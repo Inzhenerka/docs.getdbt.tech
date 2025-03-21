@@ -33,14 +33,15 @@ Certain properties are special, because:
 
 These properties are:
 
-- [`description`](/reference/resource-properties/description)
-- [`tests`](/reference/resource-properties/data-tests)
-- [`docs`](/reference/resource-configs/docs)
 - [`columns`](/reference/resource-properties/columns)
-- [`quote`](/reference/resource-properties/quote)
-- [`source` properties](/reference/source-properties) (for example, `loaded_at_field`, `freshness`)
+- [`deprecation_date`](/reference/resource-properties/deprecation_date)
+- [`description`](/reference/resource-properties/description)
 - [`exposure` properties](/reference/exposure-properties) (for example, `type`, `maturity`)
 - [`macro` properties](/reference/macro-properties) (for example, `arguments`)
+- [`quote`](/reference/resource-properties/quote)
+- [`source` properties](/reference/source-properties) (for example, `loaded_at_field`, `freshness`)
+- [`tests`](/reference/resource-properties/data-tests)
+- [`versions`](/reference/resource-properties/versions)
 
 import Example from '/snippets/_configs-properties.md'  ;
 
