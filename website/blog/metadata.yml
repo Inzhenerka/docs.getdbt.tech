@@ -2,7 +2,7 @@
 featured_image: ""
 
 # This CTA lives in right sidebar on blog index
-featured_cta: "developer_day_2025"
+featured_cta: 
 
 # Show or hide hero title, description, cta from blog index
 show_title: false
