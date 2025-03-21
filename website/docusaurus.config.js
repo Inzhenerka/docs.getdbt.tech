@@ -74,14 +74,14 @@ var siteSettings = {
     },
     announcementBar: {
       id: "monthly-demos",
-      content: "Join us for dbt Developer day on March 19th and March 20th for exciting new and coming-soon features to supercharge data developer workflows!",
+      content: "Join our monthly demos and see dbt Cloud in action!",
       backgroundColor: "#047377",
       textColor: "#fff",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://www.getdbt.com/resources/webinars/dbt-cloud-demos-with-experts/?utm_medium=i[…]ly-demos_aw&utm_content=biweekly-demos____&utm_term=all_all__",
+      "https://www.getdbt.com/resources/webinars/dbt-cloud-demos-with-experts",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
