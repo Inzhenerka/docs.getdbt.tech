@@ -39,10 +39,6 @@ Log in to the dbt Snowflake Native App using your regular Snowflake login authen
 
 If your Snowflake Native App is already configured, you will be prompted to [link credentials](#link-credentials) the next time you access dbt Cloud from the app. This is a one-time process. If you don't have a dbt Cloud account associated with a developer license, you will be denied access to the dbt Cloud environment and will need an admin to assist.
 
-_Users with IT or read-only licenses will be denied access to dbt Cloud via the Snowflake Native App._
-
-App users are able to access all information that's available to the API service token.
-
 ## Procurement
 The dbt Snowflake Native App is available on the [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3). Purchasing it includes access to the Native App and a dbt Cloud account that's on the Enterprise plan. Existing dbt Cloud Enterprise customers can also access it. If interested, contact your Enterprise account manager.
 
