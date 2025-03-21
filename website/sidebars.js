@@ -1004,7 +1004,6 @@ const sidebarSettings = {
             "reference/resource-properties/description",
             "reference/resource-properties/latest_version",
             "reference/resource-properties/include-exclude",
-            "reference/resource-properties/quote",
             "reference/resource-properties/data-tests",
             "reference/resource-properties/versions",
           ],
