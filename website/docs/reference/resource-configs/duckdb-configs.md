@@ -22,7 +22,6 @@ your_profile_name:
         s3_region: my-aws-region
         s3_access_key_id: "{{ env_var('S3_ACCESS_KEY_ID') }}"
         s3_secret_access_key: "{{ env_var('S3_SECRET_ACCESS_KEY') }}"
-      type: duckdb
   target: dev
 ```
 
