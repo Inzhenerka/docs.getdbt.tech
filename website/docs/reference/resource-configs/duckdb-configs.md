@@ -6,7 +6,7 @@ id: "duckdb-configs"
 
 ## Profile
 
-A super-minimal dbt-duckdb profile only needs one setting:
+dbt Cloud users don't have to create their own profiles.yml file. dbt-duckdb [profiles](/docs/core/connect-data-platform/duckdb-setup#connecting-to-duckdb-with-dbt-duckdb) should be set up as follows:
 
 ```yml
 default:
