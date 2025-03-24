@@ -83,7 +83,6 @@ Using the same example, the analyst can perform some exploratory data analysis b
 
 - View results: See up to **500 rows** in a table format.
 - Export results: On the top right of the table, click the the three ellipsis (`...`) button and select **Export to CSV** to export the dataset.
-  - Note? Any notes here? 
 <Lightbox src="/img/docs/collaborate/query-page/qp-results.jpg" width="95%" title="Query page Results tab" />
 
 ### View details
