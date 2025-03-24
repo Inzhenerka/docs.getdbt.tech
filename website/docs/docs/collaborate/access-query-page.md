@@ -48,13 +48,24 @@ Let's use an example to illustrate how to run queries in the Query page:
 - To express this logic in SQL, the analyst assigned to this project will:
   - Write a SQL query to calculate the number of unique orders and customers. For example: <br />
     ```sql
+    with 
+
+    orders as (
+        select * from {{ ref('orders') }}
+    ),
+
+    customers as (
+        select * from {{ ref('customers') }}
+    )
+    
     select 
         date_trunc('year', ordered_at) as order_year,
-        count(distinct o.customer_id) as unique_customers,
-        count(distinct o.order_id) as unique_orders
-    from {{ ref('orders') }} o
-    join {{ ref('customers') }} c
-        on o.customer_id = c.customer_id
+        count(distinct orders.customer_id) as unique_customers,
+        count(distinct customers.city) as unique_cities,
+        sum(orders.total_amount) as total_order_revenue
+    from orders
+    join customers
+        on orders.customer_id = customers.customer_id
     group by 1
     order by 1
     ```
