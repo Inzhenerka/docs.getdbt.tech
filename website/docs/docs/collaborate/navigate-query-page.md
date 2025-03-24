@@ -32,7 +32,7 @@ The Query page provides an interactive interface for writing, running, and analy
 <Lightbox src="/img/docs/collaborate/query-page/qp-ellipsis.jpg" title="Query page ellipsis button" />
 
 ### Results, Details, and Chart tabs
-These tabs help you analyze query execution and visualize results
+Use these tabs to analyze query execution and visualize results
 - **Results** tab: Displays (or previews) your SQL results in a detailed views. Results are limited to 500 rows, support for more rows coming soon!
 - **Details** tab: Generates succinct details of executed SQL query:
   - Query metadata: Title, description, supplied SQL, compiled SQL
