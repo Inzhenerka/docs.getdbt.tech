@@ -14,6 +14,8 @@ is_featured: true
 
 :::tip February 2024 Update
 
+This blog references dbt Core versions older than v1.0.
+
 It's been a few years since dbt-core turned 1.0! Since then, we've committed to releasing zero breaking changes whenever possible and it's become much easier to upgrade dbt Core versions.
 
 In 2024, we're taking this promise further by:
@@ -97,7 +99,7 @@ require-dbt-version: ">=0.17.2"
 ...
 ```
 
-You can add an upper bound of supported versions like this: `[">=0.20.0", "<=1.0.0"]`, but for an internal analytics project it's probably overkill. Fun fact: this upper bound is how package vendors stop users from accidentally using an old version of a package like dbt-utils - more on this in a bit!
+You can add an upper bound of supported versions like this: `[">=1.4.0", "<=1.5.0"]`, but for an internal analytics project it's probably overkill. Fun fact: this upper bound is how package vendors stop users from accidentally using an old version of a package like dbt-utils - more on this in a bit!
 
 ## Step 3: Upgrade dbt
 

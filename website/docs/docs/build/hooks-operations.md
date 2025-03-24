@@ -137,7 +137,7 @@ To invoke this macro as an operation, execute `dbt run-operation grant_select --
 
 ```
 $ dbt run-operation grant_select --args '{role: reporter}'
-Running with dbt=0.16.1
+Running with dbt=1.6.0
 Privileges granted
 
 ```

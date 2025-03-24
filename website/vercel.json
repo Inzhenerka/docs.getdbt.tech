@@ -39,6 +39,16 @@
   ],
   "redirects": [
     {
+      "source": "/docs/dbt-versions/core-upgrade/upgrading-to-v1.5",
+      "destination": "/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5",
+      "permanent": true
+    },
+    {
+      "source": "/docs/dbt-versions/core-upgrade/upgrading-to-v1.6",
+      "destination": "/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.6",
+      "permanent": true
+    },
+    {
       "source": "/docs/cloud-integrations/configure-auto-exposures",
       "destination": "/docs/cloud-integrations/downstream-exposures",
       "permanent": true

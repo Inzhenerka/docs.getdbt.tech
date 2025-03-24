@@ -138,7 +138,7 @@ Provide a short summary in the Title above. Examples of good PR titles:
 
 * "Fix: deduplicate such-and-such"
 
-* "Update: dbt version 0.13.0"
+* "Update: dbt version 1.0"
 
 -->
 
