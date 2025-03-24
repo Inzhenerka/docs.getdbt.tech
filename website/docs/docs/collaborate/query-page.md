@@ -27,7 +27,7 @@ Query page in dbt Cloud integrates with [dbt Explorer](/docs/collaborate/explore
 
 Key benefits include:
 - Quickly write, run, and iterate on SQL queries with tools like code coloring, tabbed editors, and query history.
-- Leverage dbt-generated metadata, tests, trust signals, and lineage for informed query construction.
+- Leverage dbt metadata, trust signals, and lineage from dbt Explorer for informed query construction.
 - Make data accessible to users of varied technical skill levels with SQL, Semantic Layer queries, and visual tools.
 
 Some example use cases include:
