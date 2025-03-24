@@ -37,11 +37,7 @@ The following diagram provides an illustration of the architecture:
 
 Log in to the dbt Snowflake Native App using your regular Snowflake login authentication method. The Snowflake user must have a corresponding dbt Cloud user with a _[developer license](/docs/cloud/manage-access/seats-and-users)_. Previously, this wasn't a requirement during the feature [Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). 
 
-If your Snowflake Native App is already configured, you will be prompted to [link credentials](#link-credentials) the next time you access dbt Cloud from the app. This is a one-time process. If you don't have a dbt Cloud account associated with a developer license, you will be denied access to the dbt Cloud environment and will need an admin to assist.
-
-_Users with IT or read-only licenses will be denied access to dbt Cloud via the Snowflake Native App._
-
-App users are able to access all information that's available to the API service token.
+If your Snowflake Native App is already configured, you will be prompted to [link credentials](#link-credentials) the next time you access dbt Cloud from the app. This is a one-time process.
 
 ## Procurement
 The dbt Snowflake Native App is available on the [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3). Purchasing it includes access to the Native App and a dbt Cloud account that's on the Enterprise plan. Existing dbt Cloud Enterprise customers can also access it. If interested, contact your Enterprise account manager.
@@ -56,7 +52,7 @@ If you have any questions about the dbt Snowflake Native App, you may [contact o
 
 ## Link credentials
 
-During the early stages of the Snowflake Native App preview, users were only required to exist in the Snowflake platform and could access dbt Cloud via the app without having a corresponding user. This is no longer the case, and every Snowflake user must also have dbt Cloud account access with a [developer license](/docs/cloud/manage-access/seats-and-users). 
+Every Snowflake user accessing the Native app must also have dbt Cloud account access with a [developer or read-only license](/docs/cloud/manage-access/seats-and-users). Feature access will be dependent on their dbt Cloud license type.
 
 For existing accounts with the Snowflake Native App configured, users will be prompted to authenticate with dbt Cloud the next time they log in. This is a one-time process if they have a user in dbt Cloud. If they don’t have a dbt Cloud user, they will be denied access, and an admin will need to [create one](/docs/cloud/manage-access/invite-users). 
 
