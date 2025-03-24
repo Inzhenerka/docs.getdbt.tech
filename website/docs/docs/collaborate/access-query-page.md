@@ -17,7 +17,7 @@ Available in private beta. To join, please reach out to your account manager. To
 
 The Query page provides a rich console experience with editor navigation. You can expect the Query page to:
 - Enable you to write SQL queries, with the option to open multiple tabs 
-- View highlighted keywords and parentheses, along with basic code coloring to help with readability 
+- Have SQL + dbt autocomplete suggestions and syntax highlighting
 - Bookmark SQL queries
 - View the results of the query and its details using the **Results** or **Details** tabs
 - View the chart of the query results using the **Chart** tab
