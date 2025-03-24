@@ -97,7 +97,7 @@ To view the details of the query, click on the **Details** tab to see:
 
 The Query page also supports charting results. An analyst can:
 - Select the chart type and columns to visualize.
-- Choose from **line, bar, or dot charts**.
+- Choose from **line chart, bar chart, or scatterplot**.
 - Charts work best with numerical or categorical data.
 
 <Lightbox src="/img/docs/collaborate/query-page/qp-chart.jpg" width="95%" title="Query page Chart tab" />
