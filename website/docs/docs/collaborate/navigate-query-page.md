@@ -19,7 +19,7 @@ The Query page provides an interactive interface for writing, running, and analy
 
 ### Query console
 - The Query editor is the main component of the Query page. It allows you to write, run, and analyze SQL queries
-- The Query editor supports syntax highlighting, code completion, and linting.
+- The Query editor supports syntax highlighting and autocomplete suggestions
 - The Query editor also supports asset linking, which allows you to link to specific tables, columns, and metrics in your project.
 
 <Lightbox src="/img/docs/collaborate/query-page/qp-main.png" title="Query page main interface with blank query editor" />
