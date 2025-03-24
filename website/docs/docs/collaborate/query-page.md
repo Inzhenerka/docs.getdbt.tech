@@ -32,7 +32,7 @@ Key benefits include:
 
 Some example use cases include:
 - Analysts can quickly construct queries to analyze sales performance metrics across regions and view results.
-- All users have a rich development experience by being able to explore data leverage dbt Explorer and dbt Cloud to have an end-to-end exploration experience.
+- All users have a rich development experience powered by dbt Explorer's end-to-end exploration experience.
 
 DO WE WANT TO HAVE A 'HOW IT WORKS' SECTION SO WE CAN EXPLAIN ITS ENGINE?
 
