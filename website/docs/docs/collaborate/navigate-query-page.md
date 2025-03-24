@@ -26,14 +26,14 @@ The Query page provides an interactive interface for writing, running, and analy
 
 ### Ellipsis (`...`), Save and Run buttons
 - Click on the **ellipsis** button to share, develop in the [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), edit details, or delete query.
-- Use the **Save** button to save frequently used SQL queries that you'll often run.
+- Use the **Save** button to save frequently used SQL queries.
 - Use the **Run** button to run your SQL query and view the results in the **Results** tab
 
 <Lightbox src="/img/docs/collaborate/query-page/qp-ellipsis.jpg" title="Query page ellipsis button" />
 
 ### Results, Details, and Chart tabs
-These tabs help you analyze query execution and visualize results
-- **Results** tab: Displays (or previews) your SQL results in a detailed views. Results are limited to 500 rows, support for more rows coming soon!
+Use these tabs to analyze query execution and visualize results
+- **Results** tab: Preview your SQL results. Results are paginated.
 - **Details** tab: Generates succinct details of executed SQL query:
   - Query metadata: Title, description, supplied SQL, compiled SQL
   - Connection details: Warehouse, database, schema, role, user
