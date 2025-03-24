@@ -89,7 +89,7 @@ Using the same example, the analyst can perform some exploratory data analysis b
 To view the details of the query, click on the **Details** tab to see:
 - Query metadata: Title, description, supplied SQL, compiled SQL
 - Connection details: Warehouse, database, schema, role, user
-- Query details: Query duration, status, columns, rows
+- Query details: Query duration, status, column count, row count
 
 <Lightbox src="/img/docs/collaborate/query-page/qp-details.jpg" width="95%" title="Query page Details tab" />
 
