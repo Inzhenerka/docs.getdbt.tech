@@ -13,6 +13,8 @@ import PropsCallout from '/snippets/_config-prop-callout.md';
 
 Exposures are defined in `properties.yml` files nested under an `exposures:` key. You may define `exposures` in YAML files that also define `sources` or `models`. <PropsCallout title={frontMatter.title}/>  <br /> 
 
+Note that while most exposure properties must be configured directly in these YAML files, you can set the [`enabled`](/reference/resource-configs/enabled) config at the [project level](#project-level-configs) in the`dbt_project.yml` file.
+
 
 You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `models/` directory.
 
@@ -29,6 +31,7 @@ exposures:
     type: {dashboard, notebook, analysis, ml, application}
     url: <string>
     maturity: {high, medium, low}  # Indicates level of confidence or stability in the exposure
+    [enabled](/reference/resource-configs/enabled): true | false
     [tags](/reference/resource-configs/tags): [<string>]
     [meta](/reference/resource-configs/meta): {<dictionary>}
     owner:
@@ -101,3 +104,30 @@ exposures:
 ```
 
 </File>
+
+#### Project-level configs
+
+You can define project-level configs for exposures in the `dbt_project.yml` file under the `exposures:` key using the `+` prefix:
+
+<File name="dbt_project.yml">
+
+```yml
+name: 'project_name'
+version: '1.0.0'
+config-version: 2
+
+.... rest of dbt_project.yml 
+
+exposures:
+  +enabled: true
+  +tags: ['docs']
+  +meta:
+    owner_team: analytics
+
+```
+
+</File>
+
+Note that only [`enabled`](/reference/resource-configs/enabled) is fully supported. Although `+tags` and `+meta` can appear under the config key of a compiled exposure, they don't populate the top-level `tags` or `meta` fields and as a result, tag-based [selection](/reference/resource-configs/tags#definition) or metadata extraction won't work or be available.
+
+For consistent behavior, set `tags` and `meta` directly within each exposure definition in your `.yml` files.
