@@ -20,7 +20,7 @@ The Query page provides a rich console experience with editor navigation. You ca
 - Have SQL + dbt autocomplete suggestions and syntax highlighting
 - Bookmark SQL queries
 - View the results of the query and its details using the **Results** or **Details** tabs
-- View the chart of the query results using the **Chart** tab
+- Create a visualization of your query results using the **Chart** tab
 - View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon
 - Integrate with dbt Explorer, dbt Cloud IDE, and Visual Editor to provide a seamless experience for your data exploration and collaboration.
 
