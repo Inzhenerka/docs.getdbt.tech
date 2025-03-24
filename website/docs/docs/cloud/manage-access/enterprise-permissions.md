@@ -133,7 +133,6 @@ Job viewer enables users to monitor and review job executions within dbt Cloud. 
 
 Notable features:
 - Job viewer is a project-level set.
-- Can run jobs.
 - Read-only access to job results, status, and logs.
 - No other access to dbt Cloud features. 
 - Can access dbt Explorer.
