@@ -38,7 +38,6 @@ To run queries in the Query page, you can use:
 - CTEs and subqueries  
 - Basic aggregations and joins 
 
-Limitations?
 
 ### Example
 
