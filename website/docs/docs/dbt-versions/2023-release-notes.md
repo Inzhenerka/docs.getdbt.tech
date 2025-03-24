@@ -321,7 +321,7 @@ Archived release notes for dbt Cloud from 2023
     * Added a section to introduce a new beta feature [**Extended Attributes**](/docs/dbt-cloud-environments#extended-attributes-beta), which allows users to set a flexible `profiles.yml` snippet in their dbt Cloud Environment settings.
     ## 🎯 Core projects
 
-    * We released [dbt 1.6](/docs/dbt-versions/core-upgrade/upgrading-to-v1.6)! We added docs for the new commands `dbt retry` and `dbt clone`
+    * We released [dbt 1.6](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.6)! We added docs for the new commands `dbt retry` and `dbt clone`
 
     ## New 📚 Guides, ✏️ blog posts, and FAQs
 
@@ -851,7 +851,7 @@ Archived release notes for dbt Cloud from 2023
     ## 🎯 Core projects 
 
     - Clearer descriptions in the [Jinja functions page](/reference/dbt-jinja-functions), that improve content for each card. 
-    - [1.5 Docs](/docs/dbt-versions/core-upgrade/upgrading-to-v1.5) have been released as an RC! 
+    - [1.5 Docs](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5) have been released as an RC! 
     - See the beautiful [work captured in Core v 1.5](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aissue+label%3A%22dbt-core+v1.5%22+is%3Aclosed).
 
     ## New 📚 Guides and ✏️ blog posts
