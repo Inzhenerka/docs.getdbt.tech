@@ -107,27 +107,17 @@ exposures:
 
 #### Project-level configs
 
-You can define project-level configs for exposures in the `dbt_project.yml` file under the `exposures:` key using the `+` prefix:
+You can define project-level configs for exposures in the `dbt_project.yml` file under the `exposures:` key using the `+` prefix. Currently, only the [`enabled` config](/reference/resource-configs/enabled) is supported:
 
 <File name="dbt_project.yml">
 
 ```yml
 name: 'project_name'
-version: '1.0.0'
-config-version: 2
 
 # rest of dbt_project.yml
 
 exposures:
   +enabled: true
-  +tags: ['docs']
-  +meta:
-    owner_team: analytics
-
 ```
 
 </File>
-
-Note that only [`enabled`](/reference/resource-configs/enabled) is fully supported. Although `+tags` and `+meta` can appear under the config key of a compiled exposure, they don't populate the top-level `tags` or `meta` fields and as a result, tag-based [selection](/reference/resource-configs/tags#definition) or metadata extraction won't work or be available.
-
-For consistent behavior, set `tags` and `meta` directly within each exposure definition in your `.yml` files.
