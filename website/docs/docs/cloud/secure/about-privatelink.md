@@ -7,11 +7,11 @@ sidebar_label: "About PrivateLink"
 
 # About PrivateLink <Lifecycle status="managed_plus,Virtual Private Cloud" />
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
-import PrivateLinkHostnameWarning from '/snippets/_privatelink-hostname-restriction.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
+import PrivateLinkHostnameWarning from '/snippets/_private-connection-hostname-restriction.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 PrivateLink enables a private connection from any <Constant name="cloud" /> Multi-Tenant environment to your data platform hosted on a cloud provider, such as [AWS](https://aws.amazon.com/privatelink/) or [Azure](https://azure.microsoft.com/en-us/products/private-link), using that provider’s PrivateLink technology. PrivateLink allows <Constant name="cloud" /> customers to meet security and compliance controls as it allows connectivity between <Constant name="cloud" /> and your data platform without traversing the public internet. This feature is supported in most regions across NA, Europe, and Asia, but [contact us](https://www.getdbt.com/contact/) if you have questions about availability.
 
@@ -31,4 +31,4 @@ dbt Labs has a worldwide network of regional VPCs. These VPCs are specifically u
 - [Postgres](/docs/cloud/secure/postgres-privatelink)
 - [VCS](/docs/cloud/secure/vcs-privatelink)
 
-<PrivateLinkHostnameWarning features={'/snippets/_privatelink-hostname-restriction.md'}/>
+<PrivateLinkHostnameWarning features={'/snippets/_private-connection-hostname-restriction.md'}/>
