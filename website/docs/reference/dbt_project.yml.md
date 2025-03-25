@@ -52,6 +52,9 @@ The following example is a list of all available configurations in the `dbt_proj
   [project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli): project_id # Required
   [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli): environment_id # Optional
 
+[exposures](/docs/build/exposures):
+  +[enabled](/reference/resource-configs/enabled): true | false
+
 [quoting](/reference/project-configs/quoting):
   database: true | false
   schema: true | false
