@@ -39,8 +39,13 @@
   ],
   "redirects": [
     {
+      "source": "/reference/resource-properties/quote",
+      "destination": "/reference/resource-properties/columns#quote",
+      "permanent": true
+    },
+    {
       "source": "/reference/resource-properties/include-exclude",
-      "destination": "//reference/resource-properties/versions#include",
+      "destination": "/reference/resource-properties/versions#include",
       "permanent": true
     },
     {
