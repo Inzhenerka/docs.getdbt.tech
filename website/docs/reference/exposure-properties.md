@@ -116,7 +116,7 @@ name: 'project_name'
 version: '1.0.0'
 config-version: 2
 
-.... rest of dbt_project.yml 
+# rest of dbt_project.yml
 
 exposures:
   +enabled: true
