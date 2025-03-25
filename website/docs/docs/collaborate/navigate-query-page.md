@@ -5,56 +5,72 @@ sidebar_label: "Navigation interface"
 tags: [Query page]
 ---
 
-# Navigate the Query page interface <Lifecycle status="beta" />
+# Navigate the Query page interface <Lifecycle status="beta,enterprise,team" />
 
 <IntroText>
 Learn how to navigate the Query page interface and use the main components.
 </IntroText>
 
 :::tip
-Available in private beta. To join, please reach out to your account manager. 
+Query page is available in private beta. To join, please reach out to your account manager. 
 :::
 
 The Query page provides an interactive interface for writing, running, and analyzing SQL queries. This section highlights the main components of the Query page. 
 
-### Query console
-- The Query editor is the main component of the Query page. It allows you to write, run, and analyze SQL queries
-- The Query editor supports syntax highlighting and autocomplete suggestions
-- The Query editor also supports asset linking, which allows you to link to specific tables, columns, and metrics in your project.
+## Query console
+The query console is the main component of the Query page. It allows you to write, run, and analyze SQL queries. The Query console supports:
+- Query console editor, which allows you to write, run, and analyze SQL queries:
+  - It supports syntax highlighting and autocomplete suggestions 
+  - Hyperlink from SQL code `ref` to the corresponding Explorer page
+- [Query console menu](#query-console-menu), which contains ellipsis **(`...`)**, **Bookmark**, and **Run** buttons
+- [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
+  - Has three tabs: **Results**, **Details**, and **Chart**, which allow you to analyze query execution and visualize results.
+- [Query console sidebar menu](#query-console-sidebar-menu), which contains the **dbt Explorer**, **Bookmark**, and **Query history** icons
 
-<Lightbox src="/img/docs/collaborate/query-page/qp-main.png" title="Query page main interface with blank query editor" />
+<Lightbox src="/img/docs/query-page/qp-main.png" title="Query page main interface with blank query editor" />
 
-### Ellipsis (`...`), Save and Run buttons
-- Click on the **ellipsis** button to share, develop in the [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), edit details, or delete query.
-- Use the **Save** button to save frequently used SQL queries.
-- Use the **Run** button to run your SQL query and view the results in the **Results** tab
+### Query console menu
+The Query console menu is located at the top right of the Query editor. It contains ellipsis **(`...`)**, **Bookmark**, and **Run** buttons:
+- Ellipsis **(`...`)** button &mdash; Access to develop in the [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor)
+- **Bookmark** button &mdash; Save your frequently used SQL queries as favorites for easier access.
+  - When you click **Bookmark**, a **Bookmark Query Details** modal (pop up box) will appear where you can add a **Title** and **Description**.
+  - ✨ Let [dbt Copilot](/docs/cloud/dbt-copilot) do the writing for you &mdash; use the AI assistant to automatically generate a helpful description for your bookmark.
+  - Access the newly created bookmark from the **Bookmark** icon in the [Query console sidebar menu](#query-console-sidebar-menu). 
+- **Run** button &mdash; Run your SQL query and view the results in the **Results** tab.
 
-<Lightbox src="/img/docs/collaborate/query-page/qp-ellipsis.jpg" title="Query page ellipsis button" />
+<!-- might use a gif here instead of jpg img  -->
 
-### Results, Details, and Chart tabs
-Use these tabs to analyze query execution and visualize results
-- **Results** tab: Preview your SQL results. Results are paginated.
-- **Details** tab: Generates succinct details of executed SQL query:
-  - Query metadata: Title, description, supplied SQL, compiled SQL
-  - Connection details: Warehouse, database, schema, role, user
-  - Query details: Query duration, status, columns, rows
-- **Chart** tab: Visualizes query results with built-in charts. 
+<Lightbox src="/img/docs/query-page/qp-ellipsis.jpg" title="Query page ellipsis button" />
+
+##  Query output panel
+
+The Query output panel is below the query editor and displays the results of a query. It displays the following tabs to analyze query execution and visualize results:
+- **Results** tab &mdash; Preview your SQL results, with results paginated.
+- **Details** tab &mdash; Generates succinct details of executed SQL query:
+  - Query metadata &mdash; dbt Copilot's AI-generated title and description. Along with the supplied SQL and compiled SQL.
+  - Connection details &mdash; Relevant data platform connection information.
+  - Query details &mdash; Query duration, status, column count, row count.
+- **Chart** tab &mdash; Visualizes query results with built-in charts. 
   - Use the **Chart settings** to customize the chart type and the columns you want to visualize. 
-  - Available chart types are line, bar, and dot.
-- **Ellipsis** (`...`) button: Allows you to export the results to CSV
+  - Available chart types are **line chart, bar chart, or scatterplot**.
+- **Ellipsis** (`...`) button &mdash; Allows you to export the results to CSV
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/collaborate/query-page/qp-results.jpg" width="95%" title="Query page Results tab" />
-<Lightbox src="/img/docs/collaborate/query-page/qp-details.jpg" width="95%" title="Query page Details tab" />
-<Lightbox src="/img/docs/collaborate/query-page/qp-chart.jpg" width="95%" title="Query page Chart tab" />
+<Lightbox src="/img/docs/query-page/qp-results.jpg" width="95%" title="Query page Results tab" />
+<Lightbox src="/img/docs/query-page/qp-details.jpg" width="95%" title="Query page Details tab" />
+<Lightbox src="/img/docs/query-page/qp-chart.jpg" width="95%" title="Query page Chart tab" />
 </DocCarousel>
 
-### dbt Explorer, bookmark, and Query history icons
-- Click on the **dbt Explorer** icon to view your project’s tables, columns, metrics, lineage, and more using the integrated Explorer view.
-- Click on the **Bookmark** icon to save your frequently used queries as favorites for easier access.
-- Click on the **Query history** icon to view past queries, their statuses (like Success, Error, Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
+## Query console sidebar menu
+The Query console sidebar menu and icons contains the following options:
+- **dbt Explorer icon** &mdash; View your project’s tables, columns, metrics, lineage, and more using the integrated Explorer view.
+- **Bookmark icon** &mdash; Save and access your frequently used queries. 
+  - Once you create and save a bookmark, click the ellipsis **(`...`)** button in the [Query console menu](#query-console-menu) to **Share**, **Develop in the IDE**, **Edit details**, and **Delete** a bookmark.
+  - Enhance bookmarked queries with dbt Copilot's AI-generated descriptions.
+- **Query history icon** &mdash; View past queries, their statuses (like Success, Error, Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/collaborate/query-page/qp-explorer.png" width="90%" title="Query page dbt Explorer icon" />
-<Lightbox src="/img/docs/collaborate/query-page/qp-query-history.png" width="90%" title="Query page Query history icon" />
+<Lightbox src="/img/docs/query-page/qp-explorer.png" width="90%" title="Query page dbt Explorer icon" />
+<Lightbox src="/img/docs/query-page/qp-ellipsis.gif" width="90%" title="Query page bookmark icon" />
+<Lightbox src="/img/docs/query-page/qp-query-history.png" width="90%" title="Query page Query history icon" />
 </DocCarousel>
