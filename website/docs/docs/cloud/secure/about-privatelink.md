@@ -5,11 +5,11 @@ description: "Configuring PrivateLink for AWS"
 sidebar_label: "About PrivateLink"
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
-import PrivateLinkHostnameWarning from '/snippets/_privatelink-hostname-restriction.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
+import PrivateLinkHostnameWarning from '/snippets/_private-connection-hostname-restriction.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 PrivateLink enables a private connection from any dbt Cloud Multi-Tenant environment to your data platform hosted on a cloud provider, such as [AWS](https://aws.amazon.com/privatelink/) or [Azure](https://azure.microsoft.com/en-us/products/private-link), using that provider’s PrivateLink technology. PrivateLink allows dbt Cloud customers to meet security and compliance controls as it allows connectivity between dbt Cloud and your data platform without traversing the public internet. This feature is supported in most regions across NA, Europe, and Asia, but [contact us](https://www.getdbt.com/contact/) if you have questions about availability.
 
@@ -29,4 +29,4 @@ dbt Cloud supports the following data platforms for use with the PrivateLink fea
 - [Postgres](/docs/cloud/secure/postgres-privatelink)
 - [VCS](/docs/cloud/secure/vcs-privatelink)
 
-<PrivateLinkHostnameWarning features={'/snippets/_privatelink-hostname-restriction.md'}/>
+<PrivateLinkHostnameWarning features={'/snippets/_private-connection-hostname-restriction.md'}/>

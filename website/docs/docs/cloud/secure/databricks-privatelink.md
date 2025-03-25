@@ -1,18 +1,18 @@
 ---
-title: "Configuring Databricks PrivateLink"
+title: "Configuring Databricks and AWS PrivateLink"
 id: databricks-privatelink
-description: "Configuring PrivateLink for Databricks"
-sidebar_label: "PrivateLink for Databricks"
+description: "Configuring AWS PrivateLink for Databricks"
+sidebar_label: "AWS PrivateLink for Databricks"
 pagination_next: null
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-The following steps will walk you through the setup of a Databricks AWS PrivateLink or Azure Private Link endpoint in the dbt Cloud multi-tenant environment.
+The following steps will walk you through the setup of a Databricks AWS PrivateLink endpoint in the dbt Cloud multi-tenant environment.
 
 <CloudProviders type='Databricks'/>
 
@@ -42,25 +42,6 @@ The following steps will walk you through the setup of a Databricks AWS PrivateL
     "After creating (or updating) a workspace, wait until it’s available for using or creating clusters. The workspace status stays at status RUNNING and the VPC change happens immediately. However, you cannot use or create clusters for another 20 minutes. If you create or use clusters before this time interval elapses, clusters do not launch successfully, fail, or could cause other unexpected behavior."
 
     :::
-
-## Configure Azure Private Link
-
-1. Navigate to your Azure Databricks workspace. 
-    The path format is: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Databricks/workspaces/<workspace_name>`.
-2. From the workspace overview, click **JSON view**. 
-3. Copy the value in the `resource_id` field.  
-4. Add the required information to the following template and submit your Azure Private Link request to [dbt Support](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support): 
-    ```
-      Subject: New Azure Multi-Tenant Private Link Request
-    - Type: Databricks
-    - Databricks instance name:
-    - Azure Databricks Workspace URL (e.g. adb-################.##.azuredatabricks.net)
-    - Databricks Azure resource ID:
-    - dbt Cloud multi-tenant environment: EMEA
-    - Azure region: Region that hosts your Databricks workspace (like, WestEurope, NorthEurope)
-    ```
-5. Once our Support team confirms the resources are available in the Azure portal, navigate to the Azure Databricks Workspace and browse to **Networking** > **Private Endpoint Connections**. Then, highlight the `dbt` named option and select **Approve**.
-
 
 ## Create Connection in dbt Cloud
 

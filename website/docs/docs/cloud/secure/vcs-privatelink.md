@@ -5,11 +5,11 @@ description: "Setting up a PrivateLink connection between dbt Cloud and an organ
 sidebar_label: "PrivateLink for VCS"
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 AWS PrivateLink provides private connectivity from dbt Cloud to your self-hosted cloud version control system (VCS) service by routing requests through your virtual private cloud (VPC). This type of connection does not require you to publicly expose an endpoint to your VCS repositories or for requests to the service to traverse the public internet, ensuring the most secure connection possible. AWS recommends PrivateLink connectivity as part of its [Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) and details this particular pattern in the **Shared Services** section of the [AWS PrivateLink whitepaper](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-privatelink/aws-privatelink.pdf).
 
@@ -88,7 +88,7 @@ Subject: New Multi-Tenant PrivateLink Request
 - dbt Cloud multi-tenant environment (US, EMEA, AU):
 ```
 
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 

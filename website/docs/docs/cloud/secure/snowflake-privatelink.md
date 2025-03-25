@@ -1,21 +1,21 @@
 ---
 title: "Configuring Snowflake PrivateLink"
 id: snowflake-privatelink
-description: "Configuring PrivateLink for Snowflake"
+description: "Configuring AWS PrivateLink for Snowflake"
 sidebar_label: "PrivateLink for Snowflake"
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-The following steps walk you through the setup of a Snowflake AWS PrivateLink or Azure Private Link endpoint in a dbt Cloud multi-tenant environment.
+The following steps walk you through the setup of an AWS-hosted Snowflake PrivateLink endpoint in a dbt Cloud multi-tenant environment.
 
 <CloudProviders type='Snowflake' />
 
 :::note Snowflake SSO with PrivateLink
-Users connecting to Snowflake using SSO over a PrivateLink connection from dbt Cloud will also require access to a PrivateLink endpoint from their local workstation.
+Users connecting to Snowflake using SSO over an AWS PrivateLink connection from dbt Cloud will also require access to a PrivateLink endpoint from their local workstation.
 
 >Currently, for any given Snowflake account, SSO works with only one account URL at a time: either the public account URL or the URL associated with the private connectivity service.
 
@@ -57,7 +57,7 @@ Subject: New Multi-Tenant (Azure or AWS) PrivateLink Request
 _*By default dbt Cloud will be configured to use `privatelink-account-url` from the provided [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) as the PrivateLink endpoint. Upon request, `regionless-privatelink-account-url` can be used instead._
 
 
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 

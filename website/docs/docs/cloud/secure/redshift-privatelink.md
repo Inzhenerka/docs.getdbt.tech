@@ -5,12 +5,12 @@ description: "Configuring PrivateLink for Redshift"
 sidebar_label: "PrivateLink for Redshift"
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 AWS provides two different ways to create a PrivateLink VPC endpoint for a Redshift cluster that is running in another VPC: 
 - [Redshift-managed PrivateLink Endpoints](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html)
@@ -62,7 +62,7 @@ dbt Cloud supports both types of endpoints, but there are a number of [considera
        - dbt Cloud multi-tenant environment (US, EMEA, AU):
        ```
 
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 

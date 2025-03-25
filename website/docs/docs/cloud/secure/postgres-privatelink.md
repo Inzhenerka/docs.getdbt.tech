@@ -4,12 +4,12 @@ id: postgres-privatelink
 description: "Configuring PrivateLink for Postgres"
 sidebar_label: "PrivateLink for Postgres"
 ---
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 A Postgres database, hosted either in AWS or in a properly connected on-prem data center, can be accessed through a private network connection using AWS Interface-type PrivateLink. The type of Target Group connected to the Network Load Balancer (NLB) may vary based on the location and type of Postgres instance being connected, as explained in the following steps.
 
@@ -79,7 +79,7 @@ Subject: New Multi-Tenant PrivateLink Request
 ```
 
 
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
