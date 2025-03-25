@@ -89,11 +89,11 @@ Using the same example, Kimiko can perform some exploratory data analysis by run
 
 - Viewing results in **Results** tab &mdash; View the paginated results of the query.
 - Sorting results &mdash; Click on the column header to sort the results by that column.
-- Export to CSV &mdash; On the top right of the table, click the three-dot ellipsis (`...`) button and select **Export to CSV** to export the dataset.
+- Exporting to CSV &mdash; On the top right of the table, click the three-dot ellipsis (`...`) button and select **Export to CSV** to export the dataset.
 <Lightbox src="/img/docs/query-page/qp-export-csv.jpg" width="95%" title="Query page Export to CSV" />
 
 ### View details
-Kimiko can also view the details of the query by clicking on the **Details** tab to see:
+Kimiko can also view the details of the query by clicking on the **Details** tab:
 - Query metadata &mdash; dbt Copilot AI-generated title and description. Along with the supplied SQL and compiled SQL.
 - Connection details &mdash; Relevant data platform connection information.
 - Query details &mdash; Query duration, status, column count, row count.
@@ -102,7 +102,7 @@ Kimiko can also view the details of the query by clicking on the **Details** tab
 
 ### Chart results
 
-Kimiko can visualize the chart results of the query by clicking on the **Chart** tab to see:
+Kimiko can visualize the chart results of the query by clicking on the **Chart** tab to:
 - Select the chart type and columns to visualize.
 - Choose from **line chart, bar chart, or scatterplot**.
 
@@ -110,7 +110,7 @@ Kimiko can visualize the chart results of the query by clicking on the **Chart**
 
 ### Query history
 
-Kimiko can also view the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon. They can also select a query to re-run to view the results. 
+Kimiko can also view the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon. She can also select a query to re-run to view the results. 
 
 The query history is stored indefinitely.
 
@@ -127,7 +127,7 @@ dbt Cloud Copilot is a feature that allows you to query your data with natural l
 
 Kimiko accesses dbt Explorer directly in the Query page to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the Query page interface. 
 
-This integrated view allows users to maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view comes with:
+This integrated view allows her and other users maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view comes with:
 - Same search capabilities as Explorer
 - Allows users to narrow down displayed objects by type
 - Hyperlink from SQL code `ref` to the corresponding Explorer page
