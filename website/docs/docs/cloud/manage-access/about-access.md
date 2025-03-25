@@ -107,7 +107,7 @@ Every user in dbt Cloud will have a license assigned. Licenses consume "seats" w
 There are three license types in dbt Cloud:
 
 - **Developer** &mdash; User can be granted _any_ permissions.
-- **Read-Only** &mdash; User has read-only permissions applied to all dbt Cloud resources regardless of the role-based permissions that the user is assigned. _Read-only licenced users do not inherit rights from any permisson sets_. Every read-only access across the account regardless of the group permissions assigned.
+- **Read-Only** &mdash; User has read-only permissions applied to all dbt Cloud resources regardless of the role-based permissions that the user is assigned. _Read-only licensed users do not inherit rights from any permission sets_. Every read-only licensed user has the same access across the account, regardless of the group permissions assigned.
 - **IT** &mdash; User has Security Admin and Billing Admin [permissions](/docs/cloud/manage-access/enterprise-permissions) applied, regardless of the group permissions assigned.
 
 Developer licenses will make up a majority of the users in your environment and have the highest impact on billing, so it's important to monitor how many you have at any given time.
