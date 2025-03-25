@@ -197,7 +197,7 @@ _Note: if you're using the dbt Cloud IDE to work on your dbt project, this error
 ### Invalid `ref` function
 ```
 $ dbt run -s customers
-Running with dbt=.1
+Running with dbt=1.1.0
 
 Encountered an error:
 Compilation Error in model customers (models/customers.sql)
