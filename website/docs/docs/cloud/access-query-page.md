@@ -3,6 +3,7 @@ title: "Access the Query page"
 description: "Learn how to access the Query page and run queries"
 sidebar_label: "Access and run queries"
 tags: [Query page]
+image: /img/docs/query-page/qp-chart.jpg
 ---
 
 # Access the Query page interface <Lifecycle status="beta,enterprise,team" />
@@ -26,7 +27,7 @@ The Query page provides a rich console experience with editor navigation. You ca
 
 ## Access the Query page
 
-Before accessing the Query page, ensure that the [prerequisites](/docs/collaborate/query-page#prerequisites) are met.
+Before accessing the Query page, ensure that the [prerequisites](/docs/cloud/query-page#prerequisites) are met.
 
 1. To access the Query page, select the **Query** option in the navigation sidebar.
 2. If your [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) aren’t set up, the Query page will prompt you to set them up. 
@@ -36,18 +37,18 @@ Before accessing the Query page, ensure that the [prerequisites](/docs/collabora
 
 To run queries in the Query page, you can use:
 - Standard SQL  
-- Jinja (`ref`, `source`, `is_incremental`)  
+- Jinja ([`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source), [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro))  
 - Links from SQL code `ref` to the corresponding Explorer page
 - CTEs and subqueries  
 - Basic aggregations and joins 
-- Semantic Layer queries using Semantic Layer jinja functions
+- Semantic Layer queries using Semantic Layer Jinja functions
 
 ## Example
 
 Let's use an example to illustrate how to run queries in the Query page:
 
 - A Jaffle shop wants to count unique orders and unique customers to understand whether they can expand their awesome Jaffle shop business to other parts of the world.
-- To express this logic in SQL, the analyst assigned to this project will write a SQL query to calculate the number of unique orders and customers. For example: <br /><br />
+- To express this logic in SQL, Kimiko, the analyst assigned to this project, wants to understand yearly trends to help guide expansion decisions. She writes the following SQL query to calculate the number of unique customers, cities, and total order revenue: <br /><br />
     ```sql
     with 
 
@@ -71,25 +72,28 @@ Let's use an example to illustrate how to run queries in the Query page:
     order by 1
     ```
 
-An analyst can now run the query by clicking the **Run** button and:
+Kimiko can now run the query by clicking the **Run** button and:
 - Explore and [view the results](#view-results) in the **Results** tab.
 - [View the details](#view-details) of the query in the **Details** tab.
 - [View the chart results](#chart-results) of the query results in the **Chart** tab.
 - [View the history](#query-history) of queries and their statuses (like Success, Error, Pending) using the **Query history** icon.
 - [Use dbt Explorer](#use-dbt-explorer) to view the lineage and resources of the query.
-- Likewise to promote the query to a model, they can click [**Develop in the IDE**](/docs/collaborate/navigate-query-page) on the top right of the Query page to create a new model using the dbt Cloud IDE or in the [Visual Editor](/docs/cloud/visual-editor).
+
+:::tip Want to turn a query into a model?
+Click **Develop in the IDE** from the [Query console menu](#query-console-menu) to promote your SQL into a reusable dbt model using the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor) &mdash; all within dbt Cloud!
+:::
 
 ### View results
 
-Using the same example, an analyst can perform some exploratory data analysis by running the query and:
+Using the same example, Kimiko can perform some exploratory data analysis by running the query and:
 
-- Viewing results in **Results** tab: View the paginated results of the query.
-- Sorting results: Click on the column header to sort the results by that column.
-- Export to CSV: On the top right of the table, click the the three ellipsis (`...`) button and select **Export to CSV** to export the dataset.
+- Viewing results in **Results** tab &mdash; View the paginated results of the query.
+- Sorting results &mdash; Click on the column header to sort the results by that column.
+- Export to CSV &mdash; On the top right of the table, click the three-dot ellipsis (`...`) button and select **Export to CSV** to export the dataset.
 <Lightbox src="/img/docs/query-page/qp-export-csv.jpg" width="95%" title="Query page Export to CSV" />
 
 ### View details
-To view the details of the query, click on the **Details** tab to see:
+Kimiko can also view the details of the query by clicking on the **Details** tab to see:
 - Query metadata &mdash; dbt Copilot AI-generated title and description. Along with the supplied SQL and compiled SQL.
 - Connection details &mdash; Relevant data platform connection information.
 - Query details &mdash; Query duration, status, column count, row count.
@@ -98,15 +102,15 @@ To view the details of the query, click on the **Details** tab to see:
 
 ### Chart results
 
-The Query page also supports charting results. An analyst can:
+Kimiko can visualize the chart results of the query by clicking on the **Chart** tab to see:
 - Select the chart type and columns to visualize.
 - Choose from **line chart, bar chart, or scatterplot**.
 
 <Lightbox src="/img/docs/query-page/qp-chart.jpg" width="95%" title="Query page Chart tab" />
 
-## Query history
+### Query history
 
-The Query page also supports query history, which allows you to view the history of queries and their statuses (like Success, Error, Pending). You can also select a query to re-run to view the results. 
+Kimiko can also view the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon. They can also select a query to re-run to view the results. 
 
 The query history is stored indefinitely.
 
@@ -121,22 +125,21 @@ dbt Cloud Copilot is a feature that allows you to query your data with natural l
 
 ### Use dbt Explorer
 
-View dbt Explorer directly in the Query page to access your project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the Query page interface. 
+Kimiko accesses dbt Explorer directly in the Query page to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the Query page interface. 
 
-This integrated view allows you to maintain your query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view provides you with:
+This integrated view allows users to maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view comes with:
 - Same search capabilities as Explorer
-- Allows you to narrow down displayed objects by type
+- Allows users to narrow down displayed objects by type
 - Hyperlink from SQL code `ref` to the corresponding Explorer page
 
-To access dbt Explorer, click on the **Explorer** icon on the top right of the Query page.
+To access dbt Explorer, click on the **Explorer** icon in the [Query console sidebar menu](/docs/cloud/navigate-query-page#query-console-sidebar-menu).
 
 <Lightbox src="/img/docs/query-page/qp-explorer.png" width="90%" title="Query page integrated with dbt Explorer" />
- 
 
 ## Considerations 
-- You can save and bookmark frequently used queries for yourself. Sharing those queries with others will be available soon.
+- You can save and bookmark frequently used queries for yourself. Coming soon: Sharing those queries with others.
 - The query page uses your development credentials to query. You have the ability to query against any object in any environment.
-- Every jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
+- Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
 - Coming soon: The ability to select the environment you use to resolve your `refs`.
 
 <!-- this can move to another page -->

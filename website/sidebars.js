@@ -778,11 +778,11 @@ const sidebarSettings = {
       {
         type: "category",
         label: "Analyze with Query page",
-        link: { type: "doc", id: "docs/collaborate/query-page" },
+        link: { type: "doc", id: "docs/cloud/query-page" },
         items: [
-          "docs/collaborate/query-page", // main query page doc
-          "docs/collaborate/access-query-page", // info on how to access and use query page
-          "docs/collaborate/navigate-query-page", // navigate query page doc
+          "docs/cloud/query-page", // main query page doc
+          "docs/cloud/access-query-page", // info on how to access and use query page
+          "docs/cloud/navigate-query-page", // navigate query page doc
         ],
       },
       {

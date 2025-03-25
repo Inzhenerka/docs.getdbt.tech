@@ -3,6 +3,7 @@ title: "Navigate the Query page interface"
 description: "Learn how to navigate the Query page interface"
 sidebar_label: "Navigation interface"
 tags: [Query page]
+image: /img/docs/query-page/qp-results.jpg
 ---
 
 # Navigate the Query page interface <Lifecycle status="beta,enterprise,team" />

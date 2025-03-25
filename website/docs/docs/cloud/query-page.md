@@ -3,8 +3,8 @@ title: "About the Query page"
 description: "Learn how to query data and perform exploratory data analysis using the Query page"
 sidebar_label: "About the Query page"
 tags: [Semantic Layer]
-pagination_next:  "docs/collaborate/navigate-query-page"
-image: /img/docs/collaborate/query-page/qp-results.jpg
+pagination_next:  "docs/cloud/access-query-page"
+image: /img/docs/query-page/qp-results.jpg
 ---
 
 # About the Query page <Lifecycle status="beta,enterprise,team" />
