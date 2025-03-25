@@ -158,8 +158,8 @@ models:
 Because `v4` has not specified any `columns`, it will include all of the top-level `columns`.
 
 Each other version has declared a modification from the top-level property:
-- `v3` will include all columns, but it reimplements the `customer_country` column with a different `description`
-- `v2` will include all columns *except* `customer_country`
+- `v3` will include all columns, but it reimplements the `customer_country` column with a different `description`.
+- `v2` will include all columns *except* `customer_country`.
 - `v1` doesn't include *any* of the top-level `columns`. Instead, it declares only a single integer column named `id`.
 
 
