@@ -67,12 +67,12 @@ datatype: string | [string]
 
 <VersionBlock firstVersion="1.9">
 
-The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `models`, `snapshots`, `seeds`, or `saved_queries` as appropriate.
+The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `exposures`, `models`, `snapshots`, `seeds`, or `saved_queries` as appropriate.
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
-The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `models`, `snapshots`, or `seeds` as appropriate.
+The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `exposures`, `models`, `snapshots`, or `seeds` as appropriate.
 </VersionBlock>
 
 <File name='resource_type/properties.yml'>

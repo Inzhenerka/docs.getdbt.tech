@@ -63,8 +63,8 @@ models:
           - ... # declare additional data tests
         columns:
           # include/exclude columns from the top-level model properties
-          - [include](/reference/resource-properties/include-exclude): <include_value>
-            [exclude](/reference/resource-properties/include-exclude): <exclude_list>
+          - [include](/reference/resource-properties/versions#include): <include_value>
+            [exclude](/reference/resource-properties/versions#include): <exclude_list>
           # specify additional columns
           - name: <column_name> # required
             [quote](/reference/resource-properties/columns#quote): true | false
