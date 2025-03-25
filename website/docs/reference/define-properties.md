@@ -37,9 +37,10 @@ These properties are:
 - [`tests`](/reference/resource-properties/data-tests)
 - [`docs`](/reference/resource-configs/docs)
 - [`columns`](/reference/resource-properties/columns)
-- [`quote`](/reference/resource-properties/quote)
+- [`quote`](/reference/resource-properties/columns#quote)
 - [`source` properties](/reference/source-properties) (for example, `loaded_at_field`, `freshness`)
 - [`exposure` properties](/reference/exposure-properties) (for example, `type`, `maturity`)
+  - Note that while most exposure properties must be configured directly in `properties.yml` files, you can set the [`enabled`](/reference/resource-configs/enabled) config at the [project level](/reference/exposure-properties#project-level-configs) in the`dbt_project.yml` file.
 - [`macro` properties](/reference/macro-properties) (for example, `arguments`)
 
 import Example from '/snippets/_configs-properties.md'  ;

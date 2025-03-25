@@ -39,6 +39,16 @@
   ],
   "redirects": [
     {
+      "source": "/reference/resource-properties/quote",
+      "destination": "/reference/resource-properties/columns#quote",
+      "permanent": true
+    },
+    {
+      "source": "/reference/resource-properties/include-exclude",
+      "destination": "/reference/resource-properties/versions#include",
+      "permanent": true
+    },
+    {
       "source": "/docs/cloud-integrations/configure-auto-exposures",
       "destination": "/docs/cloud-integrations/downstream-exposures",
       "permanent": true

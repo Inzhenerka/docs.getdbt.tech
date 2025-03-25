@@ -31,7 +31,7 @@ models:
       - name: <column_name> # required
         [description](/reference/resource-properties/description): <markdown_string>
         [meta](/reference/resource-configs/meta): {<dictionary>}
-        [quote](/reference/resource-properties/quote): true | false
+        [quote](/reference/resource-properties/columns#quote): true | false
         [constraints](/reference/resource-properties/constraints):
           - <constraint>
         [tests](/reference/resource-properties/data-tests):
@@ -63,11 +63,11 @@ models:
           - ... # declare additional data tests
         columns:
           # include/exclude columns from the top-level model properties
-          - [include](/reference/resource-properties/include-exclude): <include_value>
-            [exclude](/reference/resource-properties/include-exclude): <exclude_list>
+          - [include](/reference/resource-properties/versions#include): <include_value>
+            [exclude](/reference/resource-properties/versions#include): <exclude_list>
           # specify additional columns
           - name: <column_name> # required
-            [quote](/reference/resource-properties/quote): true | false
+            [quote](/reference/resource-properties/columns#quote): true | false
             [constraints](/reference/resource-properties/constraints):
               - <constraint>
             [tests](/reference/resource-properties/data-tests):
