@@ -79,7 +79,7 @@ sources:
           - name: <column_name> # required
             [description](/reference/resource-properties/description): <markdown_string>
             [meta](/reference/resource-configs/meta): {<dictionary>}
-            [quote](/reference/resource-properties/quote): true | false
+            [quote](/reference/resource-properties/columns#quote): true | false
             [tests](/reference/resource-properties/data-tests):
               - <test>
               - ... # declare additional tests
