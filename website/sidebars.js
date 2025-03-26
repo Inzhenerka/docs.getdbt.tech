@@ -575,6 +575,16 @@ const sidebarSettings = {
         },
         {
           type: "category",
+          label: "Analyze with Query page",
+          link: { type: "doc", id: "docs/cloud/query-page" },
+          items: [
+            "docs/cloud/query-page", // main query page doc
+            "docs/cloud/access-query-page", // info on how to access and use query page
+            "docs/cloud/navigate-query-page", // navigate query page doc
+          ],
+        },
+        {
+          type: "category",
           label: "Git version control",
           link: { type: "doc", id: "docs/collaborate/git-version-control" },
           items: [
@@ -773,16 +783,6 @@ const sidebarSettings = {
         "docs/cloud/enable-dbt-copilot",
         "docs/cloud/use-dbt-copilot",
         "docs/cloud/dbt-copilot-faqs",
-        ],
-      },
-      {
-        type: "category",
-        label: "Analyze with Query page",
-        link: { type: "doc", id: "docs/cloud/query-page" },
-        items: [
-          "docs/cloud/query-page", // main query page doc
-          "docs/cloud/access-query-page", // info on how to access and use query page
-          "docs/cloud/navigate-query-page", // navigate query page doc
         ],
       },
       {
