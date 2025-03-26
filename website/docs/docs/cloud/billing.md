@@ -71,16 +71,16 @@ Examples of queried metrics include:
   dbt sl query --metrics revenue,gross_sales --group-by metric_time,user__country
   ```
 
-- Running an explain for one metric → 1 queried metric
+- Running a compile for one metric → 1 queried metric
 
   ```shell
-  dbt sl query --metrics revenue --group-by metric_time --explain
+  dbt sl query --metrics revenue --group-by metric_time --compile
   ```
 
-- Running an explain for two metrics → 2 queried metrics
+- Running a compile for two metrics → 2 queried metrics
 
   ```shell
-  dbt sl query --metrics revenue,gross_sales --group-by metric_time --explain
+  dbt sl query --metrics revenue,gross_sales --group-by metric_time --compile
   ```
 
 ### Viewing usage in the product 
