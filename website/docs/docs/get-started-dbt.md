@@ -91,10 +91,10 @@ Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-feature
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Core using GitHub Codespace"
-    body="Learn how to create a codespace and execute the dbt build command."
-    link="https://docs.getdbt.com/guides/codespace?step=1"
-    icon="dbt-bit"/>
+    title="Quickstart for dbt Core using DuckDB"
+    body="Learn how to connect to DuckDB."
+    link="https://docs.getdbt.com/guides/duckdb?step=1"
+    icon="duckdb"/>
 </div>
 
 ## Related docs

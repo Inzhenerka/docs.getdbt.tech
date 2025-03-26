@@ -4,11 +4,6 @@ id: "snowflake-configs"
 description: "Snowflake Configurations - Read this in-depth guide to learn about configurations in dbt."
 ---
 
-<!----
-To-do:
-- use the reference doc structure for this article / split into separate articles
---->
-
 <VersionBlock firstVersion="1.9">
 
 ## Iceberg table format
@@ -484,6 +479,8 @@ Snowflake supports the following incremental strategies:
 - Merge (default)
 - Append
 - Delete+insert
+- Insert_overwrite
+  - Note: This is not a standard dbt incremental strategy. `insert_overwrite` behaves like `truncate` + re-`insert` commands on Snowflake. It doesn't support partition-based overwrites, which means it'll overwrite the entire table intentionally. It's implemented as an incremental strategy because it aligns with dbt’s workflow of not dropping existing tables.
 - [`microbatch`](/docs/build/incremental-microbatch)
 
 Snowflake's `merge` statement fails with a "nondeterministic merge" error if the `unique_key` specified in your model config is not actually unique. If you encounter this error, you can instruct dbt to use a two-step incremental approach by setting the `incremental_strategy` config for your model to `delete+insert`.

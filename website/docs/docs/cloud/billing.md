@@ -29,6 +29,9 @@ dbt Cloud considers a Successful Model Built as any <Term id="model">model</Term
 
 Any models built in a dbt Cloud development environment (for example, via the IDE) do not count towards your usage. Tests, seeds, ephemeral models, and snapshots also do not count. 
 
+When a dynamic table is initially created, the model is counted (if the creation is successful). However, in subsequent runs, dbt skips these models unless the definition of the dynamic table has changed. This refers not to changes in the SQL logic but to changes in dbt's logic, specifically those governed by [`on_configuration_change config`](/reference/resource-configs/on_configuration_change)). The dynamic table continues to update on a cadence because the adapter is orchestrating that refresh rather than dbt Cloud. 
+
+
 | What counts towards Successful Models Built |                     |
 |---------------------------------------------|---------------------|
 | View                                        | ✅                  |
@@ -68,16 +71,16 @@ Examples of queried metrics include:
   dbt sl query --metrics revenue,gross_sales --group-by metric_time,user__country
   ```
 
-- Running an explain for one metric → 1 queried metric
+- Running a compile for one metric → 1 queried metric
 
   ```shell
-  dbt sl query --metrics revenue --group-by metric_time --explain
+  dbt sl query --metrics revenue --group-by metric_time --compile
   ```
 
-- Running an explain for two metrics → 2 queried metrics
+- Running a compile for two metrics → 2 queried metrics
 
   ```shell
-  dbt sl query --metrics revenue,gross_sales --group-by metric_time --explain
+  dbt sl query --metrics revenue,gross_sales --group-by metric_time --compile
   ```
 
 ### Viewing usage in the product 

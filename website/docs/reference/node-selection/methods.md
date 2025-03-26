@@ -143,6 +143,10 @@ selectors unambiguous.
   dbt run --select "snowplow.*"
 ```
 
+Use the `this` package to select nodes from the current project. From the example, running `dbt run --select "package:this"` from the `snowplow` project runs the exact same set of models as the other three selectors.
+
+Since `this` always refers to the current project, using `package:this` ensures that you're only selecting models from the project you're working in.
+
 ### path
 The `path` method is used to select models/sources defined at or under a specific path.
 Model definitions are in SQL/Python files (not YAML), and source definitions are in YAML files.
@@ -253,6 +257,18 @@ There are two additional `state` selectors that complement `state:new` and `stat
 - `state:unmodified` &mdash; All existing nodes with no changes 
 
 These selectors can help you shorten run times by excluding unchanged nodes. Currently, no subselectors are available at this time, but that might change as use cases evolve. 
+
+#### Overwrites the `manifest.json`
+
+import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
+
+<Overwritesthemanifest />
+
+#### Recommendation
+
+import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overwriting-manifest.md'; 
+
+<Recommendationoverwritesthemanifest />
 
 ### tag
 The `tag:` method is used to select models that match a specified [tag](/reference/resource-configs/tags).
