@@ -33,15 +33,16 @@ Certain properties are special, because:
 
 These properties are:
 
-- [`description`](/reference/resource-properties/description)
-- [`tests`](/reference/resource-properties/data-tests)
-- [`docs`](/reference/resource-configs/docs)
 - [`columns`](/reference/resource-properties/columns)
+- [`deprecation_date`](/reference/resource-properties/deprecation_date)
+- [`description`](/reference/resource-properties/description)
 - [`quote`](/reference/resource-properties/columns#quote)
 - [`source` properties](/reference/source-properties) (for example, `loaded_at_field`, `freshness`)
 - [`exposure` properties](/reference/exposure-properties) (for example, `type`, `maturity`)
   - Note that while most exposure properties must be configured directly in `properties.yml` files, you can set the [`enabled`](/reference/resource-configs/enabled) config at the [project level](/reference/exposure-properties#project-level-configs) in the`dbt_project.yml` file.
 - [`macro` properties](/reference/macro-properties) (for example, `arguments`)
+- [`tests`](/reference/resource-properties/data-tests)
+- [`versions`](/reference/resource-properties/versions)
 
 import Example from '/snippets/_configs-properties.md'  ;
 
