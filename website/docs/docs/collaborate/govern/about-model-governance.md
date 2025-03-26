@@ -6,6 +6,11 @@ pagination_next: "docs/collaborate/govern/model-access"
 pagination_prev: null
 ---
 
+:::warning Considerations
+
+Be sure to consider if your dbt project is ready or calls for the implementation of model governance features. By implementing these features, the dbt project becomes much stricter, and therefore walking back any changes (e.g. removing data contracts, deprecating or removing model versions) becomes much more work and can add to significant maintenance burden.
+:::
+
 [**Model access**](model-access): Some models are mature, reusable data productions. Others are your team's implementation details on the way there. Mark models as "public" or "private," to make the distinction clear and to control who else can `ref` them.
 
 [**Model contracts**](model-contracts): Guarantee the shape of a model while it is building to avoid surprises or breaking changes for downstream queries. Explicitly define column names, data types, and constraints (as supported by your data platform).
