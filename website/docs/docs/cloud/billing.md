@@ -156,7 +156,7 @@ From dbt Cloud, click on your account name in the left side menu and select **Ac
 
 ### Usage notifications 
 
-Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached. In the Team plan, all users within the Owner group will receive alerts. In Enterprise plans, all users with the Account Admin and Billing Admin permission sets will receive alerts. Users cannot opt out of these emails. If you would like additional users to receive these alert emails, please provide them with the applicable permissions mentioned above. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times. 
+Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached. In the Team plan, all users within the Owner group will receive alerts. In Enterprise plans, all users with the Account Admin and Billing Admin [permission sets](/docs/cloud/manage-access/enterprise-permissions) will receive alerts. Users cannot opt out of these emails. If you would like additional users to receive these alert emails, please provide them with the applicable permissions mentioned above. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times. 
 
 ### How do I stop usage from accruing?
 
