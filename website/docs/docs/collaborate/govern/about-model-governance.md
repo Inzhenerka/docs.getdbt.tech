@@ -14,9 +14,6 @@ pagination_prev: null
 
 [**Project dependencies**](/docs/collaborate/govern/project-dependencies): <Lifecycle status='enterprise'/> Use cross project dependencies to reference public models across dbt projects using the [two-argument ref](/reference/dbt-jinja-functions/ref#ref-project-specific-models), which includes the project name. 
 
-:::info Considerations
+import ModelGovernanceRollback from '/snippets/_model-governance-rollback.md';
 
-Features like data contracts and model versions strengthen trust and stability in your project. These features increase the strictness of your project, which can make it harder to roll changes back later (like removing data contracts or deprecating or removing model versions) and can add maintenance overhead if adopted too early. 
-
-Before adding governance features, ask yourself whether your dbt project is ready to benefit from model governance features. Introducing them too early can create challenges in the future if requirements shift or models need to evolve quickly.
-:::
+<ModelGovernanceRollback />
