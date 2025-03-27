@@ -258,7 +258,7 @@ There are two additional `state` selectors that complement `state:new` and `stat
 
 These selectors can help you shorten run times by excluding unchanged nodes. Currently, no subselectors are available at this time, but that might change as use cases evolve. 
 
-#### `state:modified`: node and reference impacts
+#### `state:modified` node and reference impacts
 
 `state:modified` identifies any new nodes added, changes to existing nodes, and any changes made to:
 
