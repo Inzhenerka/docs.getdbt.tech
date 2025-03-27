@@ -17,8 +17,6 @@ They could also be used to:
 - identify historical changes in <Term id="table" /> structure
 - do much, much more
 
-dbt has produced artifacts since the release of dbt-docs in v0.11.0. Starting in dbt v0.19.0, we are committing to a stable and sustainable way of versioning, documenting, and validating dbt artifacts.
-
 ### When are artifacts produced? <Lifecycle status="team,enterprise"/>
 
 Most dbt commands (and corresponding RPC methods) produce artifacts:
