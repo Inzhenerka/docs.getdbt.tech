@@ -44,6 +44,11 @@ models:
 
 Each model can only belong to one `group`, and groups cannot be nested. If you set a different `group` in that model's YAML or in-file config, it will override the `group` applied at the project level.
 
+
+import ModelGovernanceRollback from '/snippets/_model-governance-rollback.md';
+
+<ModelGovernanceRollback />
+
 ## Access modifiers
 
 Some models are implementation details, meant for reference only within their group of related models. Other models should be accessible through the [ref](/reference/dbt-jinja-functions/ref) function across groups and projects. Models can set an [access modifier](https://en.wikipedia.org/wiki/Access_modifiers) to indicate their intended level of accessibility.
