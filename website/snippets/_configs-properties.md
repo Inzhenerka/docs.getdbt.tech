@@ -37,7 +37,7 @@ sources:
 
 
 models:
-  - name: stg_jaffle_shop__customers
+  - name: stg_jaffle_shop__customers # Must match the filename of a model &mdash including case sensitivity.
     config:
       tags: ['pii']
     columns:
