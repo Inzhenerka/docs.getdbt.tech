@@ -268,7 +268,7 @@ These selectors can help you shorten run times by excluding unchanged nodes. Cur
 
 If a node changes its group, downstream references may break, potentially causing build failures.
 
-As `group` is a config, and configs are generally included in `state:modified` detection, modifying the group name everywhere it’s referenced, will flag those nodes as "modified".
+As `group` is a config, and configs are generally included in `state:modified` detection, modifying the group name everywhere it’s referenced will flag those nodes as "modified".
 
 Depending on whether partial parsing is enabled, you will catch the breakage in CI.
 
