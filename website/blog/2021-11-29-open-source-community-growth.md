@@ -425,7 +425,7 @@ Finally, to run the models and pass lineage metadata to my local instance of Mar
 % dbt-ol run
 Running OpenLineage dbt wrapper version 0.3.1
 This wrapper will send OpenLineage events at the end of dbt execution.
-Running with dbt=1.9.0
+Running with dbt=1.0.0
 Found 7 models, 0 tests, 0 snapshots, 0 analyses, 184 macros, 0 operations, 2 seed files, 4 sources, 0 exposures
 
 18:44:15 | Concurrency: 1 threads (target='dev')
