@@ -27,11 +27,11 @@ The Query page provides a rich console experience with editor navigation. You ca
 
 ## Access the Query page
 
-Before accessing the Query page, ensure that the [prerequisites](/docs/cloud/query-page#prerequisites) are met.
+Before accessing the Query page, ensure that the [prerequisites](/docs/collaborate/query-page#prerequisites) are met.
 
 1. To access the Query page, select the **Query** option in the navigation sidebar.
-2. If your [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) aren’t set up, the Query page will prompt you to set them up. 
-3. Once your credentials are set up, you can write, run, and edit SQL queries in the Query page editor for existing models in your project.
+2. If your [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) aren’t set up, the Query page will prompt you to set them up. The ability to query data is subject to warehouse provider permissions according to your developer credentials.
+3. Once your credentials are set up, you can write, run, and edit SQL queries in the Query page editor for existing models in your project. 
 
 ## Run queries
 
@@ -72,15 +72,30 @@ Let's use an example to illustrate how to run queries in the Query page:
     order by 1
     ```
 
-Kimiko can now run the query by clicking the **Run** button and:
-- Explore and [view the results](#view-results) in the **Results** tab.
-- [View the details](#view-details) of the query in the **Details** tab.
-- [View the chart results](#chart-results) of the query results in the **Chart** tab.
-- [View the history](#query-history) of queries and their statuses (like Success, Error, Pending) using the **Query history** icon.
-- [Use dbt Explorer](#use-dbt-explorer) to view the lineage and resources of the query.
+### Use dbt Copilot <Lifecycle status="enterprise"/>
+
+To make things easier, Kimiko decides to use dbt Copilot to save time and explore other ways to analyze the data. Copilot can help her quickly update the query or generate a new one based on her prompt.
+
+1. She clicks the **dbt Copilot** icon in the Query console sidebar to open the prompt box.  
+2. She enters her prompt in natural language and asks for a yearly breakdown of unique customers and total revenue. Then clicks **Submit**.
+3. dbt Copilot responds with:
+   - A summary of the query
+   - An explanation of the logic
+   - The SQL it generated
+   - Options to **Add** or **Replace** the existing query with the generated SQL
+4. Kimiko then reviews the output and clicks **Replace** to use the generated SQL in her editor.
+5. Then, she clicks **Run** to preview the results.
+
+From here, Kimiko can:
+- Continue building or modifying the query using dbt Copilot
+- Explore the [results](#view-results) in the **Results** tab
+- [View metadata and query details](#view-details) in the **Details** tab
+- [Visualize results](#chart-results) in the **Chart** tab
+- Check the [**Query history**](#query-history) for status and past runs
+- Use [**dbt Explorer**](#use-dbt-explorer) to explore model lineage and context
 
 :::tip Want to turn a query into a model?
-Click **Develop in the IDE** from the [Query console menu](#query-console-menu) to promote your SQL into a reusable dbt model using the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor) &mdash; all within dbt Cloud!
+Coming soon &mdash; you'll soon be able to access the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor) from the [Query console menu](/docs/collaborate/navigate-query-page#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within dbt Cloud!
 :::
 
 ### View results
@@ -132,7 +147,7 @@ This integrated view allows her and other users maintain their query workflow, w
 - Allows users to narrow down displayed objects by type
 - Hyperlink from SQL code `ref` to the corresponding Explorer page
 
-To access dbt Explorer, click on the **Explorer** icon in the [Query console sidebar menu](/docs/cloud/navigate-query-page#query-console-sidebar-menu).
+To access dbt Explorer, click on the **Explorer** icon in the [Query console sidebar menu](/docs/collaborate/navigate-query-page#query-console-sidebar-menu).
 
 <Lightbox src="/img/docs/query-page/qp-explorer.png" width="90%" title="Query page integrated with dbt Explorer" />
 

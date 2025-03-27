@@ -15,6 +15,12 @@ hide_table_of_contents: true
     icon="dbt-bit"/>
 
 <Card
+    title="Analyze with Query page"
+    body="Learn how to query data and perform exploratory data analysis using the Query page."
+    link="/docs/collaborate/query-page"
+    icon="dbt-bit"/>
+
+<Card
     title="Git version control"
     body="Learn about Git and version control."
     link="/docs/collaborate/git-version-control"
