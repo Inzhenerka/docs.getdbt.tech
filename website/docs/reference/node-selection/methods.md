@@ -270,7 +270,7 @@ If a node changes its group, downstream references may break, potentially causin
 
 As `group` is a config, and configs are generally included in `state:modified` detection, modifying the group name everywhere it’s referenced will flag those nodes as "modified".
 
-Depending on whether partial parsing is enabled, you will catch the breakage in CI.
+Depending on whether partial parsing is enabled, you will catch the breakage as part of CI workflows.
 
 - If you change a group name everywhere it’s referenced, and partial parsing is enabled, dbt may only re-parse the changed model.
 - If you update a group name in all its references without partial parsing enabled, dbt will re-parse all models and identify any invalid downstream references.
