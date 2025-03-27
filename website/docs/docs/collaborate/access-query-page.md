@@ -13,7 +13,7 @@ Learn how to access the Query page, run queries, and view results.
 </IntroText>
 
 :::tip
-Query page is available in private beta. To join, please reach out to your account manager. 
+Query page is available in private beta to Enterprise accounts. To join, please reach out to your account manager. 
 :::
 
 The Query page provides a rich console experience with editor navigation. You can expect the Query page to:

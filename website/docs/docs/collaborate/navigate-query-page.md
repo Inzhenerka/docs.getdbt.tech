@@ -13,7 +13,7 @@ Learn how to navigate the Query page interface and use the main components.
 </IntroText>
 
 :::tip
-Query page is available in private beta. To join, please reach out to your account manager. 
+Query page is available in private beta to Enterprise accounts. To join, please reach out to your account manager.
 :::
 
 The Query page provides an interactive interface for writing, running, and analyzing SQL queries. This section highlights the main components of the Query page. 

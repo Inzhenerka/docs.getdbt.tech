@@ -14,7 +14,7 @@ Learn how to query data with the Query page and view documentation in dbt Explor
 </IntroText>
 
 :::tip
-Query page is available in private beta. To join, please reach out to your account manager. 
+Query page is available in private beta to Enterprise accounts. To join, please reach out to your account manager.
 :::
 
 The Query page in dbt Cloud empowers users to seamlessly explore and query data with an intuitive, context-rich interface. It bridges technical and business users by combining metadata, documentation, AI-assisted tools, and powerful querying capabilities into one unified experience. 
