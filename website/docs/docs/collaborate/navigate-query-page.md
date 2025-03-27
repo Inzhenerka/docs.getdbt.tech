@@ -6,7 +6,7 @@ tags: [Query page]
 image: /img/docs/query-page/qp-results.jpg
 ---
 
-# Navigate the Query page interface <Lifecycle status="beta,enterprise,team" />
+# Navigate the Query page interface <Lifecycle status="beta,enterprise" />
 
 <IntroText>
 Learn how to navigate the Query page interface and use the main components.

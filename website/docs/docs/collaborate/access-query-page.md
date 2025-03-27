@@ -6,7 +6,7 @@ tags: [Query page]
 image: /img/docs/query-page/qp-chart.jpg
 ---
 
-# Access the Query page interface <Lifecycle status="beta,enterprise,team" />
+# Access the Query page interface <Lifecycle status="beta,enterprise" />
 
 <IntroText>
 Learn how to access the Query page, run queries, and view results.

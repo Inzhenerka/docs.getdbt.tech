@@ -7,7 +7,7 @@ pagination_next:  "docs/collaborate/access-query-page"
 image: /img/docs/query-page/qp-results.jpg
 ---
 
-# About the Query page <Lifecycle status="beta,enterprise,team" />
+# About the Query page <Lifecycle status="beta,enterprise" />
 
 <IntroText>
 Learn how to query data with the Query page and view documentation in dbt Explorer.
@@ -37,7 +37,7 @@ Some example use cases include:
 
 ## Prerequisites 
 
-- Have a dbt Cloud [Team or Enterprise](https://www.getdbt.com/pricing) account.
+- Have a dbt Cloud [Enterprise](https://www.getdbt.com/pricing) account.
 - Available on all [tenant](/docs/cloud/about-cloud/tenancy) configurations. Single-tenant accounts should contact your account representative for setup.
 - Have a dbt Cloud [developer license](/docs/cloud/manage-access/seats-and-users) with access to the Query page.
 - Configured [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide)
