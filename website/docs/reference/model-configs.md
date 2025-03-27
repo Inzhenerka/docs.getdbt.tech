@@ -74,7 +74,7 @@ models:
 version: 2
 
 models:
-  - name: [<model-name>] # Must match the filename of a model &mdash including case sensitivity.
+  - name: [<model-name>] #  Must match the filename of a model -- including case sensitivity.
     config:
       [materialized](/reference/resource-configs/materialized): <materialization_name>
       [sql_header](/reference/resource-configs/sql_header): <string>
@@ -90,7 +90,7 @@ models:
 version: 2
 
 models:
-  - name: [<model-name>] # Must match the filename of a model &mdash including case sensitivity.
+  - name: [<model-name>] #  Must match the filename of a model -- including case sensitivity.
     config:
       [materialized](/reference/resource-configs/materialized): <materialization_name>
       [sql_header](/reference/resource-configs/sql_header): <string>
@@ -226,7 +226,7 @@ models:
 version: 2
 
 models:
-  - name: [<model-name>] # Must match the filename of a model &mdash including case sensitivity.
+  - name: [<model-name>] # Must match the filename of a model -- including case sensitivity.
     config:
       [enabled](/reference/resource-configs/enabled): true | false
       [tags](/reference/resource-configs/tags): <string> | [<string>]
@@ -249,7 +249,7 @@ models:
 version: 2
 
 models:
-  - name: [<model-name>] # Must match the filename of a model &mdash including case sensitivity.
+  - name: [<model-name>] #  Must match the filename of a model -- including case sensitivity.
     config:
       [enabled](/reference/resource-configs/enabled): true | false
       [tags](/reference/resource-configs/tags): <string> | [<string>]
