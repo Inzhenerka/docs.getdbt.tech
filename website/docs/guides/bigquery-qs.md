@@ -314,7 +314,7 @@ Sources make it possible to name and describe the data loaded into your warehous
     sources:
         - name: jaffle_shop
           description: This is a replica of the Postgres database used by our app
-          database: raw
+          database: dbt-tutorial
           schema: jaffle_shop
           tables:
               - name: customers
