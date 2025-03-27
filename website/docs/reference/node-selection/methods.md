@@ -282,7 +282,7 @@ Certain factors can affect how references are used or resolved later on, includi
 - Modifying access: if permissions or access rules change, some references might stop working.
 - Modifying `deprecation_date`: if a reference or model version is marked  deprecated, new warnings might appear that affect how references are  processed.
 - Modifying `latest_version`: if there’s no tie to a specific version, the reference or model will point to the latest version.
-  -  So if a newer version is released, the reference will automatically resolve to the new version, potentially changing the behavior or output of the system that relies on it.
+  -  If a newer version is released, the reference will automatically resolve to the new version, potentially changing the behavior or output of the system that relies on it.
 
 #### Overwrites the `manifest.json`
 
