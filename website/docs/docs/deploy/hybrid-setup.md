@@ -11,7 +11,7 @@ Set up Hybrid projects to upload dbt Core artifacts into dbt Cloud for better co
 </IntroText>
 
 :::tip Available in private beta
-To join the private beta, you must have an active dbt Cloud Enterprise account. Register here or reach out to your account representative.
+To join the private beta, you must have an active dbt Cloud Enterprise account. Reach out to your account representative to join the beta.
 :::
 
 ## How it works
@@ -90,24 +90,22 @@ Follow these steps to configure your dbt Core project so it's ready to upload ge
    - Account ID (using the `DBT_CLOUD_ACCOUNT_ID` environment variable prefix)
    - Environment ID (using the `DBT_CLOUD_ENVIRONMENT_ID` environment variable prefix)
    ```yaml
-        name: "jaffle_shop"
-        version: "3.0.0"
-        require-dbt-version: ">=1.5.0"
-            
-        ....rest of dbt_project.yml configuration...
-            
-        dbt-cloud:
-        project-id: 123456 # Your dbt Cloud project ID
-        tenant: cloud.getdbt.com # Replace with your tenant URL
-        DBT_CLOUD_ACCOUNT_ID: 1 # Replace with your account ID
-        DBT_CLOUD_ENVIRONMENT_ID: 173 # Replace with your environment ID
-    ```
+   name: "jaffle_shop"
+   version: "3.0.0"
+   require-dbt-version: ">=1.5.0"
+   ....rest of dbt_project.yml configuration...
 
+   dbt-cloud:
+   project-id: 123456 # Your dbt Cloud project ID
+   tenant: cloud.getdbt.com # Replace with your tenant URL
+   DBT_CLOUD_ACCOUNT_ID: 1 # Replace with your account ID
+   DBT_CLOUD_ENVIRONMENT_ID: 173 # Replace with your environment ID
+   ```
 2. Execute a `dbt run` in the CLI by prefixing the following variables to upload the artifacts into dbt Cloud's orchestrator.
-   - Replace the `1` and `173` with your actual account ID and environment ID:
-   - ```bash
+   ```bash
     DBT_CLOUD_ACCOUNT_ID=1 DBT_CLOUD_ENVIRONMENT_ID=173 dbt run
     ```
+   - Replace the `1` and `173` with your actual account ID and environment ID:
 3. Review the logs to confirm a successfully artifacts upload message. If there are any errors, resolve them by checking out the debug logs.
 
 ### Review artifacts in dbt Cloud
