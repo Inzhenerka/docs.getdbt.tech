@@ -260,7 +260,7 @@ These selectors can help you shorten run times by excluding unchanged nodes. Cur
 
 #### `state:modified`: node and reference impacts
 
-`state:modified` also identifies any new nodes added, changes to existing nodes, and any changes made to:
+`state:modified` identifies any new nodes added, changes to existing nodes, and any changes made to:
 
 - [access](/reference/resource-configs/access) permissions
 - [`deprecation_date` ](/reference/resource-properties/deprecation_date)
