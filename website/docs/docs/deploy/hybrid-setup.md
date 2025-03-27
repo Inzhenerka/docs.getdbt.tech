@@ -2,6 +2,8 @@
 title: "Hybrid setup"
 sidebar_label: "Hybrid setup"
 description: "Learn how to set up hybrid projects in dbt Cloud."
+pagination_next: "docs/deploy/deployment-tools"
+pagination_prev: "docs/deploy/hybrid-projects"
 ---
 
 # Hybrid setup <Lifecycle status='beta,enterprise'/>
@@ -28,26 +30,22 @@ This setup requires connecting your dbt Core project to a dbt Cloud project and 
 Follow these steps to set up Hybrid projects and upload dbt Core artifacts into dbt Cloud:
 
 <!--no toc --> 
-- [Hybrid setup ](#hybrid-setup-)
-  - [How it works](#how-it-works)
-  - [Set up Hybrid projects](#set-up-hybrid-projects)
     - [Make dbt Core models public](#make-dbt-core-models-public)
     - [Connect project in dbt Cloud](#connect-project-in-dbt-cloud)
     - [Enable artifact upload](#enable-artifact-upload)
     - [Configure dbt Core project and upload artifacts](#configure-dbt-core-project-and-upload-artifacts)
     - [Review artifacts in dbt Cloud](#review-artifacts-in-dbt-cloud)
-  - [Integrate dbt Mesh workflows](#integrate-dbt-mesh-workflows)
 
 ### Make dbt Core models public
 
-Before connecting your dbt Core project a dbt Cloud project, you should make sure the dbt Core models that you want to share use `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref). 
+Before connecting your dbt Core project a dbt Cloud project, you should make sure the dbt Core models that you want to share use `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref).
 
-The easiest way to set this would be in your dbt_project.yml file, however you can set this in the following places:
+The easiest way to set this would be in your `dbt_project.yml` file, however you can set this in the following places:
 - `dbt_project.yml` (project-level)
 - `properties.yml` (for individual models)
 - A model’s `.sql` file using a `config` block
 
-Here’s an example using a dbt_project.yml file where the marts directory is set as public so they can be consumed by downstream tools.
+Here’s an example using a `dbt_project.yml` file where the marts directory is set as public so they can be consumed by downstream tools.
 
 <File name="dbt_project.yml">
 ```yaml
@@ -71,8 +69,11 @@ To connect a dbt Core project with dbt Cloud, check out the following steps. A d
    - You don't need to set up a data warehouse or Git connection, however to upgrade the hybrid project to a full dbt Cloud project, you'd need to set up data warehouse and Git.
 3. Select the **Hybrid development** checkbox to link the dbt Core project to the dbt Cloud project.
 4. Click **Continue**.
+<Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
+
 5. Create a [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment)
 6. (Optional) For existing dbt projects, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
+<Lightbox src="/img/docs/deploy/hp-existing-project.jpg" title="Hybrid project for an existing project" />
 
 ### Enable artifact upload
 Follow these steps to configure your dbt Core project so it's ready to upload generated artifacts to dbt Cloud:
@@ -82,6 +83,8 @@ Follow these steps to configure your dbt Core project so it's ready to upload ge
    - Tenant URL
    - Account ID
    - Environment ID
+
+<Lightbox src="/img/docs/deploy/hp-artifact-upload.jpg" width="70%" title="Hybrid project artifact upload" />
 
 ### Configure dbt Core project and upload artifacts
 
@@ -116,6 +119,6 @@ Now that you've uploaded dbt Core artifacts into dbt Cloud and executed a `dbt r
 ## Integrate dbt Mesh workflows
 
 Now that you've integrated dbt Core artifacts with you dbt Cloud project, you can now:
-- Seamlessly perform cross project references between dbt Core projects and dbt Cloud projects
+- Seamlessly perform [cross project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) between dbt Core projects and dbt Cloud projects
 - Navigate [dbt Explorer](/docs/collaborate/explore-projects) as a dbt Core user and view data assets. To view dbt Explorer, you must have a [read-only seat](/docs/cloud/manage-access/seats-and-users).
-- anything else?
+- Anything else?
