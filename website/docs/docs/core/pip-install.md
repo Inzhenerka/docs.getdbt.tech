@@ -205,12 +205,10 @@ python -m pip install --upgrade dbt-core
 To downgrade to an older version, specify the version you want to use. This command can be useful when you're resolving package dependencies. As an example:
 
 ```
-python -m pip install --upgrade dbt-core==0.19.0
+python -m pip install --upgrade dbt-core==1.9
 ```
 
 ## `pip install dbt`
-
-Note that, as of v1.0.0, `pip install dbt` is no longer supported, will raise an explicit error, and the `dbt` package on PyPI stopped receiving updates. Since v0.13, PyPI package named `dbt` was a simple "pass-through" of dbt-core and the four original database adapter plugins.
 
 In the fall of 2023, the `dbt` package on PyPI became a supported method to install the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli-in-pip).
 

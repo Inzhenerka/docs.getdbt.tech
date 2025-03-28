@@ -48,7 +48,7 @@ For example, if you've just built a model that has a failing test, you can quick
 
 ```bash
 $ dbt build -s "my_model_with_duplicates"
-13:22:47 Running with dbt=1.5.0
+13:22:47 .0
 ...
 13:22:48 Completed with 1 error and 0 warnings:
 13:22:48
