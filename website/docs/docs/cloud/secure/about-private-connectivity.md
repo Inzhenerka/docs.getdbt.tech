@@ -8,6 +8,7 @@ sidebar_label: "About private connectivity"
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkHostnameWarning from '/snippets/_private-connection-hostname-restriction.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
+import PrivateConnectivityMatrix from '/snippets/_private-connectivity-matrix.md';
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
@@ -32,3 +33,5 @@ dbt Cloud supports the following data platforms for use with the private connect
 - [VCS](/docs/cloud/secure/vcs-privatelink)
 
 <PrivateLinkHostnameWarning features={'/snippets/_private-connection-hostname-restriction.md'}/>
+
+<PrivateConnectivityMatrix/>
