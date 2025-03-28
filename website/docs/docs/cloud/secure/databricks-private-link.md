@@ -7,7 +7,6 @@ pagination_next: null
 ---
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
-import private-connection-SLA from '/snippets/_private-connection-SLA.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>

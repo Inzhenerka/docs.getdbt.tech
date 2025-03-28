@@ -39,6 +39,11 @@
   ],
   "redirects": [
     {
+      "source": "/docs/cloud/secure/about-privatelink",
+      "destination": "/docs/cloud/secure/about-private-connectivity",
+      "permanent": true
+    },
+    {
       "source": "/docs/collaborate/explore-projects",
       "destination": "/docs/explore/explore-projects",
       "permanent": true
@@ -1513,11 +1518,6 @@
     {
       "source": "/docs/core/connection-profiles#understanding-threads",
       "destination": "/docs/running-a-dbt-project/using-threads",
-      "permanent": true
-    },
-    {
-      "source": "/docs/cloud/privatelink/:path*",
-      "destination": "/docs/cloud/secure/about-privatelink",
       "permanent": true
     },
     {
