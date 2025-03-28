@@ -1,5 +1,5 @@
 ---
-title: "About PrivateLink"
+title: "About private connectivity"
 id: about-private-connectivity
 description: "Configuring private connections"
 sidebar_label: "About private connectivity"
