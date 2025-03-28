@@ -2,7 +2,7 @@
 title: "Configure AWS PrivateLink for Postgres"
 id: postgres-privatelink
 description: "Configuring PrivateLink for Postgres"
-sidebar_label: "PrivateLink for Postgres"
+sidebar_label: "AWS PrivateLink for Postgres"
 ---
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';

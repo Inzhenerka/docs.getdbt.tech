@@ -2,7 +2,7 @@
 title: "Configure AWS PrivateLink for Redshift"
 id: redshift-privatelink
 description: "Configuring PrivateLink for Redshift"
-sidebar_label: "PrivateLink for Redshift"
+sidebar_label: "AWS PrivateLink for Redshift"
 ---
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';

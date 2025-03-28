@@ -39,6 +39,11 @@
   ],
   "redirects": [
     {
+      "source": "/docs/cloud/secure/about-privatelink",
+      "destination": "/docs/cloud/secure/about-private-connectivity",
+      "permanent": true
+    },
+    {
       "source": "/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-0-11-0",
       "destination": "/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0",
       "permanent": true
@@ -1343,11 +1348,6 @@
     {
       "source": "/docs/core/connection-profiles#understanding-threads",
       "destination": "/docs/running-a-dbt-project/using-threads",
-      "permanent": true
-    },
-    {
-      "source": "/docs/cloud/privatelink/:path*",
-      "destination": "/docs/cloud/secure/about-privatelink",
       "permanent": true
     },
     {

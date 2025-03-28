@@ -1,8 +1,8 @@
 ---
-title: "Configuring Snowflake PrivateLink"
+title: "Configuring Snowflake and AWS PrivateLink"
 id: snowflake-privatelink
 description: "Configuring AWS PrivateLink for Snowflake"
-sidebar_label: "PrivateLink for Snowflake"
+sidebar_label: "AWS PrivateLink for Snowflake"
 ---
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
