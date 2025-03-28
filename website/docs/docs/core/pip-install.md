@@ -263,7 +263,7 @@ dbt --version
 ```
 Note, this will also install any pre-releases of all dependencies.
 
-### Activate your virtual environment 
+## Activate your virtual environment 
 
 To install or use packages within your virtual environment:
 
@@ -319,7 +319,7 @@ dbt --version
 
 <VersionBlock lastVersion="1.7">
 
-### Installing prereleases
+## Installing prereleases
 
 `dbt-adapters` is only compatible with dbt Core 1.8 and higher. If you're on dbt Core v1.7 or lower, follow these steps to upgrade to v1.8 or higher to install prereleases of `dbt-adapters`.
 
