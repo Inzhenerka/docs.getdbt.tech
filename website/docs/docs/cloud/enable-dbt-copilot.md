@@ -1,34 +1,34 @@
 --- 
 title: "Enable dbt Copilot" 
 sidebar_label: "Enable dbt Copilot" 
-description: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your development." 
+description: "Enable dbt Copilot, an AI-powered assistant, in dbt Cloud to speed up your development." 
 ---
 
-# Enable dbt Copilot <Lifecycle status='beta'/>
+# Enable dbt Copilot <Lifecycle status="enterprise" /> 
 
-This page explains how to enable the dbt Copilot engine in dbt Cloud, leveraging AI to speed up your development and allowing you to focus on delivering quality data.
+<IntroText>
+Enable dbt Copilot, an AI-powered assistant, in dbt Cloud to speed up your development and focus on delivering quality data.
+</IntroText>
+
+This page explains how to enable dbt Copilot in dbt Cloud to speed up your development and allow you to focus on delivering quality data.
 
 ## Prerequisites
 
-- Available in the dbt Cloud IDE only.
-- Must have an active [dbt Cloud Enterprise account](https://www.getdbt.com/pricing).
+- Available in the dbt Cloud only.
+- Must have a [dbt Cloud Enterprise account](https://www.getdbt.com/pricing).
 - Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
 - By default, dbt Copilot deployments use a central OpenAI API key managed by dbt Labs. Alternatively, you can [provide your own OpenAI API key](#bringing-your-own-openai-api-key-byok).
-- Accept and sign legal agreements. Reach out to your Account team to begin this process.
+- Opt-in to AI features by following the steps in the next section in your **Account settings**.
 
 ## Enable dbt Copilot
 
-dbt Copilot is only available to your account after your organization has signed the required legal documents. It's disabled by default. A dbt Cloud admin can enable it by following these steps:
+To opt in to dbt Copilot, a dbt Cloud admin can follow these steps:
 
 1. Navigate to **Account settings** in the navigation menu.
-
 2. Under **Settings**, confirm the account you're enabling.
-
 3. Click **Edit** in the top right corner.
-
 4. Enable the **Enable account access to AI-powered features** option.
-
-5. Click **Save**. You should now have the dbt Copilot AI engine enabled for use.
+5. Click **Save**. You should now have dbt Copilot AI enabled for use.
 
 Note: To disable (only after enabled), repeat steps 1 to 3, toggle off in step 4, and repeat step 5.
 
@@ -41,6 +41,6 @@ Once AI features have been enabled, you can provide your organization's OpenAI A
 Configure AI keys using:
 - [dbt Labs-managed OpenAI API key](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations)
 - Your own [OpenAI API key](/docs/cloud/account-integrations?ai-integration=openai#ai-integrations)
-- [Azure OpenAI](/docs/cloud/account-integrations?ai-integration=azure#ai-integrations) <Lifecycle status="beta" />
+- [Azure OpenAI](/docs/cloud/account-integrations?ai-integration=azure#ai-integrations)
 
 For configuration details, see [Account integrations](/docs/cloud/account-integrations#ai-integrations).

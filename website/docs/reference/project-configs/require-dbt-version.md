@@ -103,12 +103,12 @@ require-dbt-version: "1.5.0"
 If the version of dbt used to invoke a project disagrees with the specified `require-dbt-version` in the project or _any_ of the included packages, then dbt will fail immediately with the following error:
 ```
 $ dbt compile
-Running with dbt=0.21.0
+Running with dbt=1.5.0
 Encountered an error while reading the project:
 Runtime Error
   This version of dbt is not supported with the 'my_project' package.
-    Installed version of dbt: =0.21.0
-    Required version of dbt for 'my_project': ['>=1.0.0', '<2.0.0']
+    Installed version of dbt: =1.5.0
+    Required version of dbt for 'my_project': ['>=1.6.0', '<2.0.0']
   Check the requirements for the 'my_project' package, or run dbt again with --no-version-check
 ```
 
@@ -117,7 +117,7 @@ Runtime Error
 To suppress failures to to incompatible dbt versions, supply the `--no-version-check` flag to `dbt run`.
 ```
 $ dbt run --no-version-check
-Running with dbt=0.21.0
+Running with dbt=1.5.0
 Found 13 models, 2 tests, 1 archives, 0 analyses, 204 macros, 2 operations....
 ```
 

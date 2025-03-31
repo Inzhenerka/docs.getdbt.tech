@@ -6,6 +6,8 @@ pagination_next: "docs/cloud/manage-access/seats-and-users"
 pagination_prev: null
 ---
 
+import LicenseTypes from '/snippets/_cloud-license-types.md';
+
 :::info "User access" is not "Model access"
 
 This page covers user groups and access, including:
@@ -104,11 +106,7 @@ dbt Cloud users have both a license (assigned to an individual user or by group 
 
 Every user in dbt Cloud will have a license assigned. Licenses consume "seats" which impact how your account is [billed](/docs/cloud/billing), depending on your [service plan](https://www.getdbt.com/pricing).
 
-There are three license types in dbt Cloud:
-
-- **Developer** &mdash; User can be granted _any_ permissions.
-- **Read-Only** &mdash; User has read-only permissions applied to all dbt Cloud resources regardless of the role-based permissions that the user is assigned.
-- **IT** &mdash; User has Security Admin and Billing Admin [permissions](/docs/cloud/manage-access/enterprise-permissions) applied, regardless of the group permissions assigned.
+<LicenseTypes/>
 
 Developer licenses will make up a majority of the users in your environment and have the highest impact on billing, so it's important to monitor how many you have at any given time.
 

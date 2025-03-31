@@ -258,14 +258,6 @@ To update:
 </TabItem>
 
 </Tabs>
-
-## VS Code extension <Lifecycle status="beta"/>
-
-Visual Studio (VS) Code extensions enhance command line tools by adding extra functionalities. [Power user for dbt Core and dbt Cloud](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) is a common extension used to enhance your dbt development with VS Code.
-
-You can use the dbt Cloud CLI with Power User for dbt Core and dbt Cloud by following the instructions [here](https://docs.myaltimate.com/setup/reqdConfigCloud/). 
-
-The Power User extension will handle installing the Cloud CLI on your behalf.
   
   
 ## Considerations

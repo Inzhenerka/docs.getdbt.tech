@@ -8,9 +8,15 @@ Exposures make it possible to define and describe a downstream use of your dbt p
 - run, test, and list resources that feed into your exposure
 - populate a dedicated page in the auto-generated [documentation](/docs/build/documentation) site with context relevant to data consumers
 
+Exposures can be defined in two ways:
+- Manual &mdash; Declared [explicitly](/docs/build/exposures#declaring-an-exposure) in your project’s YAML files.
+- Automatic &mdash;  dbt Cloud [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures) automatically for supported integrations, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures. However, they don’t exist in YAML files.
+
 ### Declaring an exposure
 
 Exposures are defined in `.yml` files nested under an `exposures:` key.
+
+The following example shows an exposure definition in a `models/<filename>.yml` file:
 
 <File name='models/<filename>.yml'>
 
@@ -56,9 +62,11 @@ _Optional:_
 - **maturity**: Indicates the level of confidence or stability in the exposure. One of `high`, `medium`, or `low`. For example, you could use `high` maturity for a well-established dashboard, widely used and trusted within your organization. Use `low` maturity for a new or experimental analysis.
 
 _General properties (optional)_
-- **description**
-- **tags**
-- **meta**
+
+- [**description**](/reference/resource-properties/description)
+- [**tags**](/reference/resource-configs/tags)
+- [**meta**](/reference/resource-configs/meta)
+- [**enabled**](/reference/resource-configs/enabled) &mdash; You can set this property at the exposure level or at the project level in the [`dbt_project.yml`](/reference/dbt_project.yml) file.
 
 ### Referencing exposures
 

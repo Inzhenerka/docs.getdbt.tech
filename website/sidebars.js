@@ -236,6 +236,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/firebolt-setup",
                 "docs/core/connect-data-platform/greenplum-setup",
                 "docs/core/connect-data-platform/ibmdb2-setup",
+                "docs/core/connect-data-platform/ibmnetezza-setup",
                 "docs/core/connect-data-platform/infer-setup",
                 "docs/core/connect-data-platform/iomete-setup",
                 "docs/core/connect-data-platform/layer-setup",
@@ -296,17 +297,7 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/git-commit-signing",
             "docs/cloud/dbt-cloud-ide/lint-format",
             "docs/cloud/dbt-cloud-ide/ide-user-interface",
-            {
-              type: "category",
-              label: "dbt Copilot",
-              link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-              items: [
-                "docs/cloud/dbt-copilot",
-                "docs/cloud/enable-dbt-copilot",
-                "docs/cloud/use-dbt-copilot",
-                "docs/cloud/dbt-copilot-data",
-              ],
-            },
+            "docs/cloud/dbt-cloud-ide/develop-copilot",
           ],
         },
         {
@@ -318,6 +309,7 @@ const sidebarSettings = {
             "docs/cloud/visual-editor",
             "docs/cloud/visual-editor-interface", 
             "docs/cloud/use-visual-editor",
+            "docs/cloud/build-ve-copilot",
           ],
         },
         ],
@@ -481,6 +473,16 @@ const sidebarSettings = {
             "docs/build/custom-target-names",
           ],
         },
+        {
+          type: "category",
+          label: "Optimize development",
+          collapsed: true,
+          link: { type: "doc", id: "docs/build/empty-flag" },
+          items: [
+            "docs/build/empty-flag",
+            "docs/build/sample-flag",
+          ],
+        },
         //"docs/building-a-dbt-project/dont-nest-your-curlies",
         //"docs/building-a-dbt-project/archival",
       ],
@@ -524,12 +526,13 @@ const sidebarSettings = {
           link: { type: "doc", id: "docs/deploy/monitor-jobs" },
           items: [
             "docs/deploy/monitor-jobs",
+            "docs/deploy/orchestrate-exposures",
             "docs/deploy/artifacts",
             "docs/deploy/job-notifications",
             "docs/deploy/model-notifications",
             "docs/deploy/run-visibility",
             "docs/deploy/retry-jobs",
-            "docs/deploy/source-freshness",
+            "docs/deploy/source-freshness",            
             "docs/deploy/webhooks",
           ],
         },
@@ -560,14 +563,24 @@ const sidebarSettings = {
               label: "Model consumption",
               link: {
                 type: "doc",
-                id: "docs/collaborate/auto-exposures",
+                id: "docs/collaborate/view-downstream-exposures",
               },
               items: [
-                "docs/collaborate/auto-exposures",
+                "docs/collaborate/view-downstream-exposures",
                 "docs/collaborate/data-tile",
                 "docs/collaborate/model-query-history",
               ],
             },
+          ],
+        },
+        {
+          type: "category",
+          label: "Analyze with Query page",
+          link: { type: "doc", id: "docs/collaborate/query-page" },
+          items: [
+            "docs/collaborate/query-page", // main query page doc
+            "docs/collaborate/access-query-page", // info on how to access and use query page
+            "docs/collaborate/navigate-query-page", // navigate query page doc
           ],
         },
         {
@@ -760,14 +773,37 @@ const sidebarSettings = {
         },
       ],
     },
-
     {
+      type: "category",
+      label: "dbt Copilot",
+      collapsed: true,
+      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      items: [
+        "docs/cloud/dbt-copilot",
+        "docs/cloud/enable-dbt-copilot",
+        "docs/cloud/use-dbt-copilot",
+        "docs/cloud/dbt-copilot-faqs",
+        ],
+      },
+      {
       type: "category",
       label: "dbt Cloud integrations",
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
       items: [
         "docs/cloud-integrations/overview",
-        "docs/cloud-integrations/configure-auto-exposures",
+        {
+          type: "category",
+          label: "Visualize and orchestrate exposures",
+          link: {
+            type: "doc",
+            id: "docs/cloud-integrations/downstream-exposures",
+          },
+          items: [
+            "docs/cloud-integrations/downstream-exposures",
+            "docs/cloud-integrations/downstream-exposures-tableau",
+            "docs/cloud-integrations/orchestrate-exposures",
+          ],
+        },
         {
           type: "category",
           label: "Snowflake Native App",
@@ -791,6 +827,7 @@ const sidebarSettings = {
             "docs/cloud-integrations/avail-sl-integrations",
             "docs/cloud-integrations/semantic-layer/gsheets",
             "docs/cloud-integrations/semantic-layer/excel",
+            "docs/cloud-integrations/semantic-layer/power-bi",
             "docs/cloud-integrations/semantic-layer/tableau",
           ],
         },
@@ -917,9 +954,11 @@ const sidebarSettings = {
         "reference/resource-configs/clickhouse-configs",
         "reference/resource-configs/databricks-configs",
         "reference/resource-configs/doris-configs",
+        "reference/resource-configs/duckdb-configs",
         "reference/resource-configs/firebolt-configs",
         "reference/resource-configs/greenplum-configs",
         "reference/resource-configs/infer-configs",
+        "reference/resource-configs/ibm-netezza-config",
         "reference/resource-configs/materialize-configs",
         "reference/resource-configs/azuresynapse-configs",
         "reference/resource-configs/fabric-configs",
@@ -975,8 +1014,6 @@ const sidebarSettings = {
             "reference/resource-properties/deprecation_date",
             "reference/resource-properties/description",
             "reference/resource-properties/latest_version",
-            "reference/resource-properties/include-exclude",
-            "reference/resource-properties/quote",
             "reference/resource-properties/data-tests",
             "reference/resource-properties/versions",
           ],

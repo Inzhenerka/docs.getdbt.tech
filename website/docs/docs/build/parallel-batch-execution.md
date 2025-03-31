@@ -15,22 +15,18 @@ For example, if you have a microbatch model with 12 batches, you can execute tho
 
 ## Prerequisites
 
-To enable parallel execution, you must:
+To use parallel execution, you must meet the following prerequisites:
 
 - Use Snowflake as a supported adapter.
-  - More adapters coming soon!
-  - We'll be continuing to test and add concurrency support for adapters. This means that some adapters might get concurrency support _after_ the 1.9 release.
-- Meet [additional conditions](#how-parallel-batch-execution-works) described in the following section.
+  - More adapters are coming soon!
+  - We'll continue to test and add concurrency support for more adapters in the future.
+- A batch can only be run in parallel if:
+  - The batch is _not_ the first batch.
+  - The batch is _not_ the last batch.
 
 ## How parallel batch execution works
 
-A batch can only run in parallel if all of these conditions are met:
-
-- Batch is _not_ the first batch.
-- Batch is _not_ the last batch.
-- [Adapter supports](#prerequisites) parallel batches.
-
-After checking for the conditions in the previous table &mdash; and if `concurrent_batches` value isn't set, dbt will intelligently auto-detect if the model invokes the [`{{ this }}`](/reference/dbt-jinja-functions/this) Jinja function. If it references `{{ this }}`, the batches will run sequentially since  `{{ this }}` represents the database of the current model and referencing the same relation causes conflict. 
+After checking for the conditions in the [prerequisites](#prerequisites), and if `concurrent_batches` value isn't set, dbt will intelligently auto-detect if the model invokes the [`{{ this }}`](/reference/dbt-jinja-functions/this) Jinja function. If it references `{{ this }}`, the batches will run sequentially since  `{{ this }}` represents the database of the current model and referencing the same relation causes conflict. 
 
 Otherwise, if `{{ this }}` isn't detected (and other conditions are met), the batches will run in parallel, which can be overriden when you [set a value for `concurrent_batches`](/reference/resource-properties/concurrent_batches).
 

@@ -19,16 +19,6 @@ dbt run --select [...] --defer --state path/to/artifacts
 dbt test --select [...] --defer --state path/to/artifacts
 ```
 
-
-<VersionBlock lastVersion="0.20">
-
-```shell
-dbt run --models [...] --defer --state path/to/artifacts
-dbt test --models [...] --defer --state path/to/artifacts
-```
-
-</VersionBlock>
-
 By default, dbt uses the [`target`](/reference/dbt-jinja-functions/target) namespace to resolve `ref` calls.
 
 When `--defer` is enabled, dbt resolves ref calls using the state manifest instead, but only if:

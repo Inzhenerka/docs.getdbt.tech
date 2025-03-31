@@ -25,8 +25,14 @@ python3 -m pip install dbt-core dbt-snowflake
 
 ## New and changed features and functionality
 
-**Coming soon**
+New features and functionality available in dbt Core v1.10
+
+### The `--sample` flag
+
+Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 
 ## Quick hits
+
+- Provide the [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) field for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the built-in time stamp, which uses the `loaded_at_field`). You can not define `loaded_at_query` if the `loaded_at_field` config is also provided.
 
 **Coming soon**

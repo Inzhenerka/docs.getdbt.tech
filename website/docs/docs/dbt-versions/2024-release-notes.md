@@ -31,7 +31,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
   ```
   </File>
 - **New**: [Dimensions](/reference/resource-configs/meta) now support the `meta` config property in [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and from dbt Core 1.9. You can add metadata to your dimensions to provide additional context and information about the dimension. Refer to [meta](/reference/resource-configs/meta) for more information.
-- **New**: [Auto exposures](/docs/collaborate/auto-exposures) are now generally available to dbt Cloud Enterprise plans. Auto-exposures integrate natively with Tableau (Power BI coming soon) and auto-generate downstream lineage in dbt Explorer for a richer experience.
+- **New**: [Downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) are now generally available to dbt Cloud Enterprise plans. Downstream exposures integrate natively with Tableau (Power BI coming soon) and auto-generate downstream lineage in dbt Explorer for a richer experience.
 - **New**: The dbt Semantic Layer supports Sigma as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in Preview. Refer to [Sigma](https://help.sigmacomputing.com/docs/configure-a-dbt-semantic-layer-integration) for more information.
 - **New**: The dbt Semantic Layer now supports Azure Single-tenant deployments. Refer to [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) for more information on how to get started.
 - **Fix**: Resolved intermittent issues in Single-tenant environments affecting Semantic Layer and query history.
@@ -73,8 +73,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
   - [Linting with CI jobs](https://docs.getdbt.com/docs/deploy/continuous-integration#sql-linting)
   - dbt Assist is now [dbt Copilot](https://docs.getdbt.com/docs/cloud/dbt-copilot)
   - Developer blog on [Snowflake Feature Store and dbt: A bridge between data pipelines and ML](https://docs.getdbt.com/blog/snowflake-feature-store)
-  - New [Quickstart for dbt Cloud CLI](https://docs.getdbt.com/guides/dbt-cloud-cli?step=1)
-  - [Auto-exposures with Tableau](https://docs.getdbt.com/docs/collaborate/auto-exposures)
+  - [Downstream exposures with Tableau](https://docs.getdbt.com/docs/collaborate/view-downstream-exposures)
   - Semantic Layer integration with [Excel desktop and M365](https://docs.getdbt.com/docs/cloud-integrations/semantic-layer/excel)
   - [Data health tiles](https://docs.getdbt.com/docs/collaborate/data-tile)
   - [Semantic Layer and Cloud IDE integration](https://docs.getdbt.com/docs/build/metricflow-commands#metricflow-commands)
@@ -107,7 +106,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 - **New**: In the "Latest" release track in dbt Cloud, the `snapshot_meta_column_names` config allows for customizing the snapshot metadata columns. This feature allows an organization to align these automatically-generated column names with their conventions, and will be included in the upcoming dbt Core 1.9 release.
 - **Enhancement**: the "Latest" release track in dbt Cloud infers a model's `primary_key` based on configured data tests and/or constraints within `manifest.json`. The inferred `primary_key` is visible in dbt Explorer and utilized by the dbt Cloud [compare changes](/docs/deploy/run-visibility#compare-tab) feature. This will also be released in dbt Core 1.9. Read about the [order dbt infers columns can be used as primary key of a model](https://github.com/dbt-labs/dbt-core/blob/7940ad5c7858ff11ef100260a372f2f06a86e71f/core/dbt/contracts/graph/nodes.py#L534-L541). 
 - **New:** dbt Explorer now includes trust signal icons, which is currently available as a [Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). Trust signals offer a quick, at-a-glance view of data health when browsing your dbt models in Explorer. These icons indicate whether a model is **Healthy**, **Caution**, **Degraded**, or **Unknown**. For accurate health data, ensure the resource is up-to-date and has had a recent job run. Refer to [Data health signals](/docs/collaborate/data-health-signals) for more information. 
-- **New:** Auto exposures are now available in Preview in dbt Cloud. Auto-exposures helps users understand how their models are used in downstream analytics tools to inform investments and reduce incidents. It imports and auto-generates exposures based on Tableau dashboards, with user-defined curation. To learn more, refer to [Auto exposures](/docs/collaborate/auto-exposures).
+- **New:** Downstream exposures are now available in Preview in dbt Cloud. Downstream exposures helps users understand how their models are used in downstream analytics tools to inform investments and reduce incidents. It imports and auto-generates exposures based on Tableau dashboards, with user-defined curation. To learn more, refer to [Downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau).
 
 
 ## September 2024
@@ -192,8 +191,6 @@ The following features are new or enhanced as part of our [dbt Cloud Launch Show
 - **New:** The new low-code editor, now in private beta, enables less SQL-savvy analysts to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud. These models compile directly to SQL and are indistinguishable from other dbt models in your projects: they are version-controlled, can be accessed across projects in dbt Mesh, and integrate with dbt Explorer and the Cloud IDE. [Register your interest](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) to join the private beta.
 
 - **New:** [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) is now Generally Available (GA) to all users. The dbt Cloud CLI is a command-line interface that allows you to interact with dbt Cloud, use automatic deferral, leverage dbt Mesh, and more!
-
-- **New:** The VS Code extension [Power user for dbt Core and dbt Cloud](https://docs.myaltimate.com/arch/beta/) is now available in beta for [dbt Cloud CLI](https://docs.myaltimate.com/setup/reqdConfigCloud/) users. The extension accelerates dbt and SQL development and includes features such as generating models from your source definitions or SQL, and [more](https://docs.myaltimate.com/)!
 
 - **New:** [Unit tests](/docs/build/unit-tests) are now GA in dbt Cloud. Unit tests enable you to test your SQL model logic against a set of static inputs.
 

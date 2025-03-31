@@ -15,6 +15,11 @@ By using the semantic manifest produced by dbt Core, MetricFlow will instantiate
 
 Similar to the [`manifest.json` file](/reference/artifacts/manifest-json), the `semantic_manifest.json` file also lives in the [target directory](/reference/global-configs/json-artifacts) of your dbt project where dbt stores various artifacts (such as compiled models and tests) generated during the execution of your project.
 
+There are two reasons why `semantic_manifest.json` exists alongside `manifest.json`:
+
+- Deserialization: `dbt-core` and MetricFlow use different libraries for handling data serialization.
+- Efficiency and performance: MetricFlow and the dbt Semantic Layer need specific semantic details from the manifest. By trimming down the information printed into `semantic_manifest.json`, the process becomes more efficient and enables faster data handling between `dbt-core` and MetricFlow.
+
 ## Top-level keys
 
 Top-level keys for the semantic manifest are:
