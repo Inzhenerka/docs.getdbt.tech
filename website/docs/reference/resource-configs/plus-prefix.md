@@ -4,7 +4,7 @@ description: "The + prefix helps disambiguate between resource paths and configs
 intro_text: "Use the + prefix to help clarify the difference between resource paths and configs in dbt_project.yml files."
 ---
 
-The `+` prefix is a dbt syntax feature, introduced in dbt v0.17.0, which helps disambiguate between [resource paths](/reference/resource-configs/resource-path) and configs in [`dbt_project.yml` files](/reference/dbt_project.yml).
+The `+` prefix is a dbt syntax feature which helps disambiguate between [resource paths](/reference/resource-configs/resource-path) and configs in [`dbt_project.yml` files](/reference/dbt_project.yml).
 
 - It is not compatible with `dbt_project.yml` files that use [`config-version`](/reference/project-configs/config-version) 1. 
 - It doesn't apply to:

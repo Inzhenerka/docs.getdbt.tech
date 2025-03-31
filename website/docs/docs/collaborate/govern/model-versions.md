@@ -51,6 +51,10 @@ There is a real trade-off that exists here—the cost to frequently migrate down
 
 ## When should you version a model?
 
+import ModelGovernanceRollback from '/snippets/_model-governance-rollback.md';
+
+<ModelGovernanceRollback />
+
 By enforcing a model's contract, dbt can help you catch unintended changes to column names and data types that could cause a big headache for downstream queriers. If you're making these changes intentionally, you should create a new model version. If you're making a non-breaking change, you don't need a new version—such as adding a new column, or fixing a bug in an existing column's calculation.
 
 Of course, it's possible to change a model's definition in other ways—recalculating a column in a way that doesn't change its name, data type, or enforceable characteristics—but would substantially change the results seen by downstream queriers.
