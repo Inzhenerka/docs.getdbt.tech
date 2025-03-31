@@ -54,7 +54,9 @@ To begin building SQL queries with natural language prompts in the Query page:
 2. In the dbt Copilot prompt box, enter your prompt in natural language for dbt Copilot to build the SQL query you want. <!--You can also reference existing models using the `@` symbol. For example, to build a model that calculates the total price of orders, you can enter `@orders` in the prompt and it'll pull in and reference the `orders` model.-->
 3. Click **Submit** and dbt Copilot generates a summary of the SQL query you want to build. To clear the prompt, click on the **Clear** button. To close the prompt box, click the dbt Copilot icon again.
 4. dbt Copilot will automatically generate the SQL with an explanation of the query. 
-5. Click **Add** to add the generated SQL to the existing query. Click **Replace** to replace the existing query with the generated SQL.
-6. In the **Query console menu**, click the **Run** button to preview the data.
-7. Confirm the results or continue building your model. 
+   - Click **Add** to add the generated SQL to the existing query. 
+   - Click **Replace** to replace the existing query with the generated SQL.
+5. In the **Query console menu**, click the **Run** button to preview the data.
+6. Confirm the results or continue building your model. 
 
+<Lightbox src="/img/docs/query-page/qp-copilot.gif" width="95%" title="Query page dbt Copilot" />

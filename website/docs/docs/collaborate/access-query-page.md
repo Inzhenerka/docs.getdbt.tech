@@ -23,6 +23,7 @@ The Query page provides a rich console experience with editor navigation. You ca
 - View the results of the query and its details using the **Results** or **Details** tabs
 - Create a visualization of your query results using the **Chart** tab
 - View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon
+- Use dbt Copilot to generate or edit SQL queries using natural language prompts
 - Integrate with [dbt Copilot](/docs/cloud/dbt-copilot), [dbt Explorer](/docs/collaborate/explore-projects), [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), and [Visual Editor](/docs/cloud/visual-editor) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration.
 
 ## Access the Query page
@@ -39,7 +40,7 @@ To run queries in the Query page, you can use:
 - Standard SQL  
 - Jinja ([`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source), [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro))  
 - Links from SQL code `ref` to the corresponding Explorer page
-- CTEs and subqueries  
+- <Term id="cte">CTEs</Term> and <Term id="subquery">subqueries</Term>  
 - Basic aggregations and joins 
 - Semantic Layer queries using Semantic Layer Jinja functions
 
@@ -48,7 +49,7 @@ To run queries in the Query page, you can use:
 Let's use an example to illustrate how to run queries in the Query page:
 
 - A Jaffle shop wants to count unique orders and unique customers to understand whether they can expand their awesome Jaffle shop business to other parts of the world.
-- To express this logic in SQL, Kimiko, the analyst assigned to this project, wants to understand yearly trends to help guide expansion decisions. She writes the following SQL query to calculate the number of unique customers, cities, and total order revenue: <br /><br />
+- To express this logic in SQL, Kimiko (analyst assigned to this project) wants to understand yearly trends to help guide expansion decisions. She writes the following SQL query to calculate the number of unique customers, cities, and total order revenue: <br /><br />
     ```sql
     with 
 
@@ -82,7 +83,7 @@ To make things easier, Kimiko decides to use dbt Copilot to save time and explor
    - An explanation of the logic
    - The SQL it generated
    - Options to **Add** or **Replace** the existing query with the generated SQL
-4. Kimiko then reviews the output and clicks **Replace** to use the generated SQL in her editor.
+4. Kimiko then reviews the output and clicks **Replace** to use the Copilot-generated SQL in her editor.
 5. Then, she clicks **Run** to preview the results.
 
 <Lightbox src="/img/docs/query-page/qp-copilot.gif" width="95%" title="Query page dbt Copilot" />
@@ -96,7 +97,7 @@ From here, Kimiko can:
 - Use [**dbt Explorer**](#use-dbt-explorer) to explore model lineage and context
 
 :::tip Want to turn a query into a model?
-Coming soon &mdash; you'll soon be able to access the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor) from the [Query console menu](/docs/collaborate/navigate-query-page#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within dbt Cloud!
+Coming soon &mdash; you'll be able to access the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor) from the [Query console menu](/docs/collaborate/navigate-query-page#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within dbt Cloud!
 :::
 
 ### View results
@@ -110,23 +111,27 @@ Using the same example, Kimiko can perform some exploratory data analysis by run
 
 ### View details
 Kimiko can also view the details of the query by clicking on the **Details** tab:
-- Query metadata &mdash; dbt Copilot AI-generated title and description. Along with the supplied SQL and compiled SQL.
-- Connection details &mdash; Relevant data platform connection information.
-- Query details &mdash; Query duration, status, column count, row count.
+- **Query metadata** &mdash; dbt Copilot AI-generated title and description. Along with the supplied SQL and compiled SQL.
+- **Connection details** &mdash; Relevant data platform connection information.
+- **Query details** &mdash; Query duration, status, column count, row count.
 
 <Lightbox src="/img/docs/query-page/qp-details.jpg" width="95%" title="Query page Details tab" />
 
 ### Chart results
 
 Kimiko can visualize the chart results of the query by clicking on the **Chart** tab to:
-- Select the chart type and columns to visualize.
+- Select the chart type using the chart icon.
 - Choose from **line chart, bar chart, or scatterplot**.
+- Select the axis and columns to visualize using the **Chart settings** icon.
 
 <Lightbox src="/img/docs/query-page/qp-chart.jpg" width="95%" title="Query page Chart tab" />
 
 ### Query history
 
-Kimiko can also view the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon. She can also select a query to re-run to view the results. 
+Kimiko can also view the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon:
+- She can select a query to re-run to view the results. 
+- She can search for past queries and filter by status.
+- For each query, she can click on the ellipsis **(`...`)** button to open the query in a new tab or copy the SQL.
 
 The query history is stored indefinitely.
 
@@ -134,7 +139,7 @@ The query history is stored indefinitely.
 
 ### Use dbt Explorer
 
-Kimiko accesses dbt Explorer directly in the Query page to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the Query page interface. 
+Kimiko accesses [dbt Explorer](/docs/collaborate/explore-projects) directly in the Query page to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the Query page interface. 
 
 This integrated view allows her and other users maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view comes with:
 - Same search capabilities as Explorer

@@ -37,12 +37,13 @@ Some example use cases include:
 
 ## Prerequisites 
 
-- Have a dbt Cloud [Enterprise](https://www.getdbt.com/pricing) account.
-- Available on all [tenant](/docs/cloud/about-cloud/tenancy) configurations. Single-tenant accounts should contact your account representative for setup.
+- Have a dbt Cloud [Enterprise](https://www.getdbt.com/pricing) account &mdash; [book a demo](https://www.getdbt.com/contact) to learn more about the Query page.
+- Available on all [tenant](/docs/cloud/about-cloud/tenancy) configurations. 
 - Have a dbt Cloud [developer license](/docs/cloud/manage-access/seats-and-users) with access to the Query page.
 - Configured [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide)
 - Your production and development [environments](/docs/dbt-cloud-environments) are on dbt Cloud’s ‘Latest’ [release track](/docs/dbt-versions/cloud-release-tracks) or a supported dbt version.
 - Configured the [Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) for your dbt project.
-- Use Snowflake, BigQuery, Databricks, or Redshift.
-	- Note that the dbt Semantic Layer doesn't support SSH tunneling for Postgres or Redshift connections. It also doesn't support using Single sign-on (SSO) for production credentials, though SSO is supported for development user accounts.
+- Use Snowflake, BigQuery, Databricks, Redshift, or Postgres.
+	- Note SSH tunneling for Postgres or Redshift connections is not supported. 
+	- Single sign-on (SSO) for development user accounts supported, however SSO for production credentials not yet supported.
 - Have a successful job run in the environment where you configured the [Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl).

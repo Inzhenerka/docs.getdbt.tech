@@ -54,6 +54,7 @@ The Query output panel is below the query editor and displays the results of a q
   - Connection details &mdash; Relevant data platform connection information.
   - Query details &mdash; Query duration, status, column count, row count.
 - **Chart** tab &mdash; Visualizes query results with built-in charts. 
+  - Use the chart icon to select the type of chart you want to visualize your results. Available chart types are **line chart, bar chart, or scatterplot**.
   - Use the **Chart settings** to customize the chart type and the columns you want to visualize. 
   - Available chart types are **line chart, bar chart, or scatterplot**.
 - **Ellipsis** (`...`) button &mdash; Allows you to export the results to CSV
@@ -71,10 +72,11 @@ The Query console sidebar menu and icons contains the following options:
   - Once you create and save a bookmark, click the ellipsis **(`...`)** button in the [Query console menu](#query-console-menu) to **Share**, **Develop in the IDE**, **Edit details**, and **Delete** a bookmark.
   - Enhance bookmarked queries with dbt Copilot's AI-generated descriptions.
 - **Query history icon** &mdash; View past queries, their statuses (like Success, Error, Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
-- **dbt Copilot icon** &mdash; Use dbt Copilot's AI assistant to modify or generate queries using natural language prompts.
+- **dbt Copilot icon** &mdash; Use [dbt Copilot's AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts.
 
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/query-page/qp-explorer.png" width="90%" title="Query page dbt Explorer icon" />
 <Lightbox src="/img/docs/query-page/qp-ellipsis.gif" width="90%" title="Query page bookmark icon" />
 <Lightbox src="/img/docs/query-page/qp-query-history.png" width="90%" title="Query page Query history icon" />
+<Lightbox src="/img/docs/query-page/qp-copilot.gif" width="90%" title="Query page dbt Copilot" />
 </DocCarousel>
