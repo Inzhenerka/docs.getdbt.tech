@@ -1063,7 +1063,6 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 .footer a {
   color: var(--ifm-footer-color);
   text-decoration: none;
-  display: flex;
 }
 
 .footer a:hover {
@@ -1087,22 +1086,13 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   padding-left: 0;
   gap: 1.5em;
   display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  width: 100%;
-}
-
-.footer__items--links {
-  display: flex;
-  gap: 1.5em;
-  flex-wrap: wrap;
 }
 
 /* social media icons in footer */
-.footer__items--social {
+.footer__items--right {
   display: flex;
   gap: 1.5em;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* fontawesome icons in footer */
@@ -1158,12 +1148,9 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 }
 
 @media (max-width: 910px) {
-  .footer__items--links {
+  .footer__items {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .footer__items--social {
-    max-width: 200px;
   }
 }
 
