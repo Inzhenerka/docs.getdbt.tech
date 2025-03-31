@@ -24,7 +24,7 @@ The Query page provides a rich console experience with editor navigation. You ca
 - Create a visualization of your query results using the **Chart** tab
 - View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon
 - Use dbt Copilot to generate or edit SQL queries using natural language prompts
-- Integrate with [dbt Copilot](/docs/cloud/dbt-copilot), [dbt Explorer](/docs/collaborate/explore-projects), [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), and [Visual Editor](/docs/cloud/visual-editor) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration.
+- Integrate with [dbt Copilot](/docs/cloud/dbt-copilot), [dbt Explorer](/docs/collaborate/explore-projects), [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), and [Visual Editor](/docs/cloud/visual-editor) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration
 
 ## Access the Query page
 
