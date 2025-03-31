@@ -82,9 +82,9 @@ Create a hybrid project in dbt Cloud to allow you to upload your dbt Core artifa
    - Your hybrid project will have a visible **Hybrid** indicator in the project list to help you identify it.
 <Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
 
-1. Create a [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**.
-2. Create and save a [service token](/docs/dbt-cloud-apis/service-tokens) with **Job Runner** or **Job Viewer** permissions for the Hybrid project. You'll need it to configure your dbt Core project in the next step.
-3. (Optional) For existing dbt projects, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
+5. Create a [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**.
+6. Create or have a dbt Cloud account admin create and save a [service token](/docs/dbt-cloud-apis/service-tokens) with **Job Runner** or **Job Viewer** permissions for the Hybrid project. You'll need it to configure your dbt Core project in the next step.
+7. (Optional) For existing dbt projects, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
 <Lightbox src="/img/docs/deploy/hp-existing-project.jpg" title="Hybrid project for an existing project" />
 
 ### Enable artifact upload
@@ -110,12 +110,15 @@ Prepare your dbt Core project for artifact upload by following these steps:
    ```
 2. If you don't have the latest version, [upgrade](/docs/core/pip-install#change-dbt-core-versions) your dbt Core project by running `python -m pip install --upgrade dbt-core`.
 3. Set the following environment variables in your dbt Core project by running the following commands in the CLI. Replace the `your_account_id`, `your_environment_id`, and `your_token` with the actual values you copied in the previous step.
-   - export `DBT_CLOUD_ACCOUNT_ID=your_account_id`
-   - export `DBT_CLOUD_ENVIRONMENT_ID=your_environment_id`
-   - export `DBT_CLOUD_TOKEN=your_token`
-   - export `DBT_UPLOAD_TO_ARTIFACTS_INGEST_API=True`
 
-   To unset an environment variable you run `unset [environment_variable]`.
+   ```bash
+   export DBT_CLOUD_ACCOUNT_ID=your_account_id
+   export DBT_CLOUD_ENVIRONMENT_ID=your_environment_id
+   export DBT_CLOUD_TOKEN=your_token
+   export DBT_UPLOAD_TO_ARTIFACTS_INGEST_API=True
+   ```
+
+   To unset an environment variable you run `unset environment_variable_name`, replace `environment_variable_name` with the actual name of the environment variable.
 
 4. In your local dbt Core project, add the following items you copied in the [previous section](/docs/deploy/hybrid-setup#enable-artifact-upload) to the dbt Core's `dbt_project.yml` file:
    - [Tenant URL](/docs/cloud/about-cloud/access-regions-ip-addresses)
