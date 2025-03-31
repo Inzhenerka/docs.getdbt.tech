@@ -141,7 +141,7 @@ The query history is stored indefinitely.
 
 Kimiko accesses [dbt Explorer](/docs/collaborate/explore-projects) directly in the Query page to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the Query page interface. 
 
-This integrated view allows her and other users maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view comes with:
+This integrated view allows her and other users to maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated Explorer view comes with:
 - Same search capabilities as Explorer
 - Allows users to narrow down displayed objects by type
 - Hyperlink from SQL code `ref` to the corresponding Explorer page
