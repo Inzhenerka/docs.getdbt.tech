@@ -72,8 +72,7 @@ Let's use an example to illustrate how to run queries in the Query page:
     order by 1
     ```
 
-### Use dbt Copilot <Lifecycle status="enterprise"/>
-
+### Use dbt Copilot 
 To make things easier, Kimiko decides to use dbt Copilot to save time and explore other ways to analyze the data. Copilot can help her quickly update the query or generate a new one based on her prompt.
 
 1. She clicks the **dbt Copilot** icon in the Query console sidebar to open the prompt box.  
@@ -85,6 +84,8 @@ To make things easier, Kimiko decides to use dbt Copilot to save time and explor
    - Options to **Add** or **Replace** the existing query with the generated SQL
 4. Kimiko then reviews the output and clicks **Replace** to use the generated SQL in her editor.
 5. Then, she clicks **Run** to preview the results.
+
+<Lightbox src="/img/docs/query-page/qp-copilot.gif" width="95%" title="Query page dbt Copilot" />
 
 From here, Kimiko can:
 - Continue building or modifying the query using dbt Copilot
@@ -130,13 +131,6 @@ Kimiko can also view the history of queries and their statuses (like Success, Er
 The query history is stored indefinitely.
 
 <Lightbox src="/img/docs/query-page/qp-query-history.png" width="95%" title="Query page Query history icon" />
-
-<!-- add copilot section here if available 
-
-## Query with dbt Copilot
-
-dbt Cloud Copilot is a feature that allows you to query your data with natural language. It is available in the Query page....
--->
 
 ### Use dbt Explorer
 
