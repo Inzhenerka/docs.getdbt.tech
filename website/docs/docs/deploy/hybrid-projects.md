@@ -29,7 +29,7 @@ To upload artifacts, make sure you meeting the following:
 - You're on [dbt Cloud's release tracks](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.10 and higher
 - Enabled the hybrid projects toggle in dbt Cloud’s **[Account settings](/docs/cloud/account-settings)** page
 - [Configured](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) a hybrid project in dbt Cloud.
-- dbt Core project [configured with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
+- Existing dbt Core project with latest changes and [configured with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
     - Models that you want to share with other dbt Cloud projects must use `access: public` in their model configuration. This makes the models more discoverable and shareable.
     - Learn more about [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access).
 - [dbt Cloud permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in dbt Cloud.
