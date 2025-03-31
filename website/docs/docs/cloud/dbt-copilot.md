@@ -28,7 +28,7 @@ dbt Copilot is available to all Enterprise accounts. [Book a demo](https://www.g
 dbt Copilot enhances efficiency by automating repetitive tasks while ensuring data privacy and security. It works as follows:
 
 - Access dbt Copilot through:
-  - The [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) to generate documentation, tests, semantic models
+  - The [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) to generate documentation, tests, semantic models.
   - The [Visual Editor (beta)](/docs/cloud/build-ve-copilot) to generate SQL code using natural language prompts.
   - The [Query page (beta)](/docs/collaborate/query-page) to generate SQL queries for analysis using natural language prompts.
 - dbt Copilot gathers metadata (like column names, model SQL, documentation) but never accesses row-level warehouse data.
