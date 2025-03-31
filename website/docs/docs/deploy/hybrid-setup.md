@@ -79,12 +79,12 @@ A [dbt Cloud account admin](/docs/cloud/manage-access/enterprise-permissions#per
 ### Generate service token and artifact upload values
 A dbt Cloud admin should perform these steps to generate a [service token](/docs/dbt-cloud-apis/service-tokens) and copy the values needed to configure a dbt Core project so it's ready to upload generated artifacts to dbt Cloud. The dbt Cloud admin should share the values with a dbt Core user.
 
-1. G to the Hybrid project environment you created in the previous step by navigating to **Deploy** > **Environments** and selecting the environment.
+1. Go to the Hybrid project environment you created in the previous step by navigating to **Deploy** > **Environments** and selecting the environment.
 2. Select the **Artifact upload** button and copy the following values, which the dbt Core user will need to reference in their dbt Core's `dbt_project.yml` configuration:
    - [Tenant URL](/docs/cloud/about-cloud/access-regions-ip-addresses)
    - Account ID
    - Environment ID
-   - Create a service token.
+   - Create a service token
      - dbt Cloud creates a service token with **Job Runner** or **Job Viewer** permissions.
 <Lightbox src="/img/docs/deploy/hp-artifact-upload.png" title="Generate hybrid project service token" />
 3. Make sure to copy and save the values as they're needed to configure your dbt Core project in the next step. Once the service token is created, you can't access it again.
