@@ -23,6 +23,7 @@ dbt Cloud offers the easiest and most reliable way to run your dbt project in pr
 - Uses [exports](/docs/use-dbt-semantic-layer/exports) to write [saved queries](/docs/build/saved-queries) in your data platform for reliable and fast metric reporting
 - [Visualize](/docs/cloud-integrations/downstream-exposures-tableau) and [orchestrate](/docs/cloud-integrations/orchestrate-exposures) downstream exposures to understand how models are used in downstream tools and proactively refresh the underlying data sources during scheduled dbt jobs. <Lifecycle status="enterprise"/>
 - Use [dbt Cloud's Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="enterprise" />
+- Use [Hybrid projects](/docs/deploy/hybrid-projects) to upload dbt Core artifacts into dbt Cloud for central visibility, cross-project referencing, and easier collaboration. <Lifecycle status="beta,enterprise" />
 
 Before continuing, make sure you understand dbt's approach to [deployment environments](/docs/deploy/deploy-environments). 
 
@@ -117,6 +118,18 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
 
 </div> <br />
 
+
+## Hybrid projects <Lifecycle status="beta,enterprise" />
+
+<div className="grid--3-col">
+
+<Card
+    title="Hybrid projects"
+    body="Use Hybrid projects to upload dbt Core artifacts into dbt Cloud for central visibility, cross-project referencing, and easier collaboration."
+    link="/docs/deploy/hybrid-projects"
+    icon="dbt-bit"/>
+
+</div> <br />
 
 <!--
 <a href="https://docs.getdbt.com/docs/deploy/dbt-cloud-job" target="_blank" class="pagination-nav__label nav-create-account button button--primary">Try deploying with dbt Cloud</a> 

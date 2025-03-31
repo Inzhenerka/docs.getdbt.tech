@@ -5,10 +5,10 @@ description: "Learn how to upload dbt Core artifacts into dbt Cloud to create an
 pagination_next: "docs/deploy/hybrid-setup"
 ---
 
-# Hybrid setup <Lifecycle status='beta,enterprise'/>
+# Hybrid projects <Lifecycle status='beta,enterprise'/>
 
 <IntroText>
-With Hybrid projects, organizations that adopt a complementary dbt Core and dbt Cloud workflow (where some teams develop and run dbt projects in dbt Core while others use dbt Cloud) can now seamlessly integrate their workflows by uploading dbt Core [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud.
+With Hybrid projects, organizations that adopt a complementary dbt Core and dbt Cloud workflow (where some teams develop and run dbt projects in dbt Core while others use dbt Cloud) can now seamlessly integrate their workflows by automatically uploading dbt Core [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud.
 </IntroText>
 
 :::tip Available in private beta
@@ -27,7 +27,7 @@ To upload artifacts, make sure you meeting the following:
 
 - Your organization is on a [dbt Cloud Enterprise plan](https://www.getdbt.com/pricing)
 - You're on [dbt Cloud's release tracks](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.10 and higher
-- A Hybrid projects toggle enabled in dbt Cloud’s **[Account settings](/docs/cloud/account-settings)** page
+- Enabled the hybrid projects toggle in dbt Cloud’s **[Account settings](/docs/cloud/account-settings)** page
 - [Configured](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) a hybrid project in dbt Cloud.
 - dbt Core project [configured with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
     - Models that you want to share with other dbt Cloud projects must use `access: public` in their model configuration. This makes the models more discoverable and shareable.
