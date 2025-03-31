@@ -151,7 +151,8 @@ To access dbt Explorer, click on the **Explorer** icon in the [Query console sid
 <Lightbox src="/img/docs/query-page/qp-explorer.png" width="90%" title="Query page integrated with dbt Explorer" />
 
 ## Considerations 
-- You can save and bookmark frequently used queries for yourself. Coming soon: Sharing those queries with others.
+- You can save and bookmark frequently used queries for yourself.
+- Coming soon: Sharing those queries with others.
 - The query page uses your development credentials to query. You have the ability to query against any object in any environment.
 - Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
 - Coming soon: The ability to select the environment you use to resolve your `refs`.
