@@ -87,7 +87,7 @@ A dbt Cloud admin should perform these steps to generate a [service token](/docs
    - Create a service token.
      - dbt Cloud creates a service token with **Job Runner** or **Job Viewer** permissions.
 <Lightbox src="/img/docs/deploy/hp-artifact-upload.png" title="Generate hybrid project service token" />
-3. Make sure to copy and save the values as you'll need them to configure your dbt Core project in the next step. Once the service token is created, you can't access it again.
+3. Make sure to copy and save the values as they're needed to configure your dbt Core project in the next step. Once the service token is created, you can't access it again.
 
 ### Configure dbt Core project and upload artifacts
 
