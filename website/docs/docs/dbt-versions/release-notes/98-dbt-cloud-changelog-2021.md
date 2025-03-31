@@ -7,6 +7,12 @@ description: "2021 Changelog for the dbt Cloud application"
 tags: [v1.1.41, v1.1.40, v1.1.39, v1.1.38, v1.1.37, v1.1.36, v1.1.35, v1.1.34, v1.1.33, v1.1.32, v1.1.31, v1.1.30, v1.1.29, v1.1.28, v1.1.27, v1.1.26, v1.1.25, v1.1.24, v1.1.23, v1.1.22, v1.1.21, v1.1.20, v1.1.19, v1.1.18, Jan-1-2021]
 ---
 
+:::note
+
+This changelog references dbt versions that are no longer supported and have been removed from the docs. For more information about upgrading to a supported version of dbt in your dbt Cloud environment, read [Upgrade dbt version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+
+:::
+
 Welcome to the 2021 changelog for the dbt Cloud application! You can use this changelog to see highlights of what was new, fixed, and enhanced.
 
 ## dbt Cloud v1.1.41 (December 8, 2021)
