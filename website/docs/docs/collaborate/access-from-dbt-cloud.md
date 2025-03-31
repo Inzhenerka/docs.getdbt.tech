@@ -39,7 +39,7 @@ Access dbt Explorer directly from the **modeling timing tab**, which helps you i
 
 ### Query page <Lifecycle status="beta,enterprise" />
 
-Access dbt Explorer directly from the [Query page](/docs/collaborate/access-query-page) to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more.
+Access dbt Explorer directly from the [Query page](/docs/collaborate/access-query-page) to view the project lineage and project resources with access to tables, columns, metrics, dimensions, and more.
 
 To access dbt Explorer from the Query page, click on the **Explorer** icon in the Query console sidebar menu and search for the resource you're interested in.
 
