@@ -23,8 +23,8 @@ The query console is the main component of the Query page. It allows you to writ
 - Query console editor, which allows you to write, run, and analyze SQL queries:
   - It supports syntax highlighting and autocomplete suggestions 
   - Hyperlink from SQL code `ref` to the corresponding Explorer page
-- [Query console menu](#query-console-menu), which contains **Bookmark**and **Run** buttons. 
-  - ✨ Coming soon: Ability to access the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor).
+- [Query console menu](#query-console-menu), which contains **Bookmark** and **Run** buttons. 
+  - ✨ Coming soon: Ability to open the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [Visual Editor](/docs/cloud/visual-editor) to continue editing your SQL query.
 - [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
   - Has three tabs: **Results**, **Details**, and **Chart**, which allow you to analyze query execution and visualize results.
 - [Query console sidebar menu](#query-console-sidebar-menu), which contains the **dbt Explorer**, **Bookmark**, **Query history**, and **dbt Copilot** icons.

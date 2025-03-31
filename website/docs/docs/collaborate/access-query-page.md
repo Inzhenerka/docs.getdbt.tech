@@ -111,7 +111,7 @@ Using the same example, Kimiko can perform some exploratory data analysis by run
 
 ### View details
 Kimiko can also view the details of the query by clicking on the **Details** tab:
-- **Query metadata** &mdash; dbt Copilot AI-generated title and description. Along with the supplied SQL and compiled SQL.
+- **Query metadata** &mdash; dbt Copilot AI-generated title and description, the supplied SQL, and corresponding compiled SQL.
 - **Connection details** &mdash; Relevant data platform connection information.
 - **Query details** &mdash; Query duration, status, column count, row count.
 
