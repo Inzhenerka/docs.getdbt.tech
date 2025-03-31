@@ -121,7 +121,7 @@ Prepare your dbt Core project for artifact upload by following these steps:
    To unset an environment variable you run `unset environment_variable_name`, replace `environment_variable_name` with the actual name of the environment variable.
 
 4. In your local dbt Core project, add the following items you copied in the [previous section](/docs/deploy/hybrid-setup#enable-artifact-upload) to the dbt Core's `dbt_project.yml` file:
-   - [Tenant URL](/docs/cloud/about-cloud/access-regions-ip-addresses)
+   - [Tenant_hostname](/docs/cloud/about-cloud/access-regions-ip-addresses) URL
    - Account ID (using the `DBT_CLOUD_ACCOUNT_ID` environment variable prefix)
    - Environment ID (using the `DBT_CLOUD_ENVIRONMENT_ID` environment variable prefix)
    ```yaml
@@ -132,7 +132,7 @@ Prepare your dbt Core project for artifact upload by following these steps:
 
    dbt-cloud:
    project-id: 123456 # Your dbt Cloud project ID
-   tenant: cloud.getdbt.com # Replace with your tenant URL
+   tenant_hostname: cloud.getdbt.com # Replace with your tenant URL
    DBT_CLOUD_ACCOUNT_ID: 1 # Replace with your account ID
    DBT_CLOUD_ENVIRONMENT_ID: 173 # Replace with your environment ID
    ```
