@@ -34,7 +34,7 @@ In a hybrid project, you use dbt Core locally and can upload artifacts of that d
 
 This setup requires connecting your dbt Core project to a dbt Cloud project and configuring a few environment variables and access settings.
 
-Follow these steps to set up Hybrid projects and upload dbt Core artifacts into dbt Cloud:
+Follow these steps to set up a dbt Cloud Hybrid project and upload dbt Core artifacts into dbt Cloud:
 
 <!--no toc --> 
     - [Make dbt Core models public](#make-dbt-core-models-public)
