@@ -12,7 +12,8 @@ You can name these files `whatever_you_want.yml`, and nest them arbitrarily deep
 version: 2
 
 models:
-  - [name](/reference/resource-properties/model_name): <model name>
+  # Model name must match the filename of a model -- including case sensitivity
+  - [name](/reference/resource-properties/model_name): model_name 
     [description](/reference/resource-properties/description): <markdown_string>
     [docs](/reference/resource-configs/docs):
       show: true | false
