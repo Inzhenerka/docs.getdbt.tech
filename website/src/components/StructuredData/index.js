@@ -35,7 +35,5 @@ export default function StructuredData({
     },
   };
 
-  console.log("jsonLd", jsonLd);
-
   return <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>;
 }

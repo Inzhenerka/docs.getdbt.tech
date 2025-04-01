@@ -15,7 +15,6 @@ import styles from './styles.module.css';
 import { DiscourseBlogComments } from '@site/src/components/discourseBlogComments';
 import { useDateTimeFormat } from "@docusaurus/theme-common/internal";
 import StructuredData from '@site/src/components/StructuredData';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 /* dbt Customizations:
@@ -37,11 +36,9 @@ function BlogPostPageContent({sidebar, children}) {
     hide_table_of_contents: hideTableOfContents,
     toc_min_heading_level: tocMinHeadingLevel,
     toc_max_heading_level: tocMaxHeadingLevel,
-    image: featuredImage,
   } = frontMatter;
 
   const {siteConfig} = useDocusaurusContext();
-  const baseUrl = useBaseUrl('');
 
   // Use same date formatting as in theme's BlogPostItem component
   // https://github.com/facebook/docusaurus/blob/main/packages/docusaurus-theme-classic/src/theme/BlogPostItem/Header/Info/index.tsx
@@ -86,8 +83,6 @@ function BlogPostPageContent({sidebar, children}) {
 
   // Get the full URL for the blog post
   const postUrl = `${siteConfig.url}/blog/${frontMatter.slug}`;
-  // Get the full URL for the featured image
-  const imageUrl = featuredImage ? `${siteConfig.url}${baseUrl}${featuredImage}` : undefined;
 
   return (
     <BlogLayout
@@ -112,7 +107,6 @@ function BlogPostPageContent({sidebar, children}) {
         authors={authors}
         date={date}
         url={postUrl}
-        imageUrl={imageUrl}
         tags={tags}
       />
 
