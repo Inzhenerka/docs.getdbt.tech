@@ -23,7 +23,7 @@ dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifa
 
 ## Prerequisites
 
-To upload artifacts, make sure you meeting the following:
+To upload artifacts, make sure you meet these prerequisites:
 
 - Your organization is on a [dbt Cloud Enterprise plan](https://www.getdbt.com/pricing)
 - You're on [dbt Cloud's release tracks](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.10 and higher
