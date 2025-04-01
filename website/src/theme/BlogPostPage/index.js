@@ -86,6 +86,7 @@ function BlogPostPageContent({sidebar, children}) {
 
   // Get the full URL for the blog post
   const postUrl = `${siteConfig.url}${baseUrl}${frontMatter.permalink}`;
+  console.log("postUrl", postUrl);
   // Get the full URL for the featured image
   const imageUrl = featuredImage ? `${siteConfig.url}${baseUrl}${featuredImage}` : undefined;
 

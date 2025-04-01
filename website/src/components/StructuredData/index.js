@@ -1,5 +1,5 @@
 import React from "react";
-
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 export default function StructuredData({
   title,
   description,
@@ -9,6 +9,7 @@ export default function StructuredData({
   imageUrl,
   tags,
 }) {
+  const {siteConfig} = useDocusaurusContext();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -29,10 +30,12 @@ export default function StructuredData({
       name: "dbt Labs",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.getdbt.com/ui/img/dbt-logo.png",
+        url: siteConfig.url + "/img/dbt-logo.svg",
       },
     },
   };
+
+  console.log("jsonLd", jsonLd);
 
   return <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>;
 }
