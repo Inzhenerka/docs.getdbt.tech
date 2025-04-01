@@ -33,4 +33,4 @@ To upload artifacts, make sure you meeting the following:
     - Ensure models that you want to share with other dbt Cloud projects use `access: public` in their model configuration. This makes the models more discoverable and shareable.
     - Learn more about [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access).
 - [dbt Cloud permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in dbt Cloud.
-- Note, uploading artifacts won't count again dbt Cloud run slots.
+**Note:** Uploading artifacts doesn't count against dbt Cloud run slots.
