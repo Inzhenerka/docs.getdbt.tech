@@ -8,18 +8,18 @@ pagination_next: "docs/deploy/hybrid-setup"
 # About Hybrid projects <Lifecycle status='beta,enterprise'/>
 
 <IntroText>
-With Hybrid projects, your organization can adopt complementary dbt Core and dbt Cloud workflows (where some teams develop and run dbt projects in dbt Core while others use dbt Cloud) and seamlessly integrate these workflows by automatically uploading dbt Core [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud.
+With Hybrid projects, your organization can adopt complementary dbt Core and dbt Cloud workflows (where some teams develop projects in dbt Core and others in dbt Cloud) and seamlessly integrate these workflows by automatically uploading dbt Core [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud.
 </IntroText>
 
 :::tip Available in private beta
 Hybrid projects is available in private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
 :::
 
-dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on into dbt Cloud after executing a `dbt run` in the command line interface (CLI), which helps:
+dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on &mdash; into dbt Cloud after executing a run in the command line interface (CLI), which helps:
 
 - Connect teams by bringing visibility so everyone can use dbt Core-generated artifacts in dbt Cloud.
 - Enhance collaboration by sharing model metadata, dependencies, and run history across teams using dbt Cloud.
-- Enable teams that work in dbt Core and dbt Cloud, particularly in [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) hybrid workflows, so that if an organization runs dbt Core locally or with external orchestration tools (like Airflow, Dagster), they can still collaborate with dbt Cloud.
+- Enable teams that work in dbt Core and dbt Cloud, particularly in [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) hybrid workflows, so that if an organization runs dbt Core locally or with external orchestration tools (like Airflow, Dagster) &mdash; they can still collaborate with dbt Cloud.
 
 ## Prerequisites
 
@@ -33,4 +33,5 @@ To upload artifacts, make sure you meet these prerequisites:
     - Ensure models that you want to share with other dbt Cloud projects use `access: public` in their model configuration. This makes the models more discoverable and shareable.
     - Learn more about [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access).
 - Update [dbt Cloud permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in dbt Cloud.
+
 **Note:** Uploading artifacts doesn't count against dbt Cloud run slots.

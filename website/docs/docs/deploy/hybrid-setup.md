@@ -20,7 +20,7 @@ Hybrid project is available in private beta to [dbt Cloud Enterprise accounts](h
 
 In a hybrid project, you use dbt Core locally and can upload artifacts of that dbt Core project to dbt Cloud for central visibility, cross-project referencing, and easier collaboration. 
 
-This setup requires connecting your dbt Core project to a dbt Cloud project and configuring a few environment variables and access settings.
+This setup requires connecting your dbt Core project to a dbt Cloud project and configuring a few environment variables and access settings. 
 
 Follow these steps to set up a dbt Cloud Hybrid project and upload dbt Core artifacts into dbt Cloud:
 
@@ -31,13 +31,13 @@ Follow these steps to set up a dbt Cloud Hybrid project and upload dbt Core arti
     - [Configure dbt Core project and upload artifacts](#configure-dbt-core-project-and-upload-artifacts)
     - [Review artifacts in dbt Cloud](#review-artifacts-in-dbt-cloud)
 
+Make sure to enable the hybrid projects toggle in dbt Cloud’s **Account settings** page.
+
 ### Make dbt Core models public
 
-Before connecting your dbt Core project a dbt Cloud project, you should make sure the dbt Core project is up to date.
+Before connecting your dbt Core project to a dbt Cloud project, make sure models that you want to share have `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref).
 
-1. Make sure models that you want to share use `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref).
-
-   The easiest way to set this would be in your `dbt_project.yml` file, however you can set this in the following places:
+1. The easiest way to set this would be in your `dbt_project.yml` file, however you can also set this in the following places:
    - `dbt_project.yml` (project-level)
    - `properties.yml` (for individual models)
    - A model's `.sql` file using a `config` block
@@ -56,7 +56,7 @@ Before connecting your dbt Core project a dbt Cloud project, you should make sur
 
 2. After defining `access: public`, rerun a dbt execution in the command line interface (CLI) (like `dbt run`) to apply the change.
 
-For more details on how to set this up, see Learn more about [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access). 
+3. For more details on how to set this up, see [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and [`access` config](/reference/resource-configs/access). 
 
 ### Create hybrid project
 
@@ -66,26 +66,27 @@ A [dbt Cloud account admin](/docs/cloud/manage-access/enterprise-permissions#per
 
 1. To create a new project in dbt Cloud, navigate to **Account home**.
 2. Click on **+New project**. 
-3. Select the **Advanced settings** toggle and fill out the **Project name**. Name the project something that allows you to recognize it's a dbt Core project. 
-   - You don't need to set up a data warehouse or Git connection, however to upgrade the hybrid project to a full dbt Cloud project, you'd need to set up data warehouse and Git.
-4. Select the **Hybrid development** checkbox and click **Continue**.
+3. Fill out the **Project name**. Name the project something that allows you to recognize it's a dbt Core project. 
+   - You don't need to set up a [data warehouse](/docs/supported-data-platforms) or [Git connection](/docs/cloud/git/git-configuration-in-dbt-cloud), however to upgrade the hybrid project to a full dbt Cloud project, you'd need to set up data warehouse and Git.
+4. Select the **Advanced settings** toggle and then select the **Hybrid development** checkbox. Click **Continue**.
    - The hybrid project will have a visible **Hybrid** indicator in the project list to help you identify it.
 <Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
 
-5. Create a [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**.
-6. (Optional) For existing dbt projects, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
-<Lightbox src="/img/docs/deploy/hp-existing-project.jpg" title="Hybrid project for an existing project" />
+5. After creating a project, create a corresponding [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**.
+6. (Optional) To update an existing dbt project to a hybrid project, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
+<Lightbox src="/img/docs/deploy/hp-existing-project.jpg" width="80%" title="Hybrid project for an existing project" />
 
 ### Generate service token and artifact upload values
 A dbt Cloud admin should perform these steps to generate a [service token](/docs/dbt-cloud-apis/service-tokens) and copy the values needed to configure a dbt Core project so it's ready to upload generated artifacts to dbt Cloud. The dbt Cloud admin should share the values with a dbt Core user.
 
 1. Go to the Hybrid project environment you created in the previous step by navigating to **Deploy** > **Environments** and selecting the environment.
 2. Select the **Artifact upload** button and copy the following values, which the dbt Core user will need to reference in their dbt Core's `dbt_project.yml` configuration:
-   - [Tenant URL](/docs/cloud/about-cloud/access-regions-ip-addresses)
-   - Account ID
-   - Environment ID
-   - Create a service token
+   - **[Tenant URL](/docs/cloud/about-cloud/access-regions-ip-addresses)**
+   - **Account ID**
+   - **Environment ID**
+   - **Create a service token**
      - dbt Cloud creates a service token with **Job Runner** or **Job Viewer** permissions.
+     - Note if you don't see the **Create service token** button, it's likely you don't have the necessary permissions to create a service token. Contact your dbt Cloud admin to either get the necessary permissions or create the service token for you.
 <Lightbox src="/img/docs/deploy/hp-artifact-upload.png" title="Generate hybrid project service token" />
 
 3. Make sure to copy and save the values as they're needed to configure your dbt Core project in the next step. Once the service token is created, you can't access it again.
@@ -101,7 +102,7 @@ Once you have the values from the previous step, you can prepare your dbt Core p
       - latest:    1.9.3     - Ahead of latest version!
    ```
 2. If you don't have the latest version, [upgrade](/docs/core/pip-install#change-dbt-core-versions) your dbt Core project by running `python -m pip install --upgrade dbt-core`.
-3. Set the following environment variables in your dbt Core project by running the following commands in the CLI. Replace the `your_account_id`, `your_environment_id`, and `your_token` with the actual values you copied in the previous step.
+3. Set the following environment variables in your dbt Core project by running the following commands in the CLI. Replace the `your_account_id`, `your_environment_id`, and `your_token` with the actual values in the [previous step](#generate-service-token-and-artifact-upload-values).
 
    ```bash
    export DBT_CLOUD_ACCOUNT_ID=your_account_id
@@ -111,12 +112,12 @@ Once you have the values from the previous step, you can prepare your dbt Core p
    ```
 
    - Set the environment variables in whatever way you use them in your project.
-   - To unset an environment variable you run `unset environment_variable_name`, replace `environment_variable_name` with the actual name of the environment variable.
+   - To unset an environment variable, run `unset environment_variable_name`, replacing `environment_variable_name` with the actual name of the environment variable.
 
 4. In your local dbt Core project, add the following items you copied in the [previous section](/docs/deploy/hybrid-setup#enable-artifact-upload) to the dbt Core's `dbt_project.yml` file:
-   - [Tenant_hostname](/docs/cloud/about-cloud/access-regions-ip-addresses) URL
-   - Account ID (using the `DBT_CLOUD_ACCOUNT_ID` environment variable prefix)
-   - Environment ID (using the `DBT_CLOUD_ENVIRONMENT_ID` environment variable prefix)
+   - `tenant_hostname`
+   - `DBT_CLOUD_ACCOUNT_ID` &mdash; uses a `DBT_CLOUD_` prefix
+   - `DBT_CLOUD_ENVIRONMENT_ID` &mdash; uses a `DBT_CLOUD_` prefix
    ```yaml
    name: "jaffle_shop"
    version: "3.0.0"
@@ -124,10 +125,9 @@ Once you have the values from the previous step, you can prepare your dbt Core p
    ....rest of dbt_project.yml configuration...
 
    dbt-cloud:
-   project-id: 123456 # Your dbt Cloud project ID
-   tenant_hostname: cloud.getdbt.com # Replace with your tenant URL
-   DBT_CLOUD_ACCOUNT_ID: 1 # Replace with your account ID
-   DBT_CLOUD_ENVIRONMENT_ID: 173 # Replace with your environment ID
+   tenant_hostname: cloud.getdbt.com # Replace with your Tenant URL
+   DBT_CLOUD_ACCOUNT_ID: 1 # Replace with your Account ID
+   DBT_CLOUD_ENVIRONMENT_ID: 173 # Replace with your Environment ID
    ```
 5. Once you set the environment variables using the `export` command in the same CLI session, you can execute a `dbt run` in the CLI. 
    ```bash
