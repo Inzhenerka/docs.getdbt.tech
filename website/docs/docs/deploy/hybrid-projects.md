@@ -8,7 +8,7 @@ pagination_next: "docs/deploy/hybrid-setup"
 # About Hybrid projects <Lifecycle status='beta,enterprise'/>
 
 <IntroText>
-With Hybrid projects, organizations that adopt a complementary dbt Core and dbt Cloud workflow (where some teams develop and run dbt projects in dbt Core while others use dbt Cloud) can now seamlessly integrate their workflows by automatically uploading dbt Core [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud.
+With Hybrid projects, your organization can adopt complementary dbt Core and dbt Cloud workflows (where some teams develop and run dbt projects in dbt Core while others use dbt Cloud) and seamlessly integrate these workflows by automatically uploading dbt Core [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud.
 </IntroText>
 
 :::tip Available in private beta
