@@ -90,7 +90,6 @@ A dbt Cloud admin should perform these steps to generate a [service token](/docs
 
 3. Make sure to copy and save the values as they're needed to configure your dbt Core project in the next step. Once the service token is created, you can't access it again.
 
-
 ### Configure dbt Core project and upload artifacts
 
 Once you have the values from the previous step, you can prepare your dbt Core project for artifact upload by following these steps:
