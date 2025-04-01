@@ -67,7 +67,7 @@ A [dbt Cloud account admin](/docs/cloud/manage-access/enterprise-permissions#per
 1. To create a new project in dbt Cloud, navigate to **Account home**.
 2. Click on **+New project**. 
 3. Fill out the **Project name**. Name the project something that allows you to recognize it's a dbt Core project. 
-   - You don't need to set up a [data warehouse](/docs/supported-data-platforms) or [Git connection](/docs/cloud/git/git-configuration-in-dbt-cloud), however to upgrade the hybrid project to a full dbt Cloud project, you'd need to set up data warehouse and Git.
+   - You don't need to set up a [data warehouse](/docs/supported-data-platforms) or [Git connection](/docs/cloud/git/git-configuration-in-dbt-cloud), however to upgrade the hybrid project to a full dbt Cloud project, you'd need to set up data warehouse and Git connection.
 4. Select the **Advanced settings** toggle and then select the **Hybrid development** checkbox. Click **Continue**.
    - The hybrid project will have a visible **Hybrid** indicator in the project list to help you identify it.
 <Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
