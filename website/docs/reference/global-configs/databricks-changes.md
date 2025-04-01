@@ -92,7 +92,7 @@ For several feature releases now, dbt-databricks supported both the dbt implemen
 With the `use_materialization_v2` flag, we begin the deprecation of this alternative implementation, and expand our support for the core dbt implementation.
 We now support the expression field for primary and foreign keys as a way to supply additional Databricks options, such as using [`RELY` to tell the Databricks optimizer that it may exploit the constraint to rewrite queries](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-constraint).
 
-Another change to how constraints work in practice is due to separating create and insert.
+Another change to how constraints work in practice is due to separating out `create` and `insert`.
 Previously, we would create a table with data and then attempt to apply the constraints.
 This could mean replacing an existing consistent table (created on an earlier dbt run) with one that has data that violates a constraint.
 The run would still fail, but only after we had gotten rid of the table that was valid as of the previous run.
