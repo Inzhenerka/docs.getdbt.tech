@@ -85,8 +85,7 @@ function BlogPostPageContent({sidebar, children}) {
   const { featured_cta } = blogMeta;
 
   // Get the full URL for the blog post
-  const postUrl = `${siteConfig.url}${baseUrl}${frontMatter.permalink}`;
-  console.log("postUrl", postUrl);
+  const postUrl = `${siteConfig.url}/blog/${frontMatter.slug}`;
   // Get the full URL for the featured image
   const imageUrl = featuredImage ? `${siteConfig.url}${baseUrl}${featuredImage}` : undefined;
 
