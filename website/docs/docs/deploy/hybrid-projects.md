@@ -12,7 +12,7 @@ With Hybrid projects, organizations that adopt a complementary dbt Core and dbt 
 </IntroText>
 
 :::tip Available in private beta
-Hybrid project is available in private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
+Hybrid projects is available in private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
 :::
 
 dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on into dbt Cloud after executing a dbt run in the command line interface (CLI). This also helps teams:
