@@ -14,6 +14,9 @@ import TOCCollapsible from '@theme/TOCCollapsible';
 import styles from './styles.module.css';
 import { DiscourseBlogComments } from '@site/src/components/discourseBlogComments';
 import { useDateTimeFormat } from "@docusaurus/theme-common/internal";
+import StructuredData from '@site/src/components/StructuredData';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 /* dbt Customizations:
  * Import global data from plugin
@@ -34,7 +37,11 @@ function BlogPostPageContent({sidebar, children}) {
     hide_table_of_contents: hideTableOfContents,
     toc_min_heading_level: tocMinHeadingLevel,
     toc_max_heading_level: tocMaxHeadingLevel,
+    image: featuredImage,
   } = frontMatter;
+
+  const {siteConfig} = useDocusaurusContext();
+  const baseUrl = useBaseUrl('');
 
   // Use same date formatting as in theme's BlogPostItem component
   // https://github.com/facebook/docusaurus/blob/main/packages/docusaurus-theme-classic/src/theme/BlogPostItem/Header/Info/index.tsx
@@ -77,6 +84,11 @@ function BlogPostPageContent({sidebar, children}) {
   const { blogMeta } = usePluginData("docusaurus-build-global-data-plugin");
   const { featured_cta } = blogMeta;
 
+  // Get the full URL for the blog post
+  const postUrl = `${siteConfig.url}${baseUrl}${frontMatter.permalink}`;
+  // Get the full URL for the featured image
+  const imageUrl = featuredImage ? `${siteConfig.url}${baseUrl}${featuredImage}` : undefined;
+
   return (
     <BlogLayout
       sidebar={sidebar}
@@ -94,6 +106,16 @@ function BlogPostPageContent({sidebar, children}) {
       }
       isBlogPost={true}
     >
+      <StructuredData
+        title={frontMatter?.title}
+        description={frontMatter?.description}
+        authors={authors}
+        date={date}
+        url={postUrl}
+        imageUrl={imageUrl}
+        tags={tags}
+      />
+
       {!hideTableOfContents && toc.length > 0 && (
         <TOCCollapsible
           toc={toc}
