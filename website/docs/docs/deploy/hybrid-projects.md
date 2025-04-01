@@ -19,7 +19,7 @@ dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifa
 
 - Connect teams by bringing visibility so everyone can use dbt Core-generated artifacts in dbt Cloud.
 - Enhance collaboration by sharing model metadata, dependencies, and run history across teams using dbt Cloud.
-- Enable teams that work in dbt Core and dbt Cloud, particularly in [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) hybrid workflows, so that if an organization runs dbt Core locally or with external orchestration tools (like Airflow, Dagster) &mdash; they can still collaborate with dbt Cloud.
+- Enable teams that work in dbt Core and dbt Cloud, particularly in [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) hybrid workflows, so that if an organization runs dbt Core locally or with external orchestration tools &mdash; they can still collaborate with dbt Cloud.
 
 ## Prerequisites
 

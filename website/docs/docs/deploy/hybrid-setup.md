@@ -72,8 +72,8 @@ A [dbt Cloud account admin](/docs/cloud/manage-access/enterprise-permissions#per
    - The hybrid project will have a visible **Hybrid** indicator in the project list to help you identify it.
 <Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
 
-5. After creating a project, create a corresponding [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**.
-6. (Optional) To update an existing dbt project to a hybrid project, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
+1. After creating a project, create a corresponding [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**. Note that you can leave the **Connection** field blank.
+2. (Optional) To update an existing dbt project to a hybrid project, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
 <Lightbox src="/img/docs/deploy/hp-existing-project.jpg" width="80%" title="Hybrid project for an existing project" />
 
 ### Generate service token and artifact upload values
@@ -116,8 +116,6 @@ Once you have the values from the previous step, you can prepare your dbt Core p
 
 4. In your local dbt Core project, add the following items you copied in the [previous section](/docs/deploy/hybrid-setup#enable-artifact-upload) to the dbt Core's `dbt_project.yml` file:
    - `tenant_hostname`
-   - `DBT_CLOUD_ACCOUNT_ID` &mdash; uses a `DBT_CLOUD_` prefix
-   - `DBT_CLOUD_ENVIRONMENT_ID` &mdash; uses a `DBT_CLOUD_` prefix
    ```yaml
    name: "jaffle_shop"
    version: "3.0.0"
@@ -126,8 +124,6 @@ Once you have the values from the previous step, you can prepare your dbt Core p
 
    dbt-cloud:
    tenant_hostname: cloud.getdbt.com # Replace with your Tenant URL
-   DBT_CLOUD_ACCOUNT_ID: 1 # Replace with your Account ID
-   DBT_CLOUD_ENVIRONMENT_ID: 173 # Replace with your Environment ID
    ```
 5. Once you set the environment variables using the `export` command in the same CLI session, you can execute a `dbt run` in the CLI. 
    ```bash
