@@ -9,6 +9,25 @@ dbt Cloud is [hosted](/docs/cloud/about-cloud/architecture) in multiple regions 
 
 [dbt Cloud Enterprise](https://www.getdbt.com/pricing/) plans can choose to have their account hosted in any of the below regions. Organizations **must** choose a single region per dbt Cloud account. If you need to run dbt Cloud in multiple regions, we recommend using multiple dbt Cloud accounts. 
 
+<!-- turn into expandable toggle -->
+> **Not sure which region you’re in?**
+>
+> - If your URL is `cloud.getdbt.com`, you’re on a **multi-tenant** instance → check **US AWS** on the [status page](https://status.getdbt.com).
+> - If your URL is like `yourteam.us1.dbt.com`, you’re in a **cell-based** instance → match the subdomain (e.g., `us1`) to the status page label.
+> - Still unsure? Contact your workspace admin or [dbt Support](/community/resources/getting-help#dbt-cloud-support).
+
+| Region | Location and status page | Access URL | Plans | IP Addresses |
+|--------|-------------------------------|------------|--------|---------------|
+| North America | [AWS (us-east-1, N. Virginia) — US AWS](https://status.getdbt.com/us-aws) | Multi-tenant: `cloud.getdbt.com` | Developer, Team, Enterprise | 52.45.144.63<br />54.81.134.249<br />52.22.161.231<br />52.3.77.232<br />3.214.191.130<br />34.233.79.135 |
+| North America | [AWS — US Cell 1 AWS](https://status.getdbt.com/us-cell-1-aws)  <br /> [AWS — US Cell 2 AWS](https://status.getdbt.com/us-cell-2-aws) <br /> [AWS — US Cell 3 AWS](https://status.getdbt.com/us-cell-3-aws) | Cell-based: `ACCOUNT_PREFIX.us1.dbt.com` | Enterprise | Same as above |
+| North America | [Azure (East US 2) — US Cell 1 AZURE](https://status.getdbt.com/us-cell-1-azure) | Cell-based: `ACCOUNT_PREFIX.us2.dbt.com` | Enterprise| 20.10.67.192/26 |
+| EMEA | [AWS (Frankfurt) — EMEA AWS](https://status.getdbt.com/emea-aws) | Multi-tenant: `emea.dbt.com` | Enterprise | 3.123.45.39<br />3.126.140.248<br />3.72.153.148 |
+| EMEA |[Azure (Ireland) — EMEA Cell 1 AZURE](https://status.getdbt.com/emea-cell-1-azure) | Cell-based: `ACCOUNT_PREFIX.eu2.dbt.com` | Enterprise | 20.13.190.192/26 |
+| APAC | [AWS (Sydney) — APAC AWS](https://status.getdbt.com/apac-aws) | Multi-tenant: `au.dbt.com` | Enterprise | 52.65.89.235<br />3.106.40.33<br />13.239.155.206 |
+| Virtual Private | Customized  | Customized | Enterprise | Ask [Support](/community/resources/getting-help#dbt-cloud-support) |
+
+
+
 
 | Region | Location | Access URL | IP addresses | Developer plan | Team plan | Enterprise plan |
 |--------|----------|------------|--------------|----------------|-----------|-----------------|
