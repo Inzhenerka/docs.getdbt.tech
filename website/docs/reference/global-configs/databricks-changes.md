@@ -10,7 +10,7 @@ The following are the current [behavior change flags](/docs/reference/global-con
 | ----------------------------- | ----------------------- | -------------------------- |
 | [`use_info_schema_for_columns`](#use-information-schema-for-columns) | 1.9.0                   | TBD                        |
 | [`use_user_folder_for_python`](#use-users-folder-for-python-model-notebooks)  | 1.9.0                   | TBD                        |
-| `use_materialization_v2`      | 1.10.0                  | TBD                        |
+| [`use_materialization_v2`](#use-restructured-materializations)      | 1.10.0                  | TBD                        |
 
 ## Use information schema for columns
 
