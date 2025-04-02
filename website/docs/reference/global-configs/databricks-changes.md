@@ -31,6 +31,8 @@ We plan to switch the default of this flag to `True` in v1.11.0.
 
 The `use_materialization_v2` flag is `False` by default and guards significant rewrites of the core materializations in `dbt-databricks` while they are still in an experimental stage.
 
+When set to `True`, `dbt-databricks ` uses the updated logic for all model types (views, tables, incremental, seeds) and optionally enables additional config options for more fine-tuned control.
+
 We plan to switch the default of this flag to `True` in 1.11.0, depending on user feedback.
 
 ### Changes to the Seed materialization
