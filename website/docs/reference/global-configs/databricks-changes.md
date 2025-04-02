@@ -8,7 +8,7 @@ The following are the current [behavior change flags](/docs/reference/global-con
 
 | Flag                          | `dbt-databricks`: Intro | `dbt-databricks`: Maturity |
 | ----------------------------- | ----------------------- | -------------------------- |
-| `use_info_schema_for_columns` | 1.9.0                   | TBD                        |
+| [`use_info_schema_for_columns`](#use-information-schema-for-columns) | 1.9.0                   | TBD                        |
 | `use_user_folder_for_python`  | 1.9.0                   | TBD                        |
 | `use_materialization_v2`      | 1.10.0                  | TBD                        |
 
