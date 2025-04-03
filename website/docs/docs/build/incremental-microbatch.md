@@ -21,10 +21,13 @@ Read and participate in the discussion: [dbt-core#10672](https://github.com/dbt-
 Incremental models in dbt are a [materialization](/docs/build/materializations) designed to efficiently update your data warehouse tables by only transforming and loading _new or changed data_ since the last run. Instead of reprocessing an entire dataset every time, incremental models process a smaller number of rows, and then append, update, or replace those rows in the existing table. This can significantly reduce the time and resources required for your data transformations.
 
 Microbatch is an incremental strategy designed for large time-series datasets:
-- It relies solely on a time column ([`event_time`](/reference/resource-configs/event-time)) to define time-based ranges for filtering. Set the `event_time` column for your microbatch model and its direct parents (upstream models). Note, this is different to `partition_by`, which groups rows into partitions.
+- It relies solely on a time column ([`event_time`](/reference/resource-configs/event-time)) to define time-based ranges for filtering. 
+- Set the `event_time` column for your microbatch model and its direct parents (upstream models). Note, this is different to `partition_by`, which groups rows into partitions.
+  :::caution Required
+  If your upstream models don't configure an `event_time`, dbt _cannot_ automatically filter them during batch processing and results in full table scans on every batch run. To avoid this, configure `event_time` on every upstream model that should be filtered. If you want a model to be excluded from auto-filtering, see [Usage](#usage) for how to opt out.
+  :::
 - It complements, rather than replaces, existing incremental strategies by focusing on efficiency and simplicity in batch processing.
 - Unlike traditional incremental strategies, microbatch enables you to [reprocess failed batches](/docs/build/incremental-microbatch#retry), auto-detect [parallel batch execution](/docs/build/parallel-batch-execution), and eliminate the need to implement complex conditional logic for [backfilling](#backfills).
-
 - Note, microbatch might not be the best strategy for all use cases. Consider other strategies for use cases such as not having a reliable `event_time` column or if you want more control over the incremental logic. Read more in [How `microbatch` compares to other incremental strategies](#how-microbatch-compares-to-other-incremental-strategies).
 
 ## How microbatch works
@@ -243,7 +246,21 @@ from {{ source('sales', 'transactions') }}
 
 ### Full refresh
 
-As a best practice, we recommend [configuring `full_refresh: false`](/reference/resource-configs/full_refresh) on microbatch models so that they ignore invocations with the `--full-refresh` flag. If you need to reprocess historical data, do so with a targeted backfill that specifies explicit start and end dates.
+As a best practice, we recommend [configuring `full_refresh: false`](/reference/resource-configs/full_refresh) on microbatch models so that they ignore invocations with the `--full-refresh` flag. 
+
+Note that running `dbt run --full-refresh` on a microbatch model by itself will not reset or reload data unless you also specify `--event-time-start` and `--event-time-end`. Without these flags, dbt has no way of knowing what time range to rebuild. Use explicit backfills to reset data:
+
+✅ Correct:
+```bash
+dbt run --full-refresh --event-time-start "2024-01-01" --event-time-end "2024-02-01"
+```
+
+❌ Incorrect:
+```bash
+dbt run --full-refresh
+```
+
+If you need to reprocess historical data, we recommend using a targeted backfill with `--event-time-start` and `--event-time-end`.
 
 ## Usage
 
