@@ -24,7 +24,7 @@ Microbatch is an incremental strategy designed for large time-series datasets:
 - It relies solely on a time column ([`event_time`](/reference/resource-configs/event-time)) to define time-based ranges for filtering. 
 - Set the `event_time` column for your microbatch model and its direct parents (upstream models). Note, this is different to `partition_by`, which groups rows into partitions.
   :::caution Required
-  If your upstream models don't configure an `event_time`, dbt _cannot_ automatically filter them during batch processing and results in full table scans on every batch run. To avoid this, configure `event_time` on every upstream model that should be filtered. If you want a model to be excluded from auto-filtering, see [Usage](#usage) for how to opt out.
+  If your upstream models don't configure an `event_time`, dbt _cannot_ automatically filter them during batch processing and will perform full table scans on every batch run. To avoid this, configure `event_time` on every upstream model that should be filtered. If you want a model to be excluded from auto-filtering, see [Usage](#usage) for how to opt out.
   :::
 - It complements, rather than replaces, existing incremental strategies by focusing on efficiency and simplicity in batch processing.
 - Unlike traditional incremental strategies, microbatch enables you to [reprocess failed batches](/docs/build/incremental-microbatch#retry), auto-detect [parallel batch execution](/docs/build/parallel-batch-execution), and eliminate the need to implement complex conditional logic for [backfilling](#backfills).
