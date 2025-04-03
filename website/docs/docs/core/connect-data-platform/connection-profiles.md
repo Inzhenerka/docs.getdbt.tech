@@ -103,7 +103,7 @@ When running dbt commands, you can specify which profile and target to use from 
 
 To run your dbt project with a different profile or target than the default, you can do so using the followingCLI flags:
 - `--profile` flag &mdash; Overrides the profile set in `dbt_project.yml` by pointing to another profile defined in `profiles.yml`.
-- `--target` flag &mdash; Specifies the target within that profile to use (as defined in `profiles.yml`)
+- `--target` flag &mdash; Specifies the target within that profile to use (as defined in `profiles.yml`).
 
 These flags help when you're working with multiple profiles and targets and want to override defaults without changing your files.
 
