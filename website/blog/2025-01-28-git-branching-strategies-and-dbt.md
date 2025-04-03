@@ -508,11 +508,11 @@ The pattern for hotfixes in hierarchical promotion looks like this\:
 
 Here’s how it’s typically performed\:
 
-1. Create a branch from `main`, then make the change and test the fix
+1. Create a branch from `main`, then make the change and test the fix.
 2. Open a PR to `main`, get the fix approved, then merged. The fix is now live.
-3. Check out `qa`, and `git pull` to ensure it’s up to date with what’s on the remote
-4. Merge `main` into `qa`\: `git merge main`
-5. `git push` the changes back to the remote
+3. Check out `qa`, and `git pull` to ensure it’s up to date with what’s on the remote.
+4. Merge `main` into `qa`\: `git merge main`.
+5. `git push` the changes back to the remote.
 6. At this point in our example, developers will be flagged in dbt Cloud’s IDE that there is a change on their base branch and can ”Pull from remote”. However, if you implement more than one middle branch you will need to continue resolving your branches hierarchically until you update the branch that developers base from.
 
 </p>
