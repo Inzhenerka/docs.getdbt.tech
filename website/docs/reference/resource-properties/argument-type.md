@@ -4,6 +4,8 @@ resource_types: macro_argument
 datatype: argument_type
 ---
 
+import MacroArgsNote from '/snippets/_validate-macro-args.md';
+
 
 <File name='macros/<filename>.yml'>
 
@@ -22,6 +24,8 @@ macros:
 
 ## Definition
 The data type of your argument. Note that this is only used for documentation purposes — there are no restrictions on the values you can use here.
+
+<MacroArgsNote />
 
 ## Examples
 ### Document a macro
