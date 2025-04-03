@@ -297,6 +297,28 @@ def model(dbt, session):
 
 </TabItem>
 
+<TabItem value="BigQuery Dataframe">
+
+<File name='models/my_python_model.py'>
+
+```python
+def model(dbt, session):
+    dbt.config(submission_method="bigframes")
+
+    data = {'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'Los Angeles', 'Chicago']}
+    bdf = bpd.DataFrame(data)
+
+    bdf = bdf[bdf['Age'] >= 30]
+
+    return bdf
+```
+
+</File>
+
+</TabItem>
+
 <TabItem value="PySpark">
 
 <File name='models/my_python_model.py'>
@@ -390,6 +412,34 @@ def model(dbt, session):
 
     # return final dataset (Pandas DataFrame)
     return df
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="BigQuery Dataframe">
+
+<File name='models/my_python_model.py'>
+
+```python
+import holidays
+
+def model(dbt, session):
+    dbt.config(submission_method="bigframes")
+
+    data = {
+    'id': [0, 1, 2],
+    'name': ['Brian Davis', 'Isaac Smith', 'Marie White'],
+    'birthday': ['2024-03-14', '2024-01-01', '2024-11-07']
+    }
+    bdf = bpd.DataFrame(data)
+    bdf['birthday'] = bpd.to_datetime(bdf['birthday'])
+    bdf['birthday'] = bdf['birthday'].dt.date
+
+    us_holidays = holidays.US(years=2024)
+
+    return bdf[bdf['birthday'].isin(us_holidays)]
 ```
 
 </File>
@@ -514,6 +564,30 @@ def model(dbt, session):
 **Note:** Due to a Snowpark limitation, it is not currently possible to register complex named UDFs within stored procedures and, therefore, dbt Python models. We are looking to add native support for Python UDFs as a project/DAG resource type in a future release. For the time being, if you want to create a "vectorized" Python UDF via the Batch API, we recommend either:
 - Writing [`create function`](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) inside a SQL macro, to run as a hook or run-operation
 - [Registering from a staged file](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs#creating-a-udf-from-a-python-source-file) within your Python model code
+
+</TabItem>
+
+<TabItem value="BigQuery Dataframe">
+
+<File name='models/my_python_model.py'>
+
+```python
+def model(dbt, session):
+    dbt.config(submission_method="bigframes")
+
+    # Use @bpd.udf after remote_function is deprecated.
+    @bpd.remote_function(dataset='jialuo_test_us')
+    def my_func(x: int) -> int:
+        return x * 1100
+
+    data = {"int": [1, 2], "str": ['a', 'b']}
+    bdf = bpd.DataFrame(data=data)
+    bdf['int'] = bdf['int'].apply(my_func)
+
+    return bdf
+```
+
+</File>
 
 </TabItem>
 
@@ -764,15 +838,58 @@ If not configured, `dbt-spark` will use the built-in defaults: the all-purpose c
 
 </TabItem>
 
-<TabItem value="BigQuery Dataproc">
+<TabItem value="BigQuery">
 
-The `dbt-bigquery` adapter uses a service called Dataproc to submit your Python models as PySpark jobs. That Python/PySpark code will read from your tables and views in BigQuery, perform all computation in Dataproc, and write the final result back to BigQuery.
+The `dbt-bigquery` uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
 
-**Submission methods.** Dataproc supports two submission methods: `serverless` and `cluster`. Dataproc Serverless does not require a ready cluster, which saves on hassle and cost—but it is slower to start up, and much more limited in terms of available configuration. For example, Dataproc Serverless supports only a small set of Python packages, though it does include `pandas`, `numpy`, and `scikit-learn`. (See the full list [here](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers#example_custom_container_image_build), under "The following packages are installed in the default image"). Whereas, by creating a Dataproc Cluster in advance, you can fine-tune the cluster's configuration, install any PyPI packages you want, and benefit from faster, more responsive runtimes.
+**Submission methods.** `dbt-bigquery` can be configured to use `bigframes` to execute pandas and scikit- learn code at scale on the BigQuery SQL engine. In addition, `dbt-bigquery` can also use Dataproc (`serverless` or pre-configured `cluster`) to execute Python models as PySpark jobs, reading from and writing to BigQuery; `serverless` is simpler but slower with limited configuration and pre-installed packages (`pandas`, `numpy`, `scikit-learn`), while `cluster` offers full control and faster runtimes.
 
-Use the `cluster` submission method with dedicated Dataproc clusters you or your organization manage. Use the `serverless` submission method to avoid managing a Spark cluster. The latter may be quicker for getting started, but both are valid for production.
+**BigQuery Dataframe setup:**
 
-**Additional setup:**
+```bash
+# IAM permission if using service account
+
+#Create Service Account
+gcloud iam service-accounts create dbt-bigframes-sa
+#Grant BigQuery User Role
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.user
+#Grant BigQuery Data Editor role. This can be restricted at dataset level
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.dataEditor
+#Grant Service Account user 
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
+#Grant Colab Entperprise User
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/aiplatform.colabEnterpriseUser
+
+# update the project.yaml file 
+models:
+  my_dbt_project:
+    submission_method: bigframes
+
+
+# update the profile.yaml file such as this
+my_dbt_project_sa:
+  outputs:
+    dev:
+      dataproc_region: us-central1
+      dataset: <BIGQUERY_DATESET>
+      gcs_bucket: <GCS BUCKET USED FOR BIGFRAME LOGS>
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      keyfile: <SERVICE ACCOUNT KEY FILE>
+      location: US
+      method: service-account
+      priority: interactive
+      project: <BIGQUERY_PROJECT>
+      threads: 1
+      type: bigquery
+  target: dev
+
+```
+
+**Note:**: BigQuery Dataframe is executed on a default Colab runtime. If no `default` runtime template is available, it will automatically create one for the user and mark it `default` for next time usage.
+
+
+**Dataproc setup:**
 - Create or use an existing [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
 - Enable Dataproc APIs for your project + region
 - If using the `cluster` submission method: Create or use an existing [Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) with the [Spark BigQuery connector initialization action](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google recommends copying the action into your own Cloud Storage bucket, rather than using the example version shown in the screenshot)
