@@ -219,7 +219,8 @@ No timeout is set by default. (For historical reasons, some query types use a de
 
 :::caution Note
 
-The `job_execution_timeout_seconds` represents the number of seconds to wait for the [underlying HTTP transport](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). It _doesn't_ represent the maximum allowable time for a BigQuery job itself. The behavior of BigQuery is to normally not cancel the BigQuery job if this timeout is reached, but dbt-bigquery will actually send a request to BigQuery to cancel it.
+The `job_execution_timeout_seconds` represents the number of seconds to wait for the [underlying HTTP transport](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). It _doesn't_ represent the maximum allowable time for a BigQuery job itself. 
+Normally, BigQuery keeps running the job even if this timeout is reached, but `dbt-bigquery` will send a request to BigQuery to cancel it.
 
 :::
   
