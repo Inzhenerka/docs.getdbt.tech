@@ -41,12 +41,6 @@ Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-feature
     icon="bigquery"/>
 
 <Card
-    title="Quickstart for dbt Cloud and BigQuery DataFrame"
-    body="Discover how to leverage dbt Cloud with BigQuery Dataframe to streamline your analytics workflows."
-    link="https://docs.getdbt.com/guides/bigquery-dataframe"
-    icon="bigquery"/>
-
-<Card
     title="Quickstart for dbt Cloud and Databricks"
     body="Learn how to integrate dbt Cloud with Databricks for efficient data processing and analysis."
     link="https://docs.getdbt.com/guides/databricks"
