@@ -537,6 +537,16 @@ const sidebarSettings = {
             "docs/deploy/webhooks",
           ],
         },
+        {
+          type: "category",
+          label: "Hybrid projects",
+          collapsed: true,
+          link: { type: "doc", id: "docs/deploy/hybrid-projects" },
+          items: [
+            "docs/deploy/hybrid-projects",
+            "docs/deploy/hybrid-setup",
+          ],
+        },
         "docs/deploy/deployment-tools",
       ],
     }, // end of "Deploy dbt"
