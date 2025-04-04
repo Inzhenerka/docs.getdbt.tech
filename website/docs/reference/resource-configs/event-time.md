@@ -102,13 +102,10 @@ snapshots:
 
 </File>
 
-
 import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
 
 <SnapshotYaml/>
 </VersionBlock>
-
-
 
 </TabItem>
 
@@ -139,6 +136,12 @@ sources:
 ## Definition
 
 dbt uses `event_time` to understand when an event occurred. Configure it in your `dbt_project.yml` file, property YAML file, or config block for [models](/docs/build/models), [seeds](/docs/build/seeds), or [sources](/docs/build/sources).
+
+ :::caution Required for microbatch incremental models
+  For incremental microbatch models, if your upstream models don't have `event_time` configured, dbt _cannot_ automatically filter them during batch processing and will perform full table scans on every batch run. 
+  
+  To avoid this, configure `event_time` on every upstream model that should be filtered. If you want to exclude a model from auto-filtering, see [Opt out of auto-filtering](/docs/build/incremental-microbatch#opting-out-of-auto-filtering) for how to opt out.
+  :::
 
 ### Usage
 

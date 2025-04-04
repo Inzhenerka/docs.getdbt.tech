@@ -24,7 +24,8 @@ Microbatch is an incremental strategy designed for large time-series datasets:
 - It relies solely on a time column ([`event_time`](/reference/resource-configs/event-time)) to define time-based ranges for filtering. 
 - Set the `event_time` column for your microbatch model and its direct parents (upstream models). Note, this is different to `partition_by`, which groups rows into partitions.
   :::caution Required
-  If your upstream models don't configure an `event_time`, dbt _cannot_ automatically filter them during batch processing and will perform full table scans on every batch run. To avoid this, configure `event_time` on every upstream model that should be filtered. If you want a model to be excluded from auto-filtering, see [Usage](#usage) for how to opt out.
+  If your upstream models don't have `event_time` configured, dbt _cannot_ automatically filter them during batch processing and will perform full table scans on every batch run. To avoid this, configure `event_time` on every upstream model that should be filtered. If you want to exclude a model from auto-filtering, see [Opt out of auto-filtering](#opting-out-of-auto-filtering) for how to opt out.
+  
   :::
 - It complements, rather than replaces, existing incremental strategies by focusing on efficiency and simplicity in batch processing.
 - Unlike traditional incremental strategies, microbatch enables you to [reprocess failed batches](/docs/build/incremental-microbatch#retry), auto-detect [parallel batch execution](/docs/build/parallel-batch-execution), and eliminate the need to implement complex conditional logic for [backfilling](#backfills).
@@ -194,7 +195,6 @@ It does not matter whether the table already contains data for that day. Given t
 
 Several configurations are relevant to microbatch models, and some are required:
 
-
 | Config   |  Description   | Default | Type | Required  |
 |----------|---------------|---------|------|---------|
 | [`event_time`](/reference/resource-configs/event-time)  | The column indicating "at what time did the row occur." Required for your microbatch model and any direct parents that should be filtered.   | N/A     |  Column  |  Required |
@@ -271,13 +271,16 @@ If you need to reprocess historical data, we recommend using a targeted backfill
 
 When you run a microbatch model, dbt will evaluate which batches need to be loaded, break them up into a SQL query per batch, and load each one independently.
 
-dbt will automatically filter upstream inputs (`source` or `ref`) that define `event_time`, based on the `lookback` and `batch_size` configs for this model.
+dbt will automatically filter upstream inputs (`source` or `ref`) that define `event_time`, based on the `lookback` and `batch_size` configs for this model. Note that dbt doesn't know the minimum `event_time` in your data &mdash; it only uses the configs you provide (like `begin`, `lookback`) to decide which batches to run.  
+  
+If you want to process data from the actual start of your dataset, you _must_ explicitly define it using the `begin` config or the `--event-time-start` flag.
 
 During standard incremental runs, dbt will process batches according to the current timestamp and the configured `lookback`, with one query per batch.
 
 <Lightbox src="/img/docs/building-a-dbt-project/microbatch/microbatch_lookback.png" title="Configure a lookback to reprocess additional batches during standard incremental runs"/>
 
-**Note:** If there’s an upstream model that configures `event_time`, but you *don’t* want the reference to it to be filtered, you can specify `ref('upstream_model').render()` to opt-out of auto-filtering. This isn't generally recommended — most models that configure `event_time` are fairly large, and if the reference is not filtered, each batch will perform a full scan of this input table.
+#### Opting out of auto-filtering
+If there’s an upstream model that configures `event_time`, but you *don’t* want the reference to it to be filtered, you can specify `ref('upstream_model').render()` to opt-out of auto-filtering. This isn't generally recommended — most models that configure `event_time` are fairly large, and if the reference is not filtered, each batch will perform a full scan of this input table.
 
 ## Backfills
 
@@ -290,7 +293,6 @@ As always, dbt will process the batches between the start and end as independent
 ```bash
 dbt run --event-time-start "2024-09-01" --event-time-end "2024-09-04"
 ```
-
 
 <Lightbox src="/img/docs/building-a-dbt-project/microbatch/microbatch_backfill.png" title="Configure a lookback to reprocess additional batches during standard incremental runs"/>
 
