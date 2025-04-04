@@ -886,7 +886,7 @@ my_dbt_project_sa:
 
 ```
 
-**Note:**: BigQuery Dataframe is executed on a default Colab runtime. If no `default` runtime template is available, it will automatically create one for the user and mark it `default` for next time usage.
+**Note:**: BigQuery Dataframe is executed on a default Colab runtime. If no `default` runtime template is available, the adapter will automatically create one for the user and mark it `default` for next time usage (assuming it has the right permissions).
 
 
 **Dataproc setup:**
