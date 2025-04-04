@@ -18,7 +18,7 @@ recently_updated: true
 
 In this guide, you'll learn how to set up dbt so you can use it with BigQuery Dataframes (BigFrames).
 
-In addition to the existing dataproc/pyspark based submission methods for executing python models, you can now use the BigFrames submission method to execute pandas and sciki, which help you learn code at scale on the BigQuery SQL engine.
+In addition to the existing dataproc/pyspark based submission methods for executing python models, you can now use the BigFrames submission method to execute pandas and scikit, which help you learn code at scale on the BigQuery SQL engine.
 
 BigQuery Dataframes is an open source python package that transpiles pandas and scikit-learn code to scalable BigQuery SQL. The dbt-bigquery adapter relies on the BigQuery Studio Notebook Executor Service to run the python client side code.
 
