@@ -16,7 +16,9 @@ recently_updated: true
 
 ## Introduction
 
-In this guide, you'll learn how to set up dbt so you can use it with BigQuery Dataframes (BigFrames).
+In this guide, you'll learn how to set up dbt so you can use it with BigQuery Dataframes (BigFrames):
+* Build scalable data transformation pipelines using dbt and Google Cloud, with SQL and Python.
+* Leverage BigFrames from dbt for scalable BigQuery SQL.
 
 In addition to the existing dataproc/pyspark based submission methods for executing python models, you can now use the BigFrames submission method to execute pandas and scikit, which help you learn code at scale on the BigQuery SQL engine.
 
@@ -29,11 +31,6 @@ BigQuery Dataframes is an open source python package that transpiles pandas and 
 - A [dbt Cloud account](https://www.getdbt.com/signup/) 
 - Basic to intermediate SQL and python.
 - Basic understanding of dbt fundamentals. We recommend the [dbt Fundamentals course](https://learn.getdbt.com).
-
-### What you'll learn
-
-- How to build scalable data transformation pipelines using dbt and Google Cloud, with SQL and Python.
-- How to leverage BigFrames from dbt for scalable BigQuery SQL.
 
 ### What you'll build
 
