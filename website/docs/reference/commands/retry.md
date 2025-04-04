@@ -6,7 +6,8 @@ id: "retry"
 
 `dbt retry` re-executes the last `dbt` command from the node point of failure. 
 - If no nodes are executed before the failure (for example, if a run failed early due to a warehouse connection or permission errors), `dbt retry` won't run anything since there's no recorded nodes to retry from.
-- In these cases, we recommend checking your [`run_results.json` file](/reference/artifacts/run-results-json) and manually re-running the full job so the nodes build. Once at least some nodes have run, you can use `dbt retry` to re-execute from any new point of failure.
+- In these cases, we recommend checking your [`run_results.json` file](/reference/artifacts/run-results-json) and manually re-running the full job so the nodes build. 
+- Once some nodes have run, you can use `dbt retry` to re-execute from any new point of failure.
 - If the previously executed command completed successfully, `dbt retry` will finish as `no operation`. 
 
 Retry works with the following commands:
