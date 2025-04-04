@@ -25,7 +25,7 @@ This setup requires connecting your dbt Core project to a dbt Cloud project and 
 Follow these steps to set up a dbt Cloud Hybrid project and upload dbt Core artifacts into dbt Cloud:
 
 <!--no toc --> 
-    - [Make dbt Core models public](#make-dbt-core-models-public)
+    - [Make dbt Core models public](#make-dbt-core-models-public) (optional)
     - [Create hybrid project](#create-hybrid-project)
     - [Generate service token and artifact upload values](#generate-service-token-and-artifact-upload-values)
     - [Configure dbt Core project and upload artifacts](#configure-dbt-core-project-and-upload-artifacts)
@@ -74,8 +74,8 @@ A [dbt Cloud account admin](/docs/cloud/manage-access/enterprise-permissions#per
    - The hybrid project will have a visible **Hybrid** indicator in the project list to help you identify it.
 <Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
 
-1. After creating a project, create a corresponding [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**. Note that you can leave the **Connection** field blank.
-2. (Optional) To update an existing dbt project to a hybrid project, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
+5. After creating a project, create a corresponding [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**. Note that you can leave the **Connection** field blank.
+6. (Optional) To update an existing dbt project to a hybrid project, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
 <Lightbox src="/img/docs/deploy/hp-existing-project.jpg" width="80%" title="Hybrid project for an existing project" />
 
 ### Generate service token and artifact upload values
