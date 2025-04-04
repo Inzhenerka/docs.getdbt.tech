@@ -55,7 +55,8 @@ Before you're able to run exports in development or production, you'll need to m
 
 There are two ways to run an export:
   
-- [Run exports in development](#exports-in-development) using the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) to test the output before production (You can configure exports in the dbt Cloud IDE, however running them directly in the IDE isn't supported yet). If you're using the dbt Cloud IDE, use `dbt build` to run exports. Make sure you have the [environment variable](#set-environment-variable) enabled. 
+- [Run exports in development](#exports-in-development) using the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) to test the output before production (You can configure exports in the dbt Cloud IDE, however running them directly in the IDE isn't supported yet). 
+  - If you're using the dbt Cloud IDE, use `dbt build` to run exports. Make sure you have the [environment variable](#set-environment-variable) enabled. 
 - [Run exports in production](#exports-in-production) using the [dbt Cloud job scheduler](/docs/deploy/job-scheduler) to write these queries within your data platform.
 
 ## Exports in development
@@ -67,6 +68,8 @@ This section explains the different commands and options available to run export
 - Use the [`dbt sl export` command](#exports-for-single-saved-query) to test and generate exports in your development environment for a singular saved query. You can also use the `--select` flag to specify particular exports from a saved query.
 
 - Use the [`dbt sl export-all` command](#exports-for-multiple-saved-queries) to run exports for multiple saved queries at once. This command provides a convenient way to manage and execute exports for several queries simultaneously, saving time and effort. 
+
+- If you're using the dbt Cloud IDE, use `dbt build` to run exports. Make sure you have the [environment variable](#set-environment-variable) enabled before running the command.
 
 ### Exports for single saved query
 
