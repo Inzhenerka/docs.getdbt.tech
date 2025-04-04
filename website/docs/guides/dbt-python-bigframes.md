@@ -7,7 +7,7 @@ sidebar_label: "Quickstart for BigQuery Dataframes and dbt python"
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['BigQuery', 'Google', 'GCP', 'Bigframes','Quickstart']
-keywords: ['BigQuery','dbt Core', 'Google']
+keywords: ['BigQuery','dbt', 'Google']
 level: 'Intermediate'
 recently_updated: true
 ---
