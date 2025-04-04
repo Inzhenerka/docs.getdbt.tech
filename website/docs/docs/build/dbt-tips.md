@@ -12,8 +12,18 @@ The following tips are organized into the following categories:
 - [Package tips](#package-tips) to help you streamline your workflow.
 - [Advanced tips and techniques](#advanced-tips-and-techniques) to help you get the most out of dbt.
 
-
 If you're developing with the dbt Cloud IDE, you can refer to the [keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) page to help make development more productive and easier for everyone.
+
+## YAML tips
+
+This section clarifies where you can use [Jinja](/docs/build/jinja-macros), nest [vars](/reference/dbt-jinja-functions/var) and [`env_vars`](/reference/dbt-jinja-functions/env_var) in your YAML files.
+
+- You can use Jinja in almost every YAML file in dbt (including `schema.yml`, `snapshots.yml`, `sources.yml`, and others) _except_ the [`dependencies.yml` file](/docs/build/packages#use-cases). The `dependencies.yml` filed doesn't support Jinja.
+- Use `vars` in any YAML file that supports Jinja (like `schema.yml`, `snapshots.yml`), but be aware of how they're resolved:
+  - In `dbt_project.yml`, `packages.yml`, and `profiles.yml`, `vars` must be passed through the CLI using `--vars`, not defined inside the `vars:` block in the YAML file. This is because these files are parsed before Jinja is rendered.
+- You can use `env_var()` in all YAML files that support Jinja. Only `profiles.yml` and `packages.yml` support `DBT_ENV_SECRET_` environment variables for secure values. These are masked in logs and intended for credentials or secrets.
+
+For additional info, check out [dbt-core's context docs](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/context/README.md).
 
 ## Package tips
 
