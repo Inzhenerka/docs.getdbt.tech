@@ -1170,7 +1170,7 @@ const sidebarSettings = {
           link: { type: "doc", id: "reference/macro-properties" },
           items: [
             "reference/macro-properties",
-            "reference/resource-properties/argument-type",
+            "reference/resource-properties/arguments",
           ],
         },
       ],
