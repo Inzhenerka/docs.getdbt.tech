@@ -41,13 +41,14 @@ Here's what you'll build in two parts:
 - Google Cloud project setup
     - A one-time setup to configure the Google Cloud project you’ll be working with.
 - Build and Run the Python Model
-  - Create, configure, and execute a Python model using BigQuery DataFrames and dbt.
+  - Create, configure, and execute a Python model using BigQuery DataFrames and dbt. 
+
+You will set up the environments, build scalable pipelines in dbt, and execute a python model.
 
 <Lightbox src="/img/guides/gcp-guides/gcp-bigframes-architecture.png" title="Implementation of the BigFrames submission method"/>
 
 **Figure 1** - Implementation of the BigFrames submission method for dbt python models
 
-You will set up the environments, build scalable pipelines in dbt, and execute a python model.
 
 ## Configure Google Cloud
 
@@ -55,12 +56,12 @@ The dbt BigFrames submission method supports both service account and OAuth cred
 
 1. **Create a new Google Cloud Project**
 
-  a. Your new project will have the following list of APIs already enabled, including BigQuery, which is required.
+   a. Your new project will have the following list of APIs already enabled, including BigQuery, which is required.
 
-    * [Default APIs](https://cloud.google.com/service-usage/docs/enabled-service#default)
+      * [Default APIs](https://cloud.google.com/service-usage/docs/enabled-service#default)
 
-  b. Enable the BigQuery API which also enables the following additional APIs automatically
-    * [BigQuery API's](https://cloud.google.com/bigquery/docs/enable-assets#automatic-api-enablement)
+   b. Enable the BigQuery API which also enables the following additional APIs automatically
+      * [BigQuery API's](https://cloud.google.com/bigquery/docs/enable-assets#automatic-api-enablement)
 
 
 2. **Create a service account and grant IAM permissions**
@@ -116,7 +117,7 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    gcloud storage buckets add-iam-policy-binding gs://${GOOGLE_CLOUD_PROJECT}-bucket-logs --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/storage.admin
    ```
 
-## Create, configure, execute your Python models
+## Create, configure, and execute your Python models
 
 1. In your dbt project, create a sql model in your models directory, ending in the `.sql` file extension. Name it `my_sql_model.sql`.
 2. In the file, copy this sql into it. 
@@ -129,7 +130,7 @@ The dbt BigFrames submission method supports both service account and OAuth cred
 3. Now create a new model file in the models directory, named `my_first_python_model.py`. 
 4. Configure the BigFrames submission method by either:  
 
-   (a) Project level configuration via dbt_project.yml
+   a. Project level configuration via dbt_project.yml
 
    ```python
    models:
@@ -140,7 +141,7 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    ```
    or 
 
-   (b) The Python code via dbt.config
+   b. The Python code via dbt.config
 
    ```python
    def model(dbt, session):
