@@ -842,7 +842,13 @@ If not configured, `dbt-spark` will use the built-in defaults: the all-purpose c
 
 The `dbt-bigquery` uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
 
-**Submission methods.** `dbt-bigquery` can be configured to use `bigframes` to execute pandas and scikit- learn code at scale on the BigQuery SQL engine. In addition, `dbt-bigquery` can also use Dataproc (`serverless` or pre-configured `cluster`) to execute Python models as PySpark jobs, reading from and writing to BigQuery; `serverless` is simpler but slower with limited configuration and pre-installed packages (`pandas`, `numpy`, `scikit-learn`), while `cluster` offers full control and faster runtimes.
+**Submission methods:** `
+Submission methods: BigQuery supports a few different mechanisms to submit PySpark code, each with relative advantages. 
+
+- BigQuery Dataframes (BigFrames) : Can execute pandas and scikit. There's no need to manage infrastructure and leverages BigQuery distributed query engines. It's great for analysts, data scientists, and ML engineers who want to manipulate big data using a pandas-like syntax.
+
+- Dataproc (`serverless` or pre-configured `cluster`):  Can execute Python models as PySpark jobs, reading from and writing to BigQuery. `serverless` is simpler but slower with limited configuration and pre-installed packages (`pandas`, `numpy`, `scikit-learn`), while `cluster` offers full control and faster runtimes. Good for complex, long-running batch pipelines and legacy Hadoop/Spark workflows but often slower for ad-hoc or interactive workloads.
+
 
 **BigQuery Dataframe setup:**
 
