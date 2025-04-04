@@ -33,7 +33,9 @@ Follow these steps to set up a dbt Cloud Hybrid project and upload dbt Core arti
 
 Make sure to enable the hybrid projects toggle in dbt Cloud’s **Account settings** page.
 
-### Make dbt Core models public
+### Make dbt Core models public (optional) {#make-dbt-core-models-public}
+
+This step is optional and and only needed if you want to share your dbt Core models with other dbt Cloud projects using the [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) feature.
 
 Before connecting your dbt Core project to a dbt Cloud project, make sure models that you want to share have `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref).
 
@@ -123,7 +125,7 @@ Once you have the values from the previous step, you can prepare your dbt Core p
    ....rest of dbt_project.yml configuration...
 
    dbt-cloud:
-   tenant_hostname: cloud.getdbt.com # Replace with your Tenant URL
+     tenant_hostname: cloud.getdbt.com # Replace with your Tenant URL
    ```
 5. Once you set the environment variables using the `export` command in the same CLI session, you can execute a `dbt run` in the CLI. 
    ```bash
@@ -132,7 +134,7 @@ Once you have the values from the previous step, you can prepare your dbt Core p
 
    To override the environment variables set, execute a `dbt run` with the environment variable prefix. For example, to use a different account ID and environment ID:
    ```bash
-    DBT_CLOUD_ACCOUNT_ID=2 DBT_CLOUD_ENVIRONMENT_ID=133 dbt run
+    DBT_CLOUD_ACCOUNT_ID=1 DBT_CLOUD_ENVIRONMENT_ID=123 dbt run
    ```
 
 6. After the run completes, you should see a `Artifacts uploaded successfully to artifact ingestion API: command run completed successfully` message and a run in dbt Cloud under your production environment.

@@ -17,21 +17,21 @@ Hybrid projects is available in private beta to [dbt Cloud Enterprise accounts](
 
 dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on &mdash; into dbt Cloud after executing a run in the command line interface (CLI), which helps:
 
-- Connect teams by bringing visibility so everyone can use dbt Core-generated artifacts in dbt Cloud.
-- Enhance collaboration by sharing model metadata, dependencies, and run history across teams using dbt Cloud.
-- Enable teams that work in dbt Core and dbt Cloud, particularly in [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) hybrid workflows, so that if an organization runs dbt Core locally or with external orchestration tools &mdash; they can still collaborate with dbt Cloud.
+- Collaborate with dbt Cloud users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
+- (Coming soon) New users interested in the [Visual Editor](/docs/cloud/visual-editor) can build off of dbt models already created by a central data team in dbt Core rather than having to start from scratch.
+- dbt Core users can navigate to [dbt Explorer](/docs/collaborate/explore-projects) and view their models and assets. To view dbt Explorer, you must have a [read-only seat](/docs/cloud/manage-access/seats-and-users).
 
 ## Prerequisites
 
 To upload artifacts, make sure you meet these prerequisites:
 
 - Your organization is on a [dbt Cloud Enterprise plan](https://www.getdbt.com/pricing)
-- You're on [dbt Cloud's release tracks](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.10 and higher
+- You're on [dbt Cloud's release tracks](/docs/dbt-versions/cloud-release-tracks) and your dbt Core project is on dbt v1.10 or higher
 - Enabled the hybrid projects toggle in dbt Cloud’s **[Account settings](/docs/cloud/account-settings)** page
 - [Configured](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) a hybrid project in dbt Cloud.
 - Updated your existing dbt Core project with latest changes and [configured it with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
-    - Ensure models that you want to share with other dbt Cloud projects use `access: public` in their model configuration. This makes the models more discoverable and shareable.
-    - Learn more about [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access).
-- Update [dbt Cloud permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in dbt Cloud.
+    - Ensure models that you want to share with other dbt Cloud projects use `access: public` in their model configuration. This makes the models more discoverable and shareable
+    - Learn more about [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access)
+- Update [dbt Cloud permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in dbt Cloud
 
 **Note:** Uploading artifacts doesn't count against dbt Cloud run slots.
