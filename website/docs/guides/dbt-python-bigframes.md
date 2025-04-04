@@ -16,7 +16,7 @@ recently_updated: true
 
 ## Introduction
 
-This guide will help you set up dbt Core to be used with BigQuery Dataframes (Bigframes).
+This guide will help you set up dbt to be used with BigQuery Dataframes (Bigframes).
 
 In addition to the existing dataproc/pyspark based submission methods for executing python models, you can now use the bigframes submission method to execute pandas and scikit- learn code at scale on the BigQuery SQL engine.
 
