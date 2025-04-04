@@ -1,7 +1,7 @@
 ---
 title: "Quickstart for using BigQuery Dataframes with dbt python models"
 id: dbt-python-bigframes
-description: "Use this guide to help you setup dbt Core with BigQuery Dataframes (BigFrames)."
+description: "Use this guide to help you setup dbt with BigQuery Dataframes (BigFrames)."
 sidebar_label: "Quickstart for BigQuery Dataframes and dbt python"
 # time_to_complete: '30 minutes' comment out until test
 icon: 'guides'
