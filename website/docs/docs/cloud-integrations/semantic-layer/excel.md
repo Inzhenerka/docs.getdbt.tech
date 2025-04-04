@@ -37,9 +37,9 @@ import Tools from '/snippets/_sl-excel-gsheets.md';
 type="Microsoft Excel"
 bullet_1="Results that take longer than one minute to load into Excel will fail. This limit only applies to the loading process, not the time it takes for the data platform to run the query."
 bullet_2="If you're using this extension, make sure you're signed into Microsoft with the same Excel profile you used to set up the Add-In. Log in with one profile at a time as using multiple  profiles at once might cause issues."
+bullet_3="Note that only standard granularities are currently available, custom time granularities aren't currently supported for this integration."
 queryBuilder="/img/docs/dbt-cloud/semantic-layer/query-builder.png"
 />
-
 
 ## FAQs
 <FAQ path="Troubleshooting/sl-alpn-error" />
