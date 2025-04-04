@@ -171,3 +171,5 @@ def model(dbt, session):
 5. *(Optional)* **You can also go to the Colab Enterprise Executions tab and GCS bucket from the GCP console to view the codes and logs (including previous executions).**
 
 6. Congrats! You just created your first two python models to run on BigFrames! 
+
+</div>
