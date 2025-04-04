@@ -8,12 +8,14 @@ tags: [Semantic Layer]
 
 The dbt Semantic Layer allows you to define metrics and use various interfaces to query them. The Semantic Layer does the heavy lifting to find where the queried data exists in your data platform and generates the SQL to make the request (including performing joins). 
 
+<DocCarousel slidesPerView={1} autoHeight={true}>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-concept.png" width="80%" title="This diagram shows how the dbt Semantic Layer works with your data stack." />
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-architecture.jpg" width="85%" title="The diagram displays how your data flows using the dbt Semantic Layer and the variety of integration tools it supports."/>
+</DocCarousel>
 
 ## Components
 
 The dbt Semantic Layer includes the following components:
-
 
 | Components | Information | dbt Core users | Developer plans |  Team plans | Enterprise plans | License |
 | --- | --- | :---: | :---: | :---: | :---: | :---: |
@@ -21,7 +23,6 @@ The dbt Semantic Layer includes the following components:
 | **dbt Semantic interfaces**| A configuration spec for defining metrics, dimensions, how they link to each other, and how to query them. The [dbt-semantic-interfaces](https://github.com/dbt-labs/dbt-semantic-interfaces) is available under Apache 2.0. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Team & Enterprise)|
 | **Service layer** | Coordinates query requests and dispatching the relevant metric query to the target query engine. This is provided through dbt Cloud and is available to all users on dbt version 1.6 or later. The service layer includes a Gateway service for executing SQL against the data platform. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Team & Enterprise) |
 | **[Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview)** | The interfaces allow users to submit metric queries using GraphQL and JDBC APIs. They also serve as the foundation for building first-class integrations with various tools. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Team & Enterprise)|
-
 
 ## Feature comparison
 
