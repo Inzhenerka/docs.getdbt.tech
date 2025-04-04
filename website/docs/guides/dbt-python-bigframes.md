@@ -40,7 +40,7 @@ BigQuery Dataframes is an open source python package that transpiles pandas and 
 
 ### What you'll build
 
-This guide contains two sections:
+Here's what you'll build in two parts:
 - Google Cloud project configuration
     - One shot initial configuration on the project you want to use
 - Create, configure, and execute the python model
