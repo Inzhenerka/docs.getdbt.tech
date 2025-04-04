@@ -19,7 +19,14 @@ The `use_info_schema_for_columns` flag is `False` by default.
 Setting this flag to `True` will use `information_schema` rather than `describe extended` to get column metadata for Unity Catalog tables. This setting helps you avoid issues where `describe extended` truncates information when the type is a complex struct. However, this setting is not yet the default behavior, as there are performance impacts due to a Databricks metadata limitation because of the need to run `REPAIR TABLE {{relation}} SYNC METADATA` before querying to ensure the `information_schema` is complete. 
 Please note that there is no equivalent option for views at this time which means dbt will still need to use `describe extended` for views.
 
-This flag will become the default behavior when this additional query is no longer needed.
+This flag may come default behavior in the future, depending on how information_schema changes.
+
+:::tip Do I need this flag?
+
+If your complex type comes from processing JSON using `from_json`, you have an alternative: use [`parse_json` to create the column as the `variant` type](https://docs.databricks.com/aws/en/sql/language-manual/functions/parse_json).
+Depending on how you intend to query or further process the data, the `variant` type might be a reasonable alternative in terms of performance, while not suffering from the issue of type truncation in metadata queries.
+
+:::
 
 ## Use user's folder for Python model notebooks
 
@@ -43,11 +50,31 @@ The seeds materialization should have the smallest difference between the old an
 
 In conjunction with the flag above, there are two model configuration options that can customize how we handle the view materialization when we detect an existing relation at the target location.
 
-#### `view_update_via_alter`
+* `view_update_via_alter`
 
-For view models where we set `view_update_via_alter: True`, when we detect an existing view, rather than using `create or replace...` to replace the existing view, we gather metadata to determine if the existing view matches the dbt project.
-When it does, no further action is taken; otherwise, `alter view...` is used to alter the view in place to match your dbt project.
-This allows continuity of history for the view, which is lost with `create or replace...`, which can fix user-reported issues with Unity Catalog features.
+When enabled, this config attempts to update the view in place using alter view, instead of using create or replace to replace it. 
+This allows continuity of history for the view, keeps the metadata, and helps with Unity Catalog compatibility.
+
+<File name="schema.yml">
+
+```yaml
+version: 2
+ 
+models:
+  - name: market_summary
+    config:
+      materialized: view
+      view_update_via_alter: true
+    
+    columns:
+      - name: country
+        tests:
+          - unique
+          - not_null
+...
+```
+
+</File>
 
 :::caution There is currently no support for altering the comment on a view via Databricks SQL.
 
@@ -55,21 +82,38 @@ As such, we must replace the view whenever you change its description
 
 :::
 
-#### `use_safer_relation_operations`
+* `use_safer_relation_operations`
 
-The other new model configuration introduced for views is `use_safer_relation_operations`.
-When this configuration is set to `True`, if `view_update_via_alter` is not set, we will use a multi-step, renaming approach to replacing existing relations.
-Rather than using a `create or replace...` statement to replace an existing view, we create the new view at a staging location, then swap locations with the existing view, before finally deleting the existing view.
+When enabled (and if view_update_via_alter isn't set), this config makes dbt model updates more safe by creating a new relation in a staging location, swapping it with the existing relation, and deleting the old relation afterward.
 
-:::caution This configuration option may increase storage costs.
+<File name="schema.yml">
+
+```yaml
+version: 2
+ 
+models:
+  - name: market_summary
+    config:
+      materialized: view
+      use_safer_relation_operations: true
+    
+    columns:
+      - name: country
+        tests:
+          - unique
+          - not_null
+...
+```
+
+</File>
+
+:::caution This configuration option may increase costs and disrupt Unity Catalog history.
 
 While this approach is equivalent to the default dbt view materialization, it will create additional UC objects, as compared to alternatives.
+Since this config does not use atomic 'create or replace...' for any materialization, the history of the object in Unity Catalog may not behave as you expect.
+Consider carefully before using this model config broadly.
 
 :::
-
-While this setting is more relevant for table and incremental materializations, there are benefits for use with views.
-For example, when replacing a materialized view with a traditional view, we have historically dropped the materialized view prior to creating the new view.
-Although materialized views do not currently support renaming, setting this config ensures that the materialized view is not dropped until we have successfully created the new view in the staging location; as such, there is no longer a scenario where the existing relation is dropped and the new relation fails to be created.
 
 ### Changes to the Table materialization
 
@@ -108,6 +152,13 @@ This could mean that you have time to investigate failures without worrying that
 When this configuration is set to false (the default), the target table will still never have constraint-violating data; instead, it could end up with no data, as we could fail data insert due to the constraint.
 The primary difference comes down to whether we directly replace the target as opposed to first staging and then renaming.
 
+:::caution This configuration option may increase costs and disrupt Unity Catalog history.
+
+As with views, there is a cost to using additional temporary objects, in the form of creating more UC objects with their own history.
+Consider carefully whether you need this behavior.
+
+:::
+
 ### Changes to the Incremental materialization
 
 All of the changes described for the Table materialization also apply to Incremental materialization.
@@ -115,3 +166,18 @@ In addition, we added a model config to specify whether we should apply detected
 Many users have asked for the capability to configure table metadata in Databricks, such as accepting AI-generated comments, and not have dbt overwrite that.
 Previously, dbt-databricks assumed that detected config changes to tags, tblproperties, and comments should be applied on incremental runs.
 Under the V2 materialization, you have the option of setting `incremental_apply_config_changes` to `False` to turn off this behavior (it defaults to `True` for continuity with past behavior).
+
+<File name="schema.yml">
+
+```yaml
+version: 2
+ 
+models:
+  - name: incremental_market_updates
+    config:
+      materialized: incremental
+      incremental_apply_config_changes: false
+...
+```
+
+</File>
