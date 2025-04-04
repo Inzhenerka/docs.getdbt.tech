@@ -8,7 +8,7 @@
 | Dual dbt Cloud Ingress                            |   ❌   |   ✅   |    ❌    |    ❌    |
 | <b>EGRESS - DW (from dbt Cloud)</b>               |        |        |          |          |
 | Snowflake                                         |   ✅   |   ✅   |    ✅    |    ✅    |
-| - Snowflake Internal Stage                        |   ❌   |   ⚙️   |    ✅    |    ✅    |
+| - Snowflake Internal Stage                        |   ❌   |   ❌   |    ✅    |    ✅    |
 | Databricks                                        |   ✅   |   ✅   |    ✅    |    ✅    |
 | Postgres (self-hosted)                            |   ✅   |   ✅   |    ✅    |    ✅    |
 | Redshift (Interface)                              |   ✅   |   ✅   |    -     |    -     |

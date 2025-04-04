@@ -23,14 +23,7 @@ Snowflake docs:
 - [Snowflake SSO with Private Connectivity](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview#label-sso-private-connectivity)
 :::
 
-## About private connectivity for Snowflake
-
-dbt Cloud supports private connectivity for Snowflake using one of the following services:
-
-- AWS [PrivateLink](#configure-aws-privatelink)
-- Azure [Private Link](/docs/cloud/secure/snowflake-private-link)
-
-:::note
+:::warning
 
 AWS Internal Stage PrivateLink connections are not currently supported.
 
@@ -98,7 +91,6 @@ Open the Snowflake UI and take the following steps:
 <Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink2.png" title="Create Network Rule"/>
 
 9. In the **Network Policy** tab, edit the policy you want to add the rule to. This could be your account-level policy or a policy specific to the users connecting from dbt Cloud.
-
 
 10. Add the new rule to the allowed list and click **Update Network Policy**.
 
