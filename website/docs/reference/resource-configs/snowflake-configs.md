@@ -674,7 +674,7 @@ It is possible to configure [row access policies](https://docs.snowflake.com/en/
 select ...
 
 ```
-
+</File>
 ## Configuring table tags
 
 To add tags to tables, views and dynamic tables, use the `table_tag` config. Note that the tag would need to exist beforehand.
