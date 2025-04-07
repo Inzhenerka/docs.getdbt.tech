@@ -56,7 +56,7 @@ Before connecting your dbt Core project to a dbt Cloud project, make sure models
    ```
    </File>
 
-2. After defining `access: public`, rerun a dbt execution in the command line interface (CLI) (like `dbt run`) to apply the change.
+2. After defining `access: public`, rerun a dbt execution in the dbt Core command line interface (CLI) (like `dbt run`) to apply the change.
 
 3. For more details on how to set this up, see [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and [`access` config](/reference/resource-configs/access). 
 
@@ -127,7 +127,7 @@ Once you have the values from the previous step, you can prepare your dbt Core p
    dbt-cloud:
      tenant_hostname: cloud.getdbt.com # Replace with your Tenant URL
    ```
-5. Once you set the environment variables using the `export` command in the same CLI session, you can execute a `dbt run` in the CLI. 
+5. Once you set the environment variables using the `export` command in the same dbt Core CLI session, you can execute a `dbt run` in the CLI. 
    ```bash
     dbt run
     ```
