@@ -16,11 +16,9 @@ By moving your environments and jobs to release tracks you can get all the funct
 
 | Release track | Description | Plan availability | API value |
 | ------------- | ----------- | ----------------- | --------- |
-| **Latest** <br /> <Lifecycle status="GA"/> |  Formerly called "Versionless", provides a continuous release of the latest functionality in dbt Cloud.<br /><br />Includes early access to new features of the dbt framework before they're available in open source releases of dbt Core. | All plans | `latest` (or `versionless`) |
-| **Compatible** <Lifecycle status="preview"/>  | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Team + Enterprise | `compatible` |
-| **Extended** <Lifecycle status="preview"/> | The previous month's "Compatible" release. | Enterprise | `extended` |
-
-The first "Compatible" release was on December 12, 2024, after the final release of dbt Core v1.9.0. For December 2024 only, the "Extended" release is the same as "Compatible." Starting in January 2025, "Extended" will be one month behind "Compatible."
+| **Latest** | Formerly called "Versionless", provides a continuous release of the latest functionality in dbt Cloud.<br /><br />Includes early access to new features of the dbt framework before they're available in open source releases of dbt Core. | All plans | `latest` (or `versionless`) |
+| **Compatible** | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Team + Enterprise | `compatible` |
+| **Extended** | The previous month's "Compatible" release. | Enterprise | `extended` |
 
 To configure an environment in the [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest) to use a release track, set `dbt_version` to the release track name:
 - `latest` (or `versionless`, the old name is still supported)
@@ -48,7 +46,7 @@ Choose the "Compatible" and "Extended" release tracks if you need a less-frequen
 - Prioritize "bake in" time for new features & fixes
 - Configure development & test environments to use the "Compatible" release track
 - Configure pre-production & production environments to use the "Extended" release track
-- Understand that new features will not be available until they are first released in dbt Core OSS + Compatible track
+- Understand that new features will not be available until _a month after_ they are first released in dbt Core OSS and the Compatible track. Developers (on "Compatible") will get access to new features before they can leverage those capabilities in production (on "Extended"), and must be mindful of the additional delay.
 
 **Virtual Private dbt or Single Tenant**
 - Changes to all release tracks roll out as part of dbt Cloud instance upgrades once per week
@@ -95,7 +93,7 @@ If you are upgrading from a very old unsupported version of dbt Core, you may ru
 - [v1.1] Customers on BigQuery should be aware that dbt Cloud sets a default [per-model timeout](/docs/core/connect-data-platform/bigquery-setup#job_execution_timeout_seconds) of 5 minutes. You may override this config in your connection details. Older versions of dbt (including v1.0) did not appropriately respect this timeout configuration.
 - [v1.3] Customers with non-dbt `.py` files defined within their project directories, such as `models/`. Since v1.3, dbt expects these files be valid [Python models](/docs/build/python-models). The customer needs to move these files out of their `models/` directory, or ignore them via `.dbtignore`
 - [v1.5] Customers who have `--m` in their job definitions, instead of `-m` or `--models`. This autocompletion (`--m[odels]` for `--models`) has never been officially documented or supported. It was an implicit behavior of argparse (CLI library used in dbt-core v1.0-1.4) that is not supported by `click` (the CLI library used in dbt-core since v1.5+).
-- [v1.5] Empty invalid `tests` config start raising a validation error](https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-v1.5). Replace empty `tests` config with `tests: []` or remove it altogether.
+- [v1.5] Empty invalid `tests` config start raising a validation error](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Replace empty `tests` config with `tests: []` or remove it altogether.
 - [v1.6] Performance optimization to `load_result` means you cannot call it on the same query result multiple times. Instead, save it to a local variable once, and reuse that variable (context: [dbt-core#7371](https://github.com/dbt-labs/dbt-core/pull/7371)
 
 You should [contact dbt Cloud support](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support) to request an extension, during which you will need to make those updates.

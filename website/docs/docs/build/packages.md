@@ -384,7 +384,7 @@ Beginning with v1.7, running [`dbt deps`](/reference/commands/deps) "pins" each 
 
 For example, if you use a branch name, the `package-lock.yml` file pins to the head commit. If you use a version range, it pins to the latest release. In either case, subsequent commits or versions will **not** be installed. To get new commits or versions, run `dbt deps --upgrade` or add `package-lock.yml` to your .gitignore file.
 
-As of v0.14.0, dbt will warn you if you install a package using the `git` syntax without specifying a revision (see below).
+dbt will warn you if you install a package using the `git` syntax without specifying a revision (see below).
 
 ### Configuring packages
 You can configure the models and seeds in a package from the `dbt_project.yml` file, like so:
@@ -436,17 +436,3 @@ packages:
 ```
 
 </File>
-
-### Setting two-part versions
-In dbt v0.17.0 _only_, if the package version you want is only specified as `major`.`minor`, as opposed to `major.minor.patch`, you may get an error that `1.0 is not of type 'string'`. In that case you will have to tell dbt that your version number is a string. This issue was resolved in v0.17.1 and all subsequent versions.
-
-<File name='packages.yml'>
-
-```yaml
-packages:
- - git: https://github.com/dbt-labs/dbt-codegen.git
-   version: "{{ 1.0 | as_text }}"
-```
-
-</File>
-

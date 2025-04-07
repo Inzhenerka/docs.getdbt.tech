@@ -13,7 +13,6 @@ The dbt Semantic Layer offers a seamless integration with Google Sheets through 
 - You need a Google account with access to Google Sheets and the ability to install Google add-ons.
 - You have a [dbt Cloud Environment ID](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) and a [service token](/docs/dbt-cloud-apis/service-tokens) to authenticate with from a dbt Cloud account.
 - You must have a dbt Cloud Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment.
-  - Single-tenant accounts should contact their account representative for necessary setup and enablement.
 
 If you're using [IP restrictions](/docs/cloud/secure/ip-restrictions), ensure you've added [Google’s IP addresses](https://www.gstatic.com/ipranges/goog.txt) to your IP allowlist. Otherwise, the Google Sheets connection will fail.
 
@@ -40,6 +39,7 @@ import Tools from '/snippets/_sl-excel-gsheets.md';
 type="Google Sheets"
 bullet_1="The custom menu operation has a timeout limit of six (6) minutes."
 bullet_2="If you're using this extension, make sure you're signed into Chrome with the same Google profile you used to set up the Add-On. Log in with one Google profile at a time as using multiple Google profiles at once might cause issues."
+bullet_3="Note that only standard granularities are currently available, custom time granularities aren't currently supported for this integration."
 queryBuilder="/img/docs/dbt-cloud/semantic-layer/query-builder.png"
 PrivateSelections="You can also make these selections private or public. Public selections mean your inputs are available in the menu to everyone on the sheet. 
 Private selections mean your inputs are only visible to you. Note that anyone added to the sheet can still see the data from these private selections, but they won't be able to interact with the selection in the menu or benefit from the automatic refresh."

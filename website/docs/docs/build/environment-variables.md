@@ -9,7 +9,7 @@ Environment variables can be used to customize the behavior of a dbt project dep
 
 :::info Environment Variable Naming and Prefixing
 
-Environment variables in dbt Cloud must be prefixed with either `DBT_` or `DBT_ENV_SECRET` or `DBT_ENV_CUSTOM_ENV_`. Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
+Environment variables in dbt Cloud must be prefixed with either `DBT_`, `DBT_ENV_SECRET_`, or `DBT_ENV_CUSTOM_ENV_`. Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
 
 :::
 
@@ -117,7 +117,8 @@ The following environment variables are set automatically:
 
 - `DBT_ENV` &mdash; This key is reserved for the dbt Cloud application and will always resolve to 'prod'. For deployment runs only.
 - `DBT_CLOUD_ENVIRONMENT_NAME` &mdash; The name of the dbt Cloud environment in which `dbt` is running. 
-- `DBT_CLOUD_ENVIRONMENT_TYPE` &mdash; The type of dbt Cloud environment in which `dbt` is running. The valid values are `dev`, `staging`, or `prod`. It can be unset, so use a default like `{{env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '')}}`.
+- `DBT_CLOUD_ENVIRONMENT_TYPE` &mdash; The type of dbt Cloud environment in which `dbt` is running. The valid values are `dev`, `staging`, or `prod`. The value will be empty for [General deployment environments](/docs/dbt-cloud-environments#types-of-environments), so use a default like `{{ env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '') }}`.
+- `DBT_CLOUD_INVOCATION_CONTEXT` &mdash; The context type in which `dbt` is invoked. The values are `dev`, `staging`, `prod`, or `ci`. 
 
 #### Run details
 
