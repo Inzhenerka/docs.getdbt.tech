@@ -16,7 +16,7 @@ macros:
   - name: <macro name>
     arguments:
       - name: <arg name>
-        type: <column>
+        [type](#supported-types): <string>
         description: <markdown_string>
 
 ```
@@ -51,7 +51,7 @@ macros:
   - name: <macro name>
     arguments:
       - name: <arg name>
-        type: <column>
+        type: <string>
 
 ```
 
