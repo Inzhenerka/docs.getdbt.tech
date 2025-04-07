@@ -7,6 +7,8 @@ description: "dbt uses event_time to understand when an event occurred. When def
 datatype: string
 ---
 
+import EventTimeRequired from '/snippets/_event_time_required.md';
+
 <VersionCallout version="1.9" />
 
 <Tabs>
@@ -137,11 +139,7 @@ sources:
 
 dbt uses `event_time` to understand when an event occurred. Configure it in your `dbt_project.yml` file, property YAML file, or config block for [models](/docs/build/models), [seeds](/docs/build/seeds), or [sources](/docs/build/sources).
 
- :::caution Required for microbatch incremental models
-  For incremental microbatch models, if your upstream models don't have `event_time` configured, dbt _cannot_ automatically filter them during batch processing and will perform full table scans on every batch run. 
-  
-To avoid this, configure `event_time` on every upstream model that should be filtered. Learn how to exclude a model from auto-filtering by [opting out of auto-filtering](#opting-out-of-auto-filtering).
-  :::
+<EventTimeRequired/>
 
 ### Usage
 
