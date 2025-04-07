@@ -34,7 +34,7 @@ The following steps will walk you through the setup of a Databricks Azure Privat
 5. Once our Support team confirms the resources are available in the Azure portal, navigate to the Azure Databricks Workspace and browse to **Networking** > **Private Endpoint Connections**. Then, highlight the `dbt` named option and select **Approve**.
 
 
-## Create Connection in dbt Cloud
+## Create connection in dbt Cloud
 
 Once you've completed the setup in the Databricks environment, you will be able to configure a private endpoint in dbt Cloud:
 
