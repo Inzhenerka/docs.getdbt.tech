@@ -660,7 +660,7 @@ models:
 
 </File>
 
-## Setting Row Access Policies
+## Setting row access policies
 
 It is possible to configure [row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) on tables, views and dynamic tables by leveraging the `row_access_policy` config for our models. The row access policy would need to already exist in Snowflake when it is applied to the model.
 
