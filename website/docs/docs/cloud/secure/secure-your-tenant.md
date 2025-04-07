@@ -43,7 +43,7 @@ hide_table_of_contents: true
 
 <Card
     title="Azure Private Link for Databricks"
-    body="Learn how to configure Azure Privat Link for Databricks. "
+    body="Learn how to configure Azure Private Link for Databricks. "
     link="/docs/cloud/secure/databricks-privatelink"
     icon="dbt-bit"/>
 </div>
