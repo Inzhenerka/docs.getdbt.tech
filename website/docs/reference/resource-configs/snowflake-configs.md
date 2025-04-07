@@ -662,7 +662,7 @@ models:
 
 ## Setting row access policies
 
-Configure [row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) on tables, views and dynamic tables by leveraging the `row_access_policy` config for models. The row access policy The policy must already exist in Snowflake before you apply it to the model.
+Configure [row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) on tables, views and dynamic tables by leveraging the `row_access_policy` config for models. The policy must already exist in Snowflake before you apply it to the model.
 
 <File name='models/<modelname>.sql'>
 
