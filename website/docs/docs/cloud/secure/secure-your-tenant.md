@@ -42,7 +42,7 @@ pagination_prev: null
 
 <Card
     title="Azure Private Link for Databricks"
-    body="Learn how to configure Azure Privat Link for Databricks. "
+    body="Learn how to configure Azure Private Link for Databricks. "
     link="/docs/cloud/secure/databricks-privatelink"
     icon="dbt-bit"/>
 </div>
