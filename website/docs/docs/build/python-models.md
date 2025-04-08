@@ -302,17 +302,24 @@ def model(dbt, session):
 <File name='models/my_python_model.py'>
 
 ```python
+import datetime
+
 def model(dbt, session):
-    dbt.config(submission_method="bigframes")
+  dbt.config(materialized = "incremental")
+  bdf = dbt.ref("upstream_table")
 
-    data = {'Name': ['Alice', 'Bob', 'Charlie'],
-    'Age': [25, 30, 35],
-    'City': ['New York', 'Los Angeles', 'Chicago']}
-    bdf = bpd.DataFrame(data)
+  if dbt.is_incremental:
 
-    bdf = bdf[bdf['Age'] >= 30]
+    # only new rows compared to max in current table
+    max_from_this = f"select max(updated_at) from {dbt.this}"
 
-    return bdf
+    bdf = bdf[bdf['updated_at'] >= bpd.read_gbq(max_from_this).values[0][0]]
+    # or only rows from the past 3 days
+    bdf = bdf[bdf['updated_at'] >= datetime.date.today() - datetime.timedelta(days=3)]
+
+    ...
+
+  return bdf
 ```
 
 </File>
