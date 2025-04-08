@@ -12,7 +12,7 @@ dbt supports model governance to help you control who can access models, what da
 - Use model governance to define model structure and visibility in dbt Core and dbt Cloud.
 - dbt Cloud builds on this with features like [cross-project ref](/docs/collaborate/govern/project-dependencies) that enable collaboration at scale across multiple projects, powered by its metadata service and [dbt Explorer](/docs/collaborate/explore-projects). Available in dbt Cloud Enterprise plans.
 
-All of the following features are available in dbt Core and dbt Cloud, _except_ project dependencies, which is available to [dbt Cloud Enterprise plans](https://www.getdbt.com/pricing).
+All of the following features are available in dbt Core and dbt Cloud, _except_ project dependencies, which is only available to [dbt Cloud Enterprise plans](https://www.getdbt.com/pricing).
 
 - [**Model access**](model-access)  &mdash; Mark models as "public" or "private" to distinguish between mature data products and implementation details — and to control who can `ref` each. 
 - [**Model contracts**](model-contracts) &mdash;Guarantee the shape of a model (column names, data types, constraints) before it builds, to prevent surprises for downstream data consumers. 
