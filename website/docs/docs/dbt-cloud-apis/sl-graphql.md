@@ -421,7 +421,7 @@ order_total  ordered_at
 The following section provides query examples for the GraphQL API, such as how to query metrics, dimensions, where filters, and more:
 
 <!-- no toc -->
-- [Query metric alias](#query-metric-alias) &mdash; Query with metric alias, which allow you to use simpler or more intuitive names for metrics instead of their full definitions.
+- [Query metric alias](#query-metric-alias) &mdash; Query with metric alias, which allows you to use simpler or more intuitive names for metrics instead of their full definitions.
 - [Query with a time grain](#query-with-a-time-grain)  &mdash; Fetch multiple metrics with a change in time dimension granularities.
 - [Query multiple metrics and multiple dimensions](#query-multiple-metrics-and-multiple-dimensions) &mdash; Select common dimensions for multiple metrics.
 - [Query a categorical dimension on its own](#query-a-categorical-dimension-on-its-own) &mdash; Group by a categorical dimension.
