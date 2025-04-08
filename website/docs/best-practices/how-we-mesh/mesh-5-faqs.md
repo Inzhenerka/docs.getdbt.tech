@@ -312,7 +312,7 @@ The major distinction comes with dbt Cloud's metadata service, which is unique t
 
 <DetailsToggle alt_header="Does dbt Mesh require a specific dbt Cloud plan?">
 
-Yes, a [dbt Cloud Enterprise](https://www.getdbt.com/pricing) plan is required to set up multiple projects and reference models across them. Refer to [Model governance](/docs/collaborate/govern/about-model-governance) for more information on the features available across dbt Cloud plans.
+Yes, a [dbt Cloud Enterprise](https://www.getdbt.com/pricing) plan is required to set up multiple projects and reference models across them. Refer to [model governance](/docs/collaborate/govern/about-model-governance) for more information on the features available across dbt Cloud plans.
 
 </DetailsToggle>
 
