@@ -12,15 +12,13 @@ dbt supports model governance to help you control who can access models, what da
 - Use model governance to define model structure and visibility in dbt Core and dbt Cloud.
 - dbt Cloud builds on this with features like [cross-project ref](/docs/collaborate/govern/project-dependencies) that enable collaboration at scale across multiple projects, powered by its metadata service and [dbt Explorer](/docs/collaborate/explore-projects). Available in dbt Cloud Enterprise plans.
 
-The following table shows which features are available:
+All of the following features are available in dbt Core and dbt Cloud, _except_ project dependencies, which is available to [dbt Cloud Enterprise plans](https://www.getdbt.com/pricing).
 
-| Feature | About the feature | dbt Core | dbt Cloud (Team/Developer) | dbt Cloud (Enterprise) |
-|--------|-------------------|----------|-----------------------------|-------------------------|
-| [**Model access**](model-access) | Some models are mature, reusable data productions. Others are your team's implementation details on the way there. Mark models as "public" or "private" to make the distinction clear and control who can `ref` them. | ✅ | ✅ | ✅ |
-| [**Model contracts**](model-contracts) | Guarantee the shape of a model while it is building to avoid surprises or breaking changes for downstream queries. Explicitly define column names, data types, and constraints (as supported by your data platform). | ✅ | ✅ | ✅ |
-| [**Model versions**](model-versions) | When a breaking change is unavoidable, provide a smoother upgrade pathway by creating a new version of the model. These versions share a common reference name and can reuse properties and configurations. | ✅ | ✅ | ✅ |
-| [**Project dependencies**](/docs/collaborate/govern/project-dependencies) | Reference public models across dbt projects using the [two-argument ref](/reference/dbt-jinja-functions/ref#ref-project-specific-models), which includes the project name. | ⚠️ <br/> Works with [packages](/docs/build/packages) that imports _all_ models from upstream projects. | ⚠️ <br/> Same as dbt Core | ✅ <br/> Enables you to reference only public models without importing the full project. Enhanced with [dbt Explorer](/docs/collaborate/explore-projects) and metadata service. |
-
+- [**Model access**](model-access)  &mdash; Mark models as "public" or "private" to distinguish between mature data products and implementation details — and to control who can `ref` each. 
+- [**Model contracts**](model-contracts) &mdash;Guarantee the shape of a model (column names, data types, constraints) before it builds, to prevent surprises for downstream data consumers. 
+- [**Model versions**](model-versions) &mdash; When a breaking change is unavoidable, provide a smoother upgrade pathway and deprecation window for downstream data consumers. 
+- [**Model namespaces**](/reference/dbt-jinja-functions/ref#ref-project-specific-models) &mdash; Organize models into [groups](/docs/build/groups) and [packages](/docs/build/packages) to delineate ownership boundaries. Models in different packages can share the same name, and the `ref` function can take the project/package namespace as its first argument. 
+- [**Project dependencies**](/docs/collaborate/govern/project-dependencies) &mdash; Resolve references to public models in other projects ("cross-project ref") using an always-on stateful metadata service, instead of importing all models from those projects as packages. Each project serves data products (public model references) while managing its own implementation details, enabling an [enterprise data mesh](/best-practices/how-we-mesh/mesh-1-intro). <Lifecycle status="Enterprise"/>
 
 import ModelGovernanceRollback from '/snippets/_model-governance-rollback.md';
 
