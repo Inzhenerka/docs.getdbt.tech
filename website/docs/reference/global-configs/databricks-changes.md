@@ -38,9 +38,13 @@ We plan to switch the default of this flag to `True` in v1.11.0.
 
 The `use_materialization_v2` flag is `False` by default and guards significant rewrites of the core materializations in `dbt-databricks` while they are still in an experimental stage.
 
-When set to `True`, `dbt-databricks ` uses the updated logic for all model types (views, tables, incremental, seeds) and optionally enables additional config options for more fine-tuned control.
+When set to `True`, `dbt-databricks ` uses the updated logic for all model types (views, tables, incremental, seeds) and enables additional, optional config options for more fine-tuned control:
+* view_update_via_alter — When enabled, this config attempts to update the view in place using alter view, instead of using create or replace to replace it.
+* use_safer_relation_operations — When enabled (and if view_update_via_alter isn't set), this config makes dbt model updates more safe by staging relations and using rename operations to ensure the live version of the table or view is not disrupted by failures.
+These configs are not required to receive the core benefits of this flag, which are improved performance and functionality of columns and constraints, but are gated by this flag as being further significant changes to how materializations behave.
 
 We plan to switch the default of this flag to `True` in 1.11.0, depending on user feedback.
+
 
 ### Changes to the Seed materialization
 
@@ -48,7 +52,7 @@ The seeds materialization should have the smallest difference between the old an
 
 ### Changes to the View materialization
 
-In conjunction with the flag above, there are two model configuration options that can customize how we handle the view materialization when we detect an existing relation at the target location.
+With `use_materialization_v2` flag set to `True`, there are two model configuration options that can customize how we handle the view materialization when we detect an existing relation at the target location.
 
 * `view_update_via_alter`
 
