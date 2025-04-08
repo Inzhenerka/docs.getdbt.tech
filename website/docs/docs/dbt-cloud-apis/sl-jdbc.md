@@ -256,7 +256,7 @@ The following sections provide examples of how to query metrics using the JDBC A
 - [Query by all dimensions](#query-by-all-dimensions) &mdash; Query by all valid dimensions.
 - [Query with where filters](#query-with-where-filters) &mdash; Use the `where` parameter to filter on dimensions and entities using parameters.
 - [Query with a limit](#query-with-a-limit) &mdash; Query using a `limit` or `order_by` clause.
-- [Query with order by examples](#query-with-order-by-examples) &mdash; Query with order by, accepts basic string that's a Dimension, Metric, or Entity. Defaults to ascending order. Add a `-` sign in front of the object for descending order.
+- [Query with order by examples](#query-with-order-by-examples) &mdash; Query with `order_by`, accepts basic string that's a Dimension, Metric, or Entity. Defaults to ascending order. Add a `-` sign in front of the object for descending order.
 - [Query with compile keyword](#query-with-compile-keyword) &mdash; Query using a compile keyword.
 - [Query a saved query](#query-a-saved-query) &mdash; Query using a saved query.
 - [Query metric alias](#query-metric-alias) &mdash; Query metrics using aliases, which allow you to use simpler or more intuitive names for metrics instead of their full definitions.
