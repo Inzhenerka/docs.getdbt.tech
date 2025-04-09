@@ -848,7 +848,7 @@ If not configured, `dbt-spark` will use the built-in defaults: the all-purpose c
 
 <TabItem value="BigQuery">
 
-The `dbt-bigquery` uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
+The `dbt-bigquery` adapter uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
 
 **Submission methods:**
 BigQuery supports a few different mechanisms to submit python code, each with relative advantages. 
