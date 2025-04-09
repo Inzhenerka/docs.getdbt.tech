@@ -114,6 +114,8 @@ Assign this permission set to only the users or groups you want to have access t
 
 Once the information begins to sync, you will see the results by selecting the **Cost management** dashboard option from the left-side menu. 
 
+<Lightbox src="/img/docs/dbt-cloud/cost-management/dashboard.png" width="70%" title="The cost management dashboard."/>
+
 - Hover over the **Last refreshed...** date to see a list of your configured connections and their status.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/connection-status.png" width="70%" title="View your connection status."/>
 - Adjust the period you want to monitor.
