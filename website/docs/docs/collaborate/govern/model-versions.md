@@ -281,7 +281,7 @@ models:
 
 </Tabs>
 
-Note: If none of your model versions specify columns, you don't need to define columns at all and can omit the `include`/`exclude` keys from the versioned model. In this case, dbt will automatically use all top-level columns for all versions. 
+Note: If none of your model versions specify columns, you don't need to define columns at all and can omit the `columns/include`/`exclude` keys from the versioned model. In this case, dbt will automatically use all top-level columns for all versions. 
 
 The configuration above says: Instead of two unrelated models, I have two versioned definitions of the same model: `dim_customers_v1` and `dim_customers_v2`.
 

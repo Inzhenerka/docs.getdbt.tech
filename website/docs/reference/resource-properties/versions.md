@@ -92,7 +92,7 @@ Not to be confused with the `--select/--exclude` [syntax](/reference/node-select
 :::
 </VersionBlock>
 
-The `columns` list of a versioned model can have _at most one_ `include/exclude` element. However, if none of your model versions specify columns, you don't need to define columns at all and can omit the `include`/`exclude` keys from the versioned model. In this case, dbt will automatically use all top-level columns for all versions. 
+The `columns` list of a versioned model can have _at most one_ `include/exclude` element. However, if none of your model versions specify columns, you don't need to define columns at all and can omit the `columns/include`/`exclude` keys from the versioned model. In this case, dbt will automatically use all top-level columns for all versions. 
 
 You may declare additional columns within the version's `columns` list. If a version-specific column's `name` matches a column included from the top level, the version-specific entry will override that column for that version.
 
