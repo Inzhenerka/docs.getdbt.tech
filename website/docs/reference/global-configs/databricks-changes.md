@@ -19,7 +19,7 @@ The `use_info_schema_for_columns` flag is `False` by default.
 Setting this flag to `True` will use `information_schema` rather than `describe extended` to get column metadata for Unity Catalog tables. This setting helps you avoid issues where `describe extended` truncates information when the type is a complex struct. However, this setting is not yet the default behavior, as there are performance impacts due to a Databricks metadata limitation because of the need to run `REPAIR TABLE {{relation}} SYNC METADATA` before querying to ensure the `information_schema` is complete. 
 Please note that there is no equivalent option for views at this time which means dbt will still need to use `describe extended` for views.
 
-This flag may come default behavior in the future, depending on how information_schema changes.
+This flag may become default behavior in the future, depending on how `information_schema` changes.
 
 :::tip Do I need this flag?
 
@@ -38,13 +38,13 @@ We plan to switch the default of this flag to `True` in v1.11.0.
 
 The `use_materialization_v2` flag is `False` by default and guards significant rewrites of the core materializations in `dbt-databricks` while they are still in an experimental stage.
 
-When set to `True`, `dbt-databricks ` uses the updated logic for all model types (views, tables, incremental, seeds) and enables additional, optional config options for more fine-tuned control:
-* view_update_via_alter — When enabled, this config attempts to update the view in place using alter view, instead of using create or replace to replace it.
-* use_safer_relation_operations — When enabled (and if view_update_via_alter isn't set), this config makes dbt model updates more safe by staging relations and using rename operations to ensure the live version of the table or view is not disrupted by failures.
-These configs are not required to receive the core benefits of this flag, which are improved performance and functionality of columns and constraints, but are gated by this flag as being further significant changes to how materializations behave.
+When set to `True`, `dbt-databricks ` uses the updated logic for all model types (views, tables, incremental, seeds). It also enables additional, optional config options for more fine-tuned control:
+* `view_update_via_alter` &mdash; When enabled, this config attempts to update the view in place using alter view, instead of using create or replace to replace it.
+* `use_safer_relation_operation` &mdash; When enabled (and if `view_update_via_alter` isn't set), this config makes dbt model updates more safe by staging relations and using rename operations to ensure the live version of the table or view is not disrupted by failures.
+
+These configs aren't required to receive the core benefits of this flag &mdash; like better performance and column/constraint functionality &mdash; but they are gated behind the flag because they introduce more significant changes to how materializations behave.
 
 We plan to switch the default of this flag to `True` in 1.11.0, depending on user feedback.
-
 
 ### Changes to the Seed materialization
 
@@ -52,33 +52,30 @@ The seeds materialization should have the smallest difference between the old an
 
 ### Changes to the View materialization
 
-With `use_materialization_v2` flag set to `True`, there are two model configuration options that can customize how we handle the view materialization when we detect an existing relation at the target location.
+With the `use_materialization_v2` flag set to `True`, there are two model configuration options that can customize how we handle the view materialization when we detect an existing relation at the target location.
 
-* `view_update_via_alter`
+* `view_update_via_alter` &mdash; Updates the view in place using alter view, instead of using create or replace to replace it. This allows continuity of history for the view, keeps the metadata, and helps with Unity Catalog compatibility. Here's an example of how to configure this:
 
-When enabled, this config attempts to update the view in place using alter view, instead of using create or replace to replace it. 
-This allows continuity of history for the view, keeps the metadata, and helps with Unity Catalog compatibility.
-
-<File name="schema.yml">
-
-```yaml
-version: 2
+ <File name="schema.yml">
  
-models:
-  - name: market_summary
-    config:
-      materialized: view
-      view_update_via_alter: true
-    
-    columns:
-      - name: country
-        tests:
-          - unique
-          - not_null
-...
-```
-
-</File>
+ ```yaml
+ version: 2
+  
+ models:
+   - name: market_summary
+     config:
+       materialized: view
+       view_update_via_alter: true
+     
+     columns:
+       - name: country
+         tests:
+           - unique
+           - not_null
+ ...
+ ```
+ 
+ </File>
 
 :::caution There is currently no support for altering the comment on a view via Databricks SQL.
 
@@ -86,30 +83,28 @@ As such, we must replace the view whenever you change its description
 
 :::
 
-* `use_safer_relation_operations`
+* `use_safer_relation_operations` &mdash; When enabled (and if `view_update_via_alter` isn't set), this config makes dbt model updates more safe by creating a new relation in a staging location, swapping it with the existing relation, and deleting the old relation afterward. The following example shows how to configure this:
 
-When enabled (and if view_update_via_alter isn't set), this config makes dbt model updates more safe by creating a new relation in a staging location, swapping it with the existing relation, and deleting the old relation afterward.
-
-<File name="schema.yml">
-
-```yaml
-version: 2
+ <File name="schema.yml">
  
-models:
-  - name: market_summary
-    config:
-      materialized: view
-      use_safer_relation_operations: true
-    
-    columns:
-      - name: country
-        tests:
-          - unique
-          - not_null
-...
-```
-
-</File>
+ ```yaml
+ version: 2
+  
+ models:
+   - name: market_summary
+     config:
+       materialized: view
+       use_safer_relation_operations: true
+     
+     columns:
+       - name: country
+         tests:
+           - unique
+           - not_null
+ ...
+ ```
+ 
+ </File>
 
 :::caution This configuration option may increase costs and disrupt Unity Catalog history.
 
@@ -130,31 +125,25 @@ The benefits though are improvements in performance, safety, and unblocking feat
 
 :::
 
-When `use_materialization_v2` flag is set to `True`, all paths through the materialization are changed.
-The difference that is core to all paths is that we separate table creation from inserting rows into the table.
-This change allows us to significantly improve performance when persisting documentation on the table, as setting comments at create time is much more performant than the alternative (setting the comment on each column as a separate `alter table...` operation), but is not allowed in Databricks when we create and insert data into a table in the same statement.
-Another benefit of this approach is that several other column features, such as column-level masks, are also incompatible with inserting data as part of create.
-While these features are not a part of the 1.10.0 release, they can now be supported in future releases.
+When `use_materialization_v2` is set to `True`, all materialization paths are updated. The key change is that table creation is separated from inserting rows into the table. This separation greatly improves performance for setting table comments, since adding comments at create time is faster than using separate `alter table` statements. It also resolves compatibility issues in Databricks, where creating and inserting in one step prevents setting comments.
+
+Additionally, this change makes it possible to support other column features &mdash; like column-level masks &mdash; that aren’t compatible with inserting data during creation. While these features aren’t included in version 1.10.0, they can now be added in future releases.
 
 #### Constraints
 
-For several feature releases now, dbt-databricks supported both the dbt implementation of constraints and an alternative called `persist_constraints`, that we had implemented prior.
-With the `use_materialization_v2` flag, we begin the deprecation of this alternative implementation, and expand our support for the core dbt implementation.
-We now support the expression field for primary and foreign keys as a way to supply additional Databricks options, such as using [`RELY` to tell the Databricks optimizer that it may exploit the constraint to rewrite queries](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-constraint).
+For several feature releases now, dbt-databricks supported both dbt's [constraint](/reference/resource-properties/constraints) implementation and our own alternative, earlier version called `persist_constraints`. With the `use_materialization_v2` flag, we're beginning to deprecate `persist_constraints` and shifting fully to dbt's native constraint support.
 
-Another change to how constraints work in practice is due to separating out `create` and `insert`.
-Previously, we would create a table with data and then attempt to apply the constraints.
-This could mean replacing an existing consistent table (created on an earlier dbt run) with one that has data that violates a constraint.
-The run would still fail, but only after we had gotten rid of the table that was valid as of the previous run.
-As with views, you can select between performance and safety with the `use_safer_relation_operations` flag, but regardless of setting, the new materialization approach does not allow constraint violations into the target table.
+One new enhancement is support for the `expression` field on primary and foreign keys, which lets you pass additional Databricks options &mdash; like using [`RELY` to tell the Databricks optimizer that it may exploit the constraint to rewrite queries](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-constraint).
+
+Separating `create` and `insert` also changes how constraints behave. Previously, we would create a table with data and then apply constraints. If the new data violated a constraint, the run would fail—but by then, it had already replaced the valid table from the previous run.
+
+As with views, you can select between performance and safety with the `use_safer_relation_operations` flag, but regardless of setting, the new materialization approach ensures constraint violations don't make it into the target table.
 
 #### `use_safer_relation_operations`
 
-When using this model configuration with tables, we create a staging table and once we have successfully inserted the data into the table, we replace the target materialization with renaming.
-As Databricks does not yet have transactions supporting rollback, this is much safer in the sense that if we fail at any point prior to renaming, the previously valid table remains in place.
-This could mean that you have time to investigate failures without worrying that exposures or work streams that rely on that table are broken in the mean time.
-When this configuration is set to false (the default), the target table will still never have constraint-violating data; instead, it could end up with no data, as we could fail data insert due to the constraint.
-The primary difference comes down to whether we directly replace the target as opposed to first staging and then renaming.
+When using this model configuration with tables, we first create a staging table. After successfully inserting data into the table, we rename it to replace the target materialization. Since Databricks doesn’t support rollbacks, this is a safer approach &mdash; if something fails before the rename, the original table stays intact. That gives you time to troubleshoot without worrying that exposures or work streams relying on that table are broken in the mean time.
+
+If this config is set to `false` (the default), the target table will still never contain constraint-violating data, but it might end up empty if the insert fails due to the contraint. The key difference is whether we replace the target directly or use a staging-and-rename approach.
 
 :::caution This configuration option may increase costs and disrupt Unity Catalog history.
 
@@ -165,11 +154,15 @@ Consider carefully whether you need this behavior.
 
 ### Changes to the Incremental materialization
 
-All of the changes described for the Table materialization also apply to Incremental materialization.
-In addition, we added a model config to specify whether we should apply detected config changes on incremental runs: `incremental_apply_config_changes`.
-Many users have asked for the capability to configure table metadata in Databricks, such as accepting AI-generated comments, and not have dbt overwrite that.
-Previously, dbt-databricks assumed that detected config changes to tags, tblproperties, and comments should be applied on incremental runs.
-Under the V2 materialization, you have the option of setting `incremental_apply_config_changes` to `False` to turn off this behavior (it defaults to `True` for continuity with past behavior).
+All the changes made to the [Table materialization section](#changes-to-the-table-materialization) also apply to Incremental materializations.
+
+We’ve also added a new config:` incremental_apply_config_changes`. 
+
+This config lets you control whether dbt should apply changes to things like `tags`, `tblproperties`, and comments during incremental runs. Many users wanted the capibility to configure table metadata in Databricks &mdash; like AI-generated comments &mdash; without dbt overwriting them. Previously, dbt-databricks always applied detected changes during incremental runs.
+
+With the V2 materialization, you can now set `incremental_apply_config_changes` to `False` to stop that behavior. (It defaults to `True` to match the previous behavior.)
+
+The following example shows how to configure this:
 
 <File name="schema.yml">
 
