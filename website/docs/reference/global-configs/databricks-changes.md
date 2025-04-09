@@ -135,7 +135,7 @@ For several feature releases now, dbt-databricks supported both dbt's [constrain
 
 One new enhancement is support for the `expression` field on primary and foreign keys, which lets you pass additional Databricks options &mdash; like using [`RELY` to tell the Databricks optimizer that it may exploit the constraint to rewrite queries](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-constraint).
 
-Separating `create` and `insert` also changes how constraints behave. Previously, we would create a table with data and then apply constraints. If the new data violated a constraint, the run would fail—but by then, it had already replaced the valid table from the previous run.
+Separating `create` and `insert` also changes how constraints behave. Previously, we would create a table with data and then apply constraints. If the new data violated a constraint, the run would fail &mdash; but by then, it had already replaced the valid table from the previous run.
 
 As with views, you can select between performance and safety with the `use_safer_relation_operations` flag, but regardless of setting, the new materialization approach ensures constraint violations don't make it into the target table.
 
@@ -143,7 +143,7 @@ As with views, you can select between performance and safety with the `use_safer
 
 When using this model configuration with tables, we first create a staging table. After successfully inserting data into the table, we rename it to replace the target materialization. Since Databricks doesn’t support rollbacks, this is a safer approach &mdash; if something fails before the rename, the original table stays intact. That gives you time to troubleshoot without worrying that exposures or work streams relying on that table are broken in the mean time.
 
-If this config is set to `false` (the default), the target table will still never contain constraint-violating data, but it might end up empty if the insert fails due to the contraint. The key difference is whether we replace the target directly or use a staging-and-rename approach.
+If this config is set to `false` (the default), the target table will still never contain constraint-violating data, but it might end up empty if the insert fails due to the constraint. The key difference is whether we replace the target directly or use a staging-and-rename approach.
 
 :::caution This configuration option may increase costs and disrupt Unity Catalog history.
 
@@ -156,9 +156,9 @@ Consider carefully whether you need this behavior.
 
 All the changes made to the [Table materialization section](#changes-to-the-table-materialization) also apply to Incremental materializations.
 
-We’ve also added a new config:` incremental_apply_config_changes`. 
+We’ve also added a new config: `incremental_apply_config_changes`. 
 
-This config lets you control whether dbt should apply changes to things like `tags`, `tblproperties`, and comments during incremental runs. Many users wanted the capibility to configure table metadata in Databricks &mdash; like AI-generated comments &mdash; without dbt overwriting them. Previously, dbt-databricks always applied detected changes during incremental runs.
+This config lets you control whether dbt should apply changes to things like `tags`, `tblproperties`, and comments during incremental runs. Many users wanted the capability to configure table metadata in Databricks &mdash; like AI-generated comments &mdash; without dbt overwriting them. Previously, dbt-databricks always applied detected changes during incremental runs.
 
 With the V2 materialization, you can now set `incremental_apply_config_changes` to `False` to stop that behavior. (It defaults to `True` to match the previous behavior.)
 
