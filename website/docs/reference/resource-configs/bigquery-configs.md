@@ -903,8 +903,8 @@ The BigQuery adapter supports Python models with the following additional config
 | `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
 | `submission_method`     | `<string>`  | no       | ``        | `serverless`, `bigframes` |
 | `notebook_template_id`  | `<Integer>` | no       | ``        | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
-| `compute_region`        | `<string>`  | no       | ``        | <COMPUTE_REGION> |
-| `gcs_bucket`            | `<string>`  | no       | ``        | <GCS_BUCKET> |
+| `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
+| `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
 
 ### The `enable_list_inference` parameter
 The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation.
