@@ -184,7 +184,7 @@ The unique identifier associated with a specific Colab notebook, which acts are 
 
 <Expandable alt_header="Compute Region">
 
-This region must match the location of your BigQuery dataset if you want to use BigQuery Dataframe, ensure the Colob runtime is also within the same region.
+This region must match the location of your BigQuery dataset if you want to use BigQuery Dataframe, ensure the Colab runtime is also within the same region.
 
 </Expandable>
 
