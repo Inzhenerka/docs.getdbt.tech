@@ -425,7 +425,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe">
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
 
 <File name='models/my_python_model.py'>
 
