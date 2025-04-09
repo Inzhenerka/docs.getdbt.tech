@@ -142,3 +142,63 @@ These are the exceptions, rather than the rule. Installing another team's projec
 ## Related docs
 - Refer to the [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) guide for more guidance on how to use dbt Mesh.
 - [Quickstart with dbt Mesh](/guides/mesh-qs)
+
+
+
+### Changes to the View materialization
+
+With the `use_materialization_v2` flag set to `True`, there are two model configuration options that can customize how we handle the view materialization when we detect an existing relation at the target location.
+
+* `view_update_via_alter` &mdash; Updates the view in place using alter view, instead of using create or replace to replace it. This allows continuity of history for the view, keeps the metadata, and helps with Unity Catalog compatibility. Here's an example of how to configure this:
+
+ <File name="schema.yml">
+ 
+ ```yaml
+ version: 2
+  
+ models:
+   - name: market_summary
+     config:
+       materialized: view
+       view_update_via_alter: true
+     
+     columns:
+       - name: country
+         tests:
+           - unique
+           - not_null
+ ...
+ ```
+ 
+ </File>
+
+:::caution There is currently no support for altering the comment on a view via Databricks SQL.
+
+As such, we must replace the view whenever you change its description
+
+:::
+
+* `use_safer_relation_operations` &mdash; When enabled (and if `view_update_via_alter` isn't set), this config makes dbt model updates more safe by creating a new relation in a staging location, swapping it with the existing relation, and deleting the old relation afterward.
+
+The following example shows how to configure this:
+
+ <File name="schema.yml">
+ 
+ ```yaml
+ version: 2
+  
+ models:
+   - name: market_summary
+     config:
+       materialized: view
+       use_safer_relation_operations: true
+     
+     columns:
+       - name: country
+         tests:
+           - unique
+           - not_null
+ ...
+ ```
+ 
+ </File>
