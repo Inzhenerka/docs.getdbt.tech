@@ -902,7 +902,7 @@ The BigQuery adapter supports Python models with the following additional config
 | `enable_list_inference` | `<boolean>` | no       | `True`    | `True`, `False`  |
 | `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
 | `submission_method`     | `<string>`  | no       | ``        | `serverless`, `bigframes` |
-| `notebook_template_id`  | `<Integer>` | no       | ``        | <NOTEBOOK RUNTIME TEMPLATE_ID> |
+| `notebook_template_id`  | `<Integer>` | no       | ``        | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
 | `compute_region`        | `<string>`  | no       | ``        | <COMPUTE_REGION> |
 | `gcs_bucket`            | `<string>`  | no       | ``        | <GCS_BUCKET> |
 
