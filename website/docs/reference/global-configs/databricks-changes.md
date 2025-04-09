@@ -131,13 +131,13 @@ Additionally, this change makes it possible to support other column features &md
 
 #### Constraints
 
-For several feature releases now, dbt-databricks supported both dbt's [constraint](/reference/resource-properties/constraints) implementation and our own alternative, earlier version called `persist_constraints`. With the `use_materialization_v2` flag, we're beginning to deprecate `persist_constraints` and shifting fully to dbt's native constraint support.
+For several feature releases now, dbt-databricks supported both dbt's [constraints](/reference/resource-properties/constraints) implementation and our own alternative, earlier version called `persist_constraints`. With the `use_materialization_v2` flag, we're beginning to deprecate `persist_constraints` and shifting fully to dbt's native constraint support.
 
 One new enhancement is support for the `expression` field on primary and foreign keys, which lets you pass additional Databricks options &mdash; like using [`RELY` to tell the Databricks optimizer that it may exploit the constraint to rewrite queries](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-constraint).
 
 Separating `create` and `insert` also changes how constraints behave. Previously, we would create a table with data and then apply constraints. If the new data violated a constraint, the run would fail &mdash; but by then, it had already replaced the valid table from the previous run.
 
-As with views, you can select between performance and safety with the `use_safer_relation_operations` flag, but regardless of setting, the new materialization approach ensures constraint violations don't make it into the target table.
+As with views, you can select between performance and safety with the [`use_safer_relation_operations` flag](#use_safer_relation_operations), but regardless of setting, the new materialization approach ensures constraint violations don't make it into the target table.
 
 #### `use_safer_relation_operations`
 
