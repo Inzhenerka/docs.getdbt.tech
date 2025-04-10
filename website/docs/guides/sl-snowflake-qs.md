@@ -987,6 +987,8 @@ This page will guide you on how to connect and use the following integrations to
 
 - [Connect and query with Google Sheets](#connect-and-query-with-google-sheets)
 - [Connect and query with Hex](#connect-and-query-with-hex)
+- [Connect and query with Sigma](#connect-and-query-with-sigma)
+  
 
 The dbt Semantic Layer enables you to connect and query your metric with various available tools like Google Sheets, Hex, Tableau, and more. 
 
@@ -1000,6 +1002,11 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-co
 -->
 
 <ConnectQueryAPI/>
+
+### Connect and query with Sigma
+This section will guide you on how to use the Sigma integration to query your metrics using Sigma. If you already have a Sigma account, simply log in and skip to step 6. Otherwise, you'll be using a Sigma account you'll create with Snowflake Partner Connect. 
+
+1. Go back to your Snowflake account. In the Snowflake UI, click on the home icon in the upper left corner. In the left sidebar, select **Data Products**. Then, select **Partner Connect**. Find the Sigma tile by scrolling or by searching for Sigma in the search bar. Click the tile to connect to 
 
 ### Connect and query with Hex
 This section will guide you on how to use the Hex integration to query your metrics using Hex. Select the appropriate tab based on your connection method:
