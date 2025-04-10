@@ -43,7 +43,7 @@ You must configure metadata credentials for each unique Snowflake account you wa
         - `ORGANIZATION_USAGE.USAGE_IN_CURRENCY_DAILY`
 
 
-To create a user `dbt_cost_user` and a role `dbt_cost_management` and assign it the required permissions over specific tables, you'd execute something that looks like the following example:
+To create a user `dbt_cost_user` and a role `dbt_cost_management` using SQL and assign the required permissions over specific tables, you'd execute something that looks like the following example:
 
 ```sql
 
