@@ -1041,12 +1041,15 @@ This section will guide you on how to use the Sigma integration to query your me
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-make-table.png" width="50%" title="Click the '+ New project' button on the top right"/>
 
 11. Query away! Try this one, for example:
-  `select * from
+```
+select * from
   {{ semantic_layer.query (
     metrics = ['order_total', 'order_count', large_orders', 'customers_with_orders', 'avg_order_value', pct_of_orders_that_are_large'],
     group_by = 
     [Dimension('metric_time').grain('day) ]
-) }}`
+) }}
+
+```
 
 
     
