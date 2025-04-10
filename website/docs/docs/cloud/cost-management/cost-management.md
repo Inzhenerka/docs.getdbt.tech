@@ -106,11 +106,11 @@ The cost management dashboard can be accessed anywhere in dbt Cloud from the lef
 Users with the following [permission sets](/docs/cloud/manage-access/enterprise-permissions) will be able to access the cost management dashboard:
 - Account Admin
 - Account Viewer
-- Cost Management Viewer
+- Cost Management Admin
 
-Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Viewer`. 
+Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Admin`. 
 
-Assign this permission set to the users or groups you want to have access to the dashboard. Project-level access is coming soon!
+Assign this permission set to the users or groups you want to have access to the dashboard. Project-level access is coming soon via a new role, `Cost Management Viewer`.
 
 Once the information syncs, you will see the results by selecting the **Cost management** dashboard option from the left-side menu. 
 
