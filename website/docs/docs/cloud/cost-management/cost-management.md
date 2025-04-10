@@ -128,7 +128,7 @@ There are metrics that will be available to view and measure your costs as you n
 - **Execution queries:** The total number of queries run within the data warehouse by executing dbt resources (model builds, tests, etc.).
 - **Consumption queries:** The total number of queries of given resource across all usage in the warehouse (includes BI/analytics tools, query consoles, etc.)
 - **Execution costs:** The total warehouse cost associated with the resource(s) being executed in dbt runs.
-- **Duration:** The total duration of queries that executed dbt resources over the time period.
+- **Duration (resource view only):** The total duration of queries that executed dbt resources over the time period.
 
 You can sort the list views by these metrics to see how resources are impacting individual areas and have quick views into your highest cost areas
     <Lightbox src="/img/docs/dbt-cloud/cost-management/sort-by-execution-cost.png" width="70%" title="Metrics sorted by execution cost."/>
