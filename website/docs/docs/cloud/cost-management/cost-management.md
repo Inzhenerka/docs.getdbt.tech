@@ -181,8 +181,8 @@ When you filter by resources, you get valuable insights into how your projectsâ€
 When you filter by environment, select a project to view more detailed information about how each environment type impacts your warehouse costs. 
 
     <Lightbox src="/img/docs/dbt-cloud/cost-management/filter-by-environment.png" width="70%" title="Filter the Discover view by environment."/>
-- The list view will mark your production environment with a <Lifecycle status='PROD'/> icon. 
-- Click on the colored squares next to an environment name to add or remove it from the bar graph view. 
+- The list view will mark your production environment with a `PROD` icon. 
+- Click a colored square next to an environment name to add or remove it from the bar graph view. 
 - Hover over a bar to view the cost breakdown for each environment.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/environment-cost-breakdown.png" width="70%" title="The bar graph breaks down costs by environment."/>
 - Sort the list view by any of the available fields. Click an item in the list view for detailed bar graph breakdowns of cost, query execution count, and consumption count.
