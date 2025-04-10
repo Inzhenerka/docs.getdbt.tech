@@ -114,7 +114,7 @@ Users with the following [permission sets](/docs/cloud/manage-access/enterprise-
 
 Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Admin`. 
 
-Assign this permission set to the users or groups you want to have access to the dashboard. Project-level access is coming soon via a new role, `Cost Management Viewer`.
+You can optionally assign this permission set to the users or groups you want to have access to the dashboard instead of granting broader access with the other roles. Project-level access is coming soon via a new role, `Cost Management Viewer`.
 
 Once the information syncs, you will see the results by selecting the **Cost management** dashboard option from the left-side menu. 
 
