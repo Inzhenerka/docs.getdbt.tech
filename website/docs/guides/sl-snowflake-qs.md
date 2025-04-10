@@ -1006,7 +1006,25 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-co
 ### Connect and query with Sigma
 This section will guide you on how to use the Sigma integration to query your metrics using Sigma. If you already have a Sigma account, simply log in and skip to step 6. Otherwise, you'll be using a Sigma account you'll create with Snowflake Partner Connect. 
 
-1. Go back to your Snowflake account. In the Snowflake UI, click on the home icon in the upper left corner. In the left sidebar, select **Data Products**. Then, select **Partner Connect**. Find the Sigma tile by scrolling or by searching for Sigma in the search bar. Click the tile to connect to 
+1. Go back to your Snowflake account. In the Snowflake UI, click on the home icon in the upper left corner. In the left sidebar, select **Data Products**. Then, select **Partner Connect**. Find the Sigma tile by scrolling or by searching for Sigma in the search bar. Click the tile to connect to Sigma.
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-partner-connect.png" width="50%" title="Click the '+ New project' button on the top right"/>
+2. Select the Sigma tile from the list. Click the **Optional Grant** dropdown menu. Write **RAW** and **ANALYTICS** in the text box and then click **Connect**. 
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-optional-grant.png" width="50%" title="Click the '+ New project' button on the top right"/>
+3. Make up a company name and URL to use. It doesn’t matter what URL you use, as long as it’s unique.
+4. Enter your name and email address. Choose a password for your account.
+5. Great! You now have a Sigma account. Before we get started, go back to Snowlake and open a blank worksheet. Run these lines.
+`grant all privileges on all views in schema analytics.SCHEMA to role pc_sigma_role;`
+
+`grant all privileges on all tables in schema analytics.SCHEMA to role pc_sigma_role;
+`
+6. Click on your bubble in the top right corner. Click the **Administration** button from the dropdown menu.
+7. Scroll down to the integrations section, then select **Add** next to the dbt integration.
+8. In the dbt Integration section, fill out the required fields, and then hit save: 
+- Your dbt service account token.
+- Your access URL of your existing Sigma dbt integration. Use cloud.getdbt.com as your access URL.
+- Your dbt environment ID.
+
+
 
 ### Connect and query with Hex
 This section will guide you on how to use the Hex integration to query your metrics using Hex. Select the appropriate tab based on your connection method:
