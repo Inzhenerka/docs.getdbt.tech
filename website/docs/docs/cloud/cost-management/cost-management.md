@@ -140,7 +140,7 @@ You can sort the list views by these metrics to see how resources are impacting 
 
 ### Overview 
 
-The **Overview** dashboard displays general information about your costs:
+The **Overview** dashboard is the first display you'll see. It gives you general information about your costs:
 
 - The top tiles display spend and savings over the selected period.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/warehouse-spend.png" width="70%" title="See your total spending."/>
