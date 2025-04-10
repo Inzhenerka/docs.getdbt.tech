@@ -33,7 +33,7 @@ To configure the cost management tools, you must have the following:
 
 You must configure metadata credentials for each unique Snowflake account you want the cost management tool to monitor. To configure the proper access in Snowflake: 
 
-1. Identify an existing or new (recommended) service user in your Snowflake account. We recommend configuring a new user for this service, for example, `dbt_cost_management`, for more flexible customization.
+1. Identify an existing or new (recommended) service user in your Snowflake account. We recommend configuring a new user for this service, for example, `dbt_cost_user`, for more flexible customization.
 2. Grant the user `read` permissions to the [`ORGANIZATION_USAGE`](https://docs.snowflake.com/en/sql-reference/organization-usage) and [`ACCOUNT_USAGE`](https://docs.snowflake.com/en/sql-reference/account-usage) schemas. 
     - (Optional) You can scope this down to the specific tables in the warehouse if preferred using a [Snowflake database role](https://docs.snowflake.com/en/sql-reference/account-usage#enabling-other-roles-to-use-schemas-in-the-snowflake-database) assigned the following access:
         - `ACCOUNT_USAGE.QUERY_HISTORY`
