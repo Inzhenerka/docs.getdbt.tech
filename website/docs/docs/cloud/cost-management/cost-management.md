@@ -5,6 +5,8 @@ unlisted: true
 sidebar_label: About cost management
 ---
 
+# About cost management in dbt Cloud <Lifecycle status='beta' />
+
 :::note beta documentation
 
 This documentation is for a beta feature. The title, sections, and content within this doc may change frequently during the beta period. The final product may be split into multiple pages, and existing sections may be renamed. This page is intended for beta users only. Please do not share outside of your organization. 
