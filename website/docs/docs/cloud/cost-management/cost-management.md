@@ -125,10 +125,10 @@ Once the information syncs, you will see the results by selecting the **Cost man
 
 There are metrics that will be available to view and measure your costs as you navigate the dashboard. As you filter your dashboard, you will have access to a list view that enables you to sort by these metrics. The following metrics are available in the cost management dashboard:
 
-- **Execution queries:** The total number of queries run against the data warehouse after execution of dbt runs. 
-- **Consumption queries:** The total number of warehouse credits consumed by the resource(s) after execution of your dbt runs.  
-- **Execution costs:** The total warehouse cost associate with the resource(s) after execution of your dbt runs. 
-- **Duration (resource view only):** The total duration it took to run dbt resources over the time period. 
+- **Execution queries:** The total number of queries run against the data warehouse after executing dbt runs.
+- **Consumption queries:** The total number of warehouse credits consumed by the resource(s) after executing your dbt runs.
+- **Execution costs:** The total warehouse cost associated with the resource(s) after executing your dbt runs.
+- **Duration (resource view only):** The total duration it took to run dbt resources over time.
 
 You can sort the list views by these metrics to see how resources are impacting individual areas and have quick views into your highest cost areas
     <Lightbox src="/img/docs/dbt-cloud/cost-management/sort-by-execution-cost.png" width="70%" title="Metrics sorted by execution cost."/>
