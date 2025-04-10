@@ -92,7 +92,7 @@ Once the user is created and assigned proper privileges, it's time to configure 
 To configure the metadata connection in dbt Cloud:
 
 1. Navigate to **Account Settings** and click **Connections**.
-2. Click on the connection associated with the data warehouse(s) you configured in the Snowflake setup. Do not click **Edit**. This is for the broader settings and will prevent the metadata section from being altered. 
+2. Click the connection associated with the data warehouse(s) you configured in the Snowflake setup. Do not click **Edit**. This is for the broader settings and will prevent the metadata section from being altered. 
 3. Scroll down to the **Platform metadata credentials** and click **Add credentials**.
 4. Set the appropriate **Auth method** (username and password or key pair) and fill out all the fields provided.
 5. Click **Save**.
