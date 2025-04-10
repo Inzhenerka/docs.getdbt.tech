@@ -7,7 +7,18 @@
  */
 
 export const CONSTANTS = {
+  git: 'Git',
   cloud: 'dbt Cloud',
   core: 'dbt Core',
+  dbt: 'dbt',
+  cloud_cli: 'dbt Cloud CLI',
+  explorer: 'dbt Explorer',
+  visual_editor: 'Visual Editor',
+  query_page: 'Query Page',
+  cloud_ide: 'Cloud IDE',
+  mesh: 'Mesh',
+  orchestrator: 'Orchestrator',
+  copilot: 'Copilot',
   semantic_layer: 'Semantic Layer',
 }
+ 
