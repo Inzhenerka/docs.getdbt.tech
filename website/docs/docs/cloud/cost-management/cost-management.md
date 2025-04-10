@@ -81,7 +81,9 @@ GRANT ROLE dbt_cost_management TO USER dbt_cost_user;
 
 ```
 
-You can also configure the user for key pair authentication with dbt Cloud. Repeat this process for each Snowflake warehouse you want to monitor. 
+If you prefer, you can also configure the user for key pair authentication instead of using a username and password with dbt Cloud. 
+
+You must repeat the user creation process in each Snowflake warehouse you want to monitor. 
 
 Once the user is created and assigned proper privileges, it's time to configure the connection in dbt Cloud.
 
