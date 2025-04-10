@@ -213,7 +213,7 @@ After you have moved everything into CTEs, you'll want to write a `select * from
 
 This allows anyone after us to easily step through the CTEs when troubleshooting, rather than having to untangle nested queries.
 
-> For more background on CTEs, check out the [dbt Labs style guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md#ctes).
+> For more background on CTEs, check out the [dbt Labs style guide](https://docs.getdbt.com/best-practices/how-we-style/0-how-we-style-our-dbt-projects).
 
 ## Port CTEs to individual data models
 Rather than keep our SQL code confined to one long SQL file, we'll now start splitting it into modular + reusable [dbt data models](https://docs.getdbt.com/docs/build/models).

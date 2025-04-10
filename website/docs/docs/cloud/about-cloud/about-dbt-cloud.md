@@ -18,13 +18,13 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
 
 <Card
     title="dbt Cloud CLI"
-    body="Use the dbt Cloud CLI to develop, test, run, and version control dbt projects and commands in your dbt Cloud development environment. Collaborate with team members, directly from the command line."
+    body="Use the dbt Cloud CLI to develop, test, run, and version control dbt projects and commands, directly from the command line."
     link="/docs/cloud/cloud-cli-installation"
     icon="dbt-bit"/>
 
 <Card
     title="dbt Cloud IDE"
-    body="The IDE is the easiest and most efficient way to develop dbt models, allowing you to build, test, run, and version control your dbt projects directly from your browser. Use dbt Copilot, a powerful AI engine that automatically generates code, documentation, tests, and semantic models."
+    body="The IDE is the easiest and most efficient way to develop dbt models, allowing you to build, test, run, and version control your dbt projects directly from your browser."
     link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud"
     icon="dbt-bit"/>
 
@@ -33,6 +33,12 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     body="Develop with the Visual Editor, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt Cloud."
     link="/docs/cloud/visual-editor"
     icon="dbt-bit"/>
+
+<Card
+    title="dbt Copilot*"
+    body="Use dbt Copilot to generate documentation, tests, semantic models, metrics, and SQL code from scratch, giving you the flexibility to modify or fix generated code."
+    link="/docs/cloud/dbt-copilot"
+    icon="copilot"/>
 
 <Card
     title="Manage environments"
@@ -82,6 +88,12 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     link="https://www.getdbt.com/security/"
     icon="dbt-bit"/>
 
+  <Card
+   title="Visualize and orchestrate exposures*"
+   body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
+   link="/docs/cloud-integrations/downstream-exposures"
+   icon="dbt-bit"/>
+
    <Card
     title="dbt Semantic Layer*"
     body="Use the dbt Semantic Layer to define metrics alongside your dbt models and query them from any integrated analytics tool. Get the same answers everywhere, every time."
@@ -99,12 +111,19 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     body="Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your data pipelines."
     link="/docs/collaborate/explore-projects"
     icon="dbt-bit"/>
+
+  <Card
+    title="Query page*"
+    body="Learn how to query data and perform exploratory data analysis using the Query page."
+    link="/docs/collaborate/query-page"
+    icon="dbt-bit"/>
+
 </div> <br />
 
 *These features are available on [selected plans](https://www.getdbt.com/pricing/).
+
 ## Related docs
 
 - [dbt Cloud plans and pricing](https://www.getdbt.com/pricing/)
 - [Quickstart guides](/docs/get-started-dbt)
 - [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)
-

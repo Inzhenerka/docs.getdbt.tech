@@ -14,7 +14,6 @@ The dbt Semantic Layer offers a seamless integration with Excel Online and Deskt
 - You need a Microsoft Excel account with access to install add-ons.
 - You have a [dbt Cloud Environment ID](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) and a [service token](/docs/dbt-cloud-apis/service-tokens) to authenticate with from a dbt Cloud account.
 - You must have a dbt Cloud Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment.
-  - Single-tenant accounts should contact their account representative for necessary setup and enablement.
 
 :::tip
 
@@ -38,9 +37,9 @@ import Tools from '/snippets/_sl-excel-gsheets.md';
 type="Microsoft Excel"
 bullet_1="Results that take longer than one minute to load into Excel will fail. This limit only applies to the loading process, not the time it takes for the data platform to run the query."
 bullet_2="If you're using this extension, make sure you're signed into Microsoft with the same Excel profile you used to set up the Add-In. Log in with one profile at a time as using multiple  profiles at once might cause issues."
+bullet_3="Note that only standard granularities are currently available, custom time granularities aren't currently supported for this integration."
 queryBuilder="/img/docs/dbt-cloud/semantic-layer/query-builder.png"
 />
-
 
 ## FAQs
 <FAQ path="Troubleshooting/sl-alpn-error" />

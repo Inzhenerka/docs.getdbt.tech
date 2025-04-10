@@ -46,7 +46,7 @@ _Note: If you're using the dbt Cloud IDE to work on your project, you're unlikel
 ### Not a dbt project
 
 ```
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 Encountered an error:
 Runtime Error
   fatal: Not a dbt project (or any of the parent directories). Missing dbt_project.yml file
@@ -63,7 +63,7 @@ Runtime Error
 ### Could not find profile
 
 ```
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 
 Encountered an error:
 Runtime Error
@@ -103,7 +103,7 @@ jaffle_shop: # this does not match the profile: key
 - If you can't find your `profiles.yml` file, run `dbt debug --config-dir` for help:
 ```
 $ dbt debug --config-dir
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 To view your profiles.yml file, run:
 
 open /Users/alice/.dbt
@@ -134,7 +134,7 @@ Runtime Error
 
 ```
 $ dbt debug
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 Using profiles.yml file at /Users/alice/.dbt/profiles.yml
 Using dbt_project.yml file at /Users/alice/jaffle-shop-dbt/dbt_project.yml
 
@@ -197,7 +197,7 @@ _Note: if you're using the dbt Cloud IDE to work on your dbt project, this error
 ### Invalid `ref` function
 ```
 $ dbt run -s customers
-Running with dbt=0.17.1
+Running with dbt=1.1.0
 
 Encountered an error:
 Compilation Error in model customers (models/customers.sql)
@@ -217,7 +217,7 @@ Compilation Error in model customers (models/customers.sql)
 
 ```
 $ dbt run
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 Compilation Error in macro (macros/cents_to_dollars.sql)
   Reached EOF without finding a close tag for macro (searched from line 1)
 ```
@@ -235,7 +235,7 @@ To fix this:
 - Use the error message to find your mistake
 
 To prevent this:
-- _(dbt Core users only)_ Use snippets to auto-complete pieces of Jinja ([atom-dbt package](https://github.com/dbt-labs/atom-dbt), [vscode-dbt extestion](https://marketplace.visualstudio.com/items?itemName=bastienboutonnet.vscode-dbt))
+- _(dbt Core users only)_ Use snippets to auto-complete pieces of Jinja ([atom-dbt package](https://github.com/dbt-labs/atom-dbt))
 
 </details>
 
@@ -244,7 +244,7 @@ dbt wasn't able to turn your YAML into a valid dictionary.
 
 ```
 $ dbt run
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 
 Encountered an error:
 Compilation Error
@@ -298,7 +298,7 @@ Slightly different error — the YAML structure is right (i.e. the YAML parser c
 
 ```
 $ dbt run
-Running with dbt=0.17.1
+Running with dbt=1.7.1
 
 Encountered an error:
 Compilation Error
@@ -318,7 +318,7 @@ Compilation Error
 ## Dependency Errors
 ```
 $ dbt run
-Running with dbt=0.17.1-rc
+Running with dbt=1.7.1-rc
 
 Encountered an error:
 Found a cycle: model.jaffle_shop.customers --> model.jaffle_shop.stg_customers --> model.jaffle_shop.customers

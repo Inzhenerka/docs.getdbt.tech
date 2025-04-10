@@ -16,6 +16,10 @@ Defining a dbt model is as easy as writing a SQL `select` statement. Your query 
 
 While this is ideal for quick and iterative development, for some models, constantly changing the shape of its returned dataset poses a risk when other people and processes are querying that model. It's better to define a set of upfront "guarantees" that define the shape of your model. We call this set of guarantees a "contract." While building your model, dbt will verify that your model's transformation will produce a dataset matching up with its contract, or it will fail to build.
 
+import ModelGovernanceRollback from '/snippets/_model-governance-rollback.md';
+
+<ModelGovernanceRollback />
+
 ## Where are contracts supported?
 
 At present, model contracts are supported for:
@@ -32,7 +36,6 @@ Model contracts are _not_ supported for:
 - Custom materializations (unless added by the author).
 - Models with recursive <Term id="cte" />'s in BigQuery.
 - Other resource types, such as `sources`, `seeds`, `snapshots`, and so on.
-
 
 ## How to define a contract
 

@@ -71,16 +71,16 @@ Examples of queried metrics include:
   dbt sl query --metrics revenue,gross_sales --group-by metric_time,user__country
   ```
 
-- Running an explain for one metric → 1 queried metric
+- Running a compile for one metric → 1 queried metric
 
   ```shell
-  dbt sl query --metrics revenue --group-by metric_time --explain
+  dbt sl query --metrics revenue --group-by metric_time --compile
   ```
 
-- Running an explain for two metrics → 2 queried metrics
+- Running a compile for two metrics → 2 queried metrics
 
   ```shell
-  dbt sl query --metrics revenue,gross_sales --group-by metric_time --explain
+  dbt sl query --metrics revenue,gross_sales --group-by metric_time --compile
   ```
 
 ### Viewing usage in the product 
@@ -156,7 +156,11 @@ From dbt Cloud, click on your account name in the left side menu and select **Ac
 
 ### Usage notifications 
 
-Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached. In the Team plan, all users within the Owner group will receive alerts. In Enterprise plans, all users with the Account Admin and Billing Admin permission sets will receive alerts. Users cannot opt out of these emails. If you would like additional users to receive these alert emails, please provide them with the applicable permissions mentioned above. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times. 
+Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached.
+- Team plan &mdash; All users within the Owner group receive alerts. 
+- Enterprise plans &mdash; All users with the Account Admin and Billing Admin [permission sets](/docs/cloud/manage-access/enterprise-permissions#permission-sets) receive alerts. 
+
+Users cannot opt out of these emails. To have additional users to receive these alert emails, assign them the applicable permissions mentioned earlier. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times.
 
 ### How do I stop usage from accruing?
 

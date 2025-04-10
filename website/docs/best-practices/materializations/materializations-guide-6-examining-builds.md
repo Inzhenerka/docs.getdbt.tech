@@ -14,14 +14,14 @@ hoverSnippet: Read this guide to understand how to examine your builds in dbt.
 - 📊 Artifacts contain a ton of information in JSON format, so aren’t easy to read, but **dbt Cloud** packages the most useful bits of information into a tidy **visualization** for you.
 - ☁️ If you’re not using Cloud, we can still use the output of the **dbt Core CLI to understand our runs**.
 
-### Model Timing
+### Model timing
 
 That’s where dbt Cloud’s Model Timing visualization comes in extremely handy. If we’ve set up a [Job](/guides/bigquery) in dbt Cloud to run our models, we can use the Model Timing tab to pinpoint our longest-running models.
 
 ![dbt Cloud's Model Timing diagram](/img/best-practices/materializations/model-timing-diagram.png)
 
 - 🧵 This view lets us see our **mapped out in threads** (up to 64 threads, we’re currently running with 4, so we get 4 tracks) over time. You can think of **each thread as a lane on a highway**.
-- ⌛ We can see above that `customer_status_histories` is **taking by far the most time**, so we may want to go ahead and **make that incremental**.
+- ⌛ We can see above that `order_items` and `orders` are **taking the most time**, so we may want to go ahead and **make that incremental**.
 
 If you aren’t using dbt Cloud, that’s okay! We don’t get a fancy visualization out of the box, but we can use the output from the dbt Core CLI to check our model times, and it’s a great opportunity to become familiar with that output.
 

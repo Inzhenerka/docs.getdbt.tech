@@ -21,8 +21,7 @@ The dbt Semantic Layer Power BI integration is currently in private beta. To joi
 - You installed [Power BI Desktop or Power BI On-premises Data Gateway](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors).
   - Power BI Service doesn't natively support custom connectors. To use the connector in Power BI Service, you must install and configure it on an On-premises Data Gateway.
 - You need your [dbt Cloud host](/docs/use-dbt-semantic-layer/setup-sl#3-view-connection-detail), [Environment ID](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) and [service token](/docs/dbt-cloud-apis/service-tokens) to log in. This account should be set up with the dbt Semantic Layer.
-- You must have a dbt Cloud Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment. 
-  - Single-tenant accounts should contact their account representative for necessary setup and enablement.
+- You must have a dbt Cloud Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment.
 
 import SLCourses from '/snippets/_sl-course.md';
 
@@ -77,9 +76,9 @@ To configure project credentials in Power BI Desktop:
 1. Create a blank report.
 2. On the top-left, click on **Get data**.
 3. Search for dbt Semantic Layer, then click **Connect**.
-4. Fill in your connection details. You can find your server and environment ID under the Semantic Layer configuration for your dbt Cloud project.
+4. Fill in your connection details. You can find your Host and Environment ID under the Semantic Layer configuration for your dbt Cloud project.
    :::tip 
-   Make sure you select `DirectQuery`, since the Semantic Layer connector does not support `Import` mode (see [Considerations](#considerations) for more details). 
+   Make sure you select **DirectQuery** under **Data Connectivity mode** since the Semantic Layer connector does not support **Import** mode. See [Considerations](#considerations) for more details. 
    :::
 5. Click **OK** to proceed.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-directquery.jpg" title="Select DirectQuery mode" />

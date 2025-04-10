@@ -29,7 +29,7 @@ Model versioning is a tool to tackle this problem, thoughtfully and head-on. The
 ## Related documentation
 - [`versions`](/reference/resource-properties/versions)
 - [`latest_version`](/reference/resource-properties/latest_version)
-- [`include` & `exclude`](/reference/resource-properties/include-exclude)
+- [`include` and `exclude`](/reference/resource-properties/versions#include)
 - [`ref` with `version` argument](/reference/dbt-jinja-functions/ref#versioned-ref)
 
 ## Why version a model?
@@ -50,6 +50,10 @@ dbt Core 1.6 introduced first-class support for **deprecating models** by specif
 There is a real trade-off that exists here—the cost to frequently migrate downstream code, and the cost (and clutter) of materializing multiple versions of a model in the data warehouse. Model versions do not make that problem go away, but by setting a deprecation date, and communicating a clear window for consumers to gracefully migrate off old versions, they put a known boundary on the cost of that migration.
 
 ## When should you version a model?
+
+import ModelGovernanceRollback from '/snippets/_model-governance-rollback.md';
+
+<ModelGovernanceRollback />
 
 By enforcing a model's contract, dbt can help you catch unintended changes to column names and data types that could cause a big headache for downstream queriers. If you're making these changes intentionally, you should create a new model version. If you're making a non-breaking change, you don't need a new version—such as adding a new column, or fixing a bug in an existing column's calculation.
 
@@ -276,6 +280,8 @@ models:
 </TabItem>
 
 </Tabs>
+
+Note: If none of your model versions specify columns, you don't need to define columns at all and can omit the `columns/include`/`exclude` keys from the versioned model. In this case, dbt will automatically use all top-level columns for all versions. 
 
 The configuration above says: Instead of two unrelated models, I have two versioned definitions of the same model: `dim_customers_v1` and `dim_customers_v2`.
 

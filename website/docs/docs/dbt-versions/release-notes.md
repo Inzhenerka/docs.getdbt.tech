@@ -18,6 +18,22 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## March 2025
 
+- **Behavior change**: As of March 31st, 2025, dbt Core versions 1.0, 1.1, and 1.2 have been deprecated from dbt Cloud. They are no longer available to select as versions for dbt projects. Workloads currently on these versions will be automatically upgraded to v1.3, which may cause new failures.
+- **Enhancement**: [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) users on single-tenant configurations no longer need to contact their account representative to enable this feature. Setup is now self-service and available across all tenant configurations.
+- **New**: The dbt Semantic Layer now supports Postgres as a data platform. For more details on how to set up the dbt Semantic Layer for Postgres, see [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
+- **New**: New [environment variable default](/docs/build/environment-variables#dbt-cloud-context) `DBT_CLOUD_INVOCATION_CONTEXT`. 
+- **Enhancement**: Users assigned [read-only licenses](/docs/cloud/manage-access/about-user-access#licenses) are now able to view the [Deploy](/docs/deploy/deployments) section of their dbt Cloud account and click into the individual sections but not edit or otherwise make any changes. 
+
+#### dbt Developer day
+
+The following features are new or enhanced as part of our [dbt Developer day](https://www.getdbt.com/resources/webinars/dbt-developer-day) on March 19th and 20th, 2025:
+
+- **New**: The [`--sample` flag](/docs/build/sample-flag), now available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
+- **New**: dbt Copilot, an AI-powered assistant, is now generally available in the dbt Cloud IDE for all dbt Cloud Enterprise accounts. Check out [dbt Copilot](/docs/cloud/dbt-copilot) for more information.   
+
+#### Also available this month
+
+- **New**: Bringing your own [Azure OpenAI key](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok) for [dbt Copilot](/docs/cloud/dbt-copilot) is now generally available. Your organization can configure dbt Copilot to use your own Azure OpenAI keys, giving you more control over data governance and billing.
 - **New**: The dbt Semantic Layer supports Power BI as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in private beta. To join the private beta, please reach out to your account representative. Check out the [Power BI](/docs/cloud-integrations/semantic-layer/power-bi) integration for more information.
 - **New**: [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks) are Generally Available. Depending on their plan, customers may select among the Latest, Compatible, or Extended tracks to manage the update cadences for development and deployment environments.
 - **New:** The dbt Cloud-native integration with Azure DevOps now supports [Entra ID service principals](/docs/cloud/git/setup-service-principal). Unlike a services user, which represents a real user object in Entra ID, the service principal is a secure identity associated with your dbt Cloud app to access resources in Azure unattended. Please [migrate your service user](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) to a service principal for Azure DevOps  as soon as possible.
