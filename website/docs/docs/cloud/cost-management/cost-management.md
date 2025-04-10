@@ -99,7 +99,9 @@ To configure the metadata connection in dbt Cloud:
 
     <Lightbox src="/img/docs/dbt-cloud/cost-management/configure-metadata.png" width="70%" title="Fill out the fields with the appropriate information."/>
 
-Repeat this process for each warehouse you want to monitor. After the setup is complete, it will be a few hours before the initial sync completes and information begins to populate the dashboard. 
+6. Repeat this process for each dbt Cloud warehouse connection you want to monitor. 
+
+After the setup, it will be a few hours before the initial sync completes and information begins to populate the dashboard. 
 
 ## Cost management dashboard
 
