@@ -1,6 +1,7 @@
 ---
 title: "About cost management in dbt Cloud"
 description: "Manage your data warehouse costs in dbt Cloud"
+unlisted: true
 sidebar_label: About cost management
 ---
 
