@@ -108,11 +108,20 @@ Repeat this process for each warehouse you want to monitor. After the setup is c
 
 ## Cost management dashboard
 
-The cost management dashboard is available by default to any dbt user with the `Admin` [permission set](/docs/cloud/manage-access/enterprise-permissions) assigned. Since the dashboard contains sensitive financial information, we're introducing a new permissions set to help you control access: `Cost Management Viewer`. 
+The cost management dashboard can be accessed anywhere in dbt Cloud from the left-side menu. Once enabled, **Cost management** will be an option below the **Account home** feature at the top of the sidebar. Users who don't have the proper permissions will not see the option.
 
-Assign this permission set to only the users or groups you want to have access to the dashboard. 
+Users with the following [permission sets](/docs/cloud/manage-access/enterprise-permissions) will be able to access the cost management dashboard:
+- Account Admin
+- Account Viewer
+- Admin
+- Billing Admin
+- Cost Management Admin
 
-Once the information begins to sync, you will see the results by selecting the **Cost management** dashboard option from the left-side menu. 
+Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Admin`. 
+
+Assign this permission set to the users or groups you want to have access to the dashboard.
+
+Once the information syncs, you will see the results by selecting the **Cost management** dashboard option from the left-side menu. 
 
 <Lightbox src="/img/docs/dbt-cloud/cost-management/dashboard.png" width="70%" title="The cost management dashboard."/>
 
@@ -121,24 +130,52 @@ Once the information begins to sync, you will see the results by selecting the *
 - Adjust the period you want to monitor.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/time-period.png" width="70%" title="Adjust the period you want to view."/>
 
-The **Overview** dashboard displays general information:
+### Overview 
+
+The **Overview** dashboard displays general information about your costs:
+
 - The top tiles display spend and savings over the selected period.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/warehouse-spend.png" width="70%" title="See your total spending."/>
 - The bar chart breaks down costs of dbt execution by project. You can click on the individual bars to view more information.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/project-bar.png" width="70%" title="View your spending over time by project and interact with the data to view more."/>
 
-When you click on a bar or a project, you'll be brought to the **Discover** tab. Here, you can view more detailed information about your spending. 
+You'll be brought to the **Discover** tab when you click on a bar or project. Here, you can view more detailed information about your spending. 
 
-- View information by environment or the following resource types:
+### Discover
+
+The **Discover** tab takes you to a pane where you can really start getting granular with your cost analysis. It is an interactive page that allows you to break down costs by project, resource, date, and various combinations of those. You'll be able to monitor specific notes in your project lineage to see which resources are impacting your spending the most and view the metadata specific to those resources.
+
+There are multiple options for filtering the cost data views with two starting points
+- Resources
+- Environments
+
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/filter-by-resource.png" width="70%" title="Filter the Discover view by resource types."/>
+
+#### Resource view
+
+When you filter by resources, you get valuable insights into how your projects’ resources impact warehouse costs. Use the dropdown menu or click the colored squares to add or remove resource types from the bar graph and list view. 
+
+- Filter information by following resource types:
     - Model
     - Test
     - Operation
     - Snapshot
     - Seed
     - Source
-- Filter by project and/or resource type and view daily information in the bar graph. 
-    <Lightbox src="/img/docs/dbt-cloud/cost-management/resource-type.png" width="70%" title="View individual resources and how they impact your costs."/>
-- View a detailed breakdown of your resources and the costs associated. You can filter by resource name and/or type and sort by each individual column. 
+- Filter the graph view by project and/or resource type. 
+- View a detailed breakdown of your resources and the costs associated. You can filter by resource name and/or type and sort by each column. 
     <Lightbox src="/img/docs/dbt-cloud/cost-management/resource-type.png" width="70%" title="Filter and view detailed breakdowns of your resources."/>
-- Click into a resource to view it's lineage and how much each node is impacting your costs. You can even open the resrouce in dbt Explorer from this view to better understand your metadata!
-    <Lightbox src="/img/docs/dbt-cloud/cost-management/render-lineage.png" width="70%" title="View the resrouces lineage and monitor node costs."/>
+- Click into a resource to view its lineage and how much each node impacts your costs. You can even open the resource in dbt Explorer from this view to better understand your metadata!
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/render-lineage.png" width="70%" title="View the resources lineage and monitor node costs."/>
+
+#### Environment view
+
+When you filter by environment, select a project to view more detailed information about how each environment type impacts your warehouse costs. 
+
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/filter-by-environment.png" width="70%" title="Filter the Discover view by environment."/>
+- The list view will mark your production environment with a <Lifecycle status='PROD'/> icon. 
+- Click on the colored squares next to an environment name to add or remove it from the bar graph view. 
+- Hover over a bar to view the cost breakdown for each environment.
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/environment-cost-breakdown.png" width="70%" title="The bar graph breaks down costs by environment."/>
+- Sort the list view by any of the available fields. Click an item in the list view for detailed bar graph breakdowns of cost, query execution count, and consumption count.
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/individual-environment.png" width="70%" title="View individual environments and how they impact your costs."/>
