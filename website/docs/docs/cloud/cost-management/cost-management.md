@@ -105,9 +105,9 @@ Users with the following [permission sets](/docs/cloud/manage-access/enterprise-
 - Account Viewer
 - Admin
 - Billing Admin
-- Cost Management Admin
+- Cost Management Viewer
 
-Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Admin`. 
+Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Viewer`. 
 
 Assign this permission set to the users or groups you want to have access to the dashboard.
 
@@ -119,6 +119,19 @@ Once the information syncs, you will see the results by selecting the **Cost man
     <Lightbox src="/img/docs/dbt-cloud/cost-management/connection-status.png" width="70%" title="View your connection status."/>
 - Adjust the period you want to monitor.
     <Lightbox src="/img/docs/dbt-cloud/cost-management/time-period.png" width="70%" title="Adjust the period you want to view."/>
+
+### Metrics
+
+There are metrics that will be available to view and measure your costs as you navigate the dashboard. As you filter your dashboard, you will have access to a list view that enables you to sort by these metrics. The following metrics are available in the cost management dashboard:
+
+- **Execution queries:** The total number of queries run against the data warehouse after execution of dbt runs. 
+- **Consumption queries:** The total number of warehouse credits consumed by the resource(s) after execution of your dbt runs.  
+- **Execution costs:** The total warehouse cost associate with the resource(s) after execution of your dbt runs. 
+- **Duration (resource view only):** The total duration it took to run dbt resources over the time period. 
+
+You can sort the list views by these metrics to see how resources are impacting individual areas and have quick views into your highest cost areas
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/sort-by-execution-cost.png" width="70%" title="Metrics sorted by execution cost."/>
+    <Lightbox src="/img/docs/dbt-cloud/cost-management/sort-by-consumption-query.png" width="70%" title="Metrics sorted by consumption queries."/>
 
 ### Overview 
 
