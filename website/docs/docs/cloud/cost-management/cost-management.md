@@ -27,7 +27,7 @@ To configure the cost management tools, you must have the following:
 
 - Proper [permission set](/docs/cloud/manage-access/enterprise-permissions) to configure connections in dbt Cloud. 
 - Proper [privileges](https://docs.snowflake.com/en/user-guide/security-access-control-privileges) in Snowflake to create a user and assign them database access.
-- The `Admin` or `Cost Management Viewer` permission set assigned in dbt Cloud to view and interact with the cost management dashboard.
+- An Enterprise dbt Cloud account
 
 ## Set up in Snowflake
 
@@ -106,13 +106,11 @@ The cost management dashboard can be accessed anywhere in dbt Cloud from the lef
 Users with the following [permission sets](/docs/cloud/manage-access/enterprise-permissions) will be able to access the cost management dashboard:
 - Account Admin
 - Account Viewer
-- Admin
-- Billing Admin
 - Cost Management Viewer
 
 Since the dashboard contains sensitive financial information, we're introducing a new permission set to help you regulate access: `Cost Management Viewer`. 
 
-Assign this permission set to the users or groups you want to have access to the dashboard.
+Assign this permission set to the users or groups you want to have access to the dashboard. Project-level access is coming soon!
 
 Once the information syncs, you will see the results by selecting the **Cost management** dashboard option from the left-side menu. 
 
