@@ -1011,33 +1011,42 @@ This section will guide you on how to use the Sigma integration to query your me
 
 2.  Select the Sigma tile from the list. Click the **Optional Grant** dropdown menu. Write **RAW** and **ANALYTICS** in the text box and then click **Connect**. 
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-optional-grant.png" width="50%" title="Click the '+ New project' button on the top right"/>
+
 3.  Make up a company name and URL to use. It doesn’t matter what URL you use, as long as it’s unique.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-company-name.png" width="50%" title="Click the '+ New project' button on the top right"/>
-5.  Enter your name and email address. Choose a password for your account.
+
+4.  Enter your name and email address. Choose a password for your account.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-create-profile.png" width="50%" title="Click the '+ New project' button on the top right"/>
-6.  Great! You now have a Sigma account. Before we get started, go back to Snowlake and open a blank worksheet. Run these lines.
+
+5.  Great! You now have a Sigma account. Before we get started, go back to Snowlake and open a blank worksheet. Run these lines.
 - `grant all privileges on all views in schema analytics.SCHEMA to role pc_sigma_role;`
 - `grant all privileges on all tables in schema analytics.SCHEMA to role pc_sigma_role;`
+
 6.  Click on your bubble in the top right corner. Click the **Administration** button from the dropdown menu.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-admin.png" width="50%" title="Click the '+ New project' button on the top right"/>
+
 7.  Scroll down to the integrations section, then select **Add** next to the dbt integration.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-add-integration.png" width="50%" title="Click the '+ New project' button on the top right"/>
+
 8.  In the dbt Integration section, fill out the required fields, and then hit save:
 - Your dbt service account token.
 - Your access URL of your existing Sigma dbt integration. Use cloud.getdbt.com as your access URL.
 - Your dbt environment ID.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-add-info.png" width="50%" title="Click the '+ New project' button on the top right"/>
+
 9.  Return to the home page. Create a new workbook.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-make-workbook.png" width="50%" title="Click the '+ New project' button on the top right"/>
+
 10. Click on **Table**, then click on **SQL**. Select Snowflake PC_SIGMA_WH as your data connection.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-make-table.png" width="50%" title="Click the '+ New project' button on the top right"/>
-12. Query away! Try this one, for example:
-  'select * from
+
+11. Query away! Try this one, for example:
+  `select * from
   {{ semantic_layer.query (
     metrics = ['order_total', 'order_count', large_orders', 'customers_with_orders', 'avg_order_value', pct_of_orders_that_are_large'],
     group_by = 
     [Dimension('metric_time').grain('day) ]
-) }}'
+) }}`
 
 
     
