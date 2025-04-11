@@ -31,6 +31,29 @@ New features and functionality available in dbt Core v1.10
 
 Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 
+### Parsing `catalog.yml`
+
+dbt Core can now parse the `catalog.yml` file. This is an important milestone in the journey to supporting external catalogs for Iceberg tables, as it enables write integrations. You'll be able to provide a config specifying a catalog integration for your producer model:
+
+For example: 
+
+```yml
+
+catalogs:
+  - name: catalog_name
+    integrations:
+      - name: databricks_glue_write_integration
+        external_volume: databricks_external_volume
+        table_format: iceberg
+	      type: unity
+	      adapter_properties:
+		      refresh: true
+		      sync_timing: 15 minutes
+
+```
+
+We'll have more information about this in the coming weeks, but this is an exciting step in journey to cross-platform support. 
+
 ### Managing changes to legacy behaviors
 
 dbt Core v1.10 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
