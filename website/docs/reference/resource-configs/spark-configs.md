@@ -19,7 +19,7 @@ See [Databricks configuration](#databricks-configs) for the Databricks version o
 
 When materializing a model as `table`, you may include several optional configs that are specific to the dbt-spark plugin, in addition to the standard [model configs](/reference/model-configs).
 
-| Option  | Description          | Required?        | <div style={{width:‘250px’}}>Example</div>       |
+| Option  | Description          | Required?        | <div style={{width:'250px'}}>Example</div>       |
 |---------|----------------------|------------------|--------------------------------------------------|
 | file_format | The file format to use when creating tables (`parquet`, `delta`, `iceberg`, `hudi`, `csv`, `json`, `text`, `jdbc`, `orc`, `hive` or `libsvm`). | Optional | `parquet`|
 | location_root [^1]  | The created table uses the specified directory to store its data. The table alias is appended to it.                               | Optional                | `/mnt/root`              |
