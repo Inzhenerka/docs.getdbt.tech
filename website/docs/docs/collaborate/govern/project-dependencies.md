@@ -22,7 +22,7 @@ dbt Labs supports an expanded notion of `dependencies` across multiple dbt proje
 - For the upstream ("producer") project setup:
   - Configure models in upstream project with [`access: public`](/reference/resource-configs/access) and have at least one successful job run after defining `access`.
   - Define a deployment environment in the upstream project as [Production environment](/docs/deploy/deploy-environments#set-as-production-environment), ensuring at least one successful job run in that environment.
-  - If changes have been made, ensure that the job run generates an updated manifest.json file, as this is necessary for downstream projects to reference the latest changes.
+  - If changes have been made, ensure that the job run generates an updated [manifest.json](/reference/artifacts/manifest-json) file, as this is necessary for downstream projects to reference the latest changes.
   - If the upstream project has a Staging environment, run a job in that Staging environment to ensure the downstream cross-project ref resolves.
 - Each project `name` must be unique in your dbt Cloud account. For example, if you have a dbt project (codebase) for the `jaffle_marketing` team, avoid creating projects for `Jaffle Marketing - Dev` and `Jaffle Marketing - Prod`; use [environment-level isolation](/docs/dbt-cloud-environments#types-of-environments) instead.
   - dbt Cloud supports [Connections](/docs/cloud/connect-data-platform/about-connections#connection-management), available to all dbt Cloud users. Connections allows different data platform connections per environment, eliminating the need to duplicate projects. Projects can use multiple connections of the same warehouse type. Connections are reusable across projects and environments.
