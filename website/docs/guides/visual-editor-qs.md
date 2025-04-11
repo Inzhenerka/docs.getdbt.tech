@@ -10,6 +10,8 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
+import Prerequisites from '/snippets/_visual-editor-prerequisites.md';
+
 ## Introduction
 
 :::note beta feature
@@ -26,17 +28,7 @@ The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to
 - Committing your changes to Git
 - Locating your Visual Editor model and data
 
-## Prerequisites
-
-To use the Visual Editor, you must meet the following prerequisites:
-
-- Be on an [Enterprise dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions#enterprise-plan)
-- You have the following configured on your account:
-    - A data warehouse connection
-    - Integration with a Git provider
-- Source models for the Visual Editor must have been run at least once in production
-- You have a `developer` license
-- You have credentials configured for your data warehouse and Git provider in the **Your profile** section of the **Account settings**
+<Prerequisites feature={'/snippets/_visual-editor-prerequisites.md'} />
 
 :::note Prerequisite for using the Jaffle Shop
 
