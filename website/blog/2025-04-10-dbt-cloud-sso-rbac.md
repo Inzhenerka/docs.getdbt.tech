@@ -25,7 +25,7 @@ Before we dig into SSO, RBAC, and more &mdash; let’s go over how they map into
 - **Authentication:** SSO is configured to gate authentication - it verifies (via an IdP) that users are who they say they are and can log into the specified dbt Cloud account.
 - **Authorization:** RBAC is an authorization model - it controls what users can see and do within dbt Cloud based on their assigned licenses, groups, and permission sets.
 
-## Single-Sign On (SSO) { #single-sign-on }
+## Single-Sign On (SSO)
 
 Your SSO configuration steps will depend on your IdP, so we encourage you to start at our [SSO Overview](/docs/cloud/manage-access/sso-overview) page and find the IdP-specific doc under that section that’s specific to your setup.
 
