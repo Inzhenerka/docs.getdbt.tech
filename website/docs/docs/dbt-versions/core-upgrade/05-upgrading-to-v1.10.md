@@ -39,6 +39,16 @@ You can read more about each of these behavior changes in the following links:
 
 - (Introduced, disabled by default) [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation). If the flag is set to `True`, dbt will raise a warning if the argument `type` names you've added in your macro YAMLs don't match the argument names in your macro or if the argument types aren't valid according to the [supported types](/reference/resource-properties/arguments#supported-types).
 
+### Integrating dbt Core artifacts with dbt Cloud projects
+
+With [Hybrid projects](/docs/deploy/hybrid-projects), dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run_results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on &mdash; into dbt Cloud after executing a run in the dbt Core command line interface (CLI), which helps:
+
+- Collaborate with dbt Cloud users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
+- (Coming soon) New users interested in the [Visual Editor](/docs/cloud/visual-editor) can build off of dbt models already created by a central data team in dbt Core rather than having to start from scratch.
+- dbt Core users can navigate to [dbt Explorer](/docs/collaborate/explore-projects) and view their models and assets. To view dbt Explorer, you must have a read-only seat.
+
+Hybrid projects is available in private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
+
 ## Quick hits
 
 - Provide the [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) property for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the [built-in query](https://github.com/dbt-labs/dbt-adapters/blob/6c41bedf27063eda64375845db6ce5f7535ef6aa/dbt/include/global_project/macros/adapters/freshness.sql#L4-L16), which uses the `loaded_at_field`). You cannot define `loaded_at_query` if the `loaded_at_field` config is also provided.
