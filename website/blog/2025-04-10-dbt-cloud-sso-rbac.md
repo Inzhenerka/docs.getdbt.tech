@@ -70,7 +70,7 @@ Get stuck setting up SSO? [Open a support ticket](mailto:support@getdbt.com), an
 
 In dbt Cloud, there are two main levers to control user access:
 - [Licenses](/blog/dbt-cloud-sso-rbac#licenses)
-- [Groups](/blog/dbt-cloud-sso-rbac#goups)
+- [Groups](/blog/dbt-cloud-sso-rbac#groups)
 
 As a prerequisite, these all should be set _before_ configuring RBAC. Let’s get into these!
 
