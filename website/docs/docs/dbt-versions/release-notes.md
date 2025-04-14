@@ -16,8 +16,17 @@ dbt Cloud release notes for recent and historical changes. Release notes fall in
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## April 2025
+
+
+- **Behavior change**: Users assigned the [`job admin` permission set](/docs/cloud/manage-access/enterprise-permissions#job-admin) now have access to set up integrations for projects, including the [Tableau](/docs/cloud-integrations/downstream-exposures-tableau) integration to populate downstream exposures.
+
 ## March 2025
 
+- **Behavior change**: As of March 31st, 2025, dbt Core versions 1.0, 1.1, and 1.2 have been deprecated from dbt Cloud. They are no longer available to select as versions for dbt projects. Workloads currently on these versions will be automatically upgraded to v1.3, which may cause new failures.
+- **Enhancement**: [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) users on single-tenant configurations no longer need to contact their account representative to enable this feature. Setup is now self-service and available across all tenant configurations.
+- **New**: The dbt Semantic Layer now supports Postgres as a data platform. For more details on how to set up the dbt Semantic Layer for Postgres, see [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
+- **New**: New [environment variable default](/docs/build/environment-variables#dbt-cloud-context) `DBT_CLOUD_INVOCATION_CONTEXT`. 
 - **Enhancement**: Users assigned [read-only licenses](/docs/cloud/manage-access/about-user-access#licenses) are now able to view the [Deploy](/docs/deploy/deployments) section of their dbt Cloud account and click into the individual sections but not edit or otherwise make any changes. 
 
 #### dbt Developer day

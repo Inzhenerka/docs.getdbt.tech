@@ -124,6 +124,7 @@ const sidebarSettings = {
                     "docs/cloud/manage-access/set-up-sso-okta",
                     "docs/cloud/manage-access/set-up-sso-google-workspace",
                     "docs/cloud/manage-access/set-up-sso-microsoft-entra-id",
+                    "docs/cloud/manage-access/scim",
                     "docs/cloud/manage-access/set-up-snowflake-oauth",
                     "docs/cloud/manage-access/set-up-databricks-oauth",
                     "docs/cloud/manage-access/set-up-bigquery-oauth",
@@ -536,6 +537,16 @@ const sidebarSettings = {
             "docs/deploy/webhooks",
           ],
         },
+        {
+          type: "category",
+          label: "Hybrid projects",
+          collapsed: true,
+          link: { type: "doc", id: "docs/deploy/hybrid-projects" },
+          items: [
+            "docs/deploy/hybrid-projects",
+            "docs/deploy/hybrid-setup",
+          ],
+        },
         "docs/deploy/deployment-tools",
       ],
     }, // end of "Deploy dbt"
@@ -571,6 +582,16 @@ const sidebarSettings = {
                 "docs/collaborate/model-query-history",
               ],
             },
+          ],
+        },
+        {
+          type: "category",
+          label: "Analyze with Query page",
+          link: { type: "doc", id: "docs/collaborate/query-page" },
+          items: [
+            "docs/collaborate/query-page", // main query page doc
+            "docs/collaborate/access-query-page", // info on how to access and use query page
+            "docs/collaborate/navigate-query-page", // navigate query page doc
           ],
         },
         {
@@ -775,7 +796,7 @@ const sidebarSettings = {
         "docs/cloud/dbt-copilot-faqs",
         ],
       },
-    {
+      {
       type: "category",
       label: "dbt Cloud integrations",
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
@@ -872,6 +893,17 @@ const sidebarSettings = {
       ],
     },
     "docs/dbt-support",
+    {
+      type: "category",
+      label: "Cost management",
+      link: {
+        type: "doc",
+        id: "docs/cloud/cost-management/cost-management",
+      },
+      items: [
+          "docs/cloud/cost-management/cost-management",
+      ],
+    },
     {
       type: "category",
       label: "Frequently asked questions",
@@ -1149,7 +1181,7 @@ const sidebarSettings = {
           link: { type: "doc", id: "reference/macro-properties" },
           items: [
             "reference/macro-properties",
-            "reference/resource-properties/argument-type",
+            "reference/resource-properties/arguments",
           ],
         },
       ],

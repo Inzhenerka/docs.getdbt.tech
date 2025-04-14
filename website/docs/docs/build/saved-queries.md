@@ -225,7 +225,9 @@ saved-queries:
 
 For more information on `dbt_project.yml` and config naming conventions, see the [dbt_project.yml reference page](/reference/dbt_project.yml#naming-convention).
 
-To build `saved_queries`, use the [`--resource-type` flag](/reference/global-configs/resource-type) and run the command `dbt build --resource-type saved_query`.
+To build `saved_queries`:
+- Make sure you set the right [environment variable](/docs/use-dbt-semantic-layer/exports#set-environment-variable) in your environment.
+- Run the command `dbt build --resource-type saved_query` using the [`--resource-type` flag](/reference/global-configs/resource-type).
 
 ## Configure exports
 
