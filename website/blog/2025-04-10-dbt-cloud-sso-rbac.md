@@ -44,7 +44,7 @@ Let’s break this down at a high level to make it more digestible:
 1. After setting the desired login slug, a *dbt Cloud admin* will go to the dbt Cloud SSO configuration page and copy/paste everything under the **Identity provider values** section and will share the values with the *IdP admin*.
 2. The *IdP admin* will create a [dbt Cloud app](/docs/cloud/manage-access/set-up-sso-saml-2.0#creating-the-application) and then provide the values under the **dbt configuration** section to the *dbt Cloud admin*.
    :::tip
-   Refer to the appropriate setup docs for [Google Workspace](/cloud/manage-access/set-up-sso-google-workspace), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Microsoft Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id), or [SAML 2.0](/docs/cloud/manage-access/set-up-sso-saml-2.0).
+   Refer to the appropriate setup docs for [Google Workspace](/docs/cloud/manage-access/set-up-sso-google-workspace), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Microsoft Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id), or [SAML 2.0](/docs/cloud/manage-access/set-up-sso-saml-2.0).
    :::
 3. The *dbt Cloud admin* will fill in those values into the SSO configuration page under the **dbt configuration** section and click **Save** to complete the process.
 
