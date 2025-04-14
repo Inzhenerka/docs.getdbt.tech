@@ -145,7 +145,7 @@ We have exciting news &mdash; [System for Cross-Domain Identity Management) (SCI
 
 Here’s why you should care about SCIM as a dbt Cloud admin:
 
-1. **Improved Admin and end user experience &mdash; Through automating user onboarding and offboarding, SCIM saves time for dbt Cloud admins that are managing multiple users on a weekly basis. If a user is added or removed in the IdP, their license and user account is automatically added/removed from dbt Cloud.
+1. **Improved Admin and end user experience** &mdash; Through automating user onboarding and offboarding, SCIM saves time for dbt Cloud admins that are managing multiple users on a weekly basis. If a user is added or removed in the IdP, their license and user account is automatically added/removed from dbt Cloud.
 2. **Simplified RBAC with group management** &mdash; Admins can simplify access control management by using SCIM to update group membership. Currently, SSO group mapping enables admins to add new users to groups when they are JIT provisioned. SCIM would build on that functionality to allow group management not only for new users but also for existing users. 
 
 ## Closing thoughts
