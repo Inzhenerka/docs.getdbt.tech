@@ -16,9 +16,9 @@ export const CONSTANTS = {
   visual_editor: 'Visual Editor',
   query_page: 'Query Page',
   cloud_ide: 'Cloud IDE',
-  mesh: 'dbt Mesh',
+  mesh: 'Mesh',
   orchestrator: 'Orchestrator',
-  copilot: 'dbt Copilot',
-  semantic_layer: 'dbt Semantic Layer',
+  copilot: 'Copilot',
+  semantic_layer: 'Semantic Layer',
 }
  
