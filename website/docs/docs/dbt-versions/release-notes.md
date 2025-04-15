@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## April 2025
 
-
+- **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) now supports lazy loading for large fields for `dimensions`, `entities`, and `measures` on `Metric` objects. For more information, see [Lazy loading for large fields](/docs/dbt-cloud-apis/sl-python#lazy-loading-for-large-fields).
 - **Behavior change**: Users assigned the [`job admin` permission set](/docs/cloud/manage-access/enterprise-permissions#job-admin) now have access to set up integrations for projects, including the [Tableau](/docs/cloud-integrations/downstream-exposures-tableau) integration to populate downstream exposures.
 
 ## March 2025
