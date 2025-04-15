@@ -45,10 +45,10 @@ catalogs:
       - name: databricks_glue_write_integration
         external_volume: databricks_external_volume
         table_format: iceberg
-	      type: unity
-	      adapter_properties:
-		      refresh: true
-		      sync_timing: 15 minutes
+		type: unity
+		adapter_properties:
+		refresh: true
+		sync_timing: 15 minutes
 
 ```
 
