@@ -90,7 +90,7 @@ SCIM groups are mapped to dbt Cloud groups, so license mappings can be used to a
 
 You've now configured SCIM for the Okta SSO integration in dbt Cloud.
 
-### Existing integrations
+### Existing Okta integrations
 
 If you are adding SCIM to an existing Okta integration in dbt Cloud (as opposed to setting up SCIM and Oauth concurrently for the first time), there is some functionality you should be aware of:
 
