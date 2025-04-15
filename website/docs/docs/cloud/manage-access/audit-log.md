@@ -208,7 +208,15 @@ The audit log supports various events for different objects in dbt Cloud. You wi
 | IP Restrictions Rule Changed | ip_restrictions.rule.changed | IP restriction rule edited                  |
 | IP Restrictions Rule Removed | ip_restrictions.rule.removed | IP restriction rule deleted                 |
 
-
+### SCIM
+| Event Name                    | Event Type                   | Description                                 |
+| ----------------------------- | ---------------------------- | ------------------------------------------- |
+| User Creation                  | v1.events.account.UserAdded  | New user created by SCIM service            |
+| User Update                    | v1.events.account.UserUpdated| User record updated by SCIM service         |
+| User Removal                   | v1.events.account.UserRemoved| User deleted by the SCIM service            |
+| Group Creation                 | v1.events.user_group.Added   | New group created by SCIM service           |
+| Group Update                   | v1.events.user_group_user.Changed | Group membership was updated by SCIM service |  
+| Group Removal                  | v1.events.user_group.Removed | Group removed by SCIM service               |
 
 ## Searching the audit log
 
