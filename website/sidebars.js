@@ -537,6 +537,16 @@ const sidebarSettings = {
             "docs/deploy/webhooks",
           ],
         },
+        {
+          type: "category",
+          label: "Hybrid projects",
+          collapsed: true,
+          link: { type: "doc", id: "docs/deploy/hybrid-projects" },
+          items: [
+            "docs/deploy/hybrid-projects",
+            "docs/deploy/hybrid-setup",
+          ],
+        },
         "docs/deploy/deployment-tools",
       ],
     }, // end of "Deploy dbt"
@@ -885,6 +895,17 @@ const sidebarSettings = {
     "docs/dbt-support",
     {
       type: "category",
+      label: "Cost management",
+      link: {
+        type: "doc",
+        id: "docs/cloud/cost-management/cost-management",
+      },
+      items: [
+          "docs/cloud/cost-management/cost-management",
+      ],
+    },
+    {
+      type: "category",
       label: "Frequently asked questions",
       link: {
         type: "generated-index",
@@ -1160,7 +1181,7 @@ const sidebarSettings = {
           link: { type: "doc", id: "reference/macro-properties" },
           items: [
             "reference/macro-properties",
-            "reference/resource-properties/argument-type",
+            "reference/resource-properties/arguments",
           ],
         },
       ],
