@@ -41,11 +41,11 @@ You can read more about each of these behavior changes in the following links:
 
 ### Integrating dbt Core artifacts with dbt Cloud projects
 
-With [Hybrid projects](/docs/deploy/hybrid-projects), dbt Core users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run_results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on &mdash; into dbt Cloud after executing a run in the dbt Core command line interface (CLI), which helps:
+With [hybrid projects](/docs/deploy/hybrid-projects), dbt Core users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud. This enhances hybrid dbt Core/Cloud deployments by:
 
-- Collaborate with dbt Cloud users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
-- (Coming soon) New users interested in the [Visual Editor](/docs/cloud/visual-editor) can build off of dbt models already created by a central data team in dbt Core rather than having to start from scratch.
-- dbt Core users can navigate to [dbt Explorer](/docs/collaborate/explore-projects) and view their models and assets. To view dbt Explorer, you must have a read-only seat.
+- Fostering collaboration between dbt Cloud and Core users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in Core projects. This feature unifies Cloud and Core workflows for a more connected dbt experience.
+- (Coming soon) Enabling users working in the [Visual Editor](/docs/cloud/visual-editor) to build off of models already created by a central data team in dbt Core rather than having to start from scratch.
+- Giving dbt Cloud and Core users insights into their models and assets in [dbt Explorer](/docs/collaborate/explore-projects). To view Explorer, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
 
 Hybrid projects are available as a private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
 
