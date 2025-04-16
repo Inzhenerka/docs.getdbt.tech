@@ -21,6 +21,8 @@ dbt Copilot is a powerful AI-powered assistant that's fully integrated into your
 
 With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and, now in beta, [Visual Editor](/docs/cloud/use-visual-editor).
 
+dbt Copilot is optimized for OpenAI's gpt-3.x, gpt-4o, gpt-4.1-[mini|nano], gpt-4.5 (deprecated by OpenAI) models. Using other models (like o1 and o2) can affect performance and accuracy, and functionality with other models isn't guaranteed.
+
 </Expandable>
 
 <Expandable alt_header="Where can I find dbt Copilot?">
