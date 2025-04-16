@@ -72,7 +72,7 @@ dbt Cloud maps SCIM groups to its own groups, so you can assign licenses to SCIM
 2. Navigate to the **General** tab and ensure **Enable SCIM provisioning** is checked or the **Provisioning** tab will not be displayed. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/scim-provisioned.png" width="60%" title="Enable SCIM provisioning in Okta." />
 3. Open the **Provisioning** tab and select **Integration**.
-4. Paste the **SCIM base URL** from dbt Cloud to the first field and enter your preferred **Unique identifier field for users** (`userName` is recommended) next.
+4. Paste the [**SCIM base URL** from dbt Cloud](#set-up-dbt-cloud) to the first field, then enter your preferred **Unique identifier field for users** &mdash; we recommend `userName`.
 5. Click the checkboxes for the following **Supported provisioning actions**:
     - Push New Users
     - Push Profile Updates
