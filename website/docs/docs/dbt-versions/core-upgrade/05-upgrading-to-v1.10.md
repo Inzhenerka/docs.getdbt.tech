@@ -47,7 +47,7 @@ With [Hybrid projects](/docs/deploy/hybrid-projects), dbt Core users can seamles
 - (Coming soon) New users interested in the [Visual Editor](/docs/cloud/visual-editor) can build off of dbt models already created by a central data team in dbt Core rather than having to start from scratch.
 - dbt Core users can navigate to [dbt Explorer](/docs/collaborate/explore-projects) and view their models and assets. To view dbt Explorer, you must have a read-only seat.
 
-Hybrid projects is available in private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
+Hybrid projects are available as a private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
 
 ## Quick hits
 
