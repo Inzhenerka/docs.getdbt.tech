@@ -543,7 +543,7 @@ To show a comparison, this same use case can be covered with a more simple branc
     
     <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/15_direct_tagging.png" title="Tagging in Direct Promotion" width="85%" />
 
-Which one you decide should use depends on how your team would like to manage the changes. No matter the reason for more branches, these points are always relevant to plan out\:
+Whichever option you decide depends on how your team would like to manage the changes. No matter the reason for more branches, these points are always relevant to plan out\:
 
 - Can we accurately describe the use case of each branch?
 - Who owns the oversight of any new branches?
