@@ -31,14 +31,6 @@ New features and functionality available in <Constant name="core" /> v1.10
 
 Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 
-### Managing changes to legacy behaviors
-
-dbt Core v1.10 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
-
-You can read more about each of these behavior changes in the following links:
-
-- (Introduced, disabled by default) [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation). If the flag is set to `True`, dbt will raise a warning if the argument `type` names you've added in your macro YAMLs don't match the argument names in your macro or if the argument types aren't valid according to the [supported types](/reference/resource-properties/arguments#supported-types).
-
 ### Integrating dbt Core artifacts with dbt Cloud projects
 
 With [hybrid projects](/docs/deploy/hybrid-projects), dbt Core users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud. This enhances hybrid dbt Core/Cloud deployments by:
@@ -48,6 +40,14 @@ With [hybrid projects](/docs/deploy/hybrid-projects), dbt Core users working in 
 - (Coming soon) Enabling users working in the [Visual Editor](/docs/cloud/visual-editor) to build off of models already created by a central data team in Core rather than having to start from scratch.
 
 Hybrid projects are available as a private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
+
+### Managing changes to legacy behaviors
+
+dbt Core v1.10 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
+
+You can read more about each of these behavior changes in the following links:
+
+- (Introduced, disabled by default) [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation). If the flag is set to `True`, dbt will raise a warning if the argument `type` names you've added in your macro YAMLs don't match the argument names in your macro or if the argument types aren't valid according to the [supported types](/reference/resource-properties/arguments#supported-types).
 
 ## Quick hits
 
