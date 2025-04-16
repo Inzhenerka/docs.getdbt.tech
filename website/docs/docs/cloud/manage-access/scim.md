@@ -58,7 +58,7 @@ To retrieve the necessary dbt Cloud configurations for use in Okta:
     <Lightbox src="/img/docs/dbt-cloud/access-control/copy-scim-token.png" width="60%" title="Give your token and identifier." />
 8. (Optional) Manual updates are turned off by default for all SCIM-managed entities, including the ability to invite new users manually. This ensures SCIM-managed entities stay in sync with the IdP, and we recommend keeping this setting disabled.
    - However, if you need to make manual updates (like update group membership for a SCIM-managed group), you can enable this setting by clicking **Allow manual updates**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-manual-updates.png" width="60%" title="Enabling manual updates in SCIM settings." />
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-manual-updates.png" width="70%" title="Enabling manual updates in SCIM settings." />
 
 :::note License mapping
 
