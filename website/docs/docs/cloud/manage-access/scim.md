@@ -62,7 +62,7 @@ To retrieve the necessary dbt Cloud configurations for use in Okta:
 
 :::note License mapping
 
-SCIM groups are mapped to dbt Cloud groups, so license mappings can be used to assign licenses to SCIM groups using the group name as an identifier. Currently, setting an attribute on the SCIM group for license type is not supported. 
+dbt Cloud maps SCIM groups to its own groups, so you can assign licenses to SCIM groups using the group name as an identifier. Currently, setting a license type directly as an attribute on the SCIM group isn't supported.
 
 :::
 
