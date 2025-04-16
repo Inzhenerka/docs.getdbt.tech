@@ -117,7 +117,7 @@ Once you decide [which adapter](/docs/supported-data-platforms) you're using, yo
 <VersionBlock firstVersion="1.8">
 
 ```shell
-python -m pip install <Constant name="core" /> dbt-ADAPTER_NAME
+python -m pip install dbt-core dbt-ADAPTER_NAME
 ```
 
 </VersionBlock>
@@ -135,7 +135,7 @@ For example, if using Postgres:
 <VersionBlock firstVersion="1.8">
 
 ```shell
-python -m pip install <Constant name="core" /> dbt-postgres
+python -m pip install dbt-core dbt-postgres
 ```
 
 This will install `dbt-core` and `dbt-postgres` _only_:
@@ -189,7 +189,7 @@ python -m pip install --upgrade dbt-ADAPTER_NAME
 If you're building a tool that integrates with <Constant name="core" />, you may want to install the core library alone, without a database adapter. Note that you won't be able to use dbt as a CLI tool.
 
 ```shell
-python -m pip install <Constant name="core" />
+python -m pip install dbt-core
 ```
 
 ## Change dbt Core versions
@@ -199,13 +199,13 @@ You can upgrade or downgrade versions of dbt Core by using the `--upgrade` optio
 To upgrade dbt to the latest version:
 
 ```
-python -m pip install --upgrade <Constant name="core" />
+python -m pip install --upgrade dbt-core
 ```
 
 To downgrade to an older version, specify the version you want to use. This command can be useful when you're resolving package dependencies. As an example:
 
 ```
-python -m pip install --upgrade <Constant name="core" />==1.9
+python -m pip install --upgrade dbt-core==1.9
 ```
 
 ## `pip install dbt`
@@ -216,7 +216,7 @@ If you have workflows or integrations that rely on installing the package named 
 
 ```shell
 python -m pip install \
-  <Constant name="core" /> \
+  dbt-core \
   dbt-postgres \
   dbt-redshift \
   dbt-snowflake \
@@ -239,14 +239,14 @@ Note that using a prerelease version before the final, stable version means the 
 To install prerelease versions of dbt Core and your adapter, use this command (replace `dbt-adapter-name` with your adapter)
 
 ```shell
-python3 -m pip install --pre <Constant name="core" /> dbt-adapter-name
+python3 -m pip install --pre dbt-core dbt-adapter-name
 ```
 
 For example, if you’re using Snowflake, you would use the command:
 
 
 ```shell
-python3 -m pip install --pre <Constant name="core" /> dbt-snowflake
+python3 -m pip install --pre dbt-core dbt-snowflake
 
 ```
 
@@ -257,7 +257,7 @@ dbt --version
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install --upgrade pip
-python3 -m pip install --pre <Constant name="core" /> dbt-adapter-name
+python3 -m pip install --pre dbt-core dbt-adapter-name
 source .venv/bin/activate
 dbt --version
 ```
@@ -325,7 +325,7 @@ dbt --version
 
 ```shell
 python -m pip uninstall -y dbt-adapters
-python -m pip install --upgrade --pre <Constant name="core" /> dbt-common dbt-adapters
+python -m pip install --upgrade --pre dbt-core dbt-common dbt-adapters
 dbt --version
 ```
 
