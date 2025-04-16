@@ -531,7 +531,7 @@ This structure is mostly desired when there are requirements for using different
 
 1. Developers work off of mocked data for their `feature` branches and merge to `qa` for end-to-end and over-time testing of all merged changes using the mocked data before releasing to `preproduction`.
 2. Once `qa` is merged to `preproduction`, the underlying data being used switches to using scrubbed production data and other personas can start looking at and reviewing how this data is functioning before it hits production.
-3. One `preproduction` is merged to `main`, the underlying data being used switches to production data sets. 
+3. Once `preproduction` is merged to `main`, the underlying data being used switches to production data sets. 
 
 To show a comparison, this same use case can be covered with a more simple branching strategy through the use of git tags and [dbt environment variables](https://docs.getdbt.com/docs/build/environment-variables) to switch source data\:
 
