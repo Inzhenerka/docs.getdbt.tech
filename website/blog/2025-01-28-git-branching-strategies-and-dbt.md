@@ -400,7 +400,7 @@ We highly recommend that you choose your branching strategy based on which *best
     - Changes can be slower to get to production due to the extra processes intended for the middle branch. In order to keep things moving, there should be someone (or a group of people) in place who fully own managing the changes, validation status, and release cycle.
     - Changes that are valid can get stuck behind other changes that aren’t - having a good plan in place for how the team should handle this scenario is essential because conundrum can hold up getting things to production.
     - There’s extra management of any new trunks, which will need ownership - without someone (or a group of people) who are knowledgeable, it can be confusing understanding what needs to be done and how to do it when things get out of sync.
-    - It can require additional compute in the form of scheduled jobs in the QA environment, as well as an additional CI job from qa > main for testing releases before they're merged.
+    - It can require additional compute in the form of scheduled jobs in the QA environment, as well as an additional CI job from `qa` > `main` for testing releases before they're merged.
 
 # Further enhancements
 
