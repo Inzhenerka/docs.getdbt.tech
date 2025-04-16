@@ -44,8 +44,8 @@ You can read more about each of these behavior changes in the following links:
 With [hybrid projects](/docs/deploy/hybrid-projects), dbt Core users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into dbt Cloud. This enhances hybrid dbt Core/Cloud deployments by:
 
 - Fostering collaboration between dbt Cloud and Core users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in Core projects. This feature unifies Cloud and Core workflows for a more connected dbt experience.
-- (Coming soon) Enabling users working in the [Visual Editor](/docs/cloud/visual-editor) to build off of models already created by a central data team in dbt Core rather than having to start from scratch.
 - Giving dbt Cloud and Core users insights into their models and assets in [dbt Explorer](/docs/collaborate/explore-projects). To view Explorer, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
+- (Coming soon) Enabling users working in the [Visual Editor](/docs/cloud/visual-editor) to build off of models already created by a central data team in Core rather than having to start from scratch.
 
 Hybrid projects are available as a private beta to [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
 
