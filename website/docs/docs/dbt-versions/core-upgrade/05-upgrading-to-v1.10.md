@@ -31,6 +31,16 @@ New features and functionality available in <Constant name="core" /> v1.10
 
 Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 
+### Integrating dbt Core artifacts with dbt Cloud projects
+
+With [hybrid projects](/docs/deploy/hybrid-projects), <Constant name="core"/> users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud"/>. This enhances hybrid <Constant name="core"/>/<Constant name="cloud"/> deployments by:
+
+- Fostering collaboration between <Constant name="cloud"/> + <Constant name="core"/> users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in <Constant name="core"/> projects. This feature unifies <Constant name="cloud"/> + <Constant name="core"/> workflows for a more connected <Constant name="dbt"/> experience.
+- Giving <Constant name="cloud"/> and <Constant name="core"/> users insights into their models and assets in [<Constant name="explorer"/>](/docs/collaborate/explore-projects). To view <Constant name="explorer"/>, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
+- (Coming soon) Enabling users working in the [<Constant name="visual_editor"/>](/docs/cloud/visual-editor) to build off of models already created by a central data team in <Constant name="core"/> rather than having to start from scratch.
+
+Hybrid projects are available as a private beta to [<Constant name="cloud"/> Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
+
 ### Managing changes to legacy behaviors
 
 dbt Core v1.10 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
