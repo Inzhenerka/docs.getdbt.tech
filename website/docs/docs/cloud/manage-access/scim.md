@@ -94,7 +94,7 @@ You've now configured SCIM for the Okta SSO integration in dbt Cloud.
 
 If you are adding SCIM to an existing Okta integration in dbt Cloud (as opposed to setting up SCIM and Oauth concurrently for the first time), there is some functionality you should be aware of:
 
-- Users and groups already synced to dbt Cloud will become SCIM-managed once the SCIM configuration is completed.
+- Users and groups already synced to dbt Cloud will become SCIM-managed once you complete the SCIM configuration.
 - You can leverage SCIM to import and manage existing dbt Cloud groups. Update the groups in your IdP with the same naming convention used for dbt Cloud groups. New users, groups, and existing profile changes will be automatically imported into dbt Cloud.
     - Ensure the **Import users and groups** checkbox is selected in the **Provisioning settings** tab in the Okta SCIM configuration.
     - Read more about this feature in the [Okta documentation](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-import-groups-app-provisioning.htm).
