@@ -195,12 +195,6 @@ unit_tests:
 
 </File>
 
-The `meta` config can also be defined:
-- under the `snapshots` config block in `dbt_project.yml`
-- in a `config()` Jinja macro within a snapshot's SQL block
-
-See [configs and properties](/reference/configs-and-properties) for details.
-
 </TabItem>
 
 <TabItem value="analyses">
