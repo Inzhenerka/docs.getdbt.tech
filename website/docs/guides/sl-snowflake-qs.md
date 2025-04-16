@@ -1102,10 +1102,10 @@ This section will guide you on how to use the Sigma integration to query your me
 9. Return to the Sigma home page. Create a new workbook.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-make-workbook.png" width="50%" title="Click the '+ New project' button on the top right"/>
 
-9. Click on **Table**, then click on **SQL**. Select Snowflake `PC_SIGMA_WH` as your data connection.
+10. Click on **Table**, then click on **SQL**. Select Snowflake `PC_SIGMA_WH` as your data connection.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-make-table.png" width="50%" title="Click the '+ New project' button on the top right"/>
 
-10. Query away! Try this one, for example:
+11. Query away! Try this one, for example:
 
 ```sql
 select * from
