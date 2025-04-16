@@ -172,6 +172,37 @@ You can't add YAML `meta` configs for [generic tests](/docs/build/data-tests#gen
 
 </TabItem>
 
+<TabItem value="unit tests">
+
+<File name='dbt_project.yml'>
+
+```yml
+unit_tests:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
+<File name='models/<filename>.yml'>
+
+```yml
+unit_tests:
+  - name: <test-name>
+    config:
+      [meta](/reference/snapshot-properties): {<dictionary>}
+
+```
+
+</File>
+
+The `meta` config can also be defined:
+- under the `snapshots` config block in `dbt_project.yml`
+- in a `config()` Jinja macro within a snapshot's SQL block
+
+See [configs and properties](/reference/configs-and-properties) for details.
+
+</TabItem>
+
 <TabItem value="analyses">
 
 The `meta` config is not currently supported for analyses.
