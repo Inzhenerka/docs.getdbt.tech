@@ -7,7 +7,7 @@ sidebar: "Set up SCIM"
 
 # Set up SCIM <Lifecycle status="beta, enterprise" />
 
-The System for Cross-Domain Identity Management (SCIM) makes user data more secure and simplifies the admin and end-user lifecycle experience by automating user identities and groups. You can create or disable user identities in your Identity Provider (IdP), and SCIM will automatically make those changes in near real-time downstream in dbt Cloud.
+The System for Cross-Domain Identity Management (SCIM) makes user data more secure and simplifies the admin and end-user lifecycle experience by automating user identities and groups. You can create or disable user identities in your Identity Provider (IdP), and SCIM will automatically make those changes in near real-time downstream in <Constant name="cloud" />.
 
 ## Prerequisites 
 
@@ -31,11 +31,11 @@ When users are provisioned, the following attributes are supported
 - Family name
 - Given name
 
-The following IdPs are supported in the dbt Cloud UI:
+The following IdPs are supported in the <Constant name="cloud" /> UI:
 - Okta
 - Entra ID (_coming soon_)
 
-If your IdP isn’t on the list, it can be supported using dbt Cloud APIs (_docs coming soon_).
+If your IdP isn’t on the list, it can be supported using <Constant name="cloud" /> APIs (_docs coming soon_).
 
 ## SCIM configuration for Okta <Lifecycle status="beta" />
 
@@ -46,7 +46,7 @@ Please complete the [setup SSO with Okta](/docs/cloud/manage-access/set-up-sso-o
 
 To retrieve the necessary dbt Cloud configurations for use in Okta:
 
-1. Navigate to your dbt Cloud **Account settings**.
+1. Navigate to your <Constant name="cloud" /> **Account settings**.
 2. Select **Single sign-on** from the left-side menu.
 3. Scroll to the bottom of your Okta configuration settings and click **Enable SCIM**.
     <Lightbox src="/img/docs/dbt-cloud/access-control/enable-scim.png" width="60%" title="SCIM enabled in the Okta configuration settings." />
@@ -63,6 +63,7 @@ To retrieve the necessary dbt Cloud configurations for use in Okta:
 :::note License mapping
 
 dbt Cloud maps SCIM groups to its own groups, so you can assign licenses to SCIM groups using the group name as an identifier. Currently, setting a license type directly as an attribute on the SCIM group isn't supported.
+
 
 :::
 
@@ -98,3 +99,4 @@ If you are adding SCIM to an existing Okta integration in dbt Cloud (as opposed 
 - You can leverage SCIM to import and manage existing dbt Cloud groups. Update the groups in your IdP with the same naming convention used for dbt Cloud groups. New users, groups, and existing profile changes will be automatically imported into dbt Cloud.
     - Ensure the **Import users and profile updates** and **Import groups** checkboxes are selected in the **Provisioning settings** tab in the Okta SCIM configuration.
     - Read more about this feature in the [Okta documentation](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-import-groups-app-provisioning.htm).
+
