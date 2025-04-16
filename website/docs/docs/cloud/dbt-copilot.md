@@ -38,7 +38,7 @@ dbt Copilot enhances efficiency by automating repetitive tasks while ensuring da
 - No sensitive data persists on dbt Labs' systems, except for usage data.
 - Client data, including any personal or sensitive data inserted into the query by the user, is deleted within 30 days by OpenAI.
 - dbt Copilot uses a best practice style guide to ensure consistency across teams.
-- dbt Copilot is optimized for OpenAI's gpt-4o. Using other models (like o1 and o2) can affect performance and accuracy, and functionality with other models isn't guaranteed.
+- dbt Copilot is optimized for OpenAI's gpt-3.x, gpt-4o, gpt-4.1-[mini|nano], gpt-4.5 (deprecated by OpenAI) models. Using other models (like o1 and o2) can affect performance and accuracy, and functionality with other models isn't guaranteed.
 
 :::tip
 dbt Copilot accelerates, but doesn’t replace, your analytics engineer. It helps deliver better data products faster, but always review AI-generated content, as it may be incorrect.
