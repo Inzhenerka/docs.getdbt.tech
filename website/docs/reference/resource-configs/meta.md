@@ -178,7 +178,7 @@ You can't add YAML `meta` configs for [generic tests](/docs/build/data-tests#gen
 <File name='dbt_project.yml'>
 
 ```yml
-unit_tests:
+[unit_tests](/reference/resource-properties/unit-tests):
   [<resource-path>](/reference/resource-configs/resource-path):
     +meta: {<dictionary>}
 ```
