@@ -22,7 +22,7 @@ Read about common questions about <Constant name="copilot" /> to understand how 
 
 With automatic code generation, let <Constant name="copilot" /> [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot) and, now in beta, [<Constant name="visual_editor" />](/docs/cloud/use-visual-editor).
 
-dbt Copilot is optimized for OpenAI's gpt-3.x, gpt-4o, gpt-4.1-[mini|nano], gpt-4.5 (deprecated by OpenAI) models. Using other models (like o1 and o2) can affect performance and accuracy, and functionality with other models isn't guaranteed.
+<Constant name="copilot"/> is optimized for OpenAI's gpt-3.x, gpt-4o, gpt-4.1-[mini|nano], gpt-4.5 (deprecated by OpenAI) models. Other models, like o1 and o2, are not supported and will not work with <Constant name="copilot"/>.
 
 </Expandable>
 
