@@ -8,13 +8,13 @@ tags: [Metrics, Semantic Layer]
 
 Once you define metrics in your <Constant name="dbt" /> project, you can query metrics, dimensions, and dimension values, and validate your configs using the MetricFlow commands. 
 
-MetricFlow allows you to define and query metrics in your <Constant name="dbt" /> project in the [<Constant name="cloud" />](/docs/cloud/about-develop-dbt) or [<Constant name="core" />](/docs/core/installation-overview). To experience the power of the universal [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) and dynamically query those metrics in downstream tools, you'll need a <Constant name="cloud" /> [Team or Enterprise](https://www.getdbt.com/pricing/) account. 
+MetricFlow allows you to define and query metrics in your dbt project in the [<Constant name="cloud" />](/docs/cloud/about-develop-dbt) or [<Constant name="core" />](/docs/core/installation-overview). To experience the power of the universal [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) and dynamically query those metrics in downstream tools, you'll need a <Constant name="cloud" /> [Team or Enterprise](https://www.getdbt.com/pricing/) account. 
 
 MetricFlow is compatible with Python versions 3.8, 3.9, 3.10, and 3.11.
 
 ## MetricFlow
 
-MetricFlow is a <Constant name="dbt" /> package that allows you to define and query metrics in your <Constant name="dbt" /> project. You can use MetricFlow to query metrics in your <Constant name="dbt" /> project in the <Constant name="cloud" /> CLI, <Constant name="cloud_ide" />, or <Constant name="core" />.
+MetricFlow is a dbt package that allows you to define and query metrics in your dbt project. You can use MetricFlow to query metrics in your dbt project in the <Constant name="cloud" /> CLI, <Constant name="cloud_ide" />, or <Constant name="core" />.
 
 Using MetricFlow with <Constant name="cloud" /> means you won't need to manage versioning &mdash; your <Constant name="cloud" /> account will automatically manage the versioning.
 
@@ -88,7 +88,7 @@ The following table lists the commands compatible with the <Constant name="cloud
 - [`tutorial`](#tutorial) &mdash; Dedicated MetricFlow tutorial to help get you started.
 -->
 
-:::tip Run <Constant name="dbt" /> parse to reflect metric changes
+:::tip Run dbt parse to reflect metric changes
 When you make changes to metrics, make sure to run `dbt parse` at a minimum to update the <Constant name="semantic_layer" />. This updates the `semantic_manifest.json` file, reflecting your changes when querying metrics. By running `dbt parse`, you won't need to rebuild all the models.
 ::: 
 

@@ -25,7 +25,7 @@ The community [Rules of the Road](https://docs.getdbt.com/docs/contributing/slac
 The forum is broken down into three categories:
 
 - [Help](https://discourse.getdbt.com/c/help/19)
-  - This is a Q&A style forum where you can ask the <Constant name="dbt" /> Community for help with specific questions about <Constant name="dbt" />, <Constant name="cloud" />, data modeling, or anything else you want a definitive answer on.
+  - This is a Q&A style forum where you can ask the dbt Community for help with specific questions about dbt, <Constant name="cloud" />, data modeling, or anything else you want a definitive answer on.
   - This category is for questions which can plausibly have a _single correct answer_.
     - ✅ How do I debug this Jinja error?
     - ✅ How do I set up CI in <Constant name="cloud" /> on GitHub?

@@ -8,7 +8,7 @@ pagination_next: "docs/connect-adapters"
 pagination_prev: null
 ---
 
-<Constant name="dbt" /> connects to and runs SQL against your database, warehouse, lake, or query engine. These SQL-speaking platforms are collectively referred to as _data platforms_. <Constant name="dbt" /> connects with data platforms by using a dedicated adapter plugin for each. Plugins are built as Python modules that <Constant name="core" /> discovers if they are installed on your system. Refer to the [Build, test, document, and promote adapters](/guides/adapter-creation) guide for details.
+dbt connects to and runs SQL against your database, warehouse, lake, or query engine. These SQL-speaking platforms are collectively referred to as _data platforms_. dbt connects with data platforms by using a dedicated adapter plugin for each. Plugins are built as Python modules that <Constant name="core" /> discovers if they are installed on your system. Refer to the [Build, test, document, and promote adapters](/guides/adapter-creation) guide for details.
 
 You can [connect](/docs/connect-adapters) to adapters and data platforms natively in <Constant name="cloud" /> or install them manually using <Constant name="core" />.
 

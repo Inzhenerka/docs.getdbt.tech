@@ -18,7 +18,7 @@ There's a very practical reason, too: OSS prioritizes our collective knowledge a
 
 As a standard, <Constant name="dbt" /> must be reliable and consistent. Our first priority is ensuring the continued high quality of existing <Constant name="dbt" /> capabilities before we introduce net-new capabilities.
 
-We also believe <Constant name="dbt" /> as a framework should be extensible enough to ["make the easy things easy, and the hard things possible"](https://en.wikipedia.org/wiki/Perl#Philosophy). To that end, we _don't_ believe it's appropriate for <Constant name="dbt" /> to have an out-of-the-box solution for every niche problem. Users have the flexibility to achieve many custom behaviors by defining their own macros, materializations, hooks, and more. We view it as our responsibility as maintainers to decide when something should be "possible" — via macros, packages, etc. — and when something should be "easy" — built into the <Constant name="core" /> standard.
+We also believe dbt as a framework should be extensible enough to ["make the easy things easy, and the hard things possible"](https://en.wikipedia.org/wiki/Perl#Philosophy). To that end, we _don't_ believe it's appropriate for dbt to have an out-of-the-box solution for every niche problem. Users have the flexibility to achieve many custom behaviors by defining their own macros, materializations, hooks, and more. We view it as our responsibility as maintainers to decide when something should be "possible" — via macros, packages, etc. — and when something should be "easy" — built into the <Constant name="core" /> standard.
 
 So when will we say "yes" to new capabilities for <Constant name="core" />? The signals we look for include:
 - Upvotes on issues in our GitHub repos

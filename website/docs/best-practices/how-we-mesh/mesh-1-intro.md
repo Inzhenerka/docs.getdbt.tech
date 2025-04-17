@@ -12,12 +12,12 @@ To date, there also hasn't been a first-class way to effectively manage the depe
 
 That's where **<Constant name="mesh" />** comes in - empowering data teams to work *independently and collaboratively*; sharing data, code, and best practices without sacrificing security or autonomy. 
 
-This guide will walk you through the concepts and implementation details needed to get started. <Constant name="mesh" /> is not a single product - it is a pattern enabled by a convergence of several features in <Constant name="dbt" />:
+This guide will walk you through the concepts and implementation details needed to get started. <Constant name="mesh" /> is not a single product - it is a pattern enabled by a convergence of several features in dbt:
 
 - **[Cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref)** - this is the foundational feature that enables the multi-project deployments. `{{ ref() }}`s now work across dbt Cloud projects on Enterprise plans.
 - **[<Constant name="explorer" />](/docs/collaborate/explore-projects)** - <Constant name="cloud" />'s metadata-powered documentation platform, complete with full, cross-project lineage.
-- **Governance** - <Constant name="dbt" />'s governance features allow you to manage access to your <Constant name="dbt" /> models both within and across projects.
-  - **[Groups](/docs/collaborate/govern/model-access#groups)** - With groups, you can organize nodes in your <Constant name="dbt" /> DAG that share a logical connection (for example, by functional area) and assign an owner to the entire group.
+- **Governance** - dbt's governance features allow you to manage access to your dbt models both within and across projects.
+  - **[Groups](/docs/collaborate/govern/model-access#groups)** - With groups, you can organize nodes in your dbt DAG that share a logical connection (for example, by functional area) and assign an owner to the entire group.
   - **[Access](/docs/collaborate/govern/model-access#access-modifiers)** - access configs allow you to control who can reference models.
   - **[Model Versions](/docs/collaborate/govern/model-versions)** - when coordinating across projects and teams, we recommend treating your data models as stable APIs. Model versioning is the mechanism to allow graceful adoption and deprecation of models as they evolve.
   - **[Model Contracts](/docs/collaborate/govern/model-contracts)** - data contracts set explicit expectations on the shape of the data to ensure data changes upstream of <Constant name="dbt" /> or within a project's logic don't break downstream consumers' data products.
@@ -41,4 +41,4 @@ For additional information, refer to the [<Constant name="mesh" /> FAQs](/best-p
 
 - Understand the **purpose and tradeoffs** of building a multi-project architecture.
 - Develop an intuition for various **<Constant name="mesh" /> patterns** and how to design a multi-project architecture for your organization.
-- Establish recommended steps to **incrementally adopt** these patterns in your <Constant name="dbt" /> implementation.
+- Establish recommended steps to **incrementally adopt** these patterns in your dbt implementation.

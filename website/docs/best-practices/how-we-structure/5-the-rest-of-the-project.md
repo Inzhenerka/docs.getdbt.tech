@@ -102,7 +102,7 @@ We’ve focused heavily thus far on the primary area of action in our dbt projec
 
 ### Project splitting
 
-One important, growing consideration in the analytics engineering ecosystem is how and when to split a codebase into multiple <Constant name="dbt" /> projects. Currently, our advice for most teams, especially those just starting, is fairly simple: in most cases, we recommend doing so with [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro)! <Constant name="mesh" /> allows organizations to handle complexity by connecting several <Constant name="dbt" /> projects rather than relying on one big, monolithic project. This approach is designed to speed up development while maintaining governance. 
+One important, growing consideration in the analytics engineering ecosystem is how and when to split a codebase into multiple dbt projects. Currently, our advice for most teams, especially those just starting, is fairly simple: in most cases, we recommend doing so with [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro)! <Constant name="mesh" /> allows organizations to handle complexity by connecting several dbt projects rather than relying on one big, monolithic project. This approach is designed to speed up development while maintaining governance. 
 
 As breaking up monolithic <Constant name="dbt" /> projects into smaller, connected projects, potentially within a modern mono repo becomes easier, the scenarios we currently advise against may soon become feasible. So watch this space!
 

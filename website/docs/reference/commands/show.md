@@ -12,7 +12,7 @@ Use `dbt show` to:
 
 By default, `dbt show` will display the first 5 rows from the query result. This can be customized by passing the flag `--limit n`, where `n` is the number of rows to display.
 
-The results of the preview query are not materialized in the data warehouse, or stored in any <Constant name="dbt" /> file. They are only included in <Constant name="dbt" />'s logs and displayed in the terminal. Note also that, if previewing a model, <Constant name="dbt" /> will always compile and run the compiled query from source. It will not select from the already-materialized database relation, even if you've just run the model. (We may support that in the future; if you're interested, upvote or comment on [<Constant name="core" />#7391](https://github.com/dbt-labs/dbt-core/issues/7391).)
+The results of the preview query are not materialized in the data warehouse, or stored in any dbt file. They are only included in dbt's logs and displayed in the terminal. Note also that, if previewing a model, dbt will always compile and run the compiled query from source. It will not select from the already-materialized database relation, even if you've just run the model. (We may support that in the future; if you're interested, upvote or comment on [dbt-core#7391](https://github.com/dbt-labs/dbt-core/issues/7391).)
 
 Example:
 
