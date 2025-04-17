@@ -25,7 +25,7 @@ For users of [state-based selection](/reference/node-selection/syntax#about-node
 
 ## For maintainers of adapter plugins
 
-See GitHub discussion [dbt-labs/<Constant name="core" />#5468](https://github.com/dbt-labs/dbt-core/discussions/5468) for detailed information
+See GitHub discussion [dbt-labs/dbt-core#5468](https://github.com/dbt-labs/dbt-core/discussions/5468) for detailed information
 
 ## New and changed functionality
 

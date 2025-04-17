@@ -30,12 +30,12 @@ Before dbt Core v1.8, whenever you would `pip install` a data warehouse adapter 
 Beginning in v1.8, [`dbt-core` and adapters are decoupled](https://github.com/dbt-labs/dbt-adapters/discussions/87). Going forward, your installations should explicitly include _both_ `dbt-core` _and_ the desired adapter. The new `pip` installation command should look like this:
 
 ```shell
-pip install <Constant name="core" /> dbt-ADAPTER_NAME
+pip install dbt-core dbt-ADAPTER_NAME
 ```
 
 For example, you would use the following command if you use Snowflake:
 ```shell
-pip install <Constant name="core" /> dbt-snowflake
+pip install dbt-core dbt-snowflake
 ```
 
 For the time being, we have maintained install-time dependencies to avoid breaking existing scripts in surprising ways; `pip install dbt-snowflake` will continue to install the latest versions of both `dbt-core` and `dbt-snowflake`. Given that we may remove this implicit dependency in future versions, we strongly encourage you to update install scripts **now**.
