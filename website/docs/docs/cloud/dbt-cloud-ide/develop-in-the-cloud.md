@@ -143,7 +143,7 @@ Nice job, you're ready to start developing and building models 🎉!
 - [How we style our dbt projects](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
 - [User interface](/docs/cloud/dbt-cloud-ide/ide-user-interface)
 - [Version control basics](/docs/collaborate/git/version-control-basics)
-- [dbt Commands](/reference/dbt-commands)
+- [dbt commands](/reference/dbt-commands)
 
 ## FAQs
 

@@ -45,7 +45,7 @@ Core:
   - installed: 1.5.0 # Must be 1.5 or newer
   - latest:    1.6.3 - Update available!
 
-  Your version of <Constant name="core" /> is out of date!
+  Your version of dbt-core is out of date!
   You can find instructions for upgrading here:
   https://docs.getdbt.com/docs/installation
 

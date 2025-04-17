@@ -8,7 +8,7 @@ The following sections describe the different **Account settings** available fro
 
 <Lightbox src="/img/docs/dbt-cloud/example-sidebar-account-settings.png" title="Example of Account settings from the sidebar" /> 
 
-## Git repository caching <Lifecycle status="enterprise" />
+## Git repository caching <Lifecycle status="managed_plus" />
 
 :::important repo caching enabled by default
 
@@ -53,6 +53,6 @@ To use, select the **Enable partial parsing between deployment runs** option fro
 
 To use Advanced CI features, your <Constant name="cloud" /> account must have access to them. Ask your <Constant name="cloud" /> administrator to enable Advanced CI features on your account, which they can do by choosing the **Enable account access to Advanced CI** option from the account settings.
 
-Once enabled, the **dbt compare** option becomes available in the CI job settings for you to select.
+Once enabled, the **<Constant name="dbt" /> compare** option becomes available in the CI job settings for you to select.
 
 <Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Enable account access to Advanced CI option" />

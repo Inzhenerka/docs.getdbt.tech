@@ -14,7 +14,7 @@ Encountered an error while reading the project:
   ERROR: Runtime Error
   Could not find profile named 'user'
 Runtime Error
-  Could not run dbt'
+  Could not run <Constant name="dbt" />'
 ```
 
 Usually this errors indicates that there is an issue with missing/stale credentials/authentication. No worries, we have a few workarounds for you to try:

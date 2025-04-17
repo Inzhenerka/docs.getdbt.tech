@@ -21,4 +21,3 @@ export const CONSTANTS = {
   copilot: 'Copilot',
   semantic_layer: 'Semantic Layer',
 }
- 

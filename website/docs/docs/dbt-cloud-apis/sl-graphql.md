@@ -33,10 +33,10 @@ dbt Partners can use the <Constant name="semantic_layer" /> GraphQL API to build
 Note that the <Constant name="semantic_layer" /> GraphQL API doesn't support `ref` to call dbt objects. Instead, use the complete qualified table name. If you're using dbt macros at query time to calculate your metrics, you should move those calculations into your <Constant name="semantic_layer" /> metric definitions as code.
 
 ## Requirements to use the GraphQL API
+
 - A <Constant name="cloud" /> project on dbt v1.6 or higher
 - Metrics are defined and configured
 - A <Constant name="cloud" /> [service token](/docs/dbt-cloud-apis/service-tokens) with "<Constant name="semantic_layer" /> Only” and "Metadata Only" permissions
-- Your dbt project is configured and connected to a data platform
 
 ## Using the GraphQL API
 
@@ -44,7 +44,6 @@ If you're a dbt user or partner with access to <Constant name="cloud" /> and the
 
 Refer to [Get started with the <Constant name="semantic_layer" />](/guides/sl-snowflake-qs) for more info.
 
-### Authentication 
 
 Authentication uses a <Constant name="cloud" /> [service account tokens](/docs/dbt-cloud-apis/service-tokens) passed through a header as follows. To explore the schema, you can enter this information in the "header" section.
 

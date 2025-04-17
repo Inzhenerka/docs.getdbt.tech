@@ -32,7 +32,7 @@ To install `dbt-core` and `dbt-postgres` from the GitHub code source:
 
 ```shell
 git clone https://github.com/dbt-labs/dbt-core.git
-cd <Constant name="core" />
+cd dbt-core
 python -m pip install -r requirements.txt
 ```
 </VersionBlock>

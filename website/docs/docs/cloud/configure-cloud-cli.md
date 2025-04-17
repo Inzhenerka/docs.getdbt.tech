@@ -41,8 +41,8 @@ Once you install the <Constant name="cloud" /> CLI, you need to configure it to 
 2. Save the `dbt_cloud.yml` file in the `.dbt` directory, which stores your <Constant name="cloud_cli" /> configuration. Store it in a safe place as it contains API keys. Check out the [FAQs](#faqs) to learn how to create a `.dbt` directory and move the `dbt_cloud.yml` file.
    
     - North America: https://YOUR_ACCESS_URL/cloud-cli
-    - EMEA: https://emea.dbt.com/cloud-cli
-    - APAC: https://au.dbt.com/cloud-cli
+    - EMEA: https://emea.<Constant name="dbt" />.com/cloud-cli
+    - APAC: https://au.<Constant name="dbt" />.com/cloud-cli
     - North American Cell 1: `https:/ACCOUNT_PREFIX.us1.dbt.com/cloud-cli`
     - Single-tenant: `https://YOUR_ACCESS_URL/cloud-cli`
   
@@ -76,13 +76,13 @@ Once you install the <Constant name="cloud" /> CLI, you need to configure it to 
       token-value: "<pat-or-service-token-value>"  
   ```
 
-3. After downloading the config file and creating your directory, navigate to a dbt project in your terminal:
+1. After downloading the config file and creating your directory, navigate to a project in your terminal:
 
     ```bash
     cd ~/dbt-projects/jaffle_shop
     ```
 
-4. In your `dbt_project.yml` file, ensure you have or include a `dbt-cloud` section with a `project-id` field. The `project-id` field contains the dbt Cloud project ID you want to use.
+2. In your `dbt_project.yml` file, ensure you have or include a `dbt-cloud` section with a `project-id` field. The `project-id` field contains the dbt Cloud project ID you want to use.
 
     ```yaml
     # dbt_project.yml
@@ -96,7 +96,7 @@ Once you install the <Constant name="cloud" /> CLI, you need to configure it to 
 
    - To find your project ID, select **Develop** in the dbt Cloud navigation menu. You can use the URL to find the project ID. For example, in `https://YOUR_ACCESS_URL/develop/26228/projects/123456`, the project ID is `123456`.
 
-5. You should now be able to [use the <Constant name="cloud_cli" />](#use-the-dbt-cloud-cli) and run [dbt commands](/reference/dbt-commands) like [`dbt environment show`](/reference/commands/dbt-environment) to view your <Constant name="cloud" /> configuration details or `dbt compile` to compile models in your dbt project.
+3. You should now be able to [use the <Constant name="cloud_cli" />](#use-the-dbt-cloud-cli) and run [dbt commands](/reference/dbt-commands) like [`dbt environment show`](/reference/commands/dbt-environment) to view your <Constant name="cloud" /> configuration details or `dbt compile` to compile models in your dbt project.
 
 With your repo recloned, you can add, edit, and sync files with your repo.
 
@@ -151,7 +151,7 @@ When running `dbt sqlfluff` from the <Constant name="cloud_cli" />, the followin
 
 - dbt reads the `.sqlfluff` file, if it exists, for any custom configurations you might have.
 - For continuous integration/continuous development (CI/CD) workflows, your project must have a `dbt_cloud.yml` file and you have successfully run commands from within this dbt project.
-- An SQLFluff command will return an exit code of 0 if it ran with any file violations. This dbt behavior differs from SQLFluff behavior, where a linting violation returns a non-zero exit code. dbt Labs plans on addressing this in a later release.
+- An SQLFluff command will return an exit code of 0 if it ran with any file violations. This <Constant name="dbt" /> behavior differs from SQLFluff behavior, where a linting violation returns a non-zero exit code. <Constant name="dbt" /> Labs plans on addressing this in a later release.
 
 ## Considerations
 

@@ -67,7 +67,7 @@ Release date: March 11, 2025
 
 This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
-<Constant name="core" />==1.9.3
+dbt-core==1.9.3
 
 # shared interfaces
 dbt-adapters==1.14.1
@@ -124,7 +124,7 @@ These changes reflect capabilities that are only available in <Constant name="cl
 
 This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
-<Constant name="core" />==1.9.2
+dbt-core==1.9.2
 
 # shared interfaces
 dbt-adapters==1.14.0
@@ -178,7 +178,7 @@ These changes reflect capabilities that are only available in <Constant name="cl
 
 This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
-<Constant name="core" />==1.9.1
+dbt-core==1.9.1
 
 # shared interfaces
 dbt-adapters==1.13.1
@@ -220,7 +220,7 @@ Release date: December 12, 2024
 
 This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
-<Constant name="core" />==1.9.0
+dbt-core==1.9.0
 
 # shared interfaces
 dbt-adapters==1.10.4
