@@ -60,4 +60,4 @@ If you want to receive <Constant name="dbt" /> training, check out our [<Constan
 - Billing
 - Bug reports related to the web interface
 
-As a rule of thumb, if you are using <Constant name="cloud" />, but your problem is related to code within your <Constant name="dbt" /> project, then please follow the above process or checking out the [FAQs](/docs/faqs) rather than reaching out to support. Refer to [<Constant name="cloud" /> support](/docs/dbt-support) for more information.
+As a rule of thumb, if you are using <Constant name="cloud" />, but your problem is related to code within your dbt project, then please follow the above process or checking out the [FAQs](/docs/faqs) rather than reaching out to support. Refer to [<Constant name="cloud" /> support](/docs/dbt-support) for more information.

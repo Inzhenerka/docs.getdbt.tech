@@ -2,7 +2,7 @@
 title: "Edit and create dbt models" 
 id: use-visual-editor      
 sidebar_label: "Edit and create dbt models" 
-description: "Access and use the Visual Editor to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
+description: "Access and use the Canvas to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
 pagination_prev: "docs/cloud/visual-editor-interface"
 pagination_next: "docs/cloud/build-ve-copilot"
 ---
@@ -12,7 +12,7 @@ import Prerequisites from '/snippets/_visual-editor-prerequisites.md';
 # Edit and create dbt models <Lifecycle status='beta, enterprise'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-Access and use the <Constant name="visual_editor" /> to create or edit <Constant name="dbt" /> models through a visual, drag-and-drop experience. Use the built-in AI for custom code generation in your development experience.
+Access and use the <Constant name="visual_editor" /> to create or edit dbt models through a visual, drag-and-drop experience. Use the built-in AI for custom code generation in your development experience.
 </p>
 
 :::tip Beta feature
@@ -21,7 +21,7 @@ The <Constant name="visual_editor" /> provides users with a seamless and drag-an
 To join the private beta, [register your interest](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) or reach out to your account team to begin this process.
 :::
 
-## Access Visual Editor
+## Access Canvas
 
 Before accessing the editor, you should have a <Constant name="cloud" /> project already set up. This includes a <Constant name="git" /> repository, data platform connection, environments, and developer credentials. If you don't have this set up, please contact your <Constant name="cloud" /> Admin.
 
@@ -35,7 +35,7 @@ To access the <Constant name="visual_editor" />:
 <Prerequisites feature={'/snippets/_visual-editor-prerequisites.md'} />
 
 ## Create a model
-To create a <Constant name="dbt" /> SQL model, click on **Create a new model** and perform the following steps. Note that you can't create source models in the <Constant name="visual_editor" />. This is because you need to have production run with sources already created.
+To create a dbt SQL model, click on **Create a new model** and perform the following steps. Note that you can't create source models in the <Constant name="visual_editor" />. This is because you need to have production run with sources already created.
 
 1. Drag an operator from the operator toolbar and drop it onto the canvas.
 2. Click on the operator to open its configuration panel:	
@@ -78,7 +78,7 @@ To edit an existing model, navigate to the <Constant name="visual_editor" />, cl
 
 Testing and documenting your models is an important part of the development process.  
 
-Stay tuned! Coming very soon, you'll be able to version control your <Constant name="dbt" /> modes in the <Constant name="visual_editor" />. This ensures you can track changes and revert to previous versions if needed.
+Stay tuned! Coming very soon, you'll be able to version control your dbt modes in the <Constant name="visual_editor" />. This ensures you can track changes and revert to previous versions if needed.
 
 <!-- leaving this section here in case there's more to add later if needed
 ## Limitations

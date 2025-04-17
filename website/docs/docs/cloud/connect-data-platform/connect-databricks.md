@@ -9,13 +9,13 @@ The <Constant name="dbt" />-databricks adapter is maintained by the Databricks t
 
 ## About the dbt-databricks adapter
 
-<Constant name="dbt" />-databricks is compatible with the following versions of <Constant name="core" /> in <Constant name="cloud" /> with varying degrees of functionality. 
+dbt-databricks is compatible with the following versions of <Constant name="core" /> in <Constant name="cloud" /> with varying degrees of functionality. 
 
 | Feature | <Constant name="dbt" /> Versions |
 | ----- | ----------- | 
-| <Constant name="dbt" />-databricks | Available starting with <Constant name="dbt" /> 1.0 in <Constant name="cloud" />|
-| Unity Catalog | Available starting with <Constant name="dbt" /> 1.1 | 
-| Python models | Available starting with <Constant name="dbt" /> 1.3 |
+| dbt-databricks | Available starting with dbt 1.0 in <Constant name="cloud" />|
+| Unity Catalog | Available starting with dbt 1.1 | 
+| Python models | Available starting with dbt 1.3 |
 
 The <Constant name="dbt" />-databricks adapter offers:
 - **Easier set up**

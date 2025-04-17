@@ -9,7 +9,7 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-9-concl
 
 Now that we've set the stage, it's time to dig in to the fun and messy part: how do we refactor an existing rollup in <Constant name="dbt" /> into semantic models and metrics?
 
-Let's look at the differences we can observe in how we might approach this with MetricFlow supercharging <Constant name="dbt" /> versus how we work without a <Constant name="semantic_layer" />. These differences can then inform our structure.
+Let's look at the differences we can observe in how we might approach this with MetricFlow supercharging dbt versus how we work without a <Constant name="semantic_layer" />. These differences can then inform our structure.
 
 - 🍊 In <Constant name="dbt" />, we tend to create **highly denormalized datasets** that bring **everything you want around a certain entity or process into a single table**.
 - 💜 The problem is, this **limits the dimensionality available to MetricFlow**. The more we pre-compute and 'freeze' into place, the less flexible our data is.

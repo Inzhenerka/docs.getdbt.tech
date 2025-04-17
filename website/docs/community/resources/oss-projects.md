@@ -4,13 +4,13 @@ Looking for a good place to get involved contributing code? <Constant name="dbt"
 
 ## Python
 
-- [<Constant name="core" />](https://github.com/dbt-labs/dbt-core/discussions) - the primary shared functionality powering <Constant name="dbt" />
-- [hubcap](https://github.com/dbt-labs/hubcap) - the code powering the <Constant name="dbt" /> Package hub
-- adapters - [the warehouse specific code that wires core up to various platforms](https://docs.getdbt.com/docs/contributing/adapter-development/1-what-are-adapters), several major platforms’ development is supported by <Constant name="dbt" /> Labs:
-  - [<Constant name="dbt" />-bigquery](https://github.com/dbt-labs/dbt-bigquery)
-  - [<Constant name="dbt" />-snowflake](https://github.com/dbt-labs/dbt-snowflake)
-  - [<Constant name="dbt" />-redshift](https://github.com/dbt-labs/dbt-redshift)
-  - [<Constant name="dbt" />-spark](https://github.com/dbt-labs/dbt-spark)
+- [<Constant name="core" />](https://github.com/dbt-labs/dbt-core/discussions) - the primary shared functionality powering dbt
+- [hubcap](https://github.com/dbt-labs/hubcap) - the code powering the dbt Package hub
+- adapters - [the warehouse specific code that wires core up to various platforms](https://docs.getdbt.com/docs/contributing/adapter-development/1-what-are-adapters), several major platforms’ development is supported by dbt Labs:
+  - [dbt-bigquery](https://github.com/dbt-labs/dbt-bigquery)
+  - [dbt-snowflake](https://github.com/dbt-labs/dbt-snowflake)
+  - [dbt-redshift](https://github.com/dbt-labs/dbt-redshift)
+  - [dbt-spark](https://github.com/dbt-labs/dbt-spark)
 
 ## dbt
 

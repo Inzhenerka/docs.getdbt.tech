@@ -19,7 +19,7 @@ How do you find these organizational interfaces? Here are some steps to get you 
   - Are there various domains people are focused on?
   - Are there various sizes, shapes, and sources of data that get handled separately (such as click event data)?
   - Are there people focused on separate levels of transformation, such as landing and staging data or building marts?
-  - Is there a single team that is *downstream* of your current <Constant name="dbt" /> project, who could more easily migrate onto <Constant name="mesh" /> as a consumer? 
+  - Is there a single team that is *downstream* of your current dbt project, who could more easily migrate onto <Constant name="mesh" /> as a consumer? 
 
 When attempting to define your project interfaces, you should consider investigating:
 

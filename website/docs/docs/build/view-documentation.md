@@ -10,11 +10,11 @@ You can view documentation in two complementary ways, depending on your needs:
 
 | Option | Description | Availability |
 |------|-------------|--------------|
-| [**<Constant name="dbt" /> Docs**](#dbt-docs) | Generates a static website with model lineage, metadata, and documentation that can be hosted on your web server (like S3 or Netlify). | <Constant name="core" /> or <Constant name="cloud" /> Developer plans |
-| [**<Constant name="explorer" />**](/docs/collaborate/explore-projects) | The premier documentation experience in <Constant name="cloud" />. Builds on <Constant name="dbt" /> Docs to provide a dynamic, real-time interface with rich [metadata](/docs/collaborate/explore-projects#generate-metadata), customizable views, deep insight into your project and resources, and collaborative tools. | <Constant name="cloud" /> Team or Enterprise plans |
+| [**dbt Docs**](#dbt-docs) | Generates a static website with model lineage, metadata, and documentation that can be hosted on your web server (like S3 or Netlify). | <Constant name="core" /> or <Constant name="cloud" /> Developer plans |
+| [**<Constant name="explorer" />**](/docs/collaborate/explore-projects) | The premier documentation experience in <Constant name="cloud" />. Builds on dbt Docs to provide a dynamic, real-time interface with rich [metadata](/docs/collaborate/explore-projects#generate-metadata), customizable views, deep insight into your project and resources, and collaborative tools. | <Constant name="cloud" /> Team or Enterprise plans |
 
 ## Navigating your documentation
-The following sections describe how to navigate your documentation in <Constant name="explorer" /> and <Constant name="dbt" /> Docs.
+The following sections describe how to navigate your documentation in <Constant name="explorer" /> and dbt Docs.
 
 ### dbt Explorer <Lifecycle status="team,enterprise" />
 
@@ -43,7 +43,7 @@ For additional details and instructions on how to explore your lineage, navigate
 
 ### dbt Docs
 
-<Constant name="dbt" /> Docs provides valuable insights into your <Constant name="core" /> or <Constant name="cloud" /> Developer plan projects. The interface enables you to navigate to the documentation for specific models. That might look something like this:
+dbt Docs provides valuable insights into your <Constant name="core" /> or <Constant name="cloud" /> Developer plan projects. The interface enables you to navigate to the documentation for specific models. That might look something like this:
 
 <Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/f2221dc-Screen_Shot_2018-08-14_at_6.29.55_PM.png" title="Auto-generated documentation for a dbt model"/>
 
@@ -59,7 +59,7 @@ In this example, the `fct_subscription_transactions` model only has one direct p
 
 ## Deploy the documentation site
 
-Effortlessly deploy documentation in <Constant name="explorer" /> or <Constant name="dbt" /> Docs to make it available to your teams.
+Effortlessly deploy documentation in <Constant name="explorer" /> or dbt Docs to make it available to your teams.
 
 :::caution Security
 
@@ -82,4 +82,4 @@ To learn how to deploy your documentation site, see [Build and view your docs wi
 * Use your own web server like Apache/Nginx
 * If you're on a <Constant name="cloud" /> Developer plan, see [Build and view your docs with <Constant name="cloud" />](/docs/collaborate/build-and-view-your-docs#dbt-docs) to learn how to deploy your documentation site.
 
-Interested in using <Constant name="explorer" /> for the complete <Constant name="dbt" /> documentation experience, sign up for a free [<Constant name="cloud" /> trial](https://www.getdbt.com/signup) or [contact us](https://www.getdbt.com/contact). 
+Interested in using <Constant name="explorer" /> for the complete dbt documentation experience, sign up for a free [<Constant name="cloud" /> trial](https://www.getdbt.com/signup) or [contact us](https://www.getdbt.com/contact). 

@@ -7,7 +7,7 @@ pagination_prev: null
 
 Support for <Constant name="dbt" /> is available to all users through the following channels:
 
-- Dedicated <Constant name="dbt" /> Support team (<Constant name="cloud" /> users).
+- Dedicated dbt Support team (<Constant name="cloud" /> users).
 - [The Community Forum](https://discourse.getdbt.com/).
 - [<Constant name="dbt" /> Community slack](https://www.getdbt.com/community/join-the-community/).
   
@@ -17,7 +17,7 @@ If you're developing on the command line (CLI) and have questions or need some h
 
 ## dbt Cloud support
 
-The global <Constant name="dbt" /> Support team is available to <Constant name="cloud" /> customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the <Constant name="cloud" /> navigation.
+The global dbt Support team is available to <Constant name="cloud" /> customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the <Constant name="cloud" /> navigation.
 
 ### Create a support ticket
 To create a support ticket in <Constant name="cloud" />:
@@ -29,9 +29,9 @@ To create a support ticket in <Constant name="cloud" />:
 <Lightbox src="/img/create-support-ticket.gif" title="Create a support ticket in dbt Cloud" />
 
 ### Ask dbt Support Assistant
-<Constant name="dbt" /> Support Assistant is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to <Constant name="cloud" /> users and can help answer troubleshooting questions, give a synopsis of features and functionality, or link to relevant documentation. 
+dbt Support Assistant is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to <Constant name="cloud" /> users and can help answer troubleshooting questions, give a synopsis of features and functionality, or link to relevant documentation. 
 
-The <Constant name="dbt" /> Support Assistant AI widget is separate from [<Constant name="copilot" />](/docs/cloud/dbt-copilot), a powerful AI engine that helps with code generation to accelerate your analytics workflows. The <Constant name="dbt" /> Support Assistant focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in <Constant name="cloud" /> won't affect the <Constant name="dbt" /> Support Assistant's availability.
+The dbt Support Assistant AI widget is separate from [<Constant name="copilot" />](/docs/cloud/dbt-copilot), a powerful AI engine that helps with code generation to accelerate your analytics workflows. The dbt Support Assistant focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in <Constant name="cloud" /> won't affect the dbt Support Assistant's availability.
 
 :::info
 We recommend validating information received in AI responses for any scenario using our documentation. Please [contact support](mailto:support@getdbt.com) to report incorrect information provided by the Support Assistant.
@@ -84,7 +84,7 @@ Basic assistance with <Constant name="dbt" /> project troubleshooting.
 Help with errors and issues in macros, models, and <Constant name="dbt" /> Labs' packages.
 For strategic advice, best practices, or expansion conversations, consult your Account Team.
 
-For customers on a <Constant name="cloud" /> Enterprise plan, we **also** offer basic assistance in troubleshooting issues with your <Constant name="dbt" /> project:
+For customers on a <Constant name="cloud" /> Enterprise plan, we **also** offer basic assistance in troubleshooting issues with your dbt project:
 - **Something isn't working the way I would expect it to...**
     - in a macro I created...
     - in an incremental model I'm building...
