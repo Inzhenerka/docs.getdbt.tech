@@ -4,9 +4,9 @@ sidebar_label: "Compatible Track Changelog"
 description: "The Compatible release track updates once per month, and it includes up-to-date open source versions as of the monthly release."
 ---
 
-Select the "Compatible" and "Extended" release tracks if you need a less-frequent release cadence, the ability to test new dbt releases before they go live in production, and/or ongoing compatibility with the latest open source releases of dbt Core.
+Select the "Compatible" and "Extended" release tracks if you need a less-frequent release cadence, the ability to test new dbt releases before they go live in production, and/or ongoing compatibility with the latest open source releases of <Constant name="core" />.
 
-Each monthly "Compatible" release includes functionality matching up-to-date open source versions of dbt Core and adapters at the time of release.
+Each monthly "Compatible" release includes functionality matching up-to-date open source versions of <Constant name="core" /> and adapters at the time of release.
 
 For more information, see [release tracks](/docs/dbt-versions/cloud-release-tracks).
 
@@ -65,7 +65,7 @@ Changelogs:
 
 Release date: March 11, 2025
 
-This release includes functionality from the following versions of dbt Core OSS:
+This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
 dbt-core==1.9.3
 
@@ -89,7 +89,7 @@ dbt-trino==1.9.0
 ```
 
 Changelogs:
-- [dbt-core 1.9.3](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-193---march-07-2025)
+- [<Constant name="core" /> 1.9.3](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-193---march-07-2025)
 - [dbt-adapters 1.14.1](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/CHANGELOG.md#dbt-adapters-1141---march-04-2025)
 - [dbt-common 1.15.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md#dbt-common-1150---february-14-2025)
 - [dbt-bigquery 1.9.1](https://github.com/dbt-labs/dbt-bigquery/blob/1.9.latest/CHANGELOG.md#dbt-bigquery-191---january-10-2025)
@@ -109,7 +109,7 @@ Release date: February 12, 2025
 
 ### dbt Cloud 
 
-These changes reflect capabilities that are only available in dbt Cloud.
+These changes reflect capabilities that are only available in <Constant name="cloud" />.
 
 ### Features
 
@@ -122,7 +122,7 @@ These changes reflect capabilities that are only available in dbt Cloud.
 - Fix error messages for SL query.
 - Semantic Layer commands now respect `--favor-state` when running with `--defer`.
 
-This release includes functionality from the following versions of dbt Core OSS:
+This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
 dbt-core==1.9.2
 
@@ -146,7 +146,7 @@ dbt-trino==1.9.0
 ```
 
 Changelogs:
-- [dbt-core 1.9.2](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-192---january-29-2025)
+- [<Constant name="core" /> 1.9.2](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-192---january-29-2025)
 - [dbt-adapters 1.14.0](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/CHANGELOG.md#dbt-adapters-1140---february-07-2025)
 - [dbt-common 1.14.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md)
 - [dbt-bigquery 1.9.1](https://github.com/dbt-labs/dbt-bigquery/blob/1.9.latest/CHANGELOG.md#dbt-bigquery-191---january-10-2025)
@@ -166,7 +166,7 @@ Release date: January 14, 2025
 
 ### dbt Cloud 
 
-These changes reflect capabilities that are only available in dbt Cloud.
+These changes reflect capabilities that are only available in <Constant name="cloud" />.
 
 ### Features
 
@@ -176,7 +176,7 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 - Use `meta.dbt_cloud_id` to `build unique_id` for manually defined exposure for merging against a duplicated exposure.
 
-This release includes functionality from the following versions of dbt Core OSS:
+This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
 dbt-core==1.9.1
 
@@ -200,7 +200,7 @@ dbt-trino==1.9.0
 ```
 
 Changelogs:
-- [dbt-core 1.9.1](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-191---december-16-2024)
+- [<Constant name="core" /> 1.9.1](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-191---december-16-2024)
 - [dbt-adapters 1.13.1](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/CHANGELOG.md#dbt-adapters-1131---january-10-2025)
 - [dbt-common 1.14.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md)
 - [dbt-bigquery 1.9.1](https://github.com/dbt-labs/dbt-bigquery/blob/1.9.latest/CHANGELOG.md#dbt-bigquery-191---january-10-2025)
@@ -218,7 +218,7 @@ Changelogs:
 
 Release date: December 12, 2024
 
-This release includes functionality from the following versions of dbt Core OSS:
+This release includes functionality from the following versions of <Constant name="core" /> OSS:
 ```
 dbt-core==1.9.0
 
@@ -242,7 +242,7 @@ dbt-trino==1.8.5
 ```
 
 Changelogs:
-- [dbt-core 1.9.0](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-190---december-09-2024)
+- [<Constant name="core" /> 1.9.0](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-190---december-09-2024)
 - [dbt-adapters 1.10.4](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/CHANGELOG.md#dbt-adapters-1104---november-11-2024)
 - [dbt-common 1.14.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md)
 - [dbt-bigquery 1.9.0](https://github.com/dbt-labs/dbt-bigquery/blob/1.9.latest/CHANGELOG.md#dbt-bigquery-190---december-09-2024)

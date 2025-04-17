@@ -16,12 +16,10 @@ The results of the preview query are not materialized in the data warehouse, or 
 
 Example:
 
-```
-dbt show --select "model_name.sql"
+```dbt show --select "model_name.sql"
 ```
 or
-```
-dbt show --inline "select * from {{ ref('model_name') }}"
+```dbt show --inline "select * from {{ ref('model_name') }}"
 ```
 
 The following is an example of `dbt show` output for a model named `stg_orders`:
@@ -59,7 +57,7 @@ $ dbt build -s "my_model_with_duplicates"
 13:22:48
 13:22:48 Done. PASS=1 WARN=0 ERROR=1 SKIP=0 TOTAL=2
 
-$ dbt show -s "unique_my_model_with_duplicates_id"
+$ <Constant name="dbt" /> show -s "unique_my_model_with_duplicates_id"
 13:22:53 Running with dbt=1.5.0
 13:22:53 Found 4 models, 2 tests, 0 snapshots, 0 analyses, 309 macros, 0 operations, 0 seed files, 0 sources, 0 exposures, 0 metrics, 0 groups
 13:22:53

@@ -10,7 +10,7 @@ pagination_prev: null
 
 <IntroText>
 
-Use dbt Cloud's capabilities to seamlessly run a dbt job in production or staging environments. Rather than run dbt commands manually from the command line, you can leverage the [dbt Cloud's in-app scheduling](/docs/deploy/job-scheduler) to automate how and when you execute dbt. 
+Use <Constant name="cloud" />'s capabilities to seamlessly run a dbt job in production or staging environments. Rather than run dbt commands manually from the command line, you can leverage the [<Constant name="cloud" />'s in-app scheduling](/docs/deploy/job-scheduler) to automate how and when you execute dbt. 
 
 </IntroText>
 
@@ -27,7 +27,7 @@ dbt Cloud offers the easiest and most reliable way to run your dbt project in pr
 
 Before continuing, make sure you understand dbt's approach to [deployment environments](/docs/deploy/deploy-environments). 
 
-Learn how to use dbt Cloud's features to help your team ship timely and quality production data more easily.
+Learn how to use <Constant name="cloud" />'s features to help your team ship timely and quality production data more easily.
 ## Deploy with dbt
 
 <div className="grid--3-col">
@@ -149,7 +149,7 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
 
 ## Run dbt in production
 
-If you want to run dbt jobs on a schedule, you can use tools such as dbt Cloud, Airflow, Prefect, Dagster, automation server, or Cron.-->
+If you want to run dbt jobs on a schedule, you can use tools such as <Constant name="cloud" />, Airflow, Prefect, Dagster, automation server, or Cron.-->
 
 ## Related docs
 
