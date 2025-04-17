@@ -8,7 +8,7 @@ authors: [brian_jan]
 tags: [dbt tutorials]
 hide_table_of_contents: false
 
-date: 2025-04-14
+date: 2025-04-17
 is_featured: true
 ---
 
