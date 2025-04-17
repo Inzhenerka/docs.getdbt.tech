@@ -7,7 +7,7 @@ tags: [Semantic Layer]
 pagination_next: null
 ---
 
-The [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) is a <Constant name="cloud" /> offering that allows users to centrally define their metrics within their <Constant name="dbt" /> project using [MetricFlow](/docs/build/about-metricflow).
+The [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) is a <Constant name="cloud" /> offering that allows users to centrally define their metrics within their dbt project using [MetricFlow](/docs/build/about-metricflow).
 
 The <Constant name="semantic_layer" /> offers:
 
@@ -76,6 +76,7 @@ The dbt Semantic Layer supports the following data platforms:
 - BigQuery
 - Databricks
 - Redshift
+- Postgres
 
 Support for other data platforms, such as Fabric and Trino, isn't available at this time. If you're interested in using the dbt Semantic Layer with a data platform not on the list, please [contact us](https://www.getdbt.com/get-started).
 </Expandable>
