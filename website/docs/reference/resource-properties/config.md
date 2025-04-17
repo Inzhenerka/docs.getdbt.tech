@@ -115,7 +115,7 @@ version: 2
 <File name='models/<filename>.yml'>
 
 ```yml
-unit_tests:
+[unit_tests](/reference/resource-properties/unit-tests):
   - name: <test-name>
     config:
       [enabled](/reference/resource-configs/enabled): true | false
