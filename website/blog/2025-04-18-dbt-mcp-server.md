@@ -1,6 +1,6 @@
 ---
 title: "Introducing the dbt MCP Server – Bringing Structured Data to AI Workflows and Agents"
-description: "We’re open‑sourcing an experimental dbt MCP server so LLMs and agents can safely discover, query, and run your dbt project."
+description: "We’re open‑sourcing an experimental dbt MCP server so LLMs and agents can discover, query, and run your dbt project."
 slug: introducing-dbt-mcp-server
 authors: [jason_ganz]
 tags: [ai, data ecosystem]
@@ -13,13 +13,13 @@ is_featured: true
 
 dbt is the standard for creating governed, trustworthy datasets on top of your structured data. [MCP](https://www.anthropic.com/news/model-context-protocol) is [showing](https://techcrunch.com/2025/04/09/google-says-itll-embrace-anthropic-standard-for-connecting-ai-models-to-data/) [increasing](https://techcrunch.com/2025/03/26/openai-adopts-rival-anthropic-standard-for-connecting-ai-models-to-data/) [promise](https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/introducing-model-context-protocol-mcp-in-copilot-studio-simplified-integration-with-ai-apps-and-agents/) as the standard for providing context to LLMs to allow them to function at a high level in real world, operational scenarios.
 
-Today, we are open sourcing an experimental version of the [dbt MCP server](https://github.com/dbt-labs/dbt-mcp/tree/main). We expect the dbt MCP server is going to be a key component for how AI systems interact with your structured data over the coming years. 
+Today, we are open sourcing an experimental version of the [dbt MCP server](https://github.com/dbt-labs/dbt-mcp/tree/main). We expect that over the coming years, structured data is going to become heavily integrated into AI workflows and that dbt will play a key role in building and provisioning this data.
 
 In particular, we expect both [Business Intelligence](https://roundup.getdbt.com/p/how-ai-will-disrupt-bi-as-we-know) and [Data Engineering](https://roundup.getdbt.com/p/how-ai-will-disrupt-data-engineering) will be driven by AI operating on top of the context defined in your dbt pProjects.
 
 **We are committed to building the data control plane that enables AI to reliably access structured data from across your entire data lineage.** Over the coming months and years, data teams will increasingly focus on building the rich context that feeds into the dbt MCP server.  Both AI agents and business stakeholders will then operate on top of LLM-driven systems hydrated by the dbt MCP context.
 
-[MCP demo video]
+<LoomVideo id="28cd33da8bcc41ccbe43338d327e73d8"/>
 
 Today’s system is not a full realization of the vision in the posts shared above, but it is a meaningful step towards safely integrating your structured enterprise data into AI workflows. In this post, we’ll walk through what the dbt MCP server can do today, some tips for getting started and some of the limitations of the current implementation. 
 
@@ -81,8 +81,6 @@ The data discovery tools allow LLMs to understand what data exists, how it's str
 ### **Data Asset Discovery Tools:**
 
 *note - for all of these tools, you do not need to directly access them in your workflow. Rather, the MCP client will use the context you have provided to determine which is the most accurate tool to use at a given time.*
-
-[MCP demo - data discovery.mp4](attachment:5adc83ff-52c8-432d-aee5-e1c26c2eb4cb:MCP_demo_-_data_discovery.mp4)
 
 | Tool Name | Purpose | Output |
 | --- | --- | --- |
