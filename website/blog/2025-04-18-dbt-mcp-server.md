@@ -52,13 +52,16 @@ The dbt MCP server provides access to a set of *tools* that operate on top of yo
 
 There are three primary functions of the dbt MCP server today.
 
-![image.png](attachment:8088747d-6ef5-47b6-8236-5227716bc376:image.png)
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_use_cases.png" title="Three use‑case pillars of the dbt MCP server" width="100%" />
 
 - Data discovery: Understand what data assets exist in your dbt project.
 - Data querying: Directly query the data in your dbt project. This has two components:
     - Use the dbt Semantic Layer for trustworthy, single source of truth reporting on your metrics
     - Execution of SQL queries for more freewheeling data exploration and development
 - Run and perform commands within dbt: Access the dbt CLI to run a project and perform other operations
+
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_architecture_overview.png" title="How the dbt MCP server fits between data sources and MCP‑enabled clients" width="100%" />
+
 
 ❓Do I need to be a dbt Cloud customer to use the dbt MCP server
 
@@ -158,12 +161,11 @@ To get this working.
 
 - Follow the instructions in the Readme to install the MCP server
 - Validate that you have added the MCP config to the your Claude desktop config. You should see ‘dbt’ when you go to Claude→Settings→Developer
-
-![image.png](attachment:d40e0a16-667a-47db-9543-9f780cc27422:image.png)
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_settings_dbt_mcp.png" title="Claude Desktop – MCP server running in Developer settings" width="100%" />
 
 - Create a new project called “analytics”. Give it a description of how an end user might interact with it.
 
-![image.png](attachment:7a00cd95-3814-438d-917a-68f4b9ca137b:image.png)
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_project_card.png" title="Example Claude Desktop project connected to the dbt MCP server" width="100%" />
 
 - **Add a custom prompt explaining that questions in this project will likely be routed through the dbt MCP server.** You’ll likely want to customize this to your particular organizational context.
     - Ex: This conversation is connected to and knows about the information in your dbt Project via the dbt MCP server. When you receive a question that plausibly needs data from an external data source, you will likely want to use the tools available via the dbt MCP server to provide it.
