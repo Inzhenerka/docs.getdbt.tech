@@ -25,7 +25,7 @@ Today’s system is not a full realization of the vision in the posts shared abo
 
 We believe it is important for the industry to start coalescing on best practices for safe and trustworthy ways to access your business data via LLM.
 
-**What is MCP**
+**What is MCP?**
 
 MCP stands for Model Context Protocol - it is an open protocol released by Anthropic in [November of last year](https://www.anthropic.com/news/model-context-protocol) to allow AI systems to dynamically pull in context and data. Why does this matter?
 
@@ -39,12 +39,12 @@ MCP stands for Model Context Protocol - it is an open protocol released by Anthr
 
 Since then, MCP has become widely supported, with Google, Microsoft and OpenAI all committing to support MCP. 
 
-**What does the dbt MCP Server do**
+**What does the dbt MCP Server do?**
 
 Think of it as the missing glue between:
 
 - **Your dbt project** (models, docs, lineage, Semantic Layer)
-- **Any MCP‑enabled [client](https://modelcontextprotocol.io/clients)** (Claude Desktop Projects, Cursor. agent frameworks, custom apps, etc.)
+- **Any MCP‑enabled [client](https://modelcontextprotocol.io/clients)** (Claude Desktop Projects, Cursor, agent frameworks, custom apps, etc.)
 
 We’ve [known for a while](https://roundup.getdbt.com/p/semantic-layer-as-the-data-interface) that the combination of structured data from your dbt project + LLMs is a potent combo (particularly when using the dbt Semantic Layer). The question has been, what is the best way to provision this across a wide variety of LLM applications in a way that puts the power in the hands of the Community and the ecosystem, rather than us building out a series of one-off integrations.
 
@@ -63,7 +63,7 @@ There are three primary functions of the dbt MCP server today.
 <Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_architecture_overview.png" title="How the dbt MCP server fits between data sources and MCP‑enabled clients" width="100%" />
 
 
-❓Do I need to be a dbt Cloud customer to use the dbt MCP server
+❓Do I need to be a dbt Cloud customer to use the dbt MCP server?
 
 - No - there is functionality for both dbt Cloud and dbt Core users included in the MCP. Over time, Cloud-specific services will be built into the MCP server where they provide differentiated value.
 
@@ -73,7 +73,7 @@ Let’s walk through examples of these and why each of them can be helpful in hu
 
 dbt has knowledge about the data assets that exist across your entire data stack, from raw staging models to polished analytical marts. The dbt MCP server exposes this knowledge in a way that makes it accessible to LLMs and AI agents, enabling powerful discovery capabilities:
 
-- **For human stakeholders**: Learn about your production dbt project interactively through natural language. Business users can ask questions like "What customer data do we have?" or "Where do we store marketing spend information" and receive accurate information based on your dbt project's documentation and structure.
+- **For human stakeholders**: Learn about your production dbt project interactively through natural language. Business users can ask questions like "What customer data do we have?" or "Where do we store marketing spend information?" and receive accurate information based on your dbt project's documentation and structure.
 - **For AI agent workflows**: Automatically discover and understand the available data models, their relationships, and their structures without human intervention. This allows agents to autonomously navigate complex data environments and produce accurate insights. This can be useful context for any agent that needs to operate on top of information in a data platform.
 
 The data discovery tools allow LLMs to understand what data exists, how it's structured, and how different data assets relate to each other. This contextual understanding is essential for generating accurate SQL, answering business questions, and providing trustworthy data insights.
@@ -91,10 +91,10 @@ The data discovery tools allow LLMs to understand what data exists, how it's str
 
 ## **Using the dbt MCP server for querying data via the dbt Semantic Layer**
 
-The [dbt Semantic Layer](https://www.getdbt.com/product/semantic-layer) defines your organization's metrics and dimensions in a consistent, governed way. With the dbt MCP server, LLMs can understand and query these metrics directly, ensuring that AI-generatedanalyses are consistent with your organization's definitions.
+The [dbt Semantic Layer](https://www.getdbt.com/product/semantic-layer) defines your organization's metrics and dimensions in a consistent, governed way. With the dbt MCP server, LLMs can understand and query these metrics directly, ensuring that AI-generated analyses are consistent with your organization's definitions.
 
-- **For human stakeholders**: Request metrics using natural language. Users can ask for "monthly revenue by region" and get accurate results that match your organization's standard metric definitions, with the [a higher baseline of accuracy than LLM generated SQL queries](https://roundup.getdbt.com/p/semantic-layer-as-the-data-interface).
-- **For AI agent workflows**: As agentic systems take action in the real world over a longer time horizon, they will need ways to understand the underlying reality of your business. From feeding into Ddeep Rresearch style reports to feeding operational agents, the dbt Semantic Layer can provide a trusted underlying interface for LLM systems.
+- **For human stakeholders**: Request metrics using natural language. Users can ask for "monthly revenue by region" and get accurate results that match your organization's standard metric definitions, with a [higher baseline of accuracy than LLM generated SQL queries](https://roundup.getdbt.com/p/semantic-layer-as-the-data-interface).
+- **For AI agent workflows**: As agentic systems take action in the real world over a longer time horizon, they will need ways to understand the underlying reality of your business. From feeding into deep research style reports to feeding operational agents, the dbt Semantic Layer can provide a trusted underlying interface for LLM systems.
 
 By leveraging the dbt Semantic Layer through the MCP server, you ensure that LLM-generated analyses are based on rigorous definitions instantiated as code, flexibly available in any MCP-supported client.
 
@@ -149,16 +149,16 @@ We're excited to see how the community builds with and extends the dbt MCP serve
 
 ## What is the best workflow for the current iteration of the MCP server?
 
-This early release is primarily meant to be used to *on top of an existing dbt project to answer questions about your data and metadata -* roughly tracking towards the set of use cases described in this [post](https://roundup.getdbt.com/p/how-ai-will-disrupt-bi-as-we-know) on the future of BI and data consumption. 
+This early release is primarily meant to be used *on top of an existing dbt project to answer questions about your data and metadata -* roughly tracking towards the set of use cases described in this [post](https://roundup.getdbt.com/p/how-ai-will-disrupt-bi-as-we-know) on the future of BI and data consumption. 
 
 *Chat use case:*
 
 We suggest using Claude Desktop for this and creating a custom [project](https://www.anthropic.com/news/projects) that includes a prompt explaining the use cases you are looking to cover. 
 
-To get this working.
+To get this working:
 
 - Follow the instructions in the Readme to install the MCP server
-- Validate that you have added the MCP config to the your Claude desktop config. You should see ‘dbt’ when you go to Claude→Settings→Developer
+- Validate that you have added the MCP config to your Claude desktop config. You should see ‘dbt’ when you go to Claude→Settings→Developer
 <Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_settings_dbt_mcp.png" title="Claude Desktop – MCP server running in Developer settings" width="100%" />
 
 - Create a new project called “analytics”. Give it a description of how an end user might interact with it.
@@ -172,7 +172,7 @@ To get this working.
 
 - This is an *experimental release*. We recommend that initial use should be focused on prototyping and proving value before rolling out widely across your organization.
 - Be particularly mindful with the project execution tools - remember that LLMs make mistakes and begin with permissions scoped so that you can experiment but not disrupt your data operations.
-- Start with the smallest possible use case that provides tangible value. Instead of giving this access to your entire production dbt Project, consider create an upstream project that inherits a smaller subset of models and metrics that will power.
+- Start with the smallest possible use case that provides tangible value. Instead of giving this access to your entire production dbt Project, consider creating an upstream project that inherits a smaller subset of models and metrics that will power the workflow.
 - As of right now we don’t have perfect adherence for tool selection. In our testing, the model will sometimes cycle through several unnecessary tool calls or call them in the wrong order. While this can usually be fixed by more specific prompting by the end user, that goes against the spirit of allowing the model to dynamically select the right tool for the job. We expect this to be addressed over time via improvements in the dbt MCP Server, as well as client interfaces and the protocol itself.
 - Think carefully about the use cases for Semantic Layer tool vs. using the SQL execution tool. SQL execution is powerful but less controllable. We’re looking to do a lot of hands on testing to begin to develop heuristics about when SQL execution is the best option, when to bake logic into the Semantic Layer and whether there are new abstractions that might be needed for AI workflows.
 - Tool use is powerful because it can link multiple tools together. What tools complement the dbt MCP Server? How can we use this to tie our structured data into other workflows?
@@ -190,17 +190,17 @@ There will be other use cases, specifically for dbt development, when you’ll w
 
 **Determining the most useful tools for the dbt MCP**
 
-What are the best and most useful set of tools to enable human in the loop and AI driven LLM access to structured data? The dbt MCP server presents our early explorations, but we anticipate  that the Community will find many more.
+What are the best and most useful set of tools to enable human in the loop and AI driven LLM access to structured data? The dbt MCP server presents our early explorations, but we anticipate that the Community will find many more.
 
 **How to handle hosting, authentication, RBAC and more**
 
 Currently the dbt MCP server is locally hosted, with access management via scoped service tokens from dbt Cloud or locally configured via your CLI. We expect there to be three levels via which we will continue to build out systems to make this not only safe and secure, but tailored to the needs of the specific user (human or agent) accessing the MCP.
 
 1. Hosting of the MCP: In the near future we will have a Cloud hosted version of the MCP alongside the current local MCP
-2. Managing data access with the MCP: We are committed to offering safe and trustworthy data and data asset access (think Oauth support and more)
+2. Managing data access with the MCP: We are committed to offering safe and trustworthy data and data asset access (think OAuth support and more)
 3. User and domain level context: Over the longer run we are looking into ways to provide user and domain specific knowledge about your data assets to the systems as they are querying it. 
 
-Expect to hear more on this front on 5/28 (Link) 
+Expect to hear more on this front on [5/28](https://www.getdbt.com/resources/webinars/2025-dbt-cloud-launch-showcase).
 
 This is a new frontier for the whole Community. We need to be having open, honest discussions about how to integrate these systems into our existing workflows and open up new use cases.
 
