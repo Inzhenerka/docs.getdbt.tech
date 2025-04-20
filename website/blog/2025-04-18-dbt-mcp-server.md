@@ -5,7 +5,7 @@ slug: introducing-dbt-mcp-server
 authors: [jason_ganz]
 tags: [ai, data ecosystem]
 hide_table_of_contents: false
-date: 2025-04-18
+date: 2025-04-21
 is_featured: true
 ---
 
@@ -15,7 +15,7 @@ dbt is the standard for creating governed, trustworthy datasets on top of your s
 
 Today, we are open sourcing an experimental version of the [dbt MCP server](https://github.com/dbt-labs/dbt-mcp/tree/main). We expect that over the coming years, structured data is going to become heavily integrated into AI workflows and that dbt will play a key role in building and provisioning this data.
 
-In particular, we expect both [Business Intelligence](https://roundup.getdbt.com/p/how-ai-will-disrupt-bi-as-we-know) and [Data Engineering](https://roundup.getdbt.com/p/how-ai-will-disrupt-data-engineering) will be driven by AI operating on top of the context defined in your dbt pProjects.
+In particular, we expect both [Business Intelligence](https://roundup.getdbt.com/p/how-ai-will-disrupt-bi-as-we-know) and [Data Engineering](https://roundup.getdbt.com/p/how-ai-will-disrupt-data-engineering) will be driven by AI operating on top of the context defined in your dbt Projects.
 
 **We are committed to building the data control plane that enables AI to reliably access structured data from across your entire data lineage.** Over the coming months and years, data teams will increasingly focus on building the rich context that feeds into the dbt MCP server.  Both AI agents and business stakeholders will then operate on top of LLM-driven systems hydrated by the dbt MCP context.
 
