@@ -50,7 +50,7 @@ We’ve [known for a while](https://roundup.getdbt.com/p/semantic-layer-as-the-d
 
 The dbt MCP server provides access to a set of *tools* that operate on top of your dbt project. These tools can be called by LLM systems to learn about your data and metadata.
 
-**Remember, as with any AI workflows, to make sure that you are taking appropriate caution in terms of giving these access to production systems and data. Consider starting in a sandbox environment or only granting read permissions**
+**Remember, as with any AI workflows, to make sure that you are taking appropriate caution in terms of giving these access to production systems and data. Consider starting in a sandbox environment or only granting read permissions.**
 
 There are three primary functions of the dbt MCP server today.
 
