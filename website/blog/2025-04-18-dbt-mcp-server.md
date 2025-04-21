@@ -11,7 +11,7 @@ is_featured: true
 
 # Introducing the dbt MCP Server - Bringing Structured Data to AI Workflows and Agents
 
-dbt is the standard for creating governed, trustworthy datasets on top of your structured data. [MCP](https://www.anthropic.com/news/model-context-protocol) is [showing](https://techcrunch.com/2025/04/09/google-says-itll-embrace-anthropic-standard-for-connecting-ai-models-to-data/) [increasing](https://techcrunch.com/2025/03/26/openai-adopts-rival-anthropic-standard-for-connecting-ai-models-to-data/) [promise](https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/introducing-model-context-protocol-mcp-in-copilot-studio-simplified-integration-with-ai-apps-and-agents/) as the standard for providing context to LLMs to allow them to function at a high level in real world, operational scenarios.
+dbt is the standard for creating governed, trustworthy datasets on top of your structured data. [MCP](https://www.anthropic.com/news/model-context-protocol) is showing increasing promise as the standard for providing context to LLMs to allow them to function at a high level in real world, operational scenarios.
 
 Today, we are open sourcing an experimental version of the [dbt MCP server](https://github.com/dbt-labs/dbt-mcp/tree/main). We expect that over the coming years, structured data is going to become heavily integrated into AI workflows and that dbt will play a key role in building and provisioning this data.
 
@@ -48,7 +48,9 @@ Think of it as the missing glue between:
 
 We’ve [known for a while](https://roundup.getdbt.com/p/semantic-layer-as-the-data-interface) that the combination of structured data from your dbt project + LLMs is a potent combo (particularly when using the dbt Semantic Layer). The question has been, what is the best way to provision this across a wide variety of LLM applications in a way that puts the power in the hands of the Community and the ecosystem, rather than us building out a series of one-off integrations.
 
-The dbt MCP server provides access to a set of *tools* that operate on top of your dbt project. These tools can be called by LLM systems to learn about your data and metadata. 
+The dbt MCP server provides access to a set of *tools* that operate on top of your dbt project. These tools can be called by LLM systems to learn about your data and metadata.
+
+**Remember, as with any AI workflows, to make sure that you are taking appropriate caution in terms of giving these access to production systems and data. Consider starting in a sandbox environment or only granting read permissions**
 
 There are three primary functions of the dbt MCP server today.
 
