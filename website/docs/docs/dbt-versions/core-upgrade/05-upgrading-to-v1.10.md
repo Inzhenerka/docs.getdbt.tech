@@ -7,29 +7,39 @@ displayed_sidebar: "docs"
  
 ## Resources 
 
-- dbt Core v1.10 changelog (coming soon)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
+- <Constant name="core" /> v1.10 changelog (coming soon)
+- [<Constant name="core" /> CLI Installation guide](/docs/core/installation-overview)
 - [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
 
 ## What to know before upgrading
 
 dbt Labs is committed to providing backward compatibility for all versions 1.x. Any behavior changes will be accompanied by a [behavior change flag](/reference/global-configs/behavior-changes#behavior-change-flags) to provide a migration window for existing projects. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
 
-Starting in 2024, dbt Cloud provides the functionality from new versions of dbt Core via [release tracks](/docs/dbt-versions/cloud-release-tracks) with automatic upgrades. If you have selected the "Latest" release track in dbt Cloud, you already have access to all the features, fixes, and other functionality that is included in dbt Core v1.10! If you have selected the "Compatible" release track, you will have access in the next monthly "Compatible" release after the dbt Core v1.10 final release.
+Starting in 2024, <Constant name="cloud" /> provides the functionality from new versions of <Constant name="core" /> via [release tracks](/docs/dbt-versions/cloud-release-tracks) with automatic upgrades. If you have selected the "Latest" release track in <Constant name="cloud" />, you already have access to all the features, fixes, and other functionality that is included in <Constant name="core" /> v1.10! If you have selected the "Compatible" release track, you will have access in the next monthly "Compatible" release after the <Constant name="core" /> v1.10 final release.
 
 For users of dbt Core, since v1.8, we recommend explicitly installing both `dbt-core` and `dbt-<youradapter>`. This may become required for a future version of dbt. For example:
 
 ```sql
-python3 -m pip install dbt-core dbt-snowflake
+python3 -m pip install <Constant name="core" /> dbt-snowflake
 ```
 
 ## New and changed features and functionality
 
-New features and functionality available in dbt Core v1.10
+New features and functionality available in <Constant name="core" /> v1.10
 
 ### The `--sample` flag
 
 Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
+
+### Integrating dbt Core artifacts with dbt Cloud projects
+
+With [hybrid projects](/docs/deploy/hybrid-projects), <Constant name="core"/> users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud"/>. This enhances hybrid <Constant name="core"/>/<Constant name="cloud"/> deployments by:
+
+- Fostering collaboration between <Constant name="cloud"/> + <Constant name="core"/> users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in <Constant name="core"/> projects. This feature unifies <Constant name="cloud"/> + <Constant name="core"/> workflows for a more connected dbt experience.
+- Giving <Constant name="cloud"/> and <Constant name="core"/> users insights into their models and assets in [<Constant name="explorer"/>](/docs/collaborate/explore-projects). To view <Constant name="explorer"/>, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
+- (Coming soon) Enabling users working in the [<Constant name="visual_editor"/>](/docs/cloud/visual-editor) to build off of models already created by a central data team in <Constant name="core"/> rather than having to start from scratch.
+
+Hybrid projects are available as a private beta to [<Constant name="cloud"/> Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
 
 ### Managing changes to legacy behaviors
 

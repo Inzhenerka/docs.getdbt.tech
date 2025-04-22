@@ -792,7 +792,7 @@ You need to use the same set of names for compute across your outputs, though yo
 
 :::
 
-To configure this inside of dbt Cloud, use the [extended attributes feature](/docs/dbt-cloud-environments#extended-attributes-) on the desired environments:
+To configure this inside of <Constant name="cloud" />, use the [extended attributes feature](/docs/dbt-cloud-environments#extended-attributes-) on the desired environments:
 
 ```yaml
 
