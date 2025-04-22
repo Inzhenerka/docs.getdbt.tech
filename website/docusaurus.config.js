@@ -74,7 +74,7 @@ var siteSettings = {
     },
     announcementBar: {
       id: "monthly-demos",
-      content: "Don't miss the 2025 dbt Launch Showcase on May 28-29th! Catch live demos and get a first look at the latest features coming to dbt.",
+      content: "Don't miss the 2025 dbt Launch Showcase on May 28 and 29th! Catch live demos and get a first look at the latest features coming to dbt.",
       backgroundColor: "#047377",
       textColor: "#fff",
       isCloseable: true,
