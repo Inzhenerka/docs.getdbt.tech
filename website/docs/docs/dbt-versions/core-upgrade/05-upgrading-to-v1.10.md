@@ -71,7 +71,7 @@ my_profile: # dbt would use this profile key
 
 ```
 
-dbt will stop supporting duplicate keys with silent overwrite in the future. In v1.10, if two identical keys exist in the `profiles.yml`, you will get a warning, and in a future version, dbt will stop supporting this entirely. 
+In v1.10, if two identical keys exist in the `profiles.yml`, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. 
 
 #### Custom inputs
 
