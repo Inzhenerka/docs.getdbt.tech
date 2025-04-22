@@ -86,7 +86,7 @@ models:
 
 ```
 
-dbt sees that you've configured an unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes much more challenging to determine if a configuration in your project is valid. This creates unintended issues such as:
+dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes harder to validate your project's configuration. This creates unintended issues such as:
 - Silently ignoring misspelled properties and configurations (for example, `desciption:` instead of `description:`).
 - Unintended collisions with user code when dbt introduces a new “reserved” property or configuration.
 
