@@ -17,7 +17,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-Callout: If your organization has works in both dbt core and Cloud, you can now integrate these workflows by automatically uploading dbt Core artifacts into dbt Cloud through which can be viewed in dbt Explorer. To learn more(Hybrid Projects)[https://docs.getdbt.com/docs/deploy/hybrid-projects]
+Callout: If your organization works in both dbt Core and Cloud, you can now integrate these workflows by automatically uploading dbt Core artifacts into dbt Cloud, which can be viewed in dbt Explorer. To learn more - visit (Hybrid Projects)[https://docs.getdbt.com/docs/deploy/hybrid-projects]
 
 ## Prerequisites
 
