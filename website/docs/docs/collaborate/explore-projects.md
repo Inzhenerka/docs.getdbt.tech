@@ -17,11 +17,13 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
+Callout: If your organization has works in both dbt core and Cloud, you can now integrate these workflows by automatically uploading dbt Core artifacts into dbt Cloud through which can be viewed in dbt Explorer. To learn more(Hybrid Projects)[https://docs.getdbt.com/docs/deploy/hybrid-projects]
+
 ## Prerequisites
 
-- You have a <Constant name="cloud" /> account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
+- You have a <Constant name="cloud" /> account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/)
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
-- You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />.
+- You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
 
 ## Overview page <Lifecycle status="preview" />
@@ -42,6 +44,8 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 ## Generate metadata
 
 <Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). The metadata that's available depends on the [deployment environment](/docs/deploy/deploy-environments) you've designated as _production_ or _staging_ in your <Constant name="cloud" /> project.
+
+Note: If using hybrid projects and uploading artifacts from core, make sure to follow instructions (here)[https://docs.getdbt.com/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud].
 
 - To ensure all metadata is available in dbt Explorer, run `dbt build` and `dbt docs generate` as part of your job in your production or staging environment. Running those two commands ensure all relevant metadata (like lineage, test results, documentation, and more) is available in dbt Explorer.
 - <Constant name="explorer" /> automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project. This includes deploy and merge jobs.
