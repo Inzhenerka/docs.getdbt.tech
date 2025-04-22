@@ -4,7 +4,7 @@ id: "job-commands"
 description: "How to use dbt commands to set tasks for your dbt Cloud jobs."
 ---
 
-A dbt Cloud production job allows you to set up a system to run a dbt job and job commands on a schedule, rather than running dbt commands manually from the command line or [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). A job consists of commands that are "chained" together and executed as run steps. Each run step can succeed or fail, which may determine the job's run status (Success, Cancel, or Error). 
+A <Constant name="cloud" /> production job allows you to set up a system to run a dbt job and job commands on a schedule, rather than running dbt commands manually from the command line or [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). A job consists of commands that are "chained" together and executed as run steps. Each run step can succeed or fail, which may determine the job's run status (Success, Cancel, or Error). 
 
 Each job allows you to:
 
@@ -40,7 +40,7 @@ For every job, you have the option to select the [Generate docs on run](/docs/co
 
 ### Command list
 
-You can add or remove as many dbt commands as necessary for every job. However, you need to have at least one dbt command. There are few commands listed as "dbt Cloud CLI" or "dbt Core" in the [dbt Command reference page](/reference/dbt-commands) page. This means they are meant for use in dbt Core or dbt Cloud CLI, and not in dbt Cloud IDE.
+You can add or remove as many dbt commands as necessary for every job. However, you need to have at least one dbt command. There are few commands listed as "<Constant name="cloud" /> CLI" or "<Constant name="core" />" in the [dbt Command reference page](/reference/dbt-commands) page. This means they are meant for use in <Constant name="core" /> or <Constant name="cloud" /> CLI, and not in <Constant name="cloud_ide" />.
 
 :::tip Using selectors
 
