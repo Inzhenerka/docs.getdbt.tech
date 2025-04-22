@@ -175,6 +175,8 @@ You can't add YAML `meta` configs for [generic tests](/docs/build/data-tests#gen
 
 <TabItem value="unit tests">
 
+<VersionCallout version="1.8" />
+
 <File name='dbt_project.yml'>
 
 ```yml
