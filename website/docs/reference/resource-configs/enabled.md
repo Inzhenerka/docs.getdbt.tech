@@ -160,6 +160,8 @@ select ...
 
 <TabItem value="unit tests">
 
+<VersionCallout version="1.8" />
+
 <File name='dbt_project.yml'>
 
 ```yml
