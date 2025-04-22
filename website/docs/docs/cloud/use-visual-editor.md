@@ -9,7 +9,7 @@ pagination_next: "docs/cloud/build-ve-copilot"
 
 import Prerequisites from '/snippets/_visual-editor-prerequisites.md';
 
-# Edit and create dbt models <Lifecycle status='beta, enterprise'/> 
+# Edit and create dbt models <Lifecycle status='beta, managed'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
 Access and use the <Constant name="visual_editor" /> to create or edit dbt models through a visual, drag-and-drop experience. Use the built-in AI for custom code generation in your development experience.

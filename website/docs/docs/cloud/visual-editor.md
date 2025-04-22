@@ -9,7 +9,7 @@ pagination_prev: null
 
 import Prerequisites from '/snippets/_visual-editor-prerequisites.md';
 
-# About the Visual Editor <Lifecycle status='beta, enterprise'/> 
+# About the Visual Editor <Lifecycle status='beta, managed'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
 The <Constant name="visual_editor" /> helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation.
