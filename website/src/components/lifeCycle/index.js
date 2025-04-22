@@ -39,9 +39,12 @@ const fontColors = {
 const statusUrls = STATUS_URLS;
 
 export default function Lifecycle(props) {
-  const statuses = props.status?.split(',').map(s => {
+  if (!props.status || typeof props.status !== 'string') {
+    return null;
+  }
+
+  const statuses = props.status.split(',').map(s => {
     const trimmedStatus = s.trim();
-    // If the status matches a variable name (case insensitive), use its value
     return PLAN_VARIABLES[trimmedStatus] || trimmedStatus;
   });
 
