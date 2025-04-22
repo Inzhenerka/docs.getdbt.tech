@@ -19,7 +19,7 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 
 ## Prerequisites
 
-- You have a <Constant name="cloud" /> account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/)
+- You have a <Constant name="cloud" /> account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
 - You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
