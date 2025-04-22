@@ -17,7 +17,8 @@ This page explains how to enable <Constant name="copilot" /> in <Constant name="
 - Available in the <Constant name="cloud" /> only.
 - Must have a [<Constant name="cloud" /> Enterprise account](https://www.getdbt.com/pricing).
 - Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
-- By default, <Constant name="copilot" /> deployments use a central OpenAI API key managed by <Constant name="dbt" /> Labs. Alternatively, you can [provide your own OpenAI API key](#bringing-your-own-openai-api-key-byok).
+- By default, <Constant name="copilot" /> deployments use a central OpenAI API key managed by dbt Labs. Alternatively, you can [provide your own OpenAI API key](#bringing-your-own-openai-api-key-byok).
+- <Constant name="copilot" /> is optimized for OpenAI's `gpt-3.x`, `gpt-4o`, `gpt-4.1-[mini|nano]`, and `gpt-4.5` (deprecated by OpenAI) models. Other models, like `o1` and `o2`, are not supported and will not work with <Constant name="copilot"/>.
 - Opt-in to AI features by following the steps in the next section in your **Account settings**.
 
 ## Enable dbt Copilot
@@ -39,7 +40,7 @@ Note: To disable (only after enabled), repeat steps 1 to 3, toggle off in step 4
 Once AI features have been enabled, you can provide your organization's OpenAI API key. <Constant name="cloud" /> will then leverage your OpenAI account and terms to power <Constant name="copilot" />. This will incur billing charges to your organization from OpenAI for requests made by <Constant name="copilot" />.
 
 Configure AI keys using:
-- [<Constant name="dbt" /> Labs-managed OpenAI API key](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations)
+- [dbt Labs-managed OpenAI API key](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations)
 - Your own [OpenAI API key](/docs/cloud/account-integrations?ai-integration=openai#ai-integrations)
 - [Azure OpenAI](/docs/cloud/account-integrations?ai-integration=azure#ai-integrations)
 
