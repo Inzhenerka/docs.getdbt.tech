@@ -12,7 +12,7 @@ Read about common questions about <Constant name="copilot" /> to understand how 
 
 <Constant name="copilot" /> is an AI-powered assistant fully integrated into your <Constant name="cloud" /> experience that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster.
 
-<Constant name="dbt" /> Labs is committed to protecting your privacy and data. This page provides information about how <Constant name="copilot" /> handles your data. For more information, check out the [<Constant name="dbt" /> Labs AI development principles](https://www.getdbt.com/legal/ai-principles) page.
+dbt Labs is committed to protecting your privacy and data. This page provides information about how <Constant name="copilot" /> handles your data. For more information, check out the [dbt Labs AI development principles](https://www.getdbt.com/legal/ai-principles) page.
 
 ## Overview 
 
@@ -21,6 +21,8 @@ Read about common questions about <Constant name="copilot" /> to understand how 
 <Constant name="copilot" /> is a powerful AI-powered assistant that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. <Constant name="copilot" /> embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
 
 With automatic code generation, let <Constant name="copilot" /> [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot) and, now in beta, [<Constant name="visual_editor" />](/docs/cloud/use-visual-editor).
+
+<Constant name="copilot"/> is optimized for OpenAI's `gpt-3.x`, `gpt-4o`, `gpt-4.1-[mini|nano]`, and `gpt-4.5` (deprecated by OpenAI) models. Other models, like `o1` and `o2`, are not supported and will not work with <Constant name="copilot"/>.
 
 </Expandable>
 
