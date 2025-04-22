@@ -13,15 +13,15 @@ With dbt Explorer, you can view your project's [resources](/docs/build/projects)
 
 </IntroText>
 
-import ExplorerCourse from '/snippets/_explorer-course-link.md';
-
-<ExplorerCourse />
+:::tip
+If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
+:::
 
 ## Prerequisites
 
 - You have a <Constant name="cloud" /> account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
-- You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />.
+- You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
 
 ## Overview page <Lifecycle status="preview" />
@@ -39,9 +39,15 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Explorer to discover your project's resources and lineage."/>
 
+import ExplorerCourse from '/snippets/_explorer-course-link.md';
+
+<ExplorerCourse />
+
 ## Generate metadata
 
 <Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). The metadata that's available depends on the [deployment environment](/docs/deploy/deploy-environments) you've designated as _production_ or _staging_ in your <Constant name="cloud" /> project.
+
+If you're using a [hybrid project setup](/docs/deploy/hybrid-setup) and uploading artifacts from dbt Core, make sure to follow the [setup instructions](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) to connect your project in dbt Cloud. This enables <Constant name="explorer" /> to access and display your metadata correctly.
 
 - To ensure all metadata is available in dbt Explorer, run `dbt build` and `dbt docs generate` as part of your job in your production or staging environment. Running those two commands ensure all relevant metadata (like lineage, test results, documentation, and more) is available in dbt Explorer.
 - <Constant name="explorer" /> automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project. This includes deploy and merge jobs.
@@ -53,13 +59,13 @@ Note that <Constant name="explorer" /> automatically deletes stale metadata afte
 
 | To view in <Constant name="explorer" /> | You must successfully run |
 |---------------------|---------------------------|
-| All metadata        |  [<Constant name="dbt" /> build](/reference/commands/build), [<Constant name="dbt" /> docs generate](/reference/commands/cmd-docs), and [<Constant name="dbt" /> source freshness](/reference/commands/source#dbt-source-freshness) together as part of the same job in the environment
-| Model lineage, details, or results | [<Constant name="dbt" /> run](/reference/commands/run) or [<Constant name="dbt" /> build](/reference/commands/build) on a given model within a job in the environment |
-| Columns and statistics for models, sources, and snapshots| [<Constant name="dbt" /> docs generate](/reference/commands/cmd-docs) within [a job](/docs/collaborate/build-and-view-your-docs) in the environment |
-| Test results | [<Constant name="dbt" /> test](/reference/commands/test) or [<Constant name="dbt" /> build](/reference/commands/build) within a job in the environment |
-| Source freshness results | [<Constant name="dbt" /> source freshness](/reference/commands/source#dbt-source-freshness) within a job in the environment |
-| Snapshot details | [<Constant name="dbt" /> snapshot](/reference/commands/snapshot) or [<Constant name="dbt" /> build](/reference/commands/build) within a job in the environment |
-| Seed details | [<Constant name="dbt" /> seed](/reference/commands/seed) or [<Constant name="dbt" /> build](/reference/commands/build) within a job in the environment |
+| All metadata        |  [dbt build](/reference/commands/build), [dbt docs generate](/reference/commands/cmd-docs), and [dbt source freshness](/reference/commands/source#dbt-source-freshness) together as part of the same job in the environment
+| Model lineage, details, or results | [dbt run](/reference/commands/run) or [dbt build](/reference/commands/build) on a given model within a job in the environment |
+| Columns and statistics for models, sources, and snapshots| [dbt docs generate](/reference/commands/cmd-docs) within [a job](/docs/collaborate/build-and-view-your-docs) in the environment |
+| Test results | [dbt test](/reference/commands/test) or [dbt build](/reference/commands/build) within a job in the environment |
+| Source freshness results | [dbt source freshness](/reference/commands/source#dbt-source-freshness) within a job in the environment |
+| Snapshot details | [dbt snapshot](/reference/commands/snapshot) or [dbt build](/reference/commands/build) within a job in the environment |
+| Seed details | [dbt seed](/reference/commands/seed) or [dbt build](/reference/commands/build) within a job in the environment |
 
 Richer and more timely metadata will become available as <Constant name="cloud" /> evolves.
 
@@ -180,9 +186,9 @@ Example of results from searching on the keyword `customers` and applying the fi
 
 From the sidebar, you can browse your project's resources, its file tree, and the database.
 
-- **Resources** tab &mdash; All resources in the project organized by type. Select any resource type in the list and all those resources in the project will display as a table in the main section of the page. For a description on the different resource types (like models, metrics, and so on), refer to [About <Constant name="dbt" /> projects](/docs/build/projects).
+- **Resources** tab &mdash; All resources in the project organized by type. Select any resource type in the list and all those resources in the project will display as a table in the main section of the page. For a description on the different resource types (like models, metrics, and so on), refer to [About dbt projects](/docs/build/projects).
   - [Data health signals](/docs/collaborate/data-health-signals) are visible to the right of the resource name under the **Health** column.
-- **File Tree** tab &mdash; All resources in the project organized by the file in which they are defined. This mirrors the file tree in your <Constant name="dbt" /> project repository.
+- **File Tree** tab &mdash; All resources in the project organized by the file in which they are defined. This mirrors the file tree in your dbt project repository.
 - **Database** tab &mdash; All resources in the project organized by the database and schema in which they are built. This mirrors your data platform's structure that represents the [applied state](/docs/dbt-cloud-apis/project-state) of your project.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-tabs-sidebar.png" title="Example of tabs in sidebar" />
