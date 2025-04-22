@@ -112,6 +112,8 @@ version: 2
 
 <TabItem value="unit tests">
 
+<VersionCallout version="1.8" />
+
 <File name='models/<filename>.yml'>
 
 ```yml
