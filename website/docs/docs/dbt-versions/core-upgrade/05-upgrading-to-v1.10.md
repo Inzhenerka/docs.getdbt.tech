@@ -83,7 +83,7 @@ dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently con
 - Silently ignoring misspelled properties and configurations (for example, `desciption:` instead of `description:`).
 - Unintended collisions with user code when dbt introduces a new “reserved” property or configuration.
 
-In `v1.10`, if you have an unrecognized custom property, you will get a warning, and in a future version, dbt will stop supporting custom properties. Moving forward, these should be nested under the [`meta` config](/reference/resource-configs/meta) which will be the only place to put custom user-defined attributes:
+If you have an unrecognized custom property, you will receive a warning, and in a future version, dbt will cease to support custom properties. Moving forward, these should be nested under the [`meta` config](/reference/resource-configs/meta), which will be the only place to put custom user-defined attributes:
 
 ```yml
 
