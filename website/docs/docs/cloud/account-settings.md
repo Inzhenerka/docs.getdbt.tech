@@ -8,7 +8,7 @@ The following sections describe the different **Account settings** available fro
 
 <Lightbox src="/img/docs/dbt-cloud/example-sidebar-account-settings.png" title="Example of Account settings from the sidebar" /> 
 
-## Git repository caching <Lifecycle status="managed_plus" />
+## Git repository caching <Lifecycle status="managed" />
 
 :::important repo caching enabled by default
 
