@@ -55,6 +55,8 @@ New deprecation warnings in v1.10.
 
 #### Duplicate keys in profiles.yml
 
+
+In v1.10, if two identical keys exist in the `profiles.yml`, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. 
 Previously, if identical keys existed in the [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml), dbt would use the last configuration listed in the file. 
 
 ```yml
@@ -71,10 +73,14 @@ my_profile: # dbt would use this profile key
 
 ```
 
-In v1.10, if two identical keys exist in the `profiles.yml`, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. 
-
 #### Custom inputs
+Starting in dbt v1.10, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
 
+- Unrecognized resource properties, configurations, and top-level keys
+- Duplicate YAML keys in the same file
+- `{% endmacro %}` tags without a corresponding `{% macro %}` tag
+- And more
+  
 Historically, dbt has allowed you to configure inputs largely unconstrained. A common example of this is setting custom YAML properties:
 
 ```yml
@@ -86,16 +92,9 @@ models:
 
 ```
 
-dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes harder to validate your project's configuration. This creates unintended issues such as:
+dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes challenging to validate your project's configuration. This creates unintended issues such as:
 - Silently ignoring misspelled properties and configurations (for example, `desciption:` instead of `description:`).
 - Unintended collisions with user code when dbt introduces a new “reserved” property or configuration.
-
-Starting in dbt v1.10, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
-
-- Unrecognized resource properties, configurations, and top-level keys
-- Duplicate YAML keys in the same file
-- `{% endmacro %}` tags without a corresponding `{% macro %}` tag
-- And more
 
 ## Quick hits
 
