@@ -23,7 +23,7 @@ hide_table_of_contents: true
 <Card
     title="Git version control"
     body="Learn about Git and version control."
-    link="/docs/cloud/git-version-control"
+    link="/docs/cloud/git/git-version-control"
     icon="dbt-bit"/>
 
 <Card
