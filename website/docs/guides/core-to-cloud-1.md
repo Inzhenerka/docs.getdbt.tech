@@ -85,7 +85,7 @@ This section outlines the considerations and methods to connect your data platfo
 
 1. In <Constant name="cloud" />, set up your [data platform connections](/docs/cloud/connect-data-platform/about-connections) and [environment variables](/docs/build/environment-variables). <Constant name="cloud" /> can connect with a variety of data platform providers including:
    - [AlloyDB](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) 
-   - [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) (beta)
+   - [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena)
    - [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) 
    - [Apache Spark](/docs/cloud/connect-data-platform/connect-apache-spark) 
    - [Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics)
@@ -95,6 +95,7 @@ This section outlines the considerations and methods to connect your data platfo
    - [PostgreSQL](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb)
    - [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake)
    - [Starburst or Trino](/docs/cloud/connect-data-platform/connect-starburst-trino)
+   - [Teradata](/docs/cloud/connect-data-platform/connect-teradata)
 
 2. You can verify your data platform connections by clicking the **Test connection** button in your deployment and development credentials settings.
 
