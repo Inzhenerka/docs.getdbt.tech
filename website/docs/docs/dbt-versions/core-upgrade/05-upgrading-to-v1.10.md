@@ -120,7 +120,7 @@ Moving forward, you should delete unused keys or move them to a separate yaml fi
 
 #### Unexpected jinja blocks
 
-In `v1.10`, if you have an orphaned jinja block, you will get a warning, and in a future version, dbt will stop supporting unexpected jinja blocks. Previously, these orphaned jinja blocks were silently ignored.
+If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
 
 <File name='macros/my_macro.sql'>
 
