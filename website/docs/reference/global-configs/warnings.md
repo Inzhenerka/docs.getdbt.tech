@@ -79,7 +79,7 @@ Here's how you can use the [`--warn-error-options`](#use---warn-error-options-fo
 - [Test warnings](/reference/resource-configs/severity) with the `--warn-error-options '{"error": ["LogTestResults"]}'` flag.
 - Jinja [exception warnings](/reference/dbt-jinja-functions/exceptions#warn) with `--warn-error-options '{"error": ["JinjaLogWarning"]}'`.
 - No nodes selected with `--warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'`.
-- Deprecation warnings with `--warn-error-options '{"error": ["Deprecations"]}'` (new in `v1.10).
+- Deprecation warnings with `--warn-error-options '{"error": ["Deprecations"]}'` (new in v1.10).
 
 </VersionBlock>
 
