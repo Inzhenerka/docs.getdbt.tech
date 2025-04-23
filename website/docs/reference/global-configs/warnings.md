@@ -3,8 +3,10 @@ title: "Warnings"
 id: "warnings"
 sidebar: "Warnings"
 toc_max_heading_level: 2
-intro_text: "Use the --warn-error flag to promote all warnings to errors or --warn-error-options for granular control through options."
+intro_text: "Use the `--warn-error` flag to promote all warnings to errors or `--warn-error-options` for granular control through options."
 ---
+
+## Use `--warn-error` to promote all warnings to errors
 
 Enabling `WARN_ERROR` config or setting the `--warn-error` flag will convert _all_ dbt warnings into errors. Any time dbt would normally warn, it will instead raise an error. Examples include `--select` criteria that selects no resources, deprecations, configurations with no associated models, invalid test configurations, or tests and freshness checks that are configured to return warnings.
 
@@ -54,7 +56,7 @@ Warnings that should be treated as errors can be specified through `include` and
 
 The `include` parameter can be set to "all" or "*" to treat all warnings as exceptions, or to a list of specific warning names to treat as exceptions. When include is set to "all" or "*", the optional `exclude` parameter can be set to exclude specific warnings from being treated as exceptions.
 
-Here's how you can use [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings) flag to promote _specific_ warnings to errors:
+Here's how you can use the [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings) flag to promote _specific_ warnings to errors:
 
 - Test warnings with the `--warn-error-options '{"include": ["LogTestResults"]}'` flag.
 - Jinja-level warnings with the `--warn-error-options '{"include": ["JinjaLogWarning"]}'` flag or [`exceptions.warn`](/reference/dbt-jinja-functions/exceptions#warn).
@@ -73,15 +75,15 @@ The `error` parameter can be set to `"all"` or `"*"` to treat all warnings as er
 - When `error` is set to `"all"` or `"*"`, the optional `warn` parameter can be set to exclude specific warnings from being treated as exceptions.
 - Use the `silence` parameter to ignore warnings. To silence certain warnings you want to ignore, you can specify them in the `silence` parameter. This is useful in large projects where certain warnings aren't critical and can be ignored to keep the noise low and logs clean.
 
-Here's how you can use [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings) flag to promote _specific_ warnings to errors:
+Here's how you can use the [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings) flag to promote _specific_ warnings to errors:
 - [Test warnings](/reference/resource-configs/severity) with the `--warn-error-options '{"error": ["LogTestResults"]}'` flag.
 - Jinja [exception warnings](/reference/dbt-jinja-functions/exceptions#warn) with `--warn-error-options '{"error": ["JinjaLogWarning"]}'`.
 - No nodes selected with `--warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'`.
-- Adapter deprecation warnings with `--warn-error-options '{"error": ["AdapterDeprecationWarning"]}'`.
+- Deprecation warnings with `--warn-error-options '{"error": ["Deprecations"]}'` (new in `v1.10).
 
 </VersionBlock>
 
-## Configuration
+### Configuration
 
 You can configure warnings as errors or which warnings to silence, by warn error options through command flag, environment variable, or `dbt_project.yml`.
 
@@ -132,27 +134,23 @@ In the following example, we're silencing the [`NoNodesForSelectionCriteria` war
   </File>
 </VersionBlock>
 
-## Examples
+### Examples
 Here are some examples that show you how to configure `warn_error_options` using flags or file-based configuration.
 
-<!-- no toc -->
-- [Promote all warnings to errors or target specific warnings](#promote-all-warnings-to-errors-or-target-specific-warnings) &mdash; Promote all warnings to errors or target specific warnings.
-- [Ignore warnings in a YAML file](#ignore-warnings-in-a-yaml-file) &mdash; Ignores warnings using the in a YAML file.
-- [Promote all warnings to errors](#promote-all-warnings-to-errors) &mdash; Promote all warnings to errors using the `WARN_ERROR` environment variable or `--warn-error` command flag.
-
-### Promote all warnings to errors or target specific warnings
+#### Target specific warnings
 Some of the examples use `NoNodesForSelectionCriteria`, which is a specific warning that occurs when your `--select` flag doesn't match any nodes/resources in your dbt project:
 
 <VersionBlock firstVersion="1.8">
 
-- This command promotes all warnings to errors:
-  ```text
-  dbt --warn-error-options '{"error": "all"}' run
-  ```
 
 - This command promotes all warnings to errors, except for `NoNodesForSelectionCriteria`:
   ```text
   dbt --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}' run
+  ```
+
+- This command promotes all warnings to errors, except for deprecation warnings:
+  ```text
+  dbt --warn-error-options '{"error": "all", "warn": ["Deprecations"]}' run
   ```
 
 - This command promotes only `NoNodesForSelectionCriteria` as an error:
@@ -166,14 +164,26 @@ Some of the examples use `NoNodesForSelectionCriteria`, which is a specific warn
   ```
 
 Values for `error`, `warn`, and/or `silence` should be passed on as arrays. For example, `dbt --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}' run` not `dbt --warn-error-options '{"error": "all", "warn": "NoNodesForSelectionCriteria"}' run`.
+
+The following example shows how to promote all warnings to errors, except for the `NoNodesForSelectionCriteria` warning using the `silence` and `warn` parameters in the `dbt_project.yml` file:
+  <File name='dbt_project.yml'>
+
+  ```yaml
+  ...
+  flags:
+    warn_error_options:
+      error: all # Previously called "include"
+      warn:      # Previously called "exclude"
+        - NoNodesForSelectionCriteria
+      silence:   # To silence or ignore warnings
+        - NoNodesForSelectionCriteria
+  ```
+
+  </File>
+
 </VersionBlock>
 
 <VersionBlock lastVersion="1.7">
-  
-- This command promotes all warnings to errors:
-  ```text
-  dbt --warn-error-options '{"include": "all"}' run 
-  ```
 
 - This command promotes all warnings to errors, except for `NoNodesForSelectionCriteria`:
   ```text
@@ -190,29 +200,6 @@ Values for `error`, `warn`, and/or `silence` should be passed on as arrays. For 
   DBT_WARN_ERROR_OPTIONS='{"include": ["NoNodesForSelectionCriteria"]}' dbt run
   ```
 
-</VersionBlock>
-### Ignore warnings in a YAML file
-
-<VersionBlock firstVersion="1.8">
-
-The following example shows how to promote all warnings to errors, except for the `NoNodesForSelectionCriteria` warning using the `silence` and `warn` parameters in the `dbt_project.yml` file:
-  <File name='dbt_project.yml'>
-
-  ```yaml
-  ....
-  flags:
-    warn_error_options:
-      error: all # Previously called "include"
-      warn:      # Previously called "exclude"
-        - NoNodesForSelectionCriteria
-      silence:   # To silence or ignore warnings
-        - NoNodesForSelectionCriteria
-  ```
-
-  </File>
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
 The following example shows how to exclude warnings using the `exclude` parameter in the `profiles.yml` file:
 <File name='profiles.yml'>
 
@@ -229,10 +216,10 @@ config:
 </VersionBlock>
 
 
-### Promote all warnings to errors
-Some additional examples of how to promote all warnings to errors using the `WARN_ERROR` environment variable or `--warn-error` command flag:
+#### Promote all warnings to errors
+Some examples of how to promote all warnings to errors:
 
-#### dbt command flags
+##### using dbt command flags
 
 <VersionBlock lastVersion="1.7"> 
 
@@ -252,7 +239,7 @@ dbt --warn-error-options '{"error": "*"}' run
 ```
 </VersionBlock>
 
-#### Environment variables
+##### using environment variables
 
 <VersionBlock lastVersion="1.7"> 
 
