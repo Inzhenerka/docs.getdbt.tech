@@ -67,7 +67,7 @@ In addition to providing a hosted architecture for running dbt across your organ
    <Card
     title="Host & share documentation"
     body="dbt Cloud hosts and authorizes access to dbt project documentation, allowing you to generate data documentation on a schedule for your project. Invite teammates to dbt Cloud to collaborate and share your project's documentation."
-    link="/docs/collaborate/build-and-view-your-docs"
+    link="/docs/explore/build-and-view-your-docs"
     icon="dbt-bit"/>
 
    <Card
@@ -109,13 +109,13 @@ In addition to providing a hosted architecture for running dbt across your organ
   <Card
     title="dbt Explorer*"
     body="Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your data pipelines."
-    link="/docs/collaborate/explore-projects"
+    link="/docs/explore/explore-projects"
     icon="dbt-bit"/>
 
   <Card
     title="dbt Insights*"
     body="Learn how to query data and perform exploratory data analysis using dbt Insights."
-    link="/docs/collaborate/dbt-insights"
+    link="/docs/explore/dbt-insights"
     icon="dbt-bit"/>
 
 </div> <br />

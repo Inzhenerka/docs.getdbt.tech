@@ -60,7 +60,7 @@ models:
     group: marketing
 ```
 
-- Once you've added models to the group, you can **add [access](/docs/collaborate/govern/model-access) settings to the models** based on their connections between groups, *opting for the most private access that will maintain current functionality*. This means that any model that has *only* relationships to other models in the same group should be `private` , and any model that has cross-group relationships, or is a terminal node in the group DAG should be `protected` so that other parts of the DAG can continue to reference it.
+- Once you've added models to the group, you can **add [access](/docs/mesh/govern/model-access) settings to the models** based on their connections between groups, *opting for the most private access that will maintain current functionality*. This means that any model that has *only* relationships to other models in the same group should be `private` , and any model that has cross-group relationships, or is a terminal node in the group DAG should be `protected` so that other parts of the DAG can continue to reference it.
 
 ```yml
 # in models/marketing/__models.yml
@@ -87,8 +87,8 @@ models:
 5. **Update `{{ ref }}` functions** &mdash; For any model that has a cross-project dependency (this may be in the files you moved, or in the files that remain in your project):
    1. Update the `{{ ref() }}` function to have two arguments, where the first is the name of the source project and the second is the name of the model: e.g. `{{ ref('jaffle_shop', 'my_upstream_model') }}`
    2. Update the upstream, cross-project parents’ `access` configs to `public` , ensuring any project can safely `{{ ref() }}` those models.
-   3. We *highly* recommend adding a [model contract](/docs/collaborate/govern/model-contracts) to the upstream models to ensure the data shape is consistent and reliable for your downstream consumers.
-6. **Create a `dependencies.yml` file** ([docs](/docs/collaborate/govern/project-dependencies)) for the downstream project, declaring the upstream project as a dependency.
+   3. We *highly* recommend adding a [model contract](/docs/mesh/govern/model-contracts) to the upstream models to ensure the data shape is consistent and reliable for your downstream consumers.
+6. **Create a `dependencies.yml` file** ([docs](/docs/mesh/govern/project-dependencies)) for the downstream project, declaring the upstream project as a dependency.
 
 ```yml
 

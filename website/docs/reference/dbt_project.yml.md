@@ -94,7 +94,7 @@ vars:
   - macro_namespace: packagename
     search_order: [packagename]
 
-[restrict-access](/docs/collaborate/govern/model-access): true | false
+[restrict-access](/docs/mesh/govern/model-access): true | false
 
 ```
 

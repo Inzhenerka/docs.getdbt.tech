@@ -11,7 +11,7 @@ Learn how to configure the <Constant name="cloud_cli" /> for your <Constant name
 - Secure credential storage in the <Constant name="cloud" /> platform.
 - [Automatic deferral](/docs/cloud/about-cloud-develop-defer) of build artifacts to your Cloud project's production environment.
 - Speedier, lower-cost builds.
-- Support for <Constant name="mesh" /> ([cross-project ref](/docs/collaborate/govern/project-dependencies)), and more.
+- Support for <Constant name="mesh" /> ([cross-project ref](/docs/mesh/govern/project-dependencies)), and more.
 
 ## Prerequisites
 
@@ -115,7 +115,7 @@ The <Constant name="cloud_cli" /> uses the same set of [dbt commands](/reference
 
 - Run [multiple invocations in parallel](/reference/dbt-commands) and ensure [safe parallelism](/reference/dbt-commands#parallel-execution), which is currently not guaranteed by `dbt-core`.
 - Automatically defers build artifacts to your Cloud project's production environment.
-- Supports [project dependencies](/docs/collaborate/govern/project-dependencies), which allows you to depend on another project using the metadata service in <Constant name="cloud" />. 
+- Supports [project dependencies](/docs/mesh/govern/project-dependencies), which allows you to depend on another project using the metadata service in <Constant name="cloud" />. 
   - Project dependencies instantly connect to and reference (or  `ref`) public models defined in other projects. You don't need to execute or analyze these upstream models yourself. Instead, you treat them as an API that returns a dataset.
  
 :::tip Use the <code>--help</code> flag
