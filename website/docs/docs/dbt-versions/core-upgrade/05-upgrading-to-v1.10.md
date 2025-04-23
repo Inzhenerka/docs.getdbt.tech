@@ -116,6 +116,7 @@ my_profile: # dbt would use only this profile key
 
 ```
 
+</File>
 Moving forward, you should delete unused keys or move them to a separate yaml file.
 
 #### Unexpected jinja blocks
@@ -133,6 +134,7 @@ hello!
 {% endmacro %}
 
 ```
+</File>
 
 Moving forward, you should delete these orphaned jinja blocks.
 
