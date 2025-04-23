@@ -47,7 +47,7 @@ To use, select the **Enable partial parsing between deployment runs** option fro
 
 <Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Enable partial parsing between deployment runs option" />
 
-## Account access to Advanced CI features <Lifecycle status="enterprise" />
+## Account access to Advanced CI features <Lifecycle status="managed" />
 
 [Advanced CI](/docs/deploy/advanced-ci) features, such as [compare changes](/docs/deploy/advanced-ci#compare-changes), allow <Constant name="cloud" /> account members to view details about the changes between what's in the production environment and the pull request.
 
