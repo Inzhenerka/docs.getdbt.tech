@@ -51,35 +51,22 @@ You can read more about each of these behavior changes in the following links:
 
 ### Deprecation warnings
 
-New deprecation warnings in v1.10.
+Starting in `v1.10`, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
 
-#### Duplicate keys in profiles.yml
+- Custom inputs (e.g. unrecognized resource properties, configurations, and top-level keys)
+- Duplicate YAML keys in the same file
+- Unexpected jinja blocks (e.g. `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
+- And more
 
+We will start raising these warnings in `v1.10`, but making these changes will not be prerequisite to use `v1.10`. We know it will take existing users time to migrate their projects, and it is not our goal to break anyone overnight. The goal is to enable dbt users to work with more safety, feedback, and confidence going forward.
 
-In v1.10, if two identical keys exist in the `profiles.yml`, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. 
-Previously, if identical keys existed in the [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml), dbt would use the last configuration listed in the file. 
+What does this mean for you?
 
-```yml
-
-my_profile:
-  target: 
-  outputs:
-...
-
-my_profile: # dbt would use this profile key
-  target: 
-  outputs:
-...
-
-```
+1. If your project (or dbt package) hits a new deprecation warning in `v1.10`, you should plan to update your invalid code soon! Even though it’s just a warning for now, in a future version of dbt, we will be enforcing stricter validation to the inputs of your dbt project.
+2. In the future, the [`meta` config](/reference/resource-configs/meta) will be the only place to put custom user-defined attributes. Everything else will will be strongly typed and strictly validated. If you have an extra attribute you want to include in your project, or a model config you want to access in a custom materialization, you must nest it under `meta` moving forward.
+3. If you are using the [`—-warn-error` flag](/reference/global-configs/warnings) (or `--warn-error-options '{"error": "all"}'`) to promote all warnings to errors, this will include new deprecation warnings coming to Core. If you don’t want these to be promoted to errors, the `--warn-error-options` flag gives you more granular control over exactly which types of warnings are treated as errors - you can set `"warn": ["Deprecations"]` (new as of `v1.10`) to continue treating the deprecation warnings as warnings.
 
 #### Custom inputs
-Starting in dbt v1.10, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
-
-- Unrecognized resource properties, configurations, and top-level keys
-- Duplicate YAML keys in the same file
-- `{% endmacro %}` tags without a corresponding `{% macro %}` tag
-- And more
   
 Historically, dbt has allowed you to configure inputs largely unconstrained. A common example of this is setting custom YAML properties:
 
@@ -95,6 +82,59 @@ models:
 dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes challenging to validate your project's configuration. This creates unintended issues such as:
 - Silently ignoring misspelled properties and configurations (for example, `desciption:` instead of `description:`).
 - Unintended collisions with user code when dbt introduces a new “reserved” property or configuration.
+
+In `v1.10`, if you have an unrecognized custom property, you will get a warning, and in a future version, dbt will stop supporting custom properties. Moving forward, these should be nested under the [`meta` config](/reference/resource-configs/meta) which will be the only place to put custom user-defined attributes:
+
+```yml
+
+models:
+  - name: my_model
+    description: A model in my project.
+    config:
+      meta:
+        dbt_is_awesome: true 
+
+```
+
+#### Duplicate keys in the same yaml file
+
+In `v1.10`, if two identical keys exist in the same yaml file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. Previously, if identical keys existed in the same yaml file, dbt would use the last configuration listed in the file. 
+
+<File name='profiles.yml'>
+
+```yml
+
+my_profile:
+  target: my_target
+  outputs:
+...
+
+my_profile: # dbt would use only this profile key
+  target: my_other_target
+  outputs:
+...
+
+```
+
+Moving forward, you should delete unused keys or move them to a separate yaml file.
+
+#### Unexpected jinja blocks
+
+In `v1.10`, if you have an orphaned jinja block, you will get a warning, and in a future version, dbt will stop supporting unexpected jinja blocks. Previously, these orphaned jinja blocks were silently ignored.
+
+<File name='macros/my_macro.sql'>
+
+```sql
+
+{% endmacro %} # orphaned endmacro jinja block
+
+{% macro hello() %}
+hello!
+{% endmacro %}
+
+```
+
+Moving forward, you should delete these orphaned jinja blocks.
 
 ## Quick hits
 
