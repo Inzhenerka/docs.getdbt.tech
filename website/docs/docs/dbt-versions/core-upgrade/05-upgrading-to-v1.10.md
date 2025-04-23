@@ -51,14 +51,14 @@ You can read more about each of these behavior changes in the following links:
 
 ### Deprecation warnings
 
-Starting in `v1.10`, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
+Starting in v1.10, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
 
-- Custom inputs (e.g. unrecognized resource properties, configurations, and top-level keys)
+- Custom inputs (for example, unrecognized resource properties, configurations, and top-level keys)
 - Duplicate YAML keys in the same file
-- Unexpected jinja blocks (e.g. `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
+- Unexpected jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
 - And more
 
-We will start raising these warnings in `v1.10`, but making these changes will not be prerequisite to use `v1.10`. We know it will take existing users time to migrate their projects, and it is not our goal to break anyone overnight. The goal is to enable dbt users to work with more safety, feedback, and confidence going forward.
+dbt will start raising these warnings in version 1.10, but making these changes will not be a prerequisite for using it. We at dbt Labs understand that it will take existing users time to migrate their projects, and it is not our goal to disrupt anyone with this update. The goal is to enable you and your dbt users to work with more safety, feedback, and confidence going forward.
 
 What does this mean for you?
 
