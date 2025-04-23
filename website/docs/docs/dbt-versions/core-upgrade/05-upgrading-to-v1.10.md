@@ -98,7 +98,7 @@ models:
 
 #### Duplicate keys in the same yaml file
 
-In `v1.10`, if two identical keys exist in the same yaml file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. Previously, if identical keys existed in the same yaml file, dbt would use the last configuration listed in the file. 
+If two identical keys exist in the same YAML file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. Previously, if identical keys existed in the same YAML file, dbt would use the last configuration listed in the file. 
 
 <File name='profiles.yml'>
 
