@@ -33,8 +33,8 @@ This syntax for defining foreign keys uses `ref`, meaning it will capture depend
 
 Since constraints support and enforcement [varies by platform](/reference/resource-properties/constraints#platform-specific-support), dbt offers two optional fields you can specify on any filter:
 
-- `warn_unenforced` (optional): Set to `False` to skip warnings for constraints that are supported by your platform but not enforced (like `primary_key` in Snowflake).
-- `warn_unsupported` (optional): Set to `False` to skip warnings for constraints that your platform doesn't support at all (like `check` in Redshift).
+- `warn_unenforced`: Set to `False` to skip warnings for constraints that are supported by your platform but not enforced (like `primary_key` in Snowflake).
+- `warn_unsupported`: Set to `False` to skip warnings for constraints that your platform doesn't support at all (like `check` in Redshift).
 
 <File name='models/schema.yml'>
 
