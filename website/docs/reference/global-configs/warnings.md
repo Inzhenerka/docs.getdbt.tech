@@ -3,7 +3,7 @@ title: "Warnings"
 id: "warnings"
 sidebar: "Warnings"
 toc_max_heading_level: 2
-intro_text: "Use the `--warn-error` flag to promote all warnings to errors or `--warn-error-options` for granular control through options."
+intro_text: "Use the --warn-error flag to promote all warnings to errors or --warn-error-options for granular control through options."
 ---
 
 ## Use `--warn-error` to promote all warnings to errors
