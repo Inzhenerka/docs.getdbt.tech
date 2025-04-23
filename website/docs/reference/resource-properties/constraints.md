@@ -31,7 +31,7 @@ Foreign key constraints accept two additional inputs:
 
 This syntax for defining foreign keys uses `ref`, meaning it will capture dependencies and works across different environments. It's available in [<Constant name="cloud" /> "Latest""](/docs/dbt-versions/cloud-release-tracks) and [<Constant name="core" /> v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
-Because constraint support and enforcement [varies by platform](/reference/resource-properties/constraints#platform-specific-support), dbt offers two optional fields you can specify on any constraint:
+Since constraints support and enforcement [varies by platform](/reference/resource-properties/constraints#platform-specific-support), dbt offers two optional fields you can specify on any filter:
 
 - `warn_unenforced` (optional): Set to `False` to skip warnings for constraints that are supported by your platform but not enforced (like `primary_key` in Snowflake).
 - `warn_unsupported` (optional): Set to `False` to skip warnings for constraints that your platform doesn't support at all (like `check` in Redshift).
