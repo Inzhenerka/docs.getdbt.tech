@@ -17,7 +17,7 @@ pagination_next: "docs/collaborate/view-downstream-exposures"
 
 <Expandable alt_header="How is dbt Explorer priced?" >
 
-<Constant name="explorer" /> is generally available to all regions and deployment types on the <Constant name="cloud" /> [Enterprise and Team plans](https://www.getdbt.com/). Certain features within <Constant name="explorer" />, such as multi-project lineage and column-level lineage, are only available on the Enterprise plan.
+<Constant name="explorer" /> is generally available to all regions and deployment types on all <Constant name="cloud" /> [Enterprise and Starter plans](https://www.getdbt.com/). Certain features within <Constant name="explorer" />, such as project recommendations, multi-project lineage, column-level lineage, and more are only available on the Enterprise and Enterprise plus plans.
 
 <Constant name="explorer" /> can be accessed by users with developer and read-only seats.
 
@@ -155,7 +155,7 @@ Read-only users can consume metadata in <Constant name="explorer" />. More bespo
 
 <Expandable alt_header="Does dbt Explorer require a specific dbt Cloud plan?" >
 
-<Constant name="explorer" /> is available on the dbt Cloud Team and Enterprise plans. Certain features within <Constant name="explorer" />, like multi-project lineage and column-level lineage, are only available on the Enterprise plan. 
+<Constant name="explorer" /> is available on dbt Cloud Starter and all Enterprise plans. Certain features within <Constant name="explorer" />, like project recommendations, multi-project lineage, column-level lineage, and more are only available on the Enterprise and Enterprise plus plans. 
 
 </Expandable>
 
