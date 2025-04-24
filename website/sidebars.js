@@ -502,7 +502,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "dbt Mesh",
+      label: "Build dbt Mesh",
       link: { type: "doc", id: "docs/mesh/about-mesh" },
       items: [
         "docs/mesh/about-mesh",
