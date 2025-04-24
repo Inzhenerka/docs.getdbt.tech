@@ -93,8 +93,8 @@ Set up your developer credentials:
 
 <Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.jpg" width="85%" height="100" title="Configure developer credentials in your Profile"/>
 
-1. Access the <Constant name="cloud_ide" /> by clicking **Develop** at the top of the page.
-2. Initialize your project and familiarize yourself with the <Constant name="cloud_ide" /> and its delightful [features](#cloud-ide-features).
+6. Access the <Constant name="cloud_ide" /> by clicking **Develop** at the top of the page.
+7. Initialize your project and familiarize yourself with the <Constant name="cloud_ide" /> and its delightful [features](#cloud-ide-features).
 
 Nice job, you're ready to start developing and building models 🎉!  
 
