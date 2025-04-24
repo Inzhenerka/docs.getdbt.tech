@@ -565,7 +565,7 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Explore your data",
-      link: { type: "doc", id:"docs/explore/explore-projects" },
+      link: { type: "doc", id:"docs/explore/explore-your-data" },
       items: [
         {
           type: "category",
