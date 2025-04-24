@@ -502,6 +502,30 @@ const sidebarSettings = {
     },
     {
       type: "category",
+      label: "dbt Mesh",
+      link: { type: "doc", id: "docs/mesh/about-mesh" },
+      items: [
+        "docs/mesh/about-mesh",
+        {
+          type: "category",
+          label: "Model governance",
+          collapsed: true,
+          link: {
+            type: "doc",
+            id: "docs/mesh/govern/about-model-governance",
+          },
+          items: [
+            "docs/mesh/govern/about-model-governance",
+            "docs/mesh/govern/model-access",
+            "docs/mesh/govern/model-contracts",
+            "docs/mesh/govern/model-versions",
+            "docs/mesh/govern/project-dependencies",
+          ],
+        },
+      ],  
+    },
+    {
+      type: "category",
       label: "Deploy dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/deploy/deployments" },
@@ -616,30 +640,6 @@ const sidebarSettings = {
           items: ["docs/explore/build-and-view-your-docs"],
         },  
       ],
-    },
-    {
-      type: "category",
-      label: "dbt Mesh",
-      link: { type: "doc", id: "docs/mesh/about-mesh" },
-      items: [
-        "docs/mesh/about-mesh",
-        {
-          type: "category",
-          label: "Model governance",
-          collapsed: true,
-          link: {
-            type: "doc",
-            id: "docs/mesh/govern/about-model-governance",
-          },
-          items: [
-            "docs/mesh/govern/about-model-governance",
-            "docs/mesh/govern/model-access",
-            "docs/mesh/govern/model-contracts",
-            "docs/mesh/govern/model-versions",
-            "docs/mesh/govern/project-dependencies",
-          ],
-        },
-      ],  
     },
     {
       type: "category",
