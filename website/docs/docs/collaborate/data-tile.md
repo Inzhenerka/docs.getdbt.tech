@@ -84,7 +84,7 @@ Follow these steps to set up your data health tile:
 If your analytics tool supports iFrames, you can embed the dashboard tile within it. 
 
 ## Examples
-The following examples show how to embed the data health tile in Tableau and PowerBI.
+The following examples show how to embed the data health tile in PowerBI, Tableau, and Sigma.
 
 <Tabs>
 
