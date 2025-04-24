@@ -16,7 +16,7 @@ This page explains how to enable <Constant name="copilot" /> in <Constant name="
 
 - Available in the <Constant name="cloud" /> only.
 - Must have a [<Constant name="cloud" /> Starter, Enterprise, or Enterprise plus account](https://www.getdbt.com/pricing).
-  - Certain features like BYOK or Canvas 
+  - Certain features like [BYOK](#bringing-your-own-openai-api-key-byok), [natural prompts in Canvas](/docs/cloud/build-canvas-copilot), and more are only available on Enterprise and Enterprise plus plans.
 - Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
 - By default, <Constant name="copilot" /> deployments use a central OpenAI API key managed by dbt Labs. Alternatively, you can [provide your own OpenAI API key](#bringing-your-own-openai-api-key-byok).
 - <Constant name="copilot" /> is optimized for OpenAI's `gpt-3.x`, `gpt-4o`, `gpt-4.1-[mini|nano]`, and `gpt-4.5` (deprecated by OpenAI) models. Other models, like `o1` and `o2`, are not supported and will not work with <Constant name="copilot"/>.

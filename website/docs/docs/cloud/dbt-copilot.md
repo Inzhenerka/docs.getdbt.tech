@@ -18,7 +18,7 @@ keywords: ["dbt Copilot", "dbt Cloud", "AI", "AI-powered", "dbt"]
 With automatic code generation and using natural language prompts, <Constant name="copilot" /> can [generate code](/docs/cloud/use-dbt-copilot), [documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot), [<Constant name="visual_editor" /> (beta)](/docs/cloud/build-canvas-copilot), and [<Constant name="query_page" /> (beta)](/docs/collaborate/dbt-insights).
 
 :::tip
-<Constant name="copilot" /> is available to all Enterprise accounts. [Book a demo](https://www.getdbt.com/contact) to see how AI-driven development can streamline your workflow.
+<Constant name="copilot" /> is available on Starter, Enterprise, and Enterprise plus accounts. [Book a demo](https://www.getdbt.com/contact) to see how AI-driven development can streamline your workflow.
 :::
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
