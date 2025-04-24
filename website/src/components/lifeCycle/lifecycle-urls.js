@@ -1,5 +1,5 @@
 // plan name variables to use across the docs site
-export const MANAGED= 'Enterprise';
+export const MANAGED= 'Test';
 export const SELF_SERVICE = 'Team';
 export const DEVELOPER = 'Developer';
 
