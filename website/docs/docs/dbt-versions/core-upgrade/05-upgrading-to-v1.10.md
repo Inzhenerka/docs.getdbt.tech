@@ -51,18 +51,18 @@ You can read more about each of these behavior changes in the following links:
 
 ### Deprecation warnings
 
-Starting in v1.10, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
+Starting in `v1.10`, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
 
 - Custom inputs (for example, unrecognized resource properties, configurations, and top-level keys)
 - Duplicate YAML keys in the same file
 - Unexpected jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
 - And more
 
-dbt will start raising these warnings in version 1.10, but making these changes will not be a prerequisite for using it. We at dbt Labs understand that it will take existing users time to migrate their projects, and it is not our goal to disrupt anyone with this update. The goal is to enable you and your dbt users to work with more safety, feedback, and confidence going forward.
+dbt will start raising these warnings in version `1.10`, but making these changes will not be a prerequisite for using it. We at dbt Labs understand that it will take existing users time to migrate their projects, and it is not our goal to disrupt anyone with this update. The goal is to enable you to work with more safety, feedback, and confidence going forward.
 
 What does this mean for you?
 
-1. If your project (or dbt package) encounters a new deprecation warning in v1.10, plan to update your invalid code soon. Although it’s just a warning for now, in a future version, dbt will enforce stricter validation of the inputs in your dbt project.
+1. If your project (or dbt package) encounters a new deprecation warning in `v1.10`, plan to update your invalid code soon. Although it’s just a warning for now, in a future version, dbt will enforce stricter validation of the inputs in your project.
 2. In the future, the [`meta` config](/reference/resource-configs/meta) will be the only place to put custom user-defined attributes. Everything else will be strongly typed and strictly validated. If you have an extra attribute you want to include in your project, or a model config you want to access in a custom materialization, you must nest it under `meta` moving forward.
 3. If you are using the [`—-warn-error` flag](/reference/global-configs/warnings) (or `--warn-error-options '{"error": "all"}'`) to promote all warnings to errors, this will include new deprecation warnings coming to dbt Core. If you don’t want these to be promoted to errors, the `--warn-error-options` flag gives you more granular control over exactly which types of warnings are treated as errors. You can set `"warn": ["Deprecations"]` (new as of v1.10) to continue treating the deprecation warnings as warnings.
 
@@ -98,7 +98,7 @@ models:
 
 #### Duplicate keys in the same yaml file
 
-If two identical keys exist in the same YAML file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys with silent overwrite. Previously, if identical keys existed in the same YAML file, dbt would use the last configuration listed in the file. 
+If two identical keys exist in the same YAML file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys. Previously, if identical keys existed in the same YAML file, dbt silently overwrite, using the last configuration listed in the file. 
 
 <File name='profiles.yml'>
 
