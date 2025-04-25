@@ -10,7 +10,7 @@ With data health tiles, stakeholders will get an at-a-glance confirmation on whe
 
 The data health tile:
 
-- Distills [data health signals](/docs/collaborate/data-health-signals) for data consumers.
+- Distills [data health signals](/docs/explore/data-health-signals) for data consumers.
 - Deep links you into <Constant name="explorer" /> where you can further dive into upstream data issues.
 - Provides richer information and makes it easier to debug.
 - Revamps the existing, [job-based tiles](#job-based-data-health).
@@ -18,7 +18,7 @@ The data health tile:
 Data health tiles rely on [exposures](/docs/build/exposures) to surface data health signals in your dashboards. An exposure defines how specific outputs &mdash; like dashboards or reports &mdash; depend on your data models. Exposures in dbt can be configured in two ways:
 
 - Manual &mdash; Defined [manually](/docs/build/exposures#declaring-an-exposure) and explicitly in your project’s YAML files.
-- Automatic &mdash; Pulled automatically for supported <Constant name="cloud" /> integrations. <Constant name="cloud" /> automatically [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures), removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [<Constant name="explorer" />](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
+- Automatic &mdash; Pulled automatically for supported <Constant name="cloud" /> integrations. <Constant name="cloud" /> automatically [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures), removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [<Constant name="explorer" />](/docs/explore/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
 
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Example of passing Data health tile in your dashboard." />
@@ -100,7 +100,7 @@ Follow these steps to embed the data health tile in PowerBI:
 2. Create a new PowerBI measure by right-clicking on your **Data**, **More options**, and then **New measure**.
 <Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-measure.png" width="80%" title="Create a new PowerBI measure."/>
 
-3. Navigate to <Constant name="explorer" />, select the exposure, and expand the [**Embed data health into your dashboard**](/docs/collaborate/data-tile#embed-in-your-dashboard) toggle. 
+3. Navigate to <Constant name="explorer" />, select the exposure, and expand the [**Embed data health into your dashboard**](/docs/explore/data-tile#embed-in-your-dashboard) toggle. 
 4. Go to the **iFrame** tab and copy the iFrame code. Make sure the Metadata Only token is already set up.
 5. In PowerBI, paste the iFrame code you copied into your measure calculation window. The iFrame code should look like this:
 

@@ -5,7 +5,7 @@ id: indirectly-reference-upstream-model
 description: Learn why an indirectly referenced upstream public models don't appear in Explorer
 ---
 
-For [project dependencies](/docs/collaborate/govern/project-dependencies) in <Constant name="mesh" />, [<Constant name="explorer" />](/docs/collaborate/explore-multiple-projects) only displays directly referenced [public models](/docs/collaborate/govern/model-access) from upstream projects, even if an upstream model indirectly depends on another public model.
+For [project dependencies](/docs/mesh/govern/project-dependencies) in <Constant name="mesh" />, [<Constant name="explorer" />](/docs/explore/explore-multiple-projects) only displays directly referenced [public models](/docs/mesh/govern/model-access) from upstream projects, even if an upstream model indirectly depends on another public model.
 
 So for example, if:
 

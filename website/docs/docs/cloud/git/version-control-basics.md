@@ -50,7 +50,7 @@ You can perform git tasks with the git button in the [<Constant name="cloud_ide"
 
 Merge conflicts often occur when multiple users are concurrently making edits to the same section in the same file. This makes it difficult for <Constant name="git" /> to determine which change should be kept.
 
-Refer to [merge conflicts](/docs/collaborate/git/merge-conflicts) to learn how to resolve merge conflicts.
+Refer to [merge conflicts](/docs/cloud/git/merge-conflicts) to learn how to resolve merge conflicts.
 
 ## The .gitignore file
 

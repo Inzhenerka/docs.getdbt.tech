@@ -31,7 +31,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
      - Out-of-the-box [CI/CD workflows](/docs/deploy/ci-jobs)
      - The [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) for consistent metrics
      - Domain ownership of data with multi-project [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) setups
-     - [<Constant name="explorer" />](/docs/collaborate/explore-projects) for easier data discovery and understanding
+     - [<Constant name="explorer" />](/docs/explore/explore-projects) for easier data discovery and understanding
 
    Learn more about [<Constant name="cloud" /> features](/docs/cloud/about-cloud/dbt-cloud-features).
 - <Constant name="core" /> is an open-source tool that enables data teams to define and execute data transformations in a cloud data warehouse following analytics engineering best practices. While this can work well for ‘single players’ and small technical teams, all development happens on a command-line interface, and production deployments must be self-hosted and maintained. This requires significant, costly work that adds up over time to maintain and scale.
@@ -228,7 +228,7 @@ Explore these additional configurations to optimize your <Constant name="cloud" 
 
 5. **API access** &mdash; Create [API auth tokens](/docs/dbt-cloud-apis/authentication) and access to [dbt Cloud APIs](/docs/dbt-cloud-apis/overview) as needed.  <Lifecycle status="self_service,managed" />
 
-6. **dbt Explorer** &mdash; If you use [dbt Explorer](/docs/collaborate/explore-projects) and run production jobs with an external orchestrator, ensure your production jobs run `dbt run` or `dbt build` to update and view models and their [metadata](/docs/collaborate/explore-projects#generate-metadata) in dbt Explorer. Running `dbt compile`  alone will not update model metadata. In addition, features like column-level lineage also requires catalog metadata produced through running `dbt docs generate`. <Lifecycle status="self_service,managed" />
+6. **dbt Explorer** &mdash; If you use [dbt Explorer](/docs/explore/explore-projects) and run production jobs with an external orchestrator, ensure your production jobs run `dbt run` or `dbt build` to update and view models and their [metadata](/docs/explore/explore-projects#generate-metadata) in dbt Explorer. Running `dbt compile`  alone will not update model metadata. In addition, features like column-level lineage also requires catalog metadata produced through running `dbt docs generate`. <Lifecycle status="self_service,managed" />
 
 ### CI/CD setup
 
@@ -252,7 +252,7 @@ You’ll want to make sure you set up your [development environment and credenti
    - Run `dbt compile` to make sure your project compiles correctly.
    - Run a few models in the <Constant name="cloud_ide" /> or <Constant name="cloud" /> CLI to ensure you’re experiencing accurate results in development.
 
-2. Once your first job has successfully run in your production environment, use [dbt Explorer](/docs/collaborate/explore-projects) to view your project's [resources](/docs/build/projects) (such as models, tests, and metrics) and their <Term id="data-lineage" />  to gain a better understanding of its latest production state. <Lifecycle status="self_service,managed" />
+2. Once your first job has successfully run in your production environment, use [dbt Explorer](/docs/explore/explore-projects) to view your project's [resources](/docs/build/projects) (such as models, tests, and metrics) and their <Term id="data-lineage" />  to gain a better understanding of its latest production state. <Lifecycle status="self_service,managed" />
 
 ## What’s next?
 

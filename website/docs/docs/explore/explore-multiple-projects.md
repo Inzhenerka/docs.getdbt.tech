@@ -21,7 +21,7 @@ To view the project-level lineage graph, click the **View lineage** icon in the 
 - Selecting a project node from a public model opens its detailed lineage graph if you have the [permissions](/docs/cloud/manage-access/enterprise-permissions) to do so.
 
 :::tip Indirect dependencies
-When viewing a project's lineage, <Constant name="explorer" /> shows only _directly_ [referenced](/docs/collaborate/govern/project-dependencies) public models. It doesn't show [indirect dependencies](/faqs/Project_ref/indirectly-reference-upstream-model). If a referenced model in your project depends on another upstream public model, the second-level model won't appear in <Constant name="explorer" />, however it will appear in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) lineage view.
+When viewing a project's lineage, <Constant name="explorer" /> shows only _directly_ [referenced](/docs/mesh/govern/project-dependencies) public models. It doesn't show [indirect dependencies](/faqs/Project_ref/indirectly-reference-upstream-model). If a referenced model in your project depends on another upstream public model, the second-level model won't appear in <Constant name="explorer" />, however it will appear in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) lineage view.
 :::
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/cross-project-lineage-parent.png" width="100%" height="100" title="View your cross-project lineage in a parent project and the other projects that reference it by clicking the 'Relationships' tab."/>
@@ -35,7 +35,7 @@ When viewing a downstream (child) project that imports and refs public models fr
 
 ## Explore the project-level lineage graph
 
-For cross-project collaboration, you can interact with the DAG in all the same ways as described in [Explore your project's lineage](/docs/collaborate/explore-projects#project-lineage) but you can also interact with it at the project level and view the details.
+For cross-project collaboration, you can interact with the DAG in all the same ways as described in [Explore your project's lineage](/docs/explore/explore-projects#project-lineage) but you can also interact with it at the project level and view the details.
 
 If you have permissions for a project in the account, you can view all public models used across the entire account. However, you can only view full public model details and private models if you have permissions for the specific project where those models are defined.
 
@@ -53,7 +53,7 @@ From the account-level lineage graph, you can:
 - Click the **Lineage view** icon (in the graph’s upper right corner) to view the cross-project lineage graph.
 - Click the **List view** icon (in the graph’s upper right corner) to view the project list.
     - Select a project from the **Projects** tab to switch to that project’s main **Explore** page.
-    - Select a model from the **Public Models** tab to view the [model’s details page](/docs/collaborate/explore-projects#view-resource-details).
+    - Select a model from the **Public Models** tab to view the [model’s details page](/docs/explore/explore-projects#view-resource-details).
     - Perform searches on your projects with the search bar.
 - Select a project node in the graph (double-clicking) to switch to that particular project’s lineage graph.
 

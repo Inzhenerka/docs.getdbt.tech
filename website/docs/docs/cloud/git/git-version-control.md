@@ -3,7 +3,7 @@ title: "About git"
 id: git-version-control
 description: "Git overview"
 sidebar_label: "About git"
-pagination_next: "docs/collaborate/git/version-control-basics"
+pagination_next: null
 pagination_prev: null
 ---
 
@@ -20,8 +20,8 @@ When you develop in the command line interface (CLI) or Cloud  integrated develo
 
 
 ## Related docs
-- [Version control basics](/docs/collaborate/git/version-control-basics)
-- [Merge conflicts](/docs/collaborate/git/merge-conflicts) 
+- [Version control basics](/docs/cloud/git/version-control-basics)
+- [Merge conflicts](/docs/cloud/git/merge-conflicts) 
 - [Connect to GitHub](/docs/cloud/git/connect-github)
 - [Connect to GitLab](/docs/cloud/git/connect-gitlab)
 - [Connect to Azure DevOps](/docs/cloud/git/connect-azure-devops)

@@ -112,13 +112,13 @@ CodeCommit uses `master` as its default branch, and to initialize your project, 
 
 #### Step 5: Configure pull request template URLs (Optional)
 
-To prevent users from directly merging code changes into the default branch, configure the [PR Template URL](/docs/collaborate/git/pr-template) in the **Repository details** page for your project. Once configured, <Constant name="cloud" /> will prompt users to open a new PR after committing and synching code changes on the branch in the <Constant name="cloud_ide" />, before merging any changes into the default branch.
+To prevent users from directly merging code changes into the default branch, configure the [PR Template URL](/docs/cloud/git/pr-template) in the **Repository details** page for your project. Once configured, <Constant name="cloud" /> will prompt users to open a new PR after committing and synching code changes on the branch in the <Constant name="cloud_ide" />, before merging any changes into the default branch.
 
 - Go to **Account Settings** -> **Projects** -> Select the project.
 - Click the repository link under **Repository**.
 - In the **Repository details** page, click **Edit** in the lower right.
   <Lightbox src="/img/docs/collaborate/repo-details.jpg" width="80%" title="Configure PR template in the 'Repository details' page." />
-- In the **Pull request URL** field, set the URL based on the suggested [PR template format](/docs/collaborate/git/pr-template#aws-codecommit).
+- In the **Pull request URL** field, set the URL based on the suggested [PR template format](/docs/cloud/git/pr-template#aws-codecommit).
 - Replace `<repo>` with the name of your repository (Note that it is case sensitive). In the following example, the repository name is `New_Repo`.
   <Lightbox src="/img/docs/collaborate/pr-template-example.jpg" width="60%" title="In the Pull request URL field example, the repository name is 'New_Repo'." />
 - After filling the **Pull request URL** field, click **Save**.
