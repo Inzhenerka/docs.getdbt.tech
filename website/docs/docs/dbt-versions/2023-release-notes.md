@@ -147,7 +147,7 @@ Archived release notes for <Constant name="cloud" /> from 2023
 
     - Automatic deferral of build artifacts to your Cloud project's production environment
     - Secure credential storage in the dbt Cloud platform
-    - Support for dbt Mesh ([cross-project `ref`](/docs/collaborate/govern/project-dependencies))
+    - Support for dbt Mesh ([cross-project `ref`](/docs/mesh/govern/project-dependencies))
     - Development workflow for dbt Semantic Layer
     - Speedier, lower cost builds
 
@@ -200,7 +200,7 @@ Archived release notes for <Constant name="cloud" /> from 2023
     ## ☁ Cloud projects
     - Continuous integration jobs are now generally available and no longer in beta!
     - Added [Postgres PrivateLink set up page](/docs/cloud/secure/postgres-privatelink)
-    - Published beta docs for [dbt Explorer](/docs/collaborate/explore-projects).
+    - Published beta docs for [dbt Explorer](/docs/explore/explore-projects).
     - Added a new Semantic Layer [GraphQL API doc](/docs/dbt-cloud-apis/sl-graphql) and updated the [integration docs](/docs/cloud-integrations/avail-sl-integrations) to include Hex. Responded to dbt community feedback and clarified Metricflow use cases for dbt Core and dbt Cloud.
     - Added an [FAQ](/faqs/Git/git-migration) describing how to migrate from one git provider to another in dbt Cloud.
     - Clarified an example and added a [troubleshooting section](/docs/cloud/connect-data-platform/connect-snowflake#troubleshooting) to Snowflake connection docs to address common errors and provide solutions.

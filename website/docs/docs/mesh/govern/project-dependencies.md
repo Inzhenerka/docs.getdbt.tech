@@ -18,7 +18,7 @@ dbt Labs supports an expanded notion of `dependencies` across multiple dbt proje
 - **Projects** &mdash; The dbt method to take a dependency on another project. Using a metadata service that runs behind the scenes, <Constant name="cloud" /> resolves references on-the-fly to public models defined in other projects. You don't need to parse or run those upstream models yourself. Instead, you treat your dependency on those models as an API that returns a dataset. The maintainer of the public model is responsible for guaranteeing its quality and stability.
 
 ## Prerequisites
-- Available in [<Constant name="cloud" /> Enterprise](https://www.getdbt.com/pricing). To use it, designate a [public model](/docs/collaborate/govern/model-access) and add a [cross-project ref](#how-to-write-cross-project-ref).
+- Available in [<Constant name="cloud" /> Enterprise](https://www.getdbt.com/pricing). To use it, designate a [public model](/docs/mesh/govern/model-access) and add a [cross-project ref](#how-to-write-cross-project-ref).
 - For the upstream ("producer") project setup:
   - Configure models in upstream project with [`access: public`](/reference/resource-configs/access) and have at least one successful job run after defining `access`.
   - Define a deployment environment in the upstream project as [Production environment](/docs/deploy/deploy-environments#set-as-production-environment), ensuring at least one successful _deployment_ job run in that environment. Make sure the deployment job run generates a [manifest.json](/reference/artifacts/manifest-json) file, as this contains necessary metadata information for downstream projects.
@@ -64,14 +64,14 @@ What's happening here?
 
 The `dbt_utils` package &mdash; When you run `dbt deps`, dbt will pull down this package's full contents (100+ macros) as source code and add them to your environment. You can then call any macro from the package, just as you can call macros defined in your own project.
 
-The `jaffle_finance` projects &mdash; This is a new scenario. Unlike installing a package, the models in the `jaffle_finance` project will _not_ be pulled down as source code and parsed into your project. Instead, dbt Cloud provides a metadata service that resolves references to [**public models**](/docs/collaborate/govern/model-access) defined in the `jaffle_finance` project.
+The `jaffle_finance` projects &mdash; This is a new scenario. Unlike installing a package, the models in the `jaffle_finance` project will _not_ be pulled down as source code and parsed into your project. Instead, dbt Cloud provides a metadata service that resolves references to [**public models**](/docs/mesh/govern/model-access) defined in the `jaffle_finance` project.
 
 ### Advantages
 
 When you're building on top of another team's work, resolving the references in this way has several advantages:
 - You're using an intentional interface designated by the model's maintainer with `access: public`.
 - You're keeping the scope of your project narrow, and avoiding unnecessary resources and complexity. This is faster for you and faster for dbt.
-- You don't need to mirror any conditional configuration of the upstream project such as `vars`, environment variables, or `target.name`. You can reference them directly wherever the Finance team is building their models in production. Even if the Finance team makes changes like renaming the model, changing the name of its schema, or [bumping its version](/docs/collaborate/govern/model-versions), your `ref` would still resolve successfully.
+- You don't need to mirror any conditional configuration of the upstream project such as `vars`, environment variables, or `target.name`. You can reference them directly wherever the Finance team is building their models in production. Even if the Finance team makes changes like renaming the model, changing the name of its schema, or [bumping its version](/docs/mesh/govern/model-versions), your `ref` would still resolve successfully.
 - You eliminate the risk of accidentally building those models with `dbt run` or `dbt build`. While you can select those models, you can't actually build them. This prevents unexpected warehouse costs and permissions issues. This also ensures proper ownership and cost allocation for each team's models.
 
 ### How to write cross-project ref
