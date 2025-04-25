@@ -4,8 +4,6 @@ sidebar_label: "dbt Copilot FAQs"
 description: "Answers to common questions about dbt Copilot."
 ---
 
-# dbt Copilot FAQs <Lifecycle status="managed_plus,managed" /> 
-
 <IntroText>
 Read about common questions about <Constant name="copilot" /> to understand how it works and how it can help you.
 </IntroText>
@@ -30,7 +28,7 @@ With automatic code generation, let <Constant name="copilot" /> [generate code](
 
 <Constant name="copilot" /> can currently be found in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot). Future releases will bring <Constant name="copilot" /> to the [<Constant name="visual_editor" />](/docs/cloud/use-canvas) and even more parts of the <Constant name="cloud" /> application.
 
-To use <Constant name="copilot" />, you must have a <Constant name="cloud" /> [Enterprise account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
+To use <Constant name="copilot" />, you must have a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise plus account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
 
 </Expandable>
 
@@ -52,7 +50,7 @@ with a click of a button and ensuring data privacy and security.
 
 <Expandable alt_header="Who has access to dbt Copilot?" >
 
-When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Enterprise account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
+When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise plus account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
 
 </Expandable>
 
@@ -72,7 +70,7 @@ Yes, <Constant name="copilot" /> is powered by ai-codegen-api, which is deployed
 
 <Expandable alt_header="Which model providers does dbt Copilot use?">
 
-dbt Labs works with OpenAI to build and operationalize <Constant name="copilot" />. Enterprise accounts can [supply their own OpenAI keys](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok)
+dbt Labs works with OpenAI to build and operationalize <Constant name="copilot" />. Enterprise-tier accounts can [supply their own OpenAI keys](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok).
 
 </Expandable>
 

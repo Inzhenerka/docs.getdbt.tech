@@ -4,7 +4,7 @@ id: "service-tokens"
 description: "Service account tokens help you define permissions for securing access to your dbt Cloud account and its projects."
 ---
 
-# Service account tokens <Lifecycle status="self_service,managed" />
+# Service account tokens <Lifecycle status="managed_plus,managed" />
 
 :::info Important service account token update
 

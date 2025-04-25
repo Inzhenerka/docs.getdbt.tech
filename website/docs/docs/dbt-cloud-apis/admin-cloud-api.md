@@ -4,7 +4,7 @@ id: "admin-cloud-api"
 pagination_next: "docs/dbt-cloud-apis/discovery-api"
 ---
 
-The <Constant name="cloud" /> Administrative API is enabled by default for [Team and Enterprise plans](https://www.getdbt.com/pricing/). It can be used to:
+The <Constant name="cloud" /> Administrative API is enabled by default for [Enterprise and Enterprise plus plans](https://www.getdbt.com/pricing/). It can be used to:
 
 - Download artifacts after a job has completed
 - Kick off a job run from an orchestration tool
