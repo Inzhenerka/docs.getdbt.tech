@@ -56,13 +56,13 @@ When you push a new commit to a PR, <Constant name="cloud" /> enqueues a new CI 
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-smart-cancel-job.png" width="70%" title="Example of an automatically canceled run"/>
 
-### Run slot treatment <Lifecycle status="self_service,managed" />
+### Run slot treatment <Lifecycle status="self_service,managed,managed_plus" />
 
 CI runs don't consume run slots. This guarantees a CI check will never block a production run.
 
-### SQL linting <Lifecycle status="self_service,managed" />
+### SQL linting <Lifecycle status="self_service,managed,managed_plus" />
 
-Available on [<Constant name="cloud" /> release tracks](/docs/dbt-versions/cloud-release-tracks) and <Constant name="cloud" /> Team or Enterprise accounts.
+Available on [<Constant name="cloud" /> release tracks](/docs/dbt-versions/cloud-release-tracks) and <Constant name="cloud" /> Starter or Enterprise-tier accounts.
 
 When [enabled for your CI job](/docs/deploy/ci-jobs#set-up-ci-jobs), dbt invokes [SQLFluff](https://sqlfluff.com/) which is a modular and configurable SQL linter that warns you of complex functions, syntax, formatting, and compilation errors. 
 

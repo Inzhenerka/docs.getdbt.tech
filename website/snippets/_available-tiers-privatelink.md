@@ -1,4 +1,4 @@
-:::info Limited to certain Enterprise tiers
+:::info Available to certain Enterprise tiers
 
 The PrivateLink feature is available on the following dbt Cloud Enterprise tiers:
  * Business Critical 

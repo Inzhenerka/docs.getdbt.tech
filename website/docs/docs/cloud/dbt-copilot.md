@@ -6,7 +6,7 @@ pagination_next: "docs/cloud/enable-dbt-copilot"
 keywords: ["dbt Copilot", "dbt Cloud", "AI", "AI-powered", "dbt"]
 ---
 
-# About dbt Copilot <Lifecycle status="managed_plus,managed,self_service" /> 
+# About dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
 
 <IntroText>
 <Constant name="copilot" /> is a powerful, AI-powered assistant fully integrated into your <Constant name="cloud" /> experience—designed to accelerate your analytics workflows.

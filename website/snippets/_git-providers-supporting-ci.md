@@ -8,8 +8,8 @@ The following table outlines the available integration options and their corresp
 
 | **Git provider** | **Native dbt Cloud integration** | **Automated CI job**|**Git clone**| **Information**| **Supported plans**|
 | -----------------| ---------------------------------| --------------------|-------------|----------------| --------|
-|[Azure DevOps](/docs/cloud/git/connect-azure-devops)<br /> |  ✅|  ✅ |  ✅  | Organizations on the Team  and Developer plans can connect to Azure DevOps using a deploy key. Note, you won’t be able to configure automated CI jobs but you can still develop.| Enterprise |
-|[GitHub](/docs/cloud/git/connect-github)<br />  | ✅ | ✅ |  |  | Developer, Team, and Enterprise |
-|[GitLab](/docs/cloud/git/connect-gitlab)<br /> | ✅ | ✅ |  ✅  | | Developer, Team, and Enterprise |
+|[Azure DevOps](/docs/cloud/git/connect-azure-devops)<br /> |  ✅|  ✅ |  ✅  | Organizations on the Starter and Developer plans can connect to Azure DevOps using a deploy key. Note, you won’t be able to configure automated CI jobs but you can still develop.| Enterprise, Enterprise Plus |
+|[GitHub](/docs/cloud/git/connect-github)<br />  | ✅ | ✅ |  |  | All dbt Cloud plans |
+|[GitLab](/docs/cloud/git/connect-gitlab)<br /> | ✅ | ✅ |  ✅  | | All dbt Cloud plans |
 |All other git providers using [Git clone](/docs/cloud/git/import-a-project-by-git-url) ([BitBucket](/docs/cloud/git/import-a-project-by-git-url#bitbucket), [AWS CodeCommit](/docs/cloud/git/import-a-project-by-git-url#aws-codecommit), and others)| ❌    | ❌    | ✅   | Refer to the [Customizing CI/CD with custom pipelines](/guides/custom-cicd-pipelines?step=1) guide to set up continuous integration and continuous deployment (CI/CD).|
 

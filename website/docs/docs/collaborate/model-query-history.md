@@ -5,7 +5,7 @@ description: "Import and auto-generate exposures from dashboards and understand 
 image: /img/docs/collaborate/dbt-explorer/model-query-queried-models.jpg
 ---
 
-# Model query history <Lifecycle status="managed_plus,managed" />
+# Model query history <Lifecycle status="managed,managed_plus" />
 
 <IntroText>
 Model query history helps data teams track model usage by analyzing query logs.

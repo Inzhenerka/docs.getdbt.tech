@@ -87,14 +87,14 @@ Examples of queried metrics include:
 
 Viewing usage in the product is restricted to specific roles:
 
-* Team plan &mdash; Owner group
-* Enterprise plan &mdash; Account and billing admin roles
+* Starter plan &mdash; Owner group
+* Enterprise and Enterprise Plus plans &mdash; Account and billing admin roles
 
 For an account-level view of usage, if you have access to the **Billing** and **Usage** pages, you can see an estimate of the usage for the month. In the Billing page of the **Account Settings**, you can see how your account tracks against its usage. You can also see which projects are building the most models.
 
 <Lightbox src="/img/docs/building-a-dbt-project/billing-usage-page.jpg" width="80%" title="To view account-level estimated usage, go to 'Account settings' and then select 'Billing'."/>
 
-As a Team and Developer plan user, you can see how the account is tracking against the included models built. As an Enterprise plan user, you can see how much you have drawn down from your annual commit and how much remains.
+As a Starter and Developer plan user, you can see how the account is tracking against the included models built. As an Enterprise plan user, you can see how much you have drawn down from your annual commit and how much remains.
 
 On each **Project Home** page, any user with access to that project can see how many models are built each month. From there, additional details on top jobs by models built can be found on each **Environment** page.
 
@@ -104,7 +104,7 @@ In addition, you can look at the **Job Details** page's **Insights** tab to show
 
 <Lightbox src="/img/docs/building-a-dbt-project/billing-job-page.jpg" width="80%" title="View how many models are being built per month for a particular job by going to the 'Insights' tab in the 'Job details' page."/>
 
-Usage information is available to customers on consumption-based plans, and some usage visualizations might not be visible to customers on legacy plans. Any usage data shown in <Constant name="cloud" /> is only an estimate of your usage, and there could be a delay in showing usage data in the product. Your final usage for the month will be visible on your monthly statements (statements applicable to Team and Enterprise plans).
+Usage information is available to customers on consumption-based plans, and some usage visualizations might not be visible to customers on legacy plans. Any usage data shown in <Constant name="cloud" /> is only an estimate of your usage, and there could be a delay in showing usage data in the product. Your final usage for the month will be visible on your monthly statements (statements applicable to Starter and Enterprise-tier plans).
 
 
 ## Plans and Billing
@@ -118,9 +118,9 @@ Developer plans are free and include one Developer license and 3,000 models each
 All included successful models built numbers above reflect our most current pricing and packaging. Based on your usage terms when you signed up for the Developer Plan, the included model entitlements may be different from what’s reflected above.
 
 
-### Team plan billing 
+### Starter plan billing 
 
-Team customers pay monthly via credit card for seats and usage, and accounts include 15,000 models monthly. Seats are charged upfront at the beginning of the month. If you add seats during the month, seats will be prorated and charged on the same day. Seats removed during the month will be reflected on the next invoice and are not eligible for refunds. You can change the credit card information and the number of seats from the billings section anytime. Accounts will receive one monthly invoice that includes the upfront charge for the seats and the usage charged in arrears from the previous month.
+Starter customers pay monthly via credit card for seats and usage, and accounts include 15,000 models monthly. Seats are charged upfront at the beginning of the month. If you add seats during the month, seats will be prorated and charged on the same day. Seats removed during the month will be reflected on the next invoice and are not eligible for refunds. You can change the credit card information and the number of seats from the billings section anytime. Accounts will receive one monthly invoice that includes the upfront charge for the seats and the usage charged in arrears from the previous month.
 
 Usage is calculated and charged in arrears for the previous month. If you exceed 15,000 models in any month, you will be billed for additional usage on your next invoice. Additional usage is billed at the rates on our [pricing page](https://www.getdbt.com/pricing). 
 
@@ -129,7 +129,7 @@ Included models that are not consumed do not roll over to future months. You can
 
 `($100 x number of developer seats) + ((models built - 15,000) x $0.01)`
 
-All included successful models built numbers above reflect our most current pricing and packaging. Based on your usage terms when you signed up for the Team Plan, the included model entitlements may be different from what’s reflected above.
+All included successful models built numbers above reflect our most current pricing and packaging. Based on your usage terms when you signed up for the Starter plan, the included model entitlements may be different from what’s reflected above.
 
 ### Enterprise plan billing
 
@@ -139,7 +139,7 @@ Enterprise plan billing information is not available in the <Constant name="clou
 
 ### Legacy plans
 
-Customers who purchased the <Constant name="cloud" /> Team plan before August 11, 2023, remain on a legacy pricing plan as long as your account is in good standing. The legacy pricing plan is based on seats and includes unlimited models, subject to reasonable use. 
+Customers who purchased the <Constant name="cloud" /> Starter plan before August 11, 2023, remain on a legacy pricing plan as long as your account is in good standing. The legacy pricing plan is based on seats and includes unlimited models, subject to reasonable use. 
 
 :::note Legacy <Constant name="semantic_layer" />
 
@@ -157,8 +157,8 @@ From <Constant name="cloud" />, click on your account name in the left side menu
 ### Usage notifications 
 
 Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached.
-- Team plan &mdash; All users within the Owner group receive alerts. 
-- Enterprise plans &mdash; All users with the Account Admin and Billing Admin [permission sets](/docs/cloud/manage-access/enterprise-permissions#permission-sets) receive alerts. 
+- Starter plan &mdash; All users within the Owner group receive alerts. 
+- Enterprise-tier plans &mdash; All users with the Account Admin and Billing Admin [permission sets](/docs/cloud/manage-access/enterprise-permissions#permission-sets) receive alerts. 
 
 Users cannot opt out of these emails. To have additional users to receive these alert emails, assign them the applicable permissions mentioned earlier. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times.
 
@@ -256,20 +256,20 @@ Once you've identified which models could be optimized, check out these other re
 
 ## FAQs
 
-* What happens if I need more than 8 seats on the Team plan? 
-_If you need more than 8 developer seats, select the Contact Sales option from the billing settings to talk to our sales team about an Enterprise plan._  
+* What happens if I need more seats on the Starter plan? 
+_If you need more developer seats, select the [Contact Sales](https://www.getdbt.com/contact) option from the billing settings to talk to our sales team about an Enterprise or Enterprise Plus plan._  
 
-* What if I go significantly over my included free models on the Team or Developer plan?
-_Consider upgrading to a Team or Enterprise plan. Team plans include more models and allow you to exceed the monthly usage limit. Enterprise accounts are supported by a dedicated account management team and offer annual plans, custom configurations, and negotiated usage rates._ 
+* What if I go significantly over my included free models on the Starter or Developer plan?
+_Consider upgrading to a Starter or Enterprise-tier plan. Starter and Enterprise-tier plans include more models and allow you to exceed the monthly usage limit. Enterprise accounts are supported by a dedicated account management team and offer annual plans, custom configurations, and negotiated usage rates._ 
 
 * I want to upgrade my plan. Will all of my work carry over?
 _Yes. Your <Constant name="cloud" /> account will be upgraded without impacting your existing projects and account settings._
 
 * How do I determine the right plan for me?
- _The best option is to consult with our sales team. They'll help you figure out what is right for your needs. We also offer a free two-week trial on the Team plan._
+ _The best option is to consult with our sales team. They'll help you figure out what is right for your needs. We also offer a free two-week trial on the Starter plan._
 
 * What are the <Constant name="semantic_layer" /> trial terms?
-_Team and Enterprise customers can sign up for a free trial of the <Constant name="semantic_layer" />, powered by MetricFlow, for use of up to 1,000 Queried Metrics per month. The trial will be available at least through January 2024. dbt Labs may extend the trial period in its sole discretion. During the trial period, we may reach out to discuss pricing options or ask for feedback. At the end of the trial, free access may be removed and a purchase may be required to continue use. dbt Labs reserves the right to change limits in a free trial or institute pricing when required or at any time in its sole discretion._
+_Starter and Enterprise-tier customers can sign up for a free trial of the <Constant name="semantic_layer" />, powered by MetricFlow, for use of up to 1,000 Queried Metrics per month. The trial will be available at least through January 2024. dbt Labs may extend the trial period in its sole discretion. During the trial period, we may reach out to discuss pricing options or ask for feedback. At the end of the trial, free access may be removed and a purchase may be required to continue use. dbt Labs reserves the right to change limits in a free trial or institute pricing when required or at any time in its sole discretion._
 
 * What is the reasonable use limitation for the <Constant name="semantic_layer" /> powered by MetricFlow during the trial? 
 _Each account will be limited to 1,000 Queried Metrics per month during the trial period and may be changed at the sole discretion of dbt Labs._

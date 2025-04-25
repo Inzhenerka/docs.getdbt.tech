@@ -7,7 +7,7 @@ pagination_next:  "docs/collaborate/data-tile"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 
-# Visualize downstream exposures <Lifecycle status="managed_plus,managed" />
+# Visualize downstream exposures <Lifecycle status="managed,managed_plus" />
 
 <IntroText>
 Downstream exposures integrate natively with Tableau (Power BI coming soon) and auto-generate downstream lineage in <Constant name="explorer" /> for a richer experience.

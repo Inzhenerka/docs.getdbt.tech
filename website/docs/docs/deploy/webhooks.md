@@ -29,7 +29,7 @@ You can also check out the free [dbt Fundamentals course](https://learn.getdbt.c
 ## Prerequisites
 - You have a <Constant name="cloud" /> account that is on the [Team or Enterprise plan](https://www.getdbt.com/pricing/). 
 - For `write` access to webhooks: 
-    - **Enterprise plan accounts** &mdash; Permission sets are the same for both API service tokens and the <Constant name="cloud" /> UI. You, or the API service token, must have the Account Admin, Admin, or Developer [permission set](/docs/cloud/manage-access/enterprise-permissions).  
+    - **Enterprise-tier plans** &mdash; Permission sets are the same for both API service tokens and the <Constant name="cloud" /> UI. You, or the API service token, must have the Account Admin, Admin, or Developer [permission set](/docs/cloud/manage-access/enterprise-permissions).  
     - **Team plan accounts** &mdash; For the <Constant name="cloud" /> UI, you need to have a [Developer license](/docs/cloud/manage-access/self-service-permissions). For API service tokens, you must assign the service token to have the [Account Admin or Member](/docs/dbt-cloud-apis/service-tokens#team-plans-using-service-account-tokens) permission set. 
 - You have a multi-tenant or an AWS single-tenant deployment model in <Constant name="cloud" />. For more information, refer to [Tenancy](/docs/cloud/about-cloud/tenancy).
 - Your destination system supports [Authorization headers](#troubleshooting).
@@ -180,7 +180,7 @@ An example of a webhook payload for an errored run:
 You can use the <Constant name="cloud" /> API to create new webhooks that you want to subscribe to, get detailed information about your webhooks, and to manage the webhooks that are associated with your account. The following sections describe the API endpoints you can use for this. 
 
 :::info Access URLs
-<Constant name="cloud" /> is hosted in multiple regions in the world and each region has a different access URL. People on Enterprise plans can choose to have their account hosted in any one of these regions. For a complete list of available <Constant name="cloud" /> access URLs, refer to [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).   
+<Constant name="cloud" /> is hosted in multiple regions in the world and each region has a different access URL. People on Enterprise-tier plans can choose to have their account hosted in any one of these regions. For a complete list of available <Constant name="cloud" /> access URLs, refer to [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).   
 :::
 
 ### List all webhook subscriptions

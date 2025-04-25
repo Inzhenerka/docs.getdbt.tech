@@ -5,12 +5,14 @@ pagination_next: "docs/cloud/manage-access/set-up-sso-saml-2.0"
 pagination_prev: null
 ---
 
+# Single sign-on (SSO) overview <Lifecycle status="managed, managed_plus" />
+
 This overview explains how users are provisioned in <Constant name="cloud" /> via Single Sign-On (SSO).
 <Constant name="cloud" /> supports JIT (Just-in-Time) provisioning and IdP-initiated login. You can learn more about our supported options [here](https://www.getdbt.com/pricing/).
 
 ## Prerequisites
 
-- You have a <Constant name="cloud" /> account enrolled in the Enterprise plan. [Contact us](mailto:sales@getdbt.com) to learn more and enroll.
+- You have a <Constant name="cloud" /> Enterprise or Enterprise Plus plan. [Contact us](mailto:sales@getdbt.com) to learn more, book a demo, or enroll.
 
 ## Auth0 URIs
 

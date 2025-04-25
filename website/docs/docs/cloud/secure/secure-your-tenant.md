@@ -3,6 +3,7 @@ title: "Secure your tenant"
 description: "Learn how to secure your tenant for dbt Cloud"
 pagination_next: "docs/cloud/secure/ip-restrictions"
 pagination_prev: null
+hide_table_of_contents: true
 ---
 
 <div className="grid--3-col">

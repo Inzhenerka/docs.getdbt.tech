@@ -5,9 +5,11 @@ id: "set-up-bigquery-oauth"
 pagination_next: null
 ---
 
-:::info Enterprise Feature
+# Set up BigQuery OAuth <Lifecycle status="managed, managed_plus" />
 
-This guide describes a feature of the <Constant name="cloud" /> Enterprise plan. If you’re interested in learning more about an Enterprise plan, contact us at sales@getdbt.com.
+:::info Enterprise-tier feature
+
+This guide describes a feature available on <Constant name="cloud" /> Enterprise and Enterprise Plus plans. If you’re interested in learning more about our Enterprise-tier plans, contact us at sales@getdbt.com.
 
 :::
 

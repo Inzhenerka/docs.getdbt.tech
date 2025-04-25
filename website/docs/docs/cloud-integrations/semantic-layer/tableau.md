@@ -5,7 +5,7 @@ tags: [Semantic Layer]
 sidebar_label: "Tableau"
 ---
 
-# Tableau <Lifecycle status="managed_plus,managed,self_service" />
+# Tableau <Lifecycle status="managed,managed_plus,self_service" />
 
 The Tableau integration allows you to use worksheets to query the <Constant name="semantic_layer" /> directly and produce your dashboards with trusted data. It provides a live connection to the <Constant name="semantic_layer" /> through Tableau Desktop or Tableau Server.
 

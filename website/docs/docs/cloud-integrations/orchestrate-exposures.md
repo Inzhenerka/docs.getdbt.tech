@@ -5,7 +5,7 @@ description: "Use dbt to proactively refresh the underlying data sources (like T
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Orchestrate downstream exposures <Lifecycle status="managed,beta" />
+# Orchestrate downstream exposures <Lifecycle status="managed,managed_plus,beta" />
 
 <IntroText>
 

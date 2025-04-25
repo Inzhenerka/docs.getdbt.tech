@@ -4,6 +4,8 @@ id: "admin-cloud-api"
 pagination_next: "docs/dbt-cloud-apis/discovery-api"
 ---
 
+# dbt Cloud Administrative API <Lifecycle status="managed,managed_plus" />
+
 The <Constant name="cloud" /> Administrative API is enabled by default for [Enterprise and Enterprise plus plans](https://www.getdbt.com/pricing/). It can be used to:
 
 - Download artifacts after a job has completed

@@ -7,7 +7,7 @@ hide_table_of_contents: true
 pagination_next: "docs/dbt-cloud-apis/sl-jdbc"
 ---
 
-# Semantic Layer APIs <Lifecycle status="managed_plus,managed" />
+# Semantic Layer APIs <Lifecycle status="managed,managed_plus" />
  
 The rapid growth of different tools in the modern data stack has helped data professionals address the diverse needs of different teams. The downside of this growth is the fragmentation of business logic across teams, tools, and workloads.<br /><br />
 

@@ -8,7 +8,7 @@ import CopilotResources from '/snippets/_use-copilot-resources.md';
 import CopilotEditCode from '/snippets/_use-copilot-edit-code.md';
 import CopilotVE from '/snippets/_use-copilot-ve.md';
 
-# Use dbt Copilot <Lifecycle status="managed_plus,managed,self_service" /> 
+# Use dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
 
 <IntroText>
 Use <Constant name="copilot" /> to generate documentation, tests, semantic models, and code from scratch, giving you the flexibility to modify or fix generated code.

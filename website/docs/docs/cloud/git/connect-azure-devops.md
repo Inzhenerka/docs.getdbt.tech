@@ -4,7 +4,7 @@ id: "connect-azure-devops"
 pagination_next: "docs/cloud/git/setup-service-principal"
 ---
 
-# Connect to Azure DevOps <Lifecycle status="managed" />
+# Connect to Azure DevOps <Lifecycle status="managed,managed_plus" />
 
 <Snippet path="available-enterprise-tier-only" />
 

@@ -5,7 +5,7 @@ tags: [Semantic Layer]
 sidebar_label: "Google Sheets"
 ---
 
-# Google Sheets <Lifecycle status="managed_plus,managed,self_service" />
+# Google Sheets <Lifecycle status="managed,managed_plus,self_service" />
 
 The <Constant name="semantic_layer" /> offers a seamless integration with Google Sheets through a custom menu. This add-on allows you to build <Constant name="semantic_layer" /> queries and return data on your metrics directly within Google Sheets
 

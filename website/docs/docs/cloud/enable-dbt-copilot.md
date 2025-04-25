@@ -4,7 +4,7 @@ sidebar_label: "Enable dbt Copilot"
 description: "Enable dbt Copilot, an AI-powered assistant, in dbt Cloud to speed up your development." 
 ---
 
-# Enable dbt Copilot <Lifecycle status="managed_plus,managed,self_service" /> 
+# Enable dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
 
 <IntroText>
 Enable <Constant name="copilot" />, an AI-powered assistant, in <Constant name="cloud" /> to speed up your development and focus on delivering quality data.

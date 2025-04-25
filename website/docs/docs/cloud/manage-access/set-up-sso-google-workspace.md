@@ -4,28 +4,22 @@ description: "Learn how dbt Cloud administrators can use Single-Sign On (SSO) vi
 id: "set-up-sso-google-workspace"
 ---
 
+# Set up SSO with Google Workspace <Lifecycle status="managed, managed_plus" />
+
 import SetUpPages from '/snippets/_sso-docs-mt-available.md';
 
 <SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
 
-<Constant name="cloud" /> Enterprise supports Single-Sign On (SSO) via Google GSuite. You will need
-permissions to create and manage a new Google OAuth2 application, as well as
-access to enable the Google Admin SDK. Gsuite is a component within Google
-Cloud Platform (GCP), so you will also need access to a login with permissions
-to manage the GSuite application within a GCP account.
+<Constant name="cloud" /> Enterprise-tier plans support Single-Sign On (SSO) via Google GSuite. You will need permissions to create and manage a new Google OAuth2 application, as well as access to enable the Google Admin SDK. Gsuite is a component within Google Cloud Platform (GCP), so you will also need access to a login with permissions to manage the GSuite application within a GCP account.
 
-Some customers choose to use different cloud providers for User and Group permission setup
-than for hosting infrastructure. For example, it's certainly possible to use GSuite to
-manage login information and Multifactor Authentication (MFA) configuration while hosting
-data workloads on AWS.
+Some customers choose to use different cloud providers for User and Group permission setup than for hosting infrastructure. For example, it's certainly possible to use GSuite to manage login information and Multifactor Authentication (MFA) configuration while hosting data workloads on AWS.
 
  Currently supported features include:
 
 * SP-initiated SSO
 * Just-in-time provisioning
 
-This guide outlines the setup process for authenticating to <Constant name="cloud" /> with
-Google GSuite.
+This guide outlines the setup process for authenticating to <Constant name="cloud" /> with Google GSuite.
 
 ## Configuration of the GSuite organization within GCP
 
@@ -85,8 +79,7 @@ To complete setup, follow the steps below in the <Constant name="cloud" /> appli
 
 ### Supply your OAuth Client ID and Client Secret
 
-1. Navigate to the **Enterprise &gt; Single Sign On** page under Account
-Settings.
+1. Navigate to the **Enterprise &gt; Single Sign On** page under **Account settings**.
 2. Click the **Edit** button and supply the following SSO details:
     - **Log in with**: GSuite
     - **Client ID**: Paste the Client ID generated in the steps above

@@ -6,7 +6,7 @@ description: "Embed data health tiles in your dashboards to distill data health 
 image: /img/docs/collaborate/dbt-explorer/data-tile-pass.jpg
 ---
 
-# Data health tile <Lifecycle status="managed_plus,managed" />
+# Data health tile <Lifecycle status="managed,managed_plus" />
 
 With data health tiles, stakeholders will get an at-a-glance confirmation on whether the data they’re looking at is stale or degraded. It allows teams to immediately go back into <Constant name="explorer" /> to see more details and investigate issues.
 

@@ -5,6 +5,8 @@ description: "Configuring PrivateLink for AWS"
 sidebar_label: "About PrivateLink"
 ---
 
+# About PrivateLink <Lifecycle status="managed_plus,Virtual Private Cloud" />
+
 import SetUpPages from '/snippets/_available-tiers-privatelink.md';
 import PrivateLinkHostnameWarning from '/snippets/_privatelink-hostname-restriction.md';
 import CloudProviders from '/snippets/_privatelink-across-providers.md';

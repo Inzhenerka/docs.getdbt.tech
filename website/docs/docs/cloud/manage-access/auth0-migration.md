@@ -5,6 +5,7 @@ sidebar: "SSO Auth0 Migration"
 description: "Required actions for migrating to Auth0 for SSO services on dbt Cloud."
 ---
 
+# Migrating to Auth0 for SSO <Lifecycle status="managed,managed_plus" />
 dbt Labs is partnering with Auth0 to bring enhanced features to <Constant name="cloud" />'s single sign-on (SSO) capabilities. Auth0 is an identity and access management (IAM) platform with advanced security features, and it will be leveraged by <Constant name="cloud" />. These changes will require some action from customers with SSO configured in <Constant name="cloud" /> today, and this guide will outline the necessary changes for each environment. 
 
 If you have not yet configured SSO in <Constant name="cloud" />, refer instead to our setup guides for [SAML](/docs/cloud/manage-access/set-up-sso-saml-2.0), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Google Workspace](/docs/cloud/manage-access/set-up-sso-google-workspace), or [Microsoft Entra ID (formerly Azure AD)](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) single sign-on services.

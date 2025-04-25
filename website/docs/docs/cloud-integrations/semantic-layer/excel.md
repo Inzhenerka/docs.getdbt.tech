@@ -6,7 +6,7 @@ tags: [Semantic Layer]
 sidebar_label: "Microsoft Excel"
 ---
 
-# Microsoft Excel <Lifecycle status="managed_plus,managed,self_service" />
+# Microsoft Excel <Lifecycle status="managed,managed_plus,self_service" />
 
 The <Constant name="semantic_layer" /> offers a seamless integration with Excel Online and Desktop through a custom menu. This add-on allows you to build <Constant name="semantic_layer" /> queries and return data on your metrics directly within Excel.
 

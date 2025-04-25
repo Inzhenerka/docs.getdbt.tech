@@ -3,11 +3,13 @@ title: "Set up SSO with SAML 2.0"
 id: "set-up-sso-saml-2.0"
 ---
 
+# Set up SSO with SAML 2.0 <Lifecycle status="managed, managed_plus" />
+
 import SetUpPages from '/snippets/_sso-docs-mt-available.md';
 
 <SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
 
-<Constant name="cloud" /> Enterprise supports single-sign on (SSO) for any SAML 2.0-compliant identity provider (IdP).
+<Constant name="cloud" /> Enterprise-tier plans support single-sign on (SSO) for any SAML 2.0-compliant identity provider (IdP).
 Currently supported features include:
 * IdP-initiated SSO
 * SP-initiated SSO
@@ -500,5 +502,4 @@ To complete setup, follow the steps below in <Constant name="cloud" />:
 
 ### Setting up RBAC
 
-After configuring an identity provider, you will be able to set up [role-based
-access control](/docs/cloud/manage-access/enterprise-permissions) for your account.
+After configuring an identity provider, you will be able to set up [role-based access control](/docs/cloud/manage-access/enterprise-permissions) for your account.

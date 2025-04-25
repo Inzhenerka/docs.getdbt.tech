@@ -7,7 +7,7 @@ pagination_next: "docs/collaborate/data-health-signals"
 pagination_prev: null
 ---
 
-# dbt Explorer <Lifecycle status="managed_plus,managed,self_service" />
+# dbt Explorer <Lifecycle status="self_service,managed,managed_plus" />
 
 <IntroText>
 
@@ -23,13 +23,13 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 
 ## Prerequisites
 
-- You have a <Constant name="cloud" /> account on the [Starter, Enterprise plus, or Enterprise plan](https://www.getdbt.com/pricing/).
-  - Certain features within <Constant name="explorer" />, such as [project recommendations](/docs/collaborate/project-recommendations), [column-level lineage](/docs/collaborate/column-level-lineage), and more are only available on the Enterprise and Enterprise plus plans.
+- You have a <Constant name="cloud" /> account on the [Starter, Enterprise, or Enterprise plus plan](https://www.getdbt.com/pricing/).
+  - Certain features within <Constant name="explorer" />, such as [project recommendations](/docs/collaborate/project-recommendations), [column-level lineage](/docs/collaborate/column-level-lineage), and more are only available on Enterprise and Enterprise plus plans.
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
 - You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
 
-## Overview page <Lifecycle status="managed_plus,managed,self_service" />
+## Overview page
 
 Navigate the <Constant name="explorer" /> overview page to access your project's resources and metadata. The page includes the following sections:
 
@@ -120,7 +120,7 @@ Example of exploring a model in the project's lineage graph:
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png" width="100%" title="Example of full lineage graph" />
 
-## Lenses <Lifecycle status="managed_plus,managed" />
+## Lenses <Lifecycle status="managed,managed_plus" />
 
 The **Lenses** feature is available from your [project's lineage graph](#project-lineage) (lower right corner). Lenses are like map layers for your DAG. Lenses make it easier to understand your project's contextual metadata at scale, especially to distinguish a particular model or a subset of models.
 
