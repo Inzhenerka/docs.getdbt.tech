@@ -78,7 +78,7 @@ The <Constant name="cloud_ide" /> provides a simplified interface that's accessi
 ### dbt Cloud CLI
 The <Constant name="cloud" /> CLI allows you to run dbt [commands](/reference/dbt-commands#available-commands) against your <Constant name="cloud" /> development environment from your local command line. For users who seek full control over their development environment and ideal for those comfortable with the command line.
 
-When moving from dbt Core to dbt Cloud, make sure you check the `.gitignore` file contains the [necessary folders](/docs/collaborate/git/version-control-basics#the-gitignore-file). dbt Core doesn't interact with git so dbt Cloud doesn't automatically add or verify entries in the `.gitignore` file. Additionally, if the repository already contains dbt code and doesn't require initialization, dbt Cloud won't add any missing entries to the `.gitignore file`.
+When moving from dbt Core to dbt Cloud, make sure you check the `.gitignore` file contains the [necessary folders](/docs/cloud/git/version-control-basics#the-gitignore-file). dbt Core doesn't interact with git so dbt Cloud doesn't automatically add or verify entries in the `.gitignore` file. Additionally, if the repository already contains dbt code and doesn't require initialization, dbt Cloud won't add any missing entries to the `.gitignore file`.
 
 **Who might prefer the <Constant name="cloud" /> CLI?**
 
@@ -116,18 +116,18 @@ When moving from dbt Core to dbt Cloud, make sure you check the `.gitignore` fil
 
 [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro) helps organizations with mature, complex transformation workflows in dbt increase the flexibility and performance of their dbt projects. It allows you to make use of multiple interconnected dbt projects instead of a single large, monolithic project.
 
-It enables you to interface and navigate between different projects and models with [cross-project dependencies](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref), enhancing collaboration and data governance.
+It enables you to interface and navigate between different projects and models with [cross-project dependencies](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref), enhancing collaboration and data governance.
 
 Here are some tips and caveats to consider when using <Constant name="mesh" />:
 
 ### Tips
-- To dynamically resolve [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref), all developers need to develop with <Constant name="cloud" /> (either with the <Constant name="cloud" /> CLI or <Constant name="cloud_ide" />). Cross-project references aren't natively supported in <Constant name="core" />, except by installing the source code from upstream projects [as packages](/docs/build/packages#how-do-i-add-a-package-to-my-project)
+- To dynamically resolve [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref), all developers need to develop with <Constant name="cloud" /> (either with the <Constant name="cloud" /> CLI or <Constant name="cloud_ide" />). Cross-project references aren't natively supported in <Constant name="core" />, except by installing the source code from upstream projects [as packages](/docs/build/packages#how-do-i-add-a-package-to-my-project)
 - Link models across projects for a modular and scalable approach for your project and teams.
 - Manage access to your dbt models both within and across projects using:
-  - **[Groups](/docs/collaborate/govern/model-access#groups)** &mdash; Organize nodes in your dbt DAG that share a logical connection and assign an owner to the entire group.
-  - **[Model access](/docs/collaborate/govern/model-access#access-modifiers)** &mdash; Control which other models or projects can reference this model.
-  - **[Model versions](/docs/collaborate/govern/model-versions)** &mdash; Enable adoption and deprecation of models as they evolve.
-  - **[Model contracts](/docs/collaborate/govern/model-contracts)** &mdash; Set clear expectations on the shape of the data to ensure data changes upstream of dbt or within a project's logic don't break downstream consumers' data products.
+  - **[Groups](/docs/mesh/govern/model-access#groups)** &mdash; Organize nodes in your dbt DAG that share a logical connection and assign an owner to the entire group.
+  - **[Model access](/docs/mesh/govern/model-access#access-modifiers)** &mdash; Control which other models or projects can reference this model.
+  - **[Model versions](/docs/mesh/govern/model-versions)** &mdash; Enable adoption and deprecation of models as they evolve.
+  - **[Model contracts](/docs/mesh/govern/model-contracts)** &mdash; Set clear expectations on the shape of the data to ensure data changes upstream of dbt or within a project's logic don't break downstream consumers' data products.
 - Use [dbt-meshify](https://github.com/dbt-labs/dbt-meshify) to accelerate splitting apart your monolith into multiple projects.
 
 ### Caveats
@@ -156,12 +156,12 @@ Refer to the [<Constant name="semantic_layer" /> FAQs](/docs/use-dbt-semantic-la
 
 ## dbt Explorer
 
-[<Constant name="explorer" />](/docs/collaborate/explore-projects) enhances your ability to discover, understand, and troubleshoot your data assets through rich metadata and lineage visualization. Here are some tips and caveats to consider when using <Constant name="explorer" />:
+[<Constant name="explorer" />](/docs/explore/explore-projects) enhances your ability to discover, understand, and troubleshoot your data assets through rich metadata and lineage visualization. Here are some tips and caveats to consider when using <Constant name="explorer" />:
 
 ### Tips
 - Use the search and filter capabilities in <Constant name="explorer" /> to quickly locate models, sources, and tests, streamlining your workflow.
-- View all the [different projects](/docs/collaborate/explore-multiple-projects) and public models in the account, where the public models are defined, and how they are used to gain a better understanding of your cross-project resources.
-- Use the [Lenses](/docs/collaborate/explore-projects#lenses) feature, which are map-like layers for your DAG, available from your project's lineage graph. Lenses help you further understand your project’s contextual metadata at scale, especially to distinguish a particular model or a subset of models.
+- View all the [different projects](/docs/explore/explore-multiple-projects) and public models in the account, where the public models are defined, and how they are used to gain a better understanding of your cross-project resources.
+- Use the [Lenses](/docs/explore/explore-projects#lenses) feature, which are map-like layers for your DAG, available from your project's lineage graph. Lenses help you further understand your project’s contextual metadata at scale, especially to distinguish a particular model or a subset of models.
 - Access column-level lineage (CLL) for the resources in your dbt project. <Lifecycle status="managed" />
 
 ### Caveats
@@ -169,7 +169,7 @@ Refer to the [<Constant name="semantic_layer" /> FAQs](/docs/use-dbt-semantic-la
 
 Familiarize yourself with <Constant name="explorer" />’s features to fully leverage its capabilities to avoid missed opportunities for efficiency gains.
 
-Refer to the [<Constant name="explorer" /> FAQs](/docs/collaborate/dbt-explorer-faqs) for more information.
+Refer to the [<Constant name="explorer" /> FAQs](/docs/explore/dbt-explorer-faqs) for more information.
 
 ## What's next?
 

@@ -216,7 +216,7 @@ Now that you've set up the foundational project, let's start building the data a
 6. Navigate to the **Command bar** and execute `dbt build`.
 
 Before a downstream team can leverage assets from this foundational project, you need to first:
-- [Create and define](/docs/collaborate/govern/model-access) at least one model as “public”
+- [Create and define](/docs/mesh/govern/model-access) at least one model as “public”
 - Run a [deployment job](/docs/deploy/deploy-jobs) successfully
   - Note, Enable the **Generate docs on run** toggle for this job to update the <Constant name="explorer" />. Once run, you can click Explore from the upper menu bar and see your lineage, tests, and documentation coming through successfully.
 
@@ -274,7 +274,7 @@ To make `fct_orders` publicly available:
   ```
   </File>
 
-Note: By default, model access is set to "protected", which means they can only be referenced within the same project. Learn more about access types and model groups [here](/docs/collaborate/govern/model-access#access-modifiers).
+Note: By default, model access is set to "protected", which means they can only be referenced within the same project. Learn more about access types and model groups [here](/docs/mesh/govern/model-access#access-modifiers).
 
 2. Navigate to the <Constant name="cloud_ide" /> **Lineage** tab to see the model noted as **Public**, below the model name.
 
@@ -299,11 +299,11 @@ To run your first deployment <Constant name="cloud" /> job, you will need to cre
 
 5. After the run is complete, click **Explore** from the upper menu bar. You should now see your lineage, tests, and documentation coming through successfully.
 
-For details on how <Constant name="cloud" /> uses metadata from the Staging environment to resolve references in downstream projects, check out the section on [Staging with downstream dependencies](/docs/collaborate/govern/project-dependencies#staging-with-downstream-dependencies).
+For details on how <Constant name="cloud" /> uses metadata from the Staging environment to resolve references in downstream projects, check out the section on [Staging with downstream dependencies](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
 
 ## Reference a public model in your downstream project
 
-In this section, you will set up the downstream project, "Jaffle | Finance", and [cross-project reference](/docs/collaborate/govern/project-dependencies) the `fct_orders` model from the foundational project. Navigate to the **Develop** page to set up our project:
+In this section, you will set up the downstream project, "Jaffle | Finance", and [cross-project reference](/docs/mesh/govern/project-dependencies) the `fct_orders` model from the foundational project. Navigate to the **Develop** page to set up our project:
 
 1. If you’ve also started with a new git repo, click **Initialize dbt project** under the **Version control** section.
 2. Delete the `models/example` folder
@@ -432,8 +432,8 @@ You're now set to add a model that explores how payment types vary throughout a 
 
 How can you enhance resilience and add guardrails to this type of multi-project relationship? You can adopt best practices from software engineering by:
 
-1. Defining model contracts &mdash; Set up [model contracts](/docs/collaborate/govern/model-contracts) in dbt to define a set of upfront "guarantees" that define the shape of your model. While building your model, dbt will verify that your model's transformation will produce a dataset matching up with its contract; if not, the build fails.
-2. Defining model versions &mdash; Use [model versions](/docs/collaborate/govern/model-versions) to manage updates and handle breaking changes systematically.
+1. Defining model contracts &mdash; Set up [model contracts](/docs/mesh/govern/model-contracts) in dbt to define a set of upfront "guarantees" that define the shape of your model. While building your model, dbt will verify that your model's transformation will produce a dataset matching up with its contract; if not, the build fails.
+2. Defining model versions &mdash; Use [model versions](/docs/mesh/govern/model-versions) to manage updates and handle breaking changes systematically.
 
 ### Set up model contracts
 As part of the Data Analytics team, you may want to ensure the `fct_orders` model is reliable for downstream users, like the Finance team.
@@ -618,7 +618,7 @@ select * from final
 
 ## View lineage with dbt Explorer
 
-Use [<Constant name="explorer" />](/docs/collaborate/explore-projects) to view the lineage across projects in <Constant name="cloud" />. Navigate to the **Explore** page for each of your projects &mdash; you should now view the [lineage seamlessly across projects](/docs/collaborate/explore-multiple-projects).
+Use [<Constant name="explorer" />](/docs/explore/explore-projects) to view the lineage across projects in <Constant name="cloud" />. Navigate to the **Explore** page for each of your projects &mdash; you should now view the [lineage seamlessly across projects](/docs/explore/explore-multiple-projects).
 
 <Lightbox src="/img/guides/dbt-mesh/jaffle_da_final_lineage.png" width="85%" title="View 'Jaffle | Data Analytics' lineage with dbt Explorer " />
 
@@ -638,8 +638,8 @@ Here are some additional resources to help you continue your journey:
 - [How we build our dbt mesh projects](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-1-intro)
 - [<Constant name="mesh" /> FAQs](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-5-faqs)
 - [Implement <Constant name="mesh" /> with the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs#how-can-i-implement-dbt-mesh-with-the-dbt-semantic-layer)
-- [Cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref)
-- [<Constant name="explorer" />](/docs/collaborate/explore-projects)
+- [Cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref)
+- [<Constant name="explorer" />](/docs/explore/explore-projects)
 
 </ConfettiTrigger>
 

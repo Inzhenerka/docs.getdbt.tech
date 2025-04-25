@@ -367,7 +367,7 @@ dbt list --select "+unit_test:orders_with_zero_items"  # list your unit test nam
 
 ### version
 
-The `version` method selects [versioned models](/docs/collaborate/govern/model-versions) based on their [version identifier](/reference/resource-properties/versions) and [latest version](/reference/resource-properties/latest_version).
+The `version` method selects [versioned models](/docs/mesh/govern/model-versions) based on their [version identifier](/reference/resource-properties/versions) and [latest version](/reference/resource-properties/latest_version).
 
 ```bash
 dbt list --select "version:latest"      # only 'latest' versions
