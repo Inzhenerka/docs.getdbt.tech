@@ -1,0 +1,137 @@
+---
+title: "Deprecations"
+---
+
+As dbt runs, dbt generates [events](/reference/events-logging). Sometimes these events are _deprecations_. Deprecations are a special type of warning. Deprecation warnings exist to let you know that there are problems in parts of your project that will be breaking in a future version of dbt. It is important that if there are deprecation warnings in your project, time is taken to resolve them.
+
+## List of Deprecation Warnings
+
+### ConfigDataPathDeprecation
+
+#### Description
+
+In [dbt 1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) we renamed `data-paths` to [seed-paths](/reference/project-configs/model-paths). Getting this deprecation means that `data-paths` is still being used in your project's `dbt_project.yml`.
+
+#### Resolution
+
+Change `data-paths` to `seed-paths` in your `dbt_project.yml`.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+23:14:58  [WARNING]: Deprecated functionality
+The `data-paths` config has been renamed to `seed-paths`. Please update your
+`dbt_project.yml` configuration to reflect this change.
+```
+</File>
+
+### ConfigLogPathDeprecation
+
+#### Description
+
+In we used to allow specifying `log-path` in `dbt_project.yml`. We stopped allowing this in [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Getting this deprecation warning means that `log-path` is still specified in your `dbt_project.yml` and it's not set to the default value `logs`.
+
+#### Resolution
+
+Remove `log-path` from your `dbt_project.yml` and specify it via either the CLI flag `--log-path` or environment variable `DBT_LOG_PATH`  [as documented here](/reference/global-configs/logs#log-and-target-paths)
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+23:39:18  [WARNING]: Deprecated functionality
+The `log-path` config in `dbt_project.yml` has been deprecated, and will no
+longer be supported in a future version of dbt-core. If you wish to write dbt
+logs to a custom directory, please use the --log-path CLI flag or DBT_LOG_PATH
+env var instead.
+```
+</File>
+
+### ConfigSourcePathDeprecation
+
+#### Description
+
+In [dbt 1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) we renamed `source-paths` to [model-paths](/reference/project-configs/model-paths). Getting this deprecation means that `source-paths` is still being used in your project's `dbt_project.yml`.
+
+#### Resolution
+
+Change `source-paths` to `model-paths` in your `dbt_project.yml`.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+23:03:47  [WARNING]: Deprecated functionality
+The `source-paths` config has been renamed to `model-paths`. Please update your
+`dbt_project.yml` configuration to reflect this change.
+23:03:47  Registered adapter: postgres=1.9.0
+```
+</File>
+
+### ConfigTargetPathDeprecation
+
+#### Description
+
+In we used to allow specifying `target-path` in `dbt_project.yml`. We stopped allowing this in [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Getting this deprecation warning means that `target-path` is still specified in your `dbt_project.yml` and it's not set to the default value `target`.
+
+#### Resolution
+
+Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable `DBT_TARGET_PATH`  [as documented here](/reference/global-configs/logs#log-and-target-paths)
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+23:22:01  [WARNING]: Deprecated functionality
+The `target-path` config in `dbt_project.yml` has been deprecated, and will no
+longer be supported in a future version of dbt-core. If you wish to write dbt
+artifacts to a custom directory, please use the --target-path CLI flag or
+DBT_TARGET_PATH env var instead.
+```
+</File>
+
+### PackageInstallPathDeprecation
+
+#### Description
+
+We updated the default location that packages are installed when running `dbt deps` from `dbt_modules` to `dbt_packages`. During a `dbt clean` we detected that `dbt_modules` is defined in the [clean-targets](/reference/project-configs/clean-targets) property in `dbt_project.yml` even though `dbt_modules` is not the [`packages-install-path`](/reference/project-configs/packages-install-path).
+
+#### Resolution
+
+We recommend either of the following:
+1. replace `dbt_modules` with `dbt_packages` in your `clean-targets` spec (and also `.gitignore`).
+2. set `packages-install-path: dbt_modules` if you want to keep having packages install in `dbt_modules`.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+22:48:01  [WARNING]: Deprecated functionality
+        The default package install path has changed from `dbt_modules` to
+`dbt_packages`.         Please update `clean-targets` in `dbt_project.yml` and
+check `.gitignore` as well.         Or, set `packages-install-path: dbt_modules`
+if you'd like to keep the current value.
+```
+</File>
+
+### PackageRedirectDeprecation
+
+#### Description
+
+A `PackageRedirectDeprecation` means that a package currently used in your project, defined in packages.yml, has been renamed. This generally happens when the ownership of a package has changed or the scope of the package has changed. It is likely that the package currently referenced in your packages.yml will stop being actively maintained (as development has been moved to the new package name). Thus, at some point the named package you are using will likely cease working with dbt.
+
+#### Resolution
+
+Begin referencing the new package in your `packages.yml` instead of the old package.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+22:31:38  [WARNING]: Deprecated functionality
+The `fishtown-analytics/dbt_utils` package is deprecated in favor of
+`dbt-labs/dbt_utils`. Please update your `packages.yml` configuration to use
+`dbt-labs/dbt_utils` instead.
+```
+</File>
