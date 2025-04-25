@@ -21,6 +21,7 @@ Use <Constant name="explorer" /> to navigate and manage your projects within <Co
 If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
 :::
 
+
 ## Prerequisites
 
 - You have a <Constant name="cloud" /> account on the [Starter, Enterprise, or Enterprise plus plan](https://www.getdbt.com/pricing/).
