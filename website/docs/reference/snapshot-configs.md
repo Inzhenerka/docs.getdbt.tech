@@ -149,7 +149,7 @@ Here's how you can do it:
     select * from my_snapshot_table;
     ```
 
-  This allows you to restore your snapshot if anything goes wrong during migration.
+    This allows you to restore your snapshot if anything goes wrong during migration.
 
 2. If you want to use the new configs, add required columns to your existing snapshot table using `alter` statements as needed. Here's an example of what to add if you're going to use `dbt_valid_to_current` and `snapshot_meta_column_names`:
 
