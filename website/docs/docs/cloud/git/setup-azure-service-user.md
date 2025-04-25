@@ -110,16 +110,15 @@ A <Constant name="cloud" /> account admin needs to perform the following steps.
 
 Once you connect your Microsoft Entra ID app and Azure DevOps, you need to provide <Constant name="cloud" /> information about the app:
 
-
 1. Navigate to your account settings in <Constant name="cloud" />.
 2. Select **Integrations**.
-3. Scroll to the Azure DevOps section.
+3. Scroll to the Azure DevOps section and click on the pencil icon to edit the integration.
 4. Complete the form:
     - **Azure DevOps Organization:** Must match the name of your Azure DevOps organization exactly. Do not include the `dev.azure.com/` prefix in this field. ✅ Use `my-devops-org` ❌ Avoid `dev.azure.com/my-devops-org`
     - **Application (client) ID:** Found in the Microsoft Entra ID app.
     - **Client Secrets:** Copy the **Value** field in the Microsoft Entra ID app client secrets and paste it in the **Client Secret** field in <Constant name="cloud" />. Entra ID admins are responsible for the Entra ID app secret expiration and dbt Admins should note the expiration date for rotation.
     - **Directory(tenant) ID:** Found in the Microsoft Entra ID app.
-        <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/AzureDevopsAppdbtCloud.gif" title="Adding a Microsoft Entra ID app to dbt Cloud"/>
+        <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/AzureDevopsAppdbtCloud.gif" width="100%" title="Adding a Microsoft Entra ID app to dbt Cloud"/>
 
 Your Microsoft Entra ID app should now be added to your <Constant name="cloud" /> Account. People on your team who want to develop in the <Constant name="cloud_ide" /> or <Constant name="cloud" /> CLI can now personally [authorize Azure DevOps from their profiles](/docs/cloud/git/authenticate-azure).
 
