@@ -14,7 +14,7 @@ That's where **<Constant name="mesh" />** comes in - empowering data teams to wo
 
 This guide will walk you through the concepts and implementation details needed to get started. <Constant name="mesh" /> is not a single product - it is a pattern enabled by a convergence of several features in dbt:
 
-- **[Cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref)** - this is the foundational feature that enables the multi-project deployments. `{{ ref() }}`s now work across dbt Cloud projects on Enterprise plans.
+- **[Cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref)** - this is the foundational feature that enables the multi-project deployments. `{{ ref() }}`s now work across dbt Cloud projects on Enterprise-tier plans.
 - **[<Constant name="explorer" />](/docs/collaborate/explore-projects)** - <Constant name="cloud" />'s metadata-powered documentation platform, complete with full, cross-project lineage.
 - **Governance** - dbt's governance features allow you to manage access to your dbt models both within and across projects.
   - **[Groups](/docs/collaborate/govern/model-access#groups)** - With groups, you can organize nodes in your dbt DAG that share a logical connection (for example, by functional area) and assign an owner to the entire group.

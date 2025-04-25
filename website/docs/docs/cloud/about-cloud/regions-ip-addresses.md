@@ -7,7 +7,7 @@ description: "Available regions and ip addresses"
 
 <Constant name="cloud" /> is [hosted](/docs/cloud/about-cloud/architecture) in multiple regions and will always connect to your data platform or git provider from the below IP addresses. Be sure to allow traffic from these IPs in your firewall, and include them in any database grants.
 
-[<Constant name="cloud" /> Enterprise](https://www.getdbt.com/pricing/) plans can choose to have their account hosted in any of the below regions. Organizations **must** choose a single region per <Constant name="cloud" /> account. If you need to run <Constant name="cloud" /> in multiple regions, we recommend using multiple <Constant name="cloud" /> accounts. 
+[<Constant name="cloud" /> Enterprise-tier](https://www.getdbt.com/pricing/) plans can choose to have their account hosted in any of the below regions. Organizations **must** choose a single region per <Constant name="cloud" /> account. If you need to run <Constant name="cloud" /> in multiple regions, we recommend using multiple <Constant name="cloud" /> accounts. 
 
 | Region | Location | Access URL | IP addresses | Available plans | <div style={{width:'130px'}}>Status page link</div> |
 |--------|----------|------------|--------------|-------| --------- |
