@@ -91,6 +91,30 @@ DBT_TARGET_PATH env var instead.
 ```
 </File>
 
+### ExposureNameDeprecation
+
+#### Description
+
+In [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation) we began only allowing letters, numbers, and underscores in the `name` property of [exposures](https://docs.getdbt.com/reference/exposure-properties).
+
+#### Resolution
+
+Ensure your exposure names only contain letters, numbers, and underscores. A more human readable name can be put in the `label` property of exposures.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+23:55:00  [WARNING]: Deprecated functionality
+Starting in v1.3, the 'name' of an exposure should contain only letters,
+numbers, and underscores. Exposures support a new property, 'label', which may
+contain spaces, capital letters, and special characters. stg_&customers does not
+follow this pattern. Please update the 'name', and use the 'label' property for
+a human-friendly title. This will raise an error in a future version of
+dbt-core.
+```
+</File>
+
 ### PackageInstallPathDeprecation
 
 #### Description
