@@ -9,6 +9,7 @@ description: "Use dbt Explorer's column-level lineage to gain insights about you
 
 CLL is available to all <Constant name="cloud" /> Enterprise plans that can use <Constant name="explorer" />. 
 
+
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-overview-cll.png" width="95%" title="Overview of column level lineage"/>
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';

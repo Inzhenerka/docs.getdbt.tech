@@ -304,6 +304,7 @@ You can explore the metadata from your production or staging environment to info
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="100%" title="Explore in a staging environment" />
 
 ## Related content
+
 - [All Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions)
 - [About model governance](/docs/mesh/govern/about-model-governance)
 - Blog on [What is data mesh?](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh)

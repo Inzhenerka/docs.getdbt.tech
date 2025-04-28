@@ -16,7 +16,7 @@ description: "Learn more with the FAQs about dbt Explorer, how it works, how to 
 
 <Expandable alt_header="How is dbt Explorer priced?" >
 
-<Constant name="explorer" /> is generally available to all regions and deployment types on all <Constant name="cloud" /> [Enterprise and Starter plans](https://www.getdbt.com/). Certain features within <Constant name="explorer" />, such as project recommendations, multi-project lineage, column-level lineage, and more are only available on the Enterprise and Enterprise plus plans.
+<Constant name="explorer" /> is generally available to all regions and deployment types on all <Constant name="cloud" /> [Enterprise-tier and Starter plans](https://www.getdbt.com/). Certain features within <Constant name="explorer" />, such as project recommendations, multi-project lineage, column-level lineage, and more are only available on the Enterprise and Enterprise plus plans.
 
 <Constant name="explorer" /> can be accessed by users with developer and read-only seats.
 

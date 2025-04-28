@@ -27,6 +27,7 @@ The **Lineage tab** in <Constant name="cloud" /> jobs displays the lineage assoc
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Access dbt Explorer from the lineage tab by double-clicking on the lineage node." />
 
 ### Model timing tab in jobs <Lifecycle status="self_service,managed,managed_plus"/>
+
 The [model timing tab](/docs/deploy/run-visibility#model-timing) in <Constant name="cloud" /> jobs displays the composition, order, and time taken by each model in a job run. 
 
 Access <Constant name="explorer" /> directly from the **modeling timing tab**, which helps you investigate resources, diagnose performance bottlenecks, understand dependencies/relationships of slow-running models, and potentially make changes to improve their performance.
