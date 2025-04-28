@@ -114,7 +114,6 @@ Examples of cron job schedules:
 - `30 14 L * *`: At 02:30 PM, on the last day of the month.
 
 ### Trigger on job completion  <Lifecycle status="self_service,managed,managed_plus" />
-
 To _chain_ deploy jobs together:
 1. In the **Triggers** section, enable the **Run when another job finishes** option.
 2. Select the project that has the deploy job you want to run after completion.
