@@ -33,7 +33,7 @@ We tackled these issues by embracing dbt’s incremental models, which process o
 
 This is the simplest incremental approach: Each run adds new rows to the existing table and never touches old rows. It's ideal for append-only data (e.g. logs or transactions that never change after insertion).
 
-In dbt, using append is straightforward. We configure the model as incremental and specify `incremental_strategy='append'` (for BigQuery and similar warehouses). In the SQL, we filter the source to only new records since the last load. For example, to incrementally load new transactions:
+In dbt, using append is straightforward. We configure the model as incremental and specify `incremental_strategy='append'` (for [BigQuery](/reference/resource-configs/bigquery-configs#merge-behavior-incremental-models) and [similar warehouses](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter)). In the SQL, we filter the source to only new records since the last load. For example, to incrementally load new transactions:
 
 #### Code: Append Incremental Strategy
 
