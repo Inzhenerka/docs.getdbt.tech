@@ -1001,7 +1001,7 @@ select * from
   {{ semantic_layer.query (
     metrics = ['order_total', 'order_count', large_orders', 'customers_with_orders', 'avg_order_value', pct_of_orders_that_are_large'],
     group_by = 
-    [Dimension('metric_time').grain('day) ]
+    [Dimension('metric_time').grain('day') ]
 ) }}
 ```
 
