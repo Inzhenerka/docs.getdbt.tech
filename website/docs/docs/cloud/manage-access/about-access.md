@@ -15,7 +15,7 @@ This page covers user groups and access, including:
 - Role-based access controls for projects and environments
 - Single sign-on, and secure authentication
 
-For model-specific access and their availability across projects, refer to [Model access](/docs/collaborate/govern/model-access).
+For model-specific access and their availability across projects, refer to [Model access](/docs/mesh/govern/model-access).
 
 :::
 

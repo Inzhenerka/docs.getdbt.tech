@@ -7,7 +7,7 @@ pagination_next: null
 
 <Constant name="cloud" /> enables you to generate documentation for your project and data platform. The documentation is automatically updated with new information after a fully successful job run, ensuring accuracy and relevance.
 
-The default documentation experience in <Constant name="cloud" /> is [<Constant name="explorer" />](/docs/collaborate/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). Use [<Constant name="explorer" />](/docs/collaborate/explore-projects) to view your project's resources (such as models, tests, and metrics) and their lineage to gain a better understanding of its latest production state.
+The default documentation experience in <Constant name="cloud" /> is [<Constant name="explorer" />](/docs/explore/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). Use [<Constant name="explorer" />](/docs/explore/explore-projects) to view your project's resources (such as models, tests, and metrics) and their lineage to gain a better understanding of its latest production state.
 
 Refer to [documentation](/docs/build/documentation) for more configuration details.
 
@@ -15,9 +15,9 @@ This shift makes [dbt Docs](#dbt-docs) a legacy documentation feature in <Consta
 
 ## Set up a documentation job
 
-<Constant name="explorer" /> uses the [metadata](/docs/collaborate/explore-projects#generate-metadata) generated after each job run in the production or staging environment, ensuring it always has the latest project results. To view richer metadata, you can set up documentation for a job in <Constant name="cloud" /> when you edit your job settings or create a new job.
+<Constant name="explorer" /> uses the [metadata](/docs/explore/explore-projects#generate-metadata) generated after each job run in the production or staging environment, ensuring it always has the latest project results. To view richer metadata, you can set up documentation for a job in <Constant name="cloud" /> when you edit your job settings or create a new job.
 
-Configure the job to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) when it runs. If you want to view column and statistics for models, sources, and snapshots in <Constant name="explorer" />, then this step is necessary.
+Configure the job to [generate metadata](/docs/explore/explore-projects#generate-metadata) when it runs. If you want to view column and statistics for models, sources, and snapshots in <Constant name="explorer" />, then this step is necessary.
 
 To set up a job to generate docs:
 
@@ -58,7 +58,7 @@ You configure project documentation to generate documentation when the job you s
    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/documentation-project-details.png" width="100%" title="Configuring project documentation"/>
 
 :::tip Use <Constant name="explorer" /> for a richer documentation experience
-For a  richer and more interactive experience, try out [<Constant name="explorer" />](/docs/collaborate/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). It includes map layers of your DAG, keyword search, interacts with the <Constant name="cloud_ide" />, model performance, project recommendations, and more.
+For a  richer and more interactive experience, try out [<Constant name="explorer" />](/docs/explore/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). It includes map layers of your DAG, keyword search, interacts with the <Constant name="cloud_ide" />, model performance, project recommendations, and more.
 :::
 
 ### Generating documentation
@@ -77,4 +77,4 @@ The <Constant name="cloud_ide" /> makes it possible to view [documentation](/doc
 
 ## Related docs
 - [Documentation](/docs/build/documentation)
-- [<Constant name="explorer" />](/docs/collaborate/explore-projects)
+- [<Constant name="explorer" />](/docs/explore/explore-projects)

@@ -35,9 +35,9 @@ Make sure to enable the hybrid projects toggle in <Constant name="cloud" />’s 
 
 ### Make dbt Core models public (optional) {#make-dbt-core-models-public}
 
-This step is optional and and only needed if you want to share your <Constant name="core" /> models with other <Constant name="cloud" /> projects using the [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) feature.
+This step is optional and and only needed if you want to share your <Constant name="core" /> models with other <Constant name="cloud" /> projects using the [cross-project referencing](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) feature.
 
-Before connecting your dbt Core project to a dbt Cloud project, make sure models that you want to share have `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref).
+Before connecting your dbt Core project to a dbt Cloud project, make sure models that you want to share have `access: public` in their model configuration. This setting makes those models visible to other dbt Cloud projects for better collaboration, such as [cross-project referencing](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref).
 
 1. The easiest way to set this would be in your `dbt_project.yml` file, however you can also set this in the following places:
    - `dbt_project.yml` (project-level)
@@ -58,7 +58,7 @@ Before connecting your dbt Core project to a dbt Cloud project, make sure models
 
 2. After defining `access: public`, rerun a dbt execution in the dbt Core command line interface (CLI) (like `dbt run`) to apply the change.
 
-3. For more details on how to set this up, see [access modifier](/docs/collaborate/govern/model-access#access-modifiers) and [`access` config](/reference/resource-configs/access). 
+3. For more details on how to set this up, see [access modifier](/docs/mesh/govern/model-access#access-modifiers) and [`access` config](/reference/resource-configs/access). 
 
 ### Create hybrid project
 
@@ -156,6 +156,6 @@ Now that you've uploaded dbt Core artifacts into dbt Cloud and executed a `dbt r
 Now that you've integrated <Constant name="core" /> artifacts with your <Constant name="cloud" /> project, you can now:
 
 
-- Collaborate with <Constant name="cloud" /> users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
+- Collaborate with <Constant name="cloud" /> users by enabling them to visualize and perform [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
 - (Coming soon) New users interested in the [<Constant name="visual_editor" />](/docs/cloud/canvas) can build off of dbt models already created by a central data team in <Constant name="core" /> rather than having to start from scratch.
-- <Constant name="core" /> users can navigate to [<Constant name="explorer" />](/docs/collaborate/explore-projects) and view their models and assets. To view <Constant name="explorer" />, you must have a [read-only seat](/docs/cloud/manage-access/seats-and-users).
+- <Constant name="core" /> users can navigate to [<Constant name="explorer" />](/docs/explore/explore-projects) and view their models and assets. To view <Constant name="explorer" />, you must have a [read-only seat](/docs/cloud/manage-access/seats-and-users).

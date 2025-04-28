@@ -2,10 +2,9 @@
 title: "dbt Explorer FAQs"
 sidebar_label: "dbt Explorer FAQs"
 description: "Learn more with the FAQs about dbt Explorer, how it works, how to interact with it, and more."
-pagination_next: "docs/collaborate/view-downstream-exposures"
 ---
 
-[<Constant name="explorer" />](/docs/collaborate/explore-projects) is <Constant name="cloud" />’s new knowledge base and lineage visualization experience. It offers an interactive and high-level view of your company’s entire data estate, where you can dive deep into the context you need to understand and improve lineage so your teams can trust the data they’re using to make decisions.
+[<Constant name="explorer" />](/docs/explore/explore-projects) is <Constant name="cloud" />’s new knowledge base and lineage visualization experience. It offers an interactive and high-level view of your company’s entire data estate, where you can dive deep into the context you need to understand and improve lineage so your teams can trust the data they’re using to make decisions.
 
 ## Overview
 
@@ -47,7 +46,7 @@ Support for development (<Constant name="cloud_cli" /> and <Constant name="cloud
 
 <Expandable alt_header="How do I get started in Explorer? How does it update?" >
 
-Simply select **Explore** from the <Constant name="cloud" /> top navigation bar. <Constant name="explorer" /> automatically updates after each <Constant name="cloud" /> run in the given project’s environment (production, by default). The dbt commands you run within the environment will generate and update the metadata in <Constant name="explorer" />, so make sure to run the correct combination of commands within the jobs of the environment; for more details, refer to [Generate metadata](/docs/collaborate/explore-projects#generate-metadata). 
+Simply select **Explore** from the <Constant name="cloud" /> top navigation bar. <Constant name="explorer" /> automatically updates after each <Constant name="cloud" /> run in the given project’s environment (production, by default). The dbt commands you run within the environment will generate and update the metadata in <Constant name="explorer" />, so make sure to run the correct combination of commands within the jobs of the environment; for more details, refer to [Generate metadata](/docs/explore/explore-projects#generate-metadata). 
 
 </Expandable>
 
@@ -73,13 +72,13 @@ Yes. The lineage that powers <Constant name="explorer" /> is also available thro
 
 <Expandable alt_header="Does dbt Explorer support multi-project discovery (dbt Mesh)?" >
 
-Yes. Refer to [Explore multiple projects](/docs/collaborate/explore-multiple-projects) to learn more. 
+Yes. Refer to [Explore multiple projects](/docs/explore/explore-multiple-projects) to learn more. 
 
 </Expandable>
 
 <Expandable alt_header="What kind of search capabilities does dbt Explorer support?" >
 
-Resource search capabilities include using keywords, partial strings (fuzzy search), and set operators like `OR`. Meanwhile, lineage search supports using dbt selectors. For details, refer to [Keyword search](/docs/collaborate/explore-projects#search-resources).
+Resource search capabilities include using keywords, partial strings (fuzzy search), and set operators like `OR`. Meanwhile, lineage search supports using dbt selectors. For details, refer to [Keyword search](/docs/explore/explore-projects#search-resources).
 
 </Expandable>
 
@@ -135,7 +134,7 @@ No. Cross-project column lineage is supported in the sense of viewing how a publ
 
 <Expandable alt_header="Can column descriptions be propagated down in downstream lineage automatically?" >
 
-Yes, a reused column, labeled as passthrough or rename, inherits its description from source and upstream model columns. In other words, source and upstream model columns propagate their descriptions downstream whenever they are not transformed, meaning you don’t need to manually define the description. Refer to [Inherited column descriptions](/docs/collaborate/column-level-lineage#inherited-column-descriptions) for more info.
+Yes, a reused column, labeled as passthrough or rename, inherits its description from source and upstream model columns. In other words, source and upstream model columns propagate their descriptions downstream whenever they are not transformed, meaning you don’t need to manually define the description. Refer to [Inherited column descriptions](/docs/explore/column-level-lineage#inherited-column-descriptions) for more info.
 
 </Expandable>
 
@@ -179,8 +178,8 @@ The ability to embed and share views is being evaluated as a potential future ca
 
 <Expandable alt_header=" Is dbt Explorer accessible from other areas inside dbt Cloud?" >
 
-Yes, you can [access <Constant name="explorer" /> from various <Constant name="cloud" /> features](/docs/collaborate/access-from-dbt-cloud), ensuring you have a seamless experience navigating between resources and lineage in your project.
+Yes, you can [access <Constant name="explorer" /> from various <Constant name="cloud" /> features](/docs/explore/access-from-dbt-cloud), ensuring you have a seamless experience navigating between resources and lineage in your project.
 
-While the primary way to access <Constant name="explorer" /> is through the **Explore** link in the navigation, you can also access it from the [<Constant name="cloud_ide" />](/docs/collaborate/access-from-dbt-cloud#dbt-cloud-ide), [the lineage tab in jobs](/docs/collaborate/access-from-dbt-cloud#lineage-tab-in-jobs), and the [model timing tab in jobs](/docs/collaborate/access-from-dbt-cloud#model-timing-tab-in-jobs).
+While the primary way to access <Constant name="explorer" /> is through the **Explore** link in the navigation, you can also access it from the [<Constant name="cloud_ide" />](/docs/explore/access-from-dbt-cloud#dbt-cloud-ide), [the lineage tab in jobs](/docs/explore/access-from-dbt-cloud#lineage-tab-in-jobs), and the [model timing tab in jobs](/docs/explore/access-from-dbt-cloud#model-timing-tab-in-jobs).
 
 </Expandable>

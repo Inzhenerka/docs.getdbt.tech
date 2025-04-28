@@ -20,7 +20,7 @@ This portion of our documentation will go over <Constant name="cloud" />'s vario
 - [Webhooks](/docs/deploy/webhooks) &mdash; Use webhooks to send events about your dbt jobs' statuses to other systems.  
 
 
-To set up and add data health tiles to view data freshness and quality checks in your dashboard, refer to [data health tiles](/docs/collaborate/data-tile).
+To set up and add data health tiles to view data freshness and quality checks in your dashboard, refer to [data health tiles](/docs/explore/data-tile).
 
 <DocCarousel slidesPerView={1}>
 
