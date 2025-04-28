@@ -1,11 +1,17 @@
-| title | description | slug | authors | tags | hide_table_of_contents | date | is_featured 
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Scaling Data Pipelines for a Growth-Stage Fintech with Incremental Models | How Kuda leveraged dbt incremental models to reduce costs, speed up pipelines, and scale confidently. | scaling-data-pipelines-fintech | `adedamola_onabanjo` | `analytics` `dbt Cloud` `fintech` `BigQuery` | false | 2025-04-23 | true |
-
+title: "Scaling Data Pipelines for a Growth-Stage Fintech with Incremental Models"
+description: "How Kuda leveraged dbt incremental models to reduce costs, speed up pipelines, and scale confidently."
+slug: scaling-data-pipelines-fintech
+authors: [adedamola_onabanjo]
+tags: [analytics, dbt Cloud, fintech, BigQuery]
+hide_table_of_contents: false
+date: 2025-04-23
+is_featured: true
 
 ## Introduction
 
 Building scalable data pipelines in a fast-growing fintech can feel like fixing a bike while riding it. You must keep insights flowing even as data volumes explode. At Kuda (a Nigerian neo-bank), we faced this problem as our user base surged. Traditional batch ETL (rebuilding entire tables each run) started to buckle; pipelines took hours, and costs ballooned. We needed to keep data fresh without reprocessing everything. Our solution was to leverage dbt’s incremental models, which process only new or changed records. This dramatically cut run times and curbed our BigQuery costs, letting us scale efficiently.
+
+<!-- truncate -->
 
 ## Challenges in Scaling
 
@@ -73,7 +79,7 @@ This query appends only transactions that have a transaction date later than the
 
 **_Illustration: The "Before" table shows data before an incremental run; the "After" table shows new transactions (in bold) added. No historical data is touched. Append is great for immutable data streams (like transaction logs or event streams that only ever grow)._**
 
-Append served us well for ingestion pipelines that just accumulate history without reprocessing old data. However, we had to guard against duplicates (if the source might resend records, we applied deduplication or unique constraints). Also, pure append doesn’t handle updates or deletions to existing records. If data can change after insertion (e.g. a transaction status moves from "pending" to "completed"), a different strategy is needed..
+Append served us well for ingestion pipelines that just accumulate history without reprocessing old data. However, we had to guard against duplicates (if the source might resend records, we applied deduplication or unique constraints). Also, pure append doesn’t handle updates or deletions to existing records. If data can change after insertion (e.g. a transaction status moves from "pending" to "completed"), a different strategy is needed.
 
 ### Insert Overwrite Strategy
 
@@ -103,7 +109,7 @@ FROM {{ source('core', 'transactions') }}
 WHERE transaction_date >= {{ this.last_partition }}
 ```
 
-Here, `partition_by` defines the table partition. The `WHERE` clause uses ```{{ this.last_partition }}``` (_the latest partition already present in the target_) to pull only data for new or updated partitions. On each run, BigQuery will replace any existing partition that meets the filter (e.g. the partition for the latest date) with the query results. Older partitions stay untouched.
+Here, `partition_by` defines the table partition. The `WHERE` clause uses `{{ this.last_partition }}` (_the latest partition already present in the target_) to pull only data for new or updated partitions. On each run, BigQuery will replace any existing partition that meets the filter (e.g. the partition for the latest date) with the query results. Older partitions stay untouched.
 
 #### Insert Overwrite Strategy – Before Incremental Run
 
