@@ -13,7 +13,7 @@ dbt commands are run against <Constant name="cloud" />'s infrastructure and bene
 * Secure credential storage in the <Constant name="cloud" /> platform
 * [Automatic deferral](/docs/cloud/about-cloud-develop-defer) of build artifacts to your Cloud project's production environment 
 * Speedier, lower-cost builds
-* Support for dbt Mesh ([cross-project `ref`](/docs/collaborate/govern/project-dependencies))
+* Support for dbt Mesh ([cross-project `ref`](/docs/mesh/govern/project-dependencies))
 * Significant platform improvements, to be released over the coming months
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-cli-overview.jpg" title="Diagram of how the dbt Cloud CLI works with dbt Cloud's infrastructure to run dbt commands from your local command line." />

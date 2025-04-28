@@ -15,7 +15,7 @@ This page covers user groups and access, including:
 - Role-based access controls for projects and environments
 - Single sign-on, and secure authentication
 
-For model-specific access and their availability across projects, refer to [Model access](/docs/collaborate/govern/model-access).
+For model-specific access and their availability across projects, refer to [Model access](/docs/mesh/govern/model-access).
 
 :::
 
@@ -62,7 +62,7 @@ There are three default groups available as soon as you create your <Constant na
 - **Member:** This group is for the general members of your organization, who will also have full access to the account. You cannot change the permissions. By default, <Constant name="cloud" /> adds new users to this group.
 - **Everyone:** A general group for all members of your organization. Customize the permissions to fit your organizational needs. By default, <Constant name="cloud" /> adds new users to this group.
 
-We recommend deleting the default `Owner`, `Member`, and `Everyone` groups before deploying and replacing them with your organizational groups. This prevents users from receiving more elevated privileges than they should and helps admins ensure they are properly placed.
+Default groups are automatically provisioned for all accounts to simplify the initial set up. We recommend  creating your own organizational groups so you can customize the permissions. Once you create your own groups, you can delete the default groups.
 
 ### Create new groups <Lifecycle status="managed" />
 

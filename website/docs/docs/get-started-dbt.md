@@ -16,7 +16,7 @@ Begin your dbt journey by trying one of our quickstarts, which provides a step-b
 - Out-of-the-box [CI/CD workflows](/docs/deploy/ci-jobs)
 - The [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) for consistent metrics that can be delivered to any endpoint
 - Domain ownership of data with multi-project [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro) setups
-- [<Constant name="explorer" />](/docs/collaborate/explore-projects) for collaborative data discovery and understanding
+- [<Constant name="explorer" />](/docs/explore/explore-projects) for collaborative data discovery and understanding
 
 Learn more about [<Constant name="cloud" /> features](/docs/cloud/about-cloud/dbt-cloud-features) and [start your free trial](https://www.getdbt.com/signup/) today.
 
