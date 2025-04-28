@@ -179,3 +179,21 @@ Remove `config` from `profiles.yml`. Additionally add any previous `config` in `
 User config should be moved from the 'config' key in profiles.yml to the 'flags' key in dbt_project.yml.
 ```
 </File>
+
+### ResourceNamesWithSpacesDeprecation
+
+#### Description
+
+In [dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#managing-changes-to-legacy-behaviors) we deprecated allowing resource names to have spaces in them. If you are getting this deprecation it means that we detected a resource name with a space in it.
+
+#### Resolution
+
+Rename the resource in violation so that it no longer contains a space in it's name.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+16:37:58  [WARNING]: Found spaces in the name of `model.jaffle_shop.stg supplies`
+```
+</File>
