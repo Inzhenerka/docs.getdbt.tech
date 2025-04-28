@@ -43,7 +43,7 @@ Some example use cases include:
 - Your production and development [environments](/docs/dbt-cloud-environments) are on <Constant name="cloud" />’s ‘Latest’ [release track](/docs/dbt-versions/cloud-release-tracks) or a supported dbt version.
 - Use a supported data platfrom: Snowflake, BigQuery, Databricks, Redshift, or Postgres.
 	- Note SSH tunneling for Postgres or Redshift connections is not supported. 
-	- Single sign-on (SSO) for development user accounts is supported, however SSO for production credentials not yet supported.
+	- Single sign-on (SSO) for development user accounts is supported, however SSO for production credentials is not yet supported.
 - (Optional) &mdash; To query <Constant name="semantic_layer" /> metrics from the <Constant name="query_page" />, you must also:
   - Configure the [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) for your dbt project.
   - Have a successful job run in the environment where you configured the [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl). 
