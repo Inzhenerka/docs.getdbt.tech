@@ -1105,7 +1105,7 @@ This section will guide you on how to use the Sigma integration to query your me
 10. Click on **Table**, then click on **SQL**. Select Snowflake `PC_SIGMA_WH` as your data connection.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-make-table.png" width="50%" title="Click the '+ New project' button on the top right"/>
 
-11. Query away! Try this one, for example:
+11. Query away! For example:
 
 ```sql
 select * from
@@ -1115,6 +1115,8 @@ select * from
     [Dimension('metric_time').grain('day') ]
 ) }}
 ```
+
+Note, this specific example won't run since the metrics don't currently exist.
 
 ## What's next
 
