@@ -95,7 +95,7 @@ DBT_TARGET_PATH env var instead.
 
 #### Description
 
-In [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation) we began only allowing letters, numbers, and underscores in the `name` property of [exposures](https://docs.getdbt.com/reference/exposure-properties).
+In [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation) we began only allowing letters, numbers, and underscores in the `name` property of [exposures](/reference/exposure-properties).
 
 #### Resolution
 
@@ -119,7 +119,7 @@ dbt-core.
 
 #### Description
 
-In dbt 1.9 we deprecated having `window` and `time_to_grain` directly on the `type_params` of a metric ([docs](reference/global-configs/behavior-changes#cumulative-metrics)). 
+In dbt 1.9 we deprecated having `window` and `time_to_grain` directly on the `type_params` of a metric ([docs](/reference/global-configs/behavior-changes#cumulative-metrics)). 
 
 #### Resolution
 
@@ -146,7 +146,7 @@ Prior to dbt 1.9, the MetricFlow time spine configuration was stored in a `metri
 
 #### Resolution
 
-Define a timespine in YAML as [documented here](docs/build/metricflow-time-spine#creating-a-time-spine-table).
+Define a timespine in YAML as [documented here](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
 
 #### Example Event
 
@@ -252,7 +252,7 @@ this it means that the behavior flag `source_freshness_run_project_hooks` is set
 
 #### Resolution
 
-Set `source_freshness_run_project_hooks` to `true`. If you do need to skip project hooks during a `dbt source freshness` invocation, please follow the [documentation here](reference/global-configs/behavior-changes#project-hooks-with-source-freshness) for skipping them.
+Set `source_freshness_run_project_hooks` to `true`. If you do need to skip project hooks during a `dbt source freshness` invocation, please follow the [documentation here](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness) for skipping them.
 
 #### Example Event
 
