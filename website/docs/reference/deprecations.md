@@ -73,7 +73,7 @@ The `source-paths` config has been renamed to `model-paths`. Please update your
 
 #### Description
 
-In we used to allow specifying `target-path` in `dbt_project.yml`. We stopped allowing this in [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Getting this deprecation warning means that `target-path` is still specified in your `dbt_project.yml` and it's not set to the default value `target`.
+We used to allow specifying `target-path` in `dbt_project.yml`. We stopped allowing this in [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Getting this deprecation warning means that `target-path` is still specified in your `dbt_project.yml` and it's not set to the default value `target`.
 
 #### Resolution
 
@@ -142,7 +142,7 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes.
 
 #### Description
 
-If you are seeing this, it means you don't have a YAML timespine for MetricFlow configured. 
+Prior to dbt 1.9, the MetricFlow time spine configuration was stored in a `metricflow_time_spine.sql` file. In 1.9 we introduced YAML timespine defintion for MetricFlow. When we introduced the YAML timespine definition, we decided that it would be the standard going forward. So if you are seeing this deprecation, it simply means that you don't have a YAML timespine definition for Metricflow.
 
 #### Resolution
 
@@ -210,7 +210,7 @@ The `fishtown-analytics/dbt_utils` package is deprecated in favor of
 
 #### Description
 
-The `config` property that had been setable in `profiles.yml` was [deprecated in dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#quick-hits) in favor of `flags` in the `dbt_project.yaml`. If you are seeing this deprecation it means that we detected the `config` in your `profiles.yml`.
+The `config` property that had been setable in `profiles.yml` was [deprecated in dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#quick-hits) in favor of `flags` in the `dbt_project.yaml`. If you are seeing this deprecation it means that we detected the `config` property in your `profiles.yml`.
 
 #### Resolution
 
@@ -221,7 +221,6 @@ Remove `config` from `profiles.yml`. Additionally add any previous `config` in `
 <File name='CLI'>
 ```bash
 00:08:12  [WARNING]: Deprecated functionality
-
 User config should be moved from the 'config' key in profiles.yml to the 'flags' key in dbt_project.yml.
 ```
 </File>
