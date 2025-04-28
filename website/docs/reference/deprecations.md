@@ -115,6 +115,29 @@ dbt-core.
 ```
 </File>
 
+### MFCumulativeTypeParamsDeprecation
+
+#### Description
+
+In dbt 1.9 we deprecated having `window` and `time_to_grain` directly on the `type_params` of a metric ([docs](reference/global-configs/behavior-changes#cumulative-metrics)). 
+
+#### Resolution
+
+Nest your `window` and `time_to_grain` under the `cumulative_type_params` property within the `type_params` of the relevant metric.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+15:36:22  [WARNING]: Cumulative fields `type_params.window` and
+`type_params.grain_to_date` has been moved and will soon be deprecated. Please
+nest those values under `type_params.cumulative_type_params.window` and
+`type_params.cumulative_type_params.grain_to_date`. See documentation on
+behavior changes:
+https://docs.getdbt.com/reference/global-configs/behavior-changes.
+```
+</File>
+
 ### MFTimespineWithoutYamlConfigurationDeprecation
 
 #### Description
