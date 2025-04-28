@@ -159,3 +159,23 @@ The `fishtown-analytics/dbt_utils` package is deprecated in favor of
 `dbt-labs/dbt_utils` instead.
 ```
 </File>
+
+### ProjectFlagsMovedDeprecation
+
+#### Description
+
+The `config` property that had been setable in `profiles.yml` was [deprecated in dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#quick-hits) in favor of `flags` in the `dbt_project.yaml`. If you are seeing this deprecation it means that we detected the `config` in your `profiles.yml`.
+
+#### Resolution
+
+Remove `config` from `profiles.yml`. Additionally add any previous `config` in `profiles.yml` to `flags` in `dbt_project.yml` [as documented here](/reference/global-configs/about-global-configs).
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+00:08:12  [WARNING]: Deprecated functionality
+
+User config should be moved from the 'config' key in profiles.yml to the 'flags' key in dbt_project.yml.
+```
+</File>
