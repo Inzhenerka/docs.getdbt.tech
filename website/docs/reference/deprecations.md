@@ -115,6 +115,29 @@ dbt-core.
 ```
 </File>
 
+### MFTimespineWithoutYamlConfigurationDeprecation
+
+#### Description
+
+If you are seeing this, it means you don't have a YAML timespine for MetricFlow configured. 
+
+#### Resolution
+
+Define a timespine in YAML as [documented here](docs/build/metricflow-time-spine#creating-a-time-spine-table).
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+19:56:41  [WARNING]: Time spines without YAML configuration are in the process of
+deprecation. Please add YAML configuration for your 'metricflow_time_spine'
+model. See documentation on MetricFlow time spines:
+https://docs.getdbt.com/docs/build/metricflow-time-spine and behavior change
+documentation:
+https://docs.getdbt.com/reference/global-configs/behavior-changes
+```
+</File>
+
 ### PackageInstallPathDeprecation
 
 #### Description
