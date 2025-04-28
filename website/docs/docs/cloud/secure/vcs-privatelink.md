@@ -5,6 +5,8 @@ description: "Setting up a PrivateLink connection between dbt Cloud and an organ
 sidebar_label: "PrivateLink for VCS"
 ---
 
+# Configuring PrivateLink for self-hosted cloud VCS <Lifecycle status="managed_plus,Virtual Private Cloud" />
+
 import SetUpPages from '/snippets/_available-tiers-privatelink.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';

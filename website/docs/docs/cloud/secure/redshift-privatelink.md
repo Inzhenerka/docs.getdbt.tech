@@ -5,6 +5,8 @@ description: "Configuring PrivateLink for Redshift"
 sidebar_label: "PrivateLink for Redshift"
 ---
 
+# Configure AWS PrivateLink for Redshift <Lifecycle status="managed_plus,Virtual Private Cloud" />
+
 import SetUpPages from '/snippets/_available-tiers-privatelink.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';

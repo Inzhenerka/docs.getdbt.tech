@@ -4,7 +4,7 @@
 |:-------------------------------------------------------------:|:---------------:|:-------------------------------------:|
 | [**v1.9**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) | Dec 9, 2024  | <b> Active Support &mdash; Dec 8, 2025</b>|
 | [**v1.8**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8) | May 9, 2024   | <b>Active Support &mdash; May 8, 2025</b>|
-| [**v1.7**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7) | Nov 2, 2023   | <div align="left">**dbt Core and dbt Cloud Developer & Team customers:** End of Life <br /> **dbt Cloud Enterprise customers:** Critical Support until further notice <sup>1</sup></div> | 
+| [**v1.7**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7) | Nov 2, 2023   | <div align="left">**dbt Core and dbt Cloud Developer & Starter customers:** End of Life <br /> **dbt Cloud Enterprise-tier customers:** Critical Support until further notice <sup>1</sup></div> | 
 | [**v1.6**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.6) | Jul 31, 2023  | End of Life ⚠️ |  
 | [**v1.5**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5) | Apr 27, 2023  | End of Life ⚠️ |
 | [**v1.4**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.4) | Jan 25, 2023  | End of Life ⚠️ | 
@@ -16,6 +16,6 @@
 
 All functionality in dbt Core since the v1.7 release is available in [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks), which provide automated upgrades at a cadence appropriate for your team.
 
-<sup>1</sup> Release tracks are required for the Developer and Teams plans on dbt Cloud. Accounts using older dbt versions will be migrated to the "Latest" release track.
+<sup>1</sup> Release tracks are required for the Developer and Starter plans on dbt Cloud. Accounts using older dbt versions will be migrated to the "Latest" release track.
 
 For customers of dbt Cloud: dbt Labs strongly recommends migrating environments on older and unsupported versions to [release tracks](/docs/dbt-versions/cloud-release-tracks) or a supported version. In 2025, dbt Labs will remove the oldest dbt Core versions from availability in dbt Cloud, starting with v1.0 -- v1.2.

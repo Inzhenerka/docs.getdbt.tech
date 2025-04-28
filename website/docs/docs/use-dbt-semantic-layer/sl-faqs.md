@@ -88,7 +88,7 @@ Yes, the dbt Semantic Layer is compatible with [dbt v1.6 or higher](/docs/dbt-ve
 
 <Expandable alt_header="Does dbt Semantic Layer require a specific dbt Cloud plan?">
 
-Yes, dbt Cloud [Enterprise or Team](https://www.getdbt.com/pricing) plan customers can access the dbt Semantic Layer.
+Yes, dbt Cloud [Enterprise or Starter](https://www.getdbt.com/pricing) plan customers can access the dbt Semantic Layer.
 </Expandable>
 
 <Expandable alt_header="Is there a way to leverage dbt Semantic Layer capabilities in dbt Core?">

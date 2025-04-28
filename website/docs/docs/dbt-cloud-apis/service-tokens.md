@@ -16,7 +16,7 @@ Service account tokens enable you to securely authenticate with the <Constant na
 
 You can use service account tokens for system-level integrations that do not run on behalf of any one user. Assign any permission sets available in <Constant name="cloud" /> to your service account token, which can vary slightly depending on your plan:
 
-* Enterprise plans can apply any permission sets available to service tokens.
+* Enterprise and Enterprise plus plans can apply any permission sets available to service tokens.
 * Team plans can apply Account Admin, Member, Job Admin, Read-Only, Metadata, and <Constant name="semantic_layer" /> permissions set to service tokens.
 
 You can assign as many permission sets as needed to one token. For more on permissions sets, see "[Enterprise Permissions](/docs/cloud/manage-access/enterprise-permissions)."

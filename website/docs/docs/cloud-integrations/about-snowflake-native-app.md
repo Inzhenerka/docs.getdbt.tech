@@ -40,7 +40,7 @@ Log in to the dbt Snowflake Native App using your regular Snowflake login authen
 If your Snowflake Native App is already configured, you will be prompted to [link credentials](#link-credentials) the next time you access <Constant name="cloud" /> from the app. This is a one-time process.
 
 ## Procurement
-The dbt Snowflake Native App is available on the [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3). Purchasing it includes access to the Native App and a <Constant name="cloud" /> account that's on the Enterprise plan. Existing <Constant name="cloud" /> Enterprise customers can also access it. If interested, contact your Enterprise account manager.
+The dbt Snowflake Native App is available on the [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3). Purchasing it includes access to the Native App and a <Constant name="cloud" /> account that's on the Enterprise-tier plan. Existing <Constant name="cloud" /> Enterprise customers can also access it. If interested, contact your Enterprise account manager.
 
 If you're interested, please [contact us](mailto:sales_snowflake_marketplace@dbtlabs.com) for more information.
 

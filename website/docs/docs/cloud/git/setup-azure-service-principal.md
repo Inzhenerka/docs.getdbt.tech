@@ -5,7 +5,7 @@ description: "You can set up your Azure DevOps by creating a Microsoft Entra ID 
 sidebar_label: "Set up service principal"
 ---
 
-# Set up Azure DevOps <Lifecycle status="managed" />
+# Set up Azure DevOps <Lifecycle status="managed,managed_plus" />
 
 ## Service principal overview
 

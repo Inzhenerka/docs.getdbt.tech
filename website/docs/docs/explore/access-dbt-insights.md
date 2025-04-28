@@ -74,7 +74,7 @@ Let's use an example to illustrate how to run queries in <Constant name="query_p
     ```
 
 ### Use dbt Copilot 
-To make things easier, Kimiko decides to use <Constant name="copilot" /> to save time and explore other ways to analyze the data. <Constant name="copilot" /> can help her quickly update the query or generate a new one based on her prompt.
+To make things easier, Kimiko decides to [use <Constant name="copilot" />](/docs/cloud/use-dbt-copilot#build-queries) to save time and explore other ways to analyze the data. <Constant name="copilot" /> can help her quickly update the query or generate a new one based on her prompt.
 
 1. She clicks the **<Constant name="copilot" />** icon in the Query console sidebar to open the prompt box.  
 2. She enters her prompt in natural language and asks for a yearly breakdown of unique customers and total revenue. Then clicks **Submit**.

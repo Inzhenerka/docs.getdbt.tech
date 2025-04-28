@@ -43,7 +43,7 @@ In addition to these fields, there are two other optional fields that can be con
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/bigquery-connection.png" title="A valid BigQuery connection"/>
 
 ### BigQuery OAuth
-**Available in:** Development environments, Enterprise plans only
+**Available in:** Development environments, Enterprise-tier plans only
 
 The OAuth auth method permits <Constant name="cloud" /> to run development queries on behalf of
 a BigQuery user without the configuration of BigQuery service account keyfile in <Constant name="cloud" />. For

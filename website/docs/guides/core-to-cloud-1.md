@@ -69,7 +69,7 @@ This section outlines the steps to set up your <Constant name="cloud" /> account
 
 2. Provide user [access](/docs/cloud/manage-access/about-user-access) and [invite users](/docs/cloud/manage-access/about-user-access) to your <Constant name="cloud" /> account and project.
 
-3. Configure [Single Sign-On (SSO)](/docs/cloud/manage-access/sso-overview) or [Role-based access control (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) for easy and secure access. <Lifecycle status="managed" />
+3. Configure [Single Sign-On (SSO)](/docs/cloud/manage-access/sso-overview) or [Role-based access control (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) for easy and secure access. <Lifecycle status="managed,managed_plus" />
    - This removes the need to save passwords and secret environment variables locally.
 
 ### Additional configuration
@@ -77,7 +77,7 @@ Explore these additional configurations for performance and reliability improvem
 
 1. In **Account settings**, enable [partial parsing](/docs/cloud/account-settings#partial-parsing) to only reparse changed files, saving time.
 
-2. In **Account settings**, enable [Git repo caching](/docs/cloud/account-settings#git-repository-caching) for job reliability & third-party outage protection. <Lifecycle status="managed" />
+2. In **Account settings**, enable [Git repo caching](/docs/cloud/account-settings#git-repository-caching) for job reliability & third-party outage protection. <Lifecycle status="managed,managed_plus" />
 
 ## Data platform setup
 
@@ -103,7 +103,7 @@ This section outlines the considerations and methods to connect your data platfo
 
 Explore these additional configurations to optimize your data platform setup further:
 
-1. Use [OAuth connections](/docs/cloud/manage-access/set-up-snowflake-oauth), which enables secure authentication using your data platform’s SSO.  <Lifecycle status="managed" />
+1. Use [OAuth connections](/docs/cloud/manage-access/set-up-snowflake-oauth), which enables secure authentication using your data platform’s SSO.  <Lifecycle status="managed,managed_plus" />
 
 ## Git setup
 
@@ -120,7 +120,7 @@ Your existing dbt project source code should live in a <Constant name="git" /> r
 ### Additional configuration
 Explore these additional configurations to optimize your <Constant name="git" /> setup further:
 
-1. Log into dbt Cloud using [OAuth connections](/docs/cloud/git/connect-github) to integrate with your source code platform. It automatically links to the repository using one of the native integrations set at the account level. <Lifecycle status="managed" />
+1. Log into dbt Cloud using [OAuth connections](/docs/cloud/git/connect-github) to integrate with your source code platform. It automatically links to the repository using one of the native integrations set at the account level. <Lifecycle status="managed,managed_plus" />
   
   Set up groups for dbt project access with those configured for repository access to streamline permissions.
 
@@ -142,7 +142,7 @@ The most common data environments are production, staging, and development. The 
 - Streamlining the process of switching between development, staging, and production contexts.
 - Making it easy to configure environments through the dbt Cloud UI instead of manually editing the `profiles.yml` file. You can also [set up](/reference/dbt-jinja-functions/target) or [customize](/docs/build/custom-target-names) target names in dbt Cloud.
 - Adding `profiles.yml` attributes to dbt Cloud environment settings with [Extended Attributes](/docs/dbt-cloud-environments#extended-attributes).
-- Using [Git repo caching](/docs/cloud/account-settings#git-repository-caching) to protect you from third-party outages, Git auth failures, and more. <Lifecycle status="managed" />
+- Using [Git repo caching](/docs/cloud/account-settings#git-repository-caching) to protect you from third-party outages, Git auth failures, and more. <Lifecycle status="managed,managed_plus" />
 
 ### Initial setup steps
 1. **Set up development environment** &mdash; Set up your [development](/docs/dbt-cloud-environments#create-a-development-environment) environment and [development credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#access-the-cloud-ide). You’ll need this to access your dbt project and start developing.

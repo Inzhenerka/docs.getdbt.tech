@@ -5,7 +5,7 @@ unlisted: true
 sidebar_label: About cost management
 ---
 
-# About cost management in dbt Cloud <Lifecycle status='beta, managed' />
+# About cost management in dbt Cloud <Lifecycle status='beta,managed,managed_plus' />
 
 :::note beta documentation
 
@@ -28,7 +28,7 @@ To configure the cost management tools, you must have the following:
 - Proper [permission set](/docs/cloud/manage-access/enterprise-permissions) to configure connections in dbt Cloud (such as account admin or project creator).
 - Proper [privileges](https://docs.snowflake.com/en/user-guide/security-access-control-privileges) in Snowflake to create a user and assign them database access.
 - A supported data warehouse. Note: Only Snowflake is supported at this time. More warehouses coming soon!
-- An Enterprise dbt Cloud account
+- A dbt Cloud account on the [Enterprise or Enterprise Plus plan](https://www.getdbt.com/pricing).
 
 ## Set up in Snowflake
 

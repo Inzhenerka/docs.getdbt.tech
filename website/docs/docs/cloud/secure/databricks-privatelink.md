@@ -6,6 +6,8 @@ sidebar_label: "PrivateLink for Databricks"
 pagination_next: null
 ---
 
+# Configuring Databricks PrivateLink <Lifecycle status="managed_plus,Virtual Private Cloud" />
+
 import SetUpPages from '/snippets/_available-tiers-privatelink.md';
 import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 import CloudProviders from '/snippets/_privatelink-across-providers.md';

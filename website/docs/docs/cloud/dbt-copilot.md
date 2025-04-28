@@ -29,8 +29,8 @@ With automatic code generation and using natural language prompts, <Constant nam
 
 - Access <Constant name="copilot" /> through:
   - The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot) to generate documentation, tests, semantic models.
-  - The [<Constant name="visual_editor" /> (beta)](/docs/cloud/build-canvas-copilot) to generate SQL code using natural language prompts.
-  - The [<Constant name="query_page" /> (beta)](/docs/explore/dbt-insights) to generate SQL queries for analysis using natural language prompts.
+  - The [<Constant name="visual_editor" /> (beta)](/docs/cloud/build-canvas-copilot) to generate SQL code using natural language prompts. <Lifecycle status="managed,managed_plus" /> 
+  - The [<Constant name="query_page" /> (beta)](/docs/explore/dbt-insights) to generate SQL queries for analysis using natural language prompts. <Lifecycle status="managed,managed_plus" /> 
 - <Constant name="copilot" /> gathers metadata (like column names, model SQL, documentation) but never accesses row-level warehouse data.
 - The metadata and user prompts are sent to the AI provider (in this case, OpenAI) through API calls for processing.
 - The AI-generated content is returned to <Constant name="cloud" /> for you to review, edit, and save within your project files.

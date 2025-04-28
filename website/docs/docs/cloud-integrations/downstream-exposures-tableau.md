@@ -32,7 +32,7 @@ If you're using Tableau Server, you need to add the [<Constant name="cloud" /> I
 To configure automatic downstream exposures, you should meet the following:
 
 1. Your environment and jobs are on a supported [<Constant name="cloud" /> release track](/docs/dbt-versions/cloud-release-tracks).
-2. You have a <Constant name="cloud" /> account on the [Enterprise plan](https://www.getdbt.com/pricing/).
+2. You have a <Constant name="cloud" /> account on the [Enterprise or Enterprise plus plan](https://www.getdbt.com/pricing/).
 3. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
 4. You have [proper permissions](/docs/cloud/manage-access/enterprise-permissions) to edit <Constant name="cloud" /> project or production environment settings.
 5. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled.
@@ -99,7 +99,7 @@ import ViewExposures from '/snippets/_auto-exposures-view.md';
 
 <ViewExposures/>
 
-## Orchestrate exposures <Lifecycle status="beta"/>
+## Orchestrate exposures <Lifecycle status="beta,managed,managed_plus"/>
 
 [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) using the dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
 
