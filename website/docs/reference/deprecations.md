@@ -197,3 +197,24 @@ Rename the resource in violation so that it no longer contains a space in it's n
 16:37:58  [WARNING]: Found spaces in the name of `model.jaffle_shop.stg supplies`
 ```
 </File>
+
+### SourceFreshnessProjectHooksNotRun
+
+#### Description
+
+It used to be that project hooks _wouldn't_ be run on sources when `dbt source freshness` was run. If you are seeing
+this it means that the behavior flag `source_freshness_run_project_hooks` is set to `false` and either `on-run-start` or `on-run-end` is defined ([docs](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness)).
+
+#### Resolution
+
+Set `source_freshness_run_project_hooks` to `true`. If you do need to skip project hooks during a `dbt source freshness` invocation, please follow the [documentation here](reference/global-configs/behavior-changes#project-hooks-with-source-freshness) for skipping them.
+
+#### Example Event
+
+<File name='CLI'>
+```bash
+19:51:56  [WARNING]: In a future version of dbt, the `source freshness` command
+will start running `on-run-start` and `on-run-end` hooks by default. For more
+information: https://docs.getdbt.com/reference/global-configs/legacy-behaviors
+```
+</File>
