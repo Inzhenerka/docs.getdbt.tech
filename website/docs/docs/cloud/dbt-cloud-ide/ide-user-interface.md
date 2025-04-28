@@ -58,7 +58,7 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
 3. **Version Control &mdash;** This menu contains all git-related elements, including the <Constant name="git" /> actions button. The button updates relevant actions based on your editor's state, such as prompting to pull remote changes, commit and sync when reverted commit changes are present, creating a merge/pull request when appropriate, or pruning branches deleted from the remote repository.
 
    - The dropdown menu on the <Constant name="git" /> actions button allows users to revert changes, refresh <Constant name="git" /> state, create merge/pull requests, prune branches, and change branches.
-   -  You can also [resolve merge conflicts](/docs/collaborate/git/merge-conflicts) and for more info on git, refer to [Version control basics](/docs/collaborate/git/version-control-basics#the-git-button-in-the-cloud-ide).
+   -  You can also [resolve merge conflicts](/docs/cloud/git/merge-conflicts) and for more info on git, refer to [Version control basics](/docs/cloud/git/version-control-basics#the-git-button-in-the-cloud-ide).
    -  **Version Control Options menu &mdash;** The **Changes** section, under the <Constant name="git" /> actions button, lists all file changes since the last commit. You can click on a change to open the <Constant name="git" /> Diff View to see the inline changes. You can also right-click any file and use the file-specific options in the Version Control Options menu.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/version-control-options-menu.png" width="30%" title="Right-click edited files to access Version Control Options menu"/>

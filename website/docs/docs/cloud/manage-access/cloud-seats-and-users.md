@@ -22,9 +22,9 @@ The user's assigned license determines the specific capabilities they can access
 | Use Jobs | ✅ | ❌ | ❌ |
 | Manage Account | ✅ | ❌ | ✅ |
 | API Access | ✅ | ❌ | ❌ |
-| Use [<Constant name="explorer" />](/docs/collaborate/explore-projects) | ✅  | ✅ | ❌  |
+| Use [<Constant name="explorer" />](/docs/explore/explore-projects) | ✅  | ✅ | ❌  |
 | Use [Source Freshness](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
-| Use [Docs](/docs/collaborate/build-and-view-your-docs) | ✅ | ✅ | ❌ |
+| Use [Docs](/docs/explore/build-and-view-your-docs) | ✅ | ✅ | ❌ |
 | Receive [Job notifications](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ | 
 
 *Available on Starter, Enterprise, and Enterprise plus plans only. IT seats are limited to 1 seat per Starter or Enterprise account and don't count toward seat usage.

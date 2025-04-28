@@ -80,7 +80,7 @@ models:
 
 Supported dbt-adapters use these fields when populated, to render out the foreign key constraint instead of `expression`.
 
-For more information on the adapters which support foreign key constraints, have a look at our guide on [Platform constraint support](/docs/collaborate/govern/model-contracts#platform-constraint-support).
+For more information on the adapters which support foreign key constraints, have a look at our guide on [Platform constraint support](/docs/mesh/govern/model-contracts#platform-constraint-support).
 
 </VersionBlock>
 
@@ -377,7 +377,7 @@ select
 
 <div warehouse="BigQuery">
 
-BigQuery allows defining and enforcing `not null` constraints, and defining (but _not_ enforcing) `primary key` and `foreign key` constraints (which can be used for query optimization). BigQuery does not support defining or enforcing other constraints. For more information, refer to [Platform constraint support](/docs/collaborate/govern/model-contracts#platform-constraint-support)
+BigQuery allows defining and enforcing `not null` constraints, and defining (but _not_ enforcing) `primary key` and `foreign key` constraints (which can be used for query optimization). BigQuery does not support defining or enforcing other constraints. For more information, refer to [Platform constraint support](/docs/mesh/govern/model-contracts#platform-constraint-support)
 
 Documentation: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
 

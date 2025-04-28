@@ -3,7 +3,7 @@ title: "Discover data with dbt Explorer"
 sidebar_label: "Discover data with dbt Explorer"
 description: "Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your dbt projects."
 image: /img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png
-pagination_next: "docs/collaborate/data-health-signals"
+pagination_next: "docs/explore/data-health-signals"
 pagination_prev: null
 ---
 
@@ -11,11 +11,11 @@ pagination_prev: null
 
 <IntroText>
 
-With dbt Explorer, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/collaborate/view-downstream-exposures) to gain a better understanding of its latest production state.
+With dbt Explorer, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
 
 </IntroText>
 
-Use <Constant name="explorer" /> to navigate and manage your projects within <Constant name="cloud" /> to help you and other data developers, analysts, and consumers discover and leverage your dbt resources. <Constant name="explorer" /> integrates with the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), [dbt <Constant name="query_page" />](/docs/collaborate/dbt-insights), [<Constant name="orchestrator" />](/docs/deploy/deployments), and [<Constant name="visual_editor" />](/docs/cloud/canvas) to help you develop or view your dbt resources.
+Use <Constant name="explorer" /> to navigate and manage your projects within <Constant name="cloud" /> to help you and other data developers, analysts, and consumers discover and leverage your dbt resources. <Constant name="explorer" /> integrates with the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), [dbt <Constant name="query_page" />](/docs/explore/dbt-insights), [<Constant name="orchestrator" />](/docs/deploy/deployments), and [<Constant name="visual_editor" />](/docs/cloud/canvas) to help you develop or view your dbt resources.
 
 :::tip
 If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
@@ -25,7 +25,7 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 ## Prerequisites
 
 - You have a <Constant name="cloud" /> account on the [Starter, Enterprise, or Enterprise plus plan](https://www.getdbt.com/pricing/).
-  - Certain features within <Constant name="explorer" />, such as [project recommendations](/docs/collaborate/project-recommendations), [column-level lineage](/docs/collaborate/column-level-lineage), and more are only available on Enterprise and Enterprise plus plans.
+  - Certain features within <Constant name="explorer" />, such as [project recommendations](/docs/explore/project-recommendations), [column-level lineage](/docs/explore/column-level-lineage), and more are only available on Enterprise and Enterprise plus plans.
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
 - You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
@@ -35,13 +35,13 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 Navigate the <Constant name="explorer" /> overview page to access your project's resources and metadata. The page includes the following sections:
 
 - **Search bar** &mdash; [Search](#search-resources) for resources in your project by keyword. You can also use filters to refine your search results.
-- **Sidebar** &mdash; Use the left sidebar to access model [performance](/docs/collaborate/model-performance), [project recommendations](/docs/collaborate/project-recommendations) in the **Project details** section. Browse your project's [resources, file tree, and database](#browse-with-the-sidebar) in the lower section of the sidebar.
+- **Sidebar** &mdash; Use the left sidebar to access model [performance](/docs/explore/model-performance), [project recommendations](/docs/explore/project-recommendations) in the **Project details** section. Browse your project's [resources, file tree, and database](#browse-with-the-sidebar) in the lower section of the sidebar.
 - **Lineage graph** &mdash; Explore your project's or account's [lineage graph](#project-lineage) to visualize the relationships between resources.
 - **Latest updates** &mdash; View the latest changes or issues related to your project's resources, including the most recent job runs, changed properties, lineage, and issues.
-- **Marts and public models** &mdash; View the [marts](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) and [public models](/docs/collaborate/govern/model-access#access-modifiers) in your project. You can also navigate to all public models in your account through this view.
-- **Model query history** &mdash; Use [model query history](/docs/collaborate/model-query-history) to track consumption queries on your models for deeper insights.
-- **Visualize downstream exposures** &mdash; [Set up](/docs/cloud-integrations/downstream-exposures-tableau) and [visualize downstream exposures](/docs/collaborate/view-downstream-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
-- **Data health signals** &mdash; View the [data-health-signals](/docs/collaborate/data-health-signals) for each resource to understand its health and performance.
+- **Marts and public models** &mdash; View the [marts](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) and [public models](/docs/mesh/govern/model-access#access-modifiers) in your project. You can also navigate to all public models in your account through this view.
+- **Model query history** &mdash; Use [model query history](/docs/explore/model-query-history) to track consumption queries on your models for deeper insights.
+- **Visualize downstream exposures** &mdash; [Set up](/docs/cloud-integrations/downstream-exposures-tableau) and [visualize downstream exposures](/docs/explore/view-downstream-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
+- **Data health signals** &mdash; View the [data-health-signals](/docs/explore/data-health-signals) for each resource to understand its health and performance.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Explorer to discover your project's resources and lineage."/>
 
@@ -67,7 +67,7 @@ Note that <Constant name="explorer" /> automatically deletes stale metadata afte
 |---------------------|---------------------------|
 | All metadata        |  [dbt build](/reference/commands/build), [dbt docs generate](/reference/commands/cmd-docs), and [dbt source freshness](/reference/commands/source#dbt-source-freshness) together as part of the same job in the environment
 | Model lineage, details, or results | [dbt run](/reference/commands/run) or [dbt build](/reference/commands/build) on a given model within a job in the environment |
-| Columns and statistics for models, sources, and snapshots| [dbt docs generate](/reference/commands/cmd-docs) within [a job](/docs/collaborate/build-and-view-your-docs) in the environment |
+| Columns and statistics for models, sources, and snapshots| [dbt docs generate](/reference/commands/cmd-docs) within [a job](/docs/explore/build-and-view-your-docs) in the environment |
 | Test results | [dbt test](/reference/commands/test) or [dbt build](/reference/commands/build) within a job in the environment |
 | Source freshness results | [dbt source freshness](/reference/commands/source#dbt-source-freshness) within a job in the environment |
 | Snapshot details | [dbt snapshot](/reference/commands/snapshot) or [dbt build](/reference/commands/build) within a job in the environment |
@@ -174,7 +174,7 @@ You can locate resources in your project by performing a keyword search in the s
 The **Filters** side panel becomes available after you perform a keyword search. Use this panel to further refine the results from your keyword search. By default, Explorer searches across all resources in the project. You can filter on:
 
 - [Resource type](/docs/build/projects) (like models, sources, and so on)
-- [Model access](/docs/collaborate/govern/model-access) (like public, private)
+- [Model access](/docs/mesh/govern/model-access) (like public, private)
 - [Model layer](/best-practices/how-we-structure/1-guide-overview) (like marts, staging)
 - [Model materialization](/docs/build/materializations) (like view, table)
 - [Tags](/reference/resource-configs/tags) (supports multi-select)
@@ -184,7 +184,7 @@ Under the **Models** option, you can filter on model properties (access or mater
 </Expandable>
 
 ### Example of keyword search
-Example of results from searching on the keyword `customers` and applying the filters models, description, and code. [Data health signals](/docs/collaborate/data-health-signals) are visible to the right of the model name in the search results.
+Example of results from searching on the keyword `customers` and applying the filters models, description, and code. [Data health signals](/docs/explore/data-health-signals) are visible to the right of the model name in the search results.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-keyword-search.png" width="100%" title="Example of keyword search" />
 
@@ -193,7 +193,7 @@ Example of results from searching on the keyword `customers` and applying the fi
 From the sidebar, you can browse your project's resources, its file tree, and the database.
 
 - **Resources** tab &mdash; All resources in the project organized by type. Select any resource type in the list and all those resources in the project will display as a table in the main section of the page. For a description on the different resource types (like models, metrics, and so on), refer to [About dbt projects](/docs/build/projects).
-  - [Data health signals](/docs/collaborate/data-health-signals) are visible to the right of the resource name under the **Health** column.
+  - [Data health signals](/docs/explore/data-health-signals) are visible to the right of the resource name under the **Health** column.
 - **File Tree** tab &mdash; All resources in the project organized by the file in which they are defined. This mirrors the file tree in your dbt project repository.
 - **Database** tab &mdash; All resources in the project organized by the database and schema in which they are built. This mirrors your data platform's structure that represents the [applied state](/docs/dbt-cloud-apis/project-state) of your project.
 
@@ -209,7 +209,7 @@ Here's an example of the Open in <Constant name="cloud_ide" /> icon in the upper
 
 ## View model versions
 
-If models in the project are versioned, you can see which [version of the model](/docs/collaborate/govern/model-versions) is being applied &mdash; `prerelease`, `latest`, and `old` &mdash; in the title of the model's details page and in the model list from the sidebar.
+If models in the project are versioned, you can see which [version of the model](/docs/mesh/govern/model-versions) is being applied &mdash; `prerelease`, `latest`, and `old` &mdash; in the title of the model's details page and in the model list from the sidebar.
 
 ## View resource details {#view-resource-details}
 You can view the definition and latest run results of any resource in your project. To find a resource and view its details, you can interact with the lineage graph, use search, or browse the catalog.
@@ -222,7 +222,7 @@ In the upper right corner of the resource details page, you can:
 
 <Expandable alt_header="What details are available for a model?">
 
-- **Data health signals** &mdash; [Data health signals](/docs/collaborate/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a model is Healthy, Caution, Degraded, or Unknown. Hover over an icon to view detailed information about the model's health.
+- **Data health signals** &mdash; [Data health signals](/docs/explore/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a model is Healthy, Caution, Degraded, or Unknown. Hover over an icon to view detailed information about the model's health.
 - **Status bar** (below the page title) &mdash; Information on the last time the model ran, whether the run was successful, how the data is materialized, number of rows, and the size of the model.
 - **General** tab includes:
     - **Lineage** graph &mdash; The model's lineage graph that you can interact with. The graph includes one upstream node and one downstream node from the model. Click the Expand icon in the graph's upper right corner to view the model in full lineage graph mode.
@@ -239,7 +239,7 @@ In the upper right corner of the resource details page, you can:
 <Expandable alt_header="What details are available for an exposure?">
 
 - **Status bar** (below the page title) &mdash; Information on the last time the exposure was updated.
-- **Data health signals** &mdash; [Data health signals](/docs/collaborate/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a resource is Healthy, Caution, or Degraded. Hover over an icon to view detailed information about the exposure's health.
+- **Data health signals** &mdash; [Data health signals](/docs/explore/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a resource is Healthy, Caution, or Degraded. Hover over an icon to view detailed information about the exposure's health.
 - **General** tab includes:
     - **Data health** &mdash; The status on data freshness and data quality.
     - **Status** section &mdash; The status on data freshness and data quality.
@@ -273,7 +273,7 @@ Example of the Tests view:
 <Expandable alt_header="What details are available for each source table within a source collection?">
 
 - **Status bar** (below the page title) &mdash; Information on the last time the source was updated and the number of tables the source uses.
-- **Data health signals** &mdash; [Data health signals](/docs/collaborate/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a resource is Healthy, Caution, or Degraded. Hover over an icon to view detailed information about the source's health.
+- **Data health signals** &mdash; [Data health signals](/docs/explore/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a resource is Healthy, Caution, or Degraded. Hover over an icon to view detailed information about the source's health.
 - **General** tab includes:
     - **Lineage** graph &mdash; The source's lineage graph that you can interact with. The graph includes one upstream node and one downstream node from the source. Click the Expand icon in the graph's upper right corner to view the source in full lineage graph mode.
     - **Description** section &mdash; A description of the source.
@@ -299,11 +299,12 @@ Example of the details view for the model `customers`:<br /> <Lightbox src="/img
 
 <Constant name="explorer" /> supports views for [staging deployment environments](/docs/deploy/deploy-environments#staging-environment), in addition to the production environment. This gives you a unique view into your pre-production data workflows, with the same tools available in production, while providing an extra layer of scrutiny.
 
-You can explore the metadata from your production or staging environment to inform your data development lifecycle. Just [set a single environment](/docs/deploy/deploy-environments) per <Constant name="cloud" /> project as "production" or "staging," and ensure the proper metadata has been generated then you'll be able to view it in <Constant name="explorer" />. Refer to [Generating metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
+You can explore the metadata from your production or staging environment to inform your data development lifecycle. Just [set a single environment](/docs/deploy/deploy-environments) per <Constant name="cloud" /> project as "production" or "staging," and ensure the proper metadata has been generated then you'll be able to view it in <Constant name="explorer" />. Refer to [Generating metadata](/docs/explore/explore-projects#generate-metadata) for more details.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="100%" title="Explore in a staging environment" />
 
 ## Related content
+
 - [All Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions)
-- [About model governance](/docs/collaborate/govern/about-model-governance)
+- [About model governance](/docs/mesh/govern/about-model-governance)
 - Blog on [What is data mesh?](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh)
