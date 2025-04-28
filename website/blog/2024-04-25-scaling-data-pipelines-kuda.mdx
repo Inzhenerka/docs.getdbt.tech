@@ -27,7 +27,7 @@ Rapid growth brought some serious scaling challenges, and the most important wer
 
 ## Approach: Incremental Models & Key Strategies
 
-We tackled these issues by embracing dbt’s incremental models, which process only new or updated records since the last run. Instead of monolithic daily rebuilds, our models continuously ingested changes in small bites. Below, we outline our key incremental strategies—`append`, `insert_overwrite`, and `merge`—and how we tuned performance and cost.
+We tackled these issues by embracing dbt’s incremental models, which process only new or updated records since the last run. Instead of monolithic daily rebuilds, our models continuously ingested changes in small bites. Below, we outline our key [incremental strategies](/docs/build/incremental-strategy) —`append`, `insert_overwrite`, and `merge` — and how we tuned performance and cost.
 
 ### Append Strategy
 
