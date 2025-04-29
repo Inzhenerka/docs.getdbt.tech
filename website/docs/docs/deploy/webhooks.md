@@ -26,7 +26,7 @@ If you're interested in course learning with videos, check out the [Webhooks on-
 You can also check out the free [dbt Fundamentals course](https://learn.getdbt.com/courses/dbt-fundamentals). 
 :::
 
-## Prerequisites
+## Prerequisites 
 - You have a <Constant name="cloud" /> account that is on the [Team or Enterprise plan](https://www.getdbt.com/pricing/). 
 - For `write` access to webhooks: 
     - **Enterprise-tier plans** &mdash; Permission sets are the same for both API service tokens and the <Constant name="cloud" /> UI. You, or the API service token, must have the Account Admin, Admin, or Developer [permission set](/docs/cloud/manage-access/enterprise-permissions).  
