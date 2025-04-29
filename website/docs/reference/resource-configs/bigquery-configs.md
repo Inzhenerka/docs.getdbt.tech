@@ -893,21 +893,109 @@ As with most data platforms, there are limitations associated with materialized 
 
 Find more information about materialized view limitations in Google's BigQuery [docs](https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations).
 
-## Python models
+## Python models configuration
 
-The BigQuery adapter supports Python models with the following additional configuration parameters:
+The BigQuery adapter supports Python models. Google Cloud Platform's (GCP) Dataproc uses PySpark as the processing framework for these models. 
+
+The `dbt-bigquery` adapter uses a service called Dataproc to submit your Python models as PySpark jobs. That Python/PySpark code will read from your tables and views in BigQuery, perform all computation in Dataproc, and write the final result back to BigQuery.
+
+**Submission methods.** Dataproc supports two submission methods: `serverless` and `cluster`. Dataproc Serverless does not require a ready cluster, which saves on hassle and cost—but it is slower to start up, and much more limited in terms of available configuration. For example, Dataproc Serverless supports only a small set of Python packages, though it does include `pandas`, `numpy`, and `scikit-learn`. (See the full list [here](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers#example_custom_container_image_build), under "The following packages are installed in the default image"). Whereas, by creating a Dataproc Cluster in advance, you can fine-tune the cluster's configuration, install any PyPI packages you want, and benefit from faster, more responsive runtimes.
+
+Use the `cluster` submission method with dedicated Dataproc clusters you or your organization manage. Use the `serverless` submission method to avoid managing a Spark cluster. The latter may be quicker for getting started, but both are valid for production.
+
+**Additional setup:**
+- Create or use an existing [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
+- Enable Dataproc APIs for your project + region
+- If using the `cluster` submission method: Create or use an existing [Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) with the [Spark BigQuery connector initialization action](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google recommends copying the action into your own Cloud Storage bucket, rather than using the example version shown in the screenshot)
+
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-connector-initialization.png" title="Add the Spark BigQuery connector as an initialization action"/>
+
+The following configurations are needed to run Python models on Dataproc. You can add these to your [BigQuery profile](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc) or configure them on specific Python models:
+- `gcs_bucket`: Storage bucket to which dbt will upload your model's compiled PySpark code.
+- `dataproc_region`: GCP region in which you have enabled Dataproc (for example `us-central1`).
+- `dataproc_cluster_name`: Name of Dataproc cluster to use for running Python model (executing PySpark job). Only required if `submission_method: cluster`.
+
+```python
+def model(dbt, session):
+    dbt.config(
+        submission_method="cluster",
+        dataproc_cluster_name="my-favorite-cluster"
+    )
+    ...
+```
+```yml
+version: 2
+models:
+  - name: my_python_model
+    config:
+      submission_method: serverless
+```
+
+Python models running on Dataproc Serverless can be further configured in your [BigQuery profile](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc).
+
+Any user or service account that runs dbt Python models will need the following permissions(in addition to the required BigQuery permissions) ([docs](https://cloud.google.com/dataproc/docs/concepts/iam/iam)):
+```
+dataproc.batches.create
+dataproc.clusters.use
+dataproc.jobs.create
+dataproc.jobs.get
+dataproc.operations.get
+dataproc.operations.list
+storage.buckets.get
+storage.objects.create
+storage.objects.delete
+```
+
+**Installing packages:** 
+
+Installation of third-party packages on Dataproc varies depending on whether it's a [cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) or [serverless](https://cloud.google.com/dataproc-serverless/docs).  
+
+- **Dataproc Cluster** &mdash; Google recommends installing Python packages while creating the cluster via initialization actions:  
+    - [How initialization actions are used](https://github.com/GoogleCloudDataproc/initialization-actions/blob/master/README.md#how-initialization-actions-are-used)  
+    - [Actions for installing via `pip` or `conda`](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/python)
+
+    You can also install packages at cluster creation time by [defining cluster properties](https://cloud.google.com/dataproc/docs/tutorials/python-configuration#image_version_20): `dataproc:pip.packages` or `dataproc:conda.packages`.  
+
+- **Dataproc Serverless** &mdash; Google recommends using a [custom docker image](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers) to install thrid-party packages. The image needs to be hosted in [Google Artifact Registry](https://cloud.google.com/artifact-registry/docs). It can then be used by providing the image path in dbt profiles:
+    
+    <File name='profiles.yml'>
+    ```yml
+    my-profile:
+        target: dev
+        outputs:
+            dev:
+            type: bigquery
+            method: oauth
+            project: abc-123
+            dataset: my_dataset
+            
+            # for dbt Python models to be run on Dataproc Serverless
+            gcs_bucket: dbt-python
+            dataproc_region: us-central1
+            submission_method: serverless
+            dataproc_batch:
+                runtime_config:
+                    container_image: {HOSTNAME}/{PROJECT_ID}/{IMAGE}:{TAG}
+    ```
+
+
+    </File>
+
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-pip-packages.png" title="Adding packages to install via pip at cluster startup"/>
+
+The BigQuery adapter also supports Python models with the following additional configuration parameters:
 
 | Parameter               | Type        | Required | Default   | Valid values     |
 |-------------------------|-------------|----------|-----------|------------------|
 | `enable_list_inference` | `<boolean>` | no       | `True`    | `True`, `False`  |
 | `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
 
-### The `enable_list_inference` parameter
-The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation.
-By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
+**Docs:**
 
-### The `intermediate_format` parameter
-The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
+- [Dataproc overview](https://cloud.google.com/dataproc/docs/concepts/overview)
+- [Create a Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster)
+- [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
+- [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 
 <VersionBlock firstVersion="1.8">
 
