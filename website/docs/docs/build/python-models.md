@@ -884,7 +884,7 @@ models:
 my_dbt_project_sa:
   outputs:
     dev:
-      dataproc_region: us-central1
+      compute_region: us-central1
       dataset: <BIGQUERY_DATESET>
       gcs_bucket: <GCS BUCKET USED FOR BIGFRAME LOGS>
       job_execution_timeout_seconds: 300
