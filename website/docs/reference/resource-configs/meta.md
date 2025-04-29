@@ -451,9 +451,10 @@ version: 2
 
 models:
   - name: users
-    meta:
-      owner: "@alice"
-      model_maturity: in dev
+    config:
+      meta:
+        owner: "@alice"
+        model_maturity: in dev
 
 ```
 
@@ -467,13 +468,13 @@ models:
 ```yml
 version: 2
 
-[sources](/reference/source-properties):
+sources:
   - name: salesforce
-
     tables:
       - name: account
-        meta:
-          contains_pii: true
+        config:
+          meta:
+            contains_pii: true
         columns:
           - name: email
             meta:

@@ -3,7 +3,7 @@ title: "Visualize downstream exposures"
 sidebar_label: "Visualize downstream exposures"
 description: "Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools for a richer downstream lineage."
 pagination_prev: null
-pagination_next:  "docs/collaborate/data-tile"
+pagination_next:  "docs/explore/data-tile"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 

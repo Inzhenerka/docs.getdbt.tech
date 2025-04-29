@@ -24,11 +24,11 @@ Learn how to access <Constant name="query_page" />, run queries, and view result
 - Create a visualization of your query results using the **Chart** tab
 - View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon
 - Use <Constant name="copilot" /> to generate or edit SQL queries using natural language prompts
-- Integrate with [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/collaborate/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), and [<Constant name="visual_editor" />](/docs/cloud/canvas) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration
+- Integrate with [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/explore/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), and [<Constant name="visual_editor" />](/docs/cloud/canvas) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration
 
 ## Access the dbt Insights interface
 
-Before accessing <Constant name="query_page" />, ensure that the [prerequisites](/docs/collaborate/dbt-insights#prerequisites) are met.
+Before accessing <Constant name="query_page" />, ensure that the [prerequisites](/docs/explore/dbt-insights#prerequisites) are met.
 
 1. To access <Constant name="query_page" />, select the **Query** option in the navigation sidebar.
 2. If your [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) aren’t set up, <Constant name="query_page" /> will prompt you to set them up. The ability to query data is subject to warehouse provider permissions according to your developer credentials.
@@ -95,10 +95,10 @@ From here, Kimiko can:
 - [Visualize results](#chart-results) in the **Chart** tab
 - Check the [**Query history**](#query-history) for status and past runs
 - Use [**<Constant name="explorer" />**](#use-dbt-explorer) to explore model lineage and context
-- If Kimiko wants to save the query, she can click **Bookmark** in the [query console menu](/docs/collaborate/navigate-dbt-insights#query-console-menu) to save it for future reference.
+- If Kimiko wants to save the query, she can click **Bookmark** in the [query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to save it for future reference.
 
 :::tip Want to turn a query into a model?
-Coming soon &mdash; you'll be able to access the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) from the [Query console menu](/docs/collaborate/navigate-dbt-insights#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within <Constant name="cloud" />!
+Coming soon &mdash; you'll be able to access the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) from the [Query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within <Constant name="cloud" />!
 :::
 
 ### View results
@@ -141,14 +141,14 @@ The query history is stored indefinitely.
 
 ### Use dbt Explorer
 
-Kimiko accesses [<Constant name="explorer" />](/docs/collaborate/explore-projects) directly in <Constant name="query_page" /> to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the <Constant name="query_page" /> interface. 
+Kimiko accesses [<Constant name="explorer" />](/docs/explore/explore-projects) directly in <Constant name="query_page" /> to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the <Constant name="query_page" /> interface. 
 
 This integrated view allows her and other users to maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated <Constant name="explorer" /> view comes with:
 - Same search capabilities as <Constant name="explorer" />
 - Allows users to narrow down displayed objects by type
 - Hyperlink from SQL code `ref` to the corresponding Explorer page
 
-To access <Constant name="explorer" />, click on the **<Constant name="explorer" />** icon in the [Query console sidebar menu](/docs/collaborate/navigate-dbt-insights#query-console-sidebar-menu).
+To access <Constant name="explorer" />, click on the **<Constant name="explorer" />** icon in the [Query console sidebar menu](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
 
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Explorer" />
 

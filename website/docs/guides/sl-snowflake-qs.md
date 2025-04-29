@@ -49,6 +49,7 @@ If you're on different data platforms, you can also follow this guide and will n
 - Create a [trial Snowflake account](https://signup.snowflake.com/):
   - Select the Enterprise Snowflake edition with ACCOUNTADMIN access. Consider organizational questions when choosing a cloud provider, and refer to Snowflake's [Introduction to Cloud Platforms](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms).
   - Select a cloud provider and region. All cloud providers and regions will work so choose whichever you prefer.
+- Complete the [Quickstart for dbt Cloud and Snowflake](snowflake-qs.md) guide. 
 - Basic understanding of SQL and dbt. For example, you've used dbt before or have completed the [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) course.
 
 
@@ -119,123 +120,11 @@ Open a new tab and follow these quick steps for account setup and data loading i
 2. In the Snowflake user interface (UI), click **+ Worksheet** in the upper right corner.
 3. Select **SQL Worksheet** to create a new worksheet.
 
-### Set up Snowflake environment
+### Set up and load data into Snowflake
 
-The data used here is stored as CSV files in a public S3 bucket and the following steps will guide you through how to prepare your Snowflake account for that data and upload it.
+import LoadData from '/snippets/_load-data.md';
 
-Create a new virtual warehouse, two new databases (one for raw data, the other for future dbt development), and two new schemas (one for `jaffle_shop` data, the other for `stripe` data).
-
-1. Run the following SQL commands one by one by typing them into the Editor of your new Snowflake SQL worksheet to set up your environment.
-
-2. Click **Run** in the upper right corner of the UI for each one:
-
-```sql
--- Create a virtual warehouse named 'transforming'
-create warehouse transforming;
-
--- Create two databases: one for raw data and another for analytics
-create database raw;
-create database analytics;
-
--- Within the 'raw' database, create two schemas: 'jaffle_shop' and 'stripe'
-create schema raw.jaffle_shop;
-create schema raw.stripe;
-```
-
-### Load data into Snowflake
-Now that your environment is set up, you can start loading data into it. You will be working within the raw database, using the `jaffle_shop` and stripe schemas to organize your tables.
-
-1. Create customer table. First, delete all contents (empty) in the Editor of the Snowflake worksheet. Then, run this SQL command to create the customer table in the `jaffle_shop` schema:
-
-  ```sql
-  create table raw.jaffle_shop.customers
-  ( id integer,
-    first_name varchar,
-    last_name varchar
-  );
-  ```
-
-  You should see a ‘Table `CUSTOMERS` successfully created.’ message.
-
-2. Load data. After creating the table, delete all contents in the Editor. Run this command to load data from the S3 bucket into the customer table:
-
-  ```sql
-  copy into raw.jaffle_shop.customers (id, first_name, last_name)
-  from 's3://dbt-tutorial-public/jaffle_shop_customers.csv'
-  file_format = (
-      type = 'CSV'
-      field_delimiter = ','
-      skip_header = 1
-      );
-  ```
-
-  You should see a confirmation message after running the command.
-
-3. Create `orders` table. Delete all contents in the Editor. Run the following command to create…
-
-  ```sql
-  create table raw.jaffle_shop.orders
-  ( id integer,
-    user_id integer,
-    order_date date,
-    status varchar,
-    _etl_loaded_at timestamp default current_timestamp
-  );
-  ```
-
-  You should see a confirmation message after running the command.
-
-4. Load data. Delete all contents in the Editor, then run this command to load data into the orders table:
-
-  ```sql
-  copy into raw.jaffle_shop.orders (id, user_id, order_date, status)
-  from 's3://dbt-tutorial-public/jaffle_shop_orders.csv'
-  file_format = (
-      type = 'CSV'
-      field_delimiter = ','
-      skip_header = 1
-      );
-  ```
-
-  You should see a confirmation message after running the command.
-
-5. Create `payment` table. Delete all contents in the Editor. Run the following command to create the payment table:
-
-  ```sql
-  create table raw.stripe.payment
-  ( id integer,
-    orderid integer,
-    paymentmethod varchar,
-    status varchar,
-    amount integer,
-    created date,
-    _batched_at timestamp default current_timestamp
-  );
-  ```
-
-  You should see a confirmation message after running the command.
-
-6. Load data. Delete all contents in the Editor. Run the following command to load data into the payment table:
-
-  ```sql
-  copy into raw.stripe.payment (id, orderid, paymentmethod, status, amount, created)
-  from 's3://dbt-tutorial-public/stripe_payments.csv'
-  file_format = (
-      type = 'CSV'
-      field_delimiter = ','
-      skip_header = 1
-      );
-  ```
-
-  You should see a confirmation message after running the command.
-
-7. Verify data. Verify that the data is loaded by running these SQL queries. Confirm that you can see output for each one, like the following confirmation image.
-
-  ```sql
-  select * from raw.jaffle_shop.customers;
-  select * from raw.jaffle_shop.orders;
-  select * from raw.stripe.payment;
-  ```
+<LoadData/>
 
   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-snowflake-confirm.jpg" width="90%" title="The image displays Snowflake's confirmation output when data loaded correctly in the Editor." />
 
@@ -1112,7 +1001,7 @@ select * from
   {{ semantic_layer.query (
     metrics = ['order_total', 'order_count', large_orders', 'customers_with_orders', 'avg_order_value', pct_of_orders_that_are_large'],
     group_by = 
-    [Dimension('metric_time').grain('day) ]
+    [Dimension('metric_time').grain('day') ]
 ) }}
 ```
 

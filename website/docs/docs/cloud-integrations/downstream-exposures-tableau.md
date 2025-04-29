@@ -8,7 +8,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 # Set up automatic exposures in Tableau <Lifecycle status="managed" />
 
 <IntroText>
-Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/collaborate/explore-projects">dbt Explorer</a> and the [dbt Cloud job scheduler](/docs/deploy/job-scheduler) for a richer experience.
+Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Explorer</a> and the [dbt Cloud job scheduler](/docs/deploy/job-scheduler) for a richer experience.
 
 </IntroText>
 
@@ -21,7 +21,7 @@ As a data team, it’s critical that you have context into the downstream use ca
 
 In <Constant name="cloud" />, you can configure downstream exposures in two ways:
 - Manually &mdash; Declared [explicitly](/docs/build/exposures#declaring-an-exposure) in your project’s YAML files.
-- Automatic &mdash;  <Constant name="cloud" /> [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures) automatically for supported integrations, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [<Constant name="explorer" />](/docs/collaborate/explore-projects), and behave like manual exposures. However, they don’t exist in YAML files.
+- Automatic &mdash;  <Constant name="cloud" /> [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures) automatically for supported integrations, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [<Constant name="explorer" />](/docs/explore/explore-projects), and behave like manual exposures. However, they don’t exist in YAML files.
 
 :::info Tableau Server
 If you're using Tableau Server, you need to add the [<Constant name="cloud" /> IP addresses for your region](/docs/cloud/about-cloud/access-regions-ip-addresses) to your allowlist.

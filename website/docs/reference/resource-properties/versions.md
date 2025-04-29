@@ -43,7 +43,7 @@ The value of the version identifier is used to order versions of a model relativ
 
 In general, we recommend that you use a simple "major versioning" scheme for your models: `1`, `2`, `3`, and so on, where each version reflects a breaking change from previous versions. You are able to use other versioning schemes. dbt will sort your version identifiers alphabetically if the values are not all numeric. You should **not** include the letter `v` in the version identifier, as dbt will do that for you.
 
-To run a model with multiple versions, you can use the [`--select` flag](/reference/node-selection/syntax). Refer to [Model versions](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) for more information and syntax.
+To run a model with multiple versions, you can use the [`--select` flag](/reference/node-selection/syntax). Refer to [Model versions](/docs/mesh/govern/model-versions#run-a-model-with-multiple-versions) for more information and syntax.
 
 
 ### `defined_in`
@@ -184,7 +184,7 @@ Each other version has declared a modification from the top-level property:
 ### Our recommendations
 - Follow a consistent naming convention for model versions and aliases.
 - Use `defined_in` and `alias` only if you have good reason.
-- Create a view that always points to the latest version of your model. You can automate this for all versioned models in your project with an `on-run-end` hook. For more details, read the full docs on ["Model versions"](/docs/collaborate/govern/model-versions#configuring-database-location-with-alias)
+- Create a view that always points to the latest version of your model. You can automate this for all versioned models in your project with an `on-run-end` hook. For more details, read the full docs on ["Model versions"](/docs/mesh/govern/model-versions#configuring-database-location-with-alias)
 
 ### Detecting breaking changes
 
@@ -233,7 +233,7 @@ Breaking Change to Contract Error in model sometable (models/sometable.sql)
    - order_id (number -> int)
 
   Consider making an additive (non-breaking) change instead, if possible.
-  Otherwise, create a new model version: https://docs.getdbt.com/docs/collaborate/govern/model-versions
+  Otherwise, create a new model version: https://docs.getdbt.com/docs/mesh/govern/model-versions
 ```
 
 </TabItem>

@@ -35,8 +35,8 @@ Large data sets can slow down dbt build times, making it harder for developers t
 
 With [hybrid projects](/docs/deploy/hybrid-projects), <Constant name="core"/> users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud"/>. This enhances hybrid <Constant name="core"/>/<Constant name="cloud"/> deployments by:
 
-- Fostering collaboration between <Constant name="cloud"/> + <Constant name="core"/> users by enabling them to visualize and perform [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in <Constant name="core"/> projects. This feature unifies <Constant name="cloud"/> + <Constant name="core"/> workflows for a more connected dbt experience.
-- Giving <Constant name="cloud"/> and <Constant name="core"/> users insights into their models and assets in [<Constant name="explorer"/>](/docs/collaborate/explore-projects). To view <Constant name="explorer"/>, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
+- Fostering collaboration between <Constant name="cloud"/> + <Constant name="core"/> users by enabling them to visualize and perform [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in <Constant name="core"/> projects. This feature unifies <Constant name="cloud"/> + <Constant name="core"/> workflows for a more connected dbt experience.
+- Giving <Constant name="cloud"/> and <Constant name="core"/> users insights into their models and assets in [<Constant name="explorer"/>](/docs/explore/explore-projects). To view <Constant name="explorer"/>, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
 - (Coming soon) Enabling users working in the [<Constant name="visual_editor"/>](/docs/cloud/canvas) to build off of models already created by a central data team in <Constant name="core"/> rather than having to start from scratch.
 
 Hybrid projects are available as a private beta to [<Constant name="cloud"/> Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
@@ -48,6 +48,96 @@ dbt Core v1.10 introduces new flags for [managing changes to legacy behaviors](
 You can read more about each of these behavior changes in the following links:
 
 - (Introduced, disabled by default) [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation). If the flag is set to `True`, dbt will raise a warning if the argument `type` names you've added in your macro YAMLs don't match the argument names in your macro or if the argument types aren't valid according to the [supported types](/reference/resource-properties/arguments#supported-types).
+
+### Deprecation warnings
+
+Starting in `v1.10`, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
+
+- Custom inputs (for example, unrecognized resource properties, configurations, and top-level keys)
+- Duplicate YAML keys in the same file
+- Unexpected jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
+- And more
+
+dbt will start raising these warnings in version `1.10`, but making these changes will not be a prerequisite for using it. We at dbt Labs understand that it will take existing users time to migrate their projects, and it is not our goal to disrupt anyone with this update. The goal is to enable you to work with more safety, feedback, and confidence going forward.
+
+What does this mean for you?
+
+1. If your project (or dbt package) encounters a new deprecation warning in `v1.10`, plan to update your invalid code soon. Although it’s just a warning for now, in a future version, dbt will enforce stricter validation of the inputs in your project. Check out the [`dbt-cleanup` tool](https://github.com/dbt-labs/dbt-cleanup) to autofix many of these!
+2. In the future, the [`meta` config](/reference/resource-configs/meta) will be the only place to put custom user-defined attributes. Everything else will be strongly typed and strictly validated. If you have an extra attribute you want to include in your project, or a model config you want to access in a custom materialization, you must nest it under `meta` moving forward.
+3. If you are using the [`—-warn-error` flag](/reference/global-configs/warnings) (or `--warn-error-options '{"error": "all"}'`) to promote all warnings to errors, this will include new deprecation warnings coming to dbt Core. If you don’t want these to be promoted to errors, the `--warn-error-options` flag gives you more granular control over exactly which types of warnings are treated as errors. You can set `"warn": ["Deprecations"]` (new as of `v1.10`) to continue treating the deprecation warnings as warnings.
+
+#### Custom inputs
+  
+Historically, dbt has allowed you to configure inputs largely unconstrained. A common example of this is setting custom YAML properties:
+
+```yml
+
+models:
+  - name: my_model
+    description: A model in my project.
+    dbt_is_awesome: true # a custom property
+
+```
+
+dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes challenging to validate your project's configuration. This creates unintended issues such as:
+- Silently ignoring misspelled properties and configurations (for example, `desciption:` instead of `description:`).
+- Unintended collisions with user code when dbt introduces a new “reserved” property or configuration.
+
+If you have an unrecognized custom property, you will receive a warning, and in a future version, dbt will cease to support custom properties. Moving forward, these should be nested under the [`meta` config](/reference/resource-configs/meta), which will be the only place to put custom user-defined attributes:
+
+```yml
+
+models:
+  - name: my_model
+    description: A model in my project.
+    config:
+      meta:
+        dbt_is_awesome: true 
+
+```
+
+#### Duplicate keys in the same yaml file
+
+If two identical keys exist in the same YAML file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys. Previously, if identical keys existed in the same YAML file, dbt silently overwrite, using the last configuration listed in the file. 
+
+<File name='profiles.yml'>
+
+```yml
+
+my_profile:
+  target: my_target
+  outputs:
+...
+
+my_profile: # dbt would use only this profile key
+  target: my_other_target
+  outputs:
+...
+
+```
+
+</File>
+
+Moving forward, you should delete unused keys or move them to a separate YAML file.
+
+#### Unexpected jinja blocks
+
+If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
+
+<File name='macros/my_macro.sql'>
+
+```sql
+
+{% endmacro %} # orphaned endmacro jinja block
+
+{% macro hello() %}
+hello!
+{% endmacro %}
+
+```
+</File>
+
+Moving forward, you should delete these orphaned jinja blocks.
 
 ## Quick hits
 

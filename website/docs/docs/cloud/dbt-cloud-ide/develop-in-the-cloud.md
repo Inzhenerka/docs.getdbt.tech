@@ -53,7 +53,7 @@ To understand how to navigate the <Constant name="cloud_ide" /> and its user int
 | Feature  |  Description |
 |---|---|
 | [**<Constant name="cloud_ide" /> shortcuts**](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) | You can access a variety of [commands and actions](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) in the <Constant name="cloud_ide" /> by choosing the appropriate keyboard shortcut. Use the shortcuts for common tasks like building modified models or resuming builds from the last failure. |
-| **IDE version control** | The <Constant name="cloud_ide" /> version control section and git button allow you to apply the concept of [version control](/docs/collaborate/git/version-control-basics) to your project directly into the <Constant name="cloud_ide" />. <br /><br /> - Create or change branches, execute git commands using the git button.<br /> - Commit or revert individual files by right-clicking the edited file<br /> - [Resolve merge conflicts](/docs/collaborate/git/merge-conflicts)<br /> - Link to the repo directly by clicking the branch name <br /> - Edit, format, or lint files and execute dbt commands in your primary protected branch, and commit to a new branch.<br /> - Use Git diff view to view what has been changed in a file before you make a pull request.<br /> - Use the **Prune branches** [button](/docs/cloud/dbt-cloud-ide/ide-user-interface#prune-branches-modal) (dbt v1.6 and higher) to delete local branches that have been deleted from the remote repository, keeping your branch management tidy.<br /> - Sign your [git commits](/docs/cloud/dbt-cloud-ide/git-commit-signing) to mark them as 'Verified'. <Lifecycle status="managed" /> |
+| **IDE version control** | The <Constant name="cloud_ide" /> version control section and git button allow you to apply the concept of [version control](/docs/cloud/git/version-control-basics) to your project directly into the <Constant name="cloud_ide" />. <br /><br /> - Create or change branches, execute git commands using the git button.<br /> - Commit or revert individual files by right-clicking the edited file<br /> - [Resolve merge conflicts](/docs/cloud/git/merge-conflicts)<br /> - Link to the repo directly by clicking the branch name <br /> - Edit, format, or lint files and execute dbt commands in your primary protected branch, and commit to a new branch.<br /> - Use Git diff view to view what has been changed in a file before you make a pull request.<br /> - Use the **Prune branches** [button](/docs/cloud/dbt-cloud-ide/ide-user-interface#prune-branches-modal) (dbt v1.6 and higher) to delete local branches that have been deleted from the remote repository, keeping your branch management tidy.<br /> - Sign your [git commits](/docs/cloud/dbt-cloud-ide/git-commit-signing) to mark them as 'Verified'. <Lifecycle status="managed" /> |
 | **Preview and Compile button** | You can [compile or preview](/docs/cloud/dbt-cloud-ide/ide-user-interface#console-section) code, a snippet of dbt code, or one of your dbt models after editing and saving. |
 | [**<Constant name="copilot" />**](/docs/cloud/dbt-cloud-ide/develop-copilot)| A powerful AI-powered assistant that can [generate code](/docs/cloud/dbt-cloud-ide/develop-copilot#generate-and-edit-code) using natural language, and [generate resources](/docs/cloud/dbt-cloud-ide/develop-copilot#generate-resources) (like documentation, tests, metrics, and semantic models) for you &mdash; with the click of a button. Available for <Constant name="cloud" /> Enterprise plans. |
 | **Build, test, and run button**  | Build, test, and run your project with the click of a button or by using the command bar.  
@@ -65,7 +65,7 @@ To understand how to navigate the <Constant name="cloud_ide" /> and its user int
 | **Lint and Format** | [Lint and format](/docs/cloud/dbt-cloud-ide/lint-format) your files with a click of a button, powered by SQLFluff, sqlfmt, Prettier, and Black.
 | **dbt autocomplete**  |  Autocomplete features to help you develop faster:<br /><br />  - Use `ref` to autocomplete your model names<br /> - Use `source` to autocomplete your source name + table name<br /> - Use `macro` to autocomplete your arguments<br /> - Use `env var` to autocomplete env var<br /> - Start typing a hyphen (-) to use in-line autocomplete in a YAML filebr /> - Automatically create models from dbt sources with a click of a button.  |
 | **<Term id="dag" /> in the IDE** | You can see how models are used as building blocks from left to right to transform your data from raw sources into cleaned-up modular derived pieces and final outputs on the far right of the DAG. The default view is 2+model+2 (defaults to display 2 nodes away), however, you can change it to +model+ (full  <Term id="dag" />). Note the `--exclude` flag isn't supported. |
-| **Status bar** | This area provides you with useful information about your <Constant name="cloud_ide" /> and project status. You also have additional options like enabling light or dark mode, restarting the <Constant name="cloud_ide" />, or [recloning your repo](/docs/collaborate/git/version-control-basics).
+| **Status bar** | This area provides you with useful information about your <Constant name="cloud_ide" /> and project status. You also have additional options like enabling light or dark mode, restarting the <Constant name="cloud_ide" />, or [recloning your repo](/docs/cloud/git/version-control-basics).
 | **Dark mode**  | From the status bar in the Cloud <Constant name="cloud_ide" />, enable dark mode for a great viewing experience in low-light environments. 
 
 
@@ -93,8 +93,8 @@ Set up your developer credentials:
 
 <Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.jpg" width="85%" height="100" title="Configure developer credentials in your Profile"/>
 
-1. Access the <Constant name="cloud_ide" /> by clicking **Develop** at the top of the page.
-2. Initialize your project and familiarize yourself with the <Constant name="cloud_ide" /> and its delightful [features](#cloud-ide-features).
+6. Access the <Constant name="cloud_ide" /> by clicking **Develop** at the top of the page.
+7. Initialize your project and familiarize yourself with the <Constant name="cloud_ide" /> and its delightful [features](#cloud-ide-features).
 
 Nice job, you're ready to start developing and building models 🎉!  
 
@@ -135,14 +135,14 @@ Nice job, you're ready to start developing and building models 🎉!
 
 - **Generate your YAML configurations with <Constant name="copilot" />** <Lifecycle status="managed" />  &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence (AI) feature that helps automate development in <Constant name="cloud" />. It can [generate code](/docs/cloud/dbt-cloud-ide/develop-copilot#generate-and-edit-code) using natural language, and [generate resources](/docs/cloud/dbt-cloud-ide/develop-copilot#generate-resources) (like documentation, tests, metrics,and semantic models) for you directly in the <Constant name="cloud_ide" />, so you can accomplish more in less time. Available for <Constant name="cloud" /> Enterprise plans.
 
-- **Build and view your project's docs** &mdash; The <Constant name="cloud_ide" /> makes it possible to [build and view](/docs/collaborate/build-and-view-your-docs) documentation for your dbt project while your code is still in development. With this workflow, you can inspect and verify what your project's generated documentation will look like before your changes are released to production.
+- **Build and view your project's docs** &mdash; The <Constant name="cloud_ide" /> makes it possible to [build and view](/docs/explore/build-and-view-your-docs) documentation for your dbt project while your code is still in development. With this workflow, you can inspect and verify what your project's generated documentation will look like before your changes are released to production.
 
 
 ## Related docs
 
 - [How we style our dbt projects](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
 - [User interface](/docs/cloud/dbt-cloud-ide/ide-user-interface)
-- [Version control basics](/docs/collaborate/git/version-control-basics)
+- [Version control basics](/docs/cloud/git/version-control-basics)
 - [dbt commands](/reference/dbt-commands)
 
 ## FAQs
