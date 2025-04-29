@@ -2,21 +2,17 @@
 title: "Deprecations"
 ---
 
-As dbt runs, dbt generates [events](/reference/events-logging). Sometimes these events are _deprecations_. Deprecations are a special type of warning. Deprecation warnings exist to let you know that there are problems in parts of your project that will be breaking in a future version of dbt. It is important that if there are deprecation warnings in your project, time is taken to resolve them.
+As dbt runs, it generates different categories of [events](/reference/events-logging), one of which is _deprecations_. Deprecations are a special type of warning that lets you know that there are problems in parts of your project that will result in breaking changes in a future version of dbt. It is important to resolve any deprecation warnings in your project before the changes are made.
 
 ## List of Deprecation Warnings
 
+The following are deprecation warnings in dbt today and the associated version number in which they first appear.
+
 ### ConfigDataPathDeprecation
 
-#### Description
+In [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) `data-paths` has been renamed to [seed-paths](/reference/project-configs/model-paths). If you receive this deprecation warning, it means that `data-paths` is still being used in your project's `dbt_project.yml`.
 
-In [dbt 1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) we renamed `data-paths` to [seed-paths](/reference/project-configs/model-paths). Getting this deprecation means that `data-paths` is still being used in your project's `dbt_project.yml`.
-
-#### Resolution
-
-Change `data-paths` to `seed-paths` in your `dbt_project.yml`.
-
-#### Example Event
+Example warning:
 
 <File name='CLI'>
 ```bash
@@ -26,39 +22,36 @@ The `data-paths` config has been renamed to `seed-paths`. Please update your
 ```
 </File>
 
+#### ConfigDataPathDeprecation warning resolution
+
+Change `data-paths` to `seed-paths` in your `dbt_project.yml`.
+
 ### ConfigLogPathDeprecation
 
-#### Description
+[dbt v1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5) specifying `log-path` in `dbt_project.yml` was deprecated. Receiving this deprecation warning means that `log-path` is still specified in your `dbt_project.yml` and it's not set to the default value `logs`.
 
-In we used to allow specifying `log-path` in `dbt_project.yml`. We stopped allowing this in [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Getting this deprecation warning means that `log-path` is still specified in your `dbt_project.yml` and it's not set to the default value `logs`.
-
-#### Resolution
-
-Remove `log-path` from your `dbt_project.yml` and specify it via either the CLI flag `--log-path` or environment variable `DBT_LOG_PATH`  [as documented here](/reference/global-configs/logs#log-and-target-paths)
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
 23:39:18  [WARNING]: Deprecated functionality
-The `log-path` config in `dbt_project.yml` has been deprecated, and will no
+The `log-path` config in `dbt_project.yml` has been deprecated and will no
 longer be supported in a future version of dbt-core. If you wish to write dbt
 logs to a custom directory, please use the --log-path CLI flag or DBT_LOG_PATH
 env var instead.
 ```
 </File>
 
+#### ConfigLogPathDeprecation warning resolution
+
+Remove `log-path` from your `dbt_project.yml` and specify it via either the CLI flag `--log-path` or environment variable `DBT_LOG_PATH`  [as documented here](/reference/global-configs/logs#log-and-target-paths)
+
+
 ### ConfigSourcePathDeprecation
 
-#### Description
+In [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) `source-paths` has been renamed to [model-paths](/reference/project-configs/model-paths). Receiving this deprecation warning means that `source-paths` is still being used in your project's `dbt_project.yml`.
 
-In [dbt 1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) we renamed `source-paths` to [model-paths](/reference/project-configs/model-paths). Getting this deprecation means that `source-paths` is still being used in your project's `dbt_project.yml`.
-
-#### Resolution
-
-Change `source-paths` to `model-paths` in your `dbt_project.yml`.
-
-#### Example Event
+Example: 
 
 <File name='CLI'>
 ```bash
@@ -69,39 +62,37 @@ The `source-paths` config has been renamed to `model-paths`. Please update your
 ```
 </File>
 
+#### ConfigSourcePathDeprecation warning resolution
+
+Change `source-paths` to `model-paths` in your `dbt_project.yml`.
+
 ### ConfigTargetPathDeprecation
 
-#### Description
+In [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5) specifying  `target-path` in `dbt_project.yml` was deprecated. Receiving this deprecation warning means that `target-path` is still specified in your `dbt_project.yml` and it's not set to the default value, `target`.
 
-We used to allow specifying `target-path` in `dbt_project.yml`. We stopped allowing this in [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Getting this deprecation warning means that `target-path` is still specified in your `dbt_project.yml` and it's not set to the default value `target`.
-
-#### Resolution
-
-Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable `DBT_TARGET_PATH`  [as documented here](/reference/global-configs/logs#log-and-target-paths)
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
 23:22:01  [WARNING]: Deprecated functionality
-The `target-path` config in `dbt_project.yml` has been deprecated, and will no
+The `target-path` config in `dbt_project.yml` has been deprecated and will no
 longer be supported in a future version of dbt-core. If you wish to write dbt
 artifacts to a custom directory, please use the --target-path CLI flag or
 DBT_TARGET_PATH env var instead.
 ```
 </File>
 
+#### ConfigTargetPathDeprecation warning resolution
+
+Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
+
 ### ExposureNameDeprecation
 
 #### Description
 
-In [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation) we began only allowing letters, numbers, and underscores in the `name` property of [exposures](/reference/exposure-properties).
+In [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation), dbt began allowing only letters, numbers, and underscores in the `name` property of [exposures](/reference/exposure-properties).
 
-#### Resolution
-
-Ensure your exposure names only contain letters, numbers, and underscores. A more human readable name can be put in the `label` property of exposures.
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
@@ -115,17 +106,15 @@ dbt-core.
 ```
 </File>
 
+#### ExposureNameDeprecation warning resolution
+
+Ensure your exposure names only contain letters, numbers, and underscores. A more human-readable name can be put in the [`label`](/reference/exposure-properties#overview) property of exposures.
+
 ### MFCumulativeTypeParamsDeprecation
 
-#### Description
+In dbt [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) implementing `window` and `time_to_grain` directly on the `type_params` of a [metric](/reference/global-configs/behavior-changes#cumulative-metrics) was deprecated. 
 
-In dbt 1.9 we deprecated having `window` and `time_to_grain` directly on the `type_params` of a metric ([docs](/reference/global-configs/behavior-changes#cumulative-metrics)). 
-
-#### Resolution
-
-Nest your `window` and `time_to_grain` under the `cumulative_type_params` property within the `type_params` of the relevant metric.
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
@@ -138,17 +127,15 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes.
 ```
 </File>
 
+#### MFCumulativeTypeParamsDeprecation warning resolution
+
+Nest your `window` and `time_to_grain` under the `cumulative_type_params` property within the `type_params` of the relevant metric.
+
 ### MFTimespineWithoutYamlConfigurationDeprecation
 
-#### Description
+Before dbt v1.9, the MetricFlow time spine configuration was stored in a `metricflow_time_spine.sql` file. In [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) dbt introduced the [YAML timespine defintion](/docs/build/metricflow-time-spine#configuring-time-spine-in-yaml) for MetricFlow. It was then decided that it would be the standard going forward. If you see this deprecation warning, you don't have a YAML timespine definition for Metricflow.
 
-Prior to dbt 1.9, the MetricFlow time spine configuration was stored in a `metricflow_time_spine.sql` file. In 1.9 we introduced YAML timespine defintion for MetricFlow. When we introduced the YAML timespine definition, we decided that it would be the standard going forward. So if you are seeing this deprecation, it simply means that you don't have a YAML timespine definition for Metricflow.
-
-#### Resolution
-
-Define a timespine in YAML as [documented here](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
@@ -161,41 +148,35 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes
 ```
 </File>
 
+#### MFTimespineWithoutYamlConfigurationDeprecation warning resolution
+
+Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
+
 ### PackageInstallPathDeprecation
 
-#### Description
+The default location where packages are installed when running `dbt deps` has been updated from `dbt_modules` to `dbt_packages`. During a `dbt clean` dbt detected that `dbt_modules` is defined in the [clean-targets](/reference/project-configs/clean-targets) property in `dbt_project.yml` even though `dbt_modules` is not the [`packages-install-path`](/reference/project-configs/packages-install-path).
 
-We updated the default location that packages are installed when running `dbt deps` from `dbt_modules` to `dbt_packages`. During a `dbt clean` we detected that `dbt_modules` is defined in the [clean-targets](/reference/project-configs/clean-targets) property in `dbt_project.yml` even though `dbt_modules` is not the [`packages-install-path`](/reference/project-configs/packages-install-path).
-
-#### Resolution
-
-We recommend either of the following:
-1. replace `dbt_modules` with `dbt_packages` in your `clean-targets` spec (and also `.gitignore`).
-2. set `packages-install-path: dbt_modules` if you want to keep having packages install in `dbt_modules`.
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
 22:48:01  [WARNING]: Deprecated functionality
-        The default package install path has changed from `dbt_modules` to
-`dbt_packages`.         Please update `clean-targets` in `dbt_project.yml` and
-check `.gitignore` as well.         Or, set `packages-install-path: dbt_modules`
-if you'd like to keep the current value.
+The default package install path has changed from `dbt_modules` to
+`dbt_packages`. Please update `clean-targets` in `dbt_project.yml` and
+check `.gitignore`. Or, set `packages-install-path: dbt_modules`
+If you'd like to keep the current value.
 ```
 </File>
 
+#### PackageInstallPathDeprecation warning resolution
+
+The following are recommended approaches:
+1. Replace `dbt_modules` with `dbt_packages` in your `clean-targets` spec (and `.gitignore`).
+2. Set `packages-install-path: dbt_modules` if you want to keep having packages installed in `dbt_modules`.
+
 ### PackageRedirectDeprecation
 
-#### Description
-
-A `PackageRedirectDeprecation` means that a package currently used in your project, defined in packages.yml, has been renamed. This generally happens when the ownership of a package has changed or the scope of the package has changed. It is likely that the package currently referenced in your packages.yml will stop being actively maintained (as development has been moved to the new package name). Thus, at some point the named package you are using will likely cease working with dbt.
-
-#### Resolution
-
-Begin referencing the new package in your `packages.yml` instead of the old package.
-
-#### Example Event
+This deprecation warning means a package currently used in your project, defined in `packages.yml`, has been renamed. This generally happens when the ownership of a package has changed or the scope of the package has changed. It is likely that the package currently referenced in your `packages.yml` has stopped being actively maintained (as development has been moved to the new package name), and at some point, the named package will cease working with dbt.
 
 <File name='CLI'>
 ```bash
@@ -206,17 +187,15 @@ The `fishtown-analytics/dbt_utils` package is deprecated in favor of
 ```
 </File>
 
+#### PackageRedirectDeprecation warning Resolution
+
+Begin referencing the new package in your `packages.yml` instead of the old package.
+
 ### ProjectFlagsMovedDeprecation
 
-#### Description
+In dbt [v1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#quick-hits), the `config` property that had been configurable in `profiles.yml` was deprecated in favor of `flags` in the `dbt_project.yaml`. If you see this deprecation warning, dbt detected the `config` property in your `profiles.yml`.
 
-The `config` property that had been setable in `profiles.yml` was [deprecated in dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#quick-hits) in favor of `flags` in the `dbt_project.yaml`. If you are seeing this deprecation it means that we detected the `config` property in your `profiles.yml`.
-
-#### Resolution
-
-Remove `config` from `profiles.yml`. Additionally add any previous `config` in `profiles.yml` to `flags` in `dbt_project.yml` [as documented here](/reference/global-configs/about-global-configs).
-
-#### Example Event
+Example:
 
 <File name='CLI'>
 ```bash
@@ -225,17 +204,15 @@ User config should be moved from the 'config' key in profiles.yml to the 'flags'
 ```
 </File>
 
+#### ProjectFlagsMovedDeprecation warning resolution
+
+Remove `config` from `profiles.yml`. Add any previous [`config`](/reference/global-configs/about-global-configs) in `profiles.yml` to `flags` in `dbt_project.yml`.
+
 ### ResourceNamesWithSpacesDeprecation
 
-#### Description
+In [dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#managing-changes-to-legacy-behaviors), allowing resource names to have spaces in them was deprecated. If you get this deprecation warning, dbt detected a resource name with a space in it.
 
-In [dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#managing-changes-to-legacy-behaviors) we deprecated allowing resource names to have spaces in them. If you are getting this deprecation it means that we detected a resource name with a space in it.
-
-#### Resolution
-
-Rename the resource in violation so that it no longer contains a space in it's name.
-
-#### Example Event
+Example: 
 
 <File name='CLI'>
 ```bash
@@ -243,18 +220,15 @@ Rename the resource in violation so that it no longer contains a space in it's n
 ```
 </File>
 
+#### ResourceNamesWithSpacesDeprecation warning resolution
+
+Rename the resource in violation so it no longer contains a space in its name.
+
 ### SourceFreshnessProjectHooksNotRun
 
-#### Description
+If you are seeing this, it means that the behavior flag `source_freshness_run_project_hooks` is set to `false` and either `on-run-start` or `on-run-end` is defined ([docs](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness)). Previously, project hooks wouldn't be run on sources when `dbt source freshness` was run. 
 
-It used to be that project hooks _wouldn't_ be run on sources when `dbt source freshness` was run. If you are seeing
-this it means that the behavior flag `source_freshness_run_project_hooks` is set to `false` and either `on-run-start` or `on-run-end` is defined ([docs](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness)).
-
-#### Resolution
-
-Set `source_freshness_run_project_hooks` to `true`. If you do need to skip project hooks during a `dbt source freshness` invocation, please follow the [documentation here](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness) for skipping them.
-
-#### Example Event
+Example: 
 
 <File name='CLI'>
 ```bash
@@ -263,3 +237,7 @@ will start running `on-run-start` and `on-run-end` hooks by default. For more
 information: https://docs.getdbt.com/reference/global-configs/legacy-behaviors
 ```
 </File>
+
+#### SourceFreshnessProjectHooksNotRun warning resolution
+
+Set `source_freshness_run_project_hooks` to `true`. For instructions on skipping project hooks during a `dbt source freshness` invocation, check out the [behavior change documentation](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness).
