@@ -17,9 +17,9 @@ In this quickstart guide, you'll learn how to use <Constant name="cloud" /> with
 - Load sample data into your Redshift account.
 - Connect <Constant name="cloud" /> to Redshift.
 - Take a sample query and turn it into a model in your dbt project. A model in dbt is a select statement.
-- Add tests to your models
-- Document your models
-- Schedule a job to run
+- Add tests to your models.
+- Document your models.
+- Schedule a job to run.
 
 :::tip Videos for you
 Check out [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) for free if you're interested in course learning with videos.
@@ -191,6 +191,11 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
 
 6. Click **Test Connection**. This verifies that <Constant name="cloud" /> can access your Redshift cluster.
 7. Click **Next** if the test succeeded. If it failed, you might need to check your Redshift settings and credentials.
+
+    :::tip
+    When connecting dbt Cloud to Redshift, it is recommended to use minimal configuration for Virtual Private Clouds, route tables, IP gateways, and inbound rules.
+    :::
+
 
 ## Set up a dbt Cloud managed repository 
 <Snippet path="tutorial-managed-repo" />
