@@ -895,15 +895,60 @@ Find more information about materialized view limitations in Google's BigQuery [
 
 ## Python model configuration
 
-The BigQuery adapter supports Python models. Google Cloud Platform's (GCP) Dataproc uses PySpark as the processing framework for these models. 
+The `dbt-bigquery` adapter uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
 
-The `dbt-bigquery` adapter uses a service called Dataproc to submit your Python models as PySpark jobs. That Python/PySpark code will read from your tables and views in BigQuery, perform all computation in Dataproc, and write the final result back to BigQuery.
+**Submission methods:**
+BigQuery supports a few different mechanisms to submit python code, each with relative advantages. 
 
-**Submission methods.** Dataproc supports two submission methods: `serverless` and `cluster`. Dataproc Serverless does not require a ready cluster, which saves on hassle and cost—but it is slower to start up, and much more limited in terms of available configuration. For example, Dataproc Serverless supports only a small set of Python packages, though it does include `pandas`, `numpy`, and `scikit-learn`. (See the full list [here](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers#example_custom_container_image_build), under "The following packages are installed in the default image"). Whereas, by creating a Dataproc Cluster in advance, you can fine-tune the cluster's configuration, install any PyPI packages you want, and benefit from faster, more responsive runtimes.
+- BigQuery Dataframes (BigFrames) : Can execute pandas and scikit. There's no need to manage infrastructure and leverages BigQuery distributed query engines. It's great for analysts, data scientists, and ML engineers who want to manipulate big data using a pandas-like syntax.
 
-Use the `cluster` submission method with dedicated Dataproc clusters you or your organization manage. Use the `serverless` submission method to avoid managing a Spark cluster. The latter may be quicker for getting started, but both are valid for production.
+- Dataproc (`serverless` or pre-configured `cluster`):  Can execute Python models as PySpark jobs, reading from and writing to BigQuery. `serverless` is simpler but slower with limited configuration and pre-installed packages (`pandas`, `numpy`, `scikit-learn`), while `cluster` offers full control and faster runtimes. Good for complex, long-running batch pipelines and legacy Hadoop/Spark workflows but often slower for ad-hoc or interactive workloads.
 
-**Additional setup:**
+**BigQuery Dataframe setup:**
+
+```bash
+# IAM permission if using service account
+
+#Create Service Account
+gcloud iam service-accounts create dbt-bigframes-sa
+#Grant BigQuery User Role
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.user
+#Grant BigQuery Data Editor role. This can be restricted at dataset level
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.dataEditor
+#Grant Service Account user 
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
+#Grant Colab Entperprise User
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/aiplatform.colabEnterpriseUser
+
+# update the project.yaml file 
+models:
+  my_dbt_project:
+    submission_method: bigframes
+
+
+# update the profile.yaml file such as this
+my_dbt_project_sa:
+  outputs:
+    dev:
+      compute_region: us-central1
+      dataset: <BIGQUERY_DATESET>
+      gcs_bucket: <GCS BUCKET USED FOR BIGFRAME LOGS>
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      keyfile: <SERVICE ACCOUNT KEY FILE>
+      location: US
+      method: service-account
+      priority: interactive
+      project: <BIGQUERY_PROJECT>
+      threads: 1
+      type: bigquery
+  target: dev
+
+```
+
+**Note:** BigQuery Dataframe is executed on a default Colab runtime. If no `default` runtime template is available, the adapter will automatically create one for you and mark it `default` for next time usage (assuming it has the right permissions).
+
+**Dataproc setup:**
 - Create or use an existing [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
 - Enable Dataproc APIs for your project + region
 - If using the `cluster` submission method: Create or use an existing [Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) with the [Spark BigQuery connector initialization action](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google recommends copying the action into your own Cloud Storage bucket, rather than using the example version shown in the screenshot)
@@ -994,12 +1039,12 @@ The BigQuery adapter also supports Python models with the following additional c
 | `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
 | `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
 
-**Related docs:**
+### The `enable_list_inference` parameter
+The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation.
+By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
 
-- [Dataproc overview](https://cloud.google.com/dataproc/docs/concepts/overview)
-- [Create a Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster)
-- [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
-- [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
+### The `intermediate_format` parameter
+The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
 
 ### The `submission_method` parameter
 The `submission_method` parameter specifies whether the job will run on BigQuery Dataframe or Serverless Spark. `submission_method` is not required when `dataproc_cluster_name` is declared.
@@ -1012,6 +1057,13 @@ The `compute_region` parameter specifies the region of the job.
 
 ### The `gcs_bucket` parameter
 The `gcs_bucket` parameter specifies the GCS bucket used for storing artifacts for the job.
+
+**Related docs:**
+
+- [Dataproc overview](https://cloud.google.com/dataproc/docs/concepts/overview)
+- [Create a Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster)
+- [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
+- [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 
 <VersionBlock firstVersion="1.8">
 
