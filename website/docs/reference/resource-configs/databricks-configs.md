@@ -718,7 +718,7 @@ insert into analytics.replace_where_incremental
 
 </VersionBlock>
 
-## Python models configuration
+## Python model configuration
 
 The Databricks adapter supports Python models. Databricks uses PySpark as the processing framework for these models. 
 
