@@ -571,7 +571,7 @@ The Snowflake adapter supports Python models. Snowflake uses its own framework, 
 
 **Installing packages:** Snowpark supports several popular packages via Anaconda. Refer to the [complete list](https://repo.anaconda.com/pkgs/snowflake/) for more details. Packages are installed when your model is run. Different models can have different package dependencies. If you use third-party packages, Snowflake recommends using a dedicated virtual warehouse for best performance rather than one with many concurrent users.
 
-**Python version:** To specify a different python version, use the following configuration:
+**Python version:** To specify a different Python version, use the following configuration:
 
 ```python
 def model(dbt, session):
