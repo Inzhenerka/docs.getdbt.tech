@@ -77,7 +77,7 @@ Glue Data Catalog supports the Iceberg REST specification so that you can connec
 
 <TabItem value="Iceberg REST API">
 
-For Catalogs that are compatible with the open-source Apache Iceberg™ REST OpenAPI specification, you can set up a catalog integration. 
+You can set up a catalog integration for or Catalogs that are compatible with the open-source Apache Iceberg™ REST  specification, 
 
 Example code: 
 
