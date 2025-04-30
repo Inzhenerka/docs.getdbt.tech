@@ -5,7 +5,7 @@ sidebar_label: "About Iceberg catalogs"
 description: Understand how Iceberg catalogs fit into your dbt Mesh configurations.
 ---
 
-Data catalogs have recently become at the top of the data industry's mind, especially given the excitement about Iceberg and data governance for AI. It’s also an overused term that represents a broad set of tools. So, before you dive into Iceberg catalogs, let's start at the beginning: 
+Data catalogs have recently become at the top of the data industry's mind, especially given the excitement about Iceberg and data governance for AI. It has become an overused term that represents a broad set of tools. So, before we dive into Iceberg catalogs, let's start at the beginning: 
 
 ## About data catalogs
 
