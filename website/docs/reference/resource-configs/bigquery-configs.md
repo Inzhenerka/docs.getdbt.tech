@@ -893,7 +893,7 @@ As with most data platforms, there are limitations associated with materialized 
 
 Find more information about materialized view limitations in Google's BigQuery [docs](https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations).
 
-## Python models configuration
+## Python model configuration
 
 The BigQuery adapter supports Python models. Google Cloud Platform's (GCP) Dataproc uses PySpark as the processing framework for these models. 
 
