@@ -26,7 +26,7 @@ The steps to integrate GitLab in <Constant name="cloud" /> depend on your plan. 
 
 :::note
 
-Only Team plan accounts will be able to configure [Git merges](/docs/deploy/merge-jobs) to trigger job runs. This feature is not available to Developer plans.
+You can only configure Team and Enterprise plan accounts to enable [Git merges](/docs/deploy/merge-jobs) to trigger job runs. This feature is not available to Developer plans.
 
 :::
 
