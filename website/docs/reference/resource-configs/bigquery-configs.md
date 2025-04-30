@@ -1042,7 +1042,7 @@ The BigQuery Python models also have the following additional configuration para
 - The `enable_list_inference` parameter
   - The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation. By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
 
-- The `intermediate_format` paramete
+- The `intermediate_format` parameter
   - The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
 
 - The `submission_method` parameter
