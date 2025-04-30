@@ -48,7 +48,7 @@ Iceberg catalogs are a critical abstraction layer that maps logical table names 
 There are multiple types of Iceberg catalogs:
 - Iceberg REST
 - Iceberg REST compatible
-- Delta/Iceberg Hybrid
+- Delta/Iceberg Hybrid*
 
 Hybrid catalogs support storing duplicate table metadata in Iceberg and Delta Lake formats, enabling workflows like an Iceberg engine to read from Delta Lake or vice versa. There are limitations to this specific to how the platform has implemented this. 
 
