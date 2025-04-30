@@ -50,7 +50,7 @@ There are multiple types of Iceberg catalogs:
 - Iceberg REST compatible
 - Delta/Iceberg Hybrid
 
-Hybrid catalogs support storing table metadata in Iceberg and Delta Lake formats, enabling hybrid computing environments. 
+Hybrid catalogs support storing duplicate table metadata in Iceberg and Delta Lake formats, enabling workflows like an Iceberg engine to read from Delta Lake or vice versa. There are limitations to this specific to how the platform has implemented this. 
 
 ### How dbt works with Iceberg catalogs
 
