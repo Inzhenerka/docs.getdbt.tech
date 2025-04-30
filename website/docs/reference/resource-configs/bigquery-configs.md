@@ -1028,7 +1028,7 @@ Installation of third-party packages on Dataproc varies depending on whether it'
 
 <Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-pip-packages.png" title="Adding packages to install via pip at cluster startup"/>
 
-The BigQuery adapter also supports Python models with the following additional configuration parameters:
+The BigQuery Python models also have the following additional configuration parameters:
 
 | Parameter               | Type        | Required | Default   | Valid values     |
 | :---------------------- | :---------- | :------- | :-------- | :--------------- |
@@ -1039,23 +1039,23 @@ The BigQuery adapter also supports Python models with the following additional c
 | `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
 | `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
 
-### The `enable_list_inference` parameter
+-  The `enable_list_inference` parameter
 The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation.
 By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
 
-### The `intermediate_format` parameter
+- The `intermediate_format` parameter
 The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
 
-### The `submission_method` parameter
+-  The `submission_method` parameter
 The `submission_method` parameter specifies whether the job will run on BigQuery Dataframe or Serverless Spark. `submission_method` is not required when `dataproc_cluster_name` is declared.
 
-### The `notebook_template_id` parameter
+-  The `notebook_template_id` parameter
 The `notebook_template_id` parameter specifies runtime template in Colab Enterprise.
 
-### The `compute_region` parameter
+- The `compute_region` parameter
 The `compute_region` parameter specifies the region of the job.
 
-### The `gcs_bucket` parameter
+- The `gcs_bucket` parameter
 The `gcs_bucket` parameter specifies the GCS bucket used for storing artifacts for the job.
 
 **Related docs:**
