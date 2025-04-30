@@ -986,9 +986,13 @@ Installation of third-party packages on Dataproc varies depending on whether it'
 The BigQuery adapter also supports Python models with the following additional configuration parameters:
 
 | Parameter               | Type        | Required | Default   | Valid values     |
-|-------------------------|-------------|----------|-----------|------------------|
+| :---------------------- | :---------- | :------- | :-------- | :--------------- |
 | `enable_list_inference` | `<boolean>` | no       | `True`    | `True`, `False`  |
 | `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
+| `submission_method`     | `<string>`  | no       | ``        | `serverless`, `bigframes`, `cluster` |
+| `notebook_template_id`  | `<Integer>` | no       | ``        | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
+| `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
+| `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
 
 **Related docs:**
 
@@ -996,6 +1000,18 @@ The BigQuery adapter also supports Python models with the following additional c
 - [Create a Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster)
 - [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
 - [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
+
+### The `submission_method` parameter
+The `submission_method` parameter specifies whether the job will run on BigQuery Dataframe or Serverless Spark. `submission_method` is not required when `dataproc_cluster_name` is declared.
+
+### The `notebook_template_id` parameter
+The `notebook_template_id` parameter specifies runtime template in Colab Enterprise.
+
+### The `compute_region` parameter
+The `compute_region` parameter specifies the region of the job.
+
+### The `gcs_bucket` parameter
+The `gcs_bucket` parameter specifies the GCS bucket used for storing artifacts for the job.
 
 <VersionBlock firstVersion="1.8">
 

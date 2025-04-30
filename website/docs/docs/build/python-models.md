@@ -87,7 +87,7 @@ Each Python model lives in a `.py` file in your `models/` folder. It defines a f
 - **`dbt`**: A class compiled by dbt Core, unique to each model, enables you to run your Python code in the context of your dbt project and DAG.
 - **`session`**: A class representing your data platform’s connection to the Python backend. The session is needed to read in tables as DataFrames, and to write DataFrames back to tables. In PySpark, by convention, the `SparkSession` is named `spark`, and available globally. For consistency across platforms, we always pass it into the `model` function as an explicit argument called `session`.
 
-The `model()` function must return a single DataFrame. On Snowpark (Snowflake), this can be a Snowpark or pandas DataFrame. Via PySpark (Databricks + BigQuery), this can be a Spark, pandas, or pandas-on-Spark DataFrame. For more about choosing between pandas and native DataFrames, see [DataFrame API + syntax](#dataframe-api-and-syntax).
+The `model()` function must return a single DataFrame. On Snowpark (Snowflake), this can be a Snowpark or pandas DataFrame. On BigQuery this can be BigFrames, pandas or Spark datafame. Via PySpark (Databricks), this can be a Spark, pandas, or pandas-on-Spark DataFrame. For more information about choosing between pandas and native DataFrames, see [DataFrame API + syntax](#dataframe-api-and-syntax).
 
 When you `dbt run --select python_model`, dbt will prepare and pass in both arguments (`dbt` and `session`). All you have to do is define the function. This is how every single Python model should look:
 
@@ -297,6 +297,35 @@ def model(dbt, session):
 
 </TabItem>
 
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+
+<File name='models/my_python_model.py'>
+
+```python
+import datetime
+
+def model(dbt, session):
+  dbt.config(materialized = "incremental")
+  bdf = dbt.ref("upstream_table")
+
+  if dbt.is_incremental:
+
+    # only new rows compared to max in current table
+    max_from_this = f"select max(updated_at) from {dbt.this}"
+
+    bdf = bdf[bdf['updated_at'] >= bpd.read_gbq(max_from_this).values[0][0]]
+    # or only rows from the past 3 days
+    bdf = bdf[bdf['updated_at'] >= datetime.date.today() - datetime.timedelta(days=3)]
+
+    ...
+
+  return bdf
+```
+
+</File>
+
+</TabItem>
+
 <TabItem value="PySpark">
 
 <File name='models/my_python_model.py'>
@@ -396,6 +425,34 @@ def model(dbt, session):
 
 </TabItem>
 
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+
+<File name='models/my_python_model.py'>
+
+```python
+import holidays
+
+def model(dbt, session):
+    dbt.config(submission_method="bigframes")
+
+    data = {
+    'id': [0, 1, 2],
+    'name': ['Brian Davis', 'Isaac Smith', 'Marie White'],
+    'birthday': ['2024-03-14', '2024-01-01', '2024-11-07']
+    }
+    bdf = bpd.DataFrame(data)
+    bdf['birthday'] = bpd.to_datetime(bdf['birthday'])
+    bdf['birthday'] = bdf['birthday'].dt.date
+
+    us_holidays = holidays.US(years=2024)
+
+    return bdf[bdf['birthday'].isin(us_holidays)]
+```
+
+</File>
+
+</TabItem>
+
 <TabItem value="PySpark">
 
 <File name='models/my_python_model.py'>
@@ -471,6 +528,7 @@ models:
 
 You can use the `@udf` decorator or `udf` function to define an "anonymous" function and call it within your `model` function's DataFrame transformation. This is a typical pattern for applying more complex functions as DataFrame operations, especially if those functions require inputs from third-party packages.
 - [Snowpark Python: Creating UDFs](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs.html)
+- [BigQuery Dataframe UDFs](https://cloud.google.com/bigquery/docs/user-defined-functions)
 - [PySpark functions: udf](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.udf.html)
 
 <Tabs>
@@ -514,6 +572,30 @@ def model(dbt, session):
 **Note:** Due to a Snowpark limitation, it is not currently possible to register complex named UDFs within stored procedures and, therefore, dbt Python models. We are looking to add native support for Python UDFs as a project/DAG resource type in a future release. For the time being, if you want to create a "vectorized" Python UDF via the Batch API, we recommend either:
 - Writing [`create function`](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) inside a SQL macro, to run as a hook or run-operation
 - [Registering from a staged file](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs#creating-a-udf-from-a-python-source-file) within your Python model code
+
+</TabItem>
+
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+
+<File name='models/my_python_model.py'>
+
+```python
+def model(dbt, session):
+    dbt.config(submission_method="bigframes")
+
+    # Use @bpd.udf after remote_function is deprecated.
+    @bpd.remote_function(dataset='jialuo_test_us')
+    def my_func(x: int) -> int:
+        return x * 1100
+
+    data = {"int": [1, 2], "str": ['a', 'b']}
+    bdf = bpd.DataFrame(data=data)
+    bdf['int'] = bdf['int'].apply(my_func)
+
+    return bdf
+```
+
+</File>
 
 </TabItem>
 
@@ -573,7 +655,7 @@ Over the past decade, most people writing [data transformations](https://www.get
 
 A DataFrame is a two-dimensional data structure (rows and columns). It supports convenient methods for transforming that data and creating new columns from calculations performed on existing columns. It also offers convenient ways for previewing data while developing locally or in a notebook.
 
-That's about where the agreement ends. There are numerous frameworks with their own syntaxes and APIs for DataFrames. The [pandas](https://pandas.pydata.org/docs/) library offered one of the original DataFrame APIs, and its syntax is the most common to learn for new data professionals. Most newer DataFrame APIs are compatible with pandas-style syntax, though few can offer perfect interoperability. This is true for Snowpark and PySpark, which have their own DataFrame APIs.
+That's about where the agreement ends. There are numerous frameworks with their own syntaxes and APIs for DataFrames. The [pandas](https://pandas.pydata.org/docs/) library offered one of the original DataFrame APIs, and its syntax is the most common to learn for new data professionals. Most newer DataFrame APIs are compatible with pandas-style syntax, though few can offer perfect interoperability. This is true for BigQuery DataFrames, Snowpark and PySpark, which have their own DataFrame APIs.
 
 When developing a Python model, you will find yourself asking these questions:
 
@@ -627,6 +709,3 @@ Python models have capabilities that SQL models do not. They also have some draw
     </Expandable>
 
 As a general rule, if there's a transformation you could write equally well in SQL or Python, we believe that well-written SQL is preferable: it's more accessible to a greater number of colleagues, and it's easier to write code that's performant at scale. If there's a transformation you _can't_ write in SQL, or where ten lines of elegant and well-annotated Python could save you 1000 lines of hard-to-read Jinja-SQL, Python is the way to go.
-
-
-
