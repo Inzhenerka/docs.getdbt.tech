@@ -9,8 +9,8 @@ You can set up [continuous integration](/docs/deploy/continuous-integration) (CI
 ## Prerequisites
 - You have a <Constant name="cloud" /> account. 
 - CI features:
-   - For both the [concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Starter, Enterprise, or Enterprise Plus plan](https://www.getdbt.com/pricing/).
-   - [SQL linting](/docs/deploy/continuous-integration#sql-linting) is available on [<Constant name="cloud" /> release tracks](/docs/dbt-versions/cloud-release-tracks) and to <Constant name="cloud" /> [Starter, Enterprise, or Enterprise Plus](https://www.getdbt.com/pricing/) accounts. You should have [SQLFluff configured](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) in your project.
+   - For both the [concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing/).
+   - [SQL linting](/docs/deploy/continuous-integration#sql-linting) is available on [<Constant name="cloud" /> release tracks](/docs/dbt-versions/cloud-release-tracks) and to <Constant name="cloud" /> [Starter, Enterprise, or Enterprise+](https://www.getdbt.com/pricing/) accounts. You should have [SQLFluff configured](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) in your project.
 - [Advanced CI](/docs/deploy/advanced-ci) features:
    - For the [compare changes](/docs/deploy/advanced-ci#compare-changes) feature, your <Constant name="cloud" /> account must be on an [Enterprise-tier plan](https://www.getdbt.com/pricing/) and have enabled Advanced CI features. Please ask your [<Constant name="cloud" /> administrator to enable](/docs/cloud/account-settings#account-access-to-advanced-ci-features) this feature for you. After enablement, the **dbt compare** option becomes available in the CI job settings.
 - Set up a [connection with your <Constant name="git" /> provider](/docs/cloud/git/git-configuration-in-dbt-cloud). This integration lets <Constant name="cloud" /> run jobs on your behalf for job triggering.
@@ -86,7 +86,7 @@ If you're not using <Constant name="cloud" />’s native <Constant name="git" />
 ### Prerequisites
 
 - You have a <Constant name="cloud" /> account.
-- For the [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Starter, Enterprise, or Enterprise Plus plan](https://www.getdbt.com/pricing/).
+- For the [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing/).
 
 
 1. Set up a CI job with the [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job) API endpoint using `"job_type": ci` or from the [dbt Cloud UI](#set-up-ci-jobs).

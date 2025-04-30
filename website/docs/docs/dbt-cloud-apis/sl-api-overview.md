@@ -27,7 +27,7 @@ import Features from '/snippets/_sl-plan-info.md'
 
 <Features
 product="dbt Semantic Layer"
-plan="dbt Cloud Enterprise or Enterprise plus"
+plan="dbt Cloud Enterprise or Enterprise+"
 />
 
 <div className="grid--3-col">

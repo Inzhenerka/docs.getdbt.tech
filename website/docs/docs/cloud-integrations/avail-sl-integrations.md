@@ -9,14 +9,14 @@ meta:
   api_name: dbt Semantic Layer APIs
 ---
 
-# Available integrations <Lifecycle status="managed,managed_plus,self_service" />
+# Available integrations <Lifecycle status="self_service,managed,managed_plus" />
 
 There are a number of data applications that seamlessly integrate with the <Constant name="semantic_layer" />, powered by MetricFlow, from business intelligence tools to notebooks, spreadsheets, data catalogs, and more. These integrations allow you to query and unlock valuable insights from your data ecosystem.
 
 Use the [<Constant name="semantic_layer" /> APIs](/docs/dbt-cloud-apis/sl-api-overview) to simplify metric queries, optimize your development workflow, and reduce coding. This approach also ensures data governance and consistency for data consumers.
 
 import AvailIntegrations from '/snippets/_sl-partner-links.md';
-
+3
 <AvailIntegrations/>
 
 ### Custom integration

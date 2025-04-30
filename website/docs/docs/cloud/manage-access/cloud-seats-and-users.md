@@ -27,7 +27,7 @@ The user's assigned license determines the specific capabilities they can access
 | Use [Docs](/docs/explore/build-and-view-your-docs) | ✅ | ✅ | ❌ |
 | Receive [Job notifications](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ | 
 
-*Available on Starter, Enterprise, and Enterprise plus plans only. IT seats are limited to 1 seat per Starter or Enterprise account and don't count toward seat usage.
+*Available on Starter, Enterprise, and Enterprise+ plans only. IT seats are limited to 1 seat per Starter or Enterprise account and don't count toward seat usage.
 
 ## Licenses
 

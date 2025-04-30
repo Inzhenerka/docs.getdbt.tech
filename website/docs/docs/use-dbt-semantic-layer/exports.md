@@ -5,6 +5,8 @@ sidebar_label: "Write queries with exports"
 keywords: [DBT_INCLUDE_SAVED_QUERY, exports, DBT_EXPORTS_SAVED_QUERY, dbt Cloud, Semantic Layer]
 ---
 
+# Write queries with exports <Lifecycle status="self_service,managed,managed_plus" />
+
 Exports enhance [saved queries](/docs/build/saved-queries) by running your saved queries and writing the output to a table or view within your data platform. Saved queries are a way to save and reuse commonly used queries in MetricFlow, exports take this functionality a step further by:
 
 - Enabling you to write these queries within your data platform using the <Constant name="cloud" /> job scheduler.

@@ -28,7 +28,7 @@ With automatic code generation, let <Constant name="copilot" /> [generate code](
 
 <Constant name="copilot" /> can currently be found in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot). Future releases will bring <Constant name="copilot" /> to the [<Constant name="visual_editor" />](/docs/cloud/use-canvas) and even more parts of the <Constant name="cloud" /> application.
 
-To use <Constant name="copilot" />, you must have a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise plus account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
+To use <Constant name="copilot" />, you must have a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise+ account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
 
 </Expandable>
 
@@ -50,7 +50,7 @@ with a click of a button and ensuring data privacy and security.
 
 <Expandable alt_header="Who has access to dbt Copilot?" >
 
-When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise plus account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
+When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise+ account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
 
 </Expandable>
 

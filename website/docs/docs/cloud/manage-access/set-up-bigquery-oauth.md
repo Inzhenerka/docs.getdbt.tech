@@ -9,7 +9,7 @@ pagination_next: null
 
 :::info Enterprise-tier feature
 
-This guide describes a feature available on <Constant name="cloud" /> Enterprise and Enterprise Plus plans. If you’re interested in learning more about our Enterprise-tier plans, contact us at sales@getdbt.com.
+This guide describes a feature available on <Constant name="cloud" /> Enterprise and Enterprise+ plans. If you’re interested in learning more about our Enterprise-tier plans, contact us at sales@getdbt.com.
 
 :::
 

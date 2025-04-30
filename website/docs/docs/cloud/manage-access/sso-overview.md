@@ -12,7 +12,7 @@ This overview explains how users are provisioned in <Constant name="cloud" /> vi
 
 ## Prerequisites
 
-- You have a <Constant name="cloud" /> Enterprise or Enterprise Plus plan. [Contact us](mailto:sales@getdbt.com) to learn more, book a demo, or enroll.
+- You have a <Constant name="cloud" /> Enterprise or Enterprise+ plan. [Contact us](mailto:sales@getdbt.com) to learn more, book a demo, or enroll.
 
 ## Auth0 URIs
 
