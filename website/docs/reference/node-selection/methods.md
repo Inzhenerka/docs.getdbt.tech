@@ -200,7 +200,7 @@ dbt seed --select "result:error" --state path/to/artifacts
   # reruns all the models associated with failed tests from the prior invocation of dbt build
   dbt build --select "1+result:fail" --state path/to/artifacts
 
-  # reruns models upstream and downstream of failed tests — especially in deferred state workflows 
+  # reruns the models associated with failed tests and all downstream dependencies - especially useful in deferred state workflows
   dbt build --select "1+result:fail+" --state path/to/artifacts
   ```
 
