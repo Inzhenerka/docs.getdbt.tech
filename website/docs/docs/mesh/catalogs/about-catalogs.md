@@ -9,7 +9,7 @@ Data catalogs have recently become at the top of the data industry's mind, espec
 
 ## About data catalogs
 
-The short answer is it’s data about your data.
+The short answer is it’s **data about your data**.
 
 It is a centralized metadata management layer that enables users and tools to discover, understand, and govern data effectively. At its core, a data catalog organizes metadata about datasets, including information about the schemas, lineage, access controls, and business context to help technical and non-technical users work with data more efficiently.
 
