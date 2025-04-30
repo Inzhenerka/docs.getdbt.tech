@@ -898,9 +898,13 @@ Find more information about materialized view limitations in Google's BigQuery [
 The BigQuery adapter supports Python models with the following additional configuration parameters:
 
 | Parameter               | Type        | Required | Default   | Valid values     |
-|-------------------------|-------------|----------|-----------|------------------|
+| :---------------------- | :---------- | :------- | :-------- | :--------------- |
 | `enable_list_inference` | `<boolean>` | no       | `True`    | `True`, `False`  |
 | `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
+| `submission_method`     | `<string>`  | no       | ``        | `serverless`, `bigframes`, `cluster` |
+| `notebook_template_id`  | `<Integer>` | no       | ``        | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
+| `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
+| `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
 
 ### The `enable_list_inference` parameter
 The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation.
@@ -908,6 +912,18 @@ By default, this is set to `True` to support the default `intermediate_format` o
 
 ### The `intermediate_format` parameter
 The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
+
+### The `submission_method` parameter
+The `submission_method` parameter specifies whether the job will run on BigQuery Dataframe or Serverless Spark. `submission_method` is not required when `dataproc_cluster_name` is declared.
+
+### The `notebook_template_id` parameter
+The `notebook_template_id` parameter specifies runtime template in Colab Enterprise.
+
+### The `compute_region` parameter
+The `compute_region` parameter specifies the region of the job.
+
+### The `gcs_bucket` parameter
+The `gcs_bucket` parameter specifies the GCS bucket used for storing artifacts for the job.
 
 <VersionBlock firstVersion="1.8">
 
