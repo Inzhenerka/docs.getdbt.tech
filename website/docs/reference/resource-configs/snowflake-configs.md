@@ -563,7 +563,7 @@ models:
 
 </File>
 
-## Python models configuration
+## Python model configuration
 
 The Snowflake adapter supports Python models. Snowflake uses its own framework, Snowpark, which has many similarities to PySpark.
 
