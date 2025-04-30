@@ -1,7 +1,7 @@
 import SLEnvVars from '/snippets/_sl-env-vars.md';
 
 You must be part of the Owner group and have the correct [license](/docs/cloud/manage-access/seats-and-users) and [permissions](/docs/cloud/manage-access/enterprise-permissions) to set up the Semantic Layer at the environment and project level.
-- Enterprise plus and Enterprise plan:
+- Enterprise+ and Enterprise plan:
   - Developer license with Account Admin permissions, or
   - Owner with a Developer license, assigned Project Creator, Database Admin, or Admin permissions.
 - Starter plan: Owner with a Developer license.
@@ -27,13 +27,13 @@ The dbt Semantic Layer uses [service tokens](/docs/dbt-cloud-apis/service-tokens
 
 This credential controls the physical access to underlying data accessed by the Semantic Layer, and all access policies set in the data platform for this credential will be respected.
 
-| Feature | Starter plan | Enterprise plus and Enterprise plan |
+| Feature | Starter plan | Enterprise+ and and Enterprise plan |
 | --- | --- | --- |
 | Service tokens | Can create multiple service tokens linked to one credential. | Can use multiple credentials and link multiple service tokens to each credential. Note that you cannot link a single service token to more than one credential. |
 | Credentials per project | One credential per project. | Can [add multiple](#4-add-more-credentials) credentials per project. |
 | Link multiple service tokens to a single credential | ✅ | ✅ |
 
-*If you're on a Starter plan and need to add more credentials, consider upgrading to our [Enterprise plus or Enterprise plan](https://www.getdbt.com/contact). All Enterprise users can refer to [Add more credentials](#4-add-more-credentials) for detailed steps on adding multiple credentials.*
+*If you're on a Starter plan and need to add more credentials, consider upgrading to our [Enterprise+ or Enterprise plan](https://www.getdbt.com/contact). All Enterprise users can refer to [Add more credentials](#4-add-more-credentials) for detailed steps on adding multiple credentials.*
 
 #### 1.  Select deployment environment
    - After selecting the deployment environment, you should see the **Credentials & service tokens** page. 

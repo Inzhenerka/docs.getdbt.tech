@@ -88,7 +88,7 @@ Examples of queried metrics include:
 Viewing usage in the product is restricted to specific roles:
 
 * Starter plan &mdash; Owner group
-* Enterprise and Enterprise Plus plans &mdash; Account and billing admin roles
+* Enterprise and Enterprise+ plans &mdash; Account and billing admin roles
 
 For an account-level view of usage, if you have access to the **Billing** and **Usage** pages, you can see an estimate of the usage for the month. In the Billing page of the **Account Settings**, you can see how your account tracks against its usage. You can also see which projects are building the most models.
 
@@ -257,7 +257,7 @@ Once you've identified which models could be optimized, check out these other re
 ## FAQs
 
 * What happens if I need more seats on the Starter plan? 
-_If you need more developer seats, select the [Contact Sales](https://www.getdbt.com/contact) option from the billing settings to talk to our sales team about an Enterprise or Enterprise Plus plan._  
+_If you need more developer seats, select the [Contact Sales](https://www.getdbt.com/contact) option from the billing settings to talk to our sales team about an Enterprise or Enterprise+ plan._  
 
 * What if I go significantly over my included free models on the Starter or Developer plan?
 _Consider upgrading to a Starter or Enterprise-tier plan. Starter and Enterprise-tier plans include more models and allow you to exceed the monthly usage limit. Enterprise accounts are supported by a dedicated account management team and offer annual plans, custom configurations, and negotiated usage rates._ 

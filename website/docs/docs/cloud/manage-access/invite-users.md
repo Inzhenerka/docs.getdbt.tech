@@ -5,7 +5,7 @@ id: "invite-users"
 sidebar: "Invite users"
 ---
 
-<Constant name="cloud" /> makes it easy to invite new users to your environment out of the box. This feature is available to all <Constant name="cloud" /> customers on Starter, Enterprise, and Enterprise plus plans.
+<Constant name="cloud" /> makes it easy to invite new users to your environment out of the box. This feature is available to all <Constant name="cloud" /> customers on Starter, Enterprise, and Enterprise+ plans.
 
 ## Prerequisites
 

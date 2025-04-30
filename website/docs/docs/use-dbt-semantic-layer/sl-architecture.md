@@ -21,8 +21,8 @@ The <Constant name="semantic_layer" /> includes the following components:
 | --- | --- | :---: | :---: | :---: | :---: | :---: |
 | **[MetricFlow](/docs/build/about-metricflow)** | MetricFlow in dbt allows users to centrally define their semantic models and metrics with YAML specifications. | ✅ | ✅ | ✅ |  ✅  | BSL package (code is source available) |
 | **dbt Semantic interfaces**| A configuration spec for defining metrics, dimensions, how they link to each other, and how to query them. The [dbt-semantic-interfaces](https://github.com/dbt-labs/dbt-semantic-interfaces) is available under Apache 2.0. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Starter & Enterprise)|
-| **Service layer** | Coordinates query requests and dispatching the relevant metric query to the target query engine. This is provided through <Constant name="cloud" /> and is available to all users on dbt version 1.6 or later. The service layer includes a Gateway service for executing SQL against the data platform. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Enterprise, Enterprise plus)|
-| **[<Constant name="semantic_layer" /> APIs](/docs/dbt-cloud-apis/sl-api-overview)** | The interfaces allow users to submit metric queries using GraphQL and JDBC APIs. They also serve as the foundation for building first-class integrations with various tools. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Enterprise, Enterprise plus)|
+| **Service layer** | Coordinates query requests and dispatching the relevant metric query to the target query engine. This is provided through <Constant name="cloud" /> and is available to all users on dbt version 1.6 or later. The service layer includes a Gateway service for executing SQL against the data platform. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Enterprise, Enterprise+)|
+| **[<Constant name="semantic_layer" /> APIs](/docs/dbt-cloud-apis/sl-api-overview)** | The interfaces allow users to submit metric queries using GraphQL and JDBC APIs. They also serve as the foundation for building first-class integrations with various tools. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Enterprise, Enterprise+)|
 
 ## Feature comparison
 

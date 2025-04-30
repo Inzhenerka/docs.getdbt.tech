@@ -18,7 +18,7 @@ dbt Labs supports an expanded notion of `dependencies` across multiple dbt proje
 - **Projects** &mdash; The dbt method to take a dependency on another project. Using a metadata service that runs behind the scenes, <Constant name="cloud" /> resolves references on-the-fly to public models defined in other projects. You don't need to parse or run those upstream models yourself. Instead, you treat your dependency on those models as an API that returns a dataset. The maintainer of the public model is responsible for guaranteeing its quality and stability.
 
 ## Prerequisites
-- Available in [<Constant name="cloud" /> Enterprise or Enterprise plus](https://www.getdbt.com/pricing). To use it, designate a [public model](/docs/mesh/govern/model-access) and add a [cross-project ref](#how-to-write-cross-project-ref).
+- Available in [<Constant name="cloud" /> Enterprise or Enterprise+](https://www.getdbt.com/pricing). To use it, designate a [public model](/docs/mesh/govern/model-access) and add a [cross-project ref](#how-to-write-cross-project-ref).
 - For the upstream ("producer") project setup:
   - Configure models in upstream project with [`access: public`](/reference/resource-configs/access) and have at least one successful job run after defining `access`.
   - Define a deployment environment in the upstream project as [Production environment](/docs/deploy/deploy-environments#set-as-production-environment), ensuring at least one successful _deployment_ job run in that environment. Make sure the deployment job run generates a [manifest.json](/reference/artifacts/manifest-json) file, as this contains necessary metadata information for downstream projects.

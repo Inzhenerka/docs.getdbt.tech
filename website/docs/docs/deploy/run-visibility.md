@@ -41,7 +41,7 @@ View the lineage graph associated with the job run so you can better understand 
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" width="85%" title="Example of accessing dbt Explorer from the Lineage tab" />
 
-### Model timing tab <Lifecycle status="self_service,managed" /> 
+### Model timing tab <Lifecycle status="self_service,managed,managed_plus" /> 
 
 The **Model timing** tab displays the composition, order, and time each model takes in a job run. The visualization appears for successful jobs and highlights the top 1% of model durations. This helps you identify bottlenecks in your runs so you can investigate them and potentially make changes to improve their performance. 
 

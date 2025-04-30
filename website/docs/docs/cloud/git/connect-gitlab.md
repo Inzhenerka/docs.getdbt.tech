@@ -20,7 +20,7 @@ When configuring the repository in <Constant name="cloud" />, GitLab automatical
 
 The steps to integrate GitLab in <Constant name="cloud" /> depend on your plan. If you are on:
 - the Developer or Starter plan, read these [instructions](#for-dbt-cloud-developer-and-starter-tiers).
-- the Enterprise or Enterprise Plus plan, jump ahead to these [instructions](#for-the-dbt-cloud-enterprise-tier).
+- the Enterprise or Enterprise+ plan, jump ahead to these [instructions](#for-the-dbt-cloud-enterprise-tier).
 
 ## For dbt Cloud Developer and Starter tiers
 
@@ -40,7 +40,7 @@ Once you've accepted, you should be redirected back to <Constant name="cloud" />
 
 ## For the dbt Cloud Enterprise tier
 
-<Constant name="cloud" /> Enterprise and Enterprise Plus customers have the added benefit of bringing their own GitLab OAuth application to <Constant name="cloud" />. This tier benefits from extra security, as <Constant name="cloud" /> will:
+<Constant name="cloud" /> Enterprise and Enterprise+ customers have the added benefit of bringing their own GitLab OAuth application to <Constant name="cloud" />. This tier benefits from extra security, as <Constant name="cloud" /> will:
 - Enforce user authorization with OAuth.
 - Carry GitLab's user repository permissions (read / write access) through to <Constant name="cloud" /> or <Constant name="cloud" /> CLI's git actions.
 
@@ -104,7 +104,7 @@ You will then be redirected to GitLab and prompted to sign into your account. Gi
 Once you've accepted, you should be redirected back to <Constant name="cloud" />, and your integration is ready for developers on your team to [personally authenticate with](#personally-authenticating-with-gitlab).
 
 ### Personally authenticating with GitLab
-<Constant name="cloud" /> developers on the Enterprise or Enterprise Plus plan must each connect their GitLab profiles to <Constant name="cloud" />, as every developer's read / write access for the dbt repo is checked in the <Constant name="cloud_ide" /> or <Constant name="cloud" /> CLI.
+<Constant name="cloud" /> developers on the Enterprise or Enterprise+ plan must each connect their GitLab profiles to <Constant name="cloud" />, as every developer's read / write access for the dbt repo is checked in the <Constant name="cloud_ide" /> or <Constant name="cloud" /> CLI.
 
 To connect a personal GitLab account:
 

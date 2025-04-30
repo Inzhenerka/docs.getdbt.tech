@@ -13,7 +13,7 @@ import SetUpPages from '/snippets/_available-enterprise-only.md';
 
 <SetUpPages features={'/snippets/_available-enterprise-only.md'}/>
 
-The <Constant name="cloud" /> Enterprise and Enterprise plus plans support a number of pre-built permission sets to help manage access controls within a <Constant name="cloud" /> account. See the docs on [access control](/docs/cloud/manage-access/about-user-access) for more information on Role-Based access control (RBAC).
+The <Constant name="cloud" /> Enterprise and Enterprise+ plans support a number of pre-built permission sets to help manage access controls within a <Constant name="cloud" /> account. See the docs on [access control](/docs/cloud/manage-access/about-user-access) for more information on Role-Based access control (RBAC).
 
 
 ## Permission sets

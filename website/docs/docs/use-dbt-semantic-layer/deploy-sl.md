@@ -7,6 +7,8 @@ tags: [Semantic Layer]
 pagination_next: "docs/use-dbt-semantic-layer/exports"
 ---
 
+# Deploy your metrics <Lifecycle status="self_service,managed,managed_plus" />
+
 <!-- The below snippet can be found in the following file locations in the docs code repository) 
 
 https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-run-prod-job.md

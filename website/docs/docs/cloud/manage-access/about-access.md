@@ -116,7 +116,7 @@ For more information on these license types, see [Seats & Users](/docs/cloud/man
 
 Permissions determine what a developer-licensed user can do in your dbt Cloud account. By default, members of the `Owner` and `Member` groups have full access to all areas and features. When you want to restrict access to features, assign users to groups with stricter permission sets. Keep in mind that if a user belongs to multiple groups, the most permissive group will take precedence.
 
-The permissions available depends on whether you're on an [Enterprise, Enterprise plus](/docs/cloud/manage-access/enterprise-permissions), or [self-service Starter](/docs/cloud/manage-access/self-service-permissions) plan. Developer accounts only have a single user, so permissions aren't applicable.
+The permissions available depends on whether you're on an [Enterprise, Enterprise+](/docs/cloud/manage-access/enterprise-permissions), or [self-service Starter](/docs/cloud/manage-access/self-service-permissions) plan. Developer accounts only have a single user, so permissions aren't applicable.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/assign-group-permissions.png" width="60%" title="Example permissions dropdown while editing an existing group." />
 
@@ -227,7 +227,7 @@ Don't try to edit your own user, as this isn't allowed for security reasons. You
 <Expandable alt_header="How do I add or remove users?">
 
 Each dbt Cloud plan has a base number of Developer and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
-  - If you're on an Enterprise or Enterprise Plus plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
+  - If you're on an Enterprise or Enterprise+ plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
   - If you're on a Starter plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers by making two changes: adjust your developer user seat count AND your developer billing seat count in **Account settings** -> **Users** and then in **Account settings** -> **Billing**.
 
 For detailed steps, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users#licenses).

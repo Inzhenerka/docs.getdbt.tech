@@ -25,7 +25,7 @@ Hybrid projects is available in private beta to [<Constant name="cloud" /> Enter
 
 To upload artifacts, make sure you meet these prerequisites:
 
-- Your organization is on a [<Constant name="cloud" /> Enterprise plus plan](https://www.getdbt.com/pricing)
+- Your organization is on a [<Constant name="cloud" /> Enterprise+ plan](https://www.getdbt.com/pricing)
 - You're on [<Constant name="cloud" />'s release tracks](/docs/dbt-versions/cloud-release-tracks) and your <Constant name="core" /> project is on dbt v1.10 or higher
 - [Configured](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) a hybrid project in <Constant name="cloud" />.
 - Updated your existing <Constant name="core" /> project with latest changes and [configured it with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):

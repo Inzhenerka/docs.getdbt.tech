@@ -17,8 +17,8 @@ By moving your environments and jobs to release tracks you can get all the funct
 | Release track | Description | Plan availability | API value |
 | ------------- | ----------- | ----------------- | --------- |
 | **Latest** | Formerly called "Versionless", provides a continuous release of the latest functionality in dbt Cloud.<br /><br />Includes early access to new features of the dbt framework before they're available in open source releases of dbt Core. | All plans | `latest` (or `versionless`) |
-| **Compatible** | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Starter, Enterprise, Enterprise plus | `compatible` |
-| **Extended** | The previous month's "Compatible" release. | Enterprise, Enterprise plus | `extended` |
+| **Compatible** | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Starter, Enterprise, Enterprise+ | `compatible` |
+| **Extended** | The previous month's "Compatible" release. | Enterprise, Enterprise+ | `extended` |
 
 To configure an environment in the [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest) to use a release track, set `dbt_version` to the release track name:
 - `latest` (or `versionless`, the old name is still supported)
@@ -37,12 +37,12 @@ Choose the "Compatible" and "Extended" release tracks if you need a less-frequen
 - Prioritize immediate access to fixes and features
 - Leave all environments on the "Latest" release track (default configuration)
 
-**Hybrid** - Starter, Enterprise, Enterprise plus
+**Hybrid** - Starter, Enterprise, Enterprise+
 - Prioritize ongoing compatibility between <Constant name="cloud" /> and <Constant name="core" /> for development & deployment using both products in the same dbt projects
 - Configure all environments to use the "Compatible" release track
 - Understand that new features will not be available until they are first released in <Constant name="core" /> OSS (several months after the "Latest" release track)
 
-**Cautious** - Enterprise, Enterprise plus, Business Critical
+**Cautious** - Enterprise, Enterprise+, Business Critical
 - Prioritize "bake in" time for new features & fixes
 - Configure development & test environments to use the "Compatible" release track
 - Configure pre-production & production environments to use the "Extended" release track

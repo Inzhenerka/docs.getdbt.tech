@@ -14,7 +14,7 @@ You can configure <Constant name="cloud" /> to sign your <Constant name="git" />
 ## Prerequisites 
 
 - GitHub or GitLab is your <Constant name="git" /> provider. Currently, Azure DevOps is not supported.
-- You have a <Constant name="cloud" /> account on the [Enterprise or Enterprise Plus plan](https://www.getdbt.com/pricing/).
+- You have a <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/).
 
 ## Generate GPG keypair in dbt Cloud
 

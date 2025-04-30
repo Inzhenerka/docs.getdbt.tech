@@ -148,7 +148,7 @@ Nice job, you're ready to start developing and building models 🎉!
 ## FAQs
 
 <DetailsToggle alt_header="Is there a cost to using the Cloud IDE?">
-Not at all! You can use <Constant name="cloud" /> when you sign up for the <a href="https://www.getdbt.com/pricing/">Free Developer plan</a>, which comes with one developer seat. If you'd like to access more features or have more developer seats, you can upgrade your account to the Starter, Enterprise, or Enterprise plus plan.<br />
+Not at all! You can use <Constant name="cloud" /> when you sign up for the <a href="https://www.getdbt.com/pricing/">Free Developer plan</a>, which comes with one developer seat. If you'd like to access more features or have more developer seats, you can upgrade your account to the Starter, Enterprise, or Enterprise+ plan.<br />
 
 Refer to <a href="https://www.getdbt.com/pricing/">dbt pricing plans</a> for more details.
 </DetailsToggle>
