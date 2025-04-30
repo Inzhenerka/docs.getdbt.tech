@@ -48,7 +48,7 @@ The migration to PATs is critical if you are using user API keys today. The curr
 * You must create and use unique tokens in each one of your <Constant name="cloud" /> accounts that share the same email address.
     * For example, if paul.atreides@example.com belongs to two <Constant name="cloud" /> accounts: Spice Harvesting Account and Guild Navigator Account. Before this release, the same API key was used to access both of these accounts. 
     * After this release, Paul has to individually go into these accounts and create a unique PAT for each account he wants to access the API for. These PATs are account-specific and not user specific. 
-* Cross-Account API endpoints will change in behavior when using the PATs.
+* Cross-Account API endpoints will change in behavior when using PATs.
     * These are namely /v2/accounts and /v3/accounts. Since all PATs are now account specific, getting all accounts associated with a username cannot work. /v3/accounts will only return account metadata that’s relevant to the PAT that’s being used. 
     * User account metadata will only contain information about the specific account under which the request is being made. 
     * Any other accounts that belong to that user account will need to be requested through the PAT that belongs to that account. 
