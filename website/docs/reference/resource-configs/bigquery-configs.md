@@ -990,7 +990,7 @@ The BigQuery adapter also supports Python models with the following additional c
 | `enable_list_inference` | `<boolean>` | no       | `True`    | `True`, `False`  |
 | `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
 
-**Docs:**
+**Related docs:**
 
 - [Dataproc overview](https://cloud.google.com/dataproc/docs/concepts/overview)
 - [Create a Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster)
