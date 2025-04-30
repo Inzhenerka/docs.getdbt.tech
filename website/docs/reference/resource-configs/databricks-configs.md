@@ -764,7 +764,7 @@ If not configured, `dbt-spark` will use the built-in defaults: the all-purpose c
 
 **Installing packages:** When using all-purpose clusters, we recommend installing packages which you will be using to run your Python models.
 
-**Docs:**
+**Related docs:**
 - [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 - [Databricks: Introduction to DataFrames - Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
 
