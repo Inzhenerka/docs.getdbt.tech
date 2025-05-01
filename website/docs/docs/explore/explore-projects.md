@@ -32,6 +32,8 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 
 - **Search bar** &mdash; [Search](#search-resources) for resources in your project by keyword. You can also use filters to refine your search results.
 - **Sidebar** &mdash; Use the left sidebar to access model [performance](/docs/explore/model-performance), [project recommendations](/docs/explore/project-recommendations) in the **Project details** section. Browse your project's [resources, file tree, and database](#browse-with-the-sidebar) in the lower section of the sidebar.
+- **[Global navigation](/docs/explore/global-search#global-navigation)** &mdash; Find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
+- **[External metadata ingestion](/docs/explore/global-search#external-metadata-ingestion)** &mdash; Connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt.
 - **Lineage graph** &mdash; Explore your project's or account's [lineage graph](#project-lineage) to visualize the relationships between resources.
 - **Latest updates** &mdash; View the latest changes or issues related to your project's resources, including the most recent job runs, changed properties, lineage, and issues.
 - **Marts and public models** &mdash; View the [marts](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) and [public models](/docs/mesh/govern/model-access#access-modifiers) in your project. You can also navigate to all public models in your account through this view.
