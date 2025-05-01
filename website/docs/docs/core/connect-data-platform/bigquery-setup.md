@@ -219,7 +219,8 @@ No timeout is set by default. (For historical reasons, some query types use a de
 
 :::caution Note
 
-The `job_execution_timeout_seconds` represents the number of seconds to wait for the [underlying HTTP transport](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). It _doesn't_ represent the maximum allowable time for a BigQuery job itself. So, if dbt-bigquery ran into an exception at 300 seconds, the actual BigQuery job could still be running for the time set in BigQuery's own timeout settings.
+The `job_execution_timeout_seconds` represents the number of seconds to wait for the [underlying HTTP transport](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). It _doesn't_ represent the maximum allowable time for a BigQuery job itself. 
+Normally, BigQuery keeps running the job even if this timeout is reached, however `dbt-bigquery` will send a request to BigQuery to cancel it.
 
 :::
   
@@ -409,6 +410,28 @@ my-profile:
       dataset: my_dataset
       quota_project: my-bq-quota-project
 ```
+
+### Running Python models on BigQuery Dataframe
+To run dbt Python models on GCP, dbt uses BigQuery Dataframe running directly with BigQuery compute, leveraging the scale and performance of BigQuery.
+
+```
+my-profile:
+  target: dev
+  outputs:
+    dev:
+      compute_region: us-central1
+      dataset: my_dataset
+      gcs_bucket: dbt-python
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      location: US
+      method: oauth
+      priority: interactive
+      project: abc-123
+      threads: 1
+      type: bigquery
+```
+
 
 ### Running Python models on Dataproc
 
