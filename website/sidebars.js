@@ -128,7 +128,6 @@ const sidebarSettings = {
                     "docs/cloud/manage-access/set-up-snowflake-oauth",
                     "docs/cloud/manage-access/set-up-databricks-oauth",
                     "docs/cloud/manage-access/set-up-bigquery-oauth",
-                    "docs/cloud/manage-access/set-up-bigquery-wif",
                     "docs/cloud/manage-access/external-oauth",
                   ],
                 }, // SSO
