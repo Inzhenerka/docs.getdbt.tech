@@ -19,7 +19,7 @@ You can create a deploy job and configure it to run on [scheduled days and times
 ## Prerequisites
 
 - You must have a [<Constant name="cloud" /> account](https://www.getdbt.com/signup/) and [Developer seat license](/docs/cloud/manage-access/seats-and-users).
-    - For the [Trigger on job completion](#trigger-on-job-completion) feature, your <Constant name="cloud" /> account must be on the [Starter or Enterprise-tier](https://www.getdbt.com/pricing/) plan.
+    - For the [Trigger on job completion](#trigger-on-job-completion) feature, your <Constant name="cloud" /> account must be on the [Starter or an Enterprise-tier](https://www.getdbt.com/pricing/) plan.
 - You must have a dbt project connected to a [data platform](/docs/cloud/connect-data-platform/about-connections).
 - You must have [access permission](/docs/cloud/manage-access/about-user-access) to view, create, modify, or run jobs.
 - You must set up a [deployment environment](/docs/deploy/deploy-environments). 
