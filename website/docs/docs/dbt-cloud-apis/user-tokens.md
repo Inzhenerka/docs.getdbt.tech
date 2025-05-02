@@ -73,7 +73,7 @@ Are you using a user API key today to access <Constant name="cloud" /> APIs in a
 
     :::note
 
-    You do not need to replace your API key with a PAT in <Constant name="cloud" />. The option to rotate API keys is used for rotating existing API keys, not for replacing them with PATs.
+     The option to rotate API keys is used for existing API keys, not for replacing them with PATs. You do not need to replace your API key with a PAT in the <Constant name="cloud" /> UI.
 
     :::
 
