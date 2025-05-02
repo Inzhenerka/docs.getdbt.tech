@@ -534,6 +534,7 @@ const sidebarSettings = {
             "docs/mesh/catalogs/about-catalogs",
             "docs/mesh/catalogs/catalog-platform-support",
             "docs/mesh/catalogs/snowflake-catalog-support",
+            "docs/mesh/catalogs/databricks-catalog-support",
           ],
         },
       ],  
