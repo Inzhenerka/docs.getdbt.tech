@@ -15,3 +15,18 @@ Built-in catalogs come with the platform and do not require much, if any, setup.
 
 Today, most data platforms support reading from other catalogs, but generally do not support writes. This is changing rapidly, and we will adjust our documentation and feature support as platforms implement updates to their capabilities. 
 
+<div className="grid--3-col">
+
+<Card
+    title="Snowflake"
+    body="Snowflake support for Iceberg catalogs."
+    link="/docs/mesh/catalogs/snowflake-catalog-support"
+    icon="snowflake"/>
+
+<Card
+    title="Databricks"
+    body="Databricks support for Iceberg catalogs."
+    link="/docs/mesh/catalogs/databricks-catalog-support"
+    icon="databricks"/>
+
+</div>
