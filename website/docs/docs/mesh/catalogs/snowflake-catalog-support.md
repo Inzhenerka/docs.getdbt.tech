@@ -10,6 +10,7 @@ Snowflake has support for Iceberg tables via built-in and external catalogs, inc
 - Polaris/Open Catalog (managed Polaris)*
 - Glue Data Catalog*
 - Iceberg REST Compatible* 
+
 *_dbt catalog support coming soon._
 
 
