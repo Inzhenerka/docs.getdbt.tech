@@ -101,12 +101,12 @@ To get started, create a new connection in dbt Cloud:
 2. Click **New connection** and select **BigQuery** as the connection type. Reminder, don't select **BigQuery (Legacy)**.
 3. For the **Deployment Environment Authentication Method**, select **Workload Identity Federation**.
 4. Fill out the **Google Cloud Project ID** and any optional settings you need.
-5. From the drop down, select the Oauth Configuration you created in the previous section. 
+5. Select the OAuth Configuration you created in the previous section from the drop-down. 
 6. Configure your development connection: 
-    - BigQuery Ouath (recommended)
+    - BigQuery OAuth (recommended)
         - Set this up in the same connection as the one you're using for WIF under **`OAuth2.0 settings`**
     - Service JSON 
-        - You'll need to create a separate connection with the Service JSON configuration set up.
+        - You must create a separate connection with the Service JSON configuration.
 
 ### Set up project
 
@@ -119,7 +119,7 @@ To connect a new project to your WIF configuration:
 
 ### Set up deployment environment
 
-Create a new or update an existing environment to use the WIF connection. 
+Create a new or updated environment to use the WIF connection. 
 
 When you set your environment connection to the WIF configuration, you will then see two fields appear under the Deployment credentials section: 
 - **Workload pool provider path:** This field is required for all WIF configurations.
@@ -127,7 +127,7 @@ When you set your environment connection to the WIF configuration, you will then
 - **Service account impersonation URL:** Used only if you’ve configured your workpool to use a service account impersonation for accessing your BigQuery resources (as opposed to granting the workpool direct resource access to the BigQuery resources).
     Example: `https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts<serviceaccountemail>:generateAccessToken`
 
-If you don’t already have a job based on the deployment environment with a connection set up to use WIF, you should create one now. Once you’ve configured it with the preferred settings, run the job.
+If you don’t already have a job based on the deployment environment with a connection set up for WIF, you should create one now. Once you’ve configured it with the preferred settings, run the job.
 
 ## FAQs
 
