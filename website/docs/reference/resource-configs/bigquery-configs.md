@@ -895,23 +895,23 @@ Find more information about materialized view limitations in Google's BigQuery [
 
 ## Python model configuration
 
-The `dbt-bigquery` adapter uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
-
 **Submission methods:**
-BigQuery supports a few different mechanisms to submit Python code, each with relative advantages. See the following information for both BigQuery Dataframe and Dataproc when running Python models.
+BigQuery supports a few different mechanisms to submit Python code, each with relative advantages. The `dbt-bigquery` adapter uses BigQuery DataFrames (BigFrames) or Dataproc. This process reads data from BigQuery, computes it either natively with BigQuery DataFrames or Dataproc, and writes the results back to BigQuery.
 
 <Tabs
-  defaultValue="dataframe"
+  defaultValue="dataframes"
   values={[
-    { label: 'BigQuery Dataframe', value: 'dataframe', },
+    { label: 'BigQuery DataFrames', value: 'dataframes', },
     { label: 'Dataproc', value: 'dataproc', },
   ]
 }>
-<TabItem value="dataframe">
+<TabItem value="dataframes">
 
-BigQuery Dataframes (BigFrames) can execute pandas and scikit. There's no need to manage infrastructure and leverages BigQuery distributed query engines. It's great for analysts, data scientists, and ML engineers who want to manipulate big data using a pandas-like syntax.
+BigQuery DataFrames can execute pandas and scikit. There's no need to manage infrastructure and leverages BigQuery-distributed query engines. It's great for analysts, data scientists, and ML engineers who want to manipulate big data using a pandas-like syntax.
 
-**BigQuery Dataframe setup:**
+**Note:** BigQuery DataFrames is executed on a default Colab runtime. If no `default` runtime template is available, the adapter will automatically create one for you and mark it `default` for next time usage (assuming it has the right permissions).
+
+**BigQuery DataFrames setup:**
 
 ```bash
 # IAM permission if using service account
@@ -952,8 +952,6 @@ my_dbt_project_sa:
   target: dev
 
 ```
-
-**Note:** BigQuery Dataframe is executed on a default Colab runtime. If no `default` runtime template is available, the adapter will automatically create one for you and mark it `default` for next time usage (assuming it has the right permissions).
 
 </TabItem>
 
