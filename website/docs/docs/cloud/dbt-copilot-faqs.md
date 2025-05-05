@@ -138,7 +138,7 @@ Future releases are planned that may bring <Constant name="copilot" /> to even m
     - Break TLS/SSL traffic to inspect it.
     - Disallow specific ports or services.
 
-We recommend the following URLs to be whitelisted:
+We recommend the following URLs to be allowlisted:
 
 **For <Constant name="copilot" /> in the IDE**:
 
