@@ -898,11 +898,18 @@ Find more information about materialized view limitations in Google's BigQuery [
 The `dbt-bigquery` adapter uses BigQuery Dataframe or Dataproc to run Python models. This process reads data from BigQuery, computes it either natively with BigQuery Dataframe or Dataproc, and writes the results back to BigQuery.
 
 **Submission methods:**
-BigQuery supports a few different mechanisms to submit python code, each with relative advantages. 
+BigQuery supports a few different mechanisms to submit Python code, each with relative advantages. See the following information for both BigQuery Dataframe and Dataproc when running Python models.
 
-- BigQuery Dataframes (BigFrames) : Can execute pandas and scikit. There's no need to manage infrastructure and leverages BigQuery distributed query engines. It's great for analysts, data scientists, and ML engineers who want to manipulate big data using a pandas-like syntax.
+<Tabs
+  defaultValue="dataframe"
+  values={[
+    { label: 'BigQuery Dataframe', value: 'dataframe', },
+    { label: 'Dataproc', value: 'dataproc', },
+  ]
+}>
+<TabItem value="dataframe">
 
-- Dataproc (`serverless` or pre-configured `cluster`):  Can execute Python models as PySpark jobs, reading from and writing to BigQuery. `serverless` is simpler but slower with limited configuration and pre-installed packages (`pandas`, `numpy`, `scikit-learn`), while `cluster` offers full control and faster runtimes. Good for complex, long-running batch pipelines and legacy Hadoop/Spark workflows but often slower for ad-hoc or interactive workloads.
+BigQuery Dataframes (BigFrames) can execute pandas and scikit. There's no need to manage infrastructure and leverages BigQuery distributed query engines. It's great for analysts, data scientists, and ML engineers who want to manipulate big data using a pandas-like syntax.
 
 **BigQuery Dataframe setup:**
 
@@ -948,10 +955,16 @@ my_dbt_project_sa:
 
 **Note:** BigQuery Dataframe is executed on a default Colab runtime. If no `default` runtime template is available, the adapter will automatically create one for you and mark it `default` for next time usage (assuming it has the right permissions).
 
+</TabItem>
+
+<TabItem value="dataproc">
+
+Dataproc (`serverless` or pre-configured `cluster`) can execute Python models as PySpark jobs, reading from and writing to BigQuery. `serverless` is simpler but slower with limited configuration and pre-installed packages (`pandas`, `numpy`, `scikit-learn`), while `cluster` offers full control and faster runtimes. Good for complex, long-running batch pipelines and legacy Hadoop/Spark workflows but often slower for ad-hoc or interactive workloads.
+
 **Dataproc setup:**
-- Create or use an existing [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
-- Enable Dataproc APIs for your project + region
-- If using the `cluster` submission method: Create or use an existing [Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) with the [Spark BigQuery connector initialization action](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google recommends copying the action into your own Cloud Storage bucket, rather than using the example version shown in the screenshot)
+- Create or use an existing [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets).
+- Enable Dataproc APIs for your project and region.
+- If using the `cluster` submission method: Create or use an existing [Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) with the [Spark BigQuery connector initialization action](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google recommends copying the action into your own Cloud Storage bucket, rather than using the example version shown in the screenshot.)
 
 <Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-connector-initialization.png" title="Add the Spark BigQuery connector as an initialization action"/>
 
@@ -978,7 +991,7 @@ models:
 
 Python models running on Dataproc Serverless can be further configured in your [BigQuery profile](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc).
 
-Any user or service account that runs dbt Python models will need the following permissions(in addition to the required BigQuery permissions) ([docs](https://cloud.google.com/dataproc/docs/concepts/iam/iam)):
+Any user or service account that runs dbt Python models will need the following permissions, in addition to the required BigQuery permissions:
 ```
 dataproc.batches.create
 dataproc.clusters.use
@@ -990,6 +1003,7 @@ storage.buckets.get
 storage.objects.create
 storage.objects.delete
 ```
+For more information, refer to [Dataproc IAM roles and permissions](https://cloud.google.com/dataproc/docs/concepts/iam/iam).
 
 **Installing packages:** 
 
@@ -1027,6 +1041,11 @@ Installation of third-party packages on Dataproc varies depending on whether it'
     </File>
 
 <Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-pip-packages.png" title="Adding packages to install via pip at cluster startup"/>
+
+</TabItem>
+</Tabs>
+
+### Additional parameters
 
 The BigQuery Python models also have the following additional configuration parameters:
 
