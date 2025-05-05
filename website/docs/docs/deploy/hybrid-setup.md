@@ -50,9 +50,9 @@ Before connecting your dbt Core project to a dbt Cloud project, make sure models
 
    ```yaml
    models:
-   define_public_models: # This is my project name, remember it must be specified
-   marts:
-      +access: public
+     define_public_models: # This is my project name, remember it must be specified
+       marts:
+         +access: public
    ```
    </File>
 
