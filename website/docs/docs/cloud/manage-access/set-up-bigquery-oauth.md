@@ -107,7 +107,7 @@ To get started, create a new connection in dbt Cloud:
 4. Fill out the **Google Cloud Project ID** and any optional settings you need.
 5. Select the OAuth Configuration you created in the previous section from the drop-down. 
 6. Configure your development connection: 
-    - BigQuery OAuth (recommended)
+    - [BigQuery OAuth](#bigquery-oauth) (recommended)
         - Set this up in the same connection as the one you're using for WIF under **`OAuth2.0 settings`**
     - Service JSON 
         - You must create a separate connection with the Service JSON configuration.
