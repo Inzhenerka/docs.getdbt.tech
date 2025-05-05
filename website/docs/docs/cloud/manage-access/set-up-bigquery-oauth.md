@@ -79,7 +79,7 @@ Once the BigQuery OAuth app is set up for a <Constant name="cloud" /> project, e
 You will then be redirected to BigQuery and asked to approve the drive, cloud platform, and BigQuery scopes, unless the connection is less privileged.
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/BQ-auth/BQ-access.png" title="BigQuery access request" />
 
-Select **Allow**. This redirects you back to <Constant name="cloud" />. You should now be an authenticated BigQuery user, ready to use the <Constant name="cloud_ide" />.
+Select **Allow**. This redirects you back to <Constant name="cloud" />. You are now an authenticated BigQuery user and can begin accessing dbt development tools. 
 
 ## Set up BigQuery Workload Identity Federation <Lifecycle status='beta,managed'/> 
 
