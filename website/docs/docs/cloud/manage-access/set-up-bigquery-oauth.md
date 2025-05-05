@@ -11,7 +11,11 @@ This guide describes a feature of the <Constant name="cloud" /> Enterprise plan.
 
 :::
 
-<Constant name="cloud" /> supports developer [OAuth](https://cloud.google.com/bigquery/docs/authentication) with BigQuery, providing an additional layer of security for dbt enterprise users. When BigQuery OAuth is enabled for a <Constant name="cloud" /> project, all <Constant name="cloud" /> developers must authenticate with BigQuery in order to use the <Constant name="cloud_ide" />. The project's deployment environments will still leverage the BigQuery service account key set in the project credentials.
+<Constant name="cloud" /> supports developer [OAuth](https://cloud.google.com/bigquery/docs/authentication) with BigQuery, providing an additional layer of security for dbt enterprise users. 
+
+## Set up BigQuery native OAuth
+
+When BigQuery OAuth is enabled for a <Constant name="cloud" /> project, all <Constant name="cloud" /> developers must authenticate with BigQuery in order to use the <Constant name="cloud_ide" />. The project's deployment environments will still leverage the BigQuery service account key set in the project credentials.
 
 
 To set up BigQuery OAuth in <Constant name="cloud" />, a BigQuery admin must:
@@ -77,9 +81,9 @@ You will then be redirected to BigQuery and asked to approve the drive, cloud pl
 
 Select **Allow**. This redirects you back to <Constant name="cloud" />. You should now be an authenticated BigQuery user, ready to use the <Constant name="cloud_ide" />.
 
-## Set up BigQuery workload identity federation <Lifecycle status='beta,managed'/> 
+## Set up BigQuery Workload Identity Federation <Lifecycle status='beta,managed'/> 
 
-Workload identity federation (WIF) allows application workloads, running externally to dbt Cloud, to act as a service account without the need to manage service accounts or other keys. The following instructions will enable you to authenticate your BigQuery connection in dbt Cloud using WIF. 
+Workload Identity Federation (WIF) allows application workloads, running externally to dbt Cloud, to act as a service account without the need to manage service accounts or other keys. The following instructions will enable you to authenticate your BigQuery connection in dbt Cloud using WIF. 
 
 ### Set up dbt Cloud
 

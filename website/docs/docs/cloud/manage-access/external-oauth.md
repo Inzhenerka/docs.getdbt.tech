@@ -7,7 +7,7 @@ pagination_next: null
 pagination_prev: null
 ---
 
-# Set up external OAuth <Lifecycle status="managed" />
+# Set up external OAuth for development environments <Lifecycle status="managed" />
 
 :::note 
 
