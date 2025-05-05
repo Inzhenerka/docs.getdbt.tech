@@ -20,8 +20,8 @@ These authentication methods are set up in the [global connections account setti
 
 When you create a new BigQuery connection, you will be presented with two schema options for the connection (both use the same adapter):
 
-- **BigQuery:** Supports all connection types
-- **BigQuery (Legacy):**  Supports all connection types except for WIF
+- **BigQuery:** Supports all connection types (Use this option)
+- **BigQuery (Legacy):**  Supports all connection types except for WIF (Deprecated feature. Do not use)
 
 All new connections should use the **BigQuery** option as **BigQuery (Legacy)** will be deprecated.
 
