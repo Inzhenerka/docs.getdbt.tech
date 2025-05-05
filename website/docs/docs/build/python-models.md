@@ -297,7 +297,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="Preview" />
 
 <File name='models/my_python_model.py'>
 
@@ -425,7 +425,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="Preview" />
 
 <File name='models/my_python_model.py'>
 
@@ -575,7 +575,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+<TabItem value="BigQuery Dataframe"> <Lifecycle status="Preview" />
 
 <File name='models/my_python_model.py'>
 
