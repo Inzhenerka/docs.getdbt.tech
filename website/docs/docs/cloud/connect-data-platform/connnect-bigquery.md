@@ -80,7 +80,7 @@ If you're using BigQuery WIF, we recommend using it with BigQuery Oauth. Otherwi
 
 **Available in:** Deployment environments
 
-The BigQuery WIF auth method permits dbt Cloud to run deployment queries as a service account without the configuration of BigQuery service account keyfile in dbt Cloud. For more information on the initial configuration of a BigQuery WIF connection in dbt Cloud, please see [the docs on setting up BigQuery](https://docs.getdbt.com/docs/cloud/manage-access/set-up-bigquery-oauth) WIF.
+The BigQuery WIF auth method permits dbt Cloud to run deployment queries as a service account without the configuration of BigQuery service account keyfile in dbt Cloud. For more information on the initial configuration of a BigQuery WIF connection in dbt Cloud, please see [the docs on setting up BigQuery](https://docs.getdbt.com/docs/cloud/manage-access/set-up-bigquery-oauth#Set-up-bigquery-workload-identity-federation) WIF.
 
 ## Configuration
 
