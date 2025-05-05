@@ -16,7 +16,7 @@ dbt Cloud supports different authentication methods depending on your environmen
     - Service JSON
     - BigQuery Workload Identity Federation (WIF) <Lifecycle status="managed" />
 
-Setup for all of these authentication methods is done in the [global connections account settings](/docs/cloud/connect-data-platform/about-connections), rather than single sign-on or integration settings. 
+These authentication methods are set up in the [global connections account settings](/docs/cloud/connect-data-platform/about-connections), rather than single sign-on or integration settings. 
 
 When you create a new BigQuery connection, you will be presented with two schema options for the connection (both use the same adapter):
 
@@ -33,7 +33,7 @@ While the fields in a BigQuery connection can be entered manually, we recommend 
 
 You can provide the JSON keyfile in one of two formats:
 
-- JSON keyfile upload &mdash; Upload the keyfile directly in its normal JSON format.
+- JSON keyfile upload &mdash; Upload the keyfile directly using its normal JSON format.
 - Base64-encoded string &mdash; Provide the keyfile as a base64-encoded string. When you provide a base64-encoded string, dbt decodes it automatically and populates the necessary fields.
 
 :::
@@ -41,17 +41,17 @@ You can provide the JSON keyfile in one of two formats:
 The JSON keyfile option is available for configuring both **development** and **deployment** environments.
 
 Uploading a valid JSON keyfile will populate the following fields:
-- Project id
-- Private key id
+- Project ID
+- Private key ID
 - Private key
 - Client email
-- Client id
-- Auth uri
-- Token uri
+- Client ID
+- Auth URI
+- Token URI
 - Auth provider x509 cert url
 - Client x509 cert url
 
-In addition to these fields, there are two other optional fields that can be configured in a BigQuery connection:
+In addition to these fields, two other optional fields can be configured in a BigQuery connection:
 
 | Field | Description | Examples |
 | ----- | ----------- | ------- |
@@ -66,21 +66,22 @@ In addition to these fields, there are two other optional fields that can be con
 **Available in:** Development environments
 
 The OAuth auth method permits <Constant name="cloud" /> to run development queries on behalf of
-a BigQuery user without the configuration of BigQuery service account keyfile in <Constant name="cloud" />. For more information on the initial configuration of a BigQuery OAuth connection in <Constant name="cloud" />, please see [the docs on setting up BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
+a BigQuery user without configuring the BigQuery service account keyfile in <Constant name="cloud" />. For more information on the initial configuration of a BigQuery OAuth connection in <Constant name="cloud" />, please see [the docs on setting up BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
 
-As an end user, if your organization has set up BigQuery OAuth, you can link a project with your personal BigQuery account in your personal Profile in <Constant name="cloud" />.
+As an end user, if your organization has set up BigQuery OAuth, you can link a project with your personal BigQuery account in your Profile in <Constant name="cloud" />.
 
 ### BigQuery Workload Identity Federation <Lifecycle status="managed, beta" />
 
 :::note
 
-If you're using BigQuery WIF, we recommend using it with BigQuery Oauth. Otherwise, you must create two connections - one with service JSON and one with WIF to use service JSON for development environments. 
+If you're using BigQuery WIF, we recommend using it with BigQuery OAuth. Otherwise, you must create two connections - one with service JSON and one with WIF to use service JSON for development environments. 
 
 :::
 
 **Available in:** Deployment environments
 
-The BigQuery WIF auth method permits dbt Cloud to run deployment queries as a service account without the configuration of BigQuery service account keyfile in dbt Cloud. For more information on the initial configuration of a BigQuery WIF connection in dbt Cloud, please see [the docs on setting up BigQuery](https://docs.getdbt.com/docs/cloud/manage-access/set-up-bigquery-oauth#Set-up-bigquery-workload-identity-federation) WIF.
+The BigQuery WIF auth method permits dbt Cloud to run deployment queries as a service account without configuring a BigQuery service account keyfile in dbt Cloud. For more information on the initial configuration of a BigQuery WIF connection in dbt Cloud, please see [the docs on setting up BigQuery](https://docs.getdbt.com/docs/cloud/manage-access/set-up-bigquery-oauth#Set-up-bigquery-workload-identity-federation) WIF.
+
 
 ## Configuration
 
