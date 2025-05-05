@@ -7,11 +7,29 @@ sidebar_label: "Connect BigQuery"
 
 ## Authentication
 
+dbt Cloud supports different authentication methods depending on your environment and plan type:
+
+- Development environments support:
+    - Service JSON
+    - BigQuery Oauth <Lifecycle status="managed" />
+- Deployment environments support: 
+    - Service JSON
+    - BigQuery Workload Identity Federation (WIF) <Lifecycle status="managed" />
+
+Setup for all of these authentication methods is done in the [global connections account settings](/docs/cloud/connect-data-platform/about-connections), rather than single sign-on or integration settings. 
+
+When you create a new BigQuery connection, you will be presented with two schema options for the connection (both use the same adapter):
+
+- **BigQuery:** Supports all connection types
+- **BigQuery (Legacy):**  Supports all connection types except for WIF
+
+All new connections should use the **BigQuery** option as **BigQuery (Legacy)** will be deprecated.
+
 ### JSON keyfile
 
 :::info Uploading a service account JSON keyfile
 
-While the fields in a BigQuery connection can be specified manually, we recommend uploading a service account <Term id="json" /> keyfile to quickly and accurately configure a connection to BigQuery. 
+While the fields in a BigQuery connection can be entered manually, we recommend uploading a service account <Term id="json" /> keyfile to quickly and accurately configure a connection to BigQuery. 
 
 You can provide the JSON keyfile in one of two formats:
 
@@ -20,7 +38,9 @@ You can provide the JSON keyfile in one of two formats:
 
 :::
 
-Uploading a JSON keyfile should populate the following fields:
+The JSON keyfile option is available for configuring both **development** and **deployment** environments.
+
+Uploading a valid JSON keyfile will populate the following fields:
 - Project id
 - Private key id
 - Private key
@@ -39,19 +59,28 @@ In addition to these fields, there are two other optional fields that can be con
 | Location | The [location](https://cloud.google.com/bigquery/docs/locations) where dbt should create datasets. | `US`, `EU` |
 
 
-
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/bigquery-connection.png" title="A valid BigQuery connection"/>
 
-### BigQuery OAuth
-**Available in:** Development environments, Enterprise plans only
+### BigQuery OAuth <Lifecycle status="managed" />
+
+**Available in:** Development environments
 
 The OAuth auth method permits <Constant name="cloud" /> to run development queries on behalf of
-a BigQuery user without the configuration of BigQuery service account keyfile in <Constant name="cloud" />. For
-more information on the initial configuration of a BigQuery OAuth connection in <Constant name="cloud" />, please see
-[the docs on setting up BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
+a BigQuery user without the configuration of BigQuery service account keyfile in <Constant name="cloud" />. For more information on the initial configuration of a BigQuery OAuth connection in <Constant name="cloud" />, please see [the docs on setting up BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
 
-As an end user, if your organization has set up BigQuery OAuth, you can link a project with your personal BigQuery account in your personal Profile in <Constant name="cloud" />, like so:
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/gsuite/bq_oauth/bq_oauth_as_user.gif" title="Link Button in dbt Cloud Credentials Screen" />
+As an end user, if your organization has set up BigQuery OAuth, you can link a project with your personal BigQuery account in your personal Profile in <Constant name="cloud" />.
+
+### BigQuery Workload Identity Federation <Lifecycle status="managed, beta" />
+
+:::note
+
+If you're using BigQuery WIF, we recommend using it with BigQuery Oauth. Otherwise, you must create two connections - one with service JSON and one with WIF to use service JSON for development environments. 
+
+:::
+
+**Available in:** Deployment environments
+
+The BigQuery WIF auth method permits dbt Cloud to run deployment queries as a service account without the configuration of BigQuery service account keyfile in dbt Cloud. For more information on the initial configuration of a BigQuery WIF connection in dbt Cloud, please see [the docs on setting up BigQuery](https://docs.getdbt.com/docs/cloud/manage-access/set-up-bigquery-oauth) WIF.
 
 ## Configuration
 
@@ -66,7 +95,7 @@ To customize your optional configurations in <Constant name="cloud" />:
 1. Click your name at the bottom left-hand side bar menu in <Constant name="cloud" />
 2. Select **Your profile** from the menu
 3. From there, click **Projects** and select your BigQuery project
-5. Go to **Development Connection** and select BigQuery
+5. Go to **development Connection** and select BigQuery
 6. Click **Edit** and then scroll down to **Optional settings**
 
 <Lightbox src="/img/bigquery/bigquery-optional-config.png" width="70%" title="BigQuery optional configuration"/>
