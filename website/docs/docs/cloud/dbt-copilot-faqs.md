@@ -130,7 +130,7 @@ Future releases are planned that may bring <Constant name="copilot" /> to even m
 
 ## Copilot Whitelisting
 
-<Expandable alt_header="Whitelisting URLs">
+<Expandable alt_header="Allowlisting URLs">
 
 <Constant name="copilot" /> doesn't specifically block AI-related URLs. However, if your organization use endpoint protection platforms, firewalls, or network proxies (such as Zscaler), you may encounter the following issues with <Constant name="copilot" />: 
 
