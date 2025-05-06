@@ -16,6 +16,7 @@ There are a number of data applications that seamlessly integrate with the <Cons
 Use the [<Constant name="semantic_layer" /> APIs](/docs/dbt-cloud-apis/sl-api-overview) to simplify metric queries, optimize your development workflow, and reduce coding. This approach also ensures data governance and consistency for data consumers.
 
 import AvailIntegrations from '/snippets/_sl-partner-links.md';
+
 <AvailIntegrations/>
 
 ### Custom integration
