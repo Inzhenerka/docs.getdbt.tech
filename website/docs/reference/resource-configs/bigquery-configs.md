@@ -909,7 +909,7 @@ BigQuery supports a few different mechanisms to submit Python code, each with re
 
 BigQuery DataFrames can execute pandas and scikit-learn. There's no need to manage infrastructure and leverages BigQuery-distributed query engines. It's great for analysts, data scientists, and machine learning engineers who want to manipulate big data using a pandas-like syntax.
 
-**Note:** BigQuery DataFrames is executed on a default Colab runtime. If no `default` runtime template is available, the adapter will automatically create one for you and mark it `default` for next time usage (assuming it has the right permissions).
+**Note:** BigQuery DataFrames run on Google Colab's default runtime. If no `default` runtime template is available, the adapter will automatically create one for you and mark it `default` for next time usage (assuming it has the right permissions).
 
 **BigQuery DataFrames setup:**
 
