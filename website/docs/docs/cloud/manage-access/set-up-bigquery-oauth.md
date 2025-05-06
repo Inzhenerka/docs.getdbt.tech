@@ -13,7 +13,11 @@ This guide describes a feature available on <Constant name="cloud" /> Enterprise
 
 :::
 
-<Constant name="cloud" /> supports developer [OAuth](https://cloud.google.com/bigquery/docs/authentication) with BigQuery, providing an additional layer of security for dbt enterprise users. When BigQuery OAuth is enabled for a <Constant name="cloud" /> project, all <Constant name="cloud" /> developers must authenticate with BigQuery in order to use the <Constant name="cloud_ide" />. The project's deployment environments will still leverage the BigQuery service account key set in the project credentials.
+<Constant name="cloud" /> supports [OAuth](https://cloud.google.com/bigquery/docs/authentication) with BigQuery, providing an additional layer of security for dbt enterprise users. 
+
+## Set up BigQuery native OAuth
+
+When BigQuery OAuth is enabled for a <Constant name="cloud" /> project, all <Constant name="cloud" /> developers must authenticate with BigQuery to access development tools, such as the <Constant name="cloud_ide" />. 
 
 
 To set up BigQuery OAuth in <Constant name="cloud" />, a BigQuery admin must:
@@ -77,7 +81,59 @@ Once the BigQuery OAuth app is set up for a <Constant name="cloud" /> project, e
 You will then be redirected to BigQuery and asked to approve the drive, cloud platform, and BigQuery scopes, unless the connection is less privileged.
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/BQ-auth/BQ-access.png" title="BigQuery access request" />
 
-Select **Allow**. This redirects you back to <Constant name="cloud" />. You should now be an authenticated BigQuery user, ready to use the <Constant name="cloud_ide" />.
+Select **Allow**. This redirects you back to <Constant name="cloud" />. You are now an authenticated BigQuery user and can begin accessing dbt development tools. 
+
+## Set up BigQuery Workload Identity Federation <Lifecycle status='beta,managed'/> 
+
+Workload Identity Federation (WIF) allows application workloads, running externally to dbt Cloud, to act as a service account without the need to manage service accounts or other keys for deployment environments. The following instructions will enable you to authenticate your BigQuery connection in dbt Cloud using WIF. 
+
+### Set up dbt Cloud
+
+To configure a BigQuery connection to use WIF authentication in dbt Cloud, you must set up a custom OAuth integration configured with details from the Entra application used as your workpool provider in GCP.
+
+In dbt Cloud: 
+
+1. Navigate to **Account settings** --> **Integrations** 
+2. Scroll down to the section for **Custom OAuth Integrations** and create a new integration, 
+3. Fill out all fields with the appropriate information from your IdP environment.
+    - The Application ID URI should be set to the expected audience claim on tokens issued from the Entra application. It will be the same URI your workpool provider has been configured to expect.
+    - You do not have to add the Redirect URI to your Entra application
+
+### Create connections in dbt Cloud
+
+To get started, create a new connection in dbt Cloud:
+
+1. Navigate to **Account settings** --> **Connections**.
+2. Click **New connection** and select **BigQuery** as the connection type. Reminder, don't select **BigQuery (Legacy)**.
+3. For the **Deployment Environment Authentication Method**, select **Workload Identity Federation**.
+4. Fill out the **Google Cloud Project ID** and any optional settings you need.
+5. Select the OAuth Configuration you created in the previous section from the drop-down. 
+6. Configure your development connection: 
+    - [BigQuery OAuth](#bigquery-oauth) (recommended)
+        - Set this up in the same connection as the one you're using for WIF under **`OAuth2.0 settings`**
+    - Service JSON 
+        - You must create a separate connection with the Service JSON configuration.
+
+### Set up project
+
+To connect a new project to your WIF configuration:
+1. Navigate to **Account settings** --> **Projects**.
+2. Click **New project**. 
+3. Give your project a name and (optional) subdirectory path and click **Continue**.
+4. Select the **Connection** with the WIF configuration.
+5. Configure the remainder of the project with the appropriate fields.
+
+### Set up deployment environment
+
+Create a new or updated environment to use the WIF connection. 
+
+When you set your environment connection to the WIF configuration, you will then see two fields appear under the Deployment credentials section: 
+- **Workload pool provider path:** This field is required for all WIF configurations.
+    Example: `//iam.googleapis.com/projects/<numeric_project_id>/locations/global/workloadIdentityPools/<workpool_name>/providers/<workpool_providername>`
+- **Service account impersonation URL:** Used only if you’ve configured your workpool to use a service account impersonation for accessing your BigQuery resources (as opposed to granting the workpool direct resource access to the BigQuery resources).
+    Example: `https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts<serviceaccountemail>:generateAccessToken`
+
+If you don’t already have a job based on the deployment environment with a connection set up for WIF, you should create one now. Once you’ve configured it with the preferred settings, run the job.
 
 ## FAQs
 

@@ -330,8 +330,6 @@ Configure the Entra ID application and in accordance with your Amazon configs.
 5. `Authorization URL` and `Token URL`: From the client ID app, open the `Endpoints` tab. These URLs map to the `OAuth 2.0 authorization endpoint (v2)` and `OAuth 2.0 token endpoint (v2)` fields. *You must use v2 of the `OAuth 2.0 authorization endpoint`. Do not use V1.* You can use either version of the `OAuth 2.0 token endpoint`.
 6. `Application ID URI`: Copy the `Application ID URI` field from the resource server’s Overview screen.
 
-
-
 ## FAQs
 
 <FAQ path="Troubleshooting/failed-snowflake-oauth-connection" />
