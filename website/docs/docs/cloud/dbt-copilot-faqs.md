@@ -128,7 +128,7 @@ Future releases are planned that may bring <Constant name="copilot" /> to even m
 
 </Expandable>
 
-## Copilot Whitelisting
+## Allow listing
 
 <Expandable alt_header="Allowlisting URLs">
 
