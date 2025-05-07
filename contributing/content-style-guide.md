@@ -666,9 +666,9 @@ Once you have determined that a screenshot will add value where words alone can'
     * Place callouts near the UI element but do not cover important details.
     * To highlight a part of the UI, use a transparent box with red borders. Select the fifth line thickness (medium) in the Markup tool for consistency. For example: 
 
-        [Sample callout when highlighting a UI element](images/sample-callouts.png)
+        ![Sample callout when highlighting a UI element](images/sample-callouts.png)
 
-        [Line thickness for callout box](images/callout-thickness.png)
+        ![Line thickness for callout box](images/callout-thickness.png)
 
     * To highlight multiple UI elements, use numbered callouts with a matching legend. Each number should correspond to a brief description listed below the screenshot, explaining the function of each UI element.
     
@@ -681,7 +681,7 @@ Once you have determined that a screenshot will add value where words alone can'
 
       For example:
 
-      [Sample callouts using numbers](images/sample-numbered-callouts.png)
+      ![Sample callouts using numbers](images/sample-numbered-callouts.png)
     
       **Note:** When highlighting multiple UI elements, use arrows sparingly because too many arrows can clutter the screenshot.
 * Redact all sensitive information such as names, email addresses, phone numbers, or anything that could be considered personally identifiable information (PII) should be obfuscated. If the dbt account name is shown in the screenshot, make sure to edit the name to a generic name (for example, John Doe or Jane Doe) when taking the screenshot.
