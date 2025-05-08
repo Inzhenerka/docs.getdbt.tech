@@ -63,7 +63,7 @@ Then click **Create** to create the BigQuery OAuth app and see the app client ID
 ### Configure the Connection in dbt Cloud
 Now that you have an OAuth app set up in BigQuery, you'll need to add the client ID and secret to <Constant name="cloud" />. To do so:
  1. Navigate back to the Connection details page, as described in [Locate the redirect URI value](#locate-the-redirect-uri-value).
- - Add the client ID and secret from the BigQuery OAuth app under the **OAuth 2.0 Settings** section
+ 2. Add the client ID and secret from the BigQuery OAuth app under the **OAuth 2.0 Settings** section.
  - Enter in the BigQuery token uri which is by default `https://oauth2.googleapis.com/token`
 
 ### Authenticating to BigQuery
