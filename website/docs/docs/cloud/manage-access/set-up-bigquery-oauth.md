@@ -64,6 +64,7 @@ Then click **Create** to create the BigQuery OAuth app and see the app client ID
 Now that you have an OAuth app set up in BigQuery, you'll need to add the client ID and secret to <Constant name="cloud" />. To do so:
  - Navigate back to the connection details page, as described in [Locate the redirect URI value](#locate-the-redirect-uri-value)
  - Add the client ID and secret from the BigQuery OAuth app under the **OAuth 2.0 Settings** section
+ - Enter in the BigQuery token uri which is by default `https://oauth2.googleapis.com/token`
 
 ### Authenticating to BigQuery
 Once the BigQuery OAuth app is set up for a <Constant name="cloud" /> project, each <Constant name="cloud" /> user will need to authenticate with BigQuery in order to use the <Constant name="cloud_ide" />. To do so:
