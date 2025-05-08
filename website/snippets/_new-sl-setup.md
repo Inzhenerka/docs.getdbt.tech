@@ -27,7 +27,7 @@ The dbt Semantic Layer uses [service tokens](/docs/dbt-cloud-apis/service-tokens
 
 This credential controls the physical access to underlying data accessed by the Semantic Layer, and all access policies set in the data platform for this credential will be respected.
 
-| Feature | Starter plan | Enterprise+ and and Enterprise plan |
+| Feature | Starter plan | Enterprise + and Enterprise plan |
 | --- | --- | --- |
 | Service tokens | Can create multiple service tokens linked to one credential. | Can use multiple credentials and link multiple service tokens to each credential. Note that you cannot link a single service token to more than one credential. |
 | Credentials per project | One credential per project. | Can [add multiple](#4-add-more-credentials) credentials per project. |
