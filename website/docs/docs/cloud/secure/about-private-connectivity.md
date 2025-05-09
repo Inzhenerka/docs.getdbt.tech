@@ -12,7 +12,7 @@ import PrivateConnectivityMatrix from '/snippets/_private-connectivity-matrix.md
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-Private connections enables secure communication from any dbt Cloud environment to your data platform hosted on a cloud provider, such as [AWS](https://aws.amazon.com/privatelink/) or [Azure](https://azure.microsoft.com/en-us/products/private-link), using that provider’s private connection technology. Private connections allow dbt Cloud customers to meet security and compliance controls as it allows connectivity between dbt Cloud and your data platform without traversing the public internet. This feature is supported in most regions across NA, Europe, and Asia, but [contact us](https://www.getdbt.com/contact/) if you have questions about availability.
+Private connections enables secure communication from any dbt Cloud environment to your data platform hosted on a cloud provider, such as [AWS](https://aws.amazon.com/privatelink/) or [Azure](https://azure.microsoft.com/en-us/products/private-link), using that provider’s private connection technology. Private connections allow dbt Cloud customers to meet security and compliance controls as it allows connectivity between dbt Cloud and your data platform without traversing the public internet. This feature is supported in most regions across North America, Europe, and Asia, but [contact us](https://www.getdbt.com/contact/) if you have questions about availability.
 
 <CloudProviders type='a data platform' />
 
