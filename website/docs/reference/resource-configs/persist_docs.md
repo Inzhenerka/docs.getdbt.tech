@@ -187,7 +187,7 @@ Some known issues and limitations:
             ```
         </File>
 
-    2. Run `dbt build -s models/debug_doc.sql --full-refresh`. 
+    2. Run `dbt build -s models/<modelname>.sql --full-refresh`. 
 
     3. Open the logs at `logs/dbt.log` and check the column description:
 
