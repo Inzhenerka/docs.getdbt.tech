@@ -10,6 +10,10 @@ Each monthly "Compatible" release includes functionality matching up-to-date ope
 
 For more information, see [release tracks](/docs/dbt-versions/cloud-release-tracks).
 
+## May 2025
+
+PLACEHOLDER
+
 ## April 2025
 
 Release date: April 9, 2025
