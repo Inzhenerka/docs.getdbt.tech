@@ -147,14 +147,54 @@ Some known issues and limitations:
 
 <div warehouse="Databricks">
 
-- Column-level comments require `file_format: delta` (or another "v2 file format")
+- Column-level comments require `file_format: delta` (or another "v2 file format").
 
 
 </div>
 
 <div warehouse="Snowflake">
 
-- No known issues
+- If a column name in a SQL model is in mixed-case format (for example, `ca_net_ht_N`), the docs for that column will not be persisted. For the docs to persist, there are two options: 
+
+    - Define the column name in the corresponsing YML file using lowercase or uppercase letters only.
+    - Use the [`quote`](../resource-properties/columns.md#quoter) configuration in the corresponding YML file.
+
+  See the following sample steps on how to use the `quote` field for columns in mixed-case format.
+
+    1. Create the following SQL and YML files:
+
+        <File name='<modelname>.sql'>
+
+            ```sql
+            {{ config(materialized='table') }}
+
+            -- Note the addition of double quotes for the column name below!
+            select 1 as "ca_net_ht_N"
+            ```
+        </File>
+
+        <File name='<modelname>.yml'>
+
+            ```yml
+            models:
+              - name: <modelname>
+                description: This is the table description
+
+            columns:
+              - name: "ca_net_ht_N"
+                description: This should be the description of the column
+                quote: true
+            ```
+        </File>
+
+    2. Run `dbt build -s models/debug_doc.sql --full-refresh`. 
+
+    3. Open the logs at `logs/dbt.log` and check the column description:
+
+        ```log
+        alter table analytics.<schema>.<modelname> alter
+            "ca_net_ht_N" COMMENT $$This should be the description of the column$$;
+        ```
 
 </div>
 
