@@ -16,9 +16,11 @@ Private connections enables secure communication from any dbt Cloud environment 
 
 <CloudProviders type='a data platform' />
 
+<PrivateConnectivityMatrix/>
+
 ### Cross-region private connections
 
-dbt Labs has a worldwide network of regional VPCs. These VPCs are specifically used to host VPC endpoints, which are connected to dbt Cloud instance environments. To ensure security, access to these endpoints is protected by security groups, network policies, and application connection safeguards. The connected services are also authenticated. Currently, we have multiple customers successfully connecting to their private endpoints in different regions within dbt Cloud.
+dbt Labs has globally connected private networks specifically used to host private endpoints, which are connected to dbt Cloud instance environments. This connectivity allows for dbt Cloud environments to connect to any supported region from any dbt Cloud instance within the same cloud provider network. To ensure security, access to these endpoints is protected by security groups, network policies, and application connection safeguards, in addition to the authentication and authorization mechanisms provided by each of the connected platforms.
 
 ### Configuring private connections
 
@@ -33,5 +35,3 @@ dbt Cloud supports the following data platforms for use with the private connect
 - [VCS](/docs/cloud/secure/vcs-privatelink)
 
 <PrivateLinkHostnameWarning features={'/snippets/_private-connection-hostname-restriction.md'}/>
-
-<PrivateConnectivityMatrix/>
