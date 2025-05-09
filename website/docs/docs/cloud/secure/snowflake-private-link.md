@@ -50,9 +50,9 @@ Subject: New Multi-Tenant Azure PrivateLink Request
 3. dbt Support will provide the `private endpoint resource_id` of our `private_endpoint` and the `CIDR` range for you to complete the [PrivateLink configuration](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors) by contacting the Snowflake Support team. 
 
 
-4. (Optional) If enabling an [Azure private endpoint for an Internal Stage](https://docs.snowflake.com/en/user-guide/private-internal-stages-azure) will also provide the `resource_id` for the Internal Stage endpoint. 
+4. (Optional) If enabling an [Azure private endpoint for an Internal Stage](https://docs.snowflake.com/en/user-guide/private-internal-stages-azure), it will also provide the `resource_id` for the Internal Stage endpoint. 
 
-As the Snowflake administrator, call the `SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS` function using the resource id value as the function argument. This authorizes access to the Snowflake internal stage through the private endpoint. 
+As the Snowflake administrator, call the `SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS` function using the resource ID value as the function argument. This authorizes access to the Snowflake internal stage through the private endpoint. 
 
 ```sql
 
@@ -92,12 +92,12 @@ Open the Snowflake UI and take the following steps:
 4. Give the rule a name.
 5. Select a database and schema where the rule will be stored. These selections are for permission settings and organizational purposes; they do not affect the rule itself.
 6. Set the type to `Azure Link ID` and the mode to `Ingress`.
-7. Type the Azure Link ID obtained in the section above into the identifier box and press **Enter**.
+7. In the identifier box, type the Azure Link ID obtained in the previous section and press **Enter**.
 8. Click **Create Network Rule**.
 
 <Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink2.png" title="Create Network Rule"/>
 
-9. In the **Network Policy** tab, edit the policy you want to add the rule to. This could be your account-level policy or a policy specific to the users connecting from dbt Cloud.
+9. In the **Network Policy** tab, edit the policy to which you want to add the rule. This could be your account-level policy or one specific to the users connecting from dbt Cloud.
 
 
 10. Add the new rule to the allowed list and click **Update Network Policy**.
