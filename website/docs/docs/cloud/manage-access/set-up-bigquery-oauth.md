@@ -103,7 +103,7 @@ In dbt Cloud:
 To get started, create a new connection in dbt Cloud:
 
 1. Navigate to **Account settings** --> **Connections**.
-2. Click **New connection** and select **BigQuery** as the connection type. Reminder, don't select **BigQuery (Legacy)**.
+2. Click **New connection** and select **BigQuery** as the connection type. You will then see the option to select **BigQuery** or **BigQuery (Legacy)**. Select **BigQuery**.
 3. For the **Deployment Environment Authentication Method**, select **Workload Identity Federation**.
 4. Fill out the **Google Cloud Project ID** and any optional settings you need.
 5. Select the OAuth Configuration you created in the previous section from the drop-down. 
