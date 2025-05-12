@@ -32,10 +32,15 @@ You must have proper permissions to invite new users:
 
 ## User experience
 
+:::info Email verification
+Email verification is mandatory for all new users in dbt Cloud, this includes using SSO⁠⁠. We don't allow automatic provisioning without email verification. This is a security requirement that cannot be bypassed.
+:::
+
 dbt Cloud generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
 
 The email contains a link to create an account. When the user clicks on this they will be brought to one of two screens depending on whether SSO is configured or not.
+
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/email-invite.png" width="60%" title="Example or an email invitation"/>
 
