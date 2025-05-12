@@ -32,8 +32,11 @@ You must have proper permissions to invite new users:
 
 ## User experience
 
-dbt Cloud generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
+:::info Email verification
+Email verification is mandatory for all new users in dbt Cloud, this includes using SSO⁠⁠. We don't allow automatic provisioning without email verification. This is a security requirement that cannot be bypassed.
+:::
 
+dbt Cloud generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
 The email contains a link to create an account. When the user clicks on this they will be brought to one of two screens depending on whether SSO is configured or not.
 
@@ -51,7 +54,11 @@ The default settings send the email, the user clicks the link, and is prompted t
 
 <TabItem value="SSO user">
 
-If SSO is configured for the environment, the user clicks the link, is brought to a confirmation screen, and presented with a link to authenticate against the company's identity provider:
+If SSO is configured for the environment the user will need to:
+
+1. Click the link received in their email account.
+2. Then, click the option to join the account.
+3. The user will then be brought to a confirmation screen, and presented with a link to authenticate against the company's identity provider:
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/sso-user-invite.png" width="60%" title="User invitation with SSO configured"/>
 
