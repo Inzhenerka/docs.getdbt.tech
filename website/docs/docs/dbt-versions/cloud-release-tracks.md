@@ -17,8 +17,8 @@ By moving your environments and jobs to release tracks you can get all the funct
 | Release track | Description | Plan availability | API value |
 | ------------- | ----------- | ----------------- | --------- |
 | **Latest** | Formerly called "Versionless", provides a continuous release of the latest functionality in dbt Cloud.<br /><br />Includes early access to new features of the dbt framework before they're available in open source releases of dbt Core. | All plans | `latest` (or `versionless`) |
-| **Compatible** | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Team + Enterprise | `compatible` |
-| **Extended** | The previous month's "Compatible" release. | Enterprise | `extended` |
+| **Compatible** | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Starter, Enterprise, Enterprise+ | `compatible` |
+| **Extended** | The previous month's "Compatible" release. | Enterprise, Enterprise+ | `extended` |
 
 To configure an environment in the [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest) to use a release track, set `dbt_version` to the release track name:
 - `latest` (or `versionless`, the old name is still supported)
@@ -33,16 +33,16 @@ Choose the "Compatible" and "Extended" release tracks if you need a less-frequen
 
 ### Common architectures
 
-**Default** - majority of customers on all plans
+**Default** - Majority of customers on all plans
 - Prioritize immediate access to fixes and features
 - Leave all environments on the "Latest" release track (default configuration)
 
-**Hybrid** - Team, Enterprise
+**Hybrid** - Starter, Enterprise, Enterprise+
 - Prioritize ongoing compatibility between <Constant name="cloud" /> and <Constant name="core" /> for development & deployment using both products in the same dbt projects
 - Configure all environments to use the "Compatible" release track
 - Understand that new features will not be available until they are first released in <Constant name="core" /> OSS (several months after the "Latest" release track)
 
-**Cautious** - Enterprise, Business Critical
+**Cautious** - Enterprise, Enterprise+, Business Critical
 - Prioritize "bake in" time for new features & fixes
 - Configure development & test environments to use the "Compatible" release track
 - Configure pre-production & production environments to use the "Extended" release track
@@ -69,15 +69,15 @@ To learn more about how dbt Labs deploys stable dbt upgrades in a safe manner to
 
 If you're running dbt version 1.6 or older, please know that your version of <Constant name="core" /> has reached [end-of-life (EOL)](/docs/dbt-versions/core#eol-version-support) and is no longer supported. We strongly recommend that you update to a newer version as soon as reasonably possible.
 
-dbt Labs has extended the critical support period of <Constant name="core" /> v1.7 for <Constant name="cloud" /> Enterprise customers to March 2025. At that point, we will be encouraging all customers to select a Release Track for ongoing updates in <Constant name="cloud" />.
+dbt Labs has extended the critical support period of <Constant name="core" /> v1.7 for <Constant name="cloud" /> Enterprise-tier customers to March 2025. At that point, we will be encouraging all customers to select a Release Track for ongoing updates in <Constant name="cloud" />.
 
 <Expandable alt_header="I'm using an older version of dbt in dbt Cloud. What should I do? What happens if I do nothing?" >
 
 If you're running dbt version v1.6 or older, please know that your version of dbt Core has reached [end-of-life (EOL)](/docs/dbt-versions/core#eol-version-support) and is no longer supported. We strongly recommend that you update to a newer version as soon as reasonably possible.
 
-dbt Labs has extended the "Critical Support" period of dbt Core v1.7 for dbt Cloud Enterprise customers while we work through the migration with those customers to Release Tracks. In the meantime, this means that v1.7 will continue to be accessible in dbt Cloud for Enteprise customers, jobs and environments on v1.7 for those customers will not be automatically migrated to "Latest," and dbt Labs will continue to fix critical bugs and security issues.
+dbt Labs has extended the "Critical Support" period of dbt Core v1.7 for dbt Cloud Enterprise-tier customers while we work through the migration with those customers to Release Tracks. In the meantime, this means that v1.7 will continue to be accessible in dbt Cloud for Enteprise customers, jobs and environments on v1.7 for those customers will not be automatically migrated to "Latest," and dbt Labs will continue to fix critical bugs and security issues.
 
-Starting in October 2024, dbt Cloud accounts on the Developer and Team plans have been migrated to release tracks from older dbt Core versions. If your account was migrated to the "Latest" release track and you notice new failures in scheduled jobs, please [contact dbt Cloud support](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support) to report the problem or request an extension.
+Starting in October 2024, dbt Cloud accounts on the Developer and Starter plans have been migrated to release tracks from older dbt Core versions. If your account was migrated to the "Latest" release track and you notice new failures in scheduled jobs, please [contact dbt Cloud support](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support) to report the problem or request an extension.
 
 </Expandable>
 

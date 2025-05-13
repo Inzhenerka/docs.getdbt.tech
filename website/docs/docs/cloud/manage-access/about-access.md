@@ -37,7 +37,7 @@ You can edit an existing user's license by navigating to the **Users** section o
 
 ### User passwords
 
-By default, new users will be prompted to set a password for their account. All plan tiers support and enforce [multi-factor authentication](/docs/cloud/manage-access/mfa) for users with password logins. However, they will still need to configure their password before configuring MFA. Enterprise accounts can configure [SSO](#sso-mappings) and advanced authentication measures. Developer and Starter plans only support user passwords with MFA. 
+By default, new users will be prompted to set a password for their account. All plan tiers support and enforce [multi-factor authentication](/docs/cloud/manage-access/mfa) for users with password logins. However, they will still need to configure their password before configuring MFA. Enterprise tier accounts can configure [SSO](#sso-mappings) and advanced authentication measures. Developer and Starter plans only support user passwords with MFA. 
 
 User passwords must meet the following criteria:
 
@@ -50,7 +50,7 @@ User passwords must meet the following criteria:
 
 Groups in <Constant name="cloud" /> serve much of the same purpose as they do in traditional directory tools &mdash; to gather individual users together to make bulk assignments of permissions easier. 
 
-The permissions available depends on whether you're on an [Enterprise](/docs/cloud/manage-access/enterprise-permissions) or [self-service Starter](/docs/cloud/manage-access/self-service-permissions) plan.
+The permissions available depends on whether you're on an [Enterprise-tier](/docs/cloud/manage-access/enterprise-permissions) or [self-service Starter](/docs/cloud/manage-access/self-service-permissions) plan.
 
 - Admins use groups in <Constant name="cloud" /> to assign [licenses](#licenses) and [permissions](#permissions). 
 - The permissions are more granular than licenses, and you only assign them at the group level; _you can’t assign permissions at the user level._
@@ -64,7 +64,7 @@ There are three default groups available as soon as you create your <Constant na
 
 Default groups are automatically provisioned for all accounts to simplify the initial set up. We recommend  creating your own organizational groups so you can customize the permissions. Once you create your own groups, you can delete the default groups.
 
-### Create new groups <Lifecycle status="managed" />
+### Create new groups <Lifecycle status="managed,managed_plus" />
 
 - Create new groups from the **Groups & Licenses** section of the **Account settings**.
 - If you use an external IdP for SSO, you can sync those SSO groups to <Constant name="cloud" /> from the **Group details** pane when creating or editing existing groups.
@@ -77,7 +77,7 @@ If a user is assigned licenses and permissions from multiple groups, the group t
 
 :::
 
-### SSO mappings <Lifecycle status="managed" />
+### SSO mappings <Lifecycle status="managed,managed_plus" />
 
 SSO Mappings connect an identity provider (IdP) group membership to a <Constant name="cloud" /> group. When users log into <Constant name="cloud" /> via a supported identity provider, their IdP group memberships sync with <Constant name="cloud" />. Upon logging in successfully, the user's group memberships (and permissions) will automatically adjust within <Constant name="cloud" />.
 
@@ -124,7 +124,7 @@ Some permissions (those that don't grant full access, like admins) allow groups 
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-access-control.png" width="60%" title="Example environment access control for a group with Git admin assigned." />
 
-## Role-based access control <Lifecycle status="managed" />
+## Role-based access control <Lifecycle status="managed,managed_plus" />
 
 Role-based access control (RBAC) allows you to grant users access to features and functionality based on their group membership. With this method, you can grant users varying access levels to different projects and environments. You can take access and security to the next level by integrating <Constant name="cloud" /> with a third-party identity provider (IdP) to grant users access when they authenticate with your SSO or OAuth service.
 
@@ -227,7 +227,7 @@ Don't try to edit your own user, as this isn't allowed for security reasons. You
 <Expandable alt_header="How do I add or remove users?">
 
 Each dbt Cloud plan has a base number of Developer and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
-  - If you're on an Enterprise-tier plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
+  - If you're on an Enterprise or Enterprise+ plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
   - If you're on a Starter plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers by making two changes: adjust your developer user seat count AND your developer billing seat count in **Account settings** -> **Users** and then in **Account settings** -> **Billing**.
 
 For detailed steps, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users#licenses).

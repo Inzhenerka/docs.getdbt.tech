@@ -36,13 +36,13 @@ If you're on different data platforms, you can also follow this guide and will n
 
 ### Prerequisites
 
-- You need a [<Constant name="cloud" />](https://www.getdbt.com/signup/) Trial, Team, or Enterprise account for all deployments. 
+- You need a [<Constant name="cloud" />](https://www.getdbt.com/signup/) Trial, Starter, or Enterprise-tier account for all deployments. 
 - Have the correct [<Constant name="cloud" /> license](/docs/cloud/manage-access/seats-and-users) and [permissions](/docs/cloud/manage-access/enterprise-permissions) based on your plan:
   <DetailsToggle alt_header="More info on license and permissions">  
   
-  - Enterprise &mdash; Developer license with Account Admin permissions. Or "Owner" with a Developer license, assigned Project Creator, Database Admin, or Admin permissions.
-  - Team &mdash; "Owner" access with a Developer license.
-  - Trial &mdash; Automatic "Owner" access under a Team plan trial.
+  - Enterprise-tier &mdash; Developer license with Account Admin permissions. Or "Owner" with a Developer license, assigned Project Creator, Database Admin, or Admin permissions.
+  - Starter &mdash; "Owner" access with a Developer license.
+  - Trial &mdash; Automatic "Owner" access under a Starter plan trial.
   
   </DetailsToggle>
 

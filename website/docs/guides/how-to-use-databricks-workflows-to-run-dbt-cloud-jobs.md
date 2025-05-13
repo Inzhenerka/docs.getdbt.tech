@@ -25,7 +25,7 @@ Using Databricks workflows to call the <Constant name="cloud" /> job API can be 
 
 ### Prerequisites
 
-- Active [Teams or Enterprise <Constant name="cloud" /> account](https://www.getdbt.com/pricing/)
+- Active [Enterprise or Enterprise+ <Constant name="cloud" /> account](https://www.getdbt.com/pricing/)
 - You must have a configured and existing [<Constant name="cloud" /> deploy job](/docs/deploy/deploy-jobs)
 - Active Databricks account with access to [Data Science and Engineering workspace](https://docs.databricks.com/workspace-index.html) and [Manage secrets](https://docs.databricks.com/security/secrets/index.html)
 - [Databricks CLI](https://docs.databricks.com/dev-tools/cli/index.html)

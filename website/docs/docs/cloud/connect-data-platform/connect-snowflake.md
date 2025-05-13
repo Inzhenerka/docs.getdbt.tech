@@ -100,7 +100,7 @@ The `Keypair` auth method uses Snowflake's [Key Pair Authentication](https://doc
 
 ### Snowflake OAuth
 
-**Available in:** Development environments, Enterprise plans only
+**Available in:** Development environments, Enterprise-tier plans only
 
 The OAuth auth method permits <Constant name="cloud" /> to run development queries on behalf of
 a Snowflake user without the configuration of Snowflake password in <Constant name="cloud" />. 

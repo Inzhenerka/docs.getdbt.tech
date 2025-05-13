@@ -35,7 +35,7 @@ import Features from '/snippets/_sl-plan-info.md'
 
 <Features
 product="dbt Semantic Layer"
-plan="dbt Cloud Team or Enterprise"
+plan="dbt Cloud Starter or Enterprise-tier"
 />
 
 This page points to various resources available to help you understand, configure, deploy, and integrate the <Constant name="semantic_layer" />. The following sections contain links to specific pages that explain each aspect in detail. Use these links to navigate directly to the information you need, whether you're setting up the <Constant name="semantic_layer" /> for the first time, deploying metrics, or integrating with downstream tools.

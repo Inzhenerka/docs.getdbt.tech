@@ -61,9 +61,8 @@ In addition to these fields, two other optional fields can be configured in a Bi
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/bigquery-connection.png" title="A valid BigQuery connection"/>
 
-### BigQuery OAuth <Lifecycle status="managed" />
-
-**Available in:** Development environments
+### BigQuery OAuth
+**Available in:** Development environments, Enterprise-tier plans only
 
 The OAuth auth method permits <Constant name="cloud" /> to run development queries on behalf of
 a BigQuery user without configuring the BigQuery service account keyfile in <Constant name="cloud" />. For more information on the initial configuration of a BigQuery OAuth connection in <Constant name="cloud" />, please see [the docs on setting up BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
