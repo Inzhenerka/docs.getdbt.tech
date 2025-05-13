@@ -5,8 +5,6 @@ description: "Integrate and use the JDBC API to query your metrics."
 tags: [Semantic Layer, API]
 ---
 
-# JDBC
-
 The <Constant name="semantic_layer" /> Java Database Connectivity (JDBC) API enables users to query metrics and dimensions using the JDBC protocol, while also providing standard metadata functionality. 
 
 A JDBC driver is a software component enabling a Java application to interact with a data platform. Here's some more information about our JDBC API:
