@@ -497,7 +497,7 @@ BigQuery's permission model is dissimilar from more conventional databases like 
 - BigQuery Data Editor
 - BigQuery User
 
-For use on BigQuery DataFrames:
+Required roles and permissions for BigQuery DataFrames:
 - BigQuery Job User
 - BigQuery Read Session User
 - Notebook Runtime User
