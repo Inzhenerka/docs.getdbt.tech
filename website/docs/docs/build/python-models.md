@@ -4,7 +4,7 @@ description: "Configure Python models to enhance your dbt project."
 id: "python-models"
 ---
 
-Note that only specific data platforms (BigQuery, Databricks, and Snowflake) support dbt-py models.
+Note that only specific data platforms (BigQuery, Databricks, and Snowflake) support `dbt-py` models.
 
 We encourage you to:
 - Read [the original discussion](https://github.com/dbt-labs/dbt-core/discussions/5261) that proposed this feature.
