@@ -35,7 +35,7 @@ The diagram below explains the basic process by which users are provisioned in <
 - **User Exists?**: This step checks if the user already exist in <Constant name="cloud" />'s user database.
   - **Yes**: If so, skip the user creation process
   - **No**: If so, create a new entry in the <Constant name="cloud" /> database for the new user.
-- **Create <Constant name="cloud" /> User**: This will create a new entry in the <Constant name="cloud" /> database for the new user. This user record contains the user's email address, first and last name, and any IdP attributes (e.g. groups) passed along from the Identity Provider.
+- **Create <Constant name="cloud" /> User**: This will create a new entry in the <Constant name="cloud" /> database for the new user. This user record contains the user's email address, first and last name, and any IdP attributes (for example, groups) passed along from the Identity Provider. dbt Cloud will send a verification email, and the user must follow the steps in the [User experience section](/docs/cloud/manage-access/invite-users#user-experience) to use SSO in <Constant name="cloud" />.
 - **Attach Matching Accounts**: <Constant name="cloud" /> find all of the accounts configured to match the SSO config used by this user to log in, and then create a user license record mapping the user to the account. This step will also delete any licenses that the user should not have based on the current SSO config.
 - **Attach Matching Permissions (Groups)**: <Constant name="cloud" /> iterates through the groups on the matching accounts, and find all that fit one of the below categories:
   - Have an SSO mapping group that is assigned to the user
