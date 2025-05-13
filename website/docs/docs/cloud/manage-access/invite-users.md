@@ -56,7 +56,7 @@ The default settings send the email, the user clicks the link, and is prompted t
 
 If SSO is configured for the environment the user will need to:
 
-1. Click the link received in their email account.
+1. Click the link in the verification email.
 2. Then, click the option to join the account.
 3. The user will then be brought to a confirmation screen, and presented with a link to authenticate against the company's identity provider:
 
