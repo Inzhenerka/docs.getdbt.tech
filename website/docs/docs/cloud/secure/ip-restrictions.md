@@ -7,7 +7,7 @@ pagination_next: "docs/cloud/secure/about-privatelink"
 pagination_prev: null
 ---
 
-# Configuring IP restrictions <Lifecycle status="managed_plus,Virtual Private Cloud" />
+# Configuring IP restrictions <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-iprestrictions.md';
 

@@ -30,7 +30,7 @@ With automatic code generation, let <Constant name="copilot" /> [generate code](
 
 To use <Constant name="copilot" />, you must have a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise + account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
 
-Certain features like [BYOK](#bringing-your-own-openai-api-key-byok), [natural prompts in Canvas](/docs/cloud/build-canvas-copilot), and more are only available on Enterprise and Enterprise + plans.
+Certain features like [BYOK](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok), [natural prompts in Canvas](/docs/cloud/build-canvas-copilot), and more are only available on Enterprise and Enterprise + plans.
 
 </Expandable>
 

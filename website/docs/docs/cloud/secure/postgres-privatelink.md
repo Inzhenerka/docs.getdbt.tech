@@ -9,7 +9,7 @@ import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.m
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';
 import CloudProviders from '/snippets/_privatelink-across-providers.md';
 
-# Configure AWS PrivateLink for Postgres <Lifecycle status="managed_plus,Virtual Private Cloud" />
+# Configure AWS PrivateLink for Postgres <Lifecycle status="managed_plus" />
 
 <SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
 
