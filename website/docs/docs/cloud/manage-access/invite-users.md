@@ -58,7 +58,7 @@ If SSO is configured for the environment the user will need to:
 
 1. Click the link in the verification email.
 2. Click the option to join the account.
-3. The user will then be brought to a confirmation screen, and presented with a link to authenticate against the company's identity provider:
+3. A confirmation screen appears, with a link to authenticate against the company's identity provider. Click **Authenticate with your enterprise login**.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/sso-user-invite.png" width="60%" title="User invitation with SSO configured"/>
 
