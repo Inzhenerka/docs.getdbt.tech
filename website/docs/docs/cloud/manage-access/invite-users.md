@@ -54,7 +54,7 @@ The default settings send the email, the user clicks the link, and is prompted t
 
 <TabItem value="SSO user">
 
-If SSO is configured for the environment the user will need to:
+If SSO is configured for the environment, the user must:
 
 1. Click the link in the verification email.
 2. Click the option to join the account.
