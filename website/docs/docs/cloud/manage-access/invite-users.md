@@ -33,7 +33,7 @@ You must have proper permissions to invite new users:
 ## User experience
 
 :::info Email verification
-Email verification is mandatory for all new users in dbt Cloud, this includes using SSO⁠⁠. We don't allow automatic provisioning without email verification. This is a security requirement that cannot be bypassed.
+Email verification is mandatory for all new users in dbt Cloud, including using Single Sign-On (SSO)⁠⁠. Automatic provisioning without email verification is not allowed. This is a security requirement that cannot be bypassed.
 :::
 
 dbt Cloud generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
