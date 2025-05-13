@@ -4,7 +4,7 @@ description: "Configure Python models to enhance your dbt project."
 id: "python-models"
 ---
 
-Note that only [specific data platforms](#specific-data-platforms) support dbt-py models.
+Note that only specific data platforms (BigQuery, Databricks, and Snowflake) support dbt-py models.
 
 We encourage you to:
 - Read [the original discussion](https://github.com/dbt-labs/dbt-core/discussions/5261) that proposed this feature.
@@ -384,7 +384,10 @@ Currently, Python functions defined in one dbt model can't be imported and reuse
 
 ### Using PyPI packages
 
-You can also define functions that depend on third-party packages so long as those packages are installed and available to the Python runtime on your data platform. See notes on "Installing Packages" for [specific data platforms](#specific-data-platforms).
+You can also define functions that depend on third-party packages so long as those packages are installed and available to the Python runtime on your data platform. See notes on "Installing packages" for specific data platforms:
+- [BigQuery](/reference/resource-configs/bigquery-configs.md#python-model-configuration)
+- [Databricks](/reference/resource-configs/databricks-configs.md#python-model-configuration)
+- [Snowflake](/reference/resource-configs/snowflake-configs.md#python-model-configuration)
 
 In this example, we use the `holidays` package to determine if a given date is a holiday in France. The code below uses the pandas API for simplicity and consistency across platforms. The exact syntax, and the need to refactor for multi-node processing, still vary.
 <Tabs>
