@@ -17,6 +17,15 @@ You can enhance your project navigation and editing experience by directly acces
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-ide.jpg" title="Access dbt Explorer from the IDE by clicking on the 'View in Explorer' icon next to the file breadcrumbs. " />
 
+### <Constant name="visual_editor" />
+
+Seamlessly access dbt Catalog via <Constant name="visual_editor" /> to bring your workflow to life with visual editing.
+
+#### Access dbt Catalog from <Constant name="visual_editor" />
+
+Steps here
+[Roxi to check with Greg and team and will add images on response]
+
 ### Lineage tab in jobs
 The **Lineage tab** in <Constant name="cloud" /> jobs displays the lineage associated with the [job run](/docs/deploy/jobs). Access <Constant name="explorer" /> directly from this tab, allowing you understand dependencies/relationships of resources in your project.
 
