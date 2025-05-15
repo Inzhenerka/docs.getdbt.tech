@@ -4,7 +4,7 @@ description: "Configure Python models to enhance your dbt project."
 id: "python-models"
 ---
 
-Note that only [specific data platforms](#specific-data-platforms) support dbt-py models.
+Note that only specific data platforms support `dbt-py` models. Check the [platform configuration pages](/reference/resource-configs/resource-configs) to confirm if Python models are supported. 
 
 We encourage you to:
 - Read [the original discussion](https://github.com/dbt-labs/dbt-core/discussions/5261) that proposed this feature.
@@ -297,7 +297,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+<TabItem value="BigQuery DataFrames"> <Lifecycle status="Preview" />
 
 <File name='models/my_python_model.py'>
 
@@ -384,7 +384,7 @@ Currently, Python functions defined in one dbt model can't be imported and reuse
 
 ### Using PyPI packages
 
-You can also define functions that depend on third-party packages so long as those packages are installed and available to the Python runtime on your data platform. See notes on "Installing Packages" for [specific data platforms](#specific-data-platforms).
+You can also define functions that depend on third-party packages so long as those packages are installed and available to the Python runtime on your data platform.
 
 In this example, we use the `holidays` package to determine if a given date is a holiday in France. The code below uses the pandas API for simplicity and consistency across platforms. The exact syntax, and the need to refactor for multi-node processing, still vary.
 <Tabs>
@@ -425,7 +425,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+<TabItem value="BigQuery DataFrames"> <Lifecycle status="Preview" />
 
 <File name='models/my_python_model.py'>
 
@@ -528,7 +528,7 @@ models:
 
 You can use the `@udf` decorator or `udf` function to define an "anonymous" function and call it within your `model` function's DataFrame transformation. This is a typical pattern for applying more complex functions as DataFrame operations, especially if those functions require inputs from third-party packages.
 - [Snowpark Python: Creating UDFs](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs.html)
-- [BigQuery Dataframe UDFs](https://cloud.google.com/bigquery/docs/user-defined-functions)
+- [BigQuery DataFrames UDFs](https://cloud.google.com/bigquery/docs/user-defined-functions)
 - [PySpark functions: udf](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.udf.html)
 
 <Tabs>
@@ -575,7 +575,7 @@ def model(dbt, session):
 
 </TabItem>
 
-<TabItem value="BigQuery Dataframe"> <Lifecycle status="beta" />
+<TabItem value="BigQuery DataFrames"> <Lifecycle status="Preview" />
 
 <File name='models/my_python_model.py'>
 
