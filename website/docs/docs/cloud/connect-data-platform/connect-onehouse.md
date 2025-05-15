@@ -6,7 +6,6 @@ sidebar_label: "Connect Onehouse"
 pagination_next: null
 ---
 
-<Snippet path="dbt-onehouse" />
 
 <Constant name="cloud" /> Supports connecting to [Onehouse SQL](https://www.onehouse.ai/) using the Apache Spark Connector with the Thrift method.
 
