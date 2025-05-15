@@ -32,10 +32,13 @@ You must have proper permissions to invite new users:
 
 ## User experience
 
-dbt Cloud generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
+:::info Email verification
+Email verification is mandatory for all new users in <Constant name="cloud" />, including using Single Sign-On (SSO)⁠⁠. Automatic provisioning without email verification is not allowed. This is a security requirement that cannot be bypassed.
+:::
 
+<Constant name="cloud" /> generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure that traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
-The email contains a link to create an account. When the user clicks on this they will be brought to one of two screens depending on whether SSO is configured or not.
+The email contains a link to create an account. When the user clicks on this link, they will be brought to one of two screens depending on whether SSO is configured or not.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/email-invite.png" width="60%" title="Example or an email invitation"/>
 
@@ -51,7 +54,11 @@ The default settings send the email, the user clicks the link, and is prompted t
 
 <TabItem value="SSO user">
 
-If SSO is configured for the environment, the user clicks the link, is brought to a confirmation screen, and presented with a link to authenticate against the company's identity provider:
+If SSO is configured for the environment, the user must:
+
+1. Click the link in the verification email.
+2. Click the option to join the account.
+3. A confirmation screen appears, with a link to authenticate against the company's identity provider. Click **Authenticate with your enterprise login**.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/sso-user-invite.png" width="60%" title="User invitation with SSO configured"/>
 
