@@ -302,10 +302,11 @@ The following table outlines the features available in the new navigation:
 | New navigation element    | Features                                                                 |
 |---------------------------|--------------------------------------------------------------------------|
 |[Sidebar](/docs/explore/explore-projects#sidebar)|Access model [project recommendations](/docs/explore/project-recommendations) at the project level.|
-|[Keyword search](/docs/explore/explore-projects#global-navigation-)|Global navigation lets you search across all dbt projects and Snowflake resources.                 |
+|[Global navigation](/docs/explore/explore-projects#global-navigation-)|Global navigation lets you search across all dbt projects and Snowflake resources.                 |
+|Browse|Browse your project's resources and [data health signals](/docs/explore/data-health-signals).|
 |[Integrated tool access](/docs/explore/explore-projects#integrated-tool-access)|Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link)can open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.                |
 |[Resource details](/docs/explore/explore-projects#resource-details)|Use [external metadata ingestion](/docs/explore/external-metadata-ingestion) to connect to your data warehouse and surface tables, views, and other non-dbt resources in the dbt Catalog.|
-|[Staging environments](/docs/explore/explore-projects#staging-environments)|Access the [staging environment](/docs/deploy/deploy-environments#staging-environment) at the project level.|
+|[Staging environments](/docs/explore/explore-projects#staging-environments)|Access a project-level [staging environment](/docs/deploy/deploy-environments#staging-environment) to preview data workflows with production tools and added oversight.|
 
 
 - **Sidebar** &mdash; Access model [project recommendations](/docs/explore/project-recommendations) at the project level.
@@ -313,13 +314,15 @@ The following table outlines the features available in the new navigation:
 
 - **[Global navigation](/docs/explore/explore-projects#global-navigation-)** &mdash; Global navigation lets you search across all dbt projects and Snowflake resources.
 
-- **Integrated tool access** &mdash; Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link)can open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.
+- **Browse** &mdash; Browse your project's resources and [data health signals](/docs/explore/data-health-signals).
+
+- **Integrated tool access** &mdash; Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link) caan open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.
 
 [Roxi to check with Greg and team and will add images on response]
 
 - **Resource details** &mdash; Use [external metadata ingestion](/docs/explore/external-metadata-ingestion) to connect to your data warehouse and surface tables, views, and other non-dbt resources in the dbt Catalog.
 
-- **Staging environments** &mdash; Access the [staging environment](/docs/deploy/deploy-environments#staging-environment) at the project level.
+- **Staging environments** &mdash; Access a project-level [staging environment](/docs/deploy/deploy-environments#staging-environment) to preview data workflows with production tools and added oversight.
 
 ## Global navigation <Lifecycle status="starter, enterprise, enterprise+" />
 
