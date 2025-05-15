@@ -33,7 +33,7 @@ There are multiple approaches to configuring access:
   ```
   </File>
   
-- In `properties.yml` using the new method (for v1.7 or higher). Use either the older method or the new method, but not both for the same model:
+- In `properties.yml` using the new method. Use either the older method or the new method, but not both for the same model:
 
   <File name='models/properties_my_public_model.yml'>
   
@@ -43,7 +43,7 @@ There are multiple approaches to configuring access:
   models:
     - name: my_public_model
       config:
-        access: public # newly supported in v1.7
+        access: public
       
   ```
   </File>
