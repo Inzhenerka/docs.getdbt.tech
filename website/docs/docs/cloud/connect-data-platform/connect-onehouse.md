@@ -59,7 +59,8 @@ When using dbt, ensure you add necessary configurations to dbt_project.yml for t
 | hoodie.table.type | Merge on Read or Copy on Write | No | cow  | mor   |
 
 dbt_project.yml template
-```
+
+```yml
       +materialized: table | incremental
       +file_format: hudi
       +location_root: s3://lakehouse/demolake/dbt_ecomm/
