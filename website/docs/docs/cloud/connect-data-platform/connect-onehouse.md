@@ -68,7 +68,7 @@ dbt_project.yml template
 ```
 
 A dbt_project.yml example if using jaffle shop would be
-```
+```sql
 models:
   jaffle_shop:
     +file_format: hudi
