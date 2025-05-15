@@ -7,7 +7,7 @@ pagination_next: null
 ---
 
 
-<Constant name="cloud" /> Supports connecting to [Onehouse SQL](https://www.onehouse.ai/) using the Apache Spark Connector with the Thrift method.
+<Constant name="cloud" /> supports connecting to [Onehouse SQL](https://www.onehouse.ai/) using the Apache Spark Connector with the Thrift method.
 
 **Connect to a Onehouse SQL Cluster with the `dbt-spark` adapter.**
 
