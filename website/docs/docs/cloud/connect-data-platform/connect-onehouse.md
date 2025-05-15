@@ -2,7 +2,6 @@
 title: "Connect Onehouse"
 id: connect-onehouse
 description: "Setup instructions for connecting Onehouse to dbt Cloud"
-sidebar_label: "Connect Onehouse"
 pagination_next: null
 ---
 
