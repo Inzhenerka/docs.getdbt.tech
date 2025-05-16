@@ -215,7 +215,7 @@ The following are recommended approaches:
 
 ### PackageMaterializationOverrideDeprecation
 
-The behavior where installed packages could override built-in materializations without your explicit opt-in is deprecated. Setting the [`require_explicit_package_overrides_for_builtin_materializations` flag](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) to `false` in your `dbt_project.yml` allowed package that matched the name of a built-in materialization to be continue to be included in the search and resolution order.
+The behavior where installed packages could override built-in materializations without your explicit opt-in is deprecated. Setting the [`require_explicit_package_overrides_for_builtin_materializations` flag](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) to `false` in your `dbt_project.yml` allowed packages that matched the name of a built-in materialization to continue to be included in the search and resolution order.
 
 #### PackageMaterializationOverrideDeprecation warning resolution
 
