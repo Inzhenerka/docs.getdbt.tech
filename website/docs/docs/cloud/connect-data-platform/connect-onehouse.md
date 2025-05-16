@@ -51,7 +51,7 @@ Fill in the following fields when creating an **Apache Spark** warehouse connect
 
 ## dbt project
 
-When using dbt, ensure you add necessary configurations to dbt_project.yml for the dbt connector to write data correctly.
+We recommend that you set default configurations on the dbt_project.yml to ensure that the adapter executes with Onehouse compatible sql
 
 | Field | Description | Required | Default  | Recommended |
 | ----- | ----------- | -------- | -------- | -------- |
