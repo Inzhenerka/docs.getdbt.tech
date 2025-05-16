@@ -24,7 +24,6 @@ Example setup for external catalogs. For Snowflake to interact with external cat
 
 <TabItem value="Polaris/Open Catalog">
 
-You must set up a catalog integration to use Polaris/Open Catalog (managed Polaris). 
 
 Example code:
 
