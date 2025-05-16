@@ -213,6 +213,26 @@ The following are recommended approaches:
 1. Replace `dbt_modules` with `dbt_packages` in your `clean-targets` spec (and `.gitignore`).
 2. Set `packages-install-path: dbt_modules` if you want to keep having packages installed in `dbt_modules`.
 
+### PackageMaterializationOverrideDeprecation
+
+The behavior where installed packages could override built-in materializations without your explicit opt-in is deprecated. Setting the [`require_explicit_package_overrides_for_builtin_materializations` flag](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) to `false` in your `dbt_project.yml` allowed package that matched the name of a built-in materialization to be continue to be included in the search and resolution order.
+
+#### PackageMaterializationOverrideDeprecation warning resolution
+
+Explicitly override built-in materializations, in favor of a materialization defined in a package, by reimplementing the built-in materialization in your root project and wrapping the package implementation.
+
+For example: 
+
+```jinja
+
+{% materialization table, snowflake %}
+    {{ return (package_name.materialization_table_snowflake()) }}
+{% endmaterialization %}
+
+```
+
+Then, remove the `require_explicit_package_overrides_for_builtin_materializations` flag from your `dbt_project.yml`.
+
 ### PackageRedirectDeprecation
 
 This deprecation warning means a package currently used in your project, defined in `packages.yml`, has been renamed. This generally happens when the ownership of a package has changed or the scope of the package has changed. It is likely that the package currently referenced in your `packages.yml` has stopped being actively maintained (as development has been moved to the new package name), and at some point, the named package will cease working with dbt.
@@ -226,7 +246,7 @@ The `fishtown-analytics/dbt_utils` package is deprecated in favor of
 ```
 </File>
 
-#### PackageRedirectDeprecation warning Resolution
+#### PackageRedirectDeprecation warning resolution
 
 Begin referencing the new package in your `packages.yml` instead of the old package.
 
