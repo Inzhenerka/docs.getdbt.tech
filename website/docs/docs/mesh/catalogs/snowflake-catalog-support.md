@@ -11,7 +11,7 @@ Snowflake has support for Iceberg tables via built-in and external catalogs, inc
 - Glue Data Catalog*
 - Iceberg REST Compatible* 
 
-*_dbt catalog support coming soon._
+*_dbt write catalog integration support coming soon._
 
 
 To use an externally managed catalog (anything outside of the built-in catalog), you must set up a catalog integration. To do so, you must run a SQL command similar to the following. 
