@@ -283,7 +283,7 @@ Set `source_freshness_run_project_hooks` to `true`. For instructions on skipping
 
 ### UnexpectedJinjaBlockDeprecation
 
-If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
+If you have an unexpected Jinja block - an orphaned Jinja block or a Jinja block outside of a macro context - you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these unexpected Jinja blocks were silently ignored.
 
 <File name='macros/my_macro.sql'>
 
