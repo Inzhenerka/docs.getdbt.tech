@@ -298,7 +298,7 @@ hello!
 ```
 </File>
 
-If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
+If you have an unexpected Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these unexpected Jinja blocks were silently ignored.
 
 <File name='macros/my_macro.sql'>
 
