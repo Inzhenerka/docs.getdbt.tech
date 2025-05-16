@@ -315,4 +315,4 @@ hello!
 
 #### UnexpectedJinjaBlockDeprecation warning resolution
 
-Delete the orphaned Jinja blocks.
+Delete the unexpected Jinja blocks.
