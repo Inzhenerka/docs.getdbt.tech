@@ -11,8 +11,8 @@ hide_table_of_contents: true
 <div className="grid--3-col">
 
 <Card
-    title="dbt Explorer"
-    body="Interact with dbt Explorer to understand, improve, and leverage your dbt projects."
+    title="dbt Catalog"
+    body="Interact with dbt Catalog to understand, improve, and leverage your dbt projects."
     link="/docs/explore/explore-projects"
     icon="dbt-bit"/>
 
