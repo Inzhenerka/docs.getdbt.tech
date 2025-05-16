@@ -6,7 +6,7 @@ As dbt runs, it generates different categories of [events](/reference/events-log
 
 ## Identify deprecation warnings
 
-Idenitifying which deprecations impact your environment is the first step towards remediation. 
+Finding deprecations that impact your code can be a daunting task when looking at the standard logs. Identifying them is the first step towards remediation. There are several methods for quickly locating deprecations and automatically remediating some of them.
 
 ### dbt CLI
 
