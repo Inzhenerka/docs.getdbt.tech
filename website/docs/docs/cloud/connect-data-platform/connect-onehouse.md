@@ -57,7 +57,7 @@ When using dbt, ensure you add necessary configurations to dbt_project.yml for t
 | ----- | ----------- | -------- | -------- | -------- |
 | materialized | Type of table materialization | Yes |   |  table |
 | file_format | Open table format to write | Yes |   | hudi   |
-| location_root | Location of the database in DFS | Yes |   |    |
+| location_root | Location of the database in DFS | Yes | N/A  | <your_database_location_dfs>  |
 | hoodie.table.type | Merge on Read or Copy on Write | No | cow  | mor   |
 
 dbt_project.yml template
