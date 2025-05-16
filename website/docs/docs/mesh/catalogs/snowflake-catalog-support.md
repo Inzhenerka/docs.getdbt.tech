@@ -72,7 +72,7 @@ CREATE CATALOG INTEGRATION my_glue_catalog_int
   ENABLED = TRUE;
 
 ```
-Glue Data Catalog supports the Iceberg REST specification so that you can connect to Glue via the Iceberg REST API.
+Glue Data Catalog supports the Iceberg REST specification so that you can connect to Glue via the Iceberg REST API. Prior to Snowflake supporting writes to external Iceberg REST compatible catalogs, users must set up a metadata sync to update metadata in Glue. 
 
 </TabItem>
 
