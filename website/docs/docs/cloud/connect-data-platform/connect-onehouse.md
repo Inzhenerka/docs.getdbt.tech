@@ -21,7 +21,7 @@ Connect to a Onehouse SQL Cluster with the [dbt-spark ](/connect-data-platform/c
 ## What works 
 
 * All dbt Commands, including: `dbt clean`, `dbt compile`, `dbt debug`, `dbt seed`, and `dbt run`.
-* dbt materialized type of "table" and "incremental" 
+* dbt materializations: `table` and `incremental`
 * Apache Hudi table types of Merge on Read (MoR) and Copy on Write (CoW). It is recommended to use MoR for mutable workloads.
 
 ## Limitations
