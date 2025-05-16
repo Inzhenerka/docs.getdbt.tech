@@ -55,7 +55,7 @@ We recommend that you set default configurations on the dbt_project.yml to ensur
 
 | Field | Description | Required | Default  | Recommended |
 | ----- | ----------- | -------- | -------- | -------- |
-| materialized | Type of table materialization | Yes |   |  table |
+| materialized | materialization the project/directory will default to | Yes | without input, `view`  |  `table` |
 | file_format | table format the project will default to  | Yes |  N/A | hudi   |
 | location_root | Location of the database in DFS | Yes | N/A  | <your_database_location_dfs>  |
 | hoodie.table.type | Merge on Read or Copy on Write | No | cow  | mor   |
