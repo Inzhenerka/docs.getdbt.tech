@@ -14,7 +14,7 @@ Snowflake has support for Iceberg tables via built-in and external catalogs, inc
 *_dbt write catalog integration support coming soon._
 
 
-To use an externally managed catalog (anything outside of the built-in catalog), you must set up a catalog integration. To do so, you must run a SQL command similar to the following. 
+To use an externally managed catalog (anything outside of the built-in catalog [Horizon](https://docs.snowflake.com/en/user-guide/snowflake-horizon)), you must set up a catalog integration. To do so, you must run a SQL command similar to the following. Please note that Snowflake only supports reading from external catalogs today, but will be launching support for writing, and thus we have written it in this documentation. 
 
 ## External catalogs
 
