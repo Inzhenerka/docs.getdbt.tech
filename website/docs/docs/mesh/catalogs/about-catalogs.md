@@ -59,7 +59,7 @@ dbt interacts with Iceberg catalogs through the adapters in two ways:
 - **Model Materialization:** When dbt materializes a model as a table or view, if the catalog integration is declared, the underlying adapter (Spark, Trino, Snowflake, etc.) creates an Iceberg table entry in the specified catalog, both built-in or external. 
 
 
-- **Catalog Configuration**: With our initial release of the new catalog framework, users can declare which catalog the table's metadata is written to. 
+- **Catalog Integration**: With our initial release of the new catalog framework, users can declare which catalog the table's metadata is written to. 
 
 Why is this important? dbt uses and creates a significant amount of metadata. Before every run, dbt needs to know what already exists so it knows how to compile code (ex. resolving your `{{ref()}}` to the actual table name) and where to materialize the object. By supporting these two methods, dbt can cleverly adjust based on the environment, code logic, and use case defined in your dbt project. 
 
