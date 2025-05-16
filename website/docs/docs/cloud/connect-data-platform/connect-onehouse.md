@@ -65,7 +65,7 @@ dbt_project.yml template
 ```yml
       +materialized: table | incremental
       +file_format: hudi
-      +location_root: s3://lakehouse/demolake/dbt_ecomm/
+      +location_root: <storage_uri>
       +tblproperties:
          hoodie.table.type: mor | cow
 ```
