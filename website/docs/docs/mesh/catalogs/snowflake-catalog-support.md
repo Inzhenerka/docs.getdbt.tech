@@ -165,7 +165,7 @@ catalogs:
 2. Apply the catalog configuration at either the model, folder, or project level. <br />
 <br />An example of `iceberg_model.sql`:
 
-```yaml
+```sql
 
 {{
     config(
