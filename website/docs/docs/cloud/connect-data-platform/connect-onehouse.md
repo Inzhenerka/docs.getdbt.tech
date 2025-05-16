@@ -26,7 +26,7 @@ Connect to a Onehouse SQL Cluster with the [dbt-spark ](/connect-data-platform/c
 
 ## Limitations
 
-* dbt materialized type cannot be "view".
+* Views are not supported
 * `dbt seed` has row / record limits.
 * `dbt seed` only supports Copy on Write tables.
 
