@@ -16,7 +16,6 @@ Connect to a Onehouse SQL Cluster with the [dbt-spark ](/connect-data-platform/c
 ## Requirements
 
 * For <Constant name="cloud" />, ensure your Onehouse SQL endpoint is accessible via external DNS/IP, whitelisting dbt Cloud IPs.
-* For dbt Core, you can SSH tunnel into the VPC to access the endpoint, without opening up ports.
 
 ## What works 
 
