@@ -231,7 +231,7 @@ For example:
 
 ```
 
-Then, remove the `require_explicit_package_overrides_for_builtin_materializations` flag from your `dbt_project.yml`.
+Then, remove the `require_explicit_package_overrides_for_builtin_materializations: false` flag from your `dbt_project.yml`.
 
 ### PackageRedirectDeprecation
 
