@@ -4,6 +4,45 @@ title: "Deprecations"
 
 As dbt runs, it generates different categories of [events](/reference/events-logging), one of which is _deprecations_. Deprecations are a special type of warning that lets you know that there are problems in parts of your project that will result in breaking changes in a future version of dbt. It is important to resolve any deprecation warnings in your project before the changes are made.
 
+## Check for deprecation warnings
+
+Idenitifying which deprecations impact your environment is the first step towards remediation. 
+
+### dbt CLI
+
+To view deprecations from your CLI, run:
+
+```bash
+dbt parse --no-partial-parse --show-all-deprecations
+```
+
+The `--no-partial-parse` flag ensures that even deprecations only picked up during parsing are included. The `--show-all-deprecations` flag ensures that each occurence of the deprecations is listed instead  of just the first.
+
+```bash
+
+19:15:13 [WARNING]: Deprecated functionality
+Summary of encountered deprecations:
+- MFTimespineWithoutYamlConfigurationDeprecation: 1 occurrence
+
+```
+
+### dbt Cloud
+
+If you're using dbt Cloud, you can view deprecation warnings from the **Dashboard** area of your account
+
+    <Lightbox src="/img/docs/dbt-cloud/deprecation-warnings.png" title="The deprecation warnings listed on the dbt Cloud dashboard." />
+
+Click into a job to view more details and locate the deprecation warnings in the logs (or run the `parse` command with flags from the IDE or dbt Cloud CLI).
+
+    <Lightbox src="/img/docs/dbt-cloud/deprecation-list.png" title="Deprecation warnings listed in the logs." />
+
+### Automatic remediation
+
+Some deprecations can be automatically fixed with a script. Read more about it in [this dbt blog post](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine#:~:text=2.%20Resolve%20deprecation%20warnings). [Download the script](https://github.com/dbt-labs/dbt-autofix) and follow the installation instructions to get started. 
+
+**Coming soon**: The IDE will soon have an interface for running this same script to remediate deprecation warnings in dbt Cloud.
+
+
 ## List of Deprecation Warnings
 
 The following are deprecation warnings in dbt today and the associated version number in which they first appear.
@@ -241,3 +280,39 @@ information: https://docs.getdbt.com/reference/global-configs/legacy-behaviors
 #### SourceFreshnessProjectHooksNotRun warning resolution
 
 Set `source_freshness_run_project_hooks` to `true`. For instructions on skipping project hooks during a `dbt source freshness` invocation, check out the [behavior change documentation](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness).
+
+### UnexpectedJinjaBlockDeprecation
+
+If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
+
+<File name='macros/my_macro.sql'>
+
+```sql
+
+{% endmacro %} # orphaned endmacro jinja block
+
+{% macro hello() %}
+hello!
+{% endmacro %}
+
+```
+</File>
+
+If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
+
+<File name='macros/my_macro.sql'>
+
+```sql
+
+{% endmacro %} # orphaned endmacro jinja block
+
+{% macro hello() %}
+hello!
+{% endmacro %}
+
+```
+</File>
+
+#### UnexpectedJinjaBlockDeprecation warning resolution
+
+Delete the orphaned Jinja blocks.
