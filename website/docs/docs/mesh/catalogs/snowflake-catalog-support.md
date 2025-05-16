@@ -185,6 +185,6 @@ For more information, refer to our documentation on [Snowflake configurations](/
 
 ## Limitations
 
-For external catalogs, Snowflake only supports `read`, which means it can query the table but cannot insert or modify data. 
+For external catalogs, Snowflake only supports `read`, which means it can query the table but cannot insert or modify data. Writes coming soon. 
 
 The syncing experience will be different depending on the catalog you choose. Some catalogs are automatically refreshed, and you can set parameters to do so with your catalog integration. Other catalogs might require a separate job to manage the metadata sync. 
