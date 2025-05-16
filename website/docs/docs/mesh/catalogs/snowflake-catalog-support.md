@@ -130,6 +130,60 @@ After you have created the external catalog integration, you will be able to do 
 
 - **Sync Snowflake-managed tables to an external catalog:** You can create a Snowflake Iceberg table that Snowflake manages via a cloud storage location and then register/sync that table to the external catalog. This allows other engines to discover the table. 
 
+## Catalog Configurations for Snowflake
+
+The following table outlines the configuration fields required to set up a catalog integration for [Iceberg tables in Snowflake](/reference/resource-configs/snowflake-configs#iceberg-table-format).
+
+| Field            | Required | Accepted values                                                                         |
+|------------------|----------|-----------------------------------------------------------------------------------------|
+| `name`           | yes      | Name of catalog integration                                                             |
+| `catalog_name`   | yes      | The name of the catalog integration in Snowflake. For example, `my_dbt_iceberg_catalog`)|
+| `external_volume`| yes      | `<external_volume_name>`                                                                |
+| `table_format`   | yes      | `iceberg`                                                                               |
+| `catalog_type`   | yes      | `built_in`, `iceberg_rest`*                                                             |
+| `allows_writes`  | yes      | Signals if this catalog allows writes (defaults to `false`)                             |
+
+*Coming soon! Stay tuned for updates.
+
+### Configure catalog integration for managed Iceberg tables
+
+1. Create a `catalogs.yml` at the top level of your dbt project.<br />
+<br />An example of Snowflake Horizon as the catalog:
+
+```yaml
+
+catalogs:
+  - name: catalog_horizon
+    active_write_integration: snowflake_write_integration
+    write_integrations:
+      - name: snowflake_write_integration
+        external_volume: dbt_external_volume
+        table_format: iceberg
+        catalog_type: built-in
+
+```
+
+2. Apply the catalog configuration at either the model, folder, or project level. <br />
+<br />An example of `iceberg_model.yml`:
+
+```yaml
+
+{{
+    config(
+        materialized='table',
+        catalog = catalog_horizon
+
+    )
+}}
+
+select * from {{ ref('jaffle_shop_customers') }}
+
+
+```
+3. Execute the dbt model with a `dbt run -s iceberg_model`.
+
+For more information, refer to our documentation on [Snowflake configurations](/reference/resource-configs/snowflake-configs).
+
 ## Limitations
 
 For external catalogs, Snowflake only supports `read`, which means it can query the table but cannot insert or modify data. 
