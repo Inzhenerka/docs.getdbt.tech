@@ -4,7 +4,7 @@ title: "Deprecations"
 
 As dbt runs, it generates different categories of [events](/reference/events-logging), one of which is _deprecations_. Deprecations are a special type of warning that lets you know that there are problems in parts of your project that will result in breaking changes in a future version of dbt. It is important to resolve any deprecation warnings in your project before the changes are made.
 
-## Check for deprecation warnings
+## Identify deprecation warnings
 
 Idenitifying which deprecations impact your environment is the first step towards remediation. 
 
