@@ -56,7 +56,7 @@ Hybrid catalogs support storing duplicate table metadata in Iceberg and Delta La
 
 dbt interacts with Iceberg catalogs through the adapters in two ways:
 
-- **Model Materialization:** When dbt materializes a model as a table or view, the underlying adapter (Spark, Trino, Snowflake, etc.) creates an Iceberg table entry in the specified catalog, both built-in or external.
+- **Model Materialization:** When dbt materializes a model as a table or view, if the catalog integration is declared, the underlying adapter (Spark, Trino, Snowflake, etc.) creates an Iceberg table entry in the specified catalog, both built-in or external. 
 
 
 - **Catalog Configuration**: With our initial release of the new catalog framework, users can declare which catalog the table's metadata is written to. 
