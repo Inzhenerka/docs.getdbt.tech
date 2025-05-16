@@ -18,7 +18,7 @@ To use an externally managed catalog (anything outside of the built-in catalog [
 
 ## External catalogs
 
-Example configurations for external catalogs.
+Example setup for external catalogs. For Snowflake to interact with external catalogs, a catalog integration must be created.
 
 <Tabs>
 
