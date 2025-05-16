@@ -171,7 +171,6 @@ Exports use the default credentials of the production environment. To enable exp
 1. Click **Deploy** in the top navigation bar and choose **Environments**.
 2. Select **Environment variables**.
 3. [Set the environment variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) key to `DBT_EXPORT_SAVED_QUERIES` and the environment variable's value to `TRUE` (`DBT_EXPORT_SAVED_QUERIES=TRUE`).
-*Note, if you're on dbt v1.7, set the environment variable key to `DBT_INCLUDE_SAVED_QUERY`. Use the documentation toggle to select version "1.7" to view more details.
 
 Doing this ensures saved queries and exports are included in your dbt build job. For example, running `dbt build -s sq_name` runs the equivalent of `dbt sl export --saved-query sq_name` in the dbt Cloud Job scheduler.
 
