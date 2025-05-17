@@ -107,7 +107,7 @@ customers as (
     -- this ref won't
     select * from {{ ref('customers') }}
 
-),
+)
 
 select
   page_views.id as session_id,
