@@ -15,7 +15,7 @@ Support for dbt is available to all users through the following channels:
 
 If you're developing on the command line (CLI) and have questions or need some help &mdash; reach out to the helpful dbt community through [the Community Forum](https://discourse.getdbt.com/) or [dbt Community slack](https://www.getdbt.com/community/join-the-community/).
 
-## dbt Cloud support
+## dbt platform support
 
 The global dbt Support team is available to <Constant name="cloud" /> customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the <Constant name="cloud" /> navigation.
 
@@ -39,7 +39,7 @@ We recommend validating information received in AI responses for any scenario us
 
 ### Support plans and resources
 
-We want to help you work through implementing and utilizing dbt Cloud at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
+We want to help you work through implementing and utilizing the dbt platform at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
 
 - **Enterprise and Enterprise+ plans** &mdash; Priority [support](#severity-level-for-enterprise-support), optional premium plans, enhanced SLAs, implementation assistance, dedicated management, and dbt Labs security reviews depending on price point.
 - **Developer and Starter plans** &mdash; 24x5 support (no service level agreement (SLA); [contact Sales](https://www.getdbt.com/pricing/) for Enterprise plan inquiries).
@@ -50,10 +50,10 @@ We want to help you work through implementing and utilizing dbt Cloud at your or
 
 <summary>Example of common support questions</summary>
 
-Types of dbt Cloud-related questions our Support team can assist you with, regardless of your dbt Cloud plan:<br /><br />
+Types of dbt cloud-based platform related questions our Support team can assist you with, regardless of your dbt Cloud plan:<br /><br />
 <b>How do I...</b><br />
-    - set up a dbt Cloud project?<br />
-    - set up a private package in dbt Cloud?<br />
+    - set up a dbt project?<br />
+    - set up a private package in dbt?<br />
     - configure custom branches on git repos?<br />
     - link dbt to a new GitHub account?<br /><br />
 <b>Help! I can't...</b><br />
@@ -62,7 +62,7 @@ Types of dbt Cloud-related questions our Support team can assist you with, regar
     - update user groups.<br /><br />
 <b>I need help understanding...</b><br />
     - why this run failed.<br />
-    - why I am getting this error message in dbt Cloud?<br />
+    - why I am getting this error message in dbt?<br />
     - why my CI jobs are not kicking off as expected.<br />
 </details>
 
@@ -78,7 +78,7 @@ Types of dbt Cloud-related questions our Support team can assist you with, regar
   - No service level agreement included. If you are interested in adding one, [contact Sales](https://www.getdbt.com/pricing/) to ask about our Enterprise plan.
 -->
 
-## dbt Cloud Enterprise accounts
+## dbt Enterprise accounts
 
 Basic assistance with dbt project troubleshooting.
 Help with errors and issues in macros, models, and dbt Labs' packages.
@@ -117,7 +117,7 @@ Support tickets are assigned a severity level based on the impact of the issue o
 
 Leave feedback or submit a feature request for <Constant name="cloud" /> or <Constant name="core" />.
 
-#### Share feedback or feature request for dbt Cloud
+#### Share feedback or feature request for the dbt platform
 1. In the <Constant name="cloud" /> navigation, click **Leave feedback**.
 2. In the **Leave feedback** pop up, fill out the form.
 3. Upload any relevant files to the feedback form (optional).

@@ -1,8 +1,8 @@
 ---
-title: "dbt Cloud release notes"
-description: "dbt Cloud release notes"
+title: "dbt release notes"
+description: "dbt release notes"
 id: "dbt-cloud-release-notes"
-sidebar: "dbt Cloud release notes"
+sidebar: "dbt release notes"
 pagination_next: null
 pagination_prev: null
 ---

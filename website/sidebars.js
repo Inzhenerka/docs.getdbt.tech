@@ -291,7 +291,7 @@ const sidebarSettings = {
         "docs/cloud/about-cloud-develop-defer",
         {
           type: "category",
-          label: "dbt Cloud CLI",
+          label: "dbt CLI",
           collapsed: true,
           link: { type: "doc", id: "docs/cloud/cloud-cli-installation" },
           items: [
@@ -809,7 +809,7 @@ const sidebarSettings = {
       },
       {
       type: "category",
-      label: "dbt Cloud integrations",
+      label: "dbt integrations",
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
       items: [
         "docs/cloud-integrations/overview",
@@ -884,7 +884,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "dbt Cloud release notes",
+          label: "dbt release notes",
           link: {
             type: "doc",
             id: "docs/dbt-versions/dbt-cloud-release-notes",
