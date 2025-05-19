@@ -20,7 +20,7 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 ### Fixes
 
-- get environment variables correctly from environment for publication artifacts
+- Get environment variables correctly from the environment for publication artifacts
 
 ### Under the Hood
 
