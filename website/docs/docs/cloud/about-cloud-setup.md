@@ -1,5 +1,5 @@
 ---
-title: About dbt Cloud setup
+title: About dbt setup
 id: about-cloud-setup
 description: "Configuration settings for dbt Cloud."
 sidebar_label: "About dbt Cloud setup"

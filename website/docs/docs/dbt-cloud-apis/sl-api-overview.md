@@ -7,7 +7,7 @@ hide_table_of_contents: true
 pagination_next: "docs/dbt-cloud-apis/sl-jdbc"
 ---
 
-# Semantic Layer APIs <Lifecycle status="managed,managed_plus" />
+# Semantic Layer APIs
  
 The rapid growth of different tools in the modern data stack has helped data professionals address the diverse needs of different teams. The downside of this growth is the fragmentation of business logic across teams, tools, and workloads.<br /><br />
 
@@ -22,13 +22,6 @@ You can use the <Constant name="semantic_layer" /> for a variety of tools and ap
 * Machine learning and data science
 
 <!-- this partial lives here: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Use it on diff pages and to tailor the message depending which instance can access the SL and what product lifecycle we're in. -->
-
-import Features from '/snippets/_sl-plan-info.md'
-
-<Features
-product="dbt Semantic Layer"
-plan="dbt Cloud Enterprise or Enterprise+"
-/>
 
 <div className="grid--3-col">
 

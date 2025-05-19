@@ -5,7 +5,7 @@ pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 
 # About the Discovery API <Lifecycle status="managed,managed_plus" />
 
-Every time dbt Cloud runs a project, it generates and stores information about the project. The metadata includes details about your project’s models, sources, and other nodes along with their execution results. With the dbt Cloud Discovery API, you can query this comprehensive information to gain a better understanding of your <Term id="dag">DAG</Term> and the data it produces.
+Every time  runs a project, it generates and stores information about the project. The metadata includes details about your project’s models, sources, and other nodes along with their execution results. With the dbt Discovery API, you can query this comprehensive information to gain a better understanding of your <Term id="dag">DAG</Term> and the data it produces.
 
 By leveraging the metadata in <Constant name="cloud" />, you can create systems for data monitoring and alerting, lineage exploration, and automated reporting. This can help you improve data discovery, data quality, and pipeline operations within your organization.
 
@@ -15,8 +15,8 @@ You can access the Discovery API through [ad hoc queries](/docs/dbt-cloud-apis/d
 
 You can query the <Constant name="cloud" /> metadata:
 
-- At the [environment](/docs/environments-in-dbt) level for both the latest state (use the `environment` endpoint) and historical run results (use `modelByEnvironment`) of a dbt Cloud project in production.
-- At the job level for results on a specific dbt Cloud job run for a given resource type, like `models` or `test`.
+- At the [environment](/docs/environments-in-dbt) level for both the latest state (use the `environment` endpoint) and historical run results (use `modelByEnvironment`) of a dbt project in production.
+- At the job level for results on a specific dbt job run for a given resource type, like `models` or `test`.
 
 <Snippet path="metadata-api-prerequisites" />
 

@@ -1,8 +1,8 @@
 ---
-title: Using defer in dbt Cloud
+title: Using defer in dbt
 id: about-cloud-develop-defer
-description: "Learn how to leverage defer to prod when developing with dbt Cloud."
-sidebar_label: "Defer in dbt Cloud"
+description: "Learn how to leverage defer to prod when developing with dbt."
+sidebar_label: "Defer in dbt"
 pagination_next: "docs/cloud/cloud-cli-installation"
 ---
 
@@ -13,7 +13,7 @@ Both the <Constant name="cloud_ide" /> and the <Constant name="cloud" /> CLI ena
 
 <Lightbox src src="/img/docs/reference/defer-diagram.png" width="50%" title="Use 'defer' to modify end-of-pipeline models by pointing to production models, instead of running everything upstream." />
 
-When using `--defer`, dbt Cloud will follow this order of execution for resolving the `{{ ref() }}` functions.
+When using `--defer`, dbt will follow this order of execution for resolving the `{{ ref() }}` functions.
 
 1. If a development version of a deferred relation exists, dbt preferentially uses the development database location when resolving the reference.
 2. If a development version doesn't exist, dbt uses the staging locations of parent relations based on metadata from the staging environment.
