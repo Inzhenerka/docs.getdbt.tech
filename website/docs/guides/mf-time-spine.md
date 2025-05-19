@@ -5,7 +5,6 @@ level: 'Intermediate'
 icon: 'guides'
 tags: ['Quickstart', 'Semantic Layer']
 hide_table_of_contents: true
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>

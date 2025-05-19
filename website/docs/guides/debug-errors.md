@@ -8,7 +8,6 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['Troubleshooting', 'dbt Core', 'dbt Cloud']
 level: 'Beginner'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>

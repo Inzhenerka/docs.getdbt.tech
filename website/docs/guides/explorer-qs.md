@@ -8,7 +8,6 @@ hide_table_of_contents: true
 tags: ['Explorer', 'Snowflake', 'dbt Cloud','Quickstart']
 keywords: ['dbt Explorer','Mesh','dbt Cloud', 'Snowflake', 'Multi-Project']
 level: 'Beginner'
-recently_updated: true
 ---
 
 ## Introduction

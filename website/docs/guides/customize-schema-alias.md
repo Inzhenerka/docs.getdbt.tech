@@ -8,7 +8,6 @@ hoverSnippet: Learn how to adjust your generate schema name and generate alias n
 icon: 'guides'
 hide_table_of_contents: true
 level: 'Advanced'
-recently_updated: true
 keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "custom schema"]
 ---
 
