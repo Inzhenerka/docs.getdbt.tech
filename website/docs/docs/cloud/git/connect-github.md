@@ -20,7 +20,7 @@ Connecting your GitHub account to <Constant name="cloud" /> provides convenience
 - You may need to temporarily provide an extra <Constant name="cloud" /> user account with _Owner_ or _Account Admin_ [permissions](/docs/cloud/manage-access/enterprise-permissions) for your GitHub organization owner until they complete the installation.
 
 
-## Installing dbt Cloud in your GitHub account
+## Installing <Constant name="cloud" /> in your GitHub account
 
 You can connect your <Constant name="cloud" /> account to GitHub by installing the <Constant name="cloud" /> application in your GitHub organization and providing access to the appropriate repositories. 
 To connect your <Constant name="cloud" /> account to your GitHub account: 
