@@ -19,7 +19,7 @@ Read more about why we want to enable analysts to work more like software engine
 
 Use dbt to quickly and collaboratively transform data and deploy analytics code following software engineering best practices like version control, modularity, portability, CI/CD, and documentation. This means anyone on the data team comfortable with SQL can safely contribute to production-grade data pipelines.
 
-### dbt Cloud
+### dbt
 
 <Constant name="cloud" /> offers the fastest, most reliable, and scalable way to deploy dbt. Allowing data teams to optimize their data transformation by developing, testing, scheduling, and investigating data models using a single, fully managed service through a web-based user interface (UI).
 

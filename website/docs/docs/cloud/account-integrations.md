@@ -1,7 +1,7 @@
 ---
-title: "Account integrations in dbt Cloud"
+title: "Account integrations in dbt"
 sidebar_label: "Account integrations" 
-description: "Learn how to configure account integrations for your dbt Cloud account."
+description: "Learn how to configure account integrations for your dbt account."
 ---
 
 The following sections describe the different **Account integrations** available from your <Constant name="cloud" /> account under the account **Settings** section.

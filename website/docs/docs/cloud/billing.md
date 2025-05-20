@@ -1,7 +1,7 @@
 ---
 title: "Billing"
 id: billing 
-description: "dbt Cloud billing information." 
+description: "dbt billing information." 
 sidebar_label: Billing
 pagination_next: null
 pagination_prev: null
@@ -9,7 +9,7 @@ pagination_prev: null
 
 <Constant name="cloud" /> offers a variety of [plans and pricing](https://www.getdbt.com/pricing/) to fit your organization’s needs. With flexible billing options that appeal to large enterprises and small businesses and [server availability](/docs/cloud/about-cloud/access-regions-ip-addresses) worldwide, <Constant name="cloud" /> is the fastest and easiest way to begin transforming your data.
 
-## How does dbt Cloud pricing work?
+## How does dbt pricing work?
 
 As a customer, you pay for the number of seats you have and the amount of usage consumed each month.  Seats are billed primarily on the amount of Developer and Read licenses purchased. 
 
@@ -25,11 +25,11 @@ There are three types of possible seat licenses:
 
 ### What counts as a Successful Model Built?
 
-dbt Cloud considers a Successful Model Built as any <Term id="model">model</Term> that is successfully built via a run through dbt Cloud’s orchestration functionality in a dbt Cloud deployment environment. Models are counted when built and run. This includes any jobs run via dbt Cloud's scheduler, CI builds (jobs triggered by pull requests), runs kicked off via the dbt Cloud API, and any successor dbt Cloud tools with similar functionality. This also includes models that are successfully built even when a run may fail to complete. For example, you may have a job that contains 100 models and on one of its runs, 51 models are successfully built and then the job fails. In this situation, only 51 models would be counted.
+<Constant name="cloud" /> considers a Successful Model Built as any <Term id="model">model</Term> that is successfully built via a run through <Constant name="cloud" />’s orchestration functionality in a <Constant name="cloud" /> deployment environment. Models are counted when built and run. This includes any jobs run via <Constant name="cloud" />'s scheduler, CI builds (jobs triggered by pull requests), runs kicked off via the <Constant name="cloud" /> API, and any successor <Constant name="cloud" /> tools with similar functionality. This also includes models that are successfully built even when a run may fail to complete. For example, you may have a job that contains 100 models and on one of its runs, 51 models are successfully built and then the job fails. In this situation, only 51 models would be counted.
 
 Any models built in a <Constant name="cloud" /> development environment (for example, via the <Constant name="cloud_ide" />) do not count towards your usage. Tests, seeds, ephemeral models, and snapshots also do not count. 
 
-When a dynamic table is initially created, the model is counted (if the creation is successful). However, in subsequent runs, dbt skips these models unless the definition of the dynamic table has changed. This refers not to changes in the SQL logic but to changes in dbt's logic, specifically those governed by [`on_configuration_change config`](/reference/resource-configs/on_configuration_change)). The dynamic table continues to update on a cadence because the adapter is orchestrating that refresh rather than dbt Cloud. 
+When a dynamic table is initially created, the model is counted (if the creation is successful). However, in subsequent runs, dbt skips these models unless the definition of the dynamic table has changed. This refers not to changes in the SQL logic but to changes in dbt's logic, specifically those governed by [`on_configuration_change config`](/reference/resource-configs/on_configuration_change)). The dynamic table continues to update on a cadence because the adapter is orchestrating that refresh rather than <Constant name="cloud" />. 
 
 
 | What counts towards Successful Models Built |                     |
@@ -170,7 +170,7 @@ There are 2 options to disable models from being built and charged:
 2. Alternatively, you can delete some or all of your <Constant name="cloud" /> jobs. This will ensure that no runs are kicked off, but you will permanently lose your job(s). 
 
 
-## Optimize costs in dbt Cloud
+## Optimize costs in dbt
 
 <Constant name="cloud" /> offers ways to optimize your model’s built usage and warehouse costs. 
 
@@ -178,7 +178,7 @@ There are 2 options to disable models from being built and charged:
 
 When thinking of ways to optimize your costs from successful models built, there are methods to reduce those costs while still adhering to best practices. To ensure that you are still utilizing tests and rebuilding views when logic is changed, it's recommended to implement a combination of the best practices that fit your needs. More specifically, if you decide to exclude views from your regularly scheduled <Constant name="cloud" /> job runs, it's imperative that you set up a merge job (with a link to the section) to deploy updated view logic when changes are detected.
 
-#### Exclude views in a dbt Cloud job
+#### Exclude views in a dbt job
 
 Many <Constant name="cloud" /> users utilize views, which don’t always need to be rebuilt every time you run a job. For any jobs that contain views that _do not_ include macros that dynamically generate code (for example, case statements) based on upstream tables and also _do not_ have tests, you can implement these steps:
 
@@ -217,7 +217,7 @@ Running tests for views in every job run can help keep data quality intact and s
     ```
     
 4. Save the file and commit it to your project.
-5. Modify your dbt Cloud jobs to include `--selector skip_views_but_test_views`.
+5. Modify your dbt jobs to include `--selector skip_views_but_test_views`.
 
 #### Build only changed views
 
