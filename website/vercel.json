@@ -44,6 +44,11 @@
       "permanent": true
     },
     {
+      "source": "/docs/cloud/privatelink/about-privatelink",
+      "destination": "/docs/cloud/secure/about-private-connectivity",
+      "permanent": true
+    },
+    {
       "source": "/docs/cloud/privatelink/about-private-link",
       "destination": "/docs/cloud/secure/about-private-connectivity",
       "permanent": true
