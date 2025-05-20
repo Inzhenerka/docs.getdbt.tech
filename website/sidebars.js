@@ -631,8 +631,8 @@ const sidebarSettings = {
           link: { type: "doc", id: "docs/explore/dbt-insights" },
           items: [
             "docs/explore/dbt-insights", // main query page doc
-            "docs/explore/access-dbt-insights", // info on how to access and use query page
             "docs/explore/navigate-dbt-insights", // navigate query page doc
+            "docs/explore/access-dbt-insights", // info on how to access and use query page
           ],
         },
         {
