@@ -318,21 +318,6 @@ hello!
 ```
 </File>
 
-If you have an unexpected Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these unexpected Jinja blocks were silently ignored.
-
-<File name='macros/my_macro.sql'>
-
-```sql
-
-{% endmacro %} # orphaned endmacro jinja block
-
-{% macro hello() %}
-hello!
-{% endmacro %}
-
-```
-</File>
-
 #### UnexpectedJinjaBlockDeprecation warning resolution
 
 Delete the unexpected Jinja blocks.
