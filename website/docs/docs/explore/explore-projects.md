@@ -1,17 +1,15 @@
 ---
 title: "Discover data with dbt Catalog"
 sidebar_label: "Discover data with dbt Catalog"
-description: "Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your dbt projects."
+description: "Learn about dbt Catalog and how to interact with it to understand, improve, and leverage your dbt projects."
 image: /img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png
 pagination_next: "docs/explore/data-health-signals"
 pagination_prev: null
 ---
 
-# dbt Explorer <Lifecycle status="self_service,managed,managed_plus" />
-
 <IntroText>
 
-With dbt Explorer, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
+With dbt Catalog, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
 
 </IntroText>
 
@@ -21,37 +19,19 @@ Use <Constant name="explorer" /> to navigate and manage your projects within <Co
 If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
 :::
 
-
 ## Prerequisites
 
-- You have a <Constant name="cloud" /> account on the [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing/).
-  - Certain features within <Constant name="explorer" />, such as [project recommendations](/docs/explore/project-recommendations), [column-level lineage](/docs/explore/column-level-lineage), and more are only available on Enterprise and Enterprise+ plans.
+- You have a <Constant name="cloud" /> account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
 - You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
-- *For [External metadata ingestion](/docs/explore/external-metadata-ingestion), use snowflake as your data platform.
 
-:::info New features
-Note: Features marked with an asterisk will be available to plans enrolled on or after May 28, 2025.
-:::
-
-import Generatemetadata from '/snippets/_generate-metadata.md';
-
-<Generatemetadata />
-
-### External metadata ingestion
-
-Connect directly to your data warehouse with [external metadata ingestion](/docs/explore/external-metadata-ingestion), giving you visibility into tables, views, and other resources that aren't defined in dbt with dbt Catalog.
-
-<Expandable alt_header="Old navigation">
-
-## Overview <Lifecycle status="preview" />
+## Overview page <Lifecycle status="preview" />
 
 Navigate the <Constant name="explorer" /> overview page to access your project's resources and metadata. The page includes the following sections:
 
 - **Search bar** &mdash; [Search](#search-resources) for resources in your project by keyword. You can also use filters to refine your search results.
 - **Sidebar** &mdash; Use the left sidebar to access model [performance](/docs/explore/model-performance), [project recommendations](/docs/explore/project-recommendations) in the **Project details** section. Browse your project's [resources, file tree, and database](#browse-with-the-sidebar) in the lower section of the sidebar.
-    - Find your project recommendations within your project's landing page.*
 - **Lineage graph** &mdash; Explore your project's or account's [lineage graph](#project-lineage) to visualize the relationships between resources.
 - **Latest updates** &mdash; View the latest changes or issues related to your project's resources, including the most recent job runs, changed properties, lineage, and issues.
 - **Marts and public models** &mdash; View the [marts](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) and [public models](/docs/mesh/govern/model-access#access-modifiers) in your project. You can also navigate to all public models in your account through this view.
@@ -64,6 +44,32 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
+
+## Generate metadata
+
+<Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). The metadata that's available depends on the [deployment environment](/docs/deploy/deploy-environments) you've designated as _production_ or _staging_ in your <Constant name="cloud" /> project.
+
+If you're using a [hybrid project setup](/docs/deploy/hybrid-setup) and uploading artifacts from dbt Core, make sure to follow the [setup instructions](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) to connect your project in dbt Cloud. This enables <Constant name="explorer" /> to access and display your metadata correctly.
+
+- To ensure all metadata is available in dbt Explorer, run `dbt build` and `dbt docs generate` as part of your job in your production or staging environment. Running those two commands ensure all relevant metadata (like lineage, test results, documentation, and more) is available in dbt Explorer.
+- <Constant name="explorer" /> automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project. This includes deploy and merge jobs.
+    - Note that CI jobs don't update <Constant name="explorer" />. This is because they don't reflect the production state and don't provide the necessary metadata updates.
+- To view a resource and its metadata, you must define the resource in your project and run a job in the production or staging environment.
+- The resulting metadata depends on the [commands](/docs/deploy/job-commands) executed by the jobs.
+
+Note that <Constant name="explorer" /> automatically deletes stale metadata after 3 months if no jobs were run to refresh it. To avoid this, make sure you schedule jobs to run more frequently than 3 months with the necessary commands.
+
+| To view in <Constant name="explorer" /> | You must successfully run |
+|---------------------|---------------------------|
+| All metadata        |  [dbt build](/reference/commands/build), [dbt docs generate](/reference/commands/cmd-docs), and [dbt source freshness](/reference/commands/source#dbt-source-freshness) together as part of the same job in the environment
+| Model lineage, details, or results | [dbt run](/reference/commands/run) or [dbt build](/reference/commands/build) on a given model within a job in the environment |
+| Columns and statistics for models, sources, and snapshots| [dbt docs generate](/reference/commands/cmd-docs) within [a job](/docs/explore/build-and-view-your-docs) in the environment |
+| Test results | [dbt test](/reference/commands/test) or [dbt build](/reference/commands/build) within a job in the environment |
+| Source freshness results | [dbt source freshness](/reference/commands/source#dbt-source-freshness) within a job in the environment |
+| Snapshot details | [dbt snapshot](/reference/commands/snapshot) or [dbt build](/reference/commands/build) within a job in the environment |
+| Seed details | [dbt seed](/reference/commands/seed) or [dbt build](/reference/commands/build) within a job in the environment |
+
+Richer and more timely metadata will become available as <Constant name="cloud" /> evolves.
 
 ## Explore your project's lineage graph {#project-lineage}
 
@@ -111,7 +117,7 @@ Example of exploring a model in the project's lineage graph:
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png" width="100%" title="Example of full lineage graph" />
 
-## Lenses <Lifecycle status="managed,managed_plus" />
+## Lenses
 
 The **Lenses** feature is available from your [project's lineage graph](#project-lineage) (lower right corner). Lenses are like map layers for your DAG. Lenses make it easier to understand your project's contextual metadata at scale, especially to distinguish a particular model or a subset of models.
 
@@ -146,8 +152,6 @@ Example of applying the **Tests Status** _lens_, where each model name displays 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-test-status.jpg" width="100%" title="Example of the Test Status lens" />
 
 ## Keyword search {#search-resources}
-
-With dbt Catalog, global navigation provides a search experience allowing you to find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
 
 You can locate resources in your project by performing a keyword search in the search bar. All resource names, column names, resource descriptions, warehouse relations, and code matching your search criteria will be displayed as a list on the main (center) section of the page. When searching for an exact column name, the results show all relational nodes containing that column in their schemas. If there's a match, a notice in the search result indicates the resource contains the specified column. Also, you can apply filters to further refine your search results.
 
@@ -295,57 +299,7 @@ You can explore the metadata from your production or staging environment to info
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="100%" title="Explore in a staging environment" />
 
-</Expandable>
-
-<Expandable alt_header="New navigation">
-
-dbt Catalog builds on the functionality of the old navigation and introduces exciting new capabilities to enhance your experience.
-
-The following table outlines the features available in the new navigation:
-
-| New navigation element    | Features                                                                 |
-|---------------------------|--------------------------------------------------------------------------|
-|[Sidebar](/docs/explore/explore-projects#sidebar)|Access model [project recommendations](/docs/explore/project-recommendations) at the project level.|
-|[Global navigation](/docs/explore/explore-projects#global-navigation-)|Global navigation lets you search across all dbt projects and Snowflake resources.                 |
-|Browse|Browse your project's resources and [data health signals](/docs/explore/data-health-signals).|
-|[Integrated tool access](/docs/explore/explore-projects#integrated-tool-access)|Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link)can open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.                |
-|[Resource details](/docs/explore/explore-projects#resource-details)|Use [external metadata ingestion](/docs/explore/external-metadata-ingestion) to connect to your data warehouse and surface tables, views, and other non-dbt resources in the dbt Catalog.|
-|[Staging environments](/docs/explore/explore-projects#staging-environments)|Access a project-level [staging environment](/docs/deploy/deploy-environments#staging-environment) to preview data workflows with production tools and added oversight.|
-
-
-- **Sidebar** &mdash; Access model [project recommendations](/docs/explore/project-recommendations) at the project level.
-[add image here]
-
-- **[Global navigation](/docs/explore/explore-projects#global-navigation-)** &mdash; Global navigation lets you search across all dbt projects and Snowflake resources.
-
-- **Browse** &mdash; Browse your project's resources and [data health signals](/docs/explore/data-health-signals).
-
-- **Integrated tool access** &mdash; Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link) caan open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.
-
-[Roxi to check with Greg and team and will add images on response]
-
-- **Resource details** &mdash; Use [external metadata ingestion](/docs/explore/external-metadata-ingestion) to connect to your data warehouse and surface tables, views, and other non-dbt resources in the dbt Catalog.
-
-- **Staging environments** &mdash; Access a project-level [staging environment](/docs/deploy/deploy-environments#staging-environment) to preview data workflows with production tools and added oversight.
-
-## Global navigation <Lifecycle status="starter, enterprise, enterprise+" />
-
-dbt Catalog enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
-
-Note: While Global navigation is available on Starter plans, it’s limited to a single project.
-
-### Enable global navigation
-
-- Have a [developer licence with Owner](/docs/cloud/manage-access/about-user-access#role-based-access-control) permissions.
-- Navigate to your [account settings](/docs/cloud/account-settings) in your dbt Cloud account and check the box to **Enable Explorer’s Global Navigation**
-
-</Expandable>
-  
-
-
 ## Related content
-
-- [All Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions)
+- [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions)
 - [About model governance](/docs/mesh/govern/about-model-governance)
 - Blog on [What is data mesh?](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh)
-
