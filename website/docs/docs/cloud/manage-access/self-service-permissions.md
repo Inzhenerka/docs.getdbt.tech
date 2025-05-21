@@ -1,6 +1,6 @@
 ---
 title: "Self-service Team account permissions"
-description: "Learn how dbt Cloud administrators can use self-service permissions to control access in a dbt Cloud Team account."
+description: "Learn how dbt administrators can use self-service permissions to control access in a dbt Team account."
 sidebar_label: "Team permissions"
 id: "self-service-permissions"
 ---

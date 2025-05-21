@@ -1,6 +1,6 @@
 ---
 title: "Multi-factor authentication"
-description: "Configure dbt Cloud MFA"
+description: "Configure dbt MFA"
 id: "mfa"
 sidebar: null
 ---
@@ -28,7 +28,7 @@ You can only have one of the three MFA methods configured per user. These are en
 
 1. Navigate to the **Account settings** and under **Your profile** click on **Password & Security**. Click **Enroll** next to the preferred method.
     
-<Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="List of available MFA enrollment methods in dbt Cloud." />
+<Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="List of available MFA enrollment methods in dbt." />
 
 Choose the next steps based on your preferred enrollment selection:
 

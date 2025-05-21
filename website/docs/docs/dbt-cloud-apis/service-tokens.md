@@ -1,7 +1,7 @@
 ---
 title: "Service account tokens"
 id: "service-tokens"
-description: "Service account tokens help you define permissions for securing access to your dbt Cloud account and its projects."
+description: "Service account tokens help you define permissions for securing access to your dbt account and its projects."
 ---
 
 # Service account tokens <Lifecycle status="self_service,managed" />

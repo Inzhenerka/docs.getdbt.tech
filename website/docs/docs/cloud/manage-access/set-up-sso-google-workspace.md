@@ -1,6 +1,6 @@
 ---
 title: "Set up SSO with Google Workspace"
-description: "Learn how dbt Cloud administrators can use Single-Sign On (SSO) via Google GSuite to control access in a dbt Cloud account."
+description: "Learn how dbt administrators can use Single-Sign On (SSO) via Google GSuite to control access in a dbt account."
 id: "set-up-sso-google-workspace"
 ---
 
@@ -79,7 +79,7 @@ and ensure that the API is enabled.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/7f36f50-Screen_Shot_2019-12-03_at_10.15.01_AM.png" title="The 'Admin SDK' page"/>
 
-## Configuration in dbt Cloud
+## Configuration in dbt
 
 To complete setup, follow the steps below in the <Constant name="cloud" /> application.
 
@@ -94,7 +94,7 @@ Settings.
     - **Domain in GSuite**: Enter the domain name for your GSuite account (eg. `dbtlabs.com`).
       Only users with an email address from this domain will be able to log into your <Constant name="cloud" />
       account using GSuite auth. Optionally, you may specify a CSV of domains
-      which are _all_ authorized to access your dbt Cloud account (eg. `dbtlabs.com, fishtowndata.com`)
+      which are _all_ authorized to access your <Constant name="cloud" /> account (eg. `dbtlabs.com, fishtowndata.com`)
     - **Slug**: Enter your desired login slug. Users will be able to log into dbt
       Cloud by navigating to `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. The `LOGIN-SLUG` must
       be unique across all <Constant name="cloud" /> accounts, so pick a slug that uniquely

@@ -8,7 +8,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 # Set up automatic exposures in Tableau <Lifecycle status="managed" />
 
 <IntroText>
-Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Explorer</a> and the [dbt Cloud job scheduler](/docs/deploy/job-scheduler) for a richer experience.
+Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Explorer</a> and the [<Constant name="cloud" /> job scheduler](/docs/deploy/job-scheduler) for a richer experience.
 
 </IntroText>
 
@@ -59,7 +59,7 @@ Once configured in both Tableau and [<Constant name="cloud" />](#set-up-in-dbt-c
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-create-pat.jpg" title="Create PATs for the account in Tableau"/>
 
 3. Copy the **Secret** and the **Token name** for use in a later step in <Constant name="cloud" />. The secret is only displayed once, so store it in a safe location (like a password manager).
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-copy-token.jpg" title="Copy the secret and token name to enter them in dbt Cloud"/>
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-copy-token.jpg" title="Copy the secret and token name to enter them in dbt"/>
 
 4. Copy the **Server URL** and **Sitename**. You can find these in the URL while logged into Tableau.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tablueau-serverurl.jpg" title="Locate the Server URL and Sitename in Tableau"/>
@@ -74,7 +74,7 @@ Once configured in both Tableau and [<Constant name="cloud" />](#set-up-in-dbt-c
       - Token name
       - Secret
 
-### Set up in dbt Cloud
+### Set up in dbt
 
 1. In <Constant name="cloud" />, navigate to the **Dashboard** of the project you want to add the downstream exposure to and then select **Settings**.
 2. Under the **Exposures** section, select **Add integration** to add the Tableau connection.

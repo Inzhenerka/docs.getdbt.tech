@@ -1,7 +1,7 @@
 ---
 title: "Configuring IP restrictions"
 id: ip-restrictions
-description: "Configuring IP restrictions to outside traffic from accessing your dbt Cloud environment"
+description: "Configuring IP restrictions to outside traffic from accessing your dbt environment"
 sidebar_label: "IP restrictions"
 pagination_next: "docs/cloud/secure/about-private-connectivity"
 pagination_prev: null
