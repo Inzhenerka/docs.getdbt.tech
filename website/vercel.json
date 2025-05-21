@@ -39,6 +39,16 @@
   ],
   "redirects": [
     {
+      "source": "/docs/cloud/privatelink/about-privatelink",
+      "destination": "/docs/cloud/secure/about-private-connectivity",
+      "permanent": true
+    },
+    {
+      "source": "/docs/cloud/privatelink/about-private-link",
+      "destination": "/docs/cloud/secure/about-private-connectivity",
+      "permanent": true
+    },
+    {
       "source": "/docs/collaborate/explore-projects",
       "destination": "/docs/explore/explore-projects",
       "permanent": true
