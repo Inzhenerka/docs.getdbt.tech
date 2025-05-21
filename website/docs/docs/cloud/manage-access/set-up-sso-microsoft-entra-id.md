@@ -5,13 +5,13 @@ id: "set-up-sso-microsoft-entra-id"
 sidebar_label: "Set up SSO with Microsoft Entra ID"
 ---
 
+# Set up SSO with Microsoft Entra ID <Lifecycle status="managed, managed_plus" />
+
 import SetUpPages from '/snippets/_sso-docs-mt-available.md';
 
 <SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
 
-<Constant name="cloud" /> Enterprise supports single-sign on via Microsoft Entra ID (formerly Azure AD).
-You will need permissions to create and manage a new Entra ID application.
-Currently supported features include:
+<Constant name="cloud" /> Enterprise-tier plans support single-sign on via Microsoft Entra ID (formerly Azure AD). You will need permissions to create and manage a new Entra ID application. Currently supported features include:
 
 * IdP-initiated SSO
 * SP-initiated SSO
@@ -154,7 +154,7 @@ To complete setup, follow the steps below in the <Constant name="cloud" /> appli
 Now you have completed setting up SSO with Entra ID, the next steps will be to set up
 [RBAC groups](/docs/cloud/manage-access/enterprise-permissions) to complete your access control configuration.
 
-## Troubleshooting Tips
+## Troubleshooting tips
 
 Ensure that the domain name under which user accounts exist in Azure matches the domain you supplied in [Supplying credentials](#supplying-credentials) when you configured SSO.
 

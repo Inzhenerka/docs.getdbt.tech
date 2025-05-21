@@ -17,6 +17,15 @@ You can enhance your project navigation and editing experience by directly acces
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-ide.jpg" title="Access dbt Explorer from the IDE by clicking on the 'View in Explorer' icon next to the file breadcrumbs. " />
 
+### <Constant name="visual_editor" />
+
+Seamlessly access dbt Catalog via <Constant name="visual_editor" /> to bring your workflow to life with visual editing.
+
+#### Access dbt Catalog from <Constant name="visual_editor" />
+
+Steps here
+[Roxi to check with Greg and team and will add images on response]
+
 ### Lineage tab in jobs
 The **Lineage tab** in <Constant name="cloud" /> jobs displays the lineage associated with the [job run](/docs/deploy/jobs). Access <Constant name="explorer" /> directly from this tab, allowing you understand dependencies/relationships of resources in your project.
 
@@ -26,7 +35,8 @@ The **Lineage tab** in <Constant name="cloud" /> jobs displays the lineage assoc
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Access dbt Explorer from the lineage tab by double-clicking on the lineage node." />
 
-### Model timing tab in jobs <Lifecycle status="managed,self_service"/>
+### Model timing tab in jobs <Lifecycle status="self_service,managed,managed_plus"/>
+
 The [model timing tab](/docs/deploy/run-visibility#model-timing) in <Constant name="cloud" /> jobs displays the composition, order, and time taken by each model in a job run. 
 
 Access <Constant name="explorer" /> directly from the **modeling timing tab**, which helps you investigate resources, diagnose performance bottlenecks, understand dependencies/relationships of slow-running models, and potentially make changes to improve their performance.
@@ -37,7 +47,7 @@ Access <Constant name="explorer" /> directly from the **modeling timing tab**, w
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.jpg" title="Access dbt Explorer from the model timing tab by hovering over the resource and clicking 'View in Explorer'." />
 
-### dbt Insights <Lifecycle status="beta,managed" />
+### dbt Insights <Lifecycle status="beta,managed,managed_plus" />
 
 Access <Constant name="explorer" /> directly from [<Constant name="query_page" />](/docs/explore/access-dbt-insights) to view the project lineage and project resources with access to tables, columns, metrics, dimensions, and more.
 

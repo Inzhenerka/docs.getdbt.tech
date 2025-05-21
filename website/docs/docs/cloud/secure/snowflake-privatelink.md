@@ -5,6 +5,8 @@ description: "Configuring AWS PrivateLink for Snowflake"
 sidebar_label: "AWS PrivateLink for Snowflake"
 ---
 
+# Configuring Snowflake PrivateLink <Lifecycle status="managed_plus" />
+
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
 

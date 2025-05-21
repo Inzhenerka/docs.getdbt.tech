@@ -61,9 +61,9 @@ After the <Constant name="cloud" /> administrator [sets up a connection](/docs/c
 
 :::info GitHub profile connection
 
-- <Constant name="cloud" /> developers on the [Enterprise plan](https://www.getdbt.com/pricing/) must each connect their GitHub profiles to <Constant name="cloud" />. This is because the <Constant name="cloud_ide" /> verifies every developer's read / write access for the dbt repo. 
+- <Constant name="cloud" /> developers on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/) must each connect their GitHub profiles to <Constant name="cloud" />. This is because the <Constant name="cloud_ide" /> verifies every developer's read / write access for the dbt repo. 
 
-- <Constant name="cloud" /> developers on the [Team plan](https://www.getdbt.com/pricing/) don't need to each connect their profiles to GitHub, however, it's still recommended to do so.
+- <Constant name="cloud" /> developers on the [Starter plan](https://www.getdbt.com/pricing/) don't need to each connect their profiles to GitHub, however, it's still recommended to do so.
 
 :::
 

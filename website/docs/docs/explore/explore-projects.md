@@ -1,7 +1,7 @@
 ---
-title: "Discover data with dbt Explorer"
-sidebar_label: "Discover data with dbt Explorer"
-description: "Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your dbt projects."
+title: "Discover data with dbt Catalog"
+sidebar_label: "Discover data with dbt Catalog"
+description: "Learn about dbt Catalog and how to interact with it to understand, improve, and leverage your dbt projects."
 image: /img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png
 pagination_next: "docs/explore/data-health-signals"
 pagination_prev: null
@@ -9,7 +9,7 @@ pagination_prev: null
 
 <IntroText>
 
-With dbt Explorer, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
+With dbt Catalog, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
 
 </IntroText>
 

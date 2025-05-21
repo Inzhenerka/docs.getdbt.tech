@@ -1,14 +1,14 @@
 ---
-title: "dbt features"
+title: "The dbt platform features"
 id: "dbt-cloud-features"
-sidebar_label: "dbt features"
+sidebar_label: "dbt platform features"
 description: "Explore dbt's features and learn why dbt is the fastest way to deploy dbt"
 hide_table_of_contents: true
 pagination_next: "docs/cloud/about-cloud/architecture"
 pagination_prev: null
 ---
 
-<Constant name="cloud" /> is the fastest and most reliable way to deploy dbt. Develop, test, schedule, document, and investigate data models all in one browser-based UI. 
+<Constant name="cloud" /> is the fastest and most reliable way to deploy dbt. Develop, test, schedule, document, and investigate data models all in one browser-based UI.
 
 In addition to providing a hosted architecture for running dbt across your organization, <Constant name="cloud" /> comes equipped with turnkey support for scheduling jobs, CI/CD, hosting documentation, monitoring and alerting, an integrated development environment (<Constant name="cloud_ide" />), and allows you to develop and run dbt commands from your local command line interface (CLI) or code editor.
 
@@ -17,13 +17,13 @@ In addition to providing a hosted architecture for running dbt across your organ
 <div className="grid--3-col">
 
 <Card
-    title="dbt Cloud CLI"
-    body="Use the dbt Cloud CLI to develop, test, run, and version control dbt projects and commands, directly from the command line."
+    title="dbt CLI"
+    body="Use the CLI for the dbt platform to develop, test, run, and version control dbt projects and commands, directly from the command line."
     link="/docs/cloud/cloud-cli-installation"
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Cloud IDE"
+    title="dbt Studio IDE"
     body="The IDE is the easiest and most efficient way to develop dbt models, allowing you to build, test, run, and version control your dbt projects directly from your browser."
     link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud"
     icon="dbt-bit"/>
@@ -66,13 +66,13 @@ In addition to providing a hosted architecture for running dbt across your organ
     
    <Card
     title="Host & share documentation"
-    body="dbt hosts and authorizes access to dbt project documentation, allowing you to generate data documentation on a schedule for your project. Invite teammates to dbt to collaborate and share your project's documentation."
+    body="dbt hosts and authorizes access to dbt project documentation, allowing you to generate data documentation on a schedule for your project. Invite teammates to the dbt platform to collaborate and share your project's documentation."
     link="/docs/explore/build-and-view-your-docs"
     icon="dbt-bit"/>
 
    <Card
     title="Supports GitHub, GitLab, AzureDevOps"
-    body="Seamlessly connect your git account to dbt and provide another layer of security to dbt. Import new repositories, trigger continuous integration, clone repos using HTTPS, and more!"
+    body="Seamlessly connect your git account to the dbt platform and provide another layer of security to dbt. Import new repositories, trigger continuous integration, clone repos using HTTPS, and more!"
     link="/docs/cloud/git/connect-github"
     icon="dbt-bit"/>
 

@@ -4,6 +4,9 @@ id: postgres-privatelink
 description: "Configuring PrivateLink for Postgres"
 sidebar_label: "AWS PrivateLink for Postgres"
 ---
+
+# Configure AWS PrivateLink for Postgres <Lifecycle status="managed_plus" />
+
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';

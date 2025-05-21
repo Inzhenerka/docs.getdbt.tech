@@ -6,6 +6,8 @@ tags: [Semantic Layer]
 sidebar_label: "Microsoft Excel"
 ---
 
+# Microsoft Excel <Lifecycle status="self_service,managed,managed_plus" />
+
 The <Constant name="semantic_layer" /> offers a seamless integration with Excel Online and Desktop through a custom menu. This add-on allows you to build <Constant name="semantic_layer" /> queries and return data on your metrics directly within Excel.
 
 ## Prerequisites
@@ -13,7 +15,7 @@ The <Constant name="semantic_layer" /> offers a seamless integration with Excel 
 - You have [configured the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) and are using dbt v1.6 or higher.
 - You need a Microsoft Excel account with access to install add-ons.
 - You have a [<Constant name="cloud" /> Environment ID](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) and a [service token](/docs/dbt-cloud-apis/service-tokens) to authenticate with from a <Constant name="cloud" /> account.
-- You must have a <Constant name="cloud" /> Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment.
+- You must have a <Constant name="cloud" /> Starter, Enterprise, or Enterprise + [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment.
 
 :::tip
 

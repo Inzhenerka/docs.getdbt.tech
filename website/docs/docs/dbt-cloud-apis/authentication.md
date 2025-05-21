@@ -15,7 +15,7 @@ pagination_prev: null
 
 <Card
     title="Service account tokens"
-    body="Learn how to use service account tokens to securely authenticate with the dbt API for system-level integrations."
+    body="Learn how to use service account tokens to securely authenticate with dbt APIs for system-level integrations."
     link="/docs/dbt-cloud-apis/service-tokens"
     icon="dbt-bit"/>
 

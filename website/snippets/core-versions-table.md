@@ -16,6 +16,6 @@
 
 All functionality in dbt Core since the v1.7 release is available in [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks), which provide automated upgrades at a cadence appropriate for your team.
 
-<sup>1</sup> Release tracks are required for the Developer and Teams plans on dbt Cloud. Accounts using older dbt versions will be migrated to the "Latest" release track.
+<sup>1</sup> Release tracks are required for the Developer and Starter plans on dbt Cloud. Accounts using older dbt versions will be migrated to the "Latest" release track.
 
 For customers of dbt Cloud: dbt Labs strongly recommends migrating environments on older and unsupported versions to [release tracks](/docs/dbt-versions/cloud-release-tracks) or a supported version. In 2025, dbt Labs will remove the oldest dbt Core versions from availability in dbt Cloud, starting with v1.0 -- v1.2.

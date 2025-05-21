@@ -128,7 +128,7 @@ To prevent users from directly merging code changes into the default branch, con
 ## Azure DevOps
 :::info Use Azure DevOps?
 
-If you use Azure DevOps and you are on the <Constant name="cloud" /> Enterprise plan, you can import your repo directly using [<Constant name="cloud" />'s Azure DevOps Integration](/docs/cloud/git/connect-azure-devops). Connecting your repo via the Azure DevOps Application [enables Continuous Integration](/docs/deploy/continuous-integration).
+If you use Azure DevOps and you are on the <Constant name="cloud" /> Enterprise or Enterprise+ plan, you can import your repo directly using [<Constant name="cloud" />'s Azure DevOps Integration](/docs/cloud/git/connect-azure-devops). Connecting your repo via the Azure DevOps Application [enables Continuous Integration](/docs/deploy/continuous-integration).
 
 :::
 

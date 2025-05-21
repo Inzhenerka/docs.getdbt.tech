@@ -6,6 +6,8 @@ description: "Embed data health tiles in your dashboards to distill data health 
 image: /img/docs/collaborate/dbt-explorer/data-tile-pass.jpg
 ---
 
+# Data health tile <Lifecycle status="managed,managed_plus" />
+
 With data health tiles, stakeholders will get an at-a-glance confirmation on whether the data they’re looking at is stale or degraded. It allows teams to immediately go back into <Constant name="explorer" /> to see more details and investigate issues.
 
 The data health tile:
@@ -27,7 +29,7 @@ Data health tiles rely on [exposures](/docs/build/exposures) to surface data hea
 
 ## Prerequisites
 
-- You must have a <Constant name="cloud" /> account on a [Team or Enterprise plan](https://www.getdbt.com/pricing/).
+- You must have a <Constant name="cloud" /> account on an [Enterprise-tier plan](https://www.getdbt.com/pricing/).
 - You must be an account admin to set up [service tokens](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
 - You must have [develop permissions](/docs/cloud/manage-access/seats-and-users).
 - You have [exposures](/docs/build/exposures) defined in your project:

@@ -79,7 +79,7 @@ After configuring the Project subdirectory option, <Constant name="cloud" /> wil
 
 :::info Project support in <Constant name="cloud" /> plans
 
-Some [plans](https://www.getdbt.com/pricing) support only one dbt project, while [Enterprise plans](https://www.getdbt.com/contact) allow multiple projects and [cross-project references](/best-practices/how-we-mesh/mesh-1-intro) with <Constant name="mesh" />.
+Some [plans](https://www.getdbt.com/pricing) support only one dbt project, while [Enterprise-tier plans](https://www.getdbt.com/contact) allow multiple projects and [cross-project references](/best-practices/how-we-mesh/mesh-1-intro) with <Constant name="mesh" />.
 
 :::
 

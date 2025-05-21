@@ -19,7 +19,7 @@ You can create a deploy job and configure it to run on [scheduled days and times
 ## Prerequisites
 
 - You must have a [<Constant name="cloud" /> account](https://www.getdbt.com/signup/) and [Developer seat license](/docs/cloud/manage-access/seats-and-users).
-    - For the [Trigger on job completion](#trigger-on-job-completion) feature, your <Constant name="cloud" /> account must be on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
+    - For the [Trigger on job completion](#trigger-on-job-completion) feature, your <Constant name="cloud" /> account must be on the [Starter or an Enterprise-tier](https://www.getdbt.com/pricing/) plan.
 - You must have a dbt project connected to a [data platform](/docs/cloud/connect-data-platform/about-connections).
 - You must have [access permission](/docs/cloud/manage-access/about-user-access) to view, create, modify, or run jobs.
 - You must set up a [deployment environment](/docs/deploy/deploy-environments). 
@@ -91,7 +91,7 @@ To fully customize the scheduling of your job, choose the **Cron schedule** opti
 To enhance performance, job scheduling frequencies vary by <Constant name="cloud" /> plan:
 
 - Developer plans: <Constant name="cloud" /> sets a minimum interval of every 10 minutes for scheduling jobs. This means scheduling jobs to run more frequently, or at less than 10 minute intervals, is not supported.
-- Team and Enterprise plans: No restrictions on job execution frequency.
+- Starter, Enterprise, and Enterprise+ plans: No restrictions on job execution frequency.
 
 **Examples**
 
@@ -113,8 +113,7 @@ Examples of cron job schedules:
 - `0 7 L * 5`: At 07:00 AM, on the last day of the month, and on Friday.
 - `30 14 L * *`: At 02:30 PM, on the last day of the month.
 
-### Trigger on job completion  <Lifecycle status="self_service,managed" />
-
+### Trigger on job completion  <Lifecycle status="self_service,managed,managed_plus" />
 To _chain_ deploy jobs together:
 1. In the **Triggers** section, enable the **Run when another job finishes** option.
 2. Select the project that has the deploy job you want to run after completion.

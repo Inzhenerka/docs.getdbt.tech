@@ -15,7 +15,7 @@ Support for dbt is available to all users through the following channels:
 
 If you're developing on the command line (CLI) and have questions or need some help &mdash; reach out to the helpful dbt community through [the Community Forum](https://discourse.getdbt.com/) or [dbt Community slack](https://www.getdbt.com/community/join-the-community/).
 
-## dbt support
+## dbt platform support
 
 The global dbt Support team is available to <Constant name="cloud" /> customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the <Constant name="cloud" /> navigation.
 
@@ -39,10 +39,10 @@ We recommend validating information received in AI responses for any scenario us
 
 ### Support plans and resources
 
-We want to help you work through implementing and utilizing <Constant name="cloud" /> at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
+We want to help you work through implementing and utilizing <Constant name="cloud" /> platform at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
 
-- **Enterprise plans** &mdash; Priority [support](#severity-level-for-enterprise-support), optional premium plans, enhanced SLAs, implementation assistance, dedicated management, and dbt Labs security reviews depending on price point.
-- **Developer and Team plans** &mdash; 24x5 support (no service level agreement (SLA); [contact Sales](https://www.getdbt.com/pricing/) for Enterprise plan inquiries).
+- **Enterprise and Enterprise+ plans** &mdash; Priority [support](#severity-level-for-enterprise-support), optional premium plans, enhanced SLAs, implementation assistance, dedicated management, and dbt Labs security reviews depending on price point.
+- **Developer and Starter plans** &mdash; 24x5 support (no service level agreement (SLA); [contact Sales](https://www.getdbt.com/pricing/) for Enterprise plan inquiries).
 - **Support team help** &mdash; Assistance with [common <Constant name="cloud" /> questions](/category/troubleshooting), like project setup, login issues, error understanding, setup private packages, link to a new GitHub account, [how to generate a har file](/faqs/Troubleshooting/generate-har-file), and so on.
 - **Resource guide** &mdash; Check the [guide](/community/resources/getting-help) for effective help-seeking strategies.
 
@@ -50,10 +50,10 @@ We want to help you work through implementing and utilizing <Constant name="clou
 
 <summary>Example of common support questions</summary>
 
-Types of <Constant name="cloud" />-related questions our Support team can assist you with, regardless of your <Constant name="cloud" /> plan:<br /><br />
+Types of dbt cloud-based platform related questions our Support team can assist you with, regardless of your <Constant name="cloud" /> plan:<br /><br />
 <b>How do I...</b><br />
     - set up a <Constant name="cloud" /> project?<br />
-    - set up a private package in <Constant name="cloud" />?<br />
+    - set up a private package in dbt?<br />
     - configure custom branches on git repos?<br />
     - link dbt to a new GitHub account?<br /><br />
 <b>Help! I can't...</b><br />
@@ -73,7 +73,7 @@ Types of <Constant name="cloud" />-related questions our Support team can assist
   - Receive implementation assistance
   - Dedicated account management
   - Security review by dbt Labs depending on price point
-- **Developer and Team plans**
+- **Developer and Starter plans**
   - 24x5 support
   - No service level agreement included. If you are interested in adding one, [contact Sales](https://www.getdbt.com/pricing/) to ask about our Enterprise plan.
 -->
@@ -82,9 +82,9 @@ Types of <Constant name="cloud" />-related questions our Support team can assist
 
 Basic assistance with dbt project troubleshooting.
 Help with errors and issues in macros, models, and dbt Labs' packages.
-For strategic advice, best practices, or expansion conversations, consult your Account Team.
+For strategic advice, best practices, or expansion conversations, consult your Account team.
 
-For customers on a <Constant name="cloud" /> Enterprise plan, we **also** offer basic assistance in troubleshooting issues with your dbt project:
+For customers on a <Constant name="cloud" /> Enterprise-tier plan, we **also** offer basic assistance in troubleshooting issues with your dbt project:
 - **Something isn't working the way I would expect it to...**
     - in a macro I created...
     - in an incremental model I'm building...
@@ -96,7 +96,7 @@ For customers on a <Constant name="cloud" /> Enterprise plan, we **also** offer 
     - `Compilation Error Error reading name_of_folder/name_of_file.yml - Runtime Error Syntax
         error near line 9`
 
-Types of questions you should ask your Account Team:
+Types of questions you should ask your Account team:
 - How should we think about setting up our dbt projects, environments, and jobs based on our company structure and needs?
 - I want to expand my account! How do I add more people and train them?
 - Here is our data road map for the next year - can we talk through how dbt fits into it and what features we may not be utilizing that can help us achieve our goals?
@@ -104,7 +104,7 @@ Types of questions you should ask your Account Team:
 
 ### Severity level for Enterprise support
 
-Support tickets are assigned a severity level based on the impact of the issue on your business. The severity level is assigned by dbt Labs, and the level assigned determines the priority level of support you will receive. For specific ticket response time or other questions that relate to your Enterprise account’s SLA, please refer to your Enterprise contract.
+Support tickets are assigned a severity level based on the impact of the issue on your business. The severity level is assigned by dbt Labs, and the level assigned determines the priority level of support you will receive. For specific ticket response time or other questions that relate to your Enterprise or Enterprise+ account’s SLA, please refer to your Enterprise contract.
 
 | Severity Level | Description |
 | -------------- | ----------- |
@@ -117,7 +117,7 @@ Support tickets are assigned a severity level based on the impact of the issue o
 
 Leave feedback or submit a feature request for <Constant name="cloud" /> or <Constant name="core" />.
 
-#### Share feedback or feature request for dbt
+#### Share feedback or feature request for the dbt platform
 1. In the <Constant name="cloud" /> navigation, click **Leave feedback**.
 2. In the **Leave feedback** pop up, fill out the form.
 3. Upload any relevant files to the feedback form (optional).

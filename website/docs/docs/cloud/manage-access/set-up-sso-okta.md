@@ -3,13 +3,15 @@ title: "Set up SSO with Okta"
 id: "set-up-sso-okta"
 ---
 
+# Set up SSO with Okta <Lifecycle status="managed, managed_plus" />
+
 import SetUpPages from '/snippets/_sso-docs-mt-available.md';
 
 <SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
 
 ## Okta SSO
 
-<Constant name="cloud" /> Enterprise supports single-sign on via Okta (using SAML). Currently supported features include:
+<Constant name="cloud" /> Enterprise-tier plans support single-sign on via Okta (using SAML). Currently supported features include:
 
 * IdP-initiated SSO
 * SP-initiated SSO

@@ -9,10 +9,10 @@ You can set up [continuous integration](/docs/deploy/continuous-integration) (CI
 ## Prerequisites
 - You have a <Constant name="cloud" /> account. 
 - CI features:
-   - For both the [concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-   - [SQL linting](/docs/deploy/continuous-integration#sql-linting) is available on [<Constant name="cloud" /> release tracks](/docs/dbt-versions/cloud-release-tracks) and to <Constant name="cloud" /> [Team or Enterprise](https://www.getdbt.com/pricing/) accounts. You should have [SQLFluff configured](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) in your project.
+   - For both the [concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing/).
+   - [SQL linting](/docs/deploy/continuous-integration#sql-linting) is available on [<Constant name="cloud" /> release tracks](/docs/dbt-versions/cloud-release-tracks) and to <Constant name="cloud" /> [Starter, Enterprise, or Enterprise+](https://www.getdbt.com/pricing/) accounts. You should have [SQLFluff configured](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) in your project.
 - [Advanced CI](/docs/deploy/advanced-ci) features:
-   - For the [compare changes](/docs/deploy/advanced-ci#compare-changes) feature, your <Constant name="cloud" /> account must be on the [Enterprise plan](https://www.getdbt.com/pricing/) and have enabled Advanced CI features. Please ask your [<Constant name="cloud" /> administrator to enable](/docs/cloud/account-settings#account-access-to-advanced-ci-features) this feature for you. After enablement, the **dbt compare** option becomes available in the CI job settings.
+   - For the [compare changes](/docs/deploy/advanced-ci#compare-changes) feature, your <Constant name="cloud" /> account must be on an [Enterprise-tier plan](https://www.getdbt.com/pricing/) and have enabled Advanced CI features. Please ask your [<Constant name="cloud" /> administrator to enable](/docs/cloud/account-settings#account-access-to-advanced-ci-features) this feature for you. After enablement, the **dbt compare** option becomes available in the CI job settings.
 - Set up a [connection with your <Constant name="git" /> provider](/docs/cloud/git/git-configuration-in-dbt-cloud). This integration lets <Constant name="cloud" /> run jobs on your behalf for job triggering.
    - If you're using a native [GitLab](/docs/cloud/git/connect-gitlab) integration, you need a paid or self-hosted account that includes support for GitLab webhooks and [project access tokens](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html). If you're using GitLab Free, merge requests will trigger CI jobs but CI job status updates (success or failure of the job) will not be reported back to GitLab.
 
@@ -40,7 +40,7 @@ To make CI job creation easier, many options on the **CI job** page are set to d
 4. Options in the **Execution settings** section:
     - **Commands** &mdash; By default, this includes the `dbt build --select state:modified+` command. This informs dbt Cloud to build only new or changed models and their downstream dependents. Importantly, state comparison can only happen when there is a deferred environment selected to compare state to. Click **Add command** to add more [commands](/docs/deploy/job-commands)  that you want to be invoked when this job runs.
     - **Linting** &mdash; Enable this option for dbt to [lint the SQL files](/docs/deploy/continuous-integration#sql-linting) in your project as the first step in `dbt run`. If this check runs into an error, dbt can either **Stop running on error** or **Continue running on error**. 
-    - **dbt compare**<Lifecycle status="managed" /> &mdash; Enable this option to compare the last applied state of the production environment (if one exists) with the latest changes from the pull request, and identify what those differences are. To enable record-level comparison and primary key analysis, you must add a [primary key constraint](/reference/resource-properties/constraints) or [uniqueness test](/reference/resource-properties/data-tests#unique). Otherwise, you'll receive a "Primary key missing" error message in dbt Cloud.
+    - **dbt compare**<Lifecycle status="managed,managed_plus" /> &mdash; Enable this option to compare the last applied state of the production environment (if one exists) with the latest changes from the pull request, and identify what those differences are. To enable record-level comparison and primary key analysis, you must add a [primary key constraint](/reference/resource-properties/constraints) or [uniqueness test](/reference/resource-properties/data-tests#unique). Otherwise, you'll receive a "Primary key missing" error message in dbt Cloud.
     
       To review the comparison report, navigate to the [Compare tab](/docs/deploy/run-visibility#compare-tab) in the job run's details. A summary of the report is also available from the pull request in your <Constant name="git" /> provider (see the [CI report example](#example-ci-report)). 
 
@@ -79,18 +79,20 @@ The following is an example of a CI report in a GitHub pull request, which is sh
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-ci-report.png" width="75%" title="Example of CI report comment in GitHub pull request"/>
 
-## Trigger a CI job with the API
+## Trigger a CI job with the API <Lifecycle status="managed,managed_plus" />
 
 If you're not using <Constant name="cloud" />’s native <Constant name="git" /> integration with [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab), or [Azure DevOps](/docs/cloud/git/connect-azure-devops), you can use the [Administrative API](/docs/dbt-cloud-apis/admin-cloud-api) to trigger a CI job to run. However, <Constant name="cloud" /> will not automatically delete the temporary schema for you. This is because automatic deletion relies on incoming webhooks from <Constant name="git" /> providers, which is only available through the native integrations.
+
+
 
 ### Prerequisites
 
 - You have a <Constant name="cloud" /> account.
-- For the [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-
+- You have a <Constant name="cloud" /> [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/). Legacy Team plans also retain access.
+  - For the [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your <Constant name="cloud" /> account must be on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/), and legacy Team plans. Starter plans do not have access to these features when triggering a CI job with the API.
 
 1. Set up a CI job with the [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job) API endpoint using `"job_type": ci` or from the [dbt Cloud UI](#set-up-ci-jobs).
-1. Call the [Trigger Job Run](/dbt-cloud/api-v2#/operations/Trigger%20Job%20Run) API endpoint to trigger the CI job. You must include both of these fields to the payload:
+2. Call the [Trigger Job Run](/dbt-cloud/api-v2#/operations/Trigger%20Job%20Run) API endpoint to trigger the CI job. You must include both of these fields to the payload:
    - Provide the pull request (PR) ID using one of these fields:
 
       - `github_pull_request_id`
@@ -99,7 +101,7 @@ If you're not using <Constant name="cloud" />’s native <Constant name="git" />
       - `non_native_pull_request_id` (for example, BitBucket)
    - Provide the `git_sha` or `git_branch` to target the correct commit or branch to run the job against. 
 
-## Semantic validations in CI  <Lifecycle status="self_service,managed" />
+## Semantic validations in CI  <Lifecycle status="self_service,managed,managed_plus" />
 
 Automatically test your semantic nodes (metrics, semantic models, and saved queries) during code reviews by adding warehouse validation checks in your CI job, guaranteeing that any code changes made to dbt models don't break these metrics. 
 

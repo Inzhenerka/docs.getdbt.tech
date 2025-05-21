@@ -7,6 +7,8 @@ pagination_next: "docs/cloud/secure/about-private-connectivity"
 pagination_prev: null
 ---
 
+# Configuring IP restrictions <Lifecycle status="managed_plus" />
+
 import SetUpPages from '/snippets/_available-tiers-iprestrictions.md';
 
 <SetUpPages features={'/snippets/_available-tiers-iprestrictions.md'}/>

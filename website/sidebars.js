@@ -23,7 +23,7 @@ const sidebarSettings = {
     }, // Supported data platforms directory
     {
       type: "category",
-      label: "About dbt Cloud",
+      label: "About the dbt platform",
       link: { type: "doc", id: "docs/cloud/about-cloud/dbt-cloud-features" },
       items: [
         "docs/cloud/about-cloud/architecture",
@@ -44,7 +44,7 @@ const sidebarSettings = {
         "docs/environments-in-dbt",
         {
           type: "category",
-          label: "dbt Cloud",
+          label: "dbt platform",
           collapsed: true,
           link: { type: "doc", id: "docs/cloud/about-cloud-setup" },
           items: [
@@ -285,7 +285,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Develop with dbt Cloud",
+      label: "Develop with dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/cloud/about-develop-dbt" },
       items: [
@@ -293,7 +293,7 @@ const sidebarSettings = {
         "docs/cloud/about-cloud-develop-defer",
         {
           type: "category",
-          label: "dbt Cloud CLI",
+          label: "dbt CLI",
           collapsed: true,
           link: { type: "doc", id: "docs/cloud/cloud-cli-installation" },
           items: [
@@ -303,7 +303,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "dbt Cloud IDE",
+          label: "dbt Studio IDE",
           link: {
             type: "doc",
             id: "docs/cloud/dbt-cloud-ide/develop-in-the-cloud",
@@ -388,7 +388,7 @@ const sidebarSettings = {
             "docs/build/build-metrics-intro",
             {
               type: "link",
-              label: "Quickstart with the dbt Cloud Semantic Layer",
+              label: "Quickstart with the dbt Semantic Layer",
               href: `/guides/sl-snowflake-qs`,
             },
             {
@@ -654,7 +654,7 @@ const sidebarSettings = {
         "docs/use-dbt-semantic-layer/dbt-sl",
         {
           type: "link",
-          label: "Quickstart with the dbt Cloud Semantic Layer",
+          label: "Quickstart with the dbt Semantic Layer",
           href: `/guides/sl-snowflake-qs`,
         },
         {
@@ -689,7 +689,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "dbt Cloud APIs",
+      label: "dbt APIs",
       collapsed: true,
       link: { type: "doc", id: "docs/dbt-cloud-apis/overview" },
       items: [
@@ -811,7 +811,7 @@ const sidebarSettings = {
       },
       {
       type: "category",
-      label: "dbt Cloud integrations",
+      label: "dbt integrations",
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
       items: [
         "docs/cloud-integrations/overview",
@@ -886,7 +886,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "dbt Cloud release notes",
+          label: "dbt release notes",
           link: {
             type: "doc",
             id: "docs/dbt-versions/dbt-cloud-release-notes",
