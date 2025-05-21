@@ -1,7 +1,7 @@
 --- 
 title: "Enable dbt Copilot" 
 sidebar_label: "Enable dbt Copilot" 
-description: "Enable dbt Copilot, an AI-powered assistant, in dbt Cloud to speed up your development." 
+description: "Enable dbt Copilot, an AI-powered assistant, in dbt to speed up your development." 
 ---
 
 # Enable dbt Copilot <Lifecycle status="managed" /> 

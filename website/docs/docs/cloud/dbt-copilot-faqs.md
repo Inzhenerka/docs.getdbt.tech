@@ -18,7 +18,7 @@ dbt Labs is committed to protecting your privacy and data. This page provides in
 
 <Expandable alt_header="What is dbt Copilot?">
 
-<Constant name="copilot" /> is a powerful AI-powered assistant that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. <Constant name="copilot" /> embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
+<Constant name="copilot" /> is a powerful AI-powered assistant that's fully integrated into your <Constant name="cloud" /> experience and designed to accelerate your analytics workflows. <Constant name="copilot" /> embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
 
 With automatic code generation, let <Constant name="copilot" /> [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-copilot) and, now in beta, [<Constant name="visual_editor" />](/docs/cloud/use-canvas).
 
@@ -52,7 +52,7 @@ with a click of a button and ensuring data privacy and security.
 
 <Expandable alt_header="Who has access to dbt Copilot?" >
 
-When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Enterprise account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
+When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Enterprise account](https://www.getdbt.com/contact) to all <Constant name="cloud" /> [developer license users](/docs/cloud/manage-access/seats-and-users).
 
 </Expandable>
 

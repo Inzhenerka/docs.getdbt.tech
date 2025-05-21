@@ -16,7 +16,7 @@ You can configure <Constant name="cloud" /> to sign your <Constant name="git" />
 - GitHub or GitLab is your <Constant name="git" /> provider. Currently, Azure DevOps is not supported.
 - You have a <Constant name="cloud" /> account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 
-## Generate GPG keypair in dbt Cloud
+## Generate GPG keypair in dbt
 
 To generate a GPG keypair in <Constant name="cloud" />, follow these steps:
 1. Go to your **Personal profile** page in <Constant name="cloud" />.
@@ -52,9 +52,9 @@ Once you have uploaded the public key to your <Constant name="git" /> provider, 
 
 <!-- vale on -->
 
-<DetailsToggle alt_header="What happens if I delete my GPG keypair in dbt Cloud?">
+<DetailsToggle alt_header="What happens if I delete my GPG keypair in dbt?">
 
-If you delete your GPG keypair in dbt Cloud, your Git commits will no longer be signed. You can generate a new GPG keypair by following the [steps mentioned earlier](/docs/cloud/dbt-cloud-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
+If you delete your GPG keypair in <Constant name="cloud" />, your Git commits will no longer be signed. You can generate a new GPG keypair by following the [steps mentioned earlier](/docs/cloud/dbt-cloud-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
 </DetailsToggle>
 
 <DetailsToggle alt_header="What Git providers support GPG keys?">

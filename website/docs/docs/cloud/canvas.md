@@ -2,7 +2,7 @@
 title: "About dbt Canvas" 
 id: canvas      
 sidebar_label: "About dbt Canvas" 
-description: "dbt Canvas enables you to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
+description: "dbt Canvas enables you to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt." 
 pagination_next: "docs/cloud/canvas-interface"
 pagination_prev: null
 ---
@@ -29,7 +29,7 @@ These models compile directly to SQL and are indistinguishable from other dbt mo
 - Models can be materialized into production through [<Constant name="cloud" /> orchestration](/docs/deploy/deployments), or be built directly into a user's development schema.
 - Integrate with [<Constant name="explorer" />](/docs/explore/explore-projects) and the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/canvas.png" width="90%" title="Create or edit dbt models with Canvas, enabling everyone to develop with dbt through a drag-and-drop experience inside of dbt Cloud." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/canvas.png" width="90%" title="Create or edit dbt models with Canvas, enabling everyone to develop with dbt through a drag-and-drop experience inside of dbt." />
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 

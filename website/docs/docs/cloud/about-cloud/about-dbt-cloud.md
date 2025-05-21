@@ -1,8 +1,8 @@
 ---
-title: "dbt Cloud features"
+title: "dbt features"
 id: "dbt-cloud-features"
-sidebar_label: "dbt Cloud features"
-description: "Explore dbt Cloud's features and learn why dbt Cloud is the fastest way to deploy dbt"
+sidebar_label: "dbt features"
+description: "Explore dbt's features and learn why dbt is the fastest way to deploy dbt"
 hide_table_of_contents: true
 pagination_next: "docs/cloud/about-cloud/architecture"
 pagination_prev: null
@@ -30,7 +30,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
 <Card
     title="dbt Canvas (beta)"
-    body="Develop with Canvas, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt Cloud."
+    body="Develop with Canvas, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt."
     link="/docs/cloud/canvas"
     icon="dbt-bit"/>
 
@@ -42,7 +42,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
 <Card
     title="Manage environments"
-    body="Set up and manage separate production and development environments in dbt Cloud to help engineers develop and test code more efficiently, without impacting users or data."
+    body="Set up and manage separate production and development environments in dbt to help engineers develop and test code more efficiently, without impacting users or data."
     link="/docs/environments-in-dbt"
     icon="dbt-bit"/>
 
@@ -54,7 +54,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
   <Card
     title="Notifications"
-    body="Set up and customize job notifications in dbt Cloud to receive email or slack alerts when a job run succeeds, fails, or is cancelled. Notifications alert the right people when something goes wrong instead of waiting for a user to report it."
+    body="Set up and customize job notifications in dbt to receive email or slack alerts when a job run succeeds, fails, or is cancelled. Notifications alert the right people when something goes wrong instead of waiting for a user to report it."
     link="/docs/deploy/job-notifications"
     icon="dbt-bit"/>
 
@@ -66,19 +66,19 @@ In addition to providing a hosted architecture for running dbt across your organ
     
    <Card
     title="Host & share documentation"
-    body="dbt Cloud hosts and authorizes access to dbt project documentation, allowing you to generate data documentation on a schedule for your project. Invite teammates to dbt Cloud to collaborate and share your project's documentation."
+    body="dbt hosts and authorizes access to dbt project documentation, allowing you to generate data documentation on a schedule for your project. Invite teammates to dbt to collaborate and share your project's documentation."
     link="/docs/explore/build-and-view-your-docs"
     icon="dbt-bit"/>
 
    <Card
     title="Supports GitHub, GitLab, AzureDevOps"
-    body="Seamlessly connect your git account to dbt Cloud and provide another layer of security to dbt Cloud. Import new repositories, trigger continuous integration, clone repos using HTTPS, and more!"
+    body="Seamlessly connect your git account to dbt and provide another layer of security to dbt. Import new repositories, trigger continuous integration, clone repos using HTTPS, and more!"
     link="/docs/cloud/git/connect-github"
     icon="dbt-bit"/>
 
    <Card
     title="Enable Continuous Integration"
-    body="Configure dbt Cloud to run your dbt projects in a temporary schema when new commits are pushed to open pull requests. This build-on-PR functionality is a great way to catch bugs before deploying to production, and an essential tool in any analyst's belt."
+    body="Configure dbt to run your dbt projects in a temporary schema when new commits are pushed to open pull requests. This build-on-PR functionality is a great way to catch bugs before deploying to production, and an essential tool in any analyst's belt."
     link="/docs/deploy/continuous-integration"
     icon="dbt-bit"/>
 
@@ -102,7 +102,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
    <Card
     title="Discovery API*"
-    body="Enhance your workflow and run ad-hoc queries, browse schema, or query the dbt Semantic Layer. dbt Cloud serves a GraphQL API, which supports arbitrary queries."
+    body="Enhance your workflow and run ad-hoc queries, browse schema, or query the dbt Semantic Layer. dbt serves a GraphQL API, which supports arbitrary queries."
     link="/docs/dbt-cloud-apis/discovery-api"
     icon="dbt-bit"/>
 
