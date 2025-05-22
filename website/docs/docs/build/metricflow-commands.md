@@ -219,7 +219,7 @@ mf validate-configs # For dbt Core users
 
 Options:
   --timeout                       # dbt platform only
-                                  Optional timeout for data warehouse validation in dbt.
+                                  Optional timeout for data warehouse validation in the dbt platform.
   --dw-timeout INTEGER            # dbt Core only
                                   Optional timeout for data warehouse
                                   validation steps. Default None.
