@@ -57,9 +57,9 @@ The Query output panel is below the query editor and displays the results of a q
 - **Ellipsis** (`...`) button &mdash; Allows you to export the results to CSV
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/dbt-insights/insights-results.jpg" width="95%" title="dbt Insights Results tab" />
-<Lightbox src="/img/docs/dbt-insights/insights-details.jpg" width="95%" title="dbt Insights Details tab" />
-<Lightbox src="/img/docs/dbt-insights/insights-chart.jpg" width="95%" title="dbt Insights Chart tab" />
+<Lightbox src="/img/docs/dbt-insights/insights-results.png" width="95%" title="dbt Insights Results tab" />
+<Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="dbt Insights Details tab" />
+<Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="dbt Insights Chart tab" />
 </DocCarousel>
 
 ## Query console sidebar menu
@@ -73,7 +73,6 @@ The Query console sidebar menu and icons contains the following options:
 
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights dbt Explorer icon" />
-<Lightbox src="/img/docs/dbt-insights/insights-ellipsis.gif" width="90%" title="dbt Insights bookmark icon" />
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="90%" title="dbt Insights Query history icon" />
-<Lightbox src="/img/docs/dbt-insights/insights-copilot.gif" width="90%" title="dbt Insights dbt Copilot" />
+<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="90%" title="dbt Insights dbt Copilot" />
 </DocCarousel>
