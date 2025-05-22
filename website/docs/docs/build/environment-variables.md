@@ -100,7 +100,7 @@ While all environment variables are encrypted at rest in <Constant name="cloud" 
 
 <Constant name="cloud" /> has a number of pre-defined variables built in. Variables are set automatically and cannot be changed.
 
-#### dbt IDE details
+#### Studio IDE details
 
 The following environment variable is set automatically for the <Constant name="cloud_ide" />:
 
