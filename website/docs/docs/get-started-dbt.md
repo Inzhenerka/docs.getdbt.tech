@@ -41,8 +41,8 @@ Learn more about [<Constant name="cloud" /> features](/docs/cloud/about-cloud/d
     icon="bigquery"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Databricks"
-    body="Learn how to integrate dbt Cloud with Databricks for efficient data processing and analysis."
+    title="Quickstart for dbt and Databricks"
+    body="Learn how to integrate dbt with Databricks for efficient data processing and analysis."
     link="https://docs.getdbt.com/guides/databricks"
     icon="databricks"/>
 

@@ -1,6 +1,6 @@
 ---
-title: "Invite users to dbt Cloud"
-description: "Learn how to manually invite users to dbt Cloud"
+title: "Invite users to dbt"
+description: "Learn how to manually invite users to dbt"
 id: "invite-users"
 sidebar: "Invite users"
 ---

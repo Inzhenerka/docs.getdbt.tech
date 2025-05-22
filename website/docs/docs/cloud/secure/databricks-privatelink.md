@@ -45,7 +45,7 @@ The following steps will walk you through the setup of a Databricks AWS PrivateL
 
     :::
 
-## Create Connection in dbt Cloud
+## Create Connection in dbt
 
 Once you've completed the setup in the Databricks environment, you will be able to configure a private endpoint in <Constant name="cloud" />:
 

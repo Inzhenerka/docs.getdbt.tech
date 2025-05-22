@@ -63,7 +63,7 @@ Additionally, you may configure the IdP attributes passed from your identity pro
 | last_name | Unspecified | user.last_name | The user's last name |
 | NameID | Unspecified | ID | The user's unchanging ID |
 
-`NameID` values can be persistent (`urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`) rather than unspecified if your IdP supports these values.  Using an email address for `NameID` will work, but dbt Cloud creates an entirely new user if that email address changes.  Configuring a value that will not change, even if the user's email address does, is a best practice.
+`NameID` values can be persistent (`urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`) rather than unspecified if your IdP supports these values.  Using an email address for `NameID` will work, but <Constant name="cloud" /> creates an entirely new user if that email address changes.  Configuring a value that will not change, even if the user's email address does, is a best practice.
 
 <Constant name="cloud" />'s [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control) relies
 on group mappings from the IdP to assign <Constant name="cloud" /> users to <Constant name="cloud" /> groups. To
@@ -474,9 +474,9 @@ the new integration. Keep these values somewhere safe, as you will need them to 
 6. After creating the OneLogin application, follow the instructions in the [<Constant name="cloud" /> Setup](#dbt-cloud-setup)
 section to complete the integration.
 
-## dbt Cloud Setup
+## dbt Setup
 
-### Providing IdP values to dbt Cloud
+### Providing IdP values to dbt
 
 To complete setup, follow the steps below in <Constant name="cloud" />:
 
@@ -489,10 +489,10 @@ To complete setup, follow the steps below in <Constant name="cloud" />:
    | Log&nbsp;in&nbsp;with | SAML 2.0 |
    | Identity&nbsp;Provider&nbsp;SSO&nbsp;Url | Paste the **Identity Provider Single Sign-On URL** shown in the IdP setup instructions |
    | Identity&nbsp;Provider&nbsp;Issuer | Paste the **Identity Provider Issuer** shown in the IdP setup instructions |
-   | X.509&nbsp;Certificate | Paste the **X.509 Certificate** shown in the IdP setup instructions; <br />**Note:** When the certificate expires, an Idp admin will have to generate a new one to be pasted into dbt Cloud for uninterrupted application access. |
+   | X.509&nbsp;Certificate | Paste the **X.509 Certificate** shown in the IdP setup instructions; <br />**Note:** When the certificate expires, an Idp admin will have to generate a new one to be pasted into <Constant name="cloud" /> for uninterrupted application access. |
    | Slug | Enter your desired login slug. |
     <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-6-setup-integration.png"
-        title="Configuring the application in dbt Cloud" />
+        title="Configuring the application in dbt" />
 
 4. Click **Save** to complete setup for the SAML 2.0 integration.
 5. After completing the setup, you can navigate to the URL generated for your account's _slug_ to test logging in with your identity provider. Additionally, users added the the SAML 2.0 app will be able to log in to <Constant name="cloud" /> from the IdP directly.

@@ -1,6 +1,6 @@
 ---
 title: "Self-service Starter account permissions"
-description: "Learn how dbt Cloud administrators can use self-service permissions to control access in a dbt Cloud Starter account."
+description: "Learn how dbt administrators can use self-service permissions to control access in a dbt Starter account."
 sidebar_label: "Starter permissions"
 id: "self-service-permissions"
 ---

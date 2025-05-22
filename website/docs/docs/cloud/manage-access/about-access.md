@@ -1,6 +1,6 @@
 ---
-title: "About user access in dbt Cloud"
-description: "Learn how dbt Cloud administrators can use dbt Cloud's permissioning model to control user-level access in a dbt Cloud account."
+title: "About user access in dbt"
+description: "Learn how dbt administrators can use dbt's permissioning model to control user-level access in a dbt account."
 id: "about-user-access"
 pagination_next: "docs/cloud/manage-access/seats-and-users"
 pagination_prev: null
@@ -94,7 +94,7 @@ Create an SSO mapping in the group view:
 3. In the **Users** section, ensure the **Add all users by default** option is disabled.
 4. Save the group configuration. New SSO users will be added to the group upon login, and existing users will be added to the group upon their next login. 
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-mapping.png" width="60%" title="Example of an SSO group mapped to a dbt Cloud group." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-mapping.png" width="60%" title="Example of an SSO group mapped to a dbt group." />
 
 Refer to [role-based access control](#role-based-access-control) for more information about mapping SSO groups for user assignment to <Constant name="cloud" /> groups.
 
@@ -114,7 +114,7 @@ For more information on these license types, see [Seats & Users](/docs/cloud/man
 
 ### Permissions
 
-Permissions determine what a developer-licensed user can do in your dbt Cloud account. By default, members of the `Owner` and `Member` groups have full access to all areas and features. When you want to restrict access to features, assign users to groups with stricter permission sets. Keep in mind that if a user belongs to multiple groups, the most permissive group will take precedence.
+Permissions determine what a developer-licensed user can do in your <Constant name="cloud" /> account. By default, members of the `Owner` and `Member` groups have full access to all areas and features. When you want to restrict access to features, assign users to groups with stricter permission sets. Keep in mind that if a user belongs to multiple groups, the most permissive group will take precedence.
 
 The permissions available depends on whether you're on an [Enterprise, Enterprise+](/docs/cloud/manage-access/enterprise-permissions), or [self-service Starter](/docs/cloud/manage-access/self-service-permissions) plan. Developer accounts only have a single user, so permissions aren't applicable.
 
@@ -134,31 +134,31 @@ There are a few things you need to know before you configure RBAC for SSO users:
   <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-window-details.png" width="60%" title="The Group details SSO section with a group configured." />
 - dbt Labs recommends that your <Constant name="cloud" /> group names match the IdP group names.
 
-Let's say you have a new employee being onboarded into your organization using [Okta](/docs/cloud/manage-access/set-up-sso-okta) as the IdP and dbt Cloud groups with SSO mappings. In this scenario, users are working on `The Big Project` and a new analyst named `Euclid Ean` is joining the group.
+Let's say you have a new employee being onboarded into your organization using [Okta](/docs/cloud/manage-access/set-up-sso-okta) as the IdP and <Constant name="cloud" /> groups with SSO mappings. In this scenario, users are working on `The Big Project` and a new analyst named `Euclid Ean` is joining the group.
 
 Check out the following example configurations for an idea of how you can implement RBAC for your organization (these examples assume you have already configured [SSO](/docs/cloud/manage-access/sso-overview)):
 
 <Expandable alt_header="Okta configuration"> 
 
-You and your IdP team add `Euclid Ean` to your Okta environment and assign them to the `dbt Cloud` SSO app via a group called `The Big Project`. 
+You and your IdP team add `Euclid Ean` to your Okta environment and assign them to the `dbt` SSO app via a group called `The Big Project`. 
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/okta-group-config.png" width="60%" title="The user in the group in Okta." />
 
-Configure the group attribute statements the `dbt Cloud` application in Okta. The group statements in the following example are set to the group name exactly (`The Big Project`), but yours will likely be a much broader configuration. Companies often use the same prefix across all dbt groups in their IdP. For example `DBT_GROUP_`
+Configure the group attribute statements the `dbt` application in Okta. The group statements in the following example are set to the group name exactly (`The Big Project`), but yours will likely be a much broader configuration. Companies often use the same prefix across all dbt groups in their IdP. For example `DBT_GROUP_`
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/group-attributes.png" width="60%" title="Group attributes set in the dbt Cloud SAML 2.0 app in Okta." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/group-attributes.png" width="60%" title="Group attributes set in the dbt SAML 2.0 app in Okta." />
 
 </Expandable>
 
-<Expandable alt_header="dbt Cloud configuration"> 
+<Expandable alt_header="dbt configuration"> 
 
-You and your dbt Cloud admin team configure the groups in your account's settings: 
+You and your <Constant name="cloud" /> admin team configure the groups in your account's settings: 
 1. Navigate to the **Account settings** and click **Groups & Licenses** on the left-side menu. 
 2. Click **Create group** or select an existing group and click **Edit**.
 3. Enter the group name in the **SSO** field.
 4. Configure the **Access and permissions** fields to your needs. Select a [permission set](/docs/cloud/manage-access/enterprise-permissions), the project they can access, and [environment-level access](/docs/cloud/manage-access/environment-permissions).
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/dbt-cloud-group-config.png" width="60%" title="The group configuration with SSO field filled out in dbt Cloud." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/dbt-cloud-group-config.png" width="60%" title="The group configuration with SSO field filled out in dbt." />
 
 Euclid is limited to the `Analyst` role, the `Jaffle Shop` project, and the `Development`, `Staging`, and `General` environments of that project. Euclid has no access to the `Production` environment in their role. 
 
@@ -168,7 +168,7 @@ Euclid is limited to the `Analyst` role, the `Jaffle Shop` project, and the `Dev
 
 Euclid takes the following steps to log in: 
 
-1. Access the SSO URL or the dbt Cloud app in their Okta account. The URL can be found on the **Single sign-on** configuration page in the **Account settings**. 
+1. Access the SSO URL or the <Constant name="cloud" /> app in their Okta account. The URL can be found on the **Single sign-on** configuration page in the **Account settings**. 
 
   <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login-url.png" width="60%" title="The SSO login URL in the account settings." />
 
@@ -202,7 +202,7 @@ With RBAC configured, you now have granular control over user access to features
 
 <Expandable alt_header="When are IdP group memberships updated for SSO Mapped groups?">
 
-Group memberships are updated whenever a user logs into dbt Cloud via a supported SSO provider. If you've changed group memberships in your identity provider or dbt Cloud, ask your users to log back into dbt Cloud to synchronize these group memberships.
+Group memberships are updated whenever a user logs into <Constant name="cloud" /> via a supported SSO provider. If you've changed group memberships in your identity provider or <Constant name="cloud" />, ask your users to log back into <Constant name="cloud" /> to synchronize these group memberships.
 
 </Expandable>
 
@@ -226,8 +226,8 @@ Don't try to edit your own user, as this isn't allowed for security reasons. You
 
 <Expandable alt_header="How do I add or remove users?">
 
-Each dbt Cloud plan has a base number of Developer and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
-  - If you're on an Enterprise or Enterprise+ plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
+Each <Constant name="cloud" /> plan has a base number of Developer and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
+  - If you're on an Enterprise or Enterprise + plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
   - If you're on a Starter plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers by making two changes: adjust your developer user seat count AND your developer billing seat count in **Account settings** -> **Users** and then in **Account settings** -> **Billing**.
 
 For detailed steps, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users#licenses).

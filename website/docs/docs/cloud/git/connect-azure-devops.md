@@ -9,7 +9,7 @@ pagination_next: "docs/cloud/git/setup-service-principal"
 <Snippet path="available-enterprise-tier-only" />
 
 
-## About Azure DevOps and dbt Cloud
+## About Azure DevOps and dbt
 
 Connect your Azure DevOps cloud account in <Constant name="cloud" /> to unlock new product experiences:
 

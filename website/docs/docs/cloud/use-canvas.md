@@ -2,7 +2,7 @@
 title: "Edit and create dbt models" 
 id: use-canvas    
 sidebar_label: "Edit and create dbt models" 
-description: "Access and use Canvas to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
+description: "Access and use Canvas to create or edit dbt models through a visual, drag-and-drop experience inside of dbt." 
 pagination_prev: "docs/cloud/canvas-interface"
 pagination_next: "docs/cloud/build-canvas-copilot"
 ---

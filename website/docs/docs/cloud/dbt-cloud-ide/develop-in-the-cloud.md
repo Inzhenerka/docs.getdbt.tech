@@ -153,14 +153,14 @@ Not at all! You can use <Constant name="cloud" /> when you sign up for the <a hr
 Refer to <a href="https://www.getdbt.com/pricing/">dbt pricing plans</a> for more details.
 </DetailsToggle>
 
-<DetailsToggle alt_header="Can I be a contributor to dbt Cloud">
+<DetailsToggle alt_header="Can I be a contributor to dbt">
 As a proprietary product, <Constant name="cloud" />'s source code isn't available for community contributions. If you want to build something in the dbt ecosystem, we encourage you to review [this article](/community/contributing/contributing-coding) about contributing to a dbt package, a plugin, dbt-core, or this documentation site. Participation in open-source is a great way to level yourself up as a developer, and give back to the community.
 </DetailsToggle>
 
 <DetailsToggle alt_header="What is the difference between developing on the dbt Cloud IDE, the dbt Cloud CLI, and dbt Core?">
 You can develop dbt using the web-based IDE in <Constant name="cloud" /> or on the command line interface using the <Constant name="cloud_cli" /> or open-source <Constant name="core" />, all of which enable you to execute dbt commands. The key distinction between the <Constant name="cloud_cli" /> and <Constant name="core" /> is the <Constant name="cloud_cli" /> is tailored for <Constant name="cloud" />'s infrastructure and integrates with all its features:
 
-- <Constant name="cloud_ide" />: <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features">dbt Cloud</a> is a web-based application that allows you to develop dbt projects with the IDE, includes a purpose-built scheduler, and provides an easier way to share your dbt documentation with your team. The IDE is a faster and more reliable way to deploy your dbt models and provides a real-time editing and execution environment for your dbt project.
+- <Constant name="cloud_ide" />: <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features"><Constant name="cloud" /></a> is a web-based application that allows you to develop dbt projects with the IDE, includes a purpose-built scheduler, and provides an easier way to share your dbt documentation with your team. The IDE is a faster and more reliable way to deploy your dbt models and provides a real-time editing and execution environment for your dbt project.
 
 - <Constant name="cloud_cli" />: <a href="https://docs.getdbt.com/docs/cloud/cloud-cli-installation">The <Constant name="cloud_cli" /></a> allows you to run dbt commands against your dbt <Constant name="cloud" /> development environment from your local command line or code editor. It supports cross-project ref, speedier, lower-cost builds, automatic deferral of build artifacts, and more.
 

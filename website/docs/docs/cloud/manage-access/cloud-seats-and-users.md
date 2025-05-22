@@ -1,6 +1,6 @@
 ---
 title: "Users and licenses"
-description: "Learn how dbt Cloud administrators can use licenses and seats to control access in a dbt Cloud account."
+description: "Learn how dbt administrators can use licenses and seats to control access in a dbt account."
 id: "seats-and-users"
 sidebar: "Users and licenses"
 pagination_next: "docs/cloud/manage-access/enterprise-permissions"
@@ -72,9 +72,9 @@ You can add or remove developers by increasing or decreasing the number of users
 <Tabs>
 <TabItem value="addusers" label="Adding users">
 
-To add a user in dbt Cloud, you must be an account owner or have admin privileges. 
+To add a user in <Constant name="cloud" />, you must be an account owner or have admin privileges. 
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+1. From <Constant name="cloud" />, click on your account name in the left side menu and select **Account settings**.
 
 <Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" width="75%" title="Navigate to Account Settings" />
 
@@ -92,7 +92,7 @@ Great work! After completing those these steps, your <Constant name="cloud" /> u
 
 <TabItem value="deleteusers" label="Deleting users">
 
-To delete a user in dbt Cloud, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
+To delete a user in <Constant name="cloud" />, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
 
 1. From <Constant name="cloud" />, click on your account name in the left side menu and select **Account settings**.
 
@@ -152,7 +152,7 @@ Usage notes:
 - License types are adjusted when users sign into <Constant name="cloud" /> via Single Sign On.
   Changes made to license type mappings will take effect the next time users
   sign in to <Constant name="cloud" />.
-- License type mappings are based on _IdP Groups_, not _dbt Cloud groups_, so be
+- License type mappings are based on _IdP Groups_, not _<Constant name="cloud" /> groups_, so be
   sure to check group memberships in your identity provider when configuring
   this feature.
 

@@ -53,7 +53,7 @@ Authentication uses a <Constant name="cloud" /> [service account tokens](/docs/d
 {"Authorization": "Bearer <SERVICE TOKEN>"}
 ```
 
-Each GQL request also requires a dbt Cloud `environmentId`. The API uses both the service token in the header and `environmentId` for authentication.
+Each GQL request also requires a <Constant name="cloud" /> `environmentId`. The API uses both the service token in the header and `environmentId` for authentication.
 
 ### Metadata calls
 

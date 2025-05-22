@@ -26,7 +26,7 @@ To create a support ticket in <Constant name="cloud" />:
 3. Fill out the form and click **Create Ticket**.
 4. A dbt Support team member will respond to your ticket through email.
 
-<Lightbox src="/img/create-support-ticket.gif" title="Create a support ticket in dbt Cloud" />
+<Lightbox src="/img/create-support-ticket.gif" title="Create a support ticket in dbt" />
 
 ### Ask dbt Support Assistant
 dbt Support Assistant is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to <Constant name="cloud" /> users and can help answer troubleshooting questions, give a synopsis of features and functionality, or link to relevant documentation. 
@@ -39,7 +39,7 @@ We recommend validating information received in AI responses for any scenario us
 
 ### Support plans and resources
 
-We want to help you work through implementing and utilizing the dbt platform at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
+We want to help you work through implementing and utilizing <Constant name="cloud" /> platform at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
 
 - **Enterprise and Enterprise+ plans** &mdash; Priority [support](#severity-level-for-enterprise-support), optional premium plans, enhanced SLAs, implementation assistance, dedicated management, and dbt Labs security reviews depending on price point.
 - **Developer and Starter plans** &mdash; 24x5 support (no service level agreement (SLA); [contact Sales](https://www.getdbt.com/pricing/) for Enterprise plan inquiries).
@@ -50,9 +50,9 @@ We want to help you work through implementing and utilizing the dbt platform at 
 
 <summary>Example of common support questions</summary>
 
-Types of dbt cloud-based platform related questions our Support team can assist you with, regardless of your dbt Cloud plan:<br /><br />
+Types of dbt cloud-based platform related questions our Support team can assist you with, regardless of your <Constant name="cloud" /> plan:<br /><br />
 <b>How do I...</b><br />
-    - set up a dbt project?<br />
+    - set up a <Constant name="cloud" /> project?<br />
     - set up a private package in dbt?<br />
     - configure custom branches on git repos?<br />
     - link dbt to a new GitHub account?<br /><br />
@@ -62,7 +62,7 @@ Types of dbt cloud-based platform related questions our Support team can assist 
     - update user groups.<br /><br />
 <b>I need help understanding...</b><br />
     - why this run failed.<br />
-    - why I am getting this error message in dbt?<br />
+    - why I am getting this error message in <Constant name="cloud" />?<br />
     - why my CI jobs are not kicking off as expected.<br />
 </details>
 
@@ -124,7 +124,7 @@ Leave feedback or submit a feature request for <Constant name="cloud" /> or <Con
 4. Confirm if you'd like dbt Labs to contact you about the feedback (optional).
 5. Click **Send Feedback**.
 
-<Lightbox src="/img/docs/leave-feedback.gif" title="Leave feedback in dbt Cloud" />
+<Lightbox src="/img/docs/leave-feedback.gif" title="Leave feedback in dbt" />
 
 #### Share feedback or feature request for dbt Core
 - [Create a GitHub issue here](https://github.com/dbt-labs/dbt-core/issues).

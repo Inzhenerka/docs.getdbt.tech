@@ -3,7 +3,7 @@ title: "About dbt Copilot"
 sidebar_label: "About dbt Copilot" 
 description: "dbt Copilot is a powerful AI-powered assistant designed to accelerate your analytics workflows throughout your entire ADLC." 
 pagination_next: "docs/cloud/enable-dbt-copilot"
-keywords: ["dbt Copilot", "dbt Cloud", "AI", "AI-powered", "dbt"]
+keywords: ["dbt Copilot", "dbt", "AI", "AI-powered", "dbt"]
 ---
 
 # About dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 

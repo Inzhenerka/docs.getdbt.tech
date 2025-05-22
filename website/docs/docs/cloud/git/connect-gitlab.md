@@ -1,6 +1,6 @@
 ---
 title: "Connect to GitLab"
-description: "Learn how connecting your GitLab account provides convenience and another layer of security to dbt Cloud."
+description: "Learn how connecting your GitLab account provides convenience and another layer of security to dbt."
 id: "connect-gitlab"
 ---
 
@@ -22,7 +22,7 @@ The steps to integrate GitLab in <Constant name="cloud" /> depend on your plan. 
 - the Developer or Starter plan, read these [instructions](#for-dbt-cloud-developer-and-starter-tiers).
 - the Enterprise or Enterprise+ plan, jump ahead to these [instructions](#for-the-dbt-cloud-enterprise-tier).
 
-## For dbt Cloud Developer and Starter tiers
+## For dbt Developer and Starter tiers
 
 To connect your GitLab account:
 1. From <Constant name="cloud" />, click on your account name in the left side menu and select **Account settings**. 
@@ -38,7 +38,8 @@ When you click **Link**, you will be redirected to GitLab and prompted to sign i
 
 Once you've accepted, you should be redirected back to <Constant name="cloud" />, and you'll see that your account has been linked to your profile.
 
-## For the dbt Cloud Enterprise tier
+## For the dbt Enterprise tier
+
 
 <Constant name="cloud" /> Enterprise and Enterprise+ customers have the added benefit of bringing their own GitLab OAuth application to <Constant name="cloud" />. This tier benefits from extra security, as <Constant name="cloud" /> will:
 - Enforce user authorization with OAuth.
@@ -80,10 +81,10 @@ Click **Save application** in GitLab, and GitLab will then generate an **Applica
 
 If you're a Business Critical customer using [IP restrictions](/docs/cloud/secure/ip-restrictions), ensure you've added the appropriate Gitlab CIDRs to your IP restriction rules, or else the Gitlab connection will fail.
 
-### Adding the GitLab OAuth application to dbt Cloud
+### Adding the GitLab OAuth application to dbt
 After you've created your GitLab application, you need to provide <Constant name="cloud" /> information about the app. In <Constant name="cloud" />, account admins should navigate to **Account Settings**, click on the **Integrations** tab, and expand the GitLab section.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Navigation.gif" title="Navigating to the GitLab Integration in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Navigation.gif" title="Navigating to the GitLab Integration in dbt"/>
 
 In <Constant name="cloud" />, input the following values:
 
@@ -116,7 +117,7 @@ To connect a personal GitLab account:
 
 If your GitLab account is not connected, you’ll see "No connected account". Select **Link** to begin the setup process. You’ll be redirected to GitLab, and asked to authorize <Constant name="cloud" /> in a grant screen.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="Authorizing the dbt Cloud app for developers" />
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="Authorizing the dbt app for developers" />
 
 Once you approve authorization, you will be redirected to <Constant name="cloud" />, and you should see your connected account. You're now ready to start developing in the <Constant name="cloud_ide" /> or <Constant name="cloud" /> CLI.
 

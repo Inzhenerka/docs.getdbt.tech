@@ -1,7 +1,7 @@
 ---
-title: "Account settings in dbt Cloud"
+title: "Account settings in dbt"
 sidebar_label: "Account settings" 
-description: "Learn how to enable account settings for your dbt Cloud users."
+description: "Learn how to enable account settings for your dbt users."
 ---
 
 The following sections describe the different **Account settings** available from your <Constant name="cloud" /> account in the sidebar (under your account name on the lower left-hand side). 
@@ -17,7 +17,7 @@ The following sections describe the different **Account settings** available fro
 See the next section for more details on repo caching, retention, and more.
 :::
 
-At the start of every [job](/docs/deploy/jobs) run, dbt Cloud clones the project's Git repository so it has the latest versions of your project's code and runs `dbt deps` to install your dependencies. 
+At the start of every [job](/docs/deploy/jobs) run, <Constant name="cloud" /> clones the project's Git repository so it has the latest versions of your project's code and runs `dbt deps` to install your dependencies. 
 
 For improved reliability and performance on your job runs, you can enable <Constant name="cloud" /> to keep a cache of the project's <Constant name="git" /> repository. So, if there's a third-party outage that causes the cloning operation to fail, <Constant name="cloud" /> will instead use the cached copy of the repo so your jobs can continue running as scheduled. 
 
@@ -39,7 +39,7 @@ To use, select the **Enable repository caching** option from your account settin
 
 At the start of every dbt invocation, dbt reads all the files in your project, extracts information, and constructs an internal manifest containing every object (model, source, macro, and so on). Among other things, it uses the `ref()`, `source()`, and `config()` macro calls within models to set properties, infer dependencies, and construct your project's DAG. When dbt finishes parsing your project, it stores the internal manifest in a file called `partial_parse.msgpack`. 
 
-Parsing projects can be time-consuming, especially for large projects with hundreds of models and thousands of files. To reduce the time it takes dbt to parse your project, use the partial parsing feature in dbt Cloud for your environment. When enabled, dbt Cloud uses the `partial_parse.msgpack` file to determine which files have changed (if any) since the project was last parsed, and then it parses _only_ the changed files and the files related to those changes.
+Parsing projects can be time-consuming, especially for large projects with hundreds of models and thousands of files. To reduce the time it takes dbt to parse your project, use the partial parsing feature in <Constant name="cloud" /> for your environment. When enabled, <Constant name="cloud" /> uses the `partial_parse.msgpack` file to determine which files have changed (if any) since the project was last parsed, and then it parses _only_ the changed files and the files related to those changes.
 
 Partial parsing in <Constant name="cloud" /> requires dbt version 1.4 or newer. The feature does have some known limitations. Refer to [Known limitations](/reference/parsing#known-limitations) to learn more about them.
 

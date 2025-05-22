@@ -2,7 +2,7 @@
 title: "The dbt platform features"
 id: "dbt-cloud-features"
 sidebar_label: "dbt platform features"
-description: "Explore dbt's features and learn "
+description: "Explore dbt's features and learn why the dbt platform is the fastest way to deploy dbt"
 hide_table_of_contents: true
 pagination_next: "docs/cloud/about-cloud/architecture"
 pagination_prev: null
@@ -30,7 +30,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
 <Card
     title="dbt Canvas (beta)"
-    body="Develop with Canvas, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt Cloud."
+    body="Develop with Canvas, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt."
     link="/docs/cloud/canvas"
     icon="dbt-bit"/>
 
@@ -42,7 +42,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
 <Card
     title="Manage environments"
-    body="Set up and manage separate production and development environments in dbt Cloud to help engineers develop and test code more efficiently, without impacting users or data."
+    body="Set up and manage separate production and development environments in dbt to help engineers develop and test code more efficiently, without impacting users or data."
     link="/docs/environments-in-dbt"
     icon="dbt-bit"/>
 
@@ -54,7 +54,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 
   <Card
     title="Notifications"
-    body="Set up and customize job notifications in dbt Cloud to receive email or slack alerts when a job run succeeds, fails, or is cancelled. Notifications alert the right people when something goes wrong instead of waiting for a user to report it."
+    body="Set up and customize job notifications in dbt to receive email or slack alerts when a job run succeeds, fails, or is cancelled. Notifications alert the right people when something goes wrong instead of waiting for a user to report it."
     link="/docs/deploy/job-notifications"
     icon="dbt-bit"/>
 

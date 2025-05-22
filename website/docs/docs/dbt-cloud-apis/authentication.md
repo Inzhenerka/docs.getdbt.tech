@@ -9,7 +9,7 @@ pagination_prev: null
 
 <Card
     title="Personal access tokens"
-    body="Learn about user tokens and how to use them to execute queries against the dbt APIs."
+    body="Learn about user tokens and how to use them to execute queries against the dbt API."
     link="/docs/dbt-cloud-apis/user-tokens"
     icon="dbt-bit"/>
 

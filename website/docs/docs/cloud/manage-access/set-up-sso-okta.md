@@ -69,7 +69,7 @@ To complete this section, you will need a _login slug_. This slug controls the
 URL where users on your account can log into your application via Okta. Login
 slugs are typically the lowercased name of your organization separated with
 dashes. It should contain only letters, numbers, and dashes. For example, the _login slug_ for dbt Labs would be
-`dbt-labs`. Login slugs must be unique across all dbt Cloud accounts,
+`dbt-labs`. Login slugs must be unique across all <Constant name="cloud" /> accounts,
 so pick a slug that uniquely identifies your company.
 
 <Snippet path="access_url" />
@@ -152,7 +152,7 @@ the integration between Okta and <Constant name="cloud" />.
     title="Application setup instructions"
 />
 
-## Configuration in dbt Cloud
+## Configuration in dbt
 
 To complete setup, follow the steps below in <Constant name="cloud" />.
 
@@ -173,13 +173,13 @@ configured in the steps above.
 | **Log&nbsp;in&nbsp;with** | Okta |
 | **Identity&nbsp;Provider&nbsp;SSO&nbsp;Url** | Paste the **Identity Provider Single Sign-On URL** shown in the Okta setup instructions |
 | **Identity&nbsp;Provider&nbsp;Issuer** | Paste the **Identity Provider Issuer** shown in the Okta setup instructions |
-| **X.509&nbsp;Certificate** | Paste the **X.509 Certificate** shown in the Okta setup instructions; <br />**Note:** When the certificate expires, an Okta admin will have to generate a new one to be pasted into dbt Cloud for uninterrupted application access. |
-| **Slug** | Enter your desired login slug. Users will be able to log into dbt Cloud by navigating to `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company. |
+| **X.509&nbsp;Certificate** | Paste the **X.509 Certificate** shown in the Okta setup instructions; <br />**Note:** When the certificate expires, an Okta admin will have to generate a new one to be pasted into <Constant name="cloud" /> for uninterrupted application access. |
+| **Slug** | Enter your desired login slug. Users will be able to log into <Constant name="cloud" /> by navigating to `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. Login slugs must be unique across all <Constant name="cloud" /> accounts, so pick a slug that uniquely identifies your company. |
 
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-6-setup-integration.png"
-    title="Configuring the application in dbt Cloud"
+    title="Configuring the application in dbt"
 />
 
 21. Click **Save** to complete setup for the Okta integration. From

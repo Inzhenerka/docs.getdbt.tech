@@ -14,7 +14,7 @@ You can develop in your browser using a <Constant name="cloud" />-powered comman
 
 <Card
     title="dbt CLI"
-    body="Allows you to develop and run dbt commands from your local command line or code editor against your dbt Cloud development environment."
+    body="Allows you to develop and run dbt commands from your local command line or code editor against your dbt development environment."
     link="/docs/cloud/cloud-cli-installation"
     icon="dbt-bit"/>
 
@@ -26,7 +26,7 @@ You can develop in your browser using a <Constant name="cloud" />-powered comman
 
    <Card
     title="dbt Canvas (beta)"
-    body="Develop with Canvas, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt Cloud."
+    body="Develop with Canvas, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt."
     link="/docs/cloud/canvas"
     icon="dbt-bit"/>
 

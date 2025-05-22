@@ -1,6 +1,6 @@
 ---
 title: "Secure your tenant"
-description: "Learn how to secure your tenant for dbt Cloud"
+description: "Learn how to secure your tenant for dbt"
 pagination_next: "docs/cloud/secure/ip-restrictions"
 pagination_prev: null
 hide_table_of_contents: true
@@ -10,13 +10,13 @@ hide_table_of_contents: true
 
 <Card
     title="IP restrictions"
-    body="Learn about IP Restrictions and how it can help secure your dbt Cloud environment."
+    body="Learn about IP Restrictions and how it can help secure your dbt environment."
     link="/docs/cloud/secure/ip-restrictions"
     icon="dbt-bit"/>
 
 <Card
     title="About private connectivity"
-    body="Learn about private connectivity and how it enables a secure communication from dbt Cloud environments to your data platform."
+    body="Learn about private connectivity and how it enables a secure communication from dbt environments to your data platform."
     link="/docs/cloud/secure/about-private-connectivity"
     icon="dbt-bit"/>
 
