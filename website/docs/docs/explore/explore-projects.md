@@ -1,7 +1,7 @@
 ---
-title: "Discover data with dbt Catalog"
-sidebar_label: "Discover data with dbt Catalog"
-description: "Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your dbt projects."
+title: "Discover data with Catalog"
+sidebar_label: "Discover data with Catalog"
+description: "Learn about Catalog and how to interact with it to understand, improve, and leverage your dbt projects."
 image: /img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png
 pagination_next: "docs/explore/data-health-signals"
 pagination_prev: null
@@ -9,7 +9,7 @@ pagination_prev: null
 
 <IntroText>
 
-With dbt Explorer, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
+With <Constant name="explorer" />, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/explore/view-downstream-exposures) to gain a better understanding of its latest production state.
 
 </IntroText>
 
@@ -25,11 +25,6 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 - You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
 - You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update <Constant name="explorer" />. 
 - You are on the <Constant name="explorer" /> page. To do this, select **Explore** from the navigation in <Constant name="cloud" />.
-- *For [External metadata ingestion](/docs/explore/external-metadata-ingestion), use snowflake as your data platform.
-
-:::info New features
-Note: Features marked with an asterisk will be available to plans enrolled on or after May 28, 2025.
-:::
 
 import Generatemetadata from '/snippets/_generate-metadata.md';
 
@@ -39,9 +34,18 @@ import Generatemetadata from '/snippets/_generate-metadata.md';
 
 Connect directly to your data warehouse with [external metadata ingestion](/docs/explore/external-metadata-ingestion), giving you visibility into tables, views, and other resources that aren't defined in dbt with dbt Catalog.
 
-<Expandable alt_header="Old navigation">
+## Catalog overview <Lifecycle status="preview" />
 
-## Overview <Lifecycle status="preview" />
+:::info [Global navigation](/docs/explore/explore-projects#search-resources) <Lifecycle status="starter, enterprise, enterprise+" />
+
+dbt Catalog enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
+
+To enable global navigation:
+
+- Have a [developer licence with Owner](/docs/cloud/manage-access/about-user-access#role-based-access-control) permissions.
+- Navigate to your [account settings](/docs/cloud/account-settings) in your dbt Cloud account and check the box to **Enable Explorer's Global Navigation**
+
+:::
 
 Navigate the <Constant name="explorer" /> overview page to access your project's resources and metadata. The page includes the following sections:
 
@@ -55,15 +59,13 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 - **Visualize downstream exposures** &mdash; [Set up](/docs/cloud-integrations/downstream-exposures-tableau) and [visualize downstream exposures](/docs/explore/view-downstream-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
 - **Data health signals** &mdash; View the [data-health-signals](/docs/explore/data-health-signals) for each resource to understand its health and performance.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Explorer to discover your project's resources and lineage."/>
-
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
 ## Explore your project's lineage graph {#project-lineage}
 
-dbt Explorer provides a visualization of your project's <Term id="dag">DAG</Term> that you can interact with. To access the project's full lineage graph, select **Overview** in the left sidebar and click the **Explore Lineage** button on the main (center) section of the page.
+<Constant name="explorer" /> provides a visualization of your project's <Term id="dag">DAG</Term> that you can interact with. To access the project's full lineage graph, select **Overview** in the left sidebar and click the **Explore Lineage** button on the main (center) section of the page.
 
 If you don't see the project lineage graph immediately, click **Render Lineage**. It can take some time for the graph to render depending on the size of your project and your computer's available memory. The graph of very large projects might not render so you can select a subset of nodes by using selectors, instead.
 
@@ -97,7 +99,7 @@ To explore the lineage graphs of tests and macros, view [their resource details 
     - `+snowplow_sessions +fct_orders` &mdash; Use space-delineated arguments for a union operation. Returns resources that are upstream nodes of either `snowplow_sessions` or `fct_orders`.
 
 - [View resource details](#view-resource-details) by selecting a node (double-clicking) in the graph.
-- Click **Lenses** (lower right corner of the graph) to use Explorer's [lenses](#lenses) feature.
+- Click **Lenses** (lower right corner of the graph) to use <Constant name="explorer" /> [lenses](#lenses) feature.
 
 </Expandable>
 
@@ -143,13 +145,13 @@ Example of applying the **Tests Status** _lens_, where each model name displays 
 
 ## Keyword search {#search-resources}
 
-With dbt Catalog, global navigation provides a search experience allowing you to find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
+With Catalog, global navigation provides a search experience allowing you to find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
 
 You can locate resources in your project by performing a keyword search in the search bar. All resource names, column names, resource descriptions, warehouse relations, and code matching your search criteria will be displayed as a list on the main (center) section of the page. When searching for an exact column name, the results show all relational nodes containing that column in their schemas. If there's a match, a notice in the search result indicates the resource contains the specified column. Also, you can apply filters to further refine your search results.
 
 <Expandable alt_header="Search features">
 
-- **Partial keyword search** &mdash; Also referred to as fuzzy search. Explorer uses a "contains" logic to improve your search results. This means you can search for partial terms without knowing the exact root word of your search term.
+- **Partial keyword search** &mdash; Also referred to as fuzzy search. <Constant name="explorer" /> uses a "contains" logic to improve your search results. This means you can search for partial terms without knowing the exact root word of your search term.
 - **Exclude keywords** &mdash; Prepend a minus sign (-) to the keyword you want to exclude from search results. For example, `-user` will exclude all matches of that keyword from search results.
 - **Boolean operators** &mdash; Use Boolean operators to enhance your keyword search. For example, the search results for `users OR github` will include matches for either keyword.
 - **Phrase search** &mdash; Surround a string of keywords with double quotation marks to search for that exact phrase (for example, `"stg users"`). To learn more, refer to [Phrase search](https://en.wikipedia.org/wiki/Phrase_search) on Wikipedia.
@@ -159,7 +161,7 @@ You can locate resources in your project by performing a keyword search in the s
 
 <Expandable alt_header="Filters side panel">
 
-The **Filters** side panel becomes available after you perform a keyword search. Use this panel to further refine the results from your keyword search. By default, Explorer searches across all resources in the project. You can filter on:
+The **Filters** side panel becomes available after you perform a keyword search. Use this panel to further refine the results from your keyword search. By default, <Constant name="explorer" /> searches across all resources in the project. You can filter on:
 
 - [Resource type](/docs/build/projects) (like models, sources, and so on)
 - [Model access](/docs/mesh/govern/model-access) (like public, private)
@@ -171,10 +173,29 @@ Under the **Models** option, you can filter on model properties (access or mater
 
 </Expandable>
 
+<Expandable alt_header="Global navigation">
+
+<Constant name="explorer" /> builds on the functionality of the old navigation and introduces exciting new capabilities to enhance your experience.
+
+- Search data assets &mdash; widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
+    - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with Catalog.
+- Explore lineage &mdash; provides an interactive map of data relationships across all your dbt projects. It lets you:
+    - View upstream/downstream dependencies for models, sources, and more.
+    - Drill into project and column-level lineage, including multi-project (Mesh) links.
+    - Filter with "lineage lenses" by resource type, materialization, layer, or run status.
+    - Troubleshoot data issues by tracing root causes and downstream impacts.
+    - Optimize pipelines by spotting slow, failing, or unused parts of your DAG.
+- See recommendations &mdash; offer a project-wide snapshot of dbt health, highlighting actionable tips to enhance your analytics engineering. These insights are automatically generated using dbt Cloud metadata and best practices from the project evaluator ruleset.
+- Model query history &mdash; shows how often each dbt model is queried in your warehouse, helping you:
+    - Track real usage via successful `SELECT`s (excluding builds/tests)
+    - Identify most/least used models for optimization or deprecation
+    - Guide investment and maintenance with data-driven insights
+- Downstream exposures &mdash; shows how your dbt models and sources are used by BI tools, apps, ML models, and reports across all connected projects
+
+</Expandable>
+
 ### Example of keyword search
 Example of results from searching on the keyword `customers` and applying the filters models, description, and code. [Data health signals](/docs/explore/data-health-signals) are visible to the right of the model name in the search results.
-
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-keyword-search.png" width="100%" title="Example of keyword search" />
 
 ## Browse with the sidebar
 
@@ -185,15 +206,9 @@ From the sidebar, you can browse your project's resources, its file tree, and th
 - **File Tree** tab &mdash; All resources in the project organized by the file in which they are defined. This mirrors the file tree in your dbt project repository.
 - **Database** tab &mdash; All resources in the project organized by the database and schema in which they are built. This mirrors your data platform's structure that represents the [applied state](/docs/dbt-cloud-apis/project-state) of your project.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-tabs-sidebar.png" title="Example of tabs in sidebar" />
+## Integrated tool access
 
-## Open in IDE
-
-If you have been assigned a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control), you can open the resource in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) directly from <Constant name="explorer" />. For example, the <Constant name="cloud_ide" /> opens all the corresponding files for the model. This includes the model's SQL or Python definition and any YAML files that include an entry for that model. The feature is available from the [full lineage graph](#example-of-full-lineage-graph) and the [resource's details view](#example-of-model-details).
-
-Here's an example of the Open in <Constant name="cloud_ide" /> icon in the upper right corner of the resource details page. The icon is inactive (grayed out) if you haven't been assigned a developer license.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-open-in-ide-icon.png" title="Example of icon for Open in IDE" />
-
+Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an analyst seat can open a resource directly from the Catalog in the Studio to view its model files, in Insights to query it, or in Canvas for visual editing.
 
 ## View model versions
 
@@ -254,8 +269,6 @@ When you select a test, the following details are available:
 
 Example of the Tests view:
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-test-type.jpg" width="100%" title="Example of Test Type details" />
-
 </Expandable>
 
 <Expandable alt_header="What details are available for each source table within a source collection?">
@@ -288,56 +301,6 @@ Example of the details view for the model `customers`:<br /> <Lightbox src="/img
 <Constant name="explorer" /> supports views for [staging deployment environments](/docs/deploy/deploy-environments#staging-environment), in addition to the production environment. This gives you a unique view into your pre-production data workflows, with the same tools available in production, while providing an extra layer of scrutiny.
 
 You can explore the metadata from your production or staging environment to inform your data development lifecycle. Just [set a single environment](/docs/deploy/deploy-environments) per <Constant name="cloud" /> project as "production" or "staging," and ensure the proper metadata has been generated then you'll be able to view it in <Constant name="explorer" />. Refer to [Generating metadata](/docs/explore/explore-projects#generate-metadata) for more details.
-
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="100%" title="Explore in a staging environment" />
-
-</Expandable>
-
-<Expandable alt_header="New navigation">
-
-dbt Catalog builds on the functionality of the old navigation and introduces exciting new capabilities to enhance your experience.
-
-The following table outlines the features available in the new navigation:
-
-| New navigation element    | Features                                                                 |
-|---------------------------|--------------------------------------------------------------------------|
-|[Sidebar](/docs/explore/explore-projects#sidebar)|Access model [project recommendations](/docs/explore/project-recommendations) at the project level.|
-|[Global navigation](/docs/explore/explore-projects#global-navigation-)|Global navigation lets you search across all dbt projects and Snowflake resources.                 |
-|Browse|Browse your project's resources and [data health signals](/docs/explore/data-health-signals).|
-|[Integrated tool access](/docs/explore/explore-projects#integrated-tool-access)|Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link)can open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.                |
-|[Resource details](/docs/explore/explore-projects#resource-details)|Use [external metadata ingestion](/docs/explore/external-metadata-ingestion) to connect to your data warehouse and surface tables, views, and other non-dbt resources in the dbt Catalog.|
-|[Staging environments](/docs/explore/explore-projects#staging-environments)|Access a project-level [staging environment](/docs/deploy/deploy-environments#staging-environment) to preview data workflows with production tools and added oversight.|
-
-
-- **Sidebar** &mdash; Access model [project recommendations](/docs/explore/project-recommendations) at the project level.
-[add image here]
-
-- **[Global navigation](/docs/explore/explore-projects#global-navigation-)** &mdash; Global navigation lets you search across all dbt projects and Snowflake resources.
-
-- **Browse** &mdash; Browse your project's resources and [data health signals](/docs/explore/data-health-signals).
-
-- **Integrated tool access** &mdash; Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an [analyst seat](add link) caan open a resource directly from the Catalog in the Cloud IDE to view its model files, in Insights to query it, or in dbt Canvas for visual editing.
-
-[Roxi to check with Greg and team and will add images on response]
-
-- **Resource details** &mdash; Use [external metadata ingestion](/docs/explore/external-metadata-ingestion) to connect to your data warehouse and surface tables, views, and other non-dbt resources in the dbt Catalog.
-
-- **Staging environments** &mdash; Access a project-level [staging environment](/docs/deploy/deploy-environments#staging-environment) to preview data workflows with production tools and added oversight.
-
-## Global navigation <Lifecycle status="starter, enterprise, enterprise+" />
-
-dbt Catalog enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
-
-Note: While Global navigation is available on Starter plans, it’s limited to a single project.
-
-### Enable global navigation
-
-- Have a [developer licence with Owner](/docs/cloud/manage-access/about-user-access#role-based-access-control) permissions.
-- Navigate to your [account settings](/docs/cloud/account-settings) in your dbt Cloud account and check the box to **Enable Explorer’s Global Navigation**
-
-</Expandable>
-  
-
 
 ## Related content
 - [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions)
