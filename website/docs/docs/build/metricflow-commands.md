@@ -360,7 +360,7 @@ You can include multiple dimensions in a query. For example, you can group by th
 
 **Query**
 ```bash
-dbt sl query --metrics order_total --group-by order_id__is_food_order # In dbt
+dbt sl query --metrics order_total --group-by order_id__is_food_order # In the dbt platform
 
 mf query --metrics order_total --group-by order_id__is_food_order # In dbt Core
 ```
