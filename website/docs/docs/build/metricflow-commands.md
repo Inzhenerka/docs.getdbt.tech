@@ -62,7 +62,7 @@ Something to note, MetricFlow `mf` commands return an error if you have a Metafo
 MetricFlow provides the following commands to retrieve metadata and query metrics. 
 
 <Tabs>
-<TabItem value="cloudcommands" label="Commands for dbt">
+<TabItem value="cloudcommands" label="Commands for the dbt platform">
 
 You can use the `dbt sl` prefix before the command name to execute them in the <Constant name="cloud_ide" /> or <Constant name="cloud_cli" />. For example, to list all metrics, run `dbt sl list metrics`. 
 
