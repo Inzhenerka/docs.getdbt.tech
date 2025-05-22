@@ -122,7 +122,7 @@ Use the `mf` prefix before the command name to execute them in dbt Core. For exa
 This command lists the metrics with their available dimensions:
 
 ```bash
-dbt sl list metrics <metric_name> # In dbt
+dbt sl list metrics <metric_name> # In the dbt platform
 
 mf list metrics <metric_name> # In dbt Core
 
