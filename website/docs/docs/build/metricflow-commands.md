@@ -336,7 +336,7 @@ Use the example to query multiple metrics by dimension and return the `order_tot
 
 **Query**
 ```bash
-dbt sl query --metrics order_total,users_active --group-by metric_time # In dbt
+dbt sl query --metrics order_total,users_active --group-by metric_time # In the dbt platform
 
 mf query --metrics order_total,users_active --group-by metric_time # In dbt Core
 ```
