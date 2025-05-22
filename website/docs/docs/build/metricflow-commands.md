@@ -173,7 +173,7 @@ Options:
 This command lists all unique entities:
 
 ```bash
-dbt sl list entities --metrics <metric_name> # In dbt
+dbt sl list entities --metrics <metric_name> # In the dbt platform
 
 mf list entities --metrics <metric_name> # In dbt Core
 
