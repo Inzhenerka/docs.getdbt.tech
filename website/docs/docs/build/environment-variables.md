@@ -111,7 +111,7 @@ The following environment variable is set automatically for the <Constant name="
 
 Use case &mdash; This is useful in cases where you want to dynamically use the Git branch name as a prefix for a [development schema](/docs/build/custom-schemas) ( `{{ env_var ('DBT_CLOUD_GIT_BRANCH') }}` ).
 
-#### dbt context
+#### dbt platform context
 
 The following environment variables are set automatically: 
 
