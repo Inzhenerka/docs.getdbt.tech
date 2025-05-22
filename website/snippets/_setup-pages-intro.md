@@ -20,12 +20,6 @@ Use the following command for installation:
 
 </VersionBlock>
 
-<VersionBlock lastVersion="1.7">
-
-<code>python -m pip install {props.meta.pypi_package}</code>
-
-</VersionBlock>
-
 <h2> Configuring {props.meta.pypi_package} </h2>
 
 <p>For {props.meta.platform_name}-specific configuration, please refer to <a href={props.meta.config_page}>{props.meta.platform_name} configs.</a> </p>
