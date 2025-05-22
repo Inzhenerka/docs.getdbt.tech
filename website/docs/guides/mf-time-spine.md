@@ -5,7 +5,6 @@ level: 'Intermediate'
 icon: 'guides'
 tags: ['Quickstart', 'Semantic Layer']
 hide_table_of_contents: true
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -69,7 +68,7 @@ The time spine is a dbt model that generates a series of dates (or timestamps) a
     select *
     from final
     where date_day > dateadd(year, -5, current_date())  -- Keep recent dates only
-      and date_day < dateadd(day, 30, current_date());
+      and date_day < dateadd(day, 30, current_date())
     ```
     </File>
       

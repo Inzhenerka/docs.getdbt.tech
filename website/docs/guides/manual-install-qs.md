@@ -6,7 +6,6 @@ level: 'Beginner'
 platform: 'dbt-core'
 icon: 'fa-light fa-square-terminal'
 tags: ['dbt Core','Quickstart']
-hide_table_of_contents: true
 ---
 
 <div style={{maxWidth: '900px'}}>

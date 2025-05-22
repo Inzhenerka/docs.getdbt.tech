@@ -9,7 +9,6 @@ hide_table_of_contents: true
 tags: ['BigQuery', 'Google', 'GCP', 'BigFrames','Quickstart']
 keywords: ['BigQuery','dbt', 'Google']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>

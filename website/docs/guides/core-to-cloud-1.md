@@ -9,7 +9,6 @@ hide_table_of_contents: true
 tags: ['Migration','dbt Core','dbt Cloud']
 keywords: ['dbt Core','dbt Cloud','Migration', 'Move dbt', 'Migrate dbt']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
