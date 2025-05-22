@@ -415,7 +415,7 @@ You can further filter the data set by adding a `where` clause to your query. Th
 
 **Query**
 ```bash
-# In dbt
+# In the dbt platform
 dbt sl query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True and {{ TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
 
 # In dbt Core
