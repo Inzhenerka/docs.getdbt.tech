@@ -218,7 +218,7 @@ dbt sl validate # For dbt users
 mf validate-configs # For dbt Core users
 
 Options:
-  --timeout                       # dbt only
+  --timeout                       # dbt platform only
                                   Optional timeout for data warehouse validation in dbt.
   --dw-timeout INTEGER            # dbt Core only
                                   Optional timeout for data warehouse
