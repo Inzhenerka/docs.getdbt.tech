@@ -478,7 +478,7 @@ You can use this for frequently used queries. Replace `<name>` with the name of 
 
 **Query**
 ```bash
-dbt sl query --saved-query <name> # In dbt
+dbt sl query --saved-query <name> # In the dbt platform
 
 mf query --saved-query <name> # In dbt Core
 ```
