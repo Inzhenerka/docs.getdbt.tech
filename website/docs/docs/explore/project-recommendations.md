@@ -48,3 +48,4 @@ The following table lists the rules currently defined in the `dbt_project_evalua
 Models, sources, and exposures each also have a **Recommendations** tab on their resource details page, with the specific recommendations that correspond to that resource:
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-tab.png" width="80%" title="Example of the Recommendations tab "/>
+
