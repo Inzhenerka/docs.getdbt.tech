@@ -31,10 +31,6 @@ exports.versions = [
     version: "1.8",
     EOLDate: "2025-04-15",
   },
-  {
-    version: "1.7",
-    EOLDate: "2024-11-01",
-  },
 ];
 
 /**

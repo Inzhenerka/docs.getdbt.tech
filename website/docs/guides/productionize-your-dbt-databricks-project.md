@@ -9,7 +9,6 @@ icon: 'databricks'
 hide_table_of_contents: true
 tags: ['Databricks','dbt Core','dbt Cloud']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>

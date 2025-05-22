@@ -377,7 +377,7 @@ When you remove a package from your `packages.yml` file, it isn't automatically 
 
 ### Pinning packages
 
-Beginning with v1.7, running [`dbt deps`](/reference/commands/deps) "pins" each package by creating or updating the `package-lock.yml` file in the _project_root_ where `packages.yml` is recorded. 
+Running [`dbt deps`](/reference/commands/deps) "pins" each package by creating or updating the `package-lock.yml` file in the _project_root_ where `packages.yml` is recorded. 
 
 - The `package-lock.yml` file contains a record of all packages installed.
 - If subsequent `dbt deps` runs contain no changes to `dependencies.yml` or `packages.yml`, dbt-core installs from `package-lock.yml`. 
