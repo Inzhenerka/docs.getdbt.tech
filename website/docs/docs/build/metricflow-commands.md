@@ -302,7 +302,7 @@ Options:
 
   --csv FILENAME           Provide filepath for data frame output to csv
 
- --compile (dbt)          In the query output, show the query that was
+ --compile (the dbt platform)          In the query output, show the query that was
  --explain (dbt Core)     executed against the data warehouse         
                            
 
