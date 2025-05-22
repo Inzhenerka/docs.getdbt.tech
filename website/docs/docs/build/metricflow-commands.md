@@ -247,7 +247,7 @@ mf health-checks # In dbt Core
 ## Tutorial
 
 Follow the dedicated MetricFlow tutorial to help you get started:
-<!--dbt sl tutorial # In dbt-->
+<!--dbt sl tutorial # In the dbt platform-->
 
 ```bash
 mf tutorial # In dbt Core
