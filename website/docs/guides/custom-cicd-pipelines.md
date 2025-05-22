@@ -9,7 +9,6 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt Cloud', 'Orchestration', 'CI']
 level: 'Intermediate'
-recently_updated: true
 search_weight: "heavy"
 keywords:
   - bitbucket pipeline, custom pipelines, github, gitlab, azure devops, ci/cd custom pipeline
