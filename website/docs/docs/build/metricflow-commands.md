@@ -282,7 +282,7 @@ Options:
 
   --start-time TEXT        Optional iso8601 timestamp to constraint the start
                            time of the data (inclusive)
-                           *Not available in dbt yet
+                           *Not available in the dbt platform yet
 
   --where TEXT             SQL-like where statement provided as a string and wrapped in quotes.
                            All filter items must explicitly reference fields or dimensions that are part of your model.
