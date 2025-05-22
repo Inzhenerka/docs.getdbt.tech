@@ -161,7 +161,7 @@ Options:
                       [required]
   --end-time TEXT     Optional iso8601 timestamp to constraint the end time of
                       the data (inclusive)
-                      *Not available in dbt yet
+                      *Not available in the dbt platform yet
   --start-time TEXT   Optional iso8601 timestamp to constraint the start time
                       of the data (inclusive)
                       *Not available in dbt yet
