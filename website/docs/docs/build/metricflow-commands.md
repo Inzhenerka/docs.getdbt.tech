@@ -259,7 +259,7 @@ Create a new query with MetricFlow and execute it against your data platform. Th
 
 ```bash
 dbt sl query --metrics <metric_name> --group-by <dimension_name> # In the dbt platform
-dbt sl query --saved-query <name> # In dbt
+dbt sl query --saved-query <name> # In the dbt platform
 
 mf query --metrics <metric_name> --group-by <dimension_name> # In dbt Core
 
