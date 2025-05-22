@@ -2,7 +2,7 @@
 title: "The dbt platform features"
 id: "dbt-cloud-features"
 sidebar_label: "dbt platform features"
-description: "Explore dbt's features and learn why dbt is the fastest way to deploy dbt"
+description: "Explore dbt's features and learn why the dbt platform is the fastest way to deploy dbt"
 hide_table_of_contents: true
 pagination_next: "docs/cloud/about-cloud/architecture"
 pagination_prev: null
