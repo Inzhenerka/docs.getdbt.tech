@@ -502,7 +502,7 @@ Add `--compile` (or `--explain` for dbt Core users) to your query to view the SQ
 **Query**
 
 ```bash
-# In dbt
+# In the dbt platform
 dbt sl query --metrics order_total --group-by metric_time,is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' --compile
 
 # In dbt Core
