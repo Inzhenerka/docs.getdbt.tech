@@ -164,7 +164,7 @@ Options:
                       *Not available in the dbt platform yet
   --start-time TEXT   Optional iso8601 timestamp to constraint the start time
                       of the data (inclusive)
-                      *Not available in dbt yet
+                      *Not available in in the dbt platform yet
   --help              Show this message and exit.
 ```
 
