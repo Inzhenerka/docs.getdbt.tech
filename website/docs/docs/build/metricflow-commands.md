@@ -388,7 +388,7 @@ You can add order and limit functions to filter and present the data in a readab
 
 **Query**
 ```bash
-# In dbt
+# In the dbt platform
 dbt sl query --metrics order_total --group-by order_id__is_food_order --limit 10 --order-by -metric_time 
 
 # In dbt Core
