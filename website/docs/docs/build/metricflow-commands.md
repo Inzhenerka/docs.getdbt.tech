@@ -450,7 +450,7 @@ To filter by time, there are dedicated start and end time options. Using these o
  Note that when you query a dimension, you need to specify the primary entity for that dimension. In the following example, the primary entity is `order_id`.
 <!--
 bash not support in cloud yet
-# In dbt
+# In the dbt platform
 dbt sl query --metrics order_total --group-by order_id__is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' 
 -->
 **Query**
