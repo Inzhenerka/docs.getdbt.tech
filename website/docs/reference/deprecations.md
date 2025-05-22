@@ -2,6 +2,12 @@
 title: "Deprecations"
 ---
 
+:::note
+
+"Deprecated functionality" means that the functionality still works today, but only for historical purposes and it will be removed in a future version.
+
+:::
+
 As dbt runs, it generates different categories of [events](/reference/events-logging), one of which is _deprecations_. Deprecations are a special type of warning that lets you know that there are problems in parts of your project that will result in breaking changes in a future version of dbt. It is important to resolve any deprecation warnings in your project before the changes are made.
 
 ## Identify deprecation warnings
