@@ -563,7 +563,7 @@ Optionally, you can specify the time granularity you want your data to be aggreg
 Below is an example for querying metric data at a monthly grain:
 
 ```bash
-dbt sl query --metrics revenue --group-by metric_time__month # In dbt
+dbt sl query --metrics revenue --group-by metric_time__month # In the dbt platform
 
 mf query --metrics revenue --group-by metric_time__month # In dbt Core
 ```
