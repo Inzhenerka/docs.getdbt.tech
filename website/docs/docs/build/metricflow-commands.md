@@ -137,7 +137,7 @@ Options:
 This command lists all unique dimensions for a metric or multiple metrics. It displays only common dimensions when querying multiple metrics:
 
 ```bash
-dbt sl list dimensions --metrics <metric_name> # In dbt
+dbt sl list dimensions --metrics <metric_name> # In the dbt platform
 
 mf list dimensions --metrics <metric_name> # In dbt Core
 
