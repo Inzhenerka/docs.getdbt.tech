@@ -23,7 +23,6 @@ You can use the <Constant name="semantic_layer" /> for a variety of tools and ap
 
 <!-- this partial lives here: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Use it on diff pages and to tailor the message depending which instance can access the SL and what product lifecycle we're in. -->
 
-/>
 
 <div className="grid--3-col">
 
