@@ -258,7 +258,7 @@ mf tutorial # In dbt Core
 Create a new query with MetricFlow and execute it against your data platform. The query returns the following result:
 
 ```bash
-dbt sl query --metrics <metric_name> --group-by <dimension_name> # In dbt
+dbt sl query --metrics <metric_name> --group-by <dimension_name> # In the dbt platform
 dbt sl query --saved-query <name> # In dbt
 
 mf query --metrics <metric_name> --group-by <dimension_name> # In dbt Core
