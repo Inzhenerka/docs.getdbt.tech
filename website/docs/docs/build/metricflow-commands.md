@@ -151,7 +151,7 @@ Options:
 This command lists all dimension values with the corresponding metric:
 
 ```bash
-dbt sl list dimension-values --metrics <metric_name> --dimension <dimension_name> # In dbt
+dbt sl list dimension-values --metrics <metric_name> --dimension <dimension_name> # In the dbt platform
 
 mf list dimension-values --metrics <metric_name> --dimension <dimension_name> # In dbt Core
 
