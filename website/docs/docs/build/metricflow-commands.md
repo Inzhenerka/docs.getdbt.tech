@@ -22,7 +22,7 @@ Using MetricFlow with <Constant name="cloud" /> means you won't need to manage v
 
 <Tabs>
 
-<TabItem value="cloud" label="MetricFlow with dbt">
+<TabItem value="cloud" label="MetricFlow with the dbt platform">
 
 In <Constant name="cloud" />, run MetricFlow commands directly in the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or in the [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation). 
 
