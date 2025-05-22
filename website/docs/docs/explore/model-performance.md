@@ -39,4 +39,4 @@ You can view trends in execution times, counts, and failures by using the Model 
 
 Clicking on a data point reveals a table listing all job runs for that day, with each row providing a direct link to the details of a specific run.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-performance-tab.png" title="Example of the Model performance tab"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-performance-tab.png" title="Example of the Model performance tab"/> 

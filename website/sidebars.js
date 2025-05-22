@@ -606,6 +606,7 @@ const sidebarSettings = {
             "docs/explore/column-level-lineage",
             "docs/explore/data-health-signals",
             "docs/explore/explore-multiple-projects",
+            "docs/explore/external-metadata-ingestion",
             "docs/explore/model-performance",
             "docs/explore/project-recommendations",
             "docs/explore/dbt-explorer-faqs",

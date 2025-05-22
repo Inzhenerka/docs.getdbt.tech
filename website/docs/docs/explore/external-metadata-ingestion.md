@@ -70,3 +70,4 @@ The following are best practices for external metadata ingestion, designed to en
 import Generatemetadata from '/snippets/_generate-metadata.md';
 
 <Generatemetadata />
+
