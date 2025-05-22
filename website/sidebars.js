@@ -528,17 +528,17 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Iceberg catalogs",
+          label: "Apache Iceberg",
           collapsed: true,
           link: {
             type: "doc",
             id: "docs/mesh/catalogs/about-catalogs",
           },
           items: [
-            "docs/mesh/catalogs/about-catalogs",
-            "docs/mesh/catalogs/catalog-platform-support",
-            "docs/mesh/catalogs/snowflake-catalog-support",
-            "docs/mesh/catalogs/databricks-catalog-support",
+            "docs/mesh/iceberg/about-catalogs",
+            "docs/mesh/iceberg/iceberg-platform-support",
+            "docs/mesh/iceberg/snowflake-iceberg-support",
+            "docs/mesh/iceberg/databricks-iceberg-support",
           ],
         },
       ],  
