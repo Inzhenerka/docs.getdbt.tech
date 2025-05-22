@@ -127,12 +127,6 @@ You can still explicitly override built-in materializations, in favor of a mater
 
 In the future, we may extend the project-level [`dispatch` configuration](/reference/project-configs/dispatch-config) to support a list of authorized packages for overriding built-in materialization.
 
-<VersionBlock lastVersion="1.7">
-
-The following flags were introduced in a future version of dbt Core. If you're still using an older version, then you have the legacy behavior by default (when each flag is `False`). 
-
-</VersionBlock>
-
 ### No spaces in resource names
 
 The `require_resource_names_without_spaces` flag enforces using resource names without spaces. 

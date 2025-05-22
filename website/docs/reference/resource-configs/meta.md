@@ -351,34 +351,6 @@ The `meta` config can also be defined under the `semantic-models` config block i
 
 <TabItem value="metrics">
 
-<VersionBlock lastVersion="1.7">
-
-<File name='dbt_project.yml'>
-
-```yml
-metrics:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +meta: {<dictionary>}
-```
-</File>
-
-<File name='models/metrics.yml'>
-
-```yml
-metrics:
-  - name: number_of_people
-    label: "Number of people"
-    description: Total count of people
-    type: simple
-    type_params:
-      measure: people
-    meta:
-      my_meta_direct: 'direct'
-```
-
-</File>
-</VersionBlock>
-
 <VersionBlock firstVersion="1.8"> 
 
 <File name='dbt_project.yml'>

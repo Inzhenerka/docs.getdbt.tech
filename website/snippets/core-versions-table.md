@@ -14,7 +14,7 @@
 | [**v1.0**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) | Dec 3, 2021   | Deprecated ⛔️ | 
 |  **v0.X** ⛔️                                               | (Various dates) | Deprecated ⛔️  | Deprecated ⛔️     | 
 
-All functionality in dbt Core since the v1.7 release is available in [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks), which provide automated upgrades at a cadence appropriate for your team.
+All functionality in dbt Core is available in [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks), which provide automated upgrades at a cadence appropriate for your team.
 
 <sup>1</sup> Release tracks are required for the Developer and Teams plans on dbt Cloud. Accounts using older dbt versions will be migrated to the "Latest" release track.
 
