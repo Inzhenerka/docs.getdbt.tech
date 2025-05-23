@@ -43,7 +43,7 @@ There are multiple approaches to configuring access:
   models:
     - name: my_public_model
       config:
-        access: public # newly supported in v1.7
+        access: public
       
   ```
   </File>

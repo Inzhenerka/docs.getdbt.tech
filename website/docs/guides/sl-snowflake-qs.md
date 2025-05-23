@@ -10,7 +10,6 @@ hide_table_of_contents: true
 tags: ['Semantic Layer', 'Snowflake', 'dbt Cloud','Quickstart']
 keywords: ['dbt Semantic Layer','Metrics','dbt Cloud', 'Snowflake', 'Google Sheets']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 <!-- The below snippets (or reusables) can be found in the following file locations in the docs code repository) -->
