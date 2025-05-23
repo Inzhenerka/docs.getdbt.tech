@@ -29,15 +29,13 @@ For data teams, the catalogs can fall into two buckets:
 
 - **Business data catalogs:** Serve broader organizational users (BI analysts, product managers, etc.). They enrich technical metadata with business context in the form of metrics, business definitions, data quality indicators, usage patterns, and ownership. 
 
-Hybrid catalogs that do both exist, but to keep it simple, the focus of this article is technical catalogs and how dbt works with them for Iceberg context.
-
 ### Why data catalogs are important to dbt
 
 For dbt users working in a lakehouse or multi-engine architecture, understanding and interacting with data catalogs is essential for several reasons, including:
 
 - **Table Discovery:** dbt models are registered in catalogs. Understanding the catalog structure is critical for managing datasets and informing dbt about what has already been built and where it resides.
 
-- **Cross-Engine Interoperability:** Iceberg catalogs allow datasets created by one compute engine to be read by another.  This is what dbt Mesh’s cross-platform catalogs are built on. The initial launch supports the catalog, and dbt writes the metadata to. 
+- **Cross-Engine Interoperability:** Iceberg catalogs allow datasets created by one compute engine to be read by another.  This is what dbt Mesh’s cross-platform functionality is built on. 
 
 ## About Iceberg catalogs
 
@@ -50,7 +48,7 @@ There are multiple types of Iceberg catalogs:
 - Iceberg REST compatible
 - Delta/Iceberg Hybrid*
 
-Hybrid catalogs support storing duplicate table metadata in Iceberg and Delta Lake formats, enabling workflows like an Iceberg engine to read from Delta Lake or vice versa. There are limitations to this specific to how the platform has implemented this. 
+Hybrid catalogs support storing duplicate table metadata in Iceberg and Delta Lake formats, enabling workflows like an Iceberg engine to read from Delta Lake or vice versa. There will be limitations specific to how the platform has implemented this. 
 
 ### How dbt works with Iceberg catalogs
 
