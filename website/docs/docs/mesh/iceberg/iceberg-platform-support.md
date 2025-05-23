@@ -18,7 +18,7 @@ There are two types of technical data catalogs to take into account:
 <div className="grid--3-col">
 
 <Card
-    title="About Iceberg catalogs"
+    title="Using dbt + Iceberg Catalog overview"
     body="dbt support for Apache Iceberg"
     link="/docs/mesh/iceberg/about-catalogs"
     icon="dbt-icon"/>
