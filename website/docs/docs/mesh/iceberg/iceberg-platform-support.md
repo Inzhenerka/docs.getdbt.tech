@@ -25,7 +25,7 @@ There are two types of technical data catalogs to take into account:
 
 <Card
     title="Snowflake"
-    body="Snowflake support for Apache Iceberg."
+    body="Snowflake Iceberg Configurations"
     link="/docs/mesh/iceberg/snowflake-iceberg-support"
     icon="snowflake"/>
 
