@@ -22,7 +22,7 @@ Learn how to access <Constant name="query_page" />, run queries, and view result
 - Bookmark SQL queries
 - View the results of the query and its details using the **Results** or **Details** tabs
 - Create a visualization of your query results using the **Chart** tab
-- View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** icon
+- View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** tab
 - Use <Constant name="copilot" /> to generate or edit SQL queries using natural language prompts
 - Integrate with [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/explore/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), and [<Constant name="visual_editor" />](/docs/cloud/canvas) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration
 
@@ -30,7 +30,7 @@ Learn how to access <Constant name="query_page" />, run queries, and view result
 
 Before accessing <Constant name="query_page" />, ensure that the [prerequisites](/docs/explore/dbt-insights#prerequisites) are met.
 
-1. To access <Constant name="query_page" />, select the **Query** option in the navigation sidebar.
+1. To access <Constant name="query_page" />, select the **Insights** option in the navigation sidebar.
 2. If your [developer credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) aren’t set up, <Constant name="query_page" /> will prompt you to set them up. The ability to query data is subject to warehouse provider permissions according to your developer credentials.
 3. Once your credentials are set up, you can write, run, and edit SQL queries in the <Constant name="query_page" /> editor for existing models in your project. 
 
@@ -38,7 +38,7 @@ Before accessing <Constant name="query_page" />, ensure that the [prerequisites]
 
 To run queries in <Constant name="query_page" />, you can use:
 - Standard SQL  
-- Jinja ([`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source), [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro))  
+- Jinja ([`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) functions, and other Jinja functions)
 - Links from SQL code `ref` to the corresponding Explorer page
 - <Term id="cte">CTEs</Term> and <Term id="subquery">subqueries</Term>  
 - Basic aggregations and joins 

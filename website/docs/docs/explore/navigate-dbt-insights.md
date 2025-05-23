@@ -64,10 +64,8 @@ The Query output panel is below the query editor and displays the results of a q
 
 ## Query console sidebar menu
 The Query console sidebar menu and icons contains the following options:
-- **<Constant name="explorer" /> icon** &mdash; View your project's tables, columns, metrics, lineage, and more using the integrated <Constant name="explorer" /> view.
+- **<Constant name="explorer" /> icon** &mdash; View your project's models, columns, metrics, and more using the integrated <Constant name="explorer" /> view.
 - **Bookmark icon** &mdash; Save and access your frequently used queries. 
-  - Once you create and save a bookmark, click the ellipsis **(`...`)** button in the [Query console menu](#query-console-menu) to **Share**, **Develop in the IDE**, **Edit details**, and **Delete** a bookmark.
-  - Enhance bookmarked queries with <Constant name="copilot" />'s AI-generated descriptions.
 - **Query history icon** &mdash; View past queries, their statuses (All, Success, Error, or Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
 - **<Constant name="copilot" /> icon** &mdash; Use [<Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts.
 
