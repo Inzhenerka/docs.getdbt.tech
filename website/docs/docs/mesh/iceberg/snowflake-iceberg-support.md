@@ -10,7 +10,15 @@ dbt supports materializing the table in Iceberg table format in two different wa
 - the model configuration field table_format = 'iceberg' (legacy)
 - catalog integration in the model/resource/dbt_project.yml configuration
 
-We recommend that you use the Iceberg catalog configuration to materialize models in Iceberg table format for ease of use and future-proof your code. Using table_format = 'iceberg' is a legacy workflow.
+We recommend that you use the Iceberg catalog configuration and apply the catalog in the model config for ease of use and future-proof your code. Using table_format = 'iceberg' directly on the model configuration is a legacy approach. 
+
+## Creating Iceberg Tables
+
+dbt supports creating Iceberg tables for three of the Snowflake materializations: 
+
+- [Table](/docs/build/materializations#table)
+- [Incremental](/docs/build/materializations#incremental)
+- [Dynamic Table](#dynamic-tables) 
 
 ## Iceberg catalogs
 
@@ -150,7 +158,6 @@ The following table outlines the configuration fields required to set up a catal
 | `external_volume`| yes      | `<external_volume_name>`                                                                |
 | `table_format`   | yes      | `iceberg`                                                                               |
 | `catalog_type`   | yes      | `built_in`, `iceberg_rest`*                                                             |
-| `allows_writes`  | yes      | Signals if this catalog allows writes (defaults to `false`)                             |
 
 *Coming soon! Stay tuned for updates.
 
@@ -203,12 +210,7 @@ The syncing experience will be different depending on the catalog you choose. So
 
 ## Iceberg table format
 
-The dbt-snowflake adapter supports the Iceberg table format. It is available for three of the Snowflake materializations: 
-
-- [Table](/docs/build/materializations#table)
-- [Incremental](/docs/build/materializations#incremental)
-- [Dynamic Table](#dynamic-tables) 
-
+The dbt-snowflake adapter also supports applying `table_format` as an standalone configuration for dbt-snowflake models. We do not recommend using this as it is a legacy behavior. 
 
 The following configurations are supported.
 For more information, check out the Snowflake reference for [`CREATE ICEBERG TABLE` (Snowflake as the catalog)](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake).
