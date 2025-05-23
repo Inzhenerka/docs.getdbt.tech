@@ -16,12 +16,12 @@ As a customer, you pay for the number of seats you have and the amount of usage 
 Usage is based on the number of [Successful Models Built](#what-counts-as-a-successful-model-built) and, if purchased and used, <Constant name="semantic_layer" /> [Queried Metrics](#what-counts-as-a-queried-metric) subject to reasonable usage. All billing computations are conducted in Coordinated Universal Time (UTC).
 
 ### What counts as a seat license?
-
-There are three types of possible seat licenses:
-
-* **Developer** &mdash; for roles and permissions that require interaction with the <Constant name="cloud" /> environment day-to-day.
-* **Read-Only** &mdash; for access to view certain documents and reports. 
+You can learn more about allocating users to your account in [Users and licenses](/docs/cloud/manage-access/seats-and-users).
+There are four types of possible seat licenses:
+* **Analyst** &mdash; for permission sets assigned and shared amongst those who don't need day-to-day access. Requires developer seat license purchase.
+* **Developer** &mdash; for permission sets that require day-to-day interaction with the <Constant name="dbt_platform" />.
 * **IT** &mdash; for access to specific features related to account management (for example, configuring git integration). 
+* **Read-Only** &mdash; for access to view certain documents and reports.
 
 ### What counts as a Successful Model Built?
 
