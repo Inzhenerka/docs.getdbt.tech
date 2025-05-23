@@ -31,7 +31,7 @@ There are two types of technical data catalogs to take into account:
 
 <Card
     title="Databricks"
-    body="Databricks support for Apache Iceberg."
+    body="Databricks Iceberg Configurations"
     link="/docs/mesh/iceberg/databricks-iceberg-support"
     icon="databricks"/>
 
