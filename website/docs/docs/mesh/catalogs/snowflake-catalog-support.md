@@ -129,7 +129,7 @@ After you have created the external catalog integration, you will be able to do 
 
 - **Sync Snowflake-managed tables to an external catalog:** You can create a Snowflake Iceberg table that Snowflake manages via a cloud storage location and then register/sync that table to the external catalog. This allows other engines to discover the table. 
 
-## Catalog Configurations for Snowflake
+## dbt Catalog Integration Configurations for Snowflake
 
 The following table outlines the configuration fields required to set up a catalog integration for [Iceberg tables in Snowflake](/reference/resource-configs/snowflake-configs#iceberg-table-format).
 
