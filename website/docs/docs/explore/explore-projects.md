@@ -26,11 +26,19 @@ import Generatemetadata from '/snippets/_generate-metadata.md';
 
 <Generatemetadata />
 
-### External metadata ingestion
+:::tip
+If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
+:::
+
+### External metadata ingestion <Lifecycle status="preview" />
+
+:::info
+We create dbt metadata and pull external metadata. <Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display details about the state of your project. The available metadata depends on which deployment environment you’ve designated as production or staging in your dbt project.
 
 Connect directly to your data warehouse with [external metadata ingestion](/docs/explore/external-metadata-ingestion), giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
+:::
 
-## Catalog overview <Lifecycle status="preview" />
+## Catalog overview 
 
 :::info [Global navigation](/docs/explore/explore-projects#search-resources) <Lifecycle status="starter, enterprise, enterprise+" />
 
@@ -54,10 +62,6 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 - **Model query history** &mdash; Use [model query history](/docs/explore/model-query-history) to track consumption queries on your models for deeper insights.
 - **Visualize downstream exposures** &mdash; [Set up](/docs/cloud-integrations/downstream-exposures-tableau) and [visualize downstream exposures](/docs/explore/view-downstream-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
 - **Data health signals** &mdash; View the [data-health-signals](/docs/explore/data-health-signals) for each resource to understand its health and performance.
-
-:::tip
-If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
-:::
 
 ### Catalog permissions
 
@@ -184,7 +188,7 @@ Under the **Models** option, you can filter on model properties (access or mater
 <Constant name="explorer" /> builds on the functionality of the old navigation and introduces exciting new capabilities to enhance your experience.
 
 - Search data assets &mdash; widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
-    - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with Catalog.
+    - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
 - Explore lineage &mdash; provides an interactive map of data relationships across all your dbt projects. It lets you:
     - View upstream/downstream dependencies for models, sources, and more.
     - Drill into project and column-level lineage, including multi-project (Mesh) links.
@@ -214,7 +218,7 @@ From the sidebar, you can browse your project's resources, its file tree, and th
 
 ## Integrated tool access
 
-Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an analyst seat can open a resource directly from the <Constant name="explorer" /> in the Studio to view its model files, in Insights to query it, or in <Constant name="visual_editor" /> for visual editing.
+Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an analyst seat can open a resource directly from the <Constant name="explorer" /> in the <Constant name="cloud_ide" /> to view its model files, in <Constant name="query_page" /> to query it, or in <Constant name="visual_editor" /> for visual editing.
 
 ## View model versions
 
