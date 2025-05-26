@@ -2,7 +2,18 @@
 title: "Deprecations"
 ---
 
-As dbt runs, it generates different categories of [events](/reference/events-logging), one of which is _deprecations_. Deprecations are a special type of warning that lets you know that there are problems in parts of your project that will result in breaking changes in a future version of dbt. It is important to resolve any deprecation warnings in your project before the changes are made.
+:::note
+
+Deprecated functionality still works in the v1.10 release, but it is no longer supported and will be removed in a future version.  
+
+This means the deprecated features only present a warning but don't prevent runs and other commands (unless you've configured [warnings as errors](/reference/global-configs/warnings)). 
+
+When the functionality is eventually removed, it will cause errors in your dbt runs after you upgrade if the deprecations are not addressed.
+
+
+:::
+
+As dbt runs, it generates different categories of [events](/reference/events-logging), one of which is _deprecations_. Deprecations are a special type of warning that lets you know that there are problems in parts of your project that will result in breaking changes in a future version of dbt. Although it’s just a warning for now, it is important to resolve any deprecation warnings in your project to enable you to work with more safety, feedback, and confidence going forward.
 
 ## Identify deprecation warnings
 
@@ -266,6 +277,47 @@ User config should be moved from the 'config' key in profiles.yml to the 'flags'
 #### ProjectFlagsMovedDeprecation warning resolution
 
 Remove `config` from `profiles.yml`. Add any previous [`config`](/reference/global-configs/about-global-configs) in `profiles.yml` to `flags` in `dbt_project.yml`.
+
+### PropertyMovedToConfigDeprecation 
+
+Some historical properties are moving entirely to configs.
+
+This will include: `freshness`, `meta`, `tags`, `docs`, `group`, and `access`
+
+Changing certain properties to configs is beneficial because you can set them for many resources at once in `dbt_project.yml` (project-level/folder-level defaults). More info on the difference between properties and configs [here](/reference/configs-and-properties).
+
+#### PropertyMovedToConfigDeprecation warning resolution
+
+If you previously set one of the impacted properties, such as `freshness`:
+
+```yaml
+
+sources: 
+  - name: ecom
+    schema: raw
+    description: E-commerce data for the Jaffle Shop
+    freshness:
+      warn_after:
+        count: 24
+        period: hour
+
+```
+
+You should now set it under `config`:
+
+```yaml
+
+sources: 
+  - name: ecom
+    schema: raw
+    description: E-commerce data for the Jaffle Shop
+    config:
+      freshness:
+        warn_after:
+          count: 24
+          period: hour
+
+```
 
 ### ResourceNamesWithSpacesDeprecation
 

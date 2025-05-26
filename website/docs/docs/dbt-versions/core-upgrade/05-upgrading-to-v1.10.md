@@ -56,7 +56,9 @@ Starting in `v1.10`, you will receive deprecation warnings for dbt code that wil
 - Custom inputs (for example, unrecognized resource properties, configurations, and top-level keys)
 - Duplicate YAML keys in the same file
 - Unexpected jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
+- Some `properties` are moving to `configs`
 - And more
+
 
 dbt will start raising these warnings in version `1.10`, but making these changes will not be a prerequisite for using it. We at dbt Labs understand that it will take existing users time to migrate their projects, and it is not our goal to disrupt anyone with this update. The goal is to enable you to work with more safety, feedback, and confidence going forward.
 
@@ -138,6 +140,43 @@ hello!
 </File>
 
 Moving forward, you should delete these orphaned jinja blocks.
+
+#### Properties moving to configs
+
+Some historical properties are moving entirely to configs.
+
+This will include: `freshness`, `meta`, `tags`, `docs`, `group`, and `access`
+
+If you previously set one of the impacted properties, such as `freshness`:
+
+```yaml
+
+sources: 
+  - name: ecom
+    schema: raw
+    description: E-commerce data for the Jaffle Shop
+    freshness:
+      warn_after:
+        count: 24
+        period: hour
+
+```
+
+You should now set it under `config`:
+
+```yaml
+
+sources: 
+  - name: ecom
+    schema: raw
+    description: E-commerce data for the Jaffle Shop
+    config:
+      freshness:
+        warn_after:
+          count: 24
+          period: hour
+
+```
 
 ## Quick hits
 
