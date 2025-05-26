@@ -6,7 +6,7 @@ title: "Deprecations"
 
 Deprecated functionality still works in the v1.10 release, but it is no longer supported and will be removed in a future version.  
 
-This means the deprecated features only present a warning but don't prevent runs and other commands (unless you've customized the behavior). 
+This means the deprecated features only present a warning but don't prevent runs and other commands (unless you've configured [warnings as errors](/reference/global-configs/warnings)). 
 
 When the functionality is eventually removed, it will cause errors in your dbt runs after you upgrade if the deprecations are not addressed.
 
