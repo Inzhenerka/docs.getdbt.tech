@@ -72,6 +72,6 @@ The Query console sidebar menu and icons contains the following options:
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights dbt Explorer icon" />
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="90%" title="dbt Insights Query history icon" />
-<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="90%" title="dbt Insights dbt Copilot" />
-<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Manage your query bookmarks" />
+<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="60%" title="dbt Insights dbt Copilot" />
+<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="60%" title="Manage your query bookmarks" />
 </DocCarousel>
