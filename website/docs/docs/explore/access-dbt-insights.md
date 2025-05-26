@@ -157,7 +157,9 @@ To access <Constant name="explorer" />, click on the **<Constant name="explorer"
 Insights offers a robust bookmark feature for quickly finding the queries you use most. There's also an option to share bookmarks with other dbt users (and have them share with you). Click the bookmark icon in a query to add it to your list!
 
 - Click the **bookmark icon** on the right menu to manage your bookmarked queries. You can view your personal and shared queries
+
     <Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Manage your query bookmarks" />
+    
 - View bookmark details including description and creation date in the **Overview** tab.
 - View the bookmarks history in the **Version history** tab. Click a version to compare it the current and view changes. 
 
