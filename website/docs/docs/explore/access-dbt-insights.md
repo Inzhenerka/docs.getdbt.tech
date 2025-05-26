@@ -125,7 +125,7 @@ Visualize the chart results of the query by clicking on the **Chart** tab to:
 - Choose from **line chart, bar chart, or scatterplot**.
 - Select the axis and columns to visualize using the **Chart settings** icon.
 
-<Lightbox src="/img/docs/dbt-insights/insights-chart.jpg" width="95%" title="dbt Insights Chart tab" />
+<Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="dbt Insights Chart tab" />
 
 ### Query history
 
