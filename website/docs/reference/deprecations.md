@@ -381,3 +381,33 @@ hello!
 #### UnexpectedJinjaBlockDeprecation warning resolution
 
 Delete the unexpected Jinja blocks.
+
+### WEOIncludeExcludeDeprecation
+
+The `include` and `exclude` options for `warn_error_options` have been deprecated and replaced with `error` and `warn`, respectively.
+
+#### WEOIncludeExcludeDeprecation warning resolution
+
+Anywhere `warn_error_options` is configured, replace:
+- `include` with `error`
+- `exclude` with `warn`
+
+For example:
+
+```yaml
+...
+  flags:
+    warn_error_options:
+      include:
+        - NoNodesForSelectionCriteria
+```
+
+Should now be configured as:
+
+```yaml
+...
+  flags:
+    warn_error_options:
+      error:
+        - NoNodesForSelectionCriteria
+```
