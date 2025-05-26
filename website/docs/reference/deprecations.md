@@ -143,6 +143,7 @@ dbt has deprecated the `--output` (or `-o`) flag for overriding the location of 
 #### CustomOutputPathInSourceFreshnessDeprecation warning resolution
 
 Remove the `--output` or `-o` flag and associated path configuration from any jobs running dbt source freshness commands.
+There is no alternative for changing the location of only the source freshness results. However, you can still use `--target-path` to write _all_ artifacts from the step to a custom location.
 
 ### ExposureNameDeprecation
 
