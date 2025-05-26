@@ -65,7 +65,6 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 - In <Constant name="explorer" /> searches, we use soft access controls, you'll see all matching resources in search results, with clear indicators for items you don't have access to.
 - For external metadata, the global platform credential controls which resources metadata users can discover. See [External metadata ingestion](/docs/explore/external-metadata-ingestion) for more details.
 
-=======
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
