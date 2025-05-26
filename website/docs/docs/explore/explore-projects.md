@@ -34,7 +34,11 @@ Connect directly to your data warehouse with [external metadata ingestion](/docs
 
 :::info [Global navigation](/docs/explore/explore-projects#search-resources) <Lifecycle status="starter, enterprise, enterprise+" />
 
+<<<<<<< HEAD
 <Constant name="explorer" /> enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
+=======
+dbt Catalog enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
+>>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 
 To enable global navigation:
 
@@ -55,6 +59,7 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 - **Visualize downstream exposures** &mdash; [Set up](/docs/cloud-integrations/downstream-exposures-tableau) and [visualize downstream exposures](/docs/explore/view-downstream-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
 - **Data health signals** &mdash; View the [data-health-signals](/docs/explore/data-health-signals) for each resource to understand its health and performance.
 
+<<<<<<< HEAD
 :::tip
 If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
 :::
@@ -65,6 +70,8 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 - In <Constant name="explorer" /> searches, we use soft access controls, you'll see all matching resources in search results, with clear indicators for items you don't have access to.
 - For external metadata, the global platform credential controls which resources metadata users can discover. See [External metadata ingestion](/docs/explore/external-metadata-ingestion) for more details.
 
+=======
+>>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
@@ -151,7 +158,11 @@ Example of applying the **Tests Status** _lens_, where each model name displays 
 
 ## Keyword search {#search-resources}
 
+<<<<<<< HEAD
 With <Constant name="explorer" />, global navigation provides a search experience allowing you to find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
+=======
+With Catalog, global navigation provides a search experience allowing you to find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
+>>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 
 You can locate resources in your project by performing a keyword search in the search bar. All resource names, column names, resource descriptions, warehouse relations, and code matching your search criteria will be displayed as a list on the main (center) section of the page. When searching for an exact column name, the results show all relational nodes containing that column in their schemas. If there's a match, a notice in the search result indicates the resource contains the specified column. Also, you can apply filters to further refine your search results.
 
@@ -184,7 +195,11 @@ Under the **Models** option, you can filter on model properties (access or mater
 <Constant name="explorer" /> builds on the functionality of the old navigation and introduces exciting new capabilities to enhance your experience.
 
 - Search data assets &mdash; widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
+<<<<<<< HEAD
     - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
+=======
+    - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with Catalog.
+>>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 - Explore lineage &mdash; provides an interactive map of data relationships across all your dbt projects. It lets you:
     - View upstream/downstream dependencies for models, sources, and more.
     - Drill into project and column-level lineage, including multi-project (Mesh) links.
@@ -214,7 +229,11 @@ From the sidebar, you can browse your project's resources, its file tree, and th
 
 ## Integrated tool access
 
+<<<<<<< HEAD
 Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an analyst seat can open a resource directly from the <Constant name="explorer" /> in the Studio to view its model files, in Insights to query it, or in <Constant name="visual_editor" /> for visual editing.
+=======
+Users with a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control) or an analyst seat can open a resource directly from the Catalog in the Studio to view its model files, in Insights to query it, or in Canvas for visual editing.
+>>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 
 ## View model versions
 
