@@ -40,7 +40,7 @@ The Query console menu is located at the top right of the Query editor. It conta
  - **Develop**: Open the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) to continue editing your SQL query.
 - **Run** button &mdash; Run your SQL query and view the results in the **Results** tab.
 
-  <Lightbox src="/img/docs/dbt-insights/develop-menu.jpg" title="dbt Insights Develop menu." />
+  <Lightbox src="/img/docs/dbt-insights/develop-menu.png" title="dbt Insights Develop menu." />
 
 ## Query output panel
 
@@ -73,4 +73,5 @@ The Query console sidebar menu and icons contains the following options:
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights dbt Explorer icon" />
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="90%" title="dbt Insights Query history icon" />
 <Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="90%" title="dbt Insights dbt Copilot" />
+<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Manage your query bookmarks" />
 </DocCarousel>
