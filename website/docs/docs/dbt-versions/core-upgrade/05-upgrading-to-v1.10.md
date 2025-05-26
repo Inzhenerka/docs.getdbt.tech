@@ -162,7 +162,7 @@ sources:
 
 ```
 
-You should now set it under a `config` field:
+You should now set it under `config`:
 
 ```yaml
 
