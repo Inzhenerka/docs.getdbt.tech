@@ -136,6 +136,15 @@ DBT_TARGET_PATH env var instead.
 
 Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
 
+### CustomOutputPathInSourceFreshnessDeprecation
+
+dbt has deprecated the `--output` (or `-o`) flag for overriding the location of source freshness results from the `sources.json` file destination.
+
+#### CustomOutputPathInSourceFreshnessDeprecation warning resolution
+
+Remove the `--output` or `-o` flag and associated path configuration from any jobs running dbt source freshness commands.
+There is no alternative for changing the location of only the source freshness results. However, you can still use `--target-path` to write _all_ artifacts from the step to a custom location.
+
 ### ExposureNameDeprecation
 
 #### Description
@@ -373,3 +382,33 @@ hello!
 #### UnexpectedJinjaBlockDeprecation warning resolution
 
 Delete the unexpected Jinja blocks.
+
+### WEOIncludeExcludeDeprecation
+
+The `include` and `exclude` options for `warn_error_options` have been deprecated and replaced with `error` and `warn`, respectively.
+
+#### WEOIncludeExcludeDeprecation warning resolution
+
+Anywhere `warn_error_options` is configured, replace:
+- `include` with `error`
+- `exclude` with `warn`
+
+For example:
+
+```yaml
+...
+  flags:
+    warn_error_options:
+      include:
+        - NoNodesForSelectionCriteria
+```
+
+Should now be configured as:
+
+```yaml
+...
+  flags:
+    warn_error_options:
+      error:
+        - NoNodesForSelectionCriteria
+```
