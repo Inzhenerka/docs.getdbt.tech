@@ -188,7 +188,6 @@ Under the **Models** option, you can filter on model properties (access or mater
     - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
 =======
     - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with Catalog.
->>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 - Explore lineage &mdash; provides an interactive map of data relationships across all your dbt projects. It lets you:
     - View upstream/downstream dependencies for models, sources, and more.
     - Drill into project and column-level lineage, including multi-project (Mesh) links.
