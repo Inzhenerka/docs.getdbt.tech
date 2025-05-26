@@ -67,7 +67,6 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 - For external metadata, the global platform credential controls which resources metadata users can discover. See [External metadata ingestion](/docs/explore/external-metadata-ingestion) for more details.
 
 =======
->>>>>>> cbb46352df183f8a5919c0fc09ee2eb8f175f880
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
