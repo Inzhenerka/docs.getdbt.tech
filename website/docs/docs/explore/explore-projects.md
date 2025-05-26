@@ -34,7 +34,6 @@ Connect directly to your data warehouse with [external metadata ingestion](/docs
 
 :::info [Global navigation](/docs/explore/explore-projects#search-resources) <Lifecycle status="starter, enterprise, enterprise+" />
 
-<<<<<<< HEAD
 <Constant name="explorer" /> enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
 
 To enable global navigation:
