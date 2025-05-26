@@ -55,7 +55,6 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 - **Visualize downstream exposures** &mdash; [Set up](/docs/cloud-integrations/downstream-exposures-tableau) and [visualize downstream exposures](/docs/explore/view-downstream-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
 - **Data health signals** &mdash; View the [data-health-signals](/docs/explore/data-health-signals) for each resource to understand its health and performance.
 
-<<<<<<< HEAD
 :::tip
 If your organization works in both dbt Core and Cloud, you can unify these workflows by automatically uploading dbt Core artifacts into dbt Cloud and viewing them in <Constant name="explorer" /> for a more connected dbt experience. To learn more, visit [hybrid projects](/docs/deploy/hybrid-projects).
 :::
