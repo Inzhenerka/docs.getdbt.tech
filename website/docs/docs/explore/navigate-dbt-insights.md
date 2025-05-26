@@ -54,7 +54,7 @@ The Query output panel is below the query editor and displays the results of a q
   - Use the chart icon to select the type of chart you want to visualize your results. Available chart types are **line chart, bar chart, or scatterplot**.
   - Use the **Chart settings** to customize the chart type and the columns you want to visualize. 
   - Available chart types are **line chart, bar chart, or scatterplot**.
-- **Ellipsis** (`...`) button &mdash; Allows you to export the results to CSV
+- **Download**  button &mdash; Allows you to export the results to CSV
 
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/dbt-insights/insights-results.png" width="95%" title="dbt Insights Results tab" />

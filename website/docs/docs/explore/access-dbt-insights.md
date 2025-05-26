@@ -77,7 +77,7 @@ Let's use an example to illustrate how to run queries in <Constant name="query_p
 To make things easier, [use <Constant name="copilot" />](/docs/cloud/use-dbt-copilot#build-queries) to save time and explore other ways to analyze the data. <Constant name="copilot" /> can help you quickly update the query or generate a new one based on your prompt.
 
 1. Click the **<Constant name="copilot" />** icon in the Query console sidebar to open the prompt box.  
-2. Enters your prompt in natural language and ask for a yearly breakdown of unique customers and total revenue. Then click **Submit**.
+2. Enter your prompt in natural language and ask for a yearly breakdown of unique customers and total revenue. Then click **Submit**.
 3. <Constant name="copilot" /> responds with:
    - A summary of the query
    - An explanation of the logic
@@ -107,12 +107,12 @@ Using the same example, you can perform some exploratory data analysis by runnin
 
 - Viewing results in **Results** tab &mdash; View the paginated results of the query.
 - Sorting results &mdash; Click on the column header to sort the results by that column.
-- Exporting to CSV &mdash; On the top right of the table, click the three-dot ellipsis (`...`) button and select **Export to CSV** to export the dataset.
+- Exporting to CSV &mdash; On the top right of the table, click the download button to export the dataset.
 <Lightbox src="/img/docs/dbt-insights/insights-export-csv.png" width="95%" title="dbt Insights Export to CSV" />
 
 ### View details
 View the details of the query by clicking on the **Details** tab:
-- **Query metadata** &mdash; <Constant name="copilot" /> AI-generated title and description, the supplied SQL, and corresponding compiled SQL.
+- **Query metadata** &mdash; <Constant name="copilot" />-generated title and description, the supplied SQL, and corresponding compiled SQL.
 - **Connection details** &mdash; Relevant data platform connection information.
 - **Query details** &mdash; Query duration, status, column count, row count.
 
@@ -131,8 +131,7 @@ Visualize the chart results of the query by clicking on the **Chart** tab to:
 
 View the history of queries and their statuses (All, Success, Error, or Pending) using the **Query history** icon:
 - Select a query to re-run to view the results. 
-- Ssearch for past queries and filter by status.
-- For each query, click on the ellipsis **(`...`)** button to open the query in a new tab or copy the SQL.
+- Search for past queries and filter by status.
 - Hover over the query to view the SQL code or copy it.
 
 The query history is stored indefinitely.
@@ -141,9 +140,9 @@ The query history is stored indefinitely.
 
 ### Use dbt Explorer
 
-Access [<Constant name="explorer" />](/docs/explore/explore-projects) directly in <Constant name="query_page" /> to view the project lineage and project resources with access to tables, columns, metrics, and dimensions, and more — all integrated in the <Constant name="query_page" /> interface. 
+Access [<Constant name="explorer" />](/docs/explore/explore-projects) directly in <Constant name="query_page" /> to view project resources such as models, columns, metrics, and dimensions, and more — all integrated in the <Constant name="query_page" /> interface. 
 
-This integrated view allows you and your users to maintain their query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated <Constant name="explorer" /> view comes with:
+This integrated view allows you and your users to maintain your query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated <Constant name="explorer" /> view comes with:
 - Same search capabilities as <Constant name="explorer" />
 - Allows users to narrow down displayed objects by type
 - Hyperlink from SQL code `ref` to the corresponding Explorer page
@@ -163,7 +162,7 @@ Insights offers a robust bookmark feature for quickly finding the queries you us
 - View the bookmarks history in the **Version history** tab. Click a version to compare it the current and view changes. 
 
 ## Considerations 
-- <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in any environment.
+- <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
 - Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
 - Coming soon: The ability to select the environment you use to resolve your `refs`.
 
