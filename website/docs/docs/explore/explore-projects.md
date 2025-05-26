@@ -156,7 +156,6 @@ Example of applying the **Tests Status** _lens_, where each model name displays 
 
 <<<<<<< HEAD
 With <Constant name="explorer" />, global navigation provides a search experience allowing you to find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
-=======
 
 You can locate resources in your project by performing a keyword search in the search bar. All resource names, column names, resource descriptions, warehouse relations, and code matching your search criteria will be displayed as a list on the main (center) section of the page. When searching for an exact column name, the results show all relational nodes containing that column in their schemas. If there's a match, a notice in the search result indicates the resource contains the specified column. Also, you can apply filters to further refine your search results.
 
