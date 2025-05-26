@@ -532,7 +532,7 @@ const sidebarSettings = {
           collapsed: true,
           link: {
             type: "doc",
-            id: "docs/mesh/iceberg/iceberg-platform-support",
+            id: "docs/mesh/iceberg/apache-iceberg-support",
           },
           items: [
             "docs/mesh/iceberg/apache-iceberg-support",
