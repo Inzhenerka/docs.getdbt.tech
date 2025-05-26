@@ -136,6 +136,14 @@ DBT_TARGET_PATH env var instead.
 
 Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
 
+### CustomOutputPathInSourceFreshnessDeprecation
+
+dbt has deprecated the `--output` (or `-o`) flag for overriding the location of source freshness results from the `sources.json` file destination.
+
+#### CustomOutputPathInSourceFreshnessDeprecation warning resolution
+
+Remove the `--output` or `-o` flag and associated path configuration from any jobs running dbt source freshness commands.
+
 ### ExposureNameDeprecation
 
 #### Description
