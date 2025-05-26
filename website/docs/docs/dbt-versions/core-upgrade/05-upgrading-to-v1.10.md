@@ -178,6 +178,24 @@ sources:
 
 ```
 
+#### Custom output path for source freshness
+
+The ability to override the default path for `sources.json` via the `--output` or `-o` flags has been deprecated. You can still set the path for all artifacts in the step with `--target-path`, but will receive a warning if trying to set the path for just source freshness.
+
+#### Warn error options
+
+The `warn_error_option` options for `include` and `exclude` have been deprecated and replaced with `error` and `warn`, respectively.
+
+  ```yaml
+...
+  flags:
+    warn_error_options:
+      error: # Previously called "include"
+      warn: # Previously called "exclude"
+      silence: # To silence or ignore warnings
+        - NoNodesForSelectionCriteria
+  ```
+
 ## Quick hits
 
 - Provide the [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) property for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the [built-in query](https://github.com/dbt-labs/dbt-adapters/blob/6c41bedf27063eda64375845db6ce5f7535ef6aa/dbt/include/global_project/macros/adapters/freshness.sql#L4-L16), which uses the `loaded_at_field`). You cannot define `loaded_at_query` if the `loaded_at_field` config is also provided.
