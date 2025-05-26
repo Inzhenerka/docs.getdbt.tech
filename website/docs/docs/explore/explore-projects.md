@@ -186,7 +186,6 @@ Under the **Models** option, you can filter on model properties (access or mater
 - Search data assets &mdash; widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
 <<<<<<< HEAD
     - External metadata ingestion &mdash; connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
-=======
 - Explore lineage &mdash; provides an interactive map of data relationships across all your dbt projects. It lets you:
     - View upstream/downstream dependencies for models, sources, and more.
     - Drill into project and column-level lineage, including multi-project (Mesh) links.
