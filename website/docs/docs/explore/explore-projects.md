@@ -32,11 +32,9 @@ If your organization works in both dbt Core and Cloud, you can unify these workf
 
 ### External metadata ingestion <Lifecycle status="preview" />
 
-:::info
-We create dbt metadata and pull external metadata. <Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display details about the state of your project. The available metadata depends on which deployment environment you’ve designated as production or staging in your dbt project.
-
 Connect directly to your data warehouse with [external metadata ingestion](/docs/explore/external-metadata-ingestion), giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
-:::
+
+We create dbt metadata and pull external metadata. <Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display details about the state of your project. The available metadata depends on which [deployment environment](/docs/deploy/deploy-environments) you’ve designated as production or staging in your dbt project.
 
 ## Catalog overview 
 
