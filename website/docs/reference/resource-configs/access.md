@@ -10,7 +10,8 @@ version: 2
 
 models:
   - name: model_name
-    access: private | protected | public
+    config:
+      access: private | protected | public # changed to config in v1.10
 ```
 
 </File>
@@ -28,7 +29,9 @@ There are multiple approaches to configuring access:
   
   models:
     - name: my_public_model
-      access: public # Older method, still supported
+      config:
+        access: public # Older method, still supported
+          # changed to config in v1.10
       
   ```
   </File>

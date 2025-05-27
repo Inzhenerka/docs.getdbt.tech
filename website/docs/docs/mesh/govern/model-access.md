@@ -87,19 +87,22 @@ groups:
 models:
   # This is a public model -- it's a stable & mature interface for other teams/projects
   - name: dim_customers
-    group: customer_success
-    access: public
+    config:
+      group: customer_success # changed to config in v1.10
+      access: public # changed to config in v1.10
     
   # This is a private model -- it's an intermediate transformation intended for use in this context *only*
   - name: int_customer_history_rollup
-    group: customer_success
-    access: private
+    config:
+      group: customer_success # changed to config in v1.10
+      access: private # changed to config in v1.10
     
   # This is a protected model -- it might be useful elsewhere in *this* project,
   # but it shouldn't be exposed elsewhere
   - name: stg_customer__survey_results
-    group: customer_success
-    access: protected
+    config:
+      group: customer_success # changed to config in v1.10
+      access: protected # changed to config in v1.10
 ```
 
 </File>
@@ -126,7 +129,8 @@ And the model access is defined:
 
 models:
   - name: my_model
-    access: public
+    config:
+      access: public # changed to config in v1.10
 
 ```
 
