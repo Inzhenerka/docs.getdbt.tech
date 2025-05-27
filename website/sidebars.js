@@ -695,6 +695,7 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/dbt-cloud-apis/overview" },
       items: [
         "docs/dbt-cloud-apis/overview",
+        "docs/dbt-cloud-apis/mcp",
         {
           type: "category",
           label: "API Access",
