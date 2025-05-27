@@ -69,7 +69,6 @@ The `dbt docs serve` command is only intended for local/development hosting of t
 
 ### dbt Explorer <Lifecycle status="self_service,managed,managed_plus" />
 
-
 <Constant name="explorer" /> automatically updates documentation after each production or staging job run using the metadata generated. This means it always has the latest results for your project with no manual deployment required. For details on how <Constant name="explorer" /> uses metadata to automatically update documentation, refer to [Generate metadata](/docs/explore/explore-projects#generate-metadata). 
 
 To learn how to deploy your documentation site, see [Build and view your docs with <Constant name="cloud" />](/docs/explore/build-and-view-your-docs).
