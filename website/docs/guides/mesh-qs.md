@@ -237,7 +237,8 @@ To make `fct_orders` publicly available:
 
   models:
     - name: fct_orders
-      access: public
+      config:
+        access: public # changed to config in v1.10
       description: "Customer and order details"
       columns:
         - name: order_id
@@ -443,9 +444,9 @@ As part of the Data Analytics team, you may want to ensure the `fct_orders` mode
 ```yaml
 models:
   - name: fct_orders
-    access: public
     description: “Customer and order details”
     config:
+      access: public # changed to config in v1.10
       contract:
         enforced: true
     columns:
@@ -481,10 +482,10 @@ version: 2
 
 models:
   - name: fct_orders
-    access: public
     description: "Customer and order details"
     latest_version: 2
     config:
+      access: public # changed to config in v1.10
       contract:
         enforced: true
     columns:
