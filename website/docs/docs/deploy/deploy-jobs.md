@@ -1,6 +1,6 @@
 ---
 title: "Deploy jobs"
-description: "Learn how to create and schedule deploy jobs in dbt Cloud for the scheduler to run. When you run with dbt Cloud, you get built-in observability, logging, and alerting." 
+description: "Learn how to create and schedule deploy jobs in dbt for the scheduler to run. When you run with dbt, you get built-in observability, logging, and alerting." 
 tags: [scheduler]
 ---
 
@@ -53,7 +53,7 @@ You can create a deploy job and configure it to run on [scheduled days and times
     - **Compare changes against** &mdash; By default, it’s set to **No deferral**. Select either **Environment** or **This Job** to let <Constant name="cloud" /> know what it should compare the changes against.  
 
     :::info
-    Older versions of dbt Cloud only allow you to defer to a specific job instead of an environment. Deferral to a job compares state against the project code that was run in the deferred job's last successful run. While deferral to an environment is more efficient as dbt Cloud will compare against the project representation (which is stored in the `manifest.json`) of the last successful deploy job run that executed in the deferred environment. By considering _all_ deploy jobs that run in the deferred environment, dbt Cloud will get a more accurate, latest project representation state.
+    Older versions of <Constant name="cloud" /> only allow you to defer to a specific job instead of an environment. Deferral to a job compares state against the project code that was run in the deferred job's last successful run. While deferral to an environment is more efficient as <Constant name="cloud" /> will compare against the project representation (which is stored in the `manifest.json`) of the last successful deploy job run that executed in the deferred environment. By considering _all_ deploy jobs that run in the deferred environment, <Constant name="cloud" /> will get a more accurate, latest project representation state.
     :::
 
     - **dbt version** &mdash; By default, it’s set to inherit the [dbt version](/docs/dbt-versions/core) from the environment. dbt Labs strongly recommends that you don't change the default setting. This option to change the version at the job level is useful only when you upgrade a project to the next dbt version; otherwise, mismatched versions between the environment and job can lead to confusing behavior. 
@@ -95,7 +95,7 @@ To enhance performance, job scheduling frequencies vary by <Constant name="cloud
 
 **Examples**
 
-Use tools such as [crontab.guru](https://crontab.guru/) to generate the correct cron syntax. This tool allows you to input cron snippets and return their plain English translations. The dbt Cloud job scheduler supports using `L` to schedule jobs on the last day of the month.
+Use tools such as [crontab.guru](https://crontab.guru/) to generate the correct cron syntax. This tool allows you to input cron snippets and return their plain English translations. The <Constant name="cloud" /> job scheduler supports using `L` to schedule jobs on the last day of the month.
 
 Examples of cron job schedules:
 

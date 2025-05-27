@@ -1,7 +1,7 @@
 ---
 title: "Release tracks in dbt platform"
 sidebar_label: "dbt Release Tracks"
-description: "Learn how to get automatic upgrades to dbt in dbt Cloud. Access new features and enhancements as soon as they become available."
+description: "Learn how to get automatic upgrades to dbt in the dbt platform. Access new features and enhancements as soon as they become available."
 ---
 
 Since May 2024, new capabilities in the dbt framework are delivered continuously to <Constant name="cloud" />. Your projects and environments are upgraded automatically on a cadence that you choose, depending on your <Constant name="cloud" /> plan.
@@ -55,7 +55,7 @@ Choose the "Compatible" and "Extended" release tracks if you need a less-frequen
 
 ### How to upgrade {#upgrade-tips}
 
-If you regularly develop your dbt project in <Constant name="cloud" />, and you're still running on a legacy version of <Constant name="core" />, dbt Labs recommends that you try upgrading your project in a development environment. [Override your dbt version in development](/docs/dbt-versions/upgrade-dbt-version-in-cloud#override-dbt-version). Then, launch the <Constant name="cloud_ide" /> or dbt CLI and do your development work as usual. Everything should work as you expect.
+If you regularly develop your dbt project in <Constant name="cloud" />, and you're still running on a legacy version of <Constant name="core" />, dbt Labs recommends that you try upgrading your project in a development environment. [Override your dbt version in development](/docs/dbt-versions/upgrade-dbt-version-in-cloud#override-dbt-version). Then, launch the <Constant name="cloud_ide" /> or <Constant name="cloud_cli" /> and do your development work as usual. Everything should work as you expect.
 
 If you do see something unexpected or surprising, revert back to the previous version and record the differences you observed. [Contact <Constant name="cloud" /> support](/docs/dbt-support#dbt-cloud-support) with your findings for a more detailed investigation.
 
@@ -71,7 +71,7 @@ If you're running dbt version 1.6 or older, please know that your version of <Co
 
 dbt Labs has extended the critical support period of <Constant name="core" /> v1.7 for <Constant name="cloud" /> Enterprise-tier customers to March 2025. At that point, we will be encouraging all customers to select a Release Track for ongoing updates in <Constant name="cloud" />.
 
-<Expandable alt_header="I'm using an older version of dbt in dbt Cloud. What should I do? What happens if I do nothing?" >
+<Expandable alt_header="I'm using an older version of dbt in the dbt platform. What should I do? What happens if I do nothing?" >
 
 If you're running dbt version v1.6 or older, please know that your version of dbt Core has reached [end-of-life (EOL)](/docs/dbt-versions/core#eol-version-support) and is no longer supported. We strongly recommend that you update to a newer version as soon as reasonably possible.
 
@@ -90,7 +90,7 @@ The legacy dbt Semantic Layer was deprecated in the second half of 2023. We reco
 <Expandable alt_header="What are other known issues when upgrading from older dbt Core versions?" >
 
 If you are upgrading from a very old unsupported version of dbt Core, you may run into one of these edge cases after the upgrade to a newer version:
-- [v1.1] Customers on BigQuery should be aware that dbt Cloud sets a default [per-model timeout](/docs/core/connect-data-platform/bigquery-setup#job_execution_timeout_seconds) of 5 minutes. You may override this config in your connection details. Older versions of dbt (including v1.0) did not appropriately respect this timeout configuration.
+- [v1.1] Customers on BigQuery should be aware that <Constant name="cloud" /> sets a default [per-model timeout](/docs/core/connect-data-platform/bigquery-setup#job_execution_timeout_seconds) of 5 minutes. You may override this config in your connection details. Older versions of dbt (including v1.0) did not appropriately respect this timeout configuration.
 - [v1.3] Customers with non-dbt `.py` files defined within their project directories, such as `models/`. Since v1.3, dbt expects these files be valid [Python models](/docs/build/python-models). The customer needs to move these files out of their `models/` directory, or ignore them via `.dbtignore`
 - [v1.5] Customers who have `--m` in their job definitions, instead of `-m` or `--models`. This autocompletion (`--m[odels]` for `--models`) has never been officially documented or supported. It was an implicit behavior of argparse (CLI library used in dbt-core v1.0-1.4) that is not supported by `click` (the CLI library used in dbt-core since v1.5+).
 - [v1.5] Empty invalid `tests` config start raising a validation error](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5). Replace empty `tests` config with `tests: []` or remove it altogether.
@@ -122,13 +122,13 @@ If the package you’ve installed relies on _undocumented_ functionality of db
 
 </Expandable>
 
-<Expandable alt_header="I see that dbt Core version 1.8 was released in April 2024. Will a version 1.8 become available in dbt Cloud?" >
+<Expandable alt_header="I see that dbt Core version 1.8 was released in April 2024. Will a version 1.8 become available in the dbt platform?" >
 
 No. Going forward, customers will access new functionality and ongoing support in dbt by receiving automatic updates. We believe this is the best way for us to offer a reliable, stable, and secure runtime for dbt, and for you as dbt users to be able to consistently take advantage of new features.
 
-In 2023 (and earlier), customers were expected to manage their own upgrades by selecting dbt Core versions, up to and including dbt Core v1.7, which was released in October 2023. (Way back in 2021, dbt Cloud customers would pick specific _patch releases_ of dbt Core, such as upgrading from `v0.21.0` to `v0.21.1`. We’ve come a long way since then!)
+In 2023 (and earlier), customers were expected to manage their own upgrades by selecting dbt Core versions, up to and including dbt Core v1.7, which was released in October 2023. (Way back in 2021, <Constant name="cloud" /> customers would pick specific _patch releases_ of dbt Core, such as upgrading from `v0.21.0` to `v0.21.1`. We’ve come a long way since then!)
 
-In 2024, we've changed the way that new dbt functionality is made available for dbt Cloud customers. Behavior or breaking changes are gated behind opt-in flags. Users don't need to spend valuable time managing their own upgrades. Currently, it is possible to receive continuous (daily) updates. We are adding other release cadence options for managed customers of dbt Cloud by the end of the year.
+In 2024, we've changed the way that new dbt functionality is made available for <Constant name="cloud" /> customers. Behavior or breaking changes are gated behind opt-in flags. Users don't need to spend valuable time managing their own upgrades. Currently, it is possible to receive continuous (daily) updates. We are adding other release cadence options for managed customers of <Constant name="cloud" /> by the end of the year.
 
 Opting into a release cadence with automated upgrades is required for accessing any new functionality that we've released in 2024, and going forward.
 

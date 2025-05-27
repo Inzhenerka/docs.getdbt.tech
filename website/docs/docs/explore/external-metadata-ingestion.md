@@ -22,7 +22,7 @@ These credentials are configured separately from dbt environment credentials and
 
 ## Prerequisites
 
-- Have a <Constant name="cloud" /> Cloud account on the [Enterprise or Enterprise+](https://www.getdbt.com/pricing) plan.
+- Have a <Constant name="cloud" /> account on the [Enterprise or Enterprise+](https://www.getdbt.com/pricing) plan.
 - You must be an [account admin with permission](/docs/cloud/manage-access/enterprise-permissions#account-admin) to edit connections.
     - The credentials must have [sufficient read-level access to fetch metadata](/docs/explore/external-metadata-ingestion#configuration-instructions).
 - Have [**global navigation**](/docs/explore/explore-projects#catalog-overview-) enabled.

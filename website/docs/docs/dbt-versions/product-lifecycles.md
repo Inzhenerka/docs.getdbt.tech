@@ -11,7 +11,7 @@ dbt Labs is directly involved with the maintenance of two products:
 
 All dbt features fall into a lifecycle category determined by their availablibilty in the following products:
 
-### dbt Cloud
+### dbt platform
 
 <Constant name="cloud" /> features all fall into one of the following categories:
 

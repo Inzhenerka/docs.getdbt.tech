@@ -47,7 +47,7 @@ Connect directly to your data warehouse with [external metadata ingestion](/docs
 To enable global navigation:
 
 - Have a [developer licence with Owner](/docs/cloud/manage-access/about-user-access#role-based-access-control) permissions.
-- Navigate to your [account settings](/docs/cloud/account-settings) in your dbt Cloud account and check the box to **Enable Explorer's Global Navigation**
+- Navigate to your [account settings](/docs/cloud/account-settings) in your <Constant name="cloud" /> account and check the box to **Enable Explorer's Global Navigation**.
 
 :::
 
@@ -97,7 +97,7 @@ To explore the lineage graphs of tests and macros, view [their resource details 
     - View the node's [resource details](#view-resource-details) page
 - Select a resource to highlight its relationship with other resources in your project. A panel opens on the graph's right-hand side that displays a high-level summary of the resource's details. The side panel includes a **General** tab for information like description, materialized type, and other details. In the side panel's upper right corner:
     - Click the View Resource icon to [view the resource details](#view-resource-details).
-    - Click the [Open in IDE](#open-in-ide) icon to examine the resource using the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+    - Click the [Open in IDE](#open-in-ide) icon to examine the resource using the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
     - Click the Copy Link to Page icon to copy the page's link to your clipboard.
 - Use [selectors](/reference/node-selection/methods) (in the search bar) to select specific resources or a subset of the DAG. This can help narrow the focus on the resources that interest you. All selectors are available for use, except those requiring a state comparison (result, source status, and state). You can also use the `--exclude` and the `--select` flag (which is optional). Examples:
     - `resource_type:model [RESOURCE_NAME]` &mdash; Returns all models matching the name search
@@ -195,7 +195,7 @@ Under the **Models** option, you can filter on model properties (access or mater
     - Filter with "lineage lenses" by resource type, materialization, layer, or run status.
     - Troubleshoot data issues by tracing root causes and downstream impacts.
     - Optimize pipelines by spotting slow, failing, or unused parts of your DAG.
-- See recommendations &mdash; offer a project-wide snapshot of dbt health, highlighting actionable tips to enhance your analytics engineering. These insights are automatically generated using dbt Cloud metadata and best practices from the project evaluator ruleset.
+- See recommendations &mdash; offer a project-wide snapshot of dbt health, highlighting actionable tips to enhance your analytics engineering. These insights are automatically generated using <Constant name="cloud" /> metadata and best practices from the project evaluator ruleset.
 - Model query history &mdash; shows how often each dbt model is queried in your warehouse, helping you:
     - Track real usage via successful `SELECT`s (excluding builds/tests)
     - Identify most/least used models for optimization or deprecation

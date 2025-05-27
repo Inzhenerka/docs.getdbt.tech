@@ -41,7 +41,7 @@ To access the features, you should meet the following:
 4. Use Snowflake or BigQuery as your data warehouse and can enable [query history permissions](#snowflake-model-query-history) or work with an admin to do so. Support for additional data platforms coming soon.
    - For Snowflake users: You **must** have a Snowflake Enterprise tier or higher subscription.
 
-## Enable query history in dbt Cloud
+## Enable query history in dbt
 
 To enable model query history in <Constant name="cloud" />, follow these steps:
 

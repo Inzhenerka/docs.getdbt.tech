@@ -2,7 +2,7 @@
 title: "Explore your data"
 id: "explore-your-data"
 sidebar_label: "Explore your data"
-description: "Explore your data, models, and other resources in dbt Cloud"
+description: "Explore your data, models, and other resources in dbt"
 hide_table_of_contents: true
 ---
 

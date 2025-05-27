@@ -1,14 +1,14 @@
 ---
-title: "Access dbt Explorer from dbt Cloud features"
-sidebar_label: "Access from dbt Cloud"
-description: "Learn where and how to directly access and interact with dbt Explorer from dbt Cloud features and products."
+title: "Access dbt Explorer from dbt platform features"
+sidebar_label: "Access from dbt platform"
+description: "Learn where and how to directly access and interact with dbt Explorer from dbt platform features and products."
 ---
 
 Access <Constant name="explorer" /> from other features and products inside <Constant name="cloud" />, ensuring you have a seamless experience navigating between resources and lineage in your project. 
 
 This page explains how to access <Constant name="explorer" /> from various <Constant name="cloud" /> features, including the <Constant name="cloud_ide" /> and jobs. While the primary way to navigate to <Constant name="explorer" /> is through the **Explore** link in the navigation, you can also access it from other <Constant name="cloud" /> features.
 
-### dbt Cloud IDE 
+### Studio IDE 
 You can enhance your project navigation and editing experience by directly accessing resources from the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) to <Constant name="explorer" /> for model, seed, or snapshot files. This workflow offers a seamless transition between the <Constant name="cloud_ide" /> and <Constant name="explorer" />, allowing you to quickly navigate between viewing project metadata and making updates to your models or other resources without switching contexts.
 
 #### Access dbt Explorer from the IDE

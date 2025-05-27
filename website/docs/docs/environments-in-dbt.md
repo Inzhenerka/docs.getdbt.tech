@@ -19,7 +19,7 @@ Configure environments to tell <Constant name="cloud" /> or <Constant name="core
 
 <Card
     title="Environments in dbt"
-    body="Seamlessly configure development and deployment environments in dbt to control how your project runs in both the dbt IDE, dbt CLI, and dbt jobs."
+    body="Seamlessly configure development and deployment environments in dbt to control how your project runs in both the Studio IDE, dbt CLI, and dbt jobs."
     link="/docs/dbt-cloud-environments"
     icon="dbt-bit"/>
 

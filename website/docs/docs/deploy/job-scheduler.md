@@ -2,7 +2,7 @@
 title: "Job scheduler"
 id: "job-scheduler"
 sidebar_label: "Job scheduler"
-description: "The dbt Cloud job scheduler queues scheduled or API-triggered runs, before preparing the job to enter cloud data platform. Build observability into transformation workflows with the in-app scheduling, logging, and alerting." 
+description: "The dbt job scheduler queues scheduled or API-triggered runs, before preparing the job to enter cloud data platform. Build observability into transformation workflows with the in-app scheduling, logging, and alerting." 
 tags: [scheduler]
 ---
 
@@ -23,9 +23,9 @@ The scheduler handles various tasks including:
 - Storing dbt artifacts for direct consumption/ingestion by the Discovery API
 
 The scheduler also:
-- Uses [dbt Cloud's Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="managed,managed_plus" />
+- Uses [<Constant name="cloud" />'s Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="managed,managed_plus" />
 - Powers running dbt in staging and production environments, bringing ease and confidence to CI/CD workflows and enabling observability and governance in deploying dbt at scale. 
-- Uses [Hybrid projects](/docs/deploy/hybrid-projects) to upload dbt Core artifacts into dbt Cloud for central visibility, cross-project referencing, and easier collaboration. <Lifecycle status="beta,managed_plus" />
+- Uses [Hybrid projects](/docs/deploy/hybrid-projects) to upload dbt Core artifacts into <Constant name="cloud" /> for central visibility, cross-project referencing, and easier collaboration. <Lifecycle status="beta,managed_plus" />
 
 ## Scheduler terms
 
@@ -57,7 +57,7 @@ Before the job starts executing, the scheduler checks these conditions to determ
 
 If there is an available run slot and there isn't an actively running instance of the job, the scheduler will prepare the job to run in your cloud data platform. This prep involves readying a Kubernetes pod with the right version of dbt installed, setting environment variables, loading data platform credentials, and <Constant name="git" /> provider authorization, amongst other environment-setting tasks. The time it takes to prepare the job is displayed as **Prep time** in the UI.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="85%" title="An overview of a dbt Cloud job run"/>
+<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="85%" title="An overview of a dbt job run"/>
 
 ### Treatment of CI jobs
 When compared to deployment jobs, the scheduler behaves differently when handling [continuous integration (CI) jobs](/docs/deploy/continuous-integration). It queues a CI job to be processed when it's triggered to run by a <Constant name="git" /> pull request, and the conditions the scheduler checks to determine if the run can start executing are also different: 

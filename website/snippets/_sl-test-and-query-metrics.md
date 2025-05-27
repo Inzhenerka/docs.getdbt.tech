@@ -6,7 +6,7 @@ To work with metrics in dbt, you have several tools to validate or run commands.
 
 Alternatively, you can run commands with SQL client tools like DataGrip, DBeaver, or RazorSQL.
 
-### dbt Cloud IDE users
+### Studio IDE users
 
 You can use the `dbt sl` prefix before the command name to execute them in <Constant name="cloud" />. For example, to list all metrics, run `dbt sl list metrics`. For a complete list of the MetricFlow commands available in the <Constant name="cloud_ide" />, refer to the [MetricFlow commands](/docs/build/metricflow-commands#metricflow-commandss) page.
 
@@ -16,7 +16,7 @@ Once viewed, make sure you commit and merge your changes in your project.
 
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-ide-dag.jpg" title="Validate your metrics using the Lineage tab in the IDE." />
 
-### dbt Cloud CLI users
+### Cloud CLI users
 
 This section is for <Constant name="cloud_cli" /> users. MetricFlow commands are integrated with <Constant name="cloud" />, which means you can run MetricFlow commands as soon as you install the <Constant name="cloud_cli" />. Your account will automatically manage version control for you.
 

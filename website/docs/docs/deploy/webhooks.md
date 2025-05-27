@@ -20,7 +20,7 @@ You can create webhooks for these events from the [<Constant name="cloud" /> web
 
 <Constant name="cloud" /> retries sending each event five times. <Constant name="cloud" /> keeps a log of each webhook delivery for 30 days. Every webhook has its own **Recent Deliveries** section, which lists whether a delivery was successful or failed at a glance. 
 
-A webhook in <Constant name="cloud" /> has a timeout of 10 seconds. This means that if the endpoint doesn't respond within 10 seconds, the webhook processor will time out. This can result in a situation where the client responds successfully after the 10 second timeout and records a success status while the dbt cloud webhooks system will interpret this as a failure.
+A webhook in <Constant name="cloud" /> has a timeout of 10 seconds. This means that if the endpoint doesn't respond within 10 seconds, the webhook processor will time out. This can result in a situation where the client responds successfully after the 10 second timeout and records a success status while the <Constant name="cloud" /> webhooks system will interpret this as a failure.
 
 :::tip Videos 
 If you're interested in course learning with videos, check out the [Webhooks on-demand course](https://learn.getdbt.com/courses/webhooks) from dbt Labs.
@@ -57,9 +57,9 @@ Note that <Constant name="cloud" /> automatically deactivates a webhook after 5 
 To find the appropriate <Constant name="cloud" /> access URL for your region and plan, refer to [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
 ### Differences between completed and errored webhook events {#completed-errored-event-difference}
-The `job.run.errored` event is a subset of the `job.run.completed` events. If you subscribe to both, you will receive two notifications when your job encounters an error. However, dbt Cloud triggers the two events at different times:
+The `job.run.errored` event is a subset of the `job.run.completed` events. If you subscribe to both, you will receive two notifications when your job encounters an error. However, <Constant name="cloud" /> triggers the two events at different times:
 
-- `job.run.completed` &mdash;  This event only fires once the job’s metadata and artifacts have been ingested and are available from the dbt Cloud Admin and Discovery APIs. 
+- `job.run.completed` &mdash;  This event only fires once the job’s metadata and artifacts have been ingested and are available from the <Constant name="cloud" /> Admin and Discovery APIs. 
 - `job.run.errored` &mdash; This event fires immediately so the job’s metadata and artifacts might not have been ingested. This means that information might not be available for you to use.
 
 If your integration depends on data from the Admin API (such as accessing the logs from the run) or Discovery API (accessing model-by-model statuses), use the `job.run.completed` event and filter on `runStatus` or `runStatusCode`. 
@@ -69,7 +69,7 @@ If your integration doesn’t depend on additional data or if improved delivery 
 
 ## Validate a webhook
 
-You can use the secret token provided by dbt Cloud to validate that webhooks received by your endpoint were actually sent by dbt Cloud. Official webhooks will include the `Authorization` header that contains a SHA256 hash of the request body and uses the secret token as a key. 
+You can use the secret token provided by <Constant name="cloud" /> to validate that webhooks received by your endpoint were actually sent by <Constant name="cloud" />. Official webhooks will include the `Authorization` header that contains a SHA256 hash of the request body and uses the secret token as a key. 
 
 An example for verifying the authenticity of the webhook in Python:
 
@@ -196,8 +196,8 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 #### Path parameters
 | Name       | Description                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhooks are associated with. |
+| `your access URL` | The login URL for your <Constant name="cloud" /> account. |
+| `account_id` | The <Constant name="cloud" /> account the webhooks are associated with. |
 
 #### Response sample
 ```json
@@ -261,20 +261,20 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 #### Response schema 
 | Name | Description | Possible Values |
 | --- | --- | --- |
-| `data` | List of available webhooks for the specified dbt Cloud account ID. |  |
+| `data` | List of available webhooks for the specified <Constant name="cloud" /> account ID. |  |
 | `id` | The webhook ID. This is a universally unique identifier (UUID) that's unique across all regions, including multi-tenant and single-tenant |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
+| `account_identifier` | The unique identifier for _your_ <Constant name="cloud" /> account. |  |
 | `name` | Name of the outbound webhook. |  |
 | `description` | Description of the webhook. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, <Constant name="cloud" /> configures webhooks at the account level. | <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
 | `event_types` | The event type(s) the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
+| `client_url` | The endpoint URL for an application where <Constant name="cloud" /> can send event(s) to. |  |
 | `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
 | `created_at` | Timestamp of when the webhook was created. |  |
 | `updated_at` | Timestamp of when the webhook was last updated. |  |
 | `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
 | `dispatched_at` | Timestamp of when the webhook was last dispatched to the specified endpoint URL. |  |
-| `account_id` | The dbt Cloud account ID. |  |
+| `account_id` | The <Constant name="cloud" /> account ID. |  |
 
 ### Get details about a webhook
 Get detailed information about a specific webhook. 
@@ -286,8 +286,8 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 #### Path parameters
 | Name       | Description                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
+| `your access URL` | The login URL for your <Constant name="cloud" /> account. |
+| `account_id` | The <Constant name="cloud" /> account the webhook is associated with. |
 | `webhook_id` | The webhook you want detailed information on. |
 
 #### Response sample
@@ -320,17 +320,17 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 | Name | Description | Possible Values |
 | --- | --- | --- |
 | `id` | The webhook ID. |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
+| `account_identifier` | The unique identifier for _your_ <Constant name="cloud" /> account. |  |
 | `name` | Name of the outbound webhook. |  |
 | `description` | Complete description of the webhook. |  |
 | `event_types` | The event type the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
+| `client_url` | The endpoint URL for an application where <Constant name="cloud" /> can send event(s) to. |  |
 | `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
 | `created_at` | Timestamp of when the webhook was created. |  |
 | `updated_at` | Timestamp of when the webhook was last updated. |  |
 | `dispatched_at` | Timestamp of when the webhook was last dispatched to the specified endpoint URL. |  |
-| `account_id` | The dbt Cloud account ID. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `account_id` | The <Constant name="cloud" /> account ID. |  |
+| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, <Constant name="cloud" /> configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
 | `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
 
 ### Create a new webhook subscription
@@ -361,18 +361,18 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 #### Path parameters
 | Name | Description |
 | --- | --- |
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
+| `your access URL` | The login URL for your <Constant name="cloud" /> account. |
+| `account_id` | The <Constant name="cloud" /> account the webhook is associated with. |
 
 #### Request parameters
 | Name | Description | Possible Values |
 | --- | --- | --- |
 | `event_types` | Enter the event you want to trigger this webhook. You can subscribe to more than one event. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
 | `name` | Enter the name of your webhook. |  |
-| `client_url` | Enter your application's endpoint URL, where dbt Cloud can send the event(s) to.|  |
+| `client_url` | Enter your application's endpoint URL, where <Constant name="cloud" /> can send the event(s) to.|  |
 | `active` | Enter a Boolean value to indicate whether your webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
 | `description` | Enter a description of your webhook. |  |
-| `job_ids` | Enter the specific jobs you want the webhook to trigger on or you can leave this parameter as an empty list. If this is an empty list, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `job_ids` | Enter the specific jobs you want the webhook to trigger on or you can leave this parameter as an empty list. If this is an empty list, the webhook is set to trigger for all jobs in your account; by default, <Constant name="cloud" /> configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
 
 #### Response sample
 ```json
@@ -407,17 +407,17 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 | Name | Description | Possible Values |
 | --- | --- | --- |
 | `id` | The webhook ID. |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
+| `account_identifier` | The unique identifier for _your_ <Constant name="cloud" /> account. |  |
 | `name` | Name of the outbound webhook. |  |
 | `description` | Complete description of the webhook. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, <Constant name="cloud" /> configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
 | `event_types` | The event type the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
+| `client_url` | The endpoint URL for an application where <Constant name="cloud" /> can send event(s) to. |  |
 | `hmac_secret` | The secret key for your new webhook. You can use this key to [validate the authenticity of this webhook](#validate-a-webhook). |  |
 | `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
 | `created_at` | Timestamp of when the webhook was created. |  |
 | `updated_at` | Timestamp of when the webhook was last updated. |  |
-| `account_id` | The dbt Cloud account ID. |  |
+| `account_id` | The <Constant name="cloud" /> account ID. |  |
 | `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
 
 ### Update a webhook
@@ -447,8 +447,8 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 #### Path parameters
 | Name       | Description                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
+| `your access URL` | The login URL for your <Constant name="cloud" /> account. |
+| `account_id` | The <Constant name="cloud" /> account the webhook is associated with. |
 | `webhook_id` | The webhook you want to update. |
 
 #### Request parameters
@@ -456,7 +456,7 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 |------|-------------|-----------------|
 | `event_types` | Update the event type the webhook is set to trigger on. You can subscribe to more than one. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
 | `name` | Change the name of your webhook. |  |
-| `client_url` | Update the endpoint URL for an application where dbt Cloud can send event(s) to. |  |
+| `client_url` | Update the endpoint URL for an application where <Constant name="cloud" /> can send event(s) to. |  |
 | `active` | Change the Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
 | `description` | Update the webhook's description. |  |
 | `job_ids` | Change which jobs you want the webhook to trigger for. Or, you can use an empty list to trigger it for all jobs in your account. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
@@ -492,17 +492,17 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 | Name | Description | Possible Values |
 | --- | --- | --- |
 | `id` | The webhook ID. |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
+| `account_identifier` | The unique identifier for _your_ <Constant name="cloud" /> account. |  |
 | `name` | Name of the outbound webhook. |  |
 | `description` | Complete description of the webhook. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, <Constant name="cloud" /> configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
 | `event_types` | The event type the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
+| `client_url` | The endpoint URL for an application where <Constant name="cloud" /> can send event(s) to. |  |
 | `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
 | `created_at` | Timestamp of when the webhook was created. |  |
 | `updated_at` | Timestamp of when the webhook was last updated. |  |
 | `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
-| `account_id` | The dbt Cloud account ID. |  |
+| `account_id` | The <Constant name="cloud" /> account ID. |  |
 
 
 ### Test a webhook
@@ -516,8 +516,8 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 #### Path parameters
 | Name       | Description                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
+| `your access URL` | The login URL for your <Constant name="cloud" /> account. |
+| `account_id` | The <Constant name="cloud" /> account the webhook is associated with. |
 | `webhook_id` | The webhook you want to test.  |
 
 #### Response sample
@@ -544,8 +544,8 @@ DELETE https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscript
 #### Path parameters
 | Name       | Description                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
+| `your access URL` | The login URL for your <Constant name="cloud" /> account. |
+| `account_id` | The <Constant name="cloud" /> account the webhook is associated with. |
 | `webhook_id` | The webhook you want to delete. |
 
 #### Response sample

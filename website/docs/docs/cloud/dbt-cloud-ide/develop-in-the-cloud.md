@@ -1,5 +1,5 @@
 ---
-title: "About the dbt Cloud IDE"
+title: "About the Studio IDE"
 id: develop-in-the-cloud
 description: "Develop, test, run, and build in the Cloud IDE. You can compile dbt code into SQL and run it against your database directly"
 sidebar_label: About the IDE
@@ -25,7 +25,7 @@ These [features](#dbt-cloud-ide-features) create a powerful editing environment 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="85%" title="The dbt Cloud IDE includes version control,files/folders, an editor, a command/console, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="85%" title="The Studio IDE includes version control,files/folders, an editor, a command/console, and more."/>
 
 <Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="Enable dark mode for a great viewing experience in low-light environments."/>
 </DocCarousel>
@@ -44,7 +44,7 @@ To improve your experience using <Constant name="cloud" />, we suggest that you 
 - A [development environment and development credentials](#get-started-with-the-cloud-ide) set up
 - The environment must be on dbt version 1.0 or higher
 
-## dbt Cloud IDE features
+## Studio IDE features
 
 The <Constant name="cloud_ide" /> comes with features that make it easier for you to develop, build, compile, run, and test data models. 
 
@@ -157,7 +157,7 @@ Refer to <a href="https://www.getdbt.com/pricing/">dbt pricing plans</a> for mor
 As a proprietary product, <Constant name="cloud" />'s source code isn't available for community contributions. If you want to build something in the dbt ecosystem, we encourage you to review [this article](/community/contributing/contributing-coding) about contributing to a dbt package, a plugin, dbt-core, or this documentation site. Participation in open-source is a great way to level yourself up as a developer, and give back to the community.
 </DetailsToggle>
 
-<DetailsToggle alt_header="What is the difference between developing on the dbt Cloud IDE, the dbt Cloud CLI, and dbt Core?">
+<DetailsToggle alt_header="What is the difference between developing on the Studio IDE, the dbt CLI, and dbt Core?">
 You can develop dbt using the web-based IDE in <Constant name="cloud" /> or on the command line interface using the <Constant name="cloud_cli" /> or open-source <Constant name="core" />, all of which enable you to execute dbt commands. The key distinction between the <Constant name="cloud_cli" /> and <Constant name="core" /> is the <Constant name="cloud_cli" /> is tailored for <Constant name="cloud" />'s infrastructure and integrates with all its features:
 
 - <Constant name="cloud_ide" />: <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features"><Constant name="cloud" /></a> is a web-based application that allows you to develop dbt projects with the IDE, includes a purpose-built scheduler, and provides an easier way to share your dbt documentation with your team. The IDE is a faster and more reliable way to deploy your dbt models and provides a real-time editing and execution environment for your dbt project.

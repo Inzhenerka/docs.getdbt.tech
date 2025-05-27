@@ -1,5 +1,5 @@
 ---
-title: "Build and view your docs with dbt Cloud"
+title: "Build and view your docs with dbt"
 id: "build-and-view-your-docs"
 description: "Automatically generate project documentation as you run jobs."
 pagination_next: null

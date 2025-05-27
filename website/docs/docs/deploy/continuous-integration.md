@@ -1,5 +1,5 @@
 ---
-title: "Continuous integration in dbt Cloud"
+title: "Continuous integration in dbt"
 sidebar_label: "Continuous integration"
 description: "You can set up continuous integration (CI) checks to test every single change prior to deploying the code to production just like in a software development workflow."
 pagination_next: "docs/deploy/advanced-ci"
@@ -7,7 +7,7 @@ pagination_next: "docs/deploy/advanced-ci"
 
 To implement a continuous integration (CI) workflow in <Constant name="cloud" />, you can set up automation that tests code changes by running [CI jobs](/docs/deploy/ci-jobs) before merging to production. <Constant name="cloud" /> tracks the state of what’s running in your production environment so, when you run a CI job, only the modified data assets in your pull request (PR) and their downstream dependencies are built and tested in a staging schema. You can also view the status of the CI checks (tests) directly from within the PR; this information is posted to your <Constant name="git" /> provider as soon as a CI job completes. Additionally, you can enable settings in your <Constant name="git" /> provider that allow PRs only with successful CI checks to be approved for merging.  
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/ci-workflow.png" width="90%" title="Workflow of continuous integration in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/ci-workflow.png" width="90%" title="Workflow of continuous integration in dbt"/>
 
 Using CI helps:
 
@@ -19,13 +19,13 @@ Using CI helps:
 
 When you [set up CI jobs](/docs/deploy/ci-jobs#set-up-ci-jobs), <Constant name="cloud" /> listens for a notification from your <Constant name="git" /> provider indicating that a new PR has been opened or updated with new commits. When <Constant name="cloud" /> receives one of these notifications, it enqueues a new run of the CI job.
 
-dbt Cloud builds and tests models, semantic models, metrics, and saved queries affected by the code change in a temporary schema, unique to the PR. This process ensures that the code builds without error and that it matches the expectations as defined by the project's dbt tests. The unique schema name follows the naming convention `dbt_cloud_pr_<job_id>_<pr_id>` (for example, `dbt_cloud_pr_1862_1704`) and can be found in the run details for the given run, as shown in the following image:
+<Constant name="cloud" /> builds and tests models, semantic models, metrics, and saved queries affected by the code change in a temporary schema, unique to the PR. This process ensures that the code builds without error and that it matches the expectations as defined by the project's dbt tests. The unique schema name follows the naming convention `dbt_cloud_pr_<job_id>_<pr_id>` (for example, `dbt_cloud_pr_1862_1704`) and can be found in the run details for the given run, as shown in the following image:
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/using_ci_dbt_cloud.png" width="90%"title="Viewing the temporary schema name for a run triggered by a PR"/>
 
 When the CI run completes, you can view the run status directly from within the pull request. <Constant name="cloud" /> updates the pull request in GitHub, GitLab, or Azure DevOps with a status message indicating the results of the run. The status message states whether the models and tests ran successfully or not. 
 
-dbt Cloud deletes the temporary schema from your <Term id="data-warehouse" /> when you close or merge the pull request. If your project has schema customization using the [generate_schema_name](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name) macro, dbt Cloud might not drop the temporary schema from your data warehouse. For more information, refer to [Troubleshooting](/docs/deploy/ci-jobs#troubleshooting).
+<Constant name="cloud" /> deletes the temporary schema from your <Term id="data-warehouse" /> when you close or merge the pull request. If your project has schema customization using the [generate_schema_name](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name) macro, <Constant name="cloud" /> might not drop the temporary schema from your data warehouse. For more information, refer to [Troubleshooting](/docs/deploy/ci-jobs#troubleshooting).
 
 import GitProvidersCI from '/snippets/_git-providers-supporting-ci.md';
 
@@ -74,7 +74,7 @@ If the linter runs into errors, you can specify whether dbt should stop running 
 You can optionally configure SQLFluff linting rules to override default linting behavior.
 
 - Use [SQLFluff Configuration Files](https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html#configuration-files) to override the default linting behavior in dbt.
-- Create a `.sqlfluff` configuration file in your project, add your linting rules to it, and dbt Cloud will use them when linting.
+- Create a `.sqlfluff` configuration file in your project, add your linting rules to it, and <Constant name="cloud" /> will use them when linting.
     - When configuring, you can use `dbt` as the templater (for example, `templater = dbt`)
     - If you’re using the <Constant name="cloud_ide" />, <Constant name="cloud" /> CLI, or any other editor, refer to [Customize linting](/docs/cloud/dbt-cloud-ide/lint-format#customize-linting) for guidance on how to add the dbt-specific (or dbtonic) linting rules we use for own project.
 - For complete details, refer to [Custom Usage](https://docs.sqlfluff.com/en/stable/gettingstarted.html#custom-usage) in the SQLFluff documentation.

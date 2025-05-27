@@ -1,7 +1,7 @@
 ---
 title: "About Hybrid projects"
 sidebar_label: "About Hybrid projects"
-description: "Learn how to upload dbt Core artifacts into dbt Cloud to create and set up hybrid projects."
+description: "Learn how to upload dbt Core artifacts into the dbt platform to create and set up hybrid projects."
 pagination_next: "docs/deploy/hybrid-setup"
 ---
 
@@ -29,7 +29,7 @@ To upload artifacts, make sure you meet these prerequisites:
 - You're on [<Constant name="cloud" />'s release tracks](/docs/dbt-versions/cloud-release-tracks) and your <Constant name="core" /> project is on dbt v1.10 or higher
 - [Configured](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) a hybrid project in <Constant name="cloud" />.
 - Updated your existing <Constant name="core" /> project with latest changes and [configured it with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
-    - Ensure models that you want to share with other dbt Cloud projects use `access: public` in their model configuration. This makes the models more discoverable and shareable
+    - Ensure models that you want to share with other <Constant name="cloud" /> projects use `access: public` in their model configuration. This makes the models more discoverable and shareable
     - Learn more about [access modifier](/docs/mesh/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access)
 - Update [<Constant name="cloud" /> permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in <Constant name="cloud" />
 

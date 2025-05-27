@@ -1,7 +1,7 @@
 ---
 title: "Monitor jobs and alerts"
 id: "monitor-jobs"
-description: "Monitor your dbt Cloud job and set up alerts to ensure seamless orchestration and optimize your data transformations"
+description: "Monitor your dbt job and set up alerts to ensure seamless orchestration and optimize your data transformations"
 tags: ["scheduler"]
 pagination_next: "docs/deploy/run-visibility"
 ---
@@ -24,7 +24,7 @@ To set up and add data health tiles to view data freshness and quality checks in
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="98%" title="An overview of a dbt Cloud job run which contains Run Summary, Job Trigger, Run Duration, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="98%" title="An overview of a dbt job run which contains Run Summary, Job Trigger, Run Duration, and more."/>
 
 <Lightbox src="/img/docs/dbt-cloud/deployment/run-history.png" width="95%" title="Run History dashboard allows you to monitor the health of your dbt project and displays jobs, job status, environment, timing, and more."/>
 

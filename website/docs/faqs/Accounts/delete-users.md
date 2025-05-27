@@ -1,12 +1,12 @@
 ---
-title: How do I delete a user in dbt Cloud?
-description: "Deleting a user in dbt Cloud"
+title: How do I delete a user in dbt?
+description: "Deleting a user in dbt"
 sidebar_label: 'How to delete a user'
 id: delete-users
 
 ---
 
-To delete a user in dbt Cloud, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
+To delete a user in <Constant name="cloud" />, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
 
 1. From <Constant name="cloud" />, click on your account name in the left side menu and, select **Account settings**.
 
@@ -23,7 +23,7 @@ If you are on a **Starter** plan and you are deleting users to reduce the number
 2. Enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing Address** section. If you leave any field blank, you won't be able to save your changes.
 3. Click **Update Payment Information** to save your changes. 
 
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="85%" title="Navigate to Account Settings -> Users to modify dbt Cloud users" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="85%" title="Navigate to Account Settings -> Users to modify dbt users" />
 
 ## Related docs
 

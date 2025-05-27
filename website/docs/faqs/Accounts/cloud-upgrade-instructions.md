@@ -1,7 +1,7 @@
 ---
-title: "How to upgrade a dbt Cloud account"
+title: "How to upgrade a dbt account"
 id: "cloud-upgrade-instructions"
-description: "Instructions for upgrading a dbt Cloud account after the trial ends."
+description: "Instructions for upgrading a dbt account after the trial ends."
 ---
 
 <Constant name="cloud" /> offers [several plans](https://www.getdbt.com/pricing/) with different features that meet your needs. This document is for <Constant name="cloud" /> admins and explains how to select a plan in order to continue using <Constant name="cloud" />. 
@@ -83,9 +83,9 @@ For commonly asked billings questions, refer to the <Constant name="cloud" /> [p
 <details>
   <summary>Can I pay by invoice?</summary>
   
-  Currently, dbt Cloud Starter plan payments must be made with a credit card, and by default they will be billed monthly based on the number of <a href="/docs/cloud/billing">developer seats and usage</a>.
+  Currently, <Constant name="cloud" /> Starter plan payments must be made with a credit card, and by default they will be billed monthly based on the number of <a href="/docs/cloud/billing">developer seats and usage</a>.
   
-  We don’t have any plans to do invoicing for Starter plan accounts in the near future, but we do currently support invoices for companies on the dbt Cloud Enterprise-tier plan. Feel free to <a href="https://www.getdbt.com/contact/">contact</a> us to build your Enterprise pricing plan.
+  We don’t have any plans to do invoicing for Starter plan accounts in the near future, but we do currently support invoices for companies on the <Constant name="cloud" /> Enterprise-tier plan. Feel free to <a href="https://www.getdbt.com/contact/">contact</a> us to build your Enterprise pricing plan.
 
 </details>
 <details>
