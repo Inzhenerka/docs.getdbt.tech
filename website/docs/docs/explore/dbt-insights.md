@@ -2,12 +2,11 @@
 title: "About dbt Insights"
 description: "Learn how to query data and perform exploratory data analysis using dbt Insights"
 sidebar_label: "About dbt Insights"
-unlisted: true
 tags: [Semantic Layer]
 image: /img/docs/dbt-insights/insights-chart.jpg
 ---
 
-# About dbt Insights <Lifecycle status="beta,managed,managed_plus" />
+# About dbt Insights <Lifecycle status="preview,managed,managed_plus" />
 
 <IntroText>
 Learn how to query data with <Constant name="query_page" /> and view documentation in <Constant name="explorer" />.
