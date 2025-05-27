@@ -38,9 +38,9 @@ We create dbt metadata and pull external metadata. <Constant name="explorer" /> 
 
 ## Catalog overview 
 
-:::info [Global navigation](/docs/explore/explore-projects#search-resources) <Lifecycle status="starter, enterprise, enterprise+" />
+:::info [Global navigation](/docs/explore/explore-projects#search-resources) <Lifecycle status="starter, enterprise, enterprise+" /> <Lifecycle status="preview" />
 
-<Constant name="explorer" /> enables you to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
+<Constant name="explorer" /> introduces the ability to widen your search by searching your dbt resources (models, seeds, snapshots, sources, exposures and more so) across your entire account. This broadens the results returned and gives you greater insight into all the assets across your dbt projects.
 
 To enable global navigation:
 
@@ -62,6 +62,8 @@ Navigate the <Constant name="explorer" /> overview page to access your project's
 - **Data health signals** &mdash; View the [data-health-signals](/docs/explore/data-health-signals) for each resource to understand its health and performance.
 
 ### Catalog permissions
+
+When using global navigation and searching across your projects, the following permissions apply.
 
 - Your project access permissions determine which dbt projects appear in the left-hand menu of the global navigation.
 - In <Constant name="explorer" /> searches, we use soft access controls, you'll see all matching resources in search results, with clear indicators for items you don't have access to.

@@ -1,6 +1,10 @@
 ## Generate metadata
 
-<Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). The metadata that's available depends on the [deployment environment](/docs/deploy/deploy-environments) you've designated as _production_ or _staging_ in your <Constant name="cloud" /> project.
+<Constant name="explorer" /> uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your dbt project](/docs/dbt-cloud-apis/project-state). The metadata that's available depends on the [deployment environment](/docs/deploy/deploy-environments) you've designated as _production_ or _staging_ in your <Constant name="cloud" /> project.
+
+<Constant name="explorer" /> also allows you to ingest external metadata from Snowflake, giving you visibility into tables, views, and other resources that aren't defined in dbt with <Constant name="explorer" />.
+
+## dbt metadata
 
 If you're using a [hybrid project setup](/docs/deploy/hybrid-setup) and uploading artifacts from dbt Core, make sure to follow the [setup instructions](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) to connect your project in <Constant name="cloud" />. This enables <Constant name="explorer" /> to access and display your metadata correctly.
 
