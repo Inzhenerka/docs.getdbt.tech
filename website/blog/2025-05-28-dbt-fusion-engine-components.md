@@ -190,6 +190,7 @@ Our [Contributors' Principles](/community/resources/contributor-expectations) re
 - If you want to open issues describing bugs during the Fusion engine's beta period, you can. (This is probably one of the highest-leverage things you can do!)
 - If you want to open a discussion and pitch a new way to use dbt more effectively in our new SQL-aware world, you can.
 - If you want to move upstream, and contribute to the standards underlying the dbt Fusion engine like Arrow, ADBC, Iceberg, or DataFusion, you can. You might see some familiar faces while you're there!
-- And if you just want to let dbt get better and better in the background, you can do that too.
+- If you just want to let dbt get better and better in the background, you can do that too.
+- Want to get involved in the team building this? If the components here are uniquely interesting to you, email careers.fusion@dbtlabs.com.
 
 If you need a hand wrapping your head around any of these new components, drop by #dbt-fusion-engine in the Community Slack - we'd love to chat.
