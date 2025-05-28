@@ -39,3 +39,10 @@ Please note, always review AI-generated code and content as it may produce incor
 
 To give feedback, please reach out to your dbt Labs account team. We appreciate your feedback and suggestions as we improve <Constant name="visual_editor" />.
 
+## Resources
+
+Learn more about Canvas: 
+
+- How to [use Canvas](/docs/cloud/use-canvas)
+- The Canvas [quickstart guide](/guides/canvas)
+- [Canvas fundamentals course](https://learn.getdbt.com/learn/course/canvas-fundamentals) on [dbt Learn](https://learn.getdbt.com/catalog)
