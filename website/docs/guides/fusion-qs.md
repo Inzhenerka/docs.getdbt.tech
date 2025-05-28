@@ -117,19 +117,19 @@ The dbt VS Code extension is available in the [Visual Studio extension marketpla
 
 1. Run this command from your command line to set up an example project and configure a database connection profile:
 
-If you do already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` and edit `profile: jaffle_shop` to `profile: <YOUR-PROFILE-NAME>`.
-
-```bash
-dbtf init --skip-profile-setup
-```
-
-If you do **not** already have a connection profile that you want to use, leave off the `--skip-profile-setup` flag, and prompts will guide you through configuring a profile:
+If you do **not** already have a connection profile that you want to use, start with this command and prompts will guide you through configuring a profile:
 
 ```bash
 dbtf init
 ```
 
-`init` will automatically run `dbtf debug` add the end, which will check to ensure the newly created profile establishes a valid connection with the database.
+If you do already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` to replace `profile: jaffle_shop` with `profile: <YOUR-PROFILE-NAME>`.
+
+```bash
+dbtf init --skip-profile-setup
+```
+
+If you created new credentials through the interactive prompts, `init` will automatically run `dbtf debug` at the end. This will check to ensure the newly created profile establishes a valid connection with the database.
 
 2. Change directories into your newly created project:
 
