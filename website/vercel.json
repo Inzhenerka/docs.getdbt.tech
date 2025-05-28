@@ -39,6 +39,11 @@
   ],
   "redirects": [
     {
+      "source": "/docs/cloud/secure/about-privatelink",
+      "destination": "/docs/cloud/secure/about-private-connectivity",
+      "permanent": true
+    },
+    {
       "source": "/docs/cloud/privatelink/about-privatelink",
       "destination": "/docs/cloud/secure/about-private-connectivity",
       "permanent": true
@@ -4159,7 +4164,17 @@
     },
     {
       "source": "/docs/contributing/oss-expectations",
-      "destination": "/community/resources/oss-expectations",
+      "destination": "/community/resources/contributor-expectations",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/oss-expectations",
+      "destination": "/community/resources/contributor-expectations",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/oss-projects",
+      "destination": "/community/resources/oss-sa-projects",
       "permanent": true
     },
     {
