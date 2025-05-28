@@ -4,10 +4,8 @@ description: "The new engine makes it possible to decouple source code from func
 slug: dbt-fusion-engine-components
 image: /img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png
 authors: [jason_ganz, joel_labes]
-
 tags: [analytics craft, data ecosystem]
 hide_table_of_contents: false
-
 date: 2025-05-28
 is_featured: true
 ---
