@@ -106,6 +106,68 @@ In addition, you can look at the **Job Details** page's **Insights** tab to show
 
 Usage information is available to customers on consumption-based plans, and some usage visualizations might not be visible to customers on legacy plans. Any usage data shown in <Constant name="cloud" /> is only an estimate of your usage, and there could be a delay in showing usage data in the product. Your final usage for the month will be visible on your monthly statements (statements applicable to Starter and Enterprise-tier plans).
 
+## dbt Copilot: Usage metering and limiting <Lifecycle status="Starter, Enterprise, Enterprise+" />
+
+<Constant name="copilot" /> usage is measured based on the number of completed AI requests, known as <Constant name="copilot" /> actions. Usage limits are enforced to ensure fair access and system performance.
+
+A defined number of <Constant name="copilot" /> invocations is allocated monthly based on your [subscription plan](https://www.getdbt.com/pricing). Once the usage limit is reached, access to Copilot functionality will be temporarily disabled until the start of the next billing cycle.
+
+### Usage and metering information 
+
+<Expandable alt_header="AI usage tracking by Copilot actions">
+
+<Constant name="copilot" /> actions refer to requests made to the <Constant name="copilot" /> assistant through the <Constant name="cloud" /> interface. These actions are recorded and displayed on the billing page alongside other usage metrics.
+
+The following interactions count as <Constant name="copilot" /> actions:
+
+- **Each inline generation** &mdash; Every time <Constant name="copilot" /> writes or suggests code in your file, it counts toward your usage limit.
+
+- **Each generation of documentation, tests, semantic models, or metrics** &mdash; Any time you ask <Constant name="copilot" /> to automatically create things like documentation, tests, data models, or metrics, it counts as one interaction.
+
+- **Each generation within <Constant name="copilot" /> chats on <Constant name="visual_editor" /> or <Constant name="query_page" />** &mdash; Any time you use <Constant name="copilot" /> chat in <Constant name="visual_editor" /> or <Constant name="query_page" /> to generate something, it counts as an interaction.
+
+</Expandable>
+
+<Expandable alt_header="Allowed limits on number of Copilot actions per month per license">
+
+The following table outlines the limits of <Constant name="copilot" /> actions by plan per month:
+
+|Plan                       |Limit |
+|---------------------------|------|
+|Developer                  | ❌   |
+|Starter*                   |500   |
+|Enterprise                 |5,000 |
+|Enterpise+                 |10,000|
+
+*Team plan customers who enrolled in <Constant name="copilot" /> Beta prior to March 19, 2025 have access to <Constant name="copilot" />. All other legacy Team plan customers must move to the [Starter plan or above](https://www.getdbt.com/pricing) to get access. 
+
+</Expandable>
+
+<Expandable alt_header="Notifications when limitations are reached ">
+
+When usage limits are reached, a notification appears in the UI. Additionally, an email notification is sent to the designated recipient. 
+
+For users on the Starter plan, the account owner receives an email notification when the usage limit is reached. 
+
+For users enrolled on the Enterprise and Enterprise+ plans, both the billing administrator and the account administrator are notified by email when the usage limit is reached.
+
+Once usage limits are reached, attempts to perform an action in <Constant name="copilot" /> triggers a banner notification indicating that the limit has been exceeded.
+
+Under bring your own key (BYOK), once your usage hits 100%, <Constant name="copilot" /> will be deactivated and you'll be unable to make requests to <Constant name="copilot" /> until your next billing cycle. Reach out the Support team at support@getdbt.com for help.
+
+</Expandable>
+
+### Viewing usage in the product
+
+To view the usage in your account:
+
+1. Navigate to [**Account settings**](/docs/cloud/account-settings).
+
+2. Select **Billing** under the Settings header.
+3. On the billing page, click **<Constant name="copilot" />** to view your usage.
+
+<Lightbox src="/img/docs/dbt-cloud/view-usage-in-copilot.gif" title="View usage in Copilot" />
+
 
 ## Plans and Billing
 
