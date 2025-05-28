@@ -808,6 +808,7 @@ const sidebarSettings = {
         "docs/cloud/dbt-copilot",
         "docs/cloud/enable-dbt-copilot",
         "docs/cloud/use-dbt-copilot",
+        "docs/cloud/copilot-chat-in-studio",
         "docs/cloud/dbt-copilot-faqs",
         ],
       },
