@@ -1,6 +1,6 @@
 ---
-title: "Model context protocol"
-sidebar_label: "Model context protocol"
+title: "Model Context Protocol"
+sidebar_label: "Model Context Protocol"
 description: "Learn about the MCP server in dbt"
 id: "mcp"
 pagination_prev: "docs/dbt-cloud-apis/overview"
