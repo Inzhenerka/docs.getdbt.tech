@@ -14,7 +14,7 @@ is_featured: true
 
 Today, we announced the [dbt Fusion engine](/blog/dbt-fusion-engine).
 
-The dbt Fusion engine isn't just one thing – it's a set of interconnected components working together to power the next generation of analytics engineering.
+Fusion isn't just one thing — it's a set of interconnected components working together to power the next generation of analytics engineering.
 
 This post maps out each piece of the Fusion architecture, explains how they fit together, and clarifies what's available to you whether you're compiling from source, using our pre-built binaries, or developing within a dbt Fusion powered product experience.
 
@@ -42,7 +42,7 @@ Available at: [https://github.com/dbt-labs/dbt-fusion](https://github.com/dbt-la
 
 License: ELv2
 
-This is the foundation of the Fusion engine - the code that lets you:
+This will be the foundation of the Fusion engine - the code that lets you:
 
 - Execute your `dbt seed/run/test/build`
 - Render your Jinja and create your DAG
@@ -51,9 +51,9 @@ This is the foundation of the Fusion engine - the code that lets you:
 
 To be clear, the self-compiled binary that's available today doesn't do much yet. By the time the new engine enters general availability, its source-available components will [exceed the net capabilities of dbt Core](/blog/dbt-fusion-engine-path-to-ga). **If you are a data team running dbt Core, simply running the self-compiled version of dbt Fusion will be a pure upgrade.**
 
-This repository also includes the code necessary for [Level 1 SQL Comprehension](/blog/the-levels-of-sql-comprehension#level-1-parsing) (the ability to parse SQL into a syntax tree).
+This repository will also include the code necessary for [Level 1 SQL Comprehension](/blog/the-levels-of-sql-comprehension#level-1-parsing) (the ability to parse SQL into a syntax tree).
 
-As long as you comply with the [three restrictions in ELv2](http://www.getdbt.com/licenses-faq),
+As long as you comply with the [three restrictions in ELv2](http://www.getdbt.com/licenses-faq):
 
 - ✅ You can adopt the binary into your data workflows without dbt Labs' involvement
 - ✅ You can see and modify the code
@@ -62,7 +62,7 @@ As long as you comply with the [three restrictions in ELv2](http://www.getdbt.co
 
 Artifact type: Precompiled binary
 
-Download it directly - instructions [here](/docs/fusion/install-fusion#install-fusion)
+How to access: download following the instructions [here](/docs/fusion/install-fusion#install-fusion)
 
 License: ELv2
 
@@ -75,9 +75,9 @@ When you download the precompiled binary created by dbt Labs, it contains:
 As long as you comply with the three restrictions in ELv2,
 
 - ✅ You can adopt the binary into your data workflows without dbt Labs' involvement
-- ❌ But you can not see or modify the code itself
+- ❌ But you cannot see or modify the code itself
 
-**The vast majority of existing dbt Core users that adopt the freely distributed components of Fusion should use the binary to do so, rather than compiling it from source code.** The binary has the same permissions but more capabilities (and it saves you from having to compile it yourself), even if you are not a dbt Labs customer.
+**The vast majority of existing dbt Core users that adopt the freely distributed components of Fusion should use the binary to do so, rather than compiling it from source code.** The binary has the same permissions but more capabilities (and it saves you from having to compile it yourself). You can use it internally at your company for free, even if you are not a dbt Labs customer.
 
 ### Using the dbt Fusion engine with a commercial agreement
 
@@ -87,7 +87,7 @@ Available at: [Download binary](/docs/fusion/install-fusion#install-fusion) and 
 
 License: ELv2 (binary) and Proprietary (service)
 
-Organizations who *do* have a commercial agreement will unlock even more capabilities, but they'll use the exact same publicly-released binary discussed above. *(Joel commentary - As someone who has been juggling the dbt Cloud CLI alongside dbt Core for the last couple of years, I cannot overstate how thrilled I am by this)*.
+Organizations who *do* have a commercial agreement will unlock even more capabilities, but they'll use the exact same publicly-released binary discussed above. If you want to start using platform features, [such as dbt Mesh](https://docs.getdbt.com/docs/mesh/govern/project-dependencies), all you need to do is [download a configuration file](https://docs.getdbt.com/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli). *(Joel commentary - As someone who has been juggling the dbt Cloud CLI alongside dbt Core for the last couple of years, I cannot overstate how thrilled I am by this.)*
 
 Obviously there's additional cloud-backed services necessary to deliver platform-specific features, such as State-Aware Orchestration. That code is proprietary and governed by your agreement with dbt Labs.
 
@@ -99,7 +99,7 @@ The dbt Fusion engine is the headline act, but its underlying technologies can b
 
 Artifact type: Precompiled binaries
 
-Located at: [Install on the VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt)
+How to access: [Install on the VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt)
 
 License: Proprietary
 
@@ -121,24 +121,24 @@ When you think of dbt, you're probably thinking of a combination of the Engine (
 
 The Authoring Layer is made up of everything necessary to define the *what* of a dbt project: things like the **YAML specs, Artifact specs, CLI commands and flags**, and **macro signatures**. As the user interface to dbt, the authoring layer is standard between Core and Fusion, although the Fusion engine does not include support for various behaviours and functions deprecated in earlier releases of dbt Core.
 
-For the first time, we're releasing a series of definitive JSON schemas defining the acceptable content of dbt's various YAML files. These are Apache 2.0-licensed and will be particularly helpful for other tools integrating with dbt projects.
+For the first time, we're releasing a series of definitive JSON schemas, _backed by the code in dbt Core and Fusion_, that encapsulate the acceptable content of dbt's various YAML files. These are Apache 2.0-licensed and will be particularly helpful for other tools integrating with dbt projects.
 
-This joins the existing JSON schemas defining the shape of dbt's artifacts (e.g. `manifest.json`).
+This joins the existing JSON schemas defining the shape of dbt's output artifacts (e.g. `manifest.json`). As we stabilize Fusion's metadata output (logging and artifacts) on the path to GA, we will update the published schemas.
 
 ### dbt Fusion engine adapters
 
 Artifact type: Source code
 
-Available at: (repo to come, in the meantime you can discuss this in #dbt-fusion-engine in the dbt Slack)
+Available at: Initial code in [`dbt-fusion` repo](https://github.com/dbt-labs/dbt-fusion), with more to come
 
-License: Apache 2.0 (Later this year)
+License: Apache 2.0 (later this year)
 
 Adapters are responsible for two key tasks:
 
 - Knowing how to create the appropriate SQL commands (via macros and materializations) for a data platform
 - Connecting to that target data platform and sending it SQL commands
 
-Much like Fusion is the next generation engine for dbt, we also needed next generation *adapters* for dbt. These adapters are written in Rust and built on the Apache Arrow standard.
+Much like Fusion is the next generation engine for dbt, we also needed next-generation *adapters* for dbt. These adapters are written in Rust and built on the Apache Arrow standard.
 
 The templating of SQL commands largely carries over from macros in the dbt Core adapters. Database connectivity is another story, the dbt Fusion engine cannot use the Python classes present in each adapter, for reasons both practical and performance-related.
 
