@@ -2,7 +2,7 @@
 title: "The Components of the dbt Fusion engine and how they fit together"
 description: "The new engine makes it possible to decouple source code from functionality, introducing new ways to distribute functionality to the Community."
 slug: dbt-fusion-engine-components
-image: /img/blog/2025-05-28-dbt-fusion-engine-components/vscode-ext-binary-roles.png
+image: /img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png
 authors: [jason_ganz, joel_labes]
 
 tags: [analytics craft, data ecosystem]
