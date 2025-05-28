@@ -9,7 +9,6 @@ Databricks is built on [Delta Lake](https://docs.databricks.com/aws/en/delta/) a
 
 When a dbt model is configured with the table property `UniForm`, it will duplicate the Delta metadata for an Iceberg-compatible metadata. This allows external Iceberg compute engines to read from Unity Catalogs. 
 
-
 Example SQL:
 
 ```sql
