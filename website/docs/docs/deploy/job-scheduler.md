@@ -25,7 +25,8 @@ The scheduler handles various tasks including:
 The scheduler also:
 - Uses [<Constant name="cloud" />'s Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="managed,managed_plus" />
 - Powers running dbt in staging and production environments, bringing ease and confidence to CI/CD workflows and enabling observability and governance in deploying dbt at scale. 
-- Uses [Hybrid projects](/docs/deploy/hybrid-projects) to upload dbt Core artifacts into <Constant name="cloud" /> for central visibility, cross-project referencing, and easier collaboration. <Lifecycle status="beta,managed_plus" />
+- Uses [Hybrid projects](/docs/deploy/hybrid-projects) to upload <Constant name="core" /> artifacts into dbt for central visibility, cross-project referencing, and easier collaboration. <Lifecycle status="beta,managed_plus" />
+- Uses [state-aware orchestration](/docs/deploy/state-aware-about) to decide what needs to be rebuilt based on source freshness, model staleness, and code changes. <Lifecycle status="beta,managed,managed_plus" />
 
 ## Scheduler terms
 

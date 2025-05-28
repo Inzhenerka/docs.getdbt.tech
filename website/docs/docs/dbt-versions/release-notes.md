@@ -15,6 +15,47 @@ pagination_prev: null
 - **Behavior change:** A change to existing behavior that doesn't fit into the other categories, such as feature deprecations or changes to default settings
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
+## May 2025
+
+
+### 2025 dbt Launch Showcase
+The following features are new or enhanced as part of our [dbt Launch Showcase](https://www.getdbt.com/resources/webinars/2025-dbt-cloud-launch-showcase) on May 28th, 2025:
+
+- **New**: The dbt Fusion engine is the brand new dbt engine re-written from the ground up to provide incredible speed, cost-savings tools, and comprehensive SQL language tools. The dbt Fusion engine is now available in beta for Snowflake users.
+  - Read more [about Fusion](/docs/fusion/about-fusion).
+  - Understand what actions you need to take to get your projects Fusion-ready with the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
+  - Begin testing today with the [quickstart guide](/guides/fusion).
+  - Know [where we're headed with the dbt Fusion engine](https://getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine). 
+- **New**: The dbt VS Code extension is a powerful new tool that brings the speed and productivity of the dbt Fusion engine into your Visual Studio Code editor. This is a free download that will forever change your dbt development workflows. The dbt VS Code extension is now available as beta [alongside Fusion](https://getdbt.com/blog/get-to-know-the-new-dbt-fusion-engine-and-vs-code-extension). Check out the [installation instructions](/docs/install-dbt-extension) and read more [about the features](/docs/about-dbt-extension) to get started enhancing your dbt workflows today! 
+- **New**: dbt Explorer is now dbt Catalog! Learn more about the change [here].
+	- dbt's Catalog, global navigation provides a search experience that lets you find dbt resources across all your projects, as well as non-dbt resources in Snowflake.
+	- External metadata ingestion allows you to connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt. 
+- **New**: [dbt Canvas is now generally available](https://getdbt.com/blog/dbt-canvas-is-ga) (GA). Canvas is the intuitive visual editing tool that enables anyone to create dbt models with an easy to understand drag-and-drop interface. Read more [about Canvas](/docs/cloud/canvas) to begin empowering your teams to build more, faster! 
+- **New**: [State-aware orchestration](https://docs.getdbt.com/docs/deploy/state-aware-about) is now in beta! Every time a new job in Fusion runs, state-aware orchestration automatically determines which models to build by detecting changes in code or data.
+- **New**: With Hybrid projects, your organization can adopt complementary dbt Core and dbt Cloud workflows and seamlessly integrate these workflows by automatically uploading dbt Core artifacts into dbt Cloud. [Hybrid projects](/docs/deploy/hybrid-projects) are now generally available. 
+- **New**: [System for Cross-Domain Identity Management (SCIM)](/docs/cloud/manage-access/scim) through Okta is now GA.
+- **New**: dbt now acts as a [Model Context Protocol](link to page) (MCP) server, allowing seamless integration of AI tools with data warehouses through a standardized framework.
+- **New**: You can view your [usage metering and limiting in dbt Copilot](link to page) on the billing page of your dbt Cloud account.
+- **New**: You can use Copilot to create a `dbt-styleguide.md` for dbt projects. The generated style guide template includes SQL style guidelines, model organization and naming conventions, model configurations and testing practices, and recommendations to enforce style rules. For more informtation, see [](link to page).
+- **New**: Leverage dbt Copilot to generate SQL queries in [Insights](/docs/explore/dbt-insights) from natural language prompts, enabling efficient data exploration within a context-aware interface.
+- **New**: The dbt platform Cost management dashboard is now available as a preview for Snowflake users on Enterprise and Enteprise Plus plans. Gain valuable insights into your warehouse spend with the comprehensive and interactive dashboard. Read more [about it](/docs/cloud/cost-management) to get started with your cost savings analysis today!
+- **New**: Apache Iceberg and support for external Iceberg catalogs is now available! External catalogs are a vital part of dbt Mesh and a critical component for supporting large data sets across a variety of warehouses. Read more about [Iceberg](https://docs.getdbt.com/docs/mesh/iceberg/apache-iceberg-support) and [external catalog](https://docs.getdbt.com/docs/mesh/iceberg/about-catalogs) support to begin enhancing your dbt Mesh configurations. 
+- **New** Preview support for [Power BI integration with Semantic Layer](/docs/cloud-integrations/semantic-layer/power-bi) is now available. This integration provides a live connection to the Semantic Layer through Power BI Desktop or Power BI Service.
+- **Update** Product renaming and other changes. For more information, refer to [Updated names for dbt platform and features](https://getdbt.com/blog/updated-names-for-dbt-platform-and-features).
+  <Expandable alt_header="Product names key">
+  * Canvas (previously Visual Editor)
+  * Catalog (previously Explorer)
+  * Copilot
+  * Cost Management
+  * dbt Fusion engine
+  * Insights
+  * Mesh
+  * Orchestrator
+  * Studio IDE (previously Cloud IDE)
+  * Semantic Layer
+  * Pricing plan changes. For more information, refer to [One dbt](https://www.getdbt.com/product/one-dbt).
+  </Expandable>
+
 
 ## April 2025
 

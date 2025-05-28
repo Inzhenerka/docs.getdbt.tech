@@ -45,6 +45,12 @@ Learn how to use <Constant name="cloud" />'s features to help your team ship tim
     icon="dbt-bit"/>
 
 <Card
+    title="State-aware orchestration"
+    body="Intelligently determines which models to build by detecting changes in code or data at each job run."
+    link="/docs/deploy/state-aware-about"
+    icon="dbt-bit"/>
+
+<Card
     title="Continuous integration"
     body="Set up CI checks so you can build and test any modified code in a staging environment when you open PRs and push new commits to your dbt repository."
     link="/docs/deploy/continuous-integration"

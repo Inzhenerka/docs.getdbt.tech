@@ -142,7 +142,7 @@ Once you have the values from the previous step, you can prepare your <Constant 
 6. After the run completes, you should see a `Artifacts uploaded successfully to artifact ingestion API: command run completed successfully` message and a run in <Constant name="cloud" /> under your production environment.
 
 ### Review artifacts in the dbt platform
-Now that you've uploaded dbt Core artifacts into <Constant name="dbt_platform" /> and executed a `dbt run`, you can view the artifacts job run:
+Now that you've uploaded dbt Core artifacts into the <Constant name="dbt_platform" /> and executed a `dbt run`, you can view the artifacts job run:
 1. Navigate to **Deploy**
 2. Click on **Jobs** and then the **Runs** tab.
 3. You should see a job run with the status **Success** with a `</> Artifact ingestion` indicator.

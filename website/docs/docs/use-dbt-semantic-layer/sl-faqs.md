@@ -132,7 +132,7 @@ The dbt Semantic Layer does not store a physical copy of your data. It uses unde
 
 <Expandable alt_header="How does the Semantic Layer handle data?">
 
-The dbt Semantic Layer is part of <Constant name="dbt_platform" />. It allows data teams to define metrics once, centrally, and access them from any integrated analytics tool, ensuring consistent answers across diverse datasets. In providing this service, dbt Labs permits clients to access Semantic Layer metrics. Client data passes through the Semantic Layer on the way back from the data warehouse.
+The dbt Semantic Layer is part of the <Constant name="dbt_platform" />. It allows data teams to define metrics once, centrally, and access them from any integrated analytics tool, ensuring consistent answers across diverse datasets. In providing this service, dbt Labs permits clients to access Semantic Layer metrics. Client data passes through the Semantic Layer on the way back from the data warehouse.
 
 dbt Labs handles this in a secure way using encryption and authentication from the client’s data warehouse. In certain cases, such data may be cached on dbt Labs system ephemerally (data is not persistently stored).
 

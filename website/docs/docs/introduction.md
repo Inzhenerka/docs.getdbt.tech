@@ -6,7 +6,7 @@ pagination_next: null
 pagination_prev: null
 intro_text: "dbt is the industry standard for data transformation. Learn how it can help you transform data and deploy analytics code following software engineering best practices like version control, modularity, portability, CI/CD, and documentation."
 ---
-
+ 
 <Snippet path="what-is-dbt-intro" />
 
 dbt compiles and runs your analytics code against your data platform, enabling you and your team to collaborate on a single source of truth for metrics, insights, and business definitions. This single source of truth, combined with the ability to define tests for your data, reduces errors when logic changes, and alerts you when issues arise.
@@ -15,7 +15,7 @@ dbt compiles and runs your analytics code against your data platform, enabling y
 
 Read more about why we want to enable analysts to work more like software engineers in [The dbt Viewpoint](/community/resources/viewpoint). Learn how other data practitioners around the world are using dbt by [joining the dbt Community](https://www.getdbt.com/community/join-the-community).
 
-## dbt products
+## dbt
 
 Use dbt to quickly and collaboratively transform data and deploy analytics code following software engineering best practices like version control, modularity, portability, CI/CD, and documentation. This means anyone on the data team comfortable with SQL can safely contribute to production-grade data pipelines.
 
@@ -24,6 +24,12 @@ Use dbt to quickly and collaboratively transform data and deploy analytics code 
 The <Constant name="dbt_platform" /> offers the fastest, most reliable, and scalable way to deploy dbt. Allowing data teams to optimize their data transformation by developing, testing, scheduling, and investigating data models using a single, fully managed service through a web-based user interface (UI).
 
 You can learn about plans and pricing on [www.getdbt.com](https://www.getdbt.com/pricing/). Learn more about the [<Constant name="dbt_platform" /> features](/docs/cloud/about-cloud/dbt-cloud-features) and try one of the [<Constant name="cloud" /> quickstarts](/docs/get-started-dbt).
+
+### The dbt Fusion engine
+
+The <Constant name="fusion_engine" /> is the next-generation dbt engine, designed to deliver data teams a lightning-fast development experience, intelligent cost savings, and improved governance.
+
+For more information, refer to [About the <Constant name="fusion_engine" />](/docs/fusion/about-fusion), [supported features](/docs/fusion/about-fusion), and the [installation instructions](/docs/fusion/install-fusion).
 
 ### dbt Core
 

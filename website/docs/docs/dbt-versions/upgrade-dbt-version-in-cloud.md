@@ -50,7 +50,7 @@ The example job seen in the screenshot above belongs to the environment "Prod". 
 
 ## Supported versions
 
-dbt Labs has always encouraged users to upgrade dbt Core versions whenever a new minor version is released. We released our first major version of dbt - `dbt 1.0` - in December 2021. Alongside this release, we updated our policy on which versions of dbt Core we will support in <Constant name="dbt_platform" />.
+dbt Labs has always encouraged users to upgrade dbt Core versions whenever a new minor version is released. We released our first major version of dbt - `dbt 1.0` - in December 2021. Alongside this release, we updated our policy on which versions of dbt Core we will support in the <Constant name="dbt_platform" />.
 
 > **Starting with v1.0, all subsequent minor versions are available in <Constant name="cloud" />. Versions are actively supported, with patches and bug fixes, for 1 year after their initial release. At the end of the 1-year window, we encourage all users to upgrade to a newer version for better ongoing maintenance and support.**
 
@@ -71,6 +71,16 @@ Starting with v1.0, <Constant name="cloud" /> will ensure that you're always usi
 --->
 
 For more on version support and future releases, see [Understanding <Constant name="core" /> versions](/docs/dbt-versions/core).
+
+### dbt Fusion engine
+
+dbt Labs has introduced the new [dbt Fusion engine](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. You can update environments to Fusion using the same workflows as v1.x, but there are a few things to keep in mind:
+- There are some significant changes, so check out the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
+- Currently, the only supported adapter is Snowflake. More adapter support coming soon!
+- When you change your developement environment(s) to `Fusion`, every user will have to restart the IDE.
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
+
 
 ### Need help upgrading?
 
