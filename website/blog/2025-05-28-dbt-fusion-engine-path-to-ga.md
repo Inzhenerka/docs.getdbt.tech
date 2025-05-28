@@ -27,7 +27,9 @@ None of these statements are true *yet*, but you can see where things are headin
 
 <!-- truncate -->
 
-**We will be addding functionality rapidly over the coming weeks.** In particular, keep an eye out for Databricks, BigQuery and Redshift support (in that order) in the coming weeks.
+**We will be adding functionality rapidly over the coming weeks.** In particular, keep an eye out for Databricks, BigQuery and Redshift support (in that order) in the coming weeks. 
+
+The most popular dbt Labs packages (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) are already compatible with Fusion. Some external packages may not work out of the box, but we plan to work with package maintainers to get them ready & working on Fusion. 
 
 So when is Fusion going to be GA? We're targeting later this year for the full GA release, but hoping to asymptotically approach that much sooner.
 
