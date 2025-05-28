@@ -21,6 +21,10 @@ At the same time, we want to take this opportunity to _strengthen the framework_
 
 That work is documented below — it should be simple, straightforward, and in many cases, auto-fixable with the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper.
 
+::info
+The most popular dbt Labs packages (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) are already compatible with Fusion. External packages published by organizations outside of dbt may use anti-patterns or incompatible features that fail to parse with the new Fusion engine. Now that we've announced Fusion in beta, we're going to work with other package maintainers to get them ready & working on Fusion. 
+::
+
 ### A clean slate
 
 dbt Labs is committed to moving forward with Fusion, and it will not support any deprecated functionality:
