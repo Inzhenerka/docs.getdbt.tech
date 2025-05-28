@@ -27,3 +27,16 @@ These models compile directly to SQL and are indistinguishable from other dbt mo
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 
+## Feedback
+
+Please note, always review AI-generated code and content as it may produce incorrect results. <Constant name="visual_editor" /> features and/or functionality may be added or eliminated as part of the beta trial.
+
+To give feedback, please reach out to your dbt Labs account team. We appreciate your feedback and suggestions as we improve <Constant name="visual_editor" />.
+
+## Resources
+
+Learn more about Canvas: 
+
+- How to [use Canvas](/docs/cloud/use-canvas)
+- The Canvas [quickstart guide](/guides/canvas)
+- [Canvas fundamentals course](https://learn.getdbt.com/learn/course/canvas-fundamentals) on [dbt Learn](https://learn.getdbt.com/catalog)

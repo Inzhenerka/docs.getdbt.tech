@@ -59,10 +59,10 @@ Click on an icon to expand its section or execute an action depending on its pur
 
 1. The main menu (click on the **dbt logo**) and the workspace's title. The title default is random but can be edited anytime by clicking on it.
 2. The **current model tab** and name. The name for the model is set with the **Output** operator.
-3. The **model icon** button. Manage your models in the workspace and create new or edit existing models. 
+3. The **model icon** button. Manage your models in the workspace. 
 4. The **Runs** pane displays run data, including warnings and errors.
-5. The **Commit history** display.
-6. The **Previews** pane that displays previews data for individual operators.
+5. The **Previews** pane that displays previews data for individual operators.
+6. The **Add** option for creating new models, editing existing, or adding seed files.
 7. The **Operators** toolbar (`Input`, `Transform`, and `Output`) contains the building blocks for creating a model with the editor. 
 8. The [<Constant name="copilot" />](/docs/cloud/dbt-copilot) icon (where available). Use natural language to build your <Constant name="visual_editor" /> models.
 9. The **SQL code** area displays the SQL that compiles your model.
@@ -201,7 +201,7 @@ There's a lot of data there. Dozens of customers are buying hundreds of products
 4. Click **Add sorting** and in the new **Select column** field select `Aggregation1.count_PRODUCT_ID`. Set it to `Desc`.
 5. Press the **Play icon** to preview the new data.
 
-    <Lightbox src="/img/docs/dbt-cloud/canvas/order.png" width="90%" title="The ordered data operator tile config and data preview." />
+    <Lightbox src="/img/docs/dbt-cloud/canvas/order.png" width="90%" title="The ordered data operator tile config." />
 
 :::tip
 
@@ -282,5 +282,6 @@ Want to take your skills to the next level? Try taking the SQL output from your 
 
 :::
 
+Want to learn more? Be sure to check out our [Canvas fundamentals course](https://learn.getdbt.com/learn/course/canvas-fundamentals) on [dbt Learn](https://learn.getdbt.com/catalog).
 
 </div>
