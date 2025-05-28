@@ -21,15 +21,15 @@ At the same time, we want to take this opportunity to _strengthen the framework_
 
 That work is documented below — it should be simple, straightforward, and in many cases, auto-fixable with the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper.
 
-::info
-The most popular dbt Labs packages (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) are already compatible with Fusion. External packages published by organizations outside of dbt may use anti-patterns or incompatible features that fail to parse with the new Fusion engine. Now that we've announced Fusion in beta, we're going to work with other package maintainers to get them ready & working on Fusion. 
-::
-
 ### A clean slate
 
 dbt Labs is committed to moving forward with Fusion, and it will not support any deprecated functionality:
-- All [deprecation warnings](https://docs.getdbt.com/reference/deprecations) must be resolved before upgrading to the new engine. This included historic deprecations and [new ones as of dbt Core v1.10](https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-v1.10#deprecation-warnings).
-- All [behavior change flags](https://docs.getdbt.com/reference/global-configs/behavior-changes#behaviors) will be removed (generally enabled). You can no longer opt out of them using `flags:` in your `dbt_project.yml`. 
+- All [deprecation warnings](https://docs.getdbt.com/reference/deprecations) must be resolved before upgrading to the new engine. This included historic deprecations and [new ones as of dbt Core v1.10](https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-v1.10#deprecation-warnings). _While Fusion is in beta, it will raise validation warnings, but these warnings will become errors when Fusion goes into Preview._
+- All [behavior change flags](https://docs.getdbt.com/reference/global-configs/behavior-changes#behaviors) will be removed (generally enabled). You can no longer opt out of them using `flags:` in your `dbt_project.yml`.
+
+### Ecosystem packages
+
+The most popular `dbt-labs` packages (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) are already compatible with Fusion. External packages published by organizations outside of dbt may use outdated code or incompatible features that fail to parse with the new Fusion engine. Now that we've announced Fusion in beta, we're going to work with other package maintainers to get them ready & working on Fusion. If we know that a popular package will require upgrading to a new release for Fusion compatibility, we will document it here.
 
 ### Changed functionality
 
@@ -75,16 +75,17 @@ The output after `dbt parse` in Fusion:
 ```
 relation: my_db.my_schema.my_table
 relation_via_api: my_db.my_schema.my_table
-```  
+```
 
 #### Deprecated flags
 
-Some historic flags in dbt Core v1 will no longer do anything in Fusion. If you pass them into a dbt command using Fusion, the command will not error, but the flag will be a NO-OP.
+Some historic flags in dbt Core v1 will no longer do anything in Fusion. If you pass them into a dbt command using Fusion, the command will not error, but the flag will do nothing (and warn accordingly).
+
+One exception to this rule: The `--models` / `--model` / `-m` flag was renamed to `--select` / `--s` way back in dbt Core v0.21 (Oct 2021). Silently skipping this flag means ignoring your command's selection criteria, which could mean building your entire DAG when you only meant to select a small subset. For this reason, the `--models` / `--model` / `-m` flag **will raise an error** in Fusion. Please update your job definitions accordingly.
 
 | flag name | remediation |
 | ----------| ----------- |
-| [`--show`](https://docs.getdbt.com/reference/commands/seed) | N/A |
-| `--models` / `--model` / `-m` | change to `--select` / `--s` | 
+| `dbt seed` [`--show`](https://docs.getdbt.com/reference/commands/seed) | N/A |
 | [`--print` / `--no-print`](https://docs.getdbt.com/reference/global-configs/print-output) | No action required |
 | [`--printer-width`](https://docs.getdbt.com/reference/global-configs/print-output#printer-width) | No action required |
 | [`--source`](https://docs.getdbt.com/reference/commands/deps#non-hub-packages) | No action required |
@@ -92,7 +93,7 @@ Some historic flags in dbt Core v1 will no longer do anything in Fusion. If you 
 | [`--cache-selected-only` / `--no-cache-selected-only`](https://docs.getdbt.com/reference/global-configs/cache) | No action required |
 | [`--clean-project-files-only` / `--no-clean-project-files-only`](https://docs.getdbt.com/reference/commands/clean#--clean-project-files-only) | No action required |
 | `--single-threaded` / `--no-single-threaded` | No action required |
-| dbt source freshness [`--output` / `-o`](https://docs.getdbt.com/docs/deploy/source-freshness)  | |
+| `dbt source freshness` [`--output` / `-o`](https://docs.getdbt.com/docs/deploy/source-freshness)  | |
 | [`--config-dir`](https://docs.getdbt.com/reference/commands/debug)  | No action required | 
 | [`--add-package`](https://docs.getdbt.com/reference/commands/deps) | No action required |
 | [`--resource-type` / `--exclude-resource-type`](https://docs.getdbt.com/reference/global-configs/resource-type) | change to `--resource-types` / `--exclude-resource-types` |
@@ -197,7 +198,20 @@ In dbt Core v1, the direct parents of the model being unit tested needed to exis
 
 In Fusion, `dbt build` runs _all_ of the unit tests _first_, and then build the rest of the DAG, due to built-in column name and type awareness. 
 
+#### Configuring `--threads`
+
+dbt Core runs with `--threads 1` by default. You can increase this number to run more nodes in parallel on the remote data platform, up to the max parallelism enabled by the DAG.
+
+In Fusion, if `--threads` is not set, or set to `--threads 0`, dbt will use a per-adapter default value for maximum threads. Some data platforms can handle more concurrent connections than others. If there is a user-configured value for `--threads` (via CLI flag or `profiles.yml`), Fusion will use it.
+
+#### Continue to compile unrelated nodes after hitting a compile error
+
+As soon as dbt Core's `compile` encounters an error compiling one of your models, dbt stops and doesn't compile anything else.
+
+When Fusion's `compile` encounters an error, it will skip nodes downstream of the one that failed to compile, but it will keep compiling the rest of the DAG (in parallel, up to the number of configured / optimal threads).
+
 #### Seeds with extra commas don't result in extra columns
+
 In dbt Core v1, if you have an additional comma on your seed, dbt creates a seed with an additional empty column.
 
 For example, the following seed file (with an extra comma):
@@ -225,3 +239,6 @@ Fusion will not produce this extra column in the table resulting from `dbt seed`
 | dog    |  
 | cat    |  
 | bear   |  
+
+#### Supported packages
+
