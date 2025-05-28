@@ -14,7 +14,7 @@ import FusionBeta from '/snippets/_fusion-beta-callout.md';
 
 <FusionBeta />
 
-The dbt Fusion engine shares the same familiar framework for authoring data transformations as dbt Core, while enabling data developers to work faster and deploy transformation workloads more efficiently.
+The dbt Fusion engine shares the same familiar framework for authoring data transformations as <Constant name="core" />, while enabling data developers to work faster and deploy transformation workloads more efficiently.
 
 ### What is Fusion
 
