@@ -129,7 +129,7 @@ This joins the existing JSON schemas defining the shape of dbt's artifacts (e.g.
 
 Artifact type: Source code
 
-Available at: (repo to come, in the meantime you can discuss this in #topic-dbt-fusion-engine in the dbt Slack)
+Available at: (repo to come, in the meantime you can discuss this in #dbt-fusion-engine in the dbt Slack)
 
 License: Apache 2.0 (Later this year)
 
@@ -160,7 +160,7 @@ All of this will be open-sourced under the Apache 2.0 license later this year, n
 
 Artifact type: g4 files
 
-Available at: (repo to come, in the meantime you can discuss this in #topic-dbt-fusion-engine in the dbt Slack)
+Available at: (repo to come, in the meantime you can discuss this in #dbt-fusion-engine in the dbt Slack)
 
 License: Apache 2.0 (later this year)
 
@@ -192,4 +192,4 @@ Our [Contributors' Principles](/community/resources/contributor-expectations) re
 - If you want to move upstream, and contribute to the standards underlying the dbt Fusion engine like Arrow, ADBC, Iceberg, or DataFusion, you can. You might see some familiar faces while you're there!
 - And if you just want to let dbt get better and better in the background, you can do that too.
 
-If you need a hand wrapping your head around any of these new components, drop by #talk-dbt-fusion-engine in the Community Slack - we'd love to chat.
+If you need a hand wrapping your head around any of these new components, drop by #dbt-fusion-engine in the Community Slack - we'd love to chat.

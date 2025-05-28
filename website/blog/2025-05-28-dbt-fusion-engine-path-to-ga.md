@@ -162,7 +162,7 @@ The CLI output displays *everything* that's happening, which means errors and wa
 
 What feels *off* when you're using dbt Fusion? Tell us all about it - if you've got a clear idea for what's wrong and what it should be instead, feel free to jump straight to a GitHub issue. Bonus points if you've got a minimal repro project.
 
-If you need to kick an idea around before opening an issue, we'll also be actively checking in on #topic-dbt-fusion (for high-level discussions) and topic-dbt-fusion-migration (to get into the weeds of a specific bug) on Slack.
+If you need to kick an idea around before opening an issue, we'll also be actively checking in on #dbt-fusion-engine (for high-level discussions) and #dbt-fusion-engine-migration (to get into the weeds of a specific bug) on Slack.
 
 From now until Fusion is GA, we will be prioritizing parity with existing framework features, *not adding new ones.* Post-GA, we will transfer existing framework feature requests from the dbt-core repo to dbt-fusion.
 
@@ -173,4 +173,4 @@ The path to GA for Fusion is a Community-wide effort. We want to hear from you, 
 - In Slack, we're on [#dbt-fusion-engine](https://getdbt.slack.com/archives/C088YCAB6GH) and #dbt-fusion-engine-migration
 - The GitHub repo is [https://github.com/dbt-labs/dbt-fusion](https://github.com/dbt-labs/dbt-fusion)
 - There are a couple of dozen *dbt World Circuit* meetups happening globally during June: [https://www.meetup.com/pro/dbt/](https://www.meetup.com/pro/dbt/)
-- We'll be having regular office hours with a revolving cast of characters from the Developer Experience, Engineering, and Product teams. Dates will be circulated in the #topic-dbt-fusion channel.
+- We'll be having regular office hours with a revolving cast of characters from the Developer Experience, Engineering, and Product teams. Dates will be circulated in the #dbt-fusion-engine channel.
