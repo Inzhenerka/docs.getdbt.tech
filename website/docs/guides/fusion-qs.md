@@ -140,7 +140,6 @@ cd jaffle_shop
 3. Build your dbt project (which includes creating example data):
 
 ```bash
-dbtf seed
 dbtf build
 ```
 
