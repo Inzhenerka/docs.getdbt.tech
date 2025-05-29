@@ -43,7 +43,7 @@ To enable external metadata ingestion:
 5. Apply filters to restrict which metadata is ingested:
     - You can filter by **database**, **schema**, **table**, or **view**.
     - Strongly recommend you filter by certain schemas. See [Important Considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
-    - These fields accept CSV-formatted regular expressions
+    - These fields accept CSV-formatted regular expressions:
         - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match)
         - Wildcards are supported: `DIM*` matches `DIM_ORDERS`, `DIM_PRODUCTS`, etc.
 
