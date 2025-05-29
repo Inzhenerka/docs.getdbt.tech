@@ -72,7 +72,7 @@ export default function DocRootLayoutMain({
     } else {
       setPreData({
         showisPrereleaseBanner: true,
-        isPrereleaseBannerText: `You are viewing the docs for a prerelease version of dbt Core. There may be features described that are still in development, incomplete, or unstable. For the latest generally available features, install the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>`,
+        isPrereleaseBannerText: `You are viewing the docs for The dbt Fusion engine. Fusion is currently in beta and the documentation is a work in progress. There may be features documented or configuration examples that represent previous dbt Core releases that have not been updated to accurately reflect the behavior in Fusion. Check out our list of  <a href="https://docs.getdbt.com/docs/fusion/supported-features"> supported features for Fusion</a> and the <a href="https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-fusion"> Fusion upgrade guide </a> for more information. There may be features described that are still in development, incomplete, or unstable.`,
       });
     }
     // If EOLDate not set for version, do not show banner
