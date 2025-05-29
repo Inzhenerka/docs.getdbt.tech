@@ -48,7 +48,7 @@ Go straight to the [Quickstart](/guides/fusion) to _feel the Fusion_ as fast as 
 
 ## What's next?
 
-dbt Labs launched the dbt Fusion engine as a public beta on May 28, 2025, with plans to reach full feature parity with <Constant name="core" /> ahead of [Fusion's general availability](https://docs.getdbt.com/blog/2025-05-28-dbt-fusion-engine-path-to-ga).
+dbt Labs launched the dbt Fusion engine as a public beta on May 28, 2025, with plans to reach full feature parity with <Constant name="core" /> ahead of [Fusion's general availability](https://docs.getdbt.com/blog/dbt-fusion-engine-path-to-ga).
 
 import AboutFusion from '/snippets/_about-fusion.md';
 
