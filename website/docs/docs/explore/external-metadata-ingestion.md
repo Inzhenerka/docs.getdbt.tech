@@ -41,7 +41,7 @@ To enable external metadata ingestion:
     - This allows metadata from this connection to populate the <Constant name="explorer" />
     - *Optional*: Enable additional features such as **cost optimization**
 5. Apply filters to restrict which metadata is ingested:
-    - You can filter by **database**, **schema**, **table**, or **view**
+    - You can filter by **database**, **schema**, **table**, or **view**.
     - Strongly recommend you filter by certain schemas. See [Important Considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
     - These fields accept CSV-formatted regular expressions
         - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match)
