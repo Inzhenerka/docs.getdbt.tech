@@ -7,20 +7,20 @@ pagination_next: null
 pagination_prev: null
 ---
 
-To set up and configure environment-level permissions, you must have write permissions to the **Groups & Licenses** settings of your dbt Cloud account. For more information about roles and permissions, check out [User permissions and licenses](/docs/cloud/manage-access/seats-and-users).
+To set up and configure environment-level permissions, you must have write permissions to the **Groups & Licenses** settings of your <Constant name="cloud" /> account. For more information about roles and permissions, check out [User permissions and licenses](/docs/cloud/manage-access/seats-and-users).
 
 Environment-level permissions are not the same as account-level [role-based access control (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) and are configured separately from those workflows.
 
 ## Setup instructions
 
-In your dbt Cloud account:
+In your <Constant name="cloud" /> account:
 
 1. Click your account name, above your profile icon on the left side panel. Then select **Account settings**.
 2. Select **Groups & Licenses**. We recommend deleting the default `Owner`, `Member`, and `Everyone` groups and, instead, assigning users to your organizational groups to avoid granting them unnecessary elevated privileges.
 
    However, before deleting these groups, ensure that any existing users &mdash; including yourself &mdash; are reassigned to their appropriate organizational groups. You won’t be able to delete the `Owner` group until _at least_ one user is added to another group with the account admin permission set or if there is a user with an IT license. This safety ensures that an account admin is always available to manage group changes.
 
-<Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Groups & Licenses page in dbt Cloud with the default groups highlighted."/>
+<Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Groups & Licenses page in dbt with the default groups highlighted."/>
 
 3. Create a new or open an existing group. If it's a new group, give it a name, then scroll down to **Access & permissions**. Click **Add**.
 
@@ -28,7 +28,7 @@ In your dbt Cloud account:
 
 4. Select the **Permission set** for the group. Only the following permissions sets can have environment-level permissions configured:
     - Database admin
-    - Git admin
+    - <Constant name="git" /> admin
     - Team admin
     - Analyst
     - Developer

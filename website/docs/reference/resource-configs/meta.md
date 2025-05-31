@@ -13,6 +13,7 @@ hide_table_of_contents: true
     { label: 'Seeds', value: 'seeds', },
     { label: 'Snapshots', value: 'snapshots', },
     { label: 'Tests', value: 'tests', },
+    { label: 'Unit tests', value: 'unit tests', },
     { label: 'Analyses', value: 'analyses', },
     { label: 'Macros', value: 'macros', },
     { label: 'Exposures', value: 'exposures', },
@@ -46,7 +47,8 @@ models:
 
     columns:
       - name: column_name
-        meta: {<dictionary>}
+        config:
+          meta: {<dictionary>} # changed to config in v1.10
 
 ```
 
@@ -88,7 +90,8 @@ version: 2
 
         columns:
           - name: column_name
-            meta: {<dictionary>}
+            config:
+              meta: {<dictionary>} # changed to config in v1.10
 
 ```
 
@@ -119,7 +122,8 @@ seeds:
 
     columns:
       - name: column_name
-        meta: {<dictionary>}
+        config:
+          meta: {<dictionary>} # changed to config in v1.10
 
 ```
 
@@ -152,7 +156,8 @@ snapshots:
 
     columns:
       - name: column_name
-        meta: {<dictionary>}
+        config:
+          meta: {<dictionary>} # changed to config in v1.10
 
 ```
 
@@ -169,6 +174,33 @@ See [configs and properties](/reference/configs-and-properties) for details.
 <TabItem value="tests">
 
 You can't add YAML `meta` configs for [generic tests](/docs/build/data-tests#generic-data-tests). However, you can add `meta` properties to [singular tests](/docs/build/data-tests#singular-data-tests) using `config()` at the top of the test file. 
+
+</TabItem>
+
+<TabItem value="unit tests">
+
+<VersionCallout version="1.8" />
+
+<File name='dbt_project.yml'>
+
+```yml
+[unit_tests](/reference/resource-properties/unit-tests):
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
+<File name='models/<filename>.yml'>
+
+```yml
+unit_tests:
+  - name: <test-name>
+    config:
+      [meta](/reference/snapshot-properties): {<dictionary>}
+
+```
+
+</File>
 
 </TabItem>
 
@@ -196,7 +228,8 @@ version: 2
 
 [macros](/reference/macro-properties):
   - name: macro_name
-    meta: {<dictionary>}
+    config:
+      meta: {<dictionary>} # changed to config in v1.10
 
     arguments:
       - name: argument_name
@@ -225,7 +258,8 @@ version: 2
 
 exposures:
   - name: exposure_name
-    meta: {<dictionary>}
+    config:
+      meta: {<dictionary>} # changed to config in v1.10
 
 ```
 
@@ -323,34 +357,6 @@ The `meta` config can also be defined under the `semantic-models` config block i
 
 <TabItem value="metrics">
 
-<VersionBlock lastVersion="1.7">
-
-<File name='dbt_project.yml'>
-
-```yml
-metrics:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +meta: {<dictionary>}
-```
-</File>
-
-<File name='models/metrics.yml'>
-
-```yml
-metrics:
-  - name: number_of_people
-    label: "Number of people"
-    description: Total count of people
-    type: simple
-    type_params:
-      measure: people
-    meta:
-      my_meta_direct: 'direct'
-```
-
-</File>
-</VersionBlock>
-
 <VersionBlock firstVersion="1.8"> 
 
 <File name='dbt_project.yml'>
@@ -423,9 +429,10 @@ version: 2
 
 models:
   - name: users
-    meta:
-      owner: "@alice"
-      model_maturity: in dev
+    config:
+      meta:
+        owner: "@alice"
+        model_maturity: in dev
 
 ```
 
@@ -439,17 +446,18 @@ models:
 ```yml
 version: 2
 
-[sources](/reference/source-properties):
+sources:
   - name: salesforce
-
     tables:
       - name: account
-        meta:
-          contains_pii: true
+        config:
+          meta:
+            contains_pii: true
         columns:
           - name: email
-            meta:
-              contains_pii: true
+            config:
+              meta: # changed to config in v1.10
+                contains_pii: true
 
 ```
 

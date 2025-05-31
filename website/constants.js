@@ -7,7 +7,20 @@
  */
 
 export const CONSTANTS = {
-  cloud: 'dbt Cloud',
+  git: 'Git',
+  cloud: 'dbt',
+  dbt_platform: 'dbt platform',
   core: 'dbt Core',
+  fusion: 'Fusion',
+  fusion_engine: 'dbt Fusion Engine',
+  dbt: 'dbt',
+  cloud_cli: 'Cloud CLI',
+  explorer: 'Catalog',
+  visual_editor: 'Canvas',
+  query_page: 'Insights',
+  cloud_ide: 'Studio IDE',
+  mesh: 'Mesh',
+  orchestrator: 'Orchestrator',
+  copilot: 'Copilot',
   semantic_layer: 'Semantic Layer',
 }
