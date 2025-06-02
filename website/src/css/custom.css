@@ -1,5 +1,5 @@
 :root {
-  /* 2025 Rebrand Styles */
+  /* 2025 Rebrand Styles - Transfered from www.getdbt.com */
   --font-display: "polymath", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "segoe ui", "Ubuntu", "roboto", "noto", Arial, sans-serif;
   --font-sans: "polymath-text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "segoe ui", "Ubuntu", "roboto", "noto", Arial, sans-serif;
   --font-mono: "ibm-plex-mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
@@ -72,8 +72,8 @@
   /* Docusaurus Overrides */
   --ifm-color-success: #086343 !important;
   --ifm-color-info: #047377 !important;
-  --ifm-color-warning: #9f1b1f !important;
-  --ifm-color-danger: #a64f21 !important;
+  --ifm-color-warning: var(--color-yellow-400) !important;
+  --ifm-color-danger: var(--color-pink-700) !important;
   --ifm-color-success-light: #d6f3e2 !important;
   --ifm-color-info-light: #d9f6f4 !important;
   --ifm-color-warning-light: #ffe1be !important;
@@ -1010,10 +1010,14 @@ td,
 }
 
 .markdown h1:first-child {
-  font-size: clamp(var(--ifm-h1-font-size) * 0.9375,
-      1vw,
-      var(--ifm-h1-font-size));
+  font-size: var(--ifm-h1-font-size);
   margin-top: 0.5rem;
+}
+
+@media screen and (max-width: 996px) {
+  .markdown h1:first-child {
+    font-size: 3rem;
+  }
 }
 
 .link_src-components-faqs-styles-module {
