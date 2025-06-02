@@ -33,8 +33,10 @@
   --ifm-menu-color-background-active: #effbfa;
   --ifm-font-family-monospace: "Source Code Pro", SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
-  --ifm-font-family-base: "Source Sans Pro", sans-serif;
-  --ifm-heading-font-family: "Source Sans Pro", sans-serif;
+  --ifm-font-family-base:'polymath-text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+    'segoe ui', 'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
+  --ifm-heading-font-family:     'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
+  'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
   --ifm-code-padding-vertical: 0.2rem;
   --ifm-code-padding-horizontal: 0.4rem;
   --ifm-code-background: var(--ifm-color-emphasis-200);
