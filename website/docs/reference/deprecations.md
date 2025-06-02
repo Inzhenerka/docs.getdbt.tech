@@ -37,13 +37,13 @@ Summary of encountered deprecations:
 
 ```
 
-### dbt Cloud
+### The dbt platform
 
-If you're using dbt Cloud, you can view deprecation warnings from the **Dashboard** area of your account
+If you're using <Constant name="cloud" />, you can view deprecation warnings from the **Dashboard** area of your account.
 
-    <Lightbox src="/img/docs/dbt-cloud/deprecation-warnings.png" title="The deprecation warnings listed on the dbt Cloud dashboard." />
+    <Lightbox src="/img/docs/dbt-cloud/deprecation-warnings.png" title="The deprecation warnings listed on the dbt dashboard." />
 
-Click into a job to view more details and locate the deprecation warnings in the logs (or run the `parse` command with flags from the IDE or dbt Cloud CLI).
+Click into a job to view more details and locate the deprecation warnings in the logs (or run the `parse` command with flags from the <Constant name="cloud_ide" /> or <Constant name="cloud_cli" />).
 
     <Lightbox src="/img/docs/dbt-cloud/deprecation-list.png" title="Deprecation warnings listed in the logs." />
 
@@ -51,7 +51,7 @@ Click into a job to view more details and locate the deprecation warnings in the
 
 Some deprecations can be automatically fixed with a script. Read more about it in [this dbt blog post](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine#:~:text=2.%20Resolve%20deprecation%20warnings). [Download the script](https://github.com/dbt-labs/dbt-autofix) and follow the installation instructions to get started. 
 
-**Coming soon**: The IDE will soon have an interface for running this same script to remediate deprecation warnings in dbt Cloud.
+**Coming soon**: The IDE will soon have an interface for running this same script to remediate deprecation warnings in <Constant name="cloud" />.
 
 
 ## List of Deprecation Warnings
@@ -135,6 +135,15 @@ DBT_TARGET_PATH env var instead.
 #### ConfigTargetPathDeprecation warning resolution
 
 Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
+
+### CustomOutputPathInSourceFreshnessDeprecation
+
+dbt has deprecated the `--output` (or `-o`) flag for overriding the location of source freshness results from the `sources.json` file destination.
+
+#### CustomOutputPathInSourceFreshnessDeprecation warning resolution
+
+Remove the `--output` or `-o` flag and associated path configuration from any jobs running dbt source freshness commands.
+There is no alternative for changing the location of only the source freshness results. However, you can still use `--target-path` to write _all_ artifacts from the step to a custom location.
 
 ### ExposureNameDeprecation
 
@@ -373,3 +382,33 @@ hello!
 #### UnexpectedJinjaBlockDeprecation warning resolution
 
 Delete the unexpected Jinja blocks.
+
+### WEOIncludeExcludeDeprecation
+
+The `include` and `exclude` options for `warn_error_options` have been deprecated and replaced with `error` and `warn`, respectively.
+
+#### WEOIncludeExcludeDeprecation warning resolution
+
+Anywhere `warn_error_options` is configured, replace:
+- `include` with `error`
+- `exclude` with `warn`
+
+For example:
+
+```yaml
+...
+  flags:
+    warn_error_options:
+      include:
+        - NoNodesForSelectionCriteria
+```
+
+Should now be configured as:
+
+```yaml
+...
+  flags:
+    warn_error_options:
+      error:
+        - NoNodesForSelectionCriteria
+```

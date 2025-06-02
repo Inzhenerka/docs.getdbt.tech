@@ -20,7 +20,7 @@ Starting in 2024, <Constant name="cloud" /> provides the functionality from new 
 For users of dbt Core, since v1.8, we recommend explicitly installing both `dbt-core` and `dbt-<youradapter>`. This may become required for a future version of dbt. For example:
 
 ```sql
-python3 -m pip install <Constant name="core" /> dbt-snowflake
+python3 -m pip install dbt-core dbt-snowflake
 ```
 
 ## New and changed features and functionality
@@ -31,7 +31,7 @@ New features and functionality available in <Constant name="core" /> v1.10
 
 Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 
-### Integrating dbt Core artifacts with dbt Cloud projects
+### Integrating dbt Core artifacts with dbt projects
 
 With [hybrid projects](/docs/deploy/hybrid-projects), <Constant name="core"/> users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud"/>. This enhances hybrid <Constant name="core"/>/<Constant name="cloud"/> deployments by:
 
@@ -177,6 +177,24 @@ sources:
           period: hour
 
 ```
+
+#### Custom output path for source freshness
+
+The ability to override the default path for `sources.json` via the `--output` or `-o` flags has been deprecated. You can still set the path for all artifacts in the step with `--target-path`, but will receive a warning if trying to set the path for just source freshness.
+
+#### Warn error options
+
+The `warn_error_option` options for `include` and `exclude` have been deprecated and replaced with `error` and `warn`, respectively.
+
+  ```yaml
+...
+  flags:
+    warn_error_options:
+      error: # Previously called "include"
+      warn: # Previously called "exclude"
+      silence: # To silence or ignore warnings
+        - NoNodesForSelectionCriteria
+  ```
 
 ## Quick hits
 
