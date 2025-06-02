@@ -24,7 +24,7 @@ description: "Learn more with the FAQs about dbt Catalog, how it works, how to i
 
 <Expandable alt_header="What happened to dbt Docs?" >
 
-<Constant name="Catalog" /> is the default documentation experience for <Constant name="cloud" /> customers. dbt Docs is still available but doesn't offer the same speed, metadata, or visibility as <Constant name="explorer" /> and will become a legacy feature.
+<Constant name="explorer" /> is the default documentation experience for <Constant name="cloud" /> customers. dbt Docs is still available but doesn't offer the same speed, metadata, or visibility as <Constant name="explorer" /> and will become a legacy feature.
 
 </Expandable>
 
