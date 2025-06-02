@@ -1,82 +1,8 @@
+@import './colors.css';
+@import './typography.css';
+@import './tokens.css';
+
 :root {
-  /* 2025 Rebrand Styles - Transfered from www.getdbt.com */
-  --font-display: "polymath", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "segoe ui", "Ubuntu", "roboto", "noto", Arial, sans-serif;
-  --font-sans: "polymath-text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "segoe ui", "Ubuntu", "roboto", "noto", Arial, sans-serif;
-  --font-mono: "ibm-plex-mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
-  --spacing: .25rem;
-  --container-2xl: 42rem;
-  --text-xs: .75rem;
-  --text-xs--line-height: calc(1 / .75);
-  --text-sm: .875rem;
-  --text-sm--line-height: calc(1.25 / .875);
-  --text-base: 1rem;
-  --text-base--line-height: calc(1.5 / 1);
-  --text-lg: 1.125rem;
-  --text-lg--line-height: calc(1.75 / 1.125);
-  --text-xl: 1.25rem;
-  --text-xl--line-height: calc(1.75 / 1.25);
-  --text-2xl: 1.5rem;
-  --text-2xl--line-height: calc(2 / 1.5);
-  --text-3xl: 2rem;
-  --text-3xl--line-height: calc(2.25 / 1.875);
-  --text-5xl: 3rem;
-  --text-5xl--line-height: 1;
-  --text-6xl: 4rem;
-  --text-6xl--line-height: 1;
-  --text-8xl: 5.5rem;
-  --text-8xl--line-height: 1;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --radius-sm: .25rem;
-  --radius-md: .375rem;
-  --radius-lg: .5rem;
-  --radius-xl: .75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-  --ease-in: cubic-bezier(.4,0,1,1);
-  --ease-out: cubic-bezier(0,0,.2,1);
-  --ease-in-out: cubic-bezier(.4,0,.2,1);
-  --animate-pulse: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
-  --blur-md: 12px;
-  --blur-lg: 16px;
-  --aspect-video: 16 / 9;
-  --default-transition-duration: .15s;
-  --default-transition-timing-function: cubic-bezier(.4,0,.2,1);
-  --default-font-family: var(--font-sans);
-  --default-mono-font-family: var(--font-mono);
-  --color-white: #fff;
-  --color-transform-orange-400: #ff9e5f;
-  --color-transform-orange-600: #fe6703;
-  --color-coalesce-purple-50: #f6f5ff;
-  --color-coalesce-purple-100: #ecebff;
-  --color-coalesce-purple-400: #9786ff;
-  --color-coalesce-purple-600: #632ff5;
-  --color-coalesce-purple-700: #5720e1;
-  --color-coalesce-purple-900: #3d189a;
-  --color-terminal-black-50: #f9fafb;
-  --color-terminal-black-100: #f3f4f6;
-  --color-terminal-black-200: #e5e7eb;
-  --color-terminal-black-300: #d1d5dc;
-  --color-terminal-black-400: #99a1af;
-  --color-terminal-black-500: #6a7282;
-  --color-terminal-black-600: #4a5565;
-  --color-terminal-black-700: #364153;
-  --color-terminal-black-800: #1e2939;
-  --color-terminal-black-900: #101828;
-  --color-terminal-black-950: #030711;
-  --color-yellow-400: #ffcc25;
-  --color-pink-700: #c20059;
-
-  /* 2025 Tokens */
-  --text-neutral-primary: var(--color-terminal-black-950);
-  --text-neutral-secondary: var(--color-terminal-black-800);
-  --text-accent-primary: var(--color-coalesce-purple-600);
-  --text-inverse-primary: var(--color-white);
-
-  --bg-accent-subtle: var(--color-coalesce-purple-50);
-
   /* Docusaurus Overrides */
   /* We need to keep these for components that are not using the new tokens */
   --ifm-color-success: #086343 !important;
@@ -1509,7 +1435,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   max-width: calc(4 / 12 * 100%);
 }
 
-.blogPostTitle_src-theme-BlogPostItem-styles-module>img {
+.blog-postTitle_src-theme-BlogPostItem-styles-module>img {
   display: none;
 }
 
