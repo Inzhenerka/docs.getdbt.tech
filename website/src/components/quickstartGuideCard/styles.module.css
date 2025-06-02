@@ -40,7 +40,7 @@
 
 .quickstartCard p {
   font-weight: 600;
-  color:#262A38;
+  color:#030711;
   font-size: 1.2rem;
   line-height: 1.2;
   margin-bottom: 0.5rem;
@@ -96,7 +96,7 @@
 .quickstartCard .tag_container .tag {
   background: #E5E7EB;
   border-radius: 1.5rem;
-  color:#262A38;
+  color:#030711;
   padding: 0rem 0.75rem;
 }
 
@@ -138,7 +138,7 @@
 .tag_container .tag {
   background: #E5E7EB;
   border-radius: 1.5rem;
-  color:#262A38;
+  color:#030711;
   padding: 0rem 0.75rem;
 }
 

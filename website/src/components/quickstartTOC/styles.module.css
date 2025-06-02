@@ -22,7 +22,7 @@
     display: grid;
     grid-template-columns: 1fr 5fr;
     cursor: pointer;
-    color: var(--color-primary-blue);
+    color: var(--color-neutral-primary);
     text-decoration: none;
 }
 

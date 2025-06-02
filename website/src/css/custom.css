@@ -1,4 +1,75 @@
 :root {
+  /* 2025 Rebrand Styles */
+  --font-display: "polymath", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "segoe ui", "Ubuntu", "roboto", "noto", Arial, sans-serif;
+  --font-sans: "polymath-text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "segoe ui", "Ubuntu", "roboto", "noto", Arial, sans-serif;
+  --font-mono: "ibm-plex-mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  --spacing: .25rem;
+  --container-2xl: 42rem;
+  --text-xs: .75rem;
+  --text-xs--line-height: calc(1 / .75);
+  --text-sm: .875rem;
+  --text-sm--line-height: calc(1.25 / .875);
+  --text-base: 1rem;
+  --text-base--line-height: calc(1.5 / 1);
+  --text-lg: 1.125rem;
+  --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl: 2rem;
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-6xl: 4rem;
+  --text-6xl--line-height: 1;
+  --text-8xl: 5.5rem;
+  --text-8xl--line-height: 1;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --radius-sm: .25rem;
+  --radius-md: .375rem;
+  --radius-lg: .5rem;
+  --radius-xl: .75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --ease-in: cubic-bezier(.4,0,1,1);
+  --ease-out: cubic-bezier(0,0,.2,1);
+  --ease-in-out: cubic-bezier(.4,0,.2,1);
+  --animate-pulse: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
+  --blur-md: 12px;
+  --blur-lg: 16px;
+  --aspect-video: 16 / 9;
+  --default-transition-duration: .15s;
+  --default-transition-timing-function: cubic-bezier(.4,0,.2,1);
+  --default-font-family: var(--font-sans);
+  --default-mono-font-family: var(--font-mono);
+  --color-white: #fff;
+  --color-transform-orange-400: #ff9e5f;
+  --color-transform-orange-600: #fe6703;
+  --color-coalesce-purple-50: #f6f5ff;
+  --color-coalesce-purple-100: #ecebff;
+  --color-coalesce-purple-400: #9786ff;
+  --color-coalesce-purple-600: #632ff5;
+  --color-coalesce-purple-700: #5720e1;
+  --color-coalesce-purple-900: #3d189a;
+  --color-terminal-black-50: #f9fafb;
+  --color-terminal-black-100: #f3f4f6;
+  --color-terminal-black-200: #e5e7eb;
+  --color-terminal-black-300: #d1d5dc;
+  --color-terminal-black-400: #99a1af;
+  --color-terminal-black-500: #6a7282;
+  --color-terminal-black-600: #4a5565;
+  --color-terminal-black-700: #364153;
+  --color-terminal-black-800: #1e2939;
+  --color-terminal-black-900: #101828;
+  --color-terminal-black-950: #030711;
+  --color-yellow-400: #ffcc25;
+  --color-pink-700: #c20059;
+
+  /* Docusaurus Overrides */
   --ifm-color-success: #086343 !important;
   --ifm-color-info: #047377 !important;
   --ifm-color-warning: #9f1b1f !important;
@@ -7,36 +78,33 @@
   --ifm-color-info-light: #d9f6f4 !important;
   --ifm-color-warning-light: #ffe1be !important;
   --ifm-color-danger-light: #f9d3d4 !important;
-  --ifm-color-gray-900: #262a38;
+  --ifm-color-gray-900: #030711;
   --ifm-font-weight-narrow: 400;
   --ifm-font-weight-semibold: 600;
   --ifm-font-weight-bold: 700;
-  --ifm-h1-font-size: 2.5rem;
-  --ifm-h2-font-size: 2.063rem;
-  --ifm-h3-font-size: 1.563rem;
-  --ifm-h4-font-size: 1.063rem;
-  --ifm-h5-font-size: 0.938rem;
+  --ifm-h1-font-size: 4rem;
+  --ifm-h2-font-size: 3rem;
+  --ifm-h3-font-size: 2rem;
+  --ifm-h4-font-size: 1.5rem;
+  --ifm-h5-font-size: 1.125rem;
   --ifm-navbar-height: 85px;
   --ifm-navbar-link-hover-color: var(--color-orange);
   --ifm-navbar-link-active-color: var(--color-orange);
   --ifm-footer-padding-vertical: calc(var(--ifm-spacing-vertical) * 1.875);
   --ifm-footer-background-color: #4f5d75;
   --ifm-footer-color: var(--color-white);
-  --ifm-link-color: #009999;
-  --ifm-color-primary: #047377;
-  --ifm-link-hover-color: #047377;
-  --ifm-button-border-radius: 5px;
-  --ifm-menu-color: #262a38;
+  --ifm-link-color: #632FF5;
+  --ifm-color-primary: #fe6703;
+  --ifm-link-hover-color: #632FF5;
+  --ifm-button-border-radius: var(--radius-xl);
+  --ifm-menu-color: #030711;
   --ifm-menu-color-active: #009999;
   --ifm-pagination-nav-color-hover: #047377;
   --ifm-tabs-color-active: #047377;
   --ifm-menu-color-background-active: #effbfa;
-  --ifm-font-family-monospace: 'ibm-plex-mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
-    Consolas, monospace;
-  --ifm-font-family-base: 'polymath-text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-    'segoe ui', 'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
-  --ifm-heading-font-family: 'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
-  'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
+  --ifm-font-family-monospace: var(--font-mono);
+  --ifm-font-family-base: var(--font-sans);
+  --ifm-heading-font-family: var(--font-display);
   --ifm-code-padding-vertical: 0.2rem;
   --ifm-code-padding-horizontal: 0.4rem;
   --ifm-code-background: var(--ifm-color-emphasis-200);
@@ -45,7 +113,8 @@
   --ifm-color-info-contrast-foreground: var(--ifm-color-gray-900);
   --ifm-alert-foreground-color: --ifm-color-gray-900;
   --ifm-toc-padding-vertical: 1rem;
-  --color-primary-blue: #262a38;
+  --color-neutral-primary: #030711;
+  --color-neutral-secondary: #1E2939;
   --color-green-blue: #047377;
   --color-light-teal: #009999;
   --color-light-blue: #96d7d1;
@@ -55,12 +124,12 @@
   --color-nav-text: #bfc0c0;
   --color-nav-sub-level-text: #545a66;
   --color-footer-accent: #979eab;
-  --docsearch-text-color: #262a38;
+  --docsearch-text-color: #030711;
   --pagination-icon-next: "\2192";
   --pagination-icon-prev: "\2190";
   --filter-brightness-low: 1.1;
   --filter-brightness-high: 1.5;
-  --darkmode-link-color: #1FA4A3;
+  --darkmode-link-color: #9786FF;
   --light-dark-toggle: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQuMzA4IDMuMzg1YzAtMS4xNzguMTczLTIuMzcuNjE1LTMuMzg1QzEuOTgzIDEuMjggMCA0LjI4MiAwIDcuNjkyQTguMzA4IDguMzA4IDAgMCAwIDguMzA4IDE2YzMuNDEgMCA2LjQxMi0xLjk4MyA3LjY5Mi00LjkyMy0xLjAxNS40NDItMi4yMDcuNjE1LTMuMzg1LjYxNWE4LjMwOCA4LjMwOCAwIDAgMS04LjMwNy04LjMwN1oiIGZpbGw9IiM5MkEwQjMiLz48L3N2Zz4=";
 
   /* search overrides */
@@ -84,19 +153,19 @@
 
 /* dark theme styles!!! */
 html[data-theme="dark"] {
-  --ifm-navbar-background-color: var(--color-primary-blue);
-  --ifm-menu-color-background-active: var(--color-primary-blue);
+  --ifm-navbar-background-color: var(--color-neutral-primary);
+  --ifm-menu-color-background-active: var(--color-neutral-primary);
   --ifm-menu-color: var(--color-white);
 
   /* search button darkmode */
   --docsearch-muted-color: var(--color-off-white);
   --docsearch-muted-color-for-keys: var(--docsearch-muted-color);
-  --docsearch-searchbox-background: var(--color-primary-blue) !important;
+  --docsearch-searchbox-background: var(--color-neutral-primary) !important;
 
   /* search popup */
-  --docsearch-modal-background: var(--color-primary-blue) !important;
-  --docsearch-footer-background: var(--color-primary-blue) !important;
-  --docsearch-searchbox-focus-background: var(--color-primary-blue) !important;
+  --docsearch-modal-background: var(--color-neutral-primary) !important;
+  --docsearch-footer-background: var(--color-neutral-primary) !important;
+  --docsearch-searchbox-focus-background: var(--color-neutral-primary) !important;
   --docsearch-highlight-color: var(--docsearch-muted-color) !important;
 
   /* admonition icon */
@@ -235,7 +304,19 @@ div.collapser {
 h1,
 h2,
 h3 {
-  font-weight: var(--ifm-font-weight-bold);
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+@media screen and (max-width: 996px) {
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
 }
 
 /* V2.0.0-beta.6 style updates */
@@ -247,6 +328,7 @@ code {
   border: none;
   background-color: var(--ifm-color-emphasis-200);
   color: var(--ifm-color-emphasis-900);
+  vertical-align: baseline;
 }
 
 .main-wrapper .home .col>p {
@@ -788,7 +870,7 @@ div .toggle_src-components-faqs-styles-module {
   bottom: 0;
   left: -100%;
   right: 155px;
-  background: var(--color-primary-blue);
+  background: var(--color-neutral-primary);
   content: "";
 }
 
@@ -803,7 +885,7 @@ div .toggle_src-components-faqs-styles-module {
   border-radius: 12.5%;
   height: 465px;
   width: 465px;
-  background: var(--color-primary-blue);
+  background: var(--color-neutral-primary);
   content: "";
 }
 
@@ -852,13 +934,13 @@ div .toggle_src-components-faqs-styles-module {
 .card.large.light-blue .button {
   background: var(--color-light-blue);
   border-color: var(--color-light-blue);
-  color: var(--color-primary-blue);
+  color: var(--color-neutral-primary);
 }
 
 .card.large.light-blue .button:hover {
   background: #d9f6f4;
   border-color: #d9f6f4;
-  color: var(--color-primary-blue);
+  color: var(--color-neutral-primary);
 }
 
 .card .card__body {
@@ -955,7 +1037,7 @@ td,
 .generatedIndexPage_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCategoryGeneratedIndexPage-styles-module .cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover,
 .generatedIndexPage_aEAk .card:hover {
   color: var(--color-white);
-  background: var(--color-primary-blue);
+  background: var(--color-neutral-primary);
 }
 
 /* Custom Blog Styles */
@@ -1000,7 +1082,7 @@ html[data-theme="dark"] .breadcrumbs__item--active .breadcrumbs__link {
 
 .blog-breadcrumbs a:not(:last-of-type):after {
   content: ">";
-  color: var(--color-primary-blue);
+  color: var(--color-neutral-primary);
   position: absolute;
   right: -15px;
   top: 0;
@@ -1384,7 +1466,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 }
 
 .blog-list-page .blog-index-posts-section h3 a {
-  color: var(--color-primary-blue);
+  color: var(--color-neutral-primary);
 }
 
 .blog-list-page .blog-index-posts-flex {
@@ -1469,7 +1551,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   }
 
   .blog-hero-card {
-    background: var(--color-primary-blue);
+    background: var(--color-neutral-primary);
   }
 
   .blog-hero-card-content {
@@ -2172,7 +2254,7 @@ table th {
 
 /* Default color and border for tabs in dark mode */
 [data-theme='dark'] .tabs__item {
-  background-color: var(--color-primary-blue);
+  background-color: var(--color-neutral-primary);
   border: 1px solid var(--color-nav-text);
   padding: 5px 10px;
   margin-right: 5px;
