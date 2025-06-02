@@ -69,7 +69,16 @@
   --color-yellow-400: #ffcc25;
   --color-pink-700: #c20059;
 
+  /* 2025 Tokens */
+  --text-neutral-primary: var(--color-terminal-black-950);
+  --text-neutral-secondary: var(--color-terminal-black-800);
+  --text-accent-primary: var(--color-coalesce-purple-600);
+  --text-inverse-primary: var(--color-white);
+
+  --bg-accent-subtle: var(--color-coalesce-purple-50);
+
   /* Docusaurus Overrides */
+  /* We need to keep these for components that are not using the new tokens */
   --ifm-color-success: #086343 !important;
   --ifm-color-info: #047377 !important;
   --ifm-color-warning: var(--color-yellow-400) !important;
