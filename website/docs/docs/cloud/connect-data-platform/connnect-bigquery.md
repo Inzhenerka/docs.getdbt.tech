@@ -23,7 +23,7 @@ When you create a new BigQuery connection, you will be presented with two schema
 - **BigQuery:** Supports all connection types (Use this option)
 - **BigQuery (Legacy):**  Supports all connection types except for WIF (Deprecated feature. Do not use)
 
-All new connections should use the **BigQuery** option as **BigQuery (Legacy)** will be deprecated.
+All new connections should use the **BigQuery** option as **BigQuery (Legacy)** will be deprecated. To update the connection and credentials in an existing environment to use the new BigQuery option, use the API to remove the existing connection and credentials. 
 
 ### JSON keyfile
 
