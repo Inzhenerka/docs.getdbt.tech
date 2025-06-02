@@ -31,11 +31,11 @@
   --ifm-pagination-nav-color-hover: #047377;
   --ifm-tabs-color-active: #047377;
   --ifm-menu-color-background-active: #effbfa;
-  --ifm-font-family-monospace: "Source Code Pro", SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
-  --ifm-font-family-base:'polymath-text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+  --ifm-font-family-monospace: 'ibm-plex-mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+    Consolas, monospace;
+  --ifm-font-family-base: 'polymath-text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
     'segoe ui', 'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
-  --ifm-heading-font-family:     'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
+  --ifm-heading-font-family: 'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
   'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
   --ifm-code-padding-vertical: 0.2rem;
   --ifm-code-padding-horizontal: 0.4rem;
