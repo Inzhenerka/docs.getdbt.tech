@@ -224,6 +224,10 @@ html[data-theme="dark"] input.sc-avest {
   filter: brightness(2.5);
 }
 
+.theme-doc-sidebar-item-category .clean-btn.menu__caret {
+  display: none;
+}
+
 .dropdown > .navbar__link:after {
   background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 2rem;
   border: none;
