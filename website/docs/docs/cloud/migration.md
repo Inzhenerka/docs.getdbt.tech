@@ -43,7 +43,7 @@ These actions are required to prevent users from losing access <Constant name="c
 
 ## Run related data retention
 
-All runs available in <Constant name="cloud"/> will be migrated with your account. This includes metadata about the run like its status, when it began executing, and the duration. The individual steps associated with a run will not be migrated with your account. Therefore, the <Constant name="dbt"/> commands executed during a run, along with their logs and artifact files, will not be available in <Constant name="cloud"/> after your migration.
+All runs available in <Constant name="cloud"/> will be migrated with your account. This includes metadata about the run, like its status, execution start time, and duration. However, the individual steps associated with a run will not be migrated with your account. Therefore, the <Constant name="dbt"/> commands executed during a run, along with their logs and artifact files, will not be available in <Constant name="cloud"/> after your migration.
 
 The [Discovery API](/docs/dbt-cloud-apis/discovery-api) will contain a subset of data after your account has been migrated. Metadata generated in the past 7 days will be migrated with your account. A maximum of 20 runs will be available when querying the [job object](/docs/dbt-cloud-apis/discovery-schema-job) after migration.
 
