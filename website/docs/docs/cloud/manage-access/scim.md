@@ -127,7 +127,7 @@ Please complete the [setup SSO with Entra ID](/docs/cloud/manage-access/set-up-s
 
 ### Attribute mapping
 
-To mapp the attributes that will sync with dbt:
+To map the attributes that will sync with dbt:
 
 1. From the enteprise app **Overview** screen sidebar menu, click **Provisioning**. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning.png" width="60%" title="The Provisioning option on the sidebar." />
