@@ -86,7 +86,6 @@
     0 0 0 0 rgba(30, 35, 90, 0) !important;
   --docsearch-key-shadow: none !important;
 
-  /* New root variables */
   --ease-in: cubic-bezier(.4,0,1,1);
   --ease-out: cubic-bezier(0,0,.2,1);
   --ease-in-out: cubic-bezier(.4,0,.2,1);
@@ -485,6 +484,21 @@ a.code-link:hover {
 
 .navbar__items.navbar__items--right div[class^="toggle"] {
   order: 4;
+  height: auto;
+  width: auto;
+}
+
+.navbar__items--right button[aria-label*="Switch between dark and light mode"] {
+  border-radius: 12px !important;
+  padding: 10px !important;
+}
+
+.navbar__items--right button[aria-label*="Switch between dark and light mode"]:hover {
+  background: #F5F5F5 !important;
+}
+
+html[data-theme="dark"] .navbar__items--right button[aria-label*="Switch between dark and light mode"]:hover {
+  background: #242B37 !important;
 }
 
 /* moon/sun icons for dark/light mode */
@@ -1450,6 +1464,8 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
   .navbar__items--right> :last-child {
     padding: var(--ifm-navbar-item-padding-vertical) 1em var(--ifm-navbar-item-padding-vertical) 0.5em;
+    margin-right: 0;
+    padding-right: 0 !important;
   }
 
   .blog-main-row>main {
