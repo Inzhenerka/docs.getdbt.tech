@@ -255,6 +255,11 @@ html[data-theme="dark"] .dropdown > .navbar__link:after {
   border: 1px solid #E0E0E0 !important;
 }
 
+html[data-theme="dark"] .dropdown__menu {
+  border-color: #242B37 !important;
+  background-color: #0D1421 !important;
+}
+
 .dropdown__link {
   border-radius: 12px !important;
 }
@@ -427,7 +432,7 @@ a.code-link:hover {
 }
 
 .navbar__items {
-  gap: 16px;
+  gap: 12px;
 }
 
 .navbar__items .navbar__link.nav-create-account {
@@ -1241,7 +1246,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     }
   }
 
-  html[data-theme="dark"] .navbar__item, .navbar__link {
+  html[data-theme="dark"] .navbar__item, html[data-theme="dark"] .navbar__link {
     &:hover {
       background-color: #222222 !important;
     }
@@ -1320,7 +1325,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     border: 1px solid #D1D5DC;
     border-radius: 12px;
     height: 40px;
-    max-width: 188px;
+    min-width: 188px;
     width: 100%;
     font-family: var(--font-sans);
   }
