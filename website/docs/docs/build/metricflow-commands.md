@@ -279,7 +279,7 @@ Options:
   --where TEXT             SQL-like where statement provided as a string and wrapped in quotes.
                            All filter items must explicitly reference fields or dimensions that are part of your model.
                            To query a single statement: ---where "{{ Dimension('order_id__revenue') }} > 100"
-                           To query multiple statements: --where "{{ Dimension('order_id__revenue') }} > 100 and {{ Dimension('user_count') }} < 1000"
+                           To query multiple statements: --where "{{ Dimension('order_id__revenue') }} > 100 --where {{ Dimension('user_count') }} < 1000"
                            To add a dimension filter, use the `Dimension()` template wrapper to indicate that the filter item is part of your model. 
                            Refer to the [FAQ](#faqs) for more info on how to do this using a template wrapper.
 
