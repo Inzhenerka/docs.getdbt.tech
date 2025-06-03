@@ -209,7 +209,7 @@ For more a more detailed example, see [Query metric alias](#query-metric-alias).
 
 ## Querying the API for values
 
-To query values, here are the following parameters that are available. Your query must have _either_ a `metric` **or** a `group_by` parameter to be valid. 
+To query values, the following parameters are available. Your query must have _either_ a `metric` **or** a `group_by` parameter to be valid. 
 
 | Parameter | <div style={{width:'400px'}}>Description</div>  | <div style={{width:'100px'}}>Example</div>  | 
 | --------- | -----------| ------------ |
