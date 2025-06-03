@@ -1159,12 +1159,31 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   }
 }
 
-/* Begin @Media Queries */
-@media (min-width: 997px) and (max-width: 1150px) {
-  nav.navbar a.navbar__link {
-    font-size: 0.875rem;
+  .navbar__item.navbar__link {
+    align-self: inherit !important;
+    border: 0 !important;
   }
 
+  .navbar__item, .navbar__link {
+    font-size: var(--ifm-font-size-base);
+    font-weight: 500 !important;
+    padding: 10px !important;
+    border-radius: 12px;
+    margin: 0;
+
+    &:hover {
+      color: var(--text-neutral-primary) !important;
+      background-color: #F5F5F5 !important;
+    }
+  }
+
+  .dropdown.dropdown--hoverable .navbar__link {
+    padding: 0 !important;
+  }
+
+  /* Begin @Media Queries */
+
+  @media (min-width: 997px) and (max-width: 1150px) {
   .navbar__search .navbar__search-input {
     max-width: 160px;
   }
