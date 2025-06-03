@@ -66,6 +66,7 @@
   --filter-brightness-high: 1.5;
   --darkmode-link-color: #9786FF;
   --light-dark-toggle: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQuMzA4IDMuMzg1YzAtMS4xNzguMTczLTIuMzcuNjE1LTMuMzg1QzEuOTgzIDEuMjggMCA0LjI4MiAwIDcuNjkyQTguMzA4IDguMzA4IDAgMCAwIDguMzA4IDE2YzMuNDEgMCA2LjQxMi0xLjk4MyA3LjY5Mi00LjkyMy0xLjAxNS40NDItMi4yMDcuNjE1LTMuMzg1LjYxNWE4LjMwOCA4LjMwOCAwIDAgMS04LjMwNy04LjMwN1oiIGZpbGw9IiM5MkEwQjMiLz48L3N2Zz4=";
+  --ifm-menu-link-sublist-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L6 6L10 2' stroke='%23030711' stroke-width='1.5' stroke-linecap='square' stroke-linejoin='round'/%3E%3C/svg%3E");
 
   /* search overrides */
   --docsearch-searchbox-background: var(--color-white) !important;
@@ -84,6 +85,11 @@
   --docsearch-key-shadow: inset 0 0 0 0 #cdcde6, inset 0 0 0 0 #fff,
     0 0 0 0 rgba(30, 35, 90, 0) !important;
   --docsearch-key-shadow: none !important;
+
+  /* New root variables */
+  --ease-in: cubic-bezier(.4,0,1,1);
+  --ease-out: cubic-bezier(0,0,.2,1);
+  --ease-in-out: cubic-bezier(.4,0,.2,1);
 }
 
 /* dark theme styles!!! */
@@ -216,6 +222,28 @@ html[data-theme="dark"] .redoc-markdown pre {
 
 html[data-theme="dark"] input.sc-avest {
   filter: brightness(2.5);
+}
+
+.dropdown > .navbar__link:after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 2rem;
+  border: none;
+  filter: contrast(100%);
+  height: 17px;
+  width: 26px;
+  transform: scale(.5);
+  margin-left: 0;
+  transition: transform 0.2s var(--ease-in-out);
+  
+}
+
+html[data-theme="dark"] .dropdown > .navbar__link:after {
+  filter: invert(1) brightness(2);
+}
+
+.navbar__item, .navbar__link {
+  &:hover .navbar__link:after {
+    transform: rotate(180deg) scale(.5);
+  }
 }
 
 .dropdown__menu {
@@ -584,24 +612,37 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
 
 /* Mobile ToC caret */
 .docs-doc-page .theme-doc-toc-mobile .clean-btn:after {
-  transform: rotate(90deg);
+  content: '';
+  display: inline-block;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
 }
 
 .docs-doc-page .theme-doc-toc-mobile[class*="Expanded"] .clean-btn:after {
-  transform: rotate(180deg);
+  transform: rotate(45deg);
 }
 
 /* < icon */
 .menu__link--sublist::after,
 .menu__caret::before {
-  transform: rotate(90deg);
+  content: '';
+  display: inline-block;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  transform: rotate(-45deg);
   margin-left: 1em;
-  background: var(--ifm-breadcrumb-separator) center;
-  background-repeat: no-repeat;
-  height: 9px;
-  min-width: 6px;
-  width: calc(var(--ifm-breadcrumb-separator-size) * var(--ifm-breadcrumb-size-multiplier) * var(--ifm-breadcrumb-separator-size-multiplier));
+  transition: transform 0.2s ease;
 }
+
+.menu__list-item--collapsed .menu__link--sublist::after,
+.menu__list-item--collapsed .menu__caret::before {
+  transform: rotate(45deg);
+}
+
 
 /* Table of Contents */
 .table-of-contents__link:hover,
@@ -1310,6 +1351,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   }
 }
 
+
 @media (min-width: 1440px) {
   .container--fluid {
     max-width: inherit;
@@ -1318,10 +1360,6 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   .dbt__brand {
     background-color: var(--ifm-background-color);
     border-right: 1px solid var(--ifm-toc-border-color);
-  }
-
-  button.DocSearch-Button {
-    min-width: 175px;
   }
 }
 
