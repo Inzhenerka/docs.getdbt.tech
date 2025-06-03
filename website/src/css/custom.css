@@ -218,6 +218,15 @@ html[data-theme="dark"] input.sc-avest {
   filter: brightness(2.5);
 }
 
+.dropdown__menu {
+  border-radius: 12px !important;
+  border: 1px solid #E0E0E0 !important;
+}
+
+.dropdown__link {
+  border-radius: 12px !important;
+}
+
 .dropdown--version--hide .dropdown__menu {
   opacity: 0;
   visibility: hidden;
@@ -377,6 +386,10 @@ a.code-link:hover {
 .navbar-sidebar .menu__link.nav-create-account:hover {
   color: var(--color-white);
   background: var(--color-light-teal);
+}
+
+.navbar__items {
+  gap: 16px;
 }
 
 .navbar__items .navbar__link.nav-create-account {
@@ -1247,18 +1260,12 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
   /* search bar styles */
   button.DocSearch-Button {
-    border: 1px solid #95a0b1;
-    border-radius: 5px;
-    height: 30px;
-  }
-
-  button.DocSearch-Button:active,
-  button.DocSearch-Button:focus,
-  button.DocSearch-Button:hover {
-    color: var(--docsearch-muted-color);
-    background: white;
-    box-shadow: var(--docsearch-searchbox-shadow);
-    border: 1px solid var(--ifm-link-color);
+    border: 1px solid #D1D5DC;
+    border-radius: 12px;
+    height: 40px;
+    max-width: 188px;
+    width: 100%;
+    font-family: var(--font-sans);
   }
 
   button .DocSearch-Button-Placeholder {
