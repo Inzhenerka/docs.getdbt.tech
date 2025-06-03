@@ -115,7 +115,7 @@ var siteSettings = {
       items: [
         {
           label: "Docs",
-          position: "left",
+          position: "right",
           items: [
             {
               label: "Product docs",
@@ -139,12 +139,12 @@ var siteSettings = {
         {
           to: "/guides",
           label: "Guides",
-          position: "left",
+          position: "right",
         },
         {
           to: "reference/references-overview",
           label: "Reference",
-          position: "left",
+          position: "right",
           activeBasePath: "reference",
         },
         {
@@ -190,12 +190,6 @@ var siteSettings = {
               to: "/community/spotlight",
             },
           ],
-        },
-        {
-          label: "Create a free account",
-          to: "https://www.getdbt.com/signup/",
-          position: "right",
-          className: "nav-create-account button button--primary",
         },
       ],
     },
@@ -343,7 +337,7 @@ var siteSettings = {
 if (versions) {
   siteSettings.themeConfig.navbar.items.push({
     label: "Versions",
-    position: "left",
+    position: "right",
     className: "nav-versioning",
     items: [
       ...versions.reduce((acc, version) => {
