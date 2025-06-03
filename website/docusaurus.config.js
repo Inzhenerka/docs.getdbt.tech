@@ -191,6 +191,22 @@ var siteSettings = {
             },
           ],
         },
+        {
+          label: "Account",
+          position: "right",
+          className: "navbar__account hide-label",
+          items: [
+            {
+              label: "Login",
+              to: "https://cloud.getdbt.com/",
+              target: "_blank",
+            },
+            {
+              label: "Create a free account",
+              to: "https://www.getdbt.com/signup",
+            },
+          ],
+        },
       ],
     },
     footer: {
