@@ -370,6 +370,12 @@ a.code-link:hover {
   margin-left: 1.25rem;
 }
 
+@media (max-width: 996px) {
+  .navbar__logo {
+    margin-left: 0;
+  }
+}
+
 .navbar__search-input {
   color: #505d73;
   font-weight: var(--ifm-font-weight-semibold);
@@ -1232,6 +1238,12 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     &:hover {
       color: var(--text-neutral-primary) !important;
       background-color: #F5F5F5 !important;
+    }
+  }
+
+  html[data-theme="dark"] .navbar__item, .navbar__link {
+    &:hover {
+      background-color: #222222 !important;
     }
   }
 
