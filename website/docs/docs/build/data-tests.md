@@ -199,7 +199,7 @@ Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 
 ```
 3. Check out the SQL dbt is running by either:
-   * **dbt Cloud:** checking the Details tab.
+   * **<Constant name="cloud" />:** checking the Details tab.
    * **dbt Core:** checking the `target/compiled` directory
 
 
@@ -291,12 +291,6 @@ Note that, if you select to store test failures:
 
 
 ## New `data_tests:` syntax
-
-<VersionBlock lastVersion="1.7">
-
-In dbt version 1.8, we updated the `tests` configuration to `data_tests`. For detailed information, select version v1.8 from the documentation navigation menu.
-
-</VersionBlock>
 
 <VersionBlock firstVersion="1.8">
   

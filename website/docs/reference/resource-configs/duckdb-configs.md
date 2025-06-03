@@ -6,7 +6,7 @@ id: "duckdb-configs"
 
 ## Profile
 
-dbt Cloud users don't have to create their own profiles.yml file. dbt-duckdb [profiles](/docs/core/connect-data-platform/duckdb-setup#connecting-to-duckdb-with-dbt-duckdb) should be set up as follows:
+<Constant name="cloud" /> users don't have to create their own profiles.yml file. dbt-duckdb [profiles](/docs/core/connect-data-platform/duckdb-setup#connecting-to-duckdb-with-dbt-duckdb) should be set up as follows:
 
 ```yml
 your_profile_name:
@@ -216,8 +216,9 @@ You may reference external files in your dbt models either directly or as dbt so
 ```yml
 sources:
   - name: external_source
-    meta:
-      external_location: "s3://my-bucket/my-sources/{name}.parquet"
+    config:
+      meta: # changed to config in v1.10
+        external_location: "s3://my-bucket/my-sources/{name}.parquet"
     tables:
       - name: source1
       - name: source2
@@ -244,8 +245,9 @@ If one of the source tables deviates from the pattern or needs some other specia
 ```yml
 sources:
   - name: external_source
-    meta:
-      external_location: "s3://my-bucket/my-sources/{name}.parquet"
+    config:
+      meta: # changed to config in v1.10
+        external_location: "s3://my-bucket/my-sources/{name}.parquet"
     tables:
       - name: source1
       - name: source2
