@@ -99,7 +99,7 @@
 }
 
 [data-theme='dark'] .quickstartFilterContainer {
-  background: #262A38;
+  background: #030711;
 }
 
 .quickstartFilterContainer h3 {
@@ -107,7 +107,7 @@
     font-weight: 300;
     margin-bottom: 0;
     font-size: 1.25rem;
-    color: #262A38;
+    color: #030711;
 }
 
 [data-theme='dark'] .quickstartFilterContainer h3 {

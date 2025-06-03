@@ -311,8 +311,7 @@ var siteSettings = {
     "/css/entypo.css",
     "/css/search.css",
     "/css/api.css",
-    "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;600;700&display=swap",
-    "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap",
+    "https://use.typekit.net/kvb8avc.css",
     {
       href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
       type: "text/css",

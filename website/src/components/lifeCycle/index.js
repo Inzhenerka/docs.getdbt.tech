@@ -30,10 +30,10 @@ const statusColors = {
 };
 
 const fontColors = {
-  [MANAGED_PLUS]: '#262A38',
-  [MANAGED]: '#262A38',
-  [SELF_SERVICE]: '#262A38',
-  [DEVELOPER]: '#262A38',
+  [MANAGED_PLUS]: '#030711',
+  [MANAGED]: '#030711',
+  [SELF_SERVICE]: '#030711',
+  [DEVELOPER]: '#030711',
   preview: '#ffff',
   beta: '#ffff',
   ga: '#ffff',

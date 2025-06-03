@@ -83,9 +83,8 @@ function Home() {
           style={{ padding: "0", background: "#FFF" }}
         >
           <Hero
-            heading="Welcome to the dbt Developer Hub"
-            subheading="Your home base for learning dbt, connecting with the community and contributing to the craft of analytics engineering "
-            showGraphic
+            heading="The dbt Developer Hub"
+            subheading="Find everything you need to build, document, and collaborate with dbt — faster."
           />
           <section
             className={`resource-section row ${spotlightMember ? "has-spotlight-member" : ""}`}
