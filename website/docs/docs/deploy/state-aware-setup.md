@@ -150,7 +150,7 @@ Here's the following YAML example:
 models:
   - name: dim_wizards
     config:
-      freshness: # changed to config in v1.9
+      freshness: 
         build_after:
           count: 4         # how long to wait before rebuilding
           period: hour     # unit of time
