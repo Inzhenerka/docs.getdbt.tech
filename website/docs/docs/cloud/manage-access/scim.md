@@ -123,7 +123,7 @@ Please complete the [setup SSO with Entra ID](/docs/cloud/manage-access/set-up-s
     - The **Tenant URL** in Entra ID is your **SCIM based URL** from dbt
     - The **Secret token** in Entra ID is your *SCIM token** from dbt
 8. Click **Test connection** and click **Create** once complete.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/provision-config.png" width="60%" title="Configure the app and test the connection." />
+    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning-config.png" width="60%" title="Configure the app and test the connection." />
 
 ### Attribute mapping
 
