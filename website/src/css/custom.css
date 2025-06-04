@@ -574,6 +574,17 @@ a.navbar__item.navbar__link.btn:hover {
   justify-content: space-between;
   flex-direction: row;
   padding: 1rem;
+  font-weight: 500;
+}
+
+@media(max-width: 996px) {
+  .menu__link--sublist-caret:after {
+    transform: scale(.4) rotate(45deg) !important;
+  }
+  .tocCollapsibleButton_TO0P::after {
+    background: none !important;
+    transform: scale(.4) rotate(45deg) !important;
+  }
 }
 
 .menu__list-item-collapsible .menu__link {
