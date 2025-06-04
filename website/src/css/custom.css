@@ -1318,6 +1318,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   html[data-theme="dark"] .navbar__item, html[data-theme="dark"] .navbar__link {
     &:hover {
       background-color: #242B37 !important;
+      color: var(--text-inverse-primary) !important;
     }
   }
 
