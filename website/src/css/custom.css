@@ -1951,18 +1951,18 @@ section.discourse-forum-page {
     position: absolute;
     top: 0;
     bottom: -50px;
-    width: 70px;
+    width: 100px;
     pointer-events: none;
     z-index: 2;
   }
 
   .home section > .container::before {
-    left: -70px;
+    left: -110px;
     background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255,1) 50%, transparent 100%);
   }
 
   .home section > .container::after {
-    right: -70px;
+    right: -110px;
     background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 1) 50%, transparent 100%);
   }
 
@@ -2447,15 +2447,39 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 }
 
 
-.baton-1 {
-  background-image: url('/img/batons/baton-1.png');
+.baton-1,
+.baton-2 {
+  position: relative;
+}
+
+.baton-1::before,
+.baton-2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1460px;
+  height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  z-index: 0;
+}
+
+.baton-1::before {
+  background-image: url('/img/batons/baton-1.png');
+}
+
+.baton-2::before {
+  background-image: url('/img/batons/baton-2.png');
 }
 
 @media (min-width: 1460px) {
-  .baton-1 {
+  .baton-1::before,
+  .baton-2::before {
     background-size: contain;
   }
 }
+

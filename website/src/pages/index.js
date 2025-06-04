@@ -120,10 +120,10 @@ function Home() {
 
           <section className='baton-1'>
             <div className='container'>
-            <div>
-              <span className="eyebrow">Documentation by product</span>
-              <h2 className="heading-2">Explore the docs by product</h2>
-            </div>
+              <div>
+                <span className="eyebrow">Documentation by product</span>
+                <h2 className="heading-2">Explore the docs by product</h2>
+              </div>
               <div className="home-card-grid">
                 <Card
                   title="Copilot"
@@ -162,7 +162,55 @@ function Home() {
                   icon="circle"
                 />
               </div>
+            </div>
+          </section>
+
+          <section className='baton-2'>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">Get help from others</span>
+                <h2 className="heading-2">Join the dbt Community</h2>
+                <p>Connect with thousands of developers solving real data problems every day.</p>
               </div>
+              <div className="home-card-grid">
+                <Card
+                  title="Copilot"
+                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  link="/guides/manual-install?step=1"
+                  icon="circle"
+                />
+                <Card
+                  title="Mesh"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/get-started-dbt"
+                  icon="circle"
+                />
+                <Card
+                  title="Orchestrator"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/build/projects"
+                  icon="circle"
+                />
+                <Card
+                  title="Copilot"
+                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  link="/guides/manual-install?step=1"
+                  icon="circle"
+                />
+                <Card
+                  title="Mesh"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/get-started-dbt"
+                  icon="circle"
+                />
+                <Card
+                  title="Orchestrator"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/build/projects"
+                  icon="circle"
+                />
+              </div>
+            </div>
           </section>
 
           <section className="from-the-blog">
