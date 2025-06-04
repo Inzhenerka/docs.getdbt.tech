@@ -100,7 +100,7 @@ function Home() {
                     tag="Guide"
                     body="Install and run your first model locally"
                     link="/guides/manual-install?step=1"
-                    icon="question-mark"
+                    icon="settings"
                   />
                 </div>
                 <div>
@@ -109,7 +109,7 @@ function Home() {
                     tag="Article"
                     body="Build faster with dbt Cloud's IDE"
                     link="/docs/get-started-dbt"
-                    icon="book"
+                    icon="zap"
                   />
                 </div>
                 <div>
@@ -118,7 +118,7 @@ function Home() {
                     tag="Guide"
                     body="Step-by-step tutorial with sample data"
                     link="/docs/build/projects"
-                    icon="docs"
+                    icon="tool"
                   />
                 </div>
               </div>
