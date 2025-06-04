@@ -1,12 +1,3 @@
-.card {
-  border: 1px solid var(--border-neutral-tertiary);
-  border-radius: 16px;
-  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
-  background-color: var(--bg-surface-default);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
 .cardWrapper, .cardWrapper article {
   height: 100%;
 }
@@ -18,6 +9,16 @@
   text-decoration: none;
 }
 
+.card {
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-neutral-tertiary);
+  border-radius: 16px;
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  background-color: var(--bg-surface-default);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
 .cardBody {
   color: var(--text-neutral-secondary);
 }
@@ -25,6 +26,7 @@
 .cardBody a, .cardBody a:hover {
   text-decoration: underline;
 }
+
 
 .icon {
   margin-bottom: 1.5rem;

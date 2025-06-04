@@ -1,6 +1,11 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "build": {
+    "css": {
+      "preserve": ["backdrop-filter"]
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
