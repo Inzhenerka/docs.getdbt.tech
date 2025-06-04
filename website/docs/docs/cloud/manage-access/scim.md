@@ -151,11 +151,11 @@ To map the attributes that will sync with dbt:
     - **Match objects using this attribute:** `No`
     - **Matching precedence:** *Leave blank*
     - **Apply this mapping:** `Always`
-    Click **Ok**
+  6. Click **Ok**
     <Lightbox src="/img/docs/dbt-cloud/access-control/edit-attribute.png" width="60%" title="Edit the attribute as shown." />
-6. Back on the **Attribute mapping** screen, click the checkbox to **Show advanced options**
+7. Back on the **Attribute mapping** screen, click the checkbox to **Show advanced options**
     <Lightbox src="/img/docs/dbt-cloud/access-control/show-advanced-options.png" width="60%" title="Edit the advanced options." />
-7. Mark all of the above fields as `Required` and click **Save**.
+8. Mark all of the fields from Step 5 as `Required` and click **Save**.
     <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Mark the fields as required." />    
 
 You can now begin assigning users to your SCIM app in Entra ID!
