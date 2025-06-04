@@ -237,16 +237,23 @@ content: "";
 display: flex;
 height: 22px;
 width: 22px;
-display: inline-block;
+display: none;
 }
 
 html[data-theme="dark"] .navbar__account:before {
   filter: invert(1) brightness(2);
 }
 
+@media(min-width: 996px) {
 /* Hide Account label in navbar */
 .navbar__account.hide-label {
   font-size: 0 !important;
+}
+
+.navbar__account:before {
+  display: inline-block !important;
+}
+
 }
 
 
@@ -259,7 +266,6 @@ html[data-theme="dark"] .navbar__account:before {
   transform: scale(.4);
   margin-left: 0;
   transition: transform 0.2s var(--ease-in-out);
-  
 }
 
 html[data-theme="dark"] .dropdown > .navbar__link:after {
