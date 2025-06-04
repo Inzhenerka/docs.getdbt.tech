@@ -217,66 +217,6 @@ function Home() {
             <h2>The latest from the Developer Blog</h2>
             <PostCarousel blogPostData={recentBlogData} />
           </section>
-
-          <section className="from-the-community">
-            <h2>From the dbt Community</h2>
-            <div className="grid--3-col">
-              <div>
-                <Card
-                  title="Join the community"
-                  body="Connect with data practitioners from around the world."
-                  link="/community/join"
-                  icon="smiley-face"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Become a contributor"
-                  body="Help build the resources the community uses to solve hard problems."
-                  link="/community/contribute"
-                  icon="pencil-paper"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Open source dbt Packages"
-                  body="Take your dbt project to the next level with community built packages."
-                  link="https://hub.getdbt.com/"
-                  icon="packages"
-                />
-              </div>
-            </div>
-          </section>
-
-          <section className="like-a-pro">
-            <h2>Use dbt like a pro</h2>
-            <div className="grid--3-col">
-              <div>
-                <Card
-                  title="Best practices"
-                  body="Learn battle tested strategies for analytics engineering best practices."
-                  link="/best-practices"
-                  icon="guides"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Community forum"
-                  body="Get help and swap knowledge in the async forum."
-                  link="/community/forum"
-                  icon="discussions"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Online courses"
-                  body="Structured video courses to give you a deep dive into analytics engineering topics."
-                  link="https://learn.getdbt.com/"
-                  icon="computer"
-                />
-              </div>
-            </div>
-          </section>
         </div>
 
         <div
