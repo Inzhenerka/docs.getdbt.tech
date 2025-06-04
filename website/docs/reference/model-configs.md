@@ -110,7 +110,7 @@ version: 2
 models:
   - name: [<model-name>]
     config:
-      freshness: # changed to config in v1.9 
+      freshness:
         # build_after is nested under freshness
         [build_after](/reference/resource-configs/build-after): <dict>
 ```
