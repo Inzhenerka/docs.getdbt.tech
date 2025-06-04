@@ -86,37 +86,83 @@ function Home() {
             heading="The dbt Developer Hub"
             subheading="Find everything you need to build, document, and collaborate with dbt — faster."
           />
-          <section
-          >
-            <div className="popular-header">
-              <span className="eyebrow">Quickstart</span>
-              <h2 className="heading-2">New to dbt? Start here.</h2>
+          <section>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">Quickstart</span>
+                <h2 className="heading-2">New to dbt? Start here.</h2>
+              </div>
+                <div className="home-card-grid">
+                  <Card
+                    title="Set up dbt Core"
+                    tag="Guide"
+                    body="Install and run your first model locally"
+                    link="/guides/manual-install?step=1"
+                    icon="settings"
+                  />
+                  <Card
+                    title="Use dbt in the Cloud"
+                    tag="Article"
+                    body="Build faster with dbt Cloud's IDE"
+                    link="/docs/get-started-dbt"
+                    icon="zap"
+                  />
+                  <Card
+                    title="Learn the basics"
+                    tag="Guide"
+                    body="Step-by-step tutorial with sample data"
+                    link="/docs/build/projects"
+                    icon="tool"
+                  />
+                </div>
+              </div>
+          </section>
+
+          <section className='baton-1'>
+            <div className='container'>
+            <div>
+              <span className="eyebrow">Documentation by product</span>
+              <h2 className="heading-2">Explore the docs by product</h2>
             </div>
-            <div className="popular-resources">
               <div className="home-card-grid">
                 <Card
-                  title="Set up dbt Core"
-                  tag="Guide"
-                  body="Install and run your first model locally"
+                  title="Copilot"
+                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
                   link="/guides/manual-install?step=1"
-                  icon="settings"
+                  icon="circle"
                 />
                 <Card
-                  title="Use dbt in the Cloud"
-                  tag="Article"
-                  body="Build faster with dbt Cloud's IDE"
+                  title="Mesh"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
                   link="/docs/get-started-dbt"
-                  icon="zap"
+                  icon="circle"
                 />
                 <Card
-                  title="Learn the basics"
-                  tag="Guide"
-                  body="Step-by-step tutorial with sample data"
+                  title="Orchestrator"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
                   link="/docs/build/projects"
-                  icon="tool"
+                  icon="circle"
+                />
+                <Card
+                  title="Copilot"
+                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  link="/guides/manual-install?step=1"
+                  icon="circle"
+                />
+                <Card
+                  title="Mesh"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/get-started-dbt"
+                  icon="circle"
+                />
+                <Card
+                  title="Orchestrator"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/build/projects"
+                  icon="circle"
                 />
               </div>
-            </div>
+              </div>
           </section>
 
           <section className="from-the-blog">

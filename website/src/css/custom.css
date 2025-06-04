@@ -1924,9 +1924,55 @@ section.discourse-forum-page {
 /* New Homepage Styles */
 
 .home section {
-  margin: 6.25rem auto 6.25rem;
+  max-width: 2100px;
+  width: 100%;
+  padding: 6rem 1rem;
+  margin: 0 auto;
+}
+
+.home .container {
   max-width: var(--ifm-container-width-xl);
-  padding: 0 50px;
+}
+
+@media (min-width: 1460px) {
+  .home section {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .home section > .container {
+    position: relative;
+  }
+
+  .home section > .container::before,
+  .home section > .container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -50px;
+    width: 70px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .home section > .container::before {
+    left: -70px;
+    background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255,1) 50%, transparent 100%);
+  }
+
+  .home section > .container::after {
+    right: -70px;
+    background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 1) 50%, transparent 100%);
+  }
+
+  [data-theme='dark'] .home section > .container::before {
+    background: linear-gradient(to right, var(--ifm-background-color) 0%, rgba(13, 20, 33, 1) 50%, transparent 100%);
+  }
+
+  [data-theme='dark'] .home section > .container::after {
+    background: linear-gradient(to left, var(--ifm-background-color) 0%, rgba(13, 20, 33, 1) 50%, transparent 100%);
+  }
 }
 
 .home section.from-the-blog {
@@ -2398,4 +2444,18 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 /* prevents nav bar from rendering weirdly with extended titles */
 .navbar__item{
   white-space: nowrap;
+}
+
+
+.baton-1 {
+  background-image: url('/img/batons/baton-1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (min-width: 1460px) {
+  .baton-1 {
+    background-size: contain;
+  }
 }
