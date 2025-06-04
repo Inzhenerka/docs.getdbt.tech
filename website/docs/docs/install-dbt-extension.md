@@ -34,7 +34,7 @@ import InstallExtension from '/snippets/_install-dbt-extension.md';
 
 Users must complete registration within 14 days of installing the dbt extension. There are two ways to register:
 
-- Users without an existing dbt account can register quickly and easily through an online registration form. You only need to provide your name and email address. Having a dbt account is optional, but you can create one if you choose to. 
+- Users without an existing dbt account can register quickly and easily through an online registration form. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
 - Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file.
 
 The VS Code extension is free for organizations with up to 15 users.
