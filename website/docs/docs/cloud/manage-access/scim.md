@@ -131,6 +131,7 @@ To map the attributes that will sync with dbt:
 
 1. From the enteprise app **Overview** screen sidebar menu, click **Provisioning**. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning.png" width="60%" title="The Provisioning option on the sidebar." />
+    
 2. From under **Manage**, again click **Provisioning**.
 3. Expand the **Mappings** section and click **Provision Microsoft Entra ID users**.
      <Lightbox src="/img/docs/dbt-cloud/access-control/provision-entra-users.png" width="60%" title="Provision the Entra ID users." />
