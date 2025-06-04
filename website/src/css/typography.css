@@ -34,12 +34,6 @@
   line-height: 1;
 }
 
-@media (min-width: 1280px) {
-  .heading-display {
-    font-size: var(--text-8xl);
-  }
-}
-
 /* Heading Levels */
 .heading-1 {
   font-family: var(--font-display);
@@ -48,42 +42,24 @@
   line-height: 1.2;
 }
 
-@media (min-width: 1280px) {
-  .heading-1 {
-    font-size: var(--text-6xl);
-  }
-}
-
 .heading-2 {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: var(--text-5xl);
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
 
-@media (min-width: 1280px) {
-  .heading-2 {
-    font-size: var(--text-5xl);
-  }
-}
-
 .heading-3 {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: var(--text-4xl);
   font-weight: 600;
   line-height: 1.2;
 }
 
-@media (min-width: 1280px) {
-  .heading-3 {
-    font-size: var(--text-3xl);
-  }
-}
-
 .heading-4 {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: 600;
   line-height: 1.2;
 }
@@ -91,7 +67,7 @@
 
 .heading-5 {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
+  font-size: var(--text-2xl);
   font-weight: 600;
   line-height: 1.2;
 }

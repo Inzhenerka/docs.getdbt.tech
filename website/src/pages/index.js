@@ -94,33 +94,27 @@ function Home() {
             </div>
             <div className="popular-resources">
               <div className="home-card-grid">
-                <div>
-                  <Card
-                    title="Set up dbt Core"
-                    tag="Guide"
-                    body="Install and run your first model locally"
-                    link="/guides/manual-install?step=1"
-                    icon="settings"
-                  />
-                </div>
-                <div>
-                  <Card
-                    title="Use dbt in the Cloud"
-                    tag="Article"
-                    body="Build faster with dbt Cloud's IDE"
-                    link="/docs/get-started-dbt"
-                    icon="zap"
-                  />
-                </div>
-                <div>
-                  <Card
-                    title="Learn the basics"
-                    tag="Guide"
-                    body="Step-by-step tutorial with sample data"
-                    link="/docs/build/projects"
-                    icon="tool"
-                  />
-                </div>
+                <Card
+                  title="Set up dbt Core"
+                  tag="Guide"
+                  body="Install and run your first model locally"
+                  link="/guides/manual-install?step=1"
+                  icon="settings"
+                />
+                <Card
+                  title="Use dbt in the Cloud"
+                  tag="Article"
+                  body="Build faster with dbt Cloud's IDE"
+                  link="/docs/get-started-dbt"
+                  icon="zap"
+                />
+                <Card
+                  title="Learn the basics"
+                  tag="Guide"
+                  body="Step-by-step tutorial with sample data"
+                  link="/docs/build/projects"
+                  icon="tool"
+                />
               </div>
             </div>
           </section>
