@@ -2484,3 +2484,9 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   }
 }
 
+@media (max-width: 996px) {
+  .baton-1::before,
+  .baton-2::before {
+    background-size: contain;
+  }
+}

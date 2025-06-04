@@ -71,6 +71,18 @@
   line-height: 1.2;
 }
 
+@media (max-width: 996px) {
+  .heading-1 {
+    font-size: var(--text-5xl);
+  }
+  .heading-2 {
+    font-size: var(--text-3xl);
+  }
+  .heading-3 {
+    font-size: var(--text-2xl);
+  }
+}
+
 /* Tag Style */
 .tag {
   color: var(--text-accent-primary);
