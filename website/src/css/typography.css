@@ -88,11 +88,6 @@
   line-height: 1.2;
 }
 
-@media (min-width: 1280px) {
-  .heading-4 {
-    font-size: var(--text-2xl);
-  }
-}
 
 .heading-5 {
   font-family: var(--font-display);
@@ -105,11 +100,14 @@
 .tag {
   color: var(--text-accent-primary);
   background-color: var(--bg-accent-subtle);
-  border-radius: 0.125rem;
+  border-radius: 4px;
   padding: 0.25rem;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
+  display: block;
+  width: max-content;
+  margin-bottom: 1rem;
 }
 
 /* Text Styles */
@@ -132,4 +130,10 @@
   font-weight: 500;
   margin-bottom: .5rem;
   display: inline-block;
+}
+
+html[data-theme="dark"] {
+  .eyebrow {
+    color: var(--text-inverse-accent-primary);
+  }
 }

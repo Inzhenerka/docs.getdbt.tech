@@ -61,7 +61,7 @@
 
   /* Surface Backgrounds */
   --bg-surface-default: rgba(255, 255, 255, 0.7);
-  --bg-surface-inverse: rgba(0, 0, 0, 0.7);
+  --bg-surface-inverse: rgba(16, 24, 40, 0.7);
 
   /* Brand & Accent Borders */
   --border-brand-primary: var(--color-transform-orange-600);

@@ -6,15 +6,11 @@
   border: 1px solid var(--border-neutral-tertiary);
   border-radius: 16px;
   padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  background-color: var(--bg-surface-default);
 }
 
 .cardWrapper, .cardWrapper article {
   height: 100%;
-}
-
-.cardWrapper h3 {
-  font-size: var(--text-2xl);
-  line-height: 1.875rem;
 }
 
 .cardWrapper a {
@@ -25,7 +21,6 @@
 }
 
 .cardBody {
-  margin-bottom: 20px;
   color: var(--text-neutral-secondary);
 }
 
@@ -55,6 +50,20 @@
   padding: 0rem 0.75rem;
   font-size: 16px;
 }
+
+html[data-theme="dark"] {
+
+  .card {
+    background-color: var(--bg-surface-inverse);
+    border-color: var(--border-inverse-tertiary );
+  }
+
+  .cardBody {
+    color: var(--text-inverse-secondary);
+  }
+}
+
+
 
 html[data-theme="dark"] .pill {
   background: #374151;

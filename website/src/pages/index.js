@@ -96,34 +96,29 @@ function Home() {
               <div className="home-card-grid">
                 <div>
                   <Card
-                    title="What is dbt?"
-                    body="dbt enables data practitioners to adopt software engineering best practices and deploy modular, reliable analytics code."
-                    link="/docs/introduction"
+                    title="Set up dbt Core"
+                    tag="Guide"
+                    body="Install and run your first model locally"
+                    link="/guides/manual-install?step=1"
                     icon="question-mark"
                   />
                 </div>
                 <div>
                   <Card
-                    title="Getting started guide"
-                    body="Learn how to set up dbt and build your first models. You will also test and document your project, and schedule a job."
+                    title="Use dbt in the Cloud"
+                    tag="Article"
+                    body="Build faster with dbt Cloud's IDE"
                     link="/docs/get-started-dbt"
                     icon="book"
                   />
                 </div>
                 <div>
                   <Card
-                    title="Docs"
-                    body="Discover everything dbt has to offer from the basics to advanced concepts."
+                    title="Learn the basics"
+                    tag="Guide"
+                    body="Step-by-step tutorial with sample data"
                     link="/docs/build/projects"
                     icon="docs"
-                  />
-                </div>
-                <div>
-                  <Card
-                    title="Supported data platforms"
-                    body="dbt connects to most major databases, data warehouses, data lakes, or query engines."
-                    link="/docs/supported-data-platforms"
-                    icon="rocket"
                   />
                 </div>
               </div>
