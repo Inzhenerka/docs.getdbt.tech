@@ -174,40 +174,40 @@ function Home() {
               </div>
               <div className="home-card-grid">
                 <Card
-                  title="Copilot"
-                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  title="Join Slack"
+                  body="Ask questions, get answers, and meet people who speak your data language."
                   link="/guides/manual-install?step=1"
-                  icon="circle"
+                  icon="annotation"
                 />
                 <Card
-                  title="Mesh"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  title="GitHub Discussions"
+                  body="Join technical threads or open issues."
                   link="/docs/get-started-dbt"
-                  icon="circle"
+                  icon="github-new"
                 />
                 <Card
-                  title="Orchestrator"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  title="Subscribe to the newsletter"
+                  body="Get fresh community ideas, job posts, and tools delivered weekly."
                   link="/docs/build/projects"
-                  icon="circle"
+                  icon="inbox"
                 />
                 <Card
-                  title="Copilot"
-                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  title="Answer a question on Discourse"
+                  body="Help someone solve a real problem—and build your reputation doing it."
                   link="/guides/manual-install?step=1"
-                  icon="circle"
+                  icon="message"
                 />
                 <Card
-                  title="Mesh"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  title="Events and Meetups"
+                  body="Join local and global dbt meetups."
                   link="/docs/get-started-dbt"
-                  icon="circle"
+                  icon="globe"
                 />
                 <Card
-                  title="Orchestrator"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  title="Courses & Tutorials"
+                  body="Learn dbt with hands-on guidance."
                   link="/docs/build/projects"
-                  icon="circle"
+                  icon="forward"
                 />
               </div>
             </div>
