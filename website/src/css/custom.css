@@ -256,7 +256,7 @@ html[data-theme="dark"] .navbar__account:before {
   filter: contrast(100%);
   height: 17px;
   width: 26px;
-  transform: scale(.5);
+  transform: scale(.4);
   margin-left: 0;
   transition: transform 0.2s var(--ease-in-out);
   
@@ -459,7 +459,7 @@ a.code-link:hover {
 }
 
 .navbar__items {
-  gap: 12px;
+  gap: 8px;
 }
 
 .navbar__items .navbar__link.nav-create-account {
@@ -1290,7 +1290,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
   html[data-theme="dark"] .navbar__item, html[data-theme="dark"] .navbar__link {
     &:hover {
-      background-color: #222222 !important;
+      background-color: #242B37 !important;
     }
   }
 
@@ -1331,6 +1331,11 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   .footer__copyright {
     margin-top: 1em;
   }
+}
+
+[data-theme="dark"] button.DocSearch-Button {
+  background-color: #FFF !important;
+  color: #6A7282 !important;
 }
 
 @media screen and (max-width: 750px) {
@@ -1410,7 +1415,8 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   [data-theme="dark"] button.DocSearch-Button:active,
   [data-theme="dark"] button.DocSearch-Button:focus,
   [data-theme="dark"] button.DocSearch-Button:hover {
-    background: #ffffff10;
+    background-color: #FFF !important;
+    color: #6A7282 !important;
   }
 }
 
