@@ -6,6 +6,7 @@
   background-color: var(--bg-surface-default);
   backdrop-filter: blur(10px) !important;
   color: var(--text-neutral-secondary);
+  box-shadow: none !important;
 }
 
 .cardContainer:hover {
