@@ -65,7 +65,7 @@ Now that you have activated your dbt developer account, you can access features 
 If you already have a dbt account, you do not need to re-register to use the dbt extension. The dbt extension can authenticate with the dbt platform using a `dbt_cloud.yml` file. If this file is present in your `~/.dbt/` folder, then the registration flow will automatically attempt to use this
 file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downloaded, follow the directions below:
 
-<Expandable alt_header="For dbt accounts where Fusion is enabled">
+<Expandable alt_header="For dbt accounts with Fusion enabled">
 
 1. Log in to your dbt account.
 2. Click your account name at the bottom of the left-side menu and click **Account settings**.
