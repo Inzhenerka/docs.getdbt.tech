@@ -77,7 +77,7 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 
 </Expandable>
 
-<Expandable alt_header="For dbt accounts where Fusion is not enabled">
+<Expandable alt_header="For dbt accounts without Fusion enabled">
 
 1. Log in to your dbt account.
 2. Click your account name at the bottom of the left-side menu and click **Account settings**.
