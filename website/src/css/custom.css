@@ -1365,7 +1365,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   color: #6A7282 !important;
 }
 
-@media(max-width: 996px) {
+@media(max-width: 1199px) {
   [data-theme="dark"] button.DocSearch-Button {
     background-color: transparent !important;
   }
