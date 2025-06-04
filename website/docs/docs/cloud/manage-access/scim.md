@@ -33,7 +33,7 @@ When users are provisioned, the following attributes are supported
 
 The following IdPs are supported in the <Constant name="cloud" /> UI:
 - [Okta](#scim-configuration-for-okta)
-- [Entra ID](#scim-configuration-for-entra-id)
+- [Entra ID](#scim-configuration-for-entra-id) <Lifecycle status="beta" />
 
 If your IdP isn’t on the list, it can be supported using <Constant name="cloud" /> [APIs](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/Retrieve%20SCIM%20configuration).
 
@@ -104,7 +104,7 @@ If you are adding SCIM to an existing Okta integration in <Constant name="cloud"
     - Ensure the **Import users and profile updates** and **Import groups** checkboxes are selected in the **Provisioning settings** tab in the Okta SCIM configuration.
     - Read more about this feature in the [Okta documentation](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-import-groups-app-provisioning.htm).
 
-## SCIM configuration for Entra ID
+## SCIM configuration for Entra ID <Lifecycle status="beta" />
 
 Please complete the [setup SSO with Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) steps before configuring SCIM settings.
 
@@ -131,7 +131,7 @@ To map the attributes that will sync with dbt:
 
 1. From the enteprise app **Overview** screen sidebar menu, click **Provisioning**. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning.png" width="60%" title="The Provisioning option on the sidebar." />
-    
+
 2. From under **Manage**, again click **Provisioning**.
 3. Expand the **Mappings** section and click **Provision Microsoft Entra ID users**.
      <Lightbox src="/img/docs/dbt-cloud/access-control/provision-entra-users.png" width="60%" title="Provision the Entra ID users." />
