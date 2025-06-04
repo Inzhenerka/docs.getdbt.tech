@@ -90,7 +90,7 @@ function Home() {
           >
             <div className="popular-header">
               <span className="eyebrow">Quickstart</span>
-              <h2>Popular resources</h2>
+              <h2 className="heading-2">New to dbt? Start here.</h2>
             </div>
             <div className="popular-resources">
               <div className="home-card-grid">
