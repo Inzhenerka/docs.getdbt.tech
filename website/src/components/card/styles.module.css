@@ -10,12 +10,11 @@
 }
 
 .card {
-  backdrop-filter: blur(10px);
   border: 1px solid var(--border-neutral-tertiary);
   border-radius: 16px;
   padding: 2.5rem 2.5rem 1.5rem 2.5rem;
   background-color: var(--bg-surface-default);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) !important;
 }
 
 
