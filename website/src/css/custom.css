@@ -1932,6 +1932,7 @@ section.discourse-forum-page {
 
 .home .container {
   max-width: var(--ifm-container-width-xl);
+  position: relative;
 }
 
 @media (min-width: 1460px) {
