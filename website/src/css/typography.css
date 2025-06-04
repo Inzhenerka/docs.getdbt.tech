@@ -1,3 +1,5 @@
+@import './tokens.css';
+
 :root {
   /* Font Families */
   --font-display: 'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
@@ -121,3 +123,10 @@
   font-size: var(--text-base);
   line-height: 1.5;
 } 
+
+.eyebrow {
+  color: var(--text-accent-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: 500;
+}

@@ -1842,33 +1842,6 @@ section>h2:not(.resource-section) {
   }
 }
 
-.home .popular-resources {
-  grid-area: popResources;
-}
-
-.home .popular-resources .grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--ifm-spacing-horizontal);
-}
-
-@media (min-width: 996px) {
-  .home .popular-resources .grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: calc(var(--ifm-spacing-horizontal) * 2);
-  }
-}
-
-.home .featured-header {
-  grid-area: featH2;
-}
-
-.home .featured-resource {
-  grid-area: featResource;
-  height: 100%;
-}
-
 .home .swiper .swiper-slide,
 .docswiper .swiper .swiper-slide {
   height: unset;
@@ -1893,6 +1866,18 @@ section>h2:not(.resource-section) {
   font-weight: 800;
   position: absolute;
   top: 40%;
+}
+
+.home-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media(max-width: 996px) {
+  .home-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .docswiper .swiper .swiper-button-next,

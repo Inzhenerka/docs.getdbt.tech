@@ -87,13 +87,13 @@ function Home() {
             subheading="Find everything you need to build, document, and collaborate with dbt — faster."
           />
           <section
-            className={`resource-section row ${spotlightMember ? "has-spotlight-member" : ""}`}
           >
             <div className="popular-header">
+              <span className="eyebrow">Quickstart</span>
               <h2>Popular resources</h2>
             </div>
             <div className="popular-resources">
-              <div className="grid">
+              <div className="home-card-grid">
                 <div>
                   <Card
                     title="What is dbt?"
@@ -127,16 +127,6 @@ function Home() {
                   />
                 </div>
               </div>
-            </div>
-            <div className="featured-header">
-              <h2>
-                {spotlightSection?.sectionTitle
-                  ? spotlightSection.sectionTitle
-                  : "Featured resource"}
-              </h2>
-            </div>
-            <div className="featured-resource">
-              <BlogPostCard postMetaData={spotlightSection} />
             </div>
           </section>
 
