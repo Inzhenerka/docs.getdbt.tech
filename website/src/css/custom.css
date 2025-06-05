@@ -1969,11 +1969,11 @@ section.discourse-forum-page {
   }
 
   [data-theme='dark'] .home section > .container::before {
-    background: linear-gradient(to right, var(--ifm-background-color) 0%, rgba(13, 20, 33, 1) 50%, transparent 100%);
+    background: linear-gradient(to right, var(--ifm-background-color) 0%, var(--ifm-background-color) 50%, transparent 100%);
   }
 
   [data-theme='dark'] .home section > .container::after {
-    background: linear-gradient(to left, var(--ifm-background-color) 0%, rgba(13, 20, 33, 1) 50%, transparent 100%);
+    background: linear-gradient(to left, var(--ifm-background-color) 0%, var(--ifm-background-color) 50%, transparent 100%);
   }
 }
 
