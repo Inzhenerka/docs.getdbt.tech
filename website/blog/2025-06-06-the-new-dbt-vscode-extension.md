@@ -1,0 +1,107 @@
+---
+title: "The new dbt VS Code Extension: The Experience We've All Been Waiting For"
+description: "How the new dbt VS Code extension finally delivers the dev experience we've always wanted."
+slug: vscode-extension-experience
+authors: [bruno_lima]
+
+tags: [analytics craft, data ecosystem]
+hide_table_of_contents: false
+
+date: 2025-06-06
+is_featured: true
+---
+# The new dbt VS Code Extension - The Experience We've All Been Waiting For
+
+Hello, community!
+
+My name is Bruno, and you might have seen me posting dbt content on LinkedIn. If you haven't, let me introduce myself. I started working with dbt more than 3 years ago. At that time, I was very new to the tool, and to understand it a bit better, I started creating some resources to help me with dbt learning. One of them, a dbt cheatsheet, was the starting point for my community journey.
+
+I went from this cheatsheet to creating all different kinds  content, contributing and engaging with the community, until I got the dbt community award for two times, and I am very thankful and proud about that.
+
+Since the acquisition of SDF Labs by dbt Labs, I have been waiting for the day that we would see what the result of the fusion of these two companies would be. Spoiler alert: it’s the dbt Fusion engine and its better than I could have expected.
+
+## The dbt developer experience in the pre-fusion-era
+
+If you've ever started a dbt project, chances are your journey began like mine did: cloning jaffle_shop, opening it in VS Code, and running dbt run for the first time (actually the second time, because I know you forgot to run dbt deps in the first one). It is like our initiation process, our ‘hello-world’.
+
+You played around with staging models, the orders table, customers table. But let's be honest, the developer experience in that setup was always a bit... clunky.
+
+You wanted to check the lineage of your project, one of the coolest features of dbt, and you had to run dbt docs generate, serve, and open the docs in a browser. Made some updates? Do all the steps again.
+
+Did you want to check your project's metadata? You had to rely on dbt docs (that whole process again), or build some custom solution with the manifest.json.
+
+Moving to dbt Cloud made things smoother. It has a built-in IDE with git integration, easier to compile and preview models. An auto-updating lineage tab below the model, a much better documentation with dbt Explorer, now renamed to Catalog. And a lot of other powerful features for orchestration, observability, CI/CD, and more.
+
+dbt Cloud was a big step up, but even with dbt Cloud, many of us still preferred to use our own dev environments. We like using our themes, our VS Code extensions, our terminals, but this would mean losing all the nice cloud features while developing. A sad trade-off.
+
+We've already been to Cloud and back to the terminal, and some problems remain. No matter where you were writing dbt, if you modified some model, and hadn't noticed you forgot to put a comma (because you are using trailing commas instead of leading commas, and they're harder to see, and I'm talking too much about the comma fight), you waited dbt to communicate with your DW, waited your cluster to start, and a minute later you got an error saying you should start using leading commas.
+
+All this back-and-forth communication of dbt and the platform was slowing down your project.
+
+That’s why this new release is such a big deal. It solves all the problems above and introduces other things I didn't know I needed until I saw it.
+
+## The new era of dbt development
+
+With the acquisition of SDF Labs and a renewed focus on developer experience, dbt Labs announced their new engine, so goodbye dbt Core, and enter the dbt Fusion engine. This engine was built from zero with Rust, and this is now the intelligent engine that will power up dbt no matter where you run it. There are different ways you can use the Fusion engine, and the best one is with the also announced VSCode Extension.
+
+The Fusion engine with the VS Code extension is how folks will want to develop with dbt moving forward. I can say this feels like the experience we’ve all been waiting for.
+
+After using it, it’s hard to imagine going back. Working with dbt in VS Code without this extension just doesn’t make sense anymore.
+
+It comes with a lot of features to streamline your work and make you more efficient by developing faster and spending less. But let me tell you my favorite ones:
+
+### Catch SQL Errors in Real Time
+
+There was no question what I was picking first . No more waiting for your platform to debug your code for you. If you miswrite the name of a column, or CTE, or if you don't remember how to use a function, and pass wrong parameters, you catch those errors before you run anything.
+
+This is because dbt doesn't treat SQL code as just a string anymore; it really understands it. It also shows you some helpful information about the error.
+
+<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_function_error.png" title="Showing function errors." />
+
+<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_column_error.png" title="Showing column name errors." />
+
+This is the greatest improvement of this engine, imho.
+
+### Model and Column Lineage
+
+The second-best feature is the lineage view. If you were a dbt Cloud, you would feel at home. And if you were using dbt core, finally, no more generating dbt docs to visualize lineage.
+
+Now there's a tab lineage tab that shows your project’s lineage directly in VS Code. It’s interactive and live. You can use the lenses feature, that's pretty cool to have a good visualization of your project by different attributes like resource_type, or materialization.
+
+<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_project_lineage.png" title="Project Lineage." />
+
+And something I was not expecting to be here, but thankfully it is, column-level lineage! Not just where columns come from, but also how they change: renamed, transformed, or passed through.
+
+This is incredibly helpful for debugging transformations or understanding how that key metric is shaped across models.
+
+<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_cll.png" title="Column-level Lineage." />
+
+### Instant refactoring
+
+Ok, let me show you just one more! Have you ever faced a situation where you'd like to rename a model or a column, but it is used in some many places downstream that you give up because you don't want to refactor everything or you are afraid you will break something?
+
+Now, thanks to the deep dbt Fusion SQL understanding, you can rename your model or column, and the extension will refactor all downstream dependencies for you. But don't worry, before doing it, the extension allows you to see a preview of the changes, so you can be sure it is doing what you want.
+
+<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_refactoring.webm" title="Refactoring models upstream to stg_customers." />
+
+There are a lot more other features this extension is bringing, like navigating through models instantly, autocompleting everything, renaming models or columns and being warned how it will impact your project, previewing models & CTEs, and other features that are already covered in other blogs. By the way, it just launched, so I believe we can expect more and more enhancements to come.
+
+## Conclusion: A New Default
+
+This extension changes what using dbt feels like. It brings together performance, context, and interactivity in a way that finally makes dbt feel at home inside a modern developer environment. And the best part? It’s just getting started.
+
+The Fusion engine is already powering a faster, smarter dbt under the hood. And it opens the door to a more fluid, confident, and intuitive development experience. Fewer context switches. Fewer gotchas. More time spent thinking about your data, not your tooling.
+
+If you’ve ever built models in a text editor and wished dbt “just knew more,” this is for you.
+
+If you’ve relied on the CLI but missed having true autocomplete, this is for you.
+
+And if you’ve wanted the best of both worlds, the flexibility of Core with the power of Cloud, this might just become your new default. Even if you use dbt Cloud, it powers up dbt-core to another level.
+
+We’re incredibly excited to see how the community builds with this. Try it out. Push it. Share what’s working, and what’s missing.
+
+This new extension will be constantly updated, so you can wait for more improvements.
+
+**This is the experience we’ve all been waiting for.**
+
+*Bruno is a lead Data Engineer at [phData](https://www.phdata.io), and I recently a dbt learning platform called [DataGym.io](https://www.datagym.io).*
