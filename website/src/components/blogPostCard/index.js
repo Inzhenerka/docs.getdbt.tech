@@ -22,7 +22,7 @@ function BlogPostCard({ postMetaData }) {
               {tags.map((tag, index) => (
                 <Link 
                   key={index}
-                  to={useBaseUrl(`blog/tags/${tag.permalink}`)}
+                  to={useBaseUrl(`${tag.permalink}`)}
                 >
                   <span className="tag" style={{marginBottom: '0'}}>{tag.label}</span>
                 </Link>
