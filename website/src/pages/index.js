@@ -86,123 +86,136 @@ function Home() {
             heading="The dbt Developer Hub"
             subheading="Find everything you need to build, document, and collaborate with dbt — faster."
           />
-          <section
-            className={`resource-section row ${spotlightMember ? "has-spotlight-member" : ""}`}
-          >
-            <div className="popular-header">
-              <h2>Popular resources</h2>
-            </div>
-            <div className="popular-resources">
-              <div className="grid">
-                <div>
+          <section>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">Quickstart</span>
+                <h2 className="heading-2">New to dbt? Start here.</h2>
+              </div>
+                <div className="home-card-grid">
                   <Card
-                    title="What is dbt?"
-                    body="dbt enables data practitioners to adopt software engineering best practices and deploy modular, reliable analytics code."
-                    link="/docs/introduction"
-                    icon="question-mark"
+                    title="Set up dbt Core"
+                    tag="Guide"
+                    body="Install and run your first model locally"
+                    link="/guides/manual-install?step=1"
+                    icon="settings"
                   />
-                </div>
-                <div>
                   <Card
-                    title="Getting started guide"
-                    body="Learn how to set up dbt and build your first models. You will also test and document your project, and schedule a job."
+                    title="Use dbt in the Cloud"
+                    tag="Article"
+                    body="Build faster with dbt Cloud's IDE"
                     link="/docs/get-started-dbt"
-                    icon="book"
+                    icon="zap"
                   />
-                </div>
-                <div>
                   <Card
-                    title="Docs"
-                    body="Discover everything dbt has to offer from the basics to advanced concepts."
+                    title="Learn the basics"
+                    tag="Guide"
+                    body="Step-by-step tutorial with sample data"
                     link="/docs/build/projects"
-                    icon="docs"
-                  />
-                </div>
-                <div>
-                  <Card
-                    title="Supported data platforms"
-                    body="dbt connects to most major databases, data warehouses, data lakes, or query engines."
-                    link="/docs/supported-data-platforms"
-                    icon="rocket"
+                    icon="tool"
                   />
                 </div>
               </div>
+          </section>
+
+          <section className='baton-1'>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">Documentation by product</span>
+                <h2 className="heading-2">Explore the docs by product</h2>
+              </div>
+              <div className="home-card-grid">
+                <Card
+                  title="Copilot"
+                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  link="/guides/manual-install?step=1"
+                  icon="circle"
+                />
+                <Card
+                  title="Mesh"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/get-started-dbt"
+                  icon="circle"
+                />
+                <Card
+                  title="Orchestrator"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/build/projects"
+                  icon="circle"
+                />
+                <Card
+                  title="Copilot"
+                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  link="/guides/manual-install?step=1"
+                  icon="circle"
+                />
+                <Card
+                  title="Mesh"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/get-started-dbt"
+                  icon="circle"
+                />
+                <Card
+                  title="Orchestrator"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                  link="/docs/build/projects"
+                  icon="circle"
+                />
+              </div>
             </div>
-            <div className="featured-header">
-              <h2>
-                {spotlightSection?.sectionTitle
-                  ? spotlightSection.sectionTitle
-                  : "Featured resource"}
-              </h2>
-            </div>
-            <div className="featured-resource">
-              <BlogPostCard postMetaData={spotlightSection} />
+          </section>
+
+          <section className='baton-2'>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">Get help from others</span>
+                <h2 className="heading-2">Join the dbt Community</h2>
+                <p>Connect with thousands of developers solving real data problems every day.</p>
+              </div>
+              <div className="home-card-grid">
+                <Card
+                  title="Join Slack"
+                  body="Ask questions, get answers, and meet people who speak your data language."
+                  link="/guides/manual-install?step=1"
+                  icon="annotation"
+                />
+                <Card
+                  title="GitHub Discussions"
+                  body="Join technical threads or open issues."
+                  link="/docs/get-started-dbt"
+                  icon="github-new"
+                />
+                <Card
+                  title="Subscribe to the newsletter"
+                  body="Get fresh community ideas, job posts, and tools delivered weekly."
+                  link="/docs/build/projects"
+                  icon="inbox"
+                />
+                <Card
+                  title="Answer a question on Discourse"
+                  body="Help someone solve a real problem—and build your reputation doing it."
+                  link="/guides/manual-install?step=1"
+                  icon="message"
+                />
+                <Card
+                  title="Events and Meetups"
+                  body="Join local and global dbt meetups."
+                  link="/docs/get-started-dbt"
+                  icon="globe"
+                />
+                <Card
+                  title="Courses & Tutorials"
+                  body="Learn dbt with hands-on guidance."
+                  link="/docs/build/projects"
+                  icon="forward"
+                />
+              </div>
             </div>
           </section>
 
           <section className="from-the-blog">
             <h2>The latest from the Developer Blog</h2>
             <PostCarousel blogPostData={recentBlogData} />
-          </section>
-
-          <section className="from-the-community">
-            <h2>From the dbt Community</h2>
-            <div className="grid--3-col">
-              <div>
-                <Card
-                  title="Join the community"
-                  body="Connect with data practitioners from around the world."
-                  link="/community/join"
-                  icon="smiley-face"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Become a contributor"
-                  body="Help build the resources the community uses to solve hard problems."
-                  link="/community/contribute"
-                  icon="pencil-paper"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Open source dbt Packages"
-                  body="Take your dbt project to the next level with community built packages."
-                  link="https://hub.getdbt.com/"
-                  icon="packages"
-                />
-              </div>
-            </div>
-          </section>
-
-          <section className="like-a-pro">
-            <h2>Use dbt like a pro</h2>
-            <div className="grid--3-col">
-              <div>
-                <Card
-                  title="Best practices"
-                  body="Learn battle tested strategies for analytics engineering best practices."
-                  link="/best-practices"
-                  icon="guides"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Community forum"
-                  body="Get help and swap knowledge in the async forum."
-                  link="/community/forum"
-                  icon="discussions"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Online courses"
-                  body="Structured video courses to give you a deep dive into analytics engineering topics."
-                  link="https://learn.getdbt.com/"
-                  icon="computer"
-                />
-              </div>
-            </div>
           </section>
         </div>
 

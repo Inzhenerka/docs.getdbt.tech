@@ -93,6 +93,7 @@
 
 /* dark theme styles!!! */
 html[data-theme="dark"] {
+  --ifm-background-color: #030711;
   --ifm-navbar-background-color: var(--color-neutral-primary);
   --ifm-menu-color-background-active: var(--color-neutral-primary);
   --ifm-menu-color: var(--color-white);
@@ -1318,6 +1319,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   html[data-theme="dark"] .navbar__item, html[data-theme="dark"] .navbar__link {
     &:hover {
       background-color: #242B37 !important;
+      color: var(--text-inverse-primary) !important;
     }
   }
 
@@ -1923,9 +1925,56 @@ section.discourse-forum-page {
 /* New Homepage Styles */
 
 .home section {
-  margin: 6.25rem auto 6.25rem;
+  max-width: 2100px;
+  width: 100%;
+  padding: 6rem 1rem;
+  margin: 0 auto;
+}
+
+.home .container {
   max-width: var(--ifm-container-width-xl);
-  padding: 0 50px;
+  position: relative;
+}
+
+@media (min-width: 1460px) {
+  .home section {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .home section > .container {
+    position: relative;
+  }
+
+  .home section > .container::before,
+  .home section > .container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -50px;
+    width: 100px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .home section > .container::before {
+    left: -110px;
+    background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255,1) 50%, transparent 100%);
+  }
+
+  .home section > .container::after {
+    right: -110px;
+    background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 1) 50%, transparent 100%);
+  }
+
+  [data-theme='dark'] .home section > .container::before {
+    background: linear-gradient(to right, var(--ifm-background-color) 0%, var(--ifm-background-color) 50%, transparent 100%);
+  }
+
+  [data-theme='dark'] .home section > .container::after {
+    background: linear-gradient(to left, var(--ifm-background-color) 0%, var(--ifm-background-color) 50%, transparent 100%);
+  }
 }
 
 .home section.from-the-blog {
@@ -1946,16 +1995,6 @@ section.discourse-forum-page {
 
 .home .resource-section h2 {
   margin: 0;
-}
-
-@media (max-width: 995px) {
-  .home .resource-section h2 {
-    margin: 2rem inherit;
-  }
-
-  .home h2 {
-    text-align: center;
-  }
 }
 
 section>h2:not(.resource-section) {
@@ -2010,33 +2049,6 @@ section>h2:not(.resource-section) {
   }
 }
 
-.home .popular-resources {
-  grid-area: popResources;
-}
-
-.home .popular-resources .grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--ifm-spacing-horizontal);
-}
-
-@media (min-width: 996px) {
-  .home .popular-resources .grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: calc(var(--ifm-spacing-horizontal) * 2);
-  }
-}
-
-.home .featured-header {
-  grid-area: featH2;
-}
-
-.home .featured-resource {
-  grid-area: featResource;
-  height: 100%;
-}
-
 .home .swiper .swiper-slide,
 .docswiper .swiper .swiper-slide {
   height: unset;
@@ -2061,6 +2073,18 @@ section>h2:not(.resource-section) {
   font-weight: 800;
   position: absolute;
   top: 40%;
+}
+
+.home-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media(max-width: 996px) {
+  .home-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .docswiper .swiper .swiper-button-next,
@@ -2422,4 +2446,48 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 /* prevents nav bar from rendering weirdly with extended titles */
 .navbar__item{
   white-space: nowrap;
+}
+
+
+.baton-1,
+.baton-2 {
+  position: relative;
+}
+
+.baton-1::before,
+.baton-2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1460px;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 0;
+}
+
+.baton-1::before {
+  background-image: url('/img/batons/baton-1.png');
+}
+
+.baton-2::before {
+  background-image: url('/img/batons/baton-2.png');
+}
+
+@media (min-width: 1460px) {
+  .baton-1::before,
+  .baton-2::before {
+    background-size: contain;
+  }
+}
+
+@media (max-width: 996px) {
+  .baton-1::before,
+  .baton-2::before {
+    background-size: contain;
+  }
 }

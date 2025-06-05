@@ -1,3 +1,5 @@
+@import './tokens.css';
+
 :root {
   /* Font Families */
   --font-display: 'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
@@ -32,12 +34,6 @@
   line-height: 1;
 }
 
-@media (min-width: 1280px) {
-  .heading-display {
-    font-size: var(--text-8xl);
-  }
-}
-
 /* Heading Levels */
 .heading-1 {
   font-family: var(--font-display);
@@ -46,67 +42,59 @@
   line-height: 1.2;
 }
 
-@media (min-width: 1280px) {
-  .heading-1 {
-    font-size: var(--text-6xl);
-  }
-}
-
 .heading-2 {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: var(--text-5xl);
   font-weight: 600;
   line-height: 1.2;
 }
 
-@media (min-width: 1280px) {
-  .heading-2 {
-    font-size: var(--text-5xl);
-  }
+.heading-3 {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-.heading-3 {
+.heading-4 {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: 600;
   line-height: 1.2;
 }
 
-@media (min-width: 1280px) {
-  .heading-3 {
-    font-size: var(--text-3xl);
-  }
-}
-
-.heading-4 {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-@media (min-width: 1280px) {
-  .heading-4 {
-    font-size: var(--text-2xl);
-  }
-}
 
 .heading-5 {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
+  font-size: var(--text-2xl);
   font-weight: 600;
   line-height: 1.2;
+}
+
+@media (max-width: 996px) {
+  .heading-1 {
+    font-size: var(--text-5xl);
+  }
+  .heading-2 {
+    font-size: var(--text-3xl);
+  }
+  .heading-3 {
+    font-size: var(--text-2xl);
+  }
 }
 
 /* Tag Style */
 .tag {
   color: var(--text-accent-primary);
   background-color: var(--bg-accent-subtle);
-  border-radius: 0.125rem;
+  border-radius: 4px;
   padding: 0.25rem;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
+  display: block;
+  width: max-content;
+  margin-bottom: 1rem;
 }
 
 /* Text Styles */
@@ -121,3 +109,18 @@
   font-size: var(--text-base);
   line-height: 1.5;
 } 
+
+.eyebrow {
+  color: var(--text-accent-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: .5rem;
+  display: inline-block;
+}
+
+html[data-theme="dark"] {
+  .eyebrow {
+    color: var(--text-inverse-accent-primary);
+  }
+}
