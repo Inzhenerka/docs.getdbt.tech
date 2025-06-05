@@ -2491,3 +2491,10 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
     background-size: contain;
   }
 }
+
+.static-bg {
+  background-image: url('/img/static-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}

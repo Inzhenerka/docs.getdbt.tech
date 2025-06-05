@@ -213,7 +213,7 @@ function Home() {
             </div>
           </section>
 
-          <section className="from-the-blog">
+          <section className='static-bg'>
             <div className='container'>
               <div>
                 <span className="eyebrow">From the team</span>
