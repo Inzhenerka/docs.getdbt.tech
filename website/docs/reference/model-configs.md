@@ -432,7 +432,7 @@ The model `freshness` config rebuilds models only when new source or upstream da
 
 See the following example of a `my_model.yml` file using the `freshness` config:
 
-<File name="models/<filename>.yml">
+<File name="models/my_model.yml">
   
 ```yml
 models:
