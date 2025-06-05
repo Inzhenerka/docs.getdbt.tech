@@ -19,7 +19,6 @@ export default function AnnouncementBar() {
   return (
     <div
       className={styles.announcementBar}
-      style={{backgroundColor, color: textColor}}
       role="banner">
       {isCloseable && <div className={styles.announcementBarPlaceholder} />}
       {announcementBarLink ? (
@@ -28,10 +27,6 @@ export default function AnnouncementBar() {
           rel="noopener noreferrer" 
           href={announcementBarLink}
           className={styles.announcementBarLink}
-          style={{
-            backgroundColor,
-            color: textColor,
-          }}
           >
           <AnnouncementBarContent className={styles.announcementBarContent} />
         </a>
