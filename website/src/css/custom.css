@@ -2119,6 +2119,13 @@ section>h2:not(.resource-section) {
 
 @media (max-width: 996px) {
   .home-link-grid {
+    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-link-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -177,7 +177,7 @@ function Home() {
                   <h4 className="heading-4">Documentation</h4>
                   <Link to="/">Documentation</Link>
                   <Link to="/">Product Docs</Link>
-                  <Link to="/">Best Practicesl</Link>
+                  <Link to="/">Best Practices</Link>
                   <Link to="/">Copilot</Link>
                 </div>
                 <div className="home-link-grid-item">
