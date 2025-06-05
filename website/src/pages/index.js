@@ -8,6 +8,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
 import { getSpotlightMember } from '../utils/get-spotlight-member';
 import Link from '@docusaurus/Link';
+import BlogPostCard from '@site/src/components/blogPostCard';
 
 const bannerAnimation = require('@site/static/img/banner-white.svg');
 
