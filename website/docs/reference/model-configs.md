@@ -430,9 +430,9 @@ models:
 
 The model `freshness` config rebuilds models only when new source or upstream data is available. This is useful for models that depend on other models but only need to be updated periodically. For more information, see [freshness](/reference/resource-configs/freshness).
 
-See the following example of a `model.yml` file using the `freshness` config:
+See the following example of a `my_model.yml` file using the `freshness` config:
 
-<File name="models/<filename>.yml">
+<File name="models/my_model.yml">
   
 ```yml
 models:
