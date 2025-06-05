@@ -189,7 +189,7 @@ models:
 
 <File name="models/<filename>.sql">
   
-```sql
+```jinja
 {{
     config(
         freshness={
