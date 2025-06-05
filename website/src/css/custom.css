@@ -1276,7 +1276,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   width: 100%;
   color: var(--text-inverse-primary);
   fill: var(--text-inverse-primary);
-  max-width: 25px;
+  max-width: 22px;
 }
 
 .footer-sub-items {
