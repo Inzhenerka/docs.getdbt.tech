@@ -2,12 +2,12 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import Card from '@site/src/components/card';
-import BlogPostCard from '@site/src/components/blogPostCard';
 import Hero from '@site/src/components/hero';
 import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/default/p/blog-archive-f05.json'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
 import { getSpotlightMember } from '../utils/get-spotlight-member';
+import Link from '@docusaurus/Link';
 
 const bannerAnimation = require('@site/static/img/banner-white.svg');
 
@@ -163,6 +163,45 @@ function Home() {
                 />
               </div>
             </div>
+          </section>
+
+          <section>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">Docs highlights</span>
+                <h2 className="heading-2">Dive deeper into dbt</h2>
+                <p>Learn best practices, explore detailed configuration references, or review our APIs.</p>
+              </div>
+              <div className="home-link-grid">
+                <div className="home-link-grid-item">
+                  <h4 className="heading-4">Documentation</h4>
+                  <Link to="/">Documentation</Link>
+                  <Link to="/">Product Docs</Link>
+                  <Link to="/">Best Practices</Link>
+                  <Link to="/">Copilot</Link>
+                </div>
+                <div className="home-link-grid-item">
+                  <h4 className="heading-4">Guides</h4>
+                  <Link to="/">Quickstart for dbt and Snowflake</Link>
+                  <Link to="/">Quickstart for dbt and Databricks</Link>
+                  <Link to="/">Airflow and dbt</Link>
+                  <Link to="/">Debugging errors</Link>
+                </div>
+                <div className="home-link-grid-item">
+                  <h4 className="heading-4">Reference Guides</h4>
+                  <Link to="/">Command Reference</Link>
+                  <Link to="/">Project Configurations</Link>
+                  <Link to="/">dbt Artifacts</Link>
+                </div>
+                <div className="home-link-grid-item">
+                  <h4 className="heading-4">Other Resources</h4>
+                  <Link to="/">Release Notes</Link>
+                  <Link to="/">Best Practices</Link>
+                  <Link to="/">Developer Blog</Link>
+                  <Link to="/">Join the Community</Link>
+                </div>
+              </div>
+              </div>
           </section>
 
           <section className='baton-2'>
