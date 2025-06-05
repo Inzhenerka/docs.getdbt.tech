@@ -1,11 +1,9 @@
-
 import React from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import Card from '@site/src/components/card';
 import BlogPostCard from '@site/src/components/blogPostCard';
 import Hero from '@site/src/components/hero';
-import PostCarousel from '@site/src/components/postCarousel';
 import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/default/p/blog-archive-f05.json'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
@@ -31,7 +29,7 @@ function Home() {
   const formatDate = (blogDate) => dateTimeFormat.format(new Date(blogDate));
 
   const recentBlogData = allBlogData?.archive?.blogPosts
-    ?.slice(0, 6)
+    ?.slice(0, 3)
     .reduce((accumulator, currentValue) => {
       let postMetaData = {
         title: currentValue.metadata.title,
@@ -39,6 +37,8 @@ function Home() {
         readingTime: Math.round(currentValue.metadata.readingTime),
         description: currentValue.metadata.description,
         link: currentValue.metadata.permalink,
+        image: currentValue.metadata.image,
+        tags: currentValue.metadata.tags
       };
       accumulator.push(postMetaData);
       return accumulator;
@@ -213,9 +213,19 @@ function Home() {
             </div>
           </section>
 
-          <section className="from-the-blog">
-            <h2>The latest from the Developer Blog</h2>
-            <PostCarousel blogPostData={recentBlogData} />
+          <section className='static-bg'>
+            <div className='container'>
+              <div>
+                <span className="eyebrow">From the team</span>
+                <h2 className="heading-2">Read the developer blog</h2>
+                <p>Deep dives, changelogs, best practices, and new feature highlights from dbt Labs.</p>
+              </div>
+              <div className="home-card-grid">
+                {recentBlogData.map((item) => (
+                  <BlogPostCard postMetaData={item} />
+                ))}
+              </div>
+            </div>
           </section>
         </div>
 

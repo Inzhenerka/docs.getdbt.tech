@@ -1947,8 +1947,9 @@ section.discourse-forum-page {
     position: relative;
   }
 
-  .home section > .container::before,
-  .home section > .container::after {
+  /* Only apply gradients to containers within baton sections */
+  .home section[class*="baton"] > .container::before,
+  .home section[class*="baton"] > .container::after {
     content: '';
     position: absolute;
     top: 0;
@@ -1958,21 +1959,21 @@ section.discourse-forum-page {
     z-index: 2;
   }
 
-  .home section > .container::before {
+  .home section[class*="baton"] > .container::before {
     left: -110px;
     background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255,1) 50%, transparent 100%);
   }
 
-  .home section > .container::after {
+  .home section[class*="baton"] > .container::after {
     right: -110px;
     background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 1) 50%, transparent 100%);
   }
 
-  [data-theme='dark'] .home section > .container::before {
+  [data-theme='dark'] .home section[class*="baton"] > .container::before {
     background: linear-gradient(to right, var(--ifm-background-color) 0%, var(--ifm-background-color) 50%, transparent 100%);
   }
 
-  [data-theme='dark'] .home section > .container::after {
+  [data-theme='dark'] .home section[class*="baton"] > .container::after {
     background: linear-gradient(to left, var(--ifm-background-color) 0%, var(--ifm-background-color) 50%, transparent 100%);
   }
 }
@@ -2490,4 +2491,11 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   .baton-2::before {
     background-size: contain;
   }
+}
+
+.static-bg {
+  background-image: url('/img/static-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
