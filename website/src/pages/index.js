@@ -37,6 +37,8 @@ function Home() {
         readingTime: Math.round(currentValue.metadata.readingTime),
         description: currentValue.metadata.description,
         link: currentValue.metadata.permalink,
+        image: currentValue.metadata.image,
+        tags: currentValue.metadata.tags
       };
       accumulator.push(postMetaData);
       return accumulator;

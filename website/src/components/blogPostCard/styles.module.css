@@ -89,3 +89,10 @@ html[data-theme="dark"] {
   }
 }
 
+.tagsContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 2rem;
+}
