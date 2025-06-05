@@ -192,13 +192,13 @@ models:
 ```sql
 {{
     config(
-      freshness={
-        "build_after": 
-        "count": 4
-        "period": "hour"
-        "updates_on": "all"
-        } 
-      }
+        freshness={
+            "build_after": {
+                "count": 4,
+                "period": "hour",
+                "updates_on": "all"
+            }
+        }
     )
 }}
 ```
