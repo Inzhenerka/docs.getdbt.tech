@@ -218,6 +218,12 @@ var siteSettings = {
             config-ft-widget-header-title = "Ask a question"
           ></script>
 
+          <div class="footer-logo">
+            <a href="/">
+              <img src="/img/dbt-logo-light.svg" alt="dbt Labs" />
+            </a>
+          </div>
+
           <div class="footer-grid">
             <div class="footer-grid-item">
               <h5 class="heading-5">Resources</h5>
