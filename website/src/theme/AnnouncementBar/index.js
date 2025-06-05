@@ -15,7 +15,7 @@ export default function AnnouncementBar() {
   if (!isActive || !announcementBarActive) {
     return null;
   }
-  const {backgroundColor, textColor, isCloseable} = announcementBar;
+  const { isCloseable } = announcementBar;
   return (
     <div
       className={styles.announcementBar}
