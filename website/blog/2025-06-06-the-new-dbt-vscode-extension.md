@@ -105,4 +105,4 @@ This new extension will be constantly updated, so you can wait for more improvem
 
 **This is the experience we’ve all been waiting for.**
 
-*Bruno is a lead Data Engineer at [phData](https://www.phdata.io), and I recently a dbt learning platform called [DataGym.io](https://www.datagym.io).*
+*Bruno is a lead Data Engineer at [phData](https://www.phdata.io), and recently built a dbt learning platform called [DataGym.io](https://www.datagym.io).*
