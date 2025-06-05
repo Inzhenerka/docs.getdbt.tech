@@ -6,7 +6,6 @@ import createPostPreview from '@site/functions/post-preview';
 
 
 function BlogPostCard({ postMetaData }) {
-  console.log(postMetaData);
   const { title, description, link, image, tags } = postMetaData
   return (
     <div className={styles.cardWrapper}>
