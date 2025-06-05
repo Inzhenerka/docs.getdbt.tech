@@ -33,7 +33,7 @@ models:
 models:
   - name: stg_orders
     config:
-      freshness: # changed to config in v1.9
+      freshness:
         build_after:  # build this model no more often than every X amount of time, as long as as it has new data
           count: positive_integer
           period: minute | hour | day
@@ -118,7 +118,7 @@ Add the `freshness` configuration to the model with `count: 4` and `period: hour
 models:
   - name: stg_wizards
     config:
-      freshness: # changed to config in v1.9
+      freshness:
         build_after: 
           count: 4
           period: hour
@@ -151,7 +151,7 @@ Add the `build_after` freshness configuration to the model with `count: 1` and `
 models:
   - name: stg_wizards
     config: 
-      freshness: # changed to config in v1.9
+      freshness:
         build_after: 
           count: 1
           period: hour
