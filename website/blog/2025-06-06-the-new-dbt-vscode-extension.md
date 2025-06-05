@@ -82,7 +82,9 @@ Ok, let me show you just one more! Have you ever faced a situation where you'd l
 
 Now, thanks to the deep dbt Fusion SQL understanding, you can rename your model or column, and the extension will refactor all downstream dependencies for you. But don't worry, before doing it, the extension allows you to see a preview of the changes, so you can be sure it is doing what you want.
 
-<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_refactoring.webm" title="Refactoring models upstream to stg_customers." />
+<video width="100%" height="100%" playsinline muted controls>
+  <source src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_refactoring.webm" type="video/webm" />
+</video>
 
 There are a lot more other features this extension is bringing, like navigating through models instantly, autocompleting everything, renaming models or columns and being warned how it will impact your project, previewing models & CTEs, and other features that are already covered in other blogs. By the way, it just launched, so I believe we can expect more and more enhancements to come.
 
