@@ -75,8 +75,6 @@ var siteSettings = {
     announcementBar: {
       id: "virtual-event",
       content: "Join our live event: Modernize self-service analytics with dbt — cut costs, reduce bottlenecks, and keep the tools analysts love. Register now.",
-      backgroundColor: "#047377",
-      textColor: "#fff",
       isCloseable: true,
     },
     announcementBarActive: true,
