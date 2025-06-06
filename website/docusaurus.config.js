@@ -227,25 +227,24 @@ var siteSettings = {
           <div class="footer-grid">
             <div class="footer-grid-item">
               <h5 class="heading-5">Resources</h5>
-              <a href='https://status.getdbt.com/'>dbt Status</a>
-              <a href="/">Resource Hub</a>
-              <a href="/">dbt Learn</a>
-              <a href="/">Certification</a>
-              <a href="/">Developer Blog</a>
+              <a href="https://www.getdbt.com/resources" target="_blank">Resource Hub</a>
+              <a href="https://www.getdbt.com/dbt-learn" target="_blank">dbt Learn</a>
+              <a href="https://www.getdbt.com/dbt-certification" target="_blank">Certification</a>
+              <a href="/blog">Developer Blog</a>
             </div>
             <div class="footer-grid-item">
               <h5 class="heading-5">Community</h5>
-              <a href='/'>Join the Community</a>
-              <a href="/">Become a Contributor</a>
-              <a href="/">Open Source dbt Packages</a>
-              <a href="/">Community Forum</a>
+              <a href='https://www.getdbt.com/community/join-the-community' target="_blank">Join the Community</a>
+              <a href="/community/contribute">Become a Contributor</a>
+              <a href="https://hub.getdbt.com/" target="_blank">Open Source dbt Packages</a>
+              <a href="/community/forum">Community Forum</a>
             </div>
             <div class="footer-grid-item">
               <h5 class="heading-5">Support</h5>
-              <a href='/'>Contact Support</a>
-              <a href="/">Professional Services</a>
-              <a href="/">Find a Partner</a>
-              <a href="/">System Status</a>
+              <a href='/docs/dbt-support'>Contact Support</a>
+              <a href="https://www.getdbt.com/services" target="_blank">Professional Services</a>
+              <a href="https://partners.getdbt.com/english/directory/" target="_blank">Find a Partner</a>
+              <a href="https://status.getdbt.com/" target="_blank">System Status</a>
             </div>
             <div class="footer-grid-item">
               <h5 class="heading-5">Connect with Us</h5>
