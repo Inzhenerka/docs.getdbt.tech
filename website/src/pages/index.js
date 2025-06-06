@@ -83,10 +83,14 @@ function Home() {
           className="container container--fluid home"
           style={{ padding: "0", background: "#FFF" }}
         >
-          <Hero
-            heading="The dbt Developer Hub"
-            subheading="Find everything you need to build, document, and collaborate with dbt — faster."
-          />
+          <header className='baton-hero'>
+            <div className='container'>
+              <div>
+                <h1 className="heading-1">The dbt Developer Hub</h1>
+                <p>Find everything you need to build, document, and collaborate with dbt — faster.</p>
+              </div>
+            </div>
+          </header>
           <section>
             <div className='container'>
               <div>
