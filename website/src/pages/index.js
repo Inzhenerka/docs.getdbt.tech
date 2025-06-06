@@ -267,6 +267,20 @@ function Home() {
               </div>
             </div>
           </section>
+
+          <section className='bottom-cta'>
+            <div className='container'>
+              <div className='cta-section-text'>
+                <span className="eyebrow">Get started</span>
+                <h2 className="heading-2">Start building with dbt.</h2>
+                <p>Streamline your data transformation process, reduce manual errors, and increase productivity with dbt. Sign up today an take your data transformation workflow to the next level.</p>
+              </div>
+              <div className="cta-section">
+                <Link to="/docs/get-started-dbt" className="primary-cta">Request your demo</Link>
+                <Link to="/docs/get-started-dbt" className="secondary-cta">Create a free account</Link>
+              </div>
+            </div>
+          </section>
         </div>
 
         <div
