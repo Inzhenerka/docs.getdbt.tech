@@ -276,8 +276,8 @@ function Home() {
                 <p>Streamline your data transformation process, reduce manual errors, and increase productivity with dbt. Sign up today an take your data transformation workflow to the next level.</p>
               </div>
               <div className="cta-section">
-                <Link to="/docs/get-started-dbt" className="primary-cta">Request your demo</Link>
-                <Link to="/docs/get-started-dbt" className="secondary-cta">Create a free account</Link>
+                <Link to="https://www.getdbt.com/contact" target="_blank"className="primary-cta">Request your demo</Link>
+                <Link to="https://www.getdbt.com/signup" target="_blank" className="secondary-cta">Create a free account</Link>
               </div>
             </div>
           </section>
