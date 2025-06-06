@@ -2625,8 +2625,19 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   color: var(--text-neutral-primary);
 }
 
+.bottom-cta .cta-section .primary-cta:hover {
+  background-color: var(--bg-neutral-primary-hover);
+  color: var(--text-neutral-primary);
+}
+
 .bottom-cta .cta-section .secondary-cta {
   background-color: transparent;
   color: var(--text-inverse-primary);
   border: 1px solid var(--bg-neutral-primary-default);
+  transition: all 0.3s ease;
+}
+
+.bottom-cta .cta-section .secondary-cta:hover {
+  background-color: var(--bg-neutral-primary-hover);
+  color: var(--text-neutral-primary);
 }
