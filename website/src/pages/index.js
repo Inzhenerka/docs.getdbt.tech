@@ -70,6 +70,11 @@ function Home() {
     spotlightSection = spotlightMember;
   }
 
+  const handleSearch = (e) => {
+    // Trigger Algolia search modal
+    document.querySelector('.DocSearch-Button').click();
+  };
+
   return (
     <>
       <Head>
@@ -88,6 +93,14 @@ function Home() {
               <div>
                 <h1 className="heading-1">The dbt Developer Hub</h1>
                 <p>Find everything you need to build, document, and collaborate with dbt — faster.</p>
+                <div className="hero-search-input" onClick={handleSearch}>
+                  <input
+                    type="text"
+                    placeholder="⌘K to search"
+                    readOnly
+                    className="input"
+                  />
+                </div>
               </div>
             </div>
           </header>
