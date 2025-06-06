@@ -93,13 +93,32 @@ function Home() {
               <div>
                 <h1 className="heading-1">The dbt Developer Hub</h1>
                 <p>Find everything you need to build, document, and collaborate with dbt — faster.</p>
-                <div className="hero-search-input" onClick={handleSearch}>
+                <div 
+                  className="hero-search-input" 
+                  onClick={handleSearch}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleSearch();
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Open search"
+                >
                   <input
                     type="text"
                     placeholder="⌘K to search"
                     readOnly
                     className="input"
+                    aria-hidden="true"
                   />
+                </div>
+                <div className="quick-links">
+                  <span>Quick links</span>
+                  <Link to="/guides">Tutorials</Link>
+                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Changelog</Link>
+                  <Link to="/docs/dbt-cloud-apis/overview">API</Link>
                 </div>
               </div>
             </div>

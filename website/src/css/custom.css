@@ -2508,21 +2508,41 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 }
 
 .hero-search-input input {
-  max-width: 400px !important;
-  width: 100% !important;
-  padding: .75rem !important;
-  height: 48px !important;
-  font-family: var(--font-sans) !important;
-  background: var(--bg-neutral-primary-default) !important;
-  border: 1px solid var(--bg-neutral-secondary-default) !important;
-  cursor: pointer !important;
-  border-radius: 12px !important;
+  max-width: 400px;
+  width: 100%;
+  padding: .75rem;
+  height: 48px;
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  background: var(--bg-neutral-primary-default);
+  border: 1px solid var(--bg-neutral-secondary-default);
+  cursor: pointer;
+  border-radius: 12px;
 }
 
 .hero-search-input input:active,
 .hero-search-input input:focus {
   border: 1px solid var(--bg-neutral-secondary-default) !important;
   outline: none !important;
+}
+
+.baton-hero .quick-links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.baton-hero .quick-links a {
+  text-decoration: underline;
+  color: var(--text-neutral-primary);
+  font-weight: 500;
+}
+
+[data-theme='dark'] .baton-hero .quick-links a {
+  color: var(--text-inverse-primary);
 }
 
 .static-bg {
