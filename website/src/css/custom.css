@@ -2571,3 +2571,73 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   background-repeat: no-repeat;
   background-position: bottom;
 }
+
+.bottom-cta {
+  background-image: url('https://public.cdn.getdbt.com/images/training/end-of-page-cta-bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+.bottom-cta .cta-section-text {
+  max-width: 800px;
+}
+
+.bottom-cta .eyebrow {
+  color: var(--text-inverse-primary) !important;
+}
+
+.bottom-cta .heading-2 {
+  color: var(--text-inverse-primary);
+}
+
+.bottom-cta p {
+  color: var(--text-inverse-primary);
+}
+
+.bottom-cta .cta-section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.bottom-cta .cta-section a {
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+@media (max-width: 996px) {
+  .bottom-cta .cta-section a {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.bottom-cta .cta-section a:hover {
+  text-decoration: none;
+}
+
+.bottom-cta .cta-section .primary-cta {
+  background-color: var(--bg-neutral-primary-default);
+  color: var(--text-neutral-primary);
+}
+
+.bottom-cta .cta-section .primary-cta:hover {
+  background-color: var(--bg-neutral-primary-hover);
+  color: var(--text-neutral-primary);
+}
+
+.bottom-cta .cta-section .secondary-cta {
+  background-color: transparent;
+  color: var(--text-inverse-primary);
+  border: 1px solid var(--bg-neutral-primary-default);
+  transition: all 0.3s ease;
+}
+
+.bottom-cta .cta-section .secondary-cta:hover {
+  background-color: var(--bg-neutral-primary-hover);
+  color: var(--text-neutral-primary);
+}
