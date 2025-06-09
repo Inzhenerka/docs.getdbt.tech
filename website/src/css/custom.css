@@ -481,12 +481,13 @@ a.code-link:hover {
   transform: translate3d(0, calc(-100% - 2px), 0)
 }
 
+.menu__link--sublist-caret:after {
+  background: none !important;
+}
+
 @media(max-width: 996px) {
   .navbar-sidebar .menu__link.nav-create-account {
     width: fit-content;
-  }
-  .menu__link--sublist-caret:after {
-    background: none !important;
   }
 }
 
