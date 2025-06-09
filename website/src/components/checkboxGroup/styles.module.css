@@ -46,8 +46,8 @@
 }
 
 .checkbox:checked {
-  background-color: #6B7280; 
-  border-color: #6B7280;
+  background-color: var(--color-coalesce-purple-600); 
+  border-color: var(--color-coalesce-purple-600);
 }
 
 .checkbox:checked::after {
@@ -60,10 +60,6 @@
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
-}
-
-.checkbox:hover {
-  border-color: #6B7280;
 }
 
 .viewMoreButton {
