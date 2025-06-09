@@ -2548,6 +2548,10 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   font-weight: 500;
 }
 
+.baton-hero .quick-links a:hover {
+  text-decoration: none;
+}
+
 [data-theme='dark'] .baton-hero .quick-links a {
   color: var(--text-inverse-primary);
 }
