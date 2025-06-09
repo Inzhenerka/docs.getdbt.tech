@@ -28,7 +28,7 @@ Before installing Fusion, ensure:
 
   🟢 - Supported today
   
-  🟡 - Unsupported today - Will be supported by 2025-07-18
+  🟡 - Not yet supported - Support expected by 2025-07-18
 
   | Operating System    | X86-64 | ARM  |
   |-------------------|----------|------|
