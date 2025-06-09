@@ -15,7 +15,7 @@
   --ifm-color-danger-light: #f9d3d4 !important;
   --ifm-color-gray-900: #030711;
   --ifm-font-weight-narrow: 400;
-  --ifm-font-weight-semibold: 500;
+  --ifm-font-weight-semibold: 600;
   --ifm-font-weight-bold: 700;
   --ifm-h1-font-size: 4rem;
   --ifm-h2-font-size: 3rem;
@@ -259,6 +259,9 @@ html[data-theme="dark"] .navbar__account:before {
 
 }
 
+[data-theme="dark"] .menu__link.menu__link--active {
+  background-color: var(--bg-surface-inverse);
+}
 
 .dropdown > .navbar__link:after {
   background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 2rem;
@@ -2300,6 +2303,12 @@ h2.anchor a.hash-link:before {
   height: 18px;
   width: 18px;
   display: inline-block;
+  filter: invert(1) brightness(0);
+}
+
+[data-theme="dark"] h3.anchor a.hash-link:before,
+[data-theme="dark"] h2.anchor a.hash-link:before {
+  filter: brightness(100); 
 }
 
 h3.anchor.clicked a.hash-link:before,
