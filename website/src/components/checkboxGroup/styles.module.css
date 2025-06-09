@@ -79,7 +79,10 @@
 
 .viewMoreButton:hover {
   text-decoration: underline;
-  color: rgb(4, 115, 119);
+}
+
+[data-theme='dark'] .viewMoreButton {
+  color: var(--text-inverse-primary);
 }
 
 .buttonContainer {
