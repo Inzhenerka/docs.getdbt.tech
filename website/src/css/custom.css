@@ -15,12 +15,12 @@
   --ifm-color-danger-light: #f9d3d4 !important;
   --ifm-color-gray-900: #030711;
   --ifm-font-weight-narrow: 400;
-  --ifm-font-weight-semibold: 600;
+  --ifm-font-weight-semibold: 500;
   --ifm-font-weight-bold: 700;
   --ifm-h1-font-size: 4rem;
   --ifm-h2-font-size: 3rem;
   --ifm-h3-font-size: 2rem;
-  --ifm-h4-font-size: 1.5rem;
+  --ifm-h4-font-size: 1.rem;
   --ifm-h5-font-size: 1.125rem;
   --ifm-navbar-height: 85px;
   --ifm-navbar-link-hover-color: var(--color-orange);
@@ -36,7 +36,7 @@
   --ifm-menu-color-active: #009999;
   --ifm-pagination-nav-color-hover: #047377;
   --ifm-tabs-color-active: #047377;
-  --ifm-menu-color-background-active: #effbfa;
+  --ifm-menu-color-background-active: var(--color-coalesce-purple-100);
   --ifm-font-family-monospace: var(--font-mono);
   --ifm-font-family-base: var(--font-sans);
   --ifm-heading-font-family: var(--font-display);
@@ -1064,6 +1064,10 @@ html[data-theme="dark"] .pagination-nav a:hover {
   border: none;
 }
 
+.pagination-nav__label {
+  font-size: var(--text-lg);
+}
+
 .pagination-nav__item--next .pagination-nav__label::after {
   content: var(--pagination-icon-next);
   font-weight: var(--ifm-font-weight-narrow);
@@ -1078,7 +1082,7 @@ html[data-theme="dark"] .pagination-nav a:hover {
 
 .pagination-nav__sublabel {
   font-weight: var(--ifm-font-weight-narrow);
-  margin-bottom: 1em;
+  margin-bottom: .5rem;
 }
 
 /* Font Sizing Adjustments */
