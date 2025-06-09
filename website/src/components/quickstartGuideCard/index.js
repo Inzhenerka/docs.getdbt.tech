@@ -173,11 +173,11 @@ export function QuickstartGuideTitle({ frontMatter }) {
         <div className={styles.tag_container}>
           {tags &&
             tags.map((tag, i) => (
-              <div className={styles.tag} key={i}>
+              <div className={`${styles.tag} tag`} key={i}>
                 {tag}
               </div>
             ))}
-          {level && <div className={styles.tag}>{level}</div>}
+          {level && <div className={`${styles.tag} tag`}>{level}</div>}
         </div>
       )}
     </>
