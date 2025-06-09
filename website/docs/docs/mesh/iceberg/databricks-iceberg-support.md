@@ -65,7 +65,7 @@ catalogs:
     write_integrations:
       - name: unity_catalog_integration
         table_format: iceberg
-        catalog_type: unit
+        catalog_type: unity
 
 ```
 
