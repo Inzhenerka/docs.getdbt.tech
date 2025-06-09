@@ -294,18 +294,18 @@ html[data-theme="dark"] .dropdown__menu {
   background-color: #0D1421 !important;
 }
 
-.dropdown__link {
-  border-radius: 12px !important;
-}
-
 .dropdown--version--hide .dropdown__menu {
   opacity: 0;
   visibility: hidden;
   display: none;
 }
 
+.dropdown__link {
+  border-radius: 8px !important;
+}
+
 .dropdown__link:hover, .dropdown__link--active {
-  color: var(--darkmode-link-color) !important;
+  background-color: #F5F5F5 !important;
 }
 
 .container.home:nth-child(odd) {
@@ -612,6 +612,11 @@ a.navbar__item.navbar__link.btn:hover {
   flex-direction: row;
   padding: 1rem;
   font-weight: 500;
+  border-radius: 12px;
+}
+
+.menu__list-item-collapsible {
+  border-radius: 12px;
 }
 
 @media(max-width: 996px) {
