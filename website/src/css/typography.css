@@ -37,7 +37,7 @@
 /* Heading Levels */
 .heading-1 {
   font-family: var(--font-display);
-  font-size: var(--text-6xl);
+  font-size: var(--text-5xl);
   font-weight: 600;
   line-height: 1.2;
 }
