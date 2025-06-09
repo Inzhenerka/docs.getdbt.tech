@@ -677,7 +677,7 @@ li.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2 .menu
 }
 
 .menu__list .menu__list a.menu__link.menu__link--sublist {
-  font-weight: var(--ifm-font-weight-semibold);
+  font-weight: 500;
   padding: 1rem;
 }
 
