@@ -366,9 +366,9 @@ h3 {
 
 code {
   border: none;
-  background-color: var(--ifm-color-emphasis-200);
-  color: var(--ifm-color-emphasis-900);
-  vertical-align: baseline;
+  background-color: rgba(246, 245, 255, 1);
+  color: rgba(61, 24, 154, 1);
+  font-size: var(--text-xs);
 }
 
 .main-wrapper .home .col>p {
