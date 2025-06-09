@@ -1,14 +1,22 @@
 .quickstartCard {
-  outline: 1px solid #EFF2F3;
-  border-radius: 10px;
-  box-shadow: 0px 11px 24px rgba(138, 138, 138, .1);
-  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
   max-width: 312px;
   display: flex;
   flex-direction: column;
   text-decoration: none !important;
   transition: all 0.2s ease-in-out;
   position: relative;
+  background: var(--ifm-footer-background-color);
+  color: var(--color-white);
+  border: 1px solid var(--border-neutral-tertiary);
+  border-radius: 16px;
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  background-color: var(--bg-surface-default);
+}
+
+[data-theme='dark'] .quickstartCard {
+  background-color: var(--bg-surface-inverse);
+  border-color: var(--border-inverse-tertiary);
+  color: var(--text-inverse-primary);
 }
 
 @media (max-width: 768px) {
@@ -17,12 +25,8 @@
   }
 }
 
-.quickstartCard:hover {
-  transform: translateY(-7px);
-  outline: 2px solid var(  --color-green-blue);
-}
-
-.quickstartCard:hover > .start {
+.quickstartCard:hover p,
+.quickstartCard:hover .start {
   text-decoration: underline;
 }
 
@@ -39,7 +43,7 @@
 }
 
 .quickstartCard p {
-  font-weight: 600;
+  font-weight: 500;
   color:#030711;
   font-size: 1.2rem;
   line-height: 1.2;
@@ -66,20 +70,21 @@
   font-size: 1.125rem;
   margin-top: auto;
   padding-top: 2rem;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--text-neutral-primary);
 }
 
 [data-theme='dark'] .quickstartCard .start {
-  color: #fff;
+  color: var(--text-inverse-primary);
 }
 
 .quickstartCard .start .right_arrow svg {
   margin-left: 4px;
   width: 12.6px;
-  fill: var(--ifm-link-color);
+  fill: var(--text-neutral-primary);
 }
 .quickstartCard .start:hover .right_arrow svg {
-  fill: var(--ifm-link-hover-color)
+  fill: var(--text-neutral-primary);
 }
 
 [data-theme='dark'] .quickstartCard .start .right_arrow svg {
