@@ -111,10 +111,15 @@
 }
 
 .backButton {
-  color: var(--ifm-menu-color);
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
+  color: var(--text-neutral-primary) !important;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+[data-theme='dark'] .backButton {
+  color: var(--text-inverse-primary) !important;
 }
 
 .tag_container {
