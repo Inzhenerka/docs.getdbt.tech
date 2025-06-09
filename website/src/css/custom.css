@@ -2381,11 +2381,6 @@ h2.anchor.clicked a.hash-link:before {
   font-weight: 600;
 }
 
-table th {
-  color: #ffffff; /* White text on lighter background */
-  font-weight: bold;
-}
-
 /* Dark mode table header text */
 [data-theme='dark'] table th {
   color: var(--text-inverse-primary);
