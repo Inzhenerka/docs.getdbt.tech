@@ -2500,6 +2500,12 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   padding: 6rem 1rem 20rem;
 }
 
+@media (max-width: 996px) {
+  .baton-hero {
+    padding: 4rem 1rem 6rem;
+  }
+}
+
 .baton-hero .container {
   display: flex;
   flex-direction: column;
