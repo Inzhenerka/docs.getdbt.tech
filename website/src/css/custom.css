@@ -368,7 +368,7 @@ code {
   border: none;
   background-color: rgba(246, 245, 255, 1);
   color: rgba(61, 24, 154, 1);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
 }
 
 .main-wrapper .home .col>p {
