@@ -2356,17 +2356,29 @@ h2.anchor.clicked a.hash-link:before {
   }
 }
 
+.markdown table {
+  border-radius: 12px;
+  border: solid 1px var(--border-neutral-tertiary);
+}
+
 .markdown table th,
 .markdown table td {
     padding: 8px;
-    border: 1px solid var(--table-border-color);
+    border: none;
     word-wrap: break-word;
     white-space: normal;
     text-align: left;
 }
 
-table th {
-  background-color: var(--ifm-color-primary); /* Table header background color */
+.markdown table tr {
+  border: none;
+  border-radius: 12px;
+}
+
+.markdown table th {
+  background-color: transparent;
+  color: var(--text-neutral-primary);
+  font-weight: 600;
 }
 
 :root {
