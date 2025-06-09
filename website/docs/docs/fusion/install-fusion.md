@@ -26,7 +26,7 @@ Before installing Fusion, ensure:
   <FusionA /> 
 - You are using a supported OS and architecture:
 
-  🟢 - Supported today
+  🟢 - Supported <br/>
   
   🟡 - Not yet supported - Support expected by 2025-07-18
 
