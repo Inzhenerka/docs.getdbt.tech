@@ -25,7 +25,7 @@
   }
 }
 
-.quickstartCard:hover p,
+.quickstartCard:hover h4,
 .quickstartCard:hover .start {
   text-decoration: underline;
 }
@@ -42,16 +42,12 @@
   fill: #fff;
 }
 
-.quickstartCard p {
-  font-weight: 500;
-  color:#030711;
-  font-size: 1.2rem;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
+.quickstartCard h4 {
+  color: var(--text-neutral-primary);
 }
 
-[data-theme='dark'] .quickstartCard p {
-  color: #fff;
+[data-theme='dark'] .quickstartCard h4 {
+  color: var(--text-inverse-primary);
 }
 
 .quickstartCard h3:hover {
