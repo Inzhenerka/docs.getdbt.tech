@@ -73,7 +73,7 @@ A specialized permission set intended to be used standalone or in conjunction wi
 
 Notable features:
 - Write access to the full set of Cost Management dashboard features.
-- Read access to settings related to Cost Mangement dashboard configuration
+- Write access to settings related to Cost Management dashboard configuration.
 - No other access.
 
 </Expandable>
