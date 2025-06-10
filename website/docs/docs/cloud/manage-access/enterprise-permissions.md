@@ -69,7 +69,7 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Cost Management admin">
 
-A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant write access to the Cost Management dashboard. Great for granting external (non-dbt) users and analysts access to the dashboard for customizing views of warehouse spend information.
+A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant write access to the Cost Management dashboard. Used for granting access to the dashboard for customizing views of warehouse spend information. Can be paired with [Analyst-licensed users](/docs/cloud/manage-access/seats-and-users).
 
 Notable features:
 - Write access to the full set of Cost Management dashboard features.
@@ -79,7 +79,7 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Cost Management viewer">
 
-A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant read-only access to the Cost Management dashboard. Great for granting external (non-dbt) users access to the dashboard for viewing warehouse spend information.
+A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant read-only access to the Cost Management dashboard. Used for granting read-only access to the dashboard. Can be paired with [Analyst-licensed users](/docs/cloud/manage-access/seats-and-users).
 
 Notable features:
 - Read access to the full set of Cost Management dashboard features
