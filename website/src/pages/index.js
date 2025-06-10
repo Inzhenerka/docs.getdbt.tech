@@ -165,38 +165,50 @@ function Home() {
                 <Card
                   title="Copilot"
                   body="AI-powered assistant that automates code, tests, and documentation in your workflow."
-                  link="/guides/manual-install?step=1"
-                  icon="circle"
+                  link="/docs/cloud/dbt-copilot"
+                  icon="dbt-copilot"
                 />
                 <Card
                   title="Mesh"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-                  link="/docs/get-started-dbt"
-                  icon="circle"
+                  body="Mesh is a framework that helps organizations scale their teams and data assets effectively."
+                  link="/docs/mesh/about-mesh"
+                  icon="lineage"
                 />
                 <Card
                   title="Orchestrator"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-                  link="/docs/build/projects"
-                  icon="circle"
+                  body="Every time a job runs, state-aware orchestration automatically determines which models to build by detecting changes in code or data."
+                  link="/docs/deploy/state-aware-about"
+                  icon="deploy"
                 />
                 <Card
-                  title="Copilot"
-                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
-                  link="/guides/manual-install?step=1"
-                  icon="circle"
+                  title="Insights"
+                  body="Insights in dbt empowers users to seamlessly explore and query data with an intuitive, context-rich interface."
+                  link="/docs/explore/dbt-insights"
+                  icon="insights"
                 />
                 <Card
-                  title="Mesh"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-                  link="/docs/get-started-dbt"
-                  icon="circle"
+                  title="Canvas"
+                  body="Canvas helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation."
+                  link="/docs/cloud/canvas"
+                  icon="canvas"
                 />
                 <Card
-                  title="Orchestrator"
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-                  link="/docs/build/projects"
-                  icon="circle"
+                  title="Semantic Layer"
+                  body="The dbt Semantic Layer eliminates duplicate coding by allowing data teams to define metrics on top of existing models and automatically handling data joins."
+                  link="/docs/use-dbt-semantic-layer/dbt-sl"
+                  icon="semantic"
+                />
+                <Card
+                  title="Catalog"
+                  body="Use Catalog to navigate and manage your projects within dbt to help you and other data developers, analysts, and consumers discover and leverage your dbt resources."
+                  link="/docs/explore/explore-projects"
+                  icon="compass"
+                />
+                <Card
+                  title="IDE"
+                  body="The dbt integrated development environment (Studio IDE) is a single web-based interface for building, testing, running, and version-controlling dbt projects."
+                  link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide"
+                  icon="dashboard"
                 />
               </div>
             </div>
