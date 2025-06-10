@@ -212,30 +212,30 @@ function Home() {
               <div className="home-link-grid">
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Documentation</h4>
-                  <Link to="/">Documentation</Link>
-                  <Link to="/">Product Docs</Link>
-                  <Link to="/">Best Practices</Link>
-                  <Link to="/">Copilot</Link>
+                  <Link to="/docs/introduction">Documentation</Link>
+                  <Link to="/docs/introduction">Product Docs</Link>
+                  <Link to="/best-practices">Best Practices</Link>
+                  <Link to="/docs/cloud/dbt-copilot">Copilot</Link>
                 </div>
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Guides</h4>
-                  <Link to="/">Quickstart for dbt and Snowflake</Link>
-                  <Link to="/">Quickstart for dbt and Databricks</Link>
-                  <Link to="/">Airflow and dbt</Link>
-                  <Link to="/">Debugging errors</Link>
+                  <Link to="/guides/snowflake?step=1">Quickstart for dbt and Snowflake</Link>
+                  <Link to="/guides/databricks?step=1">Quickstart for dbt and Databricks</Link>
+                  <Link to="/guides/airflow-and-dbt-cloud?step=1">Airflow and dbt</Link>
+                  <Link to="/guides/debug-errors?step=1">Debugging errors</Link>
                 </div>
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Reference Guides</h4>
-                  <Link to="/">Command Reference</Link>
-                  <Link to="/">Project Configurations</Link>
-                  <Link to="/">dbt Artifacts</Link>
+                  <Link to="/reference/dbt-commands">Command Reference</Link>
+                  <Link to="/category/project-configs">Project Configurations</Link>
+                  <Link to="/reference/artifacts/dbt-artifacts">dbt Artifacts</Link>
                 </div>
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Other Resources</h4>
-                  <Link to="/">Release Notes</Link>
-                  <Link to="/">Best Practices</Link>
-                  <Link to="/">Developer Blog</Link>
-                  <Link to="/">Join the Community</Link>
+                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release Notes</Link>
+                  <Link to="/best-practices">Best Practices</Link>
+                  <Link to="/blog">Developer Blog</Link>
+                  <Link to="/community/join">Join the Community</Link>
                 </div>
               </div>
               </div>
@@ -252,38 +252,42 @@ function Home() {
                 <Card
                   title="Join Slack"
                   body="Ask questions, get answers, and meet people who speak your data language."
-                  link="/guides/manual-install?step=1"
+                  link="https://www.getdbt.com/community/join-the-community/"
                   icon="annotation"
+                  target="_blank"
                 />
                 <Card
                   title="GitHub Discussions"
                   body="Join technical threads or open issues."
-                  link="/docs/get-started-dbt"
+                  link="https://github.com/dbt-labs/docs.getdbt.com"
                   icon="github-new"
+                  target="_blank"
                 />
                 <Card
                   title="Subscribe to the newsletter"
                   body="Get fresh community ideas, job posts, and tools delivered weekly."
-                  link="/docs/build/projects"
+                  link="https://www.getdbt.com/learn/newsletter"
                   icon="inbox"
+                  target="_blank"
                 />
                 <Card
                   title="Answer a question on Discourse"
                   body="Help someone solve a real problem—and build your reputation doing it."
-                  link="/guides/manual-install?step=1"
+                  link="/community/forum"
                   icon="message"
                 />
                 <Card
                   title="Events and Meetups"
                   body="Join local and global dbt meetups."
-                  link="/docs/get-started-dbt"
+                  link="/community/events"
                   icon="globe"
                 />
                 <Card
                   title="Courses & Tutorials"
                   body="Learn dbt with hands-on guidance."
-                  link="/docs/build/projects"
+                  link="https://learn.getdbt.com/catalog"
                   icon="forward"
+                  target="_blank"
                 />
               </div>
             </div>
