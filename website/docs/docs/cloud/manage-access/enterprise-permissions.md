@@ -82,8 +82,8 @@ Notable features:
 A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant read-only access to the Cost Management dashboard. Used for granting read-only access to the dashboard. Can be paired with [Analyst-licensed users](/docs/cloud/manage-access/seats-and-users).
 
 Notable features:
-- Read access to the full set of Cost Management dashboard features
-- Read access to settings related to Cost Mangement dashboard configuration
+- Read access to the full set of Cost Management dashboard features.
+- Read access to settings related to Cost Management dashboard configuration.
 - No other access.
 
 </Expandable>
