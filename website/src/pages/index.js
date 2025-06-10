@@ -131,24 +131,24 @@ function Home() {
               </div>
                 <div className="home-card-grid">
                   <Card
-                    title="Set up dbt Core"
-                    tag="Guide"
-                    body="Install and run your first model locally"
-                    link="/guides/manual-install?step=1"
-                    icon="settings"
-                  />
-                  <Card
-                    title="Use dbt in the Cloud"
+                    title="dbt Fusion engine"
                     tag="Article"
-                    body="Build faster with dbt Cloud's IDE"
-                    link="/docs/get-started-dbt"
+                    body="Learn about the dbt Fusion engine and see how it enables dbt to operate at speed and scale like never before."
+                    link="/docs/fusion/about-fusion"
                     icon="zap"
                   />
                   <Card
-                    title="Learn the basics"
+                    title="Get started with dbt"
                     tag="Guide"
-                    body="Step-by-step tutorial with sample data"
-                    link="/docs/build/projects"
+                    body="Build fast with our quickstart guides."
+                    link="/docs/get-started-dbt"
+                    icon="settings"
+                  />
+                  <Card
+                    title="Move to the dbt platform"
+                    tag="Guide"
+                    body="Migrate from dbt Core to the powerful, lightning fast dbt platform today!"
+                    link="/guides/core-to-cloud-1?step=1"
                     icon="tool"
                   />
                 </div>
