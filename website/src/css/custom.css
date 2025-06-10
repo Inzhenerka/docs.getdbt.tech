@@ -1256,9 +1256,6 @@ html[data-theme="dark"] a.breadcrumbs__link {
 }
 
 /* BlogPostItem header h2 size */
-.dbt-blog-container main > article h2{
-  font-size: 2rem;
-}
 .dbt-blog-container main > article h2 > a {
   color: var(--text-neutral-primary);
 }
