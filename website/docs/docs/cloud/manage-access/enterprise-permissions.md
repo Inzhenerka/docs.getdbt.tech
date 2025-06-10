@@ -67,6 +67,26 @@ Notable features:
 - No other access. 
 
 </Expandable>
+<Expandable alt_header="Cost Management admin">
+
+A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant write access to the Cost Management dashboard. Great for granting external (non-dbt) users and analysts access to the dashboard for customizing views of warehouse spend information.
+
+Notable features:
+- Write access to the full set of Cost Management dashboard features.
+- Read access to settings related to Cost Mangement dashboard configuration
+- No other access.
+
+</Expandable>
+<Expandable alt_header="Cost Management viewer">
+
+A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant read-only access to the Cost Management dashboard. Great for granting external (non-dbt) users access to the dashboard for viewing warehouse spend information.
+
+Notable features:
+- Read access to the full set of Cost Management dashboard features
+- Read access to settings related to Cost Mangement dashboard configuration
+- No other access.
+
+</Expandable>
 <Expandable alt_header="Database admin">
 
 Database admins manage the connections and configurations between <Constant name="cloud" /> and the underlying databases. 
