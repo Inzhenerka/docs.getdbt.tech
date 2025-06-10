@@ -18,23 +18,23 @@ Key:
 <SortableTable>
 
 {`
-| Account-level permission| Account Admin | Billing admin |  Manage marketplace apps | Project creator | Security admin | Viewer | 
-|:-------------------------|:-------------:|:------------:|:-------------------------:|:---------------:|:--------------:|:------:| 
-| Account settings*       |     W         |      -        |            -              |        R        |       R        |   R    |
-| Audit logs              |     R         |      -        |            -              |        -        |       R        |   R    |
-| Auth provider           |     W         |      -        |            -              |        -        |       W        |   R    |
-| Billing                 |     W         |       W       |            -              |        -        |       -        |   R    |
-| Connections             |     W         |      -        |            -              |        W        |       -        |   -    |
-| Groups                  |     W         |      -        |            -              |        R        |       W        |   R    |
-| Invitations             |     W         |      -        |            -              |        W        |       W        |   R    |
-| IP restrictions         |     W         |      -        |            -              |        -        |       W        |   R    |
-| Licenses                |     W         |      -        |            -              |        W        |       W        |   R    |
-| Marketplace app         |     -         |      -        |            W              |        -        |       -        |   -    |
-| Members                 |     W         |      -        |            -              |        W        |       W        |   R    |
-| Project (create)        |     W         |      -        |            -              |        W        |       -        |   -    |
-| Public models           |     R         |       R       |            -              |        R        |       R        |   R    |
-| Service tokens          |     W         |      -        |            -              |        -        |       R        |   R    |
-| Webhooks                |     W         |      -        |            -              |        -        |       -        |   -    |
+| Account-level permission | Account Admin | Billing admin | Cost Management admin | Cost Management viewer | Manage marketplace apps | Project creator | Security admin | Viewer |
+|:-------------------------|:-------------:|:-------------:|:---------------------:|:----------------------:|:-----------------------:|:---------------:|:--------------:|:------:|
+| Account settings*        | W             | -             | -                     | -                      | -                       | R               | R              | R      |
+| Audit logs               | R             | -             | -                     | -                      | -                       | -               | R              | R      |
+| Auth provider            | W             | -             | -                     | -                      | -                       | -               | W              | R      |
+| Billing                  | W             | W             | -                     | -                      | -                       | -               | -              | R      |
+| Connections              | W             | -             | R                     | R                      | -                       | W               | -              | -      |
+| Groups                   | W             | -             | -                     | -                      | -                       | R               | W              | R      |
+| Invitations              | W             | -             | -                     | -                      | -                       | W               | W              | R      |
+| IP restrictions          | W             | -             | -                     | -                      | -                       | -               | W              | R      |
+| Licenses                 | W             | -             | -                     | -                      | -                       | W               | W              | R      |
+| Marketplace app          | -             | -             | -                     | -                      | W                       | -               | -              | -      |
+| Members                  | W             | -             | -                     | -                      | -                       | W               | W              | R      |
+| Project (create)         | W             | -             | -                     | -                      | -                       | W               | -              | -      |
+| Public models            | R             | R             | -                     | -                      | -                       | R               | R              | R      |
+| Service tokens           | W             | -             | -                     | -                      | -                       | -               | R              | R      |
+| Webhooks                 | W             | -             | -                     | -                      | -                       | -               | -              | -      |
 `}
 
 </SortableTable>
@@ -80,20 +80,20 @@ Key:
 <SortableTable>
 
 {`
-| Account-level permission | Admin | Analyst | Cost Management admin | Cost Management viewer | Database admin | Developer | Git Admin | Job admin | Job runner | Job viewer | Metadata (Discovery API only) | Semantic Layer | Stakeholder | Team admin |
-|:------------------------:|:-----:|:-------:|:---------------------:|:----------------------:|:--------------:|:---------:|:---------:|:---------:|:----------:|:----------:|:-----------------------------:|:--------------:|:-----------:|:----------:|
-| Account settings         | R     | -       | -                     | -                      | R              | -         | R         | -         | -          | -          | -                             | -              | -           | R          |
-| Auth provider            | -     | -       | -                     | -                      | -              | -         | -         | -         | -          | -          | -                             | -              | -           | -          |
-| Billing                  | -     | -       | -                     | -                      | -              | -         | -         | -         | -          | -          | -                             | -              | -           | -          |
-| Connections              | R     | R       | R                     | R                      | W              | R         | R         | R         | -          | -          | -                             | -              | R           | R          |
-| Groups                   | R     | -       | -                     | -                      | R              | R         | R         | -         | -          | -          | -                             | -              | R           | R          |
-| Invitations              | W     | R       | -                     | -                      | R              | R         | R         | R         | -          | R          | -                             | -              | R           | R          |
-| Licenses                 | W     | R       | -                     | -                      | R              | R         | R         | R         | -          | R          | -                             | -              | -           | R          |
-| Members                  | W     | -       | -                     | -                      | R              | R         | R         | -         | -          | -          | -                             | -              | R           | R          |
-| Project (create)         | -     | -       | -                     | -                      | -              | -         | -         | -         | -          | -          | -                             | -              | -           | -          |
-| Public models            | R     | R       | -                     | -                      | R              | R         | R         | R         | -          | R          | R                             | R              | R           | R          |
-| Service tokens           | -     | -       | -                     | -                      | -              | -         | -         | -         | -          | -          | -                             | -              | -           | -          |
-| Webhooks                 | W     | -       | -                     | -                      | -              | W         | -         | -         | -          | -          | -                             | -              | -           | -          |
+| Account-level permission | Admin | Analyst | Database admin | Developer | Git Admin | Job admin | Job runner  | Job viewer  | Metadata (Discovery API only) | Semantic Layer | Stakeholder | Team admin |
+|--------------------------|:-----:|:-------:|:--------------:|:---------:|:---------:|:---------:|:-----------:|:-----------:|:--------:|:--------------:|:-----------:|:----------:| 
+| Account settings         |   R   |    -    |      R         |     -     |     R     |     -     |     -       |      -      |    -     |        -       |      -      |     R      |
+| Auth provider            |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
+| Billing                  |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
+| Connections              |   R   |    R    |      W         |     R     |     R     |     R     |     -       |      -      |    -     |        -       |      R      |     R      |
+| Groups                   |   R   |    -    |      R         |     R     |     R     |     -     |     -       |      -      |    -     |        -       |      R      |     R      |
+| Invitations              |   W   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |    -     |        -       |      R      |     R      |
+| Licenses                 |   W   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |    -     |        -       |      -      |     R      |
+| Members                  |   W   |    -    |      R         |     R     |     R     |     -     |     -       |      -      |    -     |        -       |      R      |     R      |
+| Project (create)         |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
+| Public models            |   R   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |     R    |        R       |      R      |     R      |
+| Service tokens           |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
+| Webhooks                 |   W   |    -    |      -         |     W     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
 `}
 
 </SortableTable>
