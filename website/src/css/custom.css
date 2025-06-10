@@ -784,6 +784,10 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
   padding-right: 1.25rem;
 }
 
+.table-of-contents__link > code {
+  font-size: var(--text-xs);
+}
+
 .featherlight:before {
   height: 5%;
 }
