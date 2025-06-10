@@ -66,7 +66,7 @@
 
 .heading-5 {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: var(--text-lg);
   font-weight: 600;
   line-height: 1.2;
 }
