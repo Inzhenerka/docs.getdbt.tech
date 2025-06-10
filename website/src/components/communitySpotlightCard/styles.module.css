@@ -77,6 +77,13 @@ div.spotlightMemberCard {
   margin-top: 1rem;  
   font-weight: 600;
   font-size: 1rem;
+  color: var(--text-neutral-primary);
+}
+
+@media (min-width: 996px) {
+  [data-theme='dark'] .spotlightMemberContent .spotlightReadMore {
+    color: var(--text-inverse-primary);
+  }
 }
 
 .spotlightMemberContent .spotlightMemberInfo > span {
