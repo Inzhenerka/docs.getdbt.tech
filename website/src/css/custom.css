@@ -2514,6 +2514,10 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   position: relative;
 }
 
+.baton-hero {
+  font-size: var(--text-lg);
+}
+
 .baton-1::before,
 .baton-2::before {
   content: '';
