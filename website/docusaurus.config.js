@@ -195,7 +195,7 @@ var siteSettings = {
           className: "navbar__account hide-label",
           items: [
             {
-              label: "Login",
+              label: "Login to dbt",
               to: "https://cloud.getdbt.com/",
               target: "_blank",
             },
