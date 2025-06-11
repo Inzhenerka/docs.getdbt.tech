@@ -2138,6 +2138,14 @@ section.discourse-forum-page {
   }
 }
 
+.docswiper .swiper {
+  padding-bottom: 10px;
+}
+
+.docswiper .swiper .swiper-horizontal > .docswiper .swiper .swiper-pagination-bullets, .docswiper .swiper .swiper-pagination-bullets.swiper-pagination-horizontal, .docswiper .swiper .swiper-pagination-custom, .docswiper .swiper .swiper-pagination-fraction {
+  bottom: -5px;
+}
+
 .docswiper .swiper .swiper-button-next,
 .docswiper .swiper .swiper-button-prev {
   color: var(--color-coalesce-purple-600);
