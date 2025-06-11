@@ -5,7 +5,7 @@
 :root {
   /* Docusaurus Overrides */
   /* We need to keep these for components that are not using the new tokens */
-  --ifm-color-success: var(--color-green-800) !important;
+  --ifm-color-success: var(--color-coalesce-purple-600) !important;
   --ifm-color-info: var(--color-coalesce-purple-600) !important;
   --ifm-color-warning: var(--color-yellow-400) !important;
   --ifm-color-danger: var(--color-pink-700) !important;
@@ -851,7 +851,7 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
   margin-top: 5px;
 }
 
-.alert--info {
+.alert--info, .alert--secondary {
   --ifm-alert-background-color: var(--ifm-color-info-light);
   --ifm-alert-border-color: var(--ifm-color-info);
   color: var(--ifm-color-gray-900);
@@ -879,14 +879,6 @@ html[data-theme="dark"] .alert--danger a:hover {
   color: var(--ifm-color-gray-900);
 }
 
-.alert--secondary,
-.alert--secondary a,
-.alert--secondary svg {
-  --ifm-alert-background-color: #474748;
-  color: white !important;
-  fill: white !important;
-}
-
 html[data-theme="dark"] .alert * {
   --ifm-alert-foreground-color: var(--ifm-color-gray-900);
 }
@@ -899,6 +891,7 @@ html[data-theme="dark"] .alert table {
 
 /* for dark mode */
 .alert--info a,
+.alert--secondary a,
 .alert--success a,
 .alert--danger a,
 .alert--warning a {
@@ -906,6 +899,7 @@ html[data-theme="dark"] .alert table {
 }
 
 html[data-theme="dark"] main .row .col:first-of-type .alert--info a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--secondary a:hover,
 html[data-theme="dark"] main .row .col:first-of-type .alert--success a:hover,
 html[data-theme="dark"] main .row .col:first-of-type .alert--danger a:hover,
 html[data-theme="dark"] main .row .col:first-of-type .alert--warning a:hover {
