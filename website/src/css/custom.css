@@ -626,11 +626,7 @@ a.navbar__item.navbar__link.btn:hover {
 }
 
 .menu__list-item-collapsible:hover {
-  background: var(--color-terminal-black-800) !important;
-}
-
-.menu__list-item-collapsible--active{
-  background: var(--color-terminal-black-800) !important;
+  background: var(--ifm-menu-color-background-hover) !important;
 }
 
 .menu__caret,
