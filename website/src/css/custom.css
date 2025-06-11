@@ -2140,7 +2140,7 @@ section.discourse-forum-page {
 
 .docswiper .swiper .swiper-button-next,
 .docswiper .swiper .swiper-button-prev {
-  color: #047377;
+  color: var(--color-coalesce-purple-600);
   font-weight: 800;
   position: absolute;
   top: 0;
@@ -2168,11 +2168,11 @@ section.discourse-forum-page {
 }
 
 [data-theme='dark'] .docswiper .swiper-pagination-bullet {
-  background: var(--color-off-white);
+  background: var(--color-coalesce-purple-100);
 }
 
 [data-theme='dark'] .docswiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background: var(--color-light-teal);
+  background: var(--color-coalesce-purple-100);
 }
 
 /* Community Home styles */
