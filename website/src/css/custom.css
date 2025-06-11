@@ -5,14 +5,14 @@
 :root {
   /* Docusaurus Overrides */
   /* We need to keep these for components that are not using the new tokens */
-  --ifm-color-success: #086343 !important;
-  --ifm-color-info: #047377 !important;
+  --ifm-color-success: var(--color-green-800) !important;
+  --ifm-color-info: var(--color-coalesce-purple-600) !important;
   --ifm-color-warning: var(--color-yellow-400) !important;
   --ifm-color-danger: var(--color-pink-700) !important;
-  --ifm-color-success-light: #d6f3e2 !important;
-  --ifm-color-info-light: #d9f6f4 !important;
-  --ifm-color-warning-light: #ffe1be !important;
-  --ifm-color-danger-light: #f9d3d4 !important;
+  --ifm-color-success-light: var(--color-coalesce-purple-100) !important;
+  --ifm-color-info-light: var(--color-coalesce-purple-100) !important;
+  --ifm-color-warning-light: var(--color-yellow-50) !important;
+  --ifm-color-danger-light: var(--color-pink-50) !important;
   --ifm-color-gray-900: #030711;
   --ifm-font-weight-narrow: 400;
   --ifm-font-weight-semibold: 600;
@@ -869,6 +869,10 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
   color: var(--ifm-color-gray-900);
 }
 
+html[data-theme="dark"] .alert--danger a:hover {
+  color: var(--ifm-color-gray-900) !important;
+}
+
 .alert--warning {
   --ifm-alert-background-color: var(--ifm-color-warning-light);
   --ifm-alert-border-color: var(--ifm-color-warning);
@@ -899,6 +903,15 @@ html[data-theme="dark"] .alert table {
 .alert--danger a,
 .alert--warning a {
   color: var(--ifm-color-gray-900) !important;
+}
+
+html[data-theme="dark"] main .row .col:first-of-type .alert--info a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--success a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--danger a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--warning a:hover {
+  color: var(--ifm-color-gray-900) !important;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--ifm-link-color) !important;
 }
 
 .alert blockquote {
