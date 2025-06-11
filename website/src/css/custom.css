@@ -2434,23 +2434,21 @@ h2.anchor.clicked a.hash-link:before {
 /* Default color and border for tabs */
 .tabs__item {
   background-color: var(--color-white); /* Sets the tab color the same as the file borders */
-  border: 2px solid var(--color-nav-text);
+  border: 1px solid var(--border-neutral-tertiary);
+  color: var(--text-neutral-primary);
   padding: 5px 10px;
   margin-right: 5px;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
+  font-weight: 500;
   transition: background-color 0.3s;
 }
 
 /* Default color and border for tabs in dark mode */
 [data-theme='dark'] .tabs__item {
   background-color: var(--color-neutral-primary);
-  border: 1px solid var(--color-nav-text);
-  padding: 5px 10px;
-  margin-right: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  border: 1px solid var(--border-inverse-tertiary);
+  color: var(--text-inverse-primary);
 }
 
 /*Color when hovering over tabs */
