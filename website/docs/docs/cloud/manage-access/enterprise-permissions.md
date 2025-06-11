@@ -69,7 +69,7 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Cost Management admin">
 
-A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant write access to the Cost Management dashboard. Used for granting access to the dashboard for customizing views of warehouse spend information. Can be paired with [Analyst-licensed users](/docs/cloud/manage-access/seats-and-users).
+A specialized permission set intended to be used standalone or in conjunction with other permission sets to grant write access to the Cost Management dashboard. We created this permission set so you can access the dashboard and customize the views without granting admin (write) access to other areas of the <Constant name="dbt_platform" />. Can be paired with [Analyst-licensed users](/docs/cloud/manage-access/seats-and-users).
 
 Notable features:
 - Write access to the full set of Cost Management dashboard features.
