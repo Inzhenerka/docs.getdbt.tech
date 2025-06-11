@@ -234,7 +234,7 @@ var siteSettings = {
             </div>
             <div class="footer-grid-item">
               <h5 class="heading-5">Community</h5>
-              <a href='https://www.getdbt.com/community/join-the-community' target="_blank">Join the Community</a>
+              <a href='/community/join'>Join the Community</a>
               <a href="/community/contribute">Become a Contributor</a>
               <a href="https://hub.getdbt.com/" target="_blank">Open Source dbt Packages</a>
               <a href="/community/forum">Community Forum</a>
