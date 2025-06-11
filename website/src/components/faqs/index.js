@@ -39,7 +39,7 @@ function FAQ({ path, alt_header = null }) {
       <span className={styles.link} onClick={toggleOn}>
         <span
           className={styles.toggle}
-          style={{ transform: isOn ? "rotateX(180deg)" : "rotateX(0deg)" }}
+          style={{ transform: isOn ? "rotateX(0deg)" : "rotateX(180deg)" }}
         ></span>
         <span className={styles.headerText}>
           {alt_header || (meta?.title && meta.title)}
