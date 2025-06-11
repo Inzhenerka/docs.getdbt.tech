@@ -226,10 +226,6 @@ html[data-theme="dark"] input.sc-avest {
   filter: brightness(2.5);
 }
 
-.theme-doc-sidebar-item-category .clean-btn.menu__caret {
-  display: none;
-}
-
 .navbar__item.dropdown.dropdown--hoverable.dropdown--right:nth-child(6) {
   order: 4;
 }
@@ -735,15 +731,19 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
 
 /* < icon */
 .menu__link--sublist::after,
-.menu__caret::before {
+.menu__caret::before,
+.menu__list-item-collapsible button::after {
   content: '';
   background: var(--ifm-breadcrumb-separator) center;
   max-width: 10px;
   height: 9px;
-  width: 100%;
   background-repeat: no-repeat;
   margin-left: 1em;
   transform: rotate(90deg);
+}
+
+.menu__list-item-collapsible button {
+  padding-right: 0;
 }
 
 .menu__list-item--collapsed .menu__link--sublist:after, .menu__list-item--collapsed .menu__caret:before {
