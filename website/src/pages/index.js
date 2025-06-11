@@ -116,9 +116,9 @@ function Home() {
                 </div>
                 <div className="quick-links">
                   <span>Quick links</span>
-                  <Link to="/guides">Tutorials</Link>
-                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Changelog</Link>
-                  <Link to="/docs/dbt-cloud-apis/overview">API</Link>
+                  <Link to="/guides">Guides</Link>
+                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release notes</Link>
+                  <Link to="/docs/introduction">Product docs</Link>
                 </div>
               </div>
             </div>
