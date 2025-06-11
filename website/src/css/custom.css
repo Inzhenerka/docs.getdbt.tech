@@ -256,7 +256,7 @@ html[data-theme="dark"] .navbar__account:before {
 }
 
 [data-theme="dark"] .menu__link.menu__link--active {
-  background-color: var(--bg-surface-inverse);
+  background-color: var(--color-terminal-black-800);
 }
 
 .dropdown > .navbar__link:after {
@@ -626,7 +626,11 @@ a.navbar__item.navbar__link.btn:hover {
 }
 
 .menu__list-item-collapsible:hover {
-  background: var(--ifm-menu-color-background-hover) !important;
+  background: var(--color-terminal-black-800) !important;
+}
+
+.menu__list-item-collapsible--active{
+  background: var(--color-terminal-black-800) !important;
 }
 
 .menu__caret,
