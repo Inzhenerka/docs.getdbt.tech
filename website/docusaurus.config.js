@@ -35,6 +35,7 @@ if (GIT_BRANCH !== "current") {
   });
 }
 
+console.log("DEBUG: GIT_BRANCH =", GIT_BRANCH);
 console.log("DEBUG: CONTEXT =", process.env.CONTEXT);
 console.log("DEBUG: DEPLOY_URL =", process.env.DEPLOY_URL);
 console.log("DEBUG: VERCEL_ENV =", process.env.VERCEL_ENV);
