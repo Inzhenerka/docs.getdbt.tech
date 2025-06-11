@@ -486,7 +486,7 @@ a.code-link:hover {
 }
 
 .menu__link--sublist-caret:after {
-  background: none !important;
+  background: var(--ifm-breadcrumb-separator) center;
 }
 
 @media(max-width: 996px) {
@@ -624,15 +624,6 @@ a.navbar__item.navbar__link.btn:hover {
   border-radius: 12px;
 }
 
-@media(max-width: 996px) {
-  .menu__link--sublist-caret:after {
-    transform: scale(.4) rotate(45deg) !important;
-  }
-  .tocCollapsibleButton_TO0P::after {
-    background: none !important;
-    transform: scale(.4) rotate(45deg) !important;
-  }
-}
 
 .menu__list-item-collapsible .menu__link {
   color: inherit;
@@ -726,10 +717,6 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
   background-color: transparent;
 }
 
-.menu__list-item--collapsed .menu__link--sublist::after,
-.menu__list-item--collapsed .menu__caret::before {
-  transform: rotateZ(0deg);
-}
 
 /* Mobile ToC caret */
 .docs-doc-page .theme-doc-toc-mobile .clean-btn:after {
@@ -750,20 +737,27 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
 .menu__link--sublist::after,
 .menu__caret::before {
   content: '';
-  display: inline-block;
-  border: solid currentColor;
-  border-width: 0 2px 2px 0;
-  padding: 3px;
-  transform: rotate(-45deg);
+  background: var(--ifm-breadcrumb-separator) center;
+  min-width: 6px;
+  height: 9px;
+  width: calc(var(--ifm-breadcrumb-separator-size) * var(--ifm-breadcrumb-size-multiplier) * var(--ifm-breadcrumb-separator-size-multiplier));
+  background-repeat: no-repeat;
   margin-left: 1em;
-  transition: transform 0.2s ease;
+  transform: rotate(90deg);
 }
 
-.menu__list-item--collapsed .menu__link--sublist::after,
-.menu__list-item--collapsed .menu__caret::before {
-  transform: rotate(45deg);
+.menu__list-item--collapsed .menu__link--sublist:after, .menu__list-item--collapsed .menu__caret:before {
+  transform: rotate(-45deg);
 }
 
+.menu__list-item--collapsed .menu__link--sublist:after, .menu__list-item--collapsed .menu__caret:before {
+  transform: rotate(0deg);
+}
+
+[data-theme="dark"] .menu__link--sublist::after,
+[data-theme="dark"] .menu__caret::before {
+  filter: invert(1);
+}
 
 /* Table of Contents */
 .table-of-contents__link:hover,
