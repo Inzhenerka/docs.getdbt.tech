@@ -66,7 +66,7 @@
   --filter-brightness-high: 1.5;
   --darkmode-link-color: #9786FF;
   --light-dark-toggle: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQuMzA4IDMuMzg1YzAtMS4xNzguMTczLTIuMzcuNjE1LTMuMzg1QzEuOTgzIDEuMjggMCA0LjI4MiAwIDcuNjkyQTguMzA4IDguMzA4IDAgMCAwIDguMzA4IDE2YzMuNDEgMCA2LjQxMi0xLjk4MyA3LjY5Mi00LjkyMy0xLjAxNS40NDItMi4yMDcuNjE1LTMuMzg1LjYxNWE4LjMwOCA4LjMwOCAwIDAgMS04LjMwNy04LjMwN1oiIGZpbGw9IiM5MkEwQjMiLz48L3N2Zz4=";
-
+  --ifm-menu-link-sublist-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L6 6L10 2' stroke='%23030711' stroke-width='1.5' stroke-linecap='square' stroke-linejoin='round'/%3E%3C/svg%3E");
 
   --ifm-h3-font-size: var(--text-4xl) !important;
 
