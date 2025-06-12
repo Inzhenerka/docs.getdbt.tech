@@ -16,7 +16,7 @@ This document will cover setup in Snowflake, <Constant name="cloud" />, and how 
 
 :::info Cost Management regional availability
 
-The Cost Management dashboard and features are only available to customers in the US on AWS at this time. Support for more regions and providers is being rolled out over the coming months.
+The Cost Management dashboard and features are currently only available to customers in the US on AWS. Support for more regions and providers is being rolled out over the coming months.
 
 :::
 
