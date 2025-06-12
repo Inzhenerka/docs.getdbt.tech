@@ -208,10 +208,12 @@ DimensionType = [CATEGORICAL, TIME]
 ```
 
 #### List saved queries
+
+List all saved queries for the specified environment:
   
   ```graphql
   {
-  savedQueries(environmentId: 200532) {
+  savedQueries(environmentId: "123") {
     name
     description
     label
@@ -232,27 +234,42 @@ DimensionType = [CATEGORICAL, TIME]
 }
 ```
 
+#### List a saved query
+
+List a single saved query using environment ID and query name:
+
+```graphql
+
+{
+savedQuery(environmentId: "123", savedQueryName: "query_name") {
+  name
+  description
+  label
+  queryParams {
+    metrics {
+      name
+    }
+    groupBy {
+      name
+      grain
+      datePart
+    }
+    where {
+      whereSqlTemplate
+    }
+  }
+}
+}
+```
+
 ### Querying
 
 When querying for data, _either_ a `groupBy` _or_ a `metrics` selection is required. The following section provides examples of how to query metrics:
 
-- [Create dimension values query](#create-dimension-values-query)
-- [Create metric query](#create-metric-query)
+- [Create query](#create-metric-query)
 - [Fetch query result](#fetch-query-result)
 
-#### Create dimension values query
-
-```graphql
-
-mutation createDimensionValuesQuery(
-  environmentId: BigInt!
-  metrics: [MetricInput!]
-  groupBy: [GroupByInput!]!
-): CreateDimensionValuesQueryResult!
-
-```
-
-#### Create metric query
+#### Create query
 
 ```graphql
 createQuery(
