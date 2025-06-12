@@ -116,8 +116,6 @@ html[data-theme="dark"] {
   --ifm-table-cell-color: var(--color-green-blue);
 
   --ifm-link-color: var(--darkmode-link-color);
-
-  --docsearch-hit-background: var(--color-terminal-black-800);
 }
 
 /* Linked `code` tags visibility adjustment */
