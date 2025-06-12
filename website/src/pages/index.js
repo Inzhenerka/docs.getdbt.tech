@@ -224,7 +224,7 @@ function Home() {
               <div className="home-link-grid">
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Documentation</h4>
-                  <Link to="/docs/introduction">Documentation</Link>
+                  <Link to="/docs/dbt-cloud-apis/overview">API Docs</Link>
                   <Link to="/docs/introduction">Product Docs</Link>
                   <Link to="/best-practices">Best Practices</Link>
                   <Link to="/docs/cloud/dbt-copilot">Copilot</Link>
@@ -245,7 +245,6 @@ function Home() {
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Other Resources</h4>
                   <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release Notes</Link>
-                  <Link to="/best-practices">Best Practices</Link>
                   <Link to="/blog">Developer Blog</Link>
                   <Link to="/community/join">Join the Community</Link>
                 </div>
