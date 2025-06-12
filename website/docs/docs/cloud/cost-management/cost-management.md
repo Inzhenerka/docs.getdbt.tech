@@ -14,6 +14,12 @@ This document will cover setup in Snowflake, <Constant name="cloud" />, and how 
 
 ## Prerequisites
 
+:::info Cost Management regional availability
+
+The Cost Management dashboard and features are only available to customers in the US on AWS at this time. Support for more regions and providers is being rolled out over the coming months.
+
+:::
+
 To configure the cost management tools, you must have the following:
 
 - Proper [permission set](/docs/cloud/manage-access/enterprise-permissions) to configure connections in <Constant name="cloud" /> (such as account admin or project creator).
