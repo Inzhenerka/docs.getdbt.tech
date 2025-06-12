@@ -60,13 +60,6 @@ To retrieve the necessary <Constant name="cloud" /> configurations for use in Ok
    - However, if you need to make manual updates (like update group membership for a SCIM-managed group), you can enable this setting by clicking **Allow manual updates**.
     <Lightbox src="/img/docs/dbt-cloud/access-control/scim-manual-updates.png" width="70%" title="Enabling manual updates in SCIM settings." />
 
-:::note License mapping
-
-<Constant name="cloud" /> maps SCIM groups to its own groups, so you can assign licenses to SCIM groups using the group name as an identifier. Currently, setting a license type directly as an attribute on the SCIM group isn't supported.
-
-
-:::
-
 ## SCIM configuration for Okta
 
 Please complete the [setup SSO with Okta](/docs/cloud/manage-access/set-up-sso-okta) steps before configuring SCIM settings.
@@ -159,3 +152,8 @@ To map the attributes that will sync with dbt:
     <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Mark the fields as required." />    
 
 You can now begin assigning users to your SCIM app in Entra ID!
+
+
+## Manage user licenses with SCIM
+
+You can manage user license assignments with SCIM groups using an attribute in your IdP environment.
