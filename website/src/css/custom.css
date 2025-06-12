@@ -5,14 +5,14 @@
 :root {
   /* Docusaurus Overrides */
   /* We need to keep these for components that are not using the new tokens */
-  --ifm-color-success: #086343 !important;
-  --ifm-color-info: #047377 !important;
+  --ifm-color-success: var(--color-coalesce-purple-600) !important;
+  --ifm-color-info: var(--color-coalesce-purple-600) !important;
   --ifm-color-warning: var(--color-yellow-400) !important;
   --ifm-color-danger: var(--color-pink-700) !important;
-  --ifm-color-success-light: #d6f3e2 !important;
-  --ifm-color-info-light: #d9f6f4 !important;
-  --ifm-color-warning-light: #ffe1be !important;
-  --ifm-color-danger-light: #f9d3d4 !important;
+  --ifm-color-success-light: var(--color-coalesce-purple-100) !important;
+  --ifm-color-info-light: var(--color-coalesce-purple-100) !important;
+  --ifm-color-warning-light: var(--color-yellow-50) !important;
+  --ifm-color-danger-light: var(--color-pink-50) !important;
   --ifm-color-gray-900: #030711;
   --ifm-font-weight-narrow: 400;
   --ifm-font-weight-semibold: 600;
@@ -851,7 +851,7 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
   margin-top: 5px;
 }
 
-.alert--info {
+.alert--info, .alert--secondary {
   --ifm-alert-background-color: var(--ifm-color-info-light);
   --ifm-alert-border-color: var(--ifm-color-info);
   color: var(--ifm-color-gray-900);
@@ -869,18 +869,14 @@ i.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2.menu__
   color: var(--ifm-color-gray-900);
 }
 
+html[data-theme="dark"] .alert--danger a:hover {
+  color: var(--ifm-color-gray-900) !important;
+}
+
 .alert--warning {
   --ifm-alert-background-color: var(--ifm-color-warning-light);
   --ifm-alert-border-color: var(--ifm-color-warning);
   color: var(--ifm-color-gray-900);
-}
-
-.alert--secondary,
-.alert--secondary a,
-.alert--secondary svg {
-  --ifm-alert-background-color: #474748;
-  color: white !important;
-  fill: white !important;
 }
 
 html[data-theme="dark"] .alert * {
@@ -895,10 +891,21 @@ html[data-theme="dark"] .alert table {
 
 /* for dark mode */
 .alert--info a,
+.alert--secondary a,
 .alert--success a,
 .alert--danger a,
 .alert--warning a {
   color: var(--ifm-color-gray-900) !important;
+}
+
+html[data-theme="dark"] main .row .col:first-of-type .alert--info a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--secondary a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--success a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--danger a:hover,
+html[data-theme="dark"] main .row .col:first-of-type .alert--warning a:hover {
+  color: var(--ifm-color-gray-900) !important;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--ifm-link-color) !important;
 }
 
 .alert blockquote {
@@ -2131,9 +2138,17 @@ section.discourse-forum-page {
   }
 }
 
+.docswiper .swiper {
+  padding: 0 40px 10px;
+}
+
+.docswiper .swiper .swiper-horizontal > .docswiper .swiper .swiper-pagination-bullets, .docswiper .swiper .swiper-pagination-bullets.swiper-pagination-horizontal, .docswiper .swiper .swiper-pagination-custom, .docswiper .swiper .swiper-pagination-fraction {
+  bottom: -5px;
+}
+
 .docswiper .swiper .swiper-button-next,
 .docswiper .swiper .swiper-button-prev {
-  color: #047377;
+  color: var(--color-coalesce-purple-600);
   font-weight: 800;
   position: absolute;
   top: 0;
@@ -2161,11 +2176,11 @@ section.discourse-forum-page {
 }
 
 [data-theme='dark'] .docswiper .swiper-pagination-bullet {
-  background: var(--color-off-white);
+  background: var(--color-coalesce-purple-100);
 }
 
 [data-theme='dark'] .docswiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background: var(--color-light-teal);
+  background: var(--color-coalesce-purple-100);
 }
 
 /* Community Home styles */
