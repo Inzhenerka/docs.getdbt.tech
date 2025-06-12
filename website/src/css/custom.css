@@ -2138,9 +2138,17 @@ section.discourse-forum-page {
   }
 }
 
+.docswiper .swiper {
+  padding: 0 40px 10px;
+}
+
+.docswiper .swiper .swiper-horizontal > .docswiper .swiper .swiper-pagination-bullets, .docswiper .swiper .swiper-pagination-bullets.swiper-pagination-horizontal, .docswiper .swiper .swiper-pagination-custom, .docswiper .swiper .swiper-pagination-fraction {
+  bottom: -5px;
+}
+
 .docswiper .swiper .swiper-button-next,
 .docswiper .swiper .swiper-button-prev {
-  color: #047377;
+  color: var(--color-coalesce-purple-600);
   font-weight: 800;
   position: absolute;
   top: 0;
@@ -2168,11 +2176,11 @@ section.discourse-forum-page {
 }
 
 [data-theme='dark'] .docswiper .swiper-pagination-bullet {
-  background: var(--color-off-white);
+  background: var(--color-coalesce-purple-100);
 }
 
 [data-theme='dark'] .docswiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background: var(--color-light-teal);
+  background: var(--color-coalesce-purple-100);
 }
 
 /* Community Home styles */
@@ -2408,6 +2416,14 @@ h2.anchor.clicked a.hash-link:before {
 .markdown table tr {
   border: none;
   border-radius: 12px;
+}
+
+.markdown table td {
+  border: 1px solid var(--border-neutral-tertiary);
+}
+
+[data-theme='dark'] .markdown table td {
+  border: 1px solid var(--border-inverse-tertiary);
 }
 
 .markdown table th {
