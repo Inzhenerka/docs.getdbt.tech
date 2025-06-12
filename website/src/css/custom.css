@@ -591,6 +591,10 @@ html[data-theme="dark"] svg[class^="darkToggleIcon_"] {
   margin-right: 0.75em;
 }
 
+.DocSearch-Hit-content-wrapper {
+  overflow: hidden;
+}
+
 /* navbar buttons */
 a.navbar__item.navbar__link.btn {
   border: none;
