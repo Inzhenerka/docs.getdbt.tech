@@ -96,7 +96,7 @@ version: 2
 models:
   - name: <model_name>
     config:
-      static-analysis: unsafe
+      static_analysis: unsafe
       ...
 ```
 
