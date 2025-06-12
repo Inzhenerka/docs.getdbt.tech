@@ -39,7 +39,7 @@ If your IdP isn’t on the list, it can be supported using <Constant name="cloud
 
 ## SCIM configuration for Okta <Lifecycle status="beta" />
 
-Please complete the [setup SSO with Okta](/docs/cloud/manage-access/set-up-sso-okta) steps before configuring SCIM settings. When configuring SSO, ensure the `NameID` and `email` attributes are set up — these will be used to associate logins with the correct user. If using license mapping for groups, additionally configure the `groups` attribute. 
+Please complete the [setup SSO with Okta](/docs/cloud/manage-access/set-up-sso-okta) steps before configuring SCIM settings. When configuring SSO, ensure the `NameID` and `email` attributes are set up — these will be used to associate logins with the correct user. If you're using license mapping for groups, you need to additionally configure the `groups` attribute. 
 
 
 ### Set up dbt
