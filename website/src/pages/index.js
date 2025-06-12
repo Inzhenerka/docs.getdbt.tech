@@ -170,7 +170,7 @@ function Home() {
                 />
                 <Card
                   title="dbt Mesh"
-                  body="Mesh is a framework that helps organizations scale their teams and data assets effectively."
+                  body="dbt Mesh is a framework that helps organizations scale their teams and data assets effectively."
                   link="/docs/mesh/about-mesh"
                   icon="lineage"
                 />
@@ -182,13 +182,13 @@ function Home() {
                 />
                 <Card
                   title="dbt Insights"
-                  body="Insights in dbt empowers users to seamlessly explore and query data with an intuitive, context-rich interface."
+                  body="dbt Insights in dbt empowers users to seamlessly explore and query data with an intuitive, context-rich interface."
                   link="/docs/explore/dbt-insights"
                   icon="insights"
                 />
                 <Card
                   title="dbt Canvas"
-                  body="Canvas helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation."
+                  body="dbt Canvas helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation."
                   link="/docs/cloud/canvas"
                   icon="canvas"
                 />
@@ -200,7 +200,7 @@ function Home() {
                 />
                 <Card
                   title="dbt Catalog"
-                  body="Use Catalog to navigate and manage your projects within dbt to help you and other data developers, analysts, and consumers discover and leverage your dbt resources."
+                  body="Use dbt Catalog to navigate and manage your projects within dbt to help you and other data developers, analysts, and consumers discover and leverage your dbt resources."
                   link="/docs/explore/explore-projects"
                   icon="compass"
                 />
