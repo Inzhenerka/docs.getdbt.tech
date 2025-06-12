@@ -116,6 +116,8 @@ html[data-theme="dark"] {
   --ifm-table-cell-color: var(--color-green-blue);
 
   --ifm-link-color: var(--darkmode-link-color);
+
+  --docsearch-hit-background: var(--color-terminal-black-800);
 }
 
 /* Linked `code` tags visibility adjustment */
@@ -589,6 +591,10 @@ html[data-theme="dark"] svg[class^="darkToggleIcon_"] {
 
 .navbar-sidebar__close {
   margin-right: 0.75em;
+}
+
+.DocSearch-Hit-content-wrapper {
+  overflow: hidden;
 }
 
 /* navbar buttons */
