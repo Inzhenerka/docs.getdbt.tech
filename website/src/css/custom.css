@@ -182,7 +182,7 @@ table td {
 }
 
 
-html[data-theme="dark"] main .row .col:first-of-type a:hover {
+html[data-theme="dark"] main .row .col:first-of-type a:not(.lifecycle):hover {
   text-decoration: underline;
   color: var(--darkmode-link-color) !important;
 }

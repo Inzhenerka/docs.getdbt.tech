@@ -30,13 +30,14 @@ const statusColors = {
 };
 
 const fontColors = {
-  [MANAGED_PLUS]: '#030711',
-  [MANAGED]: '#030711',
-  [SELF_SERVICE]: '#030711',
-  [DEVELOPER]: '#030711',
-  preview: '#ffff',
-  beta: '#ffff',
-  ga: '#ffff',
+  [MANAGED_PLUS]: "#030711",
+  [MANAGED]: "#030711",
+  [SELF_SERVICE]: "#030711",
+  [DEVELOPER]: "#030711",
+  preview: "#030711",
+  ga: "#030711",
+  new: "#ffff",
+  beta: "#ffff",
 };
 
 // URL mapping for predefined lifecycle statuses. urls defined in ../lifeCycle/lifecycle-urls.js file so we can update them in one place
