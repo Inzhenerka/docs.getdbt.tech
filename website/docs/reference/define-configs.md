@@ -35,7 +35,7 @@ Configurations in your root dbt project have _higher_ precedence than configurat
 ## Combining configs
 
 Most configurations are "clobbered" or overwritten when applied hierarchically. Whenever a more specific value is available, it will completely replace the less specific value. Note that a few configs have different merge behavior:
-- [`tags`](/reference/resource-configs/tags) are additive. If a model has some tags configured in `dbt_project.yml`, and more tags applied in its `.sql` file, the final set of tags will include all of them.
+- [`tags`](/reference/resource-configs/tags) are additive. If a model has some tags configured in `dbt_project.yml`, and more tags are applied in its `.sql` file, the final set of tags will include all of them.
 - [`meta`](/reference/resource-configs/meta) dictionaries are merged (a more specific key-value pair replaces a less specific value with the same key).
 - [`pre-hook` and `post-hook`](/reference/resource-configs/pre-hook-post-hook) are also additive.
 - When using the [`freshness`](/reference/resource-configs/freshness) config for sources, note the following:
