@@ -64,7 +64,7 @@ If you're on an Enterprise-tier plan and have the correct [permissions](/docs/cl
 
 If you're on a Starter plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers. 
 
-Refer to [Self-service Starter account permissions](/docs/cloud/manage-access/self-service-permissions#licenses) for more information on the number of licenses included in the Starter plan.
+Refer to [Self-service Starter account permissions](/docs/cloud/manage-access/self-service-permissions#licenses) for more information on the number of each license type included in the Starter plan.
 
 You'll need to make two changes:
 
