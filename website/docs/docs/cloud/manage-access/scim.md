@@ -164,8 +164,8 @@ To use license management via SCIM, enable the feature under the **SCIM** sectio
 _We recommend that you complete the setup instructions for your identity provider prior to enabling this toggle in your dbt account. Once enabled, any existing license mappings in <Constant name="dbt_platform" /> will be ignored._
 
 The recommended steps for migrating to SCIM license mapping are as follows:
-1. Set up SCIM but keep toggle disabled so existing license mappings continue to work as expected.
-2. Configure license attributes in your IdP.
+1. Set up SCIM but keep the toggle disabled so existing license mappings continue to work as expected.
+2. Configure license attributes in your Identity Provider (IdP).
 3. Test that SCIM attributes are being used to set license type in <Constant name="dbt_platform" />.
 4. Enable the toggle to ignore existing license mappings so that SCIM is the source-of-truth for assigning licenses to users. 
 
