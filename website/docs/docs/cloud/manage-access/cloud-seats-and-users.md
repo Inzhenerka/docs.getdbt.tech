@@ -62,7 +62,11 @@ If you're on an Enterprise-tier plan and have the correct [permissions](/docs/cl
 
 <TabItem value="starter" label="Starter plans">
 
-If you're on a Starter plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers. You'll need to make two changes:
+If you're on a Starter plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers. 
+
+Refer to [Self-service Starter account permissions](/docs/cloud/manage-access/self-service-permissions#licenses) for more information on the number of licenses included in the Starter plan.
+
+You'll need to make two changes:
 
 - Adjust your developer user seat count, which manages the users invited to your <Constant name="cloud" /> project. 
 - Adjust your developer billing seat count, which manages the number of billable seats. 
