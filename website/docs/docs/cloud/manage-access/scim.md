@@ -137,7 +137,7 @@ To map the attributes that will sync with dbt:
      <Lightbox src="/img/docs/dbt-cloud/access-control/provision-entra-users.png" width="60%" title="Provision the Entra ID users." />
 4. Click the box for **Show advanced options** and then click **Edit attribute list for customappsso**.
     <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-attributes.png" width="60%" title="Click to edit the customappsso attributes." />
-5. Scroll to the bottom of the **Edit attribute list** window and there will be an empty field where you can add a new entry. Enter the following fields: 
+5. Scroll to the bottom of the **Edit attribute list** window and find an empty field where you can add a new entry with the following fields: 
     - **Name:** `emails[type eq "work"].primary`
     - **Type:** `Boolean`
     - **Required:** True
@@ -145,7 +145,7 @@ To map the attributes that will sync with dbt:
 6. Mark all of the fields listed in Step 10 below as `Required`.
     <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Mark the fields as required." />    
 7. Click **Save**
-8. Back on the **Attribute mapping** screen, click **Add new mapping** and fill out the fields with the following:
+8. Back on the **Attribute mapping** window, click **Add new mapping** and complete fields with the following:
     - **Mapping type:** `none`
     - **Default value if null (optional):** `True`
     - **Target attribute:** `emails[type eq "work"].primary`
