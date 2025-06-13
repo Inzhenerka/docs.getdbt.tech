@@ -85,6 +85,10 @@ sources:
       [enabled](/reference/resource-configs/enabled): true | false
       [event_time](/reference/resource-configs/event-time): my_time_field
       [meta](/reference/resource-configs/meta): {<dictionary>}
+      [freshness](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+        warn_after:  
+          count: positive_integer
+          period: minute | hour | day
 
     tables:
       - name: [<source-table-name>]
