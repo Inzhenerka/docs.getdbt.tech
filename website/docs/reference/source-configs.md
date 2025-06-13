@@ -309,7 +309,7 @@ sources:
 
 #### Configure source freshness
 
-Use a `freshness` block to define the acceptable amount of time between the most recent record and now, for a table to be considered "fresh". You can provide one or both of `warn_after` and `error_after` parameters. If neither is provided, then dbt will not calculate freshness snapshots for the tables in this source. For more information, see [freshness](/reference/resource-properties/freshness).
+Use a `freshness` block to define the acceptable amount of time between the most recent record and now for a table to be considered "fresh". You can provide one or both of `warn_after` and `error_after` parameters. If neither is provided, then dbt will not calculate freshness snapshots for the tables in this source. For more information, see [freshness](/reference/resource-properties/freshness).
 
 See the following example of a `dbt_project.yml` file using the `freshness` config:
 
