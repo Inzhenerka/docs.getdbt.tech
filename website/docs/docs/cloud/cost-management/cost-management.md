@@ -26,6 +26,7 @@ To configure the cost management tools, you must have the following:
 - Proper [privileges](https://docs.snowflake.com/en/user-guide/security-access-control-privileges) in Snowflake to create a user and assign them database access.
 - A supported data warehouse. Note: Only Snowflake is supported at this time. More warehouses coming soon!
 - A <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing).
+- Support for <Constant name="core" /> and the dbt Fusion engine is coming soon! Select features will be introduced in [v1.10](/docs/dbt-versions/core-upgrade/upgrading-to-v1.10) with many more coming in future versions.
 
 
 ## Set up in Snowflake
