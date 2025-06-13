@@ -41,7 +41,7 @@ Most configurations are "clobbered" or overwritten when applied hierarchically. 
 - When using the [`freshness`](/reference/resource-configs/freshness) config for sources, note the following:
     - The `freshness` config in the `schema.yml` file overrides the `freshness` config in the `dbt_project.yml` file. 
     - A more specific `dbt_project.yml` file overrides a `dbt_project.yml` file with a less specific configuration. 
-    - In a `schema.yml` file, more specific `freshness` config merges with less specific `freshness` config.
+    - In a `schema.yml` file, more specific `freshness` configs are merged with less specific `freshness` configs.
 
 ## The `+` prefix
 
