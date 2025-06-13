@@ -156,7 +156,7 @@ You can now begin assigning users to your SCIM app in Entra ID!
 
 ## Manage user licenses with SCIM
 
-You can manage user license assignments with SCIM groups in dbt. This is accomplished using an attribute in your IdP environment, rather than settings in dbt, to ensure accurate license assignment.
+You can manage user license assignments via SCIM with a user attribute in your IdP environment. This ensures accurate license assignment as users are provisioned in the IdP and onboarded into your dbt account.
 
 To use license management via SCIM, enable the feature under the **SCIM** section in the **Single sign-on** settings. This setting will enforce license type for a user based on their SCIM attribute and disable the license mapping and manual configuration set up in dbt.  
     <Lightbox src="/img/docs/dbt-cloud/access-control/scim-managed-licenses.png" width="60%" title="Enable SCIM managed user license distribution." />    
