@@ -125,32 +125,38 @@ To map the attributes that will sync with dbt:
 
 1. From the enteprise app **Overview** screen sidebar menu, click **Provisioning**. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning.png" width="60%" title="The Provisioning option on the sidebar." />
-
 2. From under **Manage**, again click **Provisioning**.
 3. Expand the **Mappings** section and click **Provision Microsoft Entra ID users**.
      <Lightbox src="/img/docs/dbt-cloud/access-control/provision-entra-users.png" width="60%" title="Provision the Entra ID users." />
-4. Make sure the following mappings are in place and delete any others:
-    - **UserName:** `userPrincipalName`
-    - **active:** `Switch([IsSoftDeleted], , "False", "True", "True", "False")`
-    - **emails[type eq "work"].value:** `userPrincipalName`
-    - **name.givenName:** `givenName`
-    - **name.familyName:** `surname`
-    - **externalid:** `mailNickname`
-    - **emails[type eq "work"].primary** (see next step)
-     <Lightbox src="/img/docs/dbt-cloud/access-control/attribute-list.png" width="60%" title="Edit the attributes so they match the list as shown." />
-5. Click **Add new mapping** and fill out the fields with the following:
+4. Click the box for **Show advanced options** and then click **Edit attribute list for customappsso**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-attributes.png" width="60%" title="Click to edit the customappsso attributes." />
+5. Scroll to the bottom of the **Edit attribute list** window and find an empty field where you can add a new entry with the following fields: 
+    - **Name:** `emails[type eq "work"].primary`
+    - **Type:** `Boolean`
+    - **Required:** True
+    <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-entry.png" width="60%" title="Add the new field to the entry list." />
+6. Mark all of the fields listed in Step 10 below as `Required`.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Mark the fields as required." />    
+7. Click **Save**
+8. Back on the **Attribute mapping** window, click **Add new mapping** and complete fields with the following:
     - **Mapping type:** `none`
     - **Default value if null (optional):** `True`
     - **Target attribute:** `emails[type eq "work"].primary`
     - **Match objects using this attribute:** `No`
     - **Matching precedence:** *Leave blank*
     - **Apply this mapping:** `Always`
-6. Click **Ok**
+9. Click **Ok**
     <Lightbox src="/img/docs/dbt-cloud/access-control/edit-attribute.png" width="60%" title="Edit the attribute as shown." />
-7. Back on the **Attribute mapping** screen, click the checkbox to **Show advanced options**
-    <Lightbox src="/img/docs/dbt-cloud/access-control/show-advanced-options.png" width="60%" title="Edit the advanced options." />
-8. Mark all of the fields from Step 5 as `Required` and click **Save**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Mark the fields as required." />    
+10. Make sure the following mappings are in place and delete any others:
+    - **UserName:** `userPrincipalName`
+    - **active:** `Switch([IsSoftDeleted], , "False", "True", "True", "False")`
+    - **emails[type eq "work"].value:** `userPrincipalName`
+    - **name.givenName:** `givenName`
+    - **name.familyName:** `surname`
+    - **externalid:** `mailNickname`
+    - **emails[type eq "work"].primary** 
+     <Lightbox src="/img/docs/dbt-cloud/access-control/attribute-list.png" width="60%" title="Edit the attributes so they match the list as shown." />
+
 
 You can now begin assigning users to your SCIM app in Entra ID!
 
