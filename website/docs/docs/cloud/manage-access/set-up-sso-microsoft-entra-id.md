@@ -150,6 +150,12 @@ To complete setup, follow the steps below in the <Constant name="cloud" /> appli
 
 <Snippet path="login_url_note" />
 
+### Additional configuration options
+
+**Include all groups** will retrieve all groups to which a user belongs from your identity provider.  For example, if Entra ID is configured with nested groups, Entra ID will supply groups to which the user directly belongs and groups under which those groups are nested.  When this option is disabled, only groups where the user has direct membership will be supplied.  This option is enabled by default.
+
+**Maximum number of groups to retrieve** provides a configurable limit to the number of groups to retrieve for users.  By default, this is set to 250 groups, but this number can be increased if users' groups memberships exceed that amount.
+
 ## Setting up RBAC
 Now you have completed setting up SSO with Entra ID, the next steps will be to set up
 [RBAC groups](/docs/cloud/manage-access/enterprise-permissions) to complete your access control configuration.
