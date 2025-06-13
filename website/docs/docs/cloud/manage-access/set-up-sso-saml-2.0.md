@@ -113,6 +113,12 @@ them to complete setup in <Constant name="cloud" />.
       </Expandable>
       <!-- vale on -->
 
+### Additional configuration options
+
+**Sign SAML AuthnRequest** will cause <Constant name="cloud" /> to sign SAML reqeusts sent to your identity provider when users attempt to login.  Metadata for configuring this in your identity provider can be downloaded from the value shown in **SAML Metadata URL**.  Leaving this disabled is recommended for most situations.
+
+**Attribute Mappings** provides a way to associate SAML attributes which <Constant name="cloud" /> needs with attributes your identity provider includes in SAML assertions.  The value must be a valid JSON object with keys of `email`, `first_name`, or `last_name` and values that are strings or lists of strings.  For example, if your identity provider is unable to include an 'email' attribute in assertions, but does include one called `EmailAddress`, then **Attribute Mappings** should be set to `{ "email": "EmailAddress" }`.  These mappings are only needed if you cannot configure attributes as specified in the instructions above.  If that can be done, the default value of `{}` is acceptable.
+
 ### Finish setup
 
 After creating the application, follow the instructions in the [<Constant name="cloud" /> Setup](#dbt-cloud-setup)
