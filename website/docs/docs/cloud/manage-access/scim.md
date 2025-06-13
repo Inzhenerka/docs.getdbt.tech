@@ -156,4 +156,36 @@ You can now begin assigning users to your SCIM app in Entra ID!
 
 ## Manage user licenses with SCIM
 
-You can manage user license assignments with SCIM groups using an attribute in your IdP environment.
+You can manage user license assignments with SCIM groups in dbt. This is accomplished using an attribute in your IdP environment, rather than settings in dbt, to ensure accurate license assignment.
+
+To use license management via SCIM, enable the feature under the **SCIM** section in the **Single sign-on** settings. This setting will enforce license type for a user based on their SCIM attribute and disable the license mapping and manual configuration set up in dbt.  
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-managed-licenses.png" width="60%" title="Enable SCIM managed user license distribution." />    
+
+### Add license type attribute for Okta 
+
+To add the attribute for license types to your Okta environment:
+
+1. From your Okta application, navigate to the **Provisioning** tab, scroll down to **Attribute Mappings**, and click **Go to Profile Editor**.
+2. Click **Add Attribute**.
+3. Configure the attribute fields as follows (the casing should match for the values of each):
+    - **Date type:** `string`
+    - **Display name:** `License Type`
+    - **Variable name:** `licenseType`
+    - **External name:** `licenseType`
+    - **External namespace:** `urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User`
+    - **Description:** An arbitrary string of your choosing.
+    - **Enum:** Check the box for **Define enumerated list of values**
+    - **Attribute members:** Add the initial attribute and then click **Add another** until each license type is defined. We recommend adding all of the values even if you don't use them today, so they'll be available in the future. 
+        | Display name | Value |
+        |--------------|-------|
+        | **IT**       | `it`  |
+        | **Analyst**  | `analyst` |
+        | **Developer**| `developer` |
+        | **Read Only**| `read_only` |
+    - **Attribute type:** Personal
+
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-license-attributes.png" width="60%" title="Enter the fields as they appear in the image. Ensure the cases match." /> 
+
+4. **Save** the attribute mapping.
+5. Users can now have license types set in their profiles and when they are being provisioned.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-license-provisioning.png" width="60%" title="Set the license type for the user in their Okta profile." /> 
