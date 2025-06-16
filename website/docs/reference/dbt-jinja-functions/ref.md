@@ -42,8 +42,6 @@ from {{ref('model_a')}}
 
 The `{{ ref }}` function returns a `Relation` object that has the same `table`, `schema`, and `name` attributes as the [\{\{ this \}\} variable](/reference/dbt-jinja-functions/this).
 
-- Note &mdash; Prior to dbt v1.6, the <Constant name="cloud_ide" /> returns `request` as the result of `{{ ref.identifier }}`.
-
 ## Advanced ref usage
 
 ### Versioned ref
