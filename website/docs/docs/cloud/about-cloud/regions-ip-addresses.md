@@ -43,7 +43,7 @@ There are two ways to view your <Constant name="cloud" /> IP addresses:
 
 ### Static IP addresses
 
-<Constant name="cloud" />, is hosted on AWS, Azure, and the Google Cloud Platform (GCP). While we can offer static URLs for access, we cannot provide a list of IP addresses to configure connections due to the nature of these cloud services.
+<Constant name="cloud" /> is hosted on AWS, Azure, and the Google Cloud Platform (GCP). While we can offer static URLs for access, we cannot provide a list of IP addresses to configure connections due to the nature of these cloud services.
 
 * Dynamic IP addresses &mdash; <Constant name="cloud" /> offers static URLs for streamlined access, but the dynamic nature of cloud services means the underlying IP addresses change occasionally. The cloud service provider manages the IP ranges and may change them according to their operational and security needs.
 
