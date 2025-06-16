@@ -30,9 +30,13 @@ This page explains how to use <Constant name="copilot" /> to:
 
 <CopilotEditCode/>
 
+## Build visual models
+
 <Constant name="copilot" /> seamlessly integrates with the [<Constant name="visual_editor" />](/docs/cloud/canvas), a drag-and-drop experience that helps you build your visual models using natural language prompts. Before you begin, make sure you can [access the <Constant name="visual_editor" />](/docs/cloud/use-canvas#access-canvas).
 
 <CopilotVE/>
+
+## Build queries
 
 Use <Constant name="copilot" /> to build queries in [<Constant name="query_page" />](/docs/explore/dbt-insights) with natural language prompts to seamlessly explore and query data with an intuitive, context-rich interface. Before you begin, make sure you can [access <Constant name="query_page" />](/docs/explore/access-dbt-insights).
 
