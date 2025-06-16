@@ -33,7 +33,9 @@ Moving to dbt Cloud (now called just <Constant name="cloud" />) made things smoo
 
 The cloud-based <Constant name="cloud" /> was a big step up, but even so, many of us still preferred to use our own dev environments. We like using our themes, our VS Code extensions, our terminals, but this would mean losing all the nice cloud features while developing. A sad trade-off.
 
-We've already been to <Constant name="cloud" /> platform and back to the terminal, and some problems remain. No matter where you were writing dbt, if you modified some model, and hadn't noticed you forgot to put a comma (because you are using trailing commas instead of leading commas, and they're harder to see, and I'm talking too much about the comma fight), you waited dbt to communicate with your DW, waited your cluster to start, and a minute later you got an error saying you should start using leading commas.
+We've already been to <Constant name="cloud" /> platform and back to the terminal, and some problems remain. Consider this all too common scenario when modifying a dbt model: forgetting a comma[1]. You don't learn your mistake until after dbt tries to run this model on your warehouse, but dbt can't do this until your cluster is turned on. So it's not until a full minute later that you get the feedback about your missing punctuation mark.
+
+[1]: because you are using trailing commas instead of leading commas, and they're harder to see, and I'm talking too much about the comma fight
 
 All this back-and-forth communication of dbt and the platform was slowing down your project.
 
