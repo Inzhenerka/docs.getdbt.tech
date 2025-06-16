@@ -21,7 +21,7 @@ Since the acquisition of SDF Labs by dbt Labs, I have been waiting for the day t
 
 ## The dbt developer experience in the pre-fusion-era
 
-If you've ever started a dbt project, chances are your journey began like mine did: cloning jaffle_shop, opening it in VS Code, and running dbt run for the first time (actually the second time, because I know you forgot to run `dbt deps` in the first one). It is like our initiation process, our ‘hello-world’.
+If you've ever started a dbt project, chances are your journey began like mine did: cloning `jaffle_shop`, opening it in VS Code, and running `dbt run` for the first time (actually the second time, because I know you forgot to run `dbt deps` in the first one). This is the dbt initiation process, our ‘hello-world’.
 
 You played around with staging models, the orders table, customers table. But let's be honest, the developer experience in that setup was always a bit... clunky.
 
