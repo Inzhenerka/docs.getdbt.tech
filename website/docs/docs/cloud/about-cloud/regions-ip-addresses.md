@@ -43,9 +43,9 @@ There are two ways to view your <Constant name="cloud" /> IP addresses:
 
 ### Static IP addresses
 
-<Constant name="cloud" />, like many cloud services, relies on underlying AWS cloud infrastructure for operations. While we can offer static URLs for access, we cannot provide a list of IP addresses to configure connections due to the nature of AWS cloud services.
+<Constant name="cloud" />, is hosted on AWS, Azure, and the Google Cloud Platform (GCP). While we can offer static URLs for access, we cannot provide a list of IP addresses to configure connections due to the nature of these cloud services.
 
-* Dynamic IP addresses &mdash; <Constant name="cloud" /> infrastructure uses Amazon Web Services (AWS). <Constant name="cloud" /> offers static URLs for streamlined access, but the dynamic nature of cloud services means the underlying IP addresses change occasionally. AWS manages the IP ranges and may change them according to their operational and security needs.
+* Dynamic IP addresses &mdash; <Constant name="cloud" /> offers static URLs for streamlined access, but the dynamic nature of cloud services means the underlying IP addresses change occasionally. The cloud service provider manages the IP ranges and may change them according to their operational and security needs.
 
 * Using hostnames for consistent access &mdash; To ensure uninterrupted access, we recommend that you use <Constant name="cloud" /> services using hostnames. Hostnames provide a consistent reference point, regardless of any changes in underlying IP addresses. We are aligning with an industry-standard practice employed by organizations such as Snowflake.
 
