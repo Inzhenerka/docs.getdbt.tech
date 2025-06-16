@@ -1,3 +1,20 @@
+<Tabs>
+<TabItem value="yml" label="Project file">
+
+<File name="dbt_project.yml">
+  
+```yaml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+      warn_after:  
+        count: positive_integer
+        period: minute | hour | day
+```
+  
+</File>
+</TabItem>
+<TabItem value="project" label="Model YAML">
 <File name='models/<filename>.yml'>
 
 ```yaml
@@ -34,8 +51,9 @@ sources:
 
         ...
 ```
-
 </File>
+</TabItem>
+</Tabs>
 
 ## Definition
 A freshness block is used to define the acceptable amount of time between the most recent record, and now, for a <Term id="table" /> to be considered "fresh".

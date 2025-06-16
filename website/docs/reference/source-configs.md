@@ -44,6 +44,10 @@ sources:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
     [+](/reference/resource-configs/plus-prefix)[event_time](/reference/resource-configs/event-time): my_time_field
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+      warn_after:  
+        count: positive_integer
+        period: minute | hour | day
     [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta):
       key: value
 
@@ -81,6 +85,10 @@ sources:
       [enabled](/reference/resource-configs/enabled): true | false
       [event_time](/reference/resource-configs/event-time): my_time_field
       [meta](/reference/resource-configs/meta): {<dictionary>}
+      [freshness](/reference/resource-properties/freshness):
+        warn_after:  
+          count: positive_integer
+          period: minute | hour | day
 
     tables:
       - name: [<source-table-name>]
@@ -164,6 +172,7 @@ The following examples show how to configure sources in your dbt project.
 &mdash; [Disable a single source from a package](#disable-a-single-source-from-a-package) <br />
 &mdash; [Configure a source with an `event_time`](#configure-a-source-with-an-event_time) <br />
 &mdash; [Configure meta to a source](#configure-meta-to-a-source) <br />
+&mdash; [Configure source freshness](#configure-source-freshness) <br />
 
 #### Disable all sources imported from a package
 To apply a configuration to all sources included from a [package](/docs/build/packages),
@@ -298,7 +307,27 @@ sources:
 ```
 </File>
 
+#### Configure source freshness
+
+Use a `freshness` block to define the acceptable amount of time between the most recent record and now for a table to be considered "fresh". You can provide one or both of `warn_after` and `error_after` parameters. If neither is provided, then dbt will not calculate freshness snapshots for the tables in this source. For more information, see [freshness](/reference/resource-properties/freshness).
+
+See the following example of a `dbt_project.yml` file using the `freshness` config:
+
+<File name="dbt_project.yml">
+  
+```yml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+      warn_after:  
+        count: 4
+        period: hour
+```
+
+</File>
+
 ## Example source configuration
+
 The following is a valid source configuration for a project with:
 * `name: jaffle_shop`
 * A package called `events` containing multiple source tables
