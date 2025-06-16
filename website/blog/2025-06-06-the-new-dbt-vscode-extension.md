@@ -53,7 +53,7 @@ It comes with a lot of features to streamline your work and make you more effici
 
 ### Catch SQL Errors in Real Time
 
-There was no question what I was picking first. No more waiting for your platform to debug your code for you. If you miswrite the name of a column, or CTE, or if you don't remember how to use a function, and pass wrong parameters, you catch those errors before you run anything.
+There was no question what I was picking first. No more waiting for your platform to debug your code for you. If you misspell a column name or goof up a function's order of parameters, you catch those errors before you run anything.
 
 This is because Fusion doesn't treat SQL code as just a string anymore; it really understands it. It also shows you some helpful information about the error.
 
