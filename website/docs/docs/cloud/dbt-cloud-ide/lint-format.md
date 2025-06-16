@@ -45,7 +45,7 @@ With the <Constant name="cloud_ide" />, you can seamlessly use [SQLFluff](https:
 - Works with Jinja and SQL, 
 - Comes with built-in [linting rules](https://docs.sqlfluff.com/en/stable/rules.html). You can also [customize](#customize-linting) your own linting rules.
 - Empowers you to [enable linting](#enable-linting) with options like **Lint** (displays linting errors and recommends actions) or **Fix** (auto-fixes errors in the <Constant name="cloud_ide" />).
-- Displays a **Code Quality** tab to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
+- Displays a **Code Quality** tab to view code errors, provides code quality visibility and management.
 
 :::info Ephemeral models not supported
 Linting doesn't support ephemeral models in dbt v1.5 and lower. Refer to the [FAQs](#faqs) for more info.
