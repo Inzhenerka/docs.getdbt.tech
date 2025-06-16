@@ -177,14 +177,17 @@ To learn more, read the docs on [state](/reference/node-selection/syntax#about-n
 
 ## Pro-tips for dbt Projects
 ### Limit the data processed when in development
-In a development environment, faster run times allow you to iterate your code more quickly. We frequently speed up our runs by using a pattern that limits data based on the [target](/reference/dbt-jinja-functions/target) name:
-```sql
-select
-*
-from event_tracking.events
-{% if target.name == 'dev' %}
-where created_at >= dateadd('day', -3, current_date)
-{% endif %}
+Leverage the [environment variable `DBT_CLOUD_INVOCATION_CONTEXT`](/docs/build/environment-variables#dbt-platform-context), which provides metadata about the execution context of dbt. The possible values include `prod`, `dev`, `staging`, and `ci`.
+
+Currently, the variable can be used in two places:
+
+- [`dbt_project.yml`](/reference/dbt_project.yml)
+- In an `is_production` [macro](https://github.com/dbt-labs/cost-optimization-data/blob/f5ee436e733d9b3453ffb20dafa406f0fe13bdbc/macros/is_production.sql)
+
+**Example usage**:
+
+```
+{% if env_var('DBT_CLOUD_INVOCATION_CONTEXT', 'dev') != 'prod' %}
 ```
 
 ### Use grants to manage privileges on objects that dbt creates
