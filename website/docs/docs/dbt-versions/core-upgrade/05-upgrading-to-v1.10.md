@@ -7,7 +7,7 @@ displayed_sidebar: "docs"
  
 ## Resources 
 
-- <Constant name="core" /> v1.10 changelog (coming soon)
+- <Constant name="core" /> [v1.10 changelog](https://github.com/dbt-labs/dbt-core/blob/1.10.latest/CHANGELOG.md)
 - [<Constant name="core" /> CLI Installation guide](/docs/core/installation-overview)
 - [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
 
