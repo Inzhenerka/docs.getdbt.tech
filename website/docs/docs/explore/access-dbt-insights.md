@@ -152,6 +152,15 @@ To access <Constant name="explorer" />, click on the **<Constant name="explorer"
 
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Explorer" />
 
+### Set Jinja environment
+
+Set the compilation environment for your Jinja to change how table references are rendered. This feature:
+- Supports "typed" environments marked as `Production`, `Staging`, and/or `Development`.
+- Enables you to point to staging environments for Semantic Layer queries (development environments not supported)
+- Still uses the individual user credentials, so users must have appropriate access to query `PROD` and `STG`. 
+
+<Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Set the environment for your Jinja context" />
+
 ## Bookmark your queries
 
 Insights offers a robust bookmark feature for quickly finding the queries you use most. There's also an option to share bookmarks with other dbt users (and have them share with you). Click the bookmark icon in a query to add it to your list!
