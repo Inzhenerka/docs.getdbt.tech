@@ -26,11 +26,13 @@ The following table outlines the configuration fields required to set up a catal
 | Field            | Required | Accepted values                                                                         |
 |------------------|----------|-----------------------------------------------------------------------------------------|
 | `name`           | yes      | Name of catalog integration                                                             |
-| `catalog_name`   | yes      | The name of the catalog integration in BigQuery. For example, `biglake_metastore`)|
-| `storage_uri`.   | yes      | `<bucket_name>`                                                                |
+| `catalog_name`   | yes      | The name of the catalog integration in BigQuery. For example, `biglake_metastore`).     |
+| `external_volume`| yes      | `gs://<bucket_name>`                                                                    |
 | `table_format`   | yes      | `iceberg`                                                                               |
 | `catalog_type`   | yes      | `biglake_metastore`                                                                     |
-| `file_format`    | optional      | `default`,`parquet`                                                                     |
+| `file_format`    | optional | `default`,`parquet`                                                                     |
+
+dbt has an additonal configuration: `storage_uri` that the user can use on the model configuration to override the catalog integration path to supply the entire `storage_uri` path directly.
 
 ### Configure catalog integration for managed Iceberg tables
 
@@ -44,7 +46,7 @@ catalogs:
     active_write_integration: biglake_metastore
     write_integrations:
       - name: biglake_metastore
-        storage_uri: mydbtbucket
+        external_volume: 'gs://mydbtbucket'
         table_format: iceberg
         catalog_type: biglake_metastore
 
@@ -57,7 +59,7 @@ catalogs:
 {{
     config(
         materialized='table',
-        catalog = biglake_metastore
+        catalog_name = biglake_metastore
 
     )
 }}
@@ -65,6 +67,7 @@ catalogs:
 select * from {{ ref('jaffle_shop_customers') }}
 
 ```
+
 
 3. Execute the dbt model with a `dbt run -s iceberg_model`.
 
@@ -77,11 +80,8 @@ BigQuery today does not support connecting to external Iceberg catalogs. In term
 
 ### Base location 
 
-BigQuery's DDL for creating iceberg tables requires that a fully qualified storage_uri be provided, including the object path. Once the user has provided the bucket name as the `storage_uri` in the catalog integration, dbt will manage the object path. The default behavior in dbt is to provide a object path, referred to dbt as the `base_location`, in the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`. 
-
-We recommend using the default behavior, but if you need to customize the resulting `base_location`, dbt allows users to configure the base_location with the `base_location_root` and `base_location_subpath`. 
-
-- If no inputs are provided, dbt will output for base_location `{{ bucket_name }}/_dbt/{{ schema }}/{{ model_name }}`
+BigQuery's DDL for creating iceberg tables requires that a fully qualified storage_uri be provided, including the object path. Once the user has provided the bucket name as the `external_volume` in the catalog integration, dbt will manage the storage_uri input. The default behavior in dbt is to provide a object path, referred to dbt as the `base_location`, in the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`.  We recommend using the default behavior, but if you need to customize the resulting `base_location`, dbt allows users to configure the base_location with the `base_location_root` and `base_location_subpath`. 
+- If no inputs are provided, dbt will output for base_location `{{ external_volumne }}/_dbt/{{ schema }}/{{ model_name }}`
 - If base_location_root = `foo`, dbt will output `{{ bucket_name }}/foo/{{ schema }}/{{ model_name }}`
 - If base_location_subpath = `bar`, dbt will output `{{ bucket_name }}/_dbt/{{ schema }}/{{ model_name }}/bar`
 - If base_location = `foo` and base_location_subpath = `bar`, dbt will output `{{ bucket_name }}/foo/{{ schema }}/{{ model_name }}/bar`
@@ -90,7 +90,7 @@ A theoretical (but not recommended) use case is re-using the `storage_uri` while
 
 #### Rationale
 
-By default, dbt manages `base_location` on behalf of users for ease of use. The `base_ location` parameter declares where to write the data within the Storage Bucket and without guardrails (i.e. if the user forgets to provide a base location root), it's possible for BigQuery to reuse the same path across multiple tables.  
+By default, dbt manages the full `storage_uri` on behalf of users for ease of use. The `base_ location` parameter declares where to write the data within the Storage Bucket and without guardrails (i.e. if the user forgets to provide a base location root), it's possible for BigQuery to reuse the same path across multiple tables.  
 
 This behavior could result in future technical debt because it will limit the ability to:
 
