@@ -652,6 +652,39 @@ models:
 
 </File>
 
+## Setting row access policies (available from dbt-snowflake 1.10.0-rc2)
+
+Configure [row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) on tables, views and dynamic tables by leveraging the `row_access_policy` config for models. The policy must already exist in Snowflake before you apply it to the model.
+
+<File name='models/<modelname>.sql'>
+
+```sql
+{{ config(
+    row_access_policy = 'my_database.my_schema.my_row_access_policy_name on (id)'
+) }}
+
+select ...
+
+```
+</File>
+
+## Configuring table tags (available from dbt-snowflake 1.10.0-rc2)
+
+To add tags to tables, views and dynamic tables, use the `table_tag` config. Note, the tag must already exist in Snowflake before you apply it.
+
+<File name='models/<modelname>.sql'>
+
+```sql
+{{ config(
+    table_tag = "my_tag_name = 'my_tag_value'"
+) }}
+
+select ...
+
+```
+
+</File>
+
 ## Secure views
 
 To create a Snowflake [secure view](https://docs.snowflake.net/manuals/user-guide/views-secure.html), use the `secure` config for view models. Secure views can be used to limit access to sensitive data. Note: secure views may incur a performance penalty, so you should only use them if you need them.
@@ -672,7 +705,6 @@ models:
 ```
 
 </File>
-
 
 ## Source freshness known limitation
 
