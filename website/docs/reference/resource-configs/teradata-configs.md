@@ -9,7 +9,7 @@ id: "teradata-configs"
 
   ```yaml
   seeds:
-    +quote_columns: false  #or `true` if you have csv column headers with spaces
+    +quote_columns: false  #or `true` if you have CSV column headers with spaces
   ```
 
 ## Models
