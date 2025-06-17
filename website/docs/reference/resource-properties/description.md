@@ -242,7 +242,7 @@ A user-defined description used to document:
 
 These descriptions are used in the documentation website rendered by dbt (refer to [the documentation guide](/docs/build/documentation) or [<Constant name="explorer" />](/docs/explore/explore-projects)). 
 
-Descriptions can include markdown, as well as the [`doc` jinja function](/reference/dbt-jinja-functions/doc).
+Descriptions can include markdown, as well as the [`doc` Jinja function](/reference/dbt-jinja-functions/doc).
 
 :::caution You may need to quote your YAML
 

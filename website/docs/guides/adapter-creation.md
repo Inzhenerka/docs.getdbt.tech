@@ -100,7 +100,7 @@ A set of *macros* responsible for generating SQL that is compliant with the targ
 
 #### Materializations
 
-A set of *materializations* and their corresponding helper macros defined in dbt using jinja and SQL. They codify for dbt how model files should be persisted into the database.
+A set of *materializations* and their corresponding helper macros defined in dbt using Jinja and SQL. They codify for dbt how model files should be persisted into the database.
 
 ### Adapter Architecture
 
@@ -467,7 +467,7 @@ This classmethod provides the adapter's canonical date function. This is not use
 
 ### Editing SQL logic
 
-dbt implements specific SQL operations using jinja macros. While reasonable defaults are provided for many such operations (like `create_schema`, `drop_schema`, `create_table`, etc), you may need to override one or more of macros when building a new adapter.
+dbt implements specific SQL operations using Jinja macros. While reasonable defaults are provided for many such operations (like `create_schema`, `drop_schema`, `create_table`, etc), you may need to override one or more of macros when building a new adapter.
 
 #### Required macros
 
