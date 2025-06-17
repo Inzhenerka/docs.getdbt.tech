@@ -14,19 +14,19 @@ dbt supports creating Iceberg tables for two of the BigQuery materializations:
 - [Table](/docs/build/materializations#table)
 - [Incremental](/docs/build/materializations#incremental)
 
-## Iceberg catalogs
+## Bigquery Iceberg catalogs
 
-BigQuery has support for Iceberg tables via their built-in catalog [BigLake Metastore](https://cloud.google.com/bigquery/docs/iceberg-tables#architecture) today. No setup is needed to access the BigLake Metastore. However, you will need to have a [Storage bucket and BigQuery required roles](https://cloud.google.com/bigquery/docs/iceberg-tables#create-iceberg-tables) configured prior to creating an Iceberg table. 
+BigQuery supports Iceberg tables via its built-in catalog [BigLake Metastore](https://cloud.google.com/bigquery/docs/iceberg-tables#architecture) today. No setup is needed to access the BigLake Metastore. However, you will need to have a [storage bucket and the required BigQuery roles](https://cloud.google.com/bigquery/docs/iceberg-tables#create-iceberg-tables) configured prior to creating an Iceberg table. 
 
 
-## dbt Catalog Integration Configurations for BigQuery
+### dbt catalog integration configurations
 
 The following table outlines the configuration fields required to set up a catalog integration for [Iceberg tables in Snowflake](/reference/resource-configs/snowflake-configs#iceberg-table-format).
 
 | Field            | Required | Accepted values                                                                         |
 |------------------|----------|-----------------------------------------------------------------------------------------|
 | `name`           | yes      | Name of catalog integration                                                             |
-| `catalog_name`   | yes      | The name of the catalog integration in BigQuery. For example, `biglake_metastore`).     |
+| `catalog_name`   | yes      | The name of the catalog integration in BigQuery. For example, `biglake_metastore`.     |
 | `external_volume`| yes      | `gs://<bucket_name>`                                                                    |
 | `table_format`   | yes      | `iceberg`                                                                               |
 | `catalog_type`   | yes      | `biglake_metastore`                                                                     |
@@ -51,8 +51,9 @@ catalogs:
         catalog_type: biglake_metastore
 
 ```
-2. Apply the catalog configuration at either the model, folder, or project level. <br />
-<br />An example of `iceberg_model.yml`:
+2. Apply the catalog configuration at either the model, folder, or project level:
+
+<File name='iceberg_model.yml'>
 
 ```yaml
 
@@ -68,6 +69,8 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 ```
 
+</File>
+
 
 3. Execute the dbt model with a `dbt run -s iceberg_model`.
 
@@ -80,17 +83,17 @@ BigQuery today does not support connecting to external Iceberg catalogs. In term
 
 ### Base location 
 
-BigQuery's DDL for creating iceberg tables requires that a fully qualified storage_uri be provided, including the object path. Once the user has provided the bucket name as the `external_volume` in the catalog integration, dbt will manage the storage_uri input. The default behavior in dbt is to provide a object path, referred to dbt as the `base_location`, in the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`.  We recommend using the default behavior, but if you need to customize the resulting `base_location`, dbt allows users to configure the base_location with the `base_location_root` and `base_location_subpath`. 
+BigQuery's DDL for creating iceberg tables requires that a fully qualified storage_uri be provided, including the object path. Once the user has provided the bucket name as the `external_volume` in the catalog integration, dbt will manage the storage_uri input. The default behavior in dbt is to provide an object path, referred to in dbt as the `base_location`, in the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`.  We recommend using the default behavior, but if you need to customize the resulting `base_location`, dbt allows users to configure `base_location` with the `base_location_root` and `base_location_subpath`. 
 - If no inputs are provided, dbt will output for base_location `{{ external_volumne }}/_dbt/{{ schema }}/{{ model_name }}`
 - If base_location_root = `foo`, dbt will output `{{ bucket_name }}/foo/{{ schema }}/{{ model_name }}`
 - If base_location_subpath = `bar`, dbt will output `{{ bucket_name }}/_dbt/{{ schema }}/{{ model_name }}/bar`
 - If base_location = `foo` and base_location_subpath = `bar`, dbt will output `{{ bucket_name }}/foo/{{ schema }}/{{ model_name }}/bar`
 
-A theoretical (but not recommended) use case is re-using the `storage_uri` while maintaining isolation across development and production environments. We recommend against this as storage permissions should configured on the external volume and underlying storage, not paths that any analytics engineer can modify.
+A theoretical (but not recommended) use case is re-using the `storage_uri` while maintaining isolation across development and production environments. We recommend against this as storage permissions should be configured on the external volume and underlying storage, not paths that any analytics engineer can modify.
 
 #### Rationale
 
-By default, dbt manages the full `storage_uri` on behalf of users for ease of use. The `base_ location` parameter declares where to write the data within the Storage Bucket and without guardrails (i.e. if the user forgets to provide a base location root), it's possible for BigQuery to reuse the same path across multiple tables.  
+By default, dbt manages the full `storage_uri` on behalf of users for ease of use. The `base_location` parameter specifies the location within the storage bucket where the data will be written. Without guardrails (for example, if the user forgets to provide a base location root), it's possible for BigQuery to reuse the same path across multiple tables.  
 
 This behavior could result in future technical debt because it will limit the ability to:
 
