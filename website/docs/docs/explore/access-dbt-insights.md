@@ -175,7 +175,6 @@ Insights offers a robust bookmark feature for quickly finding the queries you us
 ## Considerations 
 - <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
 - Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
-- Coming soon: The ability to select the environment you use to resolve your `refs`.
 
 <!-- this can move to another page -->
 
