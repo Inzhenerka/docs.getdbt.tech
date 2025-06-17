@@ -152,6 +152,8 @@ To access <Constant name="explorer" />, click on the **<Constant name="explorer"
 
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Explorer" />
 
+### Set Jinja context
+
 ## Bookmark your queries
 
 Insights offers a robust bookmark feature for quickly finding the queries you use most. There's also an option to share bookmarks with other dbt users (and have them share with you). Click the bookmark icon in a query to add it to your list!
