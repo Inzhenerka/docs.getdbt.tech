@@ -9,7 +9,7 @@ Now that you've seen how we style our dbt projects, it's time to build your own.
 
 ## Pre-commit hooks
 
-You can use [pre-commit hooks](https://pre-commit.com/) to automatically check your code for style violations (and often fix them automagically) before it's committed. This is a great way to make sure your style guide is followed by all contributors. We recommend implementing this once you've settled on and published your style guide, and your codebase is conforming to it. This will ensure that all future commits follow the style guide. You can find an excellent set of open source pre-commit hooks for dbt from the community [here in the dbt-checkpoint project](https://github.com/dbt-checkpoint/dbt-checkpoint).
+You can use [pre-commit hooks](https://pre-commit.com/) to automatically check your code for style violations (and often fix them automagically) before you commit. This is a great way to make sure all contributors follow your style guide. We recommend implementing this once you've settled on and published your style guide, and your codebase is conforming to it. This will ensure that all future commits follow the style guide. You can find an excellent set of open source pre-commit hooks for dbt from the community [here in the dbt-checkpoint project](https://github.com/dbt-checkpoint/dbt-checkpoint).
 
 ## dbt Project Evaluator
 
