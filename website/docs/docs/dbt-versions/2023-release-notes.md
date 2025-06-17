@@ -1008,7 +1008,7 @@ Archived release notes for <Constant name="cloud" /> from 2023
     - Reliability improvements – Improved error handling that previously put IDE in a bad state
     - Corrected the list of dropdown options for the Build button
     - Adjusted startup page duration
-    - Added code snippets for `unique` and `not_null` tests for yml files
+    - Added code snippets for `unique` and `not_null` tests for YAML files
     - Added code snippets for metrics based on environment dbt versions
     - Changed “commit and push” to “commit and sync” to better reflect the action
     - Improved error message when saving or renaming files to duplicate names
