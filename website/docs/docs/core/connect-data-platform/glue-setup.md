@@ -843,7 +843,7 @@ In many cases, you may need to run you dbt jobs to read from another AWS account
 
 Review the following link https://repost.aws/knowledge-center/glue-tables-cross-accounts to set up access policies in source and target accounts
 
-Add the following `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` to your conf in the DBT profile, as such, you can have multiple outputs for each of the accounts that you have access to.
+Add the following `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` to your conf in the dbt profile, as such, you can have multiple outputs for each of the accounts that you have access to.
 
 Note: The access cross-accounts need to be within the same AWS Region
 #### Profile config example
