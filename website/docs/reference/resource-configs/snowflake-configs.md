@@ -652,7 +652,7 @@ models:
 
 </File>
 
-## Setting row access policies
+## Setting row access policies (available from dbt-snowflake 1.10.0-rc2)
 
 Configure [row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) on tables, views and dynamic tables by leveraging the `row_access_policy` config for models. The policy must already exist in Snowflake before you apply it to the model.
 
@@ -660,7 +660,7 @@ Configure [row access policies](https://docs.snowflake.com/en/user-guide/securit
 
 ```sql
 {{ config(
-    row_access_policy = 'my_row_access_policy_name on (id)'
+    row_access_policy = 'my_database.my_schema.my_row_access_policy_name on (id)'
 ) }}
 
 select ...
@@ -668,7 +668,7 @@ select ...
 ```
 </File>
 
-## Configuring table tags
+## Configuring table tags (available from dbt-snowflake 1.10.0-rc2)
 
 To add tags to tables, views and dynamic tables, use the `table_tag` config. Note, the tag must already exist in Snowflake before you apply it.
 
