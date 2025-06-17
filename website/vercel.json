@@ -39,8 +39,8 @@
   ],
   "redirects": [
     {
-      "source": "/docs/cloud/account-integrations?ai-integration=azure#ai-integrations",
-      "destination": "/docs/cloud/enable-dbt-copilot#ai-integrations",
+      "source": "/docs/cloud/account-integrations#ai-integrations",
+      "destination": "docs/cloud/enable-dbt-copilot#ai-integrations",
       "permanent": true
     },
     {
