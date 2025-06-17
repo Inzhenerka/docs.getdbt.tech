@@ -7,7 +7,7 @@ id: "run"
 
 ## Overview
 
-`dbt run` executes compiled sql model files against the current `target`
+`dbt run` executes compiled SQL model files against the current `target`
 database. dbt connects to the target database and runs the relevant SQL required
 to materialize all data models using the specified <Term id="materialization" /> strategies.
 Models are run in the order defined by the dependency graph generated during

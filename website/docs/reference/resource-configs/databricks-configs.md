@@ -1012,7 +1012,7 @@ The following table summarizes our configuration support:
 | COMMENT | [`description`](https://docs.getdbt.com/reference/resource-properties/description) | MV/ST |
 | [TBLPROPERTIES](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html#tblproperties) | `tblproperties` | MV/ST |
 | [SCHEDULE CRON](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-create-materialized-view.html#parameters) | `schedule: { 'cron': '\<cron schedule\>', 'time_zone_value': '\<time zone value\>' }` | MV/ST |
-| query | defined by your model sql | on_configuration_change for MV only |
+| query | defined by your model SQL | on_configuration_change for MV only |
 
 <File name='mv_example.sql'>
 

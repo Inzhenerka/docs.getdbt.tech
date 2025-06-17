@@ -143,7 +143,7 @@ select
   country,  -- categorical dimension
   sum(revenue_usd) -- measure
 from
-  snowflake.fact_transactions  -- sql table
+  snowflake.fact_transactions  -- SQL table
 group by metric_time_day, country  -- dimensions
   ```
 
