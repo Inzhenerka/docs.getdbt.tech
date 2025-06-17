@@ -156,7 +156,7 @@ To access <Constant name="explorer" />, click on the **<Constant name="explorer"
 
 Set the compilation environment for your Jinja to change how table references are rendered. This feature:
 - Supports "typed" environments marked as `Production`, `Staging`, and/or `Development`.
-- Enables you to point to staging environments for Semantic Layer queries (development environments not supported)
+- Enables you to point to staging environments for Semantic Layer queries (development environments not supported).
 - Still uses the individual user credentials, so users must have appropriate access to query `PROD` and `STG`. 
 
 <Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Set the environment for your Jinja context" />
