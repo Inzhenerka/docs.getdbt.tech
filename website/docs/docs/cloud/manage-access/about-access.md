@@ -59,7 +59,7 @@ The permissions available depends on whether you're on an [Enterprise-tier](/doc
 There are three default groups available as soon as you create your <Constant name="cloud" /> account (the person who created the account is added to all three automatically):
 
 - **Owner:** This group is for individuals responsible for the entire account and will give them elevated account admin privileges. You cannot change the permissions. 
-- **Member:** This group is for the general members of your organization, who will also have full access to the account. You cannot change the permissions. By default, <Constant name="cloud" /> adds new users to this group.
+- **Member:** This group is for the general members of your organization. Default permissions are broad, restricting only access to features that can alter billing or security. By default, <Constant name="cloud" /> adds new users to this group.
 - **Everyone:** A general group for all members of your organization. Customize the permissions to fit your organizational needs. By default, <Constant name="cloud" /> adds new users to this group.
 
 Default groups are automatically provisioned for all accounts to simplify the initial set up. We recommend  creating your own organizational groups so you can customize the permissions. Once you create your own groups, you can delete the default groups.
@@ -197,6 +197,10 @@ They can now configure development credentials. The `Production` environment is 
 </Expandable>
 
 With RBAC configured, you now have granular control over user access to features across <Constant name="cloud" />.
+
+### SCIM license management
+
+As part of the SSO configuration for supported IdPs, you can also configure the [System for Cross-Domain Identity Management (SCIM)](/docs/cloud/manage-access/scim) settings to add a layer of security to your user lifecycle management. As part of this process, you can integrate user license distribution into the user provisioning process through your IdP. See the [SCIM license management instructions](/docs/cloud/manage-access/scim#manage-user-licenses-with-scim) for more information.
 
 ## FAQs
 
