@@ -6,7 +6,7 @@ description: "Snowflake Configurations - Read this in-depth guide to learn about
 
 ## Iceberg table format
 
-Our Snowflake Iceberg table content has moved to a [new page!](/docs/mesh/iceberg/snowflake-iceberg-support).
+Our Snowflake Iceberg table content has moved to a [new page](/docs/mesh/iceberg/snowflake-iceberg-support)!
 
 ## Dynamic tables
 
@@ -48,7 +48,7 @@ Dynamic tables are supported with the following configuration parameters:
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'SQL config', value: 'config', },
   ]
 }>
 
@@ -125,7 +125,7 @@ models:
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'SQL config', value: 'config', },
   ]
 }>
 
@@ -562,14 +562,15 @@ The default warehouse that dbt uses can be configured in your [Profile](/docs/co
 <Tabs
   defaultValue="dbt_project.yml"
   values={[
-    { label: 'YAML code', value: 'dbt_project.yml', },
-    { label: 'SQL code', value: 'models/events/sessions.sql', },
+    { label: 'Project file', value: 'dbt_project.yml', },
+    { label: 'Property file', value: 'models/my_model.yml', },
+    { label: 'SQL config', value: 'models/events/sessions.sql', },
     ]}
 >
 
 <TabItem value="dbt_project.yml">
 
-The example config below changes the warehouse for a group of models with a config argument in the yml.
+The following example changes the warehouse for a group of models with a config argument in the YAML.
 
 <File name='dbt_project.yml'>
 
@@ -580,25 +581,39 @@ version: 1.0.0
 ...
 
 models:
-  +snowflake_warehouse: "EXTRA_SMALL"    # use the `EXTRA_SMALL` warehouse for all models in the project...
+  +snowflake_warehouse: "EXTRA_SMALL"    # default Snowflake virtual warehouse for all models in the project.
   my_project:
     clickstream:
-      +snowflake_warehouse: "EXTRA_LARGE"    # ...except for the models in the `clickstream` folder, which will use the `EXTRA_LARGE` warehouse.
-
+      +snowflake_warehouse: "EXTRA_LARGE"    # override the default Snowflake virtual warehouse for all models under the `clickstream` directory.
 snapshots:
   +snowflake_warehouse: "EXTRA_LARGE"    # all Snapshot models are configured to use the `EXTRA_LARGE` warehouse.
 ```
 
 </File>
 </TabItem>
+<TabItem value="models/my_model.yml">
 
+The following example overrides the Snowflake warehouse for a single model using a config argument in the property file.
+
+<File name='models/my_model.yml'>
+
+```yaml
+models:
+  - name: my_model
+    config:
+      snowflake_warehouse: "EXTRA_LARGE"    # override the Snowflake virtual warehouse just for this model
+```
+
+</File>
+</TabItem>
 <TabItem value="models/events/sessions.sql">
 
-The example config below changes the warehouse for a single model with a config() block in the SQL model.
+The following example changes the warehouse for a single model with a config() block in the SQL model.
 
 <File name='models/events/sessions.sql'>
 
 ```sql
+# override the Snowflake virtual warehouse for just this model
 {{
   config(
     materialized='table',
