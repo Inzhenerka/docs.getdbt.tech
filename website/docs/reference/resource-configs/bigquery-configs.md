@@ -564,7 +564,7 @@ If no `partitions` configuration is provided, dbt will instead:
 When building your model SQL, you can take advantage of the introspection performed
 by dbt to filter for only _new_ data. The maximum value in the partitioned field in the destination table
 will be available using the `_dbt_max_partition` BigQuery scripting variable. **Note:**
-this is a BigQuery SQL variable, not a dbt Jinja variable, so no jinja brackets are
+this is a BigQuery SQL variable, not a dbt Jinja variable, so no Jinja brackets are
 required to access this variable.
 
 **Example model SQL:**

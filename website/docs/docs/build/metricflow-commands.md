@@ -529,7 +529,7 @@ limit 10
 
 <TabItem value="eg7" label=" Export to CSV">
  
-Add the `--csv file_name.csv` flag to export the results of your query to a csv. The `--csv` flag is available in dbt Core only and not supported in <Constant name="cloud" />.
+Add the `--csv file_name.csv` flag to export the results of your query to a CSV. The `--csv` flag is available in dbt Core only and not supported in <Constant name="cloud" />.
 
 **Query**
 
