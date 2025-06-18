@@ -654,7 +654,7 @@ models:
 
 :::info Adapter information
 
-Starting from dbt-snowflake 1.10.0, you can set [row access policies](/reference/resource-configs/snowflake-configs#setting-row-access-policies) and [configuring table tags](/reference/resource-configs/snowflake-configs#configuring-table-tags). 
+Starting from dbt-snowflake 1.10.0, you can set [row access policies](/reference/resource-configs/snowflake-configs#setting-row-access-policies). 
 
 :::
 
