@@ -85,7 +85,7 @@ BigQuery today does not support connecting to external Iceberg catalogs. In term
 
 BigQuery's DDL for creating iceberg tables requires that a fully qualified storage_uri be provided, including the object path. Once the user has provided the bucket name as the `external_volume` in the catalog integration, dbt will manage the storage_uri input. The default behavior in dbt is to provide an object path, referred to in dbt as the `base_location`, in the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`.  We recommend using the default behavior, but if you need to customize the resulting `base_location`, dbt allows users to configure `base_location` with the `base_location_root` and `base_location_subpath`. 
 - If no inputs are provided, dbt will output for base_location `{{ external_volumne }}/_dbt/{{ schema }}/{{ model_name }}`
-- If base_location_root = `foo`, dbt will output `{{ bucket_name }}/foo/{{ schema }}/{{ model_name }}`
+- If base_location_root = `foo`, dbt will output `{{ external_volumne }}/foo/{{ schema }}/{{ model_name }}`
 - If base_location_subpath = `bar`, dbt will output `{{ bucket_name }}/_dbt/{{ schema }}/{{ model_name }}/bar`
 - If base_location = `foo` and base_location_subpath = `bar`, dbt will output `{{ bucket_name }}/foo/{{ schema }}/{{ model_name }}/bar`
 
