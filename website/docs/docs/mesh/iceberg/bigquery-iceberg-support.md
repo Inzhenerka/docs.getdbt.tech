@@ -5,7 +5,7 @@ sidebar_label: "BigQuery Iceberg support"
 description: Understand BigQuery support for Apache Iceberg.
 ---
 
-dbt supports materializing Iceberg tables on BigQuery via the catalog integration. 
+dbt supports materializing Iceberg tables on BigQuery via the catalog integration, starting with the dbt-bigquery 1.10 release.
 
 ## Creating Iceberg Tables
 
