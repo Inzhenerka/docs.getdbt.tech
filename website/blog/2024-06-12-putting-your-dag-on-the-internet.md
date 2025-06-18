@@ -72,7 +72,7 @@ def model(dbt, session: snowpark.Session):
 ```
 
 
-The result is a model with some json I can parse, for example, in a SQL model to extract some information: 
+The result is a model with some JSON I can parse, for example, in a SQL model to extract some information: 
 
 
 ```sql
