@@ -12,7 +12,7 @@ With Hybrid projects, your organization can adopt complementary <Constant name="
 </IntroText>
 
 :::tip Available in public preview
-Hybrid project is available in public preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing).
+Hybrid projects is available in public preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing).
 :::
 
 <Constant name="core" /> users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on &mdash; into <Constant name="cloud" /> after executing a run in the <Constant name="core" /> command line interface (CLI), which helps:
