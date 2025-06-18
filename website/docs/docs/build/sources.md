@@ -9,7 +9,7 @@ search_weight: "heavy"
 ## Related reference docs
 * [Source properties](/reference/source-properties)
 * [Source configurations](/reference/source-configs)
-* [`{{ source() }}` jinja function](/reference/dbt-jinja-functions/source)
+* [`{{ source() }}` Jinja function](/reference/dbt-jinja-functions/source)
 * [`source freshness` command](/reference/commands/source)
 
 ## Using sources

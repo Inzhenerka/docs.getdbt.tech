@@ -2,7 +2,7 @@
 title: "About statement blocks"
 sidebar_label: "statement blocks"
 id: "statement-blocks"
-description: "SQL queries that hit database and return results to your jinja context."
+description: "SQL queries that hit database and return results to your Jinja context."
 ---
 
 :::tip Recommendation

@@ -51,7 +51,7 @@ unit_tests:
       macros:
         is_incremental: true | false
         dbt_utils.current_timestamp: <string>
-        # ... any other jinja function from https://docs.getdbt.com/reference/dbt-jinja-functions
+        # ... any other Jinja function from https://docs.getdbt.com/reference/dbt-jinja-functions
         # ... any other context property
       vars: {dictionary}
       env_vars: {dictionary}
