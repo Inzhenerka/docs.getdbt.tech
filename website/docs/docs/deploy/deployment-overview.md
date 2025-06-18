@@ -125,7 +125,7 @@ Learn how to use <Constant name="cloud" />'s features to help your team ship tim
 </div> <br />
 
 
-## Hybrid projects <Lifecycle status="managed" />
+## Hybrid projects <Lifecycle status="managed" /> <Lifecycle status="Preview"/>
 
 <div className="grid--3-col">
 
