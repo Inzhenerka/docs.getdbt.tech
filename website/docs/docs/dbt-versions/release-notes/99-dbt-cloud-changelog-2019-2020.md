@@ -419,7 +419,7 @@ This version adds some new permission sets, and a new release candidate of dbt.
 
 #### Fixed
 
-- Removed .sql from csv download filename
+- Removed .sql from CSV download filename
 - Fixed breaking JobDefinition API with new param custom_branch_only
 - Fixed <Constant name="cloud_ide" /> query table column heading casing
 
