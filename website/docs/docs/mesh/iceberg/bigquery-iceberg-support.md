@@ -60,7 +60,7 @@ catalogs:
 {{
     config(
         materialized='table',
-        catalog_name = biglake_metastore
+        catalog_name = my_bigquery_iceberg_catalog
 
     )
 }}
