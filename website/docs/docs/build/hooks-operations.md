@@ -1,6 +1,6 @@
 ---
 title: "Hooks and operations"
-description: "Read this tutorial to learn how to use hooks and operations when building in dbt."
+description: "Customize dbt workflows using hooks and operations."
 id: "hooks-operations"
 ---
 
@@ -40,8 +40,6 @@ Hooks are snippets of SQL that are executed at different times:
 
 Hooks are a more-advanced capability that enable you to run custom SQL, and leverage database-specific actions, beyond what dbt makes available out-of-the-box with standard materializations and configurations.
 
-<Snippet path="hooks-to-grants" />
-
 If (and only if) you can't leverage the [`grants` resource-config](/reference/resource-configs/grants), you can use `post-hook` to perform more advanced workflows:
 
 * Need to apply `grants` in a more complex way, which the dbt Core `grants` config doesn't (yet) support.
@@ -71,6 +69,41 @@ You can use hooks to provide database-specific functionality not available out-o
 ### Calling a macro in a hook
 
 You can also use a [macro](/docs/build/jinja-macros#macros) to bundle up hook logic. Check out some of the examples in the reference sections for [on-run-start and on-run-end hooks](/reference/project-configs/on-run-start-on-run-end) and [pre- and post-hooks](/reference/resource-configs/pre-hook-post-hook).
+
+<File name='models/<model_name>.sql'>
+
+```sql
+{{ config(
+    pre_hook=[
+      "{{ some_macro() }}"
+    ]
+) }}
+```
+
+</File>
+
+<File name='models/properties.yml'>
+
+```yaml
+models:
+  - name: <model_name>
+    config:
+      pre_hook:
+        - "{{ some_macro() }}"
+```
+
+</File>
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  <project_name>:
+    +pre-hook:
+      - "{{ some_macro() }}"
+```
+
+</File>
 
 ## About operations
 
@@ -104,7 +137,7 @@ To invoke this macro as an operation, execute `dbt run-operation grant_select --
 
 ```
 $ dbt run-operation grant_select --args '{role: reporter}'
-Running with dbt=0.16.1
+Running with dbt=1.6.0
 Privileges granted
 
 ```
@@ -116,7 +149,7 @@ Full usage docs for the `run-operation` command can be found [here](/reference/c
 
 These examples from the community highlight some of the use-cases for hooks and operations!
 
-* [In-depth discussion of granting privileges using hooks and operations, for dbt Core versions prior to 1.2](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
+* [In-depth discussion of granting privileges using hooks and operations, for <Constant name="core" /> versions prior to 1.2](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
 * [Staging external tables](https://github.com/dbt-labs/dbt-external-tables)
 * [Performing a zero copy clone on Snowflake to reset a dev environment](https://discourse.getdbt.com/t/creating-a-dev-environment-quickly-on-snowflake/1151/2)
 * [Running `vacuum` and `analyze` on a Redshift warehouse](https://github.com/dbt-labs/redshift/tree/0.2.3/#redshift_maintenance_operation-source)

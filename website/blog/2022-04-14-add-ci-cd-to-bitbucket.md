@@ -1,5 +1,5 @@
 ---
-title: "Slim CI/CD with Bitbucket Pipelines"
+title: "Slim CI/CD with Bitbucket Pipelines for dbt Core"
 description: "How to set up slim CI/CD outside of dbt Cloud"
 slug: slim-ci-cd-with-bitbucket-pipelines
 
@@ -10,7 +10,14 @@ hide_table_of_contents: false
 
 date: 2022-05-06
 is_featured: true
+keywords:
+  - dbt core pipeline, slim ci pipeline, slim cd pipeline, bitbucket
 ---
+
+
+:::info Set up CI/CD with dbt Cloud
+This blog is specifically tailored for dbt Core users. If you're using dbt Cloud and your Git provider doesn't have a native dbt Cloud integration (like BitBucket), follow the [Customizing CI/CD with custom pipelines guide](/guides/custom-cicd-pipelines?step=3) to set up CI/CD.
+:::
 
 Continuous Integration (CI) sets the system up to test everyone’s pull request before merging. Continuous Deployment (CD) deploys each approved change to production. “Slim CI” refers to running/testing only the changed code, [thereby saving compute](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603). In summary, CI/CD automates dbt pipeline testing and deployment.
 
@@ -190,7 +197,7 @@ Reading the file over, you can see that we:
 
 In summary, anytime anything is pushed to main, we’ll ensure our production database reflects the dbt transformation, and we’ve saved the resulting artifacts to defer to.
 
-> ❓ **What are artifacts and why should I defer to them?** dbt artifacts are metadata of the last run - what models and tests were defined, which ones ran successfully, and which failed. If a future dbt run is set to ***defer*** to this metadata, it means that it can select models and tests to run based on their state, including and especially their difference from the reference metadata. See [Artifacts](https://docs.getdbt.com/reference/artifacts/dbt-artifacts), [Selection methods: “state”](https://docs.getdbt.com/reference/node-selection/methods#the-state-method), and [Caveats to state comparison](https://docs.getdbt.com/reference/node-selection/state-comparison-caveats) for details.
+> ❓ **What are artifacts and why should I defer to them?** dbt artifacts are metadata of the last run - what models and tests were defined, which ones ran successfully, and which failed. If a future dbt run is set to ***defer*** to this metadata, it means that it can select models and tests to run based on their state, including and especially their difference from the reference metadata. See [Artifacts](https://docs.getdbt.com/reference/artifacts/dbt-artifacts), [Selection methods: “state”](https://docs.getdbt.com/reference/node-selection/methods#state), and [Caveats to state comparison](https://docs.getdbt.com/reference/node-selection/state-comparison-caveats) for details.
 
 ### Slim Continuous Integration: Retrieve the artifacts and do a state-based run
 

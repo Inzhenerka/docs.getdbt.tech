@@ -35,18 +35,12 @@ In both cases, `test_type` checks a property of the test itself. These are forms
 
 ### Indirect selection
 
-<VersionBlock firstVersion="1.5" >
-
 <IndirSelect features={'/snippets/indirect-selection-definitions.md'}/>
-
-</VersionBlock>
 
 <!--tabs for eager mode, cautious mode, empty, and buildable mode -->
 <!--Tabs for 1.5+ -->
 
 ### Indirect selection examples
-
-<VersionBlock firstVersion="1.5">
 
 To visualize these methods, suppose you have `model_a`, `model_b`, and `model_c` and associated data tests. The following illustrates which tests will be run when you execute `dbt build` with the various indirect selection modes:
 
@@ -115,8 +109,6 @@ dbt build --select "orders" --indirect-selection=empty
 
 </Tabs>
 
-</VersionBlock>
-
 <!--End of tabs for eager mode, cautious mode, buildable mode, and empty mode -->
 
 ### Test selection syntax examples
@@ -180,8 +172,6 @@ Through the combination of direct and indirect selection, there are many ways to
 
   dbt test --select "assert_total_payment_amount_is_positive" # directly select the test by name
   dbt test --select "payments,test_type:singular" # indirect selection, v1.2
-  dbt test --select "payments,test_type:data" # indirect selection, v0.18.0
-  dbt test --select "payments" --data  # indirect selection, earlier versions
 
   ```
 
@@ -216,7 +206,8 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tags: [my_column_tag]
+        config:
+          tags: [my_column_tag] # changed to config in v1.10
         tests:
           - unique
 
@@ -247,7 +238,8 @@ models:
       - name: order_id
         tests:
           - unique:
-              tags: [my_test_tag]
+            config:
+              tags: [my_test_tag] # changed to config in v1.10
 
 ```
 

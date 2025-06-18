@@ -41,7 +41,7 @@ When `deprecation_date` does not include an offset from UTC, then it is interpre
 
 Declaring a `deprecation_date` for a dbt model provides a mechanism to communicate plans and timelines for long-term support and maintenance and to facilitate change management.
 
-Setting a `deprecation_date` works well in conjunction with other [model governance](/docs/collaborate/govern/about-model-governance) features like [model versions](/docs/collaborate/govern/model-versions), but can also be used independently from them.
+Setting a `deprecation_date` works well in conjunction with other [model governance](/docs/mesh/govern/about-model-governance) features like [model versions](/docs/mesh/govern/model-versions), but can also be used independently from them.
 
 ### Warning messages
 
@@ -53,11 +53,11 @@ Additionally, [`WARN_ERROR_OPTIONS`](/reference/global-configs/warnings) gives a
 |--------------------------------|----------------------------------------------------|------------------------|
 |        `DeprecatedModel`       | Parsing a project that defines a deprecated model  | Producer               |
 | `DeprecatedReference`          | Referencing a model with a past deprecation date   | Producer and consumers |
-| `UpcomingDeprecationReference` | Referencing a model with a future deprecation date | Producer and consumers |
+| `UpcomingReferenceDeprecation` | Referencing a model with a future deprecation date | Producer and consumers |
 
-** Example **
+**Example**
 
-Example output for an `UpcomingDeprecationReference` warning:
+Example output for an `UpcomingReferenceDeprecation` warning:
 ```
 $ dbt parse
 15:48:14  Running with dbt=1.6.0
@@ -75,7 +75,7 @@ Additional steps are necessary to save on build-related compute and storage cost
 
 Deprecated models can continue to be built by producers and be selected by consumers until they are [disabled](/reference/resource-configs/enabled) or removed.
 
-Just like it does not automatically [drop relations when models are deleted](/faqs/models/removing-deleted-models), dbt does not drop relations for deprecated models.
+Just like it does not automatically [drop relations when models are deleted](/faqs/Models/removing-deleted-models), dbt does not drop relations for deprecated models.
 
 Strategies similar to [here](https://discourse.getdbt.com/t/faq-cleaning-up-removed-models-from-your-production-schema/113) or [here](https://discourse.getdbt.com/t/clean-your-warehouse-of-old-and-deprecated-models/1547) can be used to drop relations that have been deprecated and are no longer in use.
 

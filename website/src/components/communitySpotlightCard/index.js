@@ -49,7 +49,8 @@ function CommunitySpotlightCard({ frontMatter, isSpotlightMember = false }) {
     companyName, 
     organization, 
     socialLinks,
-    communityAward
+    communityAward,
+    communityAwardYear,
   } = frontMatter
 
   // Get meta description text
@@ -72,13 +73,14 @@ function CommunitySpotlightCard({ frontMatter, isSpotlightMember = false }) {
           />
         </Head>
       ) : null}
-      {communityAward ? (
-        <div className={styles.awardBadge}>
-          <span>Community Award Recipient</span>
-        </div>
-      ) : null}
+
       {image && (
         <div className={styles.spotlightMemberImgContainer}>
+        {communityAward ? (
+          <div className={'tag'}>
+            <span>Community Award Recipient {communityAwardYear}</span>
+          </div>
+          ) : null}
           {id && isSpotlightMember ? (
             <img src={imageCacheWrapper(image)} alt={title} />
           ) : (

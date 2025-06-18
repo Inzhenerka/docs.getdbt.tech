@@ -5,7 +5,7 @@ id: "env_var"
 description: "Incorporate environment variables using `en_var` function."
 ---
 
-The `env_var` function can be used to incorporate Environment Variables from the system into your dbt project. This `env_var` function can be used in your `profiles.yml` file, the `dbt_project.yml` file, the `sources.yml` file, your `schema.yml` files, and in model `.sql` files. Essentially `env_var` is available anywhere dbt processes jinja code.
+The `env_var` function can be used to incorporate Environment Variables from the system into your dbt project. This `env_var` function can be used in your `profiles.yml` file, the `dbt_project.yml` file, the `sources.yml` file, your `schema.yml` files, and in model `.sql` files. Essentially `env_var` is available anywhere dbt processes Jinja code.
 
 When used in a `profiles.yml` file (to avoid putting credentials on a server), it can be used like this:
 
@@ -36,7 +36,7 @@ If passing an environment variable for a property that uses an integer type (for
 
 :::caution Quoting, Curly Brackets, & You
 
-Be sure to quote the entire jinja string (as shown above), or else the YAML parser will be confused by the Jinja curly brackets.
+Be sure to quote the entire Jinja string (as shown above), or else the YAML parser will be confused by the Jinja curly brackets.
 
 :::
 
@@ -58,7 +58,7 @@ models:
 
 ### Secrets
 
-For certain configurations, you can use "secret" env vars. Any env var named with the prefix <VersionBlock lastVersion="1.5">`DBT_ENV_SECRET_`</VersionBlock><VersionBlock firstVersion="1.6">`DBT_ENV_SECRET`</VersionBlock> will be:
+For certain configurations, you can use "secret" env vars. Any env var named with the prefix `DBT_ENV_SECRET` will be:
 - Available for use in `profiles.yml` + `packages.yml`, via the same `env_var()` function
 - Disallowed everywhere else, including `dbt_project.yml` and model SQL, to prevent accidentally writing these secret values to the <Term id="data-warehouse" /> or metadata artifacts
 - Scrubbed from dbt logs and replaced with `*****`, any time its value appears in those logs (even if the env var was not called directly)
@@ -91,12 +91,12 @@ $ DBT_ENV_CUSTOM_ENV_MY_FAVORITE_COLOR=indigo DBT_ENV_CUSTOM_ENV_MY_FAVORITE_NUM
 ```
 Compiles to:
 ```sql
--- {'MY_FAVORITE_COLOR': 'indigo', 'DBT_ENV_CUSTOM_ENV_MY_FAVORITE_NUMBER': '6'}
+-- {'MY_FAVORITE_COLOR': 'indigo', 'MY_FAVORITE_NUMBER': '6'}
 
 select 1 as id
 ```
 
-### dbt Cloud usage
+### dbt platform usage
 
-If you are using dbt Cloud, you must adhere to the naming conventions for environment variables. Environment variables in dbt Cloud must be prefixed with `DBT_` (including `DBT_ENV_CUSTOM_ENV_` or <VersionBlock lastVersion="1.5">`DBT_ENV_SECRET_`</VersionBlock><VersionBlock firstVersion="1.6">`DBT_ENV_SECRET`</VersionBlock>). Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
+If you are using <Constant name="cloud" />, you must adhere to the naming conventions for environment variables. Environment variables in <Constant name="cloud" /> must be prefixed with `DBT_` (including `DBT_ENV_CUSTOM_ENV_` or `DBT_ENV_SECRET`). Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in <Constant name="cloud" />'s UI.
 

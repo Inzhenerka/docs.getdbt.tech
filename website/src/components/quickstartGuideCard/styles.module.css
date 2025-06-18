@@ -1,22 +1,32 @@
 .quickstartCard {
-  outline: 1px solid #EFF2F3;
-  border-radius: 10px;
-  box-shadow: 0px 11px 24px rgba(138, 138, 138, .1);
-  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
-  flex: 0 0 30%;
+  max-width: 312px;
   display: flex;
   flex-direction: column;
   text-decoration: none !important;
   transition: all 0.2s ease-in-out;
   position: relative;
+  background: var(--ifm-footer-background-color);
+  color: var(--color-white);
+  border: 1px solid var(--border-neutral-tertiary);
+  border-radius: 16px;
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  background-color: var(--bg-surface-default);
 }
 
-.quickstartCard:hover {
-  transform: translateY(-7px);
-  outline: 2px solid var(  --color-green-blue);
+[data-theme='dark'] .quickstartCard {
+  background-color: var(--bg-surface-inverse);
+  border-color: var(--border-inverse-tertiary);
+  color: var(--text-inverse-primary);
 }
 
-.quickstartCard:hover > .start {
+@media (max-width: 768px) {
+  .quickstartCard {
+    max-width: 100%;
+  }
+}
+
+.quickstartCard:hover h4,
+.quickstartCard:hover .start {
   text-decoration: underline;
 }
 
@@ -32,14 +42,12 @@
   fill: #fff;
 }
 
-.quickstartCard h3 {
-  font-weight: 600;
-  color:#262A38;
-  font-size: 1.5rem;
+.quickstartCard h4 {
+  color: var(--text-neutral-primary);
 }
 
-[data-theme='dark'] .quickstartCard h3 {
-  color: #fff;
+[data-theme='dark'] .quickstartCard h4 {
+  color: var(--text-inverse-primary);
 }
 
 .quickstartCard h3:hover {
@@ -58,30 +66,25 @@
   font-size: 1.125rem;
   margin-top: auto;
   padding-top: 2rem;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--text-neutral-primary);
 }
 
 [data-theme='dark'] .quickstartCard .start {
-  color: #fff;
+  color: var(--text-inverse-primary);
 }
 
 .quickstartCard .start .right_arrow svg {
   margin-left: 4px;
   width: 12.6px;
-  fill: var(--ifm-link-color);
+  fill: var(--text-neutral-primary);
 }
 .quickstartCard .start:hover .right_arrow svg {
-  fill: var(--ifm-link-hover-color)
+  fill: var(--text-neutral-primary);
 }
 
 [data-theme='dark'] .quickstartCard .start .right_arrow svg {
   fill: #fff;
-}
-
-.quickstartCard .recently_updated {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
 }
 
 .quickstartCard .tag_container {
@@ -91,21 +94,10 @@
   margin-top: 1rem;
 }
 
-.quickstartCard .tag_container .tag {
-  background: #E5E7EB;
-  border-radius: 1.5rem;
-  color:#262A38;
-  padding: 0rem 0.75rem;
-}
-
-[data-theme='dark'] .quickstartCard .tag_container .tag {
-  background: #374151;
-  color: #fff;
-}
 
 .infoContainer {
   display: flex;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
 }
 
 .infoContainer > * {
@@ -118,28 +110,24 @@
   padding-left: 0;
 }
 
-.infoContainer .tag_container {
+.backButton {
+  color: var(--text-neutral-primary) !important;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+[data-theme='dark'] .backButton {
+  color: var(--text-inverse-primary) !important;
+}
+
+.tag_container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.375rem;
   align-items: center;
-}
-
-.infoContainer .tag_container .tag {
-  background: #E5E7EB;
-  border-radius: 1.5rem;
-  color:#262A38;
-  padding: 0rem 0.75rem;
-}
-
-[data-theme='dark'] .infoContainer .tag_container .tag {
-  background: #374151;
-  color: #fff;
-}
-
-
-.infoContainer .time_to_complete {
-  font-weight: 700;
+  margin-bottom: 2rem;
 }
 
 .infoContainer .time_to_complete svg {
@@ -163,10 +151,70 @@
 @media (max-width: 996px) {
   .infoContainer {
     gap: 1rem;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
   }
   .infoContainer > * {
     border: none;
     padding: 0;
   }
+}
+.favoriteButton {
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favoriteButton svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.favoriteButton:hover, .cardFavoriteButton:hover {
+  color: var(--color-transform-orange-600);
+}
+
+.favoriteButton.favorited, .cardFavoriteButton.favorited {
+  color: var(--color-transform-orange-600);
+}
+
+.cardFavoriteButton svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.cardFavoriteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+
+.copy-popup {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-transform-orange-600);
+  color: var(--text-neutral-primary);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 9999;
 }

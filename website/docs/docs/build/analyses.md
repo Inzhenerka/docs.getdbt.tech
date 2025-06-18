@@ -1,6 +1,6 @@
 ---
 title: "Analyses"
-description: "Read this tutorial to learn how to use custom analyses when building in dbt."
+description: "Configure SQL files in dbt to create compiled code used for analyses."
 id: "analyses"
 pagination_next: null
 ---
@@ -48,4 +48,4 @@ To compile this analysis into runnable sql, run:
 dbt compile
 ```
 
-Then, look for the compiled SQL file in `target/compiled/{project name}/analyses/running_total_by_account.sql`. This sql can then be pasted into a data visualization tool, for instance. Note that no `running_total_by_account` relation will be materialized in the database as this is an `analysis`, not a `model`.
+Then, look for the compiled SQL file in `target/compiled/{project name}/analyses/running_total_by_account.sql`. This SQL can then be pasted into a data visualization tool, for instance. Note that no `running_total_by_account` relation will be materialized in the database as this is an `analysis`, not a `model`.

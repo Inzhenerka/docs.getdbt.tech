@@ -1,23 +1,27 @@
 ---
 title: "Custom aliases"
-description: "Read this tutorial to learn how to use custom aliases when building in dbt."
+description: "Configure custom aliases to override default naming conventions for models and other resources in dbt."
 id: "custom-aliases"
 ---
 
 ## Overview
 
-When dbt runs a model, it will generally create a relation (either a `table` or a `view`) in the database. By default, dbt uses the filename of the model as the identifier for this relation in the database. This identifier can optionally be overridden using the [`alias`](/reference/resource-configs/alias) model configuration.
+When dbt runs a model, it will generally create a relation (either a <Term id="table" /> or a <Term id="view" /> ) in the database, except in the case of an [ephemeral model](/docs/build/materializations), when it will create a <Term id="cte" /> for use in another model. By default, dbt uses the model's filename as the identifier for the relation or CTE it creates. This identifier can be overridden using the [`alias`](/reference/resource-configs/alias) model configuration.
 
 ### Why alias model names?
 The names of schemas and tables are effectively the "user interface" of your <Term id="data-warehouse" />. Well-named schemas and tables can help provide clarity and direction for consumers of this data. In combination with [custom schemas](/docs/build/custom-schemas), model aliasing is a powerful mechanism for designing your warehouse.
 
-### Usage
-The `alias` config can be used to change the name of a model's identifier in the database. The following <Term id="table" /> shows examples of database identifiers for models both with, and without, a supplied `alias`.
+The file naming scheme that you use to organize your models may also interfere with your data platform's requirements for identifiers. For example, you might wish to namespace your files using a period (`.`), but your data platform's SQL dialect may interpret periods to indicate a separation between schema names and table names in identifiers, or it may forbid periods from being used at all in CTE identifiers. In cases like these, model aliasing can allow you to retain flexibility in the way you name your model files without violating your data platform's identifier requirements.
 
-| Model | Config | Database Identifier |
-| ----- | ------ | ------------------- |
-| ga_sessions.sql | &lt;None&gt; | "analytics"."ga_sessions" |
-| ga_sessions.sql | {{ config(alias='sessions') }} | "analytics"."sessions" |
+### Usage
+The `alias` config can be used to change the name of a model's identifier in the database. The following table shows examples of database identifiers for models both with and without a supplied `alias`, and with different materializations.
+
+| Model | Config | Relation Type | Database Identifier |
+| ----- | ------ | --------------| ------------------- |
+| ga_sessions.sql | \{\{ config(materialization='view') \}\} | <Term id="view" /> | "analytics"."ga_sessions" |
+| ga_sessions.sql | \{\{ config(materialization='view', alias='sessions') \}\} | <Term id="view" /> | "analytics"."sessions" |
+| ga_sessions.sql | \{\{ config(materialization='ephemeral') \}\} | <Term id="cte" /> | "\__dbt\__cte\__ga_sessions" |
+| ga_sessions.sql | \{\{ config(materialization='ephemeral', alias='sessions') \}\} | <Term id="cte" /> | "\__dbt\__cte\__sessions" |
 
 To configure an alias for a model, supply a value for the model's `alias` configuration parameter. For example:
 
@@ -73,8 +77,6 @@ To override dbt's alias name generation, create a macro named `generate_alias_na
 
 The default implementation of `generate_alias_name` simply uses the supplied `alias` config (if present) as the model alias, otherwise falling back to the model name. This implementation looks like this:
 
-<VersionBlock firstVersion="1.5">
-
 <File name='get_custom_alias.sql'>
 
 ```jinja2
@@ -99,8 +101,6 @@ The default implementation of `generate_alias_name` simply uses the supplied `al
 ```
 
 </File>
-
-</VersionBlock>
 
 import WhitespaceControl from '/snippets/_whitespace-control.md';
 
@@ -152,8 +152,13 @@ If these models should indeed have the same database identifier, you can work ar
 #### Model versions
 
 **Related documentation:**
-- [Model versions](/docs/collaborate/govern/model-versions)
+- [Model versions](/docs/mesh/govern/model-versions)
 - [`versions`](/reference/resource-properties/versions#alias)
 
 By default, dbt will create versioned models with the alias `<model_name>_v<v>`, where `<v>` is that version's unique identifier. You can customize this behavior just like for non-versioned models by configuring a custom `alias` or re-implementing the `generate_alias_name` macro.
 
+## Related docs
+
+- [Customize dbt models database, schema, and alias](/guides/customize-schema-alias?step=1) to learn how to customize dbt models database, schema, and alias
+- [Custom schema](/docs/build/custom-schemas) to learn how to customize dbt schema 
+- [Custom database](/docs/build/custom-databases) to learn how to customize dbt database

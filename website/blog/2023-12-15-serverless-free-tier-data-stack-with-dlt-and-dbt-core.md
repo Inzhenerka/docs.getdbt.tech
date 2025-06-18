@@ -63,7 +63,7 @@ When I'm happy with the results, I use the [ready-made dlt Sheets source connect
 
 For transforming I use my favorite solution, dbt Core. For running and orchestrating dbt on Cloud Functions, I am using dlt’s dbt Core runner. The benefit of the runner in this context is that I can re-use the same credential setup, instead of creating a separate profiles.yml file.
 
-This is the package I created: <https://github.com/euanjohnston-dev/idealista_dbt_pipeline>
+This is the package I created: [https://github.com/euanjohnston-dev/idealista_dbt_pipeline](https://github.com/euanjohnston-dev/idealista_dbt_pipeline)
 
 ### Production-readying the pipeline
 
@@ -119,7 +119,7 @@ Tooling wise, it was surprising how quick it was to set everything up. dlt integ
 
 Good:
 
-- As a big fan of dbt I love how seamlessly the two solutions complement one another. dlt handles the data cleaning and normalisation automatically so I can focus on curating and modelling it in dbt. While the automatic unpacking leaves some small adjustments for the analytics engineer, it’s much better than cleaning and typing json in the database or in custom python code.
+- As a big fan of dbt I love how seamlessly the two solutions complement one another. dlt handles the data cleaning and normalisation automatically so I can focus on curating and modelling it in dbt. While the automatic unpacking leaves some small adjustments for the analytics engineer, it’s much better than cleaning and typing JSON in the database or in custom python code.
 - When creating my first dummy pipeline I used duckdb. It felt like a great introduction into how simple it is to get started and provided a solid starting block before developing something for the cloud.
 
 Bad:

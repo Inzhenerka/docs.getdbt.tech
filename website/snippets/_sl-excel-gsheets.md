@@ -4,9 +4,10 @@
 <p><span>When querying your data with {props.type}:</span></p>
 
 <ul>
-  <li>It returns the data to the cell you have clicked on, and each cell where data is requested will have a note attached to it, indicating what has been queried and the timestamp.</li>
+  <li>It returns the data to the cell you clicked on. </li>
   <li> {props.bullet_1}</li>
   <li>{props.bullet_2}</li>
+  <li>{props.bullet_3}</li>
 </ul>
 
 ## Query Builder functions
@@ -48,11 +49,15 @@
   </tbody>
 </table>
 
-<p>Note: Click the info button next to any metric or dimension to see its defined description from your dbt project.</p>
+<p>Note: Click the **info** button next to any metric or dimension to see its defined description from your dbt project.</p>
 
 #### Modifying time granularity
 
 <p>When you select time dimensions in the <strong>Group By</strong> menu, you'll see a list of available time granularities. The lowest granularity is selected by default. Metric time is the default time dimension for grouping your metrics.</p>
+
+:::info 
+Note: [Custom time granularities](/docs/build/metricflow-time-spine#add-custom-granularities) (like fiscal year) aren't currently supported or accessible in this integration. Only [standard granularities](/docs/build/dimensions?dimension=time_gran#time) (like day, week, month, and so on) are available. If you'd like to access custom granularities, consider using the [Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview).
+:::
 
 #### Filtering data
 
@@ -65,38 +70,30 @@
   <li>For time dimensions, you can use the time range selector to filter on presets or custom options. The time range selector applies only to the primary time dimension (<code>metric_time</code>). For all other time dimensions that aren't <code>metric_time</code>, you can use the "Where" option to apply filters.</li>
 </ul>
 
-#### Querying without headers or columns
+#### Other settings
 
-<p>If you would like to just query the data values without the headers, you can optionally select the <strong>Exclude Column Names</strong> box.</p>
+<p>If you would like to just query the data values without the headers, you can optionally select the <strong>Exclude column names</strong> box.</p>
+<p>To return your results and keep any previously selected data below it intact, un-select the <strong>Clear trailing rows</strong> box. By default, we'll clear all trailing rows if there's stale data.</p>
 
-
-
-<!-- hide this content for initial launch
+<Lightbox src={ props.queryBuilder } width="35%" title="Run a query in the Query Builder. Use the arrow next to the Query button to select additional settings." />
 
 ## Using saved selections
 
 <p><span>Saved selections allow you to save the inputs you've created in the {props.type} <strong>Query Builder</strong> and easily access them again so you don't have to continuously build common queries from scratch. To create a saved selection:</span></p>
 
 <ol>
-  <li>Run a <span>query in the {props.type} <strong>Query Builder</strong>.</span></li>
+  <li>Run a <span>query in the <strong>Query Builder</strong>.</span></li>
   <li>Save the selection by selecting the arrow next to the <strong>Query</strong> button and then select <strong>Query & Save Selection</strong>.</li>
   <li>The application saves these selections, allowing you to view and edit them from the hamburger menu under <strong>Saved Selections</strong>.</li>
 </ol>
 
-<Lightbox src={ props.queryBuilder } width="25%" title="Query and save selections in the Query Builder using the arrow next to the Query button." />
-
-<p>You can also make these selections private or public:</p>
-
-<ul>
-  <li><strong>Public selections</strong> mean your inputs are available in the menu to everyone on the sheet.</li>
-  <li><strong>Private selections</strong> mean your inputs are only visible to you. Note that anyone added to the sheet can still see the data from these private selections, but they won't be able to interact with the selection in the menu or benefit from the automatic refresh.</li>
-</ul>
+<p><span>{props.PrivateSelections}</span></p>
 
 ### Refreshing selections
 
 <p>Set your saved selections to automatically refresh every time you load the addon. You can do this by selecting <strong>Refresh on Load</strong> when creating the saved selection. When you access the addon and have saved selections that should refresh, you'll see "Loading..." in the cells that are refreshing.</p>
 
-<p>Public saved selections will refresh for anyone who edits the sheet while private selections will only update for the user who created it.</p>
+<p>Public saved selections will refresh for anyone who edits the sheet.</p>
 
 :::tip What's the difference between saved selections and saved queries?
 
@@ -111,10 +108,8 @@
 <ol>
   <li>Open the hamburger menu in {props.type}.</li>
   <li>Navigate to <strong>Saved Queries</strong> to access the ones available to you.</li>
-  <li>You can also select <strong>Build Selection</strong>, which allows you to explore the existing query. This won't change the original query defined in the code.
+  <li>You can also select <strong>Build Selection</strong>, which allows you to explore the existing query. This won't change the original query defined in the code.</li>
     <ul>
       <li>If you use a <code>WHERE</code> filter in a saved query, {props.type} displays the advanced syntax for this filter.</li>
     </ul>
-  </li>
 </ol>
--->

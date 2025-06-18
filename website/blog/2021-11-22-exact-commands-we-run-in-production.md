@@ -12,6 +12,21 @@ date: 2021-11-29
 is_featured: false
 ---
 
+:::tip February 2024 Update
+
+This blog references dbt Core versions older than v1.0.
+
+It's been a few years since dbt-core turned 1.0! Since then, we've committed to releasing zero breaking changes whenever possible and it's become much easier to upgrade dbt Core versions.
+
+In 2024, we're taking this promise further by:
+
+- Stabilizing interfaces for everyone — adapter maintainers, metadata consumers, and (of course) people writing dbt code everywhere — as discussed in [our November 2023 roadmap update](https://github.com/dbt-labs/dbt-core/blob/main/docs/roadmap/2023-11-dbt-tng.md).
+- Introducing [Release tracks](/docs/dbt-versions/cloud-release-tracks) (formerly known as Versionless) to dbt Cloud. No more manual upgrades and no need for _a second sandbox project_ just to try out new features in development. For more details, refer to [Upgrade Core version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+
+We're leaving the rest of this post as is, so we can all remember how it used to be. Enjoy a stroll down memory lane.
+
+:::
+
 Without a command to run them, dbt models and tests are just taking up space in a Git repo.
 
 The specific dbt commands you run in production are the control center for your project. They are the structure that defines your team’s data quality + freshness standards.
@@ -42,7 +57,7 @@ Some projects can afford to have older data in the warehouse, others can’t.
 
 ### 3) Simplify your regularly scheduled runs
 
-The more complex your run commands are, the harder it gets to maintain this in the long run. Feel free to rely on dbt’s DAG (more info on why we <3 DAGs in my colleagues Christine + Randy’s [modular data modeling technique](https://getdbt.com/analytics-engineering/modular-data-modeling-technique/) post).
+The more complex your run commands are, the harder it gets to maintain this in the long run. Feel free to rely on dbt’s DAG (more info on why we &lt;3 DAGs in my colleagues Christine + Randy’s [modular data modeling technique](https://getdbt.com/analytics-engineering/modular-data-modeling-technique/) post).
 
 Given those principles, we’ll now take a look at the most common run commands for production jobs, and why we think they could work for your organization! Do note that yours may vary slightly (depending on your team’s specific needs), but as long as you stick to the principles mentioned above, your project should be in good shape!
 

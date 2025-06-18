@@ -9,7 +9,6 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt Core']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -34,7 +33,7 @@ Packages are _not_ a good fit for sharing models that contain business-specific 
 
 ## Create your new project
 :::note Using the command line for package development
-We tend to use the command line interface for package development. The development workflow often involves installing a local copy of your package in another dbt project — at present dbt Cloud is not designed for this workflow.
+We tend to use the command line interface for package development. The development workflow often involves installing a local copy of your package in another dbt project — at present <Constant name="cloud" /> is not designed for this workflow.
 :::
 
 1. Use the [dbt init](/reference/commands/init) command to create a new dbt project, which will be your package:
@@ -55,7 +54,7 @@ When working on your package, we often find it useful to install a local copy of
 ### Follow best practices
 _Modeling packages only_
 
-Use our [dbt coding conventions](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md), our article on [how we structure our dbt projects](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview), and our [best practices](best-practices) for all of our advice on how to build your dbt project.
+Use our [dbt coding conventions](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md), our article on [how we structure our dbt projects](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview), and our [best practices](/best-practices) for all of our advice on how to build your dbt project.
 
 This is where it comes in especially handy to have worked on your own dbt project previously.
 

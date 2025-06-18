@@ -13,6 +13,8 @@ import PropsCallout from '/snippets/_config-prop-callout.md';
 
 Exposures are defined in `properties.yml` files nested under an `exposures:` key. You may define `exposures` in YAML files that also define `sources` or `models`. <PropsCallout title={frontMatter.title}/>  <br /> 
 
+Note that while most exposure properties must be configured directly in these YAML files, you can set the [`enabled`](/reference/resource-configs/enabled) config at the [project level](#project-level-configs) in the`dbt_project.yml` file.
+
 
 You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `models/` directory.
 
@@ -29,9 +31,11 @@ exposures:
     type: {dashboard, notebook, analysis, ml, application}
     url: <string>
     maturity: {high, medium, low}  # Indicates level of confidence or stability in the exposure
-    [tags](/reference/resource-configs/tags): [<string>]
-    [meta](/reference/resource-configs/meta): {<dictionary>}
-    owner:
+    [enabled](/reference/resource-configs/enabled): true | false
+    config: # 'tags' and 'meta' changed to config in v1.10
+      [tags](/reference/resource-configs/tags): [<string>] 
+      [meta](/reference/resource-configs/meta): {<dictionary>} 
+    owner: # supports 'name' and 'email' only
       name: <string>
       email: <string>
     
@@ -98,6 +102,23 @@ exposures:
     description: Tell users about their favorite jaffles of the year
     depends_on: [ ref('fct_orders') ]
     owner: { email: summer-intern@jaffleshop.com }
+```
+
+</File>
+
+#### Project-level configs
+
+You can define project-level configs for exposures in the `dbt_project.yml` file under the `exposures:` key using the `+` prefix. Currently, only the [`enabled` config](/reference/resource-configs/enabled) is supported:
+
+<File name="dbt_project.yml">
+
+```yml
+name: 'project_name'
+
+# rest of dbt_project.yml
+
+exposures:
+  +enabled: true
 ```
 
 </File>

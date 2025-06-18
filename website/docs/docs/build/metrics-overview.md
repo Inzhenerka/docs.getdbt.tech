@@ -7,7 +7,9 @@ tags: [Metrics, Semantic Layer]
 pagination_next: "docs/build/cumulative"
 ---
   
-Once you've created your semantic models, it's time to start adding metrics. Metrics can be defined in the same YAML files as your semantic models, or split into separate YAML files into any other subdirectories (provided that these subdirectories are also within the same dbt project repo).
+After building [semantic models](/docs/build/semantic-models), it's time to start adding metrics. This page explains the different supported metric types you can add to your dbt project
+
+Metrics must be defined in a YAML file &mdash; either within the same file as your semantic models or in a separate YAML file in a subdirectory of your dbt project. They shouldn't be defined in a `config` block on a model.
 
 The keys for metrics definitions are:
 
@@ -15,17 +17,19 @@ The keys for metrics definitions are:
 
 <VersionBlock firstVersion="1.8">
 
-| Parameter | Description | Type |
-| --------- | ----------- | ---- |
-| `name` | Provide the reference name for the metric. This name must be a unique metric name and can consist of lowercase letters, numbers, and underscores.  | Required |
-| `description` | Describe your metric.   | Optional |
-| `type` | Define the type of metric, which can be `conversion`, `cumulative`, `derived`, `ratio`, or `simple`. | Required |
-| `type_params` | Additional parameters used to configure metrics. `type_params` are different for each metric type. | Required |
-| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).  | Required |
-| `config` | Use the [`config`](/reference/resource-properties/config) property to specify configurations for your metric. Supports [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) configurations.  | Optional |
-| `filter` | You can optionally add a [filter](#filters) string to any metric type, applying filters to dimensions, entities, time dimensions, or other metrics during metric computation. Consider it as your WHERE clause.   | Optional |
+| Parameter | Description | Required | Type |
+| --------- | ----------- | ---- | ---- |
+| `name` | Provide the reference name for the metric. This name must be a unique metric name and can consist of lowercase letters, numbers, and underscores.  | Required | String |
+| `description` | Describe your metric.   | Optional | String |
+| `type` | Define the type of metric, which can be `conversion`, `cumulative`, `derived`, `ratio`, or `simple`. | Required | String |
+| `type_params` | Additional parameters used to configure metrics. `type_params` are different for each metric type. | Required | Dict |
+| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).  | Required | String |
+| `config` | Use the [`config`](/reference/resource-properties/config) property to specify configurations for your metric. Supports [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) configurations.  | Optional | Dict |
+| `filter` | You can optionally add a [filter](#filters) string to any metric type, applying filters to dimensions, entities, time dimensions, or other metrics during metric computation. Consider it as your WHERE clause.   | Optional | String |
 
 Here's a complete example of the metrics spec configuration:
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
@@ -42,52 +46,67 @@ metrics:
       {{  Dimension('entity__name') }} > 0 and {{ Dimension(' entity__another_name') }} is not
       null and {{ Metric('metric_name', group_by=['entity_name']) }} > 5
 ```
+
+</File>
 </VersionBlock>
-
-<!-- for v1.7 and lower -->
-
-<VersionBlock lastVersion="1.7">
-
-| Parameter | Description | Type |
-| --------- | ----------- | ---- |
-| `name` | Provide the reference name for the metric. This name must be unique amongst all metrics.   | Required |
-| `description` | Describe your metric.   | Optional |
-| `type` | Define the type of metric, which can be `simple`, `ratio`, `cumulative`, or `derived`.  | Required |
-| `type_params` | Additional parameters used to configure metrics. `type_params` are different for each metric type. | Required |
-| `config` | Provide the specific configurations for your metric.   | Optional |
-| `meta` | Use the [`meta` config](/reference/resource-configs/meta) to set metadata for a resource.  | Optional |
-| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).   | Required |
-| `filter` | You can optionally add a filter string to any metric type, applying filters to dimensions, entities, or time dimensions during metric computation. Consider it as your WHERE clause.   | Optional |
-
-Here's a complete example of the metrics spec configuration:
-
-```yaml
-metrics:
-  - name: metric name                     ## Required
-    description: same as always           ## Optional
-    type: the type of the metric          ## Required
-    type_params:                          ## Required
-      - specific properties for the metric type
-    config: here for `enabled`            ## Optional
-    meta:
-        my_meta_direct: 'direct'           ## Optional
-    label: The display name for your metric. This value will be shown in downstream tools. ## Required
-    filter: |                             ## Optional            
-      {{  Dimension('entity__name') }} > 0 and {{ Dimension(' entity__another_name') }} is not
-      null and {{ Metric('metric_name', group_by=['entity_name']) }} > 5
-```
-
-</VersionBlock>
-
-This page explains the different supported metric types you can add to your dbt project.
 
 import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-### Conversion metrics
+## Default granularity for metrics
+
+<VersionBlock lastVersion="1.8">
+Default time granularity for metrics is useful if your time dimension has a very fine grain, like second or hour, but you typically query metrics rolled up at a coarser grain. 
+
+Default time granularity for metrics is available now in [the "Latest" release track in <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), and it will be available in [<Constant name="core" /> v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9). 
+
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+It's possible to define a default time granularity for metrics if it's different from the granularity of the default aggregation time dimensions (`metric_time`). This is useful if your time dimension has a very fine grain, like second or hour, but you typically query metrics rolled up at a coarser grain. 
+
+The granularity can be set using the `time_granularity` parameter on the metric, and defaults to `day`. If day is not available because the dimension is defined at a coarser granularity, it will default to the defined granularity for the dimension.
+
+### Example
+- You have a semantic model called `orders` with a time dimension called `order_time`.
+- You want the `orders` metric to roll up to `monthly` by default; however, you want the option to look at these metrics hourly.
+- You can set the `time_granularity` parameter on the `order_time` dimension to `hour`, and then set the `time_granularity` parameter in the metric to `month`.
+
+```yaml
+semantic_models:
+  ...
+  dimensions:
+    - name: order_time
+      type: time
+      type_params:
+      time_granularity: hour
+  measures:
+    - name: orders
+      expr: 1
+      agg: sum
+
+metrics:
+  - name: orders
+    type: simple
+    label: Count of Orders
+    type_params:
+      measure:
+        name: orders
+    time_granularity: month -- Optional, defaults to day
+```
+
+Remember that metrics can be defined in the same YAML files as your semantic models but must be defined as a separate top-level section and not nested within the `semantic_models` key. Or you can define metrics in their dedicated separate YAML files located in any subdirectories within the same dbt project repository.
+
+</VersionBlock>
+
+## Conversion metrics
 
 [Conversion metrics](/docs/build/conversion) help you track when a base event and a subsequent conversion event occur for an entity within a set time period.
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
@@ -112,10 +131,13 @@ metrics:
           - base_property: DIMENSION or ENTITY 
             conversion_property: DIMENSION or ENTITY 
 ```
+</File>
 
-### Cumulative metrics
+## Cumulative metrics
 
 [Cumulative metrics](/docs/build/cumulative) aggregate a measure over a given window. If no window is specified, the window will accumulate the measure over all of the recorded time period. Note that you will need to create the [time spine model](/docs/build/metricflow-time-spine) before you add cumulative metrics.
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 # Cumulative metrics aggregate a measure over a given window. The window is considered infinite if no window parameter is passed (accumulate the measure over all of time)
@@ -128,12 +150,16 @@ metrics:
         name: active_users
         fill_nulls_with: 0
         join_to_timespine: true
+      cumulative_type_params:
         window: 7 days
 ```
+</File>
 
-### Derived metrics
+## Derived metrics
 
 [Derived metrics](/docs/build/derived) are defined as an expression of other metrics. Derived metrics allow you to do calculations on top of metrics. 
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
@@ -149,6 +175,8 @@ metrics:
         - name: order_cost
           alias: cost
 ```
+</File>
+
 <!-- not supported
 ### Expression metrics
 Use [expression metrics](/docs/build/expr) when you're building a metric that involves a SQL expression of multiple measures.
@@ -167,9 +195,11 @@ metrics:
 ```
 -->
 
-### Ratio metrics 
+## Ratio metrics 
 
 [Ratio metrics](/docs/build/ratio) involve a numerator metric and a denominator metric. A  `filter` string  can be applied to both the numerator and denominator or separately to the numerator or denominator.
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
@@ -191,14 +221,17 @@ metrics:
     filter: | 
       {{ Dimension('customer__country') }} = 'MX' 
 ```
+</File>
 
-### Simple metrics
+## Simple metrics
 
 [Simple metrics](/docs/build/simple) point directly to a measure. You may think of it as a function that takes only one measure as the input.
 
-- `name` &mdash; Use this parameter to define the reference name of the metric. The name must be unique amongst metrics and can include lowercase letters, numbers, and underscores. You can use this name to call the metric from the dbt Semantic Layer API.
+- `name` &mdash; Use this parameter to define the reference name of the metric. The name must be unique amongst metrics and can include lowercase letters, numbers, and underscores. You can use this name to call the metric from the <Constant name="semantic_layer" /> API.
 
 **Note:** If you've already defined the measure using the `create_metric: True` parameter, you don't need to create simple metrics.  However, if you would like to include a constraint on top of the measure, you will need to create a simple type metric.
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
@@ -210,16 +243,21 @@ metrics:
       measure:
         name: cancellations_usd  # Specify the measure you are creating a proxy for.
         fill_nulls_with: 0
+        join_to_timespine: true
     filter: |
       {{ Dimension('order__value')}} > 100 and {{Dimension('user__acquisition')}} is not null
-    join_to_timespine: true
 ```
+</File>
 
 ## Filters
 
 A filter is configured using Jinja templating. Use the following syntax to reference entities, dimensions, time dimensions, or metrics in filters. 
 
 Refer to [Metrics as dimensions](/docs/build/ref-metrics-in-filters) for details on how to use metrics as dimensions with metric filters:
+
+<VersionBlock firstVersion="1.8">
+
+<File name="models/metrics/file_name.yml" >
 
 ```yaml
 filter: | 
@@ -232,10 +270,21 @@ filter: |
   {{ TimeDimension('time_dimension', 'granularity') }}
 
 filter: |  
-  {{ Metric('metric_name', group_by=['entity_name']) }}  # Available in v1.8 or go versionless with [Keep on latest version](/docs/dbt-versions/upgrade-dbt-version-in-cloud#keep-on-latest-version)
+ {{ Metric('metric_name', group_by=['entity_name']) }}  
+
+```
+</File>
+</VersionBlock>
+
+For example, if you want to filter for the order date dimension grouped by month, use the following syntax:
+
+```yaml
+filter: |  
+  {{ TimeDimension('order_date', 'month') }}
+
 ```
 
-### Further configuration
+## Further configuration
 
 You can set more metadata for your metrics, which can be used by other tools later on. The way this metadata is used will vary based on the specific integration partner
 

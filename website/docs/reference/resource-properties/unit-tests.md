@@ -5,11 +5,8 @@ resource_types: [models]
 datatype: test
 ---
 
-:::note 
+<VersionCallout version="1.8" />
 
-This functionality is only supported in dbt Core v1.8+ or dbt Cloud accounts that have gone versionless by opting to ["Keep on latest version"](/docs/dbt-versions/upgrade-dbt-version-in-cloud#keep-on-latest-version).
-
-:::
 
 Unit tests validate your SQL modeling logic on a small set of static inputs before you materialize your full model in production. They support a test-driven development approach, improving both the efficiency of developers and reliability of code.
 
@@ -37,23 +34,24 @@ unit_tests:
     config: 
       meta: {dictionary}
       tags: <string> | [<string>]
+      enabled: {boolean} # optional. v1.9 or higher. If not configured, defaults to `true`
     given:
       - input: <ref_or_source_call> # optional for seeds
         format: dict | csv | sql
         # either define rows inline or name of fixture
         rows: {dictionary} | <string>
-        fixture: <fixture-name> # sql or csv 
+        fixture: <fixture-name> # SQL or csv 
       - input: ... # declare additional inputs
     expect:
       format: dict | csv | sql
       # either define rows inline of rows or name of fixture
       rows: {dictionary} | <string>
-      fixture: <fixture-name> # sql or csv 
+      fixture: <fixture-name> # SQL or csv 
     overrides: # optional: configuration for the dbt execution environment
       macros:
         is_incremental: true | false
         dbt_utils.current_timestamp: <string>
-        # ... any other jinja function from https://docs.getdbt.com/reference/dbt-jinja-functions
+        # ... any other Jinja function from https://docs.getdbt.com/reference/dbt-jinja-functions
         # ... any other context property
       vars: {dictionary}
       env_vars: {dictionary}

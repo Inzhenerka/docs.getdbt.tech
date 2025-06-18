@@ -7,9 +7,9 @@ description: New features and breaking changes to consider as you upgrade to dbt
 
 For the first time, [dbt utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) is crossing the major version boundary. From [last month’s blog post](https://www.getdbt.com/blog/announcing-dbt-v1.3-and-utils/): 
 
-> It’s time to formalize what was already unofficial policy: you can rely on dbt utils in the same way as you do dbt Core, with stable interfaces and consistent and intuitive naming.
+> It’s time to formalize what was already unofficial policy: you can rely on dbt utils in the same way as you do <Constant name="core" />, with stable interfaces and consistent and intuitive naming.
 
-Just like the switch to dbt Core 1.0 last year, there are some breaking changes as we standardized and prepared for the future. Most changes can be handled with find-and-replace. If you need help, post on the [Community Forum](https://discourse.getdbt.com) or in [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) channel on Slack. 
+Just like the switch to <Constant name="core" /> 1.0 last year, there are some breaking changes as we standardized and prepared for the future. Most changes can be handled with find-and-replace. If you need help, post on the [Community Forum](https://discourse.getdbt.com) or in [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) channel on Slack. 
 
 ## New features
 
@@ -121,8 +121,11 @@ After upgrading, these are common error messages you may encounter, along with t
 <details>
 	<summary><code>The dbt_utils.surrogate_key has been replaced by dbt_utils.generate_surrogate_key</code></summary>
 	<div>
-		<p><b>Cause</b>: <code>surrogate_key()</code> has been replaced. </p>
-		<p><b>Resolution</b>:
+		<p>
+      <b>Cause</b>: <code>surrogate_key()</code> has been replaced. 
+    </p>
+		<p>
+      <b>Resolution</b>:
 			<ol>
 				<li>Decide whether you need to enable backwards compatibility <a href="#changes-to-surrogate_key">as detailed above</a>.</li>
 				<li>Find and replace <code>dbt_utils.surrogate_key</code> with <code>dbt_utils.generate_surrogate_key</code>.</li>

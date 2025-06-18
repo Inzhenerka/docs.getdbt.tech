@@ -1,7 +1,7 @@
 ---
 title: "Semantic models"
 id: "semantic-models"
-description: "Semantic models are yml abstractions on top of a dbt mode, connected via joining keys as edges"
+description: "Semantic models are YAML abstractions on top of a dbt mode, connected via joining keys as edges"
 keywords:
   - dbt metrics layer
 sidebar_label: Semantic models
@@ -9,7 +9,11 @@ tags: [Metrics, Semantic Layer]
 pagination_next: "docs/build/dimensions"
 ---
 
-Semantic models are the foundation for data definition in MetricFlow, which powers the dbt Semantic Layer:
+import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
+
+<CopilotBeta resource='semantic models' />
+
+Semantic models are the foundation for data definition in MetricFlow, which powers the <Constant name="semantic_layer" />:
 
 - Think of semantic models as nodes connected by entities in a semantic graph.
 - MetricFlow uses YAML configuration files to create this graph for querying metrics.
@@ -26,18 +30,18 @@ import SLCourses from '/snippets/\_sl-course.md';
 
 Here we describe the Semantic model components with examples:
 
-| Component                         | Description                                                                                                                                                                                                                                                                    | Type     |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| [Name](#name)                     | Choose a unique name for the semantic model. Avoid using double underscores (\_\_) in the name as they're not supported.                                                                                                                                                       | Required |
-| [Description](#description)       | Includes important details in the description                                                                                                                                                                                                                                  | Optional |
-| [Model](#model)                   | Specifies the dbt model for the semantic model using the `ref` function                                                                                                                                                                                                        | Required |
-| [Defaults](#defaults)             | The defaults for the model, currently only `agg_time_dimension` is supported.                                                                                                                                                                                                  | Required |
-| [Entities](#entities)             | Uses the columns from entities as join keys and indicate their type as primary, foreign, or unique keys with the `type` parameter                                                                                                                                              | Required |
-| [Primary Entity](#primary-entity) | If a primary entity exists, this component is Optional. If the semantic model has no primary entity, then this property is required.                                                                                                                                           | Optional |
-| [Dimensions](#dimensions)         | Different ways to group or slice data for a metric, they can be `time` or `categorical`                                                                                                                                                                                        | Required |
-| [Measures](#measures)             | Aggregations applied to columns in your data model. They can be the final metric or used as building blocks for more complex metrics                                                                                                                                           | Optional |
-| Label                             | The display name for your semantic model `node`, `dimension`, `entity`, and/or `measures`                                                                                                                                                                                      | Optional |
-| `config`                          | Use the [`config`](/reference/resource-properties/config) property to specify configurations for your metric. Supports [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) configs. | Optional |
+| Component    | Description      | Required     |  Type     | 
+| ------------ | ---------------- | -------- | -------- | 
+| [Name](#name)     | Choose a unique name for the semantic model. Avoid using double underscores (\_\_) in the name as they're not supported.   | Required | String |
+| [Description](#description)    | 	Includes important details in the description.   | Optional | String |
+| [Model](#model)     | Specifies the dbt model for the semantic model using the `ref` function.    | Required | String |
+| [Defaults](#defaults)      | The defaults for the model, currently only `agg_time_dimension` is supported.    | Required |  Dict |
+| [Entities](#entities)         | Uses the columns from entities as join keys and indicate their type as primary, foreign, or unique keys with the `type` parameter.  | Required | List | 
+| [Primary Entity](#primary-entity) | If a primary entity exists, this component is Optional. If the semantic model has no primary entity, then this property is required.    | Optional | String | 
+| [Dimensions](#dimensions)     | Different ways to group or slice data for a metric, they can be `time` or `categorical`.  | Required | List |
+| [Measures](#measures)     | Aggregations applied to columns in your data model. They can be the final metric or used as building blocks for more complex metrics.  | Optional | List |
+| [Label](#label)     | The display name for your semantic model `node`, `dimension`, `entity`, and/or `measures`.   | Optional | String |
+| `config`   | Use the [`config`](/reference/resource-properties/config) property to specify configurations for your metric. Supports [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) configs. | Optional | Dict |
 
 ## Semantic models components
 
@@ -119,8 +123,6 @@ semantic_models:
         type: categorical
 ```
 
-<VersionBlock firstVersion="1.7">
-
 Semantic models support [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) [`config`](/reference/resource-properties/config) property in either the schema file or at the project level:
 
 - Semantic model config in `models/semantic.yml`:
@@ -147,8 +149,6 @@ Semantic models support [`meta`](/reference/resource-configs/meta), [`group`](/r
   ```
 
 For more information on `dbt_project.yml` and config naming conventions, see the [dbt_project.yml reference page](/reference/dbt_project.yml#naming-convention).
-
-</VersionBlock>
 
 ### Name
 
@@ -227,20 +227,20 @@ You can refer to entities (join keys) in a semantic model using the `name` param
 
 ### Dimensions
 
-[Dimensions](/docs/build/dimensions) are different ways to organize or look at data. For example, you might group data by things like region, country, or what job someone has. However, trying to set up a system that covers every possible way to group data can be time-consuming and prone to errors.
+[Dimensions](/docs/build/dimensions) are different ways to organize or look at data. They are effectively the group by parameters for metrics. For example, you might group data by things like region, country, or job title.
 
-Instead of trying to figure out all the possible groupings ahead of time, MetricFlow lets you ask for the data you need and sorts out how to group it dynamically. You tell it what groupings (dimensions parameters) you're interested in by giving it a `name` (either a column or SQL expression like "country" or "user role") and the `type` of grouping it is (`categorical` or `time`). Categorical groups are for things you can't measure in numbers, while time groups represent dates.
+MetricFlow takes a dynamic approach when making dimensions available for metrics. Instead of trying to figure out all the possible groupings ahead of time, MetricFlow lets you ask for the dimensions you need and constructs any joins necessary to reach the requested dimensions at query time. The advantage of this approach is that you don't need to set up a system that pre-materializes every possible way to group data, which can be time-consuming and prone to errors. Instead, you define the dimensions (group by parameters) you're interested in within the semantic model, and they will automatically be made available for valid metrics.
 
-- Dimensions are identified using the name parameter, just like identifiers.
-- The naming of groups must be unique within a semantic model, but not across semantic models since MetricFlow, uses entities to determine the appropriate groups.
-- MetricFlow requires all dimensions to be tied to a primary entity.
+Dimensions have the following characteristics:
 
-While there's technically no limit to the number of dimensions in a semantic model, it's important to ensure the model remains effective and efficient for its intended purpose.
+- There are two types of dimensions: categorical and time. Categorical dimensions are for things you can't measure in numbers, while time dimensions represent dates and timestamps.
+- Dimensions are bound to the primary entity of the semantic model in which they are defined. For example, if a dimension called `full_name` is defined in a model with `user` as a primary entity, then `full_name` is scoped to the `user` entity. To reference this dimension, you would use the fully qualified dimension name `user__full_name`.
+- The naming of dimensions must be unique in each semantic model with the same primary entity. Dimension names can be repeated if defined in semantic models with a different primary entity.
+
 
 :::info For time groups
 
 For semantic models with a measure, you must have a [primary time group](/docs/build/dimensions#time).
-
 :::
 
 ### Measures
@@ -263,4 +263,4 @@ import SetUpPages from '/snippets/\_metrics-dependencies.md';
 - [Dimensions](/docs/build/dimensions)
 - [Entities](/docs/build/entities)
 - [Measures](/docs/build/measures)
-- [Semantic Layer best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)
+- [<Constant name="semantic_layer" /> best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)

@@ -175,7 +175,7 @@ Please to update variables between **`<>`**, here are explanations of these argu
 
 ### Configuration of the local environment
 
-Because **`dbt`** and **`dbt-glue`** adapters are compatible with Python versions 3.7, 3.8, and 3.9, check the version of Python:
+Because **`dbt`** and **`dbt-glue`** adapters are compatible with Python versions 3.9 or higher, check the version of Python:
 
 ```bash
 $ python3 --version
@@ -681,6 +681,9 @@ from events
 group by 1
 ```
 #### Iceberg Snapshot source code example
+
+<VersionBlock lastVersion="1.8">
+
 ```sql
 
 {% snapshot demosnapshot %}
@@ -698,6 +701,30 @@ select * from {{ ref('customers') }}
 {% endsnapshot %}
 
 ```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+```sql
+
+{% snapshot demosnapshot %}
+
+{{
+    config(
+        strategy='timestamp',
+        schema='jaffle_db',
+        updated_at='dt',
+        file_format='iceberg'
+) }}
+
+select * from {{ ref('customers') }}
+
+{% endsnapshot %}
+
+```
+
+</VersionBlock>
 
 ## Monitoring your Glue Interactive Session
 
@@ -816,7 +843,7 @@ In many cases, you may need to run you dbt jobs to read from another AWS account
 
 Review the following link https://repost.aws/knowledge-center/glue-tables-cross-accounts to set up access policies in source and target accounts
 
-Add the following `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` to your conf in the DBT profile, as such, you can have multiple outputs for each of the accounts that you have access to.
+Add the following `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` to your conf in the dbt profile, as such, you can have multiple outputs for each of the accounts that you have access to.
 
 Note: The access cross-accounts need to be within the same AWS Region
 #### Profile config example
@@ -841,7 +868,7 @@ test_project:
 
 ## Persisting model descriptions
 
-Relation-level docs persistence is supported since dbt v0.17.0. For more
+Relation-level docs persistence is supported. For more
 information on configuring docs persistence, see [the docs](/reference/resource-configs/persist_docs).
 
 When the `persist_docs` option is configured appropriately, you'll be able to
@@ -1018,7 +1045,7 @@ For more information, check the dbt documentation about [testing a new adapter](
 
 ### Supported Functionality
 
-Most dbt Core functionality is supported, but some features are only available with Apache Hudi.
+Most <Constant name="core" /> functionality is supported, but some features are only available with Apache Hudi.
 
 Apache Hudi-only features:
 1. Incremental model updates by `unique_key` instead of `partition_by` (see [`merge` strategy](/reference/resource-configs/glue-configs#the-merge-strategy))

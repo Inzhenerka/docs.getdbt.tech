@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import {HtmlClassNameProvider, ThemeClassNames} from '@docusaurus/theme-common';
-import {BlogPostProvider, useBlogPost} from '@docusaurus/theme-common/internal';
+import {
+  BlogPostProvider,
+  useBlogPost,
+} from "@docusaurus/plugin-content-blog/client";
 import BlogLayout from '@theme/BlogLayout';
 import BlogPostItem from '@theme/BlogPostItem';
 import BlogPostPaginator from '@theme/BlogPostPaginator';
@@ -10,59 +13,76 @@ import TOC from '@theme/TOC';
 import TOCCollapsible from '@theme/TOCCollapsible';
 import styles from './styles.module.css';
 import { DiscourseBlogComments } from '@site/src/components/discourseBlogComments';
+import { useDateTimeFormat } from "@docusaurus/theme-common/internal";
+import StructuredData from '@site/src/components/StructuredData';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 /* dbt Customizations:
  * Import global data from plugin
  * Import TOCCollapsible and custom styles
- * Gets authors, tags, formattedDate from metadata
- * Send authors, tags, formattedDate to snowplow
+ * Gets authors, tags, date from metadata
+ * Format date using theme's method for date formatting
+ * Send authors, tags, date to snowplow
  * Passes post title prop BlogLayout to display in breadcrumbs 
  * Get featured_cta from global data and pass to TOC
 */
 import {usePluginData} from '@docusaurus/useGlobalData';
 
 function BlogPostPageContent({sidebar, children}) {
-  const {metadata, toc} = useBlogPost();
-  const {nextItem, prevItem, frontMatter, authors, tags, formattedDate} = metadata;
+  const { metadata, toc } = useBlogPost();
+  const { nextItem, prevItem, frontMatter, authors, tags, date } =
+    metadata;
   const {
     hide_table_of_contents: hideTableOfContents,
     toc_min_heading_level: tocMinHeadingLevel,
-    toc_max_heading_level: tocMaxHeadingLevel
+    toc_max_heading_level: tocMaxHeadingLevel,
   } = frontMatter;
-  
+
+  const {siteConfig} = useDocusaurusContext();
+
+  // Use same date formatting as in theme's BlogPostItem component
+  // https://github.com/facebook/docusaurus/blob/main/packages/docusaurus-theme-classic/src/theme/BlogPostItem/Header/Info/index.tsx
+  const dateTimeFormat = useDateTimeFormat({
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+  const formatDate = (blogDate) => dateTimeFormat.format(new Date(blogDate));
+
   // dbt Custom - send blog post context to datalayer to send to snowplow
   useEffect(() => {
     let blogContext = {
-      event: 'blogContext',
-      blogAuthor: '',
-      blogCategory: '',
-      blogDate: formattedDate ? formattedDate : undefined
+      event: "blogContext",
+      blogAuthor: "",
+      blogCategory: "",
+      blogDate: date ? formatDate(date) : undefined,
+    };
+
+    if (authors && authors.length > 0) {
+      authors.map((author, i) => {
+        author?.name &&
+          (blogContext.blogAuthor += `${author.name}${i !== authors.length - 1 ? ", " : ""}`);
+      });
     }
 
-    if(authors && authors.length > 0) {
-      authors.map((author, i) => {
-        author?.name && (
-          blogContext.blogAuthor += 
-            `${author.name}${i !== authors.length - 1 ? ', ' : ''}`
-        )
-      })
-    }
-    
-    if(tags && tags.length > 0) {
+    if (tags && tags.length > 0) {
       tags.map((tag, i) => {
-        tag?.label && (
-          blogContext.blogCategory += 
-            `${tag.label}${i !== tags.length - 1 ? ', ' : ''}`
-        )
-      })
+        tag?.label &&
+          (blogContext.blogCategory += `${tag.label}${i !== tags.length - 1 ? ", " : ""}`);
+      });
     }
 
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer && window.dataLayer.push(blogContext)
-  }, [])
+    window.dataLayer && window.dataLayer.push(blogContext);
+  }, []);
 
-  const { blogMeta } = usePluginData('docusaurus-build-global-data-plugin');
-  const { featured_cta } = blogMeta
+  const { blogMeta } = usePluginData("docusaurus-build-global-data-plugin");
+  const { featured_cta } = blogMeta;
+
+  // Get the full URL for the blog post
+  const postUrl = `${siteConfig.url}/blog/${frontMatter.slug}`;
 
   return (
     <BlogLayout
@@ -75,12 +95,21 @@ function BlogPostPageContent({sidebar, children}) {
             toc={toc}
             minHeadingLevel={tocMinHeadingLevel}
             maxHeadingLevel={tocMaxHeadingLevel}
-            featured_cta={featured_cta} 
+            featured_cta={featured_cta}
           />
-        ) : undefined }
+        ) : undefined
+      }
       isBlogPost={true}
-      >
-      
+    >
+      <StructuredData
+        title={frontMatter?.title}
+        description={frontMatter?.description}
+        authors={authors}
+        date={date}
+        url={postUrl}
+        tags={tags}
+      />
+
       {!hideTableOfContents && toc.length > 0 && (
         <TOCCollapsible
           toc={toc}
@@ -92,7 +121,10 @@ function BlogPostPageContent({sidebar, children}) {
 
       <BlogPostItem>{children}</BlogPostItem>
 
-      <DiscourseBlogComments title={frontMatter.title} slug={frontMatter.slug}/>
+      <DiscourseBlogComments
+        title={frontMatter.title}
+        slug={frontMatter.slug}
+      />
 
       {(nextItem || prevItem) && (
         <BlogPostPaginator nextItem={nextItem} prevItem={prevItem} />
