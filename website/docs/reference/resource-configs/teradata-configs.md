@@ -16,7 +16,7 @@ id: "teradata-configs"
 
 ### <Term id="table" />
 * `table_kind` - define the table kind. Legal values are `MULTISET` (default for ANSI transaction mode required by `dbt-teradata`) and `SET`, e.g.:
-    * in sql materialization definition file:
+    * in SQL materialization definition file:
       ```yaml
       {{
         config(
@@ -75,7 +75,7 @@ id: "teradata-configs"
       ```
 
   Examples:
-    * in sql materialization definition file:
+    * In SQL materialization definition file:
       ```yaml
       {{
         config(
@@ -162,7 +162,7 @@ id: "teradata-configs"
       ```
 
   Examples:
-    * in sql materialization definition file:
+    * In SQL materialization definition file:
       ```yaml
       {{
         config(

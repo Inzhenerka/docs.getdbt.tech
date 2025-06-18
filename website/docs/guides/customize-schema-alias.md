@@ -39,9 +39,9 @@ The following is dbt's out-of-the-box default behavior:
 
 - The object name depends on whether an [alias](/reference/resource-configs/alias) has been defined on the model:
     - If no alias is defined, the object will be created with the same name as the model, without the `.sql` or `.py` at the end.
-        - For example, suppose that we have a model where the sql file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and no custom alias is configured. The resulting model will be created in `dbt_myschema_marketing.fct_orders_complete` in the dev environment. 
+        - For example, suppose that we have a model where the SQL file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and no custom alias is configured. The resulting model will be created in `dbt_myschema_marketing.fct_orders_complete` in the dev environment. 
     - If an alias is defined, the object will be created with the configured alias.
-    - For example, suppose that we have a model where the sql file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and the alias is configured to be `fct_orders`. The resulting model will be created in `dbt_myschema_marketing.fct_orders`
+    - For example, suppose that we have a model where the SQL file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and the alias is configured to be `fct_orders`. The resulting model will be created in `dbt_myschema_marketing.fct_orders`
 
 These default rules are a great starting point, and many organizations choose to stick with those without any customization required.
 
