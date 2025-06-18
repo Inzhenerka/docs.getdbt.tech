@@ -12,10 +12,6 @@ pagination_prev: "docs/deploy/hybrid-projects"
 Set up Hybrid projects to upload <Constant name="core" /> artifacts into <Constant name="cloud" /> for better collaboration and visibility.
 </IntroText>
 
-:::tip Available in private beta
-Hybrid project is available in private beta to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
-:::
-
 ## Set up Hybrid projects
 
 In a hybrid project, you use <Constant name="core" /> locally and can upload artifacts of that <Constant name="core" /> project to <Constant name="cloud" /> for central visibility, cross-project referencing, and easier collaboration. 
