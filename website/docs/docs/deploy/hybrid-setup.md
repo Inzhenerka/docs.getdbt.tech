@@ -13,7 +13,7 @@ Set up Hybrid projects to upload <Constant name="core" /> artifacts into <Consta
 </IntroText>
 
 :::tip Available in public preview
-Hybrid project is available in public preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing).
+Hybrid projects is available in public preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing).
 :::
 
 ## Set up Hybrid projects
