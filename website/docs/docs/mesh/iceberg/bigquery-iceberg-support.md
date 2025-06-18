@@ -42,7 +42,7 @@ dbt has an additonal configuration: `storage_uri` that the user can use on the m
 ```yaml
 
 catalogs:
-  - name: biglake_metastore
+  - name: my_bigquery_iceberg_catalog
     active_write_integration: biglake_metastore
     write_integrations:
       - name: biglake_metastore
