@@ -39,11 +39,6 @@
   ],
   "redirects": [
     {
-      "source": "/docs/cloud/account-integrations#ai-integrations",
-      "destination": "docs/cloud/enable-dbt-copilot#ai-integrations",
-      "permanent": true
-    },
-    {
       "source": "/docs/cloud/secure/about-privatelink",
       "destination": "/docs/cloud/secure/about-private-connectivity",
       "permanent": true

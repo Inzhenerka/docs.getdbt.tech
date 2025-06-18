@@ -38,4 +38,8 @@ To configure an OAuth account integration:
 
 <Lightbox src="/img/docs/dbt-cloud/account-integration-oauth.jpg" width="85%" title="Example of the OAuth integration page" />
 
+:::info
 
+We’ve moved the AI integrations section to [Enable dbt Copilot](/docs/cloud/enable-dbt-copilot#ai-integrations).
+
+:::
