@@ -11,7 +11,7 @@ pagination_next: "docs/deploy/hybrid-setup"
 With Hybrid projects, your organization can adopt complementary <Constant name="core" /> and <Constant name="cloud" /> workflows (where some teams develop projects in <Constant name="core" /> and others in <Constant name="cloud" />) and seamlessly integrate these workflows by automatically uploading <Constant name="core" /> [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud" />.
 </IntroText>
 
-:::tip Available in private beta
+:::tip Available in private beta  
 Hybrid projects is available in private beta to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing). To register your interest in the beta, reach out to your account representative.
 :::
 
