@@ -96,7 +96,7 @@ Refer to the [Jaffle shop SQLFluff config file](https://github.com/dbt-labs/jaff
 ```
 [sqlfluff]
 templater = dbt
-# This change (from jinja to dbt templater) will make linting slower
+# This change (from Jinja to dbt templater) will make linting slower
 # because linting will first compile dbt code into data warehouse code.
 runaway_limit = 10
 max_line_length = 80
