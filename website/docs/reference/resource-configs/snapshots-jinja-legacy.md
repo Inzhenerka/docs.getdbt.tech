@@ -1,6 +1,6 @@
 ---
 title: Legacy snapshot configurations
-description: Read about how to configure snapshots using legacy jinja blocks
+description: Read about how to configure snapshots using legacy Jinja blocks
 sidebar: "Legacy configuration"
 ---
 
