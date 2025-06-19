@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: 🛠️ Build site
-        run: NODE_ENV=production npm run build
+        run: NODE_ENV=production CONTEXT=production npm run build
 
       - name: 🔼 Upload site
         run: |
