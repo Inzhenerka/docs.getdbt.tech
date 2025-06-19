@@ -13,28 +13,43 @@ jobs:
     defaults:
       run:
         working-directory: website
-        
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22'
-        cache: 'npm'
-        cache-dependency-path: website/package-lock.json
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Build
-      run: NODE_ENV=production npm run build
 
-    - name: 🔼 Upload site
-      run: |
-        AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }} \
-        AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }} \
-        aws s3 sync "build/" "s3://docs-getdbt-tech-site/" \
-          --endpoint-url https://storage.yandexcloud.net \
-          --delete --only-show-errors --no-progress
-      shell: bash
+    steps:
+      - name: 🔃 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: website/package-lock.json
+
+      - name: ⚙️ Install dependencies
+        run: npm ci
+
+      - name: 🛠️ Build site
+        run: NODE_ENV=production npm run build
+
+      - name: 🔼 Upload site
+        run: |
+          AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }} \
+          AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }} \
+          aws s3 sync "build/" "s3://docs-getdbt-tech-site/" \
+            --endpoint-url https://storage.yandexcloud.net \
+            --delete --only-show-errors --no-progress
+        shell: bash
+
+      - name: 🔃 Purge CDN cache
+        uses: yc-actions/yc-cdn-cache@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.yc_sa_json_credentials }}
+          cdn-resource-id: bc8abm2727b4b5law2ep
+
+      - name: 🏁 Create GitHub deployment
+        uses: chrnorm/deployment-action@v2
+        with:
+          token: '${{ github.token }}'
+          initial-status: success
+          environment-url: https://docs.getdbt.tech/
+          environment: prod
