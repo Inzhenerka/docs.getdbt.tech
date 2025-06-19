@@ -1082,10 +1082,8 @@ The BigQuery Python models also have the following additional configuration para
 - [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
 - [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 
-<VersionBlock firstVersion="1.8">
 
 ## Unit test limitations
 
 You must specify all fields in a BigQuery `STRUCT` for [unit tests](/docs/build/unit-tests). You cannot use only a subset of fields in a `STRUCT`.
 
-</VersionBlock>
