@@ -43,7 +43,7 @@ jobs:
       - name: 🔃 Purge CDN cache
         uses: yc-actions/yc-cdn-cache@v1
         with:
-          yc-sa-json-credentials: ${{ secrets.yc_sa_json_credentials }}
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           cdn-resource-id: bc8abm2727b4b5law2ep
 
       - name: 🏁 Create GitHub deployment
