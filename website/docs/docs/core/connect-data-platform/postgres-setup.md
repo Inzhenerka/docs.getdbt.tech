@@ -132,9 +132,3 @@ pip install psycopg2
 Your OS may have its own dependencies based on your particular scenario.
 
 
-#### Limitations
-
-In versions 1.8.0 and 1.8.1, `psycopg2-binary` is installed on MacOS and Windows operating systems and `psycopg2` is installed on Linux operating systems.
-This has the side effect of requiring the OS dependencies identified above to install `dbt-postgres` on Linux.
-Users will either need to update their workflows to install these dependencies, or upgrade to 1.8.2.
-
