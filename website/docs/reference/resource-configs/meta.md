@@ -357,8 +357,6 @@ The `meta` config can also be defined under the `semantic-models` config block i
 
 <TabItem value="metrics">
 
-<VersionBlock firstVersion="1.8"> 
-
 <File name='dbt_project.yml'>
 
 ```yml
@@ -384,7 +382,6 @@ metrics:
 ```
 
 </File>
-</VersionBlock>
 
 </TabItem>
 
@@ -538,12 +535,6 @@ semantic-models:
 </Tabs>
 
 ### Assign meta to dimensions, measures, entities
-
-<VersionBlock lastVersion="1.8">
-
-Available in dbt version 1.9 and later.
-
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 

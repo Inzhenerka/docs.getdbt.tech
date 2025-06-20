@@ -49,12 +49,6 @@ This would result in the generated relation being located in the `mappings` sche
 
 <TabItem value="snapshots" label="Snapshots">
 
-<VersionBlock lastVersion="1.8">
-
-Available in <Constant name="core" /> v1.9 and higher. Select v1.9 or newer from the version dropdown to view the configs. Try it now in the [<Constant name="cloud" /> "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a snapshot in your `dbt_project.yml` or YAML file.
