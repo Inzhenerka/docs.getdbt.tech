@@ -94,9 +94,8 @@ Once the user is created and assigned proper privileges, it's time to configure 
 
 Configuring the cost management features requires both a connection and a user component:
 
-- **[Connection setup](#connection-setup):** Set up the credentials used to access the data warehouse information. Only one unique [connection](/docs/cloud/connect-data-platform/about-connections#connection-management) per warehouse needs to have the credentials configured.
-
-- **[Provision user access](#provision-user-access):** Add new permissions to users and/or groups to regulate access to the dashboard
+- **[Connection setup](#connection-setup):** Set up the credentials used to access the data warehouse information. Use the connection associated with your main account identifier (name or ID). Only one unique [connection](/docs/cloud/connect-data-platform/about-connections#connection-management) per warehouse needs to have the credentials configured. If you have multiple connections that reference the same account identifier, you only need to add platform metadata credentials to one of them.
+- **[Provision user access](#provision-user-access):** Add new permissions to users and/or groups to regulate access to the dashboard.
 
 ### Connection setup
 
