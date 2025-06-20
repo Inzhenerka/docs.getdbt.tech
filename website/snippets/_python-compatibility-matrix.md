@@ -8,4 +8,4 @@
 | Python 3.10      | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    |
 | Python 3.9       | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    | ✅    |
 
-⚠️ Python 3.13 is supported in dbt Core v1.10 and `dbt-common`. However, note that the base adapter framework of some adapters have not yet explicitly marked support for Python 3.13.
+⚠️ Python 3.13 is supported in dbt Core v1.10 and `dbt-common`. However, note that the base adapter frameworks of some adapters have not yet explicitly marked support for Python 3.13.
