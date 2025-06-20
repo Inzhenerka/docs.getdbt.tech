@@ -152,6 +152,8 @@ To complete setup, follow the steps below in the <Constant name="cloud" /> appli
 
 ### Additional configuration options
 
+The **Single sign-on** section also contains additional configuration options which are located after the credentials fields.
+
 - **Include all groups:** Retrieve all groups to which a user belongs from your identity provider. If a user is a member of nested groups, it will also include the parent groups. When this option is disabled, only groups where the user has direct membership will be supplied.  This option is enabled by default.
 
 - **Maximum number of groups to retrieve:** Provides a configurable limit to the number of groups to retrieve for users.  By default, this is set to 250 groups, but this number can be increased if users' group memberships exceed that amount.
