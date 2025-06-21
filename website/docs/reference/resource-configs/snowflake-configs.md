@@ -19,15 +19,6 @@ of [materialized views](/docs/build/materializations#Materialized-View).
 In particular, dynamic tables have access to the `on_configuration_change` setting.
 Dynamic tables are supported with the following configuration parameters:
 
-<VersionBlock lastVersion="1.8">
-
-| Parameter          | Type       | Required | Default     | Change Monitoring Support |
-|--------------------|------------|----------|-------------|---------------------------|
-| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>` | no       | `apply`     | n/a                       |
-| [`target_lag`](#target-lag)      | `<string>` | yes      |        | alter          |
-| [`snowflake_warehouse`](#configuring-virtual-warehouses)   | `<string>` | yes      |       | alter  |
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 | Parameter          | Type       | Required | Default     | Change Monitoring Support |
@@ -37,83 +28,6 @@ Dynamic tables are supported with the following configuration parameters:
 | [`snowflake_warehouse`](#configuring-virtual-warehouses)   | `<string>` | yes      |       | alter  |
 | [`refresh_mode`](#refresh-mode)       | `<string>` | no       | `AUTO`      | refresh        |
 | [`initialize`](#initialize)     | `<string>` | no       | `ON_CREATE` | n/a   |
-
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-<Tabs
-  groupId="config-languages"
-  defaultValue="project-yaml"
-  values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
-  ]
-}>
-
-<TabItem value="project-yaml">
-
-<File name='dbt_project.yml'>
-
-```yaml
-models:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): dynamic_table
-    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail
-    [+](/reference/resource-configs/plus-prefix)[target_lag](#target-lag): downstream | <time-delta>
-    [+](/reference/resource-configs/plus-prefix)[snowflake_warehouse](#configuring-virtual-warehouses): <warehouse-name>
-
-```
-
-</File>
-
-</TabItem>
-
-
-<TabItem value="property-yaml">
-
-<File name='models/properties.yml'>
-
-```yaml
-version: 2
-
-models:
-  - name: [<model-name>]
-    config:
-      [materialized](/reference/resource-configs/materialized): dynamic_table
-      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail
-      [target_lag](#target-lag): downstream | <time-delta>
-      [snowflake_warehouse](#configuring-virtual-warehouses): <warehouse-name>
-
-```
-
-</File>
-
-</TabItem>
-
-
-<TabItem value="config">
-
-<File name='models/<model_name>.sql'>
-
-```jinja
-
-{{ config(
-    [materialized](/reference/resource-configs/materialized)="dynamic_table",
-    [on_configuration_change](/reference/resource-configs/on_configuration_change)="apply" | "continue" | "fail",
-    [target_lag](#target-lag)="downstream" | "<integer> seconds | minutes | hours | days",
-    [snowflake_warehouse](#configuring-virtual-warehouses)="<warehouse-name>",
-
-) }}
-
-```
-
-</File>
-
-</TabItem>
-
-</Tabs>
 
 </VersionBlock>
 
@@ -496,7 +410,6 @@ def model(dbt, session):
 
 You can use the `python_version` config to run a Snowpark model with [Python versions](https://docs.snowflake.com/en/developer-guide/snowpark/python/setup) 3.9, 3.10, or 3.11.
 
-<VersionBlock firstVersion="1.8">
 
 **External access integrations and secrets**: To query external APIs within dbt Python models, use Snowflake’s [external access](https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview) together with [secrets](https://docs.snowflake.com/en/developer-guide/external-network-access/secret-api-reference). Here are some additional configurations you can use:
 
@@ -517,8 +430,6 @@ def model(dbt, session: snowpark.Session):
         )
     )
 ```
-
-</VersionBlock>
 
 **Docs:** ["Developer Guide: Snowpark Python"](https://docs.snowflake.com/en/developer-guide/snowpark/python/index.html)
 
