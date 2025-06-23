@@ -194,7 +194,7 @@ Leverage the [environment variable `DBT_CLOUD_INVOCATION_CONTEXT`](/docs/build/e
 **Example usage**:
 
 ```
-{% if env_var('DBT_CLOUD_INVOCATION_CONTEXT', 'dev') != 'prod' %}
+{% if env_var('DBT_CLOUD_INVOCATION_CONTEXT') != 'prod' %}
 ```
 
 ### Use grants to manage privileges on objects that dbt creates
