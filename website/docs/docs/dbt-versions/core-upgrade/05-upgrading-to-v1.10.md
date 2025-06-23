@@ -91,7 +91,7 @@ Starting in `v1.10`, you will receive deprecation warnings for dbt code that wil
 
 - Custom inputs (for example, unrecognized resource properties, configurations, and top-level keys)
 - Duplicate YAML keys in the same file
-- Unexpected jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
+- Unexpected Jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
 - Some `properties` are moving to `configs`
 - And more
 
@@ -159,7 +159,7 @@ my_profile: # dbt would use only this profile key
 
 Moving forward, you should delete unused keys or move them to a separate YAML file.
 
-#### Unexpected jinja blocks
+#### Unexpected Jinja blocks
 
 If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
 
@@ -176,7 +176,7 @@ hello!
 ```
 </File>
 
-Moving forward, you should delete these orphaned jinja blocks.
+Moving forward, you should delete these orphaned Jinja blocks.
 
 #### Properties moving to configs
 
