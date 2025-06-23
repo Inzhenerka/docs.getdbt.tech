@@ -25,7 +25,7 @@ To set up a project with a managed repository:
 6. Click **Create**.
    <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/managed-repo.png" title="Adding a managed repository"/>
 
-## Export managed repository
+## Download managed repository
 
 To download a copy of your managed repository from <Constant name="cloud" /> to your local machine:
 
