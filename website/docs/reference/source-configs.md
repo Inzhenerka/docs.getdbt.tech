@@ -8,12 +8,6 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 ## Available configurations
 
-<VersionBlock lastVersion="1.8">
-
-Sources supports [`enabled`](/reference/resource-configs/enabled) and [`meta`](/reference/resource-configs/meta).
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 Sources configurations support [`enabled`](/reference/resource-configs/enabled), [`event_time`](/reference/resource-configs/event-time), and [`meta`](/reference/resource-configs/meta)
@@ -54,17 +48,6 @@ sources:
 ```
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-```yaml
-sources:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
-    [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta):
-      key: value
-```
-</VersionBlock>
-
 </File>
 
 </TabItem>
@@ -100,25 +83,6 @@ sources:
 ```
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-```yaml
-version: 2
-
-sources:
-  - name: [<source-name>]
-    [config](/reference/resource-properties/config):
-      [enabled](/reference/resource-configs/enabled): true | false
-      [meta](/reference/resource-configs/meta): {<dictionary>}
-    tables:
-      - name: [<source-table-name>]
-        [config](/reference/resource-properties/config):
-          [enabled](/reference/resource-configs/enabled): true | false
-          [meta](/reference/resource-configs/meta): {<dictionary>}
-
-```
-</VersionBlock>
-
 </File>
 
 </TabItem>
@@ -148,17 +112,6 @@ You can disable sources imported from a package to prevent them from rendering i
             +event_time: my_time_field
   ```
 
-  </VersionBlock>
-
-  <VersionBlock lastVersion="1.8">
-    ```yaml
-  sources:
-    your_project_name:
-      subdirectory_name:
-        source_name:
-          source_table_name:
-            +enabled: false
-  ```
   </VersionBlock>
   </File>
 
@@ -261,12 +214,6 @@ sources:
 
 
 #### Configure a source with an `event_time`
-
-<VersionBlock lastVersion="1.8">
-
-Configuring an [`event_time`](/reference/resource-configs/event-time) for a source is only available in [the <Constant name="cloud" /> "Latest" release track](/docs/dbt-versions/cloud-release-tracks) or <Constant name="core" /> versions 1.9 and later.
-
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
