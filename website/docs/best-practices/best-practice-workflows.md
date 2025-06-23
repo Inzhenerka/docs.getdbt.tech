@@ -189,7 +189,7 @@ where created_at >= dateadd('day', -3, current_date)
 {% endif %}
 ```
 
-Or, instead of using the target name, leverage the [environment variable `DBT_CLOUD_INVOCATION_CONTEXT`](/docs/build/environment-variables#dbt-platform-context), which provides metadata about the execution context of dbt. The possible values include `prod`, `dev`, `staging`, and `ci`.
+Another option is to use the [environment variable `DBT_CLOUD_INVOCATION_CONTEXT`](/docs/build/environment-variables#dbt-platform-context). This environment variable provides metadata about the execution context of dbt. The possible values are `prod`, `dev`, `staging`, and `ci`.
 
 **Example usage**:
 
