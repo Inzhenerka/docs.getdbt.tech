@@ -15,12 +15,6 @@ Depending on the resource type, you can define configurations in a dbt project a
 2. From the [`dbt_project.yml` file](dbt_project.yml), under the corresponding resource key (`models:`, `snapshots:`, `tests:`, and so on)
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-1. Using a [`config()` Jinja macro](/reference/dbt-jinja-functions/config) within a `model`, `snapshot`, or `test` SQL file
-2. Using a [`config` property](/reference/resource-properties/config) in a `.yml` file for supported resource directories like `models/`, `snapshots/`, `seeds/`, `analyses/`, or `tests/` directory.
-3. From the [`dbt_project.yml` file](dbt_project.yml), under the corresponding resource key (`models:`, `snapshots:`, `tests:`, and so on)
-</VersionBlock>
 
 ## Config inheritance
 

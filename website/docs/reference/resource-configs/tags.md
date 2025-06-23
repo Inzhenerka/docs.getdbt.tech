@@ -17,25 +17,6 @@ datatype: string | [string]
 
 <File name='dbt_project.yml'>
 
-<VersionBlock lastVersion="1.8">
-
-```yml
-
-[models](/reference/model-configs):
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +tags: <string> | [<string>] # Supports single strings or list of strings
-
-[snapshots](/reference/snapshot-configs):
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +tags: <string> | [<string>]
-
-[seeds](/reference/seed-configs):
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +tags: <string> | [<string>]
-
-```
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 ```yml
@@ -68,11 +49,6 @@ datatype: string | [string]
 <VersionBlock firstVersion="1.9">
 
 The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `exposures`, `models`, `snapshots`, `seeds`, or `saved_queries` as appropriate.
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `exposures`, `models`, `snapshots`, or `seeds` as appropriate.
 </VersionBlock>
 
 <File name='resource_type/properties.yml'>
@@ -275,12 +251,6 @@ seeds:
 </File>
 
 ### Apply tags to saved queries
-
-<VersionBlock lastVersion="1.8">
-
-<VersionCallout version="1.9" />
-
-</VersionBlock>
 
 
 This following example shows how to apply a tag to a saved query in the `dbt_project.yml` file. The saved query is then tagged with `order_metrics`.
