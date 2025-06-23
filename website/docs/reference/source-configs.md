@@ -258,7 +258,7 @@ sources:
 
 Use a `freshness` block to define expectations about how frequently a table is updated with new data, and to raise warnings and errors when those expectation are not met.
 
-dbt compares the most recent upate timestamp calculated from a column, warehouse metadata, or custom query against the current timestamp when the `freshness` check is running.
+dbt compares the most recent upate timestamp calculated from a column, warehouse metadata, or custom query against the current timestamp when the freshness check is running.
 
 You can provide one or both of `warn_after` and `error_after` parameters. If neither is provided, then dbt will not calculate freshness snapshots for the tables in this source. For more information, see [freshness](/reference/resource-properties/freshness).
 
