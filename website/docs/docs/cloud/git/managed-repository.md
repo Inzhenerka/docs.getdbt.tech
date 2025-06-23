@@ -35,4 +35,4 @@ To download a copy of your managed repository from <Constant name="cloud" /> to 
 4. Locate the **Repository** field and click the hyperlink for the repo.
 5. Below the **Deploy key** will be the **Download repository** option. Click the button to download. If you don't see this option, you're either not assigned a [permission set](/docs/cloud/manage-access/enterprise-permissions#account-permissions) with `write` access to Git repositories, or you don't have a managed repo for your project. 
 
-<Lightbox src="/img/docs/download-managed-repo.png" size="60%" title="The download button for a managed repo." />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/download-managed-repo.png" size="60%" title="The download button for a managed repo." />
