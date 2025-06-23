@@ -178,7 +178,7 @@ To learn more, read the docs on [state](/reference/node-selection/syntax#about-n
 ## Pro-tips for dbt Projects
 ### Limit the data processed when in development
 
-In a development environment, faster run times allow you to iterate your code more quickly. We frequently speed up our runs by using a pattern that limits data based on the target name:
+In a development environment, faster run times allow you to iterate your code more quickly. We frequently speed up our runs by using a pattern that limits data based on the [target](/reference/dbt-jinja-functions/target) name:
 
 ```sql
 select
