@@ -29,7 +29,7 @@ To set up a project with a managed repository:
 
 To download a copy of your managed repository from <Constant name="cloud" /> to your local machine:
 
-1. Navigate to a project using the managed repository feature.
+1. Navigate to a project using a managed repository.
 2. Click **Dashboard** from the main left-side menu.
 3. From the dashboard, click **Settings**.
 4. Locate the **Repository** field and click the hyperlink for the repo.
