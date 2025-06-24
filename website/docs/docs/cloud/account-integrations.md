@@ -6,7 +6,7 @@ description: "Learn how to configure account integrations for your dbt account."
 
 The following sections describe the different **Account integrations** available from your <Constant name="cloud" /> account under the account **Settings** section.
 
-<Lightbox src="/img/docs/dbt-cloud/account-integrations.jpg" title="Example of Account integrations from the sidebar" /> 
+<Lightbox src="/img/docs/dbt-cloud/account-integrations.png" title="Example of Account integrations from the sidebar" /> 
 
 ## Git integrations
 
@@ -36,7 +36,7 @@ To configure an OAuth account integration:
 3. Under **OAuth**, click on **Link** to [connect your Slack account](/docs/deploy/job-notifications#set-up-the-slack-integration).
 4. For custom OAuth providers, under **Custom OAuth integrations**, click on **Add integration** and select the [OAuth provider](/docs/cloud/manage-access/sso-overview) from the list. Fill in the required fields and click **Save**.
 
-<Lightbox src="/img/docs/dbt-cloud/account-integration-oauth.jpg" width="85%" title="Example of the OAuth integration page" />
+<Lightbox src="/img/docs/dbt-cloud/account-integration-oauth.png" width="85%" title="Example of the OAuth integration page" />
 
 ## AI integrations
 
@@ -52,9 +52,9 @@ Note, if you bring-your-own provider, you will incur API calls and associated ch
 
 To configure the AI integration in your <Constant name="cloud" /> account, a <Constant name="cloud" /> admin can perform the following steps:
 1. Navigate to **Account settings** in the side menu.
-2. Select **Integrations** and scroll to the **AI** section.
+2. Click **Copilot**.
 3. Click on the **Pencil** icon to the right of **OpenAI** to configure the AI integration.
-   <Lightbox src="/img/docs/dbt-cloud/account-integration-ai.jpg" width="85%" title="Example of the AI integration page" />
+   <Lightbox src="/img/docs/dbt-cloud/account-integration-ai.png" width="85%" title="Example of the AI integration page" />
 4. Configure the AI integration for either **dbt Labs OpenAI**, **OpenAI**, or **Azure OpenAI**.
 
   <Tabs queryString="ai-integration"> 
@@ -63,7 +63,7 @@ To configure the AI integration in your <Constant name="cloud" /> account, a <Co
   1. Select the toggle for **dbt Labs** to use dbt Labs' managed OpenAI key.
   2. Click **Save**.
 
-  <Lightbox src="/img/docs/dbt-cloud/account-integration-dbtlabs.jpg" width="85%" title="Example of the dbt Labs integration page" />
+  <Lightbox src="/img/docs/dbt-cloud/account-integration-dbtlabs.png" width="85%" title="Example of the dbt Labs integration page" />
   </TabItem>
 
   <TabItem value="openai" label="OpenAI">
@@ -72,7 +72,7 @@ To configure the AI integration in your <Constant name="cloud" /> account, a <Co
   1. Select the toggle for **OpenAI** to use your own OpenAI key.
   2. Enter the API key.
   3. Click **Save**.
-    <Lightbox src="/img/docs/dbt-cloud/account-integration-openai.jpg" width="85%" title="Example of the OpenAI integration page" />
+    <Lightbox src="/img/docs/dbt-cloud/account-integration-openai.png" width="85%" title="Example of the OpenAI integration page" />
 
   </TabItem>
 
@@ -100,7 +100,7 @@ To configure the AI integration in your <Constant name="cloud" /> account, a <Co
   2. Enter your Azure OpenAI API key.
   3. Enter the **Endpoint**, **API Version**, and **Deployment Name**.
   4. Click **Save**.
-  <Lightbox src="/img/docs/dbt-cloud/account-integration-azure-manual.jpg" width="85%" title="Example of Azure OpenAI integration section" />
+  <Lightbox src="/img/docs/dbt-cloud/account-integration-azure-manual.png" width="85%" title="Example of Azure OpenAI integration section" />
 
   </TabItem>
   </Tabs>

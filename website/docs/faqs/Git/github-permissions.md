@@ -14,8 +14,6 @@ A GitHub organization admin will need to update the permissions in GitHub for th
 
 1. Navigate to your GitHub account. Click on the top right profile icon and then **Settings** (or personal if using a non-organization account).
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/github-settings.jpg" width="50%" title="Navigate to your GitHub account to configure your settings." />
-
 2. Then go to **Integrations** and then select **Applications** to identify any necessary permission changes. Note that a GitHub repository admin may not see the same permission request.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/github-applications.jpg" width="80%" title="Navigate to Application settings to identify permission changes." />
@@ -26,7 +24,7 @@ A GitHub organization admin will need to update the permissions in GitHub for th
 
 For more info on GitHub permissions, refer to [access permissions](https://docs.github.com/en/get-started/learning-about-github/access-permissions-on-github).
 
-Alternatively, try [disconecting your GitHub account](#disconect-github) in <Constant name="cloud" />, detailed in the following section.
+Alternatively, try [disconnecting your GitHub account](#disconnect-github) in <Constant name="cloud" />, detailed in the following section.
 
 ## Disconnect GitHub
 
@@ -37,10 +35,10 @@ Disconnect the GitHub and <Constant name="cloud" /> integration in <Constant nam
 3. Click the repository link under **Repository**.
 4. In the **Repository details** page, click **Edit**.
 5. Click **Disconnect** to remove the GitHub integration.
-6. Return to your **Project details** page and reconnect your repository by clicking the **Configure Repository** link.
-7. Configure your repository and click **Save**
-
-<Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" title="Disconnect and reconnect your git repository in your dbt Account Settings pages."/>
+        <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" title="Disconnect and reconnect your git repository in your dbt Account Settings pages."/>
+6. Click **Confirm Disconnect**. 
+7. Return to your **Project details** page and reconnect your repository by clicking the **Configure Repository** link.
+8. Click **GitHub** and select your repository.
 
 ## Support
 If you've tried these workarounds and are still experiencing this behavior &mdash; reach out to the [dbt Support](mailto:support@getdbt.com) team and we'll be happy to help!
