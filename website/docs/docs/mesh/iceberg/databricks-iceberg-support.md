@@ -15,8 +15,8 @@ Example SQL:
 ```sql
 {{ config(
     tblproperties={
-      'delta.enableIcebergCompatV2' = 'true'
-      'delta.universalFormat.enabledFormats' = 'iceberg'
+      'delta.enableIcebergCompatV2': 'true'
+      'delta.universalFormat.enabledFormats': 'iceberg'
     }
  ) }}
 
@@ -76,8 +76,12 @@ catalogs:
 
 {{
     config(
-        materialized='table',
-        catalog = unity_catalog
+        tblproperties = {
+          'delta.enableIcebergCompatV2': 'true',
+          'delta.universalFormat.enabledFormats': 'iceberg'
+        },
+        materialized = 'table',
+        catalog = 'ps_demo'
 
     )
 }}
