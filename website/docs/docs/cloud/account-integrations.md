@@ -38,69 +38,8 @@ To configure an OAuth account integration:
 
 <Lightbox src="/img/docs/dbt-cloud/account-integration-oauth.png" width="85%" title="Example of the OAuth integration page" />
 
-## AI integrations
-
-Once AI features have been [enabled](/docs/cloud/enable-dbt-copilot#enable-dbt-copilot), you can use dbt Labs' AI integration or bring-your-own provider to support AI-powered <Constant name="cloud" /> features like [<Constant name="copilot" />](/docs/cloud/dbt-copilot) and [Ask dbt](/docs/cloud-integrations/snowflake-native-app).
-
-<Constant name="cloud" /> supports AI integrations for dbt Labs-managed OpenAI keys, Self-managed OpenAI keys, or Self-managed Azure OpenAI keys.
-
-Note, if you bring-your-own provider, you will incur API calls and associated charges for features used in <Constant name="cloud" />. Bringing your own provider is available for Enterprise or Enterprise+ plans.
-
 :::info
-<Constant name="cloud" />'s AI is optimized for OpenAIs gpt-4o. Using other models can affect performance and accuracy, and functionality with other models isn't guaranteed.
+
+We’ve moved the AI integrations section to [Enable dbt Copilot](/docs/cloud/enable-dbt-copilot#ai-integrations).
+
 :::
-
-To configure the AI integration in your <Constant name="cloud" /> account, a <Constant name="cloud" /> admin can perform the following steps:
-1. Navigate to **Account settings** in the side menu.
-2. Click **Copilot**.
-3. Click on the **Pencil** icon to the right of **OpenAI** to configure the AI integration.
-   <Lightbox src="/img/docs/dbt-cloud/account-integration-ai.png" width="85%" title="Example of the AI integration page" />
-4. Configure the AI integration for either **dbt Labs OpenAI**, **OpenAI**, or **Azure OpenAI**.
-
-  <Tabs queryString="ai-integration"> 
-  <TabItem value="dbtlabs" label="dbt Labs OpenAI">
-
-  1. Select the toggle for **dbt Labs** to use dbt Labs' managed OpenAI key.
-  2. Click **Save**.
-
-  <Lightbox src="/img/docs/dbt-cloud/account-integration-dbtlabs.png" width="85%" title="Example of the dbt Labs integration page" />
-  </TabItem>
-
-  <TabItem value="openai" label="OpenAI">
-  Bringing your own OpenAI key is available for Enterprise or Enterprise+ plans.
-
-  1. Select the toggle for **OpenAI** to use your own OpenAI key.
-  2. Enter the API key.
-  3. Click **Save**.
-    <Lightbox src="/img/docs/dbt-cloud/account-integration-openai.png" width="85%" title="Example of the OpenAI integration page" />
-
-  </TabItem>
-
-  <TabItem value="azure" label="Azure OpenAI">
-  Bringing your own Azure OpenAI key is available for Enterprise or Enterprise+ plans.
-
-  To learn about deploying your own OpenAI model on Azure, refer to [Deploy models on Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models-openai). Configure credentials for your Azure OpenAI deployment in <Constant name="cloud" /> in the following two ways:
-    - [From a Target URI](#from-a-target-uri)
-    - [Manually providing the credentials](#manually-providing-the-credentials)
-
-  #### From a Target URI
-
-  1. Locate your Azure OpenAI deployment URI in your Azure Deployment details page.
-  2. In the <Constant name="cloud" /> **Azure OpenAI** section, select the tab **From Target URI**.
-  3. Paste the URI into the **Target URI** field.
-  4. Enter your Azure OpenAI API key.
-  5. Verify the **Endpoint**, **API Version**, and **Deployment Name** are correct.
-  6. Click **Save**.
-  <Lightbox src="/img/docs/dbt-cloud/account-integration-azure-target.jpg" width="85%" title="Example of Azure OpenAI integration section" />
-
-  #### Manually providing the credentials
-
-  1. Locate your Azure OpenAI configuration in your Azure Deployment details page.
-  2. In the <Constant name="cloud" /> **Azure OpenAI** section, select the tab **Manual Input**.
-  2. Enter your Azure OpenAI API key.
-  3. Enter the **Endpoint**, **API Version**, and **Deployment Name**.
-  4. Click **Save**.
-  <Lightbox src="/img/docs/dbt-cloud/account-integration-azure-manual.png" width="85%" title="Example of Azure OpenAI integration section" />
-
-  </TabItem>
-  </Tabs>

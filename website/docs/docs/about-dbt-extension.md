@@ -139,7 +139,7 @@ View table lineage:
 - Right-click on a node to update the DAG, or view column lineage for a node.
 
 View column lineage:
-- Right-click on a filename, or in the sql contents of a model file.
+- Right-click on a filename, or in the SQL contents of a model file.
 - Select **dbt: View Lineage** --> **Show column lineage**.
 - Select the column to view lineage for.
 - Double-click on a node to update the DAG selector.
