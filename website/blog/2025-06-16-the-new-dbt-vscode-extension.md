@@ -57,9 +57,9 @@ There was no question what I was picking first. No more waiting for your platfor
 
 This is because Fusion doesn't treat SQL code as just a string anymore; it really understands it. It also shows you some helpful information about the error.
 
-<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_function_error.png" title="Showing function errors." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_function_error.png" title="Showing function errors." />
 
-<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_column_error.png" title="Showing column name errors." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_column_error.png" title="Showing column name errors." />
 
 This is the greatest improvement of this engine, IMHO.
 
@@ -69,13 +69,13 @@ My next favorite feature is the lineage view. If you were a <Constant name="clou
 
 Now there's a tab lineage tab that shows your project’s lineage directly in VS Code. It’s interactive and live. You can use the lenses feature, that's pretty cool to have a good visualization of your project by different attributes like resource_type, or materialization.
 
-<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_project_lineage.png" title="Project Lineage." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_project_lineage.png" title="Project Lineage." />
 
 And something I was not expecting to be here, but thankfully it is, column-level lineage! Not just where columns come from, but also how they change: renamed, transformed, or passed through.
 
 This is incredibly helpful for debugging transformations or understanding how that key metric is shaped across models.
 
-<Lightbox src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_cll.png" title="Column-level Lineage." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_cll.png" title="Column-level Lineage." />
 
 ### Instant refactoring
 
@@ -84,7 +84,7 @@ Ok, let me show you just one more thing! Have you ever faced a situation where y
 Now, thanks to the deep dbt Fusion SQL understanding, you can rename your model or column, and the extension will refactor all downstream dependencies for you. But don't worry, before doing it, the extension allows you to see a preview of the changes, so you can be sure it is doing what you want.
 
 <video width="100%" height="100%" playsinline muted controls>
-  <source src="/img/blog/2025-06-06-the-new-dbt-vscode-extension/vs_code_extension_refactoring.webm" type="video/webm" />
+  <source src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_refactoring.webm" type="video/webm" />
 </video>
 
 There are a lot more other features this extension is bringing, like navigating through models instantly, autocompleting everything, renaming models or columns and being warned how it will impact your project, previewing models & CTEs, and other features that are already covered in other blogs. By the way, it just launched, so I believe we can expect more and more enhancements to come.
