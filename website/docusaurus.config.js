@@ -19,8 +19,8 @@ const GIT_BRANCH = process?.env?.VERCEL_GIT_COMMIT_REF;
 let { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME } = process.env;
 
 let metatags = [];
-// If Not Current Branch, do not index site
-if (GIT_BRANCH && GIT_BRANCH !== "current") {
+// If Not `current` or `main` branch, do not index site
+if (GIT_BRANCH && (GIT_BRANCH !== "current" && GIT_BRANCH !== "main")) {
   metatags.push({
     tagName: "meta",
     attributes: {
