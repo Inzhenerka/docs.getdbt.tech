@@ -81,7 +81,7 @@ catalogs:
           'delta.universalFormat.enabledFormats': 'iceberg'
         },
         materialized = 'table',
-        catalog = 'ps_demo'
+        catalog = 'unity_catalog'
 
     )
 }}
