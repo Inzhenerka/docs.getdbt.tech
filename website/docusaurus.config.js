@@ -20,15 +20,15 @@ let { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME } = process.env;
 
 let metatags = [];
 // If Not `current` branch, do not index site
-if (GIT_BRANCH && GIT_BRANCH !== "current") {
-  metatags.push({
-    tagName: "meta",
-    attributes: {
-      name: "robots",
-      content: "noindex",
-    },
-  });
-}
+// if (GIT_BRANCH && GIT_BRANCH !== "current") {
+//   metatags.push({
+//     tagName: "meta",
+//     attributes: {
+//       name: "robots",
+//       content: "noindex",
+//     },
+//   });
+// }
 
 console.log("DEBUG: VERCEL_GIT_COMMIT_REF =", process.env.VERCEL_GIT_COMMIT_REF);
 console.log("DEBUG: GIT_BRANCH =", GIT_BRANCH);
