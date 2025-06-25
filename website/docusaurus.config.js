@@ -103,8 +103,8 @@ var siteSettings = {
     navbar: {
       hideOnScroll: true,
       logo: {
-        src: "/img/dbt-logo.svg",
-        srcDark: "img/dbt-logo-light.svg",
+        src: "/img/dbt-logo.svg?v=2",
+        srcDark: "img/dbt-logo-light.svg?v=2",
         alt: "dbt Logo",
       },
       items: [
@@ -217,7 +217,7 @@ var siteSettings = {
 
           <div class="footer-logo">
             <a href="/">
-              <img src="/img/dbt-logo-light.svg" alt="dbt Labs" />
+              <img src="/img/dbt-logo-light.svg?v=2" alt="dbt Labs" />
             </a>
           </div>
 
