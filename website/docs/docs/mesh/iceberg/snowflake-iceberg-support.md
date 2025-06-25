@@ -7,7 +7,7 @@ description: Understand Snowflake support for Apache Iceberg.
 
 dbt supports materializing the table in Iceberg table format in two different ways:
 
-- the model configuration field `table_format = 'iceberg'` (legacy)
+- The model configuration field `table_format = 'iceberg'` (legacy)
 - catalog integration in the `model/resource/dbt_project.yml` configuration
 
 We recommend that you use the Iceberg catalog configuration and apply the catalog in the model config for ease of use and future-proof your code. Using `table_format = 'iceberg'` directly on the model configuration is a legacy approach. 
