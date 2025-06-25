@@ -1552,6 +1552,11 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   }
 }
 
+@media (min-width: 1480px) {
+  .dbt__brand {
+    border-right: 1px solid var(--ifm-toc-border-color);
+  }
+}
 
 @media (min-width: 1440px) {
   .container--fluid {
@@ -1560,7 +1565,6 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
   .dbt__brand {
     background-color: var(--ifm-background-color);
-    border-right: 1px solid var(--ifm-toc-border-color);
   }
 }
 
