@@ -154,6 +154,7 @@ Set the compilation environment to control how Jinja functions are rendered. Thi
 - Supports "typed" environments marked as `Production`, `Staging`, and/or `Development`.
 - Enables you to run Semantic Layer queries against staging environments (development environments not supported).
 - Still uses the individual user credentials, so users must have appropriate access to query `PROD` and `STG`. 
+- Changing the environment changes context for the Catalog view in Insights, as well as the environment context during the handoff to Catalog and Canvas. For example, switching to `Staging` in Insights and selecting **View in Catalog** will open the `Staging` view in Catalog. 
 
 <Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Set the environment for your Jinja context" />
 
