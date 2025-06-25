@@ -29,7 +29,7 @@ You wanted to check the lineage of your project, one of the coolest features of 
 
 Did you want to check your project's metadata? You had to rely on [`dbt docs`](/reference/commands/cmd-docs) (that whole process again), or build some custom solution with the [`manifest.json`](/reference/artifacts/manifest-json).
 
-Moving to dbt Cloud (now called just <Constant name="cloud" />) made things smoother. It has a built-in <Constant name="cloud_ide" with git integration, easier to compile and preview models. An auto-updating lineage tab below the model, a much better documentation with dbt Explorer, now renamed to Catalog. And a lot of other powerful features for orchestration, observability, CI/CD, and more.
+Moving to dbt Cloud (now called just <Constant name="cloud" />) made things smoother. It has a built-in <Constant name="cloud_ide" /> with git integration, easier to compile and preview models. An auto-updating lineage tab below the model, a much better documentation with dbt Explorer, now renamed to Catalog. And a lot of other powerful features for orchestration, observability, CI/CD, and more.
 
 The cloud-based <Constant name="cloud" /> was a big step up, but even so, many of us still preferred to use our own dev environments. We like using our themes, our VS Code extensions, our terminals, but this would mean losing all the nice cloud features while developing. A sad trade-off.
 
