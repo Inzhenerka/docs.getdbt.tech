@@ -33,7 +33,7 @@
   --ifm-link-hover-color: #632FF5;
   --ifm-button-border-radius: var(--radius-xl);
   --ifm-menu-color: #030711;
-  --ifm-menu-color-active: #009999;
+  --ifm-menu-color-active: var(--color-coalesce-purple-600);
   --ifm-pagination-nav-color-hover: #047377;
   --ifm-tabs-color-active: #047377;
   --ifm-menu-color-background-active: var(--color-coalesce-purple-100);
