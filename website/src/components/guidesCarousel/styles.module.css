@@ -25,10 +25,6 @@
   background: var(--ifm-color-primary);
 }
 
-.carouselContainer :global(.swiper-wrapper) {
-
-}
-
 .carouselContainer :global(.swiper-button-next),
 .carouselContainer :global(.swiper-button-prev) {
   color: var(--ifm-color-primary);
