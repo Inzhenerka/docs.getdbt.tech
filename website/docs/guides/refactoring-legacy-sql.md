@@ -10,7 +10,6 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['SQL']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -111,7 +110,7 @@ You'll move it into a `/marts` subfolder within your project's `/models` folder 
 **Cons**:
 - More pressure to get it right the first time, especially if you've referenced this model from any BI tool or downstream process.
 - Harder to audit, since you've overwritten your audit comparison model.
-- Requires navigating through Git commits to see what code you've changed throughout.
+- Requires navigating through <Constant name="git" /> commits to see what code you've changed throughout.
 
 
 #### Alongside refactoring

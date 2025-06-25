@@ -1,7 +1,7 @@
 ---
 title: "Semantic models"
 id: "semantic-models"
-description: "Semantic models are yml abstractions on top of a dbt mode, connected via joining keys as edges"
+description: "Semantic models are YAML abstractions on top of a dbt mode, connected via joining keys as edges"
 keywords:
   - dbt metrics layer
 sidebar_label: Semantic models
@@ -13,7 +13,7 @@ import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
 
 <CopilotBeta resource='semantic models' />
 
-Semantic models are the foundation for data definition in MetricFlow, which powers the dbt Semantic Layer:
+Semantic models are the foundation for data definition in MetricFlow, which powers the <Constant name="semantic_layer" />:
 
 - Think of semantic models as nodes connected by entities in a semantic graph.
 - MetricFlow uses YAML configuration files to create this graph for querying metrics.
@@ -263,4 +263,4 @@ import SetUpPages from '/snippets/\_metrics-dependencies.md';
 - [Dimensions](/docs/build/dimensions)
 - [Entities](/docs/build/entities)
 - [Measures](/docs/build/measures)
-- [Semantic Layer best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)
+- [<Constant name="semantic_layer" /> best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)

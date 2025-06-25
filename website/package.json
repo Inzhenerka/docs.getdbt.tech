@@ -7,12 +7,14 @@
     "test": "npx jest --watch",
     "lint": "eslint --cache",
     "lintAll": "eslint . --fix",
-    "prepare": "cd .. && husky install"
+    "prepare": "cd .. && husky install",
+    "cleanup-duplicates": "node scripts/cleanup_duplicate_constants.js"
   },
   "dependencies": {
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/faster": "^3.7.0",
     "@docusaurus/plugin-ideal-image": "^3.7.0",
+    "@docusaurus/plugin-vercel-analytics": "^3.7.0",
     "@docusaurus/preset-classic": "^3.7.0",
     "@docusaurus/theme-search-algolia": "^3.7.0",
     "@mdx-js/react": "^3.0.1",

@@ -32,7 +32,7 @@ When using defer, you may be selecting from production datasets, development dat
 - if you apply env-specific limits in dev but not prod, as you may end up selecting more data than you expect
 - when executing tests that depend on multiple parents (e.g. `relationships`), since you're testing "across" environments
 
-Deferral requires both `--defer` and `--state` to be set, either by passing flags explicitly or by setting environment variables (`DBT_DEFER` and `DBT_STATE`). If you use dbt Cloud, read about [how to set up CI jobs](/docs/deploy/continuous-integration).
+Deferral requires both `--defer` and `--state` to be set, either by passing flags explicitly or by setting environment variables (`DBT_DEFER` and `DBT_STATE`). If you use <Constant name="cloud" />, read about [how to set up CI jobs](/docs/deploy/continuous-integration).
 
 
 #### Favor state
@@ -213,6 +213,6 @@ dbt will check to see if `dev_alice.model_a` exists. If it doesn't exist, dbt wi
 
 ## Related docs
 
-- [Using defer in dbt Cloud](/docs/cloud/about-cloud-develop-defer)
+- [Using defer in <Constant name="cloud" />](/docs/cloud/about-cloud-develop-defer)
 - [on_configuration_change](/reference/resource-configs/on_configuration_change)
 
