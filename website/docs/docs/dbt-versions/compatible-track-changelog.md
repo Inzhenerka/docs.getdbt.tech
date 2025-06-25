@@ -10,6 +10,12 @@ Each monthly "Compatible" release includes functionality matching up-to-date ope
 
 For more information, see [release tracks](/docs/dbt-versions/cloud-release-tracks).
 
+## July 2025
+
+The compatible release slated for July 2025 will be skipped in order to further stabilize the minor upgrade of `dbt-core==1.10.0` ([released June 16, 2025](https://pypi.org/project/dbt-core/1.10.0/)) across dbt Cloud. 
+
+Compatible releases will resume in August 2025.
+
 ## June 2025
 
 Release date: June 12, 2025
