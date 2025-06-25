@@ -44,7 +44,7 @@
   font-size: 18px;
 }
 [data-theme="dark"] .discourseTopics ul li a {
-  color: #91D0CB;
+  color: var(--ifm-link-color);
 }
 .discourseTopics blockquote {
   margin-bottom: 0;
