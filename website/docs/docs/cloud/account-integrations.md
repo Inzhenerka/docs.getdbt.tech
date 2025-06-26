@@ -24,7 +24,7 @@ To configure a <Constant name="git" /> account integration:
 
 You can connect your <Constant name="cloud" /> account to additional <Constant name="git" /> providers by importing a git repository from any valid git URL. Refer to [Import a git repository](/docs/cloud/git/import-a-project-by-git-url) for more information.
 
-<Lightbox src="/img/docs/dbt-cloud/account-integration-git.jpg" width="85%" title="Example of the Git integration page" />
+<Lightbox src="/img/docs/dbt-cloud/account-integration-git.png" width="85%" title="Example of the Git integration page" />
 
 ## OAuth integrations
 
