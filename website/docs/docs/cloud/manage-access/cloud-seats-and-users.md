@@ -100,7 +100,7 @@ To delete a user in <Constant name="cloud" />, you must be an account owner or h
 
 1. From <Constant name="cloud" />, click on your account name in the left side menu and select **Account settings**.
 
-<Lightbox src="/img/docs/dbt-cloud/navigate-to-account-settings.png" width="85%" title="Navigate to Account Settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="85%" title="Navigate to Account Settings" />
 
 2. In **Account Settings**, select **Users**.
 3. Select the user you want to delete, then click **Edit**. 
