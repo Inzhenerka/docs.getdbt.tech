@@ -85,7 +85,24 @@ To avoid any unintentional data modification, dbt will **not** automatically app
 
 ## How `dbt_scd_id` is calculated
 
-The calculation of `dbt_scd_id` is handled inside dbt's snapshot macro, at this [line in the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
+`dbt_scd_id` is handled inside dbt's snapshot macro, specifically in this [line of the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
+
+It's computed as an md5 hash of the string-concatenated values of the snapshot's [`unique_key`](/reference/resource-configs/unique_key) and hashing the `updated_at_timestamp()`.
+
+ The following is an example of a custom hash calculation that combines multiple fields into a single string and hashes it using md5.
+
+ ```
+ md5(
+  coalesce(cast(unique_key1 as string), '') || '|' ||
+  coalesce(cast(unique_key2 as string), '') || '|' ||
+  coalesce(cast(updated_at as string), '')
+)
+```
+
+- For the [`timestamp` strategy](/reference/resource-configs/strategy#use-the-timestamp-strategy), the hash typically combines the [`unique_key`](/reference/resource-configs/unique_key) columns and the `updated_at` value.
+- For the [`check` strategy](/reference/resource-configs/strategy#use-the-check-strategy), the hash combines the `unique_key` columns and the values of the columns listed in [`check_cols`](/reference/resource-configs/check_cols).
+
+If you don’t want to use md5, you can use your own version of the [dispatched macro](https://github.com/dbt-labs/dbt-adapters/blob/4b3966efc50b1d013907a88bee4ab8ebd022d17a/dbt-adapters/src/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L42-L47).  
 
 ## Example
 
