@@ -80,7 +80,7 @@ To add a user in <Constant name="cloud" />, you must be an account owner or have
 
 1. From <Constant name="cloud" />, click on your account name in the left side menu and select **Account settings**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="75%" title="Navigate to Account Settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="75%" title="Navigate to Account settings" />
 
 2. In **Account Settings**, select **Billing**. 
 3. Under **Billing details**, enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing address** section. Leaving these blank won't allow you to save your changes.
