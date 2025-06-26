@@ -23,7 +23,7 @@ If you are on a **Starter** plan and you are deleting users to reduce the number
 2. Under **Billing details**, enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing address** section. If you leave any field blank, you won't be able to save your changes.
 3. Click **Update Payment Information** to save your changes. 
 
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="85%" title="Navigate to Account Settings -> Users to modify dbt users" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="85%" title="Navigate to Account settings -> Users to modify dbt users" />
 
 ## Related docs
 
