@@ -19,7 +19,7 @@ To delete a user in <Constant name="cloud" />, you must be an account owner or h
 <Lightbox src="/img/docs/dbt-cloud/delete_user.png" width="85%" title="Deleting a user" />
 
 If you are on a **Starter** plan and you are deleting users to reduce the number of billable seats, you also need to take these steps to lower the license count:
-1. In **Account Settings**, select **Billing**. 
+1. In **Account settings**, select **Billing**. 
 2. Under **Billing details**, enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing address** section. If you leave any field blank, you won't be able to save your changes.
 3. Click **Update Payment Information** to save your changes. 
 
