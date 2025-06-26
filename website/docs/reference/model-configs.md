@@ -334,13 +334,12 @@ Some types of configurations are specific to a particular model. In these cases,
 {{
   config(
     materialized = "table",
-    sort = 'event_time',
-    dist = 'event_id'
+    tags = ["core", "events"]
   )
 }}
 
 
-select * from ...
+select * from {{ ref('raw_events') }}
 ```
 
 </File>
@@ -352,10 +351,15 @@ version: 2
 
 models:
   - name: base_events
-    config:
-      materialized: table
-      sort: event_time
-      dist: event_id
+    description: "Standardized event data from raw sources"
+    columns:
+      - name: user_id
+        description: "Unique identifier for a user"
+        tests:
+          - not_null
+          - unique
+      - name: event_type
+        description: "Type of event recorded (click, purchase, etc.)"
 ```
 
 </File>
@@ -378,7 +382,7 @@ models:
     config:
       freshness:
         build_after:  # build this model no more often than every X amount of time, as long as as it has new data
-          count: positive_integer
+          count: <positive_integer>
           period: minute | hour | day
           updates_on: any | all # optional config
 ```

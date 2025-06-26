@@ -33,7 +33,7 @@ When users are provisioned, the following attributes are supported
 
 The following IdPs are supported in the <Constant name="cloud" /> UI:
 - [Okta](#scim-configuration-for-okta)
-- [Entra ID](#scim-configuration-for-entra-id) <Lifecycle status="beta" />
+- [Entra ID](#scim-configuration-for-entra-id)
 
 If your IdP isn’t on the list, it can be supported using <Constant name="cloud" /> [APIs](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/Retrieve%20SCIM%20configuration).
 
@@ -52,7 +52,7 @@ To retrieve the necessary <Constant name="cloud" /> configurations for use in Ok
     To follow best practices, you should regularly rotate your SCIM tokens. To do so, follow these same instructions you did to create a new one. To avoid service disruptions, remember to replace your token in your IdP before deleting the old token in <Constant name="cloud" />.
 
     :::
-6. In the pop-out window, give the token a name that will make it easily identifiable. Click **Save**.
+6. In the pop-up window, give the token a name that will make it easily identifiable. Click **Save**.
     <Lightbox src="/img/docs/dbt-cloud/access-control/name-scim-token.png" width="60%" title="Give your token and identifier." />
 7. Copy the token and record it securely, as _it will not be available again after you close the window_. You must create a new token if you lose the current one. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/copy-scim-token.png" width="60%" title="Give your token and identifier." />
@@ -98,7 +98,7 @@ If you are adding SCIM to an existing Okta integration in <Constant name="cloud"
     - Use **Import Users** to sync all users from <Constant name="cloud" />, including previously deleted users, if you need to re-provision those users. 
     - Read more about this feature in the [Okta documentation](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-import-groups-app-provisioning.htm).
 
-## SCIM configuration for Entra ID <Lifecycle status="beta" />
+## SCIM configuration for Entra ID 
 
 Please complete the [setup SSO with Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) steps before configuring SCIM settings.
 
