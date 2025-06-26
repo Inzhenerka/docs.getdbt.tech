@@ -86,7 +86,7 @@ To add a user in <Constant name="cloud" />, you must be an account owner or have
 3. Under **Billing details**, enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing address** section. Leaving these blank won't allow you to save your changes.
 4. Press **Update Payment Information** to save your changes.
 
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="75%" title="Navigate to Account Settings -> Billing to modify billing seat count" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="75%" title="Navigate to Account settings -> Billing to modify billing seat count" />
 
 
 Now that you've updated your billing, you can now [invite users](/docs/cloud/manage-access/invite-users) to join your <Constant name="cloud" /> account:
