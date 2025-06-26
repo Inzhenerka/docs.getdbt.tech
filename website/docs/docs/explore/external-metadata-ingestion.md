@@ -4,7 +4,7 @@ sidebar_label: "External metadata ingestion"
 description: "Connect directly to your data warehouse, giving you visibility into tables, views, and other resources that aren't defined in dbt with dbt Catalog." 
 ---
 
-# External metadata ingestion <Lifecycle status="Enterprise,Enterprise+" /> <Lifecycle status="preview" />
+# External metadata ingestion <Lifecycle status="managed,managed_plus" /> <Lifecycle status="preview" />
 
 <IntroText>
 
@@ -25,7 +25,7 @@ These credentials are configured separately from dbt environment credentials and
 - Have a <Constant name="cloud" /> account on the [Enterprise or Enterprise+](https://www.getdbt.com/pricing) plan.
 - You must be an [account admin with permission](/docs/cloud/manage-access/enterprise-permissions#account-admin) to edit connections.
     - The credentials must have [sufficient read-level access to fetch metadata](/docs/explore/external-metadata-ingestion#configuration-instructions).
-- Have [**global navigation**](/docs/explore/explore-projects#catalog-overview-) enabled.
+- Have [**global navigation**](/docs/explore/explore-projects#catalog-overview) enabled.
 - Use Snowflake as your data platform.
 - Stayed tuned! Coming very soon, there’ll be support in future for other adapters!
 
@@ -42,7 +42,7 @@ To enable external metadata ingestion:
     - *Optional*: Enable additional features such as **cost optimization**
 5. Apply filters to restrict which metadata is ingested:
     - You can filter by **database**, **schema**, **table**, or **view**.
-    - Strongly recommend you filter by certain schemas. See [Important Considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
+    - Strongly recommend you filter by certain schemas. See [Important considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
     - These fields accept CSV-formatted regular expressions:
         - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match)
         - Wildcards are supported: `DIM*` matches `DIM_ORDERS`, `DIM_PRODUCTS`, etc.
@@ -89,24 +89,12 @@ This section outlines the minimum necessary privileges to read metadata from eac
 Replace `your-database` with the name of a Snowflake database to grant metadata access. Repeat this block for each relevant database:
 
 ```sql
-
-
 SET db_var = '"<your-database>"';
 
 -- Grant access to view the database and its schemas
 GRANT USAGE ON DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 GRANT USAGE ON ALL SCHEMAS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 GRANT USAGE ON FUTURE SCHEMAS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-
--- Grant SELECT privileges to enable metadata introspection and profiling
-GRANT SELECT ON ALL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON FUTURE TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON ALL EXTERNAL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON FUTURE EXTERNAL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON ALL VIEWS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON FUTURE VIEWS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON ALL DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-GRANT SELECT ON FUTURE DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 
 -- Grant REFERENCES to enable lineage and dependency analysis
 GRANT REFERENCES ON ALL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
@@ -116,10 +104,19 @@ GRANT REFERENCES ON FUTURE EXTERNAL TABLES IN DATABASE IDENTIFIER($db_var) TO RO
 GRANT REFERENCES ON ALL VIEWS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 GRANT REFERENCES ON FUTURE VIEWS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 
+-- Recommended grant SELECT for privileges to enable metadata introspection and profiling
+GRANT SELECT ON ALL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON FUTURE TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON ALL EXTERNAL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON FUTURE EXTERNAL TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON ALL VIEWS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON FUTURE VIEWS IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON ALL DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+GRANT SELECT ON FUTURE DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
+
 -- Grant MONITOR on dynamic tables (e.g., for freshness or status checks)
 GRANT MONITOR ON ALL DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 GRANT MONITOR ON FUTURE DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
-
 ```
 
 ## Grant access to Snowflake metadata

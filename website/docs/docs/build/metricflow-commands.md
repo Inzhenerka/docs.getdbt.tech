@@ -34,13 +34,10 @@ For <Constant name="cloud_cli" /> users, MetricFlow commands are embedded in the
 
 You can install [MetricFlow](https://github.com/dbt-labs/metricflow#getting-started) from [PyPI](https://pypi.org/project/dbt-metricflow/). You need to use `pip` to install MetricFlow on Windows or Linux operating systems:
 
-<VersionBlock firstVersion="1.8">
  
 1. Create or activate your virtual environment `python -m venv venv`.
 2. Run `pip install dbt-metricflow`.
   * You can install MetricFlow using PyPI as an extension of your dbt adapter in the command line. To install the adapter, run `python -m pip install "dbt-metricflow[adapter_package_name]"` and add the adapter name at the end of the command. For example, for a Snowflake adapter, run `python -m pip install "dbt-metricflow[dbt-snowflake]"`.
-
-</VersionBlock>
 
 **Note**, you'll need to manage versioning between <Constant name="core" />, your adapter, and MetricFlow.
 
@@ -279,7 +276,7 @@ Options:
   --where TEXT             SQL-like where statement provided as a string and wrapped in quotes.
                            All filter items must explicitly reference fields or dimensions that are part of your model.
                            To query a single statement: ---where "{{ Dimension('order_id__revenue') }} > 100"
-                           To query multiple statements: --where "{{ Dimension('order_id__revenue') }} > 100 and {{ Dimension('user_count') }} < 1000"
+                           To query multiple statements: --where "{{ Dimension('order_id__revenue') }} > 100 --where {{ Dimension('user_count') }} < 1000"
                            To add a dimension filter, use the `Dimension()` template wrapper to indicate that the filter item is part of your model. 
                            Refer to the [FAQ](#faqs) for more info on how to do this using a template wrapper.
 
@@ -408,10 +405,10 @@ You can further filter the data set by adding a `where` clause to your query. Th
 **Query**
 ```bash
 # In the dbt platform
-dbt sl query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True and {{ TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
+dbt sl query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True --where {{ TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
 
 # In dbt Core
-mf query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True and TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
+mf query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True --where TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
 ```
 
 Notes:
@@ -529,7 +526,7 @@ limit 10
 
 <TabItem value="eg7" label=" Export to CSV">
  
-Add the `--csv file_name.csv` flag to export the results of your query to a csv. The `--csv` flag is available in dbt Core only and not supported in <Constant name="cloud" />.
+Add the `--csv file_name.csv` flag to export the results of your query to a CSV. The `--csv` flag is available in dbt Core only and not supported in <Constant name="cloud" />.
 
 **Query**
 

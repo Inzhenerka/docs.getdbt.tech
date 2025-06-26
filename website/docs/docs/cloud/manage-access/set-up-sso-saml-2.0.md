@@ -53,7 +53,7 @@ When prompted for the SAML 2.0 application configurations, supply the following 
 * Audience URI (SP Entity ID): `urn:auth0:<YOUR_AUTH0_ENTITYID>:{login slug}`
 - Relay State: `<login slug>`
 
-Additionally, you may configure the IdP attributes passed from your identity provider into <Constant name="cloud" />. We recommend using the following values:
+Additionally, you may configure the IdP attributes passed from your identity provider into <Constant name="cloud" />. [SCIM configuration](https://docs.getdbt.com/docs/cloud/manage-access/scim) requires `NameID` and `email` to associate logins with the correct user. If you're using license mapping for groups, you need to additionally configure the `groups` attribute. We recommend using the following values:
 
 
 | name | name format | value | description |
@@ -177,7 +177,7 @@ Login slugs must be unique across all <Constant name="cloud" /> accounts, so pic
   <Lightbox collapsed={false} src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-3-saml-settings-top.png" title="Configure the app's SAML Settings"/>
 
 2. Map your organization's Okta User and Group Attributes to the format that
-<Constant name="cloud" /> expects by using the Attribute Statements and Group Attribute Statements forms.
+<Constant name="cloud" /> expects by using the Attribute Statements and Group Attribute Statements forms. [SCIM configuration](https://docs.getdbt.com/docs/cloud/manage-access/scim) requires `email` to associate logins with the correct user. If you're using license mapping for groups, you need to additionally configure the `groups` attribute.
 
 3. The following table illustrates expected User Attribute Statements:
 
@@ -497,6 +497,13 @@ To complete setup, follow the steps below in <Constant name="cloud" />:
 4. Click **Save** to complete setup for the SAML 2.0 integration.
 5. After completing the setup, you can navigate to the URL generated for your account's _slug_ to test logging in with your identity provider. Additionally, users added the the SAML 2.0 app will be able to log in to <Constant name="cloud" /> from the IdP directly.
 
+### Additional configuration options
+
+The **Single sign-on** section also contains additional configuration options which are located after the credentials fields.
+
+- **Sign SAML Auth Request:** <Constant name="cloud" /> will sign SAML requests sent to your identity provider when users attempt to log in.  Metadata for configuring this in your identity provider can be downloaded from the value shown in **SAML Metadata URL**.  We recommend leaving this disabled for most situations.
+
+- **Attribute Mappings:** Associate SAML attributes that <Constant name="cloud" /> needs with attributes your identity provider includes in SAML assertions.  The value must be a valid JSON object with the `email`, `first_name`, or `last_name` keys and values that are strings or lists of strings.  For example, if your identity provider is unable to include an `email` attribute in assertions, but does include one called `EmailAddress`, then **Attribute Mappings** should be set to `{ "email": "EmailAddress" }`. The mappings are only needed if you cannot configure attributes as specified in the instructions on this page. If you can, the default value of `{}` is acceptable.
 
 <Snippet path="login_url_note" />
 
