@@ -83,6 +83,10 @@ To avoid any unintentional data modification, dbt will **not** automatically app
 
 :::
 
+## How `dbt_scd_id` is calculated
+
+The calculation of `dbt_scd_id` is handled inside dbt's snapshot macro, at this [line in the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
+
 ## Example
 
 <File name='snapshots/schema.yml'>
