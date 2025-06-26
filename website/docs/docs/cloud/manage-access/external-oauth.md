@@ -204,7 +204,7 @@ Configure the Okta application and APIs in accordance with your Amazon configs.
 ### 6. Create a new connection in dbt
 
 
-1. Navigate the **Account settings** and click **Connections** from the menu. Click **New connection**.
+1. Navigate to **Account settings** and click **Connections** from the menu. Click **New connection**.
 2. Configure the `Account`, `Database`, and `Warehouse` as you normally would, and for the `OAuth method`, select the external OAuth you just created.
 
 
