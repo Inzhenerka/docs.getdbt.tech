@@ -35,7 +35,7 @@ Disconnect the GitHub and <Constant name="cloud" /> integration in <Constant nam
 3. Click the repository link under **Repository**.
 4. In the **Repository details** page, click **Edit**.
 5. Click **Disconnect** to remove the GitHub integration.
-        <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" title="Disconnect and reconnect your git repository in your dbt Account Settings pages."/>
+        <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" title="Disconnect and reconnect your git repository in your dbt Account settings pages."/>
 6. Click **Confirm Disconnect**. 
 7. Return to your **Project details** page and reconnect your repository by clicking the **Configure Repository** link.
 8. Click **GitHub** and select your repository.
