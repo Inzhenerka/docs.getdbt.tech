@@ -187,7 +187,7 @@ For managed Iceberg tables, you can set a retention period for Snowflake Time Tr
 
 - **change_tracking** 
 
-Specifies whether to enable change tracking on the table
+Specifies whether to enable change tracking on the table.
 
 
 
