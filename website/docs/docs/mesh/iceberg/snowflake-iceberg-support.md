@@ -179,7 +179,7 @@ The serialization policy tells Snowflake what kind of encoding and compression t
 
 - **max_data_extension_time_in_days** 
 
-Maximum number of days Snowflake can extend the data retention period for tables to prevent streams on the tables from becoming stale. The MAX_DATA_EXTENSION_TIME_IN_DAYS parameter enables you to limit this automatic extension period to control storage costs for data retention or for compliance reasons. 
+The maximum number of days Snowflake can extend the data retention period for tables to prevent streams on the tables from becoming stale. The `MAX_DATA_EXTENSION_TIME_IN_DAYS` parameter enables you to limit this automatic extension period to control storage costs for data retention, or for compliance reasons. 
 
 - **data_retention_time_in_days** 
 
