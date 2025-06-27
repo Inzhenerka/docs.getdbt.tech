@@ -164,7 +164,7 @@ The following table outlines the configuration fields required to set up a catal
 
 ### Adapter Properties
 
-These are the additional optional configurations, unique to Snowflake, that can be supplied nested under `adapter_properties` to add in more configurability. 
+These are the additional optional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties` to add in more configurability. 
 
 | Field                         | Accepted values                                                            |
 |------------------|-----------------------------------------------------------------------------------------|
