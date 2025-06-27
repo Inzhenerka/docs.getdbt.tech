@@ -12,7 +12,9 @@ dbt supports materializing the table in Iceberg table format in two different wa
 
 :::tip **Catalog integration configuration**
 
-You can also create a `catalogs.yml` at the [top level of your dbt project](/docs/mesh/iceberg/snowflake-iceberg-support#configure-catalog-integration-for-managed-iceberg-tables).
+You can also create a `catalogs.yml` at the [top level of your dbt project](/docs/mesh/iceberg/snowflake-iceberg-support#configure-catalog-integration-for-managed-iceberg-tables) by applying the catalog configuration at either the property file, folder, or `dbt_project.yml`.
+
+Refer to our [Snowflake configurations](/reference/resource-configs/snowflake-configs) for more information.
 
 :::
 
