@@ -27,7 +27,7 @@ To connect to your database in <Constant name="cloud" />:
 
 <Lightbox src="/img/docs/connect-data-platform/choose-a-connection.png" title="Choose a connection"/>
 
-These connection instructions provide the basic fields required for configuring a data platform connection in <Constant name="cloud" />. For more detailed guides, which include demo project data, read our [Quickstart guides](https://docs.getdbt.com/guides)
+These connection instructions provide the basic fields required for configuring a data platform connection in <Constant name="cloud" />. For more detailed guides, which include demo project data, read our [Quickstart guides](/guides)
 
 ## Connection management
 
@@ -37,7 +37,7 @@ From July 2024, connection management has moved from the project level to the ac
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connections-legacy-model.png" width="55%" title="Previous connection model"/>
 
-Connections created with APIs before this change cannot be accessed with the [latest APIs](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/List%20Account%20Connections). dbt Labs recommends [recreating the connections](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/Create%20Account%20Connection) with the latest APIs.
+Connections created with APIs before this change cannot be accessed with the [latest APIs](/dbt-cloud/api-v3#/operations/List%20Account%20Connections). dbt Labs recommends [recreating the connections](/dbt-cloud/api-v3#/operations/Create%20Account%20Connection) with the latest APIs.
 
 
 :::
