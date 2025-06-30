@@ -233,7 +233,7 @@ Configure the Okta application and APIs in accordance with your Amazon configs.
 
 :::important
 
-- The Entra ID admin, and the data warehouse admin don’t need to be the same person, but we recommend that they collaborate.
+- You’ll need both an Entra ID admin and a data warehouse admin to complete the setup. They don’t need to be the same person, as long as they collaborate, everything should work smoothly.
    - For example, the Entra ID admin can register the application, and configure permissions, and the data warehouse admin can set up roles, grants, and integrations on the warehouse side.
 - The `value` field gathered in these steps is only displayed once. When created, record it immediately.
 - Ensure that the username (for example, email address) entered in the IdP matches the data warehouse credentials for all users. Mismatched usernames will result in authentication failures.
