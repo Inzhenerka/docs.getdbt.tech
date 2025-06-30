@@ -85,7 +85,7 @@ To avoid any unintentional data modification, dbt will **not** automatically app
 
 ## How `dbt_scd_id` is calculated
 
-`dbt_scd_id` is handled inside dbt's snapshot macro, specifically in this [line of the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
+dbt's snapshot macro handles `dbt_scd_id` in [the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
 
 It's computed as an md5 hash of the string-concatenated values of the snapshot's [`unique_key`](/reference/resource-configs/unique_key) and hashing the `updated_at_timestamp()`.
 
