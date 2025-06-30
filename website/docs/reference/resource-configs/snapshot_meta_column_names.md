@@ -89,7 +89,7 @@ dbt's snapshot macro handles `dbt_scd_id` in [the dbt-adapters repo](https://git
 
 It's computed as an md5 hash of the string-concatenated values of the snapshot's [`unique_key`](/reference/resource-configs/unique_key) and hashing the `updated_at_timestamp()`.
 
- The following is an example of a custom hash calculation that combines multiple fields into a single string and hashes it using md5.
+Here's an example of a custom hash calculation that combines multiple fields into a single string and hashes the result using `md5`.
 
  ```
  md5(
