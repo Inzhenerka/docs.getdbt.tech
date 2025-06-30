@@ -91,7 +91,7 @@ It's computed as an md5 hash of the string-concatenated values of the snapshot's
 
 Here's an example of a custom hash calculation that combines multiple fields into a single string and hashes the result using `md5`.
 
- ```
+ ```sql
  md5(
   coalesce(cast(unique_key1 as string), '') || '|' ||
   coalesce(cast(unique_key2 as string), '') || '|' ||
