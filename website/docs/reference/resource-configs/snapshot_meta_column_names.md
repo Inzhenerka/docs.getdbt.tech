@@ -87,7 +87,7 @@ To avoid any unintentional data modification, dbt will **not** automatically app
 
 dbt's snapshot macro handles `dbt_scd_id` in [the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
 
-It's computed as an md5 hash of the string-concatenated values of the snapshot's [`unique_key`](/reference/resource-configs/unique_key) and hashing the `updated_at_timestamp()`.
+The hash is computed by concatenating values of the snapshot's [`unique_key`](/reference/resource-configs/unique_key) and either the `updated_at` timestamp (for the timestamp strategy) or the values in `check_cols` (for the check strategy), and then hashing the resulting string using the `md5` function.  This enables dbt to track whether the contents of a row have changed between runs.
 
 Here's an example of a custom hash calculation that combines multiple fields into a single string and hashes the result using `md5`.
 
