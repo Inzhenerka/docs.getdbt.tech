@@ -100,7 +100,7 @@ Here's an example of a custom hash calculation that combines multiple fields int
 ```
 The exact fields included in the hash depend on the snapshot strategy:
 
-- For the [`timestamp` strategy](/reference/resource-configs/strategy#use-the-timestamp-strategy), the hash typically combines the [`unique_key`](/reference/resource-configs/unique_key) columns and the `updated_at` value.
+- [`timestamp` strategy](/reference/resource-configs/strategy#use-the-timestamp-strategy): The hash typically combines the [`unique_key`](/reference/resource-configs/unique_key) columns and the `updated_at` value.
 - For the [`check` strategy](/reference/resource-configs/strategy#use-the-check-strategy), the hash combines the `unique_key` columns and the values of the columns listed in [`check_cols`](/reference/resource-configs/check_cols).
 
 If you don’t want to use md5, you can use your own version of the [dispatched macro](https://github.com/dbt-labs/dbt-adapters/blob/4b3966efc50b1d013907a88bee4ab8ebd022d17a/dbt-adapters/src/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L42-L47).  
