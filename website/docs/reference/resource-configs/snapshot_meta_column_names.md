@@ -83,7 +83,7 @@ To avoid any unintentional data modification, dbt will **not** automatically app
 
 :::
 
-## How `dbt_scd_id` is calculated
+## How [`dbt_scd_id`](/reference/resource-configs/snapshot_meta_column_names#default) is calculated
 
 dbt's snapshot macro handles `dbt_scd_id` in [the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
 
