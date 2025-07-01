@@ -18,7 +18,10 @@ const sidebarSettings = {
       label: "Get started with dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/get-started-dbt" },
-      items: ["docs/get-started-dbt"],
+      items: [
+        "docs/get-started-dbt",
+        "docs/configuration-checklist",
+      ],
     }, // Get started quickstarts directory
     {
       type: "category",
