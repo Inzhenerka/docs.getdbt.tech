@@ -4381,6 +4381,11 @@
       "source": "/terms/:path*",
       "destination": "https://www.getdbt.com/blog",
       "permanent": true
+    },
+    {
+      "source": "/report-a-problem",
+      "destination": "https://www.getdbt.com/report-a-problem",
+      "permanent": true
     }
   ]
 }
