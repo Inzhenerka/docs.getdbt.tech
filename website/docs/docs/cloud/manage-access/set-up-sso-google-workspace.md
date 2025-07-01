@@ -133,3 +133,7 @@ If authentication with the GSuite API succeeds but you do not see a
 permissions to access Groups in your GSuite account. Either request that your
 GSuite user is granted the ability to request groups from an administrator, or
 have an administrator log into <Constant name="cloud" /> and authorize the GSuite integration.
+
+## Learn more
+
+<WistiaVideo id="xzksdgiamq" paddingTweak="62.25%" />
