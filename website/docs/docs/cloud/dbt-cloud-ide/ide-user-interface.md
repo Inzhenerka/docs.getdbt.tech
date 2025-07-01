@@ -100,7 +100,7 @@ The <Constant name="cloud_ide" /> returns default row limits, however, you can a
 </ul>
 </details>
 
-2. **Compile button &mdash;** The **Compile** button compiles the saved or unsaved SQL code and displays it in the **Compiled Code** tab.
+2. **Compile button &mdash;** The **Compile** button compiles the saved or unsaved SQL code and displays it in the **Compiled code** tab.
 
 
 Starting from dbt v1.6 or higher, when you save changes to a model, you can compile its code with the model's specific context. This context is similar to what you'd have when building the model and involves useful context variables like `{{ this }} `or `{{ is_incremental() }}`.
