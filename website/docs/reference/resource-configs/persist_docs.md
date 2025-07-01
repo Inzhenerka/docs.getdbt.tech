@@ -159,7 +159,7 @@ Some known issues and limitations:
     - Define the column name in the corresponding YML file using lowercase or uppercase letters only.
     - Use the [`quote`](../resource-properties/columns.md#quoter) configuration in the corresponding YML file.
 
-  See the following sample steps on how to use the `quote` field for columns in mixed-case format.
+  See the following sample steps on how to use the `quote` field for columns in a mixed-case format.
 
     1. Create the following SQL and YML files:
 
