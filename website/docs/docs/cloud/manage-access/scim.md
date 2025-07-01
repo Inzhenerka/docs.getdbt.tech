@@ -165,7 +165,8 @@ You can now begin assigning users to your SCIM app in Entra ID!
 
 You can manage user license assignments via SCIM with a user attribute in your IdP environment. This ensures accurate license assignment as users are provisioned in the IdP and onboarded into your dbt account.
 :::note
-    Analyst licenses are only available for certain plans. Assigning an Analyst license via SCIM will result in a user update error if that license type is not available in your dbt account. 
+
+    The `Analyst` license is only available for select plans. Assigning an `Analyst` license via SCIM will result in a user update error if that license type is not available for your dbt account. 
 
 :::
 
