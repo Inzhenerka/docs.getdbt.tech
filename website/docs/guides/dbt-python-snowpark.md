@@ -1,14 +1,13 @@
 ---
-title: "Leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake" 
+title: "Leverage dbt to generate analytics and ML-ready pipelines with SQL and Python with Snowflake" 
 id: "dbt-python-snowpark"
-description: "Leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake"
-hoverSnippet: Learn how to leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake.
+description: "Leverage dbt to generate analytics and ML-ready pipelines with SQL and Python with Snowflake"
+hoverSnippet: Learn how to leverage dbt to generate analytics and ML-ready pipelines with SQL and Python with Snowflake.
 # time_to_complete: '30 minutes' commenting out until we test
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Snowflake']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -93,16 +92,16 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
     create or replace schema raw; 
     use schema raw; 
 
-    -- define our file format for reading in the csvs 
-    create or replace file format csvformat
-    type = csv
+    -- define our file format for reading in the CSVs 
+    create or replace file format CSVformat
+    type = CSV
     field_delimiter =','
     field_optionally_enclosed_by = '"', 
     skip_header=1; 
 
     --
     create or replace stage formula1_stage
-    file_format = csvformat 
+    file_format = CSVformat 
     url = 's3://formula1-dbt-cloud-python-demo/formula1-kaggle-data/';
 
     -- load in the 8 tables we need for our demo 
@@ -239,7 +238,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
 6. Let’s unpack that pretty long query we ran into component parts. We ran this query to load in our 8 Formula 1 tables from a public S3 bucket. To do this, we:
     - Created a new database called `formula1` and a schema called `raw` to place our raw (untransformed) data into.
-    - Defined our file format for our CSV files. Importantly, here we use a parameter called `field_optionally_enclosed_by =` since the string columns in our Formula 1 csv files use quotes.  Quotes are used around string values to avoid parsing issues where commas `,` and new lines `/n` in data values could cause data loading errors.
+    - Defined our file format for our CSV files. Importantly, here we use a parameter called `field_optionally_enclosed_by =` since the string columns in our Formula 1 CSV files use quotes.  Quotes are used around string values to avoid parsing issues where commas `,` and new lines `/n` in data values could cause data loading errors.
     - Created a stage to locate our data we are going to load in. Snowflake Stages are locations where data files are stored.  Stages are used to both load and unload data to and from Snowflake locations. Here we are using an external stage, by referencing an S3 bucket.
     - Created our tables for our data to be copied into. These are empty tables with the column name and data type. Think of this as creating an empty container that the data will then fill into.
     - Used the `copy into` statement for each of our tables. We reference our staged location we created and upon loading errors continue to load in the rest of the data. You should not have data loading errors but if you do, those rows will be skipped and Snowflake will tell you which rows caused errors
@@ -260,7 +259,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
         <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/4-query-circuits-data.png" title="Query circuits data"/>
 
-## Configure dbt Cloud
+## Configure dbt
 
 1. We are going to be using [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) to set up a <Constant name="cloud" /> account. Using this method will allow you to spin up a fully fledged dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [managed repository](/docs/cloud/git/managed-repository), environments, and credentials already established.
 2. Navigate out of your worksheet back by selecting **home**.
@@ -278,7 +277,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
 8. You should be redirected to a <Constant name="cloud" /> registration page. Fill out the form. Make sure to save the password somewhere for login in the future.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/4-dbt-cloud-sign-up.png" title="dbt Cloud sign up"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/4-dbt-cloud-sign-up.png" title="dbt sign up"/>
 
 9. Select **Complete Registration**. You should now be redirected to your <Constant name="cloud" /> account, complete with a connection to your Snowflake account, a deployment and a development environment, and a sample job.
 
@@ -1775,7 +1774,7 @@ Since the output of our Python models are tables, we can test SQL and Python mod
     ```
 
 2. Macros in Jinja are pieces of code that can be reused multiple times in our SQL models &mdash; they are analogous to "functions" in other programming languages, and are extremely useful if you find yourself repeating code across multiple models.
-3. We use the `{% macro %}` to indicate the start of the macro and `{% endmacro %}` for the end. The text after the beginning of the macro block is the name we are giving the macro to later call it. In this case, our macro is called `test_all_values_gte_zero`. Macros take in *arguments* to pass through, in this case the `table` and the `column`. In the body of the macro, we see an SQL statement that is using the `ref` function to dynamically select the table and then the column. You can always view macros without having to run them by using `dbt run-operation`. You can learn more [here](https://docs.getdbt.com/reference/commands/run-operation).
+3. We use the `{% macro %}` to indicate the start of the macro and `{% endmacro %}` for the end. The text after the beginning of the macro block is the name we are giving the macro to later call it. In this case, our macro is called `test_all_values_gte_zero`. Macros take in *arguments* to pass through, in this case the `table` and the `column`. In the body of the macro, we see an SQL statement that is using the `ref` function to dynamically select the table and then the column. You can always view macros without having to run them by using `dbt run-operation`. You can learn more [here](/reference/commands/run-operation).
 4. Great, now we want to reference this macro as a test! Let’s create a new test file called `macro_pit_stops_mean_is_positive.sql` in our `tests` folder.
 
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/3-gte-macro-applied-to-pit-stops.png" title="creating a test on our pit stops model referencing the macro"/>

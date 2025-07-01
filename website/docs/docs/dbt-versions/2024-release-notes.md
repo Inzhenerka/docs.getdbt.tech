@@ -64,22 +64,22 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
   Documentation for new features and functionality announced at Coalesce 2024:
 
-  - Iceberg table support for [Snowflake](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#iceberg-table-format)
-  - [Athena](https://docs.getdbt.com/reference/resource-configs/athena-configs) and [Teradata](https://docs.getdbt.com/reference/resource-configs/teradata-configs) adapter support in dbt Cloud
-  - dbt Cloud now hosted on [Azure](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses)
-  - Get comfortable with [dbt Cloud Release Tracks](https://docs.getdbt.com/docs/dbt-versions/cloud-release-tracks) that keep your project up-to-date, automatically — on a cadence appropriate for your team
-  - Scalable [microbatch incremental models](https://docs.getdbt.com/docs/build/incremental-microbatch)
-  - Advanced CI [features](https://docs.getdbt.com/docs/deploy/advanced-ci)
-  - [Linting with CI jobs](https://docs.getdbt.com/docs/deploy/continuous-integration#sql-linting)
-  - dbt Assist is now [dbt Copilot](https://docs.getdbt.com/docs/cloud/dbt-copilot)
-  - Developer blog on [Snowflake Feature Store and dbt: A bridge between data pipelines and ML](https://docs.getdbt.com/blog/snowflake-feature-store)
-  - [Downstream exposures with Tableau](https://docs.getdbt.com/docs/explore/view-downstream-exposures)
-  - Semantic Layer integration with [Excel desktop and M365](https://docs.getdbt.com/docs/cloud-integrations/semantic-layer/excel)
-  - [Data health tiles](https://docs.getdbt.com/docs/explore/data-tile)
-  - [Semantic Layer and Cloud IDE integration](https://docs.getdbt.com/docs/build/metricflow-commands#metricflow-commands)
-  - Query history in [Explorer](https://docs.getdbt.com/docs/explore/model-query-history#view-query-history-in-explorer)
-  - Semantic Layer Metricflow improvements, including [improved granularity and custom calendar](https://docs.getdbt.com/docs/build/metricflow-time-spine#custom-calendar) 
-  - [Python SDK](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-python) is now generally available 
+  - Iceberg table support for [Snowflake](/reference/resource-configs/snowflake-configs#iceberg-table-format)
+  - [Athena](/reference/resource-configs/athena-configs) and [Teradata](/reference/resource-configs/teradata-configs) adapter support in dbt Cloud
+  - dbt Cloud now hosted on [Azure](/docs/cloud/about-cloud/access-regions-ip-addresses)
+  - Get comfortable with [dbt Cloud Release Tracks](/docs/dbt-versions/cloud-release-tracks) that keep your project up-to-date, automatically — on a cadence appropriate for your team
+  - Scalable [microbatch incremental models](/docs/build/incremental-microbatch)
+  - Advanced CI [features](/docs/deploy/advanced-ci)
+  - [Linting with CI jobs](/docs/deploy/continuous-integration#sql-linting)
+  - dbt Assist is now [dbt Copilot](/docs/cloud/dbt-copilot)
+  - Developer blog on [Snowflake Feature Store and dbt: A bridge between data pipelines and ML](/blog/snowflake-feature-store)
+  - [Downstream exposures with Tableau](/docs/explore/view-downstream-exposures)
+  - Semantic Layer integration with [Excel desktop and M365](/docs/cloud-integrations/semantic-layer/excel)
+  - [Data health tiles](/docs/explore/data-tile)
+  - [Semantic Layer and Cloud IDE integration](/docs/build/metricflow-commands#metricflow-commands)
+  - Query history in [Explorer](/docs/explore/model-query-history#view-query-history-in-explorer)
+  - Semantic Layer Metricflow improvements, including [improved granularity and custom calendar](/docs/build/metricflow-time-spine#custom-calendar) 
+  - [Python SDK](/docs/dbt-cloud-apis/sl-python) is now generally available 
 
 </Expandable>
 
@@ -144,7 +144,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 - **New**: Introduced the [`dbt-sl-sdk` Python software development kit (SDK)](https://github.com/dbt-labs/semantic-layer-sdk-python) Python library, which provides you with easy access to the dbt Semantic Layer with Python. It allows developers to interact with the dbt Semantic Layer APIs and query metrics and dimensions in downstream tools. Refer to the [dbt Semantic Layer Python SDK](/docs/dbt-cloud-apis/sl-python) for more information.
 - **New**: Introduced Semantic validations in CI pipelines. Automatically test your semantic nodes (metrics, semantic models, and saved queries) during code reviews by adding warehouse validation checks in your CI job using the `dbt sl validate` command. You can also validate modified semantic nodes to guarantee code changes made to dbt models don't break these metrics. Refer to [Semantic validations in CI](/docs/deploy/ci-jobs#semantic-validations-in-ci) to learn about the additional commands and use cases.
 - **New**: We now expose the `meta` field within the [config property](/reference/resource-configs/meta) for dbt Semantic Layer metrics in the [JDBC and GraphQL APIs](/docs/dbt-cloud-apis/sl-api-overview) under the `meta` field.
-- **New**: Added a new command in the dbt Cloud CLI called `export-all`, which allows you to export multiple or all of your saved queries. Previously, you had to explicitly specify the [list of saved queries](/docs/build/metricflow-commands#list-saved-queries).
+- **New**: Added a new command in the dbt CLI called `export-all`, which allows you to export multiple or all of your saved queries. Previously, you had to explicitly specify the [list of saved queries](/docs/build/metricflow-commands#list-saved-queries).
 - **Enhancement**: The <Constant name="semantic_layer" /> now offers more granular control by supporting multiple data platform credentials, which can represent different roles or service accounts. Available for <Constant name="cloud" /> Enterprise plans, you can map credentials to service tokens for secure authentication. Refer to [Set up <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) for more details.
 - **Fix**: Addressed a bug where unicode query filters (such as Chinese characters) were not working correctly in the <Constant name="semantic_layer" /> Tableau integration.
 - **Fix**: Resolved a bug with parsing certain private keys for BigQuery when running an export.
@@ -231,9 +231,9 @@ The following features are new or enhanced as part of our [<Constant name="cloud
 
   </Expandable>
 
-- **New:** Native support for Microsoft Fabric in <Constant name="cloud" /> is now GA. This feature is powered by the [dbt-fabric](https://github.com/Microsoft/dbt-fabric) adapter. To learn more, refer to [Connect Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) and [Microsoft Fabric DWH configurations](/reference/resource-configs/fabric-configs). There's also a [quickstart guide](https://docs.getdbt.com/guides/microsoft-fabric?step=1) to help you get started. 
+- **New:** Native support for Microsoft Fabric in <Constant name="cloud" /> is now GA. This feature is powered by the [dbt-fabric](https://github.com/Microsoft/dbt-fabric) adapter. To learn more, refer to [Connect Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) and [Microsoft Fabric DWH configurations](/reference/resource-configs/fabric-configs). There's also a [quickstart guide](/guides/microsoft-fabric?step=1) to help you get started. 
 
-- **New:** <Constant name="mesh" /> is now GA to <Constant name="cloud" /> Enterprise users. <Constant name="mesh" /> is a framework that helps organizations scale their teams and data assets effectively. It promotes governance best practices and breaks large projects into manageable sections. Get started with <Constant name="mesh" /> by reading the [<Constant name="mesh" /> quickstart guide](https://docs.getdbt.com/guides/mesh-qs?step=1).
+- **New:** <Constant name="mesh" /> is now GA to <Constant name="cloud" /> Enterprise users. <Constant name="mesh" /> is a framework that helps organizations scale their teams and data assets effectively. It promotes governance best practices and breaks large projects into manageable sections. Get started with <Constant name="mesh" /> by reading the [<Constant name="mesh" /> quickstart guide](/guides/mesh-qs?step=1).
 
 - **New:** The <Constant name="semantic_layer" /> [Tableau Desktop, Tableau Server](/docs/cloud-integrations/semantic-layer/tableau), and [Google Sheets integration](/docs/cloud-integrations/semantic-layer/gsheets) is now GA to <Constant name="cloud" /> Team or Enterprise accounts. These first-class integrations allow you to query and unlock valuable insights from your data ecosystem.
 
@@ -286,7 +286,7 @@ The following features are new or enhanced as part of our [<Constant name="cloud
 ## March 2024
 
 - **New:** The <Constant name="semantic_layer" /> services now support using Privatelink for customers who have it enabled.
-- **New:** You can now develop against and test your <Constant name="semantic_layer" /> in the Cloud CLI if your developer credential uses SSO.
+- **New:** You can now develop against and test your <Constant name="semantic_layer" /> in the dbt CLI if your developer credential uses SSO.
 - **Enhancement:** You can select entities to Group By, Filter By, and Order By.
 - **Fix:** `dbt parse` no longer shows an error when you use a list of filters (instead of just a string filter) on a metric.
 - **Fix:** `join_to_timespine` now properly gets applied to conversion metric input measures.
@@ -399,23 +399,23 @@ The following features are new or enhanced as part of our [<Constant name="cloud
 
   January saw some great new content:
 
-  - New [dbt Mesh FAQs](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-4-faqs) page
-  - Beta launch of [Explorer’s column-level lineage](https://docs.getdbt.com/docs/explore/column-level-lineage) feature
+  - New [dbt Mesh FAQs](/best-practices/how-we-mesh/mesh-5-faqs) page
+  - Beta launch of [Explorer’s column-level lineage](/docs/explore/column-level-lineage) feature
   - Developer blog posts:
-    - [More time coding, less time waiting: Mastering defer in dbt](https://docs.getdbt.com/blog/defer-to-prod)
-    - [Deprecation of dbt Server](https://docs.getdbt.com/blog/deprecation-of-dbt-server)
-    - From the community: [Serverless, free-tier data stack with dlt + dbt core](https://docs.getdbt.com/blog/serverless-dlt-dbt-stack)
-  - The Extrica team added docs for the [dbt-extrica community adapter](https://docs.getdbt.com/docs/core/connect-data-platform/extrica-setup)
-  - Semantic Layer: New [conversion metrics docs](https://docs.getdbt.com/docs/build/conversion) and added the parameter `fill_nulls_with` to all metric types (launched the week of January 12, 2024)
-  - New [dbt environment command](https://docs.getdbt.com/reference/commands/dbt-environment) and its flags for the dbt Cloud CLI
+    - [More time coding, less time waiting: Mastering defer in dbt](/blog/defer-to-prod)
+    - [Deprecation of dbt Server](/blog/deprecation-of-dbt-server)
+    - From the community: [Serverless, free-tier data stack with dlt + dbt core](/blog/serverless-dlt-dbt-stack)
+  - The Extrica team added docs for the [dbt-extrica community adapter](/docs/core/connect-data-platform/extrica-setup)
+  - Semantic Layer: New [conversion metrics docs](/docs/build/conversion) and added the parameter `fill_nulls_with` to all metric types (launched the week of January 12, 2024)
+  - New [dbt environment command](/reference/commands/dbt-environment) and its flags for the dbt CLI
 
   January also saw some refreshed content, either aligning with new product features or requests from the community:
 
-  - Native support for [partial parsing in dbt Cloud](https://docs.getdbt.com/docs/cloud/account-settings#partial-parsing)
-  - Updated guidance on using dots or underscores in the [Best practice guide for models](https://docs.getdbt.com/best-practices/how-we-style/1-how-we-style-our-dbt-models)
-  - Updated [PrivateLink for VCS docs](https://docs.getdbt.com/docs/cloud/secure/vcs-privatelink)
-  - Added a new `job_runner` role in our [Enterprise project role permissions docs](https://docs.getdbt.com/docs/cloud/manage-access/enterprise-permissions#project-role-permissions)
-  - Added saved queries to [Metricflow commands](https://docs.getdbt.com/docs/build/metricflow-commands#list-saved-queries)
+  - Native support for [partial parsing in dbt Cloud](/docs/cloud/account-settings#partial-parsing)
+  - Updated guidance on using dots or underscores in the [Best practice guide for models](/best-practices/how-we-style/1-how-we-style-our-dbt-models)
+  - Updated [PrivateLink for VCS docs](/docs/cloud/secure/vcs-privatelink)
+  - Added a new `job_runner` role in our [Enterprise project role permissions docs](/docs/cloud/manage-access/enterprise-permissions#project-role-permissions)
+  - Added saved queries to [Metricflow commands](/docs/build/metricflow-commands#list-saved-queries)
   - Removed [as_text docs](https://github.com/dbt-labs/docs.getdbt.com/pull/4726) that were wildly outdated
 
   </Expandable>

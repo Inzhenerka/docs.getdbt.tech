@@ -564,7 +564,7 @@ If no `partitions` configuration is provided, dbt will instead:
 When building your model SQL, you can take advantage of the introspection performed
 by dbt to filter for only _new_ data. The maximum value in the partitioned field in the destination table
 will be available using the `_dbt_max_partition` BigQuery scripting variable. **Note:**
-this is a BigQuery SQL variable, not a dbt Jinja variable, so no jinja brackets are
+this is a BigQuery SQL variable, not a dbt Jinja variable, so no Jinja brackets are
 required to access this variable.
 
 **Example model SQL:**
@@ -1055,6 +1055,7 @@ The BigQuery Python models also have the following additional configuration para
 | `notebook_template_id`  | `<Integer>` | no       | ``        | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
 | `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
 | `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
+| `packages`              | `<string>`  | no       | ``        | `['numpy<=1.1.1', 'pandas', 'mlflow']` |
 
 - The `enable_list_inference` parameter
   - The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation. By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
@@ -1081,10 +1082,8 @@ The BigQuery Python models also have the following additional configuration para
 - [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
 - [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 
-<VersionBlock firstVersion="1.8">
 
 ## Unit test limitations
 
 You must specify all fields in a BigQuery `STRUCT` for [unit tests](/docs/build/unit-tests). You cannot use only a subset of fields in a `STRUCT`.
 
-</VersionBlock>

@@ -8,7 +8,6 @@ hoverSnippet: Learn how to adjust your generate schema name and generate alias n
 icon: 'guides'
 hide_table_of_contents: true
 level: 'Advanced'
-recently_updated: true
 keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "custom schema"]
 ---
 
@@ -16,7 +15,7 @@ keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "c
 
 ## Introduction
 This guide explains how to customize the [schema](/docs/build/custom-schemas), [database](/docs/build/custom-databases), and [alias](/docs/build/custom-aliases) naming conventions in dbt to fit your data warehouse governance and design needs.
-When we develop dbt models and execute certain [commands](https://docs.getdbt.com/reference/dbt-commands) (such as `dbt run` or `dbt build`), objects (like tables and views) get created in the data warehouse based on these naming conventions.
+When we develop dbt models and execute certain [commands](/reference/dbt-commands) (such as `dbt run` or `dbt build`), objects (like tables and views) get created in the data warehouse based on these naming conventions.
 
 
 
@@ -29,10 +28,10 @@ Different warehouses have different names for _logical databases_. The informati
 
 The following is dbt's out-of-the-box default behavior:
 
-- The database where the object is created is defined by the database configured at the [environment level in dbt Cloud](/docs/dbt-cloud-environments) or in the [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml) in dbt Core.
+- The database where the object is created is defined by the database configured at the [environment level in <Constant name="cloud" />](/docs/dbt-cloud-environments) or in the [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml) in dbt Core.
 
 - The schema depends on whether you have defined a [custom schema](/docs/build/custom-schemas) for the model:
-    - If you haven't defined a custom schema, dbt creates the object in the default schema. In dbt Cloud this is typically `dbt_username` for development and the default schema for deployment environments. In dbt Core, it uses the schema specified in the `profiles.yml` file.
+    - If you haven't defined a custom schema, dbt creates the object in the default schema. In <Constant name="cloud" />, this is typically `dbt_username` for development and the default schema for deployment environments. In dbt Core, it uses the schema specified in the `profiles.yml` file.
     - If you define a custom schema, dbt concatenates the schema mentioned earlier with the custom one.
     - For example, if the configured schema is `dbt_myschema` and the custom one is `marketing`, the objects will be created under `dbt_myschema_marketing`.
     - Note that for automated CI jobs, the schema name derives from the job number and PR number: `dbt_cloud_pr_<job_id>_<pr_id>`.
@@ -40,9 +39,9 @@ The following is dbt's out-of-the-box default behavior:
 
 - The object name depends on whether an [alias](/reference/resource-configs/alias) has been defined on the model:
     - If no alias is defined, the object will be created with the same name as the model, without the `.sql` or `.py` at the end.
-        - For example, suppose that we have a model where the sql file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and no custom alias is configured. The resulting model will be created in `dbt_myschema_marketing.fct_orders_complete` in the dev environment. 
+        - For example, suppose that we have a model where the SQL file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and no custom alias is configured. The resulting model will be created in `dbt_myschema_marketing.fct_orders_complete` in the dev environment. 
     - If an alias is defined, the object will be created with the configured alias.
-    - For example, suppose that we have a model where the sql file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and the alias is configured to be `fct_orders`. The resulting model will be created in `dbt_myschema_marketing.fct_orders`
+    - For example, suppose that we have a model where the SQL file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and the alias is configured to be `fct_orders`. The resulting model will be created in `dbt_myschema_marketing.fct_orders`
 
 These default rules are a great starting point, and many organizations choose to stick with those without any customization required.
 
@@ -82,14 +81,14 @@ Further, the staging version of `fct_player_stats` should exist in a unique loca
 We often leverage the following when customizing these macros:
 
 - In <Constant name="cloud" />, we recommend utilizing [environment variables](/docs/build/environment-variables) to define where the dbt invocation is occurring (dev/stg/prod).
-    - They can be set at the environment level and all jobs will automatically inherit the default values. We'll add jinja logic (`if/else/endif`) to identify whether the run happens in dev, prod, Ci, and more.
+    - They can be set at the environment level and all jobs will automatically inherit the default values. We'll add Jinja logic (`if/else/endif`) to identify whether the run happens in dev, prod, Ci, and more.
     
 - Or as an alternative to environment variables, you can use `target.name`. For more information, you can refer to [About target variables](/reference/dbt-jinja-functions/target). 
 
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/custom-schema-env-var.png" title="Custom schema environmental variables target name." />
 
-To allow the database/schema/object name to depend on the current branch, you can use the out of the box `DBT_CLOUD_GIT_BRANCH` environment variable in dbt Cloud [special environment variables](/docs/build/environment-variables#special-environment-variables).
+To allow the database/schema/object name to depend on the current branch, you can use the out-of-the-box `DBT_CLOUD_GIT_BRANCH` environment variable in <Constant name="cloud" /> [special environment variables](/docs/build/environment-variables#special-environment-variables).
 
 
 ## Example use cases
@@ -276,7 +275,7 @@ The `DBT_CLOUD_GIT_BRANCH` variable is only available within the <Constant name=
 
 We’ve also seen some organizations prefer to organize their dev databases by branch name. This requires implementing similar logic in `generate_database_name()` instead of the `generate_schema_name()` macro. By default, dbt will not automatically create the databases. 
 
-Refer to the [Tips and tricks](https://docs.getdbt.com/guides/customize-schema-alias?step=5) section to learn more.    
+Refer to the [Tips and tricks](/guides/customize-schema-alias?step=5) section to learn more.    
 
 
 <File name='macros/generate_schema_name.sql'>

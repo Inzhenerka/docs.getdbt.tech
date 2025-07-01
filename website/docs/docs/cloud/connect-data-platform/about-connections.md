@@ -3,7 +3,7 @@ title: "About data platform connections"
 id: about-connections
 description: "Information about data platform connections"
 sidebar_label: "About data platform connections"
-pagination_next: "docs/cloud/connect-data-platform/connect-microsoft-fabric"
+pagination_next: "docs/cloud/connect-data-platform/connect-apache-spark"
 pagination_prev: null
 ---
 <Constant name="cloud" /> can connect with a variety of data platform providers including: 
@@ -27,7 +27,7 @@ To connect to your database in <Constant name="cloud" />:
 
 <Lightbox src="/img/docs/connect-data-platform/choose-a-connection.png" title="Choose a connection"/>
 
-These connection instructions provide the basic fields required for configuring a data platform connection in <Constant name="cloud" />. For more detailed guides, which include demo project data, read our [Quickstart guides](https://docs.getdbt.com/guides)
+These connection instructions provide the basic fields required for configuring a data platform connection in <Constant name="cloud" />. For more detailed guides, which include demo project data, read our [Quickstart guides](/guides)
 
 ## Connection management
 
@@ -37,7 +37,7 @@ From July 2024, connection management has moved from the project level to the ac
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connections-legacy-model.png" width="55%" title="Previous connection model"/>
 
-Connections created with APIs before this change cannot be accessed with the [latest APIs](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/List%20Account%20Connections). dbt Labs recommends [recreating the connections](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/Create%20Account%20Connection) with the latest APIs.
+Connections created with APIs before this change cannot be accessed with the [latest APIs](/dbt-cloud/api-v3#/operations/List%20Account%20Connections). dbt Labs recommends [recreating the connections](/dbt-cloud/api-v3#/operations/Create%20Account%20Connection) with the latest APIs.
 
 
 :::
@@ -100,4 +100,4 @@ Please consider the following actions, as the steps you take will depend on the 
 
 Be sure to allow traffic from these IPs in your firewall, and include them in any database grants.
 
-Allowing these IP addresses only enables the connection to your <Term id="data-warehouse" />. However, you might want to send API requests from your restricted network to the dbt Cloud API. Using the dbt Cloud API requires allowing the `cloud.getdbt.com` subdomain. For more on the dbt Cloud architecture, see [Deployment architecture](/docs/cloud/about-cloud/architecture).
+Allowing these IP addresses only enables the connection to your <Term id="data-warehouse" />. However, you might want to send API requests from your restricted network to the <Constant name="cloud" /> API. Using the <Constant name="cloud" /> API requires allowing the `cloud.getdbt.com` subdomain. For more on the <Constant name="cloud" /> architecture, see [Deployment architecture](/docs/cloud/about-cloud/architecture).

@@ -44,7 +44,7 @@ Lots of great stuff to confer about this go-round: things really coalesced this 
 - Fix this one hairy bug where one email could have multiple user accounts
 - Fix setup-connection react-page routing
 - Break out group selection logic from license types and group names
-- Handle json errors in v1/v2 body parsing
+- Handle JSON errors in v1/v2 body parsing
 - Handle AuthForbidden and AuthCancelled graciously - ie, not throw 500s
 - Fix regression with <Constant name="cloud_ide" /> loading spinner
 
@@ -72,14 +72,14 @@ This release adds a few new pieces of connective tissue, notably OAuth for BigQu
 ## dbt Cloud v1.1.13 (November 12, 2020)
 
 This release adds support for triggering runs with overriden attributes via the
-[triggerRun](https://docs.getdbt.com/dbt-cloud/api/#operation/triggerRun) API endpoint. Additionally,
+[triggerRun](/dbt-cloud/api-v2#) API endpoint. Additionally,
 a number of bugs have been squashed and performance improvements have been made.
 
 #### Enhancements
 
 - Improve error handling for long-running queries in the <Constant name="cloud_ide" />
 - Use S3 client caching to improve log download speed for scheduled runs
-- Support triggering jobs [with overriden attributes from the API](https://docs.getdbt.com/dbt-cloud/api/#operation/triggerRun)
+- Support triggering jobs [with overriden attributes from the API](/dbt-cloud/api-v2#)
 - Clarify "upgrade" copy on the billing page
 
 #### Fixed
@@ -419,7 +419,7 @@ This version adds some new permission sets, and a new release candidate of dbt.
 
 #### Fixed
 
-- Removed .sql from csv download filename
+- Removed .sql from CSV download filename
 - Fixed breaking JobDefinition API with new param custom_branch_only
 - Fixed <Constant name="cloud_ide" /> query table column heading casing
 

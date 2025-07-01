@@ -72,7 +72,7 @@ export default function DocRootLayoutMain({
     } else {
       setPreData({
         showisPrereleaseBanner: true,
-        isPrereleaseBannerText: `You are viewing the docs for a prerelease version of dbt Core. There may be features described that are still in development, incomplete, or unstable. For the latest generally available features, install the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>`,
+        isPrereleaseBannerText: `You’re viewing docs for the dbt Fusion engine, currently in beta. Some content may reflect earlier dbt Core behavior and is still being updated. Features described may be incomplete or unstable. Refer to the <a href="https://docs.getdbt.com/docs/fusion/supported-features"> supported Fusion features</a> and the <a href="https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-fusion"> Fusion upgrade guide </a> for the most accurate information.`,
       });
     }
     // If EOLDate not set for version, do not show banner
@@ -87,7 +87,7 @@ export default function DocRootLayoutMain({
       if (new Date() > new Date(EOLDate)) {
         setEOLData({
           showEOLBanner: true,
-          EOLBannerText: `This version of dbt Core is <a href="/docs/dbt-versions/core">no longer supported</a>. There will be no more patches or security fixes. For improved performance, security, and features, upgrade to the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>. Some dbt Cloud customers might have an extended <a href="/docs/dbt-versions/core">critical support window</a>. `,
+          EOLBannerText: `This version of dbt Core is <a href="/docs/dbt-versions/core">no longer supported</a>. There will be no more patches or security fixes. For improved performance, security, and features, upgrade to the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>. Some dbt customers might have an extended <a href="/docs/dbt-versions/core">critical support window</a>. `,
         });
       } else if (new Date() > threeMonths) {
         setEOLData({

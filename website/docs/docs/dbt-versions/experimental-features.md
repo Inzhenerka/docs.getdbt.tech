@@ -1,12 +1,12 @@
 ---
-title: "Preview new and experimental features in dbt Cloud"
+title: "Preview new and experimental features in the dbt platform"
 id: "experimental-features"
-sidebar_label: "Preview new dbt Cloud features"
+sidebar_label: "Preview new dbt platform features"
 description: "Gain early access to many new dbt Labs experimental features by enabling this in your profile."
 pagination_next: null
 ---
 
-dbt Labs often tests experimental features before deciding to continue on the [Product lifecycle](https://docs.getdbt.com/docs/dbt-versions/product-lifecycles#dbt-cloud).
+dbt Labs often tests experimental features before deciding to continue on the [Product lifecycle](/docs/dbt-versions/product-lifecycles#dbt-cloud).
 
 You can access experimental features to preview beta features that haven’t yet been released to <Constant name="cloud" />. You can toggle on or off all experimental features in your Profile settings. Experimental features:
 

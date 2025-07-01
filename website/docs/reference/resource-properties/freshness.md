@@ -1,3 +1,20 @@
+<Tabs>
+<TabItem value="yml" label="Project file">
+
+<File name="dbt_project.yml">
+  
+```yaml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+      warn_after:  
+        count: <positive_integer>
+        period: minute | hour | day
+```
+  
+</File>
+</TabItem>
+<TabItem value="project" label="Model YAML">
 <File name='models/<filename>.yml'>
 
 ```yaml
@@ -6,34 +23,42 @@ version: 2
 
 sources:
   - name: <source_name>
-    freshness:
-      warn_after:
-        [count](#count): <positive_integer>
-        [period](#period): minute | hour | day
-      error_after:
-        [count](#count): <positive_integer>
-        [period](#period): minute | hour | day
-      [filter](#filter): <boolean_sql_expression>
-    [loaded_at_field](#loaded_at_field): <column_name_or_expression>
-    [loaded_at_query](#loaded_at_query) <sql_expression> # v1.10 or higher. Should not be used if loaded_at_field is defined
+    config:
+      freshness: # changed to config in v1.9
+        warn_after:
+          [count](#count): <positive_integer>
+          [period](#period): minute | hour | day
+        error_after:
+          [count](#count): <positive_integer>
+          [period](#period): minute | hour | day
+        [filter](#filter): <boolean_sql_expression>
+      # changed to config in v1.10
+      [loaded_at_field](#loaded_at_field): <column_name_or_expression>
+      # or use loaded_at_query in v1.10 or higher. Should not be used if loaded_at_field is defined
+      [loaded_at_query](#loaded_at_query): <sql_expression>
 
     tables:
       - name: <table_name>
-        freshness:
-          warn_after:
-            [count](#count): <positive_integer>
-            [period](#period): minute | hour | day
-          error_after:
-            [count](#count): <positive_integer>
-            [period](#period): minute | hour | day
-          [filter](#filter): <boolean_sql_expression>
-        [loaded_at_field](#loaded_at_field): <column_name_or_expression>
-        [loaded_at_query](#loaded_at_query) <sql_expression> # v1.10 or higher. Should not be used if loaded_at_field is defined
+        config:
+          # source.table.config.freshness overrides source.config.freshness
+          freshness: 
+            warn_after:
+              [count](#count): <positive_integer>
+              [period](#period): minute | hour | day
+            error_after:
+              [count](#count): <positive_integer>
+              [period](#period): minute | hour | day
+            [filter](#filter): <boolean_sql_expression>
+          # changed to config in v1.10
+          [loaded_at_field](#loaded_at_field): <column_name_or_expression>
+          # or use loaded_at_query in v1.10 or higher. Should not be used if loaded_at_field is defined
+          [loaded_at_query](#loaded_at_query): <sql_expression>
 
         ...
 ```
-
 </File>
+</TabItem>
+</Tabs>
 
 ## Definition
 A freshness block is used to define the acceptable amount of time between the most recent record, and now, for a <Term id="table" /> to be considered "fresh".
@@ -44,9 +69,9 @@ In most cases, the `loaded_at_field` is required. Some adapters support calculat
 
 If a source has a `freshness:` block, dbt will attempt to calculate freshness for that source:
 - If `loaded_at_field` is provided, dbt will calculate freshness via a select query.
-- If `loaded_at_field` is _not_ provided, dbt will calculate freshness via warehouse metadata tables when possible (new in v1.7 on supported adapters). 
+- If `loaded_at_field` is _not_ provided, dbt will calculate freshness via warehouse metadata tables when possible. 
 <VersionBlock firstVersion="1.10"> 
-- If `loaded_at_query` is provided, dbt will calculate freshness via the provided custom sql query.
+- If `loaded_at_query` is provided, dbt will calculate freshness via the provided custom SQL query.
 - If `loaded_at_query` is provided, `loaded_at_field` should not be configured.
 </VersionBlock>
 
@@ -93,7 +118,7 @@ loaded_at_field: "convert_timezone('Australia/Sydney', 'UTC', created_at_local)"
 
 ## loaded_at_query
 
-Specify custom SQL to generate the `maxLoadedAt` timestamp on the source (rather than via warehouse metadata or the `loaded_at_field` config).
+Specify custom SQL to generate the `maxLoadedAt` timestamp on the source (rather than via warehouse metadata or the `loaded_at_field` config). Note that `loaded_at_query` should not be used if `loaded_at_field` is defined.
 
 Examples: 
 
@@ -101,16 +126,17 @@ Examples:
 
 sources:
   - name: your_source
-    freshness:
-      error_after:
-        count: 2
-        period: hour
-    loaded_at_query: |
-      select max(_sdc_batched_at) from (
-      select * from {{ this }}
-      where _sdc_batched_at > dateadd(day, -7, current_date)
-      qualify count(*) over (partition by _sdc_batched_at::date) > 2000
-      )
+    config:
+      freshness: # changed to config in v1.9
+        error_after:
+          count: 2
+          period: hour
+      loaded_at_query: |
+        select max(_sdc_batched_at) from (
+        select * from {{ this }}
+        where _sdc_batched_at > dateadd(day, -7, current_date)
+        qualify count(*) over (partition by _sdc_batched_at::date) > 2000
+        )
 
 ```
 
@@ -120,14 +146,16 @@ sources:
   - name: ecom
     schema: raw
     description: E-commerce data for the Jaffle Shop
-    freshness:
-      warn_after:
-        count: 24
-        period: hour
+    config: 
+      freshness: 
+        warn_after:
+          count: 24
+          period: hour
     tables:
       - name: raw_orders
         description: One record per order
-        loaded_at_query: "select {{ current_timestamp() }}"
+        config:
+          loaded_at_query: "select {{ current_timestamp() }}"
 ...
 
 ```
@@ -172,10 +200,11 @@ version: 2
 sources:
   - name: jaffle_shop
     database: raw
-
-    freshness: # default freshness
-      warn_after: {count: 12, period: hour}
-      error_after: {count: 24, period: hour}
+    config: 
+      # changed to config in v1.9
+      freshness: # default freshness
+        warn_after: {count: 12, period: hour}
+        error_after: {count: 24, period: hour}
 
     loaded_at_field: _etl_loaded_at
 
@@ -183,15 +212,17 @@ sources:
       - name: customers # this will use the freshness defined above
 
       - name: orders
-        freshness: # make this a little more strict
-          warn_after: {count: 6, period: hour}
-          error_after: {count: 12, period: hour}
-          # Apply a where clause in the freshness query
-          filter: datediff('day', _etl_loaded_at, current_timestamp) < 2
+        config:
+          freshness: # make this a little more strict
+            warn_after: {count: 6, period: hour}
+            error_after: {count: 12, period: hour}
+            # Apply a where clause in the freshness query
+            filter: datediff('day', _etl_loaded_at, current_timestamp) < 2
 
 
       - name: product_skus
-        freshness: # do not check freshness for this table
+        config:
+          freshness: # do not check freshness for this table
 ```
 
 </File>

@@ -55,7 +55,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ### Connecting to Teradata
 
-To connect to Teradata Vantage from dbt, you'll need to add a [profile](https://docs.getdbt.com/docs/core/connection-profiles) to your `profiles.yml` file. A Teradata profile conforms to the following syntax:
+To connect to Teradata Vantage from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles) to your `profiles.yml` file. A Teradata profile conforms to the following syntax:
 
 <File name='profiles.yml'>
 
@@ -241,12 +241,10 @@ For using cross-DB macros, teradata-utils as a macro namespace will not be used,
 
   `last_day` in `teradata_utils`, unlike the corresponding macro in `dbt_utils`, doesn't support `quarter` datepart.
 
-<VersionBlock firstVersion="1.8">
 
 dbt-teradata 1.8.0 and later versions support unit tests, enabling you to validate SQL models and logic with a small set of static inputs before going to production. This feature enhances test-driven development and boosts developer efficiency and code reliability. Learn more about dbt unit tests [here](/docs/build/unit-tests).
 
 
-</VersionBlock>
 
 ## Limitations
 

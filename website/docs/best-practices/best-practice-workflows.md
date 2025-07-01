@@ -177,7 +177,9 @@ To learn more, read the docs on [state](/reference/node-selection/syntax#about-n
 
 ## Pro-tips for dbt Projects
 ### Limit the data processed when in development
+
 In a development environment, faster run times allow you to iterate your code more quickly. We frequently speed up our runs by using a pattern that limits data based on the [target](/reference/dbt-jinja-functions/target) name:
+
 ```sql
 select
 *
@@ -185,6 +187,14 @@ from event_tracking.events
 {% if target.name == 'dev' %}
 where created_at >= dateadd('day', -3, current_date)
 {% endif %}
+```
+
+Another option is to use the [environment variable `DBT_CLOUD_INVOCATION_CONTEXT`](/docs/build/environment-variables#dbt-platform-context). This environment variable provides metadata about the execution context of dbt. The possible values are `prod`, `dev`, `staging`, and `ci`.
+
+**Example usage**:
+
+```
+{% if env_var('DBT_CLOUD_INVOCATION_CONTEXT') != 'prod' %}
 ```
 
 ### Use grants to manage privileges on objects that dbt creates
@@ -202,4 +212,4 @@ We find it most useful to separate these two types of transformations into diffe
 If you're using macros or other pieces of Jinja in your models, your compiled SQL (found in the `target/compiled` directory) may contain unwanted whitespace. Check out the [Jinja documentation](http://jinja.pocoo.org/docs/2.10/templates/#whitespace-control) to learn how to control generated whitespace.
 
 ## Related docs
-- [Updating our permissioning guidelines: grants as configs in <Constant name="core" /> v1.2](https://docs.getdbt.com/blog/configuring-grants)
+- [Updating our permissioning guidelines: grants as configs in <Constant name="core" /> v1.2](/blog/configuring-grants)

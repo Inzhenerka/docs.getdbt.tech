@@ -27,24 +27,27 @@ version: 2
 sources:
   - name: jaffle_shop
     database: raw
+    config:
+      freshness: # changed to config in v1.9
+        warn_after: {count: 12, period: hour}
+        error_after: {count: 24, period: hour}
 
-    freshness:
-      warn_after: {count: 12, period: hour}
-      error_after: {count: 24, period: hour}
-
-    loaded_at_field: _etl_loaded_at
+      loaded_at_field: _etl_loaded_at # changed to config in v1.10
 
     tables:
       - name: customers
 
       - name: orders
-        freshness:
-          warn_after: {count: 6, period: hour}
-          error_after: {count: 12, period: hour}
-          filter: datediff('day', _etl_loaded_at, current_timestamp) < 2
+        config:
+          freshness: 
+            warn_after: {count: 6, period: hour}
+            error_after: {count: 12, period: hour}
+            filter: datediff('day', _etl_loaded_at, current_timestamp) < 2
 
       - name: product_skus
-        freshness: null
+        config:
+          freshness: null 
+          
 
 ```
 </File>

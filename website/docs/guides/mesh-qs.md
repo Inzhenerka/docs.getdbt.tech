@@ -3,7 +3,7 @@ title: "Quickstart with dbt Mesh"
 id: "mesh-qs"
 level: 'Intermediate'
 icon: 'guides'
-tags: ['dbt Cloud','Quickstart']
+tags: ['dbt platform','Quickstart']
 hide_table_of_contents: true
 ---
 
@@ -30,23 +30,23 @@ You can also watch the [YouTube video on dbt and Snowflake](https://www.youtube.
 
 ### Related content:
 - [Data mesh concepts: What it is and how to get started](https://www.getdbt.com/blog/data-mesh-concepts-what-it-is-and-how-to-get-started)
-- [Deciding how to structure your <Constant name="mesh" />](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-3-structures)
-- [<Constant name="mesh" /> best practices guide](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-4-implementation)
-- [<Constant name="mesh" /> FAQs](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-5-faqs)
+- [Deciding how to structure your <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-3-structures)
+- [<Constant name="mesh" /> best practices guide](/best-practices/how-we-mesh/mesh-4-implementation)
+- [<Constant name="mesh" /> FAQs](/best-practices/how-we-mesh/mesh-5-faqs)
 
 ## Prerequisites​
 
 To leverage <Constant name="mesh" />, you need the following:
 
-- You must have a [dbt Cloud Enterprise account](https://www.getdbt.com/get-started/enterprise-contact-pricing) <Lifecycle status="managed" />
+- You must have a [<Constant name="cloud" /> Enterprise-tier account](https://www.getdbt.com/get-started/enterprise-contact-pricing) <Lifecycle status="managed,managed_plus" />
 - You have access to a cloud data platform, permissions to load the sample data tables, and <Constant name="cloud" /> permissions to create new projects. 
 - This guide uses the Jaffle Shop sample data, including `customers`, `orders`, and `payments` tables. Follow the provided instructions to load this data into your respective data platform:
-  - [Snowflake](https://docs.getdbt.com/guides/snowflake?step=3)
-  - [Databricks](https://docs.getdbt.com/guides/databricks?step=3)
-  - [Redshift](https://docs.getdbt.com/guides/redshift?step=3)
-  - [BigQuery](https://docs.getdbt.com/guides/bigquery?step=3)
-  - [Fabric](https://docs.getdbt.com/guides/microsoft-fabric?step=2)
-  - [Starburst Galaxy](https://docs.getdbt.com/guides/starburst-galaxy?step=2)
+  - [Snowflake](/guides/snowflake?step=3)
+  - [Databricks](/guides/databricks?step=3)
+  - [Redshift](/guides/redshift?step=3)
+  - [BigQuery](/guides/bigquery?step=3)
+  - [Fabric](/guides/microsoft-fabric?step=2)
+  - [Starburst Galaxy](/guides/starburst-galaxy?step=2)
 
 This guide assumes you have experience with or fundamental knowledge of dbt. Take the [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) course first if you are brand new to dbt.
 
@@ -59,7 +59,7 @@ In this section, you'll create two new, empty projects in <Constant name="cloud"
 
 For example, the always-enterprising and fictional account "Jaffle Labs" will create two projects for their data analytics and finance team: Jaffle | Data Analytics and Jaffle | Finance.
 
-<Lightbox src="/img/guides/dbt-mesh/project_names.png" width="50%" title="Create two new dbt Cloud projects named 'Jaffle | Data Analytics' and 'Jaffle Finance' " />
+<Lightbox src="/img/guides/dbt-mesh/project_names.png" width="50%" title="Create two new dbt projects named 'Jaffle | Data Analytics' and 'Jaffle Finance' " />
 
 To [create](/docs/cloud/about-cloud-setup) a new project in <Constant name="cloud" />:
 
@@ -75,7 +75,7 @@ To [create](/docs/cloud/about-cloud-setup) a new project in <Constant name="clou
      - For "Jaffle | Data Analytics", set the default database to `jaffle_da`.
      - For "Jaffle | Finance", set the default database to `jaffle_finance`
 
-<Lightbox src="/img/guides/dbt-mesh/create-new-project.gif" width="80%" title="Navigate to 'Account settings' and then click + 'New Project' to create new projects in dbt Cloud" /> 
+<Lightbox src="/img/guides/dbt-mesh/create-new-project.gif" width="80%" title="Navigate to 'Account settings' and then click + 'New Project' to create new projects in dbt" /> 
 
 7. Continue the prompts to complete the project setup. Once configured, each project should have:
     - A data platform connection
@@ -83,7 +83,7 @@ To [create](/docs/cloud/about-cloud-setup) a new project in <Constant name="clou
     - One or more [environments](/docs/deploy/deploy-environments) (such as development, deployment)
 
 ### Create a production environment
-In <Constant name="cloud" />, each project can have one deployment environment designated as "Production.". You must set up a ["Production" or "Staging" deployment environment](/docs/deploy/deploy-environments) for each project you want to "mesh" together. This enables you to leverage <Constant name="explorer" /> in the [later steps](https://docs.getdbt.com/guides/mesh-qs?step=5#create-and-run-a-dbt-cloud-job) of this guide.
+In <Constant name="cloud" />, each project can have one deployment environment designated as "Production.". You must set up a ["Production" or "Staging" deployment environment](/docs/deploy/deploy-environments) for each project you want to "mesh" together. This enables you to leverage <Constant name="explorer" /> in the [later steps](/guides/mesh-qs?step=5#create-and-run-a-dbt-cloud-job) of this guide.
 
 To set a production environment:
 1. Navigate to **Deploy** -> **Environments**, then click **Create New Environment**.
@@ -237,7 +237,8 @@ To make `fct_orders` publicly available:
 
   models:
     - name: fct_orders
-      access: public
+      config:
+        access: public # changed to config in v1.10
       description: "Customer and order details"
       columns:
         - name: order_id
@@ -283,16 +284,16 @@ Note: By default, model access is set to "protected", which means they can only 
 3. Go to **Version control** and click the **Commit and Sync** button to commit your changes.
 4. Merge your changes to the main or production branch.
 
-### Create and run a dbt Cloud job
+### Create and run a dbt job
 
-Before a downstream team can leverage assets from this foundational project, you need to [create a production environment](https://docs.getdbt.com/guides/mesh-qs?step=3#create-a-production-environment) and run a [deployment job](/docs/deploy/deploy-jobs) successfully.
+Before a downstream team can leverage assets from this foundational project, you need to [create a production environment](/guides/mesh-qs?step=3#create-a-production-environment) and run a [deployment job](/docs/deploy/deploy-jobs) successfully.
 
 To run your first deployment <Constant name="cloud" /> job, you will need to create a new <Constant name="cloud" /> job.  
 1. Click **Deploy** and then **Jobs**. 
 2. Click **Create job** and then **Deploy job**.
 3. Select the **Generate docs on run** option. This will reflect the state of this project in the **Explore** section.
 
-<Lightbox src="/img/guides/dbt-mesh/generate_docs_on_run.png" width="75%" title=" Select the 'Generate docs on run' option when configuring your dbt Cloud job." />
+<Lightbox src="/img/guides/dbt-mesh/generate_docs_on_run.png" width="75%" title=" Select the 'Generate docs on run' option when configuring your dbt job." />
 
 4. Then, click **Run now** to trigger the job.
 <Lightbox src="/img/guides/dbt-mesh/job_run_now.png" width="80%" title="Trigger a job by clicking the 'Run now' button." />
@@ -312,7 +313,7 @@ In this section, you will set up the downstream project, "Jaffle | Finance", and
 5. In the **File <Constant name="explorer" />**, hover over the project directory, click the **...** and Select **Create file**.
 6. Name the file `dependencies.yml`.
 
-<Lightbox src="/img/guides/dbt-mesh/finance_create_file.png" width="70%" title="Create file in the dbt Cloud IDE." />
+<Lightbox src="/img/guides/dbt-mesh/finance_create_file.png" width="70%" title="Create file in the Studio IDE." />
 
 6. Add the upstream `analytics` project and the `dbt_utils` package. Click **Save**.
 
@@ -419,8 +420,8 @@ You're now set to add a model that explores how payment types vary throughout a 
 
     </File> 
 
-2. Notice the cross-project ref at work! When you add the `ref`, the dbt Cloud IDE's auto-complete feature recognizes the public model as available.
-<Lightbox src="/img/guides/dbt-mesh/cross_proj_ref_autocomplete.png" title="Cross-project ref autocomplete in the dbt Cloud IDE" />
+2. Notice the cross-project ref at work! When you add the `ref`, the <Constant name="cloud_ide" />'s auto-complete feature recognizes the public model as available.
+<Lightbox src="/img/guides/dbt-mesh/cross_proj_ref_autocomplete.png" title="Cross-project ref autocomplete in the Studio IDE" />
 
 3. This automatically resolves (or links) to the correct database, schema, and table/view set by the upstream project.
 <Lightbox src="/img/guides/dbt-mesh/cross_proj_ref_compile.png" title="Cross-project ref compile" />
@@ -443,9 +444,9 @@ As part of the Data Analytics team, you may want to ensure the `fct_orders` mode
 ```yaml
 models:
   - name: fct_orders
-    access: public
     description: “Customer and order details”
     config:
+      access: public # changed to config in v1.10
       contract:
         enforced: true
     columns:
@@ -481,10 +482,10 @@ version: 2
 
 models:
   - name: fct_orders
-    access: public
     description: "Customer and order details"
     latest_version: 2
     config:
+      access: public # changed to config in v1.10
       contract:
         enforced: true
     columns:
@@ -551,7 +552,7 @@ select * from {{ ref('fct_orders', v=2) }}
 select * from {{ ref('fct_orders') }}
 ```
 
-## Add a dbt Cloud job in the downstream project
+## Add a dbt job in the downstream project
 Before proceeding, make sure you commit and merge your changes in both the “Jaffle | Data Analytics” and “Jaffle | Finance” projects.
 
 A member of the Finance team would like to schedule a <Constant name="cloud" /> job for their customer payment journey analysis immediately after the data analytics team refreshes their pipelines.
@@ -635,8 +636,8 @@ Congratulations 🎉! You're ready to bring the benefits of <Constant name="mesh
 
 Here are some additional resources to help you continue your journey:
 
-- [How we build our dbt mesh projects](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-1-intro)
-- [<Constant name="mesh" /> FAQs](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-5-faqs)
+- [How we build our dbt mesh projects](/best-practices/how-we-mesh/mesh-1-intro)
+- [<Constant name="mesh" /> FAQs](/best-practices/how-we-mesh/mesh-5-faqs)
 - [Implement <Constant name="mesh" /> with the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs#how-can-i-implement-dbt-mesh-with-the-dbt-semantic-layer)
 - [Cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref)
 - [<Constant name="explorer" />](/docs/explore/explore-projects)

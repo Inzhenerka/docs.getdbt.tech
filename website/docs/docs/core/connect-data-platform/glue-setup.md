@@ -682,28 +682,6 @@ group by 1
 ```
 #### Iceberg Snapshot source code example
 
-<VersionBlock lastVersion="1.8">
-
-```sql
-
-{% snapshot demosnapshot %}
-
-{{
-    config(
-        strategy='timestamp',
-        target_schema='jaffle_db',
-        updated_at='dt',
-        file_format='iceberg'
-) }}
-
-select * from {{ ref('customers') }}
-
-{% endsnapshot %}
-
-```
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 ```sql
@@ -843,7 +821,7 @@ In many cases, you may need to run you dbt jobs to read from another AWS account
 
 Review the following link https://repost.aws/knowledge-center/glue-tables-cross-accounts to set up access policies in source and target accounts
 
-Add the following `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` to your conf in the DBT profile, as such, you can have multiple outputs for each of the accounts that you have access to.
+Add the following `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` to your conf in the dbt profile, as such, you can have multiple outputs for each of the accounts that you have access to.
 
 Note: The access cross-accounts need to be within the same AWS Region
 #### Profile config example
@@ -883,7 +861,7 @@ use or set `database` as a node config or in the target profile when running dbt
 
 If you want to control the schema/database in which dbt will materialize models,
 use the `schema` config and `generate_schema_name` macro _only_.
-For more information, check the dbt documentation about [custom schemas](https://docs.getdbt.com/docs/build/custom-schemas).
+For more information, check the dbt documentation about [custom schemas](/docs/build/custom-schemas).
 
 ## AWS Lakeformation integration
 The adapter supports AWS Lake Formation tags management enabling you to associate existing tags defined out of dbt-glue to database objects built by dbt-glue (database, table, view, snapshot, incremental models, seeds).
@@ -1039,7 +1017,7 @@ $ export DBT_ROLE_ARN=arn:aws:iam::1234567890:role/GlueInteractiveSessionRole
 $ python3 -m pytest tests/functional
 ```
 
-For more information, check the dbt documentation about [testing a new adapter](https://docs.getdbt.com/docs/contributing/testing-a-new-adapter).
+For more information, check the dbt documentation about [testing a new adapter](/guides/adapter-creation).
 
 ## Caveats
 

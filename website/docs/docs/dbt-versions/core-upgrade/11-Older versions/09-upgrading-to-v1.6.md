@@ -7,7 +7,7 @@ displayed_sidebar: "docs"
 
 <Constant name="core" /> v1.6 has three significant areas of focus:
 1. Next milestone of [multi-project deployments](https://github.com/dbt-labs/dbt-core/discussions/6725): improvements to contracts, groups/access, versions; and building blocks for cross-project `ref`
-1. Semantic layer re-launch: <Constant name="core" /> and [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow) integration
+1. Semantic layer re-launch: <Constant name="core" /> and [MetricFlow](/docs/build/about-metricflow) integration
 1. Mechanisms to support mature deployment at scale (`dbt clone` and `dbt retry`)
 
 ## Resources
@@ -82,7 +82,7 @@ More consistency and flexibility around packages. Resources defined in a package
 - `generate_x_name` macros (defining custom rules for database, schema, alias naming) follow the same pattern as other "global" macros for package-scoped overrides. See [macro dispatch](/reference/dbt-jinja-functions/dispatch) for an overview of the patterns that are possible.
 
 :::caution Closed Beta - <Constant name="cloud" /> Enterprise
-[**Project dependencies**](/docs/mesh/govern/project-dependencies): Introduces `dependencies.yml` and dependent `projects` as a feature of dbt Cloud Enterprise. Allows enforcing model access (public vs. protected/private) across project/package boundaries. Enables cross-project `ref` of public models, without requiring the installation of upstream source code.
+[**Project dependencies**](/docs/mesh/govern/project-dependencies): Introduces `dependencies.yml` and dependent `projects` as a feature of <Constant name="cloud" /> Enterprise. Allows enforcing model access (public vs. protected/private) across project/package boundaries. Enables cross-project `ref` of public models, without requiring the installation of upstream source code.
 :::
 
 ### Deprecated functionality

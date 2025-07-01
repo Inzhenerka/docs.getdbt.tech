@@ -8,7 +8,7 @@ pagination_prev: null
 
 Begin your dbt journey by trying one of our quickstarts, which provides a step-by-step guide to help you set up [<Constant name="cloud" />](#dbt-cloud) or [<Constant name="core" />](#dbt-core) with a [variety of data platforms](/docs/cloud/connect-data-platform/about-connections).
 
-## dbt Cloud
+## the dbt platform
 
 <Constant name="cloud" /> is a scalable solution that enables you to develop, test, deploy, and explore data products using a single, fully managed software service. It enables teams with diverse skills to build reliable data products at any scale, with capabilities including:
 
@@ -23,56 +23,56 @@ Learn more about [<Constant name="cloud" /> features](/docs/cloud/about-cloud/d
 <div className="grid--3-col">
 
 <Card
-    title="Quickstart for dbt Cloud and Amazon Athena"
-    body="Integrate dbt Cloud with Amazon Athena for your data transformations."
+    title="Quickstart for dbt and Amazon Athena"
+    body="Integrate dbt with Amazon Athena for your data transformations."
     link="https://docs.getdbt.com/guides/athena"
     icon="athena"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Azure Synapse Analytics"
-    body="Discover how to integrate dbt Cloud with Azure Synapse Analytics for your data transformations."
+    title="Quickstart for dbt and Azure Synapse Analytics"
+    body="Discover how to integrate dbt with Azure Synapse Analytics for your data transformations."
     link="https://docs.getdbt.com/guides/azure-synapse-analytics"
-    icon="azure-synapse-analytics"/>
+    icon="azure-synapse-analytics-2"/>
 
 <Card
-    title="Quickstart for dbt Cloud and BigQuery"
-    body="Discover how to leverage dbt Cloud with BigQuery to streamline your analytics workflows."
+    title="Quickstart for dbt and BigQuery"
+    body="Discover how to leverage dbt with BigQuery to streamline your analytics workflows."
     link="https://docs.getdbt.com/guides/bigquery"
     icon="bigquery"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Databricks"
-    body="Learn how to integrate dbt Cloud with Databricks for efficient data processing and analysis."
+    title="Quickstart for dbt and Databricks"
+    body="Learn how to integrate dbt with Databricks for efficient data processing and analysis."
     link="https://docs.getdbt.com/guides/databricks"
     icon="databricks"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Microsoft Fabric"
-    body="Explore the synergy between dbt Cloud and Microsoft Fabric to optimize your data transformations."
+    title="Quickstart for dbt and Microsoft Fabric"
+    body="Explore the synergy between dbt and Microsoft Fabric to optimize your data transformations."
     link="https://docs.getdbt.com/guides/microsoft-fabric"
     icon="fabric"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Redshift"
-    body="Learn how to connect dbt Cloud to Redshift for more agile data transformations."
+    title="Quickstart for dbt and Redshift"
+    body="Learn how to connect dbt to Redshift for more agile data transformations."
     link="https://docs.getdbt.com/guides/redshift"
     icon="redshift"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Snowflake"
-    body="Unlock the full potential of using dbt Cloud with Snowflake for your data transformations."
+    title="Quickstart for dbt and Snowflake"
+    body="Unlock the full potential of using dbt with Snowflake for your data transformations."
     link="https://docs.getdbt.com/guides/snowflake"
     icon="snowflake"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Starburst Galaxy"
-    body="Leverage dbt Cloud with Starburst Galaxy to enhance your data transformation workflows."
+    title="Quickstart for dbt and Starburst Galaxy"
+    body="Leverage dbt with Starburst Galaxy to enhance your data transformation workflows."
     link="https://docs.getdbt.com/guides/starburst-galaxy"
     icon="starburst"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Teradata"
-    body="Discover and use dbt Cloud with Teradata to enhance your data transformation workflows."
+    title="Quickstart for dbt and Teradata"
+    body="Discover and use dbt with Teradata to enhance your data transformation workflows."
     link="https://docs.getdbt.com/guides/teradata"
     icon="teradata"/>
 
@@ -103,6 +103,6 @@ Expand your dbt knowledge and expertise with these additional resources:
 
 - [Join the monthly demos](https://www.getdbt.com/resources/webinars/dbt-cloud-demos-with-experts) to see <Constant name="cloud" /> in action and ask questions.
 - [<Constant name="cloud" /> AWS marketplace](https://aws.amazon.com/marketplace/pp/prodview-tjpcf42nbnhko) contains information on how to deploy <Constant name="cloud" /> on AWS, user reviews, and more.
-- [Best practices](https://docs.getdbt.com/best-practices) contains information on how dbt Labs approaches building projects through our current viewpoints on structure, style, and setup.
+- [Best practices](/best-practices) contains information on how dbt Labs approaches building projects through our current viewpoints on structure, style, and setup.
 - [dbt Learn](https://learn.getdbt.com) offers free online courses that cover dbt fundamentals, advanced topics, and more.
 - [Join the dbt Community](https://www.getdbt.com/community/join-the-community) to learn how other data practitioners globally are using dbt, share your own experiences, and get help with your dbt projects.

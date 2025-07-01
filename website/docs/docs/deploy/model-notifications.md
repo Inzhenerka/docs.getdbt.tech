@@ -26,7 +26,9 @@ Create configuration YAML files in your project for dbt to send notifications ab
 
 ## Configure groups
 
-Define your groups in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group must have a single email address specified &mdash; multiple email fields or lists aren't supported.
+Define your [groups](/docs/build/groups) in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group's owner can now specify one or multiple email addresses to receive model-level notifications.
+
+The `email` field supports a single email address as a string or a list of multiple email addresses.
 
 The following example shows how to define groups in a `groups.yml` file.
 
@@ -49,11 +51,16 @@ groups:
       email: marketing@dbtlabs.com
       favorite_food: jaffles
 
+# Example of multiple emails supported
   - name: docs
     owner:
       name: "Documentation team"
-      email: docs@dbtlabs.com
+      email: 
+        - docs@dbtlabs.com
+        - community@dbtlabs.com
+        - product@dbtlabs.com
       favorite_food: pizza
+
 ```
 
 </File>
@@ -119,6 +126,8 @@ Provide <Constant name="cloud" /> account members the ability to configure and r
 To use model-level notifications, your <Constant name="cloud" /> account must have access to the feature. Ask your <Constant name="cloud" /> administrator to enable this feature for account members by following these steps:
 
 1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). 
-1. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). 
+2. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). 
 
   <Lightbox src="/img/docs/dbt-cloud/example-enable-model-notifications.png" title="Example of the setting Enable group/owner notifications on models" /> 
+
+3. Click **Save**.

@@ -106,7 +106,7 @@ default:
 
 ## Attaching Additional Databases
 
-DuckDB version `0.7.0` added support for [attaching additional databases](https://duckdb.org/docs/sql/statements/attach.html) to your `dbt-duckdb` run so that you can read and write from multiple databases. Additional databases may be configured using [dbt run hooks](https://docs.getdbt.com/docs/build/hooks-operations) or via the attach argument in your profile that was added in `dbt-duckdb 1.4.0`:
+DuckDB version `0.7.0` added support for [attaching additional databases](https://duckdb.org/docs/sql/statements/attach.html) to your `dbt-duckdb` run so that you can read and write from multiple databases. Additional databases may be configured using [dbt run hooks](/docs/build/hooks-operations) or via the attach argument in your profile that was added in `dbt-duckdb 1.4.0`:
 
 ```yml
 default:
@@ -174,7 +174,7 @@ Note, using plugins may require you to add additional dependencies to the Python
 
 ## Python Support
 
-dbt added support for [Python models](https://docs.getdbt.com/docs/build/python-models) in version `1.3.0`. For most data platforms, dbt will package up the Python code defined in a `.py` file and ship it off to be executed in whatever Python environment that data platform supports (for example, Snowpark for Snowflake or Dataproc for BigQuery). 
+dbt added support for [Python models](/docs/build/python-models) in version `1.3.0`. For most data platforms, dbt will package up the Python code defined in a `.py` file and ship it off to be executed in whatever Python environment that data platform supports (for example, Snowpark for Snowflake or Dataproc for BigQuery). 
 
 In `dbt-duckdb`, Python models are executed in the same process that owns the connection to the DuckDB database, which by default, is the Python process that is created when you run dbt. To execute the Python model, the `.py` file that your model is defined in is teated as a Python module and loaded into the running process using [`importlib`](https://docs.python.org/3/library/importlib.html). Then construct the arguments to the model function that you defined (a dbt object that contains the names of any ref and source information your model needs and a `DuckDBPyConnection` object for you to interact with the underlying DuckDB database), call the model function, and then materialize the returned object as a table in DuckDB.
 
@@ -216,8 +216,9 @@ You may reference external files in your dbt models either directly or as dbt so
 ```yml
 sources:
   - name: external_source
-    meta:
-      external_location: "s3://my-bucket/my-sources/{name}.parquet"
+    config:
+      meta: # changed to config in v1.10
+        external_location: "s3://my-bucket/my-sources/{name}.parquet"
     tables:
       - name: source1
       - name: source2
@@ -244,8 +245,9 @@ If one of the source tables deviates from the pattern or needs some other specia
 ```yml
 sources:
   - name: external_source
-    meta:
-      external_location: "s3://my-bucket/my-sources/{name}.parquet"
+    config:
+      meta: # changed to config in v1.10
+        external_location: "s3://my-bucket/my-sources/{name}.parquet"
     tables:
       - name: source1
       - name: source2
@@ -303,7 +305,7 @@ LEFT JOIN {{ source('upstream', 'source') }} s USING (id)
 | Option | Default | Description |
 | --- | --- | --- |
 | location | `external_location` macro | The path to write the external materialization to. See below for more details. |
-| format | parquet |The format of the external file |(parquet, csv, or json).
+| format | parquet |The format of the external file |(parquet, CSV, or JSON).
 | delimiter | , | For CSV files, the delimiter to use for fields. |
 | options | None | Any other options to pass to DuckDB's COPY operation (for example partition_by, codec, etc). |
 | `glue_register` | false | If true, try to register the file created by this model with the AWS Glue Catalog. |
@@ -312,7 +314,8 @@ LEFT JOIN {{ source('upstream', 'source') }} s USING (id)
 
 If the location argument is specified, it must be a filename (or S3 bucket/path), and `dbt-duckdb` will attempt to infer the format argument from the file extension of the location if the format argument is unspecified (this functionality was added in version 1.4.1.)
 
-If the location argument is not specified, then the external file will be named after the `model.sql` (or `model.py`) file that defined it with an extension that matches the format argument (parquet, csv, or json). By default, the external files are created relative to the current working directory, but you can change the default directory (or S3 bucket/prefix) by specifying the `external_root` setting in your DuckDB profile.
+If the location argument is not specified, then the external file will be named after the `model.sql` (or `model.py`) file that defined it with an extension that matches the format argument (parquet, CSV, or JSON). By default, the external files are created relative to the current working directory, but you can change the default directory (or S3 bucket/prefix) by specifying the `external_root` setting in your DuckDB profile.
+
 
 `dbt-duckdb` supports the `delete+insert` and `append` [strategies](/docs/build/incremental-strategy#built-in-strategies) for incremental table models, but there's no support for incremental materialization strategies for external models.
 
