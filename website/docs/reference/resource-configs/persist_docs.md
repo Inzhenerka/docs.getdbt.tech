@@ -154,7 +154,7 @@ Some known issues and limitations:
 
 <div warehouse="Snowflake">
 
-- If a column name in a SQL model is in mixed-case format (for example, `ca_net_ht_N`), the docs for that column will not be persisted. For the docs to persist, there are two options: 
+- If a column name in a SQL model is in a mixed-case format (for example, `ca_net_ht_N`), the docs for that column will not be persisted. For the docs to persist, there are two options: 
 
     - Define the column name in the corresponsing YML file using lowercase or uppercase letters only.
     - Use the [`quote`](../resource-properties/columns.md#quoter) configuration in the corresponding YML file.
