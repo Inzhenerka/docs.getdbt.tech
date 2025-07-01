@@ -168,8 +168,7 @@ Some known issues and limitations:
             ```sql
             {{ config(materialized='table') }}
 
-            -- Note the addition of double quotes for the column name below!
-            select 1 as "ca_net_ht_N"
+            select 1 as "ca_net_ht_N" # note the use of double quotes for the column name
             ```
         </File>
 
