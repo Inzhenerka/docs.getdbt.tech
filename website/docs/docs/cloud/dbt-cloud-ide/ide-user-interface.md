@@ -200,4 +200,4 @@ Use menus and modals to interact with <Constant name="cloud_ide" /> and access u
   * Rollback your repo to remote, to refresh your git state and view status details
   * Viewing status details, including the <Constant name="cloud_ide" /> Status modal.
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-options-menu-with-save.png" width="90%" title="Access the IDE Options menu to switch to dark or light mode, restart the IDE, rollback to remote, or view the IDE status"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-options-menu-with-save.png" width="90%" title="Access the IDE options menu to switch to dark or light mode, restart the IDE, rollback to remote, or view the IDE status"/>
