@@ -107,7 +107,7 @@ Starting from dbt v1.6 or higher, when you save changes to a model, you can comp
 
 3. **Build button &mdash;** The build button allows users to quickly access dbt commands related to the active model in the File Editor. The available commands include dbt build, dbt test, and dbt run, with options to include only the current resource, the resource and its upstream dependencies, the resource, and its downstream dependencies, or the resource with all dependencies. This menu is available for all executable nodes.
 
-4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/dbt-cloud-ide/lint-format) on the active file in the File Editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
+4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/dbt-cloud-ide/lint-format) on the active file in the file editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
 
 5. **Results tab &mdash;** The Results console tab displays the most recent Preview results in tabular format. 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/results-console-tab.png" width="90%" title="Preview results show up in the Results console tab"/>
