@@ -89,4 +89,4 @@ Once you've completed this checklist, you're ready to start your dbt platform jo
 - [ ] The [guides](/guides) offer quickstarts for warehouse connections and project features.
 - [ ] [dbt Learn](https://learn.getdbt.com/catalog) has hands on courses and interactive content.
 - [ ] Our [best practices](/best-practices) offer practical advice on structuring and deploying dbt projects.
-- [ ] The [references](/reference) are the product dictionary and offer detailed implementation examples. 
+- [ ] The [references](/reference/references-overview) are the product dictionary and offer detailed implementation examples. 
