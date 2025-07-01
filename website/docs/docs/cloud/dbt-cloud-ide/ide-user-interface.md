@@ -61,7 +61,7 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
    -  You can also [resolve merge conflicts](/docs/cloud/git/merge-conflicts) and for more info on git, refer to [Version control basics](/docs/cloud/git/version-control-basics#the-git-button-in-the-cloud-ide).
    -  **Version Control Options menu &mdash;** The **Changes** section, under the <Constant name="git" /> actions button, lists all file changes since the last commit. You can click on a change to open the <Constant name="git" /> Diff View to see the inline changes. You can also right-click any file and use the file-specific options in the Version Control Options menu.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/version-control-options-menu.png" width="30%" title="Right-click edited files to access Version Control Options menu"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/version-control-options-menu.png" width="60%" title="Right-click edited files to access Version Control Options menu"/>
 
 
   - Use the **Prune branches** option to remove local branches that have already been deleted from the remote repository. Selecting this triggers a [pop-up modal](#prune-branches-modal), where you can confirm the deletion of the specific local branches, keeping your branch management tidy. Note that this won't delete the branch you're currently on. Pruning branches isn't available for [managed repositories](/docs/cloud/git/managed-repository) because they don't have a typical remote setup, which prevents remote branch deletion. 
@@ -170,7 +170,7 @@ Use menus and modals to interact with <Constant name="cloud_ide" /> and access u
 
 - #### <Constant name="cloud_ide" /> Status modal
   The <Constant name="cloud_ide" /> Status modal shows the current error message and debug logs for the server. This also contains an option to restart the <Constant name="cloud_ide" />. Open this by clicking on the <Constant name="cloud_ide" /> Status button.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-status-modal-with-save.png" width="90%" title="The Command History returns a log and detail of all your dbt invocations."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-status-modal-with-save.png" width="60%" title="The Command History returns a log and detail of all your dbt invocations."/>
 
 - #### Commit to a new branch
   Edit directly on your protected primary git branch and commit those changes to a new branch when ready.
