@@ -49,7 +49,7 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-editing.png" width="90%" title="Use the file editor, version control section, and save button during your development workflow"/>
 
-1. **File Editor &mdash;** The File Editor is where you edit code. Tabs break out the region for each opened file, and unsaved files are marked with a blue dot icon in the tab view. You can edit, format, or lint files and execute dbt commands in your protected primary git branch. Since the <Constant name="cloud_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+1. **File Editor &mdash;** The file editor is where you edit code. Tabs break out the region for each opened file, and unsaved files are marked with a blue dot icon in the tab view. You can edit, format, or lint files and execute dbt commands in your protected primary git branch. Since the <Constant name="cloud_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
 
     * Use intuitive [keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) to help develop easier for you and your team.
 
