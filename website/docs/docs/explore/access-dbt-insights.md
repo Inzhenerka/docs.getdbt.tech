@@ -15,7 +15,7 @@ Learn how to access <Constant name="query_page" />, run queries, and view result
 <Constant name="query_page" /> provides a rich console experience with editor navigation. You can expect <Constant name="query_page" /> to:
 - Enable you to write SQL queries, with the option to open multiple tabs 
 - Have SQL + dbt autocomplete suggestions and syntax highlighting
-- Bookmark SQL queries
+- Save SQL queries
 - View the results of the query and its details using the **Results** or **Details** tabs
 - Create a visualization of your query results using the **Chart** tab
 - View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** tab
@@ -91,7 +91,7 @@ From here, you can:
 - [Visualize results](#chart-results) in the **Chart** tab
 - Check the [**Query history**](#query-history) for status and past runs
 - Use [**<Constant name="explorer" />**](#use-dbt-explorer) to explore model lineage and context
-- If you want to save the query, you can click **Bookmark** in the [query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to save it for future reference.
+- If you want to save the query, you can click **Save Insight** in the [query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to save it for future reference.
 
 :::tip Want to turn a query into a model?
 You can access the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) from the [Query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within <Constant name="cloud" />!
@@ -150,16 +150,16 @@ To access <Constant name="explorer" />, click on the **<Constant name="explorer"
 
 ### Set Jinja context
 
-## Bookmark your queries
+## Save your Insights
 
-Insights offers a robust bookmark feature for quickly finding the queries you use most. There's also an option to share bookmarks with other dbt users (and have them share with you). Click the bookmark icon in a query to add it to your list!
+Insights offers a robust save feature for quickly finding the queries you use most. There's also an option to share saved Insights with other dbt users (and have them share with you). Click the **bookmark icon** in a query to add it to your list!
 
-- Click the **bookmark icon** on the right menu to manage your bookmarked queries. You can view your personal and shared queries
+- Click the **bookmark icon** on the right menu to manage your saved Insights. You can view your personal and shared queries
 
-    <Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Manage your query bookmarks" />
+    <Lightbox src="/img/docs/dbt-insights/saved-insights.png" width="90%" title="Manage your saved Insights" />
     
-- View bookmark details including description and creation date in the **Overview** tab.
-- View the bookmarks history in the **Version history** tab. Click a version to compare it the current and view changes. 
+- View saved Insight details including description and creation date in the **Overview** tab.
+- View the Insight history in the **Version history** tab. Click a version to compare it the current and view changes. 
 
 ## Considerations 
 - <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
