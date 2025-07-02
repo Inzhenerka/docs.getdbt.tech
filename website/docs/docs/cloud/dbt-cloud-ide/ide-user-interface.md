@@ -26,7 +26,7 @@ The <Constant name="cloud_ide" /> streamlines your workflow, and features a popu
 3. [**Version Control**](#editing-features) &mdash; The <Constant name="cloud_ide" />'s powerful Version Control section contains all git-related elements, including the <Constant name="git" /> actions button and the **Changes** section. 
 
 4. **File <Constant name="explorer" /> &mdash;** The File <Constant name="explorer" /> shows the filetree of your repository. You can:
-    - Click on any file in the filetree to open the file in the File Editor. 
+    - Click on any file in the filetree to open the file in the file editor. 
     - Click and drag files between directories to move files. 
     - Right-click a file to access the sub-menu options like duplicate file, copy file name, copy as `ref`, rename, delete.
     - Use file indicators, located to the right of your files or folder name, to see when changes or actions were made:
@@ -49,11 +49,11 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-editing.jpg" width="90%" title="Use the file editor, version control section, and save button during your development workflow"/>
 
-1. **File Editor &mdash;** The File Editor is where you edit code. Tabs break out the region for each opened file, and unsaved files are marked with a blue dot icon in the tab view. You can edit, format, or lint files and execute dbt commands in your protected primary git branch. Since the <Constant name="cloud_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+1. **File editor &mdash;** The file editor is where you edit code. Tabs break out the region for each opened file, and unsaved files are marked with a blue dot icon in the tab view. You can edit, format, or lint files and execute dbt commands in your protected primary git branch. Since the <Constant name="cloud_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
 
     * Use intuitive [keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) to help develop easier for you and your team.
 
-2. **Save button &mdash;** The editor has a **Save** button that saves editable files. Pressing the button or using the Command-S or Control-S shortcut saves the file contents. You don't need to save to preview code results in the Console section, but it's necessary before changes appear in a dbt invocation. The File Editor tab shows a blue icon for unsaved changes.
+2. **Save button &mdash;** The editor has a **Save** button that saves editable files. Pressing the button or using the Command-S or Control-S shortcut saves the file contents. You don't need to save to preview code results in the Console section, but it's necessary before changes appear in a dbt invocation. The file editor tab shows a blue icon for unsaved changes.
 
 3. **Version Control &mdash;** This menu contains all git-related elements, including the <Constant name="git" /> actions button. The button updates relevant actions based on your editor's state, such as prompting to pull remote changes, commit and sync when reverted commit changes are present, creating a merge/pull request when appropriate, or pruning branches deleted from the remote repository.
 
@@ -85,8 +85,8 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
 
 ## Console section
 
-The console section, located below the File editor, includes various console tabs and buttons to help you with tasks such as previewing, compiling, building, and viewing the <Term id="dag" />. Refer to the following sub-bullets for more details on the console tabs and buttons.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-console-overview.jpg" width="90%" title="The Console section is located below the File editor and has various tabs and buttons to help execute tasks"/>
+The console section, located below the file editor, includes various console tabs and buttons to help you with tasks such as previewing, compiling, building, and viewing the <Term id="dag" />. Refer to the following sub-bullets for more details on the console tabs and buttons.
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-console-overview.jpg" width="90%" title="The Console section is located below the file editor and has various tabs and buttons to help execute tasks"/>
 
 1. **Preview button &mdash;** When you click on the Preview button, it runs the SQL in the active file editor regardless of whether you have saved it or not and sends the results to the **Results** console tab. You can preview a selected portion of saved or unsaved code by highlighting it and then clicking the **Preview** button.
 
@@ -105,21 +105,21 @@ The <Constant name="cloud_ide" /> returns default row limits, however, you can a
 
 Starting from dbt v1.6 or higher, when you save changes to a model, you can compile its code with the model's specific context. This context is similar to what you'd have when building the model and involves useful context variables like `{{ this }} `or `{{ is_incremental() }}`.
 
-3. **Build button &mdash;** The build button allows users to quickly access dbt commands related to the active model in the File Editor. The available commands include dbt build, dbt test, and dbt run, with options to include only the current resource, the resource and its upstream dependencies, the resource, and its downstream dependencies, or the resource with all dependencies. This menu is available for all executable nodes.
+3. **Build button &mdash;** The build button allows users to quickly access dbt commands related to the active model in the file editor. The available commands include dbt build, dbt test, and dbt run, with options to include only the current resource, the resource and its upstream dependencies, the resource, and its downstream dependencies, or the resource with all dependencies. This menu is available for all executable nodes.
 
-4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/dbt-cloud-ide/lint-format) on the active file in the File Editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
+4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/dbt-cloud-ide/lint-format) on the active file in the file editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
 
 5. **dbt Copilot** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence engine that can generate documentation, tests, and semantic models for you. <Lifecycle status="self_service,managed,managed_plus" />
 
 6. **Results tab &mdash;** The Results console tab displays the most recent Preview results in tabular format. 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/results-console-tab.jpg" width="90%" title="Preview results show up in the Results console tab"/>
 
-7. **Code quality tab** &mdash; The Code Quality tab displays the results of the linter on the active file in the File Editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
+7. **Code quality tab** &mdash; The Code Quality tab displays the results of the linter on the active file in the file editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
 
-8. **Compiled Code tab &mdash;** The Compile generates the compiled code when the Compile button is executed. The Compiled Code tab displays the compiled SQL code for the active file in the File Editor.
+8. **Compiled Code tab &mdash;** The Compile generates the compiled code when the Compile button is executed. The Compiled Code tab displays the compiled SQL code for the active file in the file editor.
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/compiled-code-console-tab.jpg" width="90%" title="Compile results show up in the Compiled Code tab"/>
 
-9. **Lineage tab &mdash;** The Lineage tab in the File Editor displays the active model's lineage or  <Term id="dag" />. By default, it shows two degrees of lineage in both directions (`2+model_name+2`), however, you can change it to +model+ (full DAG). To use the lineage:
+9. **Lineage tab &mdash;** The Lineage tab in the file editor displays the active model's lineage or  <Term id="dag" />. By default, it shows two degrees of lineage in both directions (`2+model_name+2`), however, you can change it to +model+ (full DAG). To use the lineage:
     - Double-click a node in the DAG to open that file in a new tab
     - Expand or shrink the DAG using node selection syntax.
     - Note, the `--exclude` flag isn't supported.
