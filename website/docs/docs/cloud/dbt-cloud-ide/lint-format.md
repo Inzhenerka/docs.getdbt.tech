@@ -32,9 +32,9 @@ By default, the IDE uses sqlfmt rules to format your code, making it convenient 
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/prettier.gif" width="95%" title="Format YAML, Markdown, and JSON files using Prettier."/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sql-popup.jpg" width="95%" title="Use the Config button to select your tool."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sql-popup.png" width="95%" title="Use the config button to select your tool."/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.jpg" width="95%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.png" width="95%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
 
 </DocCarousel>
 
@@ -137,7 +137,7 @@ group_by_and_order_by_style = implicit
 
 For more info on styling best practices, refer to [How we style our SQL](/best-practices/how-we-style/2-how-we-style-our-sql).
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.jpg" width="90%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.png" width="90%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
 
 ## Format
 
