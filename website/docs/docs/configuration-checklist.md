@@ -12,13 +12,9 @@ pagination_prev: null
 So, you've created a new cloud-hosted dbt platform account, and you're ready to explore its lightning-fast and intuitive features. Welcome! Before you begin, let’s ensure your account is properly configured so that you can easily onboard new users and take advantage of all the integrations dbt has to offer. 
 
 For most organizations, this will require some collaboration with IT and/or security teams. Depending on the features you're using, you may need some of the following admin personas to help you get set up:
-- Data warehouse
-- Azure/Entra ID
-- Google Workspace
-- Amazon Web Services (AWS)
-- Okta 
-- SAML provider
-- Git 
+- Data warehouse (Snowflake, BigQuery, Databricks, etc.)
+- Access control (Okta, Entra ID, Google, SAML 2.0)
+- Git (GitHub, GitLab, Azure DevOps, etc.)
 
 This checklist is designed to ensure you have everything in the right place, allowing you to deploy quickly and without any bottlenecks. 
 
@@ -79,6 +75,7 @@ The dbt platform offers a variety of access control tools that you can leverage 
 - [ ] Manually [invite users](/docs/cloud/manage-access/invite-users) to the dbt platform, and they can authenticate using [MFA (SMS or authenticator app)](/docs/cloud/manage-access/mfa).
 - [ ] Configure [single sign-on or OAuth](/docs/cloud/manage-access/sso-overview) for advanced access control. <Lifecycle status="managed,managed_plus" /> accounts only. 
     - [ ] Create [SSO mappings](/docs/cloud/manage-access/about-user-access#sso-mappings-) for groups
+- Configure [System for Cross-Domain Identity Management (SCIM)](/docs/cloud/manage-access/scim) if available for your IdP. 
 - [ ] Users should be able to connect to the data warehouse from their personal profile. 
 - [ ] [Create groups](/docs/cloud/manage-access/about-user-access#create-new-groups-) with granular permission sets assigned.
 - [ ] Create [RBAC rules](https://docs.getdbt.com/docs/cloud/manage-access/about-user-access#role-based-access-control-) to assign users to groups and permission sets upon sign in. <Lifecycle status="managed,managed_plus" /> accounts only. 
