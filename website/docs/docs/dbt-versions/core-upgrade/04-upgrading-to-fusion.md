@@ -104,7 +104,6 @@ One exception to this rule: The `--models` / `--model` / `-m` flag was renamed t
 | `--single-threaded` / `--no-single-threaded` | No action required |
 | `dbt source freshness` [`--output` / `-o`](/docs/deploy/source-freshness)  | |
 | [`--config-dir`](/reference/commands/debug)  | No action required | 
-| [`--add-package`](/reference/commands/deps) | No action required |
 | [`--resource-type` / `--exclude-resource-type`](/reference/global-configs/resource-type) | change to `--resource-types` / `--exclude-resource-types` |
 | `--show-resource-report` / `--no-show-resource-report` | No action required |
 | [`--log-cache-events` / `--no-log-cache-events`](/reference/global-configs/logs#logging-relational-cache-events) | No action required | 

@@ -141,3 +141,6 @@ If you don’t already have a job based on the deployment environment with a con
 
 <FAQ path="Warehouse/bq-oauth-drive-scope" />
 
+## Learn More
+
+<WistiaVideo id="m7twurlmgt" paddingTweak="62.25%" />
