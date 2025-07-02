@@ -193,3 +193,7 @@ configured in the steps above.
 ## Setting up RBAC
 Now you have completed setting up SSO with Okta, the next steps will be to set up
 [RBAC groups](/docs/cloud/manage-access/about-user-access#role-based-access-control-) to complete your access control configuration.
+
+## Learn more
+
+<WistiaVideo id="xtmk0rrk5k" paddingTweak="62.25%" />

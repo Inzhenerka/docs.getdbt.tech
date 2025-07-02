@@ -237,3 +237,7 @@ Each <Constant name="cloud" /> plan has a base number of Developer and Read-Only
 For detailed steps, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users#licenses).
 
 </Expandable>
+
+## Learn more
+
+<WistiaVideo id="al3w450mcn" paddingTweak="62.25%" />
