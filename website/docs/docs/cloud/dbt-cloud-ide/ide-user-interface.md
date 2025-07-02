@@ -1,22 +1,22 @@
 ---
 title: "IDE user interface"
 id: ide-user-interface
-description: "Develop, test, run, and build in the Cloud IDE. With the Cloud IDE, you can compile dbt code into SQL and run it against your database directly"
+description: "Develop, test, run, and build in the Studio IDE. With the Studio IDE, you can compile dbt code into SQL and run it against your database directly"
 sidebar_label: User interface
 tags: [IDE]
 ---
 
-The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) is a tool for developers to effortlessly build, test, run, and version-control their dbt projects, and enhance data governance — all from the convenience of your browser. Use the Cloud <Constant name="cloud_ide" /> to compile dbt code into SQL and run it against your database directly -- no command line required!
+The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) is a tool for developers to effortlessly build, test, run, and version-control their dbt projects, and enhance data governance — all from the convenience of your browser. Use the <Constant name="cloud_ide" /> to compile dbt code into SQL and run it against your database directly -- no command line required!
 
 This page offers comprehensive definitions and terminology of user interface elements, allowing you to navigate the <Constant name="cloud_ide" /> landscape with ease.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="90%" title="The Cloud IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="90%" title="The Studio IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
 
 ## Basic layout
 
 The <Constant name="cloud_ide" /> streamlines your workflow, and features a popular user interface layout with files and folders on the left, editor on the right, and command and console information at the bottom. 
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-side-menu.jpg" width="30%" title="The Git repo link, documentation site button, Version Control menu, and File Explorer"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-side-menu.png" width="30%" title="The Git repo link, documentation site button, Version Control menu, and File Explorer"/>
 
 1. **<Constant name="git" /> repository link &mdash;** The <Constant name="git" /> repository link, located on the upper left of the <Constant name="cloud_ide" />, takes you to your repository on the same active branch. It also displays the repository name and the active branch name.
     * **Note:** This linking feature is only available for GitHub or GitLab repositories on multi-tenant <Constant name="cloud" /> accounts.
@@ -35,7 +35,7 @@ The <Constant name="cloud_ide" /> streamlines your workflow, and features a popu
       * Added (A) — The <Constant name="cloud_ide" /> detects added files
       * Deleted (D) — The <Constant name="cloud_ide" /> detects deleted files.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-command-bar.jpg" width="100%" title="Use the Command bar to write dbt commands, toggle 'Defer', and view the current IDE status"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-command-bar.png" width="100%" title="Use the Command bar to write dbt commands, toggle 'Defer', and view the current IDE status"/>
 
 5. **Command bar &mdash;**  The Command bar, located in the lower left of the <Constant name="cloud_ide" />, is used to invoke [dbt commands](/reference/dbt-commands). When a command is invoked, the associated logs are shown in the Invocation History Drawer.
 
@@ -47,7 +47,7 @@ The <Constant name="cloud_ide" /> streamlines your workflow, and features a popu
 
 The <Constant name="cloud_ide" /> features some delightful tools and layouts to make it easier for you to write dbt code and collaborate with teammates. 
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-editing.jpg" width="90%" title="Use the file editor, version control section, and save button during your development workflow"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-editing.png" width="90%" title="Use the file editor, version control section, and save button during your development workflow"/>
 
 1. **File editor &mdash;** The file editor is where you edit code. Tabs break out the region for each opened file, and unsaved files are marked with a blue dot icon in the tab view. You can edit, format, or lint files and execute dbt commands in your protected primary git branch. Since the <Constant name="cloud_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
 
@@ -61,7 +61,7 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
    -  You can also [resolve merge conflicts](/docs/cloud/git/merge-conflicts) and for more info on git, refer to [Version control basics](/docs/cloud/git/version-control-basics#the-git-button-in-the-cloud-ide).
    -  **Version Control Options menu &mdash;** The **Changes** section, under the <Constant name="git" /> actions button, lists all file changes since the last commit. You can click on a change to open the <Constant name="git" /> Diff View to see the inline changes. You can also right-click any file and use the file-specific options in the Version Control Options menu.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/version-control-options-menu.png" width="30%" title="Right-click edited files to access Version Control Options menu"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/version-control-options-menu.png" width="60%" title="Right-click edited files to access Version Control Options menu"/>
 
 
   - Use the **Prune branches** option to remove local branches that have already been deleted from the remote repository. Selecting this triggers a [pop-up modal](#prune-branches-modal), where you can confirm the deletion of the specific local branches, keeping your branch management tidy. Note that this won't delete the branch you're currently on. Pruning branches isn't available for [managed repositories](/docs/cloud/git/managed-repository) because they don't have a typical remote setup, which prevents remote branch deletion. 
@@ -69,26 +69,26 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
 ## Additional editing features
 
 - **Minimap &mdash;** A Minimap (code outline) gives you a high-level overview of your source code, which is useful for quick navigation and code understanding. A file's minimap is displayed on the upper-right side of the editor. To quickly jump to different sections of your file, click the shaded area.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-minimap.jpg" width="90%" title="Use the Minimap for quick navigation and code understanding"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-minimap.png" width="90%" title="Use the Minimap for quick navigation and code understanding"/>
 
 - **dbt Editor Command Palette &mdash;** The dbt Editor Command Palette displays text editing actions and their associated keyboard shortcuts. This can be accessed by pressing `F1` or right-clicking in the text editing area and selecting Command Palette.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-editor-command-palette-with-save.jpg" width="90%" title="Click F1 to access the dbt Editor Command Palette menu for editor shortcuts"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-editor-command-palette-with-save.png" width="90%" title="Click F1 to access the dbt Editor Command Palette menu for editor shortcuts"/>
 
 - **<Constant name="git" /> Diff View &mdash;** Clicking on a file in the **Changes** section of the **Version Control Menu** will open the changed file with <Constant name="git" /> Diff view. The editor will show the previous version on the left and the in-line changes made on the right.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-git-diff-view-with-save.jpg" width="90%" title="The Git Diff View displays the previous version on the left and the changes made on the right of the Editor"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-git-diff-view-with-save.png" width="90%" title="The Git Diff View displays the previous version on the left and the changes made on the right of the Editor"/>
 
 - **Markdown Preview console tab &mdash;** The Markdown Preview console tab shows a preview of your .md file's markdown code in your repository and updates it automatically as you edit your code.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-markdown-with-save.jpg" width="90%" title="The Markdown Preview console tab renders markdown code below the Editor tab."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-markdown-with-save.png" width="90%" title="The Markdown Preview console tab renders markdown code below the Editor tab."/>
 
 - **CSV Preview console tab &mdash;** The CSV Preview console tab displays the data from your CSV file in a table, which updates automatically as you edit the file in your seed directory.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-csv.jpg" width="90%" title="View CSV code in the CSV Preview console tab below the Editor tab."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-csv.png" width="90%" title="View CSV code in the CSV Preview console tab below the Editor tab."/>
 
 ## Console section
 
 The console section, located below the file editor, includes various console tabs and buttons to help you with tasks such as previewing, compiling, building, and viewing the <Term id="dag" />. Refer to the following sub-bullets for more details on the console tabs and buttons.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-console-overview.jpg" width="90%" title="The Console section is located below the file editor and has various tabs and buttons to help execute tasks"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-console-overview.png" width="90%" title="The Console section is located below the file editor and has various tabs and buttons to help execute tasks"/>
 
-1. **Preview button &mdash;** When you click on the Preview button, it runs the SQL in the active file editor regardless of whether you have saved it or not and sends the results to the **Results** console tab. You can preview a selected portion of saved or unsaved code by highlighting it and then clicking the **Preview** button.
+1. **Preview button &mdash;** When you click on the **Preview** button, it runs the SQL in the active file editor regardless of whether you have saved it or not and sends the results to the **Results** console tab. You can preview a selected portion of saved or unsaved code by highlighting it and then clicking the **Preview** button.
 
 <details>
 <summary>Row limits in IDE</summary>
@@ -100,7 +100,7 @@ The <Constant name="cloud_ide" /> returns default row limits, however, you can a
 </ul>
 </details>
 
-1. **Compile button &mdash;** The **Compile** button compiles the saved or unsaved SQL code and displays it in the **Compiled Code** tab.
+2. **Compile button &mdash;** The **Compile** button compiles the saved or unsaved SQL code and displays it in the **Compiled code** tab.
 
 
 Starting from dbt v1.6 or higher, when you save changes to a model, you can compile its code with the model's specific context. This context is similar to what you'd have when building the model and involves useful context variables like `{{ this }} `or `{{ is_incremental() }}`.
@@ -109,22 +109,22 @@ Starting from dbt v1.6 or higher, when you save changes to a model, you can comp
 
 4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/dbt-cloud-ide/lint-format) on the active file in the file editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
 
-5. **dbt Copilot** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence engine that can generate documentation, tests, and semantic models for you. <Lifecycle status="self_service,managed,managed_plus" />
+5. **Results tab &mdash;** The Results console tab displays the most recent Preview results in tabular format. 
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/results-console-tab.png" width="90%" title="Preview results show up in the Results console tab"/>
 
-6. **Results tab &mdash;** The Results console tab displays the most recent Preview results in tabular format. 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/results-console-tab.jpg" width="90%" title="Preview results show up in the Results console tab"/>
+6. **Code quality tab** &mdash; The Code Quality tab displays the results of the linter on the active file in the File Editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
 
-7. **Code quality tab** &mdash; The Code Quality tab displays the results of the linter on the active file in the file editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
+7. **Compiled code tab &mdash;** The Compile generates the compiled code when the Compile button is executed. The Compiled code tab displays the compiled SQL code for the active file in the file editor.
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/compiled-code-console-tab.png" width="90%" title="Compile results show up in the Compiled Code tab"/>
 
-8. **Compiled Code tab &mdash;** The Compile generates the compiled code when the Compile button is executed. The Compiled Code tab displays the compiled SQL code for the active file in the file editor.
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/compiled-code-console-tab.jpg" width="90%" title="Compile results show up in the Compiled Code tab"/>
-
-9. **Lineage tab &mdash;** The Lineage tab in the file editor displays the active model's lineage or  <Term id="dag" />. By default, it shows two degrees of lineage in both directions (`2+model_name+2`), however, you can change it to +model+ (full DAG). To use the lineage:
+8. **Lineage tab &mdash;** The Lineage tab in the file editor displays the active model's lineage or  <Term id="dag" />. By default, it shows two degrees of lineage in both directions (`2+model_name+2`), however, you can change it to +model+ (full DAG). To use the lineage:
     - Double-click a node in the DAG to open that file in a new tab
     - Expand or shrink the DAG using node selection syntax.
     - Note, the `--exclude` flag isn't supported.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/lineage-console-tab.jpg" width="90%" title="View resource lineage in the Lineage tab"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/lineage-console-tab.png" width="90%" title="View resource lineage in the Lineage tab"/>
+
+9. **dbt Copilot** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence engine that can generate documentation, tests, and semantic models for you. <Lifecycle status="self_service,managed,managed_plus" />
 
 ## Invocation history
 
@@ -135,7 +135,7 @@ You can open the drawer in multiple ways:
 - Typing a dbt command and pressing enter
 - Or pressing Control-backtick (or Ctrl + `)
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-inv-history-drawer.jpg" width="90%" title="The Invocation History Drawer returns a log and detail of all your dbt invocations."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-inv-history-drawer.png" width="90%" title="The Invocation History Drawer returns a log and detail of all your dbt invocations."/>
 
 1. **Invocation History list &mdash;** The left-hand panel of the Invocation History Drawer displays a list of previous invocations in the <Constant name="cloud_ide" />, including the command, branch name, command status, and elapsed time.
 
@@ -145,7 +145,7 @@ You can open the drawer in multiple ways:
 
 4. **Command Control button &mdash;** Use the Command Control button, located on the right side, to control your invocation and cancel or rerun a selected run.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-results.jpg" width="90%" title="The Invocation History list displays a list of previous invocations in the IDE"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-results.png" width="90%" title="The Invocation History list displays a list of previous invocations in the IDE"/>
 
 5. **Node Summary tab &mdash;** Clicking on the Results Status Tabs will filter the Node Status List based on their corresponding status. The available statuses are Pass (successful invocation of a node), Warn (test executed with a warning), Error (database error or test failure), Skip (nodes not run due to upstream error), and Queued (nodes that have not executed yet).
 
@@ -158,19 +158,19 @@ Use menus and modals to interact with <Constant name="cloud_ide" /> and access u
 
 - #### Editor tab menu
   To interact with open editor tabs, right-click any tab to access the helpful options in the file tab menu.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/editor-tab-menu-with-save.jpg" width="90%" title=" Right-click a tab to view the Editor tab menu options"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/editor-tab-menu-with-save.png" width="90%" title=" Right-click a tab to view the Editor tab menu options"/>
 
 - #### File Search
   You can easily search for and navigate between files using the File Navigation menu, which can be accessed by pressing Command-O or Control-O or clicking on the 🔍 icon in the File <Constant name="explorer" />.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-file-search-with-save.jpg" width="100%" title="The Command History returns a log and detail of all your dbt invocations."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-file-search-with-save.png" width="100%" title="The Command History returns a log and detail of all your dbt invocations."/>
 
 - #### Global Command Palette
   The Global Command Palette provides helpful shortcuts to interact with the <Constant name="cloud_ide" />, such as git actions, specialized dbt commands, and compile, and preview actions, among others. To open the menu, use Command-P or Control-P.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-global-command-palette-with-save.jpg" width="100%" title="The Command History returns a log and detail of all your dbt invocations."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-global-command-palette-with-save.png" width="100%" title="The Command History returns a log and detail of all your dbt invocations."/>
 
 - #### <Constant name="cloud_ide" /> Status modal
   The <Constant name="cloud_ide" /> Status modal shows the current error message and debug logs for the server. This also contains an option to restart the <Constant name="cloud_ide" />. Open this by clicking on the <Constant name="cloud_ide" /> Status button.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-status-modal-with-save.jpg" width="90%" title="The Command History returns a log and detail of all your dbt invocations."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-status-modal-with-save.png" width="60%" title="The Command History returns a log and detail of all your dbt invocations."/>
 
 - #### Commit to a new branch
   Edit directly on your protected primary git branch and commit those changes to a new branch when ready.
@@ -186,11 +186,11 @@ Use menus and modals to interact with <Constant name="cloud_ide" /> and access u
 
 - #### Prune branches modal
   The Prune branches modal allows users to delete local branches that have been deleted from the remote repository, keeping your branch management tidy. This is accessible through the **<Constant name="git" /> actions** button under the [**Version control** menu](#editing-features). Note that this won't delete the branch you're currently on. Pruning branches isn't available for managed repositories because they don't have a typical remote setup, which prevents remote branch deletion.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/prune-branch-modal.jpg" width="60%" title="The Prune branches modal allows users to delete local branches that have already been deleted from the remote repository."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/prune-branch-modal.png" width="60%" title="The Prune branches modal allows users to delete local branches that have already been deleted from the remote repository."/>
 
 - #### Revert Uncommitted Changes modal
   The Revert Uncommitted Changes modal is how users revert changes in the IDE. This is accessible via the `Revert File` option above the Version Control Options menu, or via the Git Actions button when there are saved, uncommitted changes in the IDE.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/revert-uncommitted-changes-with-save.jpg" width="90%" title="The Commit Changes modal is how users change their branch."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/revert-uncommitted-changes-with-save.png" width="90%" title="The Commit Changes modal is how users change their branch."/>
 
 - #### <Constant name="cloud_ide" /> Options menu
   The <Constant name="cloud_ide" /> Options menu can be accessed by clicking on the three-dot menu located at the bottom right corner of the <Constant name="cloud_ide" />. This menu contains global options such as:
@@ -200,4 +200,4 @@ Use menus and modals to interact with <Constant name="cloud_ide" /> and access u
   * Rollback your repo to remote, to refresh your git state and view status details
   * Viewing status details, including the <Constant name="cloud_ide" /> Status modal.
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-options-menu-with-save.jpg" width="90%" title="Access the IDE Options menu to switch to dark or light mode, restart the IDE, rollback to remote, or view the IDE status"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-options-menu-with-save.png" width="90%" title="Access the IDE options menu to switch to dark or light mode, restart the IDE, rollback to remote, or view the IDE status"/>
