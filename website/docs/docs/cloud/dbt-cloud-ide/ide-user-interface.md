@@ -10,7 +10,7 @@ The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-clo
 
 This page offers comprehensive definitions and terminology of user interface elements, allowing you to navigate the <Constant name="cloud_ide" /> landscape with ease.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="90%" title="The Studio IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.png" width="90%" title="The Studio IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
 
 ## Basic layout
 
@@ -26,7 +26,7 @@ The <Constant name="cloud_ide" /> streamlines your workflow, and features a popu
 3. [**Version Control**](#editing-features) &mdash; The <Constant name="cloud_ide" />'s powerful Version Control section contains all git-related elements, including the <Constant name="git" /> actions button and the **Changes** section. 
 
 4. **File <Constant name="explorer" /> &mdash;** The File <Constant name="explorer" /> shows the filetree of your repository. You can:
-    - Click on any file in the filetree to open the file in the File Editor. 
+    - Click on any file in the filetree to open the file in the file editor. 
     - Click and drag files between directories to move files. 
     - Right-click a file to access the sub-menu options like duplicate file, copy file name, copy as `ref`, rename, delete.
     - Use file indicators, located to the right of your files or folder name, to see when changes or actions were made:
@@ -53,7 +53,7 @@ The <Constant name="cloud_ide" /> features some delightful tools and layouts to 
 
     * Use intuitive [keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) to help develop easier for you and your team.
 
-2. **Save button &mdash;** The editor has a **Save** button that saves editable files. Pressing the button or using the Command-S or Control-S shortcut saves the file contents. You don't need to save to preview code results in the Console section, but it's necessary before changes appear in a dbt invocation. The File Editor tab shows a blue icon for unsaved changes.
+2. **Save button &mdash;** The editor has a **Save** button that saves editable files. Pressing the button or using the Command-S or Control-S shortcut saves the file contents. You don't need to save to preview code results in the Console section, but it's necessary before changes appear in a dbt invocation. The file editor tab shows a blue icon for unsaved changes.
 
 3. **Version Control &mdash;** This menu contains all git-related elements, including the <Constant name="git" /> actions button. The button updates relevant actions based on your editor's state, such as prompting to pull remote changes, commit and sync when reverted commit changes are present, creating a merge/pull request when appropriate, or pruning branches deleted from the remote repository.
 
