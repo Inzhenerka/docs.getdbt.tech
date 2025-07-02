@@ -154,3 +154,7 @@ OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
 
 For the full query example, see [Create a security integration](#create-a-security-integration).
 </Expandable>
+
+## Learn more
+
+<WistiaVideo id="2ynprkkijp" paddingTweak="62.25%" />
