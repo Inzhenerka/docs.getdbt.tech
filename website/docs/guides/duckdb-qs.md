@@ -133,7 +133,7 @@ For more information, refer to the [DuckDB setup](/docs/core/connect-data-platfo
 
 4. Ensure your profile is setup correctly from the command line by running the following [dbt commands](/reference/dbt-commands).
 
-    - [dbt seed](/reference/commands/seed) &mdash; loads csv files located in the seed-paths directory of your project into your data warehouse
+    - [dbt seed](/reference/commands/seed) &mdash; loads CSV files located in the seed-paths directory of your project into your data warehouse
     - [dbt compile](/reference/commands/compile) &mdash; generates executable SQL from your project source files
     - [dbt run](/reference/commands/run) &mdash; compiles and runs your project
     - [dbt test](/reference/commands/test) &mdash; compiles and tests your project
