@@ -59,6 +59,13 @@ Once enabled, the **dbt compare** option becomes available in the CI job setting
 
 ## Project settings history
 
-View the change history for your project settings from the **Account settings**. Navigate to **Projects**, click a **project name**, and then click **History**. You will be able to view historical project settings changes over the last 90 days.
+You can view historical project settings changes over the last 90 days.
+
+To view the change history: 
+1. Navigate to **Account settings** from the main menu and click **Projects**. 
+2. Click a **project name**.
+3. Click **Settings**. 
+4. Click **History**. 
+
 
 <Lightbox src="/img/docs/deploy/project-history.png" width="85%" title="Example of the project history option. " />
