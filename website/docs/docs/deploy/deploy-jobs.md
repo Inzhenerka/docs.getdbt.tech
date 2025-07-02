@@ -133,7 +133,7 @@ import DeleteJob from '/snippets/_delete-job.md';
 
 <DeleteJob/>
 
-## Job setting history
+## Job settings history
 
 You can view historical job settings changes over the last 90 days.
 
