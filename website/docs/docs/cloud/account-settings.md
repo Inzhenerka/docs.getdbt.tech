@@ -56,3 +56,9 @@ To use Advanced CI features, your <Constant name="cloud" /> account must have ac
 Once enabled, the **dbt compare** option becomes available in the CI job settings for you to select.
 
 <Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Enable account access to Advanced CI option" />
+
+## Project settings history
+
+View the change history for your project settings from the **Account settings**. Navigate to **Projects**, click a **project name**, and then click **History**. You will be able to view historical project settings changes over the last 90 days.
+
+<Lightbox src="/img/docs/deploy/project-history.png" width="85%" title="Example of the project history option. " />
