@@ -18,6 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## June 2025
 
+- **New:** You can now view the history of settings changes for [projects](/docs/cloud/account-settings), [environments](/docs/dbt-cloud-environments), and [jobs](/docs/deploy/deploy-jobs).
 - **New:** Added support for the latest version of BigQuery credentials in Semantic Layer and MetricFlow.
 - **New:**  Snowflake External OAuth is now supported for Semantic Layer queries.
 Snowflake connections that use External OAuth for user credentials can now emit queries for <Constant name="query_page" />, <Constant name="cloud_cli" />, and <Constant name="cloud_ide" /> through the Semantic Layer Gateway. This enables secure, identity-aware access via providers like Okta or Microsoft Entra ID.

@@ -1,7 +1,7 @@
 ---
 title: "About the Studio IDE"
 id: develop-in-the-cloud
-description: "Develop, test, run, and build in the Cloud IDE. You can compile dbt code into SQL and run it against your database directly"
+description: "Develop, test, run, and build in the Studio IDE. You can compile dbt code into SQL and run it against your database directly"
 sidebar_label: About the IDE
 tags: [IDE]
 pagination_next: "docs/cloud/dbt-cloud-ide/keyboard-shortcuts"
@@ -25,9 +25,9 @@ These [features](#dbt-cloud-ide-features) create a powerful editing environment 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="85%" title="The Studio IDE includes version control,files/folders, an editor, a command/console, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.png" width="85%" title="The Studio IDE includes version control, files/folders, an editor, a command/console, and more."/>
 
-<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="Enable dark mode for a great viewing experience in low-light environments."/>
+<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.png" width="85%" title="Enable dark mode for a great viewing experience in low-light environments."/>
 </DocCarousel>
 
 :::tip Disable ad blockers
@@ -66,7 +66,7 @@ To understand how to navigate the <Constant name="cloud_ide" /> and its user int
 | **dbt autocomplete**  |  Autocomplete features to help you develop faster:<br /><br />  - Use `ref` to autocomplete your model names<br /> - Use `source` to autocomplete your source name + table name<br /> - Use `macro` to autocomplete your arguments<br /> - Use `env var` to autocomplete env var<br /> - Start typing a hyphen (-) to use in-line autocomplete in a YAML file<br /> - Automatically create models from dbt sources with a click of a button.  |
 | **<Term id="dag" /> in the IDE** | You can see how models are used as building blocks from left to right to transform your data from raw sources into cleaned-up modular derived pieces and final outputs on the far right of the DAG. The default view is 2+model+2 (defaults to display 2 nodes away), however, you can change it to +model+ (full  <Term id="dag" />). Note the `--exclude` flag isn't supported. |
 | **Status bar** | This area provides you with useful information about your <Constant name="cloud_ide" /> and project status. You also have additional options like enabling light or dark mode, restarting the <Constant name="cloud_ide" />, or [recloning your repo](/docs/cloud/git/version-control-basics).
-| **Dark mode**  | From the status bar in the Cloud <Constant name="cloud_ide" />, enable dark mode for a great viewing experience in low-light environments. 
+| **Dark mode**  | From the status bar in the <Constant name="cloud_ide" />, enable dark mode for a great viewing experience in low-light environments. 
 
 
 ### Code generation
@@ -77,9 +77,9 @@ The <Constant name="cloud_ide" /> comes with **CodeGenCodeLens**, a powerful fea
 
 Use dbt-jsonschema to validate dbt YAML files, helping you leverage the autocomplete and assistance capabilities of the <Constant name="cloud_ide" />. This also provides immediate feedback on YAML file structure and syntax, helping you make sure your project configurations meet the required standards.
 
-## Get started with the Cloud IDE
+## Get started with the Studio IDE
 
-In order to start experiencing the great features of the Cloud <Constant name="cloud_ide" />, you need to first set up a [<Constant name="cloud" /> development environment](/docs/dbt-cloud-environments). In the following steps, we outline how to set up developer credentials and access the <Constant name="cloud_ide" />. If you're creating a new project, you will automatically configure this during the project setup. 
+In order to start experiencing the great features of the <Constant name="cloud_ide" />, you need to first set up a [<Constant name="cloud" /> development environment](/docs/dbt-cloud-environments). In the following steps, we outline how to set up developer credentials and access the <Constant name="cloud_ide" />. If you're creating a new project, you will automatically configure this during the project setup. 
 
 The <Constant name="cloud_ide" /> uses developer credentials to connect to your data platform. These developer credentials should be specific to your user and they should *not* be super user credentials or the same credentials that you use for your production deployment of dbt.
 
@@ -118,7 +118,7 @@ Nice job, you're ready to start developing and building models 🎉!
 
     - **Unsaved, local code &mdash;** The browser stores your code only in its local storage. In this state, you might need to commit any unsaved changes in order to switch branches or browsers. If you have saved and committed changes, you can access the "Change branch" option even if there are unsaved changes. But if you attempt to switch branches without saving changes, a warning message will appear, notifying you that you will lose any unsaved changes.
 
-    <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.jpg" width="85%" title="If you attempt to switch branches without saving changes, a warning message will appear, telling you that you will lose your changes."/>
+    <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.png" width="85%" title="If you attempt to switch branches without saving changes, a warning message will appear, telling you that you will lose your changes."/>
 
     - **Saved but uncommitted code &mdash;** When you save a file, the data gets stored in durable, long-term storage, but isn't synced back to git. To switch branches using the **Change branch** option, you must "Commit and sync" or "Revert" changes. Changing branches isn't available for saved-but-uncommitted code. This is to ensure your uncommitted changes don't get lost.
     - **Committed code &mdash;** This is stored in the branch with your git provider and you can check out other (remote) branches.
@@ -147,7 +147,7 @@ Nice job, you're ready to start developing and building models 🎉!
 
 ## FAQs
 
-<DetailsToggle alt_header="Is there a cost to using the Cloud IDE?">
+<DetailsToggle alt_header="Is there a cost to using the Studio IDE?">
 Not at all! You can use <Constant name="cloud" /> when you sign up for the <a href="https://www.getdbt.com/pricing/">Free Developer plan</a>, which comes with one developer seat. If you'd like to access more features or have more developer seats, you can upgrade your account to the Starter, Enterprise, or Enterprise+ plan.<br />
 
 Refer to <a href="https://www.getdbt.com/pricing/">dbt pricing plans</a> for more details.
