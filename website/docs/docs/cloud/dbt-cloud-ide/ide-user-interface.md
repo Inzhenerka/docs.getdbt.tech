@@ -10,7 +10,7 @@ The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-clo
 
 This page offers comprehensive definitions and terminology of user interface elements, allowing you to navigate the <Constant name="cloud_ide" /> landscape with ease.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="90%" title="The Studio IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.png" width="90%" title="The Studio IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
 
 ## Basic layout
 
