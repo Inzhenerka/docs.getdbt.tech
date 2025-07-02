@@ -341,6 +341,10 @@ var siteSettings = {
       src: "https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js",
       defer: true,
     },
+    { 
+      src: '/js/checkboxes.js', 
+      async: true,
+    },
     "https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js",
     "/js/headerLinkCopy.js",
     "/js/gtm.js",
