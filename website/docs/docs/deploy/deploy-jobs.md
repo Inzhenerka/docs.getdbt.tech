@@ -143,7 +143,7 @@ To view the change history:
 3. Click **Settings**. 
 4. Click **History**. 
 
-<Lightbox src="/img/docs/deploy/job-history.jpg" width="100%" title="Example of the job settings history."/>
+<Lightbox src="/img/docs/deploy/job-history.png" width="100%" title="Example of the job settings history."/>
 
 ## Related docs
 
