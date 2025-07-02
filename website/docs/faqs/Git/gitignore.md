@@ -36,7 +36,7 @@ For more info on `gitignore` syntax, refer to the [Git docs](https://git-scm.com
 4. Save the changes but _don't commit_.
 5. Restart the IDE by clicking on the three dots next to the **IDE Status button** on the lower right corner of the IDE screen and select **Restart IDE**.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.jpg" width="50%" title="Restart the IDE by clicking the three dots on the lower right or click on the Status bar" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.png" width="50%" title="Restart the IDE by clicking the three dots on the lower right or click on the Status bar" />
 
 6. Once the <Constant name="cloud_ide" /> restarts, go to the **File <Constant name="explorer" />** to delete the following files or folders (if they exist).  No data will be lost:
     * `target`, `dbt_modules`, `dbt_packages`, `logs`
