@@ -58,6 +58,7 @@ Git is, for many dbt environments, the backbone of your project. Git repositorie
 - Production - One per project
 - Staging - One per project
 - General - As many as you need per project
+
 Additionally, you will have only one `Development` environment per project, but each developer will have their own unique access to the IDE, separate from the work of other developers. 
 
 [Jobs](/docs/deploy/jobs) dictate which commands are run in your environments and can be triggered manually, on a schedule, by other jobs, by APIs, or when pull requests are committed or merged. 
