@@ -87,7 +87,7 @@ To avoid any unintentional data modification, dbt will **not** automatically app
 
 `dbt_scd_id` is a unique identifier generated for each row in a snapshot. dbt uses this identifier to detect changes in source records and manage versioning in slowly changing dimension (SCD) snapshots.
 
-dbt's snapshot macro handles `dbt_scd_id` in [the dbt-adapters repo](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
+dbt's snapshot macro handles `dbt_scd_id` in [the dbt-adapters repository](https://github.com/dbt-labs/dbt-adapters/blob/b12c9870d6134905ab09bfda609ce8f81bc4b40a/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L38).
 
 The hash is computed by concatenating values of the snapshot's [`unique_key`](/reference/resource-configs/unique_key) and either the `updated_at` timestamp (for the timestamp strategy) or the values in `check_cols` (for the check strategy), and then hashing the resulting string using the `md5` function.  This enables dbt to track whether the contents of a row have changed between runs.
 
