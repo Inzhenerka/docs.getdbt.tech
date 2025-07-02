@@ -71,7 +71,8 @@ var siteSettings = {
     },
     announcementBar: {
       id: "virtual-event",
-      content: "Join our live event: Modernize self-service analytics with dbt — cut costs, reduce bottlenecks, and keep the tools analysts love. Register now.",
+      content:
+        "Join our live event: Modernize self-service analytics with dbt — cut costs, reduce bottlenecks, and keep the tools analysts love. Register now.",
       isCloseable: true,
     },
     announcementBarActive: true,
@@ -240,7 +241,7 @@ var siteSettings = {
               <h5 class="heading-5">Support</h5>
               <a href='/docs/dbt-support'>Contact Support</a>
               <a href="https://www.getdbt.com/services" target="_blank">Professional Services</a>
-              <a href="https://partners.getdbt.com/english/directory/" target="_blank">Find a Partner</a>
+              <a href="https://www.getdbt.com/partner-directory" target="_blank">Find a Partner</a>
               <a href="https://status.getdbt.com/" target="_blank">System Status</a>
             </div>
             <div class="footer-grid-item">
@@ -308,8 +309,8 @@ var siteSettings = {
           remarkPlugins: [math],
           rehypePlugins: [katex],
           // Un-truncated blog posts will throw an error
-          // https://docusaurus.io/blog/releases/3.5#onuntruncatedblogposts          
-          onUntruncatedBlogPosts: 'throw',
+          // https://docusaurus.io/blog/releases/3.5#onuntruncatedblogposts
+          onUntruncatedBlogPosts: "throw",
         },
       },
     ],
@@ -325,10 +326,10 @@ var siteSettings = {
     path.resolve("plugins/buildQuickstartIndexPage"),
     path.resolve("plugins/buildRSSFeeds"),
     [
-      'vercel-analytics',
+      "vercel-analytics",
       {
         debug: false,
-        mode: 'auto',
+        mode: "auto",
       },
     ],
   ],
