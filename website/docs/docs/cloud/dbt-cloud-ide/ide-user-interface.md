@@ -1,16 +1,16 @@
 ---
 title: "IDE user interface"
 id: ide-user-interface
-description: "Develop, test, run, and build in the Cloud IDE. With the Cloud IDE, you can compile dbt code into SQL and run it against your database directly"
+description: "Develop, test, run, and build in the Studio IDE. With the Studio IDE, you can compile dbt code into SQL and run it against your database directly"
 sidebar_label: User interface
 tags: [IDE]
 ---
 
-The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) is a tool for developers to effortlessly build, test, run, and version-control their dbt projects, and enhance data governance — all from the convenience of your browser. Use the Cloud <Constant name="cloud_ide" /> to compile dbt code into SQL and run it against your database directly -- no command line required!
+The [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) is a tool for developers to effortlessly build, test, run, and version-control their dbt projects, and enhance data governance — all from the convenience of your browser. Use the <Constant name="cloud_ide" /> to compile dbt code into SQL and run it against your database directly -- no command line required!
 
 This page offers comprehensive definitions and terminology of user interface elements, allowing you to navigate the <Constant name="cloud_ide" /> landscape with ease.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="90%" title="The Cloud IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="90%" title="The Studio IDE layout includes version control on the upper left, files/folders on the left, editor on the right an command/console at the bottom"/>
 
 ## Basic layout
 
