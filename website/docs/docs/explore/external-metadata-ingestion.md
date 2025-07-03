@@ -34,7 +34,7 @@ These credentials are configured separately from dbt environment credentials and
 To enable external metadata ingestion:
 
 1. Click your account name at the bottom of the left-side menu and click **[Account settings](/docs/cloud/account-settings)**.
-2. Scroll to **Settings** and select **Edit** at the top right of the page.
+2. Under **Account**, go to **Settings** and click **Edit** at the top right corner of the page.
 3. Select the **Ingest external metadata in dbt Catalog (formerly dbt Explorer)** option (if not already enabled).
 4. Locate or create the warehouse connection you want to ingest metadata from.
 5. Go back to **Account settings**.
