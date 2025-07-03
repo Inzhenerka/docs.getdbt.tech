@@ -33,19 +33,23 @@ These credentials are configured separately from dbt environment credentials and
 
 To enable external metadata ingestion:
 
-1. Navigate to [account settings](/docs/cloud/account-settings)
-2. Locate or create the warehouse connection you want to ingest metadata from
-3. Click **Add Credential** and enter your global metadata credentials
+1. Navigate to **[Account settings](/docs/cloud/account-settings)**.
+2. Scroll to **Settings** and select **Edit** at the top right of the page.
+3. Check the box to enable **Ingest external metadata in dbt Catalog (formerly dbt Explorer)** (if not already enabled).
+4. Locate or create the warehouse connection you want to ingest metadata from.
+5. Go back to **Account settings**.
+6. Click **Connections** from the left hand side panel and select existing connection or **New connection**.
+7. Scroll to the bottom of the page and **Add credentials** in **Platform metadata credentials**.
     - These should have warehouse-level visibility across relevant databases and schemas
-4. Enable the option for “external metadata ingestion”
-    - This allows metadata from this connection to populate the <Constant name="explorer" />
-    - *Optional*: Enable additional features such as **cost optimization**
-5. Apply filters to restrict which metadata is ingested:
+8. Enable the option for “external metadata ingestion”.
+    - This allows metadata from this connection to populate the <Constant name="explorer" />.
+    - *Optional*: Enable additional features such as **cost optimization**.
+9. Apply filters to restrict which metadata is ingested:
     - You can filter by **database**, **schema**, **table**, or **view**.
     - Strongly recommend you filter by certain schemas. See [Important considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
     - These fields accept CSV-formatted regular expressions:
-        - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match)
-        - Wildcards are supported: `DIM*` matches `DIM_ORDERS`, `DIM_PRODUCTS`, etc.
+        - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match).
+        - The wildcards: `DIM*` matches `DIM_ORDERS`, `DIM_PRODUCTS`, are supported.
 
 ## Required credentials
 
