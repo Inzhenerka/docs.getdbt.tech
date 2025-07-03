@@ -49,7 +49,7 @@ To enable external metadata ingestion:
     - It is strongly recommend to filter by certain schemas. See [Important considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
     - These fields accept CSV-formatted regular expressions:
         - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match).
-        - The wildcards: `DIM*` matches `DIM_ORDERS`, `DIM_PRODUCTS`, are supported.
+        - Wildcards are supported. For example: `DIM*` matches `DIM_ORDERS` and `DIM_PRODUCTS`.
 
 ## Required credentials
 
