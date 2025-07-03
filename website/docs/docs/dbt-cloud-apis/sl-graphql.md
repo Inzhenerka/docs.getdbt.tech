@@ -157,6 +157,9 @@ metricsForDimensions(
 
 #### Metric types
 
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
 ```graphql
 Metric {
   name: String!
@@ -172,6 +175,28 @@ Metric {
 ```
 MetricType = [SIMPLE, RATIO, CUMULATIVE, DERIVED]
 ```
+
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+metricsPaginated(
+  environmentId: BigInt!
+  search: String = null
+  groupBy: [GroupByInput!] = null
+  pageNum: Int! = 1
+  pageSize: Int = null
+): MetricResultPage! {
+  items: [Metric!]!
+  pageNum: Int!
+  pageSize: Int
+  totalItems: Int!
+  totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
 
 #### Metric type parameters
 
@@ -191,6 +216,10 @@ MetricTypeParams {
 
 #### Dimension types
 
+
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
 ```graphql
 Dimension {
   name: String!
@@ -207,32 +236,79 @@ Dimension {
 DimensionType = [CATEGORICAL, TIME]
 ```
 
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+dimensionsPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!]!
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): DimensionResultPage! {
+    items: [Dimension!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
+
 #### List saved queries
 
 List all saved queries for the specified environment:
-  
-  ```graphql
-  {
-  savedQueries(environmentId: "123") {
-    name
-    description
-    label
-    queryParams {
-      metrics {
-        name
-      }
-      groupBy {
-        name
-        grain
-        datePart
-      }
-      where {
-        whereSqlTemplate
-      }
+
+
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
+```graphql
+{
+savedQueries(environmentId: "123") {
+  name
+  description
+  label
+  queryParams {
+    metrics {
+      name
+    }
+    groupBy {
+      name
+      grain
+      datePart
+    }
+    where {
+      whereSqlTemplate
     }
   }
 }
+}
 ```
+
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+savedQueriesPaginated(
+    environmentId: BigInt!
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): SavedQueryResultPage! {
+    items: [SavedQuery!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
 
 #### List a saved query
 
