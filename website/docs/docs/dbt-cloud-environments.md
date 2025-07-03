@@ -54,3 +54,15 @@ To learn more about <Constant name="cloud" /> deployment environments and how to
 import DeleteEnvironment from '/snippets/_delete-environment.md';
 
 <DeleteEnvironment />
+
+## Environment settings history
+
+You can view historical environment settings changes over the last 90 days.
+
+To view the change history: 
+1. Navigate to **Orchestration** from the main menu and click **Environments**. 
+2. Click an **environment name**.
+3. Click **Settings**. 
+4. Click **History**. 
+
+<Lightbox src="/img/docs/deploy/environment-history.png" width="85%" title="Example of the environment history option." />

@@ -10,7 +10,7 @@ Before embarking on a <Constant name="mesh" /> implementation, it's important to
 
 Some data teams operate on a global scale. By definition, the team needs to manage, deploy, and distribute data products across a large number of teams. Central IT may own some data products or simply own the platform upon which data products are built. Often, these organizations have “architects” who can advise line-of-business teams on their work while keeping track of what’s happening globally (regarding tooling and the substance of work). This is a lot like how software organizations work beyond a certain scale.
 
-The headcount ratio of platform team to domain teams in this scenario is roughly ≥10:1. For each member of the central platform team, there might be dozens of members of domain-aligned data teams.
+The headcount ratio of domain teams to platform teams in this scenario is roughly ≥10:1. For each member of the central platform team, there might be dozens of members of domain-aligned data teams.
 
 Is <Constant name="mesh" /> a good fit in this scenario? Absolutely! There is no other way to share data products at scale. One dbt project would not keep up with the global demands of an organization like this.
 
