@@ -39,7 +39,7 @@ To enable external metadata ingestion:
 4. Locate or create the warehouse connection you want to ingest metadata from.
 5. Go back to **Account settings**.
 6. Click **Connections** from the left hand side panel and select existing connection or **New connection**.
-7. Scroll to the bottom of the page and **Add credentials** in **Platform metadata credentials**.
+7. Scroll to the bottom of the page and click **Add credentials** in **Platform metadata credentials**.
     - These should have warehouse-level visibility across relevant databases and schemas
 8. Enable the option for “external metadata ingestion”.
     - This allows metadata from this connection to populate the <Constant name="explorer" />.
