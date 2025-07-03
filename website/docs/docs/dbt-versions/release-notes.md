@@ -16,6 +16,10 @@ pagination_prev: null
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## July 2025
+
+- **New**: Paginated [GraphQL](/docs/dbt-cloud-apis/sl-graphq) endpoints for metadata queries in Semantic Layer are now available. This improves integration load times for large manifests.
+
 ## June 2025
 
 - **Beta**: The dbt Fusion engine supports the BigQuery adapter in beta.
