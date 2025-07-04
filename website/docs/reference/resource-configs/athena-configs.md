@@ -345,6 +345,14 @@ models:
 
 Refer to [persist_docs](/reference/resource-configs/persist_docs) for more details.
 
+### Avoid deletion of parquet tables
+
+When using dbt-athena to build Iceberg tables, care must be taken to avoid accidentally deleting files in S3 buckets that contain manually created parquet tables.
+
+This typically occurs when a dbt model has the same name as an existing table in the AWS Glue catalog, the dbt-athena adapter checks the catalog for the table’s metadata, including its S3 location. It then deletes all files in that location before recreating the table using the SQL defined in the model. 
+
+Also, if a dbt model is configured to write to the same S3 location as an existing table (even if the table name is different). The adapter will clean out the target folder to avoid conflicts during table creation. 
+
 ## Snapshots
 
 The adapter supports snapshot materialization. It supports both the timestamp and check strategies. To create a snapshot, create a snapshot file in the `snapshots` directory. You'll need to create this directory if it doesn't already exist.
