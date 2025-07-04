@@ -327,7 +327,7 @@ The adapter may also delete data if a model is configured to use the same S3 loc
 
 When dropping a model, the `dbt-athena` adapter performs two cleanup steps for both Iceberg and Hive tables: 
 
-- It deletes the table from the AWS Glue catalog using Glue APIs
+- It deletes the table from the AWS Glue catalog using Glue APIs.
 - Removes the associated S3 data files using a delete operation
 
 However, for Iceberg tables, using standard SQL like [`DROP TABLE`](https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-drop-table.html) may not remove all related S3 objects. To ensure proper cleanup in a dbt workflow, the adapter includes a workaround that explicitly deletes these S3 objects, or alternatively, users can enable [`native_drop`](/reference/resource-configs/athena-configs#table-configuration) to let Iceberg handle the cleanup natively.
