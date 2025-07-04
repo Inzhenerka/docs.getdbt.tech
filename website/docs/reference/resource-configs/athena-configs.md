@@ -321,7 +321,7 @@ select 'b'        as user_id,
 
 ### Avoid deleting parquet files
 
-If a dbt model has the same name as an existing table in the AWS Glue catalog, the dbt-athena adapter will delete the files in that table’s S3 location before recreating it using the SQL from the model.
+If a dbt model has the same name as an existing table in the AWS Glue catalog, the `dbt-athena` adapter deletes the files in that table’s S3 location before recreating the table using the SQL from the model.
 
 The adapter may also delete data if a model is configured to use the same S3 location as an existing table. In this case, it clears the folder before creating the new table to avoid conflicts during setup.
 
