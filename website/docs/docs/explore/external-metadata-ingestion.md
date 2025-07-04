@@ -40,7 +40,8 @@ These credentials are configured separately from dbt environment credentials and
 ### Configure the warehouse connection
 
 1. Go to **Account settings**.
-5. Click **Connections** from the left hand side panel and select an existing connection or create a **New connection**.
+2. Click **Connections** from the left-hand side panel.
+3. Select an existing connection or create a [**New connection**](/docs/cloud/connect-data-platform/connect-snowflake) where you want to ingest metadata from.
 4. Scroll to the bottom of the page and click **Add credentials** in **Platform metadata credentials**.
     - These credentials should have warehouse-level visibility across relevant databases and schemas.
 5. Select the **External metadata ingestion** option.
