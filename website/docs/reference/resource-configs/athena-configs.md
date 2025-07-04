@@ -325,7 +325,7 @@ If a dbt model has the same name as an existing table in the AWS Glue catalog, t
 
 The adapter may also delete data if a model is configured to use the same S3 location as an existing table. In this case, it clears the folder before creating the new table to avoid conflicts during setup.
 
-When dropping a model, the dbt-athena adapter performs two cleanup steps for both Iceberg and Hive tables: 
+When dropping a model, the `dbt-athena` adapter performs two cleanup steps for both Iceberg and Hive tables: 
 
 - It deletes the table from the AWS Glue catalog using Glue APIs
 - Removes the associated S3 data files using a delete operation
