@@ -43,7 +43,7 @@ These credentials are configured separately from dbt environment credentials and
 5. Click **Connections** from the left hand side panel and select an existing connection or create a **New connection**.
 4. Scroll to the bottom of the page and click **Add credentials** in **Platform metadata credentials**.
     - These credentials should have warehouse-level visibility across relevant databases and schemas.
-8. Select the **External metadata ingestion** option.
+5. Select the **External metadata ingestion** option.
     - This allows metadata from this connection to populate the <Constant name="explorer" />.
     - *Optional*: Enable additional features such as **cost optimization** in the **Features** section under **Platform metadata credentials**.
 9. Apply filters to restrict which metadata is ingested:
