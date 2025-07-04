@@ -31,7 +31,7 @@ These credentials are configured separately from dbt environment credentials and
 
 ## Configuration instructions
 
-**Opt into feature and enable external metadata ingestion:**
+### Enable external metadata ingestion
 
 1. Click your account name at the bottom of the left-side menu and click **[Account settings](/docs/cloud/account-settings)**.
 2. Under Account information, go to **Settings** and click **Edit** at the top right corner of the page.
