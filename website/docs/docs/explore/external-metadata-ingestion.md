@@ -37,7 +37,7 @@ These credentials are configured separately from dbt environment credentials and
 2. Under Account information, go to **Settings** and click **Edit** at the top right corner of the page.
 3. Select the **Ingest external metadata in dbt Catalog (formerly dbt Explorer)** option (if not already enabled).
 
-**Locate/create the warehouse connection**
+### Configure the warehouse connection
 
 1. Go to **Account settings**.
 5. Click **Connections** from the left hand side panel and select an existing connection or create a **New connection**.
