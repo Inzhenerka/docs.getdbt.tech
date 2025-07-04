@@ -260,7 +260,7 @@ The `retry_on_database_errors` flag along with the `connect_retries` count speci
 
 By default, `retry_on_database_errors` is set to `False` when using <Constant name="core" /> (for example, if you're running dbt locally with `pip install dbt-core dbt-snowflake`).
 
-However, in the <Constant name="dbt_platform" /> this setting is automatically set to `True`, unless the user explicitly configures it. 
+However, in the <Constant name="dbt_platform" />, this setting is automatically set to `True`, unless the user explicitly configures it. 
 
 ### retry_all
 
