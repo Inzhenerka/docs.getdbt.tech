@@ -210,16 +210,9 @@ group by 1
 
 ### SQL Code fix
 
-```diff
-17c17
-<     count(
----
->     sum(
-23c23
-<     count(
----
->     sum(
-```
+You can see that we changed `count` to `sum` in the SQL code:
+
+<Lightbox src="/img/blog/2024-05-07-unit-testing/changed_code.png" title="SQL changes in code" />
 
 ### Caveats and pro-tips
 
