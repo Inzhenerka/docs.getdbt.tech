@@ -70,7 +70,7 @@ To configure the AI integration in your <Constant name="cloud" /> account, a <Co
   1. Select the toggle for **dbt Labs** to use dbt Labs' managed OpenAI key.
   2. Click **Save**.
 
-  <Lightbox src="/img/docs/dbt-cloud/account-integration-dbtlabs.jpg" width="85%" title="Example of the dbt Labs integration page" />
+  <Lightbox src="/img/docs/dbt-cloud/account-integration-dbtlabs.png" width="85%" title="Example of the dbt Labs integration page" />
   </TabItem>
 
   <TabItem value="openai" label="OpenAI">

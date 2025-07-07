@@ -43,8 +43,9 @@ sources:
           [count](/reference/resource-properties/freshness#count): <positive_integer>
           [period](/reference/resource-properties/freshness#period): minute | hour | day
         [filter](/reference/resource-properties/freshness#filter): <where-condition>
-      
-    [overrides](/reference/resource-properties/overrides): <string>
+    
+    # deprecated in v1.10
+    [overrides](/reference/resource-properties/overrides): <string> 
 
     [quoting](/reference/resource-properties/quoting):
       database: true | false

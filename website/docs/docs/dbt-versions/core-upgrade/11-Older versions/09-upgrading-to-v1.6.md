@@ -63,7 +63,6 @@ Supported on:
 - [Snowflake](/reference/resource-configs/snowflake-configs#dynamic-tables)
 - [Databricks](/reference/resource-configs/databricks-configs#materialized-views-and-streaming-tables)
 
-Support for BigQuery coming soon.
 
 ### New commands for mature deployment
 

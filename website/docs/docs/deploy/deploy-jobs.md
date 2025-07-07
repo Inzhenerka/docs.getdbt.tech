@@ -133,6 +133,18 @@ import DeleteJob from '/snippets/_delete-job.md';
 
 <DeleteJob/>
 
+## Job settings history
+
+You can view historical job settings changes over the last 90 days.
+
+To view the change history: 
+1. Navigate to **Orchestration** from the main menu and click **Jobs**. 
+2. Click a **job name**.
+3. Click **Settings**. 
+4. Click **History**. 
+
+<Lightbox src="/img/docs/deploy/job-history.png" width="100%" title="Example of the job settings history."/>
+
 ## Related docs
 
 - [Artifacts](/docs/deploy/artifacts)
