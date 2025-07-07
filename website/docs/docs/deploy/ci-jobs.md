@@ -146,7 +146,7 @@ Before running semantic validations, <Constant name="cloud" /> must build the mo
 
 For semantic nodes and models that aren't downstream of modified models, <Constant name="cloud" /> defers to the production models.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.png" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
 
 </Expandable>
 
