@@ -91,7 +91,7 @@ See [View documentation](/docs/build/view-documentation) to get the most out of 
 Docs blocks provide a robust method for documenting models and other resources using Jinja and markdown. Docs block files can contain arbitrary markdown, but they must be uniquely named. 
 
 ### Syntax
-To declare a docs block, use the Jinja `docs` tag. Their names can't start with a digit and may contain:
+To declare a docs block, use the Jinja `docs` tag. The name of a docs block can't start with a digit and may contain:
 
 - Uppercase and lowercase letters (A-Z, a-z)
 - Digits (0-9)
