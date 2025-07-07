@@ -158,7 +158,7 @@ To only validate modified semantic nodes, use the following command (with [state
 dbt sl validate --select state:modified+
 ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-modified.jpg" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-modified.png" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
 
 This will only validate semantic nodes. It will use the defer state set configured in your orchestration job, deferring to your production models.
 
@@ -188,7 +188,7 @@ To validate _all_ semantic nodes in your project, add the following command to d
    dbt sl validate
    ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-all.jpg" width="90%" title="Validate all semantic nodes in your CI job by adding the command: 'dbt sl validate' in your job execution settings." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-all.png" width="90%" title="Validate all semantic nodes in your CI job by adding the command: 'dbt sl validate' in your job execution settings." />
 
 </Expandable>
 
