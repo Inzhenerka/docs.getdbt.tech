@@ -124,7 +124,7 @@ To learn how to set this up, refer to the following steps:
 
 There are additional commands and use cases described in the [next section](#use-cases), such as validating all semantic nodes, validating specific semantic nodes, and so on.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.png" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
 
 ### Use cases
 
@@ -172,7 +172,7 @@ Use the selector syntax to select the _specific_ semantic node(s) you want to va
 dbt sl validate --select metric:revenue
 ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-select.jpg" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-select.png" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
 
 In this example, the CI job will validate the selected `metric:revenue` semantic node. To select multiple semantic nodes, use the selector syntax: `dbt sl validate --select metric:revenue metric:customers`.
 
