@@ -23,6 +23,7 @@ This checklist is designed to ensure you have everything in the right place, all
 The dbt platform supports [global connections](/docs/cloud/connect-data-platform/about-connections#connection-management) for your data warehouses. This means that a single configured connection can be used across multiple projects and environments. The dbt platform supports multiple data warehouse connections, including (but not limited to) BigQuery, Databricks, Redshift, and Snowflake. One of the earliest account configuration steps you'll want to take is ensuring you have a working connection:
 
 - [ ] Use the [connection set up documentation](/docs/cloud/connect-data-platform/about-connections) to configure the data warehouse connection of your choice. 
+- [ ] Verify that dbt developers have proper roles and access in your data warehouse(s).
 - [ ] Be sure the data warehouse has real data you can reference. This can be production or development data. We have a sandbox e-commerce project called [The Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) that you can use if you prefer. The Jaffle Shop includes mock data and ready-to-run models!
 - [ ] Whether starting a brand new project or importing an existing dbt Core project, you'll want to make sure you have the [proper structure configured](/docs/build/projects).
     - [ ] If you are migrating from Core, there are some important things you'll need to know, so check out our [migration guide](/guides/core-cloud-2?step=1).
@@ -32,7 +33,6 @@ The dbt platform supports [global connections](/docs/cloud/connect-data-platform
     - [ ] You can also verify the connection by running basic SQL queries using [dbt Insights](/docs/explore/access-dbt-insights).
 - [ ] Create a single model and ensure that you can [run it](/reference/dbt-commands) successfully. 
     - [ ] For an easy to use drag-and-drop interface, try creating it with [dbt Canvas](/docs/cloud/canvas).
-- [ ] Verify that dbt developers have proper roles and access in your data warehouse(s).
 - [ ] Create a service account with proper access for your [production jobs](/docs/deploy/jobs).
 
 ## Git configuration
