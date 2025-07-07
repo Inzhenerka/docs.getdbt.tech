@@ -73,15 +73,10 @@ The GraphQL API has an easy way to fetch this with the following query:
 
 #### Fetch available metrics
 
-<Tabs>
-<TabItem value="nonpaginated" label="Non-paginated">
-
+<!-- removing non-paginated sample
 ```graphql
 metrics(environmentId: BigInt!): [Metric!]!
-```
-
-</TabItem>
-<TabItem value="paginated" label="Paginated">
+```-->
 
 ```graphql
 metricsPaginated(
@@ -99,23 +94,15 @@ metricsPaginated(
 }
 ```
 
-</TabItem>
-</Tabs>
-
 #### Fetch available dimensions for metrics
 
-<Tabs>
-<TabItem value="nonpaginated" label="Non-paginated">
-
+<!-- removing non-paginated sample
 ```graphql
 dimensions(
   environmentId: BigInt!
   metrics: [MetricInput!]!
 ): [Dimension!]!
-```
-
-</TabItem>
-<TabItem value="paginated" label="Paginated">
+```-->
 
 ```graphql
 dimensionsPaginated(
@@ -132,9 +119,6 @@ dimensionsPaginated(
     totalPages: Int!
 }
 ```
-
-</TabItem>
-</Tabs>
 
 #### Fetch available granularities given metrics
 
@@ -207,25 +191,6 @@ metricsForDimensions(
 
 #### Fetch entities
 
-<Tabs>
-<TabItem value="nonpaginated" label="Non-paginated">
-
-```graphql
-entities(
-    environmentId: BigInt!
-    metrics: [MetricInput!]!
-): [Entity!]! {
-    name: String!
-    description: String
-    type: EntityType!
-    role: String
-    expr: String
-    config: EntityConfig
-}
-```
-</TabItem>
-<TabItem value="paginated" label="Paginated">
-
 ```graphql
 entitiesPaginated(
     environmentId: BigInt!
@@ -242,25 +207,7 @@ entitiesPaginated(
 }
 ```
 
-</TabItem>
-</Tabs>
-
 #### Fetch entities and dimensions to group metrics
-
-<Tabs>
-<TabItem value="nonpaginated" label="Non-paginated">
-
-```graphql
-groupBys(
-    environmentId: BigInt!
-    metrics: [MetricInput!]!
-): [EntityDimension!]! {
-    ... on Entity
-    ... on Dimension
-}
-```
-</TabItem>
-<TabItem value="paginated" label="Paginated">
 
 ```graphql
 groupBysPaginated(
@@ -277,9 +224,6 @@ groupBysPaginated(
     totalPages: Int!
 }
 ```
-
-</TabItem>
-</Tabs>
 
 #### Metric types
 
@@ -336,10 +280,7 @@ DimensionType = [CATEGORICAL, TIME]
 
 List all saved queries for the specified environment:
 
-
-<Tabs>
-<TabItem value="nonpaginated" label="Non-paginated">
-
+<!-- removing non-paginated sample
 ```graphql
 {
 savedQueries(environmentId: "123") {
@@ -361,10 +302,7 @@ savedQueries(environmentId: "123") {
   }
 }
 }
-```
-
-</TabItem>
-<TabItem value="paginated" label="Paginated">
+```-->
 
 ```graphql
 savedQueriesPaginated(
@@ -380,9 +318,6 @@ savedQueriesPaginated(
     totalPages: Int!
 }
 ```
-
-</TabItem>
-</Tabs>
 
 #### List a saved query
 
