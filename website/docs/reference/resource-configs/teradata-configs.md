@@ -414,29 +414,34 @@ These steps collectively ensure that the valid_history strategy effectively mana
   ```
   See [Collecting Statistics documentation](https://docs.teradata.com/r/76g1CuvvQlYBjb2WPIuk3g/RAyUdGfvREwbO9J0DMNpLw) for more information.
 
-## dbt-external-tables
-* [dbt-external-tables](https://github.com/dbt-labs/dbt-external-tables) are supported with dbt-teradata from dbt-teradata v1.9.3 onwards.
-* Under the hood, dbt-teradata uses the concept of foreign tables to create tables from external sources. More information can be found [here](https://docs.teradata.com/r/Enterprise_IntelliFlex_VMware/SQL-Data-Definition-Language-Syntax-and-Examples/Table-Statements/CREATE-FOREIGN-TABLE)
-* User need to add the dbt-external-tables packages as dependency and can be resolved with `dbt deps` command
+## The external tables package
+
+The [dbt-external-tables](https://github.com/dbt-labs/dbt-external-tables) package is supported with the dbt-teradata adapter from v1.9.3 onwards. Under the hood, dbt-teradata uses the concept of foreign tables to create tables from external sources. More information can be found in the [Teradata documentation](https://docs.teradata.com/r/Enterprise_IntelliFlex_VMware/SQL-Data-Definition-Language-Syntax-and-Examples/Table-Statements/CREATE-FOREIGN-TABLE). 
+
+You need to add the `dbt-external-tables` package as a dependency:
+
 ```yaml
 packages:
   - package: dbt-labs/dbt_external_tables
     version: [">=0.9.0", "<1.0.0"]
 ```
-* User need to add dispatch config for the project to pick the overridden macros from dbt-teradata package
+
+You need to add the dispatch config for the project to pick the overridden macros from the dbt-teradata package:
+
 ```yaml
 dispatch:
   - macro_namespace: dbt_external_tables
     search_order: ['dbt', 'dbt_external_tables']
 ```
-* To define `STOREDAS` and `ROWFORMAT` for in dbt-external tables, one of the below options can be used:
-    * user can use the standard dbt-external-tables config `file_format` and `row_format` respectively
-    * Or user can just add it in `USING` config as mentioned in the Teradata's [documentation](https://docs.teradata.com/r/Enterprise_IntelliFlex_VMware/SQL-Data-Definition-Language-Syntax-and-Examples/Table-Statements/CREATE-FOREIGN-TABLE/CREATE-FOREIGN-TABLE-Syntax-Elements/USING-Clause)
 
-* For external source, which requires authentication, user needs to create authentication object and pass it in `tbl_properties` as `EXTERNAL SECURITY` object.
-  For more information on Authentication object please follow this [link](https://docs.teradata.com/r/Enterprise_IntelliFlex_VMware/SQL-Data-Definition-Language-Syntax-and-Examples/Authorization-Statements-for-External-Routines/CREATE-AUTHORIZATION-and-REPLACE-AUTHORIZATION)
+To define `STOREDAS` and `ROWFORMAT` for external tables, one of the following options can be used:
+- You can use the standard dbt-external-tables config `file_format` and `row_format` respectively.
+- Or you can add it in the `USING` config as mentioned in the [Teradata documentation](https://docs.teradata.com/r/Enterprise_IntelliFlex_VMware/SQL-Data-Definition-Language-Syntax-and-Examples/Table-Statements/CREATE-FOREIGN-TABLE/CREATE-FOREIGN-TABLE-Syntax-Elements/USING-Clause).
 
-* Sample external sources are provided below as references
+For the external sources, which require authentication, you need to create an authentication object and pass it in `tbl_properties` as `EXTERNAL SECURITY` object. For more information on authentication objects, check out the [Teradata documentation](https://docs.teradata.com/r/Enterprise_IntelliFlex_VMware/SQL-Data-Definition-Language-Syntax-and-Examples/Authorization-Statements-for-External-Routines/CREATE-AUTHORIZATION-and-REPLACE-AUTHORIZATION).
+
+The following are examples of external sources configured for Teradata:
+
 ```yaml
 version: 2
 sources:
@@ -492,8 +497,8 @@ sources:
               data_type: CHAR(1)
 ```
 
-## Fallback Schema
-dbt-teradata internally created temporary tables to fetch the metadata of views for manifest and catalog creation. In case if user does not have permission to create tables on the schema they are working on, they can define a fallback_schema(to which they have proper create/drop privileges) in dbt_project.yml as variable.
+### Fallback Schema
+The dbt-teradata adapter internally creates temporary tables to fetch the metadata of views for manifest and catalog creation. In cases you don't have permission to create tables on the schema you are working on, you can define a fallback_schema (to which you have the proper `create`/`drop` privileges) in the dbt_project.yml as a variable.
 
 ```yaml
 vars:
