@@ -81,8 +81,6 @@ Currently, calculating freshness from warehouse metadata tables is supported on 
 - [Redshift](/reference/resource-configs/redshift-configs)
 - [BigQuery](/reference/resource-configs/bigquery-configs) (Supported in [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery) version 1.7.3 or higher)
 
-Support is coming soon to the [Spark](/reference/resource-configs/spark-configs) adapter.
-
 Freshness blocks are applied hierarchically:
 - A `freshness` and `loaded_at_field` property added to a source will be applied to all tables defined in that source.
 - A `freshness` and `loaded_at_field` property added to a source _table_ will override any properties applied to the source.

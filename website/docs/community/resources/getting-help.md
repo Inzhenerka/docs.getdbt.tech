@@ -66,7 +66,7 @@ We use a number of different mediums to share information
 
 ## Receiving dedicated support
 
-If you need dedicated support to build your dbt project, consider reaching out regarding [professional services](https://www.getdbt.com/contact/), or engaging one of our [consulting partners](https://partners.getdbt.com/english/directory/).
+If you need dedicated support to build your dbt project, consider reaching out regarding [professional services](https://www.getdbt.com/contact/), or engaging one of our [consulting partners](https://www.getdbt.com/partner-directory).
 
 ## dbt Training
 
