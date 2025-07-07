@@ -36,8 +36,8 @@ To retain the behavior prior to v1.7, there are two main options:
 
 ## New and changed features and functionality
 
-- [`dbt docs generate`](/reference/commands/cmd-docs) now supports `--select` to generate [catalog metadata](/reference/artifacts/catalog-json) for a subset of your project. Currently available for Snowflake and Postgres only, but other adapters are coming soon. 
-- [Source freshness](/docs/deploy/source-freshness) can now be generated from warehouse metadata tables, currently Snowflake only, but other adapters that have metadata tables are coming soon. 
+- [`dbt docs generate`](/reference/commands/cmd-docs) now supports `--select` to generate [catalog metadata](/reference/artifacts/catalog-json) for a subset of your project. 
+- [Source freshness](/docs/deploy/source-freshness) can now be generated from warehouse metadata tables. 
 
 ### MetricFlow enhancements
 
