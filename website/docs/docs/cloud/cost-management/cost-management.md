@@ -8,9 +8,11 @@ sidebar_label: About cost management
 
 The cost management dashboard in <Constant name="cloud" /> gives you valuable insight into how your dbt projects impact your data warehouse costs. They will help you optimize your warehouse spending by visualizing how features, including models, tests, snapshots, and other resources, influence costs over time so that you can take action, report to stakeholders, and optimize development workflows.
 
-Currently, only Snowflake is supported. 
+Currently, only Snowflake is supported. Support for more adapters is coming in the future.
 
 This document will cover setup in Snowflake, <Constant name="cloud" />, and how to use the cost management dashboard to view your insights.  
+
+Support for <Constant name="core" /> and the dbt Fusion engine is coming soon! Select features will be introduced in [v1.10](/docs/dbt-versions/core-upgrade/upgrading-to-v1.10), with many more to come in future versions.
 
 ## Prerequisites
 
@@ -26,7 +28,6 @@ To configure the cost management tools, you must have the following:
 - Proper [privileges](https://docs.snowflake.com/en/user-guide/security-access-control-privileges) in Snowflake to create a user and assign them database access.
 - A supported data warehouse. Note: Only Snowflake is supported at this time. More warehouses coming soon!
 - A <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing).
-- Support for <Constant name="core" /> and the dbt Fusion engine is coming soon! Select features will be introduced in [v1.10](/docs/dbt-versions/core-upgrade/upgrading-to-v1.10), with many more to come in future versions.
 
 
 ## Set up in Snowflake
@@ -116,7 +117,7 @@ After the setup, it will be a few hours before the initial sync completes and in
 
 ### Provision user access
 
-Since the dashboard contains sensitive financial information, we're introducing two new permission sets to help you regulate access: `Cost Management Admin` and `Cost Mangement Viewer`.
+Since the dashboard contains sensitive financial information, we're introducing two new permission sets to help you regulate access: `Cost Management Admin` and `Cost Management Viewer`.
 
 The `Cost Management Viewer` role is especially useful to organizations who want to grant viewer access to the dashboard without the elevated permissions associated with admin roles.
 
