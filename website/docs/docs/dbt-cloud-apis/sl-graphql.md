@@ -135,9 +135,11 @@ You can also get queryable granularities for all other dimensions using the `dim
 
 ```graphql
 {
-  dimensions(environmentId: BigInt!, metrics:[{name:"order_total"}]) {
-    name
-    queryableGranularities # --> ["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+  dimensionsPaginated(environmentId: BigInt!, metrics:[{name:"order_total"}]) {
+    items {
+      name
+      queryableGranularities # --> ["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+    }
   }
 }
 ```
@@ -146,11 +148,13 @@ You can also optionally access it from the metrics endpoint:
 
 ```graphql
 {
-  metrics(environmentId: BigInt!) {
-    name
-    dimensions {
+  metricsPaginated(environmentId: BigInt!) {
+    items {
       name
-      queryableGranularities
+      dimensions {
+        name
+        queryableGranularities
+      }
     }
   }
 }
@@ -171,22 +175,15 @@ You can also optionally access it from the metrics endpoint:
 
 ```graphql
 {
-  metrics(environmentId: BigInt!) {
-    measures {
-      name
-      aggTimeDimension
+  metricsPaginated(environmentId: BigInt!) {
+    items {
+      measures {
+        name
+        aggTimeDimension
+      }
     }
   }
 }
-```
-
-#### Fetch available metrics given a set of dimensions
-
-```graphql
-metricsForDimensions(
-  environmentId: BigInt!
-  dimensions: [GroupByInput!]!
-): [Metric!]!
 ```
 
 #### Fetch entities
