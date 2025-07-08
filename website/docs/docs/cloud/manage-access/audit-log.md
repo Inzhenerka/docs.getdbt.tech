@@ -22,7 +22,7 @@ Note that the retention period for events in the audit log is at least 12 months
 
 ## Accessing the audit log
 
-To access the audit log, click on your account name in the left side menu and select **Account settings**. Under **Settings**, click **Audit log**.
+To access the audit log, click on your account name in the left-side menu and select **Account settings**. Click **Audit log** in the left sidebar.
 
 ## Understanding the audit log
 
