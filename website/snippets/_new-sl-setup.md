@@ -15,7 +15,7 @@ Select the environment where you want to enable the Semantic Layer:
 2. Under **Settings**, click **Projects** and select the specific project you want to enable the Semantic Layer for.
 3. In the **Project details** page, navigate to the **Semantic Layer** section. Select **Configure Semantic Layer**.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/new-sl-configure.png" width="70%" title="Semantic Layer section in the 'Project Details' page"/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/new-sl-configure.png" width="70%" title="Semantic Layer section in the 'Project details' page"/>
 
 4. In the **Set Up Semantic Layer Configuration** page, select the deployment environment you want for the Semantic Layer and click **Save**. This provides administrators with the flexibility to choose the environment where the Semantic Layer will be enabled.
 
