@@ -133,5 +133,5 @@ Leave feedback or submit a feature request for <Constant name="cloud" /> or <Con
 
 For SQL writing, project performance review, or project building, refer to dbt Preferred Consulting Providers and dbt Labs' Services.
 For help writing SQL, reviewing the overall performance of your project, or want someone to actually help build your dbt project, refer to the following pages:
-- List of [dbt Consulting Partners](https://partners.getdbt.com/english/directory/).
+- List of [dbt Consulting Partners](https://www.getdbt.com/partner-directory).
 - dbt Labs' [Services](https://www.getdbt.com/dbt-labs/services/).

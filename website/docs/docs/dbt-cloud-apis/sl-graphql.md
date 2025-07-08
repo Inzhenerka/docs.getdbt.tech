@@ -73,11 +73,39 @@ The GraphQL API has an easy way to fetch this with the following query:
 
 #### Fetch available metrics
 
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
 ```graphql
 metrics(environmentId: BigInt!): [Metric!]!
 ```
 
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+metricsPaginated(
+  environmentId: BigInt!
+  search: String = null
+  groupBy: [GroupByInput!] = null
+  pageNum: Int! = 1
+  pageSize: Int = null
+): MetricResultPage! {
+  items: [Metric!]!
+  pageNum: Int!
+  pageSize: Int
+  totalItems: Int!
+  totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
+
 #### Fetch available dimensions for metrics
+
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
 
 ```graphql
 dimensions(
@@ -85,6 +113,28 @@ dimensions(
   metrics: [MetricInput!]!
 ): [Dimension!]!
 ```
+
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+dimensionsPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!]!
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): DimensionResultPage! {
+    items: [Dimension!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
 
 #### Fetch available granularities given metrics
 
@@ -155,6 +205,82 @@ metricsForDimensions(
 ): [Metric!]!
 ```
 
+#### Fetch entities
+
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
+```graphql
+entities(
+    environmentId: BigInt!
+    metrics: [MetricInput!]!
+): [Entity!]! {
+    name: String!
+    description: String
+    type: EntityType!
+    role: String
+    expr: String
+    config: EntityConfig
+}
+```
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+entitiesPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!] = null
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): EntityResultPage! {
+    items: [Entity!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
+
+#### Fetch entities and dimensions to group metrics
+
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
+```graphql
+groupBys(
+    environmentId: BigInt!
+    metrics: [MetricInput!]!
+): [EntityDimension!]! {
+    ... on Entity
+    ... on Dimension
+}
+```
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+groupBysPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!] = null
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): EntityDimensionResultPage! {
+    items: [EntityDimension!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
+
 #### Metric types
 
 ```graphql
@@ -188,7 +314,6 @@ MetricTypeParams {
 }
 ```
 
-
 #### Dimension types
 
 ```graphql
@@ -210,29 +335,54 @@ DimensionType = [CATEGORICAL, TIME]
 #### List saved queries
 
 List all saved queries for the specified environment:
-  
-  ```graphql
-  {
-  savedQueries(environmentId: "123") {
-    name
-    description
-    label
-    queryParams {
-      metrics {
-        name
-      }
-      groupBy {
-        name
-        grain
-        datePart
-      }
-      where {
-        whereSqlTemplate
-      }
+
+
+<Tabs>
+<TabItem value="nonpaginated" label="Non-paginated">
+
+```graphql
+{
+savedQueries(environmentId: "123") {
+  name
+  description
+  label
+  queryParams {
+    metrics {
+      name
+    }
+    groupBy {
+      name
+      grain
+      datePart
+    }
+    where {
+      whereSqlTemplate
     }
   }
 }
+}
 ```
+
+</TabItem>
+<TabItem value="paginated" label="Paginated">
+
+```graphql
+savedQueriesPaginated(
+    environmentId: BigInt!
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): SavedQueryResultPage! {
+    items: [SavedQuery!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+</TabItem>
+</Tabs>
 
 #### List a saved query
 

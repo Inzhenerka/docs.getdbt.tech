@@ -18,11 +18,11 @@ The <Constant name="cloud" /> audit log stores all the events that occurred in y
 - For events within 90 days, the <Constant name="cloud" /> audit log has a selectable date range that lists events triggered.
 - For events beyond 90 days, **Account Admins** and **Account Viewers** can [export all events](#exporting-logs) by using **Export All**.
 
+Note that the retention period for events in the audit log is at least 12 months. 
+
 ## Accessing the audit log
 
-To access the audit log, click on your account name in the left side menu and select **Account settings**.
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-menu.png" width="30%" title="Audit log menu"/>
+To access the audit log, click on your account name in the left-side menu and select **Account settings**. Click **Audit log** in the left sidebar.
 
 ## Understanding the audit log
 
@@ -231,10 +231,11 @@ You can search the audit log to find a specific event or actor, which is limited
 
 ## Exporting logs
 
-You can use the audit log to export all historical audit results for security, compliance, and analysis purposes:
+You can use the audit log to export all historical audit results for security, compliance, and analysis purposes. Events in the audit log are retained for at least 12 months.
 
 - **For events within 90 days** &mdash; <Constant name="cloud" /> will automatically display the 90-day selectable date range. Select **Export Selection** to download a CSV file of all the events that occurred in your organization within 90 days.
 
 - **For events beyond 90 days** &mdash; Select **Export All**. The Account Admin or Account Viewer will receive an email link to download a CSV file of all the events that occurred in your organization.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.jpg" width="95%" title="View audit log export options"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.png" width="95%" title="View audit log export options"/>
+

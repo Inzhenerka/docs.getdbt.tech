@@ -16,9 +16,18 @@ pagination_prev: null
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## July 2025
+
+- **New**: Paginated [GraphQL](/docs/dbt-cloud-apis/sl-graphql) endpoints for metadata queries in Semantic Layer are now available. This improves integration load times for large manifests. For more information, see [Metadata calls](/docs/dbt-cloud-apis/sl-graphql#metadata-calls).
+
 ## June 2025
 
 - **Enhancement:** You can now set the [compilation environment](/docs/explore/access-dbt-insights#set-jinja-environment) to control how Jinja functions are rendered in dbt Insights.
+- **Beta**: The dbt Fusion engine supports the BigQuery adapter in beta.
+- **New:** You can now view the history of settings changes for [projects](/docs/cloud/account-settings), [environments](/docs/dbt-cloud-environments), and [jobs](/docs/deploy/deploy-jobs).
+- **New:** Added support for the latest version of BigQuery credentials in Semantic Layer and MetricFlow.
+- **New:**  Snowflake External OAuth is now supported for Semantic Layer queries.
+Snowflake connections that use External OAuth for user credentials can now emit queries for <Constant name="query_page" />, <Constant name="cloud_cli" />, and <Constant name="cloud_ide" /> through the Semantic Layer Gateway. This enables secure, identity-aware access via providers like Okta or Microsoft Entra ID.
 - **New:** You can now [download your managed Git repo](/docs/cloud/git/managed-repository#download-managed-repository) from the dbt platform.
 - **New**: The <Constant name="semantic_layer" /> now supports Trino as a data platform. For more details, see [Set up the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
 - **New**: The dbt Fusion engine supports Databricks in beta.
