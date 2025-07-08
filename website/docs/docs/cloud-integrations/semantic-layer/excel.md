@@ -29,7 +29,7 @@ The <Constant name="semantic_layer" /> Microsoft Excel integration is available 
 
 1. In Excel, authenticate with your host, <Constant name="cloud" /> environment ID, and service token.
    - Access your Environment ID, Host, and URLs in your <Constant name="semantic_layer" /> settings. Generate a service token in the <Constant name="semantic_layer" /> settings or API tokens settings
-   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-and-gsheets.jpg" width="70%" title="Access your Environment ID, Host, and URLs in your dbt Semantic Layer settings. Generate a service token in the Semantic Layer settings or API tokens settings" />
+   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-and-gsheets.png" width="70%" title="Access your Environment ID, Host, and URLs in your dbt Semantic Layer settings. Generate a service token in the Semantic Layer settings or API tokens settings" />
 
 2. Start querying your metrics using the **Query Builder**. For more info on the menu functions, refer to [Query Builder functions](#query-builder-functions). To cancel a query while running, press the **Cancel** button.
 
