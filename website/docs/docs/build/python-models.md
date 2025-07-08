@@ -577,7 +577,7 @@ def model(dbt, session):
 def model(dbt, session):
     dbt.config(submission_method="bigframes")
 
-    # You can use @bpd.udf (currently a preview feature)
+    # You can also use @bpd.udf (currently a preview feature)
     @bpd.remote_function(dataset='jialuo_test_us')
     def my_func(x: int) -> int:
         return x * 1100
