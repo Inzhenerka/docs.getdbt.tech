@@ -16,7 +16,7 @@ For most organizations, this will require some collaboration with IT and/or secu
 - Access control (Okta, Entra ID, Google, SAML 2.0)
 - Git (GitHub, GitLab, Azure DevOps, etc.)
 
-This checklist is designed to ensure you have everything in the right place, allowing you to deploy quickly and without any bottlenecks. 
+This checklist ensures you have everything in the right place, allowing you to deploy quickly and without any bottlenecks. 
 
 ## Data warehouse
 
@@ -45,8 +45,8 @@ Git is, for many dbt environments, the backbone of your project. Git repositorie
     - [Azure DevOps](/docs/cloud/git/connect-azure-devops)
     - Other providers using [Git clone](/docs/cloud/git/import-a-project-by-git-url)
     - If you aren't ready to integrate with an existing Git solution, dbt can provide you with a [managed Git repository](/docs/cloud/git/managed-repository). 
-- [ ] Developers are able to [checkout](/docs/cloud/git/version-control-basics#git-overview) a new branch in your repo.
-- [ ] Developers in the IDE can [commit changes](/docs/cloud/dbt-cloud-ide/ide-user-interface#basic-layout). 
+- [ ] Ensure developers can [checkout](/docs/cloud/git/version-control-basics#git-overview) a new branch in your repo.
+- [ ] Ensure developers in the IDE can [commit changes](/docs/cloud/dbt-cloud-ide/ide-user-interface#basic-layout). 
 
 ## Environments and jobs
 
