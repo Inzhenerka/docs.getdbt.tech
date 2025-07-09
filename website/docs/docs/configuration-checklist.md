@@ -53,7 +53,7 @@ Git is, for many dbt environments, the backbone of your project. Git repositorie
 [Environments](/docs/environments-in-dbt) separate your development data from your production data. There are two types of environments - `Deployment` and `Development`. Within that distinction, there are three types of `Deployment` environments available on the dbt platform:
 - Production - One per project
 - Staging - One per project
-- General - As many as you need per project
+- General - Multiple per project
 
 Additionally, you will have only one `Development` environment per project, but each developer will have their own unique access to the IDE, separate from the work of other developers. 
 
@@ -76,14 +76,14 @@ The dbt platform offers a variety of access control tools that you can leverage 
 - [ ] Configure [single sign-on or OAuth](/docs/cloud/manage-access/sso-overview) for advanced access control. <Lifecycle status="managed,managed_plus" /> accounts only. 
     - [ ] Create [SSO mappings](/docs/cloud/manage-access/about-user-access#sso-mappings-) for groups
 - Configure [System for Cross-Domain Identity Management (SCIM)](/docs/cloud/manage-access/scim) if available for your IdP. 
-- [ ] Users should be able to connect to the data warehouse from their personal profile. 
+- [ ] Ensure invited users are able to connect to the data warehouse from their personal profile. 
 - [ ] [Create groups](/docs/cloud/manage-access/about-user-access#create-new-groups-) with granular permission sets assigned.
 - [ ] Create [RBAC rules](https://docs.getdbt.com/docs/cloud/manage-access/about-user-access#role-based-access-control-) to assign users to groups and permission sets upon sign in. <Lifecycle status="managed,managed_plus" /> accounts only. 
 - [ ] Enforce SSO for all non-admin users, and MFA is enforced for all password-based logins. 
 
 ## Continue the journey 
 
-Once you've completed this checklist, you're ready to start your dbt platform journey, but that journey has only just begun. The docs in these pages will help you get the most out of what dbt has to offer, but there are other resources to aid you along the way:
+Once you've completed this checklist, you're ready to start your dbt platform journey, but that journey has only just begun. You can explore these additional resources to support you along the way:
 - [ ] The [guides](/guides) offer quickstarts for warehouse connections and project features.
 - [ ] [dbt Learn](https://learn.getdbt.com/catalog) has hands on courses and interactive content.
 - [ ] Our [best practices](/best-practices) offer practical advice on structuring and deploying dbt projects.
