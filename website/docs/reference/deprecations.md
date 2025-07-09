@@ -213,7 +213,7 @@ Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#cre
 
 ### ModelParamUsageDeprecation
 
-The `--models` / `--model` / `-m` flag was renamed to `--select` / `--s` way back in dbt Core v0.21 (Oct 2021). Silently skipping this flag means ignoring your command's selection criteria, which could mean building your entire DAG when you only meant to select a small subset. For this reason, the `--models` / `--model` / `-m `flag will raise an error. Please update your job definitions accordingly.
+The `--models` / `--model` / `-m` flag was renamed to `--select` / `--s` way back in dbt Core v0.21 (Oct 2021). Silently skipping this flag means ignoring your command's selection criteria, which could mean building your entire DAG when you only meant to select a small subset. For this reason, the `--models` / `--model` / `-m` flag will raise <VersionBlock lastVersion="1.10">a warning</VersionBlock> <VersionBlock firstVersion="2.0">an error</VersionBlock>. Please update your job definitions accordingly.
 
 #### ModelParamUsageDeprecation warning resolution
 
