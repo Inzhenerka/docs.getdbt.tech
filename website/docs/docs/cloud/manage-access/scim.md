@@ -164,6 +164,11 @@ You can now begin assigning users to your SCIM app in Entra ID!
 ## Manage user licenses with SCIM
 
 You can manage user license assignments via SCIM with a user attribute in your IdP environment. This ensures accurate license assignment as users are provisioned in the IdP and onboarded into your dbt account.
+:::note Analyst license assignment
+
+    The `Analyst` license is only available for select plans. Assigning an `Analyst` license via SCIM will result in a user update error if that license type is not available for your dbt account. 
+
+:::
 
 To use license management via SCIM, enable the feature under the **SCIM** section in the **Single sign-on** settings. This setting will enforce license type for a user based on their SCIM attribute and disable the license mapping and manual configuration set up in dbt.  
     <Lightbox src="/img/docs/dbt-cloud/access-control/scim-managed-licenses.png" width="60%" title="Enable SCIM managed user license distribution." />
@@ -172,7 +177,7 @@ _We recommend that you complete the setup instructions for your identity provide
 
 The recommended steps for migrating to SCIM license mapping are as follows:
 1. Set up SCIM but keep the toggle disabled so existing license mappings continue to work as expected.
-2. Configure license attributes in your Identity Provider (IdP).
+2. Configure license attributes in your Identity Provider (IdP). 
 3. Test that SCIM attributes are being used to set license type in <Constant name="dbt_platform" />.
 4. Enable the toggle to ignore existing license mappings so that SCIM is the source-of-truth for assigning licenses to users. 
 
