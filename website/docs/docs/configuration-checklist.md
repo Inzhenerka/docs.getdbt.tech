@@ -50,7 +50,7 @@ Git is, for many dbt environments, the backbone of your project. Git repositorie
 
 ## Environments and jobs
 
-[Environments](/docs/environments-in-dbt) separate your development data from your production data. There are two types of environments - `Deployment` and `Development`. Within that distinction, there are three types of `Deployment` environments available on the dbt platform:
+[Environments](/docs/environments-in-dbt) separate your development data from your production data. dbt supports two environment types: Development and Deployment. There are three types of Development environments:
 - Production - One per project
 - Staging - One per project
 - General - Multiple per project
