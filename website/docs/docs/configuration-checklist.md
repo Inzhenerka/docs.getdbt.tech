@@ -59,7 +59,7 @@ Additionally, you will have only one `Development` environment per project, but 
 
 [Jobs](/docs/deploy/jobs) dictate which commands are run in your environments and can be triggered manually, on a schedule, by other jobs, by APIs, or when pull requests are committed or merged. 
 
-Once your data warehouse is connected and Git integration is complete, it's time to configure environments and jobs:
+Once you connect your data warehouse and complete the Git integration, you can configure environments and jobs:
 
 - [ ] Start by creating a new [Development environment](/docs/dbt-cloud-environments#create-a-development-environment) for your project. 
 - [ ] Create a [Production Deployment environment](/docs/deploy/deploy-environments).
