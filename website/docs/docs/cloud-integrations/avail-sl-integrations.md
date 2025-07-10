@@ -21,7 +21,7 @@ import AvailIntegrations from '/snippets/_sl-partner-links.md';
 
 ### Custom integration
 
-- all BI tools can use [exports](/docs/use-dbt-semantic-layer/exports) with the <Constant name="semantic_layer" />, even if they don’t have a native integration.
+- All BI tools can use [exports](/docs/use-dbt-semantic-layer/exports) with the <Constant name="semantic_layer" />, even if they don’t have a native integration.
 - [Consume metrics](/docs/use-dbt-semantic-layer/consume-metrics) and develop custom integrations using different languages and tools, supported through [JDBC](/docs/dbt-cloud-apis/sl-jdbc), ADBC, and [GraphQL](/docs/dbt-cloud-apis/sl-graphql) APIs, and [Python SDK library](/docs/dbt-cloud-apis/sl-python). For more info, check out [our examples on GitHub](https://github.com/dbt-labs/example-semantic-layer-clients/).
 - Connect to any tool that supports SQL queries. These tools must meet one of the two criteria:
     - Offers a generic JDBC driver option (such as DataGrip) or
