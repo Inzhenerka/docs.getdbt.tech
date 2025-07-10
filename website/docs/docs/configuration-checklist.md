@@ -84,7 +84,7 @@ The dbt platform offers a variety of access control tools that you can leverage 
 ## Continue the journey 
 
 Once you've completed this checklist, you're ready to start your dbt platform journey, but that journey has only just begun. You can explore these additional resources to support you along the way:
-- [ ] The [guides](/guides) offer quickstarts for warehouse connections and project features.
-- [ ] [dbt Learn](https://learn.getdbt.com/catalog) has hands on courses and interactive content.
-- [ ] Our [best practices](/best-practices) offer practical advice on structuring and deploying dbt projects.
-- [ ] The [references](/reference/references-overview) are the product dictionary and offer detailed implementation examples. 
+- [ ] Review the [guides](/guides) for quickstarts to help you get started with projects and features.
+- [ ] Take a [dbt Learn](https://learn.getdbt.com/catalog) hands-on course.
+- [ ] Review our [best practices](/best-practices) for practical advice on structuring and deploying your dbt projects.
+- [ ] Become familiar with the [references](/reference/references-overview), as they are the product dictionary and offer detailed implementation examples. 
