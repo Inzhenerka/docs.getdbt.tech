@@ -221,14 +221,6 @@ You can run a job that includes both models using `dbt build`. This runs both th
 No, you won't be able to reference an export using `ref`. Exports are treated as leaf nodes in your DAG. Modifying an export could lead to inconsistencies with the original metrics from the Semantic Layer.
 </DetailsToggle>
 
-<DetailsToggle alt_header="How do exports help me use the dbt Semantic Layer in tools that don't support it, such as PowerBI?">
-
-Exports provide an integration path for tools that don't natively connect with the dbt Semantic Layer by exposing tables of metrics and dimensions in the data platform.
-
-You can use exports to create a custom integration with tools such as PowerBI, and more.
-
-</DetailsToggle>
-
 <DetailsToggle alt_header="How can I select saved_queries by their resource type?">
 
 To include all saved queries in the dbt build run, use the [`--resource-type` flag](/reference/global-configs/resource-type) and run the command `dbt build --resource-type saved_query`.
