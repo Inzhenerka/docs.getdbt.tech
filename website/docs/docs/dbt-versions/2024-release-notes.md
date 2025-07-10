@@ -308,7 +308,7 @@ The following features are new or enhanced as part of our [<Constant name="cloud
 
   Exports are available for dbt Cloud multi-tenant [Team or Enterprise](https://www.getdbt.com/pricing/) plans on dbt versions 1.7 or newer. Refer to the [exports blog](https://www.getdbt.com/blog/announcing-exports-for-the-dbt-semantic-layer) for more details.
 
-  <Lightbox src="/img/docs/dbt-cloud/semantic-layer/deploy_exports.jpg" width="90%" title="Add an environment variable to run exports in your production run." />
+  <Lightbox src="/img/docs/dbt-cloud/semantic-layer/deploy_exports.png" width="90%" title="Add an environment variable to run exports in your production run." />
 
   </Expandable>
 

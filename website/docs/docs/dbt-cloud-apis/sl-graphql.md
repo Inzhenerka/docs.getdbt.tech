@@ -73,17 +73,51 @@ The GraphQL API has an easy way to fetch this with the following query:
 
 #### Fetch available metrics
 
+<!-- removing non-paginated sample
 ```graphql
 metrics(environmentId: BigInt!): [Metric!]!
+```-->
+
+```graphql
+metricsPaginated(
+  environmentId: BigInt!
+  search: String = null
+  groupBy: [GroupByInput!] = null
+  pageNum: Int! = 1
+  pageSize: Int = null
+): MetricResultPage! {
+  items: [Metric!]!
+  pageNum: Int!
+  pageSize: Int
+  totalItems: Int!
+  totalPages: Int!
+}
 ```
 
 #### Fetch available dimensions for metrics
 
+<!-- removing non-paginated sample
 ```graphql
 dimensions(
   environmentId: BigInt!
   metrics: [MetricInput!]!
 ): [Dimension!]!
+```-->
+
+```graphql
+dimensionsPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!]!
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): DimensionResultPage! {
+    items: [Dimension!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
 ```
 
 #### Fetch available granularities given metrics
@@ -101,9 +135,11 @@ You can also get queryable granularities for all other dimensions using the `dim
 
 ```graphql
 {
-  dimensions(environmentId: BigInt!, metrics:[{name:"order_total"}]) {
-    name
-    queryableGranularities # --> ["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+  dimensionsPaginated(environmentId: BigInt!, metrics:[{name:"order_total"}]) {
+    items {
+      name
+      queryableGranularities # --> ["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+    }
   }
 }
 ```
@@ -112,11 +148,13 @@ You can also optionally access it from the metrics endpoint:
 
 ```graphql
 {
-  metrics(environmentId: BigInt!) {
-    name
-    dimensions {
+  metricsPaginated(environmentId: BigInt!) {
+    items {
       name
-      queryableGranularities
+      dimensions {
+        name
+        queryableGranularities
+      }
     }
   }
 }
@@ -137,22 +175,51 @@ You can also optionally access it from the metrics endpoint:
 
 ```graphql
 {
-  metrics(environmentId: BigInt!) {
-    measures {
-      name
-      aggTimeDimension
+  metricsPaginated(environmentId: BigInt!) {
+    items {
+      measures {
+        name
+        aggTimeDimension
+      }
     }
   }
 }
 ```
 
-#### Fetch available metrics given a set of dimensions
+#### Fetch entities
 
 ```graphql
-metricsForDimensions(
-  environmentId: BigInt!
-  dimensions: [GroupByInput!]!
-): [Metric!]!
+entitiesPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!] = null
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): EntityResultPage! {
+    items: [Entity!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
+```
+
+#### Fetch entities and dimensions to group metrics
+
+```graphql
+groupBysPaginated(
+    environmentId: BigInt!
+    metrics: [MetricInput!] = null
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): EntityDimensionResultPage! {
+    items: [EntityDimension!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
+}
 ```
 
 #### Metric types
@@ -188,7 +255,6 @@ MetricTypeParams {
 }
 ```
 
-
 #### Dimension types
 
 ```graphql
@@ -210,27 +276,43 @@ DimensionType = [CATEGORICAL, TIME]
 #### List saved queries
 
 List all saved queries for the specified environment:
-  
-  ```graphql
-  {
-  savedQueries(environmentId: "123") {
-    name
-    description
-    label
-    queryParams {
-      metrics {
-        name
-      }
-      groupBy {
-        name
-        grain
-        datePart
-      }
-      where {
-        whereSqlTemplate
-      }
+
+<!-- removing non-paginated sample
+```graphql
+{
+savedQueries(environmentId: "123") {
+  name
+  description
+  label
+  queryParams {
+    metrics {
+      name
+    }
+    groupBy {
+      name
+      grain
+      datePart
+    }
+    where {
+      whereSqlTemplate
     }
   }
+}
+}
+```-->
+
+```graphql
+savedQueriesPaginated(
+    environmentId: BigInt!
+    search: String = null
+    pageNum: Int! = 1
+    pageSize: Int = null
+): SavedQueryResultPage! {
+    items: [SavedQuery!]!
+    pageNum: Int!
+    pageSize: Int
+    totalItems: Int!
+    totalPages: Int!
 }
 ```
 
