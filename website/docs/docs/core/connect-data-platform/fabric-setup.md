@@ -51,7 +51,7 @@ SQL analytics endpoints are read-only and so are not appropriate for Transformat
 
 ## Authentication methods & profile configuration
 
-:::info Microsoft Fabric supported authentication methods
+:::info Supported authentication methods
 
 Microsoft Fabric supports 2 authentication types:
 
