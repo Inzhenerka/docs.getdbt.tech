@@ -78,7 +78,7 @@ Archived release notes for <Constant name="cloud" /> from 2023
 
 ## November 2023
 
-- <Expandable alt_header='New features and UI changes to dbt Explorer'>
+- <Expandable alt_header='New features and UI changes to dbt Catalog'>
 
     There are new quality-of-life improvements in dbt Cloud for email and Slack notifications about your jobs: 
 
