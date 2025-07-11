@@ -250,7 +250,7 @@ The following are some of the known limitations and caveats for the cost managem
 - There may be discrepancies in cost comparison between the dashboard and the data platform UI, as they may reflect different numbers depending on the time period or range selected.
 - The cost metric may not perfectly reflect queries with very small durations, which may also skew the average.
 - The consumption metric includes all queries of a given model in the warehouse, beyond just analytics use cases, so it is best for relative comparison between resources.
-- The consumption metric relies on mapping the dbt model to its tables in the warehouse, so it may be imprecise depending on how the mapping change.
-- A dbt run results in multiple executions (run steps) issuing queries, which makes it less intuitive to reason about, so in the future, we'll be moving toward more run-centric metrics (grouping/aggregating).
+- The consumption metric relies on mapping the dbt models to their tables in the warehouse, so it may be imprecise depending on how those mappings change.
+- A dbt run results in multiple executions (run steps) issuing queries, which makes it less intuitive to reason about. In the future, we'll be moving toward more run-centric metrics (grouping/aggregating).
 - Core costs are dependent on using dbt v1.10 or higher to associate queries with dbt workloads.
 - Snowflake can take up to 72 hours to report accurate cost data, so the past three days may undercount until the data is updated.
