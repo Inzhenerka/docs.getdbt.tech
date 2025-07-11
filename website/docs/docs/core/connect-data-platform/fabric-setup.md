@@ -53,7 +53,7 @@ SQL analytics endpoints are read-only and so are not appropriate for Transformat
 
 :::info Supported authentication methods
 
-Microsoft Fabric supports 2 authentication types:
+Microsoft Fabric supports two authentication types:
 
 - Microsoft Entra service principal
 - Microsoft Entra password
