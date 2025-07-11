@@ -51,7 +51,7 @@ She finds a "customers" model, which might be what she needs. She clicks **custo
 
 Next, Kimiko selects **Columns** to see which columns this model uses. 
 
-<Lightbox src="/img/guides/analyst-qs/columns.png" width="90%" title="Columns in customer table" />
+<Lightbox src="/img/guides/analyst-qs/columns.png" width="90%" title="Columns in customers table" />
 
 She notices these columns: `customer_ID`, `customer_names`, and `first_ordered_at`. 
 
