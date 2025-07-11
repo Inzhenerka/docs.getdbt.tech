@@ -22,9 +22,7 @@ Note that the retention period for events in the audit log is at least 12 months
 
 ## Accessing the audit log
 
-To access the audit log, click on your account name in the left side menu and select **Account settings**.
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-menu.png" width="30%" title="Audit log menu"/>
+To access the audit log, click on your account name in the left-side menu and select **Account settings**. Click **Audit log** in the left sidebar.
 
 ## Understanding the audit log
 
@@ -239,5 +237,5 @@ You can use the audit log to export all historical audit results for security, c
 
 - **For events beyond 90 days** &mdash; Select **Export All**. The Account Admin or Account Viewer will receive an email link to download a CSV file of all the events that occurred in your organization.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.jpg" width="95%" title="View audit log export options"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.png" width="95%" title="View audit log export options"/>
 

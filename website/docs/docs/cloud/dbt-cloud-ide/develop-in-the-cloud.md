@@ -91,7 +91,7 @@ Set up your developer credentials:
 4. Enter the details under **Development Credentials**.
 5. Click **Save.**
 
-<Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.jpg" width="85%" height="100" title="Configure developer credentials in your Profile"/>
+<Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.png" width="85%" height="100" title="Configure developer credentials in your profile"/>
 
 6. Access the <Constant name="cloud_ide" /> by clicking **Develop** at the top of the page.
 7. Initialize your project and familiarize yourself with the <Constant name="cloud_ide" /> and its delightful [features](#cloud-ide-features).
