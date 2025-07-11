@@ -25,7 +25,7 @@ To access <Constant name="explorer" />, navigate to the **Explore** option in th
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Example of Catalog's resource details page and its lineage." />
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Catalog to discover your project's resources and lineage."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate Catalog to discover your project's resources and lineage."/>
 
 </DocCarousel>
 
