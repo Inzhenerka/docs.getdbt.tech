@@ -169,6 +169,16 @@ dbt-core.
 
 Ensure your exposure names only contain letters, numbers, and underscores. A more human-readable name can be put in the [`label`](/reference/exposure-properties#overview) property of exposures.
 
+### GenericJSONSchemaValidationDeprecation
+
+#### Description
+
+This deprecation type is a catchall/fallback. That is to say: we've tried our best to handle all jsonschema validation errors with specific deprecation event types, but it is possible that we missed something. Missing something means that either that we failed to handle a specific case with a specific deprecation event OR the jsonchema is wrong in a particular area.
+
+#### GenericJSONSchemaValidationDeprecation warning resolution
+
+If you are seeing this deprecation their isn't much to do unfortunately. We are continuing to work on reducing instances of this deprecation. If you would like guidance on a specific instance you are seeing, please reach out to support (for cloud) or the community slack (for core).
+
 ### MFCumulativeTypeParamsDeprecation
 
 In dbt [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) implementing `window` and `time_to_grain` directly on the `type_params` of a [metric](/reference/global-configs/behavior-changes#cumulative-metrics) was deprecated. 
