@@ -38,7 +38,7 @@ product="dbt Semantic Layer"
 plan="dbt Starter or Enterprise-tier"
 />
 
-:::info Not yet supported in Fusion
+:::info Not yet supported in the dbt Fusion engine
 <Constant name="semantic_layer" /> is currently supported in the <Constant name="dbt_platform" /> until v1.10 (Latest). Support for <Constant name="semantic_layer" /> in Fusion is not yet available, but is coming soon.
 :::
 
