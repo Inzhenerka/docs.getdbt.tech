@@ -23,12 +23,12 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 ## What you'll learn
 You may have already started your move to <Constant name="cloud" /> and are looking for tips to help you optimize your <Constant name="cloud" /> experience. This guide includes tips and caveats for the following areas:
 
-- [Adapters and connections](https://docs.getdbt.com/guides/core-to-cloud-3?step=3) 
-- [Development tools](https://docs.getdbt.com/guides/core-to-cloud-3?step=4) 
-- [Orchestration](https://docs.getdbt.com/guides/core-to-cloud-3?step=5)
-- [<Constant name="mesh" />](https://docs.getdbt.com/guides/core-to-cloud-3?step=6)
-- [<Constant name="semantic_layer" />](https://docs.getdbt.com/guides/core-to-cloud-3?step=7)
-- [<Constant name="explorer" />](https://docs.getdbt.com/guides/core-to-cloud-3?step=8)
+- [Adapters and connections](/guides/core-to-cloud-3?step=3) 
+- [Development tools](/guides/core-to-cloud-3?step=4) 
+- [Orchestration](/guides/core-to-cloud-3?step=5)
+- [<Constant name="mesh" />](/guides/core-to-cloud-3?step=6)
+- [<Constant name="semantic_layer" />](/guides/core-to-cloud-3?step=7)
+- [<Constant name="explorer" />](/guides/core-to-cloud-3?step=8)
 
 ## Adapters and connections
 
@@ -153,7 +153,7 @@ Leverage the [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/d
 
 Refer to the [<Constant name="semantic_layer" /> FAQs](/docs/use-dbt-semantic-layer/sl-faqs) for more information.
 
-## dbt Explorer
+## dbt Catalog
 
 [<Constant name="explorer" />](/docs/explore/explore-projects) enhances your ability to discover, understand, and troubleshoot your data assets through rich metadata and lineage visualization. Here are some tips and caveats to consider when using <Constant name="explorer" />:
 
@@ -189,7 +189,7 @@ For the next steps, continue exploring our 3-part-guide series on moving from <C
 If you need any additional help or have some questions, use the following resources:
 
 - [dbt Learn courses](https://learn.getdbt.com) for on-demand video learning.
-- Our [Support team](https://docs.getdbt.com/docs/dbt-support) is always available to help you troubleshoot your <Constant name="cloud" /> issues.
+- Our [Support team](/docs/dbt-support) is always available to help you troubleshoot your <Constant name="cloud" /> issues.
 - Join the [dbt Community](https://community.getdbt.com/) to connect with other dbt users, ask questions, and share best practices.
 - Subscribe to the [<Constant name="cloud" /> RSS alerts](https://status.getdbt.com/)
 - Enterprise accounts have an account management team available to help troubleshoot solutions and account management assistance. [Book a demo](https://www.getdbt.com/contact) to learn more.

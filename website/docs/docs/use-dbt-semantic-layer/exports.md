@@ -177,7 +177,7 @@ Doing this ensures saved queries and exports are included in your dbt build job.
 
 If exports aren't needed, you can set the value(s) to `FALSE` (`DBT_EXPORT_SAVED_QUERIES=FALSE`).
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/env-var-dbt-exports.jpg" width="90%" title="Add an environment variable to run exports in your production run." />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/env-var-dbt-exports.png" width="90%" title="Add an environment variable to run exports in your production run." />
 
 
 When you run a build job, any saved queries downstream of the dbt models in that job will also run. To make sure your export data is up-to-date, run the export as a downstream step (after the model).
@@ -219,14 +219,6 @@ You can run a job that includes both models using `dbt build`. This runs both th
 <DetailsToggle alt_header="Can I reference an export as a dbt model using ref()">
 
 No, you won't be able to reference an export using `ref`. Exports are treated as leaf nodes in your DAG. Modifying an export could lead to inconsistencies with the original metrics from the Semantic Layer.
-</DetailsToggle>
-
-<DetailsToggle alt_header="How do exports help me use the dbt Semantic Layer in tools that don't support it, such as PowerBI?">
-
-Exports provide an integration path for tools that don't natively connect with the dbt Semantic Layer by exposing tables of metrics and dimensions in the data platform.
-
-You can use exports to create a custom integration with tools such as PowerBI, and more.
-
 </DetailsToggle>
 
 <DetailsToggle alt_header="How can I select saved_queries by their resource type?">

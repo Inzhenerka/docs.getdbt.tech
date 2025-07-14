@@ -4,11 +4,11 @@ id: "artifacts"
 description: "Use artifacts to power your automated docs site and source freshness data." 
 ---
 
-When running dbt jobs, dbt generates and saves *artifacts*. You can use these artifacts, like `manifest.json`, `catalog.json`, and `sources.json` to power different aspects of the <Constant name="dbt_platform" />, namely: [dbt Explorer](/docs/explore/explore-projects), [dbt Docs](/docs/explore/build-and-view-your-docs#dbt-docs), and [source freshness reporting](/docs/build/sources#source-data-freshness).
+When running dbt jobs, dbt generates and saves *artifacts*. You can use these artifacts, like `manifest.json`, `catalog.json`, and `sources.json` to power different aspects of the <Constant name="dbt_platform" />, namely: [<Constant name="explorer" />](/docs/explore/explore-projects), [dbt Docs](/docs/explore/build-and-view-your-docs#dbt-docs), and [source freshness reporting](/docs/build/sources#source-data-freshness).
 
 ## Create dbt Artifacts
 
-[<Constant name="explorer" />](/docs/explore/explore-projects#generate-metadata) uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). It uses metadata from your staging and production [deployment environments](/docs/deploy/deploy-environments) (development environment metadata is coming soon).
+[<Constant name="explorer" />](/docs/explore/explore-projects#generate-metadata) uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). It uses metadata from your staging and production [deployment environments](/docs/deploy/deploy-environments).
 
 <Constant name="explorer" /> automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project &mdash; meaning it's always automatically updated after each job run.
 
@@ -16,7 +16,7 @@ To view a resource, its metadata, and what commands are needed, refer to [genera
 
 <Expandable alt_header="For dbt Docs">
 
-The following steps are for legacy dbt Docs only. For the current documentation experience, see [dbt Explorer](/docs/explore/explore-projects).
+The following steps are for legacy dbt Docs only. For the current documentation experience, see [dbt <Constant name="explorer" />](/docs/explore/explore-projects).
 
 While running any job can produce artifacts, you should only associate one production job with a given project to produce the project's artifacts. You can designate this connection on the **Project details** page. To access this page:
 

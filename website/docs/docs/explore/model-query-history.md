@@ -36,7 +36,7 @@ Model query history for Snowflake users is **only available for Enterprise tier 
 To access the features, you should meet the following:
 
 1. You have a <Constant name="cloud" /> account on an [Enterprise-tier plan](https://www.getdbt.com/pricing/). Single-tenant accounts should contact their account representative for setup.
-2. You have set up a [production](https://docs.getdbt.com/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
+2. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
 3. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in <Constant name="cloud" /> to edit project settings or production environment settings.
 4. Use Snowflake or BigQuery as your data warehouse and can enable [query history permissions](#snowflake-model-query-history) or work with an admin to do so. Support for additional data platforms coming soon.
    - For Snowflake users: You **must** have a Snowflake Enterprise tier or higher subscription.
@@ -103,7 +103,7 @@ To enhance your discovery, you can view your model query history in various loca
 2. In the main **Overview** page, click on **Performance** under the **Project details** section. Scroll down to view the **Most consumed models**.
 3. Use the dropdown menu on the right to select the desired time period, with options available for up to the past 3 months. 
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/most-consumed-models.jpg" width="85%" title="View most consumed models on the 'Performance' page in dbt Explorer." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/most-consumed-models.jpg" width="85%" title="View most consumed models on the 'Performance' page in dbt Catalog." />
 
 4. Click on a model for more details and go to the **Performance** tab.
 5. On the **Performance** tab, scroll down to the **Model performance** section. 

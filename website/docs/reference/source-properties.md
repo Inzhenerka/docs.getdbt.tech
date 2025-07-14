@@ -43,8 +43,9 @@ sources:
           [count](/reference/resource-properties/freshness#count): <positive_integer>
           [period](/reference/resource-properties/freshness#period): minute | hour | day
         [filter](/reference/resource-properties/freshness#filter): <where-condition>
-      
-    [overrides](/reference/resource-properties/overrides): <string>
+    
+    # deprecated in v1.10
+    [overrides](/reference/resource-properties/overrides): <string> 
 
     [quoting](/reference/resource-properties/quoting):
       database: true | false
@@ -108,9 +109,10 @@ sources:
     database: raw
     schema: public
     loader: emr # informational only (free text)
-    loaded_at_field: _loaded_at # configure for all sources
 
     config:
+      # changed to config in v1.10
+      loaded_at_field: _loaded_at # configure for all sources
       # meta fields are rendered in auto-generated documentation
       meta: # changed to config in v1.10
         contains_pii: true
@@ -129,7 +131,9 @@ sources:
     tables:
       - name: orders
         identifier: Orders_
-        loaded_at_field: updated_at # override source defaults
+        config:
+          # changed to config in v1.10
+          loaded_at_field: updated_at # override source defaults
         columns:
           - name: id
             tests:

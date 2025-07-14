@@ -167,3 +167,7 @@ Now you have completed setting up SSO with Entra ID, the next steps will be to s
 Ensure that the domain name under which user accounts exist in Azure matches the domain you supplied in [Supplying credentials](#supplying-credentials) when you configured SSO.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-get-domain.png" title="Obtaining the user domain from Azure" />
+
+## Learn more
+
+<WistiaVideo id="e395rnl0cy" paddingTweak="62.25%" />

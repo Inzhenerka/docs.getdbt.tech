@@ -14,7 +14,7 @@ The <Constant name="cloud_ide" /> **Status button** (located in the bottom right
 
 Once viewed, make sure you commit and merge your changes in your project.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-ide-dag.jpg" title="Validate your metrics using the Lineage tab in the IDE." />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-ide-dag.png" title="Validate your metrics using the Lineage tab in the IDE." />
 
 ### Cloud CLI users
 

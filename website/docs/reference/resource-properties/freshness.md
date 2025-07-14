@@ -32,12 +32,15 @@ sources:
           [count](#count): <positive_integer>
           [period](#period): minute | hour | day
         [filter](#filter): <boolean_sql_expression>
-    [loaded_at_field](#loaded_at_field): <column_name_or_expression>
-    [loaded_at_query](#loaded_at_query) <sql_expression> # v1.10 or higher. Should not be used if loaded_at_field is defined
+      # changed to config in v1.10
+      [loaded_at_field](#loaded_at_field): <column_name_or_expression>
+      # or use loaded_at_query in v1.10 or higher. Should not be used if loaded_at_field is defined
+      [loaded_at_query](#loaded_at_query): <sql_expression>
 
     tables:
       - name: <table_name>
         config:
+          # source.table.config.freshness overrides source.config.freshness
           freshness: 
             warn_after:
               [count](#count): <positive_integer>
@@ -46,8 +49,10 @@ sources:
               [count](#count): <positive_integer>
               [period](#period): minute | hour | day
             [filter](#filter): <boolean_sql_expression>
-        [loaded_at_field](#loaded_at_field): <column_name_or_expression>
-        [loaded_at_query](#loaded_at_query) <sql_expression> # v1.10 or higher. Should not be used if loaded_at_field is defined
+          # changed to config in v1.10
+          [loaded_at_field](#loaded_at_field): <column_name_or_expression>
+          # or use loaded_at_query in v1.10 or higher. Should not be used if loaded_at_field is defined
+          [loaded_at_query](#loaded_at_query): <sql_expression>
 
         ...
 ```
@@ -75,8 +80,6 @@ Currently, calculating freshness from warehouse metadata tables is supported on 
 - [Snowflake](/reference/resource-configs/snowflake-configs)
 - [Redshift](/reference/resource-configs/redshift-configs)
 - [BigQuery](/reference/resource-configs/bigquery-configs) (Supported in [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery) version 1.7.3 or higher)
-
-Support is coming soon to the [Spark](/reference/resource-configs/spark-configs) adapter.
 
 Freshness blocks are applied hierarchically:
 - A `freshness` and `loaded_at_field` property added to a source will be applied to all tables defined in that source.
@@ -113,7 +116,7 @@ loaded_at_field: "convert_timezone('Australia/Sydney', 'UTC', created_at_local)"
 
 ## loaded_at_query
 
-Specify custom SQL to generate the `maxLoadedAt` timestamp on the source (rather than via warehouse metadata or the `loaded_at_field` config).
+Specify custom SQL to generate the `maxLoadedAt` timestamp on the source (rather than via warehouse metadata or the `loaded_at_field` config). Note that `loaded_at_query` should not be used if `loaded_at_field` is defined.
 
 Examples: 
 
@@ -126,12 +129,12 @@ sources:
         error_after:
           count: 2
           period: hour
-    loaded_at_query: |
-      select max(_sdc_batched_at) from (
-      select * from {{ this }}
-      where _sdc_batched_at > dateadd(day, -7, current_date)
-      qualify count(*) over (partition by _sdc_batched_at::date) > 2000
-      )
+      loaded_at_query: |
+        select max(_sdc_batched_at) from (
+        select * from {{ this }}
+        where _sdc_batched_at > dateadd(day, -7, current_date)
+        qualify count(*) over (partition by _sdc_batched_at::date) > 2000
+        )
 
 ```
 
@@ -149,7 +152,8 @@ sources:
     tables:
       - name: raw_orders
         description: One record per order
-        loaded_at_query: "select {{ current_timestamp() }}"
+        config:
+          loaded_at_query: "select {{ current_timestamp() }}"
 ...
 
 ```

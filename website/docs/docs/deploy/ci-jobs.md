@@ -124,7 +124,7 @@ To learn how to set this up, refer to the following steps:
 
 There are additional commands and use cases described in the [next section](#use-cases), such as validating all semantic nodes, validating specific semantic nodes, and so on.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.png" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
 
 ### Use cases
 
@@ -146,7 +146,7 @@ Before running semantic validations, <Constant name="cloud" /> must build the mo
 
 For semantic nodes and models that aren't downstream of modified models, <Constant name="cloud" /> defers to the production models.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.png" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
 
 </Expandable>
 
@@ -158,7 +158,7 @@ To only validate modified semantic nodes, use the following command (with [state
 dbt sl validate --select state:modified+
 ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-modified.jpg" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-modified.png" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
 
 This will only validate semantic nodes. It will use the defer state set configured in your orchestration job, deferring to your production models.
 
@@ -172,7 +172,7 @@ Use the selector syntax to select the _specific_ semantic node(s) you want to va
 dbt sl validate --select metric:revenue
 ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-select.jpg" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-select.png" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
 
 In this example, the CI job will validate the selected `metric:revenue` semantic node. To select multiple semantic nodes, use the selector syntax: `dbt sl validate --select metric:revenue metric:customers`.
 
@@ -188,7 +188,7 @@ To validate _all_ semantic nodes in your project, add the following command to d
    dbt sl validate
    ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-all.jpg" width="90%" title="Validate all semantic nodes in your CI job by adding the command: 'dbt sl validate' in your job execution settings." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-all.png" width="90%" title="Validate all semantic nodes in your CI job by adding the command: 'dbt sl validate' in your job execution settings." />
 
 </Expandable>
 
@@ -253,7 +253,7 @@ Double-check that your PR isn't trying to merge using a commit that belongs to a
 
 <DetailsToggle alt_header="CI job not triggering for Virtual Private dbt users"> 
 
-To trigger jobs on <Constant name="cloud" /> using the [API](https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api), your Git provider needs to connect to your <Constant name="cloud" /> account.
+To trigger jobs on <Constant name="cloud" /> using the [API](/docs/dbt-cloud-apis/admin-cloud-api), your Git provider needs to connect to your <Constant name="cloud" /> account.
 
 If you're on a Virtual Private dbt Enterprise plan using security features like ingress PrivateLink or IP Allowlisting, registering CI hooks may not be available and can cause the job to fail silently.
 </DetailsToggle>

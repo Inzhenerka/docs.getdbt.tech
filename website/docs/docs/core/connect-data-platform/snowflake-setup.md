@@ -56,7 +56,7 @@ my-snowflake-db:
       # optional
       connect_retries: 0 # default 0
       connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
+      retry_on_database_errors: True # default: true
       retry_all: False  # default: false
       reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
   ```
@@ -91,7 +91,7 @@ my-snowflake-db:
       # optional
       connect_retries: 0 # default 0
       connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
+      retry_on_database_errors: True # default: true
       retry_all: False  # default: false
       reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
 ```
@@ -135,7 +135,7 @@ my-snowflake-db:
       # optional
       connect_retries: 0 # default 0
       connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
+      retry_on_database_errors: True # default: true
       retry_all: False  # default: false
       reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
 ```
@@ -173,7 +173,7 @@ my-snowflake-db:
       # optional
       connect_retries: 0 # default 0
       connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
+      retry_on_database_errors: True # default: true
       retry_all: False  # default: false
       reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
 ```
@@ -257,6 +257,10 @@ During node execution (such as model and test), dbt opens connections against a 
 ### retry_on_database_errors
 
 The `retry_on_database_errors` flag along with the `connect_retries` count specification is intended to make retries configurable after the snowflake connector encounters errors of type snowflake.connector.errors.DatabaseError. These retries can be helpful for handling errors of type "JWT token is invalid" when using key pair authentication.
+
+By default, `retry_on_database_errors` is set to `False` when using <Constant name="core" /> (for example, if you're running dbt locally with `pip install dbt-core dbt-snowflake`).
+
+However, in the <Constant name="dbt_platform" />, this setting is automatically set to `True`, unless the user explicitly configures it. 
 
 ### retry_all
 

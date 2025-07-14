@@ -31,21 +31,28 @@ These credentials are configured separately from dbt environment credentials and
 
 ## Configuration instructions
 
-To enable external metadata ingestion:
+### Enable external metadata ingestion
 
-1. Navigate to [account settings](/docs/cloud/account-settings)
-2. Locate or create the warehouse connection you want to ingest metadata from
-3. Click **Add Credential** and enter your global metadata credentials
-    - These should have warehouse-level visibility across relevant databases and schemas
-4. Enable the option for “external metadata ingestion”
-    - This allows metadata from this connection to populate the <Constant name="explorer" />
-    - *Optional*: Enable additional features such as **cost optimization**
-5. Apply filters to restrict which metadata is ingested:
+1. Click your account name at the bottom of the left-side menu and click **[Account settings](/docs/cloud/account-settings)**.
+2. Under Account information, go to **Settings** and click **Edit** at the top right corner of the page.
+3. Select the **Ingest external metadata in dbt <Constant name="explorer" /> (formerly dbt Explorer)** option (if not already enabled).
+
+### Configure the warehouse connection
+
+1. Go to **Account settings**.
+2. Click **Connections** from the left-hand side panel.
+3. Select an existing connection or create a [**New connection**](/docs/cloud/connect-data-platform/connect-snowflake) where you want to ingest metadata from.
+4. Scroll to the bottom of the page and click **Add credentials** in **Platform metadata credentials**.
+    - Enter the necessary credentials. These should have warehouse-level visibility across relevant databases and schemas.
+5. Select the **External metadata ingestion** option.
+    - This allows metadata from this connection to populate the <Constant name="explorer" />.
+    - *Optional*: Enable additional features such as **cost optimization** in the **Features** section under **Platform metadata credentials**.
+6. Under **Catalog filters**, apply filters to restrict which metadata is ingested:
     - You can filter by **database**, **schema**, **table**, or **view**.
-    - Strongly recommend you filter by certain schemas. See [Important considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
+    - It is strongly recommend to filter by certain schemas. See [Important considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
     - These fields accept CSV-formatted regular expressions:
-        - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match)
-        - Wildcards are supported: `DIM*` matches `DIM_ORDERS`, `DIM_PRODUCTS`, etc.
+        - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match).
+        - Wildcards are supported. For example: `DIM*` matches `DIM_ORDERS` and `DIM_PRODUCTS`.
 
 ## Required credentials
 
