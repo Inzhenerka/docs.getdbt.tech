@@ -173,11 +173,11 @@ Ensure your exposure names only contain letters, numbers, and underscores. A mor
 
 #### Description
 
-This deprecation type is a catchall/fallback. That is to say: we've tried our best to handle all jsonschema validation errors with specific deprecation event types, but it is possible that we missed something. Missing something means that either we failed to handle a specific case with a specific deprecation event OR the jsonchema is wrong in a particular area.
+This deprecation type is a catch-all/fallback. dbt attempts to handle all JSON schema validation errors with specific deprecation event types, but it is possible that we missed something. Missing something means that either dbt failed to handle a specific case with a deprecation event _or_ the JSON schema is incorrect in a particular area.
 
 #### GenericJSONSchemaValidationDeprecation warning resolution
 
-If you are seeing this deprecation their isn't much to do unfortunately. We are continuing to work on reducing instances of this deprecation. If you would like guidance on a specific instance you are seeing, please reach out to support (for cloud) or the community slack (for core).
+If you are seeing this warning, unfortunately, there isn't much you can do at this time, but we are continuing to work on reducing instances of this deprecation. If you would like guidance on a specific instance you are seeing, please [contact support](mailto:support@getdbt.com) (available for cloud-based dbt platform customers) or the [community Slack](https://www.getdbt.com/community) (for dbt Core users).
 
 ### MFCumulativeTypeParamsDeprecation
 
