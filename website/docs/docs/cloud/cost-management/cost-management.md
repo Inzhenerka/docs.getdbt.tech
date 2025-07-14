@@ -204,7 +204,7 @@ When you filter by resources, you get valuable insights into how your projectsâ€
 - Filter the graph view by project and/or resource type. 
 - View a detailed breakdown of your resources and the costs associated. You can filter by resource name and/or type and sort by each column. 
     <Lightbox src="/img/docs/dbt-cloud/cost-management/resource-type.png" width="60%" title="Filter and view detailed breakdowns of your resources."/>
-- Click into a resource to view its lineage and how much each node impacts your costs. You can even open the resource in dbt Explorer from this view to better understand your metadata!
+- Click into a resource to view its lineage and how much each node impacts your costs. You can even open the resource in <Constant name="explorer" /> from this view to better understand your metadata!
     <Lightbox src="/img/docs/dbt-cloud/cost-management/render-lineage.png" width="60%" title="View the resources lineage and monitor node costs."/>
 
 #### Environment view
