@@ -171,7 +171,6 @@ Ensure your exposure names only contain letters, numbers, and underscores. A mor
 
 ### GenericJSONSchemaValidationDeprecation
 
-#### Description
 
 This deprecation type is a catch-all/fallback. dbt attempts to handle all JSON schema validation errors with specific deprecation event types, but it is possible that we missed something. Missing something means that either dbt failed to handle a specific case with a deprecation event _or_ the JSON schema is incorrect in a particular area.
 
