@@ -16,7 +16,7 @@ To view a resource, its metadata, and what commands are needed, refer to [genera
 
 <Expandable alt_header="For dbt Docs">
 
-The following steps are for legacy dbt Docs only. For the current documentation experience, see [dbt<Constant name="explorer" />](/docs/explore/explore-projects).
+The following steps are for legacy dbt Docs only. For the current documentation experience, see [dbt <Constant name="explorer" />](/docs/explore/explore-projects).
 
 While running any job can produce artifacts, you should only associate one production job with a given project to produce the project's artifacts. You can designate this connection on the **Project details** page. To access this page:
 
