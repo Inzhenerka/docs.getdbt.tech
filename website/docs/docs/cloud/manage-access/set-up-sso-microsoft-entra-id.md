@@ -70,7 +70,7 @@ There is a [limitation](https://learn.microsoft.com/en-us/entra/identity/hybrid/
 
 The Azure users and groups you will create in the following steps are mapped to groups created in <Constant name="cloud" /> based on the group name. Reference the docs on [enterprise permissions](enterprise-permissions) for additional information on how users, groups, and permission sets are configured in <Constant name="cloud" />.
 
-The <Constant name="dbt_platform" /> uses the **User principal name** (UPN) to identify and match users logging in to <Constant name="cloud" /> through SSO. The UPN is usually formatted as an email address.
+The <Constant name="dbt_platform" /> uses the **User principal name** (UPN) in Microsoft Entra ID to identify and match users logging in to <Constant name="cloud" /> through SSO. The UPN is usually formatted as an email address.
 
 ### Adding users to an Enterprise application
 
