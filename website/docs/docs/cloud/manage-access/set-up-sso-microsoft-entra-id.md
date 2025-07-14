@@ -91,7 +91,7 @@ Under **Properties** check the toggle setting for **User assignment required?** 
 ### Configuring permissions
 
 13. Navigate back to [**Default Directory**](https://portal.azure.com/#home) (or **Home**) and then **App registration**.
-14. Select your application and then select **API Permissions**.
+14. Select your application and then select **API permissions**.
 15. Click **+Add a permission** and add the permissions shown below.
 
 | API Name | Type | Permission |
