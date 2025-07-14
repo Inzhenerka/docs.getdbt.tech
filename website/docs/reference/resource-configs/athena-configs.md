@@ -73,10 +73,9 @@ id: "athena-configs"
 ```yaml
   +lf_tags_config:
     enabled: true
-    config:
-      tags: # changed to config in v1.10
-        tag1: value1
-        tag2: value2
+    tags:
+      tag1: value1
+      tag2: value2
     tags_columns:
       tag1:
         value1: [ column1, column2 ]
