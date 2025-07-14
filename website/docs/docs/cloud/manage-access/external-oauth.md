@@ -136,7 +136,7 @@ Select a supported identity provider (IdP) for instructions on configuring exter
 
 7. Give the rule a descriptive name and scroll down to **token lifetimes**. Configure the **Access token lifetime is**, **Refresh token lifetime is**, and **but will expire if not used every** settings according to your organizational policies. We recommend the defaults of 1 hour and 90 days. Stricter rules increase the odds of your users having to re-authenticate.
 
-<Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Toke lifetime settings in the API rule window." />
+<Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Token lifetime settings in the API rule window." />
 
 8. Navigate back to the **Settings** tab and leave it open in your browser. You’ll need some of the information in later steps.
 
@@ -204,7 +204,7 @@ Configure the Okta application and APIs in accordance with your Amazon configs.
 ### 6. Create a new connection in dbt
 
 
-1. Navigate the **Account settings** and click **Connections** from the menu. Click **Add connection**.
+1. Navigate to **Account settings** and click **Connections** from the menu. Click **New connection**.
 2. Configure the `Account`, `Database`, and `Warehouse` as you normally would, and for the `OAuth method`, select the external OAuth you just created.
 
 
@@ -233,7 +233,8 @@ Configure the Okta application and APIs in accordance with your Amazon configs.
 
 :::important
 
-- The admin who creates the apps in the Microsoft Entra ID account must also be a user in your data warehouse.
+- You need both an Entra ID admin and a data warehouse admin to complete the setup. These roles don’t need to be the same person &mdash; as long as they collaborate, everything should work smoothly.
+   - Typically, the Entra ID admin handles app registration and permissions, while the data warehouse admin manages roles, grants, and integrations on the warehouse side.
 - The `value` field gathered in these steps is only displayed once. When created, record it immediately.
 - Ensure that the username (for example, email address) entered in the IdP matches the data warehouse credentials for all users. Mismatched usernames will result in authentication failures.
 :::

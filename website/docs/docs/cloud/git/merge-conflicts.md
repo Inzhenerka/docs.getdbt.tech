@@ -35,9 +35,9 @@ The <Constant name="cloud_ide" /> will display:
 - The file name colored in red in the **Changes** section, with a warning icon.
 - If you press commit without resolving the conflict, the <Constant name="cloud_ide" /> will prompt a pop up box with a list which files need to be resolved.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/merge-conflict.jpg" title="Conflicting section that needs resolution will be highlighted"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/merge-conflict.png" title="Conflicting section that needs resolution will be highlighted"/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-without-resolve.jpg" title="Pop up box when you commit without resolving the conflict"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-without-resolve.png" title="Pop up box when you commit without resolving the conflict"/>
 
 
 ## Resolve merge conflicts
@@ -51,7 +51,7 @@ You can seamlessly resolve merge conflicts that involve competing line changes i
 6. Repeat this process for every file that has a merge conflict.
 
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/resolve-conflict.jpg" title="Choosing lines of code to preserve"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/resolve-conflict.png" title="Choosing lines of code to preserve"/>
 
 :::info Edit conflict files
 - If you open the conflict file under **Changes**, the file name will display something like `model.sql (last commit)` and is fully read-only and cannot be edited. <br />
@@ -63,10 +63,10 @@ You can seamlessly resolve merge conflicts that involve competing line changes i
 When you've resolved all the merge conflicts, the last step would be to commit the changes you've made.
 
 1. Click the git action bar **Commit and resolve**. 
-2. The **Commit Changes** pop up box will confirm that all conflicts have been resolved. Write  your commit message and press **Commit Changes**
+2. The **Commit Changes** pop up box will confirm that all conflicts have been resolved. Write  your commit message and click **Commit Changes**.
 3. The <Constant name="cloud_ide" /> will return to its normal state and you can continue developing! 
 
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-resolve.jpg" title="Conflict has been resolved"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-resolve.png" title="Conflict has been resolved"/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-changes.jpg" title="Commit Changes pop up box to commit your changes"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-changes.png" title="Commit Changes pop up box to commit your changes"/>

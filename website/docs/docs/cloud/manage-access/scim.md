@@ -35,7 +35,7 @@ The following IdPs are supported in the <Constant name="cloud" /> UI:
 - [Okta](#scim-configuration-for-okta)
 - [Entra ID](#scim-configuration-for-entra-id)
 
-If your IdP isn’t on the list, it can be supported using <Constant name="cloud" /> [APIs](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/Retrieve%20SCIM%20configuration).
+If your IdP isn’t on the list, it can be supported using <Constant name="cloud" /> [APIs](/dbt-cloud/api-v3#/operations/Retrieve%20SCIM%20configuration).
 
 ## Set up dbt
 
@@ -52,7 +52,7 @@ To retrieve the necessary <Constant name="cloud" /> configurations for use in Ok
     To follow best practices, you should regularly rotate your SCIM tokens. To do so, follow these same instructions you did to create a new one. To avoid service disruptions, remember to replace your token in your IdP before deleting the old token in <Constant name="cloud" />.
 
     :::
-6. In the pop-out window, give the token a name that will make it easily identifiable. Click **Save**.
+6. In the pop-up window, give the token a name that will make it easily identifiable. Click **Save**.
     <Lightbox src="/img/docs/dbt-cloud/access-control/name-scim-token.png" width="60%" title="Give your token and identifier." />
 7. Copy the token and record it securely, as _it will not be available again after you close the window_. You must create a new token if you lose the current one. 
     <Lightbox src="/img/docs/dbt-cloud/access-control/copy-scim-token.png" width="60%" title="Give your token and identifier." />
@@ -164,6 +164,11 @@ You can now begin assigning users to your SCIM app in Entra ID!
 ## Manage user licenses with SCIM
 
 You can manage user license assignments via SCIM with a user attribute in your IdP environment. This ensures accurate license assignment as users are provisioned in the IdP and onboarded into your dbt account.
+:::note Analyst license assignment
+
+    The `Analyst` license is only available for select plans. Assigning an `Analyst` license via SCIM will result in a user update error if that license type is not available for your dbt account. 
+
+:::
 
 To use license management via SCIM, enable the feature under the **SCIM** section in the **Single sign-on** settings. This setting will enforce license type for a user based on their SCIM attribute and disable the license mapping and manual configuration set up in dbt.  
     <Lightbox src="/img/docs/dbt-cloud/access-control/scim-managed-licenses.png" width="60%" title="Enable SCIM managed user license distribution." />
@@ -172,7 +177,7 @@ _We recommend that you complete the setup instructions for your identity provide
 
 The recommended steps for migrating to SCIM license mapping are as follows:
 1. Set up SCIM but keep the toggle disabled so existing license mappings continue to work as expected.
-2. Configure license attributes in your Identity Provider (IdP).
+2. Configure license attributes in your Identity Provider (IdP). 
 3. Test that SCIM attributes are being used to set license type in <Constant name="dbt_platform" />.
 4. Enable the toggle to ignore existing license mappings so that SCIM is the source-of-truth for assigning licenses to users. 
 

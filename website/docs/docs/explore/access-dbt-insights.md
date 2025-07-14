@@ -15,7 +15,7 @@ Learn how to access <Constant name="query_page" />, run queries, and view result
 <Constant name="query_page" /> provides a rich console experience with editor navigation. You can expect <Constant name="query_page" /> to:
 - Enable you to write SQL queries, with the option to open multiple tabs 
 - Have SQL + dbt autocomplete suggestions and syntax highlighting
-- Bookmark SQL queries
+- Save SQL queries
 - View the results of the query and its details using the **Results** or **Details** tabs
 - Create a visualization of your query results using the **Chart** tab
 - View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** tab
@@ -91,7 +91,7 @@ From here, you can:
 - [Visualize results](#chart-results) in the **Chart** tab
 - Check the [**Query history**](#query-history) for status and past runs
 - Use [**<Constant name="explorer" />**](#use-dbt-explorer) to explore model lineage and context
-- If you want to save the query, you can click **Bookmark** in the [query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to save it for future reference.
+- If you want to save the query, you can click **Save Insight** in the [query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to save it for future reference.
 
 :::tip Want to turn a query into a model?
 You can access the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) from the [Query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within <Constant name="cloud" />!
@@ -148,23 +148,30 @@ To access <Constant name="explorer" />, click on the **<Constant name="explorer"
 
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Explorer" />
 
-### Set Jinja context
+### Set Jinja environment
 
-## Bookmark your queries
+Set the compilation environment to control how Jinja functions are rendered. This feature:
+- Supports "typed" environments marked as `Production`, `Staging`, and/or `Development`.
+- Enables you to run <Constant name="semantic_layer" />. queries against staging environments (development environments not supported).
+- Still uses the individual user credentials, so users must have appropriate access to query `PROD` and `STG`. 
+- Changing the environment changes context for the <Constant name="explorer" /> view in <Constant name="query_page" />, as well as the environment context during the handoff to <Constant name="explorer" /> and <Constant name="visual_editor" />. For example, switching to `Staging` in <Constant name="query_page" /> and selecting **View in Catalog** will open the `Staging` view in <Constant name="explorer" />. 
 
-Insights offers a robust bookmark feature for quickly finding the queries you use most. There's also an option to share bookmarks with other dbt users (and have them share with you). Click the bookmark icon in a query to add it to your list!
+<Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Set the environment for your Jinja context" />
 
-- Click the **bookmark icon** on the right menu to manage your bookmarked queries. You can view your personal and shared queries
+## Save your Insights
 
-    <Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Manage your query bookmarks" />
+Insights offers a robust save feature for quickly finding the queries you use most. There's also an option to share saved Insights with other dbt users (and have them share with you). Click the **bookmark icon** in a query to add it to your list!
+
+- Click the **bookmark icon** on the right menu to manage your saved Insights. You can view your personal and shared queries
+
+    <Lightbox src="/img/docs/dbt-insights/saved-insights.png" width="90%" title="Manage your saved Insights" />
     
-- View bookmark details including description and creation date in the **Overview** tab.
-- View the bookmarks history in the **Version history** tab. Click a version to compare it the current and view changes. 
+- View saved Insight details including description and creation date in the **Overview** tab.
+- View the Insight history in the **Version history** tab. Click a version to compare it the current and view changes. 
 
 ## Considerations 
 - <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
 - Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
-- Coming soon: The ability to select the environment you use to resolve your `refs`.
 
 <!-- this can move to another page -->
 

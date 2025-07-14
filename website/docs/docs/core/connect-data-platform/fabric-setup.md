@@ -51,6 +51,17 @@ SQL analytics endpoints are read-only and so are not appropriate for Transformat
 
 ## Authentication methods & profile configuration
 
+:::info Supported authentication methods
+
+Microsoft Fabric supports two authentication types:
+
+- Microsoft Entra service principal
+- Microsoft Entra password
+
+To better understand the authentication mechanisms, read our [Connect Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) page.
+
+:::
+
 ### Common configuration
 
 For all the authentication methods, refer to the following configuration options that can be set in your `profiles.yml` file. 
@@ -321,7 +332,7 @@ your_profile_name:
 
 ### Automatic Microsoft Entra ID principal provisioning for grants
 
-Please note that automatic Microsoft Entra ID principal provisioning is not supported by Microsoft Fabric Data Warehouse at this time. Even though in dbtn use the [grants](https://docs.getdbt.com/reference/resource-configs/grants) config block to automatically grant/revoke permissions on your models to users or groups, the data warehouse does not support this feature at this time.
+Please note that automatic Microsoft Entra ID principal provisioning is not supported by Microsoft Fabric Data Warehouse at this time. Even though in dbtn use the [grants](/reference/resource-configs/grants) config block to automatically grant/revoke permissions on your models to users or groups, the data warehouse does not support this feature at this time.
 
 You need to add the service principal or Microsoft Entra identity to a Fabric Workspace as an admin
 

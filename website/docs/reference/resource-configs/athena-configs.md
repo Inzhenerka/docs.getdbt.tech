@@ -138,7 +138,7 @@ Note: If you're using a workgroup with a default output location configured, `s3
 
 ### Incremental models
 
-The following [incremental models](https://docs.getdbt.com/docs/build/incremental-models) strategies are supported:
+The following [incremental models](/docs/build/incremental-models) strategies are supported:
 
 - `insert_overwrite` (default): The insert-overwrite strategy deletes the overlapping partitions from the destination table and then inserts the new records from the source. This strategy depends on the `partitioned_by` keyword! dbt will fall back to the `append` strategy if no partitions are defined.
 - `append`: Insert new records without updating, deleting or overwriting any existing data. There might be duplicate data (great for log or historical data).
@@ -313,11 +313,24 @@ select 'b'        as user_id,
 ```
 
 
-#### HA known issues
+### HA known issues
 
 - There could be a little downtime when swapping from a table with partitions to a table without (and the other way around). If higher performance is needed, consider bucketing instead of partitions.
 - By default, Glue "duplicates" the versions internally, so the last two versions of a table point to the same location.
 - It's recommended to set `versions_to_keep` >= 4, as this will avoid having the older location removed.
+
+### Avoid deleting parquet files
+
+If a dbt model has the same name as an existing table in the AWS Glue catalog, the `dbt-athena` adapter deletes the files in that table’s S3 location before recreating the table using the SQL from the model.
+
+The adapter may also delete data if a model is configured to use the same S3 location as an existing table. In this case, it clears the folder before creating the new table to avoid conflicts during setup.
+
+When dropping a model, the `dbt-athena` adapter performs two cleanup steps for both Iceberg and Hive tables: 
+
+- It deletes the table from the AWS Glue catalog using Glue APIs.
+- It removes the associated S3 data files using a delete operation.
+
+However, for Iceberg tables, using standard SQL like [`DROP TABLE`](https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-drop-table.html) may not remove all related S3 objects. To ensure proper cleanup in a dbt workflow, the adapter includes a workaround that explicitly deletes these S3 objects. Alternatively, users can enable [`native_drop`](/reference/resource-configs/athena-configs#table-configuration) to let Iceberg handle the cleanup natively.
 
 ### Update glue data catalog
 
@@ -343,7 +356,7 @@ models:
             primary_key: true
 ```
 
-Refer to [persist_docs](https://docs.getdbt.com/reference/resource-configs/persist_docs) for more details.
+Refer to [persist_docs](/reference/resource-configs/persist_docs) for more details.
 
 ## Snapshots
 

@@ -14,12 +14,6 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 ## Introduction
 
-:::note beta feature
-
-<Constant name="visual_editor" /> is currently in a limited beta. [Contact us](https://www.getdbt.com/contact/) if you're interested in joining it. Features currently in the beta are subject to change or removal.
-
-:::
-
 <Constant name="visual_editor" /> offers a quick and straightforward way for anyone to build analytics models, no background in analytics engineering is required! In this guide, you will learn about:
 
 - Accessing <Constant name="visual_editor" /> and creating a new model
