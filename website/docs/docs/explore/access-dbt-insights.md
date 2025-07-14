@@ -141,7 +141,7 @@ Access [<Constant name="explorer" />](/docs/explore/explore-projects) directly i
 This integrated view allows you and your users to maintain your query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated <Constant name="explorer" /> view comes with:
 - Same search capabilities as <Constant name="explorer" />
 - Allows users to narrow down displayed objects by type
-- Hyperlink from SQL code `ref` to the corresponding Catalog page
+- Hyperlink from SQL code `ref` to the corresponding <Constant name="explorer" /> page
 - View assets in more detail by opening with the full <Constant name="explorer" /> experience or open them in <Constant name="copilot" />.
 
 To access <Constant name="explorer" />, click on the **<Constant name="explorer" />** icon in the [Query console sidebar menu](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
