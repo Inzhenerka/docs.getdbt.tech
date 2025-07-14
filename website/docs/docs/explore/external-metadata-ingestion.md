@@ -35,7 +35,7 @@ These credentials are configured separately from dbt environment credentials and
 
 1. Click your account name at the bottom of the left-side menu and click **[Account settings](/docs/cloud/account-settings)**.
 2. Under Account information, go to **Settings** and click **Edit** at the top right corner of the page.
-3. Select the **Ingest external metadata in dbt Catalog** option (if not already enabled).
+3. Select the **Ingest external metadata in <Constant name="explorer" />** option (if not already enabled).
 
 ### Configure the warehouse connection
 
