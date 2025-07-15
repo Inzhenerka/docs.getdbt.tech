@@ -134,21 +134,29 @@ The query history is stored indefinitely.
 
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="95%" title="dbt Insights Query history icon" />
 
-### Use dbt Explorer
+### Use dbt Catalog
 
 Access [<Constant name="explorer" />](/docs/explore/explore-projects) directly in <Constant name="query_page" /> to view project resources such as models, columns, metrics, and dimensions, and more — all integrated in the <Constant name="query_page" /> interface. 
 
 This integrated view allows you and your users to maintain your query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated <Constant name="explorer" /> view comes with:
 - Same search capabilities as <Constant name="explorer" />
 - Allows users to narrow down displayed objects by type
-- Hyperlink from SQL code `ref` to the corresponding Explorer page
+- Hyperlink from SQL code `ref` to the corresponding <Constant name="explorer" /> page
 - View assets in more detail by opening with the full <Constant name="explorer" /> experience or open them in <Constant name="copilot" />.
 
 To access <Constant name="explorer" />, click on the **<Constant name="explorer" />** icon in the [Query console sidebar menu](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
 
-<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Explorer" />
+<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Catalog" />
 
-### Set Jinja context
+### Set Jinja environment
+
+Set the compilation environment to control how Jinja functions are rendered. This feature:
+- Supports "typed" environments marked as `Production`, `Staging`, and/or `Development`.
+- Enables you to run <Constant name="semantic_layer" />. queries against staging environments (development environments not supported).
+- Still uses the individual user credentials, so users must have appropriate access to query `PROD` and `STG`. 
+- Changing the environment changes context for the <Constant name="explorer" /> view in <Constant name="query_page" />, as well as the environment context during the handoff to <Constant name="explorer" /> and <Constant name="visual_editor" />. For example, switching to `Staging` in <Constant name="query_page" /> and selecting **View in Catalog** will open the `Staging` view in <Constant name="explorer" />. 
+
+<Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Set the environment for your Jinja context" />
 
 ## Save your Insights
 
@@ -164,7 +172,6 @@ Insights offers a robust save feature for quickly finding the queries you use mo
 ## Considerations 
 - <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
 - Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
-- Coming soon: The ability to select the environment you use to resolve your `refs`.
 
 <!-- this can move to another page -->
 
