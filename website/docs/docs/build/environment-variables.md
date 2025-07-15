@@ -30,7 +30,7 @@ There are four levels of environment variables:
 
 **Setting environment variables at the project and environment level**
 
-To set environment variables at the project and environment level, click **Deploy** in the top left, then select **Environments**.  Click **Environments Variables** to add and update your environment variables.
+To set environment variables at the project and environment level, click **Orchestration** in the left-side menu, then select **Environments**. Click **Environment variables** to add and update your environment variables.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/navigate-to-env-vars.png" title="Environment variables tab"/>
 
@@ -81,7 +81,7 @@ If you have not set a project level default value for every environment variable
 If you change the value of an environment variable mid-session while using the <Constant name="cloud_ide" />, you may have to refresh the <Constant name="cloud_ide" /> for the change to take effect.
 :::
 
-To refresh the <Constant name="cloud_ide" /> mid-development, click on either the green 'ready' signal or the red 'compilation error' message at the bottom right corner of the <Constant name="cloud_ide" />. A new modal will pop up, and you should select the Refresh <Constant name="cloud_ide" /> button. This will load your environment variables values into your development environment.
+To refresh the <Constant name="cloud_ide" /> mid-development, click on either the green 'ready' signal or the red 'compilation error' message at the bottom right corner of the <Constant name="cloud_ide" />. A new modal will pop up, and you should select the **Restart IDE** button. This will load your environment variables values into your development environment.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/refresh-ide.png" title="Refreshing IDE mid-session"/>
 

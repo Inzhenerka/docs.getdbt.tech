@@ -172,7 +172,7 @@ Euclid takes the following steps to log in:
 
   <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login-url.png" width="60%" title="The SSO login URL in the account settings." />
 
-2. Login with their Okta credentials.
+2. Log in with their Okta credentials.
 
   <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login.png" width="60%" title="The SSO login screen when using Okta as the identity provider." />
 
@@ -180,9 +180,13 @@ Euclid takes the following steps to log in:
 
   <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/post-login-screen.png" width="60%" title="The screen users see after their first SSO login." />
 
-4. They now open their email and click the link to join dbt Labs, which completes the process.
+4. They now open their email and click the link to join dbt Labs.
 
   <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-email.png" width="60%" title="The email the user receives on first SSO login." />
+
+5. Their email address is now verified. They click **Authenticate with your enterprise login**, which completes the process. 
+
+    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/email-verified.png" width="60%" title="The confirmation that the email address is verified." />
 
 Euclid is now logged in to their account. They only have access to the `Jaffle Shop` pr, and the project selection option is removed from their UI entirely. 
 
