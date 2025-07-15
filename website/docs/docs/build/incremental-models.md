@@ -86,6 +86,10 @@ For more complex incremental models that make use of Common Table Expressions (C
 
 :::
 
+import Incrementalpredicates from '/snippets/_incremental-predicates.md';
+
+<Incrementalpredicates />
+
 ### Defining a unique key (optional)
 
 A `unique_key` enables updating existing rows instead of just appending new rows. If new information arrives for an existing `unique_key`, that new information can replace the current information instead of being appended to the table. If a duplicate row arrives, it can be ignored. Refer to [strategy specific configs](/docs/build/incremental-strategy#strategy-specific-configs) for more options on managing this update behavior, like choosing only specific columns to update.
