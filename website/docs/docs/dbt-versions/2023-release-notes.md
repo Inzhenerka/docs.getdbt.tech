@@ -37,7 +37,7 @@ Archived release notes for <Constant name="cloud" /> from 2023
 
     The **Extended Attributes** text box is available from your environment's settings page: 
 
-    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/extended-attributes.png" width="85%" title="Example of the Extended Attributes text box" />
+    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/extended-attributes.png" width="85%" title="Example of the Extended attributes text box" />
 
   </Expandable>
 
