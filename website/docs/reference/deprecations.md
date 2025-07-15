@@ -136,6 +136,44 @@ DBT_TARGET_PATH env var instead.
 
 Remove `target-path` from your `dbt_project.yml` and specify it via either the CLI flag `--target-path` or environment variable [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
 
+### CustomKeyInObjectDeprecation
+
+This warning is dispalued when you specify a config that dbt does not recognize as part of the official config spec. This could be custom configs or defining `meta` as top-level keys in the columns list.
+
+#### CustomKeyInObjectDeprecation warning resolution
+
+Nest custom configs under `meta` and ensure `meta` is nested under `config` (similare to [`propertymovedtoconfigdeprecation`](#propertymovedtoconfigdeprecation)).
+
+Example that results in the warning: 
+
+```yaml
+
+models:
+  - name: my_model
+    config:
+      custom_config_key: value
+    columns:
+      - name: my_column
+        meta:
+          some_key: some_value
+```
+
+Example of the resolution:
+
+```yaml
+models:
+  - name: my_model
+    config:
+      meta:
+        custom_config_key: value
+    columns:
+      - name: my_column
+        config:
+          meta:
+            some_key: some_value
+
+```
+
 ### CustomOutputPathInSourceFreshnessDeprecation
 
 dbt has deprecated the `--output` (or `-o`) flag for overriding the location of source freshness results from the `sources.json` file destination.
