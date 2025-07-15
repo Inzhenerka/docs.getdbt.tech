@@ -188,11 +188,11 @@ Euclid takes the following steps to log in:
 
     <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/email-verified.png" width="60%" title="The confirmation that the email address is verified." />
 
-Euclid is now logged in to their account. They only have access to the `Jaffle Shop` pr, and the project selection option is removed from their UI entirely. 
+Euclid is now logged in to their account. They only have access to the `Jaffle Shop` project. Under **Orchestration**, they can configure development credentials.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/rbac-account-home.png" width="60%" title="The home screen with access restricted." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/orchestration-environments.png" width="60%" title="The Orchestration page with the environments." />
 
-They can now configure development credentials. The `Production` environment is visible, but it is `read-only`, and they have full access in the `Staging` environment. 
+The `Production` environment is visible, but it is `read-only`, and they have full access in the `Staging` environment. 
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/production-restricted.png" width="60%" title="The Production environment landing page with read-only access." />
 
