@@ -18,6 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## July 2025
 
+- **Enhancement:** Users assigned IT [licenses](/docs/cloud/manage-access/seats-and-users) can now edit and manage [global connections settings](/docs/cloud/connect-data-platform/about-connections#connection-management).
 - **New**: Paginated [GraphQL](/docs/dbt-cloud-apis/sl-graphql) endpoints for metadata queries in Semantic Layer are now available. This improves integration load times for large manifests. For more information, see [Metadata calls](/docs/dbt-cloud-apis/sl-graphql#metadata-calls).
 
 ## June 2025
