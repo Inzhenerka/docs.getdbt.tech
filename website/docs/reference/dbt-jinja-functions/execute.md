@@ -64,3 +64,32 @@ order by 1
 ```
 
 </File>
+
+## Parsing vs execution
+
+Parsing in Jinja is when dbt:
+
+- Reads your project files.
+- Identifies [`ref`](/reference/dbt-jinja-functions/ref) and [`source`](/reference/dbt-jinja-functions/source).
+- Identifies macro definitions.
+- Builds the dependency graph (DAG).
+
+It doesn't run any SQL &mdash; `execute == False`.
+
+Execution is when dbt actually runs SQL and builds models &mdash; `execute == True`.
+
+During execution:
+
+- dbt renders full Jinja templates into SQL.
+- Resolves all instances of `ref()` and `source()` to their corresponding table or view names.
+- Runs the SQL in your models like, ([`dbt run`](/reference/commands/run)), tests ([`dbt test`](/reference/commands/test)), [seeds](/reference/seed-properties), or [snapshots](/reference/snapshot-properties).
+- Creates or updates tables/views in the warehouse.
+- Applies any materializations (incremental, table, view, ephemeral).
+
+`execute` impacts the values of `ref()` and `source`, and won't work as expected inside of a [`sql_header`](/reference/resource-configs/sql_header#usage).
+
+This is because in the initial parse of the project, dbt identifies every use of `ref()` and `source()` to build the DAG, but doesn’t resolve them to actual database identifiers. Instead, it replaces each with a placeholder value to ensure the SQL compiles cleanly during parsing.
+
+Additionally, macros like [`log()`](/reference/dbt-jinja-functions/log) and [`exceptions.warn()`](/reference/dbt-jinja-functions/exceptions#warn) are still evaluated at parse time, during dbt's "first-pass" Jinja render to extract `ref`, `source` and `config`. As a result, dbt will also run any logging or warning messages during this process.
+
+Even though nothing is being executed yet, dbt still runs those log lines while parsing which may cause some confusion &mdash; it looks like dbt is doing something real but it’s just parsing.
