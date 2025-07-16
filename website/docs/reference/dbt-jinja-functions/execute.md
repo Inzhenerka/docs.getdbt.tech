@@ -93,3 +93,25 @@ This is because in the initial parse of the project, dbt identifies every use of
 Additionally, macros like [`log()`](/reference/dbt-jinja-functions/log) and [`exceptions.warn()`](/reference/dbt-jinja-functions/exceptions#warn) are still evaluated at parse time, during dbt's "first-pass" Jinja render to extract `ref`, `source` and `config`. As a result, dbt will also run any logging or warning messages during this process.
 
 Even though nothing is being executed yet, dbt still runs those log lines while parsing which may cause some confusion &mdash; it looks like dbt is doing something real but it’s just parsing.
+
+### Example
+
+Let's assume you have a relation named `relation` obtained using something like `{% set relation = ref('my_model') %}` or `{% set relation = source('source_name', 'table_name') %}`, this will lead to unexpected or confusing behavior during parsing:
+
+```jinja
+
+{%- if load_relation(relation) is none -%}
+    {{ log("Relation is missing: " ~ relation, True) }}
+{% endif %}
+
+```
+
+To prevent this, add the `execute` flag to make sure the check only runs when dbt is actually running the code &mdash; not just when it's preparing it.
+
+```jinja
+
+{%- if execute and load_relation(relation) is none -%}
+    {{ log("Relation is missing: " ~ relation, True) }}
+{% endif %}
+
+```
