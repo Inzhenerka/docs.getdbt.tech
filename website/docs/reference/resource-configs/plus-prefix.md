@@ -37,6 +37,10 @@ However, the leading `+` is in fact _only required_ when you need to disambiguat
 - A config accepts a dictionary as its inputs. As an example, the [`persist_docs` config](/reference/resource-configs/persist_docs).
 - Or, a config shares a key with part of a resource path. For example, if you had a directory of models named `tags`.
 
+import MissingPrefix from '/snippets/_missing-prefix.md';
+
+<MissingPrefix />
+
 <File name='dbt_project.yml'>
 
 ```yml
@@ -67,10 +71,6 @@ models:
 ```
 
 </File>
-
-import MissingPrefix from '/snippets/_missing-prefix.md';
-
-<MissingPrefix />
 
 **Note:** The use of the `+` prefix in `dbt_project.yml` is distinct from the use of `+` to control config merge behavior (clobber vs. add) in other config settings (specific resource `.yml` and `.sql` files). Currently, the only config which supports `+` for controlling config merge behavior is [`grants`](/reference/resource-configs/grants#grant-config-inheritance).
 
