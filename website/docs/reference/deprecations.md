@@ -222,7 +222,9 @@ Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#cre
 
 ### MissingPlusPrefixDeprecation
 
-dbt has deprecated specifying configurations without [the '+' prefix](https://docs.getdbt.com/reference/dbt_project.yml#the--prefix). in `dbt_project.yml`. Only folder and file names can be specified without the '+' prefix within resource configurations in `dbt_project.yml`.
+import MissingPrefix from '/snippets/_missing-prefix.md';
+
+<MissingPrefix />
 
 Example: 
 <File name='CLI'>
@@ -236,26 +238,29 @@ values without a '+' prefix are deprecated in dbt_project.yml.
 
 #### MissingPlusPrefixDeprecation warning resolution
 
-If you previously set one of the impacted configurations without a '+', such as `materialized`:
+If you previously set one of the impacted configurations without a `+`, such as `materialized`:
+
+<File name='dbt_project.yml'>
 
 ```yaml
--- dbt_project.yml
-
 models: 
   marts:
     materialized: table
 ```
 
-You should now set it with the '+' prefix to disambiguate between paths:
+</File>
+
+You should now set it with the `+` prefix to disambiguate between paths:
+
+<File name='dbt_project.yml'>
 
 ```yaml
-
--- dbt_project.yml
-
 models: 
   marts:
     +materialized: table
 ```
+
+</File>
 
 ### ModelParamUsageDeprecation
 
