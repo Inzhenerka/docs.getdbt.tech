@@ -283,7 +283,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
 10. To help you version control your dbt project, we have connected it to a [managed repository](/docs/cloud/git/managed-repository), which means that dbt Labs will be hosting your repository for you. This will give you access to a <Constant name="git" /> workflow without you having to create and host the repository yourself. You will not need to know <Constant name="git" /> for this workshop; <Constant name="cloud" /> will help guide you through the workflow. In the future, when you’re developing your own project, [feel free to use your own repository](/docs/cloud/git/connect-github). This will allow you to learn more about features like [Slim CI](/docs/deploy/continuous-integration) builds after this workshop.
 
-## Change development schema name navigate the IDE
+## Change development schema name and navigate the IDE
 
 1. First we are going to change the name of our default schema to where our dbt models will build. By default, the name is `dbt_`. We will change this to `dbt_<YOUR_NAME>` to create your own personal development schema. To do this, click on your account name in the left side menu and select **Account settings**.
 
