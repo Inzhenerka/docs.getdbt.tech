@@ -303,7 +303,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/4-initialize-dbt-project.png" title="Initialize dbt project"/>
 
 7. After the initialization is finished, you can view the files and folders in the file tree menu. As we move through the workshop we'll be sure to touch on a few key files and folders that we'll work with to build out our project.
-8. Next click **Commit and push** to commit the new files and folders from the initialize step. We always want our commit messages to be relevant to the work we're committing, so be sure to provide a message like `initialize project` and select **Commit Changes**.
+8. Next click **Commit and sync** to commit the new files and folders from the initialize step. We always want our commit messages to be relevant to the work we're committing, so be sure to provide a message like `initialize project` and select **Commit Changes**.
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" title="First commit and push"/>
 
