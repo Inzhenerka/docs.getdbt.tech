@@ -136,7 +136,7 @@ Before diving into [custom strategies](#custom-strategies), it's important to un
 |[`delete+insert`](/docs/build/incremental-strategy#about-the-incremental-strategies)| `get_incremental_delete_insert_sql`|
 |[`merge` ](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_merge_sql`|
 |[`insert_overwrite`](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_insert_overwrite_sql`|
-|[`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) | `get_incremental_microbatch_sql`       |
+|[`microbatch`](/docs/build/incremental-strategy#about-the-incremental-strategies) | `get_incremental_microbatch_sql`       |
 
 
 For example, a built-in strategy for the `append` can be defined and used with the following files:
@@ -180,7 +180,7 @@ select * from {{ ref("some_model") }}
 
 **`append`**
 
-The `append` strategy is simple to implement and has low processing costs. It inserts selected records into the destination table without updating or deleting existing data. This strategy doesn’t align directly with type 1 or type 2 [Slow Changing Dimensions](https://en.wikipedia.org/wiki/Slowly_changing_dimension) (SCD). It differs from type 1 SCD, which overwrites existing records, and only loosely resembles type 2 SCD. While it adds new rows (like type 2), but it doesn’t manage versioning or track historical changes explicitly.
+The `append` strategy is simple to implement and has low processing costs. It inserts selected records into the destination table without updating or deleting existing data. This strategy doesn’t align directly with type 1 or type 2 [Slow Changing Dimensions](https://en.wikipedia.org/wiki/Slowly_changing_dimension) (SCD). It differs from SCD1, which overwrites existing records, and only loosely resembles SCD2. While it adds new rows (like SCD2), but it doesn’t manage versioning or track historical changes explicitly.
 
 Importantly, `append` doesn't check for duplicates or verify whether a record already exists in the destination. If the same record appears multiple times in the source, it will be inserted again, potentially resulting in duplicate rows. This may not be an issue depending on your use case and data quality requirements.
 
@@ -188,7 +188,7 @@ Importantly, `append` doesn't check for duplicates or verify whether a record al
 
 The `delete+insert` strategy deletes the data for those unique keys from the target table and then inserts the data for those unique keys (this may prove to be less efficient for larger datasets). It ensures updated records are fully replaced, avoiding partial updates and can be useful when unique keys are not truly unique or when `merge` is unsupported.
 
-`delete+insert` doesn't map directly to type 1 or 2 SCD as it overwrites data and tracks history.
+`delete+insert` doesn't map directly to SCD logic (type 1 or 2) as it overwrites data and tracks history.
 
 For SCD2, use [dbt snapshots](/docs/build/snapshots#what-are-snapshots), not `delete+insert`.
 
@@ -211,6 +211,10 @@ The [`insert_overwrite](https://downloads.apache.org/spark/docs/3.1.1/sql-ref-sy
 Because it is designed for partitioned data and replaces entire partitions wholesale, it does not align with typical SCD logic, which tracks row-level history or changes.
 
 It's ideal for tables partitioned by date or another key and useful for refreshing recent or corrected data without full table rebuilds.
+
+**`microbatch`**
+
+ [`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) is an incremental strategy designed for processing large time-series datasets by splitting the data into time-based batches (for example, daily or hourly) and it supports [parallel batch execution](/docs/build/parallel-batch-execution#how-parallel-batch-execution-works) for faster runs.
 
 For details on which incremental strategies are supported by each adapter, refer to the section [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter)
 
