@@ -78,7 +78,7 @@ One of the many benefits this consistent approach to project structure confers t
 
 #### Defining groups
 
-A group is a collection of nodes within a dbt DAG. They enable intentional collaboration within and across teams by restricting [access to private](/reference/resource-configs/access) models.
+A group is a collection of nodes within a dbt DAG. Groups enable intentional collaboration within and across teams by restricting [access to private](/reference/resource-configs/access) models.
 
 import DefineGroups from '/snippets/_define-groups.md';
 
