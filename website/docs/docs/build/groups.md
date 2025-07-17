@@ -29,9 +29,6 @@ To centrally define a group in your project, there are two options:
     groups:
       - name: finance
         description: For the finance team
-
-      - name: marketing
-        description: For the marketing team
   ```
 
   </File>
