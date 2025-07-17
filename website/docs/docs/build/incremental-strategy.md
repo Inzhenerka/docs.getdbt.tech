@@ -130,13 +130,13 @@ The syntax depends on how you configure your `incremental_strategy`:
 
 Before diving into [custom strategies](#custom-strategies), it's important to understand the built-in incremental strategies in dbt and their corresponding macros:
 
-| `incremental_strategy` | Corresponding macro                    |
-|------------------------|----------------------------------------|
-| `append`               | `get_incremental_append_sql`           |
-| `delete+insert`        | `get_incremental_delete_insert_sql`    |
-| `merge`                | `get_incremental_merge_sql`            |
-| `insert_overwrite`     | `get_incremental_insert_overwrite_sql` |
-| `microbatch`           | `get_incremental_microbatch_sql`       |
+| `incremental_strategy` | Corresponding macro                                                 |
+|------------------------|---------------------------------------------------------------------|
+|[`append`](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_append_sql`|
+|[`delete+insert`](/docs/build/incremental-strategy#about-the-incremental-strategies)| `get_incremental_delete_insert_sql`|
+|[`merge` ](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_merge_sql`|
+|[`insert_overwrite`](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_insert_overwrite_sql`|
+|[`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) | `get_incremental_microbatch_sql`       |
 
 
 For example, a built-in strategy for the `append` can be defined and used with the following files:
@@ -175,6 +175,44 @@ Define a model models/my_model.sql:
 
 select * from {{ ref("some_model") }}
 ```
+
+#### About the incremental strategies
+
+**`append`**
+
+The `append` strategy is simple to implement and has low processing costs. It inserts selected records into the destination table without updating or deleting existing data. This strategy doesn’t align directly with type 1 or type 2 [Slow Changing Dimensions](https://en.wikipedia.org/wiki/Slowly_changing_dimension) (SCD). It differs from type 1 SCD, which overwrites existing records, and only loosely resembles type 2 SCD. While it adds new rows (like type 2), but it doesn’t manage versioning or track historical changes explicitly.
+
+Importantly, `append` doesn't check for duplicates or verify whether a record already exists in the destination. If the same record appears multiple times in the source, it will be inserted again, potentially resulting in duplicate rows. This may not be an issue depending on your use case and data quality requirements.
+
+**`delete+insert`**
+
+The `delete+insert` strategy deletes the data for those unique keys from the target table and then inserts the data for those unique keys (this may prove to be less efficient for larger datasets). It ensures updated records are fully replaced, avoiding partial updates and can be useful when unique keys are not truly unique or when `merge` is unsupported.
+
+`delete+insert` doesn't map directly to type 1 or 2 SCD as it overwrites data and tracks history.
+
+For SCD2, use [dbt snapshots](/docs/build/snapshots#what-are-snapshots), not `delete+insert`.
+
+**`merge`**
+
+`merge` inserts records with unique keys that don’t yet exist in the destination table and updates records with keys that do exist &mdash; mirroring the logic of SCD1, where changes are overwritten rather than historically tracked.
+
+This strategy shouldn't be confused with `delete+insert` which deletes matching records before inserting new ones. 
+
+By specifying a `unique key` (which can be composed of one or more columns), `merge` can also help resolve duplicates. If the unique key already exists in the destination table, `merge` will update the record, so you won't have duplicates, and if the records don’t exist, `merge` will insert them.
+
+Note, if you use `merge` without specifying a unique key, it behaves like the `append` strategy. However, adapters such as BigQuery, make it complusory to use a unique key with `merge`.
+
+While the `merge` strategy is powerful for keeping tables current, it's best suited for smaller tables or incremental datasets. For large tables, it can be expensive, since it typically scans the entire destination table to determine what to update or insert.
+
+**`insert_overwrite`**
+
+The [`insert_overwrite](https://downloads.apache.org/spark/docs/3.1.1/sql-ref-syntax-dml-insert-overwrite-table.html) strategy is used to efficiently update partitioned tables by replacing entire partitions with new data, rather than merging or updating individual rows. It overwrites only the affected partitions, not the whole table. 
+
+Because it is designed for partitioned data and replaces entire partitions wholesale, it does not align with typical SCD logic, which tracks row-level history or changes.
+
+It's ideal for tables partitioned by date or another key and useful for refreshing recent or corrected data without full table rebuilds.
+
+For details on which incremental strategies are supported by each adapter, refer to the section [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter)
 
 ### Custom strategies
 
