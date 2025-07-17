@@ -123,7 +123,7 @@ Let's assume you have a relation named `relation` obtained using something like 
 
 To prevent this, add the `execute` flag to make sure the check only runs when dbt is actually running the code &mdash; not just when it's preparing it.
 
-Use the command, `do exceptions.warn` to emit a warning during model execution without failing the run.
+Use the command `do exceptions.warn` to emit a warning during model execution without failing the run.
 
 ```jinja
 
