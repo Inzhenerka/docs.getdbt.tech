@@ -18,6 +18,8 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## July 2025
 
+- **Preview**: The [Semantic Layer Power BI integration](/docs/cloud-integrations/semantic-layer/power-bi) is now available in Preview.
+- **Enhancement:** You can now use `limit` and `order_by` parameters when creating [saved queries](/docs/build/saved-queries). 
 - **Enhancement:** Users assigned IT [licenses](/docs/cloud/manage-access/seats-and-users) can now edit and manage [global connections settings](/docs/cloud/connect-data-platform/about-connections#connection-management).
 - **New**: Paginated [GraphQL](/docs/dbt-cloud-apis/sl-graphql) endpoints for metadata queries in Semantic Layer are now available. This improves integration load times for large manifests. For more information, see [Metadata calls](/docs/dbt-cloud-apis/sl-graphql#metadata-calls).
 

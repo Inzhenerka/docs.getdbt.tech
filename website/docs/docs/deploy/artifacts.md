@@ -54,8 +54,6 @@ To view the latest source freshness result, refer to [generate metadata](/docs/e
 
 <Expandable alt_header="For dbt Docs">
 
-Configuring a job for the Source Freshness artifact setting also updates the data source link under **Deploy**. The new link points to the latest Source Freshness report for the selected job.
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/data-sources.png" title="A link to the latest source freshness snapshot for the selected job"/>
+Configuring a job for the Source Freshness artifact setting also updates the data source link under **Orchestration** > **Data sources**. The link points to the latest Source Freshness report for the selected job.
 
 </Expandable>

@@ -220,6 +220,48 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes
 
 Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
 
+### MissingPlusPrefixDeprecation
+
+import MissingPrefix from '/snippets/_missing-prefix.md';
+
+<MissingPrefix />
+
+Example: 
+<File name='CLI'>
+```bash
+18:16:06  [WARNING][MissingPlusPrefixDeprecation]: Deprecated functionality
+Missing '+' prefix on `tags` found at `my_path.sub_path.another_path.tags` in
+file `dbt_project.yml`. Hierarchical config
+values without a '+' prefix are deprecated in dbt_project.yml.
+```
+</File>
+
+#### MissingPlusPrefixDeprecation warning resolution
+
+If you previously set one of the impacted configurations without a `+`, such as `materialized`:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models: 
+  marts:
+    materialized: table
+```
+
+</File>
+
+You should now set it with the `+` prefix to disambiguate between paths:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models: 
+  marts:
+    +materialized: table
+```
+
+</File>
+
 ### ModelParamUsageDeprecation
 
 The `--models` / `--model` / `-m` flag was renamed to `--select` / `--s` way back in dbt Core v0.21 (Oct 2021). Silently skipping this flag means ignoring your command's selection criteria, which could mean building your entire DAG when you only meant to select a small subset. For this reason, the `--models` / `--model` / `-m` flag will raise a warning in dbt Core v1.10, and an error in Fusion. Please update your job definitions accordingly.
