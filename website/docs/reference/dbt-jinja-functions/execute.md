@@ -78,7 +78,7 @@ It doesn't run any SQL &mdash; `execute == False`.
 
 Execution is when dbt actually runs SQL and builds models &mdash; `execute == True`.
 
-During execution:
+During execution, dbt:
 
 - dbt renders full Jinja templates into SQL.
 - Resolves all instances of `ref()` and `source()` to their corresponding table or view names.
