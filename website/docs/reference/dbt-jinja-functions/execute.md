@@ -82,7 +82,7 @@ During execution, dbt:
 
 - Renders full Jinja templates into SQL.
 - Resolves all instances of `ref()` and `source()` to their corresponding table or view names.
-- Runs the SQL in your models like, ([`dbt run`](/reference/commands/run)), tests ([`dbt test`](/reference/commands/test)), [seeds](/reference/seed-properties), or [snapshots](/reference/snapshot-properties).
+- Runs the SQL in your models during commands like ([`dbt run`](/reference/commands/run)), ([`dbt test`](/reference/commands/test)), [`dbt seed`](/reference/commands/seed, or [`dbt snapshot`](/reference/commands/snapshot).
 - Creates or updates tables/views in the warehouse.
 - Applies any materializations (incremental, table, view, ephemeral).
 
