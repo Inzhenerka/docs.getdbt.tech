@@ -80,7 +80,7 @@ Execution is when dbt actually runs SQL and builds models &mdash; `execute == Tr
 
 During execution, dbt:
 
-- dbt renders full Jinja templates into SQL.
+- Renders full Jinja templates into SQL.
 - Resolves all instances of `ref()` and `source()` to their corresponding table or view names.
 - Runs the SQL in your models like, ([`dbt run`](/reference/commands/run)), tests ([`dbt test`](/reference/commands/test)), [seeds](/reference/seed-properties), or [snapshots](/reference/snapshot-properties).
 - Creates or updates tables/views in the warehouse.
