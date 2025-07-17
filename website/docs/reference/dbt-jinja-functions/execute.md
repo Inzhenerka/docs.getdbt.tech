@@ -94,7 +94,9 @@ Additionally, macros like [`log()`](/reference/dbt-jinja-functions/log) and [`ex
 
 Even though nothing is being executed yet, dbt still runs those log lines while parsing which may cause some confusion &mdash; it looks like dbt is doing something real but it’s just parsing.
 
-### Example
+## Examples
+
+### Logging fully-qualified relation names
 
 Let's assume you have a relation named `relation` obtained using something like `{% set relation = ref('my_model') %}` or `{% set relation = source('source_name', 'table_name') %}`, this will lead to unexpected or confusing behavior during parsing:
 
