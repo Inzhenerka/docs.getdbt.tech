@@ -138,11 +138,11 @@ Remove `target-path` from your `dbt_project.yml` and specify it via either the C
 
 ### CustomKeyInObjectDeprecation
 
-This warning is dispalued when you specify a config that dbt does not recognize as part of the official config spec. This could be custom configs or defining `meta` as top-level keys in the columns list.
+This warning is displayed when you specify a config that dbt does not recognize as part of the official config spec. This could be custom configs or defining `meta` as top-level keys in the `columns` list.
 
 #### CustomKeyInObjectDeprecation warning resolution
 
-Nest custom configs under `meta` and ensure `meta` is nested under `config` (similare to [`propertymovedtoconfigdeprecation`](#propertymovedtoconfigdeprecation)).
+Nest custom configs under `meta` and ensure `meta` is nested under `config` (similar to [`PropertyMovedToConfigDeprecation`](#propertymovedtoconfigdeprecation)).
 
 Example that results in the warning: 
 
