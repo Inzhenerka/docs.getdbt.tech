@@ -147,7 +147,6 @@ Nest custom configs under `meta` and ensure `meta` is nested under `config` (sim
 Example that results in the warning: 
 
 ```yaml
-
 models:
   - name: my_model
     config:
