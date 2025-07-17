@@ -171,7 +171,6 @@ models:
         config:
           meta:
             some_key: some_value
-
 ```
 
 ### CustomOutputPathInSourceFreshnessDeprecation
