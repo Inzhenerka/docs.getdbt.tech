@@ -145,6 +145,61 @@ dbt has deprecated the `--output` (or `-o`) flag for overriding the location of 
 Remove the `--output` or `-o` flag and associated path configuration from any jobs running dbt source freshness commands.
 There is no alternative for changing the location of only the source freshness results. However, you can still use `--target-path` to write _all_ artifacts from the step to a custom location.
 
+### CustomTopLevelKeyDeprecation
+
+This warning informs users when they use custom top-level keys in their YAML files that are not supported by dbt.
+
+import DeprecationWarnings from '/snippets/_deprecation-warnings.md';
+
+<DeprecationWarnings />
+
+#### CustomTopLevelKeyDeprecation warning resolution
+
+Move custom top-level keys in your YAML files under `config.meta`.
+
+For example, when you use a custom top-level key such as `custom_metdata`:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  my_project:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
+custom_metadata:
+  owner: "data_team"
+  description: "This project contains models for our analytics platform"
+  last_updated: "2025-07-01"
+```
+
+</File>
+
+You should move the key under `config.meta`:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  my_project:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
+config:
+  meta:
+    custom_metadata:
+      owner: "data_team"
+      description: "This project contains models for our analytics platform"
+      last_updated: "2025-07-01"
+```
+
+</File>
+
+
 ### ExposureNameDeprecation
 
 #### Description
@@ -225,6 +280,10 @@ Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#cre
 import MissingPrefix from '/snippets/_missing-prefix.md';
 
 <MissingPrefix />
+
+import DeprecationWarnings2 from '/snippets/_deprecation-warnings.md';
+
+<DeprecationWarnings2 />
 
 Example: 
 <File name='CLI'>
@@ -420,6 +479,18 @@ information: https://docs.getdbt.com/reference/global-configs/legacy-behaviors
 #### SourceFreshnessProjectHooksNotRun warning resolution
 
 Set `source_freshness_run_project_hooks` to `true`. For instructions on skipping project hooks during a `dbt source freshness` invocation, check out the [behavior change documentation](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness).
+
+### SourceOverrideDeprecation
+
+The `overrides` property for sources is deprecated.
+
+import DeprecationWarnings3 from '/snippets/_deprecation-warnings.md';
+
+<DeprecationWarnings3 />
+
+#### SourceOverrideDeprecation warning resolution
+
+Remove the `overrides` property and [enable or disable a source](/reference/source-configs.md#configuring-sources) from a package instead. 
 
 ### UnexpectedJinjaBlockDeprecation
 
