@@ -37,7 +37,7 @@ To centrally define a group in your project, there are two options:
   </File>
 
 
-- Create one `_groups.yml` file in the root of a `groups` directory. For this option, configure [`model-paths`](/reference/project-configs/model-paths) in the `dbt_project.yml` file:
+- Create one `_groups.yml` file in the root of a `groups` directory. For this option, you also need to configure [`model-paths`](/reference/project-configs/model-paths) in the `dbt_project.yml` file:
 
   ```yml 
   model-paths: ["models", "groups"]
