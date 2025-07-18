@@ -192,7 +192,7 @@ The `delete+insert` strategy deletes the data for the `unique_key` from the targ
 
 For SCD2, use [dbt snapshots](/docs/build/snapshots#what-are-snapshots), not `delete+insert`.
 
-**`merge`**
+*##### `merge`
 
 `merge` inserts records with a `unique_key` that don’t exist yet in the destination table and updates records with keys that do exist &mdash; mirroring the logic of SCD1, where changes are overwritten rather than historically tracked.
 
