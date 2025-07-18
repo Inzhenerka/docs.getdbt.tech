@@ -176,7 +176,7 @@ Define a model models/my_model.sql:
 select * from {{ ref("some_model") }}
 ```
 
-#### About the incremental strategies
+#### About built-in incremental strategies
 
 ##### `append`
 
