@@ -204,7 +204,7 @@ Note, if you use `merge` without specifying a `unique_key`, it behaves like the 
 
 While the `merge` strategy is useful for keeping tables current, it's best suited for smaller tables or incremental datasets. It can be expensive for large tables because it scans the entire destination table to determine what to update or insert.
 
-**`insert_overwrite`**
+##### `insert_overwrite`
 
 The [`insert_overwrite`](https://downloads.apache.org/spark/docs/3.1.1/sql-ref-syntax-dml-insert-overwrite-table.html) strategy is used to efficiently update partitioned tables by replacing entire partitions with new data, rather than merging or updating individual rows. It overwrites only the affected partitions, not the whole table. 
 
