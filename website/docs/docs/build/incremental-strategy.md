@@ -216,7 +216,7 @@ It's ideal for tables partitioned by date or another key and useful for refreshi
 
  [`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) is an incremental strategy designed for processing large time-series datasets by splitting the data into time-based batches (for example, daily or hourly) and it supports [parallel batch execution](/docs/build/parallel-batch-execution#how-parallel-batch-execution-works) for faster runs.
 
-For details on which incremental strategies are supported by each adapter, refer to the section [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter)
+For details on which incremental strategies are supported by each adapter, refer to the section [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
 
 ### Custom strategies
 
