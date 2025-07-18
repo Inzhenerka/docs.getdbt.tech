@@ -136,7 +136,7 @@ Before diving into [custom strategies](#custom-strategies), it's important to un
 |[`delete+insert`](/docs/build/incremental-strategy#about-the-incremental-strategies)| `get_incremental_delete_insert_sql`|
 |[`merge` ](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_merge_sql`|
 |[`insert_overwrite`](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_insert_overwrite_sql`|
-|[`microbatch`](/docs/build/incremental-strategy#about-the-incremental-strategies) | `get_incremental_microbatch_sql`       |
+|[`microbatch`](/docs/build/incremental-strategy#microbatch) | `get_incremental_microbatch_sql`       |
 
 
 For example, a built-in strategy for the `append` can be defined and used with the following files:
