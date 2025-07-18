@@ -198,7 +198,7 @@ For SCD2, use [dbt snapshots](/docs/build/snapshots#what-are-snapshots), not `de
 
 This strategy shouldn't be confused with `delete+insert` which deletes matching records before inserting new ones. 
 
-By specifying a `unique key` (which can be composed of one or more columns), `merge` can also help resolve duplicates. If the unique key already exists in the destination table, `merge` will update the record, so you won't have duplicates, and if the records don’t exist, `merge` will insert them.
+By specifying a `unique_key` (which can be composed of one or more columns), `merge` can also help resolve duplicates. If the `unique_key` already exists in the destination table, `merge` will update the record, so you won't have duplicates. If the records don’t exist, `merge` will insert them.
 
 Note, if you use `merge` without specifying a `unique_key`, it behaves like the `append` strategy. However, it is required to use a `unique_key` with `merge` for adapters like BigQuery.
 
