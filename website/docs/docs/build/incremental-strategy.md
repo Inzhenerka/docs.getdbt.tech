@@ -133,7 +133,7 @@ Before diving into [custom strategies](#custom-strategies), it's important to un
 | `incremental_strategy` | Corresponding macro                                                 |
 |------------------------|---------------------------------------------------------------------|
 |[`append`](/docs/build/incremental-strategy#append)|`get_incremental_append_sql`|
-|[`delete+insert`](/docs/build/incremental-strategy#about-the-incremental-strategies)| `get_incremental_delete_insert_sql`|
+|[`delete+insert`](/docs/build/incremental-strategy#deleteinsert)| `get_incremental_delete_insert_sql`|
 |[`merge` ](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_merge_sql`|
 |[`insert_overwrite`](/docs/build/incremental-strategy#about-the-incremental-strategies)|`get_incremental_insert_overwrite_sql`|
 |[`microbatch`](/docs/build/incremental-strategy#microbatch) | `get_incremental_microbatch_sql`       |
