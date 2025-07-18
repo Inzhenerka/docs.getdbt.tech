@@ -212,7 +212,7 @@ Because it is designed for partitioned data and replaces entire partitions whole
 
 It's ideal for tables partitioned by date or another key and useful for refreshing recent or corrected data without full table rebuilds.
 
-**`microbatch`**
+##### `microbatch`
 
 [`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) is an incremental strategy designed for processing large time-series datasets by splitting the data into time-based batches (for example, daily or hourly). It supports [parallel batch execution](/docs/build/parallel-batch-execution#how-parallel-batch-execution-works) for faster runs.
 
