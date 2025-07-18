@@ -49,7 +49,7 @@ These credentials are configured separately from dbt environment credentials and
     - *Optional*: Enable additional features such as **cost optimization** in the **Features** section under **Platform metadata credentials**.
 6. Under **Catalog filters**, apply filters to restrict which metadata is ingested:
     - You can filter by **database**, **schema**, **table**, or **view**.
-      - Note: To include all databases or schemas, use `.*` as the allow value.
+      - **Note:** To include all databases or schemas, enter `.*`  in the **Allow** field.
     - It is strongly recommend to filter by certain schemas. See [Important considerations](/docs/explore/external-metadata-ingestion#important-considerations) for more information.
     - These fields accept CSV-formatted regular expressions:
         - Example: `DIM` matches `DIM_ORDERS` and `DIMENSION_TABLE` (basic "contains" match).
