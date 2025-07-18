@@ -194,7 +194,7 @@ For SCD2, use [dbt snapshots](/docs/build/snapshots#what-are-snapshots), not `de
 
 **`merge`**
 
-`merge` inserts records with unique keys that don’t yet exist in the destination table and updates records with keys that do exist &mdash; mirroring the logic of SCD1, where changes are overwritten rather than historically tracked.
+`merge` inserts records with unique keys that don’t exist yet in the destination table and updates records with keys that do exist &mdash; mirroring the logic of SCD1, where changes are overwritten rather than historically tracked.
 
 This strategy shouldn't be confused with `delete+insert` which deletes matching records before inserting new ones. 
 
