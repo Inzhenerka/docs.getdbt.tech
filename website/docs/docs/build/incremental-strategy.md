@@ -178,7 +178,7 @@ select * from {{ ref("some_model") }}
 
 #### About the incremental strategies
 
-**`append`**
+##### `append`
 
 The `append` strategy is simple to implement and has low processing costs. It inserts selected records into the destination table without updating or deleting existing data. This strategy doesn’t align directly with type 1 or type 2 [Slow Changing Dimensions](https://en.wikipedia.org/wiki/Slowly_changing_dimension) (SCD). It differs from SCD1, which overwrites existing records, and only loosely resembles SCD2. While it adds new rows (like SCD2), but it doesn’t manage versioning or track historical changes explicitly.
 
