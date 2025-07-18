@@ -202,7 +202,7 @@ By specifying a `unique key` (which can be composed of one or more columns), `me
 
 Note, if you use `merge` without specifying a unique key, it behaves like the `append` strategy. However, it is required to use a unique key with `merge` for adapters like BigQuery.
 
-While the `merge` strategy is powerful for keeping tables current, it's best suited for smaller tables or incremental datasets. For large tables, it can be expensive, since it typically scans the entire destination table to determine what to update or insert.
+While the `merge` strategy is useful for keeping tables current, it's best suited for smaller tables or incremental datasets. It can be expensive for large tables because it scans the entire destination table to determine what to update or insert.
 
 **`insert_overwrite`**
 
