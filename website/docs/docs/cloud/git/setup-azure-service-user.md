@@ -374,7 +374,7 @@ A <Constant name="cloud" /> account admin with access to the service user's Azur
 4. Enter values for the required fields.
 6. Click **Save**.
 7. Click **Link Azure service user**.
-8. You will be directed to Azure DevOps and must accept the Microsoft Entra ID app's permissions.
+8. You will be directed to Azure DevOps and you must accept the Microsoft Entra ID app's permissions.
 9. Finally, you will be redirected to <Constant name="cloud" />, and the service user will be connected.
 
 <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/azure-service-user.png" title="Connecting an Azure Service User"/>
