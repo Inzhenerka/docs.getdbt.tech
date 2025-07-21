@@ -135,7 +135,7 @@ models:
 
 ```
 
-#### Custom configs not nested under meta
+#### Custom keys not nested under meta
 
 Previously, when you could define any additional fields directly under configm, it could lead to collisions between preexisting user-defined configurations and official configurations of the dbt framework. 
 
