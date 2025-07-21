@@ -10,7 +10,7 @@ dbt supports materializing the table in Iceberg table format in two different wa
 - The model configuration field `table_format = 'iceberg'` (legacy)
 - Catalog integration can be configured in the SQL config (inside the `.sql` model file), property file (model folder), or project file ([`dbt_project.yml`](/reference/dbt_project.yml)).
 
-:::info **Catalog integration configuration**
+:::info Catalog integration configuration
 
 You need to create a `catalogs.yml` file to use the integration and apply that integration on the config level.
 
