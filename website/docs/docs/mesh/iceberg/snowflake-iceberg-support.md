@@ -14,7 +14,7 @@ dbt supports materializing the table in Iceberg table format in two different wa
 
 You need to create a `catalogs.yml` file to use the integration and apply that integration on the config level.
 
-Refer to our [Snowflake configurations](/reference/resource-configs/snowflake-configs) for more information.
+Refer to [Snowflake configurations](/reference/resource-configs/snowflake-configs) for more information.
 
 :::
 
