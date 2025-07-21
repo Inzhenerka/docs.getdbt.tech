@@ -140,6 +140,10 @@ Remove `target-path` from your `dbt_project.yml` and specify it via either the C
 
 This warning is displayed when you specify a config that dbt does not recognize as part of the official config spec. This could be custom configs or defining `meta` as top-level keys in the `columns` list.
 
+Previously, when you could define any additional fields directly under configm, it could lead to collisions between preexisting user-defined configurations and official configurations of the dbt framework. 
+
+As of dbt Core v1.10 and in the dbt Fusion engine, top-level config keys will be reserved for official configurations of the dbt framework.
+
 #### CustomKeyInObjectDeprecation warning resolution
 
 Nest custom configs under `meta` and ensure `meta` is nested under `config` (similar to [`PropertyMovedToConfigDeprecation`](#propertymovedtoconfigdeprecation)).
@@ -170,6 +174,20 @@ models:
         config:
           meta:
             some_key: some_value
+```
+
+To access custom configurations nested under attributes of `meta`, use `config.get('meta')` and then index the meta dictionary by the name of your custom attribute. Users will need to adjust their code that accesses the custom config keys directly as top-level keys.
+
+Example before custom configurations were nested under meta:
+
+```jinja
+{% set my_custom_config = config.get('custom_config_key') %}
+```
+
+After configs are nested:
+
+```jinja
+{% set my_custom_config = config.get('meta').custom_config_key %}
 ```
 
 ### CustomOutputPathInSourceFreshnessDeprecation
