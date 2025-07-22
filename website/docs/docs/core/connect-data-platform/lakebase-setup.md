@@ -1,5 +1,5 @@
 ---
-title: "AlloyDB setup"
+title: "Databricks Lakebase setup"
 meta:
   maintained_by: dbt Labs
   authors: dbt Labs
@@ -21,4 +21,4 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Profile Configuration
 
-Lakebase targets are configured exactly the same as [Postgres targets](postgres-setup#profile-configuration).
+Databricks Lakebase targets are configured exactly the same as [Postgres targets](postgres-setup#profile-configuration).
