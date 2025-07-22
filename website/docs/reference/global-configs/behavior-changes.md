@@ -257,7 +257,7 @@ When you set the `validate_macro_args` flag to `True`, dbt will:
 
 ### Generic test arguments property
 
-dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguiate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
+dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
 
 By default, the `require_generic_test_arguments_property` flag is set to `False`, which means dbt won't parse the new `arguments` syntax. In this case, if the `arguments` property is specified, dbt raises the `ArgumentsPropertyInGenericTestDeprecation` deprecation to indicate that the `arguments` property will be used to parse inputs to the generic test after `require_generic_test_arguments_property` reaches maturity and is `True` by default.
 
@@ -276,7 +276,7 @@ models:
 
 </File>
 
-Using the alternative `test_name` format:
+Here's an example using the alternative `test_name` format:
 
 <File name='model.yml'>
 
@@ -295,5 +295,5 @@ models:
 </File>
 
 When you set the `require_generic_test_arguments_property` flag to `True`, dbt will:
-- Parse any key value pairs under `arguments` in generic tests as inputs to the generic test macro.
+- Parse any key-value pairs under `arguments` in generic tests as inputs to the generic test macro.
 - Raise a `MissingArgumentsPropertyInGenericTestDeprecation` warning if additional non-config arguments are specified outside of the `arguments` property.
