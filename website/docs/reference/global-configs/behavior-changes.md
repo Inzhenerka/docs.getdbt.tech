@@ -63,7 +63,8 @@ flags:
   require_yaml_configuration_for_mf_time_spines: False
   require_batched_execution_for_custom_microbatch_strategy: False
   require_nested_cumulative_type_params: False
-  validate_macro_args: False 
+  validate_macro_args: False
+  require_generic_test_arguments_property: False
 ```
 
 </File>
@@ -259,7 +260,7 @@ When you set the `validate_macro_args` flag to `True`, dbt will:
 
 dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
 
-By default, the `require_generic_test_arguments_property` flag is set to `False`, which means dbt won't parse the new `arguments` syntax. In this case, if the `arguments` property is specified, dbt raises the `ArgumentsPropertyInGenericTestDeprecation` deprecation to indicate that the `arguments` property will be used to parse inputs to the generic test after `require_generic_test_arguments_property` reaches maturity and is `True` by default.
+By default, the `require_generic_test_arguments_property` flag is set to `False`, which means dbt won't parse the new `arguments` syntax. In this case, if the `arguments` property is specified, dbt raises the `ArgumentsPropertyInGenericTestDeprecation` deprecation to indicate that the `arguments` property will be used to parse inputs to the generic test after `require_generic_test_arguments_property` reaches maturity and becomes `True` by default.
 
 Here's an example of the new `arguments` property:
 

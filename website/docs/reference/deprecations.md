@@ -96,6 +96,23 @@ models:
 
 </File>
 
+Alternatively, the original `arguments` keyword could be renamed to something else that does not collide with the new `arguments` key in the dbt framework. This renaming would also need to occur in the test macro definition, and the renamed key would still need to be specified within the `arguments` property to be valid syntactically. For example: 
+
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - my_custom_generic_test:
+          arguments:
+            renamed_arguments: [1,2,3]
+            expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
 ### ConfigDataPathDeprecation
 
 In [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) `data-paths` has been renamed to [seed-paths](/reference/project-configs/model-paths). If you receive this deprecation warning, it means that `data-paths` is still being used in your project's `dbt_project.yml`.
