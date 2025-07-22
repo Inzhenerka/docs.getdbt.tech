@@ -142,7 +142,7 @@ This warning is displayed when you specify a config that dbt does not recognize 
 
 Previously, when you could define any additional fields directly under `config`, it could lead to collisions between pre-existing user-defined configurations and official configurations of the dbt framework. 
 
-As of dbt Core v1.10 and in the dbt Fusion engine, top-level config keys will be reserved for official configurations of the dbt framework.
+As of dbt Core v1.10 and in the <Constant name="fusion_engine" />, top-level config keys will be reserved for official configurations of the dbt framework.
 
 import DeprecationWarnings4 from '/snippets/_deprecation-warnings.md';
 
