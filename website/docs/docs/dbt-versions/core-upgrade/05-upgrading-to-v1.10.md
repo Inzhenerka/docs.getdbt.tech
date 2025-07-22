@@ -137,7 +137,7 @@ models:
 
 #### Custom keys not nested under meta
 
-Previously, when you could define any additional fields directly under `config`, it could lead to collisions between preexisting user-defined configurations and official configurations of the dbt framework. 
+Previously, when you could define any additional fields directly under `config`, it could lead to collisions between pre-existing user-defined configurations and official configurations of the dbt framework. 
 
 In the future, the `meta` config will be the sole location for custom user-defined attributes. Everything else will be strongly typed and strictly validated. If you have an extra attribute you want to include in your project, or a model config you want to access in a custom materialization, you must nest it under `meta` moving forward:
 
