@@ -333,6 +333,93 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes
 
 Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
 
+### MissingArgumentsPropertyInGenericTestDeprecation
+
+dbt has deprecated specifiying keyword arguments as properties on custom generic data tests or data tests making use of the alternative `test_name` syntax. Instead, arguments to tests should be specified under the new `arguments` property.
+
+This deprecation warning is only raised when the behavior flag `require_generic_test_arguments_property` is set to `True`.
+
+
+#### MissingArgumentsPropertyInGenericTestDeprecation warning resolution
+
+If you previously set arguments as top-level properties on custom generic tests:
+
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+or using the alternative `test_name` syntax:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+    - name: arbitrary_name
+      test_name: dbt_utils.expression_is_true
+      expression: "order_items_subtotal = subtotal"
+      where: "1=1"
+```
+
+</File>
+
+You should now nest arguments under `arguments` and framework configurations under `config:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+or using the alternative `test_name` syntax:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments: 
+            expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+or
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+    - name: arbitrary_name
+      test_name: dbt_utils.expression_is_true
+      arguments:
+         expression: "order_items_subtotal = subtotal"
+      config:
+        where: "1=1"
+```
+
+</File>
+
 ### MissingPlusPrefixDeprecation
 
 import MissingPrefix from '/snippets/_missing-prefix.md';
