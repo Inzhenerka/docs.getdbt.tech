@@ -1895,7 +1895,7 @@ Now that we've completed testing and documenting our work, we're ready to deploy
 
 3. When it's completed, you should see the git button read **Create branch** and the branch you're currently looking at will become **main**.
 4. Now that all of our development work has been merged to the main branch, we can build our deployment job. Given that our production environment and production job were created automatically for us through Partner Connect, all we need to do here is update some default configurations to meet our needs.
-5. In the left hand menu, select **Orchestration** **> Environments**
+5. In the left-hand menu, go to **Orchestration** > **Environments**.
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/2-ui-select-environments.png" title="Navigate to environments within the UI"/>
 
 6. You should see two environments listed and you'll want to select the **Deployment** environment then **Settings** to modify it.
