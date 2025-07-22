@@ -382,27 +382,13 @@ models:
   - name: my_model_with_generic_test
     data_tests:
       - dbt_utils.expression_is_true:
-          expression: "order_items_subtotal = subtotal"
-```
-
-</File>
-
-or using the alternative `test_name` syntax:
-
-<File name='model.yml'>
-
-```yaml
-models:
-  - name: my_model_with_generic_test
-    data_tests:
-      - dbt_utils.expression_is_true:
           arguments: 
             expression: "order_items_subtotal = subtotal"
 ```
 
 </File>
 
-or
+or:
 
 <File name='model.yml'>
 
