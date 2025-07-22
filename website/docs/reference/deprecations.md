@@ -339,10 +339,6 @@ import MissingPrefix from '/snippets/_missing-prefix.md';
 
 <MissingPrefix />
 
-import DeprecationWarnings2 from '/snippets/_deprecation-warnings.md';
-
-<DeprecationWarnings2 />
-
 Example: 
 <File name='CLI'>
 ```bash
@@ -352,6 +348,10 @@ file `dbt_project.yml`. Hierarchical config
 values without a '+' prefix are deprecated in dbt_project.yml.
 ```
 </File>
+
+import DeprecationWarnings2 from '/snippets/_deprecation-warnings.md';
+
+<DeprecationWarnings2 />
 
 #### MissingPlusPrefixDeprecation warning resolution
 
