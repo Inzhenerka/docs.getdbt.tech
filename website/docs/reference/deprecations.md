@@ -65,7 +65,7 @@ dbt has deprecated the ability to specify a custom top-level property called `ar
 
 #### ArgumentsPropertyInGenericTestDeprecation warning resolution
 
-If you previously had a property called `arguments` on a custom generic tests:
+If you previously had a property called `arguments` on custom generic tests:
 
 <File name='model.yml'>
 
@@ -78,7 +78,7 @@ models:
           expression: "order_items_subtotal = subtotal"
 ```
 
-You should now flip the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
+You should flip the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
 
 <File name='model.yml'>
 
@@ -371,7 +371,7 @@ Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#cre
 
 ### MissingArgumentsPropertyInGenericTestDeprecation
 
-dbt has deprecated specifiying keyword arguments as properties on custom generic data tests or data tests making use of the [alternative `test_name` format](/docs/reference/resource-properties/data-tests#alternative-format-for-defining-tests). Instead, arguments to tests should be specified under the new `arguments` property.
+dbt has deprecated specifiying keyword arguments as properties on custom generic data tests or data tests that use the [alternative `test_name` format](/docs/reference/resource-properties/data-tests#alternative-format-for-defining-tests). Instead, arguments to tests should be specified under the new `arguments` property.
 
 This deprecation warning is only raised when the behavior flag `require_generic_test_arguments_property` is set to `True`.
 
@@ -393,7 +393,7 @@ models:
 
 </File>
 
-or using the alternative `test_name` format:
+Or using the alternative `test_name` format:
 
 <File name='model.yml'>
 
@@ -409,7 +409,7 @@ models:
 
 </File>
 
-You should now nest arguments under `arguments` and framework configurations under `config:
+You should now nest arguments under `arguments` and framework configurations under `config`:
 
 <File name='model.yml'>
 
@@ -424,7 +424,7 @@ models:
 
 </File>
 
-or:
+Or:
 
 <File name='model.yml'>
 

@@ -83,6 +83,7 @@ This table outlines which month of the "Latest" release track in <Constant name=
 | [require_nested_cumulative_type_params](#cumulative-metrics)         |   2024.11         | TBD*                 | 1.9.0           | TBD*            |
 | [validate_macro_args](#macro-argument-validation)         | 2025.03           | TBD*                 | 1.10.0          | TBD*            | 
 | [require_generic_test_arguments_property](#generic-test-arguments-property) | 2025.07 | TBD* | 1.10.5 | TBD* |
+
 When the <Constant name="cloud" /> Maturity is "TBD," it means we have not yet determined the exact date when these flags' default values will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
 - Migrate your project to support the new behavior, and then set the flag to `True` to stop seeing the warnings.
 - Set the flag to `False`. You will continue to see warnings, and you will retain the legacy behavior even after the maturity date (when the default value changes).
@@ -258,9 +259,10 @@ When you set the `validate_macro_args` flag to `True`, dbt will:
 
 dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguiate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
 
-By default, the `require_generic_test_arguments_property` flag is set to `False`, which means dbt won't parse the new `arguments` syntax. In this case, if the `arguments` property is specified, dbt will raise the `ArgumentsPropertyInGenericTestDeprecation` deprecation to indicate that the `arguments` property will be used to parse inputs to the generic test once `require_generic_test_arguments_property` reaches maturity and is `True` by default.
+By default, the `require_generic_test_arguments_property` flag is set to `False`, which means dbt won't parse the new `arguments` syntax. In this case, if the `arguments` property is specified, dbt raises the `ArgumentsPropertyInGenericTestDeprecation` deprecation to indicate that the `arguments` property will be used to parse inputs to the generic test after `require_generic_test_arguments_property` reaches maturity and is `True` by default.
 
-Here's an example the new `arguments` property:
+Here's an example of the new `arguments` property:
+
 <File name='model.yml'>
 
 ```yaml
@@ -274,7 +276,7 @@ models:
 
 </File>
 
-or using the alternative `test_name` format:
+Using the alternative `test_name` format:
 
 <File name='model.yml'>
 
@@ -290,6 +292,8 @@ models:
         where: "1=1"
 ```
 
+</File>
+
 When you set the `require_generic_test_arguments_property` flag to `True`, dbt will:
-- Parse any key value pairs under `arguments` in generic tests as inputs to the generic test macro
-- Raise a `MissingArgumentsPropertyInGenericTestDeprecation` warning if additional non-config arguments are specified outside of the `arguments` property
+- Parse any key value pairs under `arguments` in generic tests as inputs to the generic test macro.
+- Raise a `MissingArgumentsPropertyInGenericTestDeprecation` warning if additional non-config arguments are specified outside of the `arguments` property.
