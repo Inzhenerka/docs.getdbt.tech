@@ -45,6 +45,8 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `tcp_keepalive_interval`  | 200 | Number of Seconds of inactivity before the next probe is sent |
 | `tcp_keepalive_count`  | 5 | Number of times probes will be sent |
 
+For your tcp_keepalive inputs, we recommend taking a look at the [Redshift documentation](https://docs.aws.amazon.com/redshift/latest/mgmt/troubleshooting-connections.html) for more information on the right configuration for you. 
+
 
 ## Authentication Parameters
 
