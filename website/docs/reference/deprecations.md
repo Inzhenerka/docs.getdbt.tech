@@ -144,6 +144,10 @@ Previously, when you could define any additional fields directly under `config`,
 
 As of dbt Core v1.10 and in the dbt Fusion engine, top-level config keys will be reserved for official configurations of the dbt framework.
 
+import DeprecationWarnings4 from '/snippets/_deprecation-warnings.md';
+
+<DeprecationWarnings4 />
+
 #### CustomKeyInObjectDeprecation warning resolution
 
 Nest custom configs under `meta` and ensure `meta` is nested under `config` (similar to [`PropertyMovedToConfigDeprecation`](#propertymovedtoconfigdeprecation)).
