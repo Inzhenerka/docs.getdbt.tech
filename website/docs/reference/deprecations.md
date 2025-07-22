@@ -62,7 +62,6 @@ The following are deprecation warnings in dbt today and the associated version n
 
 dbt has deprecated the ability to specify a custom top-level property called `arguments` on generic tests. This deprecation warning is only raised when the behavior flag `require_generic_test_arguments_property` is set to `False`.
 
-
 #### ArgumentsPropertyInGenericTestDeprecation warning resolution
 
 If you previously had a property called `arguments` on custom generic tests:
