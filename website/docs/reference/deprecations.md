@@ -78,6 +78,8 @@ models:
           expression: "order_items_subtotal = subtotal"
 ```
 
+</File>
+
 You should flip the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
 
 <File name='model.yml'>
