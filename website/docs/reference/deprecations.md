@@ -58,6 +58,42 @@ Some deprecations can be automatically fixed with a script. Read more about it i
 
 The following are deprecation warnings in dbt today and the associated version number in which they first appear.
 
+### ArgumentsPropertyInGenericTestDeprecation
+
+dbt has deprecated the ability to specify a custom top-level property called `arguments` on generic tests. This deprecation warning is only raised when the behavior flag `require_generic_test_arguments_property` is set to `False`.
+
+
+#### ArgumentsPropertyInGenericTestDeprecation warning resolution
+
+If you previously had a property called `arguments` on a custom generic tests:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - my_custom_generic_test:
+          arguments: [1,2,3]
+          expression: "order_items_subtotal = subtotal"
+```
+
+You should now flip the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - my_custom_generic_test:
+          arguments: 
+            arguments: [1,2,3]
+            expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
 ### ConfigDataPathDeprecation
 
 In [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) `data-paths` has been renamed to [seed-paths](/reference/project-configs/model-paths). If you receive this deprecation warning, it means that `data-paths` is still being used in your project's `dbt_project.yml`.
