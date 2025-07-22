@@ -1,25 +1,30 @@
 ---
-title: "Connect Redshift, PostgreSQL, and AlloyDB"
+title: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
 id: connect-redshift-postgresql-alloydb
-description: "Setup instructions for connecting Redshift, PostgreSQL, and AlloyDBnpm to dbt"
-sidebar_label: "Connect Redshift, PostgreSQL, and AlloyDB"
+description: "Setup instructions for connecting Redshift, PostgreSQL,Lakebase and AlloyDB to dbt"
+sidebar_label: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
 ---
 
-The following fields are required when creating a Postgres, Redshift, or AlloyDB connection:
+dbt Cloud supports connecting to PostgresSQL, Postgres compatible databases (AlloyDB, Lakebase) and Redshift. 
+
+The following fields are required when creating a connection:
 
 | Field | Description | Examples |
 | ----- | ----------- | -------- |
-| Host Name | The hostname of the Postgres, Redshift, or AlloyDB database to connect to. This can either be a hostname or an IP address. | `xxx.us-east-1.amazonaws.com` or `hostname.us-east-1.redshift.amazonaws.com` or `workgroup-name.123456789.us-east-1.redshift-serverless.amazonaws.com` |
+| Host Name | The hostname of the Postgres, Redshift, Lakebase or AlloyDB database to connect to. This can either be a hostname or an IP address. | `xxx.us-east-1.amazonaws.com` or `hostname.us-east-1.redshift.amazonaws.com` or `workgroup-name.123456789.us-east-1.redshift-serverless.amazonaws.com` |
 | Port | Usually 5432 (Postgres) or 5439 (Redshift) | `5439` |
 | Database | The logical database to connect to and run queries against. | `analytics` |
 
 **Note**: When you set up a Redshift or Postgres connection in <Constant name="cloud" />, SSL-related parameters aren't available as inputs. 
 
+
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-connection.png" width="70%" title="Configuring a Redshift connection"/>
 
 ### Authentication Parameters
 
-For authentication, <Constant name="cloud" /> users can use either a **Database username and password**, or they can now use **IAM User authentication** to Redshift via [extended attributes](/docs/dbt-cloud-environments#extended-attributes).
+For authentication, <Constant name="cloud" /> users can use either a **Database username and password** for Postgres and Postgres compatible databases.
+
+For Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/external-oauth) 
 
 <Tabs
   defaultValue="database"
