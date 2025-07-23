@@ -113,6 +113,10 @@ Once a user has authorized <Constant name="cloud" /> with Snowflake via their id
 ### Setting up multiple dbt projects with Snowflake 0Auth
 If you are planning to set up the same Snowflake account to different <Constant name="cloud" /> projects, you can use the same security integration for all of the projects.
 
+import SnowflakeOauthWithPL from '/snippets/_snowflake-oauth-with-pl.md'; 
+
+<SnowflakeOauthWithPL />
+
 ### Troubleshooting
 
 <Expandable alt_header="Invalid consent request">

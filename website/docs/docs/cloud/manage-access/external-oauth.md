@@ -45,6 +45,10 @@ Select the configuration for your supported data warehouse:
 
 <TabItem value="Snowflake">
 
+import SnowflakeOauthWithPL from '/snippets/_snowflake-oauth-with-pl.md'; 
+
+<SnowflakeOauthWithPL />
+
 The following is a template for creating the OAuth configurations in the Snowflake environment:
 
 ```sql
