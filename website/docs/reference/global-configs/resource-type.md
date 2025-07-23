@@ -99,3 +99,23 @@ Instead of targeting specific resources, use the `--resource-type` or `--exclude
     </File>
 
 </VersionBlock>
+
+- In this example, use the following command to include multiple resource types such as data tests and models in your build process:
+
+    <File name='Usage'>
+
+    ```text
+    dbt build --resource-type test model
+    ```
+
+    </File>
+
+- In this example, use the following command to exclude multiple resource types such as data tests and models in your build process:
+
+    <File name='Usage'>
+
+    ```text
+    dbt build --exclude-resource-type test model
+    ```
+
+    </File>
