@@ -27,7 +27,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | Profile field | Example | Description |
 | ------------- | ------- | ------------ |
 | `type` | redshift | The type of data warehouse you are connecting to|
-| `host` | hostname.region.redshift.amazonaws.com or workgroup.account.region.redshift-serverless.amazonaws.com | Host of cluster|
+| `host` | `hostname.region.redshift.amazonaws.com` or `workgroup.account.region.redshift-serverless.amazonaws.com` | Host of cluster|
 | `port`  | 5439 | Port for your Redshift environment|
 | `dbname`  | my_db | Database name|
 | `schema`  | my_schema | Schema name|
