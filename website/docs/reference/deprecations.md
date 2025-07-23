@@ -64,7 +64,7 @@ dbt has deprecated the ability to specify a custom top-level property called `ar
 
 #### ArgumentsPropertyInGenericTestDeprecation warning resolution
 
-If you previously had a property called `arguments` on custom generic tests:
+For example, you may have previously had a property called `arguments` on custom generic tests:
 
 <File name='model.yml'>
 
