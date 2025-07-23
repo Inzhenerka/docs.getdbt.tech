@@ -37,7 +37,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `autocreate`  | false | Optional, default `False`. Creates user if they do not exist |
 | `db_groups`  | ['ANALYSTS'] | Optional. A list of existing database group names that the DbUser joins for the current session |
 | `ra3_node`  | true | Optional, default `False`. Enables cross-database sources |
-| `autocommit`  | true | Optional, default True. Enables autocommit after each statement |
+| `autocommit`  | true | Optional, default `True`. Enables autocommit after each statement |
 | `retries`  | 1 | Number of retries (on each statement) |
 | `retry_all`  | true | Allows dbt to retry all statements in a query|
 | `tcp_keepalive`  | true | Allows dbt to prevent idle connections from being dropped by intermediate firewalls or load-balancers |
