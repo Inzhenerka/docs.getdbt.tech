@@ -86,7 +86,7 @@ Instead of targeting specific resources, use the `--resource-type` or `--exclude
 
     </File>
 
-- In this example, use the following command to exclude multiple resource types such as data tests and models in your build process:
+- In this example, use the following command to exclude multiple resource types such as data tests and models from your build process:
 
     <File name='Usage'>
 
