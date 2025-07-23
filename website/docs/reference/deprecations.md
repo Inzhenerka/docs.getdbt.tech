@@ -58,6 +58,60 @@ Some deprecations can be automatically fixed with a script. Read more about it i
 
 The following are deprecation warnings in dbt today and the associated version number in which they first appear.
 
+### ArgumentsPropertyInGenericTestDeprecation
+
+dbt has deprecated the ability to specify a custom top-level property called `arguments` on generic tests. This deprecation warning is only raised when the behavior flag `require_generic_test_arguments_property` is set to `False`.
+
+#### ArgumentsPropertyInGenericTestDeprecation warning resolution
+
+For example, you may have previously had a property called `arguments` on custom generic tests:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - my_custom_generic_test:
+          arguments: [1,2,3]
+          expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+You should set the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - my_custom_generic_test:
+          arguments: 
+            arguments: [1,2,3]
+            expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+Alternatively, the original `arguments` keyword could be renamed to something else that does not collide with the new `arguments` key in the dbt framework. This renaming would also need to occur in the test macro definition, and the renamed key would still need to be specified within the `arguments` property to be valid syntactically. For example: 
+
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - my_custom_generic_test:
+          arguments:
+            renamed_arguments: [1,2,3]
+            expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
 ### ConfigDataPathDeprecation
 
 In [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) `data-paths` has been renamed to [seed-paths](/reference/project-configs/model-paths). If you receive this deprecation warning, it means that `data-paths` is still being used in your project's `dbt_project.yml`.
@@ -332,6 +386,79 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes
 #### MFTimespineWithoutYamlConfigurationDeprecation warning resolution
 
 Define your MetricFlow timespine in [YAML](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
+
+### MissingArgumentsPropertyInGenericTestDeprecation
+
+dbt has deprecated specifiying keyword arguments as properties on custom generic data tests or data tests that use the [alternative `test_name` format](/docs/reference/resource-properties/data-tests.md#alternative-format-for-defining-tests). Instead, arguments to tests should be specified under the new `arguments` property.
+
+This deprecation warning is only raised when the behavior flag `require_generic_test_arguments_property` is set to `True`.
+
+
+#### MissingArgumentsPropertyInGenericTestDeprecation warning resolution
+
+If you previously set arguments as top-level properties on custom generic tests:
+
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+Or using the alternative `test_name` format:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+    - name: arbitrary_name
+      test_name: dbt_utils.expression_is_true
+      expression: "order_items_subtotal = subtotal"
+      where: "1=1"
+```
+
+</File>
+
+You should now nest arguments under `arguments` and framework configurations under `config`:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments: 
+            expression: "order_items_subtotal = subtotal"
+```
+
+</File>
+
+Or with framework configurations:
+
+<File name='model.yml'>
+
+```yaml
+models:
+  - name: my_model_with_generic_test
+    data_tests:
+    - name: arbitrary_name
+      test_name: dbt_utils.expression_is_true
+      arguments:
+         expression: "order_items_subtotal = subtotal"
+      config:
+        where: "1=1"
+```
+
+</File>
 
 ### MissingPlusPrefixDeprecation
 
