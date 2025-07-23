@@ -25,7 +25,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## June 2025
 
-- **New**: [System for Cross-Domain Identity Management](/docs/cloud/manage-access/scim#scim-configuration-for-entra-id) (SCIM) through Microsoft Entra ID is now GA.
+- **New**: [System for Cross-Domain Identity Management](/docs/cloud/manage-access/scim#scim-configuration-for-entra-id) (SCIM) through Microsoft Entra ID is now GA. Also available on legacy Enterprise plans. 
 - **Enhancement:** You can now set the [compilation environment](/docs/explore/access-dbt-insights#set-jinja-environment) to control how Jinja functions are rendered in dbt Insights.
 - **Beta**: The dbt Fusion engine supports the BigQuery adapter in beta.
 - **New:** You can now view the history of settings changes for [projects](/docs/cloud/account-settings), [environments](/docs/dbt-cloud-environments), and [jobs](/docs/deploy/deploy-jobs).
