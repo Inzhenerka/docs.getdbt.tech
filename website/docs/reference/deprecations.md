@@ -79,7 +79,7 @@ models:
 
 </File>
 
-You should flip the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
+You should set the `require_generic_test_arguments_property` flag to `True` and nest any keyword arguments to your test under the new `arguments` property:
 
 <File name='model.yml'>
 
