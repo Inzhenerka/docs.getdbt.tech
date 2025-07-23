@@ -11,7 +11,7 @@ You can set up a merge job to implement a continuous deployment (CD) workflow in
 By using CD in <Constant name="cloud" />, you can take advantage of deferral to build only the edited model and any downstream changes. With merge jobs, state will be updated almost instantly, always giving the most up-to-date state information in [<Constant name="explorer" />](/docs/explore/explore-projects).
 
 :::note Triggering merge jobs in monorepos
-If you have a monorepo with several dbt projects, a single pull request in one of your projects will trigger jobs for all projects connected to the monorepo. To address this, you can use separate target branches per project (for example, `main-project-a`, `main-project-b`) to separate CI triggers.
+If you have a monorepo with several dbt projects, merging a single pull request in one of your projects will trigger jobs for all projects connected to the monorepo. To address this, you can use separate target branches per project (for example, `main-project-a`, `main-project-b`) to separate CI triggers.
 :::
 
 ## Prerequisites
