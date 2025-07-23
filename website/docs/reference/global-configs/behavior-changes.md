@@ -262,7 +262,7 @@ dbt supports parsing key-value arguments that are inputs to generic tests when s
 
 By default, the `require_generic_test_arguments_property` flag is set to `False`, which means dbt won't parse the new `arguments` syntax. In this case, if the `arguments` property is specified, dbt raises the `ArgumentsPropertyInGenericTestDeprecation` deprecation to indicate that the `arguments` property will be used to parse inputs to the generic test after `require_generic_test_arguments_property` reaches maturity and becomes `True` by default.
 
-Here's an example of the new `arguments` property:
+Here's an example using the new `arguments` property:
 
 <File name='model.yml'>
 
