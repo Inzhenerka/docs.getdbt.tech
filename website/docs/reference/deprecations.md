@@ -442,7 +442,7 @@ models:
 
 </File>
 
-Or:
+Or with framework configurations:
 
 <File name='model.yml'>
 
