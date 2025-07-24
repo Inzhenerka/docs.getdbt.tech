@@ -151,7 +151,7 @@ Columns are not resources in and of themselves. Instead, they are child properti
 - `tests`
 - `description`
 
-Because columns are not resources, their `tags` and `meta` properties, even when nested under a `config` block, are not true configurations. They do not inherit the `tags` or `meta` values of their parent resources. However, you can select a generic test, defined on a column, using tags applied to its column or top-level resource; see [test selection examples](/reference/node-selection/test-selection-examples#run-tests-on-tagged-columns).
+Because columns are not resources, their `tags` and `meta` properties are not true configurations even when nested under a `config` block. They do not inherit the `tags` or `meta` values of their parent resources. However, you can select a generic test, defined on a column, using tags applied to its column or top-level resource; see [test selection examples](/reference/node-selection/test-selection-examples#run-tests-on-tagged-columns).
 
 Columns may optionally define a `data_type`, which is necessary for:
 - Enforcing a model [contract](/reference/resource-configs/contract)
