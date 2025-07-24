@@ -85,7 +85,6 @@ to authenticate <Constant name="cloud" /> to run queries against Snowflake on be
 
 :::info Update deployment environments
 
-Starting November 2025, Snowflake will phase out single-factor password authentication, and MFA will be enforced.
 
 
 
