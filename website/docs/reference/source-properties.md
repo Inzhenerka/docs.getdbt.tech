@@ -55,14 +55,14 @@ sources:
     tables:
       - name: <string> #required
         [description](/reference/resource-properties/description): <markdown_string>
-        [meta](/reference/resource-configs/meta): {<dictionary>}
         [identifier](/reference/resource-properties/identifier): <table_name>
-        [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
         [tests](/reference/resource-properties/data-tests):
           - <test>
           - ... # declare additional tests
-        [tags](/reference/resource-configs/tags): [<string>]
         [config](/reference/resource-properties/config):
+          [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
+          [meta](/reference/resource-configs/meta): {<dictionary>}
+          [tags](/reference/resource-configs/tags): [<string>]
           [freshness](/reference/resource-properties/freshness):
             warn_after:
               [count](/reference/resource-properties/freshness#count): <positive_integer>
@@ -80,12 +80,13 @@ sources:
         columns:
           - name: <column_name> # required
             [description](/reference/resource-properties/description): <markdown_string>
-            [meta](/reference/resource-configs/meta): {<dictionary>}
             [quote](/reference/resource-properties/columns#quote): true | false
             [tests](/reference/resource-properties/data-tests):
               - <test>
               - ... # declare additional tests
-            [tags](/reference/resource-configs/tags): [<string>]
+            [config](/reference/resource-properties/config):
+              [meta](/reference/resource-configs/meta): {<dictionary>}
+              [tags](/reference/resource-configs/tags): [<string>]
           - name: ... # declare properties of additional columns
 
       - name: ... # declare properties of additional source tables
