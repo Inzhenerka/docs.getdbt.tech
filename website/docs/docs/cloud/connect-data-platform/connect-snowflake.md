@@ -30,7 +30,7 @@ This section describes the different authentication methods for connecting <Cons
 
 :::info Snowflake authentication
 
-From November 25, 2025 Snowflake will phase out single-factor password authentication and, multi-factor authentication (MFA) will be enforced.
+From November 2025 Snowflake will phase out single-factor password authentication and, multi-factor authentication (MFA) will be enforced.
 
 MFA will be required for all `Username / Password` authentication.
 
