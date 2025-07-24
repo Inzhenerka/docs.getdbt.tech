@@ -83,7 +83,6 @@ to authenticate <Constant name="cloud" /> to run queries against Snowflake on be
 
 ### Key pair
 
-:::info Update deployment environments
 
 
 
