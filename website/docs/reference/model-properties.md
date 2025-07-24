@@ -31,14 +31,15 @@ models:
     [columns](/reference/resource-properties/columns):
       - name: <column_name> # required
         [description](/reference/resource-properties/description): <markdown_string>
-        [meta](/reference/resource-configs/meta): {<dictionary>}
         [quote](/reference/resource-properties/columns#quote): true | false
         [constraints](/reference/resource-properties/constraints):
           - <constraint>
         [tests](/reference/resource-properties/data-tests):
           - <test>
           - ... # declare additional data tests
-        [tags](/reference/resource-configs/tags): [<string>]
+        [config](/reference/resource-properties/config):
+          [meta](/reference/resource-configs/meta): {<dictionary>}
+          [tags](/reference/resource-configs/tags): [<string>]
         
         # only required in conjunction with time_spine key
         [granularity](/docs/build/metricflow-time-spine#creating-a-time-spine-table): <[any supported time granularity](/docs/build/dimensions?dimension=time_gran)> 
