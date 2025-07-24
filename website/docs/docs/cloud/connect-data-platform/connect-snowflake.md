@@ -62,7 +62,7 @@ to authenticate <Constant name="cloud" /> to run queries against Snowflake on be
 - Admin access to Snowflake (if MFA settings haven't already been applied to the account)
 - [Admin (write) access](/docs/cloud/manage-access/seats-and-users) to <Constant name="cloud" /> environments
 
-<Constant name="cloud" /> supports [Snowflake's MFA](https://docs.snowflake.com/en/user-guide/security-mfa) as another `Username / Password` option for increased login security. Snowflake's MFA support is powered by the Duo Security service.
+[MFA](https://docs.snowflake.com/en/user-guide/security-mfa) is required by Snowflake for all `Username / Password` logins. Snowflake's MFA support is powered by the Duo Security service.
 
 - In <Constant name="cloud" />, set the following [extended attribute](/docs/dbt-cloud-environments#extended-attributes) in the development environment **General settings** page, under the **Extended attributes** section:
 
