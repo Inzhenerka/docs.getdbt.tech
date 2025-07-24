@@ -53,7 +53,7 @@ to authenticate <Constant name="cloud" /> to run queries against Snowflake on be
 
 `Username / Password` authentication is permitted in development environments only. In other environments (for example, deployment), users must complete the MFA setup.
 
-**Note**: The schema field in the **Developer Credentials** section is a required field.
+**Note**: The *Schema** field in the **Developer Credentials** section is required.
 <Lightbox src="/img/docs/dbt-cloud/snowflake-userpass-auth.png" width="70%" title="Snowflake username/password authentication"/>
 
 **Prerequisites:**
