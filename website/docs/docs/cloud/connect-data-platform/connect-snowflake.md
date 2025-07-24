@@ -34,6 +34,8 @@ Starting November 2025, Snowflake will phase out single-factor password authenti
 
 MFA will be required for all `Username / Password` authentication.
 
+To continue using key pair authentication, users should update any deployment environments currently using `Username / Password` by November 2025.
+
 Refer to [Snowflake's blog post](https://www.snowflake.com/en/blog/blocking-single-factor-password-authentification/) for more information.
 
 :::
