@@ -338,7 +338,7 @@ config:
 
 ### DuplicateYAMLKeysDeprecation
 
-This warning is raised when two identical keys exist in the `profiles.yml`. Note that in a future version, dbt will stop supporting duplicate keys with silent overwrite. 
+This warning is raised when two identical keys exist in the `profiles.yml`. 
 
 Previously, if identical keys existed in the [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml), dbt would use the last configuration listed in the file. 
 
@@ -357,6 +357,8 @@ my_profile: # dbt would use this profile key
 ...
 ```
 </File>
+
+Note that in a future version, dbt will stop supporting duplicate keys with silent overwrite. 
 
 #### DuplicateYAMLKeysDeprecation warning resolution
 
