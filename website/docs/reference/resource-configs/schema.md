@@ -112,7 +112,7 @@ For example, to save test results in a specific schema, you can configure it lik
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   +store_failures: true
   +schema: test_results
 ```
@@ -185,7 +185,7 @@ To use the same profile schema, set `+schema: null`.
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   +store_failures: true
   +schema: _sad_test_failures  # Will write tables to my_database.my_schema__sad_test_failures
 ```

@@ -50,14 +50,14 @@ models:
     columns:
       - name: event_id
         description: This is a unique identifier for the event
-        tests:
+        data_tests:
           - unique
           - not_null
 
       - name: user-id
         quote: true
         description: The user who performed the event
-        tests:
+        data_tests:
           - not_null
 
 ```
@@ -140,7 +140,7 @@ models:
     columns:
       - name: event_id
         description: This is a unique identifier for the event
-        tests:
+        data_tests:
             - unique
             - not_null
 ```

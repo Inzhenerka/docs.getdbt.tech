@@ -137,18 +137,18 @@ sources:
           loaded_at_field: updated_at # override source defaults
         columns:
           - name: id
-            tests:
+            data_tests:
               - unique
 
           - name: price_in_usd
-            tests:
+            data_tests:
               - not_null
 
       - name: customers
         quoting:
           identifier: true # override source defaults
         columns:
-            tests:
+            data_tests:
               - unique
 ```
 

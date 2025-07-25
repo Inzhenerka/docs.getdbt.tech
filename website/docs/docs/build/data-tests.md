@@ -119,15 +119,15 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'returned']
       - name: customer_id
-        tests:
+        data_tests:
           - relationships:
               to: ref('customers')
               field: id
@@ -165,7 +165,7 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique
           - not_null
 

@@ -109,7 +109,7 @@ sources:
         columns:
           - name: id
             description: Primary key of the orders table
-            tests:
+            data_tests:
               - unique
               - not_null
           - name: status

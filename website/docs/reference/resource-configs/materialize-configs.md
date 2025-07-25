@@ -83,7 +83,7 @@ If you set the optional `--store-failures` flag or [`store_failures` config](/re
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
+data_tests:
   project_name:
     +store_failures: true
     +schema: test

@@ -27,7 +27,7 @@ version: 2
 
 models:
   - name: <model_name>
-    tests:
+    data_tests:
       - [<test_name>](#custom-data-test-name):
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
@@ -35,7 +35,7 @@ models:
 
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
-        tests:
+        data_tests:
           - [<test_name>](#custom-data-test-name)
           - [<test_name>](#custom-data-test-name):
               <argument_name>: <argument_value>
@@ -58,7 +58,7 @@ sources:
   - name: <source_name>
     tables:
     - name: <table_name>
-      tests:
+      data_tests:
         - [<test_name>](#custom-data-test-name)
         - [<test_name>](#custom-data-test-name):
             <argument_name>: <argument_value>
@@ -67,7 +67,7 @@ sources:
 
       columns:
         - name: <column_name>
-          tests:
+          data_tests:
             - [<test_name>](#custom-data-test-name)
             - [<test_name>](#custom-data-test-name):
                 <argument_name>: <argument_value>
@@ -89,7 +89,7 @@ version: 2
 
 seeds:
   - name: <seed_name>
-    tests:
+    data_tests:
       - [<test_name>](#custom-data-test-name)
       - [<test_name>](#custom-data-test-name):
           <argument_name>: <argument_value>
@@ -98,7 +98,7 @@ seeds:
 
     columns:
       - name: <column_name>
-        tests:
+        data_tests:
           - [<test_name>](#custom-data-test-name)
           - [<test_name>](#custom-data-test-name):
               <argument_name>: <argument_value>
@@ -120,7 +120,7 @@ version: 2
 
 snapshots:
   - name: <snapshot_name>
-    tests:
+    data_tests:
       - [<test_name>](#custom-data-test-name)
       - [<test_name>](#custom-data-test-name):
           <argument_name>: <argument_value>
@@ -129,7 +129,7 @@ snapshots:
 
     columns:
       - name: <column_name>
-        tests:
+        data_tests:
           - [<test_name>](#custom-data-test-name)
           - [<test_name>](#custom-data-test-name):
               <argument_name>: <argument_value>
@@ -178,7 +178,7 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - not_null
 ```
 
@@ -199,7 +199,7 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique:
               config:
                 where: "order_id > 21"
@@ -222,12 +222,12 @@ models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'returned']
 
       - name: status_id
-        tests:
+        data_tests:
           - accepted_values:
               values: [1, 2, 3, 4]
               quote: false
@@ -250,7 +250,7 @@ models:
   - name: orders
     columns:
       - name: customer_id
-        tests:
+        data_tests:
           - relationships:
               to: ref('customers')
               field: id
@@ -274,7 +274,7 @@ models:
   - name: orders
     description: 
         Order overview data mart, offering key details for each order including if it's a customer's first order and a food vs. drink item breakdown. One row per order.
-    tests:
+    data_tests:
       - dbt_utils.expression_is_true:
           expression: "order_items_subtotal = subtotal"
       - dbt_utils.expression_is_true:
@@ -297,7 +297,7 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - primary_key  # name of my custom generic test
 
 ```
@@ -329,7 +329,7 @@ models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               name: unexpected_order_status_today
               values: ['placed', 'shipped', 'completed', 'returned']
@@ -369,7 +369,7 @@ models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'returned']
               config:
@@ -406,7 +406,7 @@ models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               name: unexpected_order_status_today
               values: ['placed', 'shipped', 'completed', 'returned']
@@ -457,7 +457,7 @@ models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - name: unexpected_order_status_today
             test_name: accepted_values  # name of the generic test to apply
             values:

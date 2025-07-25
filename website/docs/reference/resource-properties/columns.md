@@ -302,7 +302,7 @@ sources:
         columns:
           - name: orderID
             quote: true
-            tests:
+            data_tests:
               - not_null
 
 ```

@@ -46,7 +46,7 @@ models:
   - name: orders
     columns:
       - name: surrogate_key
-        tests:
+        data_tests:
           - unique
 
 ```
@@ -63,7 +63,7 @@ version: 2
 
 models:
   - name: orders
-    tests:
+    data_tests:
       - unique:
           column_name: "(country_code || '-' || order_id)"
 ```
@@ -82,7 +82,7 @@ version: 2
 
 models:
   - name: orders
-    tests:
+    data_tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - country_code

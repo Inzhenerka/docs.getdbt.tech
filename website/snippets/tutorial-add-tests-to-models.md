@@ -14,29 +14,29 @@ To add tests to your project:
       - name: customers
         columns:
           - name: customer_id
-            tests:
+            data_tests:
               - unique
               - not_null
 
       - name: stg_customers
         columns:
           - name: customer_id
-            tests:
+            data_tests:
               - unique
               - not_null
 
       - name: stg_orders
         columns:
           - name: order_id
-            tests:
+            data_tests:
               - unique
               - not_null
           - name: status
-            tests:
+            data_tests:
               - accepted_values:
                   values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
           - name: customer_id
-            tests:
+            data_tests:
               - not_null
               - relationships:
                   to: ref('stg_customers')
