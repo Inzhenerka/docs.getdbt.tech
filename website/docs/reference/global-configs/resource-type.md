@@ -31,91 +31,109 @@ The available resource types are:
 - [`test`](/docs/build/data-tests)
 - [`unit_test`](/docs/build/unit-tests)
 
-## Example
+## Examples
 
-Instead of targeting specific resources, use the `--resource-type` or `--exclude-resource-type` flags to target all resources of a certain type: `dbt build --resource-type RESOURCE_TYPE` replacing `RESOURCE_TYPE` with the resource type you want to include.
+Instead of targeting specific resources, use the `--resource-type` or `--exclude-resource-type` flags to target all resources of a certain type: `dbt build --resource-type RESOURCE_TYPE` or `dbt test --resource-type RESOURCE_TYPE`, replacing `RESOURCE_TYPE` with the resource type you want to include.
 
-- For example, use the following command to include _all_ snapshots from your dbt build process:
+See the following sample commands for including or excluding resource types. Note that the `--exclude-resource-type` flag is only available in dbt version 1.8 and higher.
 
-    <File name='Usage'>
+### Include all snapshots
 
-    ```text
-    dbt build --resource-type snapshot
-    ```
+Use the following command to include _all_ snapshots in your dbt build process:
 
-    </File>
+<File name='Usage'>
+
+```text
+dbt build --resource-type snapshot
+```
+
+</File>
 
 
-- In this example, run the following command to include _all_ saved queries with the `--resource-type` flag:
+#### Include all saved queries
 
-    <File name='Usage'>
+In this example, run the following command to include _all_ saved queries with the `--resource-type` flag:
 
-    ```text
-    dbt build --resource-type saved_query
-    ```
+<File name='Usage'>
 
-    </File>
+```text
+dbt build --resource-type saved_query
+```
 
--  In this example, use the following command to exclude _all_ unit tests from your dbt build process. Note that the `--exclude-resource-type` flag is only available in dbt version 1.8 and higher:
+</File>
 
-    <File name='Usage'>
+### Include all data tests
 
-    ```text
-    dbt build --exclude-resource-type unit_test
-    ```
+In this example, use the following command to include _all_ data tests in your build process:
 
-    </File>
+<File name='Usage'>
 
-- In this example, use the following command to include all data tests in your build process:
+```text
+dbt build --resource-type test
+```
 
-    <File name='Usage'>
+</File>
 
-    ```text
-    dbt build --resource-type test
-    ```
+### Include multiple resource types
 
-    </File>
+In this example, use the following command to include multiple resource types such as data tests and models in your build process:
 
-- In this example, use the following command to include multiple resource types such as data tests and models in your build process:
+<File name='Usage'>
 
-    <File name='Usage'>
+```text
+dbt build --resource-type test model
+```
 
-    ```text
-    dbt build --resource-type test model
-    ```
+</File>
 
-    </File>
+### Exclude multiple resource types
 
-- In this example, use the following command to exclude multiple resource types such as data tests and models from your build process:
+In this example, use the following command to exclude multiple resource types such as data tests and models from your build process:
 
-    <File name='Usage'>
+<File name='Usage'>
 
-    ```text
-    dbt build --exclude-resource-type test model
-    ```
+```text
+dbt build --exclude-resource-type test model
+```
 
-    </File>
+</File>
+
+### Exclude all unit tests
+
+In this example, use the following command to exclude _all_ unit tests from your dbt build process.
+
+<File name='Usage'>
+
+```text
+dbt build --exclude-resource-type unit_test
+```
+
+</File>
 
 <VersionBlock firstVersion="1.9">
 
--  In this example, use the following command to exclude _all_ unit tests when running tests:
+### Include all data tests during testing
 
-    <File name='Usage'>
+In this example, use the following command to include _all_ data tests when running tests:
 
-    ```text
-    dbt test --exclude-resource-type unit_test
-    ```
+<File name='Usage'>
 
-    </File>
+```text
+dbt test --resource-type test
+```
 
-- In this example, use the following command to include all data tests when running tests:
+</File>
 
-    <File name='Usage'>
+### Exclude all unit tests during testing
 
-    ```text
-    dbt test --resource-type test
-    ```
+In this example, use the following command to exclude _all_ unit tests when running tests:
 
-    </File>
+<File name='Usage'>
+
+```text
+dbt test --exclude-resource-type unit_test
+```
+
+</File>
 
 </VersionBlock>
