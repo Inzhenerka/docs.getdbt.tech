@@ -18,7 +18,6 @@ The `--exclude-resource-type` flag is only available in dbt version 1.8 and high
 
 The available resource types are:
 
-
 - [`analysis`](/docs/build/analyses)
 - [`exposure`](/docs/build/exposures)
 - [`metric`](/docs/build/build-metrics-intro)
@@ -30,6 +29,19 @@ The available resource types are:
 - [`source`](/docs/build/sources)
 - [`test`](/docs/build/data-tests)
 - [`unit_test`](/docs/build/unit-tests)
+
+## Positive vs negative filters
+
+- `--resource-type` is a positive filter &mdash; dbt only runs the resource types selected in the command, implicitly skipping every other type.
+- `--exclude-resource-type` is a negative filter &mdash; dbt starts with the full catalog of resource types and then omits the types selected in the command. dbt runs everything _except_ those resource types. 
+
+You can use both flags in a command; dbt first applies the positive filter (`--resource-type`) and then removes the negatives (`--exclude-resource-type`). For example:
+
+```text
+dbt build --resource-type model test snapshot --exclude-resource-type snapshot
+```
+
+Note that the list of dbt resource types is mutually exclusive and collectively exhaustive (MECE). This means that any `--resource-type` selection can also be achieved by excluding the other resource types using `--exclude-resource-type`, and vice versa.
 
 ## Examples
 
