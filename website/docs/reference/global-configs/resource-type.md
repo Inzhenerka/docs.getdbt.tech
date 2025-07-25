@@ -50,7 +50,7 @@ dbt build --resource-type snapshot
 </File>
 
 
-#### Include all saved queries
+### Include all saved queries
 
 In this example, run the following command to include _all_ saved queries with the `--resource-type` flag:
 
