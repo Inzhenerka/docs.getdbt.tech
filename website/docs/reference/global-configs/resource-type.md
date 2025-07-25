@@ -35,7 +35,7 @@ The available resource types are:
 - `--resource-type` is a positive filter &mdash; dbt only runs the resource types selected in the command, implicitly skipping every other type.
 - `--exclude-resource-type` is a negative filter &mdash; dbt starts with the full catalog of resource types and then omits the types selected in the command. dbt runs everything _except_ those resource types. 
 
-You can use both flags in a command; dbt first applies the positive filter (`--resource-type`) and then removes the negatives (`--exclude-resource-type`). For example:
+You can use both flags in a command; dbt first applies the positive filter (`--resource-type`) and then removes the types listed in the negative filter (`--exclude-resource-type`). For example:
 
 ```text
 dbt build --resource-type model test snapshot --exclude-resource-type snapshot
