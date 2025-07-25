@@ -52,7 +52,7 @@ dbt build --resource-type snapshot
 
 ### Include all saved queries
 
-In this example, run the following command to include _all_ saved queries with the `--resource-type` flag:
+Use the following command to include _all_ saved queries with the `--resource-type` flag:
 
 <File name='Usage'>
 
@@ -64,7 +64,7 @@ dbt build --resource-type saved_query
 
 ### Include all data tests
 
-In this example, use the following command to include _all_ data tests in your build process:
+Use the following command to include _all_ data tests in your build process:
 
 <File name='Usage'>
 
@@ -76,7 +76,7 @@ dbt build --resource-type test
 
 ### Include multiple resource types
 
-In this example, use the following command to include multiple resource types such as data tests and models in your build process:
+Use the following command to include multiple resource types such as data tests and models in your build process:
 
 <File name='Usage'>
 
@@ -88,7 +88,7 @@ dbt build --resource-type test model
 
 ### Exclude multiple resource types
 
-In this example, use the following command to exclude multiple resource types such as data tests and models from your build process:
+Use the following command to exclude multiple resource types such as data tests and models from your build process:
 
 <File name='Usage'>
 
@@ -100,7 +100,7 @@ dbt build --exclude-resource-type test model
 
 ### Exclude all unit tests
 
-In this example, use the following command to exclude _all_ unit tests from your dbt build process.
+Use the following command to exclude _all_ unit tests from your dbt build process.
 
 <File name='Usage'>
 
@@ -114,7 +114,7 @@ dbt build --exclude-resource-type unit_test
 
 ### Include all data tests during testing
 
-In this example, use the following command to include _all_ data tests when running tests:
+Use the following command to include _all_ data tests when running tests:
 
 <File name='Usage'>
 
@@ -126,7 +126,7 @@ dbt test --resource-type test
 
 ### Exclude all unit tests during testing
 
-In this example, use the following command to exclude _all_ unit tests when running tests:
+Use the following command to exclude _all_ unit tests when running tests:
 
 <File name='Usage'>
 
