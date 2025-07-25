@@ -37,6 +37,8 @@ Instead of targeting specific resources, use the `--resource-type` or `--exclude
 
 See the following sample commands for including or excluding resource types. Note that the `--exclude-resource-type` flag is only available in dbt version 1.8 and higher.
 
+<Expandable alt_header="Include resource types">
+
 ### Include multiple resource types
 
 Use the following command to include multiple resource types such as data tests and models in your build process:
@@ -102,6 +104,9 @@ dbt test --resource-type test
 
 </VersionBlock>
 
+</Expandable>
+<Expandable alt_header="Exclude resource types">
+
 ### Exclude multiple resource types
 
 Use the following command to exclude multiple resource types such as data tests and models from your build process:
@@ -141,3 +146,4 @@ dbt test --exclude-resource-type unit_test
 </File>
 
 </VersionBlock>
+</Expandable>
