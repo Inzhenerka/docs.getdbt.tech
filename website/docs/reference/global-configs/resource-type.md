@@ -33,7 +33,7 @@ The available resource types are:
 
 ## Examples
 
-Instead of targeting specific resources, use the `--resource-type` or `--exclude-resource-type` flags to target all resources of a certain type: `dbt build --resource-type RESOURCE_TYPE` or `dbt test --resource-type RESOURCE_TYPE`, replacing `RESOURCE_TYPE` with the resource type you want to include.
+Instead of targeting specific resources, use the `--resource-type` or `--exclude-resource-type` flags to target all resources of a certain type: `dbt build --resource-type RESOURCE_TYPE` or `dbt test --resource-type RESOURCE_TYPE`. Replace `RESOURCE_TYPE` with the resource type you want to include.
 
 See the following sample commands for including or excluding resource types. Note that the `--exclude-resource-type` flag is only available in dbt version 1.8 and higher.
 
