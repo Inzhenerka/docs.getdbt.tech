@@ -176,7 +176,7 @@ seeds:
 
 </File>
 
-### Tests
+### Data tests
 
 Customize the name of the schema in which tests [configured to store failures](/reference/resource-configs/store_failures) will save their results.
 The resulting schema is `{{ profile.schema }}_{{ tests.schema }}`, with a default suffix of `dbt_test__audit`.

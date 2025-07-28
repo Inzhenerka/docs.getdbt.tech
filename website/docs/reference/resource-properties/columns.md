@@ -289,7 +289,7 @@ Without setting `quote: true`:
 - Documentation may not render correctly, e.g. `group` and `"group"` may not be matched as the same column name.
 
 ### Example
-#### Add tests to a quoted column in a source table
+#### Add data tests to a quoted column in a source table
 This is especially relevant if using Snowflake:
 
 ```yml
