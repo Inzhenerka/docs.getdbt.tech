@@ -787,3 +787,73 @@ Should now be configured as:
       error:
         - NoNodesForSelectionCriteria
 ```
+
+
+### ModulesItertoolsUsageDeprecation
+
+dbt has deprecated usage of `modules.itertools` in jinja.
+
+Example:
+
+<File name='CLI'>
+```bash
+15:49:33  [WARNING]: Deprecated functionality
+Usage of itertools modules is deprecated. Please use the built-in functions
+instead.
+```
+</File>
+
+
+#### ModulesItertoolsUsageDeprecation warning resolution
+
+If you currently making use of methods within the `itertools` module from within jinja SQL, pleas use the available built-in macros and jinja methods instead.
+
+For example:
+
+<File name='models/itertools_usage.sql'>
+
+```
+{%- set A = [1, 2] -%}
+{%- set B = ['x', 'y', 'z'] -%}
+{%- set AB_cartesian = modules.itertools.product(A, B) -%}
+
+{%- for item in AB_cartesian %}
+  {{ item }}
+{%- endfor -%}
+```
+
+</File>
+
+should be converted to use alternative built-in dbt jinja methods:
+
+
+<File name='macros/cartesian_product.sql'>
+
+```
+{%- macro cartesian_product(list1, list2) -%}
+  {%- set result = [] -%}
+  {%- for item1 in list1 -%}
+    {%- for item2 in list2 -%}
+      {%- set _ = result.append((item1, item2)) -%}
+    {%- endfor -%}
+  {%- endfor -%}
+  {{ return(result) }}
+{%- endmacro -%}
+```
+
+</File>
+
+
+<File name='models/itertools_usage.sql'>
+
+```
+{%- set A = [1, 2] -%}
+{%- set B = ['x', 'y', 'z'] -%}
+{%- set AB_cartesian = cartesian_product(A, B) -%}
+
+{%- for item in AB_cartesian %}
+  {{ item }}
+{%- endfor -%}
+```
+
+</File>
