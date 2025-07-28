@@ -32,6 +32,21 @@ import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
 
 <UseCaseInfo/>
 
+## How do I create a package?
+
+Creating packages is an advanced use of dbt, but it can be a relatively simple task. The only strict requirement is the presence of a [`dbt_project.yml file`](/reference/dbt_project.yml).
+
+The most common use-cases for packages are:
+
+- Models to share across multiple projects.
+- Macros to share across multiple projects.
+- Or both of the above.
+
+Note, packages can be private &mdash; they don't need to be shared publicly. You can create a package within your own git provider (for example, you can create a package within GitHub) for your own private use.
+
+For instructions on creating dbt packages and additional information, refer to our guide [Building dbt packages](/guides/building-packages?step=1).
+
+
 ## How do I add a package to my project?
 1. Add a file named `dependencies.yml` or `packages.yml` to your dbt project. This should be at the same level as your `dbt_project.yml` file.
 2. Specify the package(s) you wish to add using one of the supported syntaxes, for example:
@@ -336,7 +351,9 @@ packages:
 </File>
 
 ### Local packages
-A "local" package is a dbt project accessible from your local file system. You can install it by specifying the project's path. It works best when you nest the project within a subdirectory relative to your current project's directory.
+A "local" package is a dbt project accessible from your local file system. They're are best suited when there is a small subset of models, macros, and more so, that you want to share across multiple downstream dbt projects (but each downstream project still has their own unique models, macros, etc).
+
+You can install local packages by specifying the project's path. It works best when you nest the project within a subdirectory relative to your current project's directory. 
 
 <File name='packages.yml'>
 
