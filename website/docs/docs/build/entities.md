@@ -6,7 +6,7 @@ sidebar_label: "Entities"
 tags: [Metrics, Semantic Layer]
 ---
 
-Entities are real-world concepts in a business such as customers, transactions, and ad campaigns. We often focus our analyses around specific entities, such as customer churn or annual recurring revenue modeling. In our semantic layer models, these entities serve as our join key across semantic models.
+Entities are real-world concepts in a business such as customers, transactions, and ad campaigns. We often focus our analyses around specific entities, such as customer churn or annual recurring revenue modeling. In our semantic layer models, these entities serve as joins key across semantic models.
 
 Within a semantic graph, the required parameters for an entity are `name` and `type`. The `name` refers to either the key column name from the underlying data table, or it may serve as an alias with the column name referenced in the `expr` parameter. The `name` for your entity must be unique to the semantic model and can not be the same as an existing `measure` or `dimension` within that same model.
 
