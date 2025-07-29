@@ -42,7 +42,7 @@ The most common use-cases for packages are:
 - Macros to share across multiple projects.
 - Or both of the above.
 
-Note, packages can be private &mdash; they don't need to be shared publicly. You can create a package within your own git provider (for example, you can create a package within GitHub) for your own private use.
+Note, packages can be [private](#private-packages) &mdash; they don't need to be shared publicly. You can create a package within your own git provider (for example, you can create a package within GitHub) for your own private use.
 
 For instructions on creating dbt packages and additional information, refer to our guide [Building dbt packages](/guides/building-packages?step=1).
 
