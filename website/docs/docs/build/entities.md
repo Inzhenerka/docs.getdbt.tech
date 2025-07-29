@@ -6,7 +6,7 @@ sidebar_label: "Entities"
 tags: [Metrics, Semantic Layer]
 ---
 
-Entities are real-world concepts in a business such as customers, transactions, and ad campaigns. We often focus our analyses around specific entities, such as customer churn or annual recurring revenue modeling. We represent entities in our semantic models using id columns that serve as join keys to other semantic models in your semantic graph.
+Entities are real-world concepts in a business such as customers, transactions, and ad campaigns. We often focus our analyses around specific entities, such as customer churn or annual recurring revenue modeling. In our semantic layer models, these entities serve as our join key across semantic models.
 
 Within a semantic graph, the required parameters for an entity are `name` and `type`. The `name` refers to either the key column name from the underlying data table, or it may serve as an alias with the column name referenced in the `expr` parameter. The `name` for your entity must be unique to the semantic model and can not be the same as an existing `measure` or `dimension` within that same model.
 
@@ -150,3 +150,92 @@ entities:
     type: foreign # This can be any entity type key. 
     expr: date_key || '|' || brand_code # Defines the expression for linking fields to form the surrogate key.
 ```
+
+## Examples
+
+As mentioned, entites serve as our join keys using the unique entity name. Therefore, we could join onto a single `unique` key from the same `foreign` key.
+
+For example, consider `dim_date_categories` table with the following columns:
+
+```sql
+date_id (primary key)
+date_day (unique key)
+fiscal_year_name
+```
+
+And a `fct_orders` table with the following columns:
+```sql
+order_id (primary key)
+ordered_at
+delivered_at
+order_total
+```
+
+How might we define our Semantic Layer yml, so we can query `order_total` by `ordered_at` `fiscal_year_name` and `delivered_at` `fiscal_year_name`?
+
+First, we need to define two `unique` entities in the `dim_date_categories` with the expression set to `date_day`:
+```yaml
+semantic_models:
+- name: dim_date_categories
+  description: A date dimension table providing fiscal time attributes for analysis.
+  model: ref('dim_date_categories')
+  entities:
+  - name: date_id
+    type: primary
+
+  - name: ordered_at_entity
+    type: unique
+    expr: date_day
+
+  - name: delivered_at_entity
+    type: unique
+    expr: date_day
+
+  dimensions:
+  - name: date_day
+    type: time
+    type_params:
+      time_granularity: day
+
+  - name: fiscal_year_name
+    type: categorical
+```
+
+Then, we need to add these same entities as `foreign` keys to our `fct_orders` model and with the expression set to `ordered_at` and `delivered_at`:
+
+```yaml
+semantic_models:
+  - name: fct_orders
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order fact table. This table is at the order grain with one row per order.
+    model: ref('fct_orders')
+    entities:
+      - name: order_id
+        type: primary
+
+      - name: ordered_at_entity
+        type: foreign
+        expr: ordered_at
+
+      - name: delivered_at_entity
+        type: foreign
+        expr: delivered_at
+
+    dimensions:
+      - name: ordered_at
+        expr: ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+
+    measures:
+      - name: order_total
+        description: The total amount for each order including taxes.
+        agg: sum
+        create_metric: True
+        
+ ```
+
+In this example, we're now able to run `dbt sl query --metrics order_total --group-by ordered_at_entity__fiscal_year_name` or `dbt sl query --metrics order_total --group-by delivered_at_entity__fiscal_year_name`
