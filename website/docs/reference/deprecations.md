@@ -791,7 +791,7 @@ Should now be configured as:
 
 ### ModulesItertoolsUsageDeprecation
 
-dbt has deprecated usage of `modules.itertools` in jinja.
+dbt has deprecated usage of `modules.itertools` in Jinja.
 
 Example:
 
