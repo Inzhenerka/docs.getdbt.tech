@@ -53,7 +53,7 @@ models:
     [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
     [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
-    [+](/reference/resource-configs/plus-prefix)[build_after](/reference/resource-configs/build-after): <dict>
+    [+](/reference/resource-configs/plus-prefix)[build_after](/reference/resource-configs/build-after): <dict> # Only for state aware orchestration in the dbt plaftorm 
 
   ```
 
@@ -111,7 +111,7 @@ models:
   - name: [<model-name>]
     config:
       freshness:
-        # build_after is nested under freshness
+        # build_after available for dbt platform only and is nested under freshness
         [build_after](/reference/resource-configs/build-after): <dict>
 ```
 
@@ -381,7 +381,7 @@ models:
   - name: stg_orders
     config:
       freshness:
-        build_after:  # build this model no more often than every X amount of time, as long as as it has new data
+        build_after:  # build this model no more often than every X amount of time, as long as as it has new data. Available only for state aware orchestration on the dbt platform. 
           count: <positive_integer>
           period: minute | hour | day
           updates_on: any | all # optional config
