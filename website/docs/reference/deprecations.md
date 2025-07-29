@@ -597,7 +597,7 @@ For example, the following SQL file:
 
 <File name='models/itertools_usage.sql'>
 
-```
+```sql
 {%- set A = [1, 2] -%}
 {%- set B = ['x', 'y', 'z'] -%}
 {%- set AB_cartesian = modules.itertools.product(A, B) -%}
@@ -614,7 +614,7 @@ Should be converted to use alternative built-in dbt Jinja methods. For example:
 
 <File name='macros/cartesian_product.sql'>
 
-```
+```sql
 {%- macro cartesian_product(list1, list2) -%}
   {%- set result = [] -%}
   {%- for item1 in list1 -%}
@@ -631,7 +631,7 @@ Should be converted to use alternative built-in dbt Jinja methods. For example:
 
 <File name='models/itertools_usage.sql'>
 
-```
+```sql
 {%- set A = [1, 2] -%}
 {%- set B = ['x', 'y', 'z'] -%}
 {%- set AB_cartesian = cartesian_product(A, B) -%}
