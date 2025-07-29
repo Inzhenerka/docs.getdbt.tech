@@ -54,7 +54,7 @@ This variable is a pointer to the Python [re](https://docs.python.org/3/library/
 ## itertools
 
 :::info Note
-Starting with `dbt-core==1.10.6`, usage of `modules.itertools` will raise a deprecation warning. For more information and suggested workarounds, please refer to the [documentation on `ModulesItertoolsUsageDeprecation`](/reference/deprecations.md#modules-itertools-usage-deprecation).
+Starting in `dbt-core==1.10.6`, usage of `modules.itertools` raises a deprecation warning. For more information and suggested workarounds, refer to the [documentation on `ModulesItertoolsUsageDeprecation`](/reference/deprecations.md#modules-itertools-usage-deprecation).
 :::
 
 This variable is a pointer to the Python [itertools](https://docs.python.org/3/library/itertools.html) module, which includes useful functions for working with iterators (loops, lists, and the like).
