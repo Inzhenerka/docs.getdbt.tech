@@ -351,7 +351,7 @@ packages:
 </File>
 
 ### Local packages
-A "local" package is a dbt project accessible from your local file system. They're are best suited when there is a small subset of models, macros, and more so, that you want to share across multiple downstream dbt projects (but each downstream project still has their own unique models, macros, etc).
+A "local" package is a dbt project accessible from your local file system. They're are best suited when there is a common collection of models, macros, and more so, that you want to share across multiple downstream dbt projects (but each downstream project still has their own unique models, macros, etc).
 
 You can install local packages by specifying the project's path. It works best when you nest the project within a subdirectory relative to your current project's directory. 
 
