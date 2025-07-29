@@ -576,7 +576,7 @@ Update your job definitions and remove the `--models` / `--model` / `-m` flag an
 
 ### ModulesItertoolsUsageDeprecation
 
-dbt has deprecated the usage of `modules.itertools` in Jinja.
+dbt has deprecated the use of `modules.itertools` in Jinja.
 
 Example:
 
