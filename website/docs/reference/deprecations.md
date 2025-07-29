@@ -824,7 +824,7 @@ For example, the following SQL file:
 
 </File>
 
-should be converted to use alternative built-in dbt jinja methods:
+Should be converted to use alternative built-in dbt Jinja methods. For example:
 
 
 <File name='macros/cartesian_product.sql'>
