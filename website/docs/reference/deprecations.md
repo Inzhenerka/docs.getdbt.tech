@@ -806,7 +806,7 @@ instead.
 
 #### ModulesItertoolsUsageDeprecation warning resolution
 
-If you currently making use of methods within the `itertools` module from within jinja SQL, pleas use the available built-in macros and jinja methods instead.
+If you are currently using functions from the `itertools` module within Jinja SQL templates, use the available built-in macros and Jinja methods instead.
 
 For example, the following SQL file:
 
