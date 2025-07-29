@@ -1,6 +1,6 @@
-Adding [tests](/docs/build/data-tests) to a project helps validate that your models are working correctly.
+Adding [data tests](/docs/build/data-tests) to a project helps validate that your models are working correctly.
 
-To add tests to your project:
+To add data tests to your project:
 
 1. Create a new YAML file in the `models` directory, named `models/schema.yml`
 2. Add the following contents to the file:

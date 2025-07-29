@@ -534,11 +534,11 @@ To add data tests to your project:
 
 3. Run `dbt test`, and confirm that all your tests passed.
 
-When you run `dbt test`, dbt iterates through your YAML files, and constructs a query for each test. Each query will return the number of records that fail the test. If this number is 0, then the test is successful.
+When you run `dbt test`, dbt iterates through your YAML files, and constructs a query for each data test. Each query will return the number of records that fail the test. If this number is 0, then the data test is successful.
 
 #### FAQs
 
-<FAQ path="Tests/available-tests" alt_header="What tests are available for me to use in dbt? Can I add my own custom tests?" />
+<FAQ path="Tests/available-tests" alt_header="What data tests are available for me to use in dbt? Can I add my own custom tests?" />
 <FAQ path="Tests/test-one-model" />
 <FAQ path="Runs/failed-tests" />
 <FAQ path="Project/schema-yml-name" alt_header="Does my test file need to be named `schema.yml`?" />
