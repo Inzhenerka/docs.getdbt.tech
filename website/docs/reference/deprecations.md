@@ -808,7 +808,7 @@ instead.
 
 If you currently making use of methods within the `itertools` module from within jinja SQL, pleas use the available built-in macros and jinja methods instead.
 
-For example:
+For example, the following SQL file:
 
 <File name='models/itertools_usage.sql'>
 
