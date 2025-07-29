@@ -628,7 +628,6 @@ Should be converted to use alternative built-in dbt Jinja methods. For example:
 
 </File>
 
-
 <File name='models/itertools_usage.sql'>
 
 ```sql
