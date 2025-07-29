@@ -153,7 +153,7 @@ entities:
 
 ## Examples
 
-As mentioned, entites serve as our join keys using the unique entity name. Therefore, we can join a single `unique` key to multiple `foreign` keys.
+As mentioned, entites serve as our join keys, using the unique entity name. Therefore, we can join a single `unique` key to multiple `foreign` keys.
 
 Consider `dim_date_categories` table with the following columns:
 
@@ -240,6 +240,6 @@ semantic_models:
         
  ```
 
-With this configuration, our Semantic Models are linked by `date_day` and `ordered_at` via the `ordered_at_entity`, and by `date_day` and `delivered_at` by the `delivered_at_entity`. To validate our output, we can run:
+With this configuration, our semantic models can join on `ordered_at = date_day` via the `ordered_at_entity`, and on `delivered_at = date_day` by the `delivered_at_entity`. To validate our output, we can run:
 - `dbt sl query --metrics order_total --group-by ordered_at_entity__fiscal_year_name` or
 - `dbt sl query --metrics order_total --group-by delivered_at_entity__fiscal_year_name`
