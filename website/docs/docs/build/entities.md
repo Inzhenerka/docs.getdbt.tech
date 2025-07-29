@@ -155,7 +155,7 @@ entities:
 
 As mentioned, entites serve as our join keys, using the unique entity name. Therefore, we can join a single `unique` key to multiple `foreign` keys.
 
-Consider `dim_date_categories` table with the following columns:
+Consider `date_categories` table with the following columns:
 
 ```sql
 date_id (primary key)
@@ -163,7 +163,7 @@ date_day (unique key)
 fiscal_year_name
 ```
 
-And a `fct_orders` table with the following columns:
+And a `orders` table with the following columns:
 ```sql
 order_id (primary key)
 ordered_at
@@ -173,13 +173,13 @@ order_total
 
 How might we define our Semantic Layer yml, so we can query `order_total` by `ordered_at` `fiscal_year_name` and `delivered_at` `fiscal_year_name`?
 
-First, we need to define two `unique` entities in the `dim_date_categories` with the expression set to `date_day`:
+First, we need to define two `unique` entities in the `date_categories` with the expression set to `date_day`:
 
 ```yaml
 semantic_models:
-- name: dim_date_categories
+- name: date_categories
   description: A date dimension table providing fiscal time attributes for analysis.
-  model: ref('dim_date_categories')
+  model: ref('date_categories')
   entities:
   - name: date_id
     type: primary
@@ -203,16 +203,16 @@ semantic_models:
     type: categorical
 ```
 
-Then, we need to add these same entities as `foreign` keys to our `fct_orders` model and with the expression set to `ordered_at` and `delivered_at`:
+Then, we need to add these same entities as `foreign` keys to our `orders` model and with the expression set to `ordered_at` and `delivered_at`:
 
 ```yaml
 semantic_models:
-  - name: fct_orders
+  - name: orders
     defaults:
       agg_time_dimension: ordered_at
     description: |
       Order fact table. This table is at the order grain with one row per order.
-    model: ref('fct_orders')
+    model: ref('orders')
     entities:
       - name: order_id
         type: primary
