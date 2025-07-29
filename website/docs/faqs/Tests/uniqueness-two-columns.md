@@ -6,7 +6,7 @@ id: uniqueness-two-columns
 
 ---
 
-Yes, There's a few different options.
+Yes, there's a few different options.
 
 
 Consider an orders <Term id="table" /> that contains records from multiple countries, and the combination of ID and country code is unique:

@@ -157,9 +157,9 @@ This feature is not implemented for analyses.
 
 ## Description
 
-The `data_tests` property defines assertions about a column, <Term id="table" />, or <Term id="view" />. The property contains a list of [generic tests](/docs/build/data-tests#generic-data-tests), referenced by name, which can include the four built-in generic tests available in dbt. For example, you can add tests that ensure a column contains no duplicates and zero null values. Any arguments or [configurations](/reference/data-test-configs) passed to those tests should be nested below the test name.
+The `data_tests` property defines assertions about a column, <Term id="table" />, or <Term id="view" />. The property contains a list of [generic data tests](/docs/build/data-tests#generic-data-tests), referenced by name, which can include the four built-in generic tests available in dbt. For example, you can add data tests that ensure a column contains no duplicates and zero null values. Any arguments or [configurations](/reference/data-test-configs) passed to those data tests should be nested below the test name.
 
-Once these tests are defined, you can validate their correctness by running `dbt test`.
+Once these data tests are defined, you can validate their correctness by running `dbt test`.
 
 ## Out-of-the-box data tests
 
@@ -167,7 +167,7 @@ There are four generic data tests that are available out of the box, for everyon
 
 ### `not_null`
 
-This test validates that there are no `null` values present in a column.
+This data test validates that there are no `null` values present in a column.
 
 <File name='models/<filename>.yml'>
 
@@ -186,7 +186,7 @@ models:
 
 ### `unique`
 
-This test validates that there are no duplicate values present in a field.
+This data test validates that there are no duplicate values present in a field.
                 
 The config and where clause are optional.
 
@@ -209,7 +209,7 @@ models:
 
 ### `accepted_values`
 
-This test validates that all of the non-`null` values in a column are present in a supplied list of `values`. If any values other than those provided in the list are present, then the test will fail.
+This data test validates that all of the non-`null` values in a column are present in a supplied list of `values`. If any values other than those provided in the list are present, then the data test will fail.
 
 The `accepted_values` test supports an optional `quote` parameter which, by default, will single-quote the list of accepted values in the test query. To test non-strings (like integers or boolean values) explicitly set the `quote` config to `false`.
 
@@ -237,7 +237,7 @@ models:
 
 ### `relationships`
 
-This test validates that all of the records in a child <Term id="table" /> have a corresponding record in a parent table. This property is referred to as "referential integrity".
+This data test validates that all of the records in a child <Term id="table" /> have a corresponding record in a parent table. This property is referred to as "referential integrity".
 
 The following example tests that every order's `customer_id` maps back to a valid `customer`.
 
@@ -284,9 +284,9 @@ models:
 
 This example focuses on testing expressions to ensure that `order_items_subtotal` equals `subtotal` and `order_total` correctly sums `subtotal` and `tax_paid`.
 
-### Use custom generic test
+### Use custom generic data test
 
-If you've defined your own custom generic test, you can use that as the `test_name`:
+If you've defined your own custom generic data test, you can use that as the `test_name`:
 
 <File name='models/<filename>.yml'>
 
@@ -304,21 +304,21 @@ models:
 
 </File>
 
-Check out the guide on writing a [custom generic test](/best-practices/writing-custom-generic-tests) for more information.
+Check out the guide on writing a [custom generic data test](/best-practices/writing-custom-generic-tests) for more information.
 
 ### Custom data test name
 
-By default, dbt will synthesize a name for your generic test by concatenating:
+By default, dbt will synthesize a name for your generic data test by concatenating:
 - test name (`not_null`, `unique`, etc)
 - model name (or source/seed/snapshot)
 - column name (if relevant)
 - arguments (if relevant, e.g. `values` for `accepted_values`)
 
-It does not include any configurations for the test. If the concatenated name is too long, dbt will use a truncated and hashed version instead. The goal is to preserve unique identifiers for all resources in your project, including tests.
+It does not include any configurations for the data test. If the concatenated name is too long, dbt will use a truncated and hashed version instead. The goal is to preserve unique identifiers for all resources in your project, including tests.
 
-You may also define your own name for a specific test, via the `name` property.
+You may also define your own name for a specific data test, via the `name` property.
 
-**When might you want this?** dbt's default approach can result in some wonky (and ugly) test names. By defining a custom name, you get full control over how the test will appear in log messages and metadata artifacts. You'll also be able to select the test by that name.
+**When might you want this?** dbt's default approach can result in some wonky (and ugly) data test names. By defining a custom name, you get full control over how the data test will appear in log messages and metadata artifacts. You'll also be able to select the data test by that name.
 
 <File name='models/<filename>.yml'>
 
@@ -356,9 +356,9 @@ $ dbt test --select unexpected_order_status_today
 12:43:41  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-A test's name must be unique for all tests defined on a given model-column combination. If you give the same name to tests defined on several different columns, or across several different models, then `dbt test --select <repeated_custom_name>` will select them all. 
+A data test's name must be unique for all tests defined on a given model-column combination. If you give the same name to data tests defined on several different columns, or across several different models, then `dbt test --select <repeated_custom_name>` will select them all. 
 
-**When might you need this?** In cases where you have defined the same test twice, with only a difference in configuration, dbt will consider these tests to be duplicates:
+**When might you need this?** In cases where you have defined the same data test twice, with only a difference in configuration, dbt will consider these data tests to be duplicates:
 
 <File name='models/<filename>.yml'>
 
@@ -395,7 +395,7 @@ Compilation Error
   - test.testy.accepted_values_orders_status__placed__shipped__completed__returned.69dce9e5d5 (models/one_file.yml)
 ```
 
-By providing a custom name, you help dbt differentiate tests:
+By providing a custom name, you help dbt differentiate data tests:
 
 <File name='models/<filename>.yml'>
 
@@ -440,11 +440,11 @@ $ dbt test
 12:48:04  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 ```
 
-**If using [`store_failures`](/reference/resource-configs/store_failures):** dbt uses each data test's name as the name of the table in which to store any failing records. If you have defined a custom name for one test, that custom name will also be used for its table of failures. You may optionally configure an [`alias`](/reference/resource-configs/alias) for the test, to separately control both the name of the test (for metadata) and the name of its database table (for storing failures).
+**If using [`store_failures`](/reference/resource-configs/store_failures):** dbt uses each data test's name as the name of the table in which to store any failing records. If you have defined a custom name for one data test, that custom name will also be used for its table of failures. You may optionally configure an [`alias`](/reference/resource-configs/alias) for the data test, to separately control both the name of the data test (for metadata) and the name of its database table (for storing failures).
 
 ### Alternative format for defining tests
 
-When defining a generic data test with several arguments and configurations, the YAML can look and feel unwieldy. If you find it easier, you can define the same test properties as top-level keys of a single dictionary, by providing the test name as `test_name` instead. It's totally up to you.
+When defining a generic data test with several arguments and configurations, the YAML can look and feel unwieldy. If you find it easier, you can define the same data test properties as top-level keys of a single dictionary, by providing the data test name as `test_name` instead. It's totally up to you.
 
 This example is identical to the one above:
 
