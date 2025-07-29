@@ -38,7 +38,7 @@ Creating packages is an advanced use of dbt, but it can be a relatively simple t
 
 The most common use-cases for packages are:
 
-- [Models](/docs/build/models) to share across multiple projects.
+- Sharing [models](/docs/build/models) to share across multiple projects.
 - [Macros](/docs/build/jinja-macros) to share across multiple projects.
 
 Note, packages can be [private](#private-packages) &mdash; they don't need to be shared publicly. You can create a package within your own git provider (for example, you can create a package within GitHub) for your own private use.
