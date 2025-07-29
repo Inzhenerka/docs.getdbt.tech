@@ -14,7 +14,9 @@ Connecting your GitLab account to <Constant name="cloud" /> provides convenience
 :::info
 When configuring the repository in <Constant name="cloud" />, GitLab automatically:
 - Registers a webhook that triggers pipeline jobs in <Constant name="cloud" />.
-- Creates a [project access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) in your GitLab repository, which sends the job run status back to GitLab using the <Constant name="cloud" /> API for CI jobs. <Constant name="cloud" /> automatically refreshes this token for you, which means you never have to manually rotate it. Check out the [troubleshooting](#troubleshooting) section for more information. Requires a [GitLab Premium or Ultimate account](https://about.gitlab.com/pricing/).
+- Creates a [project access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) in your GitLab repository, which sends the job run status back to GitLab using the <Constant name="cloud" /> API for CI jobs. <Constant name="cloud" /> automatically refreshes this token for you. 
+
+Requires a [GitLab Premium or Ultimate account](https://about.gitlab.com/pricing/).
 
 :::
 
