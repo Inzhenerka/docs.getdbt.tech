@@ -41,7 +41,7 @@ The most common use-cases for packages are:
 - Sharing [models](/docs/build/models) to share across multiple projects.
 - Sharing [macros](/docs/build/jinja-macros) to share across multiple projects.
 
-Note, packages can be [private](#private-packages) &mdash; they don't need to be shared publicly. You can create a package within your own git provider (for example, you can create a package within GitHub) for your own private use.
+Note that packages can be [private](#private-packages) &mdash; they don't need to be shared publicly. Private packages can be hosted on your own Git provider (for example, GitHub or GitLab).
 
 For instructions on creating dbt packages and additional information, refer to our guide [Building dbt packages](/guides/building-packages?step=1).
 
