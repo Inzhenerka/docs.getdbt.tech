@@ -153,9 +153,9 @@ entities:
 
 ## Examples
 
-As mentioned, entites serve as our join keys using the unique entity name. Therefore, we could join onto a single `unique` key from the same `foreign` key.
+As mentioned, entites serve as our join keys using the unique entity name. Therefore, we can join a single `unique` key to multiple `foreign` keys.
 
-For example, consider `dim_date_categories` table with the following columns:
+Consider `dim_date_categories` table with the following columns:
 
 ```sql
 date_id (primary key)
@@ -174,6 +174,7 @@ order_total
 How might we define our Semantic Layer yml, so we can query `order_total` by `ordered_at` `fiscal_year_name` and `delivered_at` `fiscal_year_name`?
 
 First, we need to define two `unique` entities in the `dim_date_categories` with the expression set to `date_day`:
+
 ```yaml
 semantic_models:
 - name: dim_date_categories
@@ -198,6 +199,7 @@ semantic_models:
       time_granularity: day
 
   - name: fiscal_year_name
+    description: Formatted fiscal year string (e.g. 'FY2025')
     type: categorical
 ```
 
@@ -232,10 +234,12 @@ semantic_models:
 
     measures:
       - name: order_total
-        description: The total amount for each order including taxes.
+        description: Total amount for each order including taxes.
         agg: sum
         create_metric: True
         
  ```
 
-In this example, we're now able to run `dbt sl query --metrics order_total --group-by ordered_at_entity__fiscal_year_name` or `dbt sl query --metrics order_total --group-by delivered_at_entity__fiscal_year_name`
+With this configuration, our Semantic Models are linked by `date_day` and `ordered_at` via the `ordered_at_entity`, and by `date_day` and `delivered_at` by the `delivered_at_entity`. To validate our output, we can run:
+- `dbt sl query --metrics order_total --group-by ordered_at_entity__fiscal_year_name` or
+- `dbt sl query --metrics order_total --group-by delivered_at_entity__fiscal_year_name`
