@@ -34,7 +34,7 @@ import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
 
 ## How do I create a package?
 
-Creating packages is an advanced use of dbt, but it can be a relatively simple task. The only strict requirement is the presence of a [`dbt_project.yml file`](/reference/dbt_project.yml).
+Creating packages is an advanced use of dbt, but it can be a relatively simple task. The only strict requirement is the presence of a [`dbt_project.yml` file](/reference/dbt_project.yml).
 
 The most common use-cases for packages are:
 
