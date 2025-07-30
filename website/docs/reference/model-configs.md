@@ -53,7 +53,7 @@ models:
     [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
     [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
-    [+](/reference/resource-configs/plus-prefix)[build_after](/reference/resource-configs/build-after): <dict> # Only for state aware orchestration on dbt Enterprise or Enteprise+ plans.
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness): <dict> # Only for state aware orchestration on dbt Enterprise or Enteprise+ plans.
 
   ```
 
