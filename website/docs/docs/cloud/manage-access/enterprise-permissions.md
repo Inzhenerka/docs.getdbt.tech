@@ -89,7 +89,7 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Database admin">
 
-Database admins manage the connections and configurations between <Constant name="cloud" /> and the underlying databases. 
+Database admins manage configurations between <Constant name="cloud" /> and the underlying databases. 
 
 Notable features: 
 - Database admin is a project-level set. 
