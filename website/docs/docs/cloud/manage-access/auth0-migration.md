@@ -15,7 +15,7 @@ If you have not yet configured SSO in <Constant name="cloud" />, refer instead t
 
 The Auth0 migration feature is being rolled out incrementally to customers who have SSO features already enabled. When the migration option has been enabled on your account, you will see **SSO Update Required** on the right side of the menu bar, near the settings icon. 
 
-Alternatively, you can start the process by going to **Account settings** > **Single sign-on**. Click the **Begin Migration** button to start. 
+Alternatively, you can start the process by clicking your account name at the bottom left-hand menu and going to **Account settings** > **Single sign-on**. Click the **Begin Migration** button to start.
 
 :::warning vanity urls
 

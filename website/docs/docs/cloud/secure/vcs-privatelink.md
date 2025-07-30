@@ -108,7 +108,7 @@ Once dbt confirms that the PrivateLink integration is complete, you can use it i
 
 **To configure a new git integration with PrivateLink:**
 
-1. Click your name at the bottom left-hand menu and go to **Account settings** > **Projects**.
+1. Click your account name at the bottom left-hand menu and go to **Account settings** > **Projects**.
 2. Click **New project**.
 3. Name your project and configure your development environment.
 4. Under **Set up repository**, click **Git clone**.
@@ -119,7 +119,7 @@ Once dbt confirms that the PrivateLink integration is complete, you can use it i
 
 **To configure an existing git integration with PrivateLink:** 
 
-1. Click your name at the bottom left-hand menu and go to **Account settings** > **Integrations**.
+1. Click your account name at the bottom left-hand menu and go to **Account settings** > **Integrations**.
 2. Under **Gitlab**, select **PrivateLink Endpoint** as the connection type.
     Your configured integrations will appear in the dropdown menu. 
 3. Select the configured endpoint from the dropdown list.

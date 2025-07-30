@@ -92,7 +92,7 @@ In BigQuery, optional configurations let you tailor settings for tasks such as q
 
 To customize your optional configurations in <Constant name="cloud" />:
 
-1. Click your name at the bottom left-hand menu and go to **Account settings** > **Projects**.
+1. Click your account name at the bottom left-hand menu and go to **Account settings** > **Projects**.
 2. Select your BigQuery project.
 3. Go to **Development connection** and select **BigQuery**.
 4. Click **Edit** and then scroll down to **Optional settings**.
