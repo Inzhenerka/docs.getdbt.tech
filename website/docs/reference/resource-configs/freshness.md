@@ -34,7 +34,7 @@ models:
   - name: stg_orders
     config:
       freshness:
-        build_after:  # build this model no more often than every X amount of time, as long as as it has new data. Available only on dbt platform Enterprise tiers. 
+        build_after:  # build this model no more often than every X amount of time, as long as it has new data. Available only on dbt platform Enterprise tiers. 
           count: <positive_integer>
           period: minute | hour | day
           updates_on: any | all # optional config
