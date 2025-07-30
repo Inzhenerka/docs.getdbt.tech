@@ -85,7 +85,7 @@ Key:
 | Account settings         |   R   |    -    |      R         |     -     |     R     |     -     |     -       |      -      |    -     |        -       |      -      |     R      |
 | Auth provider            |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
 | Billing                  |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
-| Connections              |   R   |    R    |      W         |     R     |     R     |     R     |     -       |      -      |    -     |        -       |      R      |     R      |
+| Connections              |   R   |    R    |      R         |     R     |     R     |     R     |     -       |      -      |    -     |        -       |      R      |     R      |
 | Groups                   |   R   |    -    |      R         |     R     |     R     |     -     |     -       |      -      |    -     |        -       |      R      |     R      |
 | Invitations              |   W   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |    -     |        -       |      R      |     R      |
 | Licenses                 |   W   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |    -     |        -       |      -      |     R      |

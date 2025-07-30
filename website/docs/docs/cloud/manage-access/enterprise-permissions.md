@@ -89,13 +89,13 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Database admin">
 
-Database admins manage the connections and configurations between <Constant name="cloud" /> and the underlying databases. 
+Database admins manage configurations between <Constant name="cloud" /> and the underlying databases. 
 
 Notable features: 
 - Database admin is a project-level set. 
-- Can set up and maintain database connections, environment variables, and <Constant name="semantic_layer" /> configs.
+- Can set up and maintain environment variables and <Constant name="semantic_layer" /> configs.
 - Helpful for scenarios where your data warehouse admins only need access to <Constant name="cloud" /> to configure connections. 
-- Read-only access to Git repo, job, and run settings. 
+- Read-only access to connections, Git repo, job, and run settings. 
 - Can access <Constant name="explorer" />.
 
 </Expandable>
