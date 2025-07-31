@@ -84,7 +84,7 @@ You can use the generated PAT as the authentication method for <Constant name="s
 
 ### 3. View connection detail
 1. Go back to the **Project details** page for connection details to connect to downstream tools.
-2. Copy and share the environment ID, service or personal token, host, as well as the service or personal token name to the relevant teams for BI connection set up. If your tool uses the GraphQL API, save the GraphQL API host information instead of the JDBC URL. 
+2. Copy and share the environment ID, service or personal token, host, as well as the service or personal token name to the relevant teams for BI connection setup. If your tool uses the GraphQL API, save the GraphQL API host information instead of the JDBC URL. 
 
     For info on how to connect to other integrations, refer to [Available integrations](/docs/cloud-integrations/avail-sl-integrations).
 
