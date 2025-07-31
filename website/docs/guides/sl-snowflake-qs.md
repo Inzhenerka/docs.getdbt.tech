@@ -857,7 +857,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-ru
 In this section, you will learn how to set up the <Constant name="semantic_layer" />, add credentials, and create service tokens. This section goes over the following topics:
 
 - [Select environment](#1-select-environment)
-- [Add a credential and create service tokens](#2-add-a-credential-and-create-service-tokens)
+- [Configure credentials and create tokens](#2-configure-credentials-and-create-tokens)
 - [View connection detail](#3-view-connection-detail)
 - [Add more credentials](#4-add-more-credentials)
 - [Delete configuration](#delete-configuration)
@@ -911,7 +911,7 @@ This section will guide you on how to use the Hex integration to query your metr
 8. Enter the following information:
    * Select your version of dbt as 1.6 or higher
    * Enter your environment id 
-   * Enter your service token 
+   * Enter your service or personal token 
    * Make sure to click on the **Use <Constant name="semantic_layer" />** toggle. This way, all queries are routed through dbt.
    * Click **Create connection** in the bottom right corner.
 9. Hover over **More** on the menu shown in the following image and select **<Constant name="semantic_layer" />**.
@@ -982,7 +982,7 @@ This section will guide you on how to use the Sigma integration to query your me
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-add-integration.png" width="70%" title="Click the '+ New project' button on the top right"/>
 
 8. In the **dbt Integration** section, fill out the required fields, and then hit save:
-- Your dbt [service account token](/docs/dbt-cloud-apis/service-tokens).
+- Your dbt [service account token](/docs/dbt-cloud-apis/service-tokens) or [personal access tokens](/docs/dbt-cloud-apis/user-tokens).
 - Your access URL of your existing Sigma dbt integration. Use `cloud.getdbt.com` as your access URL.
 - Your dbt environment ID.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-add-info.png" width="50%" title="Click the '+ New project' button on the top right"/>
