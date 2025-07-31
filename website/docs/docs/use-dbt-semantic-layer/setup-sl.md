@@ -43,6 +43,18 @@ import SlSetUp from '/snippets/_new-sl-setup.md';
 8. You’re done 🎉! The semantic layer should is now enabled for your project. 
 -->
 
+## Personal access tokens for Semantic Layer
+
+Using personal access tokens (PATs) is also a supported authentication method for the dbt Semantic Layer. This enables user-level authentication as opposed to using service tokens. When you authenticate using PATs, queries are run using your personal development credentials. 
+
+To use PATs in Semantic Layer:
+
+1. Create a [personal access token](/docs/dbt-cloud-apis/user-tokens).
+2. Use the token as the authentication method for queries in the following Semantic Layer APIs:
+    - [GraphQL](/docs/dbt-cloud-apis/sl-graphql)
+    - [JDBC](/docs/dbt-cloud-apis/sl-jdbc)
+    - [Python SDK](/docs/dbt-cloud-apis/sl-python)
+
 ## Next steps
 
 - Now that you've set up the <Constant name="semantic_layer" />, start querying your metrics with the [available integrations](/docs/cloud-integrations/avail-sl-integrations).
