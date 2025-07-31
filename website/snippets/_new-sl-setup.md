@@ -78,7 +78,7 @@ To use PATs in <Constant name="semantic_layer" />:
    3. Click **Edit**.
    4. Go to **Development credentials** and enter your details. 
    5. Click **Save**.
-2. [Create a personal access token](/docs/dbt-cloud-apis/user-tokens.md). Make sure to copy the token. 
+2. [Create a personal access token](/docs/dbt-cloud-apis/user-tokens). Make sure to copy the token. 
 
 You can use the generated PAT as the authentication method for <Constant name="semantic_layer" /> [APIs](/docs/dbt-cloud-apis/sl-api-overview) and [integrations](/docs/cloud-integrations/avail-sl-integrations). 
 
