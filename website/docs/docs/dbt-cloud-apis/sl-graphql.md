@@ -50,7 +50,7 @@ Refer to [Get started with the <Constant name="semantic_layer" />](/guides/sl-sn
 Authentication uses either a <Constant name="cloud" /> [service account token](/docs/dbt-cloud-apis/service-tokens) or a [personal access token](/docs/dbt-cloud-apis/user-tokens) passed through a header as follows. To explore the schema, you can enter this information in the "header" section.
 
 ```shell
-{"Authorization": "Bearer <SERVICE TOKEN>"}
+{"Authorization": "Bearer <AUTHENTICATION TOKEN>"}
 ```
 
 Each GQL request also requires a <Constant name="cloud" /> `environmentId`. The API uses both the service or personal token in the header and `environmentId` for authentication.
