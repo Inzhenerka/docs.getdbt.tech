@@ -213,9 +213,9 @@ Notable features:
 - No other access to <Constant name="cloud" /> features. 
 
 </Expandable>
-<Expandable alt_header="Stakeholder/Read-Only">
+<Expandable alt_header="Stakeholder and Read-Only">
 
-The Stakeholder/Read-Only permission set is similar to Viewer, but without access to sensitive content such as account settings or billing information. Useful for personas who need to monitor projects and their configurations.
+The Stakeholder and Read-Only are identical permission sets that are similar to Viewer, but without access to sensitive content such as account settings or billing information. Useful for personas who need to monitor projects and their configurations.
 
 Notable features: 
 - Stakeholder is a project-level set.
