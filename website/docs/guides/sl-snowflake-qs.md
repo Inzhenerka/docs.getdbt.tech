@@ -910,7 +910,7 @@ This section will guide you on how to use the Hex integration to query your metr
 
 8. Enter the following information:
    * Select your version of dbt as 1.6 or higher
-   * Enter your environment id 
+   * Enter your Environment ID 
    * Enter your service or personal token 
    * Make sure to click on the **Use <Constant name="semantic_layer" />** toggle. This way, all queries are routed through dbt.
    * Click **Create connection** in the bottom right corner.
