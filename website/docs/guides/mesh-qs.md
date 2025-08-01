@@ -81,9 +81,9 @@ To [create](/docs/cloud/about-cloud-setup) a new project in <Constant name="clou
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" width="95%" title="Navigate to Account settings." />
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" width="90%" title="Navigate to Account settings." />
 
-<Lightbox src="/img/guides/dbt-mesh/select_projects.png" width="95%" title="Select projects from the menu." />
+<Lightbox src="/img/guides/dbt-mesh/select_projects.png" width="30%" title="Select projects from the menu." />
 
 <Lightbox src="/img/guides/dbt-mesh/create_a_new_project.png" width="95%" title="Create a new project in the Studio IDE." />
 
