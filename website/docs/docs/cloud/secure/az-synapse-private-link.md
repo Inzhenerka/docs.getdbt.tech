@@ -18,7 +18,7 @@ The following steps walk you through the setup of a Private Link endpoint for Az
 
 1. Navigate to your Azure Synapse workspace in the Azure Portal
 2. From the workspace overview, click **JSON view**. 
-3. Copy the value in the **Resource ID**** field at the top of the pane.  
+3. Copy the value in the **Resource ID** field at the top of the pane.  
     The path format is: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Synapse/workspaces/<workspace_name>`.
 4. Add the required information to the following template and submit your Azure Private Link request to [dbt Support](/docs/dbt-support#dbt-cloud-support): 
     ```
@@ -26,8 +26,8 @@ The following steps walk you through the setup of a Private Link endpoint for Az
     - Type: Azure Synapse
     - Server name:
     - Azure Synapse workspace resource ID:
-    - <Constant name="cloud" /> multi-tenant environment: EMEA
-    - Azure region: Region that hosts your Synapse workspace (like, WestEurope, NorthEurope)
+    - dbt Azure multi-tenant environment (EMEA):
+    - Azure Synapse workspace region (e.g., WestEurope, NorthEurope):
     ```
 5. Once our Support team confirms the the endpoint has been created, navigate to the Azure Synapse workspace in the Azure Portal and browse to **Security** > **Private endpoint connections**. In the **Private endpoint connections** table, highlight the `dbt` named option and select **Approve**. Confirm with Support that the connection has been approved so they can validate the connection and make it available for use in  <Constant name="cloud" />.
 

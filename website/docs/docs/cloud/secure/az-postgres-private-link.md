@@ -18,16 +18,16 @@ The following steps walk you through the setup of a Private Link endpoint for Az
 
 1. Navigate to your Azure Database for Postgres Flexible Server in the Azure Portal
 2. From the server overview, click **JSON view**. 
-3. Copy the value in the **Resource ID**** field at the top of the pane.  
+3. Copy the value in the **Resource ID** field at the top of the pane.  
     The path format is: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.DBforPostgreSQL/flexibleServers/<server_name>`.
 4. Add the required information to the following template and submit your Azure Private Link request to [dbt Support](/docs/dbt-support#dbt-cloud-support): 
     ```
       Subject: New Azure Multi-Tenant Private Link Request
     - Type: Azure Database for Postgres Flexible Server
-    - Server name:
+    - Postgres Flexible Server name:
     - Azure Database for Postgres Flexible Server resource ID:
-    - <Constant name="cloud" /> multi-tenant environment: EMEA
-    - Azure region: Region that hosts your Postgres Flexible Server (like, WestEurope, NorthEurope)
+    - dbt Azure multi-tenant environment (EMEA):
+    - Azure Postgres server region (e.g., WestEurope, NorthEurope):
     ```
 5. Once our Support team confirms the the endpoint has been created, navigate to the Azure Database for Postgres Flexible Server in the Azure Portal and browse to **Settings** > **Networking**. In the **Private Endpoints** section, highlight the `dbt` named option and select **Approve**. Confirm with Support that the connection has been approved so they can validate the connection and make it available for use in  <Constant name="cloud" />.
 
