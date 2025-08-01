@@ -6,6 +6,7 @@ id: anchors
 
 With YAML anchors, you can reuse configuration blocks across your dbt project files. Note that the way anchors are defined and used is different between dbt versions.
 
+<VersionBlock lastVersion="1.9">
 dbt Core v1.9 supports standalone anchor definitions at the top level of YAML files. For example:
 
 <Tabs>
@@ -51,8 +52,9 @@ sources:
 </TabItem>
 
 </Tabs>
+</VersionBlock>
 
-
+<VersionBlock firstVersion="1.10">
 In dbt Core v1.10 and dbt Fusion engine, standalone anchors that are meant to be used as reusable snippets should be moved under the `anchors:` key. For example:
 
 <Tabs>
@@ -125,4 +127,6 @@ models:
 Only move anchors to the `anchors:` section if they are defined solely for reuse and not part of the YAML’s intended structure. Anchor references (`*anchor_name` or `<<: *anchor_name`) should remain unchanged.
 
 The YAML structure is validated more strictly in dbt Core v1.10 and Fusion; top-level keys that dbt does not recognize as part of the official config spec would result in a deprecation warning. To verify syntax compatibility, run `dbt parse`.
+
+</VersionBlock>
 
