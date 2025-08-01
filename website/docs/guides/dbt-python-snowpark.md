@@ -293,7 +293,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/2-credentials-edit-schema-name.png" title="Credentials edit schema name"/>
 
-3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name (`hwatson` is used in the lab screenshots). Be sure to click **Save** for your changes!
+3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name. Be sure to click **Save** for your changes!
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" title="Save new schema name"/>
 
 4. We now have our own personal development schema, amazing! When we run our first dbt models they will build into this schema.
