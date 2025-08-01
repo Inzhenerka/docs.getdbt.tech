@@ -251,7 +251,7 @@ Fusion will not produce this extra column in the table resulting from `dbt seed`
 
 #### New `anchors:` key
 
-You can use the new `anchors:` key to reuse configuration blocks across your dbt project files. Note that Fusion does not support standalone anchor definitions at the top level of YAML files. Standalone anchors that are meant to be used as reusable snippets should be moved under the `anchors:` key. For example:
+You can use the new top-level `anchors:` key as a container for reusable configuration blocks inside a YAML file. In Fusion, due to stricter schema verification, YAML blocks that were only meant to be used as anchors and not interpreted as part of the configuration proper may result in warnings and/or errors. In these cases, the anchored snippets should be moved under the `anchors:` key. For example:
 
 <File name='models/_models.yml'>
 
