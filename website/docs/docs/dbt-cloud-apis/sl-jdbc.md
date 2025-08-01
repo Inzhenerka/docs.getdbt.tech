@@ -31,7 +31,7 @@ Note that the <Constant name="semantic_layer" /> GraphQL API doesn't support `re
 
 ## Authentication
 
-<Constant name="cloud" /> authorizes requests to the <Constant name="semantic_layer" /> API. You need to provide an environment ID, host, and [service account tokens](/docs/dbt-cloud-apis/service-tokens) or [personal access tokens](/docs/dbt-cloud-apis/user-tokens).
+<Constant name="cloud" /> authorizes requests to the <Constant name="semantic_layer" /> API. You need to provide an Environment ID, Host, and [service account tokens](/docs/dbt-cloud-apis/service-tokens) or [personal access tokens](/docs/dbt-cloud-apis/user-tokens).
 
 ## Connection parameters
 
