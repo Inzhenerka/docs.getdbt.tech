@@ -208,6 +208,8 @@ const sidebarSettings = {
                 "docs/cloud/secure/databricks-private-link",
                 "docs/cloud/secure/redshift-privatelink",
                 "docs/cloud/secure/postgres-privatelink",
+                "docs/cloud/secure/az-postgres-private-link",
+                "docs/cloud/secure/az-synapse-private-link",
                 "docs/cloud/secure/vcs-privatelink",
               ],
             }, // PrivateLink

@@ -32,6 +32,8 @@ dbt Labs has globally connected private networks specifically used to host priva
 - [Databricks Azure Private Link](/docs/cloud/secure/databricks-private-link)
 - [Redshift AWS PrivateLink](/docs/cloud/secure/redshift-privatelink)
 - [Postgres AWS PrivateLink](/docs/cloud/secure/postgres-privatelink)
-- [VCS](/docs/cloud/secure/vcs-privatelink)
+- [Azure Database for Postgres Flexible Server](/docs/cloud/secure/az-postgres-private-link)
+- [Azure Synapse](/docs/cloud/secure/az-synapse-private-link)
+- [VCS - AWS](/docs/cloud/secure/vcs-privatelink)
 
 <PrivateLinkHostnameWarning features={'/snippets/_private-connection-hostname-restriction.md'}/>
