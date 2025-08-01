@@ -984,7 +984,7 @@ This section will guide you on how to use the Sigma integration to query your me
 8. In the **dbt Integration** section, fill out the required fields, and then hit save:
 - Your dbt [service account token](/docs/dbt-cloud-apis/service-tokens) or [personal access tokens](/docs/dbt-cloud-apis/user-tokens).
 - Your access URL of your existing Sigma dbt integration. Use `cloud.getdbt.com` as your access URL.
-- Your dbt environment ID.
+- Your dbt Environment ID.
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-sigma-add-info.png" width="50%" title="Click the '+ New project' button on the top right"/>
 
 9. Return to the Sigma home page. Create a new workbook.
