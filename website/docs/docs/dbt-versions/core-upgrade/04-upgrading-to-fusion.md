@@ -247,3 +247,31 @@ Fusion will not produce this extra column in the table resulting from `dbt seed`
 | dog    |  
 | cat    |  
 | bear   |  
+
+
+#### New `anchors:` key
+
+You can use the new `anchors:` key to reuse configuration blocks across your dbt project files. Note that Fusion does not support standalone anchor definitions at the top level of YAML files. Standalone anchors that are meant to be used as reusable snippets should be moved under the `anchors:` key. For example:
+
+<File name='models/_models.yml'>
+
+```yml
+anchors:
+  - columns: &id_column
+    - name: id
+      description: This is a unique identifier.
+      data_tests:
+        - not_null
+
+models:
+  - name: my_first_model
+    columns: *id_column
+  - name: my_second_model
+    columns: *id_column
+```
+
+</File>
+
+Note that not all anchors should be moved under an `anchors` block. Some anchors are part of the main YAML structure (for example, defining tests on a column) and should _not_ be moved under a top-level `anchors` key.
+
+For more information about this new key, see [anchors](/reference/resource-properties/anchors).

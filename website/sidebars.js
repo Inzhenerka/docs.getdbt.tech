@@ -1088,6 +1088,7 @@ const sidebarSettings = {
             description: "The list of general properties available in dbt.",
           },
           items: [
+            "reference/resource-properties/anchors",
             "reference/resource-properties/columns",
             "reference/resource-properties/config",
             "reference/resource-properties/constraints",
