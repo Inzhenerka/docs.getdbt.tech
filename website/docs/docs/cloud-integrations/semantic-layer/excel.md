@@ -28,7 +28,7 @@ The <Constant name="semantic_layer" /> offers a seamless integration with Excel 
 
 The <Constant name="semantic_layer" /> Microsoft Excel integration is available to download directly on [Microsoft AppSource](https://appsource.microsoft.com/en-us/product/office/WA200007100?tab=Overview). You can choose to download this add-on in for both [Excel Desktop](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationId=4132ecd1-425d-982d-efb4-de94ebc83f26) and [Excel Online](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationid=4132ecd1-425d-982d-efb4-de94ebc83f26&isWac=True)
 
-1. In Excel, authenticate with your host, <Constant name="cloud" /> environment ID, and service token.
+1. In Excel, authenticate with your Host, <Constant name="cloud" /> Environment ID, and service token.
    - Access your Environment ID, Host, and URLs in your <Constant name="semantic_layer" /> settings. Generate a service token in the <Constant name="semantic_layer" /> settings or **API tokens** settings. Alternatively, you can also create a personal access token by going to **API tokens** > **Personal tokens**. 
    <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-and-gsheets.png" width="70%" title="Access your Environment ID, Host, and URLs in your dbt Semantic Layer settings. Generate a service token in the Semantic Layer settings or API tokens settings" />
 
