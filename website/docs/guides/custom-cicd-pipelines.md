@@ -71,7 +71,7 @@ The setup below shows how to call the <Constant name="cloud" /> API to run a job
 
 When running a CI/CD pipeline you’ll want to use a service token instead of any individual’s API key. There are [detailed docs](/docs/dbt-cloud-apis/service-tokens) available on this, but below is a quick rundown (this must be performed by an Account Admin):
 
-- Login to your <Constant name="cloud" /> account.
+1. Log in to your <Constant name="cloud" /> account.
 - In the upper left, click the menu button, then **Account settings**.
 - Click [**Service tokens**](/docs/dbt-cloud-apis/service-tokens) on the left.
 - Click **+ Create service token** to create a new token specifically for CI/CD API calls.
