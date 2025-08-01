@@ -104,7 +104,9 @@ sources:
 </Tabs>
 
 :::important 
-Not all anchors should be moved under an `anchors:` block. Some anchors are part of the main YAML structure (for example, defining tests on a column) and should _not_ be moved under a top-level `anchors:` key. For example:
+Not all anchors should be moved under an `anchors:` block, such as anchors that are part of the main YAML structure (for example, defining tests on a column).
+
+For example:
 
 ```yml
 models:
