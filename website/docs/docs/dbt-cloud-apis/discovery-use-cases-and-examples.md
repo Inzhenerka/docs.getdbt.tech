@@ -909,7 +909,7 @@ Graph example:
 The Discovery API enables access to comprehensive model-level data lineage by exposing:
 
 - Upstream dependencies of models, including relationships to [sources](/docs/build/sources), [seeds](/docs/build/seeds), and [snapshots](/docs/build/snapshots) 
-- Model execution metadata, such as run status, execution time, and freshness
+- Model execution metadata such as run status, execution time, and freshness
 - Column-level details, including tests and descriptions
 - References between models to reconstruct lineage across your project
 
