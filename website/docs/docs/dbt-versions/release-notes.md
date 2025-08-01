@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## August 2025
 
-- **New**: You can now use [personal access tokens (PATs)](/docs/dbt-cloud-apis/user-tokens) to authenticate in Semantic Layer. This enables user-level authentication and reduces the need for sharing tokens between users. When you authenticate using PATs, queries are run using your personal development credentials. For more information, see [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
+- **New**: You can now use [personal access tokens (PATs)](/docs/dbt-cloud-apis/user-tokens) to authenticate in the Semantic Layer. This enables user-level authentication and reduces the need for sharing tokens between users. When you authenticate using PATs, queries are run using your personal development credentials. For more information, see [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
 
 ## July 2025
 
