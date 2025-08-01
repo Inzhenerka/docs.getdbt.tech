@@ -30,7 +30,7 @@ import SLCourses from '/snippets/_sl-course.md';
 3. [Find your](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) **Host** and **Environment ID** in <Constant name="cloud" />.
    - Navigate to **Account Settings** and select **Projects** on the left sidebar.
    - Select your project and then navigate to the **<Constant name="semantic_layer" />** settings.  You'll need this to authenticate in Google Sheets in the following step.
-   - You can [generate your service token](/docs/dbt-cloud-apis/service-tokens) by clicking **Generate Service Token** within the <Constant name="semantic_layer" /> configuration page or navigating to **API tokens** in <Constant name="cloud" />. Alternatively, you can also create a [personal access token](/docs/dbt-cloud-apis/user-tokens) by going to **API tokens** > **Personal tokens**. 
+   - You can generate your service token by clicking **Generate Service Token** within the <Constant name="semantic_layer" /> configuration page or navigating to **API tokens** in <Constant name="cloud" />. Alternatively, you can also create a personal access token by going to **API tokens** > **Personal tokens**. 
       <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-and-gsheets.png" width="70%" title="Access your Environment ID, Host, and URLs in your dbt Semantic Layer settings. Generate a service token in the Semantic Layer settings or API tokens settings" />
 4. In Google Sheets, authenticate with your host, <Constant name="cloud" /> environment ID, and service or personal token.
 
