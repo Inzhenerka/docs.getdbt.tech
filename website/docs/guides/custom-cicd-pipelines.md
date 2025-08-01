@@ -74,7 +74,7 @@ When running a CI/CD pipeline you’ll want to use a service token instead of an
 1. Log in to your <Constant name="cloud" /> account.
 2. Click your account name at the bottom left-hand menu and go to **Account settings**.
 3. Click [**Service tokens**](/docs/dbt-cloud-apis/service-tokens) on the left.
-- Click **+ Create service token** to create a new token specifically for CI/CD API calls.
+4. Click **+ Create service token** to create a new token specifically for CI/CD API calls.
 - Name your token something like “CICD Token”.
 - Click the **+Add permission** button under **Access**, and grant this token the **Job Admin** permission.
 - Click **Save** and you’ll see a grey box appear with your token. Copy that and save it somewhere safe (this is a password, and should be treated as such).
