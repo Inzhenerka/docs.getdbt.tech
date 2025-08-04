@@ -26,6 +26,6 @@ Databricks Lakebase targets are configured exactly the same as [Postgres targets
 Use these key parameters to connect to Databricks Lakebase:
 
 - `host name`: Found in **Databricks** > **Compute** > **Database instances** > **Connect with PSQL** using the format `instance-123abcdef456.database.cloud.databricks.com`
-- `database name` is databricks_postgres by default
+- `database name`: Use `databricks_postgres` by default
 - For authentication, dbt-postgres can only support username/password. You can generate a password either by [enabling Native Postgres Role Login](https://docs.databricks.com/aws/en/oltp/oauth?language=UI#authenticate-with-databricks-identities) (recommended) or [generating an Oauth token that will need to be refreshed every hour](https://docs.databricks.com/aws/en/oltp/oauth?language=UI#authenticate-with-databricks-identities]). 
 
