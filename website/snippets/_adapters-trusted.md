@@ -58,7 +58,7 @@
     title="Databricks Lakebase"
     body="<ul><li><a href='/docs/core/connect-data-platform/lakebase-setup'>Install with dbt Core </a> </li> </ul><br /><br /><a <a href=https://badge.fury.io/py/dbt-postgres><img src=https://badge.fury.io/py/dbt-postgres.svg/></a>"
     pills='["dbt platform", "dbt Core"]'
-    icon="dbt-lakebase"/>
+    icon="lakebase"/>
 
 <Card
     title="Materialize"
