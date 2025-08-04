@@ -22,3 +22,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 ## Profile Configuration
 
 Databricks Lakebase targets are configured exactly the same as [Postgres targets](postgres-setup#profile-configuration).
+
+- `host name` is found in Databricks > Compute > Database instances > Connect with PSQL in the format `instance-123abcdef456.database.cloud.databricks.com
+- `database name` is databricks_postgres by default
