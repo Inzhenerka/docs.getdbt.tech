@@ -11,6 +11,11 @@
     - Native OAuth
 
   </Expandable>
+
+  <Expandable alt_header="Redshift">
+    - Username / Password
+
+  </Expandable>
   
   <Expandable alt_header="Snowflake">
     - Username / Password
