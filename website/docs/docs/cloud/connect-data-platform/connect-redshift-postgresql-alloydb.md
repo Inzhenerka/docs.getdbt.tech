@@ -6,7 +6,7 @@ sidebar_label: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
 ---
 /* TODO: break Redshift connection docs to separate page */ 
  
-dbt Cloud supports connecting to PostgresSQL, Postgres compatible databases (AlloyDB, Lakebase) and Redshift. 
+dbt Platform supports connecting to PostgresSQL, Postgres compatible databases (AlloyDB, Lakebase) and Redshift. 
 
 The following fields are required when creating a connection:
 
@@ -23,9 +23,9 @@ The following fields are required when creating a connection:
 
 ### Authentication Parameters
 
-For authentication, <Constant name="cloud" /> users can use either a **Database username and password** for Postgres and Postgres compatible databases.
+For authentication, <Constant name="cloud" /> users can use **Database username and password** for Postgres and Postgres compatible databases. For more information on what is supported, check out the database specific setup page for limitations and helpful tips. 
 
-For Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/external-oauth) 
+In addition, for Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/external-oauth) 
 
 <Tabs
   defaultValue="database"
