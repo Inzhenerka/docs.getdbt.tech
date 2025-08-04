@@ -293,7 +293,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/2-credentials-edit-schema-name.png" title="Credentials edit schema name"/>
 
-3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name (`hwatson` is used in the lab screenshots). Be sure to click **Save** for your changes!
+3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name. Be sure to click **Save** for your changes!
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" title="Save new schema name"/>
 
 4. We now have our own personal development schema, amazing! When we run our first dbt models they will build into this schema.
@@ -457,21 +457,21 @@ sources:
         description: One record per circuit, which is the specific race course. 
         columns:
           - name: circuitid
-            tests:
+            data_tests:
             - unique
             - not_null
       - name: constructors 
         description: One record per constructor. Constructors are the teams that build their formula 1 cars. 
         columns:
           - name: constructorid
-            tests:
+            data_tests:
             - unique
             - not_null
       - name: drivers
         description: One record per driver. This table gives details about the driver. 
         columns:
           - name: driverid
-            tests:
+            data_tests:
             - unique
             - not_null
       - name: lap_times
@@ -480,7 +480,7 @@ sources:
         description: One row per pit stop. Pit stops do not have their own id column, the combination of the race_id and driver_id identify the pit stop.
         columns:
           - name: stop
-            tests:
+            data_tests:
               - accepted_values:
                   values: [1,2,3,4,5,6,7,8]
                   quote: false            
@@ -488,13 +488,13 @@ sources:
         description: One race per row. Importantly this table contains the race year to understand trends. 
         columns:
           - name: raceid
-            tests:
+            data_tests:
             - unique
             - not_null        
       - name: results
         columns:
           - name: resultid
-            tests:
+            data_tests:
             - unique
             - not_null   
         description: One row per result. The main table that we join out for grid and position variables.
@@ -502,7 +502,7 @@ sources:
         description: One status per row. The status contextualizes whether the race was finished or what issues arose e.g. collisions, engine, etc. 
         columns:
           - name: statusid
-            tests:
+            data_tests:
             - unique
             - not_null
 ```
@@ -743,11 +743,11 @@ The next step is to set up the staging models for each of the 8 source tables. G
 
     After the source and all the staging models are complete for each of the 8 tables, your staging folder should look like this:
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/1-staging-folder.png" title="Staging folder"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/1-staging-folder.png" width="40%" title="Staging folder"/>
 
 1. It’s a good time to delete our example folder since these two models are extraneous to our formula1 pipeline and `my_first_model` fails a `not_null` test that we won’t spend time investigating. <Constant name="cloud" /> will warn us that this folder will be permanently deleted, and we are okay with that so select **Delete**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/2-delete-example.png" title="Delete example folder"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/2-delete-example.png" width="40%" title="Delete example folder"/>
 
 1. Now that the staging models are built and saved, it's time to create the models in our development schema in Snowflake. To do this we're going to enter into the command line `dbt build` to run all of the models in our project, which includes the 8 new staging models and the existing example models.
 
@@ -1743,7 +1743,7 @@ Since the output of our Python models are tables, we can test SQL and Python mod
           columns:
             - name: constructor_name
               description: team that makes the car
-              tests:
+              data_tests:
                 - unique
 
         - name: lap_times_moving_avg
@@ -1751,7 +1751,7 @@ Since the output of our Python models are tables, we can test SQL and Python mod
           columns:
             - name: race_year
               description: year of the race
-              tests:
+              data_tests:
                 - relationships:
                   to: ref('int_lap_times_years')
                   field: race_year
@@ -1890,12 +1890,12 @@ Now that we've completed testing and documenting our work, we're ready to deploy
   - Once our code is merged to the main branch, we'll need to run dbt in our production environment to build all of our models and run all of our tests. This will allow us to build production-ready objects into our production environment in Snowflake. Luckily for us, the Partner Connect flow has already created our deployment environment and job to facilitate this step.
 
 1. Before getting started, let's make sure that we've committed all of our work to our feature branch. If you still have work to commit, you'll be able to select the **Commit and push**, provide a message, and then select **Commit** again.
-2. Once all of your work is committed, the git workflow button will now appear as **Merge to main**. Select **Merge to main** and the merge process will automatically run in the background.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" title="Merge into main"/>
+2. Once all of your work is committed, the git workflow button will now appear as **Merge this branch to main**. Click **Merge this branch to main** and the merge process will automatically run in the background.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" title="Merge this branch to main"/>
 
 3. When it's completed, you should see the git button read **Create branch** and the branch you're currently looking at will become **main**.
 4. Now that all of our development work has been merged to the main branch, we can build our deployment job. Given that our production environment and production job were created automatically for us through Partner Connect, all we need to do here is update some default configurations to meet our needs.
-5. In the menu, select **Deploy** **> Environments**
+5. In the left-hand menu, go to **Orchestration** > **Environments**.
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/2-ui-select-environments.png" title="Navigate to environments within the UI"/>
 
 6. You should see two environments listed and you'll want to select the **Deployment** environment then **Settings** to modify it.
