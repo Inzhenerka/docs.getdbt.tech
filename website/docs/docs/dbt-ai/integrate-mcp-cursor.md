@@ -1,3 +1,10 @@
+---
+title: "Integrate Cursor with MCP"
+sidebar_label: "Integrate Cursor with MCP"
+description: "Guide to set up Cursor with dbt-mcp"
+id: "integrate-cursorlaude-mcp"
+---
+
 # MCP Setup with Cursor
 
 [Cursor](https://docs.cursor.com/context/model-context-protocol) is an AI-powered code editor, integrated with VSCode(Visual Studio Code). 

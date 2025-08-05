@@ -1,3 +1,10 @@
+---
+title: "Integrate Claude with MCP"
+sidebar_label: "Integrate Claude with MCP"
+description: "Guide to set up claude with dbt-mcp"
+id: "integrate-claude-mcp"
+---
+
 # MCP Setup with Claude
 
 Claude is an AI assistant from Anthropic with two main interfaces: 
