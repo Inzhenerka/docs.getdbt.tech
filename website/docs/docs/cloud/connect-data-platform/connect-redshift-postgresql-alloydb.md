@@ -6,7 +6,7 @@ sidebar_label: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
 ---
 <!-- TODO: break Redshift connection docs to separate page -->
  
-dbt Platform supports connecting to PostgresSQL, Postgres compatible databases (AlloyDB, Lakebase) and Redshift. 
+dbt Platform supports connecting to PostgresSQL, Postgres-compatible databases (AlloyDB, Lakebase), and Redshift. 
 
 The following fields are required when creating a connection:
 
