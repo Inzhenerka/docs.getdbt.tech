@@ -4,7 +4,11 @@ sidebar_label: "anchors"
 id: anchors
 ---
 
-With YAML anchors, you can reuse configuration blocks across your dbt project files. Note that the way anchors are defined and used is different between dbt versions.
+Anchors are a [feature of YAML](https://yaml.org/spec/1.2.2/#692-node-anchors) making it possible to reuse configuration blocks inside of a single YAML file. Fragments of configuration which are not valid on their own or which only exist as template data should be enclosed in the `anchors:` key, to protect them from being rejected during file validation:
+
+- The dbt Fusion engine will raise an error when it encounters unexpected keys, including those used as part of an anchor definition. _Note that during the Fusion engine's beta period, these errors are downgraded to warnings._
+- Version 1.10 and later of dbt Core will raise a warning on unexpected keys.
+- Earlier versions of dbt Core will not raise a warning at all
 
 <VersionBlock lastVersion="1.9">
 dbt Core v1.9 supports standalone anchor definitions at the top level of YAML files. For example:
