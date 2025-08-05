@@ -25,7 +25,6 @@ You will need to configure environment variables in order to access the tools. I
 | DBT_TOKEN | Required | Your personal access token or service token from dbt Platform. Note: a service token is required when using the Semantic Layer and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
 
-
 #### Configuration for SQL Tools
 | Environment Variable | Required | Description |
 | --- | --- | --- |

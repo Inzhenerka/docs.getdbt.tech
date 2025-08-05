@@ -17,7 +17,7 @@ For more information on MCP, have a look at [Get started with the Model Context 
 ## Architecture
 There are two ways to access the dbt-mcp server: locally hosted or remote hosted on dbt Platform.
 
-<!-- need to create -->
+<!--TODO need to create -->
 
 ## Available Tools
 
@@ -67,26 +67,22 @@ To learn more about the dbt Semantic layer, click [here](/docs/dbt-cloud-apis/di
 * `execute_sql` - Execute SQL on dbt Cloud's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
 
 
-
 ## Server Setup
 
 There are two ways to setup dbt MCP, [local](#local) and [remote](#remote). We recommend using the locally hosted dbt-mcp for applications like locally hosted IDE Copilots and remote dbt-mcp for 
 custom applications like AI Agents.
 
 - [Local MCP Server Setup Guide](website/docs/docs/dbt-ai/setup-local-mcp.md)
--[ Remote MCP Server Setup Guide](website/docs/docs/dbt-ai/setup-remote-mcp.md)
-
-
-## Troubleshooting
-
-- Some MCP clients may be unable to find `uvx` from the JSON config. If this happens, try finding the full path to `uvx` with `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
+- [Remote MCP Server Setup Guide](website/docs/docs/dbt-ai/setup-remote-mcp.md)
 
 ## MCP Integrations 
 - [Claude](docs/docs/ai/integrate-mcp-claude)
 - [Cursor](docs/docs/ai/integrate-mcp-cursor)
 - [VSCode](/docs/docs/ai/integrate-mcp-vscode)
 
+## Troubleshooting
+
+- Some MCP clients may be unable to find `uvx` from the JSON config. If this happens, try finding the full path to `uvx` with `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
 
 ## Further reading
-
 - Refer to our blog on [Introducing the dbt MCP Server](/blog/introducing-dbt-mcp-server#getting-started) for more information.
