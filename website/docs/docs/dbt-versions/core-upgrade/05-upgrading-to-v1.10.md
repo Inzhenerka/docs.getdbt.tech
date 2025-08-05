@@ -33,23 +33,46 @@ Large data sets can slow down dbt build times, making it harder for developers t
 
 ### New `anchors:` key
 
-As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 will emit a warning when it sees a standalone anchor definition at the top level of a YAML file. Instead, you can use the new top-level `anchors:` key as a container for those reusable configuration blocks. For example:
+As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees a standalone anchor definition at the top level of a YAML file. Instead, you can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
 
+The following is a sample configuration that uses a standalone anchor definition at the top level of a YAML file:
+<File name='models/_models.yml'>
+
+```yml
+this_value_is_always_ignored: &the_anchor_name_is_what_matters
+  name: id
+  description: This is a unique identifier.
+  data_tests:
+    - not_null
+```
+
+</File>
+
+You can use the new top-level `anchors:` key instead. For example: 
 <File name='models/_models.yml'>
 
 ```yml
 anchors:
-  - columns: &id_column
-    - name: id
+  - this_value_is_always_ignored: &the_anchor_name_is_what_matters
+      name: id
       description: This is a unique identifier.
       data_tests:
         - not_null
 
 models:
-  - name: my_first_model
-    columns: *id_column
-  - name: my_second_model
-    columns: *id_column
+    - name: my_first_model
+      description: This is a description for the first model.
+      columns:
+        - *the_anchor_name_is_what_matters
+        - name: my_second_column
+          description: "This is a description for the second column. I can add it even though there's another column added via anchor."
+          data_tests:
+            - not_null
+
+    - name: my_second_model
+      description: This is a description for the second model.
+      columns:
+        - *the_anchor_name_is_what_matters
 ```
 
 </File>

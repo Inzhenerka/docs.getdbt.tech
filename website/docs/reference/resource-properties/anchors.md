@@ -4,14 +4,14 @@ sidebar_label: "anchors"
 id: anchors
 ---
 
-Anchors are a [feature of YAML](https://yaml.org/spec/1.2.2/#692-node-anchors) making it possible to reuse configuration blocks inside of a single YAML file. Fragments of configuration which are not valid on their own or which only exist as template data should be enclosed in the `anchors:` key, to protect them from being rejected during file validation:
+Anchors are a [YAML feature](https://yaml.org/spec/1.2.2/#692-node-anchors) that make it possible to reuse configuration blocks inside a single YAML file. Fragments of configuration which are not valid on their own or which only exist as template data should be enclosed in the `anchors:` key. Using the `anchors:` key protects them from being rejected during file validation. The following scenarios describe how unexpected keys are handled across different dbt versions:
 
-- The dbt Fusion engine will raise an error when it encounters unexpected keys, including those used as part of an anchor definition. _Note that during the Fusion engine's beta period, these errors are downgraded to warnings._
-- Version 1.10 and later of dbt Core will raise a warning on unexpected keys.
-- Earlier versions of dbt Core will not raise a warning at all
+
+- dbt Core v1.10 and higher will raise a warning, while the dbt Fusion engine will raise an error. _Note that during Fusion's beta period, these errors are downgraded to warnings._
+- dbt Core v1.9 and earlier will not raise a warning at all.
 
 <VersionBlock lastVersion="1.9">
-dbt Core v1.9 supports standalone anchor definitions at the top level of YAML files. For example:
+In dbt Core v1.9 and earlier, you can use standalone anchor definitions at the top level of YAML files. For example:
 
 <Tabs>
 <TabItem value="model" label="Models">
@@ -130,7 +130,7 @@ models:
 
 Only move anchors to the `anchors:` section if they are defined solely for reuse and not part of the YAML’s intended structure. Anchor references (`*anchor_name` or `<<: *anchor_name`) should remain unchanged.
 
-The YAML structure is validated more strictly in dbt Core v1.10 and Fusion; top-level keys that dbt does not recognize as part of the official config spec would result in a deprecation warning. To verify syntax compatibility, run `dbt parse`.
+To verify syntax compatibility, run `dbt parse`.
 
 </VersionBlock>
 
