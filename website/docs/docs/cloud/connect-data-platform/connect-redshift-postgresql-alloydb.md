@@ -1,8 +1,8 @@
 ---
 title: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
 id: connect-redshift-postgresql-alloydb
-description: "Setup instructions for connecting Redshift, PostgreSQL,Lakebase and AlloyDB to dbt"
-sidebar_label: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
+description: "Setup instructions for connecting Redshift, PostgreSQL, Lakebase, and AlloyDB to dbt"
+sidebar_label: "Connect Redshift, PostgreSQL, Lakebase, and AlloyDB"
 ---
 <!-- TODO: break Redshift connection docs to separate page -->
  
