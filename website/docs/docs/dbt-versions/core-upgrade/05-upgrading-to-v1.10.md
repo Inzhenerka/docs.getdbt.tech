@@ -33,7 +33,7 @@ Large data sets can slow down dbt build times, making it harder for developers t
 
 ### New `anchors:` key
 
-You can use the new `anchors:` key to reuse configuration blocks across your dbt project files. Note that dbt Core v1.10 does not support standalone anchor definitions at the top level of YAML files. Standalone anchors that are meant to be used as reusable snippets should be moved under the `anchors:` key. For example:
+As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 will emit a warning when it sees a standalone anchor definition at the top level of a YAML file. Instead, you can use the new top-level `anchors:` key as a container for those reusable configuration blocks. For example:
 
 <File name='models/_models.yml'>
 
