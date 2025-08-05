@@ -225,7 +225,7 @@ catalogs:
 {{
     config(
         materialized='table',
-        catalog = catalog_horizon
+        catalog_name = catalog_horizon
 
     )
 }}
