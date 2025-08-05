@@ -21,7 +21,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remote via db
 | Semantic Layer | ✅ | ✅ |
 | Generate SQL | ✅ | ❌ |
 | Execute SQL on dbt Platform | ✅ | ❌ |
-| Metadata Queries on dbt Platform | ✅ | ✅ |
+| Metadata Discovery | ✅ | ✅ |
 | Disable tools | ✅ | ❌ |
 
 
@@ -40,6 +40,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remote via db
 
 
 ### Semantic Layer
+To learn more about the dbt Semantic layer, click [here](/docs/use-dbt-semantic-layer/dbt-sl)
 
 * `list_metrics` - Retrieves all defined metrics
 * `get_dimensions` - Gets dimensions associated with specified metrics
@@ -48,6 +49,8 @@ There are two ways to access the dbt-mcp server: locally hosted or remote via db
 
 
 ### Metadata Discovery
+To learn more about the dbt Semantic layer, click [here](/docs/dbt-cloud-apis/discovery-api)
+
 * `get_mart_models` - Gets all mart models
 * `get_all_models` - Gets all models
 * `get_model_details` - Gets details for a specific model
