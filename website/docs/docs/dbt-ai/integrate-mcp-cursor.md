@@ -2,7 +2,7 @@
 title: "Integrate Cursor with MCP"
 sidebar_label: "Integrate Cursor with MCP"
 description: "Guide to set up Cursor with dbt-mcp"
-id: "integrate-cursorlaude-mcp"
+id: "integrate-cursor-mcp"
 ---
 
 # MCP Setup with Cursor
