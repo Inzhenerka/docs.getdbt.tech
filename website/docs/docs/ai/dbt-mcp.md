@@ -7,9 +7,6 @@ Join us in [Github](https://github.com/dbt-labs/dbt-mcp?tab=readme-ov-file) for 
 ## Architecture
 There are two ways to access the dbt-mcp server: locally hosted or remote via dbt Platform.
 
-
-
-
 <!-- need to create -->
 
 ## Tools
