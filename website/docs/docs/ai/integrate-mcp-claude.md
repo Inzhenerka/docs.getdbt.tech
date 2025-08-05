@@ -4,19 +4,24 @@ Claude is an AI assistant from Anthropic with two main interfaces:
 - Claude Code: a terminal/IDE tool for development
 - Claude Desktop: a GUI with MCP support for file access and commands as well as basic coding features 
 
-
 ## Claude Code
 
 You can set up Claude Code with both the local and remote dbt-mcp server. We recommend using the local dbt-mcp for more developer focused workloads. 
 
-### Setup
-1. Create an json file on your machine with either your environment variables for the local dbt-mcp or host and header information for remote dbt-mcp. 
+### Setup with Local dbt-mcp
+1. Create an json file on your machine with your environment variables for the local dbt-mcp.
 2. Run the following command to add the MCP server to Claude Code:
 
 ```bash
 claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
 Remember to update the file path. 
+
+### Setup with Remote dbt-mcp
+<!-- does this even work?need eng confirmation -->
+
+
+### Claude Code scopes
 
 By default the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
 
@@ -30,6 +35,7 @@ claude mcp add dbt -s project -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
 
 More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#understanding-mcp-server-scopes)
+
 
 #### Claude Desktop
 

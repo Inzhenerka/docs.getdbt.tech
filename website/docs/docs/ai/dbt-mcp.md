@@ -64,7 +64,7 @@ custom applications like AI Agents.
 ## Set up Local Server
 
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
-2. Copy the [`.env.example` file](https://github.com/dbt-labs/dbt-mcp/blob/main/.env.example) locally under a file called `.env` and set it with the following environment variable configuration:
+2. Copy the [`.env.example` file](https://github.com/dbt-labs/dbt-mcp/blob/main/.env.example) locally under a file called `.env`. You will need this file for integrating with MCP compatible tools. Set it with the following environment variable configuration:
 
 ### Setting Environment Variables
 
@@ -147,9 +147,13 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on d
 - **Production environment ID**: This can be found on the `Orchestration` page of dbt Cloud. Use this to set a `x-dbt-prod-environment-id` header.
 - **Service token**: To fully utilize Remote MCP, this needs to be configured for the dbt Semantic Layer by following [this](https://docs.getdbt.com/docs/use-dbt-semantic-layer/setup-sl#2-add-a-credential-and-create-service-tokens) guide and have `Developer` permissions. Add this as a `Authorization` header with a value like: `token <token>`. Be sure to replace `<token>` with the value of your token.
 
-Then you can use these values to connect to the remote server with Streamable HTTP MCP transport. Use the example [here](https://github.com/dbt-labs/dbt-mcp/blob/76992ac51a905e9e0d2194774e7246ee288094b9/examples/remote_mcp/main.py) as a reference in Python. A similar implementation is possible with SDKs for many other languages.
+3. With that information, you will be able to integrate with MCP compatiable tools with either an env file with the necessary information or via Streamable HTTP MCP transport.
 
-You can also connect from MCP clients which support remote MCP with headers. For instance, you can connect Cursor to the remote server with the following configuration. Be sure to replace `<host>`, `<token>`, and `<prod-id>` with your information:
+
+- Env File: Depending on the MCP client, you will either need to provide the file or provide the below information into their UI. 
+Example configuration: 
+
+Be sure to replace `<host>`, `<token>`, and `<prod-id>` with your information:
 
 ```
 {
@@ -164,6 +168,9 @@ You can also connect from MCP clients which support remote MCP with headers. For
   }
 }
 ```
+- Streamable HTTP MCP transport: Use the example [here](https://github.com/dbt-labs/dbt-mcp/blob/76992ac51a905e9e0d2194774e7246ee288094b9/examples/remote_mcp/main.py) as a reference in Python. A similar implementation is possible with SDKs for many other languages.
+
+
 
 ## Troubleshooting
 
