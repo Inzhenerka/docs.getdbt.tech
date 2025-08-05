@@ -2,9 +2,7 @@
 title: "Model Context Protocol"
 sidebar_label: "Model Context Protocol"
 description: "Learn about the MCP server in dbt"
-id: "mcp"
-pagination_prev: "docs/dbt-cloud-apis/overview"
-pagination_next: "docs/dbt-cloud-apis/authentication"
+id: "about-mcp"
 ---
 
 dbt can now function as a [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) (MCP) server, providing a standardized framework that enables users to seamlessly integrate AI applications with their data warehouses. This ensures a consistent and efficient way to connect, access, and utilize data across various AI tools.

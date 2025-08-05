@@ -739,7 +739,6 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/dbt-cloud-apis/overview" },
       items: [
         "docs/dbt-cloud-apis/overview",
-        "docs/dbt-cloud-apis/mcp",
         {
           type: "category",
           label: "API Access",
@@ -845,16 +844,32 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "dbt Copilot",
+      label: "dbt AI",
       collapsed: true,
-      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
       items: [
-        "docs/cloud/dbt-copilot",
-        "docs/cloud/enable-dbt-copilot",
-        "docs/cloud/use-dbt-copilot",
-        "docs/cloud/copilot-styleguide",
-        "docs/cloud/copilot-chat-in-studio",
-        "docs/cloud/dbt-copilot-faqs",
+        {
+          type: "category",
+          label: "Copilot",
+          collapsed: true,
+          link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+          items: [
+           "docs/cloud/dbt-copilot",
+           "docs/cloud/enable-dbt-copilot",
+            "docs/cloud/use-dbt-copilot",
+            "docs/cloud/copilot-styleguide",
+            "docs/cloud/copilot-chat-in-studio",
+            "docs/cloud/dbt-copilot-faqs",
+          ],
+        },
+                {
+          type: "category",
+          label: "MCP server",
+          collapsed: true,
+          link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
+          items: [
+            "docs/dbt-ai/about-mcp",
+          ],
+        },
       ],
     },
     {
