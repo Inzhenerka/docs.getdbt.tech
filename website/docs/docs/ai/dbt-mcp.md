@@ -5,20 +5,18 @@ The MCP (Model Context Protocol) server provides dbt tools for your AI data stac
 Join us in [Github](https://github.com/dbt-labs/dbt-mcp?tab=readme-ov-file) for any comments or questions and in [the community Slack](https://www.getdbt.com/community/join-the-community) in the `#tools-dbt-mcp` channel.
 
 ## Architecture
-There are two ways to access the dbt-mcp server: locally hosted or remote via dbt Platform.
+There are two ways to access the dbt-mcp server: locally hosted or remote hosted on dbt Platform.
 
 <!-- need to create -->
 
-## Availble Tools
+## Available Tools
 
 ## Supported
-| Feature  | Local | Remote |
+| Tools | Local | Remote |
 | --- | --- | --- |
-| dbt CLI commands | ✅ | ❌ |
+| dbt CLI  | ✅ | ❌ |
 | Semantic Layer | ✅ | ✅ |
-| Generate SQL | ✅ | ❌ |
-| Execute SQL on dbt Platform | ✅ | ❌ |
-| Metadata Discovery | ✅ | ✅ |
+| SQL  | ✅ | ❌ |
 | Disable tools | ✅ | ❌ |
 
 
@@ -138,7 +136,7 @@ Add this configuration to the respective client's config file. Be sure to replac
 
 <!-- we are going to yank a lot of the content out and link to the dbt mcp integrations-->
 
-## Set up Remove Server
+## Set up Remote Server
 
 The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on dbt Platform. 
 
