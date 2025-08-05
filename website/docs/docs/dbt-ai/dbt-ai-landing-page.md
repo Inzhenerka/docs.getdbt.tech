@@ -11,9 +11,13 @@ As AI becomes a more common part of data workflows, dbt provides tools to help t
 
 dbt’s AI features include:
 
-- **dbt** **Model Context Protocol (MCP) Server:** Exposes dbt commands, structured data and metadata from your dbt project in a machine-readable format. External systems—such as LLMs or agents, can use this metadata to access models, metrics, tests, and documentation with full project context.
+- **[dbt Model Context Protocol (MCP) Server:](website/docs/docs/dbt-ai/mcp.md)** Exposes dbt commands, structured data and metadata from your dbt project in a machine-readable format. External systems—such as LLMs or agents, can use this metadata to access models, metrics, tests, and documentation with full project context.
 - **dbt Copilot**: An AI-powered assistant that helps users author models, documentation, and semantic models directly in the dbt platform. dbt Copilot generates suggestions based on the structure and contents of your dbt project and can answer questions about your code using a built-in LLM.
-- **Ecosystem integrations**: dbt provides ways to connect your project with external AI systems through APIs and standards like MCP. These integrations enable workflows such as natural language query generation, AI-driven validation, and semantic search.
+- **Ecosystem AI integrations**: dbt provides ways to connect your project with external AI systems through APIs and standards like MCP. These integrations enable workflows such as natural language query generation, AI-driven validation, and semantic search.
+<!-- TODO:
+- move Copilot and link to it. 
+- Link to AI Integrations page
+-->
 
 ## Common dbt AI use cases
 
