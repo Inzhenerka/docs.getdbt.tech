@@ -9,7 +9,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remote via db
 
 <!-- need to create -->
 
-## Tools
+## Availble Tools
 
 ## Supported
 | Feature  | Local | Remote |
@@ -68,7 +68,7 @@ custom applications like AI Agents.
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
 2. Copy the [`.env.example` file](https://github.com/dbt-labs/dbt-mcp/blob/main/.env.example) locally under a file called `.env` and set it with the following environment variable configuration:
 
-### Tools
+### Setting Environment Variables
 
 You will need to configure environment variables in order to access the tools. 
 
@@ -138,7 +138,7 @@ Add this configuration to the respective client's config file. Be sure to replac
 
 <!-- we are going to yank a lot of the content out and link to the dbt mcp integrations-->
 
-## Set up Local Server
+## Set up Remove Server
 
 The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on dbt Platform. 
 
