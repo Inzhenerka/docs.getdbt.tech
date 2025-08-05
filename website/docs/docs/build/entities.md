@@ -6,7 +6,7 @@ sidebar_label: "Entities"
 tags: [Metrics, Semantic Layer]
 ---
 
-Entities are real-world concepts in a business such as customers, transactions, and ad campaigns. We often focus our analyses around specific entities, such as customer churn or annual recurring revenue modeling. In our semantic layer models, these entities serve as joins key across semantic models.
+Entities are real-world concepts in a business, such as customers, transactions, and ad campaigns. We often focus our analyses on specific entities, such as customer churn or annual recurring revenue modeling. In our Semantic Layer models, these entities serve as a join key across semantic models.
 
 Within a semantic graph, the required parameters for an entity are `name` and `type`. The `name` refers to either the key column name from the underlying data table, or it may serve as an alias with the column name referenced in the `expr` parameter. The `name` for your entity must be unique to the semantic model and can not be the same as an existing `measure` or `dimension` within that same model.
 
@@ -153,9 +153,9 @@ entities:
 
 ## Examples
 
-As mentioned, entites serve as our join keys, using the unique entity name. Therefore, we can join a single `unique` key to multiple `foreign` keys.
+As mentioned, entities serve as our join keys, using the unique entity name. Therefore, we can join a single `unique` key to multiple `foreign` keys.
 
-Consider `date_categories` table with the following columns:
+Consider a `date_categories` table with the following columns:
 
 ```sql
 date_id (primary key)
@@ -163,7 +163,7 @@ date_day (unique key)
 fiscal_year_name
 ```
 
-And a `orders` table with the following columns:
+And an `orders` table with the following columns:
 ```sql
 order_id (primary key)
 ordered_at
@@ -171,7 +171,7 @@ delivered_at
 order_total
 ```
 
-How might we define our Semantic Layer yml, so we can query `order_total` by `ordered_at` `fiscal_year_name` and `delivered_at` `fiscal_year_name`?
+How might we define our Semantic Layer YAML so that we can query `order_total` by `ordered_at` `fiscal_year_name`, and `delivered_at` `fiscal_year_name`?
 
 First, we need to define two `unique` entities in the `date_categories` with the expression set to `date_day`:
 
@@ -203,7 +203,7 @@ semantic_models:
     type: categorical
 ```
 
-Then, we need to add these same entities as `foreign` keys to our `orders` model and with the expression set to `ordered_at` and `delivered_at`:
+Then, we need to add these same entities as `foreign` keys to our `orders` model, with the expression set to `ordered_at` and `delivered_at`:
 
 ```yaml
 semantic_models:
@@ -240,6 +240,6 @@ semantic_models:
         
  ```
 
-With this configuration, our semantic models can join on `ordered_at = date_day` via the `ordered_at_entity`, and on `delivered_at = date_day` by the `delivered_at_entity`. To validate our output, we can run:
+With this configuration, our semantic models can join on `ordered_at = date_day` via the `ordered_at_entity`, and on `delivered_at = date_day` via the `delivered_at_entity`. To validate our output, we can run:
 - `dbt sl query --metrics order_total --group-by ordered_at_entity__fiscal_year_name` or
 - `dbt sl query --metrics order_total --group-by delivered_at_entity__fiscal_year_name`
