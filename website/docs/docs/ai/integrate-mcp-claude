@@ -1,10 +1,22 @@
-#### Claude Code
+# MCP Setup with Claude
 
-Run the following command to add the MCP server to Claude Code:
+Claude is an AI assistant from Anthropic with two main interfaces: 
+- Claude Code: a terminal/IDE tool for development
+- Claude Desktop: a GUI with MCP support for file access and commands as well as basic coding features 
+
+
+## Claude Code
+
+You can set up Claude Code with both the local and remote dbt-mcp server. We recommend using the local dbt-mcp for more developer focused workloads. 
+
+### Setup
+1. Create an json file on your machine with either your environment variables for the local dbt-mcp or host and header information for remote dbt-mcp. 
+2. Run the following command to add the MCP server to Claude Code:
 
 ```bash
 claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
+Remember to update the file path. 
 
 By default the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
 
@@ -21,6 +33,10 @@ More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#un
 
 #### Claude Desktop
 
-Follow [these](https://modelcontextprotocol.io/quickstart/user) instructions to create the `claude_desktop_config.json` file and connect.
+1. Go to the Claude Desktop settings. Click on the Claude menu in your system’s menu bar (not in Claude window itself).
+2. In the Settings window, navigate to the “Developer” tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
+3. Click the “Edit Config” button to open the configuration file and provide either the 
+your environment variables for the local dbt-mcp or host and header information for remote dbt-mcp. 
+2. Upon a successful restart, you’ll see an MCP server indicator  in the bottom-right corner of the conversation input box
 
 For debugging, you can find the Claude Desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
