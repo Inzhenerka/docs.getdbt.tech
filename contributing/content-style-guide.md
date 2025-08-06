@@ -67,7 +67,8 @@ We have many official and unofficial partners in the world of dbt. It's importan
 
 Avoid shorthand unless they use it as well. For example:
 
-- Visual Studio Code &mdash; 
+- Visual Studio Code &mdash; VScode ❌
+- Visual Studio Code &mdash; VS Code ✅ 
 
 ### Acronyms and initialisms
 
