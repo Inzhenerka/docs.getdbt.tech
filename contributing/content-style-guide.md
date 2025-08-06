@@ -36,7 +36,7 @@ The right sidebar (rightbar), also known as the page TOC, is created automatical
 
 ## Naming conventions and branding
 
-There are many features in dbt. There are even a few different iterations of dbt itself. Figuring out what's a feature, what's a "product," and what's lingo can be a challenge. Addressing them into files and publishing to the docs site also has a set of rules to follow. This section will help clear up some of that language around calling out dbt products, features, and file names.
+There are many features in dbt. There are even a few different iterations of dbt itself. Figuring out what's a feature, what's a "product," and what's lingo can be a challenge. Addressing them in files and publishing to the docs site also has a set of rules to follow. This section will help clear up some of the language around calling out dbt products, features, and file names.
 
 ### dbt products
 
