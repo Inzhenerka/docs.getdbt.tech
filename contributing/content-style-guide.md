@@ -59,7 +59,7 @@ Some features in the cloud-based dbt platform are treated as proper nouns:
 - Semantic Layer
 - Copilot
 
-All of our other features, such as models, environments, configs, and settings, are all common nouns.
+All of our other features, such as models, environments, configs, and settings, are treated as common nouns.
 
 ### 3rd party brands
 
