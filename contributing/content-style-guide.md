@@ -49,7 +49,7 @@ The following are the "branding" guidelines for the various dbt products (all ca
 
 ### dbt features
 
-There are also a number of features in the cloud-based dbt platform that are treated as proper nouns:
+Some features in the cloud-based dbt platform are treated as proper nouns:
 - Studio IDE
 - Canvas
 - Insights
@@ -59,11 +59,11 @@ There are also a number of features in the cloud-based dbt platform that are tre
 - Semantic Layer
 - Copilot
 
-All of our other features such as models, environments, configs, and settings are all common nouns.
+All of our other features, such as models, environments, configs, and settings, are all common nouns.
 
 ### 3rd party brands
 
-We have many official and unofficial partners in the world of dbt. It's important that we (and by extension, our docs) respect their branding. Use proper nouns where appropriate and, even if if a product has been known by a particular name for years, if they change it, we should respect that and use the new branding. 
+We have many official and unofficial partners in the world of dbt. We (and by extension, our docs) must respect their branding. Use proper nouns where appropriate, and even if a product has been known by a particular name for years, if the name changes, we should use the new branding. 
 
 Avoid shorthand unless they use it as well. For example:
 
@@ -71,6 +71,16 @@ Avoid shorthand unless they use it as well. For example:
 - Visual Studio Code &mdash; VS Code ✅ 
 
 ### Acronyms and initialisms
+
+When using acronyms and initialisms, use all caps, unless there is another established standard:
+
+- yaml ❌ --> YAML ✅ 
+- sql ❌ --> SQL ✅ 
+- json ❌ --> JSON ✅ 
+- dbt ✅ --> DBT ❌
+- scuba ✅ --> S.C.U.B.A. ❌
+
+The exception in cases like YAML and SQL is if you are using the file extension. For example, "Save the model in a file with the .sql extension."
 
 ### Filenaming
 
