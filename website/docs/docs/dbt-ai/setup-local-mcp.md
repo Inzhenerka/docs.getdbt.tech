@@ -6,15 +6,31 @@ id: "setup-local-mcp"
 ---
 
 
-## Set up Local Server
+## Set up Local dbt Server
 To set up the local dbt-mcp server, follow these directions.
 
-1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
-2. Copy the [`.env.example` file](https://github.com/dbt-labs/dbt-mcp/blob/main/.env.example) locally under a file called `.env`. You will need this file for integrating with MCP compatible tools. Set it with the following environment variable configuration:
+1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to install dbt-mcp and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment. 
+
+2. Create an `.env` file to set your environment variables. 
+
+Here is an example of the file:
+
+```code
+DBT_HOST=cloud.getdbt.com
+DBT_PROD_ENV_ID=your-production-environment-id
+DBT_DEV_ENV_ID=your-development-environment-id
+DBT_USER_ID=your-user-id
+DBT_TOKEN=your-service-token
+DBT_PROJECT_DIR=/path/to/your/dbt/project
+DBT_PATH=/path/to/your/dbt/executable
+MULTICELL_ACCOUNT_PREFIX=your-account-prefix
+```
+ You will need this file for integrating with MCP compatible tools. 
+ Here are the environment variables you could supply:
 
 ### Setting Environment Variables
 
-You will need to configure environment variables in order to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt Platform environment variables.
+You will need to configure environment variables in order to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt Platform specific environment variables and vice versa. 
 
 #### Configuration for Discovery, Semantic Layer, and SQL Tools
 
@@ -25,13 +41,15 @@ You will need to configure environment variables in order to access the tools. I
 | DBT_TOKEN | Required | Your personal access token or service token from dbt Platform. Note: a service token is required when using the Semantic Layer and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
 
-#### Configuration for SQL Tools
+#### Additional Configuration for SQL Tools
 | Environment Variable | Required | Description |
 | --- | --- | --- |
 | DBT_DEV_ENV_ID | Optional | Your dbt Cloud development environment ID |
 | DBT_USER_ID | Optional | Your dbt Cloud user ID ([docs](https://docs.getdbt.com/faqs/Accounts/find-user-id)) |
 
 #### Configuration for dbt CLI
+The local dbt-mcp supports all flavors of the dbt Engine, including dbt Core and dbt Fusion.
+
 | Environment Variable | Required | Description | Example |
 | --- | --- | --- | --- |
 | DBT_PROJECT_DIR | Required | The path to where the repository of your dbt Project is hosted locally.  | /Users/myname/reponame |
@@ -54,11 +72,13 @@ We support disabling tool access on the local dbt-mcp.
 | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
 | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable certain tools    |
 
-#### Example Configuration File
+3. After creating your .env file, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating an 
+configruation files. This is dependent on what tools you want to intergrate with. 
 
-After going through the [Setup](#setup), you can use dbt-mcp with an MCP client.
 
-Add this configuration to the respective client's config file. Be sure to replace the sections within `<>`:
+### Example Configuration File
+For some tools,  you may need an additional configuration file to upload in order to connect to dbt-mcp. 
+Here is a sample configuration json file that you can use to connect to MCP tools. Be sure to replace the sections within `<>`:
 
 ```json
 {

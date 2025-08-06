@@ -7,15 +7,14 @@ id: "dbt-ai-landing-page"
 
 # Overview
 
-As AI becomes a more common part of data workflows, dbt provides tools to help teams integrate AI safely and effectively into their analytics stack. This page consolidates dbt's AI capabilities that enable AI interaction with dbt, supporting use cases like conversational access to data, agent-driven automation, and AI-assisted development.
+As AI becomes a more common part of data workflows, dbt provides tools to help teams integrate AI safely and effectively into their analytics stack. This page provides an overview of dbt's MCP Server which can support use cases like conversational access to data, agent-driven automation, and AI-assisted development.
 
 dbt’s AI features include:
 
 - **[dbt Model Context Protocol (MCP) Server:](website/docs/docs/dbt-ai/mcp.md)** Exposes dbt commands, structured data and metadata from your dbt project in a machine-readable format. External systems—such as LLMs or agents, can use this metadata to access models, metrics, tests, and documentation with full project context.
-- **dbt Copilot**: An AI-powered assistant that helps users author models, documentation, and semantic models directly in the dbt platform. dbt Copilot generates suggestions based on the structure and contents of your dbt project and can answer questions about your code using a built-in LLM.
-- **Ecosystem AI integrations**: dbt provides ways to connect your project with external AI systems through APIs and standards like MCP. These integrations enable workflows such as natural language query generation, AI-driven validation, and semantic search.
+
+- **Ecosystem AI integrations**: dbt provides ways to connect your project with MCP. These integrations enable workflows such as natural language query generation, AI-driven validation, and semantic search.
 <!-- TODO:
-- move Copilot and link to it. 
 - Link to AI Integrations page
 -->
 
@@ -43,7 +42,7 @@ Examples:
 
 ### AI-assisted development
 
-dbt Copilot helps users accelerate development by generating SQL, YAML, and documentation within the dbt platform interface. It uses knowledge of your project’s structure to make suggestions consistent with existing patterns. dbt Copilot also allows users to ask questions about their code and receive context-aware responses from a built-in LLM.
+dbt MCP helps users accelerate development by generating SQL, YAML, and documentation within the dbt platform interface. It uses knowledge of your project’s structure to make suggestions consistent with existing patterns. dbt Copilot also allows users to ask questions about their code and receive context-aware responses from a built-in LLM.
 
 Examples:
 

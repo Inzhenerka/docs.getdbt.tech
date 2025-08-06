@@ -5,7 +5,7 @@ description: "Learn how to set up the Remote dbt-mcp server"
 id: "setup-remote-mcp"
 ---
 
-## Set up Remote Server
+## Set up Remote dbt Server
 
 The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on dbt Platform. 
 
