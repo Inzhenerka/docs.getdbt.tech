@@ -64,6 +64,8 @@ All of our other features, such as models, environments, configs, and settings, 
 ### 3rd party brands
 
 We have many official and unofficial partners in the world of dbt. We (and by extension, our docs) must respect their branding. Use proper nouns where appropriate, and even if a product has been known by a particular name for years, if the name changes, we should use the new branding. 
+- Microsoft Azure Active Directory  ❌
+- Microsoft Entra ID ✅ 
 
 Avoid shorthand unless they use it as well. For example:
 
