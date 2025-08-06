@@ -6,7 +6,7 @@ This guide includes standards we want to emphasize, likely because we've made de
 
 ### Table of Contents
 * [Folder Structure and TOC](#folder-structure-and-toc)
-* [Naming conventions and branding ](#what-to-call-things)
+* [Naming conventions and branding ](#naming-conventions-and-branding)
 * [Using Markdown](#using-markdown)
 * [Callouts](#callouts)
 * [Text formatting](#Text-formatting)
