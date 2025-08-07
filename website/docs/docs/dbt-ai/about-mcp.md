@@ -4,7 +4,7 @@ sidebar_label: "Model Context Protocol"
 description: "Learn about the dbt MCP server"
 id: "about-mcp"
 ---
-# dbt Model Context Protocol (MCP)
+# About dbt Model Context Protocol (MCP)
 
 As AI becomes a more common part of data workflows, dbt users need a seamless way to integrate dbt metadata and execution effectively into their analytics stack. This page provides an overview of dbt's MCP Server which can support use cases like conversational access to data, agent-driven automation, and AI-assisted development.
 
@@ -74,13 +74,13 @@ To learn more about the dbt Semantic layer, click [here](/docs/dbt-cloud-apis/di
 There are two ways to setup dbt MCP, [local](#local) and [remote](#remote). We recommend using the locally hosted dbt-mcp for applications like locally hosted IDE Copilots and remote dbt-mcp for 
 custom applications like AI Agents.
 
-- [Local MCP Server Setup Guide](website/docs/docs/dbt-ai/setup-local-mcp.md)
-- [Remote MCP Server Setup Guide](website/docs/docs/dbt-ai/setup-remote-mcp.md)
+- [Local MCP Server Setup Guide](/docs/docs/dbt-ai/setup-local-mcp)
+- [Remote MCP Server Setup Guide](/docs/dbt-ai/setup-remote-mcp)
 
 ## MCP Integrations 
-- [Claude](docs/docs/ai/integrate-mcp-claude)
-- [Cursor](docs/docs/ai/integrate-mcp-cursor)
-- [VSCode](/docs/docs/ai/integrate-mcp-vscode)
+- [Claude](/docs/ai/integrate-mcp-claude)
+- [Cursor](/docs/ai/integrate-mcp-cursor)
+- [VSCode](/docs/ai/integrate-mcp-vscode)
 
 ## Troubleshooting
 

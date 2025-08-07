@@ -2,7 +2,7 @@
 title: "Integrate Claude with dbt MCP"
 sidebar_label: "Integrate Claude with MCP"
 description: "Guide to set up claude with dbt-mcp"
-id: "integrate-claude-mcp"
+id: "integrate-mcp-claude"
 ---
 
 # Integrate Claude with dbt MCP
@@ -55,10 +55,6 @@ More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#un
 3. Click the “Edit Config” button and open the configuration file with a text editor.
 4. Replace the contents of the configuration file with the following JSON structure:
 
-</TabItem>
-
-<TabItem value="macOS for Local dbt MCP" >
-
 macOS
 ```json 
 {
@@ -74,6 +70,7 @@ macOS
   }
 }
 ```
+
 <!-- need to add in sample code for macOS remote and windows -->
 
 

@@ -869,6 +869,11 @@ const sidebarSettings = {
           link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
           items: [
             "docs/dbt-ai/about-mcp",
+            "docs/dbt-ai/setup-local-mcp",
+            "docs/dbt-ai/setup-remote-mcp",
+            "docs/dbt-ai/integrate-mcp-vscode",
+            "docs/dbt-ai/integrate-mcp-cursor",
+            "docs/dbt-ai/integrate-mcp-claude",
           ],
         },
       ],

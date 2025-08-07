@@ -4,8 +4,8 @@ sidebar_label: "Set Up Local MCP"
 description: "Learn how to set up the local dbt-mcp server"
 id: "setup-local-mcp"
 ---
-## Set up Local dbt Server
-[The Local dbt Server](https://github.com/dbt-labs/dbt-mcp) can be hosted locally on your machine or virtually. To set up the local dbt-mcp server, follow these directions.
+
+[The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) can be hosted locally on your machine or virtually. To set up the local dbt-mcp server, follow these directions.
 
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to install dbt-mcp and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment. 
 
