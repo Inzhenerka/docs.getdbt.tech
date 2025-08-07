@@ -190,7 +190,7 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
 
 6. Click **Save**.
 7. Set up your personal development credentials by going to **Your profile** > **Credentials**.
-8. Select your project using the Redshift connection. 
+8. Select your project that uses the Redshift connection. 
 9. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
 10. Set your development credentials. These credentials will be used by <Constant name="cloud" /> to connect to Redshift. Those credentials (as provided in your CloudFormation output) will be:
     - **Username** &mdash; `dbtadmin`

@@ -191,7 +191,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 
 6. Click **Save**.
 7. Set up your personal development credentials by going to **Your profile** > **Credentials**.
-8. Select your project using the Snowflake connection. 
+8. Select your project that uses the Snowflake connection. 
 9. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
 10. Enter your **Development credentials** for Snowflake with: 
     * **Username** &mdash; The username you created for Snowflake. The username is not your email address and is usually your first and last name together in one word. 

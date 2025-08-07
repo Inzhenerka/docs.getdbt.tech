@@ -115,7 +115,7 @@ If you created your Teradata Vantage database instance at https://clearscape.ter
   <Lightbox src="/img/teradata/dbt_cloud_teradata_account_settings.png" title="dbt - Teradata Account Settings" />
 
 6. Set up your personal development credentials by going to **Your profile** > **Credentials**.
-7. Select your project using the Teradata connection. 
+7. Select your project that uses the Teradata connection. 
 8. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
 9. Enter your **Development credentials** for Teradata with:
    * **Username** &mdash; The username of Teradata database.
