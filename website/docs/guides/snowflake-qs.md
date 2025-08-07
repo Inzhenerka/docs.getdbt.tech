@@ -102,7 +102,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 2. Enter a project name and click **Continue**.
 3. In the **Configure your development environment** section, click the **Connection** dropdown menu and select **Add new connection**.
   This directs you to the **Add new connection** page. 
-4. In the **Type** section, click **Snowflake**.
+4. In the **Type** section, select **Snowflake**.
 
     <Lightbox src="/img/snowflake_tutorial/dbt_cloud_setup_snowflake_connection_start.png" title="dbt - Choose Snowflake Connection" />
 
