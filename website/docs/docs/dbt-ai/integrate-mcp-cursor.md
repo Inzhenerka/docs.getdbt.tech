@@ -12,7 +12,7 @@ id: "integrate-cursor-mcp"
 After setting up your local server, you can now connect the server to Cursor. 
 After logging into Cursor Desktop, follow the following steps based on how dbt-mcp is hosted. We recommend using the linked templates here rather than the one hosted on the Cursor MCP integrations page. 
 
-## Set up with Local dbt-mcp server
+## Set up with Local dbt MCP server
 
 1. Click on the following button for access to the setup template
 
@@ -22,7 +22,7 @@ After logging into Cursor Desktop, follow the following steps based on how dbt-m
 3. Save and now you have access to the dbt-mcp!
 
 
-## Set up with Remote dbt-mcp server
+## Set up with Remote dbt MCP server
 
 1. Click on the following button for access to the setup template
 
