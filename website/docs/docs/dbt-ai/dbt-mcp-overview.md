@@ -1,18 +1,18 @@
 ---
-title: "Model Context Protocol"
+title: "dbt Model Context Protocol"
 sidebar_label: "Model Context Protocol"
 description: "Learn about the dbt MCP server"
 id: "about-mcp"
 ---
+# dbt Model Context Protocol (MCP)
 
-dbt is now accessible through a [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) (MCP) server, providing a standardized framework that enables users to seamlessly integrate AI applications with dbt and the underlying data warehouses. This ensures a consistent and efficient way to connect, access, and utilize data across various AI tools.
+As AI becomes a more common part of data workflows, dbt users need a seamless way to integrate dbt metadata and execution effectively into their analytics stack. This page provides an overview of dbt's MCP Server which can support use cases like conversational access to data, agent-driven automation, and AI-assisted development.
 
-The MCP server has access to the dbt CLI, [API](/docs/dbt-cloud-apis/overview), the [Discovery API](/docs/dbt-cloud-apis/discovery-api), and [Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl). It provides access to private APIs, text-to-sql, and SQL execution.
+The dbt Model Context Protocol (MCP) server, providing a standardized framework that enables users to seamlessly integrate AI applications with dbt and the underlying data warehouses. This ensures a consistent and efficient way to connect, access, and utilize data across various AI tools.
 
-Note that access to the Discovery and the Semantic Layer API is limited depending on your [plan type](https://www.getdbt.com/pricing).
+The MCP server provides access to the dbt CLI, [API](/docs/dbt-cloud-apis/overview), the [Discovery API](/docs/dbt-cloud-apis/discovery-api), and [Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl). It provides access to private APIs, text-to-sql, and SQL execution.
 
 For more information on MCP, have a look at [Get started with the Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction).
-
 
 ## Architecture
 There are two ways to access the dbt-mcp server: locally hosted or remote hosted on dbt Platform.
@@ -21,7 +21,8 @@ There are two ways to access the dbt-mcp server: locally hosted or remote hosted
 
 ## Available Tools
 
-## Supported
+### Supported
+
 | Tools | Local | Remote |
 | --- | --- | --- |
 | dbt CLI  | ✅ | ❌ |
@@ -29,6 +30,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remote hosted
 | SQL  | ✅ | ❌ |
 | Disable tools | ✅ | ❌ |
 
+Note that access to the Discovery and the Semantic Layer API is limited depending on your [plan type](https://www.getdbt.com/pricing).
 
 ### dbt CLI commands
 
