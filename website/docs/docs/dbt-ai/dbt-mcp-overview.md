@@ -8,7 +8,7 @@ id: "about-mcp"
 
 As AI becomes a more common part of data workflows, dbt users need a seamless way to integrate dbt metadata and execution effectively into their analytics stack. This page provides an overview of dbt's MCP Server which can support use cases like conversational access to data, agent-driven automation, and AI-assisted development.
 
-The dbt Model Context Protocol (MCP) server, providing a standardized framework that enables users to seamlessly integrate AI applications with dbt and the underlying data warehouses. This ensures a consistent and efficient way to connect, access, and utilize data across various AI tools.
+The [dbt Model Context Protocol (MCP) server](https://github.com/dbt-labs/dbt-mcp), providing a standardized framework that enables users to seamlessly integrate AI applications with dbt and the underlying data warehouses. This ensures a consistent and efficient way to connect, access, and utilize data across various AI tools.
 
 The MCP server provides access to the dbt CLI, [API](/docs/dbt-cloud-apis/overview), the [Discovery API](/docs/dbt-cloud-apis/discovery-api), and [Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl). It provides access to private APIs, text-to-sql, and SQL execution.
 
