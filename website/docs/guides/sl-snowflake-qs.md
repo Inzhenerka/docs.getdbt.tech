@@ -189,10 +189,11 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 
     <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_account_settings.png" title="dbt - Snowflake Account Settings" />
 
-6. Set up your personal development credentials by going to **Your profile** > **Credentials**.
-7. Select your project using the Snowflake connection. 
-8. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
-9. Enter your **Development credentials** for Snowflake with: 
+6. Click **Save**.
+7. Set up your personal development credentials by going to **Your profile** > **Credentials**.
+8. Select your project using the Snowflake connection. 
+9. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
+10. Enter your **Development credentials** for Snowflake with: 
     * **Username** &mdash; The username you created for Snowflake. The username is not your email address and is usually your first and last name together in one word. 
     * **Password** &mdash; The password you set when creating your Snowflake account.
     * **Schema** &mdash; You’ll notice that the schema name has been auto-created for you. By convention, this is `dbt_<first-initial><last-name>`. This is the schema connected directly to your development environment, and it's where your models will be built when running dbt within the <Constant name="cloud_ide" />.
@@ -201,8 +202,8 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 
     <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt - Snowflake Development Credentials" />
 
-10. Click **Test connection**. This verifies that <Constant name="cloud" /> can access your Snowflake account.
-11. If the test succeeded, you can set up a repository. If it failed, you may need to check your Snowflake settings and credentials.
+11. Click **Test connection**. This verifies that <Constant name="cloud" /> can access your Snowflake account.
+12. If the test succeeded, you can set up a repository. If it failed, you may need to check your Snowflake settings and credentials.
 
 </TabItem>
 </Tabs>

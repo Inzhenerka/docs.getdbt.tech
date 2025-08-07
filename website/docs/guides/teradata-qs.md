@@ -107,24 +107,25 @@ If you created your Teradata Vantage database instance at https://clearscape.ter
 1. Create a new project in <Constant name="cloud" />. Click on your account name in the left side menu, select **Account settings**, and click **+ New Project**. 
 2. Enter a project name and click **Continue**.
 3. In the **Configure your development environment** section, click the **Connection** dropdown menu and select **Add new connection**.
-4. Select **Teradata**, fill in all the required details in the **Settings** section, and click **Save**.
+4. In the **Type** section, select **Teradata**.
+5. Enter your Teradata settings and click **Save**.
 
   <Lightbox src="/img/teradata/dbt_cloud_teradata_setup_connection_start.png" title="dbt - Choose Teradata Connection" />
   
   <Lightbox src="/img/teradata/dbt_cloud_teradata_account_settings.png" title="dbt - Teradata Account Settings" />
 
-5. Set up your personal development credentials by going to **Your profile** > **Credentials**.
-6. Select your project using the Teradata connection. 
-7. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
-8. Enter your **Development credentials** for Teradata with:
+6. Set up your personal development credentials by going to **Your profile** > **Credentials**.
+7. Select your project using the Teradata connection. 
+8. Click the **configure your development environment and add a connection** link. This directs you to a page where you can enter your personal development credentials.
+9. Enter your **Development credentials** for Teradata with:
    * **Username** &mdash; The username of Teradata database.
    * **Password** &mdash; The password of Teradata database.
    * **Schema** &mdash; The default database to use.
   
    <Lightbox src="/img/teradata/dbt_cloud_teradata_development_credentials.png" title="dbt - Teradata Development Credentials" />
 
-9. Click **Test Connection** to verify that <Constant name="cloud" /> can access your Teradata Vantage instance.
-10. If the test succeeded, you can set up a repository. If it failed, you may need to check your Teradata settings and credentials.
+10. Click **Test Connection** to verify that <Constant name="cloud" /> can access your Teradata Vantage instance.
+11. If the test succeeded, you can set up a repository. If it failed, you may need to check your Teradata settings and credentials.
 
 ## Set up a dbt managed repository
 
