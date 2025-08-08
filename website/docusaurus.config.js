@@ -70,14 +70,14 @@ var siteSettings = {
       //debug: true,
     },
     announcementBar: {
-      id: "virtual-event",
+      id: "dbt-workshop",
       content:
-        "Join our live event: Modernize self-service analytics with dbt — cut costs, reduce bottlenecks, and keep the tools analysts love. Register now.",
+        "Join our live virtual workshop: Fast track to dbt — build and run your first dbt models. Save your seat.",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://www.getdbt.com/resources/webinars/empowering-data-analysts-showcase-series-part-one",
+      "https://www.getdbt.com/resources/webinars/fast-track-to-dbt-workshop",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
@@ -214,8 +214,8 @@ var siteSettings = {
             data-ft-workflow-tag="docs" 
             config-ft-greeting-message="Welcome to dbt Product docs! Ask a question."
             config-ft-widget-header-title = "Ask a question"
+            config-ft-privacy-policy = "We're pleased to offer this complimentary chatbot service, powered by Forethought.ai, to optimize your experience and productivity. Your use of this chatbot is subject to, and may be retained pursuant to, the terms of the privacy policy available for review at <a href='https://www.getdbt.com/cloud/privacy-policy' target='_blank'>https://www.getdbt.com/cloud/privacy-policy</a>."
           ></script>
-
           <div class="footer-logo">
             <a href="/">
               <img src="/img/dbt-logo-light.svg?v=2" alt="dbt Labs" />

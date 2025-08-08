@@ -24,6 +24,8 @@ To use the extension, you must meet the following prerequisites:
 
 This is the only official dbt Labs VS Code extension. Please disable or uninstall any third-party dbt extensions before installing to avoid issues.
 
+Read the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) for the latest updates.
+
 :::
 
 import InstallExtension from '/snippets/_install-dbt-extension.md'; 
