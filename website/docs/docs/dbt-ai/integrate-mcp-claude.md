@@ -8,8 +8,8 @@ id: "integrate-mcp-claude"
 # Integrate Claude with dbt MCP <Lifecycle status="beta" />
 
 Claude is an AI assistant from Anthropic with two primary interfaces: 
-- Claude Code: a terminal/IDE tool for development
-- Claude for desktop: a GUI with MCP support for file access and commands as well as basic coding features 
+- [Claude Code](https://www.anthropic.com/claude-code): a terminal/IDE tool for development
+- [Claude for desktop](https://claude.ai/download): a GUI with MCP support for file access and commands as well as basic coding features 
 
 ## Claude Code
 
