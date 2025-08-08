@@ -7,7 +7,7 @@ id: "integrate-mcp-vscode"
 
 # Integrate VS Code with MCP <Lifecycle status="beta" />
 
-Microsoft [Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) is a powerful and popular integrated development environment (IDE). 
+[Microsoft Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) is a powerful and popular integrated development environment (IDE). 
 
 These instructions are for integrating dbt MCP and VS Code. To get started, in VS Code:
 
