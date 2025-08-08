@@ -199,7 +199,7 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
     <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_development_credentials.png" title="dbt - Redshift Development Credentials" />
 
 11. Click **Test connection**. This verifies that <Constant name="cloud" /> can access your Redshift cluster.
-12. If the test succeeded, you can set up a repository. If it failed, you might need to check your Redshift settings and credentials.
+12. If the test succeeded, click **Save** to complete the configuration. If it failed, you might need to check your Redshift settings and credentials.
 
 ## Set up a dbt managed repository 
 <Snippet path="tutorial-managed-repo" />
