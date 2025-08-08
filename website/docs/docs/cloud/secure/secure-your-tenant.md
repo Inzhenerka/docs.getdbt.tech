@@ -77,4 +77,10 @@ hide_table_of_contents: true
     link="/docs/cloud/secure/az-synapse-private-link"
     icon="dbt-bit"/>
 
+<Card
+    title="GCP Private Service Connect for Snowflake"
+    body="Learn how to configure GCP Private Service Connect for Snowflake."
+    link="/docs/cloud/secure/snowflake-psc"
+    icon="dbt-bit"/>
+
 </div>

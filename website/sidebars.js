@@ -204,6 +204,7 @@ const sidebarSettings = {
                 "docs/cloud/secure/about-private-connectivity",
                 "docs/cloud/secure/snowflake-privatelink",
                 "docs/cloud/secure/snowflake-private-link",
+                "docs/cloud/secure/snowflake-psc",
                 "docs/cloud/secure/databricks-privatelink",
                 "docs/cloud/secure/databricks-private-link",
                 "docs/cloud/secure/redshift-privatelink",

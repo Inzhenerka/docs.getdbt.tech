@@ -26,14 +26,20 @@ dbt Labs has globally connected private networks specifically used to host priva
 
 <Constant name="cloud" /> supports the following data platforms for use with the private connections feature. Instructions for enabling private connections for the various data platform providers are unique. The following guides will walk you through the necessary steps, including working with [dbt Support](/community/resources/getting-help#dbt-cloud-support) to complete the connection in the dbt private network and setting up the endpoint in <Constant name="cloud" />.
 
-- [Snowflake - AWS](/docs/cloud/secure/snowflake-privatelink)
-- [Snowflake - Azure](/docs/cloud/secure/snowflake-private-link)
-- [Databricks - AWS](/docs/cloud/secure/databricks-privatelink)
-- [Databricks - Azure](/docs/cloud/secure/databricks-private-link)
-- [Redshift - AWS](/docs/cloud/secure/redshift-privatelink)
-- [Postgres - AWS](/docs/cloud/secure/postgres-privatelink)
-- [Azure Database for Postgres Flexible Server](/docs/cloud/secure/az-postgres-private-link)
-- [Azure Synapse](/docs/cloud/secure/az-synapse-private-link)
-- [VCS - AWS](/docs/cloud/secure/vcs-privatelink)
+#### AWS
+- [Snowflake](/docs/cloud/secure/snowflake-privatelink)
+- [Databricks](/docs/cloud/secure/databricks-privatelink)
+- [Redshift](/docs/cloud/secure/redshift-privatelink)
+- [Postgres](/docs/cloud/secure/postgres-privatelink)
+- [VCS](/docs/cloud/secure/vcs-privatelink)
+
+#### Azure
+- [Snowflake](/docs/cloud/secure/snowflake-private-link)
+- [Databricks](/docs/cloud/secure/databricks-private-link)
+- [Database for Postgres Flexible Server](/docs/cloud/secure/az-postgres-private-link)
+- [Synapse](/docs/cloud/secure/az-synapse-private-link)
+
+#### GCP
+- [Snowflake](/docs/cloud/secure/snowflake-psc)
 
 <PrivateLinkHostnameWarning features={'/snippets/_private-connection-hostname-restriction.md'}/>
