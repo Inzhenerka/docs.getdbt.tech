@@ -176,7 +176,7 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
 5. Enter your Redshift settings. Reference your credentials you saved from the CloudFormation template.
     - **Hostname** &mdash; Your entire hostname.
     - **Port** &mdash; `5439`
-    - **Database** &mdash; `dbtworkshop`.
+    - **Database** (under **Optional settings**) &mdash; `dbtworkshop`
 
     <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_account_settings.png" width="90%" title="dbt - Redshift Cluster Settings" />
 
