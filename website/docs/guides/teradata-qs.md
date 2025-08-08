@@ -125,7 +125,7 @@ If you created your Teradata Vantage database instance at https://clearscape.ter
    <Lightbox src="/img/teradata/dbt_cloud_teradata_development_credentials.png" title="dbt - Teradata Development Credentials" />
 
 10. Click **Test Connection** to verify that <Constant name="cloud" /> can access your Teradata Vantage instance.
-11. If the test succeeded, you can set up a repository. If it failed, you may need to check your Teradata settings and credentials.
+11. If the test succeeded, click **Save** to complete the configuration. If it failed, you may need to check your Teradata settings and credentials.
 
 ## Set up a dbt managed repository
 
