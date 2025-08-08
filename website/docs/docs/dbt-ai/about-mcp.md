@@ -84,9 +84,9 @@ There are two ways to install dbt MCP: [local](#local) and [remote](#remote). We
 ## MCP Integrations 
 
 The dbt MCP server integrates with the following clients:
-- [Claude](/docs/ai/integrate-mcp-claude)
-- [Cursor](/docs/ai/integrate-mcp-cursor)
-- [VS Code](/docs/ai/integrate-mcp-vscode)
+- [Claude](/docs/dbt-ai/integrate-mcp-claude)
+- [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
+- [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
 
 ## Troubleshooting
 
