@@ -33,59 +33,67 @@ Large data sets can slow down dbt build times, making it harder for developers t
 
 ### New `anchors:` key
 
-As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees a standalone anchor definition at the top level of a YAML file. Instead, you can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
+As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees an unexpected top-level key in a YAML file. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. There is a new top-level `anchors:` key which you can use as a container for these reusable configuration blocks.
 
-The following is a sample configuration that uses a standalone anchor definition at the top level of a YAML file:
+Instead of this:
+
 <File name='models/_models.yml'>
 
 ```yml
-this_value_is_always_ignored: &the_anchor_name_is_what_matters
+id_column: &id_column_alias
   name: id
   description: This is a unique identifier.
+  data_type: int
   data_tests:
     - not_null
+    - unique
+
+models:
+  - name: my_first_model
+    columns: 
+      - *id_column_alias
+      - name: unrelated_column_a
+        description: This column is not repeated in other models
+  - name: my_second_model
+    columns: 
+      - *id_column_alias
 ```
 
 </File>
 
-You can use the new top-level `anchors:` key instead. For example: 
+Move the anchor into the `anchors:` key instead:
 <File name='models/_models.yml'>
 
 ```yml
-anchors:
-  - this_value_is_always_ignored: &the_anchor_name_is_what_matters
+anchors: 
+  - &id_column_alias
       name: id
       description: This is a unique identifier.
+      data_type: int
       data_tests:
         - not_null
+        - unique
 
 models:
-    - name: my_first_model
-      description: This is a description for the first model.
-      columns:
-        - *the_anchor_name_is_what_matters
-        - name: my_second_column
-          description: "This is a description for the second column. I can add it even though there's another column added via anchor."
-          data_tests:
-            - not_null
-
-    - name: my_second_model
-      description: This is a description for the second model.
-      columns:
-        - *the_anchor_name_is_what_matters
+  - name: my_first_model
+    columns: 
+      - *id_column_alias
+      - name: unrelated_column_a
+        description: This column is not repeated in other models
+  - name: my_second_model
+    columns: 
+      - *id_column_alias
 ```
 
 </File>
 
-Note that not all anchors should be moved under an `anchors:` block, such as anchors that are part of the main YAML structure (for example, defining tests on a column).
-
-For more information about this new key, see [anchors](/reference/resource-properties/anchors).
+This move is only necessary for fragments defined outside of the main YAML structure. For more information about this new key, see [anchors](/reference/resource-properties/anchors).
 
 ### Parsing `catalogs.yml`
 
 dbt Core can now parse the `catalogs.yml` file. This is an important milestone in the journey to supporting external catalogs for Iceberg tables, as it enables write integrations. You'll be able to provide a config specifying a catalog integration for your producer model:
 
-For example: 
+For example:
 
 ```yml
 

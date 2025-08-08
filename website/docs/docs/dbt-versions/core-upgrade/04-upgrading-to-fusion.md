@@ -248,55 +248,61 @@ Fusion will not produce this extra column in the table resulting from `dbt seed`
 | cat    |  
 | bear   |  
 
-
 #### New `anchors:` key
 
-You can use the new top-level `anchors:` key as a container for reusable configuration blocks inside a YAML file. In Fusion, due to stricter schema verification, YAML blocks that were only meant to be used as anchors and not interpreted as part of the configuration proper may result in warnings and/or errors. In these cases, the anchored snippets should be moved under the `anchors:` key.
+As part of the ongoing process of making the dbt authoring language more precise, unexpected top-level keys in a YAML file will result in errors. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. There is a new top-level `anchors:` key which you can use as a container for these reusable configuration blocks.
 
-The following is a sample configuration that uses a standalone anchor definition at the top level of a YAML file:
+Instead of this:
 
 <File name='models/_models.yml'>
 
 ```yml
-this_value_is_always_ignored: &the_anchor_name_is_what_matters
+# id_column is not a valid name for a top level key in the dbt authoring spec, and will raise an error
+id_column: &id_column_alias
   name: id
   description: This is a unique identifier.
+  data_type: int
   data_tests:
     - not_null
+    - unique
+
+models:
+  - name: my_first_model
+    columns: 
+      - *id_column_alias
+      - name: unrelated_column_a
+        description: This column is not repeated in other models
+  - name: my_second_model
+    columns: 
+      - *id_column_alias
 ```
 
 </File>
 
-You can use the new top-level `anchors:` key instead. For example: 
-
+Move the anchor into the `anchors:` key instead:
 <File name='models/_models.yml'>
 
 ```yml
-anchors:
-  - this_value_is_always_ignored: &the_anchor_name_is_what_matters
+anchors: 
+  - &id_column_alias
       name: id
       description: This is a unique identifier.
+      data_type: int
       data_tests:
         - not_null
+        - unique
 
 models:
-    - name: my_first_model
-      description: This is a description for the first model.
-      columns:
-        - *the_anchor_name_is_what_matters
-        - name: my_second_column
-          description: "This is a description for the second column. I can add it even though there's another column added via anchor."
-          data_tests:
-            - not_null
-
-    - name: my_second_model
-      description: This is a description for the second model.
-      columns:
-        - *the_anchor_name_is_what_matters
+  - name: my_first_model
+    columns: 
+      - *id_column_alias
+      - name: unrelated_column_a
+        description: This column is not repeated in other models
+  - name: my_second_model
+    columns: 
+      - *id_column_alias
 ```
 
 </File>
 
-Note that not all anchors should be moved under an `anchors` block, such as anchors that are part of the main YAML structure (for example, defining tests on a column).
-
-For more information about this new key, see [anchors](/reference/resource-properties/anchors).
+This move is only necessary for fragments defined outside of the main YAML structure. For more information about this new key, see [anchors](/reference/resource-properties/anchors).
