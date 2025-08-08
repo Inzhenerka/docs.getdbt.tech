@@ -74,7 +74,7 @@ macOS
 <!-- need to add in sample code for macOS remote and windows -->
 
 
-5. Save the file Upon a successful restart, you’ll see an MCP server indicator  in the bottom-right corner of the conversation input box
+5. Save the file. Upon a successful restart, you’ll see an MCP server indicator  in the bottom-right corner of the conversation input box
 
 For debugging, you can find the Claude Desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
 
