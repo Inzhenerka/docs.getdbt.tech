@@ -17,7 +17,7 @@ For more information on MCP, have a look at [Get started with the Model Context 
 <!--TODO need to create>
 ## Architecture
 
-There are two ways to access the dbt-mcp server: locally hosted or remote hosted on the cloud-based dbt platform.
+There are two ways to access the dbt-mcp server: locally hosted or remotely hosted on the cloud-based dbt platform.
 
 <-->
 

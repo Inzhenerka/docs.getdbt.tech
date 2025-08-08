@@ -30,15 +30,15 @@ MULTICELL_ACCOUNT_PREFIX=your-account-prefix
 
 ### Setting Environment Variables
 
-You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform specific environment variables and vice versa. 
+You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa. 
 
 #### Configuration for Discovery, Semantic Layer, and SQL Tools
 
 | Environment Variable | Required | Description |
 | --- | --- | --- |
-| DBT_HOST | Required | Your dbt Platform instance hostname. For more information, click [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses). If you are using Multi-cell, don’t include the `ACCOUNT_PREFIX` here. Default is `cloud.getdbt.com`  |
+| DBT_HOST | Required | Your dbt Platform instance hostname. For more information, click [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses). If you are using Multi-cell, don’t include the `ACCOUNT_PREFIX` here. The default is `cloud.getdbt.com`  |
 | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell  `ACCOUNT_PREFIX`. If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses).  |
-| DBT_TOKEN | Required | Your personal access token or service token from dbt platform. <br/> **Note**: a service token is required when using the Semantic Layer, and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
+| DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/> **Note**: A service token is required when using the Semantic Layer, and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
 
 #### Additional Configuration for SQL Tools
@@ -59,7 +59,7 @@ The local dbt-mcp supports all flavors of the dbt Engine, including dbt Core and
 You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](https://docs.getdbt.com/reference/global-configs/about-global-configs#available-flags).
 
 We automatically set `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` so that the MCP server knows if no node is selected when running a dbt command.
-You can overwrite it if needed, but we believe that it provides a better experience when calling dbt from the MCP server, making sure that the tool selects valid nodes.
+You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
 
 #### Disabling tools
 We support disabling tool access on the local dbt-mcp.  
@@ -96,3 +96,4 @@ Here is a sample configuration JSON file that you can use to connect to the MCP 
 ```
 
 `<path-to-.env-file>` is where you saved the `.env` file from the Setup step.
+

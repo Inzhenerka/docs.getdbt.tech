@@ -28,13 +28,13 @@ claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
 Remember to update the file path. 
 
-### Claude code scopes
+### Claude Code scopes
 
 By default, the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
 
 It is also possible to install the MCP server:
-- in the "user" scope, to have it installed for all Claude Code sessions, independently of the directory used
-- in the "project" scope, to create a config file that can be version controlled so that all developers of the same project can have the MCP server already installed
+- In the "user" scope, to have it installed for all Claude Code sessions, independently of the directory used
+- In the "project" scope, to create a config file that can be version controlled so that all developers of the same project can have the MCP server already installed
 
 To install it in the project scope, run the following and commit the `.mcp.json` file. Be sure to use an env var file path that is the same for all users.
 ```bash
@@ -51,7 +51,7 @@ More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#un
 3. Click the **Edit Config** button and open the configuration file with a text editor.
 4. Replace the contents of the configuration file with [your correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server):
 
-For local MCP
+For local MCP:
 ```json 
 {
   "mcpServers": {
@@ -66,8 +66,6 @@ For local MCP
   }
 }
 ```
-
-
 
 5. Save the file. Upon a successful restart, you’ll see an MCP server indicator in the bottom-right corner of the conversation input box
 
