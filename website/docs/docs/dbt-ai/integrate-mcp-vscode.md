@@ -68,9 +68,7 @@ These instructions are for integrating dbt MCP and Microsoft VS Code. To get sta
   </Tabs>
 
 6. You can start, stop, and configure your MCP servers by:
-  - Running the `MCP: List Servers` command from the Command Palette (Control/Command + Shift + P) and selecting the server. The output should look something like this: 
-
-  <Lightbox src="/img/mcp/vscode_run_server_output.png" width="60%" title="VS Code Output" />
+  - Running the `MCP: List Servers` command from the Command Palette (Control/Command + Shift + P) and selecting the server. 
 
   - Utilizing the keywords inline within the `mcp.json` file:
 
