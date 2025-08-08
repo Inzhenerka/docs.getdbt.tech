@@ -5,7 +5,7 @@ description: "Use this guide to build and define metrics, set up the dbt Semanti
 sidebar_label: "Quickstart dbt Catalog"
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Explorer', 'Snowflake', 'dbt platform','Quickstart']
+tags: ['Explorer', 'Snowflake', 'dbt platform','Quickstart','Catalog']
 keywords: ['dbt Catalog','Mesh','dbt platform', 'Snowflake', 'Multi-Project']
 level: 'Beginner'
 ---
