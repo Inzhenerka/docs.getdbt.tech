@@ -5,15 +5,15 @@ description: "Guide to set up claude with dbt-mcp"
 id: "integrate-mcp-claude"
 ---
 
-# Integrate Claude with dbt MCP
+# Integrate Claude with dbt MCP <Lifecycle status="beta" />
 
-Claude is an AI assistant from Anthropic with two main interfaces: 
+Claude is an AI assistant from Anthropic with two primary interfaces: 
 - Claude Code: a terminal/IDE tool for development
 - Claude Desktop: a GUI with MCP support for file access and commands as well as basic coding features 
 
 ## Claude Code
 
-You can set up Claude Code with both the local and remote dbt-mcp server. We recommend using the local dbt-mcp for more developer focused workloads. 
+You can set up Claude Code with both the local and remote dbt-mcp server. We recommend using the local dbt-mcp for more developer-focused workloads. 
 
 ### Setup with Local dbt MCP Server
 
@@ -30,13 +30,13 @@ Remember to update the file path.
 
 ### Claude Code scopes
 
-By default the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
+By default, the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
 
 It is also possible to install the MCP server:
 - in the "user" scope, to have it installed for all Claude Code sessions, independently of the directory used
 - in the "project" scope, to create a config file that can be version controlled so that all developers of the same project can have the MCP server already installed
 
-To install it in the project scope, run the following and and commit the `.mcp.json` file. Be sure to use an env var file path that is the same for all users.
+To install it in the project scope, run the following and commit the `.mcp.json` file. Be sure to use an env var file path that is the same for all users.
 ```bash
 claude mcp add dbt -s project -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
@@ -68,6 +68,7 @@ For local MCP
 ```
 
 
+
 5. Save the file. Upon a successful restart, you’ll see an MCP server indicator  in the bottom-right corner of the conversation input box
 
 For debugging, you can find the Claude Desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
@@ -76,6 +77,4 @@ For debugging, you can find the Claude Desktop logs at `~/Library/Logs/Claude` f
 **Troubleshooting**
 
 - Claude Desktop may return errors such as `Error: spawn uvx ENOENT` or `Could not connect to MCP server dbt-mcp`. Try replacing the command
-and environment variables file path with the full patth. For `ux`, find the full path to `uvx` by running `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
-
- 
+and environment variables file path with the full path. For `ux`, find the full path to `uvx` by running `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.

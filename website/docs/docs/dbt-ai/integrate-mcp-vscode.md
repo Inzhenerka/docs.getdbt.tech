@@ -5,13 +5,17 @@ description: "Guide to set up VS Code with dbt-mcp"
 id: "integrate-mcp-vscode"
 ---
 
-These instructions are for integrating dbt MCP and Microsoft VS Code. To get started, in VS Code:
+# Integrate VS Code with MCP <Lifecycle status="beta" />
+
+Microsoft [Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) is a powerful and popular integrated development environment (IDE). 
+
+These instructions are for integrating dbt MCP and VS Code. To get started, in VS Code:
 
 1. Open the Settings menu and select the correct tab atop the page for your use case
-    - `Workspace` - configures the server in the context of your workspace
-    - `User` - configures the server in the context of your user 
+    - `Workspace` &mdash; configures the server in the context of your workspace
+    - `User` &mdash; configures the server in the context of your user 
     <br />
-   **Note for WSL users**: If you're using VS Code with WSL (Windows Subsystem for Linux), you'll need to configure WSL-specific settings. Run the **Preferences: Open Remote Settings** command from the Command Palette (F1) or select the **Remote** tab in the Settings editor. Local User settings are reused in WSL but can be overridden with WSL-specific settings. Configuring MCP servers in the local User settings will not work properly in a WSL environment.
+   **Note for WSL users**: If you're using VS Code with Windows Subsystem for Linux (WSL), you'll need to configure WSL-specific settings. Run the **Preferences: Open Remote Settings** command from the Command Palette (F1) or select the **Remote** tab in the Settings editor. Local User settings are reused in WSL but can be overridden with WSL-specific settings. Configuring MCP servers in the local user settings will not work properly in a WSL environment.
 
 2. Select **Features** → **Chat**
 
@@ -19,7 +23,7 @@ These instructions are for integrating dbt MCP and Microsoft VS Code. To get sta
 
   <Lightbox src="/img/mcp/vscode_mcp_enabled_image.png" width="60%" title="mcp-vscode-settings" />
 
-4. Open the command palette `Control/Command + Shift + P`, and select either `MCP: Open Workspace Folder MCP Configuration` or `MCP: Open User Configuration` depending on whether you want to install the MCP server for this workspace or for all workspaces for the user
+4. Open the command palette `Control/Command + Shift + P`, and select either `MCP: Open Workspace Folder MCP Configuration` or `MCP: Open User Configuration`, depending on whether you want to install the MCP server for this workspace or all workspaces for the user
 
 5. Add your server configuration (`dbt`) to the provided `mcp.json` file as one of the servers:
 
@@ -29,16 +33,16 @@ These instructions are for integrating dbt MCP and Microsoft VS Code. To get sta
 
   ```json
   {
-	  "servers": {
-		  "dbt": {
-			  "command": "uvx",
+    "servers": {
+      "dbt": {
+        "command": "uvx",
         "args": [
           "--env-file",
           "<path-to-.env-file>",
           "dbt-mcp"
         ]
-		  }
-	  }
+      }
+    }
   }
   ```
 
@@ -76,5 +80,6 @@ These instructions are for integrating dbt MCP and Microsoft VS Code. To get sta
 
 Now you will be able to access the local dbt MCP server on VS Code through interfaces like Github Copilot.
 
-## Additonal Resources
-VS Code MCP docs [here](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for reference
+## Additional resources
+
+You can find Microsoft's VS Code MCP docs [here](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for reference.

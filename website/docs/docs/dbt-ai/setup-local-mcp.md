@@ -1,9 +1,11 @@
 ---
-title: "Set Up Local MCP"
-sidebar_label: "Set Up Local MCP"
+title: "Set Up local MCP"
+sidebar_label: "Set Up local MCP"
 description: "Learn how to set up the local dbt-mcp server"
 id: "setup-local-mcp"
 ---
+
+# Set up local MCP <Lifecycle status="beta" />
 
 [The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) can be hosted locally on your machine or virtually. To set up the local dbt-mcp server, follow these directions.
 
@@ -23,20 +25,20 @@ DBT_PROJECT_DIR=/path/to/your/dbt/project
 DBT_PATH=/path/to/your/dbt/executable
 MULTICELL_ACCOUNT_PREFIX=your-account-prefix
 ```
- You will need this file for integrating with MCP compatible tools. 
+ You will need this file for integrating with MCP-compatible tools. 
  Here are the environment variables you could supply:
 
 ### Setting Environment Variables
 
-You will need to configure environment variables in order to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt Platform specific environment variables and vice versa. 
+You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform specific environment variables and vice versa. 
 
 #### Configuration for Discovery, Semantic Layer, and SQL Tools
 
 | Environment Variable | Required | Description |
 | --- | --- | --- |
-| DBT_HOST | Required | Your dbt Platform instance hostname. For more information, click [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses). If you are using Multi-cell, do not include the `ACCOUNT_PREFIX` here. Default is `cloud.getdbt.com`  |
+| DBT_HOST | Required | Your dbt Platform instance hostname. For more information, click [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses). If you are using Multi-cell, don’t include the `ACCOUNT_PREFIX` here. Default is `cloud.getdbt.com`  |
 | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell  `ACCwhOUNT_PREFIX`. If you are not using Multi-cell, do not set. You can learn more [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses).  |
-| DBT_TOKEN | Required | Your personal access token or service token from dbt Platform. Note: a service token is required when using the Semantic Layer and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
+| DBT_TOKEN | Required | Your personal access token or service token from dbt platform. Note: a service token is required when using the Semantic Layer, and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
 
 #### Additional Configuration for SQL Tools
@@ -50,14 +52,14 @@ The local dbt-mcp supports all flavors of the dbt Engine, including dbt Core and
 
 | Environment Variable | Required | Description | Example |
 | --- | --- | --- | --- |
-| DBT_PROJECT_DIR | Required | The path to where the repository of your dbt Project is hosted locally.  | /Users/myname/reponame |
+| DBT_PROJECT_DIR | Required | The path to where the repository of your dbt project is hosted locally.  | /Users/myname/reponame |
 | DBT_PATH | Required | The path to your dbt executable (Core/Fusion/Cloud CLI). You can find your dbt executable by running `which dbt` | /opt/homebrew/bin/dbt |
 | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 10 seconds. |
 
-You can set any environment variable supported by your dbt executable like [for the ones supported in dbt Core](https://docs.getdbt.com/reference/global-configs/about-global-configs#available-flags).
+You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](https://docs.getdbt.com/reference/global-configs/about-global-configs#available-flags).
 
 We automatically set `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` so that the MCP server knows if no node is selected when running a dbt command.
-You can overwrite it if needed but we believe that it provides a better experience when calling dbt from the MCP server, making sure that the tool is selecting valid nodes.
+You can overwrite it if needed, but we believe that it provides a better experience when calling dbt from the MCP server, making sure that the tool selects valid nodes.
 
 #### Disabling tools
 We support disabling tool access on the local dbt-mcp.  
@@ -68,15 +70,15 @@ We support disabling tool access on the local dbt-mcp.
 | `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools                    |
 | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
 | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
-| `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable certain tools    |
+| `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
 
-3. After creating your .env file, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating an 
-configruation files. This is dependent on what tools you want to intergrate with. 
+3. After creating your .env file, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating a 
+configuration file. This is dependent on what tools you want to integrate with. 
 
 
 ### Example Configuration File
-For some tools,  you may need an additional configuration file to upload in order to connect to dbt-mcp. 
-Here is a sample configuration json file that you can use to connect to MCP tools. Be sure to replace the sections within `<>`:
+For some tools,  you may need an additional configuration file to upload to connect to dbt-mcp. 
+Here is a sample configuration JSON file that you can use to connect to the MCP tools. Be sure to replace the sections within `<>`:
 
 ```json
 {
@@ -93,4 +95,4 @@ Here is a sample configuration json file that you can use to connect to MCP tool
 }
 ```
 
-`<path-to-.env-file>` is where you saved the `.env` file from the Setup step
+`<path-to-.env-file>` is where you saved the `.env` file from the Setup step.

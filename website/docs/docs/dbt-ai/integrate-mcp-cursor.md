@@ -5,7 +5,7 @@ description: "Guide to set up Cursor with dbt-mcp"
 id: "integrate-mcp-cursor"
 ---
 
-# Integrate Cursor with dbt MCP
+# Integrate Cursor with dbt MCP <Lifecycle status="beta" />
 
 [Cursor](https://docs.cursor.com/context/model-context-protocol) is an AI-powered code editor, integrated with Microsoft Visual Studio Code (VS Code). 
 
