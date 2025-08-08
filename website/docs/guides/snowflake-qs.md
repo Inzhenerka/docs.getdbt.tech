@@ -131,7 +131,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
     <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt - Snowflake Development Credentials" />
 
 11. Click **Test connection**. This verifies that <Constant name="cloud" /> can access your Snowflake account.
-12. If the test succeeded, you can set up a repository. If it failed, you may need to check your Snowflake settings and credentials.
+12. If the test succeeded, click **Save** to complete the configuration. If it failed, you may need to check your Snowflake settings and credentials.
 
 </TabItem>
 </Tabs>
