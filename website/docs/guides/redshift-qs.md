@@ -171,7 +171,6 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
 1. Create a new project in [<Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses). Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
 2. Enter a project name and click **Continue**.
 3. In the **Configure your development environment** section, click the **Connection** dropdown menu and select **Add new connection**.
-  This directs you to the **Add new connection** page. 
 4. In the **Type** section, select **Redshift**.
 5. Enter your Redshift settings. Reference your credentials you saved from the CloudFormation template.
     - **Hostname** &mdash; Your entire hostname.
