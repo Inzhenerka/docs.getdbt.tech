@@ -79,6 +79,6 @@ These instructions are for integrating dbt MCP and VS Code. To get started, in V
 
 Now you will be able to access the local dbt MCP server on VS Code through interfaces like GitHub Copilot.
 
-## Additional resources
+## Resources
 
 - Microsoft VS Code MCP [docs](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).

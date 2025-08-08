@@ -28,11 +28,11 @@ MULTICELL_ACCOUNT_PREFIX=your-account-prefix
  You will need this file for integrating with MCP-compatible tools. 
  Here are the environment variables you could supply:
 
-### Setting Environment Variables
+### Setting environment variables
 
 You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa. 
 
-#### Configuration for Discovery, Semantic Layer, and SQL Tools
+#### Configuration for APIs and SQL tools
 
 | Environment Variable | Required | Description |
 | --- | --- | --- |
@@ -41,7 +41,7 @@ You will need to configure environment variables to access the tools. If you are
 | DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/> **Note**: A service token is required when using the Semantic Layer, and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
 
-#### Additional Configuration for SQL Tools
+#### Additional configuration for SQL tools
 | Environment Variable | Required | Description |
 | --- | --- | --- |
 | DBT_DEV_ENV_ID | Optional | Your dbt Cloud development environment ID |
@@ -76,7 +76,7 @@ We support disabling tool access on the local dbt-mcp.
 configuration file. This is dependent on what tools you want to integrate with. 
 
 
-### Example Configuration File
+### Example configuration
 For some tools,  you may need an additional configuration file to upload to connect to dbt-mcp. 
 Here is a sample configuration JSON file that you can use to connect to the MCP tools. Be sure to replace the sections within `<>`:
 

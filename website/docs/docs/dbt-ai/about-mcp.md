@@ -75,14 +75,14 @@ To learn more about the dbt Semantic layer, click [here](/docs/dbt-cloud-apis/di
 - `execute_sql`: Execute SQL on dbt Cloud's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
 
 
-## Server Setup
+## Server setup
 
 There are two ways to install dbt MCP: [local](#local) and [remote](#remote). 
 
 - [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
 - [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
 
-## MCP Integrations 
+## MCP integrations 
 
 The dbt MCP server integrates with the following clients:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
