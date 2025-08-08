@@ -76,7 +76,7 @@ To learn more about the dbt Semantic layer, click [here](/docs/dbt-cloud-apis/di
 
 ## Server Setup
 
-There are two ways to install dbt MCP: [local](#local) and [remote](#remote). We recommend using the locally hosted `dbt-mcp` for applications like locally hosted IDE Copilots and remote `dbt-mcp` for custom applications like AI Agents.
+There are two ways to install dbt MCP: [local](#local) and [remote](#remote). 
 
 - [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
 - [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
