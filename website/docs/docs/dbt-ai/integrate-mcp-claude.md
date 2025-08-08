@@ -9,13 +9,13 @@ id: "integrate-mcp-claude"
 
 Claude is an AI assistant from Anthropic with two primary interfaces: 
 - Claude Code: a terminal/IDE tool for development
-- Claude Desktop: a GUI with MCP support for file access and commands as well as basic coding features 
+- Claude for desktop: a GUI with MCP support for file access and commands as well as basic coding features 
 
 ## Claude Code
 
-You can set up Claude Code with both the local and remote dbt-mcp server. We recommend using the local dbt-mcp for more developer-focused workloads. 
+You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads. 
 
-### Setup with Local dbt MCP Server
+### Setup with local dbt MCP server
 
 Prerequisites:
 - Have an .env file with your environment variables 
@@ -28,7 +28,7 @@ claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
 Remember to update the file path. 
 
-### Claude Code scopes
+### Claude code scopes
 
 By default, the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
 
@@ -44,11 +44,11 @@ claude mcp add dbt -s project -- uvx --env-file <path-to-.env-file> dbt-mcp
 More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#understanding-mcp-server-scopes)
 
 
-## Claude Desktop
+## Claude for desktop
 
-1. Go to the Claude Desktop settings. Click on the Claude menu in your system’s menu bar (not the settings within the Claude window itself) and select “Settings…”
-2. In the Settings window, navigate to the `Developer` tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
-3. Click the “Edit Config” button and open the configuration file with a text editor.
+1. Go to the Claude settings. Click on the Claude menu in your system’s menu bar (not the settings within the Claude window itself) and select **Settings…**
+2. In the Settings window, navigate to the **Developer** tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
+3. Click the **Edit Config** button and open the configuration file with a text editor.
 4. Replace the contents of the configuration file with [your correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server):
 
 For local MCP
@@ -69,12 +69,12 @@ For local MCP
 
 
 
-5. Save the file. Upon a successful restart, you’ll see an MCP server indicator  in the bottom-right corner of the conversation input box
+5. Save the file. Upon a successful restart, you’ll see an MCP server indicator in the bottom-right corner of the conversation input box
 
-For debugging, you can find the Claude Desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
+For debugging, you can find the Claude desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
 
 
 **Troubleshooting**
 
-- Claude Desktop may return errors such as `Error: spawn uvx ENOENT` or `Could not connect to MCP server dbt-mcp`. Try replacing the command
+- Claude desktop may return errors such as `Error: spawn uvx ENOENT` or `Could not connect to MCP server dbt-mcp`. Try replacing the command
 and environment variables file path with the full path. For `ux`, find the full path to `uvx` by running `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
