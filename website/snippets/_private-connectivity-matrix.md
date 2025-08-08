@@ -2,7 +2,7 @@
 
 
 | Connectivity Type                                 | AWS MT | AWS ST | Azure MT | Azure ST | GCP MT |
-|:--------------------------------------------------|:------:|:------:|:--------:|:--------:|
+|:--------------------------------------------------|:------:|:------:|:--------:|:--------:|:--------:|
 | <b>INGRESS (to <Constant name="cloud" />)</b>                     |        |        |          |          |          |
 | Private <Constant name="cloud" /> Ingress                         |   ❌   |   ✅   |    ❌    |    ✅    |    ❌    |
 | Dual <Constant name="cloud" /> Ingress                            |   ❌   |   ✅   |    ❌    |    ❌    |    ❌    |
