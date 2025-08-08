@@ -14,7 +14,7 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
 
 - **dbt Cloud host**: Use this to form the full URL. For example, replace `<host>` here: `https://<host>/api/ai/v1/mcp/`. It may look like: `https://cloud.getdbt.com/api/ai/v1/mcp/`.
 - **Production environment ID**: This can be found on the `Orchestration` page of dbt Cloud. Use this to set an `x-dbt-prod-environment-id` header.
-- **Service token**: To fully utilize remote MCP, this needs to be configured for the dbt Semantic Layer by following [this](https://docs.getdbt.com/docs/use-dbt-semantic-layer/setup-sl#2-add-a-credential-and-create-service-tokens) guide and have `Developer` permissions. Add this as an `Authorization` header with a value like: `token <token>`. Be sure to replace `<token>` with the value of your token.
+- **Token**: Please generate either a personal access token or service token. In terms of permissions, to fully utilize remote MCP, this needs to be configured with Semantic Layer and Developer permissions. 
 
 3. With that information, you will be able to integrate with MCP compatible tools with either an env file with the necessary information or via Streamable HTTP MCP transport.
 
