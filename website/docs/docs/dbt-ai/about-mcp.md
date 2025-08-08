@@ -26,7 +26,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remote hosted
 ### Supported
 
 | Tools | Local | Remote |
-| --- | --- | --- |gk
+| --- | --- | --- |
 | dbt CLI  | ✅ | ❌ |
 | Semantic Layer | ✅ | ✅ |
 | SQL  | ✅ | ❌ |
