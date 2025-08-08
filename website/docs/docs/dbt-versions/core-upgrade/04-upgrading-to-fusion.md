@@ -250,14 +250,14 @@ Fusion will not produce this extra column in the table resulting from `dbt seed`
 
 #### New `anchors:` key
 
-As part of the ongoing process of making the dbt authoring language more precise, unexpected top-level keys in a YAML file will result in errors. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. There is a new top-level `anchors:` key which you can use as a container for these reusable configuration blocks.
+As part of the ongoing process of making the dbt authoring language more precise, unexpected top-level keys in a YAML file will result in errors. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. You can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
 
-Instead of this:
+For example, rather than using this configuration:
 
 <File name='models/_models.yml'>
 
 ```yml
-# id_column is not a valid name for a top level key in the dbt authoring spec, and will raise an error
+# id_column is not a valid name for a top-level key in the dbt authoring spec, and will raise an error
 id_column: &id_column_alias
   name: id
   description: This is a unique identifier.
@@ -279,7 +279,8 @@ models:
 
 </File>
 
-Move the anchor into the `anchors:` key instead:
+Move the anchor under the `anchors:` key instead:
+
 <File name='models/_models.yml'>
 
 ```yml

@@ -33,9 +33,9 @@ Large data sets can slow down dbt build times, making it harder for developers t
 
 ### New `anchors:` key
 
-As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees an unexpected top-level key in a YAML file. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. There is a new top-level `anchors:` key which you can use as a container for these reusable configuration blocks.
+As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees an unexpected top-level key in a YAML file. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. You can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
 
-Instead of this:
+For example, rather than using this configuration:
 
 <File name='models/_models.yml'>
 
@@ -53,7 +53,7 @@ models:
     columns: 
       - *id_column_alias
       - name: unrelated_column_a
-        description: This column is not repeated in other models
+        description: This column is not repeated in other models.
   - name: my_second_model
     columns: 
       - *id_column_alias
@@ -61,7 +61,8 @@ models:
 
 </File>
 
-Move the anchor into the `anchors:` key instead:
+Move the anchor under the `anchors:` key instead:
+
 <File name='models/_models.yml'>
 
 ```yml
