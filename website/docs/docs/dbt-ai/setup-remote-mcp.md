@@ -12,7 +12,7 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
 1. Ensure that you have [AI Features](https://docs.getdbt.com/docs/cloud/enable-dbt-copilot) turned on.
 2. Obtain the following information from dbt Platform:
 
-  - **dbt Cloud host**: Use this to form the full URL. For example, replace `<host>` here: `https://<host>/api/ai/v1/mcp/`. It may look like: `https://cloud.getdbt.com/api/ai/v1/mcp/`. If you have a multi-cell account, the host url will be `<ACCOUNT_PREFIX>.us1.dbt.com`
+  - **dbt Cloud host**: Use this to form the full URL. For example, replace `<host>` here: `https://<host>/api/ai/v1/mcp/`. It may look like: `https://cloud.getdbt.com/api/ai/v1/mcp/`. If you have a multi-cell account, the host url will be `<ACCOUNT_PREFIX>.us1.dbt.com`. For more information, [check out our docs.](/cloud/about-cloud/access-regions-ip-addresses)
   - **Production environment ID**: This can be found on the `Orchestration` page of dbt Cloud. Use this to set an `x-dbt-prod-environment-id` header.
   - **Token**: Please generate either a personal access token or a service token. In terms of permissions, to fully utilize remote MCP, it must be configured with Semantic Layer and Developer permissions. 
 
