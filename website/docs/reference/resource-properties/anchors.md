@@ -55,7 +55,7 @@ models:
 
 ### Merge syntax
 
-Sometimes, an anchor is mostly the same but one part needs to be overridden. When the anchor refers to a dictionary/mapping (not a list or a [scalar value](https://softwareengineering.stackexchange.com/questions/238033/what-does-it-mean-when-data-is-scalar/238045#238045)), you can use the `<<:` merge syntax to override an already-defined key, or add extra keys to the dictionary. For example:
+Sometimes, an anchor is mostly the same but one part needs to be overridden. When the anchor refers to a dictionary/mapping (not a list or a <Term id="scalar-value" />), you can use the `<<:` merge syntax to override an already-defined key, or add extra keys to the dictionary. For example:
 
 <File name='models/_models.yml'>
 
