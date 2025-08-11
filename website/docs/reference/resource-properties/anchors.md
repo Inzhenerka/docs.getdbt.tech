@@ -2,17 +2,17 @@
 title: anchors
 sidebar_label: "anchors"
 id: anchors
+description: "Learn how to use the `anchors:` key when reusing configuration blocks inside a single YAML file."
 ---
 
 Anchors are a [YAML feature](https://yaml.org/spec/1.2.2/#692-node-anchors) that let you reuse configuration blocks inside a single YAML file. In dbt Core v1.10, the `anchors:` key was introduced to enclose configuration fragments that aren't valid on their own or that only exist as template data. Using the `anchors:` key ensures these fragments won't be rejected during file validation.
 
 In dbt Core v1.10 and higher, invalid anchors trigger a warning. In the dbt Fusion engine, these invalid anchors will result in errors when Fusion leaves beta.
 
-<VersionBlock lastVersion="1.9">
 :::note
 You can define anchors in dbt Core v1.9 and earlier, but there is no dedicated location for anchors in these versions. If you need to define a standalone anchor, you can put it at the top level of your YAML file.
 :::
-</VersionBlock>
+
 
 ## YAML anchor syntax
 
@@ -114,11 +114,9 @@ sources:
 
 </File>
 
-## Tips and common pitfalls
+## Usage notes
 
-<VersionBlock lastVersion="1.9">
 - Old versions of dbt Core (v1.9 and earlier) do not have a dedicated `anchors:` key. If you need to define a standalone anchor, you can leave it at the top level of your file.
-</VersionBlock>
 - You can't merge additional elements into a list which was defined as an anchor. For example, if you define an anchor containing multiple columns, you can't attach extra columns to the end of the list. Instead, define each column as an individual anchor and add each one to the relevant tables.
 - You do not need to move existing anchors to the `anchors:` key if they are already defined in a larger valid YAML object. For example, the following `&customer_id_tests` anchor does not need to be moved because it is a valid part of the existing `columns` block.
 
