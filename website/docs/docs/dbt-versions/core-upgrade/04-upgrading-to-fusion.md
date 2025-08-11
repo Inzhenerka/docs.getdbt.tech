@@ -271,7 +271,7 @@ models:
     columns: 
       - *id_column_alias
       - name: unrelated_column_a
-        description: This column is not repeated in other models
+        description: This column is not repeated in other models.
   - name: my_second_model
     columns: 
       - *id_column_alias
