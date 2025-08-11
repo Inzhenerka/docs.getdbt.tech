@@ -843,12 +843,7 @@ const sidebarSettings = {
         },
       ],
     },
-    {
-      type: "category",
-      label: "dbt AI",
-      collapsed: true,
-      items: [
-        {
+            {
           type: "category",
           label: "Copilot",
           collapsed: true,
@@ -862,21 +857,20 @@ const sidebarSettings = {
             "docs/cloud/dbt-copilot-faqs",
           ],
         },
-                {
-          type: "category",
-          label: "MCP server",
-          collapsed: true,
-          link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
-          items: [
-            "docs/dbt-ai/about-mcp",
-            "docs/dbt-ai/setup-local-mcp",
-            "docs/dbt-ai/setup-remote-mcp",
-            "docs/dbt-ai/integrate-mcp-vscode",
-            "docs/dbt-ai/integrate-mcp-cursor",
-            "docs/dbt-ai/integrate-mcp-claude",
+    {
+      type: "category",
+      label: "dbt MCP",
+      collapsed: true,
+      link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
+      items: [
+       
+          "docs/dbt-ai/about-mcp",
+          "docs/dbt-ai/setup-local-mcp",
+          "docs/dbt-ai/setup-remote-mcp",
+          "docs/dbt-ai/integrate-mcp-vscode",
+          "docs/dbt-ai/integrate-mcp-cursor",
+          "docs/dbt-ai/integrate-mcp-claude",
           ],
-        },
-      ],
     },
     {
       type: "category",
