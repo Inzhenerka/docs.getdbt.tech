@@ -843,12 +843,7 @@ const sidebarSettings = {
         },
       ],
     },
-    {
-      type: "category",
-      label: "dbt AI",
-      collapsed: true,
-      items: [
-        {
+            {
           type: "category",
           label: "Copilot",
           collapsed: true,
@@ -862,6 +857,11 @@ const sidebarSettings = {
             "docs/cloud/dbt-copilot-faqs",
           ],
         },
+    {
+      type: "category",
+      label: "dbt MCP",
+      collapsed: true,
+      items: [
                 {
           type: "category",
           label: "MCP server",
