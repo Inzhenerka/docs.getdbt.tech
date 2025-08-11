@@ -30,7 +30,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 | --- | --- | --- |
 | dbt CLI  | ✅ | ❌ |
 | Semantic Layer | ✅ | ✅ |
-| SQL  | ✅ | ❌ |
+| SQL  | ✅ | ✅ |
 | Disable tools | ✅ | ❌ |
 
 Note that access to the Discovery API and the Semantic Layer API is limited depending on your [plan type](https://www.getdbt.com/pricing).
