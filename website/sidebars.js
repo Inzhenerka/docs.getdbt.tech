@@ -861,22 +861,16 @@ const sidebarSettings = {
       type: "category",
       label: "dbt MCP",
       collapsed: true,
+      link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
       items: [
-                {
-          type: "category",
-          label: "MCP server",
-          collapsed: true,
-          link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
-          items: [
-            "docs/dbt-ai/about-mcp",
-            "docs/dbt-ai/setup-local-mcp",
-            "docs/dbt-ai/setup-remote-mcp",
-            "docs/dbt-ai/integrate-mcp-vscode",
-            "docs/dbt-ai/integrate-mcp-cursor",
-            "docs/dbt-ai/integrate-mcp-claude",
+       
+          "docs/dbt-ai/about-mcp",
+          "docs/dbt-ai/setup-local-mcp",
+          "docs/dbt-ai/setup-remote-mcp",
+          "docs/dbt-ai/integrate-mcp-vscode",
+          "docs/dbt-ai/integrate-mcp-cursor",
+          "docs/dbt-ai/integrate-mcp-claude",
           ],
-        },
-      ],
     },
     {
       type: "category",
