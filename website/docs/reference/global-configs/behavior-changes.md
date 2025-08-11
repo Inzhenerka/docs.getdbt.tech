@@ -261,7 +261,11 @@ When you set the `validate_macro_args` flag to `True`, dbt will:
 
 dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
 
-By default, the `require_generic_test_arguments_property` flag is set to `False`, so using this `arguments` property is optional. If you do use `arguments` while the flag is `False`, dbt will recognize it but raise the `ArgumentsPropertyInGenericTestDeprecation` warning to let you know that the flag will eventually default to `True` and become required.
+By default, the `require_generic_test_arguments_property` flag is set to `True` in "Latest", and `False` in versions of dbt Core less than 1.11.0.
+
+Usage of the `arguments` property in test definitions is optional in either case.
+
+If you do use `arguments` while the flag is `False`, dbt will recognize it but raise the `ArgumentsPropertyInGenericTestDeprecation` warning to let you know that the flag will eventually default to `True` across all releases and be parsed as keyword arguments to the test.
 
 Here's an example using the new `arguments` property:
 
