@@ -18,24 +18,21 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
 
 3. For the remote MCP, you will pass on headers through the json blob in order to configure required fields:
 
-#### Configuration for APIs and SQL tools
+**Configuration for APIs and SQL tools**
 
 | Header | Required | Description |
 | --- | --- | --- |
 | Token | Required | Your personal access token or service token from the dbt platform. <br/> **Note**: A service token is required when using the Semantic Layer, and this service token should have at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | x-dbt-prod-environment-id | Required | Your dbt Cloud production environment ID |
 
-#### Additional configuration for SQL tools
+**Additional configuration for SQL tools**
 | Header | Required | Description |
 | --- | --- | --- |
 | x-dbt-dev-environment-id | Required | Your dbt Cloud development environment ID |
 | x-dbt-user-id | Required for `execute_sql` | Your dbt Cloud user ID ([docs](https://docs.getdbt.com/faqs/Accounts/find-user-id)) |
 
-5. After establishing what headers you need, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating a 
-configuration file. This is dependent on what tools you want to integrate with. 
+4. After establishing what headers you need, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating a configuration file. This is dependent on what tools you want to integrate with. 
 
-
-  Depending on the MCP client, you will either need to provide a file with the json blob or provide the below information in their UI. 
   Example configuration: 
 
   Be sure to replace `<host>`, `<token>`, and `<prod-id>` with your information:
