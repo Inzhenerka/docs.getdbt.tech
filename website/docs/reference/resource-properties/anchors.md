@@ -2,8 +2,9 @@
 title: anchors
 sidebar_label: "anchors"
 id: anchors
-description: "Learn how to use the `anchors:` key when reusing configuration blocks inside a single YAML file."
 ---
+
+## Definition
 
 Anchors are a [YAML feature](https://yaml.org/spec/1.2.2/#692-node-anchors) that let you reuse configuration blocks inside a single YAML file. In dbt Core v1.10, the `anchors:` key was introduced to enclose configuration fragments that aren't valid on their own or that only exist as template data. Using the `anchors:` key ensures these fragments won't be rejected during file validation.
 
