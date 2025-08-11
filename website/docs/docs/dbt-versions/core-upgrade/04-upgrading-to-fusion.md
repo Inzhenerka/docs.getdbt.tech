@@ -248,7 +248,7 @@ Fusion will not produce this extra column in the table resulting from `dbt seed`
 | cat    |  
 | bear   |  
 
-#### New `anchors:` key
+#### Move standalone anchors under `anchors:` key
 
 As part of the ongoing process of making the dbt authoring language more precise, unexpected top-level keys in a YAML file will result in errors. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. You can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
 
