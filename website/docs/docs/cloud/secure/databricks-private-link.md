@@ -29,7 +29,7 @@ The following steps will walk you through the setup of a Databricks Azure Privat
     - Azure Databricks Workspace URL (e.g. adb-################.##.azuredatabricks.net)
     - Databricks Azure resource ID:
     - dbt Azure multi-tenant environment (EMEA):
-    - Azure Databricks workspace region (e.g., WestEurope, NorthEurope):
+    - Azure Databricks workspace region (like WestEurope, NorthEurope):
     ```
 5. Once our Support team confirms the resources are available in the Azure portal, navigate to the Azure Databricks Workspace and browse to **Networking** > **Private Endpoint Connections**. Then, highlight the `dbt` named option and select **Approve**.
 
