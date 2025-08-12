@@ -16,7 +16,9 @@ The following steps walk you through the setup of a Private Link endpoint for Az
 
 ## Configure Azure Private Link
 
-1. Navigate to your Azure Synapse workspace in the Azure Portal
+From your Azure portal:
+
+1. Navigate to your Azure Synapse workspace.
 2. From the workspace overview, click **JSON view**. 
 3. Copy the value in the **Resource ID** field at the top of the pane.  
     The path format is: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Synapse/workspaces/<workspace_name>`.
@@ -29,7 +31,7 @@ The following steps walk you through the setup of a Private Link endpoint for Az
     - dbt Azure multi-tenant environment (EMEA):
     - Azure Synapse workspace region (e.g., WestEurope, NorthEurope):
     ```
-5. Once our Support team confirms the the endpoint has been created, navigate to the Azure Synapse workspace in the Azure Portal and browse to **Security** > **Private endpoint connections**. In the **Private endpoint connections** table, highlight the `dbt` named option and select **Approve**. Confirm with Support that the connection has been approved so they can validate the connection and make it available for use in  <Constant name="cloud" />.
+5. Once our support team confirms the the endpoint has been created, navigate to the Azure Synapse workspace in the Azure Portal and browse to **Security** > **Private endpoint connections**. In the **Private endpoint connections** table, highlight the `dbt` named option and select **Approve**. Confirm with Support that the connection has been approved so they can validate the connection and make it available for use in  <Constant name="cloud" />.
 
 
 ## Create connection in dbt
@@ -37,7 +39,7 @@ The following steps walk you through the setup of a Private Link endpoint for Az
 Once you've completed the step above, you will be able to configure a private endpoint in <Constant name="cloud" />:
 
 1. Navigate to **Settings** → **Create new project** → select **Synapse**. 
-2. You will see two radio buttons: **Default Endpoint** and **PrivateLink Endpoint** Select **PrivateLink Endpoint**. 
+2. You will see two radio buttons: **Default Endpoint** and **PrivateLink Endpoint**. Select **PrivateLink Endpoint**. 
 3. Select the private endpoint from the dropdown (this will automatically populate the hostname/account field).
 4. Configure the remaining data platform details.
 5. Test your connection and save it.

@@ -66,6 +66,7 @@ Once <Constant name="cloud" /> support completes the configuration, you can star
 5. Test your connection and save it.
 
 ## Configuring Network Policies
+
 If your organization uses [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) to restrict access to your Snowflake account, you will need to add a network rule for <Constant name="cloud" />. 
 
 You can request the CIDR range from [<Constant name="cloud" /> Support](mailto:support@getdbt.com), that you can use to create a network policy. 
