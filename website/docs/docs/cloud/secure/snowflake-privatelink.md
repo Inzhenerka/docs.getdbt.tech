@@ -67,15 +67,15 @@ Once <Constant name="cloud" /> support completes the configuration, you can star
 
 ## Configuring Internal Stage PrivateLink in <Constant name="cloud" />
 
-If an Internal Stage PrivateLink endpoint has been provisioned, dbt Environments must be configured to use this endpoint instead of the account default set in Snowflake.
+If an Internal Stage PrivateLink endpoint has been provisioned, your dbt environments must be configured to use this endpoint instead of the account default set in Snowflake.
 
-1. Obtain the Internal Stage PrivateLink endpoint DNS from dbt Support. e.g. `*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com`
-2. In the appropriate Project, navigate to **Orchestration** → **Environments**.
-3. In any Environment that should use the dbt Internal Stage PrivateLink endpoint set an Extended Attribute similar to the following:
+1. Obtain the Internal Stage PrivateLink endpoint DNS from dbt Support. For example, `*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com`.
+2. In the appropriate dbt project, navigate to **Orchestration** → **Environments**.
+3. In any environment that should use the dbt Internal Stage PrivateLink endpoint, set an **Extended Attribute** similar to the following:
 ```
 s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com'
 ```
-4. Save the Environment changes
+4. Save the changes
 
 <Lightbox src="/img/docs/dbt-cloud/snowflake-internal-stage-dns.png" title="Internal Stage DNS"/>
 
