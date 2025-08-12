@@ -29,7 +29,7 @@ models:
   - name: <model_name>
     data_tests:
       - [<test_name>](#custom-data-test-name):
-          arguments: # available in 1.10 and higher
+          arguments: # available in v1.10 and higher
             <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
