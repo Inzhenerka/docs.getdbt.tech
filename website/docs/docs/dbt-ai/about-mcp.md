@@ -32,6 +32,8 @@ There are two ways to install dbt MCP: [local](#local) and [remote](#remote).
 ## Available Tools
 
 ### Supported
+The dbt MCP server has access to many parts of the dbt experience related to development, deployment, and discovery. 
+Here are the categories of tools supported based on what form of the MCP Server you connect to as well as detailed information on exact commands or queries available to the LLM.   
 
 | Tools | Local | Remote |
 | --- | --- | --- |
