@@ -57,7 +57,7 @@ If you're triggering [CI](/docs/deploy/continuous-integration) job runs, the ben
 
 When partial parsing is enabled, dbt may occasionally fail or incorrectly parse the project causing:
 - Nodes (for example, models, sources) to not be found.
-- Configuration to be set incorrectly (e.g. different to what is defined in a model's schema.yml file).
+- Configurations to be set incorrectly (for example, different from what is defined in a model's `schema.yml` file).
 
 If you ever get into this state, you can trigger a full re-parse by running the dbt command with `--no-partial-parse` or by deleting the `target/partial_parse.msgpack` file (e.g. by running `dbt clean`). You can disable partial parsing and entirely by setting the `PARTIAL_PARSE` global config to `false`.
 
