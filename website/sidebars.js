@@ -740,7 +740,6 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/dbt-cloud-apis/overview" },
       items: [
         "docs/dbt-cloud-apis/overview",
-        "docs/dbt-cloud-apis/mcp",
         {
           type: "category",
           label: "API Access",
@@ -844,19 +843,34 @@ const sidebarSettings = {
         },
       ],
     },
+            {
+          type: "category",
+          label: "Copilot",
+          collapsed: true,
+          link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+          items: [
+           "docs/cloud/dbt-copilot",
+           "docs/cloud/enable-dbt-copilot",
+            "docs/cloud/use-dbt-copilot",
+            "docs/cloud/copilot-styleguide",
+            "docs/cloud/copilot-chat-in-studio",
+            "docs/cloud/dbt-copilot-faqs",
+          ],
+        },
     {
       type: "category",
-      label: "dbt Copilot",
+      label: "dbt MCP",
       collapsed: true,
-      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
       items: [
-        "docs/cloud/dbt-copilot",
-        "docs/cloud/enable-dbt-copilot",
-        "docs/cloud/use-dbt-copilot",
-        "docs/cloud/copilot-styleguide",
-        "docs/cloud/copilot-chat-in-studio",
-        "docs/cloud/dbt-copilot-faqs",
-      ],
+       
+          "docs/dbt-ai/about-mcp",
+          "docs/dbt-ai/setup-local-mcp",
+          "docs/dbt-ai/setup-remote-mcp",
+          "docs/dbt-ai/integrate-mcp-vscode",
+          "docs/dbt-ai/integrate-mcp-cursor",
+          "docs/dbt-ai/integrate-mcp-claude",
+          ],
     },
     {
       type: "category",
@@ -1089,6 +1103,7 @@ const sidebarSettings = {
             description: "The list of general properties available in dbt.",
           },
           items: [
+            "reference/resource-properties/anchors",
             "reference/resource-properties/columns",
             "reference/resource-properties/config",
             "reference/resource-properties/constraints",
