@@ -22,6 +22,13 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 <-->
 
+## Server Access
+
+There are two ways to install dbt MCP: [local](#local) and [remote](#remote). 
+
+- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
+- [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
+
 ## Available Tools
 
 ### Supported
@@ -75,13 +82,6 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 - `text_to_sql`: Generate SQL from natural language requests
 - `execute_sql`: Execute SQL on dbt Cloud's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
 
-
-## Server setup
-
-There are two ways to install dbt MCP: [local](#local) and [remote](#remote). 
-
-- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
-- [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
 
 ## MCP integrations 
 
