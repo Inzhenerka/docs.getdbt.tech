@@ -16,7 +16,7 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
   - **Production environment ID**: This can be found on the `Orchestration` page of dbt Cloud. Use this to set an `x-dbt-prod-environment-id` header.
   - **Token**: Please generate either a personal access token or a service token. In terms of permissions, to fully utilize remote MCP, it must be configured with Semantic Layer and Developer permissions. 
 
-3. For the remote MCP, you will pass on headers through the json blob in order to configure required fields:
+3. For the remote MCP, you will pass on headers through the JSON blob to configure required fields:
 
 **Configuration for APIs and SQL tools**
 
