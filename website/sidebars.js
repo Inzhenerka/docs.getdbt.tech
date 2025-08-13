@@ -144,7 +144,8 @@ const sidebarSettings = {
                     "docs/cloud/manage-access/set-up-snowflake-oauth",
                     "docs/cloud/manage-access/set-up-databricks-oauth",
                     "docs/cloud/manage-access/set-up-bigquery-oauth",
-                    "docs/cloud/manage-access/external-oauth",
+                    "docs/cloud/manage-access/snowflake-external-oauth",
+                    "docs/cloud/manage-access/redshift-external-oauth",
                   ],
                 }, // SSO
                 "docs/cloud/manage-access/audit-log",
