@@ -29,7 +29,7 @@ models:
   - name: <model_name>
     data_tests:
       - [<test_name>](#custom-data-test-name):
-          arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
             <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
@@ -63,7 +63,7 @@ sources:
       data_tests:
         - [<test_name>](#custom-data-test-name)
         - [<test_name>](#custom-data-test-name):
-            arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+            arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
               <argument_name>: <argument_value>
             [config](/reference/resource-properties/config):
               [<test_config>](/reference/data-test-configs): <config-value>
@@ -96,7 +96,7 @@ seeds:
     data_tests:
       - [<test_name>](#custom-data-test-name)
       - [<test_name>](#custom-data-test-name):
-          arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
             <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
@@ -129,7 +129,7 @@ snapshots:
     data_tests:
       - [<test_name>](#custom-data-test-name)
       - [<test_name>](#custom-data-test-name):
-          arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
             <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
@@ -232,7 +232,7 @@ models:
       - name: status
         data_tests:
           - accepted_values:
-              arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 values: ['placed', 'shipped', 'completed', 'returned']
 
       - name: status_id
@@ -262,7 +262,7 @@ models:
       - name: customer_id
         data_tests:
           - relationships:
-              arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 to: ref('customers')
                 field: id
 ```
@@ -287,7 +287,7 @@ models:
         Order overview data mart, offering key details for each order including if it's a customer's first order and a food vs. drink item breakdown. One row per order.
     data_tests:
       - dbt_utils.expression_is_true:
-          arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
             expression: "order_items_subtotal = subtotal"
       - dbt_utils.expression_is_true:
           arguments:
@@ -345,7 +345,7 @@ models:
         data_tests:
           - accepted_values:
               name: unexpected_order_status_today
-              arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
@@ -385,7 +385,7 @@ models:
       - name: status
         data_tests:
           - accepted_values:
-              arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
@@ -425,7 +425,7 @@ models:
         data_tests:
           - accepted_values:
               name: unexpected_order_status_today
-              arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
@@ -478,7 +478,7 @@ models:
         data_tests:
           - name: unexpected_order_status_today
             test_name: accepted_values  # name of the generic test to apply
-            arguments: # available in v1.10 and higher. Older versions can set the <argument_name> as the top-level property.
+            arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
               values:
                 - placed
                 - shipped
