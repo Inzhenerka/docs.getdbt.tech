@@ -32,7 +32,7 @@ These connection instructions provide the basic fields required for configuring 
 
 ### Supported authentication methods
 
-The following auth types are supported for each of the connections available on the dbt platform:
+The following table shows which authentication types are supported for each connection available on the <Constant name="dbt_platform" />:
 
 import AuthTypes from '/snippets/_dbt_connection_support.md';
 
