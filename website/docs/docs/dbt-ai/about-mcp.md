@@ -66,7 +66,7 @@ To learn more about the dbt Semantic layer, click [here](/docs/use-dbt-semantic-
 - `get_dimensions`: Gets dimensions associated with specified metrics
 - `get_entities`: Gets entities associated with specified metrics
 - `query_metrics`: Query metrics with optional grouping, ordering, filtering, and limiting
-- `get_metrics_compiled_sql` - Gets and returns the compiled SQL that would be generated for specified metrics and groupings without executing the query
+- `get_metrics_compiled_sql`: Returns the compiled SQL generated for specified metrics and groupings without executing the query
 
 ### Metadata Discovery
 
@@ -79,7 +79,7 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 - `get_model_children`: Gets the children models of a specific model
 
 ### SQL 
-⚠️ The SQL tools access the dbt Platform endpoints. While MCP usage of the tools do not consume dbt Copilot credits, access to the tools will be impacted by dbt Copilot credit overages from direct usage of Copilot in dbt Platform.
+⚠️ The SQL tools access the dbt platform endpoints. While MCP usage of the tools doesn't consume dbt Copilot credits, access to the tools is impacted by dbt Copilot credit overages from direct usage of Copilot in dbt.
 
 - `text_to_sql`: Generate SQL from natural language requests
 - `execute_sql`: Execute SQL on dbt Cloud's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
@@ -87,7 +87,9 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 
 ## MCP integrations 
 
-The dbt MCP server integrates with the following clients:
+The dbt MCP server integrates with any [MCP client](https://modelcontextprotocol.io/clients) that supports token authentication and tool use capabilities. 
+
+We have also created integration guides for the following clients:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)

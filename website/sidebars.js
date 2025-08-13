@@ -204,10 +204,13 @@ const sidebarSettings = {
                 "docs/cloud/secure/about-private-connectivity",
                 "docs/cloud/secure/snowflake-privatelink",
                 "docs/cloud/secure/snowflake-private-link",
+                "docs/cloud/secure/snowflake-psc",
                 "docs/cloud/secure/databricks-privatelink",
                 "docs/cloud/secure/databricks-private-link",
                 "docs/cloud/secure/redshift-privatelink",
                 "docs/cloud/secure/postgres-privatelink",
+                "docs/cloud/secure/az-postgres-private-link",
+                "docs/cloud/secure/az-synapse-private-link",
                 "docs/cloud/secure/vcs-privatelink",
               ],
             }, // PrivateLink
@@ -861,22 +864,16 @@ const sidebarSettings = {
       type: "category",
       label: "dbt MCP",
       collapsed: true,
+      link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
       items: [
-                {
-          type: "category",
-          label: "MCP server",
-          collapsed: true,
-          link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
-          items: [
-            "docs/dbt-ai/about-mcp",
-            "docs/dbt-ai/setup-local-mcp",
-            "docs/dbt-ai/setup-remote-mcp",
-            "docs/dbt-ai/integrate-mcp-vscode",
-            "docs/dbt-ai/integrate-mcp-cursor",
-            "docs/dbt-ai/integrate-mcp-claude",
+       
+          "docs/dbt-ai/about-mcp",
+          "docs/dbt-ai/setup-local-mcp",
+          "docs/dbt-ai/setup-remote-mcp",
+          "docs/dbt-ai/integrate-mcp-vscode",
+          "docs/dbt-ai/integrate-mcp-cursor",
+          "docs/dbt-ai/integrate-mcp-claude",
           ],
-        },
-      ],
     },
     {
       type: "category",
@@ -1109,6 +1106,7 @@ const sidebarSettings = {
             description: "The list of general properties available in dbt.",
           },
           items: [
+            "reference/resource-properties/anchors",
             "reference/resource-properties/columns",
             "reference/resource-properties/config",
             "reference/resource-properties/constraints",
