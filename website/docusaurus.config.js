@@ -72,12 +72,12 @@ var siteSettings = {
     announcementBar: {
       id: "dbt-workshop",
       content:
-        "Join our live virtual workshop: Fast track to dbt — build and run your first dbt models. Save your seat.",
+        "The free dbt VS Code extension is the best way to develop locally in dbt.",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://www.getdbt.com/resources/webinars/fast-track-to-dbt-workshop",
+      "/docs/about-dbt-extension",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
