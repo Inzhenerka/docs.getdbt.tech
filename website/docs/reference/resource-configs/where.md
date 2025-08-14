@@ -54,7 +54,7 @@ models:
       - name: other_column
         data_tests:
           - not_null:
-              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: 
                 where: "date_column < current_date"
 ```
 

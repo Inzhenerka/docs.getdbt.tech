@@ -530,7 +530,7 @@ To add data tests to your project:
             data_tests:
               - not_null
               - relationships:
-                  arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                  arguments:
                     to: ref('stg_customers')
                     field: customer_id
 
@@ -602,7 +602,7 @@ Adding [documentation](/docs/build/documentation) to your project allows you to 
             data_tests:
               - not_null
               - relationships:
-                  arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                  arguments:
                     to: ref('stg_customers')
                     field: customer_id
     ```
