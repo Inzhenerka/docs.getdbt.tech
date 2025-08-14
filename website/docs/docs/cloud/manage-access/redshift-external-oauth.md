@@ -229,11 +229,11 @@ In your Entra ID account:
 
 ## Configure the Trusted Token Issuer in IAM IdC
 
-A *trusted token issuer* generates an access token that is used to identify a user, and then authenticates that user. This essentially lets services outside of the AWS ecosystem, such as the dbt platform, connect to IAM IdC (and Redshift) with access tokens they have generated or retrieved from an external IdP (Entra ID). 
+A *trusted token issuer* generates an access token that is used to identify a user, and then authenticates that user. This essentially lets services outside of the AWS ecosystem, such as the dbt platform, connect to IAM IdC (and Redshift) with access tokens they have generated or retrieved from an external IdP (Entra ID or Okta). 
 
 The following steps are outlined per [this blog post](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/): 
 
-1. Open the AWS Management Console and navigate to [IAM Identity Center](https://console.aws.amazon.com/singlesignon), and then to the **Settings**
+1. Open the AWS Management Console and navigate to [IAM Identity Center](https://console.aws.amazon.com/singlesignon), and then to the **Settings**.
 2. Select the **Authentication** tab and under **Trusted token issuers**, choose **Create trusted token issuer**.
 3. On the **Set up an external IdP to issue trusted tokens** page, under **Trusted token issuer details**, do the following:
     1. For **Issuer URL**, enter the OIDC discovery URL of the external IdP that will issue tokens for trusted identity propagation. The URL would be: `https://sts.windows.net/<tenantid>/`. To find your Microsoft Entra tenant ID, see [Collect Microsoft Entra ID information](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/#Collect-Microsoft-Entra-ID-information). **DO NOT FORGET THE FORWARD SLASH AT THE END OF THE URL**. 
@@ -260,12 +260,15 @@ To start, select **IAM Identity Center connection** from Amazon Redshift conso
 
 ## Finalizing the dbt configuration
 
-If you have an existing connection, make sure that OAuth method is set to **External OAuth** and select the integration you created in an earlier step. Otherwise, create a new Redshift connection, being sure to set values for Server Hostname , OAuth Method , and Database name (this field can be found under the **Optional Settings**). 
+If you have an existing connection, make sure that the OAuth method is set to **External OAuth** and select the integration you created in an earlier step. Otherwise, create a new Redshift connection, being sure to set values for:
+- **Server Hostname** 
+- **OAuth Method** 
+- **Database name** (this field can be found under the **Optional Settings**)
 
 This connection should be set as the connection for a development environment in an existing or new project. 
 
-Once the connection has been assigned to a development environment, you can configure your user credentials for that development environment under `Account Settings > Your Profile > Credentials > <Your Project Name>` . Set the authentication method to `External Oauth` , set `schema` and other fields if desired, and save the credentials. You can then click the `Connect to Redshift` button.
+Once the connection has been assigned to a development environment, you can configure your user credentials for that development environment under `Account Settings > Your Profile > Credentials > <Your Project Name>`. Set the authentication method to `External Oauth`, set `schema` and other fields if desired, and save the credentials. You can then click the `Connect to Redshift` button.
 
 ### Verify connection in Studio
 
-Once your develop session has initialized, you can test that you’re able to connect to Redshift using external OAuth by running `dbt debug`.
+Once your development session has initialized, you can test that you’re able to connect to Redshift using external OAuth by running `dbt debug`.
