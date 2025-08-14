@@ -451,7 +451,7 @@ models:
 
 </File>
 
-## Using both dbt tags and BigQuery tags
+#### Using both dbt tags and BigQuery tags
 
 You can use dbt's existing `tags` configuration alongside BigQuery's `resource_tags`:
 
