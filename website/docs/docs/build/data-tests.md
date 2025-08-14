@@ -130,7 +130,7 @@ models:
       - name: customer_id
         data_tests:
           - relationships:
-              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments:
                 to: ref('customers')
                 field: id
 ```
