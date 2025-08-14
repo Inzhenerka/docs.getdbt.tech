@@ -2124,6 +2124,31 @@ section.discourse-forum-page {
   }
 }
 
+.home .hero-cta {
+  margin-top: 2rem;
+
+  a {
+    background: #fff;
+    border: solid 1px #000;
+    border-radius: 12px;
+    padding: 8px 16px;
+    color: #000;
+    transition: all 0.2s ease-in-out;
+  }
+
+  a:hover {
+    text-decoration: none;
+    background: var(--bg-neutral-primary-hover);
+  }
+}
+
+@media (max-width: 996px) {
+  .home .hero-cta {
+    padding: 8px;
+    font-size: var(--text-sm);
+  }
+}
+
 .home section:first-of-type {
   padding-top: 0;
 }
@@ -2597,7 +2622,7 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 .baton-hero::before {
   content: '';
   position: absolute;
-  top: 10%;
+  top: 6%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -2638,7 +2663,7 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 
 .baton-hero {
   text-align: center;
-  padding: 6rem 1rem 20rem;
+  padding: 9rem 1rem 20rem;
 }
 
 @media (max-width: 996px) {
@@ -2678,7 +2703,7 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
   justify-content: center;
   align-items: center;
 }
@@ -2691,6 +2716,16 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 
 .baton-hero .quick-links a:hover {
   text-decoration: none;
+}
+
+@media (max-width: 996px) {
+  .quick-links span {
+    display: none;
+  }
+
+  .quick-links a {
+    font-size: var(--text-sm);
+  }
 }
 
 [data-theme='dark'] .baton-hero .quick-links a {

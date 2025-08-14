@@ -120,6 +120,9 @@ function Home() {
                   <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release notes</Link>
                   <Link to="/docs/introduction">Product docs</Link>
                 </div>
+                <div className="hero-cta">
+                  <Link to="/docs/install-dbt-extension" class="primary-cta">Install Fusion + VS Code extension</Link>
+                </div>
               </div>
             </div>
           </header>
