@@ -408,8 +408,8 @@ Resource tags are key-value pairs that must follow BigQuery's tag format: `{goog
 - **Control access at scale**: Manage access patterns consistently across different projects and environments.
 
 #### Prerequisites
-- Create tag keys and values in advance before using them in dbt.
-- Grant the required IAM permissions to apply tags to resources.
+- [Create tag keys and values](https://cloud.google.com/bigquery/docs/tags#create_tag_keys_and_values) in advance before using them in dbt.
+- Grant the [required IAM permissions](https://cloud.google.com/bigquery/docs/tags#required_permissions) to apply tags to resources.
 
 #### Configuring tags in a model file
 
