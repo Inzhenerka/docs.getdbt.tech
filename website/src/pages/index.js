@@ -157,7 +157,6 @@ function Home() {
                 </div>
               </div>
           </section>
- . . . 
           <section className='baton-1'>
             <div className='container'>
               <div>
