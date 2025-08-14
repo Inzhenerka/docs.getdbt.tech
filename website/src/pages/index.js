@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import Card from '@site/src/components/card';
 import Hero from '@site/src/components/hero';
+import BorderBeam from '@site/src/components/borderBeam';
 import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/default/p/blog-archive-f05.json'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
@@ -217,6 +218,7 @@ function Home() {
                   body="This free tool brings the full power of the dbt Fusion engine into your local environment with features like live error detection, lightning-fast parse times, insights and rich lineage all in VS Code or Cursor."
                   link="/docs/about-dbt-extension"
                   icon="vsce"
+                  showBorderBeam={true}
                 />
               </div>
             </div>
