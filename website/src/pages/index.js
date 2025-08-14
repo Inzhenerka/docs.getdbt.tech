@@ -213,6 +213,12 @@ function Home() {
                   link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide"
                   icon="dashboard"
                 />
+                <Card
+                  title="VS Code Extension"
+                  body="This free tool brings the full power of the dbt Fusion engine into your local environment with features like live error detection, lightning-fast parse times, insights and rich lineage all in VS Code or Cursor."
+                  link="/docs/about-dbt-extension"
+                  icon="vsce"
+                />
               </div>
             </div>
           </section>
