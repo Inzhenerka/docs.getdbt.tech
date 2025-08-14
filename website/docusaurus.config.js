@@ -221,11 +221,11 @@ var siteSettings = {
               <div class='cta-section-text'>
                 <span class="eyebrow">Get started</span>
                 <h2 class="heading-2">Start building with dbt.</h2>
-                <p>Streamline your data transformation process, reduce manual errors, and increase productivity with dbt. Sign up today and take your data transformation workflow to the next level.</p>
+                <p>The free dbt VS Code extension is the best way to develop locally with the dbt Fusion Engine.</p>
               </div>
               <div class="cta-section">
-                <a href="https://www.getdbt.com/contact" target="_blank" class="primary-cta">Request your demo</a>
-                <a href="https://www.getdbt.com/signup" target="_blank" class="secondary-cta">Create a free account</a>
+                <a href="https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt" target="_blank" class="primary-cta">Install free extension</a>
+                <a href="https://www.getdbt.com/signup" target="_blank" class="secondary-cta">Request your demo</a>
               </div>
             </div>
           </div>
