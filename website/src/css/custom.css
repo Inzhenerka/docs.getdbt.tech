@@ -1296,8 +1296,35 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
 /* footer styles */
 .footer {
+  background-color: transparent;
+  padding: 0;
+}
+.footer .container {
+  padding: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+}
+.footer__links {
+  padding-left: 0 !important;
+}
+
+.sub-footer {
   background-color: var(--color-terminal-black-950);
   padding-top: 3rem;
+}
+
+.sub-footer .container {
+  max-width: var(--ifm-container-width-xl);
+  margin: 0 auto;
+  padding: var(--ifm-footer-padding-vertical) var(--ifm-footer-padding-horizontal);
+}
+
+@media (max-width: 996px) {
+  .sub-footer .container {
+    padding: 0 var(--ifm-spacing-horizontal);
+  }
 }
 
 .footer__links {
@@ -2010,8 +2037,8 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 }
 
 /* OneTrust Cookies Settings Btn in Footer */
-footer #ot-sdk-btn,
-footer #ot-sdk-btn.optanon-show-settings {
+.sub-footer #ot-sdk-btn,
+.sub-footer #ot-sdk-btn.optanon-show-settings {
   background: none;
   border: none;
   color: var(--text-inverse-tertiary);
@@ -2024,8 +2051,8 @@ footer #ot-sdk-btn.optanon-show-settings {
   cursor: pointer;
 }
 
-footer #ot-sdk-btn:hover,
-footer #ot-sdk-btn.optanon-show-settings:hover {
+.sub-footer #ot-sdk-btn:hover,
+.sub-footer #ot-sdk-btn.optanon-show-settings:hover {
   background: none;
   border: none;
   color: var(--text-inverse-primary);
@@ -2682,6 +2709,21 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
+  text-align: left;
+  margin: 0 auto;
+  padding: 4rem 0;
+}
+
+.bottom-cta .container {
+  margin: 0 auto;
+  max-width: var(--ifm-container-width-xl);
+  padding: var(--ifm-footer-padding-vertical) var(--ifm-footer-padding-horizontal);
+}
+
+@media (max-width: 996px) {
+  .bottom-cta .container {
+    padding: 0 var(--ifm-spacing-horizontal);
+  }
 }
 
 .bottom-cta .cta-section-text {

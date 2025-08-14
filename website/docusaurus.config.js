@@ -216,6 +216,22 @@ var siteSettings = {
             config-ft-widget-header-title = "Ask a question"
             config-ft-privacy-policy = "We're pleased to offer this complimentary chatbot service, powered by Forethought.ai, to optimize your experience and productivity. Your use of this chatbot is subject to, and may be retained pursuant to, the terms of the privacy policy available for review at <a href='https://www.getdbt.com/cloud/privacy-policy' target='_blank'>https://www.getdbt.com/cloud/privacy-policy</a>."
           ></script>
+          <div class='bottom-cta'>
+            <div class='container'>
+              <div class='cta-section-text'>
+                <span class="eyebrow">Get started</span>
+                <h2 class="heading-2">Start building with dbt.</h2>
+                <p>Streamline your data transformation process, reduce manual errors, and increase productivity with dbt. Sign up today and take your data transformation workflow to the next level.</p>
+              </div>
+              <div class="cta-section">
+                <a href="https://www.getdbt.com/contact" target="_blank" class="primary-cta">Request your demo</a>
+                <a href="https://www.getdbt.com/signup" target="_blank" class="secondary-cta">Create a free account</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-footer">
+          <div class="container">
           <div class="footer-logo">
             <a href="/">
               <img src="/img/dbt-logo-light.svg?v=2" alt="dbt Labs" />
@@ -269,6 +285,8 @@ var siteSettings = {
               <a href='https://www.getdbt.com/security/'>Security</a>
               <button id="ot-sdk-btn" onclick="openPreferenceCenter()">Cookie Settings</button>
             </div>
+          </div>
+          </div>
           </div>
           `,
         },
