@@ -241,6 +241,7 @@ var siteSettings = {
           <div class="footer-grid">
             <div class="footer-grid-item">
               <h5 class="heading-5">Resources</h5>
+              <a href='/docs/about-dbt-extension'>VS Code Extension</a>
               <a href="https://www.getdbt.com/resources" target="_blank">Resource Hub</a>
               <a href="https://www.getdbt.com/dbt-learn" target="_blank">dbt Learn</a>
               <a href="https://www.getdbt.com/dbt-certification" target="_blank">Certification</a>
