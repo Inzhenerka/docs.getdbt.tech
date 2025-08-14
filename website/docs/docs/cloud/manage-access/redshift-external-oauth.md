@@ -169,54 +169,51 @@ Ensure that the username (for example, email address) entered in the IdP matches
 
 ### 2. Create the Entra ID apps
 
-- You’ll create two apps in the Azure portal: A resource server and a client app.
-- In your Azure portal, open the **Entra ID** and click **App registrations** from the left menu.
-
-:::important
-
-- You need both an Entra ID admin and a data warehouse admin to complete the setup. These roles don’t need to be the same person &mdash; as long as they collaborate, everything should work smoothly.
-   - Typically, the Entra ID admin handles app registration and permissions, while the data warehouse admin manages roles, grants, and integrations on the warehouse side.
-- The `value` field gathered in these steps is only displayed once. When created, record it immediately.
-- Ensure that the username (for example, email address) entered in the IdP matches the data warehouse credentials for all users. Mismatched usernames will result in authentication failures.
-:::
+You’ll create two apps in the Azure portal: A resource server and a client app.
 
 ### 3. Create a resource server
 
-1. From the app registrations screen, click **New registration**.
-   1. Give the app a name.
-   2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
-   3. Click **Register**to see the application’s overview.
-2. From the app overview page, click **Expose an API** from the left menu.
-3. Click **Add** next to **Application ID URI**. The field will automatically populate. Click **Save**.
-4. Record the `value` field for use in a future step. _This is only displayed once. Be sure to record it immediately. Microsoft hides the field when you leave the page and come back._
-5. From the same screen, click **Add scope**.
-   1. Name the scope `session:role-any`.
-   2. Set “Who can consent?” to **Admins and users**.
-   3. Set **Admin consent display name** to `session:role-any` and give it a description.
-   4. Ensure **State** is set to **Enabled**.
-   5. Click **Add scope**.
+In your Entra ID account: 
+
+1. From the app registrations screen, click **New registration**.
+    1. Give the app a name.
+    2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
+    3. Click **Register** to see the application’s overview.
+2. From the app overview page left menu, click **Expose an API**.
+3. Click **Add** next to **Application ID URI**. The field will automatically populate. 
+4. Click **Save**.
+
+   <Lightbox src="/img/docs/dbt-cloud/create-resource-server.png" width="60%" title="Create the Entra ID resource server." />
+
+5. Record the `value` field for use in a future step.
+6. From the same screen, click **Add scope**:
+    1. Name the scope `dbt-redshift`.
+    2. Set **Who can consent?** to **Admins and users**.
+    3. Set **Admin consent display name** to `dbt-redshift` and give it a description.
+    4. Ensure **State** is set to **Enabled**.
+    5. Click **Add scope**.
+
 
 ### 4. Create a client app
 
-1. From the **App registration page**, click **New registration**.
-   1. Give the app a name that uniquely identifies it as the client app.
-   2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
-   3. Set the **Redirect URI** to **Web** and copy/paste the **Redirect URI** from <Constant name="cloud" /> into the field.
-   4. Click **Register**.
-2. From the app overview page, click **API permissions** from the left menu, and click **Add permission**.
-3. From the pop-out screen, click **APIs my organization uses**, search for the resource server name from the previous steps, and click it.
-4. Ensure the box for the **Permissions** `session:role-any` is enabled and click **Add permissions**.
-5. Click **Grant admin consent** and from the popup modal click **Yes**.
-6. From the left menu, click **Certificates and secrets** and click **New client secret**. Name the secret, set an expiration, and click **Add**.
-**Note**: Microsoft does not allow “forever” as an expiration date. The maximum time is two years. Documenting the expiration date so you can refresh the secret before the expiration or user authorization fails is essential.
-7. Record the `value` for use in a future step and record it immediately.
-**Note**: Entra ID will not display this value again once you navigate away from this screen.
+1. From the **App registration page**, click **New registration**.
+    1. Give the app a name that uniquely identifies it as the client app.
+    2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
+    3. Set the **Redirect URI** to **Web** and copy/paste the **Redirect URI** from dbt into the field.
+    4. Click **Register**.
+2. From the app overview page, click **API permissions** from the left menu, and click **Add permission**.
 
-### 5. Data warehouse configuration
+   <Lightbox src="/img/docs/dbt-cloud/add-permission-entra.png" width="60%" title="Add permissions to the Entra ID app." />
 
-Ensure your Amazon admins have completed the [Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with Entra ID. 
+3. From the pop-out screen, click **APIs my organization uses**, search for the resource server name from the previous steps, and click it.
+4. Ensure the box for the **Permissions** `dbt-redshift` is enabled and click **Add permissions**.
+5. Click **Grant admin consent** and from the popup modal click **Yes**.
+6. From the left menu, click **Certificates and secrets** and click **New client secret**. Name the secret, set an expiration, and click **Add**. 
+    - **Note**: Microsoft does not allow “forever” as an expiration date. The maximum time is two years. Documenting the expiration date so you can refresh the secret before the expiration or user authorization fails is essential.
+7. Record the `value` for use in a future step and record it immediately. 
+   - **Note**: Entra ID will not display this value again once you navigate away from this screen.
 
-### 6. Configuring the integration in dbt
+### 5. Configuring the integration in dbt
 
 1. Navigate back to the <Constant name="cloud" /> **Account settings** —> **Integrations** page you were on at the beginning. It’s time to start filling out all of the fields. There will be some back-and-forth between the Entra ID account and <Constant name="cloud" />.
 2. `Integration name`: Give the integration a descriptive name that includes identifying information about the Entra ID environment so future users won’t have to guess where it belongs.
@@ -230,15 +227,45 @@ Ensure your Amazon admins have completed the [Identity Center integration](https
 </Tabs>
 
 
-### 5. Data warehouse configuration OKta
+## Configure the Trusted Token Issuer in IAM IdC
+
+A *trusted token issuer* generates an access token that is used to identify a user, and then authenticates that user. This essentially lets services outside of the AWS ecosystem, such as the dbt platform, connect to IAM IdC (and Redshift) with access tokens they have generated or retrieved from an external IdP (Entra ID). 
+
+The following steps are outlined per [this blog post](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/): 
+
+1. Open the AWS Management Console and navigate to [IAM Identity Center](https://console.aws.amazon.com/singlesignon), and then to the **Settings**
+2. Select the **Authentication** tab and under **Trusted token issuers**, choose **Create trusted token issuer**.
+3. On the **Set up an external IdP to issue trusted tokens** page, under **Trusted token issuer details**, do the following:
+    1. For **Issuer URL**, enter the OIDC discovery URL of the external IdP that will issue tokens for trusted identity propagation. The URL would be: `https://sts.windows.net/<tenantid>/`. To find your Microsoft Entra tenant ID, see [Collect Microsoft Entra ID information](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/#Collect-Microsoft-Entra-ID-information). **DO NOT FORGET THE FORWARD SLASH AT THE END OF THE URL**. 
+        1. In the Azure portal, navigate to **App registrations**.
+        2. Choose one of the applications that you created in the previous sections.
+        3. On the left panel, choose **Overview**, a new page will appear containing the **Essentials** section. 
+    2. For **Trusted token issuer name**, enter a name to identify this TTI in IAM Identity Center and the application console.
+    3. Under Map attributes, do the following:
+        1. For **Identity provider attribute**, select an attribute from the list to map to an attribute in the Identity Center identity store. You can choose **Email**, **Object Identifier**, **Subject**, and **Other**. This example uses **Other** where we’re specifying the **upn** (user principal name) as the **Identity provider attribute** to map with **Email** from the **IAM identity Center attribute**.
+            - **Note:** When using this workflow, it's been our experience that `upn` matched up with `Email`, as specified in this example.
+
+## Configure Redshift IdC application to utilize TTI
+
+To start, select **IAM Identity Center connection** from Amazon Redshift console menu.
+
+   <Lightbox src="/img/docs/dbt-cloud/redshift-idc.png" width="60%" title="The AWS Redshift console." />
+
+1. Select the Amazon Redshift application that you created as part of the prerequisites.
+2. Select the **Client connections tab** and choose **Edit**.
+3. Choose **Yes** under **Configure client connections that use third-party IdPs**.
+4. Select the checkbox for **Trusted token issuer** that you created in the previous section.
+5. Enter the aud claim value under **Configure selected trusted token issuers**. **This should be the application ID URI you set for the integration in dbt Platform.**
 
 
-Configure the Okta application and APIs in accordance with your Amazon configs.
+## Finalizing the dbt configuration
 
+If you have an existing connection, make sure that OAuth method is set to **External OAuth** and select the integration you created in an earlier step. Otherwise, create a new Redshift connection, being sure to set values for Server Hostname , OAuth Method , and Database name (this field can be found under the **Optional Settings**). 
 
-### 5. Data warehouse configuration entra ID
+This connection should be set as the connection for a development environment in an existing or new project. 
 
+Once the connection has been assigned to a development environment, you can configure your user credentials for that development environment under `Account Settings > Your Profile > Credentials > <Your Project Name>` . Set the authentication method to `External Oauth` , set `schema` and other fields if desired, and save the credentials. You can then click the `Connect to Redshift` button.
 
-Ensure your Amazon admins have completed the [Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with Entra ID. 
+### Verify connection in Studio
 
-Configure the Entra ID application and in accordance with your Amazon configs.
+Once your develop session has initialized, you can test that you’re able to connect to Redshift using external OAuth by running `dbt debug`.
