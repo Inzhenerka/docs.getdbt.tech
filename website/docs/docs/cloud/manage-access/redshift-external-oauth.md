@@ -67,7 +67,7 @@ Select a supported identity provider (IdP) for instructions on configuring exter
 ### 3. Create the Okta API
 
 1. Expand the **Security** section and click **API** from the Okta sidebar menu.
-2. On the API screen, click **Add authorization server**. Give the authorization server a name (a nickname for your data warehouse account would be appropriate). For the **Audience** field, copy and paste your data warehouse login URL (for example, https://abdc-ef1234.snowflakecomputing.com). Give the server an appropriate description and click **Save**.
+2. On the API screen, click **Add authorization server**. Give the authorization server a name (a nickname for your data warehouse account would be appropriate). For the **Audience** field, copy and paste your data warehouse login URL. Give the server an appropriate description and click **Save**.
 
 <Lightbox src="/img/docs/dbt-cloud/create-okta-api.png" width="60%" title="The Okta API window with the Audience value set." />
 
