@@ -2,8 +2,6 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import Card from '@site/src/components/card';
-import Hero from '@site/src/components/hero';
-import BorderBeam from '@site/src/components/borderBeam';
 import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/default/p/blog-archive-f05.json'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
