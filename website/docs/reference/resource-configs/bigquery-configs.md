@@ -395,24 +395,23 @@ select * from {{ ref('another_model') }}
 
 You can create a new label with no value or remove a value from an existing label key.
 
-A label with a key that has an empty value can also be [referred](https://cloud.google.com/bigquery/docs/adding-labels#adding_a_label_without_a_value) to as a tag in BigQuery. However, this should not be confused with a [BigQuery tag](https://cloud.google.com/bigquery/docs/tags), which conditionally applies IAM policies to BigQuery tables and datasets. Find out more in [labels and tags](https://cloud.google.com/resource-manager/docs/tags/tags-overview).
+A label with a key that has an empty value can also be referred to as a [tag](https://cloud.google.com/bigquery/docs/adding-labels#adding_a_label_without_a_value) in BigQuery. However, this is different from a [BigQuery tag](https://cloud.google.com/bigquery/docs/tags), which conditionally applies IAM policies to BigQuery tables and datasets. For more information, see the [Tags documentation](https://cloud.google.com/resource-manager/docs/tags/tags-overview).
 
 ### Resource tags
 
-[BigQuery tags](https://cloud.google.com/bigquery/docs/tags) enable conditional IAM access control for BigQuery tables and views. You can apply these BigQuery tags using the `resource_tags` configuration.
+[BigQuery tags](https://cloud.google.com/bigquery/docs/tags) enable conditional IAM access control for BigQuery tables and views. You can apply these BigQuery tags using the `resource_tags` configuration. This section contains guidelines for using the `resource_tags` configuration parameter. 
 
 Resource tags are key-value pairs that must follow BigQuery's tag format: `{google_cloud_project_id}/{key_name}: value`. Unlike labels, BigQuery tags are primarily designed for IAM access control using conditional policies, allowing organizations to:
 
-- **Implement conditional access control**: Apply IAM policies conditionally based on BigQuery tags (e.g., granting access only to tables tagged with `environment:production`)
-- **Enforce data governance**: Use BigQuery tags with IAM policies to protect sensitive data
-- **Control access at scale**: Manage access patterns consistently across different projects and environments
+- **Implement conditional access control**: Apply IAM policies conditionally based on BigQuery tags (for example, granting access only to tables tagged with `environment:production`).
+- **Enforce data governance**: Use BigQuery tags with IAM policies to protect sensitive data.
+- **Control access at scale**: Manage access patterns consistently across different projects and environments.
 
-:::info Prerequisites
+#### Prerequisites
 - Tag keys and values must be created in advance before they can be used in dbt
 - Requires appropriate IAM permissions to apply tags to resources
-:::
 
-**Configuring tags in a model file**
+#### Configuring tags in a model file
 
 <File name='model.sql'>
 
@@ -433,7 +432,7 @@ select * from {{ ref('another_model') }}
 
 </File>
 
-**Configuring tags in dbt_project.yml**
+#### Configuring tags in `dbt_project.yml`
 
 <File name='dbt_project.yml'>
 
@@ -452,7 +451,7 @@ models:
 
 </File>
 
-**Using both dbt tags and BigQuery tags**
+## Using both dbt tags and BigQuery tags
 
 You can use dbt's existing `tags` configuration alongside BigQuery's `resource_tags`:
 
