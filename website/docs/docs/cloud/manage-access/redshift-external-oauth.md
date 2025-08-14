@@ -169,7 +169,7 @@ Ensure that the username (for example, email address) entered in the IdP matches
 
 You’ll create two apps in the Azure portal: A resource server and a client app.
 
-### 3. Create a resource server
+#### Create a resource server
 
 In your Entra ID account: 
 
@@ -192,7 +192,7 @@ In your Entra ID account:
     5. Click **Add scope**.
 
 
-### 4. Create a client app
+#### Create a client app
 
 1. From the **App registration page**, click **New registration**.
     1. Give the app a name that uniquely identifies it as the client app.
@@ -211,7 +211,7 @@ In your Entra ID account:
 7. Record the `value` for use in a future step and record it immediately. 
    - **Note**: Entra ID will not display this value again once you navigate away from this screen.
 
-### 5. Configuring the integration in dbt
+### 3. Configuring the integration in dbt
 
 1. Navigate back to the <Constant name="cloud" /> **Account settings** —> **Integrations** page you were on at the beginning. It’s time to start filling out all of the fields. There will be some back-and-forth between the Entra ID account and <Constant name="cloud" />.
 2. `Integration name`: Give the integration a descriptive name that includes identifying information about the Entra ID environment so future users won’t have to guess where it belongs.
