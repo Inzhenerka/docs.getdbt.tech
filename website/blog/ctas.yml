@@ -49,4 +49,5 @@
   header: VS Code extension
   subheader: The free dbt VS Code extension is the best way to develop locally in dbt.
   button_text: Install free extension
+  icon: vsce
   url: /docs/install-dbt-extension

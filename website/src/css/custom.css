@@ -1920,23 +1920,35 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
 /* CTA Styles */
 .docs-cta {
-  padding: 20px 10px;
-  margin: 1rem;
-  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid var(--border-neutral-tertiary);
+  border-radius: 16px;
+  margin-top: 3rem;
   /*position: sticky;*/
-  text-align: center;
-  background: var(--color-terminal-black-100);
+  text-align: left;
   position: relative;
   bottom: 0;
   max-width: 400px;
 }
 
+.docs-cta-icon {
+  margin-bottom: 1rem;
+  max-width: 30px;
+  font-size: 25px;
+}
+
+.docs-cta-icon img {
+  max-width: 100%;
+  height: auto;
+}
+
 .docs-cta h4 {
   margin-bottom: 10px;
+  font-size: 1.25rem;
 }
 
 .docs-cta p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 21px;
 }
 
@@ -1957,6 +1969,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 /* CTA dark-mode styles */
 [data-theme='dark'] .docs-cta {
   background: var(--color-terminal-black-800);
+  border-color: var(--border-inverse-tertiary);
 }
 
 @media (max-width: 996px) {
