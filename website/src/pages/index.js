@@ -218,7 +218,7 @@ function Home() {
                   body="This free tool brings the full power of the dbt Fusion engine into your local environment with features like live error detection, lightning-fast parse times, insights and rich lineage all in VS Code or Cursor."
                   link="/docs/about-dbt-extension"
                   icon="vsce"
-                  showBorderBeam={true}
+                  showBorderBeam
                 />
               </div>
             </div>

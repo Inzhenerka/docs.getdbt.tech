@@ -30,4 +30,12 @@ Many data applications integrate with <Constant name="cloud" />, enabling you to
     link="/docs/cloud-integrations/avail-sl-integrations"
     icon="dbt-bit"/>
 
+<Card
+    title="dbt VS Code extension"
+    body="The free dbt VS Code extension is the best way to develop locally with the dbt Fusion Engine."
+    link="/docs/about-dbt-extension"
+    icon="vsce"
+    showBorderBeam
+    />
+
 </div>
