@@ -14,7 +14,7 @@ Many data applications integrate with <Constant name="cloud" />, enabling you to
 
 <Card
     title="dbt VS Code extension"
-    body="The free dbt VS Code extension is the best way to develop locally with the dbt Fusion Engine."
+    body="The dbt extension brings a hyper-fast, intelligent, and cost-efficient dbt development experience to VS Code. The best way to experience all the power of the new dbt Fusion engine while developing locally."
     link="/docs/about-dbt-extension"
     icon="vsce"
     showBorderBeam
