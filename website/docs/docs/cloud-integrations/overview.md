@@ -13,6 +13,14 @@ Many data applications integrate with <Constant name="cloud" />, enabling you to
 <div className="grid--3-col">
 
 <Card
+    title="dbt VS Code extension"
+    body="The free dbt VS Code extension is the best way to develop locally with the dbt Fusion Engine."
+    link="/docs/about-dbt-extension"
+    icon="vsce"
+    showBorderBeam
+    />
+
+<Card
     title="Visualize and orchestrate downstream exposures"
     body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
     link="docs/cloud-integrations/downstream-exposures"
@@ -29,13 +37,5 @@ Many data applications integrate with <Constant name="cloud" />, enabling you to
     body="Review a wide range of partners you can integrate and query with the dbt Semantic Layer."
     link="/docs/cloud-integrations/avail-sl-integrations"
     icon="dbt-bit"/>
-
-<Card
-    title="dbt VS Code extension"
-    body="The free dbt VS Code extension is the best way to develop locally with the dbt Fusion Engine."
-    link="/docs/about-dbt-extension"
-    icon="vsce"
-    showBorderBeam
-    />
 
 </div>
