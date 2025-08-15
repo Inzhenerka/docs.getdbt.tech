@@ -1973,6 +1973,10 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   border-color: var(--border-inverse-tertiary);
 }
 
+[data-theme='dark'] .docs-cta .docs-cta-btn:hover {
+  color: var(--text-neutral-primary) !important;
+}
+
 @media (max-width: 996px) {
   .docs-cta {
     display: none;
