@@ -1,3 +1,40 @@
 .feedbackContainer {
   margin-top: 4rem;
 }
+
+.feedbackButtons {
+  display: flex;
+  gap: .75rem;
+}
+
+.feedbackButton {
+  background-color: transparent;
+  color: var(--ifm-heading-color);
+  border: 1px solid var(--color-neutral-primary);
+  transition: all 0.3s ease;
+  border-radius: .75rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+} 
+
+.feedbackButton:hover {
+  background-color: var(--color-neutral-secondary);
+  border-color: var(--color-neutral-secondary);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+html[data-theme="dark"] {
+  .feedbackButton {
+   background-color: var(--color-neutral-secondary);
+   border-color: var(--color-neutral-secondary);
+   color: var(--color-white);
+ }
+ 
+ .feedbackButton:hover {
+   background-color: var(--color-neutral-secondary);
+   border-color: var(--color-neutral-secondary);
+   color: var(--color-white);
+ }
+}
