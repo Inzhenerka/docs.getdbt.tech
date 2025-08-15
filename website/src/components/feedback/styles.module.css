@@ -9,12 +9,12 @@
   margin-bottom: 0;
 }
 
-.feedbackButtons {
+.feedbackContainer .feedbackButtons {
   display: flex;
   gap: .75rem;
 }
 
-.feedbackButton {
+.feedbackContainer .feedbackButton {
   background-color: transparent;
   color: var(--ifm-heading-color);
   border: 1px solid var(--color-neutral-primary);
@@ -28,21 +28,27 @@
   gap: 0.5rem;
 } 
 
-.feedbackButton:hover {
+.feedbackContainer .feedbackButton:hover {
   background-color: var(--color-neutral-secondary);
   border-color: var(--color-neutral-secondary);
   color: var(--color-white);
   cursor: pointer;
 }
 
+.feedbackContainer .feedbackLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 html[data-theme="dark"] {
-  .feedbackButton {
+  .feedbackContainer .feedbackButton {
    background-color: var(--color-neutral-primary);
    border-color: var(--color-white);
    color: var(--color-white);
  }
  
- .feedbackButton:hover {
+ .feedbackContainer .feedbackButton:hover {
    background-color: color-mix(in oklab,var(--color-white)60%,transparent);
    border-color: var(--color-white);
    color: var(--color-neutral-primary);
