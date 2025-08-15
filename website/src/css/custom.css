@@ -1924,6 +1924,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   border: 1px solid var(--border-neutral-tertiary);
   border-radius: 16px;
   margin-top: 3rem;
+  margin-bottom: 2rem;
   /*position: sticky;*/
   text-align: left;
   position: relative;
