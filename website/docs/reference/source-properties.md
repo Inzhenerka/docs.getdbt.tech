@@ -33,7 +33,7 @@ sources:
       [<source_config>](source-configs): <config_value>
       [freshness](/reference/resource-properties/freshness):
         # changed to config in v1.10
-        [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
+      [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
         warn_after:
           [count](/reference/resource-properties/freshness#count): <positive_integer>
           [period](/reference/resource-properties/freshness#period): minute | hour | day
