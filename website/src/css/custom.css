@@ -1920,10 +1920,11 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
 /* CTA Styles */
 .docs-cta {
-  padding: 2rem;
+  padding: 1.5rem;
   border: 1px solid var(--border-neutral-tertiary);
   border-radius: 16px;
   margin-top: 1rem;
+  margin-right: 1rem;
   margin-bottom: 7rem;
   /*position: sticky;*/
   text-align: left;
