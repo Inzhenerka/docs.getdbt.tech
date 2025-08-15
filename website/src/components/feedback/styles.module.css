@@ -1,5 +1,12 @@
 .feedbackContainer {
   margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.feedbackContainer h2 {
+  margin-bottom: 0;
 }
 
 .feedbackButtons {
@@ -16,6 +23,9 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 } 
 
 .feedbackButton:hover {
@@ -27,14 +37,14 @@
 
 html[data-theme="dark"] {
   .feedbackButton {
-   background-color: var(--color-neutral-secondary);
-   border-color: var(--color-neutral-secondary);
+   background-color: var(--color-neutral-primary);
+   border-color: var(--color-white);
    color: var(--color-white);
  }
  
  .feedbackButton:hover {
-   background-color: var(--color-neutral-secondary);
-   border-color: var(--color-neutral-secondary);
-   color: var(--color-white);
+   background-color: color-mix(in oklab,var(--color-white)60%,transparent);
+   border-color: var(--color-white);
+   color: var(--color-neutral-primary);
  }
 }
