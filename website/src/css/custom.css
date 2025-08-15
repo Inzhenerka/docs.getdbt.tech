@@ -1923,13 +1923,18 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   padding: 2rem;
   border: 1px solid var(--border-neutral-tertiary);
   border-radius: 16px;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
   /*position: sticky;*/
   text-align: left;
   position: relative;
   bottom: 0;
   max-width: 400px;
+}
+
+@media (max-width: 1180px) {
+  .docs-cta {
+    margin-bottom: 7rem;
+  }
 }
 
 .docs-cta-icon {
