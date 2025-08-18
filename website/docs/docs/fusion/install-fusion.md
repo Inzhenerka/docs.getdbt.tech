@@ -4,13 +4,18 @@ description: "Install the Fusion engine locally to take data transformation to t
 id: install-fusion
 ---
 
-# About Fusion installation <Lifecycle status="beta" />
+# About Fusion local installation <Lifecycle status="preview" />
 
 import FusionBeta from '/snippets/_fusion-beta-callout.md';
 
+<VersionBlock lastVersion="1.99">
+
 <FusionBeta />
 
+</VersionBlock>
+
 import FusionPrereqs from '/snippets/_fusion-prereqs.md';
+
 
 <FusionPrereqs />
  
@@ -23,7 +28,7 @@ import FusionPrereqs from '/snippets/_fusion-prereqs.md';
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Fusion engine on the CLI"
+    title="dbt Fusion engine from the CLI"
     body="Learn how to install the dbt Fusion engine on the command line interface (CLI)."
     link="/docs/fusion/install-fusion-cli"
     icon="dbt-bit"/>
