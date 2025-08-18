@@ -29,11 +29,22 @@
   gap: 0.5rem;
 } 
 
-.feedbackContainer .feedbackButton:hover {
+.feedbackContainer .feedbackButton:hover:not(:disabled) {
   background-color: var(--color-neutral-secondary);
   border-color: var(--color-neutral-secondary);
   color: var(--color-white);
   cursor: pointer;
+}
+
+.feedbackContainer .feedbackButtonSelected {
+  background-color: var(--color-neutral-secondary);
+  border-color: var(--color-neutral-secondary);
+  color: var(--color-white);
+}
+
+.feedbackContainer .feedbackButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .feedbackContainer .feedbackButtons .feedbackMessage {
@@ -56,7 +67,13 @@ html[data-theme="dark"] {
    color: var(--color-white);
  }
  
- .feedbackContainer .feedbackButton:hover {
+ .feedbackContainer .feedbackButton:hover:not(:disabled) {
+   background-color: color-mix(in oklab,var(--color-white)60%,transparent);
+   border-color: var(--color-white);
+   color: var(--color-neutral-primary);
+ }
+
+ .feedbackContainer .feedbackButtonSelected {
    background-color: color-mix(in oklab,var(--color-white)60%,transparent);
    border-color: var(--color-white);
    color: var(--color-neutral-primary);
