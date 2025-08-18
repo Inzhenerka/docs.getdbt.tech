@@ -83,9 +83,11 @@ export const Feedback = () => {
         }
       );
 
+      const data = await response.json();
+
       // If error, set submission status to error and throw error
-      if (response.error) {
-        throw new Error(response.error);
+      if (data?.error) {
+        throw new Error(data?.error);
       }
 
       // Save to localStorage array
