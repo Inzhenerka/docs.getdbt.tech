@@ -186,6 +186,7 @@ Where `name: 'dbt_utils'` specifies the subfolder of `dbt_packages` that's creat
     - Private packages only work within a single Azure DevOps project. If your repositories are in different projects within the same organization, you can't reference them in the `private` key at this time.
     - For Azure DevOps, use the `org/repo` path (not the `org_name/project_name/repo_name` path) with the project tier inherited from the integrated source repository.
   - [Gitlab](/docs/cloud/git/connect-gitlab)
+    - Every Gitlab repo with private packages must also be a <Constant name="cloud" /> project. 
 
 #### Configuration
 
