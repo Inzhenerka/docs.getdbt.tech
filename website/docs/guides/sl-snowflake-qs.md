@@ -855,9 +855,9 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-ru
 <RunProdJob/>
 
 
-## Set up dbt Semantic Layer
+## Set up dbt Semantic Layer gateway
 
-In this section, you will learn how to set up the <Constant name="semantic_layer" />, add credentials, and create service tokens. This section goes over the following topics:
+In this section, you will learn how to set up the <Constant name="semantic_layer" /> gateway, add credentials, and create service tokens. This section goes over the following topics:
 
 - [Select environment](#1-select-environment)
 - [Configure credentials and create tokens](#2-configure-credentials-and-create-tokens)
