@@ -47,7 +47,7 @@ This page points to various resources available to help you understand, configur
 
 Refer to the following resources to get started with the <Constant name="semantic_layer" />:
 - [Quickstart with the <Constant name="semantic_layer" />](/guides/sl-snowflake-qs) &mdash; Build and define metrics, set up the <Constant name="semantic_layer" />, and query them using our first-class integrations.
-- [Build your metrics](/docs/build/build-metrics-intro) &mdash; Use MetricFlow in dbt to centrally define your metrics.
+- [Build your metrics](/docs/build/build-metrics-intro) &mdash; Use MetricFlow in <Constant name="cloud" /> to centrally define your metrics.
 - [<Constant name="semantic_layer" /> FAQs](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Discover answers to frequently asked questions about the <Constant name="semantic_layer" />, such as availability, integrations, and more.
 
 ## Configure the dbt Semantic Layer
