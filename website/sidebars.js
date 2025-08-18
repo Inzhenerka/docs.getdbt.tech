@@ -221,7 +221,7 @@ const sidebarSettings = {
           type: "category",
           label: "dbt Core and Fusion",
           collapsed: true,
-          link: { type: "doc", id: "/docs/about-dbt-install" },
+          link: { type: "doc", id: "docs/about-dbt-install" },
           items: [
             "docs/about-dbt-install",
             "docs/core/dbt-core-environments",

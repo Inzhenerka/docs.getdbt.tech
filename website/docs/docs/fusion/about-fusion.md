@@ -45,7 +45,7 @@ Fusion also enables more-efficient deployments of large DAGs. By tracking which 
 You can:
 - Select Fusion from the [dropdown/toggle in the dbt platform](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine)
 - [Install the dbt extension for VSCode](/docs/install-dbt-extension)
-- [Install the Fusion CLI](/docs/fusion/install-fusion)
+- [Install the Fusion CLI](/docs/fusion/install-fusion-cli)
 
 Go straight to the [Quickstart](/guides/fusion) to _feel the Fusion_ as fast as possible.
 
