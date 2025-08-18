@@ -19,6 +19,5 @@ Before installing Fusion, ensure:
   |-------------------|----------|------|
   | macOS             |   🟢     |  🟢  |
   | Linux             |   🟢     |  🟢  |
-  | Windows*           |   🟡     |  🟡  |
+  | Windows            |   🟢     |  🟡  |
   
-  *Support for Windows is coming soon. Watch this page for updates. 
