@@ -26,7 +26,7 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Set up Semantic Layer gateway
+## Set up the Semantic Layer gateway
 
 import SlSetUp from '/snippets/_new-sl-setup.md';  
 
