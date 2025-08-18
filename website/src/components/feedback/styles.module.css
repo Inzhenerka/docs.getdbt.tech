@@ -12,6 +12,7 @@
 .feedbackContainer .feedbackButtons {
   display: flex;
   gap: .75rem;
+  position: relative;
 }
 
 .feedbackContainer .feedbackButton {
@@ -33,6 +34,13 @@
   border-color: var(--color-neutral-secondary);
   color: var(--color-white);
   cursor: pointer;
+}
+
+.feedbackContainer .feedbackButtons .feedbackMessage {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  position: absolute;
+  bottom: -1.6rem;
 }
 
 .feedbackContainer .feedbackLinks {
