@@ -44,7 +44,7 @@ Start-Process powershell
 Or, close and reopen PowerShell. This will load the updated environment settings into the new session.
 -->
 
-### Verify the installation
+## Verify the installation
 
 After installation, open a new command-line window and verify that Fusion is installed correctly by checking the version. You can run these commands using `dbt`, or use `dbtf` as an unambiguous alias for Fusion, if you have another dbt CLI installed on your machine.
 
