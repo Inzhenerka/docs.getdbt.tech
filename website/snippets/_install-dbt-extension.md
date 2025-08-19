@@ -1,5 +1,5 @@
 
-The dbt extensions for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <Constant name="fusion_engine" />.
+The dbt extension for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <Constant name="fusion_engine" />.
 
 ## Prerequisites
 
