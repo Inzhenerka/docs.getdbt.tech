@@ -1,11 +1,11 @@
 
-The dbt extensions for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <constant name="fusion_engine" />.
+The dbt extensions for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <Constant name="fusion_engine" />.
 
 ## Prerequisites
 
 To use the extension, you must meet the following prerequisites:
 
-- The dbt extension requires installation of the <constant name="fusion_engine" />. <constant name="fusion" /> installation is part of the extension installation process, but you can also [manually install](/docs/fusion/install-fusion) separate from this workflow, either before or after the extension is installed. 
+- The dbt extension requires installation of the <Constant name="fusion_engine" />. <Constant name="fusion" /> installation is part of the extension installation process, but you can also [manually install](/docs/fusion/install-fusion) separate from this workflow, either before or after the extension is installed. 
 - You are using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
 - You are not using (or have disabled) 3rd party dbt extensions.
 - You are using a macOS<!--, Windows,--> or Linux-based computer.
@@ -37,11 +37,11 @@ In VS Code:
 
 :::note
 
-If you are already running the <constant name="fusion_engine" />, you must be on version `2.0.0-beta.66` or higher to use the migration tool.
+If you are already running the <Constant name="fusion_engine" />, you must be on version `2.0.0-beta.66` or higher to use the migration tool.
 
 :::
 
-The dbt extension provides a built-in migration tool to walk you through the process of configuring <constant name="fusion" />  and updating your dbt project to support all of its features and fix any deprecated code. To start the process:
+The dbt extension provides a built-in migration tool to walk you through the process of configuring <Constant name="fusion" />  and updating your dbt project to support all of its features and fix any deprecated code. To start the process:
 
 1. From the VS Code left-side menu, click the **dbt logo**.
 2. In the resulting pane, open the **Get started** section and click the **Get started** button. 
@@ -58,14 +58,14 @@ This will start the migration tool and guide you through the migration with a se
 - **Do you have an existing dbt platform account**: If you answer `Y`, you will be given instructions for downloading your dbt platform profile to register the extension. An `N` answer will skip to the next step.
 - **Ready to run a dbtf init?** (If there is no `profiles.yml` file present): You will go through the dbt configuration processes, including connecting to your data warehouse. 
 - **Ready to run a dbtf debug?** (If there is an existing `profiles.yml` file): Validates that your project is configured correctly and can connect to your data warehouse.
-- **Ready to run a dbtf parse?**: Your dbt project will be parsed to check for compatibility with <constant name="fusion" />.
+- **Ready to run a dbtf parse?**: Your dbt project will be parsed to check for compatibility with <Constant name="fusion" />.
     - If any issues are encountered during the parsing, you'll be given the option to run the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) tool to resolve the errors. If you opt not to run the tool during the migration processes, you can always run it later or manually fix any errors. However, the migration tool can not continue until the errors are resolved.
-- **Ready to run a ‘dbtf compile -static-analysis off’?** (Only runs once the parse passes): Compiles your project without any static analysis, mimicking dbt Core. This compile only renders Jinja into SQL, so <constant name="fusion" />'s advanced SQL comprehension is temporarily disabled. 
-- **Ready to run a ‘dbtf compile’?**: Compiles your project with full <constant name="fusion" /> static analysis. It checks that your SQL code is valid in the context of your warehouse's tables and columns. 
+- **Ready to run a ‘dbtf compile -static-analysis off’?** (Only runs once the parse passes): Compiles your project without any static analysis, mimicking dbt Core. This compile only renders Jinja into SQL, so <Constant name="fusion" />'s advanced SQL comprehension is temporarily disabled. 
+- **Ready to run a ‘dbtf compile’?**: Compiles your project with full <Constant name="fusion" /> static analysis. It checks that your SQL code is valid in the context of your warehouse's tables and columns. 
 
     <Lightbox src="/img/docs/extension/fusion-onboarding-complete.png" title="The message received when you have completed migrating your project to the dbt Fusion engine." width="60%" /> 
 
-Once the migration tool is completed, you're ready to dive into all the features that the <constant name="fusion_engine" /> has to offer!
+Once the migration tool is completed, you're ready to dive into all the features that the <Constant name="fusion_engine" /> has to offer!
 
 ## Register the extension
 
@@ -148,8 +148,8 @@ If you are not seeing dbt LSP features in your editor, first consult the general
 #### Unsupported dbt version
 
 If you see an error message indicating that your version of dbt is unsupported, then there is likely a problem with your environment.
-- Check the **dbt Path** setting in your VS Code settings. If this path is set, ensure that it is pointing to a valid <constant name="fusion_engine" />  executable.
-- If necessary, you can also install the <constant name="fusion_engine" />  directly using these instructions: [Install the Fusion CLI](/docs/fusion/install-fusion).
+- Check the **dbt Path** setting in your VS Code settings. If this path is set, ensure that it is pointing to a valid <Constant name="fusion_engine" />  executable.
+- If necessary, you can also install the <Constant name="fusion_engine" />  directly using these instructions: [Install the Fusion CLI](/docs/fusion/install-fusion).
 
 import AboutFusion from '/snippets/_about-fusion.md';
 
