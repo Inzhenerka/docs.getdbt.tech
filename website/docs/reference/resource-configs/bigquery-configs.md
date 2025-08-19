@@ -433,7 +433,7 @@ select * from {{ ref('another_model') }}
 </File>
 
 #### Configuring tags in `dbt_project.yml`
-
+To configure tags in a `dbt_project.yml` file, refer to the following example:
 <File name='dbt_project.yml'>
 
 ```yaml
