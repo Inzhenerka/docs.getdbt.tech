@@ -141,7 +141,7 @@ Note: It is possible to "hide" status bar items in VS Code. Double-check if the 
 
 #### Missing dbt LSP features
 
-If you are not seeing dbt LSP features in your editor, first consult the general troubleshooting steps above. If you have confirmed that the dbt extension is installed correctly, but you still do not see dbt Language Server features (autocomplete, go-to-definition, hover text, etc):
+If you are not seeing dbt LSP features in your editor, first consult the general troubleshooting steps above. If you have confirmed that the dbt extension is installed correctly, but you still do not see dbt Language Server features (for example, autocomplete, go-to-definition, hover text):
  - Check the version of your dbt extension on the extensions page in your editor. Ensure that you are using the latest available version of the dbt extension.
  - Try reinstalling the dbt Language Server by pressing `cmd+shift+P` (macOS) or `ctrl+shift+P` (<!--Windows/-->Linux) and selecting the `dbt: Reinstall dbt LSP` command.
 
