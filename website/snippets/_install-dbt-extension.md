@@ -102,7 +102,7 @@ Now that you have activated your dbt developer account, you can access features 
 <!-- This anchor is linked from the VS Code registration page. Please do not change it -->
 
 If you already have a dbt account, you do not need to re-register to use the dbt extension. The dbt extension can authenticate with the dbt platform using a `dbt_cloud.yml` file. If this file is present in your `~/.dbt/` folder, then the registration flow will automatically attempt to use this
-file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downloaded, follow the directions below:
+file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downloaded, refer to the following instructions:
 
 <Expandable alt_header="For dbt accounts with Fusion enabled">
 
