@@ -53,7 +53,7 @@ Refer to the following resources to get started with the <Constant name="semanti
 ## Configure the dbt Semantic Layer
 
 The following resources provide information on how to configure the <Constant name="semantic_layer" />:
-- [Set up the <Constant name="semantic_layer" /> gateway](/docs/use-dbt-semantic-layer/setup-sl) &mdash; Learn how to set up the <Constant name="semantic_layer" /> gateway in <Constant name="cloud" /> using intuitive navigation.
+- [Administer the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) &mdash; Seamlessly set up the credentials and tokens to start querying the <Constant name="semantic_layer" />. 
 - [Architecture](/docs/use-dbt-semantic-layer/sl-architecture) &mdash; Explore the powerful components that make up the <Constant name="semantic_layer" />.
 
 ## Deploy metrics
