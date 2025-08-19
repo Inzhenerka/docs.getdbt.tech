@@ -9,7 +9,7 @@ pagination_prev: null
 
 <Constant name="dbt" /> enables data teams to transform data using analytics engineering best practices. You can install dbt locally using these options:
 
-* Local command line interface (CLI) tools leveraging the speed and scale of the dbt Fusion engine or using our legacy Core product
+* Local command line interface (CLI) tools leveraging the speed and scale of the <Constant name="fusion_engine" /> or using our legacy Core product
 * VS Code and Cursor with dbt extension
 
 If you're interested in using the <Constant name="dbt_platform" />, our feature-rich, browser-based UI, you can learn more in [About dbt set up](/docs/cloud/about-cloud-setup).
