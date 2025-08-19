@@ -11,7 +11,7 @@ Fusion can be installed via the command line from our official CDN:
 - **macOS/Linux:** Using `curl`
 <!--- **Windows:** Using `irm` -->
 
-### macOS & Linux installation
+## macOS & Linux installation
 
 Run the following command in the terminal:
 
