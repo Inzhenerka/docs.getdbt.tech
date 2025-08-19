@@ -412,7 +412,7 @@ Resource tags are key-value pairs that must follow BigQuery's tag format: `{goog
 - Grant the [required IAM permissions](https://cloud.google.com/bigquery/docs/tags#required_permissions) to apply tags to resources.
 
 #### Configuring tags in a model file
-
+To configure tags in a model file, refer to the following example:
 <File name='model.sql'>
 
 ```sql
