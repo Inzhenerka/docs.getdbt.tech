@@ -95,7 +95,7 @@ steps to finish setting up your account (_Note: this is not required to use the 
 2. Enter the email address you used for your dbt extension registration and click **Continue**.
 3. Check your email for a verification link and follow the password reset instructions to set a password for your account.
 
-Now that you have activated your dbt developer account, you can access features of the dbt platform. You can also re-download your registration key using the steps outlined in [Register with an existing dbt account](#register-with-an-existing-dbt-account) below if you need to set up the dbt extension on a new machine.
+Now that you have activated your dbt developer account, you can access features of the <Constant name="dbt_platform" />. You can also re-download your registration key using the steps outlined in [Register with an existing dbt account](#register-with-an-existing-dbt-account) if you need to set up the dbt extension on a new machine.
 
 ### Register with an existing dbt account 
 
