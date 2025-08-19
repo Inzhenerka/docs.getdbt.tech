@@ -65,7 +65,7 @@ The following command will update to the latest version of Fusion and adapter co
 dbtf system update
 ```
 
-### Uninstall
+### Uninstall Fusion
 
 This command will uninstall the Fusion binary from your system (but aliases will remain wherever they are installed, for example `~/.zshrc`):
 
