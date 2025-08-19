@@ -57,7 +57,7 @@ dbtf --version
 
 This location is automatically added to your path to easily execute the `dbtf` command, but it requires reloading your shell.
 
-### Update Fusion
+## Update Fusion
 
 The following command will update to the latest version of Fusion and adapter code:
 
@@ -65,7 +65,7 @@ The following command will update to the latest version of Fusion and adapter co
 dbtf system update
 ```
 
-### Uninstall Fusion
+## Uninstall Fusion
 
 This command will uninstall the Fusion binary from your system, but aliases will remain wherever they are installed (for example `~/.zshrc`):
 
@@ -73,7 +73,7 @@ This command will uninstall the Fusion binary from your system, but aliases will
 dbtf system uninstall
 ```
 
-### Adapter installation
+## Adapter installation
 
 The Fusion install automatically includes adapters outlined in the [Fusion requirements](/docs/fusion/supported-features#requirements). Other adapters will be available at a later date.
 

@@ -89,7 +89,7 @@ If you do not already have a dbt account, you'll need to get registered. This on
 ### Accessing your dbt account
 
 Registering to use the dbt extension makes it easy to create a full dbt account. You can follow these
-steps to finish setting up your account (_Note: this is not required to use the dbt extension_).
+steps to finish setting up your account (_Note: This is not required to use the dbt extension_).
 
 1. Navigate to [us1.dbt.com](https://us1.dbt.com) and click **Forgot password?**.
 2. Enter the email address you used for your dbt extension registration and click **Continue**.
