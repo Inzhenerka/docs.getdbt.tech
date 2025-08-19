@@ -1,4 +1,4 @@
-The following packages are verified and supported on the dbt Fusion engine:
+The following packages are verified and supported on the <Constant name="fusion_engine" />:
 
 - [dbt-labs/audit_helper](https://github.com/dbt-labs/dbt-audit-helper.git)
 - [dbt-labs/codegen](https://github.com/dbt-labs/dbt-codegen.git)
