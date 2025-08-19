@@ -7,7 +7,7 @@ pagination_next: "docs/core/dbt-core-environments"
 pagination_prev: null
 ---
 
-<Constant name="dbt" />  enables data teams to transform data using analytics engineering best practices. You can install dbt locally using these options:
+<Constant name="dbt" /> enables data teams to transform data using analytics engineering best practices. You can install dbt locally using these options:
 
 * Local command line interface (CLI) tools leveraging the speed and scale of the dbt Fusion engine or using our legacy Core product
 * VS Code and Cursor with dbt extension
