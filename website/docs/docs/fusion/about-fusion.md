@@ -10,7 +10,7 @@ pagination_prev: null
 
 <IntroText>
 
-dbt is the industry standard for data transformation. The dbt Fusion engine enables dbt to operate at speed and scale like never before.
+dbt is the industry standard for data transformation. The <Constant name="fusion_engine" /> enables dbt to operate at speed and scale like never before.
 </IntroText>
 
 <VersionBlock lastVersion="1.99">
