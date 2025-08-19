@@ -67,7 +67,7 @@ dbtf system update
 
 ### Uninstall Fusion
 
-This command will uninstall the Fusion binary from your system (but aliases will remain wherever they are installed, for example `~/.zshrc`):
+This command will uninstall the Fusion binary from your system, but aliases will remain wherever they are installed (for example `~/.zshrc`):
 
 ```shell
 dbtf system uninstall
