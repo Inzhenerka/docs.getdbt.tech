@@ -35,7 +35,7 @@ import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 
 <Card
     title="dbt Fusion engine upgrade"
-    body="Learn how you can upgrade and leverage the speed and scale of the dbt Fusion engine"
+    body="Learn how you can upgrade and leverage the speed and scale of the dbt Fusion engine."
     link="/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine"
     icon="dbt-bit"/>
 
