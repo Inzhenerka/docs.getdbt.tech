@@ -82,7 +82,7 @@ The Fusion install automatically includes adapters outlined in the [Fusion requi
 Common issues and resolutions:
 
 - **dbt command not found:** Ensure installation location is correctly added to your `$PATH`.
-- **Version conflicts:** Verify no existing dbt Core or dbt CLI versions are installed (or active) that could conflict with Fusion.
+- **Version conflicts:** Verify no existing <Constant name="core" /> or dbt CLI versions are installed (or active) that could conflict with Fusion.
 - **Installation permissions:** Confirm your user has appropriate permissions to install software locally.
 
 ## Frequently asked questions
