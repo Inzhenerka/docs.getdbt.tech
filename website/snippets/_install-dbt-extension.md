@@ -30,23 +30,24 @@ In VS Code:
     <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="The dbt Language Server will be installed automatically"/>
 4. If the dbt Fusion engine is not already installed on your machine, the extension will prompt you to download and install it. Follow the steps shown in the notification to complete the installation.
     <Lightbox src="/img/docs/extension/install-dbt-fusion-engine.png" width="60%" title="Follow the prompt to install the dbt Fusion engine"/>
-5. You're all set up! See [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
+5. Run the VS Code extension [upgrade tool](#upgrade-to-fusion) to ensure your dbt project is Fusion ready and help you fix any errors and deprecations.
+6. You're all set up! See [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
     <Lightbox src="/img/docs/extension/kitchen-sink.png" width="60%" title="Showing lineage and compiled code in the extension"/>
 
 ## Upgrade to Fusion
 
 :::note
 
-If you are already running the <Constant name="fusion_engine" />, you must be on version `2.0.0-beta.66` or higher to use the migration tool.
+If you are already running the <Constant name="fusion_engine" />, you must be on version `2.0.0-beta.66` or higher to use the upgrade tool.
 
 :::
 
-The dbt extension provides a built-in migration tool to walk you through the process of configuring <Constant name="fusion" />  and updating your dbt project to support all of its features and fix any deprecated code. To start the process:
+The dbt extension provides a built-in upgrade tool to walk you through the process of configuring <Constant name="fusion" />  and updating your dbt project to support all of its features and fix any deprecated code. To start the process:
 
 1. From the VS Code left-side menu, click the **dbt logo**.
 2. In the resulting pane, open the **Get started** section and click the **Get started** button. 
 
-    <Lightbox src="/img/docs/extension/fusion-onboarding-experience.png" title="The dbt extension help pane and migration assistant." width="60%" /> 
+    <Lightbox src="/img/docs/extension/fusion-onboarding-experience.png" title="The dbt extension help pane and upgrade assistant." width="60%" /> 
 
 You can also manually start this process by opening a CLI window and running: 
 
@@ -54,18 +55,18 @@ You can also manually start this process by opening a CLI window and running:
 dbt init --fusion-upgrade
 ```
 
-This will start the migration tool and guide you through the migration with a series of prompts:
+This will start the upgrade tool and guide you through the Fusion upgrade with a series of prompts:
 - **Do you have an existing dbt platform account?**: If you answer `Y`, you will be given instructions for downloading your dbt platform profile to register the extension. An `N` answer will skip to the next step.
 - **Ready to run a dbtf init?** (If there is no `profiles.yml` file present): You will go through the dbt configuration processes, including connecting to your data warehouse. 
 - **Ready to run a dbtf debug?** (If there is an existing `profiles.yml` file): Validates that your project is configured correctly and can connect to your data warehouse.
 - **Ready to run a dbtf parse?**: Your dbt project will be parsed to check for compatibility with <Constant name="fusion" />.
-    - If any issues are encountered during the parsing, you'll be given the option to run the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) tool to resolve the errors. If you opt to not run the tool during the migration processes, you can always run it later or manually fix any errors. However, the migration tool cannot continue until the errors are resolved.
+    - If any issues are encountered during the parsing, you'll be given the option to run the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) tool to resolve the errors. If you opt to not run the tool during the upgrade processes, you can always run it later or manually fix any errors. However, the upgrade tool cannot continue until the errors are resolved.
 - **Ready to run a ‘dbtf compile -static-analysis off’?** (Only runs once the parse passes): Compiles your project without any static analysis, mimicking dbt Core. This compile only renders Jinja into SQL, so <Constant name="fusion" />'s advanced SQL comprehension is temporarily disabled. 
 - **Ready to run a ‘dbtf compile’?**: Compiles your project with full <Constant name="fusion" /> static analysis. It checks that your SQL code is valid in the context of your warehouse's tables and columns. 
 
-    <Lightbox src="/img/docs/extension/fusion-onboarding-complete.png" title="The message received when you have completed migrating your project to the dbt Fusion engine." width="60%" /> 
+    <Lightbox src="/img/docs/extension/fusion-onboarding-complete.png" title="The message received when you have completed upgrading your project to the dbt Fusion engine." width="60%" /> 
 
-Once the migration tool is completed, you're ready to dive into all the features that the <Constant name="fusion_engine" /> has to offer!
+Once the upgrade is completed, you're ready to dive into all the features that the <Constant name="fusion_engine" /> has to offer!
 
 ## Register the extension
 
