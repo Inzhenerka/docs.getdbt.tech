@@ -64,16 +64,16 @@ Once you install the <Constant name="cloud_cli" />, you need to configure it to 
       account-name: "<account-name>"
       account-id: "<account-id>"
       account-host: "<account-host>" # for example, "cloud.getdbt.com"
-      token-name: "<pat-or-service-token-name>"
-      token-value: "<pat-or-service-token-value>"
+      token-name: "<pat-name>"
+      token-value: "<pat-value>"
   
     - project-name: "<project-name>"
       project-id: "<project-id>"
       account-name: "<account-name>"
       account-id: "<account-id>"
       account-host: "<account-host>" # for example, "cloud.getdbt.com"
-      token-name: "<pat-or-service-token-name>"
-      token-value: "<pat-or-service-token-value>"  
+      token-name: "<pat-name>"
+      token-value: "<pat-value>"  
   ```
 
 1. After downloading the config file and creating your directory, navigate to a project in your terminal:
