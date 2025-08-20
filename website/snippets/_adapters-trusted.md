@@ -31,6 +31,12 @@
     icon="bigquery"/>
 
 <Card
+    title="ClickHouse"
+    body="<ul><li><a href='/docs/core/connect-data-platform/clickhouse-setup'>Install with dbt Core </a> </li></ul><br /> <a href=https://badge.fury.io/py/dbt-clickhouse><img src=https://badge.fury.io/py/dbt-clickhouse.svg/></a>"
+    pills='["dbt Core"]'
+    icon="clickhouse"/>
+    
+<Card
     title="Databricks"
     body="<ul><li><a href='/docs/cloud/connect-data-platform/connect-databricks'>Set up in the dbt platform </a> <br /></li><li><a href='/docs/core/connect-data-platform/databricks-setup'>Install with dbt Core  </a> </li></ul><br /> <a href=https://badge.fury.io/py/dbt-databricks><img src=https://badge.fury.io/py/dbt-databricks.svg/></a>"
     pills='["dbt platform", "dbt Core"]'
@@ -91,7 +97,7 @@
     body="<ul><li><a href='/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb'>Set up in the dbt platform </a> <br /></li><li><a href='/docs/core/connect-data-platform/postgres-setup'>Install with dbt Core </a> </li></ul><br />  <a href=https://badge.fury.io/py/dbt-postgres><img src=https://badge.fury.io/py/dbt-postgres.svg/></a>"
     pills='["dbt platform", "dbt Core"]'
     icon="postgres"/>
-
+[]
 <Card
     title="Redshift"
     body="<ul><li><a href='/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb'>Set up in the dbt platform </a> <br /></li><li><a href='/docs/core/connect-data-platform/redshift-setup'>Install with dbt Core </a> </li></ul><br /> <a href=https://badge.fury.io/py/dbt-redshift><img src=https://badge.fury.io/py/dbt-redshift.svg/></a>"
