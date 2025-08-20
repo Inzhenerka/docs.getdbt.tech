@@ -97,7 +97,7 @@
     body="<ul><li><a href='/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb'>Set up in the dbt platform </a> <br /></li><li><a href='/docs/core/connect-data-platform/postgres-setup'>Install with dbt Core </a> </li></ul><br />  <a href=https://badge.fury.io/py/dbt-postgres><img src=https://badge.fury.io/py/dbt-postgres.svg/></a>"
     pills='["dbt platform", "dbt Core"]'
     icon="postgres"/>
-[]
+
 <Card
     title="Redshift"
     body="<ul><li><a href='/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb'>Set up in the dbt platform </a> <br /></li><li><a href='/docs/core/connect-data-platform/redshift-setup'>Install with dbt Core </a> </li></ul><br /> <a href=https://badge.fury.io/py/dbt-redshift><img src=https://badge.fury.io/py/dbt-redshift.svg/></a>"
