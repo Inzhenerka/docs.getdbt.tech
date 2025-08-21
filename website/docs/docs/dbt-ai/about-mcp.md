@@ -75,9 +75,9 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 
 ### Admin API
 
-To learn more about the dbt Cloud Admin API, click [here](/docs/dbt-cloud-apis/admin-cloud-api)
+To learn more about the dbt Admin API, click [here](/docs/dbt-cloud-apis/admin-cloud-api)
 
-- `list_jobs`: List all jobs in a dbt Cloud account with optional filtering by environment
+- `list_jobs`: List all jobs in a dbt account
 - `get_job_details`: Get detailed information for a specific job including configuration and settings  
 - `trigger_job_run`: Trigger a job run with optional parameter overrides like Git branch, schema, or execution parameters
 - `list_jobs_runs`: List runs in an account with optional filtering by job, status, or other criteria
@@ -91,7 +91,7 @@ To learn more about the dbt Cloud Admin API, click [here](/docs/dbt-cloud-apis/a
 ⚠️ The SQL tools access the dbt platform endpoints. While MCP usage of the tools doesn't consume dbt Copilot credits, access to the tools is impacted by dbt Copilot credit overages from direct usage of Copilot in dbt.
 
 - `text_to_sql`: Generate SQL from natural language requests
-- `execute_sql`: Execute SQL on dbt Cloud's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
+- `execute_sql`: Execute SQL on the dbt platform's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
 
 
 ## Server setup
