@@ -82,6 +82,11 @@ If your organization uses [Snowflake Network Policies](https://docs.snowflake.co
 
 You can request the VPCE IDs from [<Constant name="cloud" /> Support](mailto:support@getdbt.com), that you can use to create a network policy. If creating an endpoint for Internal Stage, the VPCE ID will be different from the VPCE ID of the main service endpoint.
 
+:::note Network Policy for Snowflake Internal Stage PrivateLink
+For guidance on protecting both the Snowflake service and Internal Stage consult the Snowflake [network policies](https://docs.snowflake.com/en/user-guide/network-policies#strategies-for-protecting-both-service-and-internal-stage) and [network rules](https://docs.snowflake.com/en/user-guide/network-rules#incoming-requests) docs. 
+
+:::
+
 ### Using the UI
 
 Open the Snowflake UI and take the following steps:
@@ -123,8 +128,3 @@ ALTER NETWORK POLICY <network_policy_name>
   ADD ALLOWED_NETWORK_RULE_LIST =('allow_dbt_cloud_access');
 
 ```
-
-:::note Network Policy for Snowflake Internal Stage PrivateLink
-For guidance on protecting both the Snowflake service and Internal Stage consult the Snowflake [network policies](https://docs.snowflake.com/en/user-guide/network-policies#strategies-for-protecting-both-service-and-internal-stage) and [network rules](https://docs.snowflake.com/en/user-guide/network-rules#incoming-requests) docs. 
-
-:::
