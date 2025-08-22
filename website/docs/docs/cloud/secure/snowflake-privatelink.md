@@ -80,7 +80,7 @@ s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.ama
 ## Configuring Network Policies
 If your organization uses [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) to restrict access to your Snowflake account, you will need to add a network rule for <Constant name="cloud" />. 
 
-You can request the VPCE ID from [<Constant name="cloud" /> Support](mailto:support@getdbt.com), that you can use to create a network policy. 
+You can request the VPCE IDs from [<Constant name="cloud" /> Support](mailto:support@getdbt.com), that you can use to create a network policy. If creating an endpoint for Internal Stage, the VPCE ID will be different from the VPCE ID of the main service endpoint.
 
 ### Using the UI
 
@@ -123,3 +123,8 @@ ALTER NETWORK POLICY <network_policy_name>
   ADD ALLOWED_NETWORK_RULE_LIST =('allow_dbt_cloud_access');
 
 ```
+
+:::note Network Policy for Snowflake Internal Stage PrivateLink
+For guidance on protecting both the Snowflake service and Internal Stage consult the Snowflake [network policies](https://docs.snowflake.com/en/user-guide/network-policies#strategies-for-protecting-both-service-and-internal-stage) and [network rules](https://docs.snowflake.com/en/user-guide/network-rules#incoming-requests) docs. 
+
+:::
