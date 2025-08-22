@@ -22,17 +22,26 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 <-->
 
+## Server Access
+
+There are two ways to install dbt MCP: [local](#local) and [remote](#remote). 
+
+- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
+- [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
+
 ## Available Tools
 
 ### Supported
+The dbt MCP server has access to many parts of the dbt experience related to development, deployment, and discovery. 
+Here are the categories of tools supported based on what form of the MCP Server you connect to as well as detailed information on exact commands or queries available to the LLM.   
 
 | Tools | Local | Remote |
 | --- | --- | --- |
 | dbt CLI  | ✅ | ❌ |
 | Semantic Layer | ✅ | ✅ |
+| SQL  | ✅ | ✅ |
 | Metadata Discovery| ✅ | ✅ |
 | Administrative API | ✅ | ❌ |
-| SQL  | ✅ | ❌ |
 | Disable tools | ✅ | ❌ |
 
 Note that access to the Discovery API and the Semantic Layer API is limited depending on your [plan type](https://www.getdbt.com/pricing).
@@ -93,13 +102,6 @@ To learn more about the dbt Administrative API, click [here](/docs/dbt-cloud-api
 - `text_to_sql`: Generate SQL from natural language requests
 - `execute_sql`: Execute SQL on the dbt platform's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
 
-
-## Server setup
-
-There are two ways to install dbt MCP: [local](#local) and [remote](#remote). 
-
-- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
-- [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
 
 ## MCP integrations 
 
