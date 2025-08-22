@@ -31,7 +31,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 | dbt CLI  | ✅ | ❌ |
 | Semantic Layer | ✅ | ✅ |
 | Metadata Discovery| ✅ | ✅ |
-| Admin API | ✅ | ❌ |
+| Administrative API | ✅ | ❌ |
 | SQL  | ✅ | ❌ |
 | Disable tools | ✅ | ❌ |
 
@@ -73,9 +73,9 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 - `get_model_health`: Get health signals for a specific model
 
 
-### Admin API
+### Administrative API
 
-To learn more about the dbt Admin API, click [here](/docs/dbt-cloud-apis/admin-cloud-api)
+To learn more about the dbt Administrative API, click [here](/docs/dbt-cloud-apis/admin-cloud-api)
 
 - `list_jobs`: List all jobs in a dbt account
 - `get_job_details`: Get detailed information for a specific job including configuration and settings  
