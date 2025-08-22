@@ -503,7 +503,7 @@ For a full list of possible configuration fields that can be passed in `dataproc
 To connect to BigQuery using the `oauth` method, follow these steps:
 
 1. Make sure the `gcloud` command is [installed on your computer](https://cloud.google.com/sdk/downloads)
-2. Activate the application-default account with
+2. Activate the application-default account with:
 
 ```shell
 gcloud auth application-default login \           
