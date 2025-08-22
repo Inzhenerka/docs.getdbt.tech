@@ -71,7 +71,7 @@ We support disabling tool access on the local dbt-mcp.
 | `DISABLE_DBT_CLI`        | `false` | Set this to `true` to disable dbt Core, dbt Cloud CLI, and dbt Fusion MCP tools |
 | `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools                    |
 | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
-| `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Admin API MCP tools                         |
+| `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Admininistrative API MCP tools                         |
 | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
 | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
 
