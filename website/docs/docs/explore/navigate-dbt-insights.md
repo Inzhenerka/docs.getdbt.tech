@@ -71,3 +71,13 @@ The Query console sidebar menu and icons contains the following options:
 <Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="60%" title="dbt Insights dbt Copilot" />
 <Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="60%" title="Manage your query bookmarks" />
 </DocCarousel>
+
+## LSP features in dbt Insights
+<!-- Added this new subsection for now, please check if the features listed here are correct. Might need screenshots-->
+The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
+
+- **Live error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
+- **`Ref` suggestions:** Autocomplete SQL functions, model names, columns, macros, and more.
+- **Hover insights:** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
+- **Live CTE previews:** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
+- **Build flexibly:** Use the command palette to build models with complex selectors.

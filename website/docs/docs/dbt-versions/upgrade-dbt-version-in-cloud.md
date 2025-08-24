@@ -84,7 +84,7 @@ dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion
 - There are some significant changes, these can also be found in the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 - Make sure you're using a supported adapter and authentication method:
   <FusionDWH /> 
-- When you change your development environment(s) to `Fusion Latest`, every user will have to restart the IDE.
+- When you change your development environment(s) to **Latest Fusion**, every user will have to restart the IDE.
 
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />

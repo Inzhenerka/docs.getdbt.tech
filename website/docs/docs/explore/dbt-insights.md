@@ -44,3 +44,4 @@ Some example use cases include:
 - (Optional) &mdash; To query [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) metrics from the <Constant name="query_page" />, you must also:
   - [Configure](/docs/use-dbt-semantic-layer/setup-sl) the <Constant name="semantic_layer" /> for your dbt project.
   - Have a successful job run in the environment where you configured the <Constant name="semantic_layer" />. 
+- (Optional) To get Language Server Protocol (LSP) features in <Constant name="query_page" /> and have your compilation run on the <Constant name="fusion_engine" />, set your development environment to use the **Latest Fusion** dbt version.
