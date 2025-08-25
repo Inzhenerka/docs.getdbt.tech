@@ -77,7 +77,7 @@ The Query console sidebar menu and icons contains the following options:
 The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
 
 - **Live error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
-- **`Ref` suggestions:** Autocomplete SQL functions, model names, columns, macros, and more.
+- **`Ref` suggestions:** Autocomplete model names when using the `ref()` function to reference other models in your project.
 - **Hover insights:** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
 - **Live CTE previews:** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
 - **Default VS Code commands:** You can use text editing capabilities such as multi-cursor editing, text transformations, and keyboard shortcuts within the <Constant name="query_page" /> interface.
