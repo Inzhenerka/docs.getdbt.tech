@@ -220,11 +220,6 @@ In your Entra ID account:
 5. `Authorization URL` and `Token URL`: From the client ID app, open the `Endpoints` tab. These URLs map to the `OAuth 2.0 authorization endpoint (v2)` and `OAuth 2.0 token endpoint (v2)` fields. *You must use v2 of the `OAuth 2.0 authorization endpoint`. Do not use V1.* You can use either version of the `OAuth 2.0 token endpoint`.
 6. `Application ID URI`: Copy the `Application ID URI` field from the resource server’s Overview screen.
 
-</TabItem>
-
-</Tabs>
-
-
 ## Configure the Trusted Token Issuer in IAM IdC
 
 A *trusted token issuer* generates an access token that is used to identify a user, and then authenticates that user. This essentially lets services outside of the AWS ecosystem, such as the dbt platform, connect to IAM IdC (and Redshift) with access tokens they have generated or retrieved from an external IdP (Entra ID or Okta). 
@@ -242,6 +237,10 @@ The following steps are outlined per [this blog post](https://aws.amazon.com/blo
     3. Under Map attributes, do the following:
         1. For **Identity provider attribute**, select an attribute from the list to map to an attribute in the Identity Center identity store. You can choose **Email**, **Object Identifier**, **Subject**, and **Other**. This example uses **Other** where we’re specifying the **upn** (user principal name) as the **Identity provider attribute** to map with **Email** from the **IAM identity Center attribute**.
             - **Note:** When using this workflow, it's been our experience that `upn` matched up with `Email`, as specified in this example.
+
+</TabItem>
+
+</Tabs>
 
 ## Configure Redshift IdC application to utilize TTI
 

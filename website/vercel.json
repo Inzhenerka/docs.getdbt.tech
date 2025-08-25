@@ -39,6 +39,11 @@
   ],
   "redirects": [
     {
+      "source": "/docs/cloud/manage-access/external-oauth",
+      "destination": "/docs/cloud/manage-access/sso-overview",
+      "permanent": true
+    },
+    {
       "source": "/docs/dbt-cloud-apis/mcp",
       "destination": "/docs/dbt-ai/about-mcp",
       "permanent": true
