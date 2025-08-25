@@ -80,4 +80,4 @@ The following Language Server Protocol (LSP) features are available for projects
 - **`Ref` suggestions:** Autocomplete SQL functions, model names, columns, macros, and more.
 - **Hover insights:** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
 - **Live CTE previews:** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
-- **Build flexibly:** Use the command palette to build models with complex selectors.
+- **Default VS Code commands:** You can use text editing capabilities such as multi-cursor editing, text transformations, and keyboard shortcuts within the <Constant name="query_page" /> interface.
