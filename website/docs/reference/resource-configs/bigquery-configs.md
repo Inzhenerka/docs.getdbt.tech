@@ -1139,6 +1139,7 @@ The BigQuery Python models also have the following additional configuration para
 | `compute_region`        | `<string>`  | no       | ``        | `<COMPUTE_REGION>` |
 | `gcs_bucket`            | `<string>`  | no       | ``        | `<GCS_BUCKET>` |
 | `packages`              | `<string>`  | no       | ``        | `['numpy<=1.1.1', 'pandas', 'mlflow']` |
+| `enable_change_history` | `<boolean>` | no       | ``        | `True`, `False`   |
 
 - The `enable_list_inference` parameter
   - The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation. By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
@@ -1157,6 +1158,9 @@ The BigQuery Python models also have the following additional configuration para
 
 - The `gcs_bucket` parameter
   - The `gcs_bucket` parameter specifies the GCS bucket used for storing artifacts for the job.
+
+- The `enable_change_history` parameter
+  - The `enable_change_history` parameter enables [BigQuery's change history feature](https://cloud.google.com/bigquery/docs/change-history) which tracks changes made to a BigQuery table. When enabled, users can audit and debug the behavior of their incremental models.
 
 **Related docs:**
 
