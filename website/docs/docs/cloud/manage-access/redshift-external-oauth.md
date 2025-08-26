@@ -9,13 +9,9 @@ pagination_prev: null
 
 # Set up external OAuth with Redshift <Lifecycle status="managed, managed_plus" />
 
-:::note 
+import AboutExternal from '/snippets/_about-external-oauth.md';
 
-This feature is currently only available for Okta and Entra ID identity providers.
-
-:::
-
-<Constant name="cloud" /> Enterprise and Enterprise+ plans support OAuth authentication with external providers. When **External OAuth** is enabled, users can authorize their Development credentials using single sign-on (SSO) via the identity provider (IdP). External OAuth authorizes users to access multiple applications, including <Constant name="cloud" />, without sharing their static credentials with the service. This makes the process of authenticating for development environments easier for the user and provides an additional layer of security to your <Constant name="cloud" /> account. 
+<AboutExternal/>
 
 ## Getting started
 
@@ -97,34 +93,9 @@ Select a supported identity provider (IdP) for instructions on configuring exter
 
 ### 4. Create the OAuth settings in the data warehouse
 
-1. Open up a Snowflake worksheet and copy/paste the following:
+Ensure your Amazon admins have completed the Identity Center integration with Okta.
 
-```sql
-
-create security integration your_integration_name
-type = external_oauth
-enabled = true
-external_oauth_type = okta
-external_oauth_issuer = ''
-external_oauth_jws_keys_url = ''
-external_oauth_audience_list = ('')
-external_oauth_token_user_mapping_claim = 'sub'
-external_oauth_snowflake_user_mapping_attribute = 'email_address'
-external_oauth_any_role_mode = 'ENABLE'
-
-```
-
-2. Change `your_integration_name` to something appropriately descriptive. For example, `dev_OktaAccountNumber_okta`. Copy the `external_oauth_issuer` and `external_oauth_jws_keys_url` from the metadata URI in step 3.3. Use the same Snowflake URL you entered in step 3.2 as the `external_oauth_audience_list`.
-
-Adjust the other settings as needed to meet your organization's configurations in Okta and Snowflake.
-
-<Lightbox src="/img/docs/dbt-cloud/gather-uris.png" width="60%" title="The issuer and jws keys URIs in the metadata URL" />
-
-3. Run the steps to create the integration in Snowflake.
-
-:::info Username consistency
-Ensure that the username (for example, email address) entered in the IdP matches the Snowflake credentials for all users. Mismatched usernames will result in authentication failures.
-:::
+Configure the Okta application and APIs in accordance with your Amazon configs.
 
 ### 5. Configuring the integration in dbt
 
@@ -220,6 +191,11 @@ In your Entra ID account:
 5. `Authorization URL` and `Token URL`: From the client ID app, open the `Endpoints` tab. These URLs map to the `OAuth 2.0 authorization endpoint (v2)` and `OAuth 2.0 token endpoint (v2)` fields. *You must use v2 of the `OAuth 2.0 authorization endpoint`. Do not use V1.* You can use either version of the `OAuth 2.0 token endpoint`.
 6. `Application ID URI`: Copy the `Application ID URI` field from the resource server’s Overview screen.
 
+
+</TabItem>
+
+</Tabs>
+
 ## Configure the Trusted Token Issuer in IAM IdC
 
 A *trusted token issuer* generates an access token that is used to identify a user, and then authenticates that user. This essentially lets services outside of the AWS ecosystem, such as the dbt platform, connect to IAM IdC (and Redshift) with access tokens they have generated or retrieved from an external IdP (Entra ID or Okta). 
@@ -229,30 +205,26 @@ The following steps are outlined per [this blog post](https://aws.amazon.com/blo
 1. Open the AWS Management Console and navigate to [IAM Identity Center](https://console.aws.amazon.com/singlesignon), and then to the **Settings**.
 2. Select the **Authentication** tab and under **Trusted token issuers**, choose **Create trusted token issuer**.
 3. On the **Set up an external IdP to issue trusted tokens** page, under **Trusted token issuer details**, do the following:
-    1. For **Issuer URL**, enter the OIDC discovery URL of the external IdP that will issue tokens for trusted identity propagation. The URL would be: `https://sts.windows.net/<tenantid>/`. To find your Microsoft Entra tenant ID, see [Collect Microsoft Entra ID information](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/#Collect-Microsoft-Entra-ID-information). **DO NOT FORGET THE FORWARD SLASH AT THE END OF THE URL**. 
-        1. In the Azure portal, navigate to **App registrations**.
-        2. Choose one of the applications that you created in the previous sections.
-        3. On the left panel, choose **Overview**, a new page will appear containing the **Essentials** section. 
+    1. For **Issuer URL**, enter the OIDC discovery URL of the external IdP that will issue tokens for trusted identity propagation. _Include the forward slash at the end of the URL_. 
     2. For **Trusted token issuer name**, enter a name to identify this TTI in IAM Identity Center and the application console.
     3. Under Map attributes, do the following:
-        1. For **Identity provider attribute**, select an attribute from the list to map to an attribute in the Identity Center identity store. You can choose **Email**, **Object Identifier**, **Subject**, and **Other**. This example uses **Other** where we’re specifying the **upn** (user principal name) as the **Identity provider attribute** to map with **Email** from the **IAM identity Center attribute**.
-            - **Note:** When using this workflow, it's been our experience that `upn` matched up with `Email`, as specified in this example.
-
-</TabItem>
-
-</Tabs>
+        1. For **Identity provider attribute**, select an attribute from the list to map to an attribute in the Identity Center identity store. You can choose:
+         - Email 
+         - Object Identifier
+         - Subject
+         - Other &mdash; When using this options with UPN, it's been our experience that `upn` matched up with `Email`.
 
 ## Configure Redshift IdC application to utilize TTI
 
-To start, select **IAM Identity Center connection** from Amazon Redshift console menu.
+To start, select **IAM Identity Center connection** from the Amazon Redshift console menu.
 
    <Lightbox src="/img/docs/dbt-cloud/redshift-idc.png" width="60%" title="The AWS Redshift console." />
 
-1. Select the Amazon Redshift application that you created as part of the prerequisites.
+1. Select the Amazon Redshift application that you created as part of the setup.
 2. Select the **Client connections tab** and choose **Edit**.
 3. Choose **Yes** under **Configure client connections that use third-party IdPs**.
 4. Select the checkbox for **Trusted token issuer** that you created in the previous section.
-5. Enter the aud claim value under **Configure selected trusted token issuers**. **This should be the application ID URI you set for the integration in dbt Platform.**
+5. Enter the aud claim value under **Configure selected trusted token issuers**. **This should be the application ID URI you set for the integration in the dbt platform.**
 
 
 ## Finalizing the dbt configuration
@@ -264,7 +236,7 @@ If you have an existing connection, make sure that the OAuth method is set to **
 
 This connection should be set as the connection for a development environment in an existing or new project. 
 
-Once the connection has been assigned to a development environment, you can configure your user credentials for that development environment under `Account Settings > Your Profile > Credentials > <Your Project Name>`. Set the authentication method to `External Oauth`, set `schema` and other fields if desired, and save the credentials. You can then click the `Connect to Redshift` button.
+Once the connection has been assigned to a development environment, you can configure your user credentials for that development environment under `Account Settings > Your Profile > Credentials > <Your Project Name>`. Set the authentication method to `External OAuth`, set the `schema` and other fields if desired, and save the credentials. You can then click the `Connect to Redshift` button.
 
 ### Verify connection in Studio
 
