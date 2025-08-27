@@ -41,7 +41,7 @@ Once you install the <Constant name="cloud_cli" />, you need to configure it to 
 
     </details>
 
-4. Save the `dbt_cloud.yml` file in the `.dbt` directory, which stores your <Constant name="cloud_cli" /> configuration. Store it in a safe place as it contains API keys. Check out the [FAQs](#faqs) to learn how to create a `.dbt` directory and move the `dbt_cloud.yml` file.
+4. Save the `dbt_cloud.yml` file in the `.dbt` directory, which stores your <Constant name="cloud_cli" /> configuration. Store it in a safe place as it contains API keys. Check out the [FAQs](#faqs) to learn how to create a `.dbt` directory and move the `dbt_cloud.yml` file. If you have multiple copies and your file has a numerical addendum (for example, `dbt_cloud(2).yml`), remove the additional text from the filename. 
 
   
 5. Follow the banner instructions and download the config file to:
