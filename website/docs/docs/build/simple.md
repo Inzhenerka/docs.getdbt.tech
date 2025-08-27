@@ -27,7 +27,7 @@ Note that we use the double colon (::) to indicate whether a parameter is nested
 | `measure:name` | The measure you're referencing. | Required | String |
 | `measure:alias` | Optional [`alias`](/reference/resource-configs/alias) to rename the measure. | Optional | String |
 | `measure:filter` | Optional `filter` applied to the measure. | Optional | String |
-| `measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | String |
+| `measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | Integer |
 | `measure:join_to_timespine` | Indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional | Boolean |
 
 The following displays the complete specification for simple metrics, along with an example.
