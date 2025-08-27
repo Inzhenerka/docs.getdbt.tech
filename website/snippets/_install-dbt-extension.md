@@ -141,7 +141,7 @@ dbt-cloud:
   project-id: 12345 # Required
 ```
 
-Otherwise, cross-platform references will not resolve properly, and you will encounter errors executing dbt commands.
+If you don’t configure this correctly, cross-platform references will not resolve properly, and you will encounter errors executing dbt commands.
 
 #### General troubleshooting tips
 
