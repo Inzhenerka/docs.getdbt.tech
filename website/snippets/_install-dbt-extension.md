@@ -134,7 +134,7 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 
 #### dbt platform configurations
 
-Users of the cloud-based dbt platform who have a `dbt-cloud:` config in the `dbt_project.yml` file and who are also using [dbt Mesh](/docs/mesh/about-mesh) must have the project ID configured:
+If you're a cloud-based dbt platform user who has the `dbt-cloud:` config in the `dbt_project.yml` file and are also using [dbt Mesh](/docs/mesh/about-mesh), you must have the project ID configured:
 
 ```yaml
 dbt-cloud:
