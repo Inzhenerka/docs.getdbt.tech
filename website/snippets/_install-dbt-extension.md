@@ -141,6 +141,7 @@ dbt-cloud:
   project-id: 12345 # Required
 ```
 
+Otherwise, cross-platform references will not resolve, and you are likely to encounter errors executing dbt commands
 #### General troubleshooting tips
 
 If the dbt extension has activated successfully, you will see the `dbt Extension` label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.
