@@ -132,6 +132,15 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 ## Troubleshooting
 <!-- This anchor is linked from the  VS Code extension. Please do not change it -->
 
+#### dbt platform configurations
+
+Users of the cloud-based dbt platform who have a `dbt-cloud:` config in the `dbt_project.yml` file and who are also using [dbt Mesh](/docs/mesh/about-mesh) must have the project ID configured:
+
+```yaml
+dbt-cloud:
+  project-id: 12345 # Required
+```
+
 #### General troubleshooting tips
 
 If the dbt extension has activated successfully, you will see the `dbt Extension` label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.

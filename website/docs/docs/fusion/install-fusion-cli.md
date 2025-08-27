@@ -1,6 +1,7 @@
 ---
 title: "Install Fusion from the CLI"
 description: "Install the Fusion engine locally from the command line interface (CLI) to take data transformation to the next level."
+keywords: ["dbt Fusion engine", "Fusion", "Install Fusion", "Update Fusion", "Fusion updates" ]
 id: install-fusion-cli
 ---
 
