@@ -41,12 +41,10 @@ Once you install the <Constant name="cloud_cli" />, you need to configure it to 
 
     </details>
 
-4. Save the `dbt_cloud.yml` file in the `.dbt` directory, which stores your <Constant name="cloud_cli" /> configuration. Store it in a safe place as it contains API keys. Check out the [FAQs](#faqs) to learn how to create a `.dbt` directory and move the `dbt_cloud.yml` file. If you have multiple copies and your file has a numerical addendum (for example, `dbt_cloud(2).yml`), remove the additional text from the filename. 
+4. Save the `dbt_cloud.yml` file in the `.dbt` directory, which stores your <Constant name="cloud_cli" /> configuration.
 
-  
-5. Follow the banner instructions and download the config file to:
-   - Mac or Linux:  `~/.dbt/dbt_cloud.yml`
-   - Windows:  `C:\Users\yourusername\.dbt\dbt_cloud.yml`  
+    - Mac or Linux:  `~/.dbt/dbt_cloud.yml`
+    - Windows:  `C:\Users\yourusername\.dbt\dbt_cloud.yml`  
 
     The config file looks like this:
   
@@ -74,13 +72,15 @@ Once you install the <Constant name="cloud_cli" />, you need to configure it to 
         token-value: "<pat-value>"  
     ```
 
-6. After downloading the config file and creating your directory, navigate to a project in your terminal:
+    Store the config file in a safe place as it contains API keys. Check out the [FAQs](#faqs) to learn how to create a `.dbt` directory and move the `dbt_cloud.yml` file. If you have multiple copies and your file has a numerical addendum (for example, `dbt_cloud(2).yml`), remove the additional text from the filename. 
+
+5. After downloading the config file and creating your directory, navigate to a project in your terminal:
 
     ```bash
     cd ~/dbt-projects/jaffle_shop
     ```
 
-7. In your `dbt_project.yml` file, ensure you have or include a `dbt-cloud` section with a `project-id` field. The `project-id` field contains the <Constant name="cloud" /> project ID you want to use.
+6. In your `dbt_project.yml` file, ensure you have or include a `dbt-cloud` section with a `project-id` field. The `project-id` field contains the <Constant name="cloud" /> project ID you want to use.
 
     ```yaml
     # dbt_project.yml
@@ -94,7 +94,7 @@ Once you install the <Constant name="cloud_cli" />, you need to configure it to 
 
    - To find your project ID, select **Develop** in the <Constant name="cloud" /> navigation menu. You can use the URL to find the project ID. For example, in `https://YOUR_ACCESS_URL/develop/26228/projects/123456`, the project ID is `123456`.
 
-8. You should now be able to [use the <Constant name="cloud_cli" />](#use-the-dbt-cloud-cli) and run [dbt commands](/reference/dbt-commands) like [`dbt environment show`](/reference/commands/dbt-environment) to view your <Constant name="cloud" /> configuration details or `dbt compile` to compile models in your dbt project.
+7. You should now be able to [use the <Constant name="cloud_cli" />](#use-the-dbt-cloud-cli) and run [dbt commands](/reference/dbt-commands) like [`dbt environment show`](/reference/commands/dbt-environment) to view your <Constant name="cloud" /> configuration details or `dbt compile` to compile models in your dbt project.
 
 With your repo recloned, you can add, edit, and sync files with your repo.
 
