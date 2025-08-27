@@ -21,7 +21,7 @@ exports.versions = [
   },
   {
     version: "1.11",
-    customDisplay: "Latest (dbt platform only)",
+    customDisplay: "Latest (dbt platform)",
   },
   {
     version: "1.10",
