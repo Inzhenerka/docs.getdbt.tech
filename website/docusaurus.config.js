@@ -72,12 +72,12 @@ var siteSettings = {
     announcementBar: {
       id: "dbt-workshop",
       content:
-        "The free dbt VS Code extension is the best way to develop locally in dbt.",
+        "Register now for Coalesce 2025 ✨ The Analytics Engineering Conference!",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "/docs/about-dbt-extension",
+      "https://coalesce.getdbt.com/5Y3oaq/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2026_coalesce-2025_aw&utm_content=coalesce____&utm_term=all_all__",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
