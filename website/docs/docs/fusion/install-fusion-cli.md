@@ -53,7 +53,7 @@ dbtf --version
 ```
 
 - **macOS** & **Linux**: $HOME/.local/bin/dbt
-<!--- **Windows:** `C:\Users\<YourUsername>\.local\bin\dbt.exe` -->
+- **Windows:** `C:\Users\<YourUsername>\.local\bin\dbt.exe`
 
 This location is automatically added to your path to easily execute the `dbtf` command, but it requires reloading your shell.
 
