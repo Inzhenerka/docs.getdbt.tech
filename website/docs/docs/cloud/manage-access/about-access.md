@@ -77,6 +77,24 @@ If a user is assigned licenses and permissions from multiple groups, the group t
 
 :::
 
+### Group access and permissions
+
+You can control which projects the members of any given group have access to with the **Access and permissions** settings. Select the role (or roles) you want to assign to the group, the projects to which they'll have access, and which environments they can write to (edit). 
+
+This gives you the flexibility to determine exactly how much access users in any given group will have. You can provide members with administrative access to their own project, but limit their view of all others to `read-only`. Grant users write access only to the environments they require, while keeping production off limits. 
+
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-access-policy.png" width="60%" title="Assign a variety of roles and access permissions to user groups." />
+
+#### Environment write access
+
+Some permission sets have read-only access to environment settings but are unable to edit them. When you create a group and assign **Environment write access**, it will override any read-only environment settings inherent to the permission set. 
+
+In this example, the `analyst` permission set, which by default has read-only access to jobs, is assigned to the group across all projects; however, the **Environment write access** is set to `All Environments`. This will grant all users in this group the ability to create, edit, and delete jobs across all environments and projects. 
+
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-write.png" width="60%" title="Users assigned environment write access will be able to edit environment settings." />
+
+It's essential to set the **Environment write access** settings only if you intend to grant users the ability to edit them. To grant users only the permissions inherent to their set, leave this setting blank (all boxes unchecked).
+
 ### SSO mappings <Lifecycle status="managed,managed_plus" />
 
 SSO Mappings connect an identity provider (IdP) group membership to a <Constant name="cloud" /> group. When users log into <Constant name="cloud" /> via a supported identity provider, their IdP group memberships sync with <Constant name="cloud" />. Upon logging in successfully, the user's group memberships (and permissions) will automatically adjust within <Constant name="cloud" />.
