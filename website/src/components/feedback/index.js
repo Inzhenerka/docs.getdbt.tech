@@ -69,8 +69,7 @@ export const Feedback = () => {
 
     try {
       const response = await fetch(
-        // TODO: Add prod url before merge
-        'https://www-getdbt-com-git-feedback-widget-endpoint-dbt-labs.vercel.app/api/submit-feedback',
+        "https://www.getdbt.com/api/submit-feedback",
         {
           method: "POST",
           headers: {
