@@ -1,0 +1,42 @@
+---
+title: "Configuring BigQuery and GCP Private Service Connect (beta)"
+id: bigquery-psc
+description: "Configuring GCP Private Service Connect for BigQuery (beta)"
+sidebar_label: "GCP Private Service Connect for BigQuery (beta)"
+---
+
+# Configuring BigQuery Private Service Connect <Lifecycle status="managed_plus" /> (beta)
+
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
+
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
+
+The following steps walk you through the setup of a GCP BigQuery Private Service Connect (PSC) endpoint in a <Constant name="cloud" /> multi-tenant environment.
+
+<CloudProviders type='BigQuery' />
+
+## Configure GCP Private Service Connect
+
+To enable dbt to privately connect to your BigQuery project via [Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect) the regional PSC endpoint will need to be enabled for your dbt account. Using the following template, submit a request to [dbt Support](/docs/dbt-support#dbt-cloud-support):
+
+```
+Subject: New Multi-Tenant GCP PSC Request
+- Type: BigQuery
+- BigQuery project region: 
+- dbt GCP multi-tenant environment:
+```
+
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
+
+<PrivateLinkSLA />
+
+## Create Connection in dbt
+
+Once <Constant name="cloud" /> support completes the configuration, you can start creating new connections using PrivateLink. 
+
+1. Navigate to **Settings** → **Create new project** → select **BigQuery**. 
+2. You will see two radio buttons: **Default Endpoint** and **PrivateLink Endpoint**. Select **PrivateLink Endpoint**. 
+3. Select the private endpoint from the dropdown (this will automatically populate the API endpoint field).
+4. Configure any remaining data platform details.
+5. Save the connection and test in either a project job or Studio session.
