@@ -32,12 +32,12 @@ Note that we use the double colon (::) to indicate whether a parameter is nested
 | `calculation` | Method of calculation. Either `conversion_rate` or `conversions`. Defaults to `conversion_rate`.  | Optional | String |
 | `base_measure` | A list of base measure inputs. | Required | Dict |
 | `base_measure:name` | The base conversion event measure. |  Required | String |
-| `base_measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | String |
+| `base_measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | Integer |
 | `base_measure:join_to_timespine` | Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional | Boolean |
 | `base_measure:filter` | Optional `filter` used to apply to the base measure. | Optional | String |
 | `conversion_measure` | A list of conversion measure inputs. | Required | Dict |
 | `conversion_measure:name` | The base conversion event measure.| Required | String |
-| `conversion_measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | String |
+| `conversion_measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | Integer |
 | `conversion_measure:join_to_timespine` | Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional | Boolean |  
 | `window` | The time window for the conversion event, such as 7 days, 1 week, 3 months. Defaults to infinity. | Optional | String |
 | `constant_properties` | List of constant properties.  | Optional | List |
