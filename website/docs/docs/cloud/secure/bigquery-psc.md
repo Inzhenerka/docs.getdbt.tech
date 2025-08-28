@@ -5,12 +5,12 @@ description: "Configuring GCP Private Service Connect for BigQuery (beta)"
 sidebar_label: "GCP Private Service Connect for BigQuery (beta)"
 ---
 
-# Configuring BigQuery Private Service Connect <Lifecycle status="managed_plus" /> (beta)
+# Configuring BigQuery Private Service Connect <Lifecycle status="beta, managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
+<SetUpPages />
 
 The following steps walk you through the setup of a GCP BigQuery Private Service Connect (PSC) endpoint in a <Constant name="cloud" /> multi-tenant environment.
 
