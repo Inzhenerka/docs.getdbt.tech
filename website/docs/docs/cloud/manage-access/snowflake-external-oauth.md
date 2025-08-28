@@ -1,21 +1,17 @@
 ---
-title: "Set up external OAuth"
-id: external-oauth
-description: "Configuration instructions for dbt and external OAuth connections"
-sidebar_label: "Set up external OAuth"
+title: "Set up external OAuth with Snowflake"
+id: snowflake-external-oauth
+description: "Configuration instructions for dbt and external OAuth connections with Snowflake"
+sidebar_label: "Set up external OAuth with Snowflake"
 pagination_next: null
 pagination_prev: null
 ---
 
-# Set up external OAuth <Lifecycle status="managed, managed_plus" />
+# Set up external OAuth with Snowflake <Lifecycle status="managed, managed_plus" />
 
-:::note 
+import AboutExternal from '/snippets/_about-external-oauth.md';
 
-This feature is currently only available for Okta and Entra ID identity providers with [Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) and [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake) connections.
-
-:::
-
-<Constant name="cloud" /> Enterprise and Enterprise+ plans support OAuth authentication with external providers. When **External OAuth** is enabled, users can authorize their Development credentials using single sign-on (SSO) via the identity provider (IdP). External OAuth authorizes users to access multiple applications, including <Constant name="cloud" />, without sharing their static credentials with the service. This makes the process of authenticating for development environments easier for the user and provides an additional layer of security to your <Constant name="cloud" /> account. 
+<AboutExternal/>
 
 ## Getting started
 
@@ -27,9 +23,9 @@ The process of setting up external OAuth will require a little bit of back-and-f
 - **Okta:** You’ll be working in multiple areas of the Okta account, but you can start in the **Applications** section. You will need permissions to [create an application](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Application_permissions) and an [authorization server](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Authorization_server_permissions).
 - **Entra ID** An admin with access to create [Entra ID apps](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/custom-available-permissions) who is also a user in the data warehouse is required. 
 
-**Data warehouses:**
+**Data warehouse:**
 - **Snowflake:** Open a worksheet in an account that has permissions to [create a security integration](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration).
-- **Redshift:** Create and manage the [Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with your identity provider.
+
 
 If the admins that handle these products are all different people, it’s better to have them coordinating simultaneously to reduce friction.
 
@@ -38,12 +34,6 @@ Ensure that the username/email address entered by the IdP admin matches the Snow
 :::
 
 ## Data warehouse configurations
-
-Select the configuration for your supported data warehouse:
-
-<Tabs>
-
-<TabItem value="Snowflake">
 
 The following is a template for creating the OAuth configurations in the Snowflake environment:
 
@@ -67,24 +57,14 @@ The `external_oauth_token_user_mapping_claim` and `external_oauth_snowflake_u
 - The Snowflake default roles ACCOUNTADMIN, ORGADMIN, or SECURITYADMIN, are blocked from external OAuth by default and they will likely fail to authenticate. See the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration-oauth-external) for more information. 
 - The value for `external_oauth_snowflake_user_mapping_attribute` must map correctly to the Snowflake username. For example, if `email_address` is used, the email in the token from the IdP must match the Snowflake username exactly.
 
-</TabItem>
-
-<TabItem value="Redshift">
-
-Ensure your Amazon admins have completed the [Amazon Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with Okta or Entra ID.
-
-</TabItem>
-
-</Tabs>
 
 ## Identity provider configuration
 
 Select a supported identity provider (IdP) for instructions on configuring external OAuth in their environment and completing the integration in <Constant name="cloud" />:
 
-- [Okta](#okta)
-- [Entra ID](#entra-id)
+<Tabs>
 
-## Okta
+<TabItem value="Okta">
 
 ### 1. Initialize the dbt settings
 
@@ -142,12 +122,6 @@ Select a supported identity provider (IdP) for instructions on configuring exter
 
 ### 4. Create the OAuth settings in the data warehouse
 
-Select the instructions for your data warehouse:
-
-<Tabs>
-
-<TabItem value="Snowflake">
-
 1. Open up a Snowflake worksheet and copy/paste the following:
 
 ```sql
@@ -176,18 +150,6 @@ Adjust the other settings as needed to meet your organization's configurations i
 :::info Username consistency
 Ensure that the username (for example, email address) entered in the IdP matches the Snowflake credentials for all users. Mismatched usernames will result in authentication failures.
 :::
-
-</TabItem>
-
-<TabItem value="Redshift">
-
-Ensure your Amazon admins have completed the [Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with Okta. 
-
-Configure the Okta application and APIs in accordance with your Amazon configs.
-
-</TabItem>
-
-</Tabs>
 
 ### 5. Configuring the integration in dbt
 
@@ -218,7 +180,9 @@ Configure the Okta application and APIs in accordance with your Amazon configs.
 
 4. **Save** the connection, and you have now configured External OAuth with Okta!
 
-## Entra ID
+</TabItem>
+
+<TabItem value="Entra ID">
 
 ### 1. Initialize the dbt settings
 
@@ -273,12 +237,6 @@ Configure the Okta application and APIs in accordance with your Amazon configs.
 
 ### 5. Data warehouse configuration
 
-Select the instructions for the appropriate data warehouse:
-
-<Tabs>
-
-<TabItem value="Snowflake">
-
 You'll be switching between the Entra ID site and Snowflake. Keep your Entra ID account open for this process.
 
 Copy and paste the following as a template in a Snowflake worksheet:
@@ -309,18 +267,6 @@ app in Entra ID, click **Endpoints** and open the **Federation metadata document
    - The **Application ID URI** maps to the `external_oauth_audience_list` field in Snowflake.
 4. Run the configurations. Be sure the admin who created the Microsoft apps is also a user in Snowflake, or the configuration will fail.
 
-</TabItem>
-
-<TabItem value="Redshift">
-
-Ensure your Amazon admins have completed the [Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with Entra ID. 
-
-Configure the Entra ID application and in accordance with your Amazon configs.
-
-</TabItem>
-
-</Tabs>
-
 
 ### 6. Configuring the integration in dbt
 
@@ -330,6 +276,10 @@ Configure the Entra ID application and in accordance with your Amazon configs.
 4. `Client ID`: Copy the’ Application (client) ID’ on the overview page for the client ID app.
 5. `Authorization URL` and `Token URL`: From the client ID app, open the `Endpoints` tab. These URLs map to the `OAuth 2.0 authorization endpoint (v2)` and `OAuth 2.0 token endpoint (v2)` fields. *You must use v2 of the `OAuth 2.0 authorization endpoint`. Do not use V1.* You can use either version of the `OAuth 2.0 token endpoint`.
 6. `Application ID URI`: Copy the `Application ID URI` field from the resource server’s Overview screen.
+
+</TabItem>
+
+</Tabs>
 
 ## FAQs
 
