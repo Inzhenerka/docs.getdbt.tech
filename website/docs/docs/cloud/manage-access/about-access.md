@@ -79,9 +79,14 @@ If a user is assigned licenses and permissions from multiple groups, the group t
 
 ### Group access and permissions
 
-You can control which projects the members of any given group have access to with the **Access and permissions** settings. Select the role (or roles) you want to assign to the group, the projects to which they'll have access, and which environments they can write to (edit). 
+The **Access & Permissions** section of a group is where you can assign users the right level of access based on their role or responsibilities. You decide:
 
-This gives you the flexibility to determine exactly how much access users in any given group will have. You can provide members with administrative access to their own project, but limit their view of all others to `read-only`. Grant users write access only to the environments they require, while keeping production off limits. 
+
+* Projects the group can access
+* Roles that the group members are assigned for each
+* Environments the group can edit
+
+This setup provides you with the flexibility to determine the level of access users in any given group will have. For example, you might allow one group of analysts to edit jobs in their project, but only let them view related projects, or you could grant admin-level access to a team that owns a specific project while keeping others restricted to read-only.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-access-policy.png" width="60%" title="Assign a variety of roles and access permissions to user groups." />
 
