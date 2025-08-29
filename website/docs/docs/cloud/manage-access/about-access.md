@@ -89,7 +89,7 @@ This gives you the flexibility to determine exactly how much access users in any
 
 Some permission sets have read-only access to environment settings but are unable to edit them. When you create a group and assign **Environment write access**, it will override any read-only environment settings inherent to the permission set. 
 
-In this example, the `analyst` permission set, which by default has read-only access to jobs, is assigned to the group across all projects; however, the **Environment write access** is set to `All Environments`. This will grant all users in this group the ability to create, edit, and delete jobs across all environments and projects. 
+In the following example, the `analyst` permission set, which by default has read-only access to jobs, is assigned to the group across all projects; however, the **Environment write access** is set to `All Environments`.  This grants all users in this group the ability to create, edit, and delete jobs across all environments and projects. 
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-write.png" width="60%" title="Users assigned environment write access will be able to edit environment settings." />
 
