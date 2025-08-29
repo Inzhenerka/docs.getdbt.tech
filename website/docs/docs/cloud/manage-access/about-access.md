@@ -81,7 +81,6 @@ If a user is assigned licenses and permissions from multiple groups, the group t
 
 The **Access & Permissions** section of a group is where you can assign users the right level of access based on their role or responsibilities. You decide:
 
-
 * Projects the group can access
 * Roles that the group members are assigned for each
 * Environments the group can edit
