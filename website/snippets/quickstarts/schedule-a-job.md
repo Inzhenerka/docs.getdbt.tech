@@ -22,8 +22,8 @@ Use <Constant name="cloud" />'s Scheduler to deploy your production jobs confide
 
 ### Create a deployment environment
 
-1. In the upper left, select **Deploy**, then click **Environments**.
-2. Click **Create Environment**.
+1. From the main menu, go to **Orchestration** > **Environments**.
+2. Click **Create environment**.
 3. In the **Name** field, write the name of your deployment environment. For example, "Production."
 4. In the **dbt Version** field, select the latest version from the dropdown.
 5. Under **Deployment connection**, enter the name of the dataset you want to use as the target, such as "Analytics". This will allow dbt to build and work with that dataset. For some data warehouses, the target dataset may be referred to as a "schema".
@@ -35,7 +35,7 @@ Jobs are a set of dbt commands that you want to run on a schedule. For example, 
 
 As the `jaffle_shop` business gains more customers, and those customers create more orders, you will see more records added to your source data. Because you materialized the `customers` model as a table, you'll need to periodically rebuild your table to ensure that the data stays up-to-date. This update will happen when you run a job.
 
-1. After creating your deployment environment, you should be directed to the page for a new environment. If not, select **Deploy** in the upper left, then click **Jobs**.
+1. After creating your deployment environment, you should be directed to the page for a new environment. If not, select **Orchestration** from the main menu, then click **Jobs**.
 2. Click **Create one** and provide a name, for example, "Production run", and link to the Environment you just created.
 3. Scroll down to the **Execution Settings** section.
 4. Under **Commands**, add this command as part of your job if you don't see it:
