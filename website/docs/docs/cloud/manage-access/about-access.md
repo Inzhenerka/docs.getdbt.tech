@@ -93,7 +93,7 @@ In the following example, the `analyst` permission set, which by default has rea
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-write.png" width="60%" title="Users assigned environment write access will be able to edit environment settings." />
 
-It's essential to set the **Environment write access** settings only if you intend to grant users the ability to edit them. To grant users only the permissions inherent to their set, leave this setting blank (all boxes unchecked).
+Only use **Environment write access** settings when you intend to grant users the ability to edit environments. To grant users only the permissions inherent to their set, leave this setting blank (all boxes unchecked).
 
 ### SSO mappings <Lifecycle status="managed,managed_plus" />
 
