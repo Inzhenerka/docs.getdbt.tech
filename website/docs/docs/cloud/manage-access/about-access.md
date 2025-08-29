@@ -92,7 +92,7 @@ This setup provides you with the flexibility to determine the level of access us
 
 #### Environment write access
 
-Some permission sets have read-only access to environment settings but are unable to edit them. When you create a group and assign **Environment write access**, it will override any read-only environment settings inherent to the permission set. 
+Some permission sets have read-only access to environment settings, which means they cannot edit these settings. If you assign users with these permission sets to a group with **Environment write access**, they will be able to create, edit, and delete environment settings, overriding the read-only restriction.
 
 In the following example, the `analyst` permission set, which by default has read-only access to jobs, is assigned to the group across all projects; however, the **Environment write access** is set to `All Environments`.  This grants all users in this group the ability to create, edit, and delete jobs across all environments and projects. 
 
