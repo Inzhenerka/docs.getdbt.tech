@@ -144,7 +144,8 @@ const sidebarSettings = {
                     "docs/cloud/manage-access/set-up-snowflake-oauth",
                     "docs/cloud/manage-access/set-up-databricks-oauth",
                     "docs/cloud/manage-access/set-up-bigquery-oauth",
-                    "docs/cloud/manage-access/external-oauth",
+                    "docs/cloud/manage-access/snowflake-external-oauth",
+                    "docs/cloud/manage-access/redshift-external-oauth",
                   ],
                 }, // SSO
                 "docs/cloud/manage-access/audit-log",
@@ -211,6 +212,7 @@ const sidebarSettings = {
                 "docs/cloud/secure/postgres-privatelink",
                 "docs/cloud/secure/az-postgres-private-link",
                 "docs/cloud/secure/az-synapse-private-link",
+                "docs/cloud/secure/bigquery-psc",
                 "docs/cloud/secure/vcs-privatelink",
               ],
             }, // PrivateLink
@@ -970,6 +972,7 @@ const sidebarSettings = {
           },
           items: [
             "docs/dbt-versions/dbt-cloud-release-notes",
+            "docs/dbt-versions/dbt-cloud-release-notes-gen",
             "docs/dbt-versions/compatible-track-changelog",
             "docs/dbt-versions/2024-release-notes",
             "docs/dbt-versions/2023-release-notes",

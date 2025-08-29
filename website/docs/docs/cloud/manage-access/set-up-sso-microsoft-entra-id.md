@@ -37,7 +37,11 @@ Log into the Azure portal for your organization. Using the [**Microsoft Entra ID
 | **Name** | <Constant name="cloud" /> |
 | **Supported account types** | Accounts in this organizational directory only _(single tenant)_ |
 
-4. Configure the **Redirect URI**. The table below shows the appropriate Redirect URI values for single-tenant and multi-tenant deployments. For most enterprise use-cases, you will want to use the single-tenant Redirect URI. Replace `YOUR_AUTH0_URI` with the [appropriate Auth0 URI](/docs/cloud/manage-access/sso-overview#auth0-uris) for your region and plan.
+4. Configure the **Redirect URI**. The table below shows the appropriate Redirect URI values for single-tenant and multi-tenant Entra ID app deployments. For most enterprise use-cases, you will want to use the single-tenant Redirect URI. Replace `YOUR_AUTH0_URI` with the [appropriate Auth0 URI](/docs/cloud/manage-access/sso-overview#auth0-uris) for your region and plan.
+
+**Note:** Your dbt platform tenancy has no bearing on this setting. This Entra ID app setting controls app access:
+     - **Single-tenant:** Only users from your Entra ID tenant can access the app.
+     - **Multi-tenant:** Users from _any_ Entra ID tenant can access the app.
 
 | Application Type | Redirect URI |
 | ----- | ----- |

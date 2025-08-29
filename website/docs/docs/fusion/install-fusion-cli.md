@@ -1,6 +1,7 @@
 ---
 title: "Install Fusion from the CLI"
 description: "Install the Fusion engine locally from the command line interface (CLI) to take data transformation to the next level."
+keywords: ["dbt Fusion engine", "Fusion", "Install Fusion", "Update Fusion", "Fusion updates" ]
 id: install-fusion-cli
 ---
 
@@ -27,7 +28,7 @@ exec $SHELL
 
 Or, close and reopen your Terminal window. This will load the updated environment settings into the new session.
 
-<!-- ### Windows installation (PowerShell)
+### Windows installation (PowerShell)
 
 Run the following command in PowerShell:
 
@@ -42,7 +43,6 @@ Start-Process powershell
 ```
 
 Or, close and reopen PowerShell. This will load the updated environment settings into the new session.
--->
 
 ## Verify the installation
 
@@ -53,7 +53,7 @@ dbtf --version
 ```
 
 - **macOS** & **Linux**: $HOME/.local/bin/dbt
-<!--- **Windows:** `C:\Users\<YourUsername>\.local\bin\dbt.exe` -->
+- **Windows:** `C:\Users\<YourUsername>\.local\bin\dbt.exe`
 
 This location is automatically added to your path to easily execute the `dbtf` command, but it requires reloading your shell.
 
