@@ -76,6 +76,10 @@ The Query console sidebar menu and icons contains the following options:
 
 The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
 
+- **Live CTE previews:** Preview a CTE’s output for faster validation and debugging.
+
+    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="60%" title="Preview CTE in Insights" />
+
 - **Live error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
 
     <Lightbox src="/img/docs/dbt-insights/sql-validation.png" width="90%" title="Live error detection" />
@@ -90,7 +94,3 @@ The following Language Server Protocol (LSP) features are available for projects
     <Lightbox src="/img/docs/dbt-insights/column-info.png" width="60%" title="Sample column details" />
     <Lightbox src="/img/docs/dbt-insights/column-hover.png" width="60%" title="Sample column details" />
     </DocCarousel>
-
-- **Live CTE previews:** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
-
-    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="60%" title="Preview CTE in Insights" />
