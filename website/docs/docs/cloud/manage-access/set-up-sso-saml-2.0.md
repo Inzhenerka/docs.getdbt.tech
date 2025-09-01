@@ -5,10 +5,6 @@ id: "set-up-sso-saml-2.0"
 
 # Set up SSO with SAML 2.0 <Lifecycle status="managed, managed_plus" />
 
-import SetUpPages from '/snippets/_sso-docs-mt-available.md';
-
-<SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
-
 <Constant name="cloud" /> Enterprise-tier plans support single-sign on (SSO) for any SAML 2.0-compliant identity provider (IdP).
 Currently supported features include:
 * IdP-initiated SSO
