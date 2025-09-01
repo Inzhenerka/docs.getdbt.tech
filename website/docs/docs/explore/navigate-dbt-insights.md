@@ -73,7 +73,7 @@ The Query console sidebar menu and icons contains the following options:
 </DocCarousel>
 
 ## LSP features in dbt Insights
-<!-- Added this new subsection for now, please check if the features listed here are correct. Might need screenshots-->
+
 The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
 
 - **Live error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
