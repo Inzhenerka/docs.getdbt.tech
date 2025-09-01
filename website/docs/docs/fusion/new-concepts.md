@@ -133,7 +133,7 @@ Disable static analysis in YAML:
 
 <File name='models/my_udf_using_model.sql'>
 
-```
+```yml
 models:
   - name: model_with_static_analysis_off
     config:
