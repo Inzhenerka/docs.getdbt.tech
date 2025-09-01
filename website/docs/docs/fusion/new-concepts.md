@@ -129,9 +129,9 @@ models:
 
 </File>
 
-<File name='models/my_udf_using_model.sql'>
-
 Disable static analysis in YAML:
+
+<File name='models/my_udf_using_model.sql'>
 
 ```
 models:
