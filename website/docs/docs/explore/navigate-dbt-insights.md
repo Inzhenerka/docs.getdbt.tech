@@ -78,7 +78,7 @@ The following Language Server Protocol (LSP) features are available for projects
 
 - **Live CTE previews:** Preview a CTE’s output for faster validation and debugging.
 
-    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="60%" title="Preview CTE in Insights" />
+    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="90%" title="Preview CTE in Insights" />
 
 - **Live error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
 
