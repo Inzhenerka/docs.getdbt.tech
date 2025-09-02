@@ -72,7 +72,7 @@ The Query console sidebar menu and icons contains the following options:
 <Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="60%" title="Manage your query bookmarks" />
 </DocCarousel>
 
-## LSP features in dbt Insights
+## LSP features
 
 The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
 
