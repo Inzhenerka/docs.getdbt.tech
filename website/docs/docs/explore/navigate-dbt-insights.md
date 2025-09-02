@@ -80,7 +80,7 @@ The following Language Server Protocol (LSP) features are available for projects
 
     <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="90%" title="Preview CTE in Insights" />
 
-- **Live error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
+- **Real-time error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
 
     <Lightbox src="/img/docs/dbt-insights/sql-validation.png" width="90%" title="Live error detection" />
 
