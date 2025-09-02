@@ -217,7 +217,7 @@ semantic_models:
 version: 2
 
 saved-queries:
-  - name: <saved-query-name>
+  - name: <saved_query_name>
     config:
       [cache](/docs/build/saved-queries#parameters): 
         enabled: true | false
@@ -226,9 +226,11 @@ saved-queries:
       [meta](/reference/resource-configs/meta): {dictionary}
       [schema](/reference/resource-configs/schema): <string>
     [exports](/docs/build/saved-queries#parameters):
-      - name: my_export
+      - name: <export_name>
         config:
           [export_as](/docs/build/saved-queries#parameters): view | table 
+          [alias](/reference/resource-configs/alias): <string>
+          [schema](/reference/resource-configs/schema): <string>
 ```
 
 </File>
