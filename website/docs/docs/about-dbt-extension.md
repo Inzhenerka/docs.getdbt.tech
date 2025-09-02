@@ -211,6 +211,8 @@ For organizations that are not customers of the dbt platform, the best place for
 
 We welcome feedback as we work to continuously improve the extension, and would love to hear from you!
 
+For more information regarding support and acceptable use of the dbt VS Code extension, refer to our [Acceptable Use Policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup).
+
 import AboutFusion from '/snippets/_about-fusion.md';
 
 <AboutFusion />
