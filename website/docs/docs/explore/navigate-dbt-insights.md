@@ -88,7 +88,7 @@ The following Language Server Protocol (LSP) features are available for projects
   
     <Lightbox src="/img/docs/dbt-insights/ref-autocomplete.png" width="90%" title="ref suggestions in Insights" />
 
-- **Hover insights:** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
+- **Hover insights:** View context on tables, columns, and functions without leaving your code. Hover over any SQL element to see details like column names and data types.
 
     <DocCarousel slidesPerView={1}>
     <Lightbox src="/img/docs/dbt-insights/column-info.png" width="60%" title="Sample column details" />
