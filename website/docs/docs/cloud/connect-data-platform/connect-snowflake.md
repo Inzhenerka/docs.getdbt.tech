@@ -114,6 +114,10 @@ The `Keypair` auth method uses Snowflake's [Key Pair Authentication](https://doc
 
    <Lightbox src="/img/docs/dbt-cloud/snowflake-keypair-auth.png" width="60%" title="Snowflake keypair authentication"/>
 
+:::note Limitation
+Specifying a private key using an [environment variable](/docs/build/environment-variables) (for example, `{{ env_var('DBT_PRIVATE_KEY') }}`) for Snowflake key pair authentication is currently not supported. 
+:::
+
 ### Snowflake OAuth
 
 **Available in:** Development environments, Enterprise-tier plans only

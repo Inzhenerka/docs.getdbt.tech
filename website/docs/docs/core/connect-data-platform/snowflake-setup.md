@@ -106,10 +106,6 @@ To use key pair authentication, specify the `private_key_path` in your configura
 
 dbt can specify a `private_key` directly as a string instead of a `private_key_path`. This `private_key` string can be in either Base64-encoded DER format, representing the key bytes, or in plain-text PEM format. Refer to [Snowflake documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth) for more info on how they generate the key.
 
-:::note Limitation
-Specifying a private key using an [environment variable](/docs/build/environment-variables) (for example, `{{ env_var('PRIVATE_KEY') }}`) for Snowflake key pair authentication is currently not supported. 
-:::
-
 <VersionBlock firstVersion="1.9">
 
 <File name='~/.dbt/profiles.yml'>
