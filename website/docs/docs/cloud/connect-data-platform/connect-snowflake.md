@@ -99,6 +99,7 @@ The `Keypair` auth method uses Snowflake's [Key Pair Authentication](https://doc
 
 2. Finally, set the **Private Key** and **Private Key Passphrase** fields in the **Credentials** page to finish configuring <Constant name="cloud" /> to authenticate with Snowflake using a key pair.
    - **Note:** Unencrypted private keys are permitted. Use a passphrase only if needed. dbt can specify a `private_key` directly as a string instead of a `private_key_path`. This `private_key` string can be in either Base64-encoded DER format, representing the key bytes, or in plain-text PEM format. Refer to [Snowflake documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth) for more info on how they generate the key.
+   - Specifying a private key using an [environment variable](/docs/build/environment-variables) (for example, `{{ env_var('DBT_PRIVATE_KEY') }}`) is not supported. 
 
 3. To successfully fill in the Private Key field, you _must_ include commented lines. If you receive a `Could not deserialize key data` or `JWT token` error, refer to [Troubleshooting](#troubleshooting) for more info. 
 
@@ -114,9 +115,6 @@ The `Keypair` auth method uses Snowflake's [Key Pair Authentication](https://doc
 
    <Lightbox src="/img/docs/dbt-cloud/snowflake-keypair-auth.png" width="60%" title="Snowflake keypair authentication"/>
 
-:::note Limitation
-Specifying a private key using an [environment variable](/docs/build/environment-variables) (for example, `{{ env_var('DBT_PRIVATE_KEY') }}`) for Snowflake key pair authentication is currently not supported. 
-:::
 
 ### Snowflake OAuth
 
