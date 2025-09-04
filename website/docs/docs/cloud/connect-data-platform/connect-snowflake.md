@@ -115,7 +115,6 @@ The `Keypair` auth method uses Snowflake's [Key Pair Authentication](https://doc
 
    <Lightbox src="/img/docs/dbt-cloud/snowflake-keypair-auth.png" width="60%" title="Snowflake keypair authentication"/>
 
-
 ### Snowflake OAuth
 
 **Available in:** Development environments, Enterprise-tier plans only
