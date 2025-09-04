@@ -338,7 +338,7 @@ To support custom calendars (like fiscal years, fiscal quarters, and so on), cre
    dbt sl query --metrics orders --group-by metric_time__fiscal_year
    ```
 
-   <Lightbox src="/img/mf-guide-fiscal-preview.jpg" title="Validate the custom calendar metrics and time spine output in the Studio IDE" />
+   <Lightbox src="/img/mf-guide-fiscal-preview.png" title="Validate the custom calendar metrics and time spine output in the Studio IDE" />
 
 
 ## What's next
