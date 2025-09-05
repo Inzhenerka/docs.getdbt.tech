@@ -97,7 +97,7 @@ Create an app in Entra where dbt will request access tokens when authenticating 
 2. Give the app a name that makes it easily identifiable.
 3. Ensure **Supported account types** are set to “Accounts in this organizational directory only (Org name - Single Tenant).”
 4. Click **Register** to see the application’s overview screen.
-5. From the **app overview**, click **Expose an API** from the left menu.
+5. From the **app overview**, click **Expose an API** in the left menu.
 6. Click **Add** next to Application ID URI. The field will automatically populate. 
 7. Click **Save**.
 
