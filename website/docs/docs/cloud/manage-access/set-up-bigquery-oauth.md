@@ -107,8 +107,8 @@ Workload Identity Federation utilizes a machine-to-machine OAuth flow that is un
 
 ### 2. Create a Workpool and Workpool Provider in GCP
 
-1. In your GCP account's main menu, navigate to **IAM & Admin** and click the **Workload Identity Federation** option (not to be confused with the **Workforce Identity Federation** option directly adjacent). 
-2. If you haven’t created a workpool yet, click **Get started** or create a new workpool (button near the top of the page).
+1. In your GCP account's main menu, navigate to **IAM & Admin** and click the **Workload Identity Federation** option (not to be confused with the **Work_force_ Identity Federation** option directly adjacent). 
+2. If you haven’t created a workpool yet, click **Get started** or create a new workpool (use button near the top of the page).
 3. Give the workpool a name and description. Per the [GCP documentation](https://cloud.google.com/iam/docs/workload-identity-federation#pools), a new pool should be created for each non-Google Cloud environment that needs to access Google Cloud resources, such as development, staging, or production environments. The workpool should be named accordingly to make it easily identifiable in the future.
 4. When creating your provider:
     - Set the type of the provider to **OpenID Connect (OIDC)**.
@@ -122,7 +122,7 @@ Workload Identity Federation utilizes a machine-to-machine OAuth flow that is un
 
 ### 3. Service Account Impersonation
 
-A workpool either uses a service account or is granted direct resource access to determine which resources a caller has access to. The [GCP documentation](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#access) provides more detailed information on configuring both for your workpool. We chose the service account approach in our implementation because it offered greater flexibility.
+A workpool either uses a service account or is granted direct resource access to determine which resources a caller can access. The [GCP documentation](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#access) provides more detailed information on configuring both for your workpool. We chose the service account approach in our implementation because it offered greater flexibility.
 
 If you haven’t already, create a new service account:
 1. From the main menu, select **IAM & Admin** 
@@ -148,7 +148,7 @@ In <Constant name="cloud" />:
     - The Application ID URI should be set to the expected audience claim on tokens issued from the Entra application. It will be the same URI your workpool provider has been configured to expect.
     - You do not have to add the Redirect URI to your Entra application
 
-### 4. Create connections in dbt
+### 5. Create connections in dbt
 
 To get started, create a new connection in <Constant name="cloud" />:
 
@@ -163,7 +163,7 @@ To get started, create a new connection in <Constant name="cloud" />:
     - Service JSON 
         - You must create a separate connection with the Service JSON configuration.
 
-### 5. Set up project
+### 6. Set up project
 
 To connect a new project to your WIF configuration:
 1. Navigate to **Account settings** --> **Projects**.
@@ -172,7 +172,7 @@ To connect a new project to your WIF configuration:
 4. Select the **Connection** with the WIF configuration.
 5. Configure the remainder of the project with the appropriate fields.
 
-### 6. Set up deployment environment
+### 7. Set up deployment environment
 
 Create a new or updated environment to use the WIF connection. 
 
