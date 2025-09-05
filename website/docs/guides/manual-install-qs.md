@@ -35,6 +35,7 @@ The following steps use [GitHub](https://github.com/) as the <Constant name="git
 2. Select:
     - **Private (recommended):** To secure your environment and prevent private information (like credentials) from being public.
     - **Public:** If you need to easily collaborate and share with others, especially outside of your organization. 
+
 You can always change the privacy settings later. 
 3. Leave the default values for all other settings.
 4. Click **Create repository**.
