@@ -101,7 +101,7 @@ Create an app in Entra where dbt will request access tokens when authenticating 
 6. Click **Add** next to Application ID URI. The field will automatically populate. 
 7. Click **Save**.
 
-Workload Identity Federation utilizes a machine-to-machine OAuth flow that is unattended by the user; as such, a redirect URI won't need to be set for the application. Step three in this section is crucial because it determines the audience for tokens issued from the app and informs the workpool in GCP whether the calling application has permission to access the resources guarded by the workpool.
+Workload Identity Federation utilizes a machine-to-machine OAuth flow that is unattended by the user; as such, a redirect URI won't need to be set for the application. Step 3 in this section is crucial because it determines the audience for tokens issued from the app and informs the workpool in GCP whether the calling application has permission to access the resources guarded by the workpool.
 
 - **Related documentation:** [GCP &mdash; Prepare your external identity provider](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#create)
 
