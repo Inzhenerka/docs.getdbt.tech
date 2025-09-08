@@ -257,6 +257,7 @@ display: flex;
 height: 22px;
 width: 22px;
 display: none;
+margin-top: 5px;
 }
 
 html[data-theme="dark"] .navbar__account:before {
@@ -1523,10 +1524,16 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   }
 }
 
-[data-theme="dark"] button.DocSearch-Button {
+/* hide search text and keys until 1201px */
+button .DocSearch-Button-Placeholder,
+button .DocSearch-Button-Keys {
+  display: none;
+}
+
+/* [data-theme="dark"] button.DocSearch-Button {
   background-color: #FFF !important;
   color: #6A7282 !important;
-}
+} */
 
 @media screen and (max-width: 750px) {
   .card.large {
@@ -1553,18 +1560,14 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   .DocSearch-Button .DocSearch-Search-Icon {
     color: var(--docsearch-muted-color);
   }
-
-  /* hide search text and keys until 1201px */
-  button .DocSearch-Button-Placeholder,
-  button .DocSearch-Button-Keys {
-    display: none;
-  }
 }
 
 @media screen and (min-width: 1320px) {
-
+  /* 9/8/25 NOTE: Disabled all desktop search bar styles
+     to fit the IDE Extension CTA into the nav
+  */
   /* search bar styles */
-  button.DocSearch-Button {
+  /* button.DocSearch-Button {
     border: 1px solid #D1D5DC;
     border-radius: 12px;
     height: 40px;
@@ -1579,7 +1582,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     padding: 0 12px 0 8px;
   }
 
-  /* magnifying glass icon */
+  // magnifying glass icon
   button.DocSearch-Button .DocSearch-Search-Icon {
     color: var(--docsearch-muted-color);
     stroke-width: 2px;
@@ -1587,7 +1590,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     height: 1em;
   }
 
-  /* keys wrapper */
+  // keys wrapper
   button .DocSearch-Button-Keys {
     border: none;
     padding: 0.24em 0.5em;
@@ -1595,7 +1598,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     margin-right: -13px;
   }
 
-  /* single key */
+  // single key
   button .DocSearch-Button-Key {
     font-size: 1.12rem;
     line-height: 1em;  
@@ -1607,13 +1610,13 @@ html[data-theme="dark"] .main-wrapper nav a:active {
     gap: 0;
   }
 
-  /* Add dark background on hover for searchbox */
+  // Add dark background on hover for searchbox
   [data-theme="dark"] button.DocSearch-Button:active,
   [data-theme="dark"] button.DocSearch-Button:focus,
   [data-theme="dark"] button.DocSearch-Button:hover {
     background-color: #FFF !important;
     color: #6A7282 !important;
-  }
+  } */
 }
 
 @media (min-width: 1480px) {
