@@ -204,7 +204,7 @@ var siteSettings = {
           ],
         },
         {
-          label: "Install dbt IDE extension",
+          label: "Install VS Code extension",
           position: "right",
           to: "/docs/install-dbt-extension",
           className: "nav-install-dbt-extension",
