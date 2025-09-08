@@ -230,6 +230,17 @@ html[data-theme="dark"] input.sc-avest {
   order: 4;
 }
 
+.navbar__item.nav-install-dbt-extension {
+  order: 5;
+  background: var(--ifm-color-primary);
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar__item.nav-install-dbt-extension:hover {
+  background-color: var(--ifm-color-primary) !important;
+  background-image: linear-gradient(oklab(0.865972 0.00164044 0.169914 / 0.5) 0%, rgba(0, 0, 0, 0) 50%) !important;
+}
+
 .navbar__account:before {
   background: url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M20%2021C20%2019.6044%2020%2018.9067%2019.8278%2018.3389C19.44%2017.0605%2018.4395%2016.06%2017.1611%2015.6722C16.5933%2015.5%2015.8956%2015.5%2014.5%2015.5H9.5C8.10444%2015.5%207.40665%2015.5%206.83886%2015.6722C5.56045%2016.06%204.56004%2017.0605%204.17224%2018.3389C4%2018.9067%204%2019.6044%204%2021%22%20stroke%3D%22%23030711%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M12%2012C14.4853%2012%2016.5%209.98528%2016.5%207.5C16.5%205.01472%2014.4853%203%2012%203C9.51472%203%207.5%205.01472%207.5%207.5C7.5%209.98528%209.51472%2012%2012%2012Z%22%20stroke%3D%22%23030711%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") no-repeat;
 content: "";
