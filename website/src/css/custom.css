@@ -547,7 +547,55 @@ a.code-link:hover {
   gap: 8px;
 }
 
-@media(max-width: 1258px) {
+/* Custom nav styles from right before mobile,
+   up to where nav begins to hit logo
+*/
+@media(min-width: 996px) and (max-width: 1154px) {
+  .navbar__items {
+    min-width: auto;
+    gap: 0 !important;
+  }
+
+  .navbar__items .navbar__brand {
+    min-width: 167px;
+    padding: 10px 0 0;
+  }
+
+  .navbar__items .navbar__brand .navbar__logo {
+    height: 1.5rem;
+  }
+
+  .navbar__items.navbar__items--right {
+    width: 100%;
+    flex-basis: 100%;
+  }
+}
+
+@media(min-width: 996px) and (max-width: 1199px) {
+  .navbar__items.navbar__items--right .navbar__item, .navbar__items.navbar__items--right .navbar__link {
+    font-size: 0.875rem;
+    padding: 10px 8px !important;
+  }
+}
+
+@media(min-width: 1200px) and (max-width: 1320px) {
+  .navbar__items.navbar__items--right .navbar__item, .navbar__items.navbar__items--right .navbar__link {
+    font-size: 0.938rem;
+    padding: 10px 8px !important;
+  }
+}
+
+@media(min-width: 996px) and (max-width: 1320px) {
+  .navbar__items {
+    gap: 0 !important;
+  }
+
+  .navbar__items.navbar__items--right .navbar__item, .navbar__items.navbar__items--right .navbar__link {
+    padding: 10px 8px !important;
+  }
+}
+
+@media(max-width: 1530px) {
   .navbar__items {
     gap: 4px;
   }
@@ -1530,11 +1578,6 @@ button .DocSearch-Button-Keys {
   display: none;
 }
 
-/* [data-theme="dark"] button.DocSearch-Button {
-  background-color: #FFF !important;
-  color: #6A7282 !important;
-} */
-
 @media screen and (max-width: 750px) {
   .card.large {
     height: auto;
@@ -1562,12 +1605,16 @@ button .DocSearch-Button-Keys {
   }
 }
 
-@media screen and (min-width: 1320px) {
+@media screen and (min-width: 1530px) {
   /* 9/8/25 NOTE: Disabled all desktop search bar styles
      to fit the IDE Extension CTA into the nav
   */
   /* search bar styles */
-  /* button.DocSearch-Button {
+  [data-theme="dark"] button.DocSearch-Button {
+    background-color: #FFF !important;
+    color: #6A7282 !important;
+  }
+  button.DocSearch-Button {
     border: 1px solid #D1D5DC;
     border-radius: 12px;
     height: 40px;
@@ -1580,9 +1627,10 @@ button .DocSearch-Button-Keys {
     font-size: 0.875rem;
     font-weight: 500;
     padding: 0 12px 0 8px;
+    display: inline-block;
   }
 
-  // magnifying glass icon
+  /* magnifying glass icon */
   button.DocSearch-Button .DocSearch-Search-Icon {
     color: var(--docsearch-muted-color);
     stroke-width: 2px;
@@ -1590,15 +1638,16 @@ button .DocSearch-Button-Keys {
     height: 1em;
   }
 
-  // keys wrapper
+  /* keys wrapper */
   button .DocSearch-Button-Keys {
     border: none;
     padding: 0.24em 0.5em;
     gap: 0;
     margin-right: -13px;
+    display: flex;
   }
 
-  // single key
+  /* single key */
   button .DocSearch-Button-Key {
     font-size: 1.12rem;
     line-height: 1em;  
@@ -1610,13 +1659,13 @@ button .DocSearch-Button-Keys {
     gap: 0;
   }
 
-  // Add dark background on hover for searchbox
+  /* Add dark background on hover for searchbox */
   [data-theme="dark"] button.DocSearch-Button:active,
   [data-theme="dark"] button.DocSearch-Button:focus,
   [data-theme="dark"] button.DocSearch-Button:hover {
     background-color: #FFF !important;
     color: #6A7282 !important;
-  } */
+  }
 }
 
 @media (min-width: 1480px) {
