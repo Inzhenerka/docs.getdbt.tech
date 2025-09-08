@@ -24,4 +24,4 @@ The following packages are verified and supported on the <Constant name="fusion_
 - [metaplane/dbt_expectations](https://github.com/metaplane/dbt-expectations.git)
 - [Montreal-Analytics/snowflake_utils](https://github.com/Montreal-Analytics/dbt-snowflake-utils.git)
 
-In addition, when making their packages compatible with <Constant name="fusion_engine" />, the Fivetran team consolidated their source and transformation packages into a single one. If you were manually installing source packages like `fivetran/github_source` but not using the `fivetran/github` package, you will now need to install `fivetran/github` and deactivate the transformation models.
+Additionally, the Fivetran `source` and `transformation` packages have been combined into a single package. If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
