@@ -1606,8 +1606,9 @@ button .DocSearch-Button-Keys {
 }
 
 @media screen and (min-width: 1530px) {
-  /* 9/8/25 NOTE: Disabled all desktop search bar styles
-     to fit the IDE Extension CTA into the nav
+  /* 
+    9/8/25 NOTE: Only showing full search bar styles
+    on 1530px and above to fit the IDE Extension CTA into the nav
   */
   /* search bar styles */
   [data-theme="dark"] button.DocSearch-Button {
