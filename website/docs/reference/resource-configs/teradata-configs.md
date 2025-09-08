@@ -497,8 +497,8 @@ sources:
               data_type: CHAR(1)
 ```
 
-### temporary_metadata_generation_schema (earlier fallback_schema)
-The dbt-teradata adapter internally creates temporary tables to fetch the metadata of views for manifest and catalog creation. In cases you don't have permission to create tables on the schema you are working on, you can define a temporary_metadata_generation_schema (to which you have the proper `create`/`drop` privileges) in the dbt_project.yml as a variable.
+### `temporary_metadata_generation_schema` (previously `fallback_schema`)
+The dbt-teradata adapter internally creates temporary tables to fetch the metadata of views for manifest and catalog creation. If you lack permission to create tables on the schema you are working with, you can define a `temporary_metadata_generation_schema` (to which you have the proper `create`/`drop` privileges) in the `dbt_project.yml` as a variable.
 
 ```yaml
 vars:
