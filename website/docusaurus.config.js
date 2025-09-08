@@ -207,6 +207,7 @@ var siteSettings = {
           label: "Install VS Code extension",
           position: "right",
           to: "/docs/install-dbt-extension",
+          id: "nav-install-vs-code-extension",
           className: "nav-install-dbt-extension",
         },
       ],
