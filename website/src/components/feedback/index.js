@@ -54,7 +54,7 @@ export const Feedback = () => {
       
       if (existingFeedback) {
         setSelectedFeedback(existingFeedback.is_positive);
-        setTextFeedback(existingFeedback.text_feedback || "");
+        setTextFeedback(existingFeedback.message || "");
         setHasSubmitted(true);
       }
     }
@@ -83,8 +83,10 @@ export const Feedback = () => {
     setSubmissionStatus("loading");
 
     try {
+      // "https://www.getdbt.com/api/submit-feedback",
+      // "https://docs-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback"
       const response = await fetch(
-        "https://www.getdbt.com/api/submit-feedback",
+        "http://localhost:3000/api/submit-feedback",
         {
           method: "POST",
           headers: {
@@ -92,7 +94,7 @@ export const Feedback = () => {
           },
           body: JSON.stringify({
             is_positive: selectedFeedback,
-            text_feedback: textFeedback.trim(),
+            message: textFeedback.trim(),
             page_url: window.location.href,
           }),
         }
@@ -108,13 +110,15 @@ export const Feedback = () => {
       // Save to localStorage array
       const currentUrl = window.location.href;
       const feedbackArray = getFeedbackData();
-      const existingFeedbackIndex = feedbackArray.findIndex(item => item.page_url === currentUrl);
-      
+      const existingFeedbackIndex = feedbackArray.findIndex(
+        (item) => item.page_url === currentUrl
+      );
+
       const newFeedbackItem = {
         is_positive: selectedFeedback,
-        text_feedback: textFeedback.trim(),
+        message: textFeedback.trim(),
         timestamp: Date.now(),
-        page_url: currentUrl
+        page_url: currentUrl,
       };
 
       if (existingFeedbackIndex >= 0) {
@@ -159,21 +163,25 @@ export const Feedback = () => {
             No
           </button>
         </div>
-        <div className={styles.feedbackInput}>
-          <textarea 
-            placeholder="Tell us what you think..." 
-            value={textFeedback}
-            onChange={(e) => setTextFeedback(e.target.value)}
-            disabled={hasSubmitted}
-          />
-        </div>
-        <button 
-          type="submit" 
-          className={styles.feedbackSubmitButton}
-          disabled={hasSubmitted || selectedFeedback === null || submissionStatus === "loading"}
-        >
-          {submissionStatus === "loading" ? "Submitting..." : "Submit Feedback"}
-        </button>
+        {selectedFeedback !== null && (
+          <>
+            <div className={styles.feedbackInput}>
+              <textarea 
+                placeholder="Tell us what you think..." 
+                value={textFeedback}
+                onChange={(e) => setTextFeedback(e.target.value)}
+                disabled={hasSubmitted}
+              />
+            </div>
+            <button 
+              type="submit" 
+              className={styles.feedbackSubmitButton}
+              disabled={hasSubmitted || submissionStatus === "loading"}
+            >
+              {submissionStatus === "loading" ? "Submitting..." : "Submit Feedback"}
+            </button>
+          </>
+        )}
       </form>
       {submissionStatus && (
         <div>
