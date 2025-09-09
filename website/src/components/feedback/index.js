@@ -12,6 +12,7 @@ import styles from "./styles.module.css";
 export const Feedback = () => {
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [textFeedback, setTextFeedback] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const FEEDBACK_STORAGE_KEY = 'page_feedback_data';
@@ -53,19 +54,33 @@ export const Feedback = () => {
       
       if (existingFeedback) {
         setSelectedFeedback(existingFeedback.is_positive);
+        setTextFeedback(existingFeedback.text_feedback || "");
         setHasSubmitted(true);
       }
     }
   }, []);
 
-  const handleFeedbackSubmit = async (feedbackValue) => {
+  const handleRatingSelect = (feedbackValue) => {
+    if (hasSubmitted) {
+      return;
+    }
+    setSelectedFeedback(feedbackValue);
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    
     // Prevent resubmission if already submitted
     if (hasSubmitted) {
       return;
     }
 
+    // Require rating selection
+    if (selectedFeedback === null) {
+      return;
+    }
+
     setSubmissionStatus("loading");
-    setSelectedFeedback(feedbackValue);
 
     try {
       const response = await fetch(
@@ -76,7 +91,8 @@ export const Feedback = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            is_positive: feedbackValue,
+            is_positive: selectedFeedback,
+            text_feedback: textFeedback.trim(),
             page_url: window.location.href,
           }),
         }
@@ -95,7 +111,8 @@ export const Feedback = () => {
       const existingFeedbackIndex = feedbackArray.findIndex(item => item.page_url === currentUrl);
       
       const newFeedbackItem = {
-        is_positive: feedbackValue,
+        is_positive: selectedFeedback,
+        text_feedback: textFeedback.trim(),
         timestamp: Date.now(),
         page_url: currentUrl
       };
@@ -115,26 +132,27 @@ export const Feedback = () => {
       setHasSubmitted(true);
     } catch (error) {
       setSubmissionStatus("error");
-      setSelectedFeedback(null); // Reset selection on error
     }
   };
 
   return (
     <div className={styles.feedbackContainer}>
       <h2 className={styles.feedbackHeader}>Was this page helpful?</h2>
-      <div className={styles.feedbackActions}>
+      <form onSubmit={handleFormSubmit} className={styles.feedbackActions}>
         <div className={styles.feedbackButtons}>
           <button
+            type="button"
             className={`${styles.feedbackButton} ${selectedFeedback === true ? styles.feedbackButtonSelected : ""}`}
-            onClick={() => handleFeedbackSubmit(true)}
+            onClick={() => handleRatingSelect(true)}
             disabled={hasSubmitted}
           >
             <ThumbsUp />
             Yes
           </button>
           <button
+            type="button"
             className={`${styles.feedbackButton} ${selectedFeedback === false ? styles.feedbackButtonSelected : ""}`}
-            onClick={() => handleFeedbackSubmit(false)}
+            onClick={() => handleRatingSelect(false)}
             disabled={hasSubmitted}
           >
             <ThumbsDown />
@@ -142,9 +160,21 @@ export const Feedback = () => {
           </button>
         </div>
         <div className={styles.feedbackInput}>
-          <textarea placeholder="Tell us what you think..." />
+          <textarea 
+            placeholder="Tell us what you think..." 
+            value={textFeedback}
+            onChange={(e) => setTextFeedback(e.target.value)}
+            disabled={hasSubmitted}
+          />
         </div>
-      </div>
+        <button 
+          type="submit" 
+          className={styles.feedbackSubmitButton}
+          disabled={hasSubmitted || selectedFeedback === null || submissionStatus === "loading"}
+        >
+          {submissionStatus === "loading" ? "Submitting..." : "Submit Feedback"}
+        </button>
+      </form>
       {submissionStatus && (
         <div>
           {submissionStatus === "loading" ? (

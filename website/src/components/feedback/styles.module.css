@@ -54,6 +54,45 @@
   cursor: not-allowed;
 }
 
+/* Submit Button */
+.feedbackContainer .feedbackSubmitButton {
+  background: var(--ifm-color-primary);
+  transition: all 0.3s ease-in-out;
+  color: var(--color-neutral-primary);
+  border: none;
+  border-radius: .75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.feedbackContainer .feedbackSubmitButton:hover:not(:disabled) {
+  background-color: var(--ifm-color-primary) !important;
+  background-image: linear-gradient(oklab(0.865972 0.00164044 0.169914 / 0.5) 0%, rgba(0, 0, 0, 0) 50%) !important;
+}
+
+.feedbackContainer .feedbackSubmitButton:focus {
+  outline: 2px solid var(--color-coalesce-purple-600);
+  outline-offset: 2px;
+}
+
+.feedbackContainer .feedbackSubmitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+html[data-theme="dark"] .feedbackContainer .feedbackSubmitButton {
+  color: var(--color-neutral-primary);
+}
+
+html[data-theme="dark"] .feedbackContainer .feedbackSubmitButton:hover:not(:disabled) {
+  color: var(--color-neutral-primary) !important;
+  background-color: var(--ifm-color-primary) !important;
+  background-image: linear-gradient(oklab(0.865972 0.00164044 0.169914 / 0.5) 0%, rgba(0, 0, 0, 0) 50%) !important;
+}
+
 /* Feedback Input */
 .feedbackContainer .feedbackInput {
   margin-top: 1rem;
@@ -110,4 +149,9 @@ html[data-theme="dark"] {
    border-color: var(--color-white);
    color: var(--color-neutral-primary);
  }
+
+ .feedbackContainer .feedbackInput textarea {
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
+}
 }
