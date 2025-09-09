@@ -84,6 +84,7 @@ export const Feedback = () => {
     setSubmissionStatus("loading");
 
     try {
+      // TODO: Change to production URL
       // "https://www.getdbt.com/api/submit-feedback",
       // "https://docs-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback"
       const response = await fetch(
