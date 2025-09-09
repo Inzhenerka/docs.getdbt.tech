@@ -84,6 +84,14 @@ export const Feedback = () => {
     setSubmissionStatus("loading");
 
     try {
+      // Execute reCAPTCHA
+      const token = await window.grecaptcha.execute(
+        "6LeIksMrAAAAABYsWNCpUv15lXXzEZj91zdDCymo",
+        {
+          action: "feedback_submission",
+        }
+      )
+      
       // TODO: Change to production URL
       // "https://www.getdbt.com/api/submit-feedback",
       // "https://docs-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback"
@@ -98,6 +106,7 @@ export const Feedback = () => {
             is_positive: selectedFeedback,
             message: textFeedback.trim(),
             page_url: window.location.href,
+            recaptcha_token: token,
           }),
         }
       );
