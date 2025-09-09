@@ -14,6 +14,7 @@ export const Feedback = () => {
   const [selectedFeedback, setSelectedFeedback] = useState(null);
   const [textFeedback, setTextFeedback] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [loadedFromStorage, setLoadedFromStorage] = useState(false);
 
   const FEEDBACK_STORAGE_KEY = 'page_feedback_data';
 
@@ -54,8 +55,8 @@ export const Feedback = () => {
       
       if (existingFeedback) {
         setSelectedFeedback(existingFeedback.is_positive);
-        setTextFeedback(existingFeedback.message || "");
         setHasSubmitted(true);
+        setLoadedFromStorage(true);
       }
     }
   }, []);
@@ -82,32 +83,43 @@ export const Feedback = () => {
 
     setSubmissionStatus("loading");
 
+    console.log('submitting feedback')
+    console.log(JSON.stringify({
+      is_positive: selectedFeedback,
+      message: textFeedback.trim(),
+      page_url: window.location.href,
+    }))
+
     try {
       // "https://www.getdbt.com/api/submit-feedback",
       // "https://docs-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback"
-      const response = await fetch(
-        "http://localhost:3000/api/submit-feedback",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            is_positive: selectedFeedback,
-            message: textFeedback.trim(),
-            page_url: window.location.href,
-          }),
-        }
-      );
+      // const response = await fetch(
+      //   "http://localhost:3000/api/submit-feedback",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       is_positive: selectedFeedback,
+      //       message: textFeedback.trim(),
+      //       page_url: window.location.href,
+      //     }),
+      //   }
+      // );
 
-      const data = await response.json();
+      // const data = await response.json();
 
-      // If error, set submission status to error and throw error
-      if (data?.error) {
-        throw new Error(data?.error);
-      }
+      // // If error, set submission status to error and throw error
+      // if (data?.error) {
+      //   throw new Error(data?.error);
+      // }
 
-      // Save to localStorage array
+      // If success, set submission status to success and save to localStorage
+      setSubmissionStatus("error");
+      setHasSubmitted(true);
+
+      // Save to localStorage array only on success
       const currentUrl = window.location.href;
       const feedbackArray = getFeedbackData();
       const existingFeedbackIndex = feedbackArray.findIndex(
@@ -130,13 +142,11 @@ export const Feedback = () => {
       }
 
       saveFeedbackData(feedbackArray);
-
-      // If success, set submission status to success
-      setSubmissionStatus("success");
-      setHasSubmitted(true);
     } catch (error) {
       setSubmissionStatus("error");
     }
+
+    console.log('submissionStatus', submissionStatus);
   };
 
   return (
@@ -163,41 +173,41 @@ export const Feedback = () => {
             No
           </button>
         </div>
-        {selectedFeedback !== null && (
+        {selectedFeedback !== null && !loadedFromStorage && (
           <>
             <div className={styles.feedbackInput}>
-              <textarea 
-                placeholder="Tell us what you think..." 
+              <textarea
+                placeholder="Tell us what you think..."
                 value={textFeedback}
                 onChange={(e) => setTextFeedback(e.target.value)}
-                disabled={hasSubmitted}
+                disabled={hasSubmitted && submissionStatus === "success"}
               />
             </div>
-            <button 
-              type="submit" 
-              className={styles.feedbackSubmitButton}
-              disabled={hasSubmitted || submissionStatus === "loading"}
-            >
-              {submissionStatus === "loading" ? "Submitting..." : "Submit Feedback"}
-            </button>
+              {submissionStatus === "loading" ? (
+                <span className={styles.feedbackMessage}>
+                  Submitting feedback...
+                </span>
+              ) : submissionStatus === "success" ? (
+                <span className={styles.feedbackMessage}>
+                  Thank you for your feedback!
+                </span>
+              ) : (
+                <button
+                  type="submit"
+                  className={styles.feedbackSubmitButton}
+                  disabled={submissionStatus === "loading"}
+                >
+                  Submit Feedback
+                </button>
+              )}
+              {submissionStatus === "error" && (
+                <span className={styles.feedbackMessage}>
+                  Error submitting feedback. Please try again.
+                </span>
+              )}
           </>
         )}
       </form>
-      {submissionStatus && (
-        <div>
-          {submissionStatus === "loading" ? (
-            <span className={styles.feedbackMessage}>Submitting feedback...</span>
-          ) : submissionStatus === "success" ? (
-            <span className={styles.feedbackMessage}>
-              Thank you for your feedback!
-            </span>
-          ) : submissionStatus === "error" ? (
-            <span className={styles.feedbackMessage}>
-              Error submitting feedback. Please try again.
-            </span>
-          ) : null}
-        </div>
-    )}
       <div className={styles.feedbackLinks}>
         <Link
           href="https://www.getdbt.com/cloud/privacy-policy"
