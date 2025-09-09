@@ -1669,9 +1669,14 @@ button .DocSearch-Button-Keys {
   }
 }
 
-@media (min-width: 1480px) {
+@media (min-width: 1670px) {
   .dbt__brand {
     border-right: 1px solid var(--ifm-toc-border-color);
+    padding: 0 var(--ifm-navbar-padding-horizontal) 0 0;
+    min-height: var(--ifm-navbar-height);
+    max-height: var(--ifm-navbar-height);
+    width: 300px;
+    min-width: 5.5em;
   }
 }
 
@@ -1686,14 +1691,6 @@ button .DocSearch-Button-Keys {
 }
 
 @media (min-width: 997px) {
-  .dbt__brand {
-    padding: 0 var(--ifm-navbar-padding-horizontal) 0 0;
-    min-height: var(--ifm-navbar-height);
-    max-height: var(--ifm-navbar-height);
-    width: 300px;
-    min-width: 5.5em;
-  }
-
   html.docs-version-current .navbar {
     width: 100%;
     margin-left: 0;
