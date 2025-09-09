@@ -16,7 +16,8 @@ export const validateTextInput = (text, setValidationError) => {
 
   // Check for potential XSS patterns
   const xssPatterns = [
-    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+    /<script\b[^>]*>/gi, // matches <script ...>
+    /<\/script\b[^>]*>/gi, // matches </script ...>
     /javascript:/gi,
     /on\w+\s*=/gi,
     /<iframe\b[^>]*>/gi,
