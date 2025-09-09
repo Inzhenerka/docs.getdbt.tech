@@ -83,37 +83,30 @@ export const Feedback = () => {
 
     setSubmissionStatus("loading");
 
-    console.log('submitting feedback')
-    console.log(JSON.stringify({
-      is_positive: selectedFeedback,
-      message: textFeedback.trim(),
-      page_url: window.location.href,
-    }))
-
     try {
       // "https://www.getdbt.com/api/submit-feedback",
       // "https://docs-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback"
-      // const response = await fetch(
-      //   "http://localhost:3000/api/submit-feedback",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       is_positive: selectedFeedback,
-      //       message: textFeedback.trim(),
-      //       page_url: window.location.href,
-      //     }),
-      //   }
-      // );
+      const response = await fetch(
+        "http://localhost:3000/api/submit-feedback",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            is_positive: selectedFeedback,
+            message: textFeedback.trim(),
+            page_url: window.location.href,
+          }),
+        }
+      );
 
-      // const data = await response.json();
+      const data = await response.json();
 
-      // // If error, set submission status to error and throw error
-      // if (data?.error) {
-      //   throw new Error(data?.error);
-      // }
+      // If error, set submission status to error and throw error
+      if (data?.error) {
+        throw new Error(data?.error);
+      }
 
       // If success, set submission status to success and save to localStorage
       setSubmissionStatus("success");
@@ -145,8 +138,6 @@ export const Feedback = () => {
     } catch (error) {
       setSubmissionStatus("error");
     }
-
-    console.log('submissionStatus', submissionStatus);
   };
 
   return (
