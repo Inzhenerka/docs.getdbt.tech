@@ -1,3 +1,4 @@
+/* Feedback Container */
 .feedbackContainer {
   margin-top: 4rem;
   display: flex;
@@ -9,6 +10,7 @@
   margin-bottom: 0;
 }
 
+/* Button Styles */
 .feedbackContainer .feedbackButtons {
   display: flex;
   gap: .75rem;
@@ -19,7 +21,7 @@
   background-color: transparent;
   color: var(--ifm-heading-color);
   border: 1px solid var(--color-neutral-primary);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   border-radius: .75rem;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -36,6 +38,11 @@
   cursor: pointer;
 }
 
+.feedbackContainer .feedbackButton:focus {
+  outline: 2px solid var(--color-coalesce-purple-600);
+  outline-offset: 2px;
+}
+
 .feedbackContainer .feedbackButtonSelected {
   background-color: var(--color-neutral-secondary);
   border-color: var(--color-neutral-secondary);
@@ -47,19 +54,44 @@
   cursor: not-allowed;
 }
 
-.feedbackContainer .feedbackButtons .feedbackMessage {
+/* Feedback Input */
+.feedbackContainer .feedbackInput {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+.feedbackContainer .feedbackInput textarea {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--color-terminal-black-300);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-terminal-black-500);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.feedbackContainer .feedbackInput textarea:focus {
+  outline: 2px solid var(--color-coalesce-purple-600);
+outline-offset: 2px;      
+}
+
+/* Submission Status */
+.feedbackContainer .feedbackMessage {
   margin-bottom: 0;
   font-size: 0.9rem;
   position: absolute;
   bottom: -1.6rem;
 }
 
+/* Additional Links */
 .feedbackContainer .feedbackLinks {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
+/* Dark Mode */
 html[data-theme="dark"] {
   .feedbackContainer .feedbackButton {
    background-color: var(--color-neutral-primary);

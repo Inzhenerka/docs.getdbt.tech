@@ -122,35 +122,44 @@ export const Feedback = () => {
   return (
     <div className={styles.feedbackContainer}>
       <h2 className={styles.feedbackHeader}>Was this page helpful?</h2>
-      <div className={styles.feedbackButtons}>
-        <button 
-          className={`${styles.feedbackButton} ${selectedFeedback === true ? styles.feedbackButtonSelected : ''}`}
-          onClick={() => handleFeedbackSubmit(true)}
-          disabled={hasSubmitted}
-        >
-          <ThumbsUp />
-          Yes
-        </button>
-        <button 
-          className={`${styles.feedbackButton} ${selectedFeedback === false ? styles.feedbackButtonSelected : ''}`}
-          onClick={() => handleFeedbackSubmit(false)}
-          disabled={hasSubmitted}
-        >
-          <ThumbsDown />
-          No
-        </button>
-        {submissionStatus === "loading" ? (
-          <span className={styles.feedbackMessage}>
-            Submitting feedback...
-          </span>
-          ) : submissionStatus === "success" ? (
-          <span className={styles.feedbackMessage}>Thank you for your feedback!</span>
-        ) : submissionStatus === "error" ? (
-          <span className={styles.feedbackMessage}>
-            Error submitting feedback. Please try again.
-          </span>
-        ) : null}
+      <div className={styles.feedbackActions}>
+        <div className={styles.feedbackButtons}>
+          <button
+            className={`${styles.feedbackButton} ${selectedFeedback === true ? styles.feedbackButtonSelected : ""}`}
+            onClick={() => handleFeedbackSubmit(true)}
+            disabled={hasSubmitted}
+          >
+            <ThumbsUp />
+            Yes
+          </button>
+          <button
+            className={`${styles.feedbackButton} ${selectedFeedback === false ? styles.feedbackButtonSelected : ""}`}
+            onClick={() => handleFeedbackSubmit(false)}
+            disabled={hasSubmitted}
+          >
+            <ThumbsDown />
+            No
+          </button>
+        </div>
+        <div className={styles.feedbackInput}>
+          <textarea placeholder="Tell us what you think..." />
+        </div>
       </div>
+      {submissionStatus && (
+        <div>
+          {submissionStatus === "loading" ? (
+            <span className={styles.feedbackMessage}>Submitting feedback...</span>
+          ) : submissionStatus === "success" ? (
+            <span className={styles.feedbackMessage}>
+              Thank you for your feedback!
+            </span>
+          ) : submissionStatus === "error" ? (
+            <span className={styles.feedbackMessage}>
+              Error submitting feedback. Please try again.
+            </span>
+          ) : null}
+        </div>
+    )}
       <div className={styles.feedbackLinks}>
         <Link
           href="https://www.getdbt.com/cloud/privacy-policy"
@@ -158,7 +167,7 @@ export const Feedback = () => {
           rel="noopener noreferrer"
         >
           Privacy policy
-        </Link> 
+        </Link>
         <Link
           href="https://github.com/dbt-labs/docs.getdbt.com/issues"
           target="_blank"
