@@ -129,6 +129,11 @@ outline-offset: 2px;
   
 }
 
+.feedbackContainer .validationError {
+  color: var(--ifm-color-danger);
+  margin-top: 0.5rem;
+}
+
 /* Additional Links */
 .feedbackContainer .feedbackLinks {
   display: flex;

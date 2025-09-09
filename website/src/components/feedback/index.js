@@ -3,6 +3,7 @@ import Link from "@docusaurus/Link";
 import { ThumbsUp } from "./ThumbsUp";
 import { ThumbsDown } from "./ThumbsDown";
 import styles from "./styles.module.css";
+import { validateTextInput } from "../../utils/validate-text-input";
 
 /**
  * Feedback component to handle visitor feedback for the current docs page.
@@ -15,6 +16,7 @@ export const Feedback = () => {
   const [textFeedback, setTextFeedback] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [loadedFromStorage, setLoadedFromStorage] = useState(false);
+  const [validationError, setValidationError] = useState("");
 
   const FEEDBACK_STORAGE_KEY = 'page_feedback_data';
 
@@ -68,6 +70,18 @@ export const Feedback = () => {
     setSelectedFeedback(feedbackValue);
   };
 
+  const handleTextChange = (e) => {
+    const newText = e.target.value;
+    setTextFeedback(newText);
+    
+    // Validate input on change
+    if (newText.trim()) {
+      validateTextInput(newText, setValidationError);
+    } else {
+      setValidationError("");
+    }
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
@@ -78,6 +92,11 @@ export const Feedback = () => {
 
     // Require rating selection
     if (selectedFeedback === null) {
+      return;
+    }
+
+    // Validate text input before submission
+    if (textFeedback.trim() && !validateTextInput(textFeedback, setValidationError)) {
       return;
     }
 
@@ -180,8 +199,9 @@ export const Feedback = () => {
               <textarea
                 placeholder="Tell us what you think..."
                 value={textFeedback}
-                onChange={(e) => setTextFeedback(e.target.value)}
+                onChange={handleTextChange}
                 disabled={hasSubmitted && submissionStatus === "success"}
+                maxLength={2000}
               />
             </div>
               {submissionStatus === "loading" ? (
@@ -196,9 +216,15 @@ export const Feedback = () => {
                 <button
                   type="submit"
                   className={styles.feedbackSubmitButton}
+                  disabled={!!validationError}
                 >
                   Submit Feedback
                 </button>
+              )}
+              {validationError && (
+                <span className={`${styles.feedbackMessage} ${styles.validationError}`}>
+                  {validationError}
+                </span>
               )}
               {submissionStatus === "error" && (
                 <span className={styles.feedbackMessage}>
