@@ -116,7 +116,7 @@ export const Feedback = () => {
       // }
 
       // If success, set submission status to success and save to localStorage
-      setSubmissionStatus("error");
+      setSubmissionStatus("success");
       setHasSubmitted(true);
 
       // Save to localStorage array only on success
@@ -195,7 +195,6 @@ export const Feedback = () => {
                 <button
                   type="submit"
                   className={styles.feedbackSubmitButton}
-                  disabled={submissionStatus === "loading"}
                 >
                   Submit Feedback
                 </button>
