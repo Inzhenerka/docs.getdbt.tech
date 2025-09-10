@@ -22,7 +22,7 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
 
   | Header | Required | Description |
   | --- | --- | --- |
-  | Token | Required | Your personal access token or service token from the dbt platform. <br/> **Note**: When using the Semantic Layer, you must use one of these tokens: <li>A service token with `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions</li><li>A personal access token</li> |
+  | Token | Required | Your personal access token or service token from the dbt platform. <br/> **Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions. |
   | x-dbt-prod-environment-id | Required | Your dbt Cloud production environment ID |
 
   **Additional configuration for SQL tools**
