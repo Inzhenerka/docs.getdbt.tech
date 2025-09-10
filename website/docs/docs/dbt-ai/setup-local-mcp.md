@@ -39,7 +39,7 @@ You will need to configure environment variables to access the tools. If you are
 | --- | --- | --- |
 | DBT_HOST | Required | Your dbt platform [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). If you're using Multi-cell, exclude the `ACCOUNT_PREFIX` from the hostname. The default is `cloud.getdbt.com`  |
 | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell  `ACCOUNT_PREFIX`. If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses).  |
-| DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/>**Note**: When using the Semantic Layer, you must use one of these tokens:<br/> - A service token with `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions<br/> - A personal access token  |
+| DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/>**Note**: When using the Semantic Layer, you must use one of these tokens: <li>A service token with `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions</li><li>A personal access token</li>  |
 | DBT_ACCOUNT_ID | Required for Admininstrative API tools | Your [dbt account ID](https://docs.getdbt.com/faqs/Accounts/find-user-id) |
 | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
 
