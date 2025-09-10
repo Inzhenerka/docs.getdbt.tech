@@ -31,13 +31,12 @@ dbt supports creating Iceberg tables for three of the Snowflake materializations
 ## Iceberg catalogs
 
 Snowflake has support for Iceberg tables via built-in and external catalogs, including:
-- Snowflake built-in catalog (metadata managed by Snowflake’s built-in information schema)
-- Polaris/Open Catalog (managed Polaris)*
-- Glue Data Catalog*
-- Iceberg REST Compatible* 
+- Snowflake Horizon (the built-in catalog) 
+- Polaris/Open Catalog (managed Polaris)
+- Glue Data Catalog (Iceberg REST catalog integration is recommended)
+- Iceberg REST Compatible 
 
-*_dbt catalog support coming soon._
-
+dbt supports the Snowflake built-in catalog and Iceberg REST compatible catalogs (Polaris, Open Catalog, Glue Data Catalog, Unity Catalog) on dbt-snowflake. 
 
 To use an externally managed catalog (anything outside of the built-in catalog), you must set up a catalog integration. To do so, you must run a SQL command similar to the following. 
 
@@ -165,21 +164,22 @@ The following table outlines the configuration fields required to set up a catal
 | `catalog_name`   | yes      | The name of the catalog integration in Snowflake. For example, `my_dbt_iceberg_catalog`)|
 | `external_volume`| yes      | `<external_volume_name>`                                                                |
 | `table_format`   | yes      | `iceberg`                                                                               |
-| `catalog_type`   | yes      | `built_in`, `iceberg_rest`*                                                             |
+| `catalog_type`   | yes      | `built_in`, `iceberg_rest`                                                             |
 | `adapter_properties`| optional| See below                                                                    |
 
-*Coming soon! Stay tuned for updates.
+You can connect to external Iceberg compatible catalogs such as Polaris, Unity Catalog, and Glue Data Catalog via the Iceberg REST `catalog_type`. Please note that we only support Iceberg REST with [Catalog Linked Databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) 
 
 ### Adapter Properties
 
-These are the additional optional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties` to add in more configurability. 
+These are the additional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties` to add in more configurability. 
 
-| Field                         | Accepted values                                                            |
-|------------------|-----------------------------------------------------------------------------------------|
-| `storage_serialization_policy`|  `COMPATIBLE` or `OPTIMIZED`                                               |
-| `max_data_extension_time_in_days`|  `0` to `90` with a default of `14`                                     |
-| `data_retention_time_in_days`|  Standard Account: `1`, Enterprise or higher: `0` to `90`, default `1`      |
-| `change_tracking`|  `True` or `False`                                                                      |
+| Field | Required | Accepted Values |
+| --- | --- | --- |
+| `storage_serialization_policy` | Optional | `COMPATIBLE` or `OPTIMIZED`     |
+| `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
+| `data_retention_time_in_days` | Optional | Standard Account: `1`, Enterprise or higher: `0` to `90`, default `1`  |
+| `change_tracking` | Optional | `True` or `False`    |
+| `catalog_linked_database` | Required if you are using the iceberg_rest `catalog type`. | catalog linked database name.   |
 
 -  **storage_serialization_policy** 
 
@@ -197,6 +197,9 @@ For managed Iceberg tables, you can set a retention period for Snowflake Time Tr
 
 Specifies whether to enable change tracking on the table.
 
+- **catalog_linked_database**
+
+[Catalog-linked databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) (CLD) in Snowflake ensures that Snowflake is able to automatically sync metadata (including namespaces and iceberg tables) from the external Iceberg Catalog and reisters them as remote tables in the catalog-linked database. The reason we require the usage of Catalog-linked databases for building Iceberg tables with external catalogs is because without it, dbt will be unable to truly manage the table end to end. Snowflake does not support dropping the Iceberg table on non-CLDs in the external catalog, only unlinking the Snowflake table which creates a discrepany with how dbt expects to manage the materialized objetc.
 
 
 ### Configure catalog integration for managed Iceberg tables
@@ -214,6 +217,8 @@ catalogs:
         external_volume: dbt_external_volume
         table_format: iceberg
         catalog_type: built_in
+        adapter_properties:
+          change_tracking: 'True'
 
 ```
 
@@ -248,7 +253,7 @@ The syncing experience will be different depending on the catalog you choose. So
 
 ## Iceberg table format
 
-The dbt-snowflake adapter also supports applying `table_format` as an standalone configuration for dbt-snowflake models. We do not recommend using this as it is a legacy behavior. 
+The dbt-snowflake adapter also supports applying `table_format` as an standalone configuration for dbt-snowflake models. We do not recommend using this as it is a legacy behavior and you will only be able to write to Snowflake Horizon (not external Iceberg catalogs)
 
 The following configurations are supported.
 For more information, check out the Snowflake reference for [`CREATE ICEBERG TABLE` (Snowflake as the catalog)](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake).
