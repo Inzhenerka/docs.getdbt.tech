@@ -92,6 +92,22 @@ const sidebarSettings = {
             },
             {
               type: "category",
+              label: "Connect Fusion data platform",
+              link: {
+                type: "doc",
+                id: "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
+              },
+              items: [
+                "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
+                "docs/cloud/connect-data-platform-fusion/connection-profiles",
+                "docs/cloud/connect-data-platform-fusion/connect-bigquery",
+                "docs/cloud/connect-data-platform-fusion/connect-databricks",
+                "docs/cloud/connect-data-platform-fusion/connect-redshift",
+                "docs/cloud/connect-data-platform-fusion/connect-snowflake",
+              ],
+            },
+            {
+              type: "category",
               label: "Manage access",
               link: {
                 type: "doc",
@@ -250,7 +266,23 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Connect Fusion data platform",
+              link: {
+                type: "doc",
+                id: "docs/fusion/connect-data-platform-fusion/about-fusion-connections",
+              },
+              items: [
+                "docs/fusion/connect-data-platform-fusion/about-fusion-connections",
+                "docs/fusion/connect-data-platform-fusion/connection-profiles",
+                "docs/fusion/connect-data-platform-fusion/bigquery-setup",
+                "docs/fusion/connect-data-platform-fusion/databricks-setup",
+                "docs/fusion/connect-data-platform-fusion/redshift-setup",
+                "docs/fusion/connect-data-platform-fusion/snowflake-setup",
+              ],
+            },
+            {
+              type: "category",
+              label: "Connect Core data platform",
               link: {
                 type: "doc",
                 id: "docs/core/connect-data-platform/about-core-connections",
@@ -1090,6 +1122,23 @@ const sidebarSettings = {
         "reference/resource-configs/watsonx-presto-config",
         "reference/resource-configs/watsonx-spark-config",
         "reference/resource-configs/yellowbrick-configs",
+      ],
+    },
+    {
+      type: "category",
+      label: "Platform-specific configs (Fusion)",
+      link: {
+        type: "generated-index",
+        title: "Platform-specific configs (Fusion)",
+        description:
+          "Platform-specific configs are used to configure the dbt project for a specific database platform.",
+        slug: "/reference/resource-configs-fusion",
+      },
+      items: [
+        "reference/resource-configs-fusion/bigquery-configs",
+        "reference/resource-configs-fusion/databricks-configs",
+        "reference/resource-configs-fusion/redshift-configs",
+        "reference/resource-configs-fusion/snowflake-configs",
       ],
     },
     {
