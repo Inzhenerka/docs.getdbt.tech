@@ -6,7 +6,7 @@ unlisted: true
 description: Understand Databricks support for Apache Iceberg.
 ---
 
-Databricks is built on [Delta Lake](https://docs.databricks.com/aws/en/delta/) and stores data in the [Delta table](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture) format. Databricks does not support writing to Iceberg catalogs. However, it does support reading from external Iceberg catalogs and creating tables readable from Iceberg clients stored as Delta tables.
+Databricks is built on [Delta Lake](https://docs.databricks.com/aws/en/delta/) and stores data in the [Delta table](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture) format. Databricks does not support writing to Iceberg catalogs. However, it does support reading from external Iceberg catalogs and creating tables readable from Iceberg clients. Databricks can create managed Iceberg tables and create Iceberg compatible Delta tables by storing the table metadata in Iceberg and Delta. 
 
 When a dbt model is configured with the table property `UniForm`, it will duplicate the Delta metadata for an Iceberg-compatible metadata. This allows external Iceberg compute engines to read from Unity Catalogs. 
 
