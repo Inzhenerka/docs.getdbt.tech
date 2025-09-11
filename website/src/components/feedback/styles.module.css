@@ -141,6 +141,13 @@ outline-offset: 2px;
   gap: 1rem;
 }
 
+/* Disclaimer */
+.feedbackContainer .feedbackDisclaimer {
+  font-size: 0.8em;
+  margin-top: 1rem;
+  max-width: 360px;
+}
+
 /* Dark Mode */
 html[data-theme="dark"] {
   .feedbackContainer .feedbackButton {

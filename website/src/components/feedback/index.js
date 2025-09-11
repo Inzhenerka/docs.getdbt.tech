@@ -262,21 +262,28 @@ export const Feedback = () => {
           </>
         )}
       </form>
-      <div className={styles.feedbackLinks}>
-        <Link
-          href="https://www.getdbt.com/cloud/privacy-policy"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Privacy policy
-        </Link>
-        <Link
-          href="https://github.com/dbt-labs/docs.getdbt.com/issues"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Create a GitHub issue
-        </Link>
+      <div>
+        <div className={styles.feedbackLinks}>
+          <Link
+            href="https://www.getdbt.com/cloud/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy policy
+          </Link>
+          <Link
+            href="https://github.com/dbt-labs/docs.getdbt.com/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Create a GitHub issue
+          </Link>
+        </div>
+        <div className={styles.feedbackDisclaimer}>
+          <p>
+              This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+          </p>
+        </div>
       </div>
     </div>
   );
