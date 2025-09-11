@@ -90,6 +90,15 @@ Please complete the [setup SSO with Okta](/docs/cloud/manage-access/set-up-sso-o
 
 You've now configured SCIM for the Okta SSO integration in <Constant name="cloud" />.
 
+### SCIM username format
+
+SCIM requires the username format to be set to the user's email address. If your Okta configurations map the `userName` attribute to a different format, SCIM user provisioning will fail. To set your Okta app config to `email`:
+
+1. Open the SAML app created for the dbt integration.
+2. In the apps **Sign on** tab, click **Edit** in the **Settings** pane.
+3. Set the **Application username format** field to **Email**.
+4. Click **Save**.
+
 ### Existing Okta integrations
 
 If you are adding SCIM to an existing Okta integration in <Constant name="cloud" /> (as opposed to setting up SCIM and SSO concurrently for the first time), there is some functionality you should be aware of:
