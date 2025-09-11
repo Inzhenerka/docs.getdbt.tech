@@ -1,6 +1,6 @@
 ---
 title: "Connect Snowflake"
 id: connect-snowflake
-description: "Configure Snowflake connection."
+description: "Setup instructions for connecting Snowflake to dbt Fusion"
 sidebar_label: "Connect Snowflake"
 ---
