@@ -90,13 +90,13 @@ This table outlines which month of the "Latest" release track in <Constant name=
 
 This table outlines which version of the dbt adapter contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
 
-| Flag                          | `dbt-<ADAPTER>`: Intro | `dbt-<ADAPTER>`: Maturity |
+| Flag                          | dbt-<ADAPTER>: Intro | dbt-<ADAPTER>: Maturity |
 | ----------------------------- | ----------------------- | -------------------------- |
-| [`use_info_schema_for_columns`](/reference/global-configs/databricks-changes#use-information-schema-for-columns) | `Databricks` 1.9.0                   | TBD                        |
-| [`use_user_folder_for_python`](/reference/global-configs/databricks-changes#use-users-folder-for-python-model-notebooks)  | `Databricks` 1.9.0                   | TBD                        |
-| [`use_materialization_v2`](/reference/global-configs/databricks-changes#use-restructured-materializations)      | `Databricks` 1.10.0                  | TBD                        |
-| [`enable_truthy_nulls_equals_macro`](/reference/global-configs/snowflake-changes#the-enable_truthy_nulls_equals_macro-flag) | `Snowflake` 1.9.0 | TBD | 
-| [`restrict_direct_pg_catalog_access`](/reference/global-configs/redshift-changes#the-restrict_direct_pg_catalog_access-flag) | `Redshift` 1.9.0 | TBD |
+| [use_info_schema_for_columns](/reference/global-configs/databricks-changes#use-information-schema-for-columns) | Databricks 1.9.0                   | TBD                        |
+| [use_user_folder_for_python](/reference/global-configs/databricks-changes#use-users-folder-for-python-model-notebooks)  | Databricks 1.9.0                   | TBD                        |
+| [use_materialization_v2](/reference/global-configs/databricks-changes#use-restructured-materializations)      | Databricks 1.10.0                  | TBD                        |
+| [enable_truthy_nulls_equals_macro](/reference/global-configs/snowflake-changes#the-enable_truthy_nulls_equals_macro-flag) | Snowflake 1.9.0 | TBD | 
+| [restrict_direct_pg_catalog_access](/reference/global-configs/redshift-changes#the-restrict_direct_pg_catalog_access-flag) | Redshift 1.9.0 | TBD |
 
 When the <Constant name="cloud" /> Maturity is "TBD," it means we have not yet determined the exact date when these flags' default values will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
 
