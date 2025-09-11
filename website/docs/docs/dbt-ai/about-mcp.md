@@ -81,7 +81,7 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 - `get_model_children`: Gets the children models of a specific model
 - `get_model_health`: Gets health signals for a specific model
 - `get_exposures`: Gets all exposures
-- `get_exposure_details`: Get details for a specific exposure or a list of exposures
+- `get_exposure_details`: Gets details for a specific exposure or a list of exposures
 
 
 ### Administrative API
