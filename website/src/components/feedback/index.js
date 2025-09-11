@@ -18,12 +18,12 @@ export const Feedback = () => {
   const [loadedFromStorage, setLoadedFromStorage] = useState(false);
   const [validationError, setValidationError] = useState("");
 
-  const FEEDBACK_STORAGE_KEY = 'page_feedback_data';
+  const FEEDBACK_STORAGE_KEY = "page_feedback_data";
 
   // Get all feedback data from localStorage
   const getFeedbackData = () => {
-    if (typeof window === 'undefined') return [];
-    
+    if (typeof window === "undefined") return [];
+
     try {
       const data = localStorage.getItem(FEEDBACK_STORAGE_KEY);
       return data ? JSON.parse(data) : [];
@@ -34,8 +34,8 @@ export const Feedback = () => {
 
   // Save feedback data to localStorage
   const saveFeedbackData = (feedbackArray) => {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     try {
       localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(feedbackArray));
     } catch (error) {
@@ -45,16 +45,19 @@ export const Feedback = () => {
 
   // Find existing feedback for current page
   const findPageFeedback = (feedbackArray, pageUrl) => {
-    return feedbackArray.find(item => item.page_url === pageUrl);
+    return feedbackArray.find((item) => item.page_url === pageUrl);
   };
 
   // Load feedback state from localStorage on component mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const currentUrl = window.location.href;
       const feedbackArray = getFeedbackData();
       const existingFeedback = findPageFeedback(feedbackArray, currentUrl);
-      
+
+      // TODO: Delete before merge
+      console.log("existingFeedback", existingFeedback);
+
       if (existingFeedback) {
         setSelectedFeedback(existingFeedback.is_positive);
         setHasSubmitted(true);
@@ -73,7 +76,7 @@ export const Feedback = () => {
   const handleTextChange = (e) => {
     const newText = e.target.value;
     setTextFeedback(newText);
-    
+
     // Validate input on change
     if (newText.trim()) {
       validateTextInput(newText, setValidationError);
@@ -84,7 +87,7 @@ export const Feedback = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Prevent resubmission if already submitted
     if (hasSubmitted) {
       return;
@@ -96,7 +99,10 @@ export const Feedback = () => {
     }
 
     // Validate text input before submission
-    if (textFeedback.trim() && !validateTextInput(textFeedback, setValidationError)) {
+    if (
+      textFeedback.trim() &&
+      !validateTextInput(textFeedback, setValidationError)
+    ) {
       return;
     }
 
@@ -109,13 +115,22 @@ export const Feedback = () => {
         {
           action: "feedback_submission",
         }
-      )
-      
+      );
+
+      // TODO: Delete before merge
+      console.log("hitting submit feedback api");
+      console.log("payload", {
+        is_positive: selectedFeedback,
+        message: textFeedback.trim(),
+        page_url: window.location.href,
+        recaptcha_token: token,
+      });
+
       // TODO: Change to production URL
       // "https://www.getdbt.com/api/submit-feedback",
       // "http://localhost:3000/api/submit-feedback",
       const response = await fetch(
-        "https://docs-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback",
+        "https://www-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback",
         {
           method: "POST",
           headers: {
@@ -130,7 +145,13 @@ export const Feedback = () => {
         }
       );
 
+      // TODO: Delete before merge
+      console.log("api response", response);
+
       const data = await response.json();
+
+      // TODO: Delete before merge
+      console.log("data", data);
 
       // If error, set submission status to error and throw error
       if (data?.error) {
@@ -155,6 +176,9 @@ export const Feedback = () => {
         page_url: currentUrl,
       };
 
+      // TODO: Delete before merge
+      console.log("newFeedbackItem", newFeedbackItem);
+
       if (existingFeedbackIndex >= 0) {
         // Update existing feedback
         feedbackArray[existingFeedbackIndex] = newFeedbackItem;
@@ -165,6 +189,8 @@ export const Feedback = () => {
 
       saveFeedbackData(feedbackArray);
     } catch (error) {
+      // TODO: Delete before merge
+      console.log("error submitting feedback", error);
       setSubmissionStatus("error");
     }
   };
@@ -204,33 +230,35 @@ export const Feedback = () => {
                 maxLength={2000}
               />
             </div>
-              {submissionStatus === "loading" ? (
-                <span className={styles.feedbackMessage}>
-                  Submitting feedback...
-                </span>
-              ) : submissionStatus === "success" ? (
-                <span className={styles.feedbackMessage}>
-                  Thank you for your feedback!
-                </span>
-              ) : (
-                <button
-                  type="submit"
-                  className={styles.feedbackSubmitButton}
-                  disabled={!!validationError}
-                >
-                  Submit Feedback
-                </button>
-              )}
-              {validationError && (
-                <span className={`${styles.feedbackMessage} ${styles.validationError}`}>
-                  {validationError}
-                </span>
-              )}
-              {submissionStatus === "error" && (
-                <span className={styles.feedbackMessage}>
-                  Error submitting feedback. Please try again.
-                </span>
-              )}
+            {submissionStatus === "loading" ? (
+              <span className={styles.feedbackMessage}>
+                Submitting feedback...
+              </span>
+            ) : submissionStatus === "success" ? (
+              <span className={styles.feedbackMessage}>
+                Thank you for your feedback!
+              </span>
+            ) : (
+              <button
+                type="submit"
+                className={styles.feedbackSubmitButton}
+                disabled={!!validationError}
+              >
+                Submit Feedback
+              </button>
+            )}
+            {validationError && (
+              <span
+                className={`${styles.feedbackMessage} ${styles.validationError}`}
+              >
+                {validationError}
+              </span>
+            )}
+            {submissionStatus === "error" && (
+              <span className={styles.feedbackMessage}>
+                Error submitting feedback. Please try again.
+              </span>
+            )}
           </>
         )}
       </form>
