@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "@docusaurus/Link";
 import { ThumbsUp } from "./ThumbsUp";
 import { ThumbsDown } from "./ThumbsDown";
@@ -15,53 +15,7 @@ export const Feedback = () => {
   const [selectedFeedback, setSelectedFeedback] = useState(null);
   const [textFeedback, setTextFeedback] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [loadedFromStorage, setLoadedFromStorage] = useState(false);
   const [validationError, setValidationError] = useState("");
-
-  const FEEDBACK_STORAGE_KEY = "page_feedback_data";
-
-  // Get all feedback data from localStorage
-  const getFeedbackData = () => {
-    if (typeof window === "undefined") return [];
-
-    try {
-      const data = localStorage.getItem(FEEDBACK_STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
-    } catch (error) {
-      return [];
-    }
-  };
-
-  // Save feedback data to localStorage
-  const saveFeedbackData = (feedbackArray) => {
-    if (typeof window === "undefined") return;
-
-    try {
-      localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(feedbackArray));
-    } catch (error) {
-      return;
-    }
-  };
-
-  // Find existing feedback for current page
-  const findPageFeedback = (feedbackArray, pageUrl) => {
-    return feedbackArray.find((item) => item.page_url === pageUrl);
-  };
-
-  // Load feedback state from localStorage on component mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const currentUrl = window.location.href;
-      const feedbackArray = getFeedbackData();
-      const existingFeedback = findPageFeedback(feedbackArray, currentUrl);
-
-      if (existingFeedback) {
-        setSelectedFeedback(existingFeedback.is_positive);
-        setHasSubmitted(true);
-        setLoadedFromStorage(true);
-      }
-    }
-  }, []);
 
   const handleRatingSelect = (feedbackValue) => {
     if (hasSubmitted) {
@@ -116,8 +70,9 @@ export const Feedback = () => {
 
       // TODO: Change to production URL
       // "https://www.getdbt.com/api/submit-feedback",
+      // "https://www-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback",
       const response = await fetch(
-        "https://www-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback",
+        "http://localhost:3000/api/submit-feedback",
         {
           method: "POST",
           headers: {
@@ -139,33 +94,9 @@ export const Feedback = () => {
         throw new Error(data?.error);
       }
 
-      // If success, set submission status to success and save to localStorage
+      // If success, set submission status to success
       setSubmissionStatus("success");
       setHasSubmitted(true);
-
-      // Save to localStorage array only on success
-      const currentUrl = window.location.href;
-      const feedbackArray = getFeedbackData();
-      const existingFeedbackIndex = feedbackArray.findIndex(
-        (item) => item.page_url === currentUrl
-      );
-
-      const newFeedbackItem = {
-        is_positive: selectedFeedback,
-        message: textFeedback.trim(),
-        timestamp: Date.now(),
-        page_url: currentUrl,
-      };
-
-      if (existingFeedbackIndex >= 0) {
-        // Update existing feedback
-        feedbackArray[existingFeedbackIndex] = newFeedbackItem;
-      } else {
-        // Add new feedback
-        feedbackArray.push(newFeedbackItem);
-      }
-
-      saveFeedbackData(feedbackArray);
     } catch (error) {
       setSubmissionStatus("error");
     }
@@ -195,17 +126,19 @@ export const Feedback = () => {
             No
           </button>
         </div>
-        {selectedFeedback !== null && !loadedFromStorage && (
+        {selectedFeedback !== null && (
           <>
+            {!hasSubmitted && (
             <div className={styles.feedbackInput}>
               <textarea
                 placeholder="Tell us what you think..."
                 value={textFeedback}
                 onChange={handleTextChange}
                 disabled={hasSubmitted && submissionStatus === "success"}
-                maxLength={2000}
-              />
-            </div>
+                  maxLength={2000}
+                />
+              </div>
+            )}
             {submissionStatus === "loading" ? (
               <span className={styles.feedbackMessage}>
                 Submitting feedback...
