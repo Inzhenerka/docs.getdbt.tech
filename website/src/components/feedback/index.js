@@ -55,9 +55,6 @@ export const Feedback = () => {
       const feedbackArray = getFeedbackData();
       const existingFeedback = findPageFeedback(feedbackArray, currentUrl);
 
-      // TODO: Delete before merge
-      console.log("existingFeedback", existingFeedback);
-
       if (existingFeedback) {
         setSelectedFeedback(existingFeedback.is_positive);
         setHasSubmitted(true);
@@ -117,18 +114,8 @@ export const Feedback = () => {
         }
       );
 
-      // TODO: Delete before merge
-      console.log("hitting submit feedback api");
-      console.log("payload", {
-        is_positive: selectedFeedback,
-        message: textFeedback.trim(),
-        page_url: window.location.href,
-        recaptcha_token: token,
-      });
-
       // TODO: Change to production URL
       // "https://www.getdbt.com/api/submit-feedback",
-      // "http://localhost:3000/api/submit-feedback",
       const response = await fetch(
         "https://www-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback",
         {
@@ -145,13 +132,7 @@ export const Feedback = () => {
         }
       );
 
-      // TODO: Delete before merge
-      console.log("api response", response);
-
       const data = await response.json();
-
-      // TODO: Delete before merge
-      console.log("data", data);
 
       // If error, set submission status to error and throw error
       if (data?.error) {
@@ -176,9 +157,6 @@ export const Feedback = () => {
         page_url: currentUrl,
       };
 
-      // TODO: Delete before merge
-      console.log("newFeedbackItem", newFeedbackItem);
-
       if (existingFeedbackIndex >= 0) {
         // Update existing feedback
         feedbackArray[existingFeedbackIndex] = newFeedbackItem;
@@ -189,8 +167,6 @@ export const Feedback = () => {
 
       saveFeedbackData(feedbackArray);
     } catch (error) {
-      // TODO: Delete before merge
-      console.log("error submitting feedback", error);
       setSubmissionStatus("error");
     }
   };
