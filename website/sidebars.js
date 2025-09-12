@@ -99,7 +99,6 @@ const sidebarSettings = {
               },
               items: [
                 "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
-                "docs/cloud/connect-data-platform-fusion/connection-profiles",
                 "docs/cloud/connect-data-platform-fusion/connect-bigquery",
                 "docs/cloud/connect-data-platform-fusion/connect-databricks",
                 "docs/cloud/connect-data-platform-fusion/connect-redshift",
