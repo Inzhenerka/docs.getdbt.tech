@@ -104,7 +104,7 @@ export const Feedback = () => {
 
   return (
     <div className={styles.feedbackContainer}>
-      <h2 className={styles.feedbackHeader}>Was this page helpful?</h2>
+      <h2 id="feedback-header" className={styles.feedbackHeader}>Was this page helpful?</h2>
       <form onSubmit={handleFormSubmit} className={styles.feedbackActions}>
         <div className={styles.feedbackButtons}>
           <button
