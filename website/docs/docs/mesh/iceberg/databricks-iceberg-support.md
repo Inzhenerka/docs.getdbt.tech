@@ -7,9 +7,9 @@ description: Understand Databricks support for Apache Iceberg.
 ---
 
 Databricks is built on [Delta Lake](https://docs.databricks.com/aws/en/delta/) and stores data in the [Delta table](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture) format. Databricks does not support writing to Iceberg catalogs. 
-Databricks can create both managed Iceberg tables and create Iceberg compatible Delta tables by storing the table metadata in Iceberg and Delta, readable from external clients. In terms of reading, Unity Catalog does support reading from external Iceberg catalogs.
+Databricks can create both managed Iceberg tables as well as create Iceberg compatible Delta tables by storing the table metadata in Iceberg and Delta, readable from external clients. In terms of reading, Unity Catalog does support reading from external Iceberg catalogs.
 
-When a dbt model is configured with the table property `UniForm`, it will duplicate the Delta metadata for an Iceberg-compatible metadata.  
+When a dbt model is configured with the table property `UniForm`, it will duplicate the Delta metadata for an Iceberg-compatible metadata. This allows external Iceberg compute engines to read from Unity Catalogs. 
 
 Example SQL:
 
@@ -43,9 +43,9 @@ The following table outlines the configuration fields required to set up a catal
 
 These are the additional configurations that can be supplied and nested under `adapter_properties` to add in more configurability. 
 
-| Field | Description | Required | Accepted values |
-| :---- | :---- | :---- | :---- |
-| file_format |  | Optional, Defaults to `delta` unless overwritten in Databricks account.  | delta (default), parquet, hudi |
+| table_format | Table Format for your dbt models will be materialized as  | OptionalDefaults to `delta` unless overwritten in Databricks account.  | default, iceberg |
+| adapter_properties: | Additional Platform-Specific Properties.  | Optional | See below for acceptable values	 |
+
 
 Example:
 
@@ -77,6 +77,7 @@ catalogs:
 <br />
 
 An example of `iceberg_model.sql`:
+
 ```yaml
 
 {{
