@@ -1,5 +1,10 @@
 const sidebarSettings = {
   docs: [
+    {
+      type: 'html',
+      value: 'About',
+      className: 'sidebar-title',
+    },
     "docs/introduction",
     {
       type: "category",
@@ -12,6 +17,11 @@ const sidebarSettings = {
         "docs/fusion/supported-features",
         "docs/fusion/install-fusion",
       ],
+    },
+    {
+      type: 'html',
+      value: 'Get started',
+      className: 'sidebar-title',
     },
     {
       type: "category",
@@ -318,6 +328,11 @@ const sidebarSettings = {
       ],
     },
     {
+      type: 'html',
+      value: 'Build and develop',
+      className: 'sidebar-title',
+    },
+    {
       type: "category",
       label: "Develop with dbt",
       collapsed: true,
@@ -581,6 +596,11 @@ const sidebarSettings = {
           ],
         },
       ],
+    },
+    {
+      type: 'html',
+      value: 'Deploy and explore',
+      className: 'sidebar-title',
     },
     {
       type: "category",
@@ -860,20 +880,25 @@ const sidebarSettings = {
         },
       ],
     },
-            {
-          type: "category",
-          label: "Copilot",
-          collapsed: true,
-          link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-          items: [
-           "docs/cloud/dbt-copilot",
-           "docs/cloud/enable-dbt-copilot",
-            "docs/cloud/use-dbt-copilot",
-            "docs/cloud/copilot-styleguide",
-            "docs/cloud/copilot-chat-in-studio",
-            "docs/cloud/dbt-copilot-faqs",
-          ],
-        },
+    {
+      type: 'html',
+      value: 'Tools',
+      className: 'sidebar-title',
+    },
+    {
+      type: "category",
+      label: "Copilot",
+      collapsed: true,
+      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      items: [
+        "docs/cloud/dbt-copilot",
+        "docs/cloud/enable-dbt-copilot",
+        "docs/cloud/use-dbt-copilot",
+        "docs/cloud/copilot-styleguide",
+        "docs/cloud/copilot-chat-in-studio",
+        "docs/cloud/dbt-copilot-faqs",
+      ],
+    },
     {
       type: "category",
       label: "dbt MCP",
