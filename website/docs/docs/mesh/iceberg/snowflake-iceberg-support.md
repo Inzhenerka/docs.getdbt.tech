@@ -169,7 +169,7 @@ The following table outlines the configuration fields required to set up a catal
 | `catalog_type`   | yes      | `built_in`, `iceberg_rest`                                                             |
 | `adapter_properties`| optional| See below                                                                    |
 
-You can connect to external Iceberg compatible catalogs such as Polaris, Unity Catalog, and Glue Data Catalog via the Iceberg REST `catalog_type`. Please note that we only support Iceberg REST with [Catalog Linked Databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) 
+You can connect to external Iceberg compatible catalogs such as Polaris and Unity Catalog via the Iceberg REST `catalog_type`. Please note that we only support Iceberg REST with [Catalog Linked Databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) 
 
 ### Adapter Properties
 
