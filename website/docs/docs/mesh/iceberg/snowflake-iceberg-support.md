@@ -33,12 +33,14 @@ dbt supports creating Iceberg tables for three of the Snowflake materializations
 Snowflake has support for Iceberg tables via built-in and external catalogs, including:
 - Snowflake Horizon (the built-in catalog) 
 - Polaris/Open Catalog (managed Polaris)
-- Glue Data Catalog (Iceberg REST catalog integration is recommended)
+- Glue Data Catalog*
 - Iceberg REST Compatible 
 
-dbt supports the Snowflake built-in catalog and Iceberg REST compatible catalogs (Polaris, Open Catalog, Glue Data Catalog, Unity Catalog) on dbt-snowflake. 
+dbt supports the Snowflake built-in catalog and Iceberg REST compatible catalogs (including Polaris and Unity Catalog) on dbt-snowflake. 
 
 To use an externally managed catalog (anything outside of the built-in catalog), you must set up a catalog integration. To do so, you must run a SQL command similar to the following. 
+
+*Not supported in dbt-snowflake
 
 ### External catalogs
 
