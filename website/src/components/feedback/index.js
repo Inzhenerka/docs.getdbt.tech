@@ -68,11 +68,9 @@ export const Feedback = () => {
         }
       );
 
-      // TODO: Change to production URL
-      // "https://www.getdbt.com/api/submit-feedback",
-      // "http://localhost:3000/api/submit-feedback",
+      // Submit feedback to db
       const response = await fetch(
-        "https://www-getdbt-com-git-feedback-input-dbt-labs.vercel.app/api/submit-feedback",
+        "https://www.getdbt.com/api/submit-feedback",
         {
           method: "POST",
           headers: {
