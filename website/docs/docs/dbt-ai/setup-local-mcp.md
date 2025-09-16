@@ -9,9 +9,11 @@ id: "setup-local-mcp"
 
 [The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine. To set up the local dbt MCP server, follow these directions.
 
-1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to install `dbt-mcp` and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment.
+## 1. Install uv
 
-2. Create an `.env` file to set your environment variables.
+[Install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to run `dbt-mcp` and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment.
+
+## 2. Create an `.env` file to set your environment variables
 
 Here is an example of the file:
 
@@ -75,7 +77,19 @@ We support disabling tool access on the local dbt-mcp.
 | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
 | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
 
-3. After creating your .env file, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating a
+
+## 3. (Optional) Test your configuration
+
+In a terminal, run the following command to test your setup:
+```bash
+uvx --env-file <path-to-.env-file> dbt-mcp
+```
+
+If there are no errors, `uv` and the `.env` file are set up correctly and you can move on to the next step.
+
+## 4. Set up your MCP client
+
+After creating your `.env` file, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating a
 configuration file. This is dependent on what tools you want to integrate with.
 
 
