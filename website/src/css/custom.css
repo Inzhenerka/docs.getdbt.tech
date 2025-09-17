@@ -2923,4 +2923,8 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   border-bottom: 2px solid var(--ifm-color-primary); /* Line below */
   margin: 12px 0;
   text-align: center; /* Optional: Center the title */
+
+/* Hide reCaptcha badge */
+.grecaptcha-badge {
+  display: none;
 }
