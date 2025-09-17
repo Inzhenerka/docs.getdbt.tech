@@ -119,45 +119,48 @@ var siteSettings = {
               activeBaseRegex: "docs/(?!(dbt-cloud))",
             },
             {
-              label: "API docs",
-              to: "/docs/dbt-cloud-apis/overview",
+              label: "References",
+              to: "reference/references-overview",
+            },
+            {
+              label: "Guides",
+              to: "/guides",
             },
             {
               label: "Best practices",
               to: "/best-practices",
-            },
-            {
-              label: "Release notes",
-              to: "/docs/dbt-versions/dbt-cloud-release-notes",
             },
           ],
         },
         {
-          to: "/guides",
-          label: "Guides",
+          to: "/docs/dbt-cloud-apis/overview",
+          label: "APIs",
           position: "right",
         },
         {
-          to: "reference/references-overview",
-          label: "Reference",
+          to: "/blog",
+          label: "Developer blog",
           position: "right",
-          activeBasePath: "reference",
         },
         {
-          label: "Resources",
+          label: "Help",
           position: "right",
           items: [
             {
+              label: "Release notes",
+              to: "/docs/dbt-versions/dbt-cloud-release-notes",
+            },
+            {
+              label: "FAQs",
+              to: "/docs/faqs",
+            },
+            {
+              label: "Support and billing",
+              to: "/docs/dbt-support",
+            },
+            {
               label: "Courses",
               href: "https://learn.getdbt.com",
-            },
-            {
-              label: "Best practices",
-              to: "/best-practices",
-            },
-            {
-              label: "Developer blog",
-              to: "/blog",
             },
           ],
         },
