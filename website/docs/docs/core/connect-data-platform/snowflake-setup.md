@@ -108,7 +108,7 @@ dbt can specify a `private_key` directly as a string instead of a `private_key_p
 
 :::important Private keys in Fusion
 If you're using a 3DES-encrypted, headerless PEM body, you should either:
-- Re-export your existing key using a modern algorithm such as AES-256 encryption.
+- (Recommended) Re-export your existing key using a modern algorithm such as AES-256 encryption.
 - Add the `BEGIN` header and `END` footer to your PEM body. For example:
 
   ```
