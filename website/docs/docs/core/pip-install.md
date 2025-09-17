@@ -88,6 +88,10 @@ To set up a Python virtual environment, navigate to your project directory and e
   </TabItem>
 </Tabs>
 
+The structure for windows varies based on the terminal you are using. If you're using cmd, that works fine, but little difference for powershell and bash shells. 
+
+For powershell, it will be `.\env\Scripts\Activate.ps1 ` and for bash ` source env/Scripts/activate `. 
+
 If you're using <Constant name="core" />, refer to [What are the best practices for installing <Constant name="core" /> with pip?](/faqs/Core/install-pip-best-practices.md#using-virtual-environments) after creating your virtual environment. 
 
 If you're using the <Constant name="cloud" /> CLI, you can [install <Constant name="cloud" /> CLI in pip](/docs/cloud/cloud-cli-installation#install-dbt-cloud-cli-in-pip) after creating your virtual environment.
