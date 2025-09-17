@@ -22,7 +22,7 @@ Connect your Azure DevOps cloud account in <Constant name="cloud" /> to unlock n
 
 Currently, there are multiple methods for integrating Azure DevOps with <Constant name="cloud" />: 
 
-- [**Service principal (recommended)**](/docs/cloud/git/setup-service-principal)
+- [**Service principal (recommended)**](/docs/cloud/git/setup-service-principal): Available to all accounts.
 - [**Service user (legacy)**](/docs/cloud/git/setup-service-user): Available to all accounts.
 - [**Service user to service principal migration**](/docs/cloud/git/setup-service-principal#migrate-to-service-principal): Once the **Service principal** option is available, you can migrate to the new service. 
 
