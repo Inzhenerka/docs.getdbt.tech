@@ -19,11 +19,6 @@ const sidebarSettings = {
       ],
     },
     {
-      type: 'html',
-      value: 'Get started',
-      className: 'sidebar-title',
-    },
-    {
       type: "category",
       label: "About the dbt platform",
       link: { type: "doc", id: "docs/cloud/about-cloud/dbt-cloud-features" },
@@ -36,7 +31,7 @@ const sidebarSettings = {
         "docs/cloud/about-cloud/tenancy",
       ],
     }, // About dbt Cloud directory
-        {
+    {
       type: "category",
       label: "Supported data platforms",
       collapsed: true,
@@ -49,6 +44,11 @@ const sidebarSettings = {
         "docs/contribute-core-adapters",
       ],
     }, // Supported data platforms directory
+    {
+      type: 'html',
+      value: 'Get started',
+      className: 'sidebar-title',
+    },
     {
       type: "category",
       label: "Get started with dbt",
@@ -727,6 +727,11 @@ const sidebarSettings = {
       ],
     },
     {
+      type: 'html',
+      value: 'Additional tools',
+      className: 'sidebar-title',
+    },
+    {
       type: "category",
       label: "Use the dbt Semantic Layer",
       collapsed: true,
@@ -860,6 +865,11 @@ const sidebarSettings = {
         id: "docs/cloud/cost-management/cost-management",
       },
       items: ["docs/cloud/cost-management/cost-management"],
+    },
+    {
+      type: 'html',
+      value: 'Release information',
+      className: 'sidebar-title',
     },
     {
       type: "category",
