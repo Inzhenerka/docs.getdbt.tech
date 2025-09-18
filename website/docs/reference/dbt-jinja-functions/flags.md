@@ -95,28 +95,28 @@ The following commands are supported:
 
 | `flags.WHICH` value | Command and description                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `"build"`           | `dbt build`: Builds and tests all selected resources.                                 |
-| `"clean"`           | `dbt clean`: Removing artifacts like target directory and packages.                 |
-| `"clone"`           | `dbt clone`: Clone models and other resources.                                                      |
-| `"compile"`         | `dbt compile`: Compile SQL, but do not execute.                                     |
-| `"debug"`           | `dbt debug`: Test connections and validate configs.                                 |
-| `"deps"`            | `dbt deps`: Download package dependencies.                                          |
-| `"docs"`            | `dbt docs`: Generate and serve documentation.                                         |
-| `"environment"`     | `dbt environment`: Workspace environment commands (cloud CLI).                      |
-| `"help"`            | `dbt help`: Shows help for commands and subcommands.                                    |
-| `"init"`            | `dbt init`: Bootstrap a new project.                                                |
-| `"invocation"`      | `dbt invocation`: For interacting with or inspecting current invocation (cloud CLI) |
-| `"list"`            | `dbt list` / `dbt ls`: List resources.                                              |
-| `"parse"`           | `dbt parse`: Parse project and report errors, but don’t build/test.                 |
-| `"retry"`           | `dbt retry`: Retry the last invocation from the point of failure.                   |
-| `"run"`             | `dbt run`: Execute models.                                                          |
-| `"run-operation"`   | `dbt run-operation`: Invoke arbitrary macros or SQL ops.                            |
-| `"seed"`            | `dbt seed`: Load CSV(s) into the database.                                          |
-| `"show"`            | `dbt show`: Inspect resource definitions or materializations.                       |
-| `"snapshot"`        | `dbt snapshot`: Execute snapshots.                                                  |
-| `"source"`          | `dbt source`: Validate freshness and inspect source definitions.                       |
-| `"test"`            | `dbt test`: Schema and data tests.                                                    |
-| `"version"`         | `dbt version`: Display dbt version.                                                 |
+| `"build"`           | Builds and tests all selected resources.                                 |
+| `"clean"`           | Removing artifacts like target directory and packages.                 |
+| `"clone"`           | Clone models and other resources.                                                      |
+| `"compile"`         | Compile SQL, but do not execute.                                     |
+| `"debug"`           | Test connections and validate configs.                                 |
+| `"deps"`            | Download package dependencies.                                          |
+| `"docs"`            | Generate and serve documentation.                                         |
+| `"environment"`     | Workspace environment commands (cloud CLI).                      |
+| `"help"`            | Shows help for commands and subcommands.                                    |
+| `"init"`            | Bootstrap a new project.                                                |
+| `"invocation"`      | For interacting with or inspecting current invocation (cloud CLI) |
+| `"list"`            | List resources.                                              |
+| `"parse"`           | Parse project and report errors, but don’t build/test.                 |
+| `"retry"`           | Retry the last invocation from the point of failure.                   |
+| `"run"`             | Execute models.                                                          |
+| `"run-operation"`   | Invoke arbitrary macros or SQL ops.                            |
+| `"seed"`            | Load CSV(s) into the database.                                          |
+| `"show"`            | Inspect resource definitions or materializations.                       |
+| `"snapshot"`        | Execute snapshots.                                                  |
+| `"source"`          | Validate freshness and inspect source definitions.                       |
+| `"test"`            | Schema and data tests.                                                    |
+| `"version"`         | Display dbt version.                                                 |
 
 
 
