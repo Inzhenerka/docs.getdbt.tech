@@ -2919,7 +2919,7 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
   font-weight: bold;
   display: block;
   padding: 8px 0;
-  border-top: 2px solid var(--color-coalesce-purple-600);  /* Line above */
+  border-top: 2px solid var(--color-coalesce-purple-100);  /* Line above */
   /* border-bottom: 2px solid var(--ifm-color-primary); Line below */
   margin: 12px 0;
   text-align: left; /* Optional: Center the title */
