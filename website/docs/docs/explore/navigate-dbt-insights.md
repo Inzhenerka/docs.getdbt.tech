@@ -16,13 +16,13 @@ Learn how to navigate <Constant name="query_page" /> interface and use the main 
 
 ## Query console
 The query console is the main component of <Constant name="query_page" />. It allows you to write, run, and analyze SQL queries. The Query console supports:
-- Query console editor, which allows you to write, run, and analyze SQL queries:
+1. Query console editor, which allows you to write, run, and analyze SQL queries:
   - It supports syntax highlighting and autocomplete suggestions 
   - Hyperlink from SQL code `ref` to the corresponding Explorer page
-- [Query console menu](#query-console-menu), which contains **Bookmark (icon)**, **Develop**, and **Run** buttons. 
-- [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
-  - Has three tabs: **Results**, **Details**, and **Chart**, which allow you to analyze query execution and visualize results.
-- [Query console sidebar menu](#query-console-sidebar-menu), which contains the **<Constant name="explorer" />**, **Bookmark**, **Query history**, and **<Constant name="copilot" />** icons.
+2. [Query console menu](#query-console-menu), which contains **Bookmark (icon)**, **Develop**, and **Run** buttons. 
+3. [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
+  - Has three tabs: **Data**, **Chart**, and **Details**, which allow you to analyze query execution and visualize results.
+4. [Query console sidebar menu](#query-console-sidebar-menu), which contains the **<Constant name="explorer" />**, **Bookmark**, **Query history**, and **<Constant name="copilot" />** icons.
 
 <Lightbox src="/img/docs/dbt-insights/insights-main.png" title="dbt Insights main interface with blank query editor" />
 
@@ -34,14 +34,12 @@ The Query console menu is located at the top right of the Query editor. It conta
   - Let [<Constant name="copilot" />](/docs/cloud/dbt-copilot) do the writing for you &mdash; use the AI assistant to automatically generate a helpful description for your bookmark.
   - Access the newly created bookmark from the **Bookmark** icon in the [Query console sidebar menu](#query-console-sidebar-menu). 
  - **Develop**: Open the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) to continue editing your SQL query.
-- **Run** button &mdash; Run your SQL query and view the results in the **Results** tab.
-
-  <Lightbox src="/img/docs/dbt-insights/develop-menu.png" title="dbt Insights Develop menu." />
+- **Run** button &mdash; Run your SQL query and view the results in the **Data** tab.
 
 ## Query output panel
 
 The Query output panel is below the query editor and displays the results of a query. It displays the following tabs to analyze query execution and visualize results:
-- **Results** tab &mdash; Preview your SQL results, with results paginated.
+- **Data** tab &mdash; Preview your SQL results, with results paginated.
 - **Details** tab &mdash; Generates succinct details of executed SQL query:
   - Query metadata &mdash; <Constant name="copilot" />'s AI-generated title and description. Along with the supplied SQL and compiled SQL.
   - Connection details &mdash; Relevant data platform connection information.
@@ -57,17 +55,57 @@ The Query output panel is below the query editor and displays the results of a q
 <Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="dbt Insights Details tab" />
 <Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="dbt Insights Chart tab" />
 </DocCarousel>
+<!--need to update-->
 
 ## Query console sidebar menu
 The Query console sidebar menu and icons contains the following options:
-- **<Constant name="explorer" /> icon** &mdash; View your project's models, columns, metrics, and more using the integrated <Constant name="explorer" /> view.
-- **Bookmark icon** &mdash; Save and access your frequently used queries. 
-- **Query history icon** &mdash; View past queries, their statuses (All, Success, Error, or Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
-- **<Constant name="copilot" /> icon** &mdash; Use [<Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts.
 
-<DocCarousel slidesPerView={1}>
+### dbt Catalog
+
+**<Constant name="explorer" /> icon** &mdash; View your project's models, columns, metrics, and more using the integrated <Constant name="explorer" /> view.
+
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights dbt Catalog icon" />
+<!--need to update-->
+
+### Bookmark 
+
+Save and access your frequently used queries. 
+
+<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="60%" title="Manage your query bookmarks" /> 
+<!--need to update-->
+
+### Query history
+
+View past queries, their statuses (All, Success, Error, or Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
+
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="90%" title="dbt Insights Query history icon" />
-<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="60%" title="dbt Insights dbt Copilot" />
-<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="60%" title="Manage your query bookmarks" />
-</DocCarousel>
+<!--need to update-->
+
+### dbt Copilot
+
+Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts or to chat with the <Constant name="copilot" /> agent to gather insights about your data. The <Constant name="copilot" />'s AI assistant has two tabs:
+
+- **Text to SQL** - Build queries in <Constant name="query_page" /> with natural language prompts to explore and query data with an intuitive, context-rich interface. For more information, see [Build queries](/docs/cloud/use-dbt-copilot#build-queries).
+
+  <!--insert screenshot-->
+
+- **Analysis**<Lifecycle status='preview' /> - Ask questions to the <Constant name="copilot" /> agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. Some sample questions: 
+
+  - _What region are my sales growing the fastest?_ 
+  - _What was the revenue last month?_
+  - _How should I optimize my marketing spend next quarter?_
+  - _How many customers do I have, broken down by customer type?_
+
+  The dbt <Constant name="copilot" /> agent creates an analysis plan based on your question. The agent:
+
+  1. Gets context using your semantic models and metrics. 
+  2. Generates SQL queries using your project's definitions.  
+  3. Executes the SQL query and returns results with context.
+  3. Creates visualizations by generating Insights-compatible charts for visual consumption⁠.
+  4. Reviews and summarizes the generated insights and provides a comprehensive answer.
+
+  The <Constant name="copilot" /> agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
+
+  For more information, see [Analyze data with the dbt <Constant name="copilot" /> agent](/docs/cloud/use-dbt-copilot#analyzet-data-with-the-analyst-agent).
+
+  <!--insert screenshot-->
