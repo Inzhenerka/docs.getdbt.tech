@@ -95,7 +95,7 @@ The following commands are supported:
 
 | `flags.WHICH` value | Command and description                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `"build"`           | `dbt build`: Builds & tests all selected resources.                                 |
+| `"build"`           | `dbt build`: Builds and tests all selected resources.                                 |
 | `"clean"`           | `dbt clean`: Removing artifacts like target directory and packages.                 |
 | `"clone"`           | `dbt clone`: Clone models and other resources.                                                      |
 | `"compile"`         | `dbt compile`: Compile SQL, but do not execute.                                     |
