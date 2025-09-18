@@ -89,7 +89,7 @@ Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to
 
   <!--insert screenshot-->
 
-- **Analysis**<Lifecycle status='preview' /> - Ask questions to the <Constant name="copilot" /> agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. Some sample questions: 
+- **Analysis**<Lifecycle status='preview' /> - Ask questions to the dbrt <Constant name="copilot" /> agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. Some sample questions: 
 
   - _What region are my sales growing the fastest?_ 
   - _What was the revenue last month?_
