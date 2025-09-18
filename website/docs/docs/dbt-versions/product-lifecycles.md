@@ -4,7 +4,7 @@ id: "product-lifecycles"
 description: "Learn about dbt Labs' product lifecycles."
 ---
 
-dbt Labs is directly involved with the maintenance of two products: 
+dbt Labs is directly involved with the maintenance of three products: 
 
 - <Constant name="core" />: The [open-source](https://github.com/dbt-labs/dbt-core) software that’s freely available.
 - <Constant name="cloud" />: The cloud-based [SaaS solution](https://www.getdbt.com/signup), originally built on top of <Constant name="core" />. We're now introducing dbt's new engine, the <Constant name="fusion_engine" />. For more information, refer to [About the dbt Fusion engine](/docs/fusion/about-fusion).
@@ -45,8 +45,10 @@ We release <Constant name="core" /> in the following lifecycle states. Core rele
 
 ### dbt Fusion engine
 
-The <Constant name="fusion_engine" /> is currently in beta.
+The <Constant name="fusion_engine" /> and [VS Code extension](/docs/about-dbt-extension) are currently in preview for local installations and beta in <Constant name="cloud" />.
 
 - **Beta:** Beta features are still in development and are only available to select customers. Beta features are incomplete and might not be entirely stable; they should be used at the customer’s risk, as breaking changes could occur. Beta features might not be fully documented, technical support is limited, and service level objectives (SLOs) might not be provided. Download the [Beta Features Terms and Conditions](/assets/beta-tc.pdf) for more details.
+
+- **Preview:** Preview features are stable and considered functionally ready for production deployments that are using supported features and do not depend on deprecated functionality. For more about the status of features and functionality, the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) contain the most recent information.
 
 - **Path to Generally available (GA):** Learn what's required for the dbt Fusion engine to reach GA in our [Path to GA](/blog/dbt-fusion-engine-path-to-ga) blog post.
