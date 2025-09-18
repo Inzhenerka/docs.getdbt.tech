@@ -2,7 +2,7 @@ const sidebarSettings = {
   docs: [
     {
       type: 'html',
-      value: 'About',
+      value: 'ABOUT',
       className: 'sidebar-title',
     },
     "docs/introduction",
@@ -46,7 +46,7 @@ const sidebarSettings = {
     }, // Supported data platforms directory
     {
       type: 'html',
-      value: 'Get started',
+      value: 'GET STARTED',
       className: 'sidebar-title',
     },
     {
@@ -328,7 +328,7 @@ const sidebarSettings = {
     },
     {
       type: 'html',
-      value: 'Build and develop',
+      value: 'BUILD AND DEVELOP',
       className: 'sidebar-title',
     },
     {
@@ -598,7 +598,7 @@ const sidebarSettings = {
     },
     {
       type: 'html',
-      value: 'Deploy and explore',
+      value: 'DEPLOY AND EXPLORE',
       className: 'sidebar-title',
     },
     {
@@ -728,7 +728,7 @@ const sidebarSettings = {
     },
     {
       type: 'html',
-      value: 'Additional tools',
+      value: 'ADDITIONAL TOOLS',
       className: 'sidebar-title',
     },
     {
@@ -868,7 +868,7 @@ const sidebarSettings = {
     },
     {
       type: 'html',
-      value: 'Release information',
+      value: 'RELEASE INFORMATION',
       className: 'sidebar-title',
     },
     {
