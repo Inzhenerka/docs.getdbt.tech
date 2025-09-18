@@ -93,19 +93,19 @@ select 1 as id
 
 The following commands are supported: 
 
-| `flags.WHICH` value | Command and description                                                                                     |
+| `flags.WHICH` value | Description                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `"build"`           | Builds and tests all selected resources.                                 |
-| `"clean"`           | Removing artifacts like target directory and packages.                 |
+| `"build"`           | Build and test all selected resources.                                 |
+| `"clean"`           | Remove artifacts like target directory and packages.                 |
 | `"clone"`           | Clone models and other resources.                                                      |
 | `"compile"`         | Compile SQL, but do not execute.                                     |
 | `"debug"`           | Test connections and validate configs.                                 |
 | `"deps"`            | Download package dependencies.                                          |
 | `"docs"`            | Generate and serve documentation.                                         |
 | `"environment"`     | Workspace environment commands (cloud CLI).                      |
-| `"help"`            | Shows help for commands and subcommands.                                    |
+| `"help"`            | Show help for commands and subcommands.                                    |
 | `"init"`            | Bootstrap a new project.                                                |
-| `"invocation"`      | For interacting with or inspecting current invocation (cloud CLI) |
+| `"invocation"`      | For interacting with or inspecting current invocation (cloud CLI). |
 | `"list"`            | List resources.                                              |
 | `"parse"`           | Parse project and report errors, but don’t build/test.                 |
 | `"retry"`           | Retry the last invocation from the point of failure.                   |
