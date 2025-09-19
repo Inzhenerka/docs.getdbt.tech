@@ -917,6 +917,11 @@ const sidebarSettings = {
         },
       ],
     },
+    {
+      type: 'html',
+      value: ' ',
+      className: 'sidebar-title',
+    },
   ],
   apis: [
       "docs/dbt-cloud-apis/overview",
