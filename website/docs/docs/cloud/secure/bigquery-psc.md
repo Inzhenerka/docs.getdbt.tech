@@ -16,7 +16,7 @@ The following steps walk you through the setup of a GCP BigQuery [Private Servic
 
 <CloudProviders type='BigQuery' />
 
-## Enabling dbt for GCP BigQuery Private Service Connect
+## Enabling dbt for GCP Private Service Connect
 
 To enable dbt to privately connect to your BigQuery project via PSC, the regional PSC endpoint needs be enabled for your dbt account. Using the following template, submit a request to [dbt Support](/docs/dbt-support#dbt-cloud-support):
 
