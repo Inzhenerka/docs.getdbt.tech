@@ -44,7 +44,7 @@ The following table outlines the configuration fields required to set up a catal
 These are the additional configurations that can be supplied and nested under `adapter_properties` to add in more configurability. 
 | Field | Description | Required | Accepted values |
 | :---- | :---- | :---- | :---- |
-| table_format | Table Format for your dbt models will be materialized as  | Optional |�Defaults to `delta` unless overwritten in Databricks account. |
+| table_format | Table Format for your dbt models will be materialized as  | Optional | Defaults to `delta` unless overwritten in Databricks account. |
 | adapter_properties: | Additional Platform-Specific Properties.  | Optional | See below for acceptable values	 |
 
 
