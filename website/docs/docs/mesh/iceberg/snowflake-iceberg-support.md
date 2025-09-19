@@ -18,7 +18,7 @@ Refer to [Snowflake configurations](/reference/resource-configs/snowflake-config
 
 :::
 
-We recommend that you use the Iceberg catalog configuration and apply the catalog in the model config for ease of use and future-proof your code. Using `table_format = 'iceberg'` directly on the model configuration is a legacy approach and limits usage to just Snowflake Horizon as the catalog. Catalog support is available on dbt 1.10+
+We recommend using the Iceberg catalog configuration and applying the catalog in the model config for ease of use and to future-proof your code. Using `table_format = 'iceberg'` directly on the model configuration is a legacy approach and limits usage to just Snowflake Horizon as the catalog. Catalog support is available on dbt 1.10+
 
 ## Creating Iceberg Tables
 
@@ -33,14 +33,13 @@ dbt supports creating Iceberg tables for three of the Snowflake materializations
 Snowflake has support for Iceberg tables via built-in and external catalogs, including:
 - Snowflake Horizon (the built-in catalog) 
 - Polaris/Open Catalog (managed Polaris)
-- Glue Data Catalog*
+- Glue Data Catalog (Not supported in dbt-snowflake)
 - Iceberg REST Compatible 
 
 dbt supports the Snowflake built-in catalog and Iceberg REST compatible catalogs (including Polaris and Unity Catalog) on dbt-snowflake. 
 
 To use an externally managed catalog (anything outside of the built-in catalog), you must set up a catalog integration. To do so, you must run a SQL command similar to the following. 
 
-*Not supported in dbt-snowflake
 
 ### External catalogs
 
@@ -169,11 +168,11 @@ The following table outlines the configuration fields required to set up a catal
 | `catalog_type`   | yes      | `built_in`, `iceberg_rest`                                                             |
 | `adapter_properties`| optional| See below                                                                    |
 
-You can connect to external Iceberg compatible catalogs such as Polaris and Unity Catalog via the Iceberg REST `catalog_type`. Please note that we only support Iceberg REST with [Catalog Linked Databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) 
+You can connect to external Iceberg compatible catalogs such as Polaris and Unity Catalog via the Iceberg REST `catalog_type`. Please note that we only support Iceberg REST with [Catalog Linked Databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database). 
 
 ### Adapter Properties
 
-These are the additional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties` to add in more configurability. 
+These are the additional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties`. 
 
 | Field | Required | Accepted Values |
 | --- | --- | --- |
@@ -255,7 +254,7 @@ The syncing experience will be different depending on the catalog you choose. So
 
 ## Iceberg table format
 
-The dbt-snowflake adapter also supports applying `table_format` as an standalone configuration for dbt-snowflake models. We do not recommend using this as it is a legacy behavior and you will only be able to write to Snowflake Horizon (not external Iceberg catalogs)
+The dbt-snowflake adapter also supports applying `table_format` as a standalone configuration for dbt-snowflake models. We recommend against using this, as it is a legacy behavior, and you will only be able to write to Snowflake Horizon (not external Iceberg catalogs).
 
 The following configurations are supported.
 For more information, check out the Snowflake reference for [`CREATE ICEBERG TABLE` (Snowflake as the catalog)](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake).
