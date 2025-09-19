@@ -726,6 +726,11 @@ const sidebarSettings = {
         },
       ],
     },
+        {
+      type: 'html',
+      value: 'dbt AI',
+      className: 'sidebar-title',
+    },
     {
       type: 'html',
       value: 'ADDITIONAL TOOLS',
