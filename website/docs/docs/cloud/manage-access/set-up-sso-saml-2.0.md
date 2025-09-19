@@ -47,7 +47,7 @@ When prompted for the SAML 2.0 application configurations, supply the following 
 
 * Single sign on URL: `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
 * Audience URI (SP Entity ID): `urn:auth0:<YOUR_AUTH0_ENTITYID>:{login slug}`
-- Relay State: `<login slug>`
+- Relay State: `<login slug>` (Note: Relay state may be shown as optional in the IdP settings; it is _required_ for the dbt SSO configuration.) 
 
 Additionally, you may configure the IdP attributes passed from your identity provider into <Constant name="cloud" />. [SCIM configuration](/docs/cloud/manage-access/scim) requires `NameID` and `email` to associate logins with the correct user. If you're using license mapping for groups, you need to additionally configure the `groups` attribute. We recommend using the following values:
 
