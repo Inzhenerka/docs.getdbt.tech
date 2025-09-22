@@ -101,7 +101,7 @@ id: "setup-local-mcp"
             "<path-to-.env-file>",
             "dbt-mcp"
           ]
-        },
+        }
       }
     }
     ```
