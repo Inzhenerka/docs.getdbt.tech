@@ -232,7 +232,7 @@ var siteSettings = {
               </div>
               <div class="cta-section">
                 <a href="https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt" target="_blank" class="primary-cta">Install free extension</a>
-                <a href="https://www.getdbt.com/signup" target="_blank" class="secondary-cta">Request your demo</a>
+                <a href="https://www.getdbt.com/contact" target="_blank" class="secondary-cta">Request your demo</a>
               </div>
             </div>
           </div>
