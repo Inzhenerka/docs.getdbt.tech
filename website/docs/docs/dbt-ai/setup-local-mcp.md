@@ -97,11 +97,11 @@ id: "setup-local-mcp"
         "dbt-mcp": {
           "command": "uvx",
           "args": [
-          "--env-file",
+            "--env-file",
             "<path-to-.env-file>",
             "dbt-mcp"
           ]
-        },
+        }
       }
     }
     ```
