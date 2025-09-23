@@ -34,6 +34,21 @@ In VS Code:
 6. You're all set up! See [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
     <Lightbox src="/img/docs/extension/kitchen-sink.png" width="60%" title="Showing lineage and compiled code in the extension"/>
 
+## Getting started
+
+Once the dbt VS Code extension has been installed in your environment, the dbt logo will appear on the sidebar. This provides you with a menu that contains workflows to help you get started, offers information about the extension and your dbt project, and provides helpful links to guide you. For more information, see the [the dbt extension menu](/docs/about-dbt-extension#the-dbt-extension-menu) documentation. 
+
+To get started with the extension:
+1. Click on the dbt logo to open the menu and expand the **Get started** section. 
+2. Click on the **dbt Walkthrough** status bar to view the welcome screen.
+    <Lightbox src="/img/docs/extension/welcome-screen.png" width="60%" title="dbt VS Code extension welcome screen."/>
+3. Click through the items to get started with the extension:
+    - **Open your dbt project:** Launches file explorer so you can select the dbt project you want to open with Fusion.
+    - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date.
+    - **Explore features:** Opens the [documentation](/docs/about-dbt-extension) so you can learn more about all the extension has to offer.
+    - **Register:** Launches the registration workflow so you can continue to use the extension beyond the trial period.
+
+
 ## Upgrade to Fusion
 
 :::note
