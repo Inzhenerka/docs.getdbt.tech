@@ -50,7 +50,7 @@ id: "setup-local-mcp"
       | --- | --- | --- | --- |
       | DBT_PROJECT_DIR | Required | The path to where the repository of your dbt project is hosted locally.  | /Users/myname/reponame |
       | DBT_PATH | Required | The path to your dbt executable (Core/Fusion/Cloud CLI). You can find your dbt executable by running `which dbt` | /opt/homebrew/bin/dbt |
-      | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 10 seconds. |
+      | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
 
       You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](https://docs.getdbt.com/reference/global-configs/about-global-configs#available-flags).
 
