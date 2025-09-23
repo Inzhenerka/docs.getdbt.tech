@@ -5,7 +5,7 @@ The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsI
 
 To use the extension, you must meet the following prerequisites:
 
-- <Constant name="fusion_engine" /> &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension automatically installs the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
+- <Constant name="fusion_engine" /> &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
 - Editor &mdash; You're using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
 - Disabled third-party dbt extensions &mdash; You aren't using (or have disabled) third-party dbt extensions.
 - Operating systems &mdash; You're using a macOS, Windows, or Linux-based computer.
