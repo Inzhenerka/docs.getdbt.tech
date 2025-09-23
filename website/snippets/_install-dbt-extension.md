@@ -39,7 +39,7 @@ In VS Code:
 Once the dbt VS Code extension has been installed in your environment, the dbt logo will appear on the sidebar. From here, you can access workflows to help you get started, offers information about the extension and your dbt project, and provides helpful links to guide you. For more information, see the [the dbt extension menu](/docs/about-dbt-extension#the-dbt-extension-menu) documentation. 
 
 To get started with the extension:
-1. From the sidebar menu, click on the dbt logo to open the menu and expand the **Get started** section. 
+1. From the sidebar menu, click the dbt logo to open the menu and expand the **Get started** section. 
 2. Click the **dbt Walkthrough** status bar to view the welcome screen.
     <Lightbox src="/img/docs/extension/welcome-screen.png" width="60%" title="dbt VS Code extension welcome screen."/>
 3. Click through the items to get started with the extension:
