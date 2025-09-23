@@ -330,7 +330,11 @@ const sidebarSettings = {
           label: "dbt VS Code Extension",
           collapsed: true,
           link: { type: "doc", id: "docs/about-dbt-extension" },
-          items: ["docs/about-dbt-extension", "docs/install-dbt-extension"],
+          items: [
+            "docs/about-dbt-extension",
+            "docs/dbt-extension-features", 
+            "docs/install-dbt-extension",
+          ],
         },
         {
           type: "category",
@@ -355,6 +359,7 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/keyboard-shortcuts",
             "docs/cloud/dbt-cloud-ide/git-commit-signing",
             "docs/cloud/dbt-cloud-ide/lint-format",
+            "docs/cloud/dbt-cloud-ide/autofix-deprecations",
             "docs/cloud/dbt-cloud-ide/develop-copilot",
           ],
         },
