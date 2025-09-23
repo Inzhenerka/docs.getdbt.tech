@@ -1,14 +1,14 @@
 
-The dbt extension for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <Constant name="fusion_engine" />.
+The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <Constant name="fusion_engine" />.
 
 ## Prerequisites
 
 To use the extension, you must meet the following prerequisites:
 
-- The dbt extension requires installation of the <Constant name="fusion_engine" />. <Constant name="fusion" /> installation is part of the extension installation process, but you can also [manually install](/docs/fusion/install-fusion) separate from this workflow, either before or after the extension is installed. 
-- You are using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
-- You are not using (or have disabled) third-party dbt extensions.
-- You are using a macOS, Windows, or Linux-based computer.
+- dbt Fusion engine &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension automatically installs the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
+- Editor &mdash; You're using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
+- Disabled third-party dbt extensions &mdash; You aren't using (or have disabled) third-party dbt extensions.
+- Operating systems &mdash; You're using a macOS, Windows, or Linux-based computer.
 
 ## Installation instructions
 
