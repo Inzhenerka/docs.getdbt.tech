@@ -59,7 +59,7 @@ If you are already running the <Constant name="fusion_engine" />, you must be on
 
 The dbt extension provides a built-in upgrade tool to walk you through the process of configuring <Constant name="fusion" />  and updating your dbt project to support all of its features and fix any deprecated code. To start the process:
 
-1. From the VS Code left-side menu, click the **dbt logo**.
+1. From the VS Code sidebar menu, click the **dbt logo**.
 2. In the resulting pane, open the **Get started** section and click the **Get started** button. 
 
     <Lightbox src="/img/docs/extension/fusion-onboarding-experience.png" title="The dbt extension help pane and upgrade assistant." width="60%" /> 
