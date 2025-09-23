@@ -91,15 +91,19 @@ By default, we use the warehouse metadata to check if sources (or upstream model
 
 You can customize with:
 - `loaded_at_field`: Specify a specific column to use from the data.
+
+  If a source is a view in the data warehouse, dbt can’t track updates from the warehouse metadata when the view changes. In this case, dbt always considers the source fresh. To check freshness for this source, add a `loaded_at_field` to your configuration.
+
 - `loaded_at_query`: Define a custom freshness condition in SQL to account for partial loading or streaming data.
 :::note 
 You can either define `loaded_at_field` or `loaded_at_query` but not both.
 :::
 You can also customize with:
-- `updates_on`: Change the default from any to all so it doesn’t build unless all upstreams have fresh data reducing compute even more.
-- `Build_after`: Don’t build a model more often than every x period to reduce build frequency when you need data less often than sources refresh.
+- `updates_on`: Change the default from `any` to `all` so it doesn’t build unless all upstreams have fresh data reducing compute even more.
+- `build_after`: Don’t build a model more often than every x period to reduce build frequency when you need data less often than sources refresh.
 
-To learn more about model freshness and build after, refer to [model `freshness` config](/reference/resource-configs/freshness). To learn more about source and upstream model freshness configs, refer to [resource `freshness` config](/reference/resource-properties/freshness)
+
+To learn more about model freshness and build after, refer to [model `freshness` config](/reference/resource-configs/freshness). To learn more about source and upstream model freshness configs, refer to [resource `freshness` config](/reference/resource-properties/freshness).
 
 ## Customizing behavior
 
@@ -142,7 +146,7 @@ A Jaffle shop has recently expanded globally and wanted to make savings. To redu
 
 To do this, she uses the model `freshness` config. This config helps state-aware orchestration decide _when_ a model should be rebuilt. 
 
-Note that for every `freshness` config, you're required to either set values for both `count` and `period`, or set `freshness: null`. This requirement applies to all `freshness` types: `freshness.warn_after`, `freshness.error_after`, and `freshness.build_after`.
+Note that for every `freshness` config, you're required to set values for both `count` and `period`. This applies to all `freshness` types: `freshness.warn_after`, `freshness.error_after`, and `freshness.build_after`. If you want to exclude a model from the freshness rule, set `freshness: null`. This overrides an inherited freshness rule and excludes the model with this setting from the freshness check. 
 
 Refer to the following samples for using the `freshness` config in the model file, in the project file, and in the `config` block of the `model.sql` file:
 

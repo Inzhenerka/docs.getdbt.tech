@@ -104,7 +104,7 @@ This means that by default, the model will be built every time a scheduled job r
 
 ## Examples
 
-The following examples show how to configure models to run less frequently and more frequently.
+The following examples show how to configure models to run less frequently, more frequently, or on a custom frequency.
 
 You can configure the `freshness` YAML to skip models during the build process *unless* new data is available *and* a specified time interval has passed.
 
@@ -174,3 +174,19 @@ When the state-aware orchestration job runs, dbt checks two things:
 If _both_ conditions are met, dbt rebuilds the model. This also means if either model (`stg_wizards` _or_ `stg_worlds`) has new data, dbt rebuilds the model. If neither model has new data, nothing will be built.
 
 In this example, because `updates_on: any` is set in, even if only the `raw.wizards` source has new data and only `stg_wizards` was built in the last hour (while `stg_worlds` hasn’t been updated), dbt will still build the model because it only needs one source update and one eligible (stale) model.
+
+### Custom frequency
+
+You can also use custom logic with `build_after` to set different frequencies for different days, or to skip builds during a specific period (for example, on a weekend). 
+
+If you want to build every hour on weekdays (Monday to Friday), you can use Jinja expressions in your YAML file. For example:
+
+```yaml
++freshness:
+  build_after:
+    # wait at least 48 hours before building again, if Saturday or Sunday
+    # otherwise, wait at least 1 hour before building again
+    count: "{{ 48 if modules.datetime.datetime.today().weekday() in (6, 7) else 1 }}"
+    period: hour
+    updates_on: any
+```
