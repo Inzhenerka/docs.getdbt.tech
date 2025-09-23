@@ -1,5 +1,5 @@
 
-The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) for VS Code and Cursor streamlines dbt development workflows. The dbt extension is powered by the <Constant name="fusion_engine" />.
+The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) for VS Code and Cursor, powered by the <Constant name="fusion_engine" />, streamlines dbt development workflows. 
 
 ## Prerequisites
 
