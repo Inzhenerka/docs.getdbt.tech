@@ -179,7 +179,7 @@ In this example, because `updates_on: any` is set in, even if only the `raw.wiza
 
 You can also use custom logic with `build_after` to set different frequencies for different days, or to skip builds during a specific period (for example, on a weekend). 
 
-If you want to build every hour on weekdays (Monday to Friday), you can use Jinja expressions in your YAML file. For example:
+If you want to build every hour on just weekdays (Monday to Friday), you can use Jinja expressions in your YAML file. For example:
 
 ```yaml
 +freshness:
