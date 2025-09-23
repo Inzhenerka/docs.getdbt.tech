@@ -40,7 +40,7 @@ Once the dbt VS Code extension has been installed in your environment, the dbt l
 
 To get started with the extension:
 1. Click on the dbt logo to open the menu and expand the **Get started** section. 
-2. Click on the **dbt Walkthrough** status bar to view the welcome screen.
+2. Click the **dbt Walkthrough** status bar to view the welcome screen.
     <Lightbox src="/img/docs/extension/welcome-screen.png" width="60%" title="dbt VS Code extension welcome screen."/>
 3. Click through the items to get started with the extension:
     - **Open your dbt project:** Launches file explorer so you can select the dbt project you want to open with Fusion.

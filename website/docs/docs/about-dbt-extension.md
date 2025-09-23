@@ -57,7 +57,7 @@ Once installed, the dbt extension automatically activates when you open any `.sq
 After installation, you may want to configure the extension to better fit your development workflow:
 
 1. Open the VS Code settings by pressing `Ctrl+,` (Windows/Linux) or `Cmd+,` (Mac).
-2. Search for `dbt`. On this page, you can adjust the extension’s configuration options as to fit your needs.
+2. Search for `dbt`. On this page, you can adjust the extension’s configuration options to fit your needs.
 
 <Lightbox src="/img/docs/extension/dbt-extension-settings.png" width="30%" title="dbt extension settings within the VS Code settings."/>
 

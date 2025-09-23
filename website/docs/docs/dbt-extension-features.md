@@ -1,12 +1,13 @@
 ---
 title: dbt VS Code extension features and functionality
 id: dbt-extension-features
-description: "The dbt VS Code extension is backed by a the dbt Fusion enginge and a powerful LSP."
+description: "The dbt VS Code extension is backed by the dbt Fusion engine and a powerful LSP."
 sidebar_label: "dbt VS Code extension features"
 pagination_next: "docs/install-dbt-extension"
 ---
 
-The dbt VS Code extension is backed by a the speed and power of the dbt Fusion engine and a dynamic Language Server Protocol (LSP) that enables enhanced workflows, faster development, and easy navigation.
+ # dbt VS Code extension features and functionality <Lifecycle status="preview" />
+The dbt VS Code extension is backed by the speed and power of the dbt Fusion engine and a dynamic Language Server Protocol (LSP) that enables enhanced workflows, faster development, and easy navigation.
 
 The following extension features help you get more done, fast:
 
