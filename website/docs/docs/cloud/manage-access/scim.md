@@ -167,10 +167,13 @@ To map the attributes that will sync with dbt:
     - **externalid:** `mailNickname`
     - **emails[type eq "work"].primary** 
      <Lightbox src="/img/docs/dbt-cloud/access-control/attribute-list.png" width="60%" title="Edit the attributes so they match the list as shown." />
-
+11. Click **Save**.
 
 You can now begin assigning users to your SCIM app in Entra ID!
 
+## Assign users to SCIM app
+
+Once you complete mapping attributes, follow Microsoft's [official instructions for assigning users or groups to an Enterprise App in Entra ID](https://learn.microsoft.com/en-us/azure/databricks/admin/users-groups/scim/aad#step-3-assign-users-and-groups-to-the-application). This allows the SCIM provisioning process to begin for the selected users.
 
 ## Manage user licenses with SCIM
 
