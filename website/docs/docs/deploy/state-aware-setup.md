@@ -230,7 +230,7 @@ models:
     build_after:
       count: 4
       period: hour
-  jaffle_shop:
+  jaffle_shop: # this needs to match your project `name:` in dbt_project.yml
     staging:
       +materialized: view
     marts:
