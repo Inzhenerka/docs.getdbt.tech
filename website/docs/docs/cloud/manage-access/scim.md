@@ -177,7 +177,7 @@ The following steps go over how to assign users/groups to the SCIM app. Refer to
 
 1. Navigate to Enterprise applications and select the SCIM app.
 2. Go to **Manage** > **Provisioning**.
-3. To synchronize Microsoft Entra ID users and groups to dbt, select the **Start provisioning** button.
+3. To synchronize Microsoft Entra ID users and groups to dbt, click the **Start provisioning** button.
     <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-start-provision.png" width="80%" title="Start provisioning to synchronize users and groups." />
 4. Navigate back to the SCIM app's overview page and go to **Manage** > **Users and groups**.
 5. Click **Add user/group** and select the users and groups. 
