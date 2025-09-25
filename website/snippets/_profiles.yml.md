@@ -1,7 +1,7 @@
 If you're using dbt from the command line, you need a `profiles.yml` file that contains the connection details for your data platform. The system reads your `dbt_project.yml` file to find the `profile` name, and then looks for a profile with the same name in your `profiles.yml` file. This profile contains all the information dbt needs to connect to your data platform.
 
 :::note dbt platform accounts
-If you're using the cloud-based <Constant name="cloud" /> platform, you can [{props.connect}](/docs/cloud/connect-data-platform/about-connections)[{props.setup}](/docs/cloud/connect-data-platform-fusion/about-fusion-connections) directly in the <Constant name="cloud" /> interface and don't need a `profiles.yml` file.
+If you're using the cloud-based <Constant name="cloud" /> platform, you can [connect to your data platform](/docs/cloud/connect-data-platform/about-connections) directly in the <Constant name="cloud" /> interface and don't need a `profiles.yml` file.
 :::
 
 This section identifies the parts of your `profiles.yml` that aren't specific to a particular data platform. For specific connection details, refer to the relevant page for your data platform.

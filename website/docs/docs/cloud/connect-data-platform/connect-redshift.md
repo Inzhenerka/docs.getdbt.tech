@@ -1,55 +1,29 @@
 ---
-title: "Connect Redshift, PostgreSQL, Lakebase and AlloyDB"
-id: connect-redshift-postgresql-alloydb
-description: "Setup instructions for connecting Redshift, PostgreSQL, Lakebase, and AlloyDB to dbt"
-sidebar_label: "Connect Redshift, PostgreSQL, Lakebase, and AlloyDB"
+title: "Connect Redshift"
+id: connect-redshift
+description: "Setup instructions for connecting Redshift to dbt"
+sidebar_label: "Connect Redshift"
 ---
 <!-- TODO: break Redshift connection docs to separate page -->
  
-dbt Platform supports connecting to PostgresSQL, Postgres-compatible databases (AlloyDB, Lakebase), and Redshift. 
+dbt platform supports connecting to Redshift. 
 
 The following fields are required when creating a connection:
 
 | Field | Description | Examples |
 | ----- | ----------- | -------- |
-| Host Name | The hostname of the database to connect to. This can either be a hostname or an IP address. Refer to [set up pages](/docs/core/connect-data-platform/about-core-connections) to find the hostname for your adapter. | Postgres: `xxx.us-east-1.amazonaws.com` |
-| Port | Usually 5432 (Postgres) or 5439 (Redshift) | `5439` |
+| Host Name | The hostname of the database to connect to. This can either be a hostname or an IP address. Refer to [set up pages](/docs/core/connect-data-platform/about-core-connections) to find the hostname for your adapter. | Redshift: `hostname.region.redshift.amazonaws.com` |
+| Port | Usually 5439 (Redshift) | `5439` |
 | Database | The logical database to connect to and run queries against. | `analytics` |
 
-**Note**: When you set up a Redshift or Postgres connection in <Constant name="cloud" />, SSL-related parameters aren't available as inputs. 
+**Note**: When you set up a Redshift connection in <Constant name="cloud" />, SSL-related parameters aren't available as inputs. 
 
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-connection.png" width="70%" title="Configuring a Redshift connection"/>
 
 ### Authentication Parameters
 
-For authentication, <Constant name="cloud" /> users can use **Database username and password** for Postgres and Postgres compatible databases. For more information on what is supported, check out the database specific setup page for limitations and helpful tips. 
-
-In addition, for Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/redshift-external-oauth) 
-
-<Tabs
-  defaultValue="database"
-  values={[
-    {label: 'Database', value: 'database'},
-    {label: 'IAM User', value: 'iam-user-inline'},
-  ]}
->
-
-<TabItem value="database">
-
-The following table contains the parameters for the database (password-based) connection method.
-
-
-| Field | Description | Examples |
-| ------------- | ------- | ------------ |
-| `user`   | Account username to log into your cluster | myuser |
-| `password`  | Password for authentication  | _password1! |
-
-<br/>
-
-</TabItem>
-
-<TabItem value="iam-user-inline">
+For authentication in Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/redshift-external-oauth) 
 
 On Cloud, the IAM user authentication is currently only supported via [extended attributes](/docs/dbt-cloud-environments#extended-attributes). Once the project is created, development and deployment environments can be updated to use extended attributes to pass the fields described below, as some are not supported via textbox.
 
@@ -57,7 +31,6 @@ You will need to create an IAM User, generate an [access key](https://docs.aws.a
 - on a cluster, a database user is expected in the `user` field. The IAM user is only leveraged for authentication, the database user for authorization
 - on Serverless, grant permission to the IAM user in Redshift. The `user` field is ignored (but still required)
 - For both, the `password` field will be ignored.
-
 
 | Profile field | Example | Description |
 | ------------- | ------- | ------------ |
@@ -88,14 +61,9 @@ secret_access_key: '{{ env_var(''DBT_ENV_SECRET_ACCESS_KEY'') }}'
 
 Both `DBT_ENV_ACCESS_KEY_ID` and `DBT_ENV_SECRET_ACCESS_KEY` will need [to be assigned](/docs/build/environment-variables) for every environment leveraging extended attributes as such.
 
-</TabItem>
-
-</Tabs>
-
-
 ### Connecting via an SSH Tunnel
 
-To connect to a Postgres, Redshift, or AlloyDB instance via an SSH tunnel, select the **Use SSH Tunnel** option when creating your connection. When configuring the tunnel, you must supply the hostname, username, and port for the [bastion server](#about-the-bastion-server-in-aws).
+To connect to a Redshift instance via an SSH tunnel, select the **Use SSH Tunnel** option when creating your connection. When configuring the tunnel, you must supply the hostname, username, and port for the [bastion server](#about-the-bastion-server-in-aws).
 
 Once the connection is saved, a public key will be generated and displayed for the Connection. You can copy this public key to the bastion server to authorize <Constant name="cloud" /> to connect to your database via the bastion server.
 
@@ -145,7 +113,7 @@ The Bastion server should now be ready for <Constant name="cloud" /> to use as a
 
 To optimize performance with data platform-specific configurations in <Constant name="cloud" />, refer to [Redshift-specific configuration](/reference/resource-configs/redshift-configs).
 
-To grant users or roles database permissions (access rights and privileges), refer to the [Redshift permissions](/reference/database-permissions/redshift-permissions) page or [Postgres permissions](/reference/database-permissions/postgres-permissions) page.
+To grant users or roles database permissions (access rights and privileges), refer to the [Redshift permissions](/reference/database-permissions/redshift-permissions) page.
 
 ## FAQs
 

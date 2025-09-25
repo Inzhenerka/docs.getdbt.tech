@@ -84,25 +84,11 @@ const sidebarSettings = {
                 "docs/cloud/connect-data-platform/connect-databricks",
                 "docs/cloud/connect-data-platform/connect-microsoft-fabric",
                 "docs/cloud/connect-data-platform/connect-onehouse",
-                "docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-redshift",
                 "docs/cloud/connect-data-platform/connect-starburst-trino",
                 "docs/cloud/connect-data-platform/connect-snowflake",
                 "docs/cloud/connect-data-platform/connect-teradata",
-              ],
-            },
-            {
-              type: "category",
-              label: "Connect your data platforms (Fusion)",
-              link: {
-                type: "doc",
-                id: "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
-              },
-              items: [
-                "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
-                "docs/cloud/connect-data-platform-fusion/connect-bigquery",
-                "docs/cloud/connect-data-platform-fusion/connect-databricks",
-                "docs/cloud/connect-data-platform-fusion/connect-redshift",
-                "docs/cloud/connect-data-platform-fusion/connect-snowflake",
               ],
             },
             {
