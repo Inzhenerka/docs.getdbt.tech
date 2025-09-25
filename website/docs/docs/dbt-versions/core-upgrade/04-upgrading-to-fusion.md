@@ -320,7 +320,13 @@ return('xyz') + 'abc'
 {% endmacro %}
 ```
 
-This is no longer supported in <Constant name="fusion" /> and will return an error. This is not a common use case and there is no deprecation warning for this behavior in  <Constant name="core" />. The supported format is:
+This is no longer supported in <Constant name="fusion" /> and will return an error: 
+
+```bash
+error: dbt1501: Failed to add template invalid operation: return() is called in a non-block context
+```
+
+This is not a common use case and there is no deprecation warning for this behavior in  <Constant name="core" />. The supported format is:
 
 ```jinja
 {% macro my_macro() %}
