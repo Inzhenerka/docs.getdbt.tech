@@ -17,6 +17,12 @@ If passing an environment variable for a property that uses an integer type (for
 
 :::
 
+:::info Boolean Environment Variables
+If passing an environment variable for a property that uses a boolean type (for example, `True`, `false`), be sure to add a filter to the Jinja expression, as shown here.
+`"{{ (env_var('SECURE').lower() == 'true') }}"` 
+
+:::
+
 :::caution Quoting, Curly Brackets, & You
 
 Be sure to quote the entire Jinja string (as shown above), or else the YAML parser will be confused by the Jinja curly brackets.
