@@ -310,7 +310,7 @@ To run your first deployment <Constant name="cloud" /> job, you will need to cre
 4. Then, click **Run now** to trigger the job.
 <Lightbox src="/img/guides/dbt-mesh/job_run_now.png" width="80%" title="Trigger a job by clicking the 'Run now' button." />
 
-5. After the run is complete, navigate to Catalog. You should now see your lineage, tests, and documentation coming through successfully.
+5. After the run is complete, navigate to <Constant name="explorer"/>. You should now see your lineage, tests, and documentation coming through successfully.
 
 For details on how <Constant name="cloud" /> uses metadata from the Staging environment to resolve references in downstream projects, check out the section on [Staging with downstream dependencies](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
 
