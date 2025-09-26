@@ -123,23 +123,23 @@ var siteSettings = {
               to: "reference/references-overview",
             },
             {
-              label: "Guides",
-              to: "/guides",
-            },
-            {
               label: "Best practices",
               to: "/best-practices",
+            },
+            {
+              to: "/blog",
+              label: "Developer blog",
             },
           ],
         },
         {
-          to: "/docs/dbt-cloud-apis/overview",
-          label: "APIs",
+          to: "/guides",
+          label: "Guides",
           position: "right",
         },
         {
-          to: "/blog",
-          label: "Developer blog",
+          to: "/docs/dbt-cloud-apis/overview",
+          label: "APIs",
           position: "right",
         },
         {
@@ -157,6 +157,10 @@ var siteSettings = {
             {
               label: "Support and billing",
               to: "/docs/dbt-support",
+            },
+            {
+              label: "Fusion Diaries",
+              href: "https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements",
             },
             {
               label: "Courses",
