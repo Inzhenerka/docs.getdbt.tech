@@ -1,5 +1,10 @@
 const sidebarSettings = {
   docs: [
+    {
+      type: 'html',
+      value: 'About',
+      className: 'sidebar-title',
+    },
     "docs/introduction",
     {
       type: "category",
@@ -13,7 +18,7 @@ const sidebarSettings = {
         "docs/fusion/install-fusion",
       ],
     },
-        {
+    {
       type: "category",
       label: "About the dbt platform",
       link: { type: "doc", id: "docs/cloud/about-cloud/dbt-cloud-features" },
@@ -26,7 +31,7 @@ const sidebarSettings = {
         "docs/cloud/about-cloud/tenancy",
       ],
     }, // About dbt Cloud directory
-        {
+    {
       type: "category",
       label: "Supported data platforms",
       collapsed: true,
@@ -39,6 +44,11 @@ const sidebarSettings = {
         "docs/contribute-core-adapters",
       ],
     }, // Supported data platforms directory
+    {
+      type: 'html',
+      value: 'Get started',
+      className: 'sidebar-title',
+    },
     {
       type: "category",
       label: "Get started with dbt",
@@ -317,6 +327,11 @@ const sidebarSettings = {
       ],
     },
     {
+      type: 'html',
+      value: 'Build and develop',
+      className: 'sidebar-title',
+    },
+    {
       type: "category",
       label: "Develop with dbt",
       collapsed: true,
@@ -583,6 +598,11 @@ const sidebarSettings = {
       ],
     },
     {
+      type: 'html',
+      value: 'Deploy and explore',
+      className: 'sidebar-title',
+    },
+    {
       type: "category",
       label: "Deploy dbt",
       collapsed: true,
@@ -709,34 +729,6 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Copilot",
-      collapsed: true,
-      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-      items: [
-        "docs/cloud/dbt-copilot",
-        "docs/cloud/enable-dbt-copilot",
-        "docs/cloud/use-dbt-copilot",
-        "docs/cloud/copilot-styleguide",
-        "docs/cloud/copilot-chat-in-studio",
-        "docs/cloud/dbt-copilot-faqs",
-      ],
-    },
-    {
-      type: "category",
-      label: "dbt MCP",
-      collapsed: true,
-      link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
-      items: [
-          "docs/dbt-ai/about-mcp",
-          "docs/dbt-ai/setup-local-mcp",
-          "docs/dbt-ai/setup-remote-mcp",
-          "docs/dbt-ai/integrate-mcp-vscode",
-          "docs/dbt-ai/integrate-mcp-cursor",
-          "docs/dbt-ai/integrate-mcp-claude",
-          ],
-    },
-    {
-      type: "category",
       label: "Use the dbt Semantic Layer",
       collapsed: true,
       link: { type: "doc", id: "docs/use-dbt-semantic-layer/dbt-sl" },
@@ -777,6 +769,44 @@ const sidebarSettings = {
         },
         "docs/use-dbt-semantic-layer/sl-faqs",
       ],
+    },
+    {
+      type: 'html',
+      value: 'dbt AI',
+      className: 'sidebar-title',
+    },
+    {
+      type: "category",
+      label: "Copilot",
+      collapsed: true,
+      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      items: [
+        "docs/cloud/dbt-copilot",
+        "docs/cloud/enable-dbt-copilot",
+        "docs/cloud/use-dbt-copilot",
+        "docs/cloud/copilot-styleguide",
+        "docs/cloud/copilot-chat-in-studio",
+        "docs/cloud/dbt-copilot-faqs",
+      ],
+    },
+    {
+      type: "category",
+      label: "dbt MCP",
+      collapsed: true,
+      link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
+      items: [
+          "docs/dbt-ai/about-mcp",
+          "docs/dbt-ai/setup-local-mcp",
+          "docs/dbt-ai/setup-remote-mcp",
+          "docs/dbt-ai/integrate-mcp-vscode",
+          "docs/dbt-ai/integrate-mcp-cursor",
+          "docs/dbt-ai/integrate-mcp-claude",
+          ],
+    },
+    {
+      type: 'html',
+      value: 'Additional tools',
+      className: 'sidebar-title',
     },
     {
       type: "category",
@@ -836,6 +866,11 @@ const sidebarSettings = {
       items: ["docs/cloud/cost-management/cost-management"],
     },
     {
+      type: 'html',
+      value: 'Release information',
+      className: 'sidebar-title',
+    },
+    {
       type: "category",
       label: "Available dbt versions",
       link: { type: "doc", id: "docs/dbt-versions/core" },
@@ -882,6 +917,11 @@ const sidebarSettings = {
           dirName: "docs/dbt-versions/release-notes",
         },
       ],
+    },
+    {
+      type: 'html',
+      value: ' ',
+      className: 'sidebar-title',
     },
   ],
   apis: [
