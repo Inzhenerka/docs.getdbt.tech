@@ -303,7 +303,7 @@ Before a downstream team can leverage assets from this foundational project, you
 To run your first deployment <Constant name="cloud" /> job, you will need to create a new <Constant name="cloud" /> job.  
 1. Click **Deploy** and then **Jobs**. 
 2. Click **Create job** and then **Deploy job**.
-3. Select the **Generate docs on run** option. This will hydrate your metadata in dbt Catalog.
+3. Select the **Generate docs on run** option. This will hydrate your metadata in <Constant name="explorer"/>.
 
 <Lightbox src="/img/guides/dbt-mesh/generate_docs_on_run.png" width="75%" title=" Select the 'Generate docs on run' option when configuring your dbt job." />
 
