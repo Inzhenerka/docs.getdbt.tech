@@ -28,6 +28,7 @@ import VersionContext from '../../../stores/VersionContext'
 import getElements from '../../../utils/get-html-elements';
 import useHashLink from '../../../utils/use-hash-link';
 import removeTrailingDashes from '../../../utils/remove-trailing-slashes';
+import CopyPage from '@site/src/components/copyPage';
 
 /**
  * Decide if the toc should be rendered, on mobile or desktop viewports
@@ -186,7 +187,11 @@ export default function DocItemLayout({children}) {
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article>
+          <div className={styles.copyPageContainer}>
             <DocBreadcrumbs />
+            
+              <CopyPage />
+            </div>
             <DocVersionBadge />
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
