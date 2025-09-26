@@ -344,7 +344,11 @@ const sidebarSettings = {
           label: "dbt VS Code Extension",
           collapsed: true,
           link: { type: "doc", id: "docs/about-dbt-extension" },
-          items: ["docs/about-dbt-extension", "docs/install-dbt-extension"],
+          items: [
+            "docs/about-dbt-extension",
+            "docs/dbt-extension-features", 
+            "docs/install-dbt-extension",
+          ],
         },
         {
           type: "category",
