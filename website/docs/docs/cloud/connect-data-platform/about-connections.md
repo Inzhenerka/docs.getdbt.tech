@@ -8,31 +8,20 @@ pagination_prev: null
 ---
 The <Constant name="dbt_platform" /> can connect with a variety of data platform providers. Expand the sections below to know the supported data platforms for <Constant name="core" /> and the <Constant name="fusion_engine" />: 
 
-<Expandable alt_header="dbt Core">
-
-- [AlloyDB](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) 
-- [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena)
-- [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift) 
-- [Apache Spark](/docs/cloud/connect-data-platform/connect-apache-spark)
-- [Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics)
-- [Databricks](/docs/cloud/connect-data-platform/connect-databricks) 
-- [Google BigQuery](/docs/cloud/connect-data-platform/connect-bigquery)
-- [Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric)
-- [PostgreSQL](/docs/cloud/connect-data-platform/connect-postgresql-alloydb)
-- [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake)
-- [Starburst or Trino](/docs/cloud/connect-data-platform/connect-starburst-trino)
-- [Teradata](/docs/cloud/connect-data-platform/connect-teradata) <Lifecycle status="preview" />
-
-</Expandable>
-
-<Expandable alt_header="dbt Fusion">
-
-- [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift) 
-- [Databricks](/docs/cloud/connect-data-platform/connect-databricks) 
-- [Google BigQuery](/docs/cloud/connect-data-platform/connect-bigquery)
-- [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake)
-
-</Expandable>
+| Connection | Available on Latest   | Available on Fusion <Lifecycle status='preview' />|
+|------------|:---------------------:|:---------------------:|
+| [AlloyDB](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) | ✅ | ❌ |
+| [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) | ✅ | ❌ |
+| [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift) | ✅ | ✅ |
+| [Apache Spark](/docs/cloud/connect-data-platform/connect-apache-spark) | ✅ | ❌ |
+| [Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics) | ✅ | ❌ |
+| [Databricks](/docs/cloud/connect-data-platform/connect-databricks) | ✅ | ✅ |
+| [Google BigQuery](/docs/cloud/connect-data-platform/connect-bigquery) | ✅ | ✅ |
+| [Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) | ✅ | ❌ |
+| [PostgreSQL](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) | ✅ | ❌ |
+| [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake) | ✅ | ✅ |
+| [Starburst or Trino](/docs/cloud/connect-data-platform/connect-starburst-trino) | ✅ | ❌ |
+| [Teradata](/docs/cloud/connect-data-platform/connect-teradata) <Lifecycle status="preview" /> | ✅ | ❌ |
 
 To connect to your database in <Constant name="cloud" />:
 
@@ -47,20 +36,24 @@ These connection instructions provide the basic fields required for configuring 
 
 The following tables show which authentication types are supported for each connection available on the <Constant name="dbt_platform" />:
 
-<Expandable alt_header="dbt Core">
+<Tabs>
+
+<TabItem value="dbt Core">
 
 import AuthTypes from '/snippets/_dbt_connection_support.md';
 
 <AuthTypes />
-</Expandable>
+</TabItem>
 
-<Expandable alt_header="dbt Fusion">
+<TabItem value="dbt Fusion">
 <!--must verify supported auth methods for Fusion adapters-->
 import AuthTypesFusion from '/snippets/_dbt_connection_support_fusion.md';
 
 <AuthTypesFusion />
 
-</Expandable>
+</TabItem>
+
+</Tabs>
 
 ## Connection management
 
