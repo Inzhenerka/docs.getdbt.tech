@@ -153,7 +153,7 @@ For users enrolled on the Enterprise and Enterprise+ plans, both the billing adm
 
 Once usage limits are reached, attempts to perform an action in <Constant name="copilot" /> triggers a banner notification indicating that the limit has been exceeded.
 
-Under bring your own key (BYOK), once your usage hits 100%, <Constant name="copilot" /> will be deactivated and you'll be unable to make requests to <Constant name="copilot" /> until your next billing cycle. Reach out the Support team at support@getdbt.com for help.
+Under Bring Your Own Key (BYOK), usage is not tracked by <Constant name="copilot" /> and is subject to your OpenAI limits.
 
 </Expandable>
 
