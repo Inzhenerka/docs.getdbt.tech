@@ -1,6 +1,6 @@
 ---
-title: "Apache Hive configurations"
-description: "Apache Hive Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Cloudera Hive configurations"
+description: "Cloudera Hive Configurations - Read this in-depth guide to learn about configurations in dbt."
 id: "hive-configs"
 ---
 
