@@ -24,9 +24,9 @@ When you go to your **Account home**, you'll see a chart showing the number of m
 
 ## Clear cache button
 
-State-aware orchestration uses a cached hash of both code and data state for each model in an environment, stored in Redis. When running a job, dbt checks if there is a change in the hash for the model being built between the saved state in Redis and the current state that would be built by the job. If there is a change, dbt builds the model, and if there isn’t, dbt reuses the model from the last time it was built.
+State-aware orchestration uses a cached hash of both code and data state for each model in an environment stored in Redis. When running a job, dbt checks if there is a change in the hash for the model being built between the saved state in Redis and the current state that would be built by the job. If there is a change, dbt builds the model, and if there isn’t, dbt reuses the model from the last time it was built.
 
-When you want to wipe this state clean and start again, you can clear the cache by clicking the **Clear cache** button on the **Environments** page.
+When you want to wipe this state clean and start again, you can clear the cache by clicking the **Clear cache** button on the **Environments** page. The **Clear cache** button is only available if you have enabled state-aware orchestration.
 
 <!--insert screenshot-->
 
@@ -45,7 +45,7 @@ When running a job, a structured logs view is available to show which models wer
 
 ## Model consumption view
 
-State-aware jobs provide charts that show information about your job runs, and how many models were build and reused by your job per week. In the **Overview** section, the following charts are available: 
+State-aware jobs provide charts that show information about your job runs, and how many models were built and reused by your job per week. In the **Overview** section, the following charts are available: 
 
 Under the **Runs** tab:
 - **Recent runs**
@@ -64,7 +64,7 @@ Under the **Models** tab:
 Lineage lenses are interactive visual filters in [dbt <Constant name="explorer" />](/docs/explore/explore-projects#lenses) that show additional context on your lineage graph to understand how resources are defined or performing. When you apply a lens, tags become visible on the nodes in the lineage graph, indicating the layer value along with coloration based on that value.
 
 The **Latest status** lens shows the status from the latest execution of the resource in the current environment. Nodes can be tagged with any of the following:
-
+<!--Please check accuracy of the description-->
 For sources:
 
 - **PASS** - Source freshness check passed, indicating data is fresh⁠
@@ -76,7 +76,7 @@ For models:
 
 - **SKIPPED** - Model was skipped during the latest run.
 - **SUCCESS** - Model built successfully during the latest run.
-- **FAIL** - 
+- **FAIL** - <!--when are models tagged with this?-->
 - **ERROR** - Model failed to build during the latest run.
 - **WARN** - Model built with warnings during the latest run.
 - **REUSED** - Model execution was reused from state-aware orchestration, avoiding unnecessary rebuilds.
@@ -84,7 +84,7 @@ For models:
 
 <!--insert screenshot-->
 
-To view the lineage lenses for state-aware orchestration:
+To view this lens:
 
 1. From the main menu, go to **Catalog**. 
 2. Select your project. 
