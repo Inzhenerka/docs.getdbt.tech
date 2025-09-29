@@ -14,6 +14,24 @@ Learn how to navigate <Constant name="query_page" /> interface and use the main 
 
 <Constant name="query_page" /> provides an interactive interface for writing, running, and analyzing SQL queries. This section highlights the main components of <Constant name="query_page" />. 
 
+## Query Builder
+
+Query Builder is a tool in dbt <Constant name="query_page" /> where you can build queries against the Semantic Layer without writing SQL code. It guides users in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
+
+- Build queries from semantic objects rather than raw tables.
+- Have filters, time ranges, and aggregates tailored to the semantic model.
+- Convert semantic queries into SQL code for developers. 
+
+To use Query Builder:
+
+1. Enter a natural language question in the dbt <Constant name="query_page" /> interface. 
+
+  <!--insert screenshot-->
+
+  dbt Copilot starts an analysis of the existing data sources in your project and shows you the available metrics, dimensions, and filters that you can use to build your query. 
+
+2. Select the metrics, dimensions, and filters you want to include in your query by clicking **+**.
+
 ## Query console
 The query console is the main component of <Constant name="query_page" />. It allows you to write, run, and analyze SQL queries. The Query console supports:
 - Query console editor, which allows you to write, run, and analyze SQL queries:
