@@ -26,7 +26,7 @@ When you go to your **Account home**, you'll see a chart showing the number of m
 
 State-aware orchestration uses a cached hash of both code and data state for each model in an environment stored in Redis. When running a job, dbt checks if there is a change in the hash for the model being built between the saved state in Redis and the current state that would be built by the job. If there is a change, dbt builds the model, and if there isn’t, dbt reuses the model from the last time it was built.
 
-When you want to wipe this state clean and start again, you can clear the cache by clicking the **Clear cache** button on the **Environments** page. The **Clear cache** button is only available if you have enabled state-aware orchestration.
+When you want to wipe this state clean and start again, you can clear the cache by clicking the **Clear cache** button on the **Orchestration** > **Environments** page. The **Clear cache** button is only available if you have enabled state-aware orchestration.
 
 <!--insert screenshot-->
 
@@ -34,7 +34,7 @@ After clearing the cache, the next run rebuilds every model from scratch. Subseq
 
 ## Logs view of built models
 
-When running a job, a structured logs view is available to show which models were built, skipped, or reused. 
+When running a job, a structured logs view shows which models were built, skipped, or reused. 
 
 <!--insert screenshot of logs with numbered callouts-->
 
@@ -45,7 +45,7 @@ When running a job, a structured logs view is available to show which models wer
 
 ## Model consumption view
 
-State-aware jobs provide charts that show information about your job runs, and how many models were built and reused by your job per week. In the **Overview** section, the following charts are available: 
+State-aware jobs provide charts that show information about your job runs, and how many models were built and reused by your job per week. In the **Overview** section of your job, the following charts are available: 
 
 Under the **Runs** tab:
 - **Recent runs**
