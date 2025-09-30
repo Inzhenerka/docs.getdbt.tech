@@ -110,7 +110,7 @@ These tools help automate boilerplate code generation for dbt projects files. To
 
 - `generate_source`: Creates source YAML definitions from database schemas
 - `generate_model_yaml`: Generates documentation YAML for existing dbt models, including column names, data types, and description placeholders
-- `generate_staging_model`: Creates staging SQL models from sources to transform raw source data into cleaned staging models
+- `generate_staging_model`: Creates staging SQL models from sources to transform raw source data into clean staging models.
 
 ## MCP integrations
 
