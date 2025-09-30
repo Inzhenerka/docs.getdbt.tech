@@ -106,7 +106,7 @@ To learn more about the dbt Administrative API, click [here](/docs/dbt-cloud-api
 
 ### Codegen tools
 
-These tools help automate boilerplate code generation for dbt projects. They require the [dbt-codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/) package to be installed in your dbt project. These tools are disabled by default and can be enabled by setting the `DISABLE_DBT_CODEGEN` environment variable to `false`.
+These tools help automate boilerplate code generation for dbt projects files. To use them, install the [dbt-codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/) in your dbt project. These tools are disabled by default. To enable them, set the `DISABLE_DBT_CODEGEN` environment variable to `false`.
 
 - `generate_source`: Creates source YAML definitions from database schemas
 - `generate_model_yaml`: Generates documentation YAML for existing dbt models, including column names, data types, and description placeholders
