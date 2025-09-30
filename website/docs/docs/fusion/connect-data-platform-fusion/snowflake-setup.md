@@ -17,11 +17,13 @@ meta:
 
 You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
-The Snowflake adapter for Fusion supports the following authentication methods:
-- [Password](#password)
-- [Key pair](#key-pair)
-- [SSO](#single-sign-on)
-- [Password with MFA](#password)
+The Snowflake adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
+- Password
+- Key pair
+- Single sign-on (SSO)
+- Password with MFA
+
+## Snowflake configuration details
 
 The information required for configuring the Snowflake adapter can be found conveniently in your Snowflake account menu:
 1. Click on your name from the Snowflake sidebar. 
@@ -31,7 +33,9 @@ The information required for configuring the Snowflake adapter can be found conv
 
 <Lightbox src="/img/fusion/connect-adapters/snowflake-account-details.png" width="60%" title="Sample config file in Snowflake." />
 
-Executing `dbt init` without an existing `profiles.yml` file will prompt for the following fields:
+## Configure Fusion
+
+Executing `dbt init` in your CLI will prompt for the following fields:
 
 - **Account:** Snowflake account number
 - **User:** Your Snowflake username
@@ -40,9 +44,15 @@ Executing `dbt init` without an existing `profiles.yml` file will prompt for the
 - **Schema:** The development/staging/deployment schema for the project
 - **Role (Optional):** The role dbt should assume when connnecting to the warehouse.
 
-You will then select your authentication method. Follow the on screen prompts to provide the required information.
+If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them.
 
-## Password
+Next, select your authentication method. Follow the on screen prompts to provide the required information.
+
+## Supported authentication types
+
+<Tabs>
+
+<TabItem value="Password">
 
 Password authentication prompts for your Snowflake account password. This is becoming an increasingly less common option as organizations opt for more secure authentication.
 
@@ -90,7 +100,9 @@ default:
 
 </File>
 
-## Key pair
+</TabItem>
+
+<TabItem value="Key pair">
 
 Key pair authentication gives you the option to:
 - Define the path to the key. 
@@ -139,7 +151,9 @@ default:
 
 </File>
 
-## Single sign-on
+</TabItem>
+
+<TabItem value="Single sign-on">
 
 Single sign-on will leverage your browser to authenticate the Snowflake session.
 
@@ -166,3 +180,7 @@ default:
       schema: JANE_SMITH
 ```
 </File>
+
+</TabItem>
+
+</Tabs>
