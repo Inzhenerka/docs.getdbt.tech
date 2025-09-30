@@ -3,7 +3,7 @@ title: "Quickstart for the dbt Fusion engine"
 id: "fusion"
 # time_to_complete: '30 minutes' commenting out until we test
 level: 'Beginner'
-icon: 'Guides'
+icon: 'zap'
 hide_table_of_contents: true
 tags: ['dbt Fusion engine', 'dbt Cloud','Quickstart']
 recently_updated: true
