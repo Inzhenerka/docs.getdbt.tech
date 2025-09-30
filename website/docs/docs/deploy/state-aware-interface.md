@@ -54,18 +54,6 @@ When running a job, a structured logs view shows which models were built, skippe
 Lineage lenses are interactive visual filters in [dbt <Constant name="explorer" />](/docs/explore/explore-projects#lenses) that show additional context on your lineage graph to understand how resources are defined or performing. When you apply a lens, tags become visible on the nodes in the lineage graph, indicating the layer value along with coloration based on that value. If you're significantly zoomed out, only the tags and their colors are visible in the graph.
 
 The **Latest status** lens shows the status from the latest execution of the resource in the current environment. Nodes can be tagged with any of the following:
-<!--Please check accuracy of the description-->
-
-<Expandable alt_header="For sources">
-
-- **PASS** - Source freshness check passed, indicating data is fresh⁠.
-- **WARN** - Source freshness check returned a warning, indicating data may be getting stale⁠.
-- **ERROR** - Source freshness check failed, indicating stale data.
-- **UNKNOWN** - No freshness check has been configured or run for this source.
-
-</Expandable>
-
-<Expandable alt_header="For models">
 
 - **Skipped** - Model was skipped during the latest run.
 - **Success** - Model built successfully during the latest run.
@@ -73,8 +61,6 @@ The **Latest status** lens shows the status from the latest execution of the res
 - **Error** - Model failed to build during the latest run.
 - **Warn** - Model built with warnings during the latest run.
 - **Reused** - Model execution was reused from state-aware orchestration, avoiding unnecessary rebuilds.
-
-</Expandable>
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-latest-status-lens.png" width="90%" title="Using the Latest status lens"/>
 
@@ -84,7 +70,7 @@ To view your lineage with the **Latest status** lens:
 2. Select your run. 
 3. Go to the **Lineage** tab.
     The lineage of your project appears.
-4. In the **Lenses** field, select **Latest status**. 
+4. In the **Lenses** field, select **Latest status**.
 
 ## Clear cache button
 
