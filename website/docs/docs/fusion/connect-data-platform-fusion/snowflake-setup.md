@@ -14,3 +14,154 @@ meta:
   platform_name: 'Snowflake'
   config_page: '/reference/resource-configs-fusion/snowflake-configs'
 ---
+
+You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+
+The Snowflake adapter for Fusion supports the following authentication methods:
+- [Password](#password)
+- [Key pair](#key-pair)
+- [SSO](#single-sign-on)
+- [Password with MFA](#password)
+
+The information required for configuring the Snowflake adapter can be found conveniently in your Snowflake account menu:
+1. Click on your name from the Snowflake sidebar. 
+2. Hover over the **Account** field.
+3. In the field with your account name, click **View account details**.
+4. Click **Config file** and select the appropriate **Warehouse**, **Database**, 
+
+<Lightbox src="/img/fusion/connect-adapters/snowflake-account-details" width="60%" title="Sample config file in Snowflake." />
+
+Executing `dbt init` without an existing `profiles.yml` file will prompt for the following fields:
+
+- **Account:** Snowflake account number
+- **User:** Your Snowflake username
+- **Database:** The database within your Snowflake account to connec to your project
+- **Warehouse:** The compute warehouse that will handle the tasks for your project
+- **Schema:** The development/staging/deployment schema for the project
+- **Role (Optional):** The role dbt should assume when connnecting to the warehouse.
+
+You will then select your authentication method. Follow the on screen prompts to provide the required information.
+
+## Password
+
+Password authentication prompts for your Snowflake account password. This is becoming an increasingly less common option as organizations opt for more secure authentication.
+
+Selecting **Password with MFA** will be redirect you to the Snowflake account login to provide your passkey or authenticator password.
+
+#### Example password configuration
+
+<File name="profiles.yml">
+
+```yml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      threads: 16
+      account: ABC123
+      user: JANE.SMITH@YOURCOMPANY.COM
+      database: JAFFLE_SHOP
+      warehouse: TRANSFORM
+      schema: JANE_SMITH
+      password: THISISMYPASSWORD
+```
+
+</File>
+
+#### Example password with MFA configuration
+
+<File name="profiles.yml">
+
+```yml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      threads: 16
+      authenticator: username_password_mfa
+      account: ABC123
+      user: JANE.SMITH@YOURCOMPANY.COM
+      database: JAFFLE_SHOP
+      warehouse: TRANFORM
+      schema: JANE_SMITH
+```
+
+</File>
+
+## Key pair
+
+Key pair authentication gives you the option to:
+- Define the path to the key. 
+- Provide the plain-text PEM format key inline.
+
+In either case, we recommend using PKCS#8 format with AES-256 encryption for key pair authentication with Fusion. Fusion doesn't support legacy 3DES encryption or headerless key formats. Using older key formats may cause authentication failures.
+
+If you encounter the `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8` error, then your private key is in the wrong format. You have two options:
+
+- (Recommended fix) Re-export your key with modern encryption:
+
+  ```bash
+  # Convert to PKCS#8 with AES-256 encryption
+  openssl genrsa 2048 | openssl pkcs8 -topk8 -v2 aes-256-cbc -inform PEM -out rsa_key.p8
+  ```
+
+- (Temporary workaround) Add the `BEGIN` header and `END` footer to your PEM body:
+
+  ```
+  -----BEGIN ENCRYPTED PRIVATE KEY-----
+  < Your existing encrypted private key contents >
+  -----END ENCRYPTED PRIVATE KEY-----
+  ```
+
+  Once the key is configuted, you will be given the option to provide a passphrase, if required. 
+
+#### Example key pair configuration
+
+<File name="profiles.yml">
+
+```yml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      threads: 16
+      account: ABC123
+      user: JANE.SMITH@YOURCOMPANY.COM
+      database: JAFFLE_SHOP
+      warehouse: TRANSFORM
+      schema: JANE_SMITH
+      private_key: '<Your existing encrypted private key contents>'
+      private_key_passphrase: YOURPASSPHRASEHERE
+```
+
+</File>
+
+## Single sign-on
+
+Single sign-on will leverage your browser to authenticate the Snowflake session.
+
+By default, every connection that dbt opens will require you to re-authenticate in a browser. The Snowflake connector package supports caching your session token, but it [currently only supports Windows and Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
+
+Refer to the [Snowflake docs](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) for information on enabling this feature in your account.
+
+#### Example SSO configuration
+
+<File name="profiles.yml">
+
+```yml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      threads: 16
+      authenticator: externalbrowser
+      account: ABC123
+      user: JANE.SMITH@YOURCOMPANY.COM
+      database: JAFFLE_SHOP
+      warehouse: TRANSFORM
+      schema: JANE_SMITH
+```
