@@ -29,7 +29,7 @@ The information required for configuring the Snowflake adapter can be found conv
 3. In the field with your account name, click **View account details**.
 4. Click **Config file** and select the appropriate **Warehouse**, **Database**, 
 
-<Lightbox src="/img/fusion/connect-adapters/snowflake-account-details" width="60%" title="Sample config file in Snowflake." />
+<Lightbox src="/img/fusion/connect-adapters/snowflake-account-details.png" width="60%" title="Sample config file in Snowflake." />
 
 Executing `dbt init` without an existing `profiles.yml` file will prompt for the following fields:
 
@@ -165,3 +165,4 @@ default:
       warehouse: TRANSFORM
       schema: JANE_SMITH
 ```
+</File>
