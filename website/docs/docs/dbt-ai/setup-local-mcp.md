@@ -68,7 +68,7 @@ id: "setup-local-mcp"
       | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
       | `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Admininistrative API MCP tools                         |
       | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
-      | `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable dbt codegen MCP tools (requires dbt-codegen package) |
+      | `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package) |
       | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
     </TabItem>
 
