@@ -58,7 +58,7 @@ id: "setup-local-mcp"
       You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
     </TabItem>
 
-    <TabItem value="Disabling tools">  
+    <TabItem value="Disabling tools">
       You can disable the following tool access on the local `dbt-mcp`:
 
       | Name                     | Default | Description                                                                     |
@@ -68,6 +68,7 @@ id: "setup-local-mcp"
       | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
       | `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Admininistrative API MCP tools                         |
       | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
+      | `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable dbt codegen MCP tools (requires dbt-codegen package) |
       | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
     </TabItem>
 

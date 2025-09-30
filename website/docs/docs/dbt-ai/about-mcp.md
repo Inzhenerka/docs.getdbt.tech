@@ -104,6 +104,13 @@ To learn more about the dbt Administrative API, click [here](/docs/dbt-cloud-api
 - `text_to_sql`: Generate SQL from natural language requests
 - `execute_sql`: Execute SQL on the dbt platform's backend infrastructure with support for Semantic Layer SQL syntax. Note: using a PAT instead of a service token for `DBT_TOKEN` is required for this tool.
 
+### Codegen tools
+
+These tools help automate boilerplate code generation for dbt projects. They require the [dbt-codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/) package to be installed in your dbt project. These tools are disabled by default and can be enabled by setting the `DISABLE_DBT_CODEGEN` environment variable to `false`.
+
+- `generate_source`: Creates source YAML definitions from database schemas
+- `generate_model_yaml`: Generates documentation YAML for existing dbt models, including column names, data types, and description placeholders
+- `generate_staging_model`: Creates staging SQL models from sources to transform raw source data into cleaned staging models
 
 ## MCP integrations
 
