@@ -44,7 +44,8 @@ Executing `dbt init` in your CLI will prompt for the following fields:
 - **Schema:** The development/staging/deployment schema for the project
 - **Role (Optional):** The role dbt should assume when connnecting to the warehouse.
 
-If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them.
+
+Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
 
 Next, select your authentication method. Follow the on screen prompts to provide the required information.
 
@@ -187,4 +188,4 @@ default:
 
 ## More information
 
-Find Snowflake specific configurations information in the Snowflake adapter [reference guide](/reference/resource-configs/snowflake-configs).
+Find Snowflake specific configurations information in the [Snowflake adapter reference guide](/reference/resource-configs/snowflake-configs).

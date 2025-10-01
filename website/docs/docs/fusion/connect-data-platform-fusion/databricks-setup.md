@@ -15,7 +15,7 @@ meta:
   config_page: '/reference/resource-configs/databricks-configs'
 --- 
 
-You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+You can configure the Databricks adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The Databricks adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
 - Personal access token
@@ -38,7 +38,8 @@ Executing `dbt init` in your CLI will prompt for the following fields:
 - **Schema:** The development/staging/deployment schema for the project
 - **Catalog (Optional):** The Databricks catalog containing your schemas and tables
 
-If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them.
+
+Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
 
 Next, select your authentication method. Follow the on screen prompts to provide the required information.
 
@@ -102,4 +103,4 @@ default:
 
 ## More information
 
-Find Databricks specific configuration information in the Databricks adapter [reference guide](/reference/resource-configs/databricks-configs).
+Find Databricks specific configuration information in the [Databricks adapter reference guide](/reference/resource-configs/databricks-configs).
