@@ -22,7 +22,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 The following features are new or enhanced as part of dbt's Coalesce event from October 13-16, 2025:
 
-- **Preview**: The [dbt platform](/docs/cloud-integrations/semantic-layer/power-bi) (powered by Fusion) is now in Preview.
+- **Preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in Preview.
 
 
 ## September 2025
