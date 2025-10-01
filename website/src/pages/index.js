@@ -90,17 +90,17 @@ function Home() {
                 </p>
 
                 {/* quicklinks moved up with tightened spacing */}
-                <div className="quick-links quick-links--tight">
-                  <span>Quick links:</span>
-                  <Link to="/docs/introduction">Product docs</Link>
-                  <Link to="/guides">Guides</Link>
-                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release notes</Link>
-                </div>
                 <div className="hero-cta hero-cta--tight">
                   <Link className="hero-border-beam-cta" to="/docs/install-dbt-extension">
                     <span>Install dbt VS Code extension + Unlock Fusion</span>
                     <BorderBeam size={260} borderWidth={2} />
                   </Link>
+                </div>
+                <div className="quick-links quick-links--tight">
+                  <span><b>Quick links:</b></span>
+                  <Link to="/docs/introduction">Product docs</Link>
+                  <Link to="/guides">Guides</Link>
+                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release notes</Link>
                 </div>
               </div>
             </div>
