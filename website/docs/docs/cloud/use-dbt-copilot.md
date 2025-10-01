@@ -69,3 +69,5 @@ Use dbt <Constant name="copilot" /> to analyze your data and get contextualized 
    The <Constant name="copilot" /> agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
 
 5. Confirm the results or continue asking the <Constant name="copilot" /> agent for more insights about your data. 
+
+<Lightbox src="/img/docs/dbt-insights/insights-copilot-agent.png" width="60%" title="Using the Copilot agent in Insights" />
