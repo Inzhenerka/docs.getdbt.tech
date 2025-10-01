@@ -99,3 +99,7 @@ default:
 </TabItem>
 
 </Tabs>
+
+## More information
+
+Find Databricks specific configuration information in the Databricks adapter [reference guide](/reference/resource-configs/databricks-configs).
