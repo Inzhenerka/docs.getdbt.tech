@@ -2,6 +2,7 @@
 title: "Snowflake configurations"
 id: "snowflake-configs"
 description: "Snowflake Configurations - Read this in-depth guide to learn about configurations in dbt."
+tags: ['Snowflake', 'dbt Fusion', 'dbt Core']
 ---
 
 ## Iceberg table format

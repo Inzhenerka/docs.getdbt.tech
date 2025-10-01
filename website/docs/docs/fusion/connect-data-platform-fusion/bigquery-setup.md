@@ -12,5 +12,5 @@ meta:
   slack_channel_name: '#db-bigquery'
   slack_channel_link: 'https://getdbt.slack.com/archives/C99SNSRTK'
   platform_name: 'BigQuery'
-  config_page: '/reference/resource-configs-fusion/bigquery-configs'
+  config_page: '/reference/resource-configs/bigquery-configs'
 ---

@@ -1113,23 +1113,6 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Platform-specific configs (Fusion)",
-      link: {
-        type: "generated-index",
-        title: "Platform-specific configs (Fusion)",
-        description:
-          "Platform-specific configs are used to configure the dbt project for a specific database platform.",
-        slug: "/reference/resource-configs-fusion",
-      },
-      items: [
-        "reference/resource-configs-fusion/bigquery-configs",
-        "reference/resource-configs-fusion/databricks-configs",
-        "reference/resource-configs-fusion/redshift-configs",
-        "reference/resource-configs-fusion/snowflake-configs",
-      ],
-    },
-    {
-      type: "category",
       label: "Resource configs and properties",
       link: { type: "doc", id: "reference/resource-configs/resource-path" },
       items: [

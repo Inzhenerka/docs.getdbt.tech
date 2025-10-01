@@ -12,7 +12,7 @@ meta:
   slack_channel_name: '#db-snowflake'
   slack_channel_link: 'https://getdbt.slack.com/archives/C01DRQ178LQ'
   platform_name: 'Snowflake'
-  config_page: '/reference/resource-configs-fusion/snowflake-configs'
+  config_page: '/reference/resource-configs/snowflake-configs'
 ---
 
 You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.

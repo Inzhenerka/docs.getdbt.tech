@@ -12,7 +12,7 @@ meta:
   slack_channel_name: '#db-databricks-and-spark'
   slack_channel_link: 'https://getdbt.slack.com/archives/CNGCW8HKL'
   platform_name: 'Databricks'
-  config_page: '/reference/resource-configs-fusion/databricks-configs'
+  config_page: '/reference/resource-configs/databricks-configs'
 --- 
 
 You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
