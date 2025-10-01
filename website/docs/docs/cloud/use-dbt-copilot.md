@@ -43,25 +43,26 @@ Use <Constant name="copilot" /> to build queries in [<Constant name="query_page"
 
 To begin building SQL queries with natural language prompts in <Constant name="query_page" />:
 
-1. Click the **<Constant name="copilot" />** icon in the Query console sidebar menu. The **Text to SQL** tab opens. 
-2. In the dbt Copilot prompt box, enter your prompt in natural language for dbt Copilot to build the SQL query you want. <!--You can also reference existing models using the `@` symbol. For example, to build a model that calculates the total price of orders, you can enter `@orders` in the prompt and it'll pull in and reference the `orders` model.-->
-3. Click **Submit** and <Constant name="copilot" /> generates a summary of the SQL query you want to build. To clear the prompt, click on the **Clear** button. To close the prompt box, click the <Constant name="copilot" /> icon again.
-4. <Constant name="copilot" /> will automatically generate the SQL with an explanation of the query. 
+1. Click the **<Constant name="copilot" />** icon in the Query console sidebar menu. 
+2. Click **Generate SQL**.
+3. In the dbt Copilot prompt box, enter your prompt in natural language for dbt <Constant name="copilot" /> to build the SQL query you want. <!--You can also reference existing models using the `@` symbol. For example, to build a model that calculates the total price of orders, you can enter `@orders` in the prompt and it'll pull in and reference the `orders` model.-->
+4. Click **↑** to submit your prompt. <Constant name="copilot" /> generates a summary of the SQL query you want to build. To clear the prompt, click on the **Clear** button. To close the prompt box, click the <Constant name="copilot" /> icon again.
+5. <Constant name="copilot" /> will automatically generate the SQL with an explanation of the query. 
    - Click **Add** to add the generated SQL to the existing query. 
    - Click **Replace** to replace the existing query with the generated SQL.
-5. In the **Query console menu**, click the **Run** button to preview the data.
-6. Confirm the results or continue building your model. 
+6. In the **Query console menu**, click the **Run** button to preview the data.
+7. Confirm the results or continue building your model. 
 
 <Lightbox src="/img/docs/dbt-insights/insights-copilot.gif" width="95%" title="dbt Copilot in dbt Insights" />
 
 ## Analyze data with the Copilot agent <Lifecycle status='preview' />
 
-Use <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking natural language questions to the [<Constant name="query_page" />](/docs/explore/dbt-insights) <Constant name="copilot" /> agent. Before you begin, make sure you can [access <Constant name="query_page" />](/docs/explore/access-dbt-insights).
+Use dbt <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking natural language questions to the [<Constant name="query_page" />](/docs/explore/dbt-insights) <Constant name="copilot" /> agent. Before you begin, make sure you can [access <Constant name="query_page" />](/docs/explore/access-dbt-insights).
 
 1. Click the **<Constant name="copilot" />** icon in the Query console sidebar menu.
-2. Go to the **Analysis** tab.
+2. Click **Agent**.
 3. In the dbt <Constant name="copilot" /> prompt box, enter your question.
-4. Click **Submit**.
+4. Click **↑** to submit your question.
 
    The <Constant name="copilot" /> agent then translates natural language questions into structured queries, executes queries against governed dbt models and metrics, and returns results with references, assumptions, and possible next steps.
 
