@@ -85,7 +85,7 @@ View past queries, their statuses (All, Success, Error, or Pending), start time,
 
 Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts or to chat with the <Constant name="copilot" /> agent to gather insights about your data. There are two ways you can use dbt <Constant name="copilot" /> in <Constant name="explorer" /> to interact with your data:
 
-- **Agent**<Lifecycle status='preview' /> - Ask questions to the dbt <Constant name="copilot" /> agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. Some sample questions: 
+- **Agent**<Lifecycle status='beta' /> - Ask questions to the dbt <Constant name="copilot" /> agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. Some sample questions: 
 
   - _What region are my sales growing the fastest?_ 
   - _What was the revenue last month?_
