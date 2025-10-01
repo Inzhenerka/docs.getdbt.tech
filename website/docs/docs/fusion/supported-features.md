@@ -14,12 +14,12 @@ Learn about the features supported by the dbt Fusion engine, including requireme
 
 </IntroText>
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FuFusionLifecyclesionBeta from '/snippets/_fusion-lifecycle-callout.md';
 import FusionDWH from '/snippets/_fusion-dwh.md';
 
 <VersionBlock lastVersion="1.99">
 
-<FusionBeta />
+<FusionLifecycle />
 
 </VersionBlock>
 

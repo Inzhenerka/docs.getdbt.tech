@@ -6,9 +6,9 @@ displayed_sidebar: "docs"
 ---
 
 import FusionAdapters from '/snippets/_fusion-dwh.md';
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 import AboutFusion from '/snippets/_about-fusion.md';
 
