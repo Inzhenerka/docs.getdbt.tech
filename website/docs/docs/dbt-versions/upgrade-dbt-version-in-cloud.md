@@ -111,4 +111,15 @@ dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion
 
 ### Upgrading to Fusion
 
-When you're ready to upgrade your project(s) to <Constant name="fusion_engine">, there are some tools available to you in the dbt platform UI to help you get started. 
+When you're ready to upgrade your project(s) to <Constant name="fusion_engine" />, there are some tools available to you in the dbt platform UI to help you get started. 
+
+#### Admin controls
+
+By default, all users can view the <Constant name="fusion" /> upgrade workflows. The actions they can take will ultimately be limited by their assigned permissions and access to environments. You can fine tune who can access the upgrade with the combination of a new account setting and permission set, the `Fusion admin`.
+
+From your **Account settings**:
+1. Navigate to the **Account** screen.
+2. Click **Edit** and scroll to the bottom and click the box next to **Enable Fusion migration** permissions.
+3. Click **Save**
+
+

@@ -111,6 +111,12 @@ Notable features:
 - Can access <Constant name="explorer" />.
 
 </Expandable>
+<Expandable alt_header="Fusion admin">
+This permission set is used exclusively to enable users to interact with the Fusion upgrade workflows. We recommend assigning to users only on specific environments to limit access and upgrade only projects that are Fusion-ready. 
+
+See the [dbt platform Fusion upgrade](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) docs for more information.
+
+</Expandable>
 <Expandable alt_header="Git admin">
 
 Git admins manage Git repository integrations and cloning.
