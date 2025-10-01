@@ -8,7 +8,7 @@ sidebar_label: About cost management
 
 :::Private preview
 
-Cost management features are in private preview. If you're interested in joining the preview, please reach out to your account manager.
+Cost management features are in private preview. If you're interested in joining the preview, please contact your account manager.
 
 :::
 
