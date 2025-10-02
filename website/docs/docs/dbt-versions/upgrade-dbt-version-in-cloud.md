@@ -80,7 +80,7 @@ From your **Account settings**:
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/fusion-migration-permissions.png" width="60%" title="Limit access to the Fusion upgrade workflows."/>
 
-This will hide the <Constant name="fusion" /> upgrade workflow from users who don't have the `Fusion admin` permission set, including the highest levels of admin access. To grant users access to the upgrade workflows, navigate to a group in your **Account settings**:
+This hides the <Constant name="fusion" /> upgrade workflow from users who don't have the `Fusion admin` permission set, including the highest levels of admin access. To grant users access to the upgrade workflows:
 1. Click **Edit**
 2. Scroll to the **Access and permissions** section and click **Add permission**.
 3. Select the **Fusion admin** permission set from the dropdown and then select the project(s) you want the users to access. 
