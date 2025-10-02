@@ -71,7 +71,7 @@ To take advantage of the upgrade assistant, you'll need to meet the following pr
 
 #### Assign access to upgrade
 
-By default, all users can view the <Constant name="fusion" /> upgrade workflows. The actions they can take will ultimately be limited by their assigned permissions and access to environments. You can fine-tune who can access the upgrade with the combination of a new account setting and a permission set, specifically the `Fusion admin`.
+By default, all users can view the <Constant name="fusion" /> upgrade workflows. The actions they can take will ultimately be limited by their assigned permissions and access to environments. You can fine-tune who can access the upgrade with the combination of a new account setting and the `Fusion admin` permission set.
 
 From your **Account settings**:
 1. Navigate to the **Account** screen.
