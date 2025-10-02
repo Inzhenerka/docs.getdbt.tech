@@ -355,6 +355,5 @@ import FusionPackages from '/snippets/_fusion-supported-packages.md';
 
 <FusionPackages />
 
-## Steps to upgrade to Fusion
 
 <FusionUpgradeSteps />
