@@ -283,11 +283,11 @@ This way, if either `dim_wizards` or `dim_worlds` has fresh upstream data and en
 
 ### Deleted tables
 
-If a table was deleted in the warehouse, and neither the model’s code nor the data it depends on has changed, state-aware orchestration does not detect a change and will not rebuild the table because it does not check whether every table still exists. To build the table, refer to the following workarounds:
+If a table was deleted in the warehouse, and neither the model’s code nor the data it depends on has changed, state-aware orchestration does not detect a change and will not rebuild the table. This is because the system decides what to build based on code and upstream data changes, not by checking whether every table still exists. To build the table, you have the following options:
 
 - **Clear cache and rebuild**: Go to **Orchestration** > **Environments** and click **Clear cache**. The next run will rebuild all models from a clean state.
 
-- **Temporarily disable state-aware orchestration**: Go to **Orchestration** > **Jobs**. Select your job and click **Edit**. Under **Enable Fusion cost optimization features**, disable **State-aware orchestration** and click **Save**. This forces a full build when you run the job. You can re‑enable the feature after the run.
+- **Temporarily disable state-aware orchestration**: Go to **Orchestration** > **Jobs**. Select your job and click **Edit**. Under **Enable Fusion cost optimization features**, disable **State-aware orchestration** and click **Save**. Run the job to force a full build, then re‑enable the feature after the run.
 
 ## Related docs
 
