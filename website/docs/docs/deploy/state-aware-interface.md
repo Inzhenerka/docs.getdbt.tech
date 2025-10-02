@@ -57,8 +57,8 @@ The **Latest status** lens shows the status from the latest execution of the res
 
 - **Skipped** - Model was skipped during the latest run.
 - **Success** - Model built successfully during the latest run.
-- **Fail** - <!--when are models tagged with this?-->
-- **Error** - Model failed to build during the latest run.
+- **Fail** - Model built but with test failures.<!--Is this correct?-->
+- **Error** - Model failed to build during the latest run. <!--Is this correct?-->
 - **Warn** - Model built with warnings during the latest run.
 - **Reused** - Model execution was reused from state-aware orchestration, avoiding unnecessary rebuilds.
 
