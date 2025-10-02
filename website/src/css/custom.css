@@ -2242,8 +2242,8 @@ section.discourse-forum-page {
 }
 
 .home .hero-cta.hero-cta--tight {
-  margin-top: 1rem;
-  transform: translateY(2.75rem);
+  margin-top: 0.5rem;
+  transform: translateY(1rem);
 }
 
 .home .hero-cta .hero-border-beam-cta {
@@ -2252,7 +2252,7 @@ section.discourse-forum-page {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1rem;
   border-radius: 999px;
   border: 1px solid #000;
   overflow: hidden;
@@ -2274,21 +2274,20 @@ section.discourse-forum-page {
     font-size: var(--text-sm);
   }
 
-  .quick-links span {
-    display: none;
-  }
-
-  .quick-links a {
-    font-size: var(--text-sm);
-  }
-
-  .baton-hero .quick-links.quick-links--tight {
-    transform: translateY(1rem);
-  }
-
   .home .hero-cta.hero-cta--tight {
-    transform: translateY(1.25rem);
+    transform: translateY(0.1rem);
   }
+}
+
+.home .baton-hero.baton-hero--compact {
+  scale: 0.95;
+  transform: translateY(-2rem);
+
+}
+
+.home section.home-quickstart {
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
 
 .home section:first-of-type {
@@ -2813,8 +2812,8 @@ iframe#q-messenger-frame:not(.qlfd-maximized) {
 }
 
 .baton-hero.baton-hero--compact {
-  padding: 6rem .75rem 12rem;
-  margin-bottom: -4rem;
+  padding: 8rem .55rem 12rem;
+  margin-bottom: -5rem;
 }
 
 @media (max-width: 996px) {
