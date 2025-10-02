@@ -240,6 +240,7 @@ html[data-theme="dark"] input.sc-avest {
 .navbar__item.nav-install-dbt-extension:hover {
   background-color: var(--ifm-color-primary) !important;
   background-image: linear-gradient(oklab(0.865972 0.00164044 0.169914 / 0.5) 0%, rgba(0, 0, 0, 0) 50%) !important;
+  transition: transform 0.2s ease-in-out;
 }
 html[data-theme="dark"] .navbar__item.nav-install-dbt-extension {
   color: var(--color-neutral-primary);
@@ -2257,6 +2258,11 @@ section.discourse-forum-page {
   border: 1px solid #000;
   overflow: hidden;
   font-weight: 600;
+  transition: transform 0.2s ease-in-out;
+}
+
+.home .hero-cta .hero-border-beam-cta:hover {
+  transform: translateY(-2px) scale(1.02);
 }
 
 .home .hero-cta .hero-border-beam-cta span {
