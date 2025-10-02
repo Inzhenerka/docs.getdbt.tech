@@ -6,7 +6,7 @@ sidebar_label: About cost management
 
 # About cost management in dbt <Lifecycle status='preview,managed,managed_plus' />
 
-:::Private preview
+:::info Private preview
 
 Cost management features are in private preview. If you're interested in joining the preview, please contact your account manager.
 
