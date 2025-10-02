@@ -22,6 +22,7 @@ The **Latest** track ensures you have up-to-date <Constant name="cloud" /> funct
 As a best practice, dbt Labs recommends that you test the upgrade in development first; use the [Override dbt version](#override-dbt-version) setting to test _your_ project on the latest dbt version before upgrading your deployment environments and the default development environment for all your colleagues.
 
 To upgrade an environment in the [<Constant name="cloud" /> Admin API](/docs/dbt-cloud-apis/admin-cloud-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), set `dbt_version` to the name of your release track:
+- `Latest Fusion` <Lifecycle status="beta" /> (available to select accounts)
 - `latest` (formerly called `versionless`; the old name is still supported)
 - `compatible` (available to Starter, Enterprise, Enterprise+ plans)
 - `extended` (available to all Enterprise plans)
@@ -41,6 +42,68 @@ Configure your project to use a different dbt version than what's configured in 
 
 5. (Optional) Verify that <Constant name="cloud" /> will use your override setting to build the project by invoking a `dbt build` command in the <Constant name="cloud_ide" />'s command bar. Expand the **System Logs** section and find the output's first line. It should begin with `Running with dbt=` and list the version <Constant name="cloud" /> is using. <br /><br />
    For users on Release tracks, the output will display `Running dbt...` instead of a specific version, reflecting the flexibility and continuous automatic updates provided by the release track functionality.
+
+## dbt Fusion engine <Lifecycle status="beta" />
+
+dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but there are a few things to keep in mind:
+
+- To gain access to the Fusion Latest release track, you must reach out to your dbt Labs account team to request it. Week by week, we'll expand the beta cohort based on project eligibility, including Starter plans. Once we transition from Beta to Preview, all users will see it as an option for their environments, projects, jobs, etc.
+- To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and follow our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion). 
+- There are some significant changes; these can also be found in the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
+- Make sure you're using a supported adapter and authentication method:
+  <FusionDWH /> 
+- When you change your development environment(s) to `Fusion Latest`, every user will have to restart the IDE.
+
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
+
+### Upgrading to Fusion <Lifecycle status="beta" />
+
+When you're ready to upgrade your project(s) to <Constant name="fusion_engine" />, there are some tools available to you in the dbt platform UI to help you get started. The <Constant name="fusion" /> upgrade assistant will step you through the process of preparing and upgrading your projects. 
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/fusion-upgrade-gui.png" width="60%" title="The Fusion upgrade assistant."/>
+
+#### Prerequisites
+
+To take advantage of the upgrade assistant, you'll need to meet the following prerequisites:
+- Your dbt project must be updated to use the `Latest` release track.
+- You must have a `developer` license.
+- You must have the <Constant name="Fusion" /> beta enabled for your account. For more information, please contact your account manager. 
+
+#### Assign access to upgrade
+
+By default, all users can view the <Constant name="fusion" /> upgrade workflows. The actions they can take will ultimately be limited by their assigned permissions and access to environments. You can fine-tune who can access the upgrade with the combination of a new account setting and a permission set, specifically the `Fusion admin`.
+
+From your **Account settings**:
+1. Navigate to the **Account** screen.
+2. Click **Edit** and scroll to the bottom, and click the box next to **Enable Fusion migration** permissions.
+3. Click **Save**.
+
+This will hide the <Constant name="fusion" /> upgrade workflow from users who don't have the `Fusion admin` permission set, including the highest levels of admin access. To grant users access to the upgrade workflows, navigate to a group in your **Account settings**:
+1. Click **Edit**
+2. Scroll to the **Access and permissions** section and click **Add permission**.
+3. Select the **Fusion admin** permission set from the dropdown and then select the project(s) you want the users to access. 
+4. Click **Save**
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/assign-fusion-admin.png" width="60%" title="Assign Fusion admin to groups and projects."/>
+
+The <Constant name="fusion" /> upgrade workflows will help users identify areas of the project that need to be updated and provide tools for manually resolving and autofixing any errors. 
+
+
+#### Upgrade your development environment
+
+To begin the process of upgrading to <Constant name="fusion" /> with the assistant:
+1. From the project homepage or sidebar menu, click the **Start Fusion upgrade** or **Get started** button. You will be redirected to the <Constant name="cloud_ide" />.
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/start-upgrade.png" width="60%" title="Start the Fusion upgrade."/>
+2. At the top of the <Constant name="cloud_ide" /> click the button to **Check deprecation warnings**. 
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Begin the process of parsing for deprecation warnings."/>
+3. dbt will parse your project for the deprecations and present a list of all deprecation warnings. You are given the option to **Autofix warnings**. This will attempt to correct all syntax errors automatically. See [Fix deprecation warnings](/docs/cloud/dbt-cloud-ide/autofix-deprecations) for more information. 
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Begin the process of parsing for deprecation warnings."/>
+4. Once the deprecation warnings have been resolved, click the **Enable Fusion** button. This will upgrade your development environment to Fusion!
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/autofix-success.png" width="60%" title="You're now ready to upgrade to Fusion in your development environment!"/>
+
+Now that you've upgraded your development environment to <Constant name="Fusion" />, you're ready to start the process of upgrading your Production, Staging, and General environments. Follow your organization's standard procedures and use the [release tracks](#release-tracks) to upgrade.
 
 ## Jobs
 
@@ -94,32 +157,3 @@ Once you know what code changes you'll need to make, you can start implementing 
 - Then add a job to the new testing environment that replicates one of the production jobs your team relies on.
   - If that job runs smoothly, you should be all set to merge your branch into main. 
   - Then change your development and deployment environments in your main dbt project to run off the newest version of <Constant name="core" />.
-
-## dbt Fusion engine <Lifecycle status="beta" />
-
-dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but there are a few things to keep in mind:
-
-- To gain access to the Fusion Latest release track, you must reach out to your dbt Labs account team to request it. Week by week we'll expand the beta cohort based on project eligibility, including Starter plans. Once we transition from Beta to Preview, all users will see it as an option for their environments, projects, jobs, etc.
-- To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and follow our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion). 
-- There are some significant changes, these can also be found in the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
-- Make sure you're using a supported adapter and authentication method:
-  <FusionDWH /> 
-- When you change your development environment(s) to `Fusion Latest`, every user will have to restart the IDE.
-
-
-  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
-
-### Upgrading to Fusion
-
-When you're ready to upgrade your project(s) to <Constant name="fusion_engine" />, there are some tools available to you in the dbt platform UI to help you get started. 
-
-#### Admin controls
-
-By default, all users can view the <Constant name="fusion" /> upgrade workflows. The actions they can take will ultimately be limited by their assigned permissions and access to environments. You can fine tune who can access the upgrade with the combination of a new account setting and permission set, the `Fusion admin`.
-
-From your **Account settings**:
-1. Navigate to the **Account** screen.
-2. Click **Edit** and scroll to the bottom and click the box next to **Enable Fusion migration** permissions.
-3. Click **Save**
-
-
