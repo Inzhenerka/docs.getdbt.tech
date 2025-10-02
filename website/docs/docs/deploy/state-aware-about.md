@@ -36,6 +36,49 @@ For example, you can configure your project so that <Constant name="cloud" /> sk
 
 Without configuring anything, <Constant name="cloud" />'s state-aware orchestration automatically knows to build your models either when the code has changed or if there’s any new data in a source (or upstream model in the case of [dbt Mesh](/docs/mesh/about-mesh)).
 
+## Efficient testing in state-aware orchestration
+
+Data quality can get degraded in two ways: 
+
+- New code changes definitions or introduces edge cases.
+- New data, like duplicates or unexpected values, invalidates downstream metrics.
+
+Running dbt’s out-of-the-box [data tests](/docs/build/data-tests) (`unique`, `not_null`, `accepted_values`, `relationships`) on every build helps catch data errors before they impact business decisions. Catching these errors often requires having multiple tests on every model and running tests even when not necessary. If nothing relevant has changed, repeated test executions don’t improve coverage and only increase cost.
+
+With Fusion, dbt gains an understanding of the SQL code based on the logical plan for the compiled code. dbt then can determine when a test must run again, or when a prior upstream test result can be reused.
+
+Efficient testing in state-aware orchestration reduces warehouse costs by avoiding redundant data tests and combining multiple tests into one run. This feature includes two optimizations:
+    
+- **Test reuse** &mdash; Tests are reused in cases where no logic in the code or no new data could have changed the test's outcome.
+- **Test aggregation** &mdash; When there are multiple tests on a model, dbt combines tests to run as a single query against the warehouse, rather than running separate queries for each test.
+
+### Enabling Efficient testing
+
+To enable Efficient testing, refer to the steps on how to [Create a job](/docs/deploy/state-aware-setup#create-a-job). Under the **Execution settings** section, select **Enable Fusion cost optimization features** to enable both **State-aware orchestration** and **Efficient testing** features. You can expand **More options** to enable or disable individual settings.
+
+### Example
+
+In the following query, you’re joining an `orders` and a `customers` table:
+
+```sql
+with
+  orders as (select * from ref('orders')),
+  customers as (select * from ref('customers')),
+  joined as (
+    select
+      customers.customer_id as customer_id,
+      orders.order_id as order_id
+    from customers
+    left join orders
+      on orders.customer_id = customers.customer_id
+  )
+select * from joined
+```
+
+- `not_null` test: A `left join` can introduce null values for customers without orders. Even if upstream tests verified `not_null(order_id)` in orders, the join can create null values downstream. dbt must always run a `not_null` test on `order_id` in this joined result.
+
+- `unique` test: If `orders.order_id` and `customers.customer_id` are unique upstream, uniqueness of `order_id` is preserved and the upstream result can be reused. 
+
 ## Related docs
 
 - [State-aware orchestration configuration](/docs/deploy/state-aware-setup)
