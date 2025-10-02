@@ -144,10 +144,11 @@ function Home() {
                   icon="dbt-copilot"
                 />
                 <Card
-                  title="dbt Mesh"
-                  body="dbt Mesh is a framework that helps organizations scale their teams and data assets effectively."
-                  link="/docs/mesh/about-mesh"
-                  icon="lineage"
+                  title="VS Code Extension"
+                  body="This free tool brings the full power of the dbt Fusion engine into your local environment with features like live error detection, lightning-fast parse times, insights and rich lineage all in VS Code or Cursor."
+                  link="/docs/about-dbt-extension"
+                  icon="vsce"
+                  showBorderBeam
                 />
                 <Card
                   title="dbt Orchestrator"
@@ -186,11 +187,10 @@ function Home() {
                   icon="dashboard"
                 />
                 <Card
-                  title="VS Code Extension"
-                  body="This free tool brings the full power of the dbt Fusion engine into your local environment with features like live error detection, lightning-fast parse times, insights and rich lineage all in VS Code or Cursor."
-                  link="/docs/about-dbt-extension"
-                  icon="vsce"
-                  showBorderBeam
+                  title="dbt Mesh"
+                  body="dbt Mesh is a framework that helps organizations scale their teams and data assets effectively."
+                  link="/docs/mesh/about-mesh"
+                  icon="lineage"
                 />
               </div>
             </div>
