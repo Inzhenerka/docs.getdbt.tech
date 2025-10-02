@@ -18,7 +18,9 @@ import FusionBeta from '/snippets/_fusion-beta-callout.md';
 
 <FusionBeta />
 
-The dbt Fusion engine is a powerful new approach to classic dbt ideas! Completely rebuilt from the ground up in Rust, Fusion enables you to compile and run your dbt projects faster than ever. We understand that you may want to see Fusion in action for yourself before you try it out in your development and production environments, and this quickstart guide aims to do just that!
+The dbt Fusion engine is a powerful new approach to classic dbt ideas! Completely rebuilt from the ground up in Rust, Fusion enables you to compile and run your dbt projects faster than ever. 
+
+This quickstart guide aims to give you an idea of how Fusion works in your development and production environments, focusing on the dbt extension and CLI combined experience.
 
 ### About the dbt Fusion engine
 
@@ -30,7 +32,18 @@ Fusion and the powerful features that the engine provides are available in the f
 
 Read more [about the dbt Fusion engine](/docs/fusion/about-fusion) to get a better understanding of what's new, what's changed, and what's been deprecated.
 
-This guide will focus on the dbt extension and CLI combined experience.
+### Fusion demo video
+
+Want to see Fusion in action? Check out the following video to get a sense of how it works:
+
+<div style={{ position: 'relative', maxWidth: '960px', margin: '2rem auto', overflow: 'hidden', borderRadius: '12px', boxShadow: 'var(--ifm-global-shadow-lw)' }}>
+  <iframe
+    src="https://app.storylane.io/share/xd39nkcj3jqs?slides=1-37&autoplay=true&hide_header=true&hide_footer=true"
+    title="dbt Fusion + VS Code extension walkthrough"
+    style={{ position: 'relative', top: '-48px', height: '780px', width: '100%', border: 0 }}
+    allow="fullscreen; autoplay; encrypted-media"
+  />
+</div>
 
 ## Prerequisites
 
