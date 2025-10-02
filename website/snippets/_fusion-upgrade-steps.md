@@ -1,4 +1,4 @@
-#### Known limitations during upgrade
+### Known limitations during upgrade
 
 The following are known limitations during the upgrade process:
 
