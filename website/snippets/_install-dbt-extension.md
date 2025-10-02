@@ -47,7 +47,6 @@ To get started with the extension:
     - **Explore features:** Opens the [documentation](/docs/about-dbt-extension) so you can learn more about all the extension has to offer.
     - **Register:** Launches the registration workflow so you can continue to use the extension beyond the trial period.
 
-
 ## Upgrade to Fusion
 
 :::note

@@ -7,6 +7,7 @@ displayed_sidebar: "docs"
 
 import FusionAdapters from '/snippets/_fusion-dwh.md';
 import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
 
 <FusionBeta />
 
@@ -20,7 +21,7 @@ import AboutFusion from '/snippets/_about-fusion.md';
 
 At the same time, we want to take this opportunity to _strengthen the framework_ by removing deprecated functionality, rationalizing confusing behavior, and providing more rigorous validation on erroneous inputs. This means that there is some work involved in preparing an existing dbt project for readiness on Fusion.
 
-That work is documented below — it should be simple, straightforward, and in many cases, auto-fixable with the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper.
+That work is documented below — it should be simple, straightforward, and in many cases, auto-fixable with the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper. Users on dbt platform can use the [dbt-autofix tool](https://github.com/dbt-labs/dbt-autofix) to fix many of them.
 
 You can find more information about what's changing in the dbt Fusion engine [changelog](https://github.com/dbt-labs/dbt-fusion/blob/main/CHANGELOG.md).
 
@@ -353,3 +354,8 @@ return('xyzabc')
 import FusionPackages from '/snippets/_fusion-supported-packages.md';
 
 <FusionPackages />
+
+
+### Steps to upgrade to Fusion
+
+<FusionUpgradeSteps />
