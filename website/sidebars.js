@@ -805,7 +805,6 @@ const sidebarSettings = {
           "docs/dbt-ai/integrate-mcp-vscode",
           "docs/dbt-ai/integrate-mcp-cursor",
           "docs/dbt-ai/integrate-mcp-claude",
-          "docs/dbt-ai/mcp-fusion-tools",
           ],
     },
     {
