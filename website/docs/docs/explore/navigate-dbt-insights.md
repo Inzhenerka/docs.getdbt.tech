@@ -30,7 +30,7 @@ To create a SQL query in Query Builder:
     - Click **Add Metric** to select the metrics for your query. 
     - Click **Add Group by** to choose the dimensions that break down your metric, such as time grain (day, week, month), region, product, or customer.
     - Click **Add Filter** to create a filter to narrow your results.
-    - Click **Add Order by** to select how your want to sort the results of your query. 
+    - Click **Add Order by** to select how you want to sort the results of your query. 
 4. Click **Run** to run your query.
     Results are available in the **Data** tab.
 
