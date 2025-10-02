@@ -49,7 +49,6 @@ dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion
 
 - To gain access to the Fusion Latest release track, you must reach out to your dbt Labs account team to request it. Week by week, we'll expand the beta cohort based on project eligibility, including Starter plans. Once we transition from Beta to Preview, all users will see it as an option for their environments, projects, jobs, etc.
 - To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and follow our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion). 
-- There are some significant changes; these can also be found in the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 - Make sure you're using a supported adapter and authentication method:
   <FusionDWH /> 
 - When you change your development environment(s) to `Latest Fusion`, every user will have to restart the IDE.
