@@ -31,6 +31,14 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
   | x-dbt-dev-environment-id | Required for `execute_sql` | Your dbt Cloud development environment ID |
   | x-dbt-user-id | Required for `execute_sql` | Your dbt Cloud user ID ([docs](https://docs.getdbt.com/faqs/Accounts/find-user-id)) |
 
+  **Additional configuration for fusion tools**
+  | Header | Required | Description |
+  | --- | --- | --- |
+  | x-dbt-dev-environment-id | Required| Your dbt Cloud development environment ID |
+  | x-dbt-user-id | Required | Your dbt Cloud user ID ([docs](https://docs.getdbt.com/faqs/Accounts/find-user-id)) |
+  | x-dbt-fusion-defer | Optional | Default: `false`. When set to `true` will use `x-dbt-prod-environment-id` as deferal environment |
+
+
   **Configuration to disable tools**
   | Header | Required  | Description |
   | --- | --- | --- |
