@@ -52,13 +52,13 @@ id: "setup-local-mcp"
       | DBT_PATH | Required | The path to your dbt executable (Core/Fusion/Cloud CLI). You can find your dbt executable by running `which dbt` | /opt/homebrew/bin/dbt |
       | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
 
-      You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](https://docs.getdbt.com/reference/global-configs/about-global-configs#available-flags).
+      You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
 
       `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command.
       You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
     </TabItem>
 
-    <TabItem value="Disabling tools">  
+    <TabItem value="Disabling tools">
       You can disable the following tool access on the local `dbt-mcp`:
 
       | Name                     | Default | Description                                                                     |
@@ -68,6 +68,7 @@ id: "setup-local-mcp"
       | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
       | `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Admininistrative API MCP tools                         |
       | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
+      | `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package) |
       | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
     </TabItem>
 
