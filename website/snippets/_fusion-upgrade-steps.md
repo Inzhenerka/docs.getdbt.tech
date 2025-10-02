@@ -39,5 +39,5 @@ The following are known limitations during the upgrade process:
 
 - **State-aware orchestratio**n &mdash; If using [state-aware orchestration](/docs/deploy/state-aware-about), dbt doesn't detect a change if a table or view is dropped externally. This means state-aware orchestration _will not_ rebuild it.
   - Workarounds:
-    - <!-- placeholder for link to Bianca's doc on instructions) -->
+    - Use **Clear cache** button on the Environment settings page to force a full rebuild (acts like a reset). <!-- not avail yet and link to Bianca’s doc on instructions) --> OR
     - Temporarily disable State-aware orchestration for the job and rerun it again.
