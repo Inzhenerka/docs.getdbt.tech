@@ -279,7 +279,7 @@ If you want to exclude a model from the freshness rule set at a higher level, se
 
 This way, if either `dim_wizards` or `dim_worlds` has fresh upstream data and enough time passed, dbt rebuilds the models. This method helps when the need for fresher data outweighs the costs.
 
-## Troubleshooting
+## Limitation
 
 ### Deleted tables
 
