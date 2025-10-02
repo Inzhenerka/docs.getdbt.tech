@@ -6,6 +6,12 @@ sidebar_label: About cost management
 
 # About cost management in dbt <Lifecycle status='preview,managed,managed_plus' />
 
+:::info Private preview
+
+Cost management features are in private preview. If you're interested in joining the preview, please contact your account manager.
+
+:::
+
 The cost management dashboard in <Constant name="cloud" /> gives you valuable insight into how your dbt projects impact your data warehouse costs. They will help you optimize your warehouse spending by visualizing how features, including models, tests, snapshots, and other resources, influence costs over time so that you can take action, report to stakeholders, and optimize development workflows.
 
 Currently, only Snowflake is supported. Support for more adapters is coming in the future.
