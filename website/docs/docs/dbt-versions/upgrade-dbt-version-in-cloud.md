@@ -45,7 +45,7 @@ Configure your project to use a different dbt version than what's configured in 
 
 ## dbt Fusion engine <Lifecycle status="beta" />
 
-dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but there are a few things to keep in mind:
+dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
 
 - To gain access to the Fusion Latest release track, you must reach out to your dbt Labs account team to request it. Week by week, we'll expand the beta cohort based on project eligibility, including Starter plans. Once we transition from Beta to Preview, all users will see it as an option for their environments, projects, jobs, etc.
 - To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and read more about the changes in our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion). 
