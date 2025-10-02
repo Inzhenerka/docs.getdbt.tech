@@ -14,7 +14,7 @@ Learn how to navigate <Constant name="query_page" /> interface and use the main 
 
 <Constant name="query_page" /> provides an interactive interface for writing, running, and analyzing SQL queries. This section highlights the main components of <Constant name="query_page" />. 
 
-## Query Builder
+## Query Builder <Lifecycle status="beta" />
 
 Query Builder in dbt <Constant name="query_page" /> lets you build queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
 
