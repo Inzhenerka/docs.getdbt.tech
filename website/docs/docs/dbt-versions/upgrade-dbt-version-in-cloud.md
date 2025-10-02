@@ -81,14 +81,15 @@ From your **Account settings**:
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/fusion-migration-permissions.png" width="60%" title="Limit access to the Fusion upgrade workflows."/>
 
 This hides the <Constant name="fusion" /> upgrade workflow from users who don't have the `Fusion admin` permission set, including the highest levels of admin access. To grant users access to the upgrade workflows:
-1. Click **Edit**
-2. Scroll to the **Access and permissions** section and click **Add permission**.
-3. Select the **Fusion admin** permission set from the dropdown and then select the project(s) you want the users to access. 
-4. Click **Save**
+1. Navigate to a group in your **Account settings**.
+2. Click **Edit**.
+3. Scroll to the **Access and permissions** section and click **Add permission**.
+4. Select the **Fusion admin** permission set from the dropdown and then select the project(s) you want the users to access. 
+5. Click **Save**.
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/assign-fusion-admin.png" width="60%" title="Assign Fusion admin to groups and projects."/>
 
-The <Constant name="fusion" /> upgrade workflows will help users identify areas of the project that need to be updated and provide tools for manually resolving and autofixing any errors. 
+The <Constant name="fusion" /> upgrade workflows helps identify areas of the project that need to be updated and provides tools for manually resolving and autofixing any errors. 
 
 
 #### Upgrade your development environment
@@ -96,11 +97,11 @@ The <Constant name="fusion" /> upgrade workflows will help users identify areas 
 To begin the process of upgrading to <Constant name="fusion" /> with the assistant:
 1. From the project homepage or sidebar menu, click the **Start Fusion upgrade** or **Get started** button. You will be redirected to the <Constant name="cloud_ide" />.
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/start-upgrade.png" width="60%" title="Start the Fusion upgrade."/>
-2. At the top of the <Constant name="cloud_ide" /> click the button to **Check deprecation warnings**. 
+2. At the top of the <Constant name="cloud_ide" /> click **Check deprecation warnings**. 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Begin the process of parsing for deprecation warnings."/>
-3. dbt will parse your project for the deprecations and present a list of all deprecation warnings. You are given the option to **Autofix warnings**. This will attempt to correct all syntax errors automatically. See [Fix deprecation warnings](/docs/cloud/dbt-cloud-ide/autofix-deprecations) for more information. 
+3. dbt parses your project for the deprecations and presents a list of all deprecation warnings along with the option to **Autofix warnings**. Autofixing attempts to correct all syntax errors automatically. See [Fix deprecation warnings](/docs/cloud/dbt-cloud-ide/autofix-deprecations) for more information. 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Begin the process of parsing for deprecation warnings."/>
-4. Once the deprecation warnings have been resolved, click the **Enable Fusion** button. This will upgrade your development environment to Fusion!
+4. Once the deprecation warnings have been resolved, click the **Enable Fusion** button. This upgrades your development environment to Fusion!
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/autofix-success.png" width="60%" title="You're now ready to upgrade to Fusion in your development environment!"/>
 
