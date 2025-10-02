@@ -73,9 +73,12 @@ To create a state-aware job:
     - **Environment variables**: Define [environment variables](/docs/build/environment-variables) to customize the behavior of your project when the deploy job runs.
     - **Target name**: Define the [target name](/docs/build/custom-target-names) to customize the behavior of your project when the deploy job runs. Environment variables and target names are often used interchangeably. 
     - **Run timeout**: Cancel the deploy job if the run time exceeds the timeout value. 
-    - **Compare changes against**: By default, it’s set to **No deferral**. Select either **Environment** or **This Job** to let <Constant name="cloud" /> know what it should compare the changes against.  
+    - **Compare changes against**: By default, it’s set to **No deferral**. Select either **Environment** or **This Job** to let <Constant name="cloud" /> know what it should compare the changes against. 
 
-You can see which models dbt builds in the run summary logs. Models that weren't rebuilt during the run will show **reusing** in the logs alongside the reason that dbt was able to skip building the model (and saving you unnecessary compute!)
+7. Click **Save**. 
+
+You can see which models dbt builds in the run summary logs. Models that weren't rebuilt during the run are tagged as **Reused** with context about why dbt skipped rebuilding them (and saving you unnecessary compute!). You can also see the reused models under the **Reused** tab.
+
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/SAO_logs_view.png" width="90%" title="Example logs for state-aware orchestration"/>
 
@@ -274,7 +277,17 @@ If you want to exclude a model from the freshness rule set at a higher level, se
 ```
 </File>
 
-This way, if either `dim_wizards` or `dim_worlds` has fresh upstream data and enough time passed, dbt rebuilds the models. This method helps when the need for fresher data outweighs the costs. 
+This way, if either `dim_wizards` or `dim_worlds` has fresh upstream data and enough time passed, dbt rebuilds the models. This method helps when the need for fresher data outweighs the costs.
+
+## Troubleshooting
+
+### Deleted tables
+
+If a table was deleted in the warehouse, and neither the model’s code nor the data it depends on has changed, state-aware orchestration does not detect a change and will not rebuild the table because it does not check whether every table still exists. To build the table, refer to the following workarounds:
+
+- **Clear cache and rebuild**: Go to **Orchestration** > **Environments** and click **Clear cache**. The next run will rebuild all models from a clean state.
+
+- **Temporarily disable state-aware orchestration**: Go to **Orchestration** > **Jobs**. Select your job and click **Edit**. Under **Enable Fusion cost optimization features**, disable **State-aware orchestration** and click **Save**. This forces a full build when you run the job. You can re‑enable the feature after the run.
 
 ## Related docs
 
