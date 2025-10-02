@@ -16,21 +16,26 @@ Learn how to navigate <Constant name="query_page" /> interface and use the main 
 
 ## Query Builder
 
-Query Builder is a tool in dbt <Constant name="query_page" /> where you can build queries against the Semantic Layer without writing SQL code. It guides users in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
+Query Builder in dbt <Constant name="query_page" /> lets you build queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
 
 - Build queries from semantic objects rather than raw tables.
 - Have filters, time ranges, and aggregates tailored to the semantic model.
-- Convert semantic queries into SQL code for developers. 
+- Convert semantic queries into SQL code for developers. <!--how to do this?-->
 
-To use Query Builder:
+To create a SQL query in Query Builder:
 
-1. Enter a natural language question in the dbt <Constant name="query_page" /> interface. 
+1. From the main menu, go to **<Constant name="query_page" />**.
+2. Click **Build a query**. 
+3. Select what you want to include in your query.
+    - Click **Add Metric** to select the metrics for your query. 
+    - Click **Add Group by** to choose the dimensions that break down your metric, such as time grain (day, week, month), region, product, or customer.
+    - Click **Add Filter** to create a filter to narrow your results.
+    - Click **Add Order by** to select how your want to sort the results of your query. 
+4. Click **Run** to run your query.
+    Results are available in the **Data** tab.
 
-  <!--insert screenshot-->
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="Query Builder in dbt Insights" />
 
-  dbt Copilot starts an analysis of the existing data sources in your project and shows you the available metrics, dimensions, and filters that you can use to build your query. 
-
-2. Select the metrics, dimensions, and filters you want to include in your query by clicking **+**.
 
 ## Query console
 The query console is the main component of <Constant name="query_page" />. It allows you to write, run, and analyze SQL queries. The Query console supports:
