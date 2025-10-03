@@ -5,6 +5,8 @@ description: "Guide to set up claude with dbt-mcp"
 id: "integrate-mcp-claude"
 ---
 
+import MCPExample from '/snippets/_mcp-config-files.md';
+
 # Integrate Claude with dbt MCP <Lifecycle status="beta" />
 
 Claude is an AI assistant from Anthropic with two primary interfaces: 
@@ -51,21 +53,27 @@ More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#un
 3. Click the **Edit Config** button and open the configuration file with a text editor.
 4. Replace the contents of the configuration file with [your correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server):
 
-For local MCP:
-```json 
-{
-  "mcpServers": {
-    "dbt-mcp": {
-      "command": "uvx",
-      "args": [
-        "--env-file",
-        "<environment_variable_file.env",
-        "dbt-mcp"
-      ]
+    For local MCP:
+    ```json 
+    {
+      "mcpServers": {
+        "dbt-mcp": {
+         "command": "uvx",
+         "args": [
+           "--env-file",
+            "<environment_variable_file.env",
+            "dbt-mcp"
+          ]
+        }
+      }
     }
-  }
-}
-```
+    ```
+
+    #### Local MCP with dbt platform authentication <Lifecycle status="enterperprise, enterprise_plus" />
+
+    Additionally, you can configure the local MCP server to authenticate against your dbt platform environment using OAuth. Substitute the previous local MCP JSON with one of the following:
+
+    <MCPExample />
 
 5. Save the file. Upon a successful restart, you’ll see an MCP server indicator in the bottom-right corner of the conversation input box
 

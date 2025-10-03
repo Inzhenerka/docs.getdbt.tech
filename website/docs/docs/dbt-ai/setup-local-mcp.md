@@ -5,6 +5,8 @@ description: "Learn how to set up the local dbt-mcp server"
 id: "setup-local-mcp"
 ---
 
+import MCPExample from '/snippets/_mcp-config-files.md';
+
 # Set up local MCP <Lifecycle status="beta" />
 
 [The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine. Set up the local dbt MCP server with the following directions: 
@@ -111,7 +113,7 @@ id: "setup-local-mcp"
 
 ## dbt platform authentication <Lifecycle status="enterperprise, enterprise_plus" />
 
-The local MCP server integrates with your existing cloud-based dbt platform OAuth integration with a simple configuration file in the client. Reference the following sample configurations:
+The local MCP server integrates with your existing cloud-based dbt platform OAuth integration with a simple configuration file in the client. Reference the following sample configurations (configs may vary depending on the client):
 
 :::info static subdomains
 
@@ -119,80 +121,7 @@ Only accounts with static subdomains (for example, abc123.us1.dbt.com) can use O
 
 :::
 
-<Tabs>
-
-<TabItem value="dbt platform + CLI">
-
-Provide the standard JSON configuration file. The `DBT_PROJECT_DIR` and `DBT_PATH` fields are required.
-
-```json
-{
-  "mcpServers": {
-    "dbt": {
-      "command": "uvx",
-      "args": [
-        "dbt-mcp"
-      ],
-      "env": {
-        "DBT_HOST": "https://<your-dbt-host-with-custom-subdomain>",
-        "DBT_PROJECT_DIR": "/path/to/project",
-        "DBT_PATH": "path/to/dbt/executable"
-      }
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem value="dbt platform only" >
-
-When using only the dbt platform, the CLI tools can be disabled.
-
-```json
-{
-  "mcpServers": {
-    "dbt": {
-      "command": "uvx",
-      "args": [
-        "dbt-mcp"
-      ],
-      "env": {
-        "DBT_HOST": "https://<your-dbt-host-with-custom-subdomain>",
-        "DISABLE_DBT_CLI": "true"
-      }
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem value="CLI only">
-
-When using the MCP server with only the CLI, the platform tools can be disabled, and there is no prompt for authentication.
-
-```json
-{
-  "mcpServers": {
-    "dbt": {
-      "command": "uvx",
-      "args": [
-        "dbt-mcp"
-      ],
-      "env": {
-        "DBT_PROJECT_DIR": "/path/to/project",
-        "DBT_PATH": "path/to/dbt/executable",
-        "DISABLE_SEMANTIC_LAYER": "true",
-        "DISABLE_DISCOVERY": "true",
-        "DISABLE_ADMIN_API": "true",
-        "DISABLE_SQL": "true"
-      }
-    }
-  }
-}
-```
-
-</TabItem>
-</Tabs>
+<MCPExample />
 
 Once configured, when your session queries the dbt platform account, you are brought to the OAuth workflow for authentication, and then to your account to select the project you want to reference.
 
