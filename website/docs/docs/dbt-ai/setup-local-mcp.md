@@ -98,8 +98,8 @@ id: "setup-local-mcp"
         "dbt-mcp": {
           "command": "uvx",
           "args": [
-           "--env-file",
-            "<environment_variable_file.env",
+            "--env-file",
+            "<path-to-.env-file>",
             "dbt-mcp"
           ]
         }
