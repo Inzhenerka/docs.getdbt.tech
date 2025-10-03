@@ -45,13 +45,12 @@ Configure your project to use a different dbt version than what's configured in 
 
 ## dbt Fusion engine <Lifecycle status="private_preview" />
 
-dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
-
-- To gain access to the `Latest Fusion` release track, you must reach out to your dbt Labs account team to request it. Week by week, we'll expand the beta cohort based on project eligibility, including Starter plans. Once we transition from Beta to Preview, all users will see it as an option for their environments, projects, jobs, etc.
-- To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and read more about the changes in our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion). 
+dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in private preview on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
+- If you don't see the `Latest Fusion` release track as an option, you should check with your dbt Labs account team about eligibility.
+- To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and read more about the changes in our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 - Make sure you're using a supported adapter and authentication method:
   <FusionDWH /> 
-- When you change your development environment(s) to `Latest Fusion`, every user will have to restart the IDE.
+- Once you upgrade your development environment(s) to `Latest Fusion`, every user will have to restart the IDE.
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
 
@@ -89,7 +88,6 @@ This hides the <Constant name="fusion" /> upgrade workflow from users who don't 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/assign-fusion-admin.png" width="60%" title="Assign Fusion admin to groups and projects."/>
 
 The <Constant name="fusion" /> upgrade workflows helps identify areas of the project that need to be updated and provides tools for manually resolving and autofixing any errors. 
-
 
 #### Upgrade your development environment
 
