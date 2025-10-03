@@ -111,7 +111,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
     `<path-to-.env-file>` is where you saved the `.env` file from the Setup step.
 
-## dbt platform authentication <Lifecycle status="enterperprise, enterprise_plus" />
+## dbt platform authentication <Lifecycle status="managed, managed_plus" />
 
 The local MCP server integrates with your existing cloud-based dbt platform OAuth integration with a simple configuration file in the client. Reference the following sample configurations (configs may vary depending on the client):
 

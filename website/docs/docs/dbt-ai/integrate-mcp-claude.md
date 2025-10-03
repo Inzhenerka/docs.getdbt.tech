@@ -69,7 +69,7 @@ More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#un
     }
     ```
 
-    #### Local MCP with dbt platform authentication <Lifecycle status="enterperprise, enterprise_plus" />
+    #### Local MCP with dbt platform authentication <Lifecycle status="managed, managed_plus" />
 
     Additionally, you can configure the local MCP server to authenticate against your dbt platform environment using OAuth. Substitute the previous local MCP JSON with one of the following:
 
