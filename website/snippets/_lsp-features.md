@@ -1,5 +1,5 @@
 |                              | VS Code extension + Fusion | Studio IDE | Insights |
-|------------------------------|----------------------------|------------|----------|
+|------------------------------|:--------------------------:|:----------:|:--------:|
 | Autocomplete column names    | ✅                          | ✅          | ❌        |
 | Autocomplete function names  | ✅                          | ✅          | ❌        |
 | Autocomplete ref/source args | ✅                          | ✅          | ✅        |
