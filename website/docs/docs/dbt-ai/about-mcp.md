@@ -122,7 +122,7 @@ A set of tools, leveraging the <Constant name="fusion" /> engine.
 - `get_column_lineage`: TODO
 
 ### Fusion tools (Local)
-A set of tools, leveraging the <Constant name="fusion" /> engine with access to a locally running <Constant name="fusion"> LSP when the VS Code extension is installed:
+A set of tools, leveraging the <Constant name="fusion" /> engine with access to a locally running <Constant name="fusion" /> LSP when the VS Code extension is installed:
 
 - `get_column_lineage`: TODO
 
