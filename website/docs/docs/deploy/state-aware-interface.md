@@ -16,7 +16,7 @@ Learn how to navigate the state-aware orchestration interface for better visibil
 
 When you go to your **Account home**, you'll see a chart showing the number of models built and reused, giving you visibility into how state-aware orchestration is optimizing your data builds. This chart helps you to:
 
-- **Track effectiveness of state-aware orchestration** &mdash; See how state-aware orchestration reduces unnecessary model rebuilds by only building models when there's fresh upstream data⁠. This chart provides transparency into how the optimization is working across your dbt implementation.
+- **Track effectiveness of state-aware orchestration** &mdash; See how state-aware orchestration reduces unnecessary model rebuilds by only building models when there are changes to the data or code⁠. This chart provides transparency into how the optimization is working across your dbt implementation.
 ⁠
 - **Analyze build patterns** &mdash; Gain insights into your project's build frequency and identify opportunities for further optimization.
 
@@ -78,6 +78,6 @@ State-aware orchestration uses a cached hash of both code and data state for eac
 
 When you want to wipe this state clean and start again, you can clear the cache by clicking the **Clear cache** button on the **Orchestration** > **Environments** page. The **Clear cache** button is only available if you have enabled state-aware orchestration.
 
-<!--insert screenshot-->
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-clear-cache.png" width="90%" title="Clear cache button"/>
 
 After clearing the cache, the next run rebuilds every model from scratch. Subsequent runs rely on the regenerated cache.
