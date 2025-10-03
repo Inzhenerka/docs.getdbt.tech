@@ -20,11 +20,13 @@ This page offers comprehensive definitions and terminology of user interface ele
 
 The <Constant name="visual_editor" /> interface is composed of:
 
-- **Navigation bars** &mdash; The top and left-side navigation bars contain options for switching between models in the workspace, opening existing or creating new models, uploading CSV data, previewing data and runs, and viewing helpful shortcuts.
-- **Operator toolbar** &mdash; Located at the top of the canvas area, the toolbar displays all the node categories available:
-	- Input
-	- Transform
-	- Output
+- **Navigation bars** &mdash; The top and ledft-side navigation bars contain options for switching between models in the workspace, opening existing or creating new models, uploading CSV data, previewing data and runs, and viewing helpful shortcuts.
+- **Operator toolbar** &mdash; Located at the top of the canvas area, the toolbar displays all the node categories available, as well as tools to help you develop:
+	- **Input:** Source models and data
+	- **Transform:** Data transformation tools
+	- **Output:** Output model configurations
+	- **[Copilot](/docs/cloud/build-canvas-copilot):** AI tools to help you build fast and efficiently
+	- **SQL:** View your completed model's compiled SQL
 - **Operators** &mdash; Tiles that provide source data, perform specific transformations, and layer configurations (such as model, join, aggregate, filter, and so on). Use connectors to link the operators and build a complete data transformation pipeline. 
 - **Canvas** &mdash; The main whiteboard space below the node toolbar. The canvas allows you to create or modify models through a sleek drag-and-drop experience.
 - **Configuration panel** &mdash; Each operator has a configuration panel that opens when you click on it. The configuration panel allows you to configure the operator, review the current model, preview changes to the table, view the SQL code for the node, and delete the operator.
