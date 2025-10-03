@@ -36,7 +36,7 @@ For example, you can configure your project so that <Constant name="cloud" /> sk
 
 Without configuring anything, <Constant name="cloud" />'s state-aware orchestration automatically knows to build your models either when the code has changed or if there’s any new data in a source (or upstream model in the case of [dbt Mesh](/docs/mesh/about-mesh)).
 
-## Efficient testing in state-aware orchestration
+## Efficient testing in state-aware orchestration <Lifecycle status='beta'/>
 
 Data quality can get degraded in two ways: 
 
