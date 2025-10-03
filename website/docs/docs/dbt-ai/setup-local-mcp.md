@@ -95,15 +95,13 @@ id: "setup-local-mcp"
     ```json
     {
       "mcpServers": {
-        "dbt": {
+        "dbt-mcp": {
           "command": "uvx",
           "args": [
+           "--env-file",
+            "<environment_variable_file.env",
             "dbt-mcp"
-          ],
-          "env": {
-            "DBT_PROJECT_DIR": "/path/to/project",
-            "DBT_PATH": "path/to/dbt/executable",
-          }
+          ]
         }
       }
     }
