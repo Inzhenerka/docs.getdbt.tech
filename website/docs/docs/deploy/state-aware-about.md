@@ -5,7 +5,7 @@ id: "state-aware-about"
 tags: ['scheduler','SAO']
 ---
 
-# About state-aware orchestration <Lifecycle status="beta,managed,managed_plus" />
+# About state-aware orchestration <Lifecycle status="private_preview,managed,managed_plus" />
 
 <IntroText>
 

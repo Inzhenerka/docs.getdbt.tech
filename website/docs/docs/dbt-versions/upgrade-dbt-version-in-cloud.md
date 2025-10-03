@@ -15,7 +15,7 @@ Navigate to the settings page of an environment, then click **Edit**. Click the 
 
 ### Release Tracks
 
-Starting in 2024, your project will be upgraded automatically on a cadence that you choose
+Starting in 2024, your project gets upgraded automatically on a cadence that you choose:
 
 The **Latest** track ensures you have up-to-date <Constant name="cloud" /> functionality, and early access to new features of the dbt framework. The **Compatible** and **Extended** tracks are designed for customers who need a less-frequent release cadence, the ability to test new dbt releases before they go live in production, and/or ongoing compatibility with the latest open source releases of <Constant name="core" />.
 
@@ -43,7 +43,7 @@ Configure your project to use a different dbt version than what's configured in 
 5. (Optional) Verify that <Constant name="cloud" /> will use your override setting to build the project by invoking a `dbt build` command in the <Constant name="cloud_ide" />'s command bar. Expand the **System Logs** section and find the output's first line. It should begin with `Running with dbt=` and list the version <Constant name="cloud" /> is using. <br /><br />
    For users on Release tracks, the output will display `Running dbt...` instead of a specific version, reflecting the flexibility and continuous automatic updates provided by the release track functionality.
 
-## dbt Fusion engine <Lifecycle status="beta" />
+## dbt Fusion engine <Lifecycle status="private_preview" />
 
 dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in beta on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
 
@@ -53,10 +53,9 @@ dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion
   <FusionDWH /> 
 - When you change your development environment(s) to `Latest Fusion`, every user will have to restart the IDE.
 
-
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
 
-### Upgrading environments to Fusion <Lifecycle status="beta" />
+### Upgrading environments to Fusion <Lifecycle status="private_preview" />
 
 When you're ready to upgrade your project(s) to <Constant name="fusion_engine" />, there are some tools available to you in the dbt platform UI to help you get started. The <Constant name="fusion" /> upgrade assistant will step you through the process of preparing and upgrading your projects. 
 
