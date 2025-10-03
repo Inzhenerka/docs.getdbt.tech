@@ -48,30 +48,4 @@ When using only the dbt platform, the CLI tools can be disabled. The `DBT_HOST` 
 ```
 
 </TabItem>
-<TabItem value="CLI only">
-
-When using the MCP server with only the CLI, the platform tools can be disabled, and there is no prompt for authentication.
-
-```json
-{
-  "mcpServers": {
-    "dbt": {
-      "command": "uvx",
-      "args": [
-        "dbt-mcp"
-      ],
-      "env": {
-        "DBT_PROJECT_DIR": "/path/to/project",
-        "DBT_PATH": "path/to/dbt/executable",
-        "DISABLE_SEMANTIC_LAYER": "true",
-        "DISABLE_DISCOVERY": "true",
-        "DISABLE_ADMIN_API": "true",
-        "DISABLE_SQL": "true"
-      }
-    }
-  }
-}
-```
-
-</TabItem>
 </Tabs>
