@@ -116,13 +116,13 @@ These tools help automate boilerplate code generation for dbt projects files. To
 
 ### Fusion tools (Remote)
 
-A set of tools, leveraging the <Constant name="fusion"> engine.
+A set of tools, leveraging the <Constant name="fusion" /> engine.
 
 - `compile_sql`: TODO
 - `get_column_lineage`: TODO
 
 ### Fusion tools (Local)
-A set of tools, leveraging the <Constant name="fusion"> engine with access to a locally running <Constant name="fusion"> LSP when the VS Code extension is installed:
+A set of tools, leveraging the <Constant name="fusion" /> engine with access to a locally running <Constant name="fusion"> LSP when the VS Code extension is installed:
 
 - `get_column_lineage`: TODO
 
