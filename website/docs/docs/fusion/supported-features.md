@@ -36,6 +36,14 @@ To use Fusion in your dbt project:
   <FusionDWH /> 
 - Have only SQL models defined in your project. Python models are not currently supported because Fusion cannot parse these to extract dependencies (refs) on other models. <!-- [TODO: Link to dbt-fusion Python issue.] -->
 
+## Fusion LSP features
+
+The dbt VS Code extension, <Constant name="cloud_ide" />, and <Constant name="query_page" /> contain a powerful set of features backed by our Language Server Protocol (LSP) that enable fast and efficient development workflows. The following features are supported across these tools:
+
+import LSPFeatures from '/snippets/_lsp-features.md';
+
+<LSPFeatures />
+
 ### Limitations
 
 If your project is using any of the features listed in the following table, you can use Fusion, but you won't be able to fully migrate all your workloads because you have:
