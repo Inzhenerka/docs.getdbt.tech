@@ -243,10 +243,9 @@ const sidebarSettings = {
               label: "Connect Fusion to your data platform",
               link: {
                 type: "doc",
-                id: "docs/fusion/connect-data-platform-fusion/about-fusion-connections",
+                id: "docs/fusion/connect-data-platform-fusion/profiles.yml",
               },
               items: [
-                "docs/fusion/connect-data-platform-fusion/about-fusion-connections",
                 "docs/fusion/connect-data-platform-fusion/profiles.yml",
                 "docs/fusion/connect-data-platform-fusion/connection-profiles",
                 "docs/fusion/connect-data-platform-fusion/bigquery-setup",
