@@ -20,7 +20,7 @@ This page offers comprehensive definitions and terminology of user interface ele
 
 The <Constant name="visual_editor" /> interface is composed of:
 
-- **Navigation bars** &mdash; The top and ledft-side navigation bars contain options for switching between models in the workspace, opening existing or creating new models, uploading CSV data, previewing data and runs, and viewing helpful shortcuts.
+- **Navigation bars** &mdash; The top and left-side navigation bars contain options for switching between models in the workspace, opening existing or creating new models, uploading CSV data, previewing data and runs, and viewing helpful shortcuts.
 - **Operator toolbar** &mdash; Located at the top of the canvas area, the toolbar displays all the node categories available:
 	- Input
 	- Transform
@@ -46,9 +46,9 @@ Input operators configure source data:
 Transform operators shape your data:
 - **Join**: Define the join conditions and choose columns from both tables.
 - **Union:** Perform a `UNION` to remove duplicates or `UNION ALL` to prevent deduplicaation.
-- **Pivot:** Select the column and values to create a pivot.
 - **Formula**: Add the formula to create a new column. Use the built-AI code generator to help 
 - **Aggregate**: Specify the aggregation functions and the columns they apply to generate SQL code by clicking on the question mark (?) icon. Enter your prompt and wait to see the results.
+- **Pivot:** Select the column and values to create a pivot.
 - **Limit**: Set the maximum number of rows you want to return.  
 - **Order**: Select the columns to sort by and the sort order.
 - **Filter**: Set the conditions to filter data.	
