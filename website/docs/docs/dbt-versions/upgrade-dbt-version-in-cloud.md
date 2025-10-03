@@ -56,7 +56,7 @@ dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
 
-### Upgrading to Fusion <Lifecycle status="beta" />
+### Upgrading environments to Fusion <Lifecycle status="beta" />
 
 When you're ready to upgrade your project(s) to <Constant name="fusion_engine" />, there are some tools available to you in the dbt platform UI to help you get started. The <Constant name="fusion" /> upgrade assistant will step you through the process of preparing and upgrading your projects. 
 
