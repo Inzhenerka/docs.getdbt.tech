@@ -26,16 +26,11 @@ GCP Internal Stage PSC connections are not currently supported.
 
 To configure Snowflake instances hosted on GCP for [Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect):
 
-1. Follow the steps in the [Authorize Private Service Connect for your account](https://docs.snowflake.com/en/user-guide/private-service-connect-google#authorize-private-service-connect-for-your-account) section in the Snowflake Documentation to allow for PSC connectivity from the dbt GCP project. Use `dbt-cloud-prod-psc` as the project ID in the `AUTHORIZE_PRIVATELINK` step, replacing `<access_token>` with the token retrieved in the previous step.
-
-```
-USE ROLE ACCOUNTADMIN;
-
-SELECT SYSTEM$AUTHORIZE_PRIVATELINK (
- 'dbt-cloud-prod-psc',
- '<access_token>' 
-);
-```
+1. Open a support case with Snowflake to allow access from the <Constant name="cloud" /> GCP Project ID.
+- Snowflake prefers that the account owner opens the support case directly rather than dbt Labs acting on their behalf. For more information, refer to [Snowflake's knowledge base article](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors).
+- Provide them with your <Constant name="cloud" /> account ID along with any other information requested in the article.
+  - **GCP Project ID**: `dbt-cloud-prod-psc`
+- You will need to have `ACCOUNTADMIN` access to the Snowflake instance to submit a Support request.
 
 2. After access has been granted, run the Snowflake system function [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) and copy the output.
 
