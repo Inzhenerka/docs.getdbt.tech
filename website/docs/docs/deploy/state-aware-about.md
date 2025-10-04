@@ -5,7 +5,7 @@ id: "state-aware-about"
 tags: ['scheduler','SAO']
 ---
 
-# About state-aware orchestration <Lifecycle status="private_preview,managed,managed_plus" />
+# About state-aware orchestration <Lifecycle status="beta,managed,managed_plus" />
 
 <IntroText>
 
@@ -52,6 +52,13 @@ Efficient testing in state-aware orchestration reduces warehouse costs by avoidi
 - **Test reuse** &mdash; Tests are reused in cases where no logic in the code or no new data could have changed the test's outcome.
 - **Test aggregation** &mdash; When there are multiple tests on a model, dbt combines tests to run as a single query against the warehouse, rather than running separate queries for each test.
 
+### Supported data tests
+
+The following tests can be reused when Efficient tesing is enabled:
+- [`unique`](/reference/resource-properties/data-tests#unique)
+- [`not_null`](/reference/resource-properties/data-tests#not_null)
+- [`relationships`](https://docs.getdbt.com/reference/resource-properties/data-tests#relationships)
+
 ### Enabling Efficient testing
 
 To enable Efficient testing, refer to the steps on how to [Create a job](/docs/deploy/state-aware-setup#create-a-job). Under the **Execution settings** section, select **Enable Fusion cost optimization features** to enable both **State-aware orchestration** and **Efficient testing** features. You can expand **More options** to enable or disable individual settings.
@@ -78,6 +85,21 @@ select * from joined
 - `not_null` test: A `left join` can introduce null values for customers without orders. Even if upstream tests verified `not_null(order_id)` in orders, the join can create null values downstream. dbt must always run a `not_null` test on `order_id` in this joined result.
 
 - `unique` test: If `orders.order_id` and `customers.customer_id` are unique upstream, uniqueness of `order_id` is preserved and the upstream result can be reused. 
+
+### Limitation
+
+- **Aggregated tests do not support custom configs**. Tests that include the following [custom config options](/reference/data-test-configs) will run individually rather than as part of the aggregated batch:
+
+  ```yaml
+  config:
+    fail_calc: <string>
+    limit: <integer>
+    severity: error | warn
+    error_if: <string>
+    warn_if: <string>
+    store_failures: true | false
+    where: <string>
+  ```
 
 ## Related docs
 
