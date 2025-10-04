@@ -49,20 +49,13 @@ When running a job, a structured logs view shows which models were built, skippe
 3. You can use the search bar and filter the logs to show **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused**, **Debugged** messages.
 4. Detailed log messages are provided to get more context on why models were reused. 
 
-## Lens for state-aware orchestration
+## Reused tag in the Latest status lens
 
 Lineage lenses are interactive visual filters in [dbt <Constant name="explorer" />](/docs/explore/explore-projects#lenses) that show additional context on your lineage graph to understand how resources are defined or performing. When you apply a lens, tags become visible on the nodes in the lineage graph, indicating the layer value along with coloration based on that value. If you're significantly zoomed out, only the tags and their colors are visible in the graph.
 
-The **Latest status** lens shows the status from the latest execution of the resource in the current environment. Nodes can be tagged with any of the following:
+The **Latest status** lens shows the status from the latest execution of the resource in the current environment. When you use this lens to view your lineage, models that were reused from state-aware orchestration are tagged with **Reused**. 
 
-- **Skipped** - Model was skipped during the latest run.
-- **Success** - Model built successfully during the latest run.
-- **Fail** - Model built but with test failures.<!--Is this correct?-->
-- **Error** - Model failed to build during the latest run. <!--Is this correct?-->
-- **Warn** - Model built with warnings during the latest run.
-- **Reused** - Model execution was reused from state-aware orchestration, avoiding unnecessary rebuilds.
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-latest-status-lens.png" width="90%" title="Using the Latest status lens"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-latest-status-lens.png" width="90%" title="Latest status lens showing reused models"/>
 
 To view your lineage with the **Latest status** lens:
 
