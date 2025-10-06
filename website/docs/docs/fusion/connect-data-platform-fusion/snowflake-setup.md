@@ -188,4 +188,4 @@ default:
 
 ## More information
 
-Find Snowflake specific configurations information in the [Snowflake adapter reference guide](/reference/resource-configs/snowflake-configs).
+Find Snowflake-specific configuration information in the [Snowflake adapter reference guide](/reference/resource-configs/snowflake-configs).
