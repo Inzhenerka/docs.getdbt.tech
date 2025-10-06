@@ -118,13 +118,13 @@ These tools help automate boilerplate code generation for dbt projects files. To
 
 A set of tools, leveraging the <Constant name="fusion" /> engine.
 
-- `compile_sql`: TODO
-- `get_column_lineage`: TODO
+- `compile_sql`: Compile a SQL statement in the context of the current project and environment.
+- `get_column_lineage`: <Constant name="fusion" /> exclusive! Get column lineage information across a project DAG for a specific column.
 
 ### Fusion tools (Local)
 A set of tools, leveraging the <Constant name="fusion" /> engine with access to a locally running <Constant name="fusion" /> LSP when the VS Code extension is installed:
 
-- `get_column_lineage`: TODO
+- `get_column_lineage`: <Constant name="fusion" /> exclusive! Get column lineage information across a project DAG for a specific column.
 
 ## MCP integrations
 
