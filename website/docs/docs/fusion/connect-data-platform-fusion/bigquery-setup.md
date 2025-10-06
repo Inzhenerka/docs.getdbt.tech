@@ -82,7 +82,7 @@ default:
 
 Prior to selecting this authentication method, you must first configure local OAuth for gcloud:
 
-## Local OAuth gcloud setup
+#### Local OAuth gcloud setup
 
 1. Make sure the `gcloud` command is [installed on your computer](https://cloud.google.com/sdk/downloads)
 2. Activate the application-default account with:
