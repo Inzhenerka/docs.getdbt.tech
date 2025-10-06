@@ -84,7 +84,7 @@ Prior to selecting this authentication method, you must first configure local OA
 
 #### Local OAuth gcloud setup
 
-1. Make sure the `gcloud` command is [installed on your computer](https://cloud.google.com/sdk/downloads)
+1. Make sure the `gcloud` command is [installed on your computer](https://cloud.google.com/sdk/downloads).
 2. Activate the application-default account with:
 
 ```shell
