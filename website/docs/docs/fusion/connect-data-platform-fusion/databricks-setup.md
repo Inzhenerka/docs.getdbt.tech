@@ -41,7 +41,7 @@ Executing `dbt init` in your CLI will prompt for the following fields:
 
 Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
 
-Next, select your authentication method. Follow the on screen prompts to provide the required information.
+Next, select your authentication method. Follow the on-screen prompts to provide the required information.
 
 ## Supported authentication types
 
