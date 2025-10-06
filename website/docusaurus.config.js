@@ -396,8 +396,8 @@ var siteSettings = {
               routes: [{ route: "/docs/fusion/**" }],
             },
             {
-              id: "dbt",
-              name: "dbt",
+              id: "platform",
+              name: "Platform",
               routes: [{ route: "/docs/cloud/**" }],
             },
             {
