@@ -19,7 +19,7 @@ You can configure the Databricks adapter by running `dbt init` in your CLI or ma
 
 The Databricks adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
 - Personal access token
-- Oauth
+- OAuth
 
 ## Databricks configuration details
 
