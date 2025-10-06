@@ -4,7 +4,7 @@
 
 The `DBT_PROJECT_DIR` and `DBT_PATH` fields are required.
 
-The `DBT_HOST` field value can be found in your dbt platform account information under **Access URLs**.
+You can find the `DBT_HOST` field value in your dbt platform account information under **Access URLs**.
 
 ```json
 {
