@@ -43,7 +43,7 @@ Executing `dbt init` in your CLI will prompt for the following fields:
 - **Dataset:** The schema name
 - **Location:** The location for your GCP environment (for example, us-east1)
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you have the option to retain the existing fields or overwrite them. 
 
 Next, select your authentication method. Follow the on-screen prompts to provide the required information.
 
