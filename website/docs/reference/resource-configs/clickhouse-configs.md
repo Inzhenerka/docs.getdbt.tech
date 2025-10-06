@@ -4,8 +4,6 @@ description: "Read this guide to understand ClickHouse configurations in dbt."
 id: "clickhouse-configs"
 ---
 
-# TODO: Changes done only to track which pieces of documentation has been already moved. This is not the final version of this file
-
 ## Documentation
 
-See the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt) for the full `dbt-clickhouse` documentation entry.
+All ClickHouse configuration documentation has been moved to the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt) to maintain a single source of truth. Please visit this page for complete and up-to-date information about the ClickHouse adapter.

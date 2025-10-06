@@ -22,8 +22,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-# TODO: Changes done only to track which pieces of documentation has been already moved. This is not the final version of this file
-
 
 ## Supported features
 
@@ -80,9 +78,16 @@ Inside `project_name` dir, update your `dbt_project.yml` file to specify a profi
 profile: 'clickhouse'
 ```
 
-### Execute dbt debug with the CLI tool to confirm whether dbt is able to connect to ClickHouse.
-Confirm the response includes Connection test: [OK connection ok] indicating a successful connection.
+### Test connection
+Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]` indicating a successful connection.
 
 ## Documentation
 
 See the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt) for the full `dbt-clickhouse` documentation entry.
+
+## Contributing
+
+We welcome contributions from the community to help improve the dbt-ClickHouse adapter. Whether you’re fixing a bug,
+adding a new feature, or enhancing documentation, your efforts are greatly appreciated!
+
+Please take a moment to read our [Contribution Guide](https://github.com/ClickHouse/dbt-clickhouse/blob/main/CONTRIBUTING.md) to get started. The guide provides detailed instructions on setting up your environment, running tests, and submitting pull requests.
