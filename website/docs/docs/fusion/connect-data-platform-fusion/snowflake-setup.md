@@ -18,10 +18,14 @@ meta:
 You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The Snowflake adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
-- Password
+- Password 
 - Key pair
 - Single sign-on (SSO)
 - Password with MFA
+
+:::note
+[Snowflake is deprecating single-access password login](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). Individual developers should use MFA or SSO instead of password authentication. Password-based login remains supported for service users (Snowflake user type: `LEGACY_SERVICE`).
+:::
 
 ## Snowflake configuration details
 

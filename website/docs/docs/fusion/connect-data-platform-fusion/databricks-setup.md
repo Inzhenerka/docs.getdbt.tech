@@ -18,14 +18,15 @@ meta:
 You can configure the Databricks adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The Databricks adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
-- Personal access token
+- Personal access token (for individual users)
+- Service Principal token (for service users)
 - OAuth
 
 ## Databricks configuration details
 
-The <Constant name="fusion_engine" /> `dbt-databricks` adapter is the only supported connection method for Databricks. In the past, it was possible to connect dbt Core via the dbt-spark adapter, but this is no longer supported for <Constant name="fusion" />.
+The <Constant name="fusion_engine" /> `dbt-databricks` adapter is the only supported connection method for Databricks.
 
-`dbt-databricks` can connect to Databricks SQL Warehouses and all-purpose clusters. Databricks SQL Warehouses are the recommended way to get started with Databricks.
+`dbt-databricks` can connect to Databricks SQL Warehouses. These warehouses are the recommended way to get started with Databricks.
 
 Refer to the [Databricks docs](https://docs.databricks.com/dev-tools/dbt.html#) for more info on how to obtain the credentials for configuring your profile.
 
@@ -52,6 +53,33 @@ Next, select your authentication method. Follow the on-screen prompts to provide
 Enter your personal access token (PAT) for the Databricks environment. For more information about obtaining a PAT, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/dev-tools/auth/pat). This is considered a legacy feature by Databricks and OAuth is recommended over PATs.
 
 #### Example personal access token configuration
+
+<File name="profiles.yml">
+
+```yml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      database: TRANSFORMING
+      schema: JANE_SMITH
+      host: YOUR.HOST.COM
+      http_path: YOUR/PATH/HERE
+      token: ABC123
+      auth_type: databricks_cli
+      threads: 16
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="Service Principal token">
+
+Enter your Service Principal token for the Databricks environment. For more information about obtaining a Service Principal token, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/dev-tools/auth/pat)<!--needs updating-->. This is considered a legacy feature by Databricks and OAuth is recommended over Service Principal tokens.
+
+#### Example Service Principal token configuration
 
 <File name="profiles.yml">
 
