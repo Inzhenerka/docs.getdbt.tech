@@ -42,7 +42,7 @@ Executing `dbt init` in your CLI will prompt for the following fields:
 - **Database:** The database within your Snowflake account to connec to your project
 - **Warehouse:** The compute warehouse that will handle the tasks for your project
 - **Schema:** The development/staging/deployment schema for the project
-- **Role (Optional):** The role dbt should assume when connnecting to the warehouse.
+- **Role (Optional):** The role dbt should assume when connnecting to the warehouse
 
 
 Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
