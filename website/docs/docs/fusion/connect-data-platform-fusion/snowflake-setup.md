@@ -57,7 +57,7 @@ Next, select your authentication method. Follow the on-screen prompts to provide
 
 Password authentication prompts for your Snowflake account password. This is becoming an increasingly less common option as organizations opt for more secure authentication.
 
-Selecting **Password with MFA** will be redirect you to the Snowflake account login to provide your passkey or authenticator password.
+Selecting **Password with MFA** redirects you to the Snowflake account login to provide your passkey or authenticator password.
 
 #### Example password configuration
 
