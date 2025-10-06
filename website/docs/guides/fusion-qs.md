@@ -36,11 +36,11 @@ Read more [about the dbt Fusion engine](/docs/fusion/about-fusion) to get a bett
 
 Want to see Fusion in action? Check out the following video to get a sense of how it works:
 
-<div style={{ position: 'relative', maxWidth: '960px', margin: '2rem auto', overflow: 'hidden', borderRadius: '12px', boxShadow: 'var(--ifm-global-shadow-lw)' }}>
+<div style={{ position: 'relative', maxWidth: '960px', margin: '2rem auto', overflow: 'hidden', borderRadius: '12px', height: '500px', boxShadow: 'var(--ifm-global-shadow-lw)' }}>
   <iframe
-    src="https://app.storylane.io/share/xd39nkcj3jqs?slides=1-37&autoplay=true&hide_header=true&hide_footer=true"
+    src="https://app.storylane.io/share/a1rkqx0mbd7a"
     title="dbt Fusion + VS Code extension walkthrough"
-    style={{ position: 'relative', top: '-48px', height: '780px', width: '100%', border: 0 }}
+    style={{ position: 'relative', top: '-48px', height: '900px', width: '100%', border: 0, paddingBottom:'calc(42.20% + 25px)',transform: 'scale(1)'}}
     allow="fullscreen; autoplay; encrypted-media"
   />
 </div>
