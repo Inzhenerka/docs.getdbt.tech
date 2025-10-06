@@ -27,7 +27,7 @@ The `DBT_HOST` field value can be found in your dbt platform account information
 </TabItem>
 <TabItem value="dbt platform only" >
 
-When using only the dbt platform, the CLI tools can be disabled. The `DBT_HOST` field value can be found in your dbt platform account information under **Access URLs**.
+When you use only the dbt platform, you can disable the CLI tools. You can find the `DBT_HOST` field value in your dbt platform account information under **Access URLs**.
 
 
 ```json
