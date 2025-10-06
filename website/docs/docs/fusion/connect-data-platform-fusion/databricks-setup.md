@@ -76,7 +76,7 @@ default:
 
 <TabItem value="OAuth (Recommended)">
 
-Selecting the OAuth option will create a connection to your Databricks environment and open a web browser so you can complete the authentication. Users will be prompted to reauthenticate with each new dbt sessions they initiate.
+Selecting the OAuth option will create a connection to your Databricks environment and open a web browser so you can complete the authentication. Users will be prompted to re-authenticate with each new dbt session they initiate.
 
 #### Example OAuth configuration
 
