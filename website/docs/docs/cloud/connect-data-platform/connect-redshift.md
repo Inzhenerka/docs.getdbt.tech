@@ -23,7 +23,7 @@ The following fields are required when creating a connection:
 
 ### Authentication Parameters
 
-For authentication in Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/redshift-external-oauth) 
+For authentication in Redshift, users can use **IAM User authentication** via [extended attributes](/docs/dbt-cloud-environments#extended-attributes) or Identity Center via [external Oauth](/docs/cloud/manage-access/redshift-external-oauth).
 
 On Cloud, the IAM user authentication is currently only supported via [extended attributes](/docs/dbt-cloud-environments#extended-attributes). Once the project is created, development and deployment environments can be updated to use extended attributes to pass the fields described below, as some are not supported via textbox.
 
