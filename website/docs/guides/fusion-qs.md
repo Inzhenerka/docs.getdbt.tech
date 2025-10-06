@@ -32,19 +32,6 @@ Fusion and the powerful features that the engine provides are available in the f
 
 Read more [about the dbt Fusion engine](/docs/fusion/about-fusion) to get a better understanding of what's new, what's changed, and what's been deprecated.
 
-### Fusion demo video
-
-Want to see Fusion in action? Check out the following video to get a sense of how it works:
-
-<div style={{ position: 'relative', maxWidth: '960px', margin: '2rem auto', overflow: 'hidden', borderRadius: '12px', height: '500px', boxShadow: 'var(--ifm-global-shadow-lw)' }}>
-  <iframe
-    src="https://app.storylane.io/share/a1rkqx0mbd7a"
-    title="dbt Fusion + VS Code extension walkthrough"
-    style={{ position: 'relative', top: '-48px', height: '900px', width: '100%', border: 0, paddingBottom:'calc(42.20% + 25px)',transform: 'scale(1)'}}
-    allow="fullscreen; autoplay; encrypted-media"
-  />
-</div>
-
 ## Prerequisites
 
 To take full advantage of this guide, you'll need to meet the following prerequisites:
@@ -166,13 +153,24 @@ The following should now be done:
 
 ## Explore with the dbt VS Code extension
 
-The dbt VS Code extension compiles and builds your project with the dbt Fusion engine, a powerful and blazing fast rebuild of dbt from the ground up. Using the Jaffle Shop project in VS Code:
+The dbt VS Code extension compiles and builds your project with the dbt Fusion engine, a powerful and blazing fast rebuild of dbt from the ground up. 
 
-You'll want to do a few things to get started:
+Want to see Fusion in action? Check out the following video to get a sense of how it works:
+
+<div style={{ position: 'relative', maxWidth: '960px', margin: '2rem auto', overflow: 'hidden', borderRadius: '12px', height: '500px', boxShadow: 'var(--ifm-global-shadow-lw)' }}>
+  <iframe
+    src="https://app.storylane.io/share/a1rkqx0mbd7a"
+    title="dbt Fusion + VS Code extension walkthrough"
+    style={{ position: 'relative', top: '-48px', height: '900px', width: '100%', border: 0, paddingBottom:'calc(42.20% + 25px)',transform: 'scale(1)'}}
+    allow="fullscreen; autoplay; encrypted-media"
+  />
+</div>
+
+To explore the features and functionality of the dbt VS Code extension, you'll want to do a few things:
 
 1. Open the **View** menu and click **Command Palette** and enter `Workspaces: Add Folder to Workspace`. Choose your `jaffle_shop` folder that we created earlier. Without adding the root folder of the dbt project to the workspace, the LSP won't load within the workspace.
-1. Open the `models/marts/orders.sql` file to see the definition for the `orders` model. This is the model we'll use in all of the examples below.
-1. Locate `Lineage` and `Query Results` in the lower panel and the **dbt icon** in the upper right corner next to your editor groups. If you see all of these, the extension is installed correctly and running!
+2. Open the `models/marts/orders.sql` file to see the definition for the `orders` model. This is the model we'll use in all of the examples below.
+3. Locate `Lineage` and `Query Results` in the lower panel and the **dbt icon** in the upper right corner next to your editor groups. If you see all of these, the extension is installed correctly and running!
     <Lightbox src="/img/docs/extension/extension-running.png" width="60%" title="The VS Code UI with the extension running."/>
 
 Now you're ready to see some of these awesome features in action!
