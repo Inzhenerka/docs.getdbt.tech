@@ -4,7 +4,6 @@ id: connect-redshift
 description: "Setup instructions for connecting Redshift to dbt"
 sidebar_label: "Connect Redshift"
 ---
-<!-- TODO: break Redshift connection docs to separate page -->
  
 dbt platform supports connecting to Redshift. 
 
