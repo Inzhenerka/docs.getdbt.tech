@@ -39,7 +39,7 @@ Executing `dbt init` in your CLI will prompt for the following fields:
 
 - **Account:** Snowflake account number
 - **User:** Your Snowflake username
-- **Database:** The database within your Snowflake account to connec to your project
+- **Database:** The database within your Snowflake account to connect to your project
 - **Warehouse:** The compute warehouse that will handle the tasks for your project
 - **Schema:** The development/staging/deployment schema for the project
 - **Role (Optional):** The role dbt should assume when connnecting to the warehouse
