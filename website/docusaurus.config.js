@@ -395,6 +395,16 @@ var siteSettings = {
               name: "Fusion",
               routes: [{ route: "/docs/fusion/**" }],
             },
+            {
+              id: "dbt",
+              name: "dbt",
+              routes: [{ route: "/docs/cloud/**" }],
+            },
+            {
+              id: "api-reference",
+              name: "API Reference",
+              routes: [{ route: "/docs/dbt-cloud-apis/**" }],
+            },
           ],
           siteTitle: "dbt Developer Hub",
           siteDescription:
