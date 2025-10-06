@@ -102,4 +102,4 @@ default:
 
 ## More information
 
-Find Redshift specific configuration information in the [Redshift adapter reference guide](/reference/resource-configs/redshift-configs).
+Find Redshift-specific configuration information in the [Redshift adapter reference guide](/reference/resource-configs/redshift-configs).
