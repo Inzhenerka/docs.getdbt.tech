@@ -24,6 +24,9 @@ The following features are new or enhanced as part of dbt's Coalesce event from 
 
 - **Preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in Preview.
 
+### Pre-Coalesce 
+
+- **Behavior change**: The CodeGenCodeLens feature for creating models from your sources with a click of a button has been temporarily removed from the <Constant name="cloud_ide" /> due to compatibility issues. We plan to reintroduce this feature in the near future for both the IDE and the VS Code extension.
 
 ## September 2025
 
