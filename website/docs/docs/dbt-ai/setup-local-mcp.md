@@ -123,6 +123,6 @@ Only accounts with static subdomains (for example, abc123.us1.dbt.com) can use O
 
 <MCPExample />
 
-Once configured, when your session queries the dbt platform account, you are brought to the OAuth workflow for authentication, and then to your account to select the project you want to reference.
+Once configured, your session connects to the dbt platform account, starts the OAuth authentication workflow, and then opens your account where you can select the project you want to reference.
 
 <Lightbox src="/img/mcp/select-project.png" width="60%" title="Select your dbt platform project"/>
