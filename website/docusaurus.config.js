@@ -371,13 +371,36 @@ var siteSettings = {
         generate: {
           enableMarkdownFiles: true,
           enableLlmsFullTxt: true,
+          relativePaths: false,
         },
         include: {
           includeBlog: false,
           includePages: false,
           includeDocs: true,
         },
-      }
+        // Content organization
+        structure: {
+          sections: [
+            {
+              id: "getting-started",
+              name: "Getting Started",
+              routes: [
+                { route: "/docs/introduction" },
+                { route: "/docs/get-started-dbt" },
+                { route: "/docs/configuration-checklist" },
+              ],
+            },
+            {
+              id: "fusion",
+              name: "Fusion",
+              routes: [{ route: "/docs/fusion/**" }],
+            },
+          ],
+          siteTitle: "dbt Developer Hub",
+          siteDescription:
+            "End user documentation, guides and technical reference for dbt",
+        },
+      },
     ],
   ],
   scripts: [
