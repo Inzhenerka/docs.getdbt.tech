@@ -365,6 +365,20 @@ var siteSettings = {
         mode: "auto",
       },
     ],
+    [
+      "@signalwire/docusaurus-plugin-llms-txt",
+      {
+        generate: {
+          enableMarkdownFiles: true,
+          enableLlmsFullTxt: true,
+        },
+        include: {
+          includeBlog: false,
+          includePages: false,
+          includeDocs: true,
+        },
+      }
+    ],
   ],
   scripts: [
     {
