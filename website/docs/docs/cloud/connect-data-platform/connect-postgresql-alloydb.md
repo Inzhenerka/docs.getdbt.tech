@@ -4,7 +4,6 @@ id: connect-postgresql-alloydb
 description: "Setup instructions for connecting PostgreSQL, Lakebase, and AlloyDB to dbt"
 sidebar_label: "Connect PostgreSQL, Lakebase, and AlloyDB"
 ---
-<!-- TODO: break Redshift connection docs to separate page -->
  
 dbt platform supports connecting to PostgresSQL and Postgres-compatible databases (AlloyDB, Lakebase). 
 
