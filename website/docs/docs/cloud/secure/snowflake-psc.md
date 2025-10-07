@@ -24,6 +24,8 @@ GCP Internal Stage PSC connections are not currently supported.
 
 ## Configure GCP Private Service Connect
 
+The dbt Labs GCP project has been pre-authorized for connections to Snowflake accounts. 
+
 To configure Snowflake instances hosted on GCP for [Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect):
 
 1. Run the Snowflake system function [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) and copy the output.
