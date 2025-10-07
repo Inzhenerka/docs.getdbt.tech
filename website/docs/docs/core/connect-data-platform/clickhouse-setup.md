@@ -44,7 +44,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 ## Connecting to ClickHouse with **dbt-clickhouse**
 
 To connect to ClickHouse from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles)
-to your `profiles.yml` file. An example of a ClickHouse profile have the following syntax:
+to your `profiles.yml` file. An example of a ClickHouse profile has the following syntax:
 
 ```yaml
 <profile-name>:
@@ -66,11 +66,11 @@ to your `profiles.yml` file. An example of a ClickHouse profile have the followi
 
 ## Documentation
 
-See the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt) for the full `dbt-clickhouse` documentation entry.
+See the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt) for the full documentation entry for the `dbt-clickhouse` adapter.
 
 ## Contributing
 
-We welcome contributions from the community to help improve the dbt-ClickHouse adapter. Whether you’re fixing a bug,
-adding a new feature, or enhancing documentation, your efforts are greatly appreciated!
+We welcome contributions from the community to help improve the dbt-ClickHouse adapter. Whether you're fixing a bug,
+adding a new feature, or enhancing the documentation, your efforts are greatly appreciated!
 
 Please take a moment to read our [Contribution Guide](https://github.com/ClickHouse/dbt-clickhouse/blob/main/CONTRIBUTING.md) to get started. The guide provides detailed instructions on setting up your environment, running tests, and submitting pull requests.
