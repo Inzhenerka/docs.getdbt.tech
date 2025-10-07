@@ -4,7 +4,7 @@ Keep in mind the following considerations during the upgrade process:
 
 - **Manifest incompatibility** &mdash; <Constant name="fusion" /> writes manifest to version 20; whereas the <Constant name="core" /> engine writes to [earlier manifest versions](/reference/artifacts/manifest-json). 
 
-  Manifests from different engines (<Constant name="core" /> and <Constant name="fusion" />) can’t be used together across environments, so avoid using `state:modified`, `--defer`, or cross-env `dbt docs generate` until _all_ environments are upgraded to the **Latest Fusion** version. Using these features before all environments are on <Constant name="Fusion" /> may cause errors and failures.
+ As a result, mixing <Constant name="core" /> and <Constant name="fusion" /> manifests across environments breaks cross-environment features. Use `state:modified`, `--defer`, and cross-env `dbt docs generate` only once _all_ environments run the latest <Constant name="fusion" /> version. Using these features before all environments are on <Constant name="Fusion" /> may cause errors and failures.
 
 - **State-aware orchestratio**n &mdash; If using [state-aware orchestration](/docs/deploy/state-aware-about), dbt doesn't detect a change if a table or view is dropped externally. This means state-aware orchestration _will not_ rebuild it.
   - Use the following workarounds:
