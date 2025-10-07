@@ -23,7 +23,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
   - **Beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in one run.
   - **New**: To improve visibility into state‑aware orchestration and provide better control when you need to reset cached state, the following [UI enhancements](/docs/deploy/state-aware-interface) are introduced:
     - **Models built and reused chart** on your **Account home**
-    - New charts in the **Overview** section of your job display **Recent runs**, **Total run duration**, **Models built**, and **Models reused**
+    - New charts in the **Overview** section of your job display that **Recent runs**, **Total run duration**, **Models built**, and **Models reused**
     - A structured logs view and a **Reused** tab to quickly find reused models
     - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
     - **Clear cache** button on the **Environments** page to reset cached state when needed
