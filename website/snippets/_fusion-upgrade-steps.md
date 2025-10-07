@@ -1,10 +1,12 @@
 #### Upgrade considerations
 
-The following are known limitations during the upgrade process:
+Keep in mind the following considerations during the upgrade process:
 
-- **Manifest incompatibility** &mdash; <Constant name="Fusion" /> writes manifest v20; whereas the <Constant name="core" />e engine writes to [earlier manifest versions](/reference/artifacts/manifest-json). Manifests from different engines (<Constant name="Core" /> and <Constant name="Fusion" />) can’t be used together across environments, so avoid using `state:modified`, `--defer`, or cross-env `dbt docs generate` until _all_ environments are upgraded to the **Latest Fusion** version. Using these features before all environments are on <Constant name="Fusion" /> may cause errors and failures.
+- **Manifest incompatibility** &mdash; <Constant name="fusion" /> writes manifest to version 20; whereas the <Constant name="core" /> engine writes to [earlier manifest versions](/reference/artifacts/manifest-json). 
+
+  Manifests from different engines (<Constant name="core" /> and <Constant name="fusion" />) can’t be used together across environments, so avoid using `state:modified`, `--defer`, or cross-env `dbt docs generate` until _all_ environments are upgraded to the **Latest Fusion** version. Using these features before all environments are on <Constant name="Fusion" /> may cause errors and failures.
 
 - **State-aware orchestratio**n &mdash; If using [state-aware orchestration](/docs/deploy/state-aware-about), dbt doesn't detect a change if a table or view is dropped externally. This means state-aware orchestration _will not_ rebuild it.
-  - Workarounds:
-    - Use the **Clear cache** button on the selected Environment settings' page to force a full rebuild (acts like a reset). OR
+  - Use the following workarounds:
+    - Use the **Clear cache** button on the selected Environment settings' page to force a full rebuild (acts like a reset) OR
     - Temporarily disable State-aware orchestration for the job and rerun it again.
