@@ -75,7 +75,7 @@ More info on scopes [here](https://docs.anthropic.com/en/docs/claude-code/mcp#un
 
     <MCPExample />
 
-5. Save the file. Upon a successful restart, you’ll see an MCP server indicator in the bottom-right corner of the conversation input box
+5. Save the file. Upon a successful restart of Claude Desktop, you’ll see an MCP server indicator in the bottom-right corner of the conversation input box.
 
 For debugging, you can find the Claude desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
 
