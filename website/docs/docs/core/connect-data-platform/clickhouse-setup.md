@@ -43,43 +43,26 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Connecting to ClickHouse with **dbt-clickhouse**
 
-### Install dbt-core and dbt-clickhouse
-
-```sh
-pip install dbt-clickhouse
-```
-
-### Provide dbt with the connection details for our ClickHouse instance. 
-The full list of connection configuration options is available in the [complete ClickHouse documentation](https://clickhouse.com/docs/en/integrations/dbt). Configure `clickhouse` profile in ~/.dbt/profiles.yml file and provide user, password, schena host properties:
+To connect to ClickHouse from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles)
+to your `profiles.yml` file. An example of a ClickHouse profile have the following syntax:
 
 ```yaml
-clickhouse:
-  target: dev
+<profile-name>:
+  target: <target-name>
   outputs:
-    dev:
+    <target-name>:
       type: clickhouse
-      schema: <target_schema>
-      host: <host>
-      port: 8443 # use 9440 for native
-      user: default
-      password: <password>
-      secure: True
+      schema: [ default ] # ClickHouse database for dbt models
+
+      # optional
+      host: [ localhost ]
+      port: [ 8123 ]  # Defaults to 8123, 8443, 9000, 9440 depending on the secure and driver settings 
+      user: [ default ] # User for all database operations
+      password: [ <empty string> ] # Password for the user
+      secure: [ False ] # Use TLS (native protocol) or HTTPS (http protocol)
+
+      # You can find all the configurations options in the ClickHouse documentation: https://clickhouse.com/docs/integrations/dbt
 ```
-
-### Create a dbt project:
-
-```sh
-dbt init project_name
-```
-
-Inside `project_name` dir, update your `dbt_project.yml` file to specify a profile name to connect to the ClickHouse server.
-
-```yaml
-profile: 'clickhouse'
-```
-
-### Test connection
-Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]` indicating a successful connection.
 
 ## Documentation
 
