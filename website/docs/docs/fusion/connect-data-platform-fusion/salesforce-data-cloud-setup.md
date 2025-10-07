@@ -23,14 +23,15 @@ As we continue to develop and take in your feedback, the experience is subject t
 ## Installing dbt-salesforce
 This adapter is available via dbt Fusion CLI. In order to access the adapter, install dbt Fusion and the adapter will be available for usage. We recommend using the VS Code Extension as the development interface. dbt Platform support coming soon. 
 
-
 ## Profile Configuration
 
-Salesforce Data Cloud targets should be set up using the following configuration in your `profiles.yml` file. Prior to setting up the Data Cloud profiles.yml, you will need:
+Set up your profiles.yml in order for dbt to connect to Salesforce Data Cloud. Prior to setting up the Data Cloud profiles.yml, you will need:
 
-- A Data Cloud instance with an connected app configurated for dbt
+- A Data Cloud instance with an Connected app configurated for dbt
+- server.key file downloaded 
 - User with `Data Cloud admin` permission set
 
+For more information on how to create a Connected App, follow the [Set up your Salesforce environment directions](https://developer.salesforce.com/blogs/2024/11/how-to-use-the-python-connector-for-data-cloud). You can stop when you come across the `Set up your Python Environment` instructions (after you copy the Consumer Key).
 
 
 <File name='~/.dbt/profiles.yml'>
@@ -50,7 +51,7 @@ company-name:
 | Profile Field | Required | Description | Examples |
 | --- | --- | --- | --- |
 | method | Yes | Authentication Method. Currently only jwt_bearer supported | jwt_bearer |
-| client_id | Yes | Client ID of the connected app |  |
+| client_id | Yes | This is the consumer_key from your Connected App Secrets |  |
 | private_key_path | Yes | File Path of Server Key file | /Users/dbt_user/Documents/server.key |
 | login_url | Yes | Login Url of Salesforce Instance  | [https://login.salesforce.com](https://login.salesforce.com/) |
 | username | Yes |  | dbt_user@dbtlabs.com |
