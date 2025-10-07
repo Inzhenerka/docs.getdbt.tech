@@ -1,7 +1,7 @@
 ---
 title: "Salesforce Data Cloud setup"
 description: "Read this guide to learn about the Salesforce Data Cloud warehouse setup in dbt."
-id: "postgres-setup"
+id: "salesforce-data-cloud-setup"
 meta:
   maintained_by: dbt Labs
   authors: 'Fusion dbt maintainers'
@@ -21,15 +21,17 @@ As we continue to develop and take in your feedback, the experience is subject t
 
 
 ## Installing dbt-salesforce
-This adapter is only available via dbt Fusion. In order to access the adapter, install dbt Fusion and the adapter will be available for usage. We recommend using the VS Code Extension for development. 
+This adapter is available via dbt Fusion CLI. In order to access the adapter, install dbt Fusion and the adapter will be available for usage. We recommend using the VS Code Extension as the development interface. dbt Platform support coming soon. 
 
 
 ## Profile Configuration
 
 Salesforce Data Cloud targets should be set up using the following configuration in your `profiles.yml` file. Prior to setting up the Data Cloud profiles.yml, you will need:
 
-- A Data Cloud instance with an app configurated for dbt ##TODO add in link for how to set it up
+- A Data Cloud instance with an connected app configurated for dbt
 - User with `Data Cloud admin` permission set
+
+
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -39,24 +41,18 @@ company-name:
   outputs:
     dev:
       type: salesforce
-      method: [auth method]
+      method: jwt_bearer
       client_id: [client id of your Data Cloud app]
       private_key_path: [local file path of your server key]
       login_url: "https://login.salesforce.com"
       username: [Data Cloud instance]
 ```
+| Profile Field | Required | Description | Examples |
+| --- | --- | --- | --- |
+| method | Yes | Authentication Method. Currently only jwt_bearer supported | jwt_bearer |
+| client_id | Yes | Client ID of the connected app |  |
+| private_key_path | Yes | File Path of Server Key file | /Users/dbt_user/Documents/server.key |
+| login_url | Yes | Login Url of Salesforce Instance  | [https://login.salesforce.com](https://login.salesforce.com/) |
+| username | Yes |  | dbt_user@dbtlabs.com |
 
-salesforce:
-  outputs:
-    salesforce:
-      type: salesforce
-      method: jwt_bearer
-      client_id: "3MVG9azVmavckRRTHNV2_fE_OhgCA6moSG91tgRlo9Y1epZ7GLgotfJ7DdC3M.PVICcX1fRlle7x7gJGslavv"
-      private_key_path: "/Users/amychen/Downloads/server.key"
-      login_url: "https://login.salesforce.com"
-      username: "storm.050b6314da1346@salesforce.com"
-  target: salesforce
 
-</File>
-
-### Configurations
