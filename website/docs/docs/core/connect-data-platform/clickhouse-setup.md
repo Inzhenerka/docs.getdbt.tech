@@ -44,13 +44,14 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 ## Connecting to ClickHouse with **dbt-clickhouse**
 
 To connect to ClickHouse from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles)
-to your `profiles.yml` file. An example of a ClickHouse profile has the following syntax:
+to your `profiles.yml` file or inside your `~/.dbt/profiles.yml` file. An example of a ClickHouse profile has the following syntax:
 
+<File name='profiles.yml'>
 ```yaml
-<profile-name>:
-  target: <target-name>
+clickhouse-service:
+  target: dev
   outputs:
-    <target-name>:
+    dev:
       type: clickhouse
       schema: [ default ] # ClickHouse database for dbt models
 
@@ -63,6 +64,23 @@ to your `profiles.yml` file. An example of a ClickHouse profile has the followin
 
       # You can find all the configurations options in the ClickHouse documentation: https://clickhouse.com/docs/integrations/dbt
 ```
+</File>
+
+### Create a dbt project
+You can now use this profile in one of your existing projects or create a new one using:
+
+```sh
+dbt init project_name
+```
+
+Inside `project_name` dir, update your `dbt_project.yml` file to specify a profile name to connect to the ClickHouse server.
+
+```yaml
+profile: 'clickhouse-service'
+```
+
+### Test connection
+Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]` indicating a successful connection.
 
 ## Documentation
 
