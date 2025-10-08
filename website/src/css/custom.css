@@ -2254,10 +2254,10 @@ section.discourse-forum-page {
   justify-content: center;
   gap: 0.5rem;
   padding: 1rem 1rem;
-  border-radius: 999px;
+  border-radius: .75rem;
   border: 1px solid #000;
   overflow: hidden;
-  font-weight: 600;
+  font-weight: 500;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -2271,7 +2271,7 @@ section.discourse-forum-page {
 }
 
 .home .hero-cta .hero-border-beam-cta > div {
-  border-radius: 999px;
+  border-radius: .75rem;
 }
 
 @media (max-width: 996px) {
