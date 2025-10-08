@@ -2261,8 +2261,6 @@ section.discourse-forum-page {
   transition: transform 0.2s ease-in-out;
 }
 
-  transform: translateY(-2px) scale(1.02);
-}
 
 .home .hero-cta .hero-border-beam-cta span {
   position: relative;
