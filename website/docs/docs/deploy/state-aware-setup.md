@@ -41,7 +41,7 @@ By default, for an Enterprise-tier account upgraded to the dbt Fusion engine, an
 
 ## Create a job
 
-New jobs are state-aware by default. If you have existing jobs, you need to select **State-aware orchestration** in your job settings to make them state-aware.
+New jobs are state-aware by default. If you have existing jobs, you need to select **Enable Fusion cost optimization features** in your job settings to make them state-aware.
 
 To create a state-aware job:
 
@@ -52,14 +52,14 @@ To create a state-aware job:
     - **Environment**: By default, it’s set to the deployment environment you created the state-aware job from.
 3. Options in the **Execution settings** and **Triggers** sections:
    
-   **Note:** New jobs are state-aware by default. For existing jobs, you need to select **State-aware orchestration** under **Enable Fusion cost optimization features** in the Job settings page.
+   **Note:** New jobs are state-aware by default. For existing jobs, you need to select **Enable Fusion cost optimization features** in the Job settings page.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Example of Triggers on the Deploy Job page"/>
 
 - **Execution settings** section:
      - **Commands**: By default, it includes the `dbt build` command. Click **Add command** to add more [commands](/docs/deploy/job-commands) that you want to be invoked when the job runs.
      - **Generate docs on run**: Enable this option if you want to [generate project docs](/docs/build/documentation) when this deploy job runs.
-     - **Enable Fusion cost optimization features**: Select this option to enable both **State-aware orchestration** and **Efficient testing** features. You can expand **More options** to enable or disable individual settings. 
+     - **Enable Fusion cost optimization features**: Select this option to enable **State-aware orchestration**. **Efficient testing** is disabled by default. You can expand **More options** to enable or disable individual settings. 
 - **Triggers** section:
     - **Run on schedule**: Run the deploy job on a set schedule.
       - **Timing**: Specify whether to [schedule](#schedule-days) the deploy job using **Intervals** that run the job every specified number of hours, **Specific hours** that run the job at specific times of day, or **Cron schedule** that run the job specified using [cron syntax](#cron-schedule).
