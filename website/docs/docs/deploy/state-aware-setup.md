@@ -281,6 +281,8 @@ This way, if either `dim_wizards` or `dim_worlds` has fresh upstream data and en
 
 ## Limitation
 
+The following section lists considerations when using state-aware-orchestration:
+
 ### Deleted tables
 
 If a table was deleted in the warehouse, and neither the model’s code nor the data it depends on has changed, state-aware orchestration does not detect a change and will not rebuild the table. This is because the system decides what to build based on code and upstream data changes, not by checking whether every table still exists. To build the table, you have the following options:
