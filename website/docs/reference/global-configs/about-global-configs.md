@@ -37,7 +37,7 @@ Because the values of `flags` can differ across invocations, we strongly advise 
 | Flag name | Type | Default | Supported in project? | Environment variable | <div style={{width:'400px'}}>CLI options</div> | Supported in <Constant name="cloud_cli" />? |
 |-----------|------|---------|-----------------------|----------------------|---------------------|-------------------------|
 | [cache_selected_only](/reference/global-configs/cache) | boolean | False | ✅ | `DBT_CACHE_SELECTED_ONLY` | `--cache-selected-only`, `--no-cache-selected-only` | ✅ |
-| [clean_project_files_only](/reference/commands/clean#--clean-project-files-only_) | boolean | True | ❌ | `DBT_CLEAN_PROJECT_FILES_ONLY` | `--clean-project-files-only, --no-clean-project-files-only` | ❌ |
+| [clean_project_files_only](/reference/commands/clean#--clean-project-files-only) | boolean | True | ❌ | `DBT_CLEAN_PROJECT_FILES_ONLY` | `--clean-project-files-only, --no-clean-project-files-only` | ❌ |
 | [debug](/reference/global-configs/logs#debug-level-logging) | boolean | False | ✅ | `DBT_DEBUG` | `--debug`, `--no-debug` | ✅ |
 | [defer](/reference/node-selection/defer) | boolean | False | ❌ | `DBT_DEFER` | `--defer`, `--no-defer` | ✅ (default) |
 | [defer_state](/reference/node-selection/defer) | path | None | ❌ | `DBT_DEFER_STATE` | `--defer-state` | ❌ |
