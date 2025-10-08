@@ -36,7 +36,7 @@ For example, you can configure your project so that <Constant name="cloud" /> sk
 
 Without configuring anything, <Constant name="cloud" />'s state-aware orchestration automatically knows to build your models either when the code has changed or if there’s any new data in a source (or upstream model in the case of [dbt Mesh](/docs/mesh/about-mesh)).
 
-## Efficient testing in state-aware orchestration <Lifecycle status="private_beta" />
+## Efficient testing in state-aware orchestration <Lifecycle status='private_beta' />
 
 :::info Private beta feature
 State-aware orchestration features in the <Constant name="dbt_platform" /> are only available in Fusion. Contact your account manager to enable Fusion in your account. 
