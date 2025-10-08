@@ -100,6 +100,8 @@ select * from joined
 
 ### Limitation
 
+The following section lists some considerations when using Efficient testing in state-aware-orchestration:
+
 - **Aggregated tests do not support custom configs**. Tests that include the following [custom config options](/reference/data-test-configs) will run individually rather than as part of the aggregated batch:
 
   ```yaml
