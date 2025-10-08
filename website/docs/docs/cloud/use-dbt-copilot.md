@@ -55,7 +55,7 @@ To begin building SQL queries with natural language prompts in <Constant name="q
 
 <Lightbox src="/img/docs/dbt-insights/insights-copilot.gif" width="95%" title="dbt Copilot in dbt Insights" />
 
-## Analyze data with the Copilot agent <Lifecycle status='beta' />
+## Analyze data with the Copilot agent <Lifecycle status='private_beta' />
 
 Use dbt <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking natural language questions to the [<Constant name="query_page" />](/docs/explore/dbt-insights) <Constant name="copilot" /> agent. Before you begin, make sure you can [access <Constant name="query_page" />](/docs/explore/access-dbt-insights).
 
