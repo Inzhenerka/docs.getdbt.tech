@@ -1,5 +1,5 @@
 ---
-title: "Navigating the state-aware orchestration interface"
+title: "Navigating the state-aware interface"
 sidebar_label: "Navigating the interface"
 description: "Learn how to navigate the state-aware orchestration interface for better visibility into model builds and cost tracking." 
 id: "state-aware-interface"
