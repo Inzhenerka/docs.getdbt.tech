@@ -33,7 +33,7 @@ The information required for configuring the Snowflake adapter can be found conv
 1. Click on your name from the Snowflake sidebar. 
 2. Hover over the **Account** field.
 3. In the field with your account name, click **View account details**.
-4. Click **Config file** and select the appropriate **Warehouse**, **Database**, 
+4. Click **Config file** and select the appropriate **Warehouse** and **Database**. 
 
 <Lightbox src="/img/fusion/connect-adapters/snowflake-account-details.png" width="60%" title="Sample config file in Snowflake." />
 

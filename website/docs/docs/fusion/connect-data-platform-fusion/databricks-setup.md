@@ -77,7 +77,7 @@ default:
 
 <TabItem value="Service Principal token">
 
-Enter your Service Principal token for the Databricks environment. For more information about obtaining a Service Principal token, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/dev-tools/auth/pat)<!--needs updating-->. This is considered a legacy feature by Databricks and OAuth is recommended over Service Principal tokens.
+Enter your Service Principal token for the Databricks environment. For more information about obtaining a Service Principal token, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/admin/users-groups/service-principals).
 
 #### Example Service Principal token configuration
 
