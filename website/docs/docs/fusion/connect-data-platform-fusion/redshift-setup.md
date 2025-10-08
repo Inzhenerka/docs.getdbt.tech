@@ -58,7 +58,7 @@ default:
       method: database
       host: ABC123.COM
       user: JANE.SMITH@YOURCOMPANY.COM
-      password: ABC123!
+      password: ABC123
       threads: 16
 ```
 
