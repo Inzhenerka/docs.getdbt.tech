@@ -41,7 +41,9 @@ By default, for an Enterprise-tier account upgraded to the dbt Fusion engine, an
 
 ## Create a job
 
-New jobs are state-aware by default. If you have existing jobs, you need to select **Enable Fusion cost optimization features** in your job settings to make them state-aware.
+:::info New jobs are state-aware by default
+For existing jobs, make them state-aware by selecting **Enable Fusion cost optimization features** in the **Job settings** page.
+:::
 
 To create a state-aware job:
 
@@ -51,8 +53,6 @@ To create a state-aware job:
     - (Optional) **Description**: Provide a description of what the job does (for example, what the job consumes and what the job produces). 
     - **Environment**: By default, it’s set to the deployment environment you created the state-aware job from.
 3. Options in the **Execution settings** and **Triggers** sections:
-   
-   **Note:** New jobs are state-aware by default. For existing jobs, you need to select **Enable Fusion cost optimization features** in the Job settings page.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Example of Triggers on the Deploy Job page"/>
 
