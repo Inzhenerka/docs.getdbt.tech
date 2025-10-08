@@ -65,7 +65,15 @@ The following tests can be reused when Efficient tesing is enabled:
 
 ### Enabling Efficient testing
 
-To enable Efficient testing, refer to the steps on how to [Create a state-aware job](/docs/deploy/state-aware-setup#create-a-job). In your job settings, select **Enable Fusion cost optimization features** to enable **State-aware orchestration**, then select **Efficient testing**. You can expand **More options** to enable or disable individual settings. 
+To enable Efficient testing:
+
+1. From the main menu, go to **Orchestration** > **Jobs**. 
+2. Select your job. Go to your job settings and click **Edit**. 
+3. Under **Execution settings**, select **Enable Fusion cost optimization features** to enable **State-aware orchestration**.<!--needs to be verified-->
+4. Select **Efficient testing**. This feature is disabled by default.
+5. Click **Save**.
+
+You can expand **More options** to enable or disable individual settings. 
 
 ### Example
 
