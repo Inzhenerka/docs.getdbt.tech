@@ -94,25 +94,11 @@ const sidebarSettings = {
                 "docs/cloud/connect-data-platform/connect-databricks",
                 "docs/cloud/connect-data-platform/connect-microsoft-fabric",
                 "docs/cloud/connect-data-platform/connect-onehouse",
-                "docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-redshift",
                 "docs/cloud/connect-data-platform/connect-starburst-trino",
                 "docs/cloud/connect-data-platform/connect-snowflake",
                 "docs/cloud/connect-data-platform/connect-teradata",
-              ],
-            },
-            {
-              type: "category",
-              label: "Connect your data platforms (Fusion)",
-              link: {
-                type: "doc",
-                id: "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
-              },
-              items: [
-                "docs/cloud/connect-data-platform-fusion/about-fusion-connections",
-                "docs/cloud/connect-data-platform-fusion/connect-bigquery",
-                "docs/cloud/connect-data-platform-fusion/connect-databricks",
-                "docs/cloud/connect-data-platform-fusion/connect-redshift",
-                "docs/cloud/connect-data-platform-fusion/connect-snowflake",
               ],
             },
             {
@@ -266,10 +252,9 @@ const sidebarSettings = {
               label: "Connect Fusion to your data platform",
               link: {
                 type: "doc",
-                id: "docs/fusion/connect-data-platform-fusion/about-fusion-connections",
+                id: "docs/fusion/connect-data-platform-fusion/profiles.yml",
               },
               items: [
-                "docs/fusion/connect-data-platform-fusion/about-fusion-connections",
                 "docs/fusion/connect-data-platform-fusion/profiles.yml",
                 "docs/fusion/connect-data-platform-fusion/connection-profiles",
                 "docs/fusion/connect-data-platform-fusion/bigquery-setup",
@@ -1171,23 +1156,6 @@ const sidebarSettings = {
         "reference/resource-configs/watsonx-presto-config",
         "reference/resource-configs/watsonx-spark-config",
         "reference/resource-configs/yellowbrick-configs",
-      ],
-    },
-    {
-      type: "category",
-      label: "Platform-specific configs (Fusion)",
-      link: {
-        type: "generated-index",
-        title: "Platform-specific configs (Fusion)",
-        description:
-          "Platform-specific configs are used to configure the dbt project for a specific database platform.",
-        slug: "/reference/resource-configs-fusion",
-      },
-      items: [
-        "reference/resource-configs-fusion/bigquery-configs",
-        "reference/resource-configs-fusion/databricks-configs",
-        "reference/resource-configs-fusion/redshift-configs",
-        "reference/resource-configs-fusion/snowflake-configs",
       ],
     },
     {

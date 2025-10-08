@@ -73,6 +73,38 @@ exports.versionedPages = [
     page: "reference/global-configs/indirect-selection",
     firstVersion: "1.8",
   },
+  {
+    page: "docs/cloud/connect-data-platform/connect-apache-spark",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-amazon-athena",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-azure-synapse-analytics",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-microsoft-fabric",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-onehouse",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-postgresql-alloydb",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-starburst-trino",
+    lastVersion: "1.99",
+  },
+  {
+    page: "docs/cloud/connect-data-platform/connect-teradata",
+    lastVersion: "1.99",
+  },
 ];
 
 /**
@@ -91,10 +123,6 @@ exports.versionedCategories = [
   },
   {
     category: "Install dbt Core",
-    lastVersion: "1.99",
-  },
-  {
-    category: "Connect your data platforms",
     lastVersion: "1.99",
   },
 ];
