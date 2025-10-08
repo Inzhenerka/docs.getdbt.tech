@@ -9,6 +9,12 @@ id: "setup-remote-mcp"
 
 The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on the cloud-based dbt platform.
 
+:::info
+Note that Remote dbt MCP relies on dbt Copilot for authentication and usage limits. Most MCP tools don't consume dbt Copilot credits, however the [`text_to_sql`](/docs/dbt-ai/about-mcp#sql) tool is the only exception and counts toward your dbt Copilot usage.
+
+If you reach your dbt Copilot usage limit, all remote dbt MCP tools will be unavailable until your Copilot credits reset, even if those tools don’t normally consume credits. To increase your credits, please reach out to your account manager. 
+:::
+
 1. Ensure that you have [AI Features](https://docs.getdbt.com/docs/cloud/enable-dbt-copilot) turned on.
 2. Obtain the following information from dbt Platform:
 
