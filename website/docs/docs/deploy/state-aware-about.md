@@ -39,7 +39,7 @@ Without configuring anything, <Constant name="cloud" />'s state-aware orchestrat
 ## Efficient testing in state-aware orchestration <Lifecycle status='private_beta' />
 
 :::info Private beta feature
-State-aware orchestration features in the <Constant name="dbt_platform" /> are only available in Fusion. Contact your account manager to enable Fusion in your account. 
+State-aware orchestration features in the <Constant name="dbt_platform" /> are only available in Fusion, which is in private preview. Contact your account manager to enable Fusion in your account. 
 :::
 
 Data quality can get degraded in two ways: 
