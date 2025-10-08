@@ -69,7 +69,8 @@ To view your lineage with the **Latest status** lens:
 
 State-aware orchestration uses a cached hash of both code and data state for each model in an environment stored in Redis. When running a job, dbt checks if there are changes in the hash for the model being built between the saved state in Redis and the current state that would be built by the job. If there is a change, dbt builds the model. If there are no changes, dbt reuses the model from the last time it was built.
 
-When you want to wipe this state clean and start again, you can clear the cache by clicking the **Clear cache** button on the **Orchestration** > **Environments** page. The **Clear cache** button is only available if you have enabled state-aware orchestration.
+- To wipe this state clean and start again, clear the cache by clicking the **Clear cache** button on the **Orchestration** > **Environments** page. 
+- The **Clear cache** button is only available if you have enabled state-aware orchestration.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-clear-cache.png" width="90%" title="Clear cache button"/>
 
