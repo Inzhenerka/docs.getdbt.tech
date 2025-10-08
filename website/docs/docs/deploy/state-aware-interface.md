@@ -72,6 +72,7 @@ State-aware orchestration uses a cached hash of both code and data state for eac
 - To wipe this state clean and start again, clear the cache by clicking the **Clear cache** button on the **Orchestration** > **Environments** page. 
 - The **Clear cache** button is only available if you have enabled state-aware orchestration.
 
+- After clearing the cache, the next run rebuilds every model from scratch. Subsequent runs rely on the regenerated cache.
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-clear-cache.png" width="90%" title="Clear cache button"/>
 
 After clearing the cache, the next run rebuilds every model from scratch. Subsequent runs rely on the regenerated cache.
