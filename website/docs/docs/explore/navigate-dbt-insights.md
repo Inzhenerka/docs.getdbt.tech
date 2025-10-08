@@ -31,10 +31,18 @@ To create a SQL query in Query Builder:
     - Click **Add Group by** to choose the dimensions that break down your metric, such as time grain (day, week, month), region, product, or customer.
     - Click **Add Filter** to create a filter to narrow your results.
     - Click **Add Order by** to select how you want to sort the results of your query. 
+    - Click **Add Limit**, select the amount of results you want to see when you run your query. If left blank, you will get all the results. 
 4. Click **Run** to run your query.
     Results are available in the **Data** tab.
 
-    <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="Query Builder in dbt Insights" />
+    <DocCarousel slidesPerView={1}>
+
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-interface.png" title="Query Builder in dbt Insights" />
+
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="After running the query" />
+
+    </DocCarousel>
+
 
 
 ## Query console
