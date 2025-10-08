@@ -69,11 +69,9 @@ To enable Efficient testing:
 
 1. From the main menu, go to **Orchestration** > **Jobs**. 
 2. Select your job. Go to your job settings and click **Edit**. 
-3. Under **Execution settings**, select **Enable Fusion cost optimization features** to enable **State-aware orchestration**.<!--needs to be verified-->
+3. Under **Enable Fusion cost optimization features**, go to **More options**.
 4. Select **Efficient testing**. This feature is disabled by default.
 5. Click **Save**.
-
-You can expand **More options** to enable or disable individual settings. 
 
 ### Example
 
