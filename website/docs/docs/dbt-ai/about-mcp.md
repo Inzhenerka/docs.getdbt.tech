@@ -121,6 +121,12 @@ A set of tools that leverage the <Constant name="fusion" /> engine for advanced 
 - `compile_sql`: Compiles a SQL statement in the context of the current project and environment.
 - `get_column_lineage`: <Constant name="fusion" /> exclusive! Get column lineage information across a project DAG for a specific column.
 
+:::info
+Note that Remote dbt MCP relies on dbt Copilot for authentication and usage limits. Most MCP tools don't consume dbt Copilot credits, however the [`text_to_sql` and `execute_sql`](#sql) tools are the only exception and count toward your dbt Copilot usage.
+
+If you reach your dbt Copilot usage limit, all remote dbt MCP tools will be unavailable until your Copilot credits reset, even if those tools don’t normally consume credits. To increase your credits, please reach out to your account manager. 
+:::
+
 ### Fusion tools (Local)
 A set of tools that leverage the <Constant name="fusion" /> engine through a locally running <Constant name="fusion" /> Language Server Protocol (LSP) in VS Code or Cursor with the dbt VS Code extension.
 
