@@ -16,26 +16,23 @@ meta:
   config_page: '/reference/resource-configs/data-cloud-configs'
 ---
 
-:::warning Disclaimer
-This adapter is in the Alpha product stage and is not production-ready. It should only be used in sandbox or test environments. 
+⚠️ Disclaimer: This adapter is in the Alpha product stage and thus is not production-ready. It should only be used in sandbox or test environments. 
+As we continue to develop and take in your feedback, the experience is subject to change — commands, configuration, and workflows may be updated or removed in future releases. 
 
-As we continue to develop and take in your feedback, the experience is subject to change &mdash; commands, configuration, and workflows may be updated or removed in future releases. 
-:::
 
-This `dbt-salesforce` adapter is available via CLI in the <Constant name="fusion_engine" />. To access the adapter, [install dbt Fusion](/docs/fusion/about-fusion-install). We recommend using the [VS Code Extension](/docs/fusion/install-dbt-extension) as the development interface. <Constant name="dbt_platform" /> support coming soon. 
+## Installing dbt-salesforce
+This adapter is available via dbt Fusion CLI. In order to access the adapter, install dbt Fusion and the adapter will be available for usage. We recommend using the VS Code Extension as the development interface. dbt Platform support coming soon. 
 
-## Prerequisites
+## Profile Configuration
 
-Before you can connect dbt to the Salesforce Data Cloud, you need the following:
+Set up your profiles.yml in order for dbt to connect to Salesforce Data Cloud. Prior to setting up the Data Cloud profiles.yml, you will need:
 
-- A Data Cloud instance with a connected app configured for dbt
-  - For steps how to create a connected app, refer to [Set up your Salesforce environment directions](https://developer.salesforce.com/blogs/2024/11/how-to-use-the-python-connector-for-data-cloud). Follow the instructions until **Step 2: Retrieve the Consumer Key and Secret** under **Set up your Python Environment**. <!--how to create a Data Cloud instance?-->
-- `server.key` file <!--where to download this file?-->
+- A Data Cloud instance with an Connected app configurated for dbt
+- server.key file downloaded 
 - User with `Data Cloud admin` permission set
 
-## Configure Fusion
+For more information on how to create a Connected App, follow the [Set up your Salesforce environment directions](https://developer.salesforce.com/blogs/2024/11/how-to-use-the-python-connector-for-data-cloud). You can stop when you come across the `Set up your Python Environment` instructions (after you copy the Consumer Key).
 
-To connect dbt to Salesforce Data Cloud, set up your `profiles.yml`. Refer to the following configuration:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -46,26 +43,17 @@ company-name:
     dev:
       type: salesforce
       method: jwt_bearer
-      client_id: [Consumer Key of your Data Cloud app]
+      client_id: [client id of your Data Cloud app]
       private_key_path: [local file path of your server key]
       login_url: "https://login.salesforce.com"
       username: [Data Cloud instance]
 ```
-</File>
-
-
-| Profile field | Required | Description | Examples |
+| Profile Field | Required | Description | Examples |
 | --- | --- | --- | --- |
-| `method` | Yes | Authentication Method. Currently, only `jwt_bearer` supported. | jwt_bearer |
-| `client_id` | Yes | This is the `Consumer Key` from your connected app secrets. |  |
-| `private_key_path` | Yes | File path of the `server.key` file in your computer. | /Users/dbt_user/Documents/server.key |
-| `login_url` | Yes | Login URL of the Salesforce instance.  | [https://login.salesforce.com](https://login.salesforce.com/) |
-| `username` | Yes |  | dbt_user@dbtlabs.com |
-
-<!--For username, the sample above says [Data cloud instance] but the sample here is an email-->
-
-## More information
-
-Find Salesforce-specific configuration information in the [Salesforce adapter reference guide](/reference/resource-configs-fusion/data-cloud-configs).
+| method | Yes | Authentication Method. Currently only jwt_bearer supported | jwt_bearer |
+| client_id | Yes | This is the consumer_key from your Connected App Secrets |  |
+| private_key_path | Yes | File Path of Server Key file | /Users/dbt_user/Documents/server.key |
+| login_url | Yes | Login Url of Salesforce Instance  | [https://login.salesforce.com](https://login.salesforce.com/) |
+| username | Yes |  | dbt_user@dbtlabs.com |
 
 
