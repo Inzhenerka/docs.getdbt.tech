@@ -28,9 +28,9 @@ This `dbt-salesforce` adapter is available via CLI in the <Constant name="fusion
 
 Before you can connect dbt to the Salesforce Data Cloud, you need the following:
 
-- A Data Cloud instance with a connected app configured for dbt
-  - For steps how to create a connected app, refer to [Set up your Salesforce environment directions](https://developer.salesforce.com/blogs/2024/11/how-to-use-the-python-connector-for-data-cloud). Follow the instructions until **Step 2: Retrieve the Consumer Key and Secret** under **Set up your Python Environment**. <!--how to create a Data Cloud instance?-->
-- `server.key` file <!--where to download this file?-->
+- A Data Cloud instance
+- [External Client App for dbt to connect to Data Cloud](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5) with [Oauth configured](https://help.salesforce.com/s/articleView?id=xcloud.configure_external_client_app_oauth_settings.htm&type=5)
+- [Private Key and server.key file](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
 - User with `Data Cloud admin` permission set
 
 ## Configure Fusion
