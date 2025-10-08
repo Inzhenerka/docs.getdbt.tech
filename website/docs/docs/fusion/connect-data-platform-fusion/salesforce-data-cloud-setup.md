@@ -49,7 +49,7 @@ company-name:
       client_id: [Consumer Key of your Data Cloud app]
       private_key_path: [local file path of your server key]
       login_url: "https://login.salesforce.com"
-      username: [Data Cloud instance]
+      username: [username on the Data Cloud Instance]
 ```
 </File>
 
