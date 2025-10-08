@@ -46,7 +46,7 @@ When running a job, a structured logs view shows which models were built, skippe
 
 1. Each model has an icon indicating its status.
 2. The **Reused** tab indicates the total number of reused models.
-3. You can use the search bar or filter the logs to show **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused**, **Debugged** messages. 
+3. You can use the search bar or filter the logs to show **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused**, or **Debugged** messages. 
 4. Detailed log messages are provided to get more context on why models were built, reused, or skipped. These messages are highlighted in the logs.
 
 ## Reused tag in the Latest status lens
