@@ -75,4 +75,3 @@ State-aware orchestration uses a cached hash of both code and data state for eac
 - After clearing the cache, the next run rebuilds every model from scratch. Subsequent runs rely on the regenerated cache.
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-clear-cache.png" width="90%" title="Clear cache button"/>
 
-After clearing the cache, the next run rebuilds every model from scratch. Subsequent runs rely on the regenerated cache.
