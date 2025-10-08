@@ -42,12 +42,12 @@ Under the **Models** tab:
 
 When running a job, a structured logs view shows which models were built, skipped, or reused. 
 
-<!--insert screenshot of logs with numbered callouts-->
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-logs-view.png" title="Logs view of built models"/>
 
-1. The **Reused** tab indicates the total number of resued models.
-2. Reused models are highlighted in the logs. 
-3. You can use the search bar and filter the logs to show **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused**, **Debugged** messages.
-4. Detailed log messages are provided to get more context on why models were reused. 
+1. Each model has an icon indicating its status.
+2. The **Reused** tab indicates the total number of reused models.
+3. You can use the search bar or filter the logs to show **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused**, **Debugged** messages. 
+4. Detailed log messages are provided to get more context on why models were built, reused, or skipped. These messages are highlighted in the logs.
 
 ## Reused tag in the Latest status lens
 
