@@ -119,16 +119,16 @@ var siteSettings = {
               activeBaseRegex: "docs/(?!(dbt-cloud))",
             },
             {
-              label: "API docs",
-              to: "/docs/dbt-cloud-apis/overview",
+              label: "References",
+              to: "reference/references-overview",
             },
             {
               label: "Best practices",
               to: "/best-practices",
             },
             {
-              label: "Release notes",
-              to: "/docs/dbt-versions/dbt-cloud-release-notes",
+              to: "/blog",
+              label: "Developer blog",
             },
           ],
         },
@@ -138,26 +138,33 @@ var siteSettings = {
           position: "right",
         },
         {
-          to: "reference/references-overview",
-          label: "Reference",
+          to: "/docs/dbt-cloud-apis/overview",
+          label: "APIs",
           position: "right",
-          activeBasePath: "reference",
         },
         {
-          label: "Resources",
+          label: "Help",
           position: "right",
           items: [
             {
+              label: "Release notes",
+              to: "/docs/dbt-versions/dbt-cloud-release-notes",
+            },
+            {
+              label: "FAQs",
+              to: "/docs/faqs",
+            },
+            {
+              label: "Support and billing",
+              to: "/docs/dbt-support",
+            },
+            {
+              label: "Fusion Diaries",
+              href: "https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements",
+            },
+            {
               label: "Courses",
               href: "https://learn.getdbt.com",
-            },
-            {
-              label: "Best practices",
-              to: "/best-practices",
-            },
-            {
-              label: "Developer blog",
-              to: "/blog",
             },
           ],
         },
@@ -206,7 +213,7 @@ var siteSettings = {
         {
           label: "Install VS Code extension",
           position: "right",
-          to: "/docs/install-dbt-extension",
+          to: "https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt",
           id: "nav-install-vs-code-extension",
           className: "nav-install-dbt-extension",
         },
@@ -232,7 +239,7 @@ var siteSettings = {
               </div>
               <div class="cta-section">
                 <a href="https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt" target="_blank" class="primary-cta">Install free extension</a>
-                <a href="https://www.getdbt.com/signup" target="_blank" class="secondary-cta">Request your demo</a>
+                <a href="https://www.getdbt.com/contact" target="_blank" class="secondary-cta">Request your demo</a>
               </div>
             </div>
           </div>
