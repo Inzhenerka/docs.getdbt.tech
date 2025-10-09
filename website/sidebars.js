@@ -10,8 +10,9 @@ const sidebarSettings = {
       type: "category",
       label: "dbt Fusion engine",
       collapsed: true,
-      link: { type: "doc", id: "docs/fusion/about-fusion" },
+      link: { type: "doc", id: "docs/fusion/fusion" },
       items: [
+        "docs/fusion/fusion",
         "docs/fusion/about-fusion",
         "docs/fusion/new-concepts",
         "docs/fusion/supported-features",
