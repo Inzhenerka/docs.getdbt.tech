@@ -5,7 +5,7 @@ id: profiles.yml
 ---
 import ProfilesYml from '/snippets/_profiles.yml.md';
 
-<ProfilesYml setup='set up connections' />
+<ProfilesYml />
 
 ## Related docs
 
