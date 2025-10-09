@@ -23,7 +23,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 The following features are new or enhanced as part of dbt's Coalesce event from October 13-16, 2025:
 
-- **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in Private preview. If you have any questions, please reach out to your account manager.
+- **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
 
 ### Pre-Coalesce 
 
