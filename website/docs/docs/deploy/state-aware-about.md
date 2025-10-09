@@ -5,7 +5,7 @@ id: "state-aware-about"
 tags: ['scheduler','SAO']
 ---
 
-# About state-aware orchestration <Lifecycle status="beta,managed,managed_plus" />
+# About state-aware orchestration <Lifecycle status="private_preview,managed,managed_plus" />
 
 <IntroText>
 
@@ -13,9 +13,9 @@ Every time a job runs, state-aware orchestration automatically determines which 
 
 </IntroText>
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 State-aware orchestration saves you compute costs and reduces runtime because when a job runs, it checks for new records and only builds the models that will change.
 

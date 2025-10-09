@@ -15,9 +15,9 @@ dbt is the industry standard for data transformation. The <Constant name="fusion
 
 <VersionBlock lastVersion="1.99">
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 </VersionBlock>
 

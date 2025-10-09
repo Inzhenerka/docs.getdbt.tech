@@ -6,9 +6,9 @@ id: about-fusion-install
 
 # About Fusion local installation <Lifecycle status="preview" />
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 
