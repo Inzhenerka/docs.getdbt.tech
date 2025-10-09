@@ -23,13 +23,13 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 The following features are new or enhanced as part of dbt's Coalesce event from October 13-16, 2025:
 
 - **Preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in Preview.
-- **Preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in private preview!
+- **Private Preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private Preview!
   - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
-  - **Beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in one run.
+  - **Private Beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in Private Beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in one run.
   - **New**: To improve visibility into state‑aware orchestration and provide better control when you need to reset cached state, the following [UI enhancements](/docs/deploy/state-aware-interface) are introduced:
     - **Models built and reused chart** on your **Account home**
     - New charts in the **Overview** section of your job that display **Recent runs**, **Total run duration**, **Models built**, and **Models reused**
-    - A new structure to view logs grouped by models with a **Reused** tab to quickly find reused models
+    - A new structure to view logs grouped by models, with a **Reused** tab to quickly find reused models
     - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
     - **Clear cache** button on the **Environments** page to reset cached state when needed
 
