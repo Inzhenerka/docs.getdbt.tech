@@ -23,10 +23,18 @@ There are two reasons why `semantic_manifest.json` exists alongside `manifest.js
 ## Top-level keys
 
 Top-level keys for the semantic manifest are:
+-  `semantic_models` &mdash; Starting points of data with entities and dimensions, and correspond to models in your dbt project. 
+-  `metrics` &mdash; Functions combining entities, dimensions, and so on to define quantitative indicators.
+- `project_configuration` &mdash; Contains information around your project configurations
+- `saved_queries` &mdash; Saves commonly used queries in MetricFlow
+
+<VersionBlock lastVersion="1.9">
+Top-level keys for the semantic manifest are:
 -  `semantic_models` &mdash; Starting points of data with entities, dimensions, and measures, and correspond to models in your dbt project. 
 -  `metrics` &mdash; Functions combining measures, constraints, and so on to define quantitative indicators.
 - `project_configuration` &mdash; Contains information around your project configurations
 - `saved_queries` &mdash; Saves commonly used queries in MetricFlow
+</VersionBlock>
 
 ### Example
 
