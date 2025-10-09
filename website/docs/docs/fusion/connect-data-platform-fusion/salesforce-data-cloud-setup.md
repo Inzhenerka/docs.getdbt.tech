@@ -30,7 +30,7 @@ Before you can connect dbt to the Salesforce Data Cloud, you need the following:
 
 - A Data Cloud instance
 - [External Client App for dbt to connect to Data Cloud instance](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5) with [Oauth configured](https://help.salesforce.com/s/articleView?id=xcloud.configure_external_client_app_oauth_settings.htm&type=5)
-- [Private Key and server.key file](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
+- [A private key and the `server.key` file](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
 - User with `Data Cloud admin` permission set
 
 ## Configure Fusion
@@ -54,13 +54,13 @@ company-name:
 </File>
 
 
-| Profile field | Required | Description | Examples |
+| Profile field | Required | Description | Example |
 | --- | --- | --- | --- |
 | `method` | Yes | Authentication Method. Currently, only `jwt_bearer` supported. | jwt_bearer |
 | `client_id` | Yes | This is the `Consumer Key` from your connected app secrets. |  |
 | `private_key_path` | Yes | File path of the `server.key` file in your computer. | /Users/dbt_user/Documents/server.key |
 | `login_url` | Yes | Login URL of the Salesforce instance.  | [https://login.salesforce.com](https://login.salesforce.com/) |
-| `username` | Yes |  | dbt_user@dbtlabs.com |
+| `username` | Yes | Username on the Data Cloud Instance. | dbt_user@dbtlabs.com |
 
 <!--For username, the sample above says [Data cloud instance] but the sample here is an email-->
 
