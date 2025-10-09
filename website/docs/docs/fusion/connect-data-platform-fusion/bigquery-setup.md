@@ -126,4 +126,4 @@ default:
 
 ## More information
 
-Find BigQuery specific configuration information in the [BigQuery adapter reference guide](/reference/resource-configs/bigquery-configs).
+Find BigQuery-specific configuration information in the [BigQuery adapter reference guide](/reference/resource-configs/bigquery-configs).
