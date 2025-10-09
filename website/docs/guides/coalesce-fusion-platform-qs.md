@@ -26,7 +26,7 @@ Let's get started with access to a Fusion Sandbox!
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/workshop-form.png" width="90%" title="The form for accessing your Fusion Sandbox in dbt Platform." />
 
-1. Go to [https://workshops.us1.dbt.com/workshop](https://workshops.us1.dbt.com/workshop) (Note: In order to access the sign-up page, you may need to log out of any existing dbt Platform account you have or access this URL in Incognito Mode)
+1. Go to [https://workshops.us1.dbt.com/workshop](https://workshops.us1.dbt.com/workshop?id=46) (Note: In order to access the sign-up page, you may need to log out of any existing dbt Platform account you have or access this URL in Incognito Mode)
 
 2. Enter your first name, last name, and company email.
 
@@ -70,7 +70,7 @@ Let's get started with access to a Fusion Sandbox!
 
 2. Navigate to **Prod Job (State Aware Orchestration Enabled)** at the bottom of the page.
 
-3. Open **Settings** to validate that State-Aware Orchestration is already enabled for this job.
+3. Open **Settings** to enable State Aware Orchestration. Check **Enable Fusion cost optimization features** and expand to check **State Aware Orchestration.** Click **Save.**
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/toggle-sao.png" width="90%" title="SAO is easily enabled through the familiar job configurations view." />
 
