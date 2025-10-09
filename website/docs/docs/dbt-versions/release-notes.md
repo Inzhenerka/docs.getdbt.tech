@@ -24,6 +24,10 @@ The following features are new or enhanced as part of dbt's Coalesce event from 
 
 - **Preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in Preview.
 
+- **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
+  - **Beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. This is available in private beta.
+  - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. This fetaure is available in beta.
+
 ### Pre-Coalesce 
 
 - **Behavior change**: The CodeGenCodeLens feature for creating models from your sources with a click of a button has been temporarily removed from the <Constant name="cloud_ide" /> due to compatibility issues. We plan to reintroduce this feature in the near future for both the IDE and the VS Code extension.
