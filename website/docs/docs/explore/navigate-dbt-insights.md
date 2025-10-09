@@ -95,7 +95,6 @@ Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to
   1. Gets context using your semantic models and metrics. 
   2. Generates SQL queries using your project's definitions.  
   3. Executes the SQL query and returns results with context.
-  3. Creates visualizations by generating Insights-compatible charts for visual consumption⁠.
   4. Reviews and summarizes the generated insights and provides a comprehensive answer.
 
   The <Constant name="copilot" /> agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
