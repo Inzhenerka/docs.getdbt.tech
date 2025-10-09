@@ -22,7 +22,7 @@ Query Builder in dbt <Constant name="query_page" /> lets you build queries again
 - Have filters, time ranges, and aggregates tailored to the semantic model.
 - View the underlying SQL code for each metric query. 
 
-To create a SQL query in Query Builder:
+To create a query in Query Builder:
 
 1. From the main menu, go to **<Constant name="query_page" />**.
 2. Click **Build a query**. 
