@@ -20,7 +20,7 @@ Query Builder in dbt <Constant name="query_page" /> lets you build queries again
 
 - Build queries from semantic objects rather than raw tables.
 - Have filters, time ranges, and aggregates tailored to the semantic model.
-- Convert semantic queries into SQL code for developers. <!--how to do this?-->
+- View the underlying SQL code for each metric query. 
 
 To create a SQL query in Query Builder:
 
