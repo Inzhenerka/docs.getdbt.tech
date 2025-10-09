@@ -18,7 +18,7 @@ Learn how to navigate <Constant name="query_page" /> interface and use the main 
 
 Query Builder in dbt <Constant name="query_page" /> lets you build queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
 
-- Build queries from semantic objects rather than raw tables.
+- Build analyses from your predefined semantic layer metrics.
 - Have filters, time ranges, and aggregates tailored to the semantic model.
 - View the underlying SQL code for each metric query. 
 
