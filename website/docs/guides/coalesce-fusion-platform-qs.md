@@ -9,9 +9,20 @@ tags: ['dbt Fusion engine', 'dbt Platform','Quickstart']
 recently_updated: true
 ---
 
-## Section 1: Workshop Sign-up
+## Introduction
 
-Get hands-on with the dbt Fusion Engine in a sandbox dbt Platform account during Coalesce. This Quickstart guide is only intended to be used by in-person Coalesce registered users.
+Get hands-on with the dbt Fusion Engine in a sandbox dbt Platform account during Coalesce. **This Quickstart guide is only intended to be used by in-person Coalesce registered users.**
+
+Continue this guide to get hands on keyboards or preview the experience in the video below.
+
+<div>
+<iframe src="https://fast.wistia.net/embed/iframe/8w1n1xeqo9?web_component=true&seo=true&videoFoam=false" title="Coalesce Fusion Sandbox Walkthrough Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="840px" height="460px"></iframe>
+<script src="https://fast.wistia.net/player.js" async></script>
+</div>
+
+## Section 1: Sandbox Sign-up
+
+Let's get started with access to a Fusion Sandbox!
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/workshop-form.png" width="90%" title="The form for accessing your Fusion Sandbox in dbt Platform." />
 
@@ -29,7 +40,7 @@ Get hands-on with the dbt Fusion Engine in a sandbox dbt Platform account during
 
 6. Click **Login**  
 
-## Section 2 - Developer Productivity with Fusion
+## Section 2: Developer Productivity with Fusion
 
 1. In the left navigation, click **Select a project** and choose **Mom’s Flower Shop**
 
@@ -53,7 +64,7 @@ Get hands-on with the dbt Fusion Engine in a sandbox dbt Platform account during
 
     Please note: any file edits stay local to your Studio IDE; no feature branches are permitted for this sandbox account.
 
-## Section 3 - State-Aware Orchestration
+## Section 3: State-Aware Orchestration
 
 1. From the left navigation, go to **Orchestration → Environments → Production**.
 
@@ -85,8 +96,11 @@ Get hands-on with the dbt Fusion Engine in a sandbox dbt Platform account during
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/models-reused.png" width="90%" title="💡 State aware orchestration ensures only changed data is processed." />
 
-## Section 4 - Learn More
+## Section 4: Learn More
 
 Stop by the **dbt Booth in the Discovery Hall** to learn more about the Fusion-powered features mentioned in the keynote, witness the magic firsthand at any of our demo pods, and dive deeper into use cases, success stories, and migration details through ongoing lightning talks.
 
+Learn more about the dbt Fusion Engine in the docs: [About Fusion](https://docs.getdbt.com/docs/fusion/about-fusion)
+
+Continue learning dbt at [learn.getdbt.com](http://learn.getdbt.com)
 
