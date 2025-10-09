@@ -44,8 +44,16 @@ All of that and more is available in the [dbt extension for VSCode](/docs/about-
 
 Fusion also enables more-efficient deployments of large DAGs. By tracking which columns are used where, and which source tables have fresh data, Fusion can ensure that models are rebuilt only when they need to process new data. This ["state-aware orchestration"](/docs/deploy/state-aware-about) is a feature of the dbt platform.
 
-### How to use Fusion
+### Thread management
 
+The <Constant name="fusion_engine" /> manages parallelism differently than <Constant name="core" />. Rather than treating the `threads` setting as a strict limit on concurrent operations, Fusion dynamically optimizes parallelism based on the selected warehouse.
+
+In Redshift, the `threads` setting limits the number of queries or statements that can run in parallel, which is important for managing Redshift's concurrency limits. In other warehouses, Fusion dynamically adjusts thread usage based on each warehouse's capabilities, using your thread configuration as guidance while automatically optimizing for maximum efficiency.
+
+For more information, refer to [Using threads](/docs/running-a-dbt-project/using-threads#fusion-engine-thread-behavior).
+
+### How to use Fusion
+ 
 You can:
 - Select Fusion from the [dropdown/toggle in the dbt platform](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) <Lifecycle status="beta" />
 - [Install the dbt extension for VSCode](/docs/install-dbt-extension) <Lifecycle status="preview" />
