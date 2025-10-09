@@ -14,6 +14,30 @@ Learn how to navigate <Constant name="query_page" /> interface and use the main 
 
 <Constant name="query_page" /> provides an interactive interface for writing, running, and analyzing SQL queries. This section highlights the main components of <Constant name="query_page" />. 
 
+## Query console
+The query console is the main component of <Constant name="query_page" />. It allows you to write, run, and analyze SQL queries. The Query console supports:
+- Query console editor, which allows you to write, run, and analyze SQL queries:
+  - It supports syntax highlighting and autocomplete suggestions 
+  - Hyperlink from SQL code `ref` to the corresponding Explorer page
+- [Query console menu](#query-console-menu), which contains **Bookmark (icon)**, **Develop**, and **Run** buttons. 
+- [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
+  - Has three tabs: **Results**, **Details**, and **Chart**, which allow you to analyze query execution and visualize results.
+- [Query console sidebar menu](#query-console-sidebar-menu), which contains the **<Constant name="explorer" />**, **Bookmark**, **Query history**, and **<Constant name="copilot" />** icons.
+
+<Lightbox src="/img/docs/dbt-insights/insights-main.png" title="dbt Insights main interface with blank query editor" />
+
+### Query console menu
+The Query console menu is located at the top right of the Query editor. It contains the **Bookmark**, **Develop**, and **Run** buttons:
+
+- **Bookmark** button &mdash; Save your frequently used SQL queries as favorites for easier access.
+  - When you click **Bookmark**, a **Bookmark Query Details** modal (pop up box) will appear where you can add a **Title** and **Description**.
+  - Let [<Constant name="copilot" />](/docs/cloud/dbt-copilot) do the writing for you &mdash; use the AI assistant to automatically generate a helpful description for your bookmark.
+  - Access the newly created bookmark from the **Bookmark** icon in the [Query console sidebar menu](#query-console-sidebar-menu). 
+ - **Develop**: Open the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) to continue editing your SQL query.
+- **Run** button &mdash; Run your SQL query and view the results in the **Results** tab.
+
+  <Lightbox src="/img/docs/dbt-insights/develop-menu.png" title="dbt Insights Develop menu." />
+
 ## Query Builder <Lifecycle status="beta" />
 
 Query Builder in dbt <Constant name="query_page" /> lets you build queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
@@ -42,32 +66,6 @@ To create a query in Query Builder:
     <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="After running the query" />
 
     </DocCarousel>
-
-
-
-## Query console
-The query console is the main component of <Constant name="query_page" />. It allows you to write, run, and analyze SQL queries. The Query console supports:
-- Query console editor, which allows you to write, run, and analyze SQL queries:
-  - It supports syntax highlighting and autocomplete suggestions 
-  - Hyperlink from SQL code `ref` to the corresponding Explorer page
-- [Query console menu](#query-console-menu), which contains **Bookmark (icon)**, **Develop**, and **Run** buttons. 
-- [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
-  - Has three tabs: **Results**, **Details**, and **Chart**, which allow you to analyze query execution and visualize results.
-- [Query console sidebar menu](#query-console-sidebar-menu), which contains the **<Constant name="explorer" />**, **Bookmark**, **Query history**, and **<Constant name="copilot" />** icons.
-
-<Lightbox src="/img/docs/dbt-insights/insights-main.png" title="dbt Insights main interface with blank query editor" />
-
-### Query console menu
-The Query console menu is located at the top right of the Query editor. It contains the **Bookmark**, **Develop**, and **Run** buttons:
-
-- **Bookmark** button &mdash; Save your frequently used SQL queries as favorites for easier access.
-  - When you click **Bookmark**, a **Bookmark Query Details** modal (pop up box) will appear where you can add a **Title** and **Description**.
-  - Let [<Constant name="copilot" />](/docs/cloud/dbt-copilot) do the writing for you &mdash; use the AI assistant to automatically generate a helpful description for your bookmark.
-  - Access the newly created bookmark from the **Bookmark** icon in the [Query console sidebar menu](#query-console-sidebar-menu). 
- - **Develop**: Open the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) to continue editing your SQL query.
-- **Run** button &mdash; Run your SQL query and view the results in the **Results** tab.
-
-  <Lightbox src="/img/docs/dbt-insights/develop-menu.png" title="dbt Insights Develop menu." />
 
 ## Query output panel
 
