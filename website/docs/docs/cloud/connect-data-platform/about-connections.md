@@ -8,7 +8,7 @@ pagination_prev: null
 ---
 The <Constant name="dbt_platform" /> can connect with a variety of data platform providers. Expand the sections below to know the supported data platforms for <Constant name="core" /> and the <Constant name="fusion_engine" />: 
 
-| Connection | Available on Latest   | Available on Fusion <Lifecycle status='preview' />|
+| Connection | Available on Latest   | Available on Fusion<Lifecycle status='private_preview' />|
 |------------|:---------------------:|:---------------------:|
 | [AlloyDB](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) | ✅ | ❌ |
 | [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) | ✅ | ❌ |
@@ -46,7 +46,6 @@ import AuthTypes from '/snippets/_dbt_connection_support.md';
 </TabItem>
 
 <TabItem value="dbt Fusion">
-<!--must verify supported auth methods for Fusion adapters-->
 import AuthTypesFusion from '/snippets/_dbt_connection_support_fusion.md';
 
 <AuthTypesFusion />

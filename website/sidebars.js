@@ -261,7 +261,6 @@ const sidebarSettings = {
                 "docs/fusion/connect-data-platform-fusion/databricks-setup",
                 "docs/fusion/connect-data-platform-fusion/redshift-setup",
                 "docs/fusion/connect-data-platform-fusion/snowflake-setup",
-                "docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup",
               ],
             },
             {
@@ -1146,7 +1145,6 @@ const sidebarSettings = {
         "reference/resource-configs/oracle-configs",
         "reference/resource-configs/postgres-configs",
         "reference/resource-configs/redshift-configs",
-        "reference/resource-configs/data-cloud-configs",
         "reference/resource-configs/singlestore-configs",
         "reference/resource-configs/snowflake-configs",
         "reference/resource-configs/trino-configs",
