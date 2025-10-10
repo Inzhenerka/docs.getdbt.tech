@@ -8,5 +8,5 @@ Keep in mind the following considerations during the upgrade process:
 
 - **State-aware orchestration** &mdash; If using [state-aware orchestration](/docs/deploy/state-aware-about), dbt doesn’t detect a change if a table or view is dropped outside of dbt, as the cache is unique to each dbt platform environment. This means state-aware orchestration will not rebuild that model until either there is new data or a change in the code that the model uses.
   - **Workarounds:**
-    - Use the **Clear cache** button on the selected Environment settings' page to force a full rebuild (acts like a reset) OR
+    - Use the **Clear cache** button on the target Environment settings page to force a full rebuild (acts like a reset), or
     - Temporarily disable State-aware orchestration for the job and rerun it.
