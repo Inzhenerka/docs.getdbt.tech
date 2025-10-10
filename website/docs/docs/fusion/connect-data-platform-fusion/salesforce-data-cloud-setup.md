@@ -30,7 +30,7 @@ Before you can connect dbt to the Salesforce Data Cloud, you need the following:
 
 - A Data Cloud instance
 - [An external client app that dbt connects to for the Data Cloud instance](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5), with [OAuth configured](https://help.salesforce.com/s/articleView?id=xcloud.configure_external_client_app_oauth_settings.htm&type=5). OAuth scopes must include:
-  - Manage user data via APIs (`api`)
+  - `api` - To manage user data via APIs.
   - Perform requests at any time (`refresh_token`, `offline_access`)
   - Perform ANSI SQL queries on Data Cloud data (`cdp_query_api`)
 - [A private key and the `server.key` file](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
