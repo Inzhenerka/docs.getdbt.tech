@@ -36,6 +36,37 @@ The Query console menu is located at the top right of the Query editor. It conta
  - **Develop**: Open the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [<Constant name="visual_editor" />](/docs/cloud/canvas) to continue editing your SQL query.
 - **Run** button &mdash; Run your SQL query and view the results in the **Data** tab.
 
+## Query Builder <Lifecycle status="beta" />
+
+Query Builder in dbt <Constant name="query_page" /> lets you build queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
+
+- Build analyses from your predefined semantic layer metrics.
+- Have filters, time ranges, and aggregates tailored to the semantic model.
+- View the underlying SQL code for each metric query. 
+
+To create a query in Query Builder:
+
+1. From the main menu, go to **<Constant name="query_page" />**.
+2. Click **Build a query**. 
+3. Select what you want to include in your query.
+    - Click **Add Metric** to select the metrics for your query. 
+    - Click **Add Group by** to choose the dimensions that break down your metric, such as time grain (day, week, month), region, product, or customer.
+    - Click **Add Filter** to create a filter to narrow your results.
+    - Click **Add Order by** to select how you want to sort the results of your query. 
+    - Click **Add Limit**, select the amount of results you want to see when you run your query. If left blank, you will get all the results. 
+4. Click **Run** to run your query.
+    Results are available in the **Data** tab. You can see the SQL code generated in the **Details** tab.
+
+    <DocCarousel slidesPerView={1}>
+
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-interface.png" title="Query Builder in dbt Insights" />
+
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="Results are displayed in the Data tab" />
+
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-sql.png" title="The generated SQL code in the Details tab" />
+
+    </DocCarousel>
+
 ## Query output panel
 
 The Query output panel is below the query editor and displays the results of a query. It displays the following tabs to analyze query execution and visualize results:
