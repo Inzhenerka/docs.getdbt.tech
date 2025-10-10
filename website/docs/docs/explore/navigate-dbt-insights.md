@@ -79,7 +79,7 @@ View past queries, their statuses (All, Success, Error, or Pending), start time,
 
 ### dbt Copilot
 
-Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts or to chat with the <Constant name="copilot" /> agent to gather insights about your data. There are two ways you can use dbt <Constant name="copilot" /> in <Constant name="explorer" /> to interact with your data:
+Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts or to chat with the <Constant name="copilot" /> agent to gather insights about your data. There are two ways you can use dbt <Constant name="copilot" /> in <Constant name="query_page" /> to interact with your data:
 
 <Lightbox src="/img/docs/dbt-insights/insights-copilot-tabs.png" width="90%" title="dbt Copilot in Insights" />
 
