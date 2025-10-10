@@ -52,17 +52,17 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
 
 3. An in-app guide will appear for quick resources and videos about <Constant name="fusion"/>’s new capabilities. Please take a few minutes to review these resources\!
 
-4. From the File Explorer in **Studio,** open the `models/staging/stg\_flower\_orders.sql` file.
+4. From the File Explorer in **Studio,** open the `models/staging/stg_flower_orders.sql` file.
 
-5. Use **Preview CTE** above the first CTE to preview data for just this CTE (`raw\_flower\_orders`) . 
+5. Use **Preview CTE** above the first CTE to preview data for just this CTE (`raw_flower_orders`) . 
    
    💡 *<Constant name="fusion"/> enables modular previews for faster debugging.*  
 
-6. Hover over the asterisk in `select \*` to see column names and data types of available columns.   
+6. Hover over the asterisk in `select *` to see column names and data types of available columns.   
    
 <Lightbox src="/img/guides/coalesce-fusion-qs/select-star.png" width="90%" title="💡 Fusion provides live metadata and column insights as you code." />
 
-7. Test <Constant name="fusion"/>’s live error detection — introduce a typo and click **Save**. (e.g., `change order\_id` to `order\_key`) to see real-time feedback. Hover over the red squiggly line to see details about the error.
+7. Test <Constant name="fusion"/>’s live error detection — introduce a typo and click **Save**. (e.g., `change order_id` to `order_key`) to see real-time feedback. Hover over the red squiggly line to see details about the error.
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/sql-error.png" width="90%" title="Fusion can detect your SQL errors in real-time while you code and before you send it to your data platform." />
 
@@ -92,7 +92,7 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
 
 7. Run the job again by clicking **Run now** again to see the power of State aware orchestration at work\!
 
-8. When the job completes, open the **Lineage** tab to see **Reuse** statuses appear on most models. We have new flower orders, so the `stg\_flower\_orders` and downstream models are rerun (status: success), while the rest of the models are reused, since there is no new data.   
+8. When the job completes, open the **Lineage** tab to see **Reuse** statuses appear on most models. We have new flower orders, so the `stg_flower_orders` and downstream models are rerun (status: success), while the rest of the models are reused, since there is no new data.   
    
    💡 *<Constant name="fusion"/> automatically skips models without fresh data, saving pipeline execution time and avoiding data platform costs*
 
