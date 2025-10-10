@@ -26,7 +26,7 @@ The following features are new or enhanced as part of dbt's Coalesce event from 
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
   - [About data platform connections](/docs/cloud/connect-data-platform/about-connections) lists all available <Constant name="dbt_platform" /> connections on Fusion and the supported authentication methods per connection. 
 - **New**: Fusion‑specific configuration is now available for BigQuery, Databricks, Redshift, and Snowflake. For more information, see [Connect Fusion to your data platform](/docs/fusion/connect-data-platform-fusion/profiles.yml).
-- **Alpha**: The `dbt-salesforce` adapter is available via CLI in the <Constant name="fusion_engine" />. Note that this connection is in the Alpha product stage and is not production-ready. For more information, see [Salesforce Data Cloud setup](/docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup).
+- **Alpha**: The `dbt-salesforce` adapter is available via the <Constant name="fusion_engine" /> CLI. Note that this connection is in the Alpha product stage and is not production-ready. For more information, see [Salesforce Data Cloud setup](/docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup).
 
 
 ### Pre-Coalesce 
