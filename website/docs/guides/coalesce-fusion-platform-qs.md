@@ -17,7 +17,7 @@ Get hands-on with the <Constant name="fusion_engine"/> in a sandbox dbt platform
 This Quickstart guide is only intended to be used by in-person Coalesce registered users.
 :::
 
-Continue using this guide to get hands on keyboards, or you can preview the experience in the following video.
+Continue using this guide to get hands-on keyboard experience, preview the experience in the following video.
 
 <div>
 <iframe src="https://fast.wistia.net/embed/iframe/8w1n1xeqo9?web_component=true&seo=true&videoFoam=false" title="Coalesce Fusion Sandbox Walkthrough Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="840px" height="460px"></iframe>
@@ -40,25 +40,25 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
 
 5. Click **Complete Registration** and note your temporary email and password.   
    
-   💡 *Accounts remain active for 7 days, but you must use the temporary email / password provided to you after registration to access the account. Store this on a notepad doc or password manager for the week.*	  
+   💡 *Accounts remain active for 7 days, but you must use the temporary email / password provided to you after registration to access the account. Store this in a notepad doc or password manager for the week.*	  
 
 6. Click **Login**  
 
 ## Section 2: Developer productivity with Fusion
 
-1. In the left navigation, click **Select a project** and choose **Mom’s Flower Shop**
+1. In the dbt platform left-hand navigation, click **Select a project** and choose **Mom’s Flower Shop**
 
-2. In the left hand navigation, click on **Studio** to open the <Constant name="fusion"/>-enabled IDE.
+2. In the left-hand navigation, click on **Studio** to open the <Constant name="fusion"/>-enabled IDE.
 
 3. An in-app guide will appear for quick resources and videos about <Constant name="fusion"/>’s new capabilities. Please take a few minutes to review these resources\!
 
 4. From the File Explorer in **Studio,** open the `models/staging/stg\_flower\_orders.sql` file.
 
-5. Use **Preview CTE** above the first CTE to preview data for a just this CTE (`raw\_flower\_orders`) . 
+5. Use **Preview CTE** above the first CTE to preview data for just this CTE (`raw\_flower\_orders`) . 
    
    💡 *<Constant name="fusion"/> enables modular previews for faster debugging.*  
 
-6. Hover the asterisk in `select \*` to see column names and data types of available columns.   
+6. Hover over the asterisk in `select \*` to see column names and data types of available columns.   
    
 <Lightbox src="/img/guides/coalesce-fusion-qs/select-star.png" width="90%" title="💡 Fusion provides live metadata and column insights as you code." />
 
@@ -72,9 +72,9 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
 
 1. From the left navigation, go to **Orchestration → Environments → Production**.
 
-2. Navigate to **Prod Job (State Aware Ochestration Enabled)** at the bottom of the page.
+2. Navigate to **Prod Job (State Aware Orchestration Enabled)** at the bottom of the page.
 
-3. Open **Settings** to validate that State-aware ochestration is already enabled for this job.
+3. Open **Settings** to validate that State-aware orchestration is already enabled for this job.
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/toggle-sao.png" width="90%" title="SAO is easily enabled through the familiar job configurations view." />
 
@@ -90,11 +90,11 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
     
     All models should show **Success**, since this is the first full run of the project. 
 
-7. Run the job again by clicking **Run now** again to see the power of State aware ochestrationat work\!
+7. Run the job again by clicking **Run now** again to see the power of State aware orchestration at work\!
 
 8. When the job completes, open the **Lineage** tab to see **Reuse** statuses appear on most models. We have new flower orders, so the `stg\_flower\_orders` and downstream models are rerun (status: success), while the rest of the models are reused, since there is no new data.   
    
-   💡 *<Constant name="fusion"/>  automatically skips models without fresh data, saving pipeline execution time and avoiding data platform costs*
+   💡 *<Constant name="fusion"/> automatically skips models without fresh data, saving pipeline execution time and avoiding data platform costs*
 
 9. On the **Prod Job (State Aware Orchestration Enabled)** page, click on **Models** underneath the Overview section.
 
@@ -104,9 +104,9 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
 
 ## Section 4: Learn More
 
-Stop by the **dbt Booth in the Discovery Hall** to learn more about the <Constant name="fusion"/> -powered features mentioned in the keynote, witness the magic firsthand at any of our demo pods, and dive deeper into use cases, success stories, and migration details through ongoing lightning talks.
+Stop by the **dbt Booth in the Discovery Hall** to learn more about the <Constant name="fusion"/>-powered features mentioned in the keynote, witness the magic firsthand at any of our demo pods, and dive deeper into use cases, success stories, and migration details through ongoing lightning talks.
 
-Learn more about the <Constant name="fusion_engine"/>  in the docs: [About Fusion](https://docs.getdbt.com/docs/fusion/about-fusion)
+Learn more about the <Constant name="fusion_engine"/> in the docs: [About Fusion](https://docs.getdbt.com/docs/fusion/about-fusion)
 
 Continue learning dbt at [learn.getdbt.com](http://learn.getdbt.com)
 
