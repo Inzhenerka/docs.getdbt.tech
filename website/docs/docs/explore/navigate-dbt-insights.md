@@ -57,7 +57,7 @@ To create a query in Query Builder:
     - Click **Add Order by** to select how you want to sort the results of your query. 
     - Click **Add Limit**, select the amount of results you want to see when you run your query. If left blank, you will get all the results. 
 4. Click **Run** to run your query.
-    Results are available in the **Data** tab. You can see the SQL code generated in the **Chart** tab.
+    Results are available in the **Data** tab. You can see the SQL code generated in the **Details** tab.
 
     <DocCarousel slidesPerView={1}>
 
@@ -65,7 +65,7 @@ To create a query in Query Builder:
 
     <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="Results are displayed in the Data tab" />
 
-    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-sql.png" title="The generated SQL code in the Chart tab" />
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-sql.png" title="The generated SQL code in the Details tab" />
 
     </DocCarousel>
 
