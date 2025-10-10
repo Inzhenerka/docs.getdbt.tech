@@ -109,4 +109,4 @@ Stop by the **dbt Booth in the Discovery Hall** to learn more about the <Constan
 Learn more about the <Constant name="fusion_engine"/> in the docs: [About Fusion](https://docs.getdbt.com/docs/fusion/about-fusion)
 
 Continue learning dbt at [learn.getdbt.com](http://learn.getdbt.com)
-
+Learn about [Coalesce](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) &mdash; the premier analytics engineering conference where data leaders and practitioners reimagine tools and reshape the future of data and AI.
