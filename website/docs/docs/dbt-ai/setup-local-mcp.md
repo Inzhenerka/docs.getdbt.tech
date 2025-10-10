@@ -5,6 +5,8 @@ description: "Learn how to set up the local dbt-mcp server"
 id: "setup-local-mcp"
 ---
 
+import MCPExample from '/snippets/_mcp-config-files.md';
+
 # Set up local MCP <Lifecycle status="beta" />
 
 [The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine. Set up the local dbt MCP server with the following directions: 
@@ -50,15 +52,15 @@ id: "setup-local-mcp"
       | --- | --- | --- | --- |
       | DBT_PROJECT_DIR | Required | The path to where the repository of your dbt project is hosted locally.  | /Users/myname/reponame |
       | DBT_PATH | Required | The path to your dbt executable (Core/Fusion/Cloud CLI). You can find your dbt executable by running `which dbt` | /opt/homebrew/bin/dbt |
-      | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 10 seconds. |
+      | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
 
-      You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](https://docs.getdbt.com/reference/global-configs/about-global-configs#available-flags).
+      You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
 
       `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command.
       You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
     </TabItem>
 
-    <TabItem value="Disabling tools">  
+    <TabItem value="Disabling tools">
       You can disable the following tool access on the local `dbt-mcp`:
 
       | Name                     | Default | Description                                                                     |
@@ -68,6 +70,7 @@ id: "setup-local-mcp"
       | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
       | `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Admininistrative API MCP tools                         |
       | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
+      | `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package) |
       | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
     </TabItem>
 
@@ -107,3 +110,19 @@ id: "setup-local-mcp"
     ```
 
     `<path-to-.env-file>` is where you saved the `.env` file from the Setup step.
+
+## dbt platform authentication <Lifecycle status="managed, managed_plus" />
+
+The local MCP server integrates with your existing cloud-based dbt platform OAuth integration with a simple configuration file in the client. Reference the following sample configurations (configs may vary depending on the client):
+
+:::info static subdomains
+
+Only accounts with static subdomains (for example, abc123.us1.dbt.com) can use OAuth with MCP servers. All accounts are in the process of being migrated to static subdomains by Dec 2025. Please contact support for more information.
+
+:::
+
+<MCPExample />
+
+Once configured, your session connects to the dbt platform account, starts the OAuth authentication workflow, and then opens your account where you can select the project you want to reference.
+
+<Lightbox src="/img/mcp/select-project.png" width="60%" title="Select your dbt platform project"/>
