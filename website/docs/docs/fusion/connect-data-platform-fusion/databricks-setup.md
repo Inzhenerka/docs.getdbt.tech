@@ -15,6 +15,8 @@ meta:
   config_page: '/reference/resource-configs/databricks-configs'
 --- 
 
+# Databricks setup <Lifecycle status='preview' />
+
 You can configure the Databricks adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The Databricks adapter for Fusion supports the following [authentication methods](#supported-authentication-types):

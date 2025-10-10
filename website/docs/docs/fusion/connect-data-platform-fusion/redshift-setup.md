@@ -15,6 +15,8 @@ meta:
   config_page: '/reference/resource-configs-fusion/redshift-configs'
 ---
 
+# Redshift setup <Lifecycle status='preview' />
+
 You can configure the Redshift adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The Redshift adapter for Fusion supports the following [authentication methods](#supported-authentication-types):

@@ -15,6 +15,8 @@ meta:
   config_page: '/reference/resource-configs/bigquery-configs'
 ---
 
+# BigQuery setup <Lifecycle status='preview' />
+
 You can configure the BigQuery adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The BigQuery adapter for Fusion supports the following [authentication methods](#supported-authentication-types):

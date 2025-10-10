@@ -15,6 +15,8 @@ meta:
   config_page: '/reference/resource-configs/snowflake-configs'
 ---
 
+# Snowflake setup <Lifecycle status='preview' />
+
 You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
 
 The Snowflake adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
