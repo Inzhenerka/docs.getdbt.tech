@@ -22,7 +22,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
   Organizations that use network allow-listing should add `YOUR_ACCESS_URL.dbt.com` to their allow list (for example, if your access URL is `us1.dbt.com`, add `us1.dbt.com` to your allow list). 
     
-  All OAuth, Git, and public API integrations will continue to work with the previous domain. View the updated access URL in dbt platform's **Account settings** page.
+  All OAuth, Git, and public API integrations will continue to work with the previous domain. View the updated access URL in <Constant name="dbt_platform" />'s **Account settings** page.
 
   For questions, contact [support@getdbt.com](mailto:support@getdbt.com).
 
