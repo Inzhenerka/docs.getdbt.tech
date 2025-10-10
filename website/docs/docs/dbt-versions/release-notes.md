@@ -25,7 +25,7 @@ The following features are new or enhanced as part of [dbt's Coalesce analytics 
 
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
 
-- **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private Preview!
+- **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private preview!
   - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
   - **Private beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in Private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in one run.
   - **New**: To improve visibility into state‑aware orchestration and provide better control when you need to reset cached state, the following [UI enhancements](/docs/deploy/state-aware-interface) are introduced:
