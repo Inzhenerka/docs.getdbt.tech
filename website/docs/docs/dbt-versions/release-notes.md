@@ -17,6 +17,20 @@ pagination_prev: null
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
 ## October 2025
+
+
+### Coalesce 2025 announcements
+
+The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
+
+- **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
+
+- **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
+  - **Private beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time.
+  - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
+
+### Pre-Coalesce 
+
 - **Enhancement**:
   - **<Constant name="fusion" /> MCP tools** &mdash; Added <Constant name="fusion" /> tools that support `compile_sql` and `get_column_lineage` (Fusion-exclusive) for both [Remote](/docs/dbt-ai/about-mcp#fusion-tools-remote) and [Local](/docs/dbt-ai/about-mcp#fusion-tools-local) usage. Remote <Constant name="fusion" /> tools defer to your prod environment by default (set with `x-dbt-prod-environment-id`); you can disable deferral with `x-dbt-fusion-disable-defer=true`. Refer to [set up remote MCP](/docs/dbt-ai/setup-remote-mcp) for more info.
   - **Local MCP OAuth** &mdash; You can now authenticate the local dbt MCP server to the dbt platform with OAuth (supported docs for [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor), and [VS Code](/docs/dbt-ai/integrate-mcp-vscode)), reducing local secret management and standardizing setup. Refer to [dbt platform authentication](/docs/dbt-ai/setup-local-mcp#dbt-platform-authentication) for more information.

@@ -6,7 +6,7 @@ id: "state-aware-setup"
 tags: ['scheduler']
 ---
 
-# Setting up state-aware orchestration <Lifecycle status="beta,managed,managed_plus" />
+# Setting up state-aware orchestration <Lifecycle status="private_preview,managed,managed_plus" />
 
 <IntroText>
 
@@ -14,9 +14,9 @@ Set up state-aware orchestration to automatically determine which models to buil
 
 </IntroText>
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 ## Prerequisites
 

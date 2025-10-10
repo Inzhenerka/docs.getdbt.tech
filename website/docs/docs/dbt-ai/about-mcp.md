@@ -5,7 +5,7 @@ description: "Learn about the dbt MCP server"
 id: "about-mcp"
 ---
 
-# About dbt Model Context Protocol (MCP) <Lifecycle status="beta" />
+# About dbt Model Context Protocol (MCP)
 
 As AI becomes more deeply integrated into data workflows, dbt users need a seamless way to access and integrate dbt's structured metadata and execution context effectively. This page provides an overview of dbt's MCP Server, which exposes this context, supporting use cases such as conversational access to data, agent-driven automation of dbt workflows, and AI-assisted development.
 
@@ -26,7 +26,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 You can install dbt MCP locally or remotely:
 
-- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
+- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp) <Lifecycle status="beta" />
 - [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
 
 ## Available Tools
