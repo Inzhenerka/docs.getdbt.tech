@@ -24,6 +24,10 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
 
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
+  - [About data platform connections](/docs/cloud/connect-data-platform/about-connections) lists all available <Constant name="dbt_platform" /> connections on Fusion and the supported authentication methods per connection. 
+- **New**: Fusion‑specific configuration is now available for BigQuery, Databricks, Redshift, and Snowflake. For more information, see [Connect Fusion to your data platform](/docs/fusion/connect-data-platform-fusion/profiles.yml).
+- **Alpha**: The `dbt-salesforce` adapter is available via the <Constant name="fusion_engine" /> CLI. Note that this connection is in the Alpha product stage and is not production-ready. For more information, see [Salesforce Data Cloud setup](/docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup).
+
 
 - **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private preview!
   - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
