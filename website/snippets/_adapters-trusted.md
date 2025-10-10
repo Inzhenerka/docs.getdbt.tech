@@ -106,7 +106,7 @@
 
 <Card
     title="Salesforce Data Cloud"
-    body="<ul><li><a href='/docs/core/connect-data-platform-fusion/salesforce-data-cloud-setup'>Install with dbt Fusion </a> </li></ul><br />"
+    body="<ul><li><a href='/docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup'>Install with dbt Fusion </a> </li></ul><br />"
     pills='["dbt Fusion"]'
     icon="salesforce"/>
 
