@@ -25,6 +25,15 @@ The following features are new or enhanced as part of [dbt's Coalesce analytics 
 
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
 
+- **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private preview!
+  - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
+  - **Private beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in Private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in a single query.
+  - **New**: To improve visibility into state‑aware orchestration and provide better control when you need to reset cached state, the following [UI enhancements](/docs/deploy/state-aware-interface) are introduced:
+    - **Models built and reused chart** on your **Account home**
+    - New charts in the **Overview** section of your job that display **Recent runs**, **Total run duration**, **Models built**, and **Models reused**
+    - A new structure to view logs grouped by models, with a **Reused** tab to quickly find reused models
+    - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
+    - **Clear cache** button on the **Environments** page to reset cached state when needed
 - **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
   - **Private beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time.
   - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
