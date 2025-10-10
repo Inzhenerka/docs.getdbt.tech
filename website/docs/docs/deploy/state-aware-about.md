@@ -61,7 +61,7 @@ Efficient testing in state-aware orchestration reduces warehouse costs by avoidi
 The following tests can be reused when Efficient tesing is enabled:
 - [`unique`](/reference/resource-properties/data-tests#unique)
 - [`not_null`](/reference/resource-properties/data-tests#not_null)
-- [`relationships`](https://docs.getdbt.com/reference/resource-properties/data-tests#relationships)
+- [`accepted_values`](/reference/resource-properties/data-tests#accepted_values)
 
 ### Enabling Efficient testing
 
@@ -69,7 +69,7 @@ To enable Efficient testing:
 
 1. From the main menu, go to **Orchestration** > **Jobs**. 
 2. Select your job. Go to your job settings and click **Edit**. 
-3. Under **Enable Fusion cost optimization features**, go to **More options**.
+3. Under **Enable Fusion cost optimization features**, expand **More options**.
 4. Select **Efficient testing**. This feature is disabled by default.
 5. Click **Save**.
 
