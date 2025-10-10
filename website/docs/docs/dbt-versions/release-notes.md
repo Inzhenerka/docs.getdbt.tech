@@ -25,6 +25,10 @@ The following features are new or enhanced as part of dbt's Coalesce event from 
 
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
 
+- **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
+  - **Private beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time.
+  - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
+
 ### Pre-Coalesce 
 
 - **Enhancement**:

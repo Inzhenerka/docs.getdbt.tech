@@ -8,7 +8,7 @@ pagination_prev: "docs/explore/model-query-history"
 pagination_next: "docs/explore/navigate-dbt-insights"
 ---
 
-# About dbt Insights <Lifecycle status="preview,managed,managed_plus" />
+# About dbt Insights <Lifecycle status="managed,managed_plus" />
 
 <IntroText>
 Learn how to query data with <Constant name="query_page" /> and view documentation in <Constant name="explorer" />.
