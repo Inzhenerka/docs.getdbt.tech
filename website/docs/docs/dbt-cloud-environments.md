@@ -55,6 +55,10 @@ import DeleteEnvironment from '/snippets/_delete-environment.md';
 
 <DeleteEnvironment />
 
+import JobMonitoring from '/snippets/_in-progress-top-jobs.md';
+
+<JobMonitoring />
+
 ## Environment settings history
 
 You can view historical environment settings changes over the last 90 days.

@@ -27,8 +27,6 @@ The following features are new or enhanced as part of [dbt's Coalesce analytics 
   - [About data platform connections](/docs/cloud/connect-data-platform/about-connections) lists all available <Constant name="dbt_platform" /> connections on Fusion and the supported authentication methods per connection. 
 - **New**: Fusion‑specific configuration is now available for BigQuery, Databricks, Redshift, and Snowflake. For more information, see [Connect Fusion to your data platform](/docs/fusion/connect-data-platform-fusion/profiles.yml).
 - **Alpha**: The `dbt-salesforce` adapter is available via the <Constant name="fusion_engine" /> CLI. Note that this connection is in the Alpha product stage and is not production-ready. For more information, see [Salesforce Data Cloud setup](/docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup).
-
-
 - **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private preview!
   - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
   - **Private beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in Private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in a single query.
