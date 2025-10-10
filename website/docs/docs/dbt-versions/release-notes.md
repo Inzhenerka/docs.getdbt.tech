@@ -21,7 +21,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ### Coalesce 2025 announcements
 
-The following features are new or enhanced as part of dbt's Coalesce event from October 13-16, 2025:
+The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
 
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
 
