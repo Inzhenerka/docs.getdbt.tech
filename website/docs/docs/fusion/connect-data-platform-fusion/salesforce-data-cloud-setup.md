@@ -59,9 +59,9 @@ company-name:
 
 | Profile field | Required | Description | Example |
 | --- | --- | --- | --- |
-| `method` | Yes | Authentication Method. Currently, only `jwt_bearer` supported. | jwt_bearer |
+| `method` | Yes | Authentication Method. Currently, only `jwt_bearer` supported. | `jwt_bearer` |
 | `client_id` | Yes | This is the `Consumer Key` from your connected app secrets. |  |
-| `private_key_path` | Yes | File path of the `server.key` file in your computer. | /Users/dbt_user/Documents/server.key |
+| `private_key_path` | Yes | File path of the `server.key` file in your computer. | `/Users/dbt_user/Documents/server.key` |
 | `login_url` | Yes | Login URL of the Salesforce instance.  | [https://login.salesforce.com](https://login.salesforce.com/) |
 | `username` | Yes | Username on the Data Cloud Instance. | dbt_user@dbtlabs.com |
 
