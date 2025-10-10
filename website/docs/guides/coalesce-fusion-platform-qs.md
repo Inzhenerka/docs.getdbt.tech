@@ -66,7 +66,7 @@ Let's get started with access to a <Constant name="fusion"/> sandbox!
 
 <Lightbox src="/img/guides/coalesce-fusion-qs/sql-error.png" width="90%" title="Fusion can detect your SQL errors in real-time while you code and before you send it to your data platform." />
 
-    Please note: any file edits stay local to your Studio IDE; no feature branches are permitted for this sandbox account.
+    Please note: any file edits stay local to your <Constant name="cloud_ide"/>; no feature branches are permitted for this sandbox account.
 
 ## Section 3: State-aware orchestration
 
