@@ -18,23 +18,31 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## October 2025
 
+
 ### Coalesce 2025 announcements
 
-The following features are new or enhanced as part of dbt's Coalesce event from October 13-16, 2025:
+The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
 
-- **Preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in Preview.
-- **Private Preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private Preview!
+- **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
+
+- **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in Private Preview!
   - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
-  - **Private Beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in Private Beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in one run.
+  - **Private beta**: The [Efficient testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in Private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in one run.
   - **New**: To improve visibility into state‑aware orchestration and provide better control when you need to reset cached state, the following [UI enhancements](/docs/deploy/state-aware-interface) are introduced:
     - **Models built and reused chart** on your **Account home**
     - New charts in the **Overview** section of your job that display **Recent runs**, **Total run duration**, **Models built**, and **Models reused**
     - A new structure to view logs grouped by models, with a **Reused** tab to quickly find reused models
     - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
     - **Clear cache** button on the **Environments** page to reset cached state when needed
+- **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
+  - **Private beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time.
+  - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
 
 ### Pre-Coalesce 
 
+- **Enhancement**:
+  - **<Constant name="fusion" /> MCP tools** &mdash; Added <Constant name="fusion" /> tools that support `compile_sql` and `get_column_lineage` (Fusion-exclusive) for both [Remote](/docs/dbt-ai/about-mcp#fusion-tools-remote) and [Local](/docs/dbt-ai/about-mcp#fusion-tools-local) usage. Remote <Constant name="fusion" /> tools defer to your prod environment by default (set with `x-dbt-prod-environment-id`); you can disable deferral with `x-dbt-fusion-disable-defer=true`. Refer to [set up remote MCP](/docs/dbt-ai/setup-remote-mcp) for more info.
+  - **Local MCP OAuth** &mdash; You can now authenticate the local dbt MCP server to the dbt platform with OAuth (supported docs for [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor), and [VS Code](/docs/dbt-ai/integrate-mcp-vscode)), reducing local secret management and standardizing setup. Refer to [dbt platform authentication](/docs/dbt-ai/setup-local-mcp#dbt-platform-authentication) for more information.
 - **Behavior change**: The CodeGenCodeLens feature for creating models from your sources with a click of a button has been temporarily removed from the <Constant name="cloud_ide" /> due to compatibility issues. We plan to reintroduce this feature in the near future for both the IDE and the VS Code extension.
 
 ## September 2025
