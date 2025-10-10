@@ -26,9 +26,6 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
   For questions, contact [support@getdbt.com](mailto:support@getdbt.com).
 
-- **Behavior change**: US multi-tenant (US MT) accounts only — Over the next few weeks, account URLs will transition from `cloud.getdbt.com` to dedicated domains on `dbt.com` (for example, `us1.dbt.com`). You’ll be automatically redirected—no action is required. If your organization uses network allow-listing, add `us1.dbt.com`. All OAuth, Git (including GitLab), and public API integrations will continue to work with the previous domain. You can view your new account URL in [Account settings](/docs/cloud/account-settings). A separate release note will be published for the AU/EMEA multi-tenant rollout.
-
-
 - **Enhancement**:
   - **<Constant name="fusion" /> MCP tools** &mdash; Added <Constant name="fusion" /> tools that support `compile_sql` and `get_column_lineage` (Fusion-exclusive) for both [Remote](/docs/dbt-ai/about-mcp#fusion-tools-remote) and [Local](/docs/dbt-ai/about-mcp#fusion-tools-local) usage. Remote <Constant name="fusion" /> tools defer to your prod environment by default (set with `x-dbt-prod-environment-id`); you can disable deferral with `x-dbt-fusion-disable-defer=true`. Refer to [set up remote MCP](/docs/dbt-ai/setup-remote-mcp) for more info.
   - **Local MCP OAuth** &mdash; You can now authenticate the local dbt MCP server to the dbt platform with OAuth (supported docs for [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor), and [VS Code](/docs/dbt-ai/integrate-mcp-vscode)), reducing local secret management and standardizing setup. Refer to [dbt platform authentication](/docs/dbt-ai/setup-local-mcp#dbt-platform-authentication) for more information.
