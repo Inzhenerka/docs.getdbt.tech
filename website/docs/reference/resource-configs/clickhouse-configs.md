@@ -28,10 +28,13 @@ models:
   <resource-path>:
     +materialized: view
 ```
+
 </File>
 </TabItem>
+
 <TabItem value="config">
 <File name='models/<model_name>.sql'>
+
 ```jinja
 {{ config(materialized = "view") }}
 ```
@@ -65,10 +68,13 @@ models:
     +engine: <engine-type>
     +partition_by: [ <column-name>, ... ]
 ```
+
 </File>
 </TabItem>
+
 <TabItem value="config">
 <File name='models/<model_name>.sql'>
+
 ```jinja
 {{ config(
     materialized = "table",
@@ -109,6 +115,7 @@ values={[
 { label: 'Config block', value: 'config', },
 ]}
 >
+
 <TabItem value="project-yaml">
 <File name='dbt_project.yml'>
 
@@ -122,10 +129,13 @@ models:
     +unique_key: [ <column-name>, ... ]
     +inserts_only: [ True|False ]
 ```
+
 </File>
 </TabItem>
+
 <TabItem value="config">
 <File name='models/<model_name>.sql'>
+
 ```jinja
 {{ config(
     materialized = "incremental",
@@ -154,7 +164,7 @@ models:
 | `partition_by`           | A partition is a logical combination of records in a table by a specified criterion. The partition key can be any expression from the table columns.                                                                                                              | Optional                                                                             |
 | `inserts_only`           | (Deprecated, see the `append` materialization strategy).  If True, incremental updates will be inserted directly to the target incremental table without creating an intermediate table.                                                                          | Optional (default: `False`)                                                          |
 | `incremental_strategy`   | The strategy to use for incremental materialization.  `delete+insert`, `append` and `insert_overwrite` (experimental) are supported.  For additional details on strategies, see [here](https://github.com/ClickHouse/dbt-clickhouse#incremental-model-strategies) | Optional (default: 'default')                                                        |
-| `incremental_predicates` | Incremental predicate clause to be applied to `delete+insert` materializations                                                                                                                                                                                    | Optional  
+| `incremental_predicates` | Incremental predicate clause to be applied to `delete+insert` materializations                                                                                                                                                                                    | Optional                                                                             |
 
 The full list of configurations can be found in the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
 
