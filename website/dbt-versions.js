@@ -78,10 +78,6 @@ exports.versionedPages = [
     page: "reference/global-configs/indirect-selection",
     firstVersion: "1.8",
   },
-  {
-    page: "docs/build/udfs",
-    firstVersion: "1.11",
-  },
 ];
 
 /**
@@ -94,10 +90,5 @@ exports.versionedPages = [
  * @property {string} firstVersion The first version the category is visible in the sidebar
  */
 exports.versionedCategories = [
-
-  {
-    category: "For functions",
-    firstVersion: "1.11",
-  },
 
 ];
