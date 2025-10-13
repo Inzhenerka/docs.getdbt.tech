@@ -5,9 +5,13 @@ The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsI
 
 To use the extension, you must meet the following prerequisites:
 
-- <Constant name="fusion_engine" /> &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
-- Editor &mdash; You're using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
-- Operating systems &mdash; You're using a macOS, Windows, or Linux-based computer. 
+| Prerequisite | Details |
+| --- | --- |
+| **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
+|  | _Registration_ &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.<li> _Don't have a dbt account?_ Follow the VS Code “get started” flow to register and verify your email.</li><li>_Returning user?_ If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you cannot log into the account associated with your email or if it's locked, reach out to dbt Support to have it unlocked or reset before logging in.</li> |
+| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<li>dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.</li><li>Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> — you  don't need a <Constant name="dbt_platform" /> project to use the extension.</li> |
+| **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
+| **Operating systems** | macOS, Windows, or Linux-based computer. |
 
 ## Installation instructions
 
