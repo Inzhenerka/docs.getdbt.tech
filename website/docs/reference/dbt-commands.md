@@ -54,7 +54,7 @@ Some commands are not yet supported in the <Constant name="fusion_engine" /> or 
 | [list](/reference/commands/list) | Lists resources defined in a dbt project |  ✅ | All tools <br /> All [supported versions](/docs/dbt-versions/core) |
 | [parse](/reference/commands/parse) | Parses a project and writes detailed timing info |  ✅ | All tools <br /> All [supported versions](/docs/dbt-versions/core) |
 | reattach | Reattaches to the most recent invocation to retrieve logs and artifacts. |   N/A | <Constant name="cloud_cli" /> <br /> Requires [dbt v1.6 or higher](/docs/dbt-versions/core) |
-| [retry](/reference/commands/retry) | Retry the last run `dbt` command from the point of failure |  ❌ | All tools <br /> Requires [dbt v1.6 or higher](/docs/dbt-versions/core)<br /> <Constant name="fusion" /> not yet supported |
+| [retry](/reference/commands/retry) | Retry the last run `dbt` command from the point of failure |  ❌ | All tools <br /> Requires [dbt v1.6 or higher](/docs/dbt-versions/core)<br /> Not yet supported in <Constant name="fusion" /> |
 | [run](/reference/commands/run) | Runs the models in a project |   ❌ | All tools <br /> All [supported versions](/docs/dbt-versions/core) |
 | [run-operation](/reference/commands/run-operation) | Invokes a macro, including running arbitrary maintenance SQL against the database | ❌ | All tools <br /> All [supported versions](/docs/dbt-versions/core) |
 | [seed](/reference/commands/seed) | Loads CSV files into the database |  ❌ | All tools <br /> All [supported versions](/docs/dbt-versions/core) |
