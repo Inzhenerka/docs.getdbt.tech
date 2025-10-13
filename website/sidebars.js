@@ -248,6 +248,19 @@ const sidebarSettings = {
             },
             {
               type: "category",
+              label: "Connect Fusion to your data platform",
+              link: {
+                type: "doc",
+                id: "docs/fusion/connect-data-platform-fusion/profiles.yml",
+              },
+              items: [
+                "docs/fusion/connect-data-platform-fusion/profiles.yml",
+                "docs/fusion/connect-data-platform-fusion/connection-profiles",
+                "docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup",
+              ],
+            },
+            {
+              type: "category",
               label: "Install dbt Core",
               link: { type: "doc", id: "docs/core/installation-overview" },
               items: [
@@ -433,6 +446,7 @@ const sidebarSettings = {
             "docs/build/snapshots",
             "docs/build/seeds",
             "docs/build/jinja-macros",
+            "docs/build/udfs",
             "docs/build/sources",
             "docs/build/exposures",
             "docs/build/groups",
@@ -1081,6 +1095,7 @@ const sidebarSettings = {
         "reference/project-configs/config-version",
         "reference/project-configs/dispatch-config",
         "reference/project-configs/docs-paths",
+        "reference/project-configs/function-paths",
         "reference/project-configs/macro-paths",
         "reference/project-configs/name",
         "reference/project-configs/on-run-start-on-run-end",
@@ -1132,6 +1147,7 @@ const sidebarSettings = {
         "reference/resource-configs/snowflake-configs",
         "reference/resource-configs/trino-configs",
         "reference/resource-configs/starrocks-configs",
+        "reference/resource-configs/data-cloud-configs",
         "reference/resource-configs/teradata-configs",
         "reference/resource-configs/upsolver-configs",
         "reference/resource-configs/vertica-configs",
@@ -1321,6 +1337,18 @@ const sidebarSettings = {
           items: [
             "reference/macro-properties",
             "reference/resource-properties/arguments",
+          ],
+        },
+        {
+          type: "category",
+          label: "For functions",
+          link: { type: "doc", id: "reference/function-properties" },
+          items: [
+            "reference/function-properties",
+            "reference/function-configs",
+            "reference/resource-properties/type",
+            "reference/resource-properties/returns",
+            "reference/resource-properties/function-arguments",
           ],
         },
       ],
