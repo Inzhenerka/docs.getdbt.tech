@@ -9,6 +9,10 @@ id: "setup-remote-mcp"
 
 The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on the cloud-based dbt platform.
 
+import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
+
+<MCPCreditUsage />
+
 1. Ensure that you have [AI Features](https://docs.getdbt.com/docs/cloud/enable-dbt-copilot) turned on.
 2. Obtain the following information from dbt Platform:
 
