@@ -33,7 +33,7 @@ For information about selecting models on the command line, refer to [Model sele
 Commands with a ('❌') indicate write commands, commands with a ('✅') indicate read commands, and commands with a (N/A) indicate it's not relevant to the parallelization of dbt commands.
 
 :::info
-Some commands aren't yet supported in <Constant name="fusion" /> or have limited functionality. See the [Fusion supported features](/docs/fusion/supported-features) page for details.
+Some commands are not yet supported in the <Constant name="fusion_engine" /> or have limited functionality. See the [Fusion supported features](/docs/fusion/supported-features) page for details.
 :::
 
 
