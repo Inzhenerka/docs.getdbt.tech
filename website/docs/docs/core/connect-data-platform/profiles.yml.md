@@ -3,12 +3,11 @@ title: "About profiles.yml"
 description: "The dbt profiles.yml file contains the connection details for your data warehouse."
 id: profiles.yml
 ---
-
 import ProfilesYml from '/snippets/_profiles.yml.md';
 
-<ProfilesYml connect='set up connections' />
+<ProfilesYml />
 
 ## Related docs
 
-- [Install dbt Core](/docs/core/installation-overview)
-- [Connection profiles](/docs/core/connect-data-platform/connection-profiles)
+- [Install dbt Fusion engine](/docs/fusion/about-fusion-install)
+- [Connection profiles](/docs/fusion/connect-data-platform-fusion/connection-profiles)

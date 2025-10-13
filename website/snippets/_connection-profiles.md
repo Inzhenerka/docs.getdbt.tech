@@ -155,9 +155,9 @@ For more information, check out [using threads](/docs/running-a-dbt-project/usin
 The parent directory for `profiles.yml` is determined using the following precedence:
 
 1. `--profiles-dir` option
-1. `DBT_PROFILES_DIR` environment variable
-1. current working directory
-1. `~/.dbt/` directory
+2. `DBT_PROFILES_DIR` environment variable
+3. current working directory
+4. `~/.dbt/` directory
 
 To check the expected location of your `profiles.yml` file for your installation of dbt, you can run the following:
 
