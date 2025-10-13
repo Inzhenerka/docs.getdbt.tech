@@ -36,9 +36,9 @@ The following features are new or enhanced as part of [dbt's Coalesce analytics 
     - A new structure to view logs grouped by models, with a **Reused** tab to quickly find reused models
     - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
     - **Clear cache** button on the **Environments** page to reset cached state when needed
-- **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
-  - **Private beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time.
-  - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
+- **New**: [dbt <Constant name="query_page" />](/docs/explore/dbt-insights) is now generally available (GA)!
+  - **Private beta**: The [<Constant name="copilot" /> agent](/docs/explore/navigate-dbt-insights#dbt-copilot) is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. For more information, see [Analyze data with the Copilot agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-copilot-agent).
+  - **Beta**: dbt <Constant name="query_page" /> now has a [Query Builder](/docs/explore/navigate-dbt-insights#query-builder), where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
 
 ### Pre-Coalesce 
 
