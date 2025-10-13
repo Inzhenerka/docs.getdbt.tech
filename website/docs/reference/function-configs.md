@@ -8,6 +8,7 @@ meta:
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
+<VersionCallout version="1.11" /> 
 
 ## Available configurations
 ### Function-specific configurations
