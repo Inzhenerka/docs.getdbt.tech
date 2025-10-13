@@ -3,7 +3,7 @@ title: arguments (for functions)
 sidebar_label: "arguments"
 id: function-arguments
 ---
-
+<VersionCallout version="1.11" /> 
 import ArgumentsShared from '/snippets/_arguments-shared.md';
 
 <File name='functions/<filename>.yml'>
