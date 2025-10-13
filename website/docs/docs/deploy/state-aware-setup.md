@@ -59,7 +59,7 @@ To create a state-aware job:
 - **Execution settings** section:
      - **Commands**: By default, it includes the `dbt build` command. Click **Add command** to add more [commands](/docs/deploy/job-commands) that you want to be invoked when the job runs.
      - **Generate docs on run**: Enable this option if you want to [generate project docs](/docs/build/documentation) when this deploy job runs.
-     - **Force node selection**: Enable this option only if you want to rebuild nodes every with every job run and to ignore data freshness. Disable (uncheck the box) to allow state-aware orchestration.
+     - **Force node selection**: Enable this option only if you want to rebuild nodes every job run and to ignore data freshness. Disable (uncheck the box) to allow state-aware orchestration.
 - **Triggers** section:
     - **Run on schedule**: Run the deploy job on a set schedule.
       - **Timing**: Specify whether to [schedule](#schedule-days) the deploy job using **Intervals** that run the job every specified number of hours, **Specific hours** that run the job at specific times of day, or **Cron schedule** that run the job specified using [cron syntax](#cron-schedule).
