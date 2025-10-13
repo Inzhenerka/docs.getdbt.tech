@@ -121,6 +121,10 @@ A set of tools that leverage the <Constant name="fusion" /> engine for advanced 
 - `compile_sql`: Compiles a SQL statement in the context of the current project and environment.
 - `get_column_lineage`: <Constant name="fusion" /> exclusive! Get column lineage information across a project DAG for a specific column.
 
+import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
+
+<MCPCreditUsage />
+
 ### Fusion tools (Local)
 A set of tools that leverage the <Constant name="fusion" /> engine through a locally running <Constant name="fusion" /> Language Server Protocol (LSP) in VS Code or Cursor with the dbt VS Code extension.
 

@@ -2,6 +2,7 @@
 title: "BigQuery configurations"
 description: "Reference guide for Big Query configurations in dbt."
 id: "bigquery-configs"
+tags: ['BigQuery', 'dbt Fusion', 'dbt Core']
 ---
 
 <!----
