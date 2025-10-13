@@ -91,4 +91,9 @@ exports.versionedPages = [
  */
 exports.versionedCategories = [
 
+  {
+    category: "For functions",
+    firstVersion: "1.11",
+  },
+
 ];
