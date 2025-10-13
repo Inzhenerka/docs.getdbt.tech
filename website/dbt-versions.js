@@ -78,6 +78,10 @@ exports.versionedPages = [
     page: "reference/global-configs/indirect-selection",
     firstVersion: "1.8",
   },
+  {
+    page: "docs/build/udfs",
+    firstVersion: "1.11",
+  },
 ];
 
 /**
