@@ -653,6 +653,7 @@ const sidebarSettings = {
           items: [
             "docs/deploy/state-aware-about",
             "docs/deploy/state-aware-setup",
+            "docs/deploy/state-aware-interface",
           ],
         },
         {

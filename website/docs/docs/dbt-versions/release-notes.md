@@ -18,6 +18,19 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## October 2025
 
+
+### Coalesce 2025 announcements
+
+The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
+
+- **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
+
+- **New**: dbt <Constant name="query_page" /> is now generally available (GA)!
+  - **Private beta**: The <Constant name="copilot" /> agent is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time.
+  - **Beta**: dbt <Constant name="query_page" /> now has a Query Builder, where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
+
+### Pre-Coalesce 
+
 - **Behavior change**: <Constant name="dbt_platform" /> [access URLs](/docs/cloud/about-cloud/access-regions-ip-addresses) for accounts in the US multi-tenant (US MT) region are transitioning from `cloud.getdbt.com` to dedicated domains on `dbt.com` (for example, `us1.dbt.com`). Users will be automatically redirected, which means no action is required. EMEA and APAC MT accounts are not impacted by this change and will be updated by the end of November 2025.
 
   Organizations that use network allow-listing should add `YOUR_ACCESS_URL.dbt.com` to their allow list (for example, if your access URL is `ab123.us1.dbt.com`, add the entire domain `ab123.us1.dbt.com` to your allow list). 
