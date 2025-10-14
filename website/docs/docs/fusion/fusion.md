@@ -3,26 +3,34 @@ title: "The dbt Fusion engine"
 id: "fusion"
 description: "Fusion is the next-generation engine and development experience for dbt projects."
 pagination_next: "docs/fusion/about-fusion"
-pagination_prev: null
+pagination_prev: "docs/introduction"
 ---
 
-<Constant name="fusion" /> is the next-generation engine built on Rust, that powers development across <Constant name="core" />, the dbt platform, and the VS Code extension.
+<Constant name="fusion" /> is the next-generation engine built on Rust, that powers development across the <Constant name="dbt_platform" />,  <Constant name="core" />, and the VS Code extension.
 
-It’s faster, smarter, and more consistent — bringing static analysis, autocomplete, instant feedback to every dbt workflow, and a deeply integrated VS Code experience powered by a [Language Server Protocol (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server).
+It’s faster, smarter, and more consistent &mdash; bringing static analysis, autocomplete, instant feedback &mdash; to every dbt workflow, and a deeply integrated VS Code experience powered by a [Language Server Protocol (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server).
 
 ## Getting started
-If you're not sure where to begin, choose the best path that matches how you use or plan to use dbt.
+Fusion is integrated in many different ways across the dbt ecosystem &mdash; in the <Constant name="dbt_platform" />, in VS Code, or from <Constant name="core" />. All of these use the same next-generation Fusion engine, but the features and experience differ depending on where you develop.
 
-| If you are... | What to install or use | What happens | Learn more |
-| --- | --- | --- | --- |
-| Working in the dbt platform | Use <Constant name="cloud_ide" />, <Constant name="visual_editor" />, and more | <Constant name="fusion" /> powers compilation, jobs, and IDE sessions automatically | Learn more about [<Constant name="fusion" />  in the dbt platform](/docs/fusion/install-fusion) |
-| Developing in VS Code| Install the [dbt extension for VSCode](/docs/install-dbt-extension) and Fusion. Available to all <Constant name="core"/> or dbt platform users | Get autocomplete, inline errors, lineage, and model previews as you code | Learn more about the [dbt extension for VSCode](/docs/install-dbt-extension) |
-| Developing locally| Install the [Fusion CLI](/docs/fusion/install-fusion) | Get autocomplete, inline errors, lineage, and model previews as you code | Learn more about the [Fusion CLI](/docs/fusion/install-fusion) |
+### Where and how to use Fusion
 
+Fusion powers every way you work with dbt — in dbt Cloud, in VS Code, or from the command line.  
+All three use the same next-generation Fusion engine, but the features and experience differ depending on where you develop. If you're not sure where to begin, check out the table to see which option is best for you.
 
-- [Install the dbt extension for VSCode](/docs/install-dbt-extension) <Lifecycle status="preview" />
-- [Install the Fusion CLI](/docs/fusion/install-fusion) <Lifecycle status="preview" />
-- [Upgrade to the dbt platform](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) <Lifecycle status="beta" />
+| How you use dbt | What to use | Compatible with | What Fusion powers | Learn more |
+| --- | --- | --- | --- | --- |
+| <Constant name="dbt_platform" /> | [<Constant name="cloud_ide" />](/docs/cloud-ide) or [<Constant name="visual_editor" />](/docs/cloud/canvas)<br /> Fusion is built in automatically. | <Constant name="dbt_platform" /> <Constant name="core" /> projects | - Fast, reliable compilation, static analysis, validation, and job execution. <br /> - Visual and interactive features like autocomplete, inline errors, model previews, lineage, and instant feedback. | Learn more about [<Constant name="fusion" /> in the dbt platform](/docs/fusion/install-fusion) |
+| VS Code or Cursor |  [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) | <Constant name="dbt_platform" />  projects<br /> <Constant name="dbt_core" /> projects | Fast, reliable compilation, static analysis, validation, and job execution. <br /> Visual and interactive features like autocomplete, inline errors, model previews, lineage, and instant feedback. | Learn more about the [dbt extension for VSCode](/docs/install-dbt-extension) |
+| From the command line | [Fusion CLI](/docs/fusion/install-fusion-cli) Completely free to use (except for commercial competitors). | <Constant name="dbt_platform" />  projects<br /> <Constant name="core" />  projects | Performance-focused Fusion engine for `parse`, `compile`, `build`, `run`, and related commands. <br /> No visual features like autocomplete, inline errors, model previews, lineage, and instant feedback. | Learn more about the [Fusion CLI](/docs/fusion/install-fusion-cli) |
+
+---
+
+### Notes
+
+- 💡 **Fusion CLI is free** for all dbt users and organizations (unless competing directly with dbt Cloud).  
+- 🧠 **dbt Cloud and the VS Code extension** offer the richest Fusion experience, with visual and interactive features p
+
 
 ## How it works
 

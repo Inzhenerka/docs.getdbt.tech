@@ -1,9 +1,7 @@
 ---
-title: "About the dbt Fusion engine"
+title: "About Fusion"
 id: "about-fusion"
 description: "Fusion is the next-generation engine for dbt."
-pagination_next: null
-pagination_prev: null
 ---
 
 # About the dbt Fusion engine
