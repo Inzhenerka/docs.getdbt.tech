@@ -36,7 +36,7 @@ For example, you can configure your project so that <Constant name="cloud" /> sk
 
 Without configuring anything, <Constant name="cloud" />'s state-aware orchestration automatically knows to build your models either when the code has changed or if there’s any new data in a source (or upstream model in the case of [dbt Mesh](/docs/mesh/about-mesh)).
 
-## Efficient testing in state-aware orchestration <Lifecycle status="private beta" />
+## Efficient Testing in state-aware orchestration <Lifecycle status="private beta" />
 
 :::info Private beta feature
 State-aware orchestration features in the <Constant name="dbt_platform" /> are only available in Fusion, which is in private preview. Contact your account manager to enable Fusion in your account. 
@@ -51,26 +51,26 @@ Running dbt’s out-of-the-box [data tests](/docs/build/data-tests) (`unique`, `
 
 With Fusion, dbt gains an understanding of the SQL code based on the logical plan for the compiled code. dbt then can determine when a test must run again, or when a prior upstream test result can be reused.
 
-Efficient testing in state-aware orchestration reduces warehouse costs by avoiding redundant data tests and combining multiple tests into one run. This feature includes two optimizations:
+Efficient Testing in state-aware orchestration reduces warehouse costs by avoiding redundant data tests and combining multiple tests into one run. This feature includes two optimizations:
     
 - **Test reuse** &mdash; Tests are reused in cases where no logic in the code or no new data could have changed the test's outcome.
 - **Test aggregation** &mdash; When there are multiple tests on a model, dbt combines tests to run as a single query against the warehouse, rather than running separate queries for each test.
 
 ### Supported data tests
 
-The following tests can be reused when Efficient tesing is enabled:
+The following tests can be reused when Efficient Testing is enabled:
 - [`unique`](/reference/resource-properties/data-tests#unique)
 - [`not_null`](/reference/resource-properties/data-tests#not_null)
 - [`accepted_values`](/reference/resource-properties/data-tests#accepted_values)
 
-### Enabling Efficient testing
+### Enabling Efficient Testing
 
-To enable Efficient testing:
+To enable Efficient Testing:
 
 1. From the main menu, go to **Orchestration** > **Jobs**. 
 2. Select your job. Go to your job settings and click **Edit**. 
 3. Under **Enable Fusion cost optimization features**, expand **More options**.
-4. Select **Efficient testing**. This feature is disabled by default.
+4. Select **Efficient Testing**. This feature is disabled by default.
 5. Click **Save**.
 
 ### Example
@@ -98,7 +98,7 @@ select * from joined
 
 ### Limitation
 
-The following section lists some considerations when using Efficient testing in state-aware-orchestration:
+The following section lists some considerations when using Efficient Testing in state-aware-orchestration:
 
 - **Aggregated tests do not support custom configs**. Tests that include the following [custom config options](/reference/data-test-configs) will run individually rather than as part of the aggregated batch:
 
