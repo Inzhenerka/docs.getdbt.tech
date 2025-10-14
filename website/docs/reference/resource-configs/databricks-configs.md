@@ -8,9 +8,8 @@ tags: ['Databricks', 'dbt Fusion', 'dbt Core']
 
 When materializing a model as `table`, you may include several optional configs that are specific to the dbt-databricks plugin, in addition to the standard [model configs](/reference/model-configs).
 
-<VersionBlock firstVersion="1.9">
-
 dbt-databricks v1.9 adds support for the `table_format: iceberg` config. Try it now on the [<Constant name="cloud" /> "Latest" release track](/docs/dbt-versions/cloud-release-tracks). All other table configurations were also supported in 1.8.
+
 
 | Option    | Description| Required?     | Model support   | Example      |
 |-------------|--------|-----------|-----------------|---------------|
@@ -39,11 +38,8 @@ dbt-databricks v1.9 adds support for the `table_format: iceberg` config. Try it 
 In dbt-databricks v1.10, there are several new model configurations options gated behind the `use_materialization_v2` flag.
 For details, see the [documentation of Databricks behavior flags](/reference/global-configs/databricks-changes).
 
-</VersionBlock>
-
-<VersionBlock firstVersion="1.9">
-
 ### Python submission methods
+_Available in versions 1.9 or higher_
 
 In dbt-databricks v1.9 (try it now in [the <Constant name="cloud" /> "Latest" release track](/docs/dbt-versions/cloud-release-tracks)), you can use these four options for `submission_method`: 
 
@@ -140,11 +136,9 @@ models:
 
 </File>
 
-</VersionBlock>
-
-<VersionBlock firstVersion="1.10">
 
 ## Configuring columns
+_Available in versions 1.10 or higher_
 
 When materializing models of various types, you may include several optional column-level configs that are specific to the dbt-databricks plugin, in addition to the standard [column configs](/reference/resource-properties/columns). Support for column tags and column masks were added in dbt-databricks v1.10.4.
 
@@ -181,11 +175,8 @@ models:
 
 </File>
 
-</VersionBlock>
-
-<VersionBlock firstVersion="1.9">
-
 ## Incremental models
+_Available in versions 1.9 or higher_
 
 dbt-databricks plugin leans heavily on the [`incremental_strategy` config](/docs/build/incremental-strategy). This config tells the incremental materialization how to build models in runs beyond their first. It can be set to one of five values:
  - **`append`**: Insert new records without updating or overwriting any existing data.
@@ -195,8 +186,6 @@ dbt-databricks plugin leans heavily on the [`incremental_strategy` config](/docs
  - **`microbatch`** (Delta file format only): Implements the [microbatch strategy](/docs/build/incremental-microbatch) using `replace_where` with predicates generated based `event_time`.
  
 Each of these strategies has its pros and cons, which we'll discuss below. As with any model config, `incremental_strategy` may be specified in `dbt_project.yml` or within a model file's `config()` block.
-
-</VersionBlock>
 
 ### The `append` strategy
 
@@ -421,8 +410,6 @@ merge into analytics.merge_incremental as DBT_INTERNAL_DEST
 </TabItem>
 </Tabs>
 
-<VersionBlock firstVersion="1.9">
-
 Beginning with 1.9, `merge` behavior can be modified with the following additional configuration options:
 
 - `target_alias`, `source_alias`: Aliases for the target and source to allow you to describe your merge conditions more naturally.  These default to `DBT_INTERNAL_DEST` and `DBT_INTERNAL_SOURCE`, respectively.
@@ -536,8 +523,6 @@ when not matched by source
 </TabItem>
 </Tabs>
 
-</VersionBlock>
-
 ### The `replace_where` strategy
 
 The `replace_where` incremental strategy requires:
@@ -627,9 +612,10 @@ insert into analytics.replace_where_incremental
 </TabItem>
 </Tabs>
 
-<VersionBlock firstVersion="1.9">
 
 ### The `microbatch` strategy
+
+_Available in versions 1.9 or higher_
 
 The Databricks adapter implements the `microbatch` strategy using `replace_where`. Note the requirements and caution statements for `replace_where` above. For more information about this strategy, see the [microbatch reference page](/docs/build/incremental-microbatch).
 
@@ -701,8 +687,6 @@ insert into analytics.replace_where_incremental
 
 </TabItem>
 </Tabs>
-
-</VersionBlock>
 
 ## Python model configuration
 
@@ -841,7 +825,7 @@ compute:
 
 ### Specifying the compute for models
 
-As with many other configuaration options, you can specify the compute for a model in multiple ways, using `databricks_compute`.
+As with many other configuration options, you can specify the compute for a model in multiple ways, using `databricks_compute`.
 In your `dbt_project.yml`, the selected compute can be specified for all the models in a given directory:
 
 <File name='dbt_project.yml'>
@@ -917,9 +901,8 @@ Databricks adapter ... using compute resource <name of compute>.
 
 Materializing a python model requires execution of SQL as well as python.
 Specifically, if your python model is incremental, the current execution pattern involves executing python to create a staging table that is then merged into your target table using SQL.
-<VersionBlock firstVersion="1.9">
 The python code needs to run on an all purpose cluster (or serverless cluster, see [Python Submission Methods](#python-submission-methods)), while the SQL code can run on an all purpose cluster or a SQL Warehouse.
-</VersionBlock>
+
 When you specify your `databricks_compute` for a python model, you are currently only specifying which compute to use when running the model-specific SQL.
 If you wish to use a different compute for executing the python itself, you must specify an alternate compute in the config for the model.
 For example:
@@ -1035,7 +1018,7 @@ select * from {{ ref('my_seed') }}
 
 </File>
 
-### Configuration Details
+### Configuration details
 
 #### partition_by
 `partition_by` works the same as for views and tables, i.e. can be a single column, or an array of columns to partition by.

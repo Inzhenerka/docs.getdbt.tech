@@ -3,6 +3,7 @@ title: type
 sidebar_label: "type"
 id: type
 ---
+<VersionCallout version="1.11" /> 
 
 <File name='functions/<filename>.yml'>
 
