@@ -6,11 +6,11 @@ id: install-fusion
 
 # About Fusion local installation <Lifecycle status="preview" />
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 <VersionBlock lastVersion="1.99">
 
-<FusionBeta />
+<FusionLifecycle />
 
 </VersionBlock>
 
