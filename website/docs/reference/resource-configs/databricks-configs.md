@@ -1,6 +1,7 @@
 ---
 title: "Databricks configurations"
 id: "databricks-configs"
+tags: ['Databricks', 'dbt Fusion', 'dbt Core']
 ---
 
 ## Configuring tables
