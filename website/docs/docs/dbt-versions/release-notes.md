@@ -16,6 +16,21 @@ pagination_prev: null
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## October 2025
+
+- **Behavior change**: <Constant name="dbt_platform" /> [access URLs](/docs/cloud/about-cloud/access-regions-ip-addresses) for accounts in the US multi-tenant (US MT) region are transitioning from `cloud.getdbt.com` to dedicated domains on `dbt.com` (for example, `us1.dbt.com`). Users will be automatically redirected, which means no action is required. EMEA and APAC MT accounts are not impacted by this change and will be updated by the end of November 2025.
+
+  Organizations that use network allow-listing should add `YOUR_ACCESS_URL.dbt.com` to their allow list (for example, if your access URL is `ab123.us1.dbt.com`, add the entire domain `ab123.us1.dbt.com` to your allow list). 
+    
+  All OAuth, Git, and public API integrations will continue to work with the previous domain. View the updated access URL in <Constant name="dbt_platform" />'s **Account settings** page.
+
+  For questions, contact [support@getdbt.com](mailto:support@getdbt.com).
+
+- **Enhancement**:
+  - **<Constant name="fusion" /> MCP tools** &mdash; Added <Constant name="fusion" /> tools that support `compile_sql` and `get_column_lineage` (Fusion-exclusive) for both [Remote](/docs/dbt-ai/about-mcp#fusion-tools-remote) and [Local](/docs/dbt-ai/about-mcp#fusion-tools-local) usage. Remote <Constant name="fusion" /> tools defer to your prod environment by default (set with `x-dbt-prod-environment-id`); you can disable deferral with `x-dbt-fusion-disable-defer=true`. Refer to [set up remote MCP](/docs/dbt-ai/setup-remote-mcp) for more info.
+  - **Local MCP OAuth** &mdash; You can now authenticate the local dbt MCP server to the dbt platform with OAuth (supported docs for [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor), and [VS Code](/docs/dbt-ai/integrate-mcp-vscode)), reducing local secret management and standardizing setup. Refer to [dbt platform authentication](/docs/dbt-ai/setup-local-mcp#dbt-platform-authentication) for more information.
+- **Behavior change**: The CodeGenCodeLens feature for creating models from your sources with a click of a button has been temporarily removed from the <Constant name="cloud_ide" /> due to compatibility issues. We plan to reintroduce this feature in the near future for both the IDE and the VS Code extension.
+
 ## September 2025
 
 - **Fix**: Improved how [MetricFlow](/docs/build/about-metricflow) handles [offset metrics](/docs/build/derived) for more accurate results when querying time-based data. MetricFlow now joins data _after_ aggregation when the query grain matches the offset grain. Previously, when querying offset metrics, the offset join was applied _before_ aggregation, which could exclude some values from the total time period.

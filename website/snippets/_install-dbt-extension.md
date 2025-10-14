@@ -5,9 +5,13 @@ The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsI
 
 To use the extension, you must meet the following prerequisites:
 
-- <Constant name="fusion_engine" /> &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
-- Editor &mdash; You're using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
-- Operating systems &mdash; You're using a macOS, Windows, or Linux-based computer. 
+| Prerequisite | Details |
+| --- | --- |
+| **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
+|  | _Registration_ &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.<br /><br /> ⁃ _Don't have a dbt account?_ Follow the VS Code “get started” flow to register and verify your email.<br /><br /> ⁃ _Returning user?_ If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you cannot log into the account associated with your email or if it's locked, reach out to dbt Support to have it unlocked or reset before logging in. |
+| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
+| **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
+| **Operating systems** | macOS, Windows, or Linux-based computer. |
 
 ## Installation instructions
 
@@ -75,6 +79,9 @@ This will start the upgrade tool and guide you through the Fusion upgrade with a
 - **Ready to run a dbtf debug?** (If there is an existing `profiles.yml` file): Validates that your project is configured correctly and can connect to your data warehouse.
 - **Ready to run a dbtf parse?**: Your dbt project will be parsed to check for compatibility with <Constant name="fusion" />.
     - If any issues are encountered during the parsing, you'll be given the option to run the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) tool to resolve the errors. If you opt to not run the tool during the upgrade processes, you can always run it later or manually fix any errors. However, the upgrade tool cannot continue until the errors are resolved.
+        :::tip AI Agents
+        There are cases where dbt-autofix may not resolve all errors and requires manual intervention. For those cases, the dbt-autofix tool provides an [AI Agents.md](https://github.com/dbt-labs/dbt-autofix/blob/main/AGENTS.md) file to enable AI agents to help with migration work after dbt-autofix has completed its part.
+        :::
 - **Ready to run a ‘dbtf compile -static-analysis off’?** (Only runs once the parse passes): Compiles your project without any static analysis, mimicking dbt Core. This compile only renders Jinja into SQL, so <Constant name="fusion" />'s advanced SQL comprehension is temporarily disabled. 
 - **Ready to run a ‘dbtf compile’?**: Compiles your project with full <Constant name="fusion" /> static analysis. It checks that your SQL code is valid in the context of your warehouse's tables and columns. 
 
