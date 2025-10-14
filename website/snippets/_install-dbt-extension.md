@@ -174,9 +174,17 @@ Note: It is possible to "hide" status bar items in VS Code. Double-check if the 
 
 #### Missing dbt LSP features
 
-If you are not seeing dbt LSP features in your editor, first consult the general troubleshooting steps above. If you have confirmed that the dbt extension is installed correctly, but you still do not see dbt Language Server features (for example, autocomplete, go-to-definition, hover text):
- - Check the version of your dbt extension on the extensions page in your editor. Ensure that you are using the latest available version of the dbt extension.
- - Try reinstalling the dbt Language Server by pressing `cmd+shift+P` (macOS) or `ctrl+shift+P` (Windows/Linux) and selecting the `dbt: Reinstall dbt LSP` command.
+If you receive a `no active LSP for this workspace` error message or aren't seeing [dbt Language Server (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general [troubleshooting steps](#troubleshooting) mentioned earlier. 
+
+If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
+1. Check extension version &mdash; Ensure that you're using the latest available version of the dbt extension:
+    - Opening the Extensions page in your editor, or
+    - Going to the **Output** tab and looking for the version number.
+2. Reinstall the LSP &mdash; If the version is correct, reinstall the LSP:
+   - Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux),
+   - Paste `dbt: Reinstall dbt LSP`  and enter.
+
+This command downloads the LSP and re-activates the extension to resolve the error.
 
 #### Unsupported dbt version
 
