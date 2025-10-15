@@ -59,7 +59,7 @@ We recommend using a serverless cluster if you want to minimize the time spent o
 Let’s [create a Databricks SQL warehouse](https://docs.databricks.com/sql/admin/sql-endpoints.html#create-a-sql-warehouse):
 
 1. Click **SQL Warehouses** in the sidebar.
-2. Click *Create SQL Warehouse*.
+2. Click **Create SQL Warehouse**.
 3. Enter a name for the warehouse.
 4. If using a serverless SQL warehouse, select a [cluster size](https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#sizing-a-serverless-sql-warehouse) (2X-Small through 4X-Large) or leave the default, but ensure it suits your workload.
 5. Accept the default warehouse settings or edit them.
