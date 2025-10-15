@@ -5,9 +5,13 @@ The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsI
 
 To use the extension, you must meet the following prerequisites:
 
-- <Constant name="fusion_engine" /> &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
-- Editor &mdash; You're using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
-- Operating systems &mdash; You're using a macOS, Windows, or Linux-based computer. 
+| Prerequisite | Details |
+| --- | --- |
+| **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
+|  | _Registration_ &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.<br /><br /> ⁃ _Don't have a dbt account?_ Follow the VS Code “get started” flow to register and verify your email.<br /><br /> ⁃ _Returning user?_ If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you cannot log into the account associated with your email or if it's locked, reach out to dbt Support to have it unlocked or reset before logging in. |
+| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
+| **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
+| **Operating systems** | macOS, Windows, or Linux-based computer. |
 
 ## Installation instructions
 
@@ -170,9 +174,17 @@ Note: It is possible to "hide" status bar items in VS Code. Double-check if the 
 
 #### Missing dbt LSP features
 
-If you are not seeing dbt LSP features in your editor, first consult the general troubleshooting steps above. If you have confirmed that the dbt extension is installed correctly, but you still do not see dbt Language Server features (for example, autocomplete, go-to-definition, hover text):
- - Check the version of your dbt extension on the extensions page in your editor. Ensure that you are using the latest available version of the dbt extension.
- - Try reinstalling the dbt Language Server by pressing `cmd+shift+P` (macOS) or `ctrl+shift+P` (Windows/Linux) and selecting the `dbt: Reinstall dbt LSP` command.
+If you receive a `no active LSP for this workspace` error message or aren't seeing [dbt Language Server (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general [troubleshooting steps](#troubleshooting) mentioned earlier. 
+
+If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
+1. Check extension version &mdash; Ensure that you're using the latest available version of the dbt extension by:
+    - Opening the Extensions page in your editor, or
+    - Going to the **Output** tab and looking for the version number.
+2. Reinstall the LSP &mdash; If the version is correct, reinstall the LSP:
+   1. Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux).
+   2. Paste `dbt: Reinstall dbt LSP` and enter.
+
+This command downloads the LSP and re-activates the extension to resolve the error.
 
 #### Unsupported dbt version
 
