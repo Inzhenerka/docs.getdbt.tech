@@ -4,7 +4,7 @@ description: "Read this guide to understand ClickHouse configurations in dbt."
 id: "clickhouse-configs"
 ---
 
-## Configs for some of the existing models
+## Configurations for some of the existing models
 
 ### View materialization
 
@@ -196,7 +196,7 @@ supported by the ClickHouse connector and is configured using the following synt
 
 For more information on configuration, check out the [snapshot configs](/reference/snapshot-configs) reference page.
 
-### Documentation on the rest of features
+## More ClickHouse Adapter Configurations
 The `dbt-clickhouse` adapter implements other features like snapshots, custom macros, ClickHouse's materialized views, and more.
 
 Documentation for all these features and additional configuration options can now be found on the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt). Please visit this page for complete and up-to-date information about this adapter.
