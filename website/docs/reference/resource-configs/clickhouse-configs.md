@@ -4,7 +4,7 @@ description: "Read this guide to understand ClickHouse configurations in dbt."
 id: "clickhouse-configs"
 ---
 
-## Configurations for some of the existing models
+## ClickHouse configurations
 
 ### View materialization
 
