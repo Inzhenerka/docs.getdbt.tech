@@ -99,7 +99,7 @@ models:
 | `order_by`     | A tuple of column names or arbitrary expressions. This allows you to create a small sparse index that helps find data faster.                        | Optional (default: `tuple()`)     |
 | `partition_by` | A partition is a logical combination of records in a table by a specified criterion. The partition key can be any expression from the table columns. | Optional                          |
 
-The full list of configurations can be found in the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
+For the complete list of configuration options, see the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
 
 ### Incremental materialization
 
