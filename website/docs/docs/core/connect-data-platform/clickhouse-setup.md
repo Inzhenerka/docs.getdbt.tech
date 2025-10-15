@@ -29,7 +29,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 - [x] View materialization
 - [x] Incremental materialization
 - [x] Microbatch incremental materialization
-- [x] Materialized View materializations (uses the `TO` form of MATERIALIZED VIEW, experimental)
+- [x] Materialized View materialization (experimental)
 - [x] Seeds
 - [x] Sources
 - [x] Docs generate
