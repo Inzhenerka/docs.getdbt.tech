@@ -11,9 +11,9 @@ pagination_prev: null
 
 <VersionBlock lastVersion="1.99">
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 </VersionBlock>
 
@@ -128,6 +128,20 @@ models:
 ```
 
 </File>
+
+Disable static analysis in YAML:
+
+<File name='models/my_udf_using_model.yml'>
+
+```yml
+models:
+  - name: model_with_static_analysis_off
+    config:
+      static_analysis: off
+```
+
+</File>
+
 
 Disable static analysis for a model using a custom UDF:
 
