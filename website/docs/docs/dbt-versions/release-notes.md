@@ -39,6 +39,7 @@ The following features are new or enhanced as part of [dbt's Coalesce analytics 
 - **New**: [dbt <Constant name="query_page" />](/docs/explore/dbt-insights) is now generally available (GA)!
   - **Private beta**: The [<Constant name="copilot" /> agent](/docs/explore/navigate-dbt-insights#dbt-copilot) is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. For more information, see [Analyze data with the Copilot agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-copilot-agent).
   - **Beta**: dbt <Constant name="query_page" /> now has a [Query Builder](/docs/explore/navigate-dbt-insights#query-builder), where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
+- **New**: [MetricFlow](/docs/build/about-metricflow) is now developed and maintained as part of the [Open Semantic Interchange (OSI)](https://www.snowflake.com/en/blog/open-semantic-interchange-ai-standard/) initiative, and is distributed under the [Apache 2.0 license](https://github.com/dbt-labs/metricflow/blob/main/LICENSE). For more information, see the blog post about [Open sourcing MetricFlow](https://www.getdbt.com/blog/open-source-metricflow-governed-metrics).
 
 ### Pre-Coalesce 
 
