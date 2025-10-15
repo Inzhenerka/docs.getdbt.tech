@@ -166,7 +166,7 @@ models:
 | `incremental_strategy`   | The strategy to use for incremental materialization.  `delete+insert`, `append` and `insert_overwrite` (experimental) are supported.  For additional details on strategies, see [here](https://github.com/ClickHouse/dbt-clickhouse#incremental-model-strategies) | Optional (default: 'default')                                                        |
 | `incremental_predicates` | Incremental predicate clause to be applied to `delete+insert` materializations                                                                                                                                                                                    | Optional                                                                             |
 
-The full list of configurations can be found in the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
+For the complete list of configuration options, see the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
 
 ## Snapshot
 
