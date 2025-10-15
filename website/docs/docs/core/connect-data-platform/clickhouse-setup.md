@@ -41,7 +41,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 - [x] Distributed incremental materialization (experimental)
 - [x] Contracts
 
-## Connecting to ClickHouse with **dbt-clickhouse**
+## Connecting to ClickHouse
 
 To connect to ClickHouse from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles)
 to your `profiles.yml` configuration file. Follow the reference configuration below to set up a ClickHouse profile:
