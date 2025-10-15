@@ -74,22 +74,23 @@ You can now use this profile in one of your existing projects or create a new on
 dbt init project_name
 ```
 
-Inside `project_name` dir, update your `dbt_project.yml` file to specify a profile name to connect to the ClickHouse server.
+Navigate to the `project_name` directory and update your `dbt_project.yml` file to use the profile you configured to connect to ClickHouse.
 
 ```yaml
 profile: 'clickhouse-service'
 ```
 
 ### Test connection
-Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]` indicating a successful connection.
+
+Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]`, indicating a successful connection.
 
 ## Documentation
 
-See the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt) for the full documentation entry for the `dbt-clickhouse` adapter.
+See the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt) for more details on using the `dbt-clickhouse` adapter to manage your data model.
 
 ## Contributing
 
-We welcome contributions from the community to help improve the dbt-ClickHouse adapter. Whether you're fixing a bug,
+We welcome contributions from the community to help improve the `dbt-ClickHouse` adapter. Whether you're fixing a bug,
 adding a new feature, or enhancing the documentation, your efforts are greatly appreciated!
 
 Please take a moment to read our [Contribution Guide](https://github.com/ClickHouse/dbt-clickhouse/blob/main/CONTRIBUTING.md) to get started. The guide provides detailed instructions on setting up your environment, running tests, and submitting pull requests.
