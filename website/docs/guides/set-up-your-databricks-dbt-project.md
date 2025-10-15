@@ -63,7 +63,7 @@ Let’s [create a Databricks SQL warehouse](https://docs.databricks.com/sql/admi
 3. Enter a name for the warehouse.
 4. If using a serverless SQL warehouse, select a [cluster size](https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#sizing-a-serverless-sql-warehouse) (2X-Small through 4X-Large) or leave the default, but ensure it suits your workload.
 5. Accept the default warehouse settings or edit them.
-6. Click *Create*
+6. Click **Create**.
 7. Configure warehouse permissions to ensure our service principal and developer have the right access.
 
 We are not covering python in this post but if you want to learn more, check out these [docs](/docs/build/python-models#specific-data-platforms). Depending on your workload, you may wish to create a larger SQL Warehouse for production workflows while having a smaller development SQL Warehouse (if you’re not using Serverless SQL Warehouses). As your project grows, you might want to apply [compute per model configurations](/reference/resource-configs/databricks-configs#specifying-the-compute-for-models). 
