@@ -200,4 +200,3 @@ For more information on configuration, check out the [snapshot configs](/referen
 
 The `dbt-clickhouse` adapter supports most dbt-native features like tests, snapshots, helper macros, and more. For a complete overview of supported features and best practices, see the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
 
-Documentation for all these features and additional configuration options can now be found on the [ClickHouse website](https://clickhouse.com/docs/integrations/dbt). Please visit this page for complete and up-to-date information about this adapter.
