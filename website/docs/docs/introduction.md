@@ -21,7 +21,7 @@ Use dbt to quickly and collaboratively transform data and deploy analytics code 
 
 ### The dbt platform (formerly dbt Cloud) 
 
-The <Constant name="dbt_platform" /> (formerly dbt Cloud) offers the fastest, most reliable, and scalable way to deploy dbt. Allowing data teams to optimize their data transformation by developing, testing, scheduling, and investigating data models using a single, fully managed service through a web-based user interface (UI).
+The <Constant name="dbt_platform" /> offers the fastest, most reliable, and scalable way to deploy dbt. Allowing data teams to optimize their data transformation by developing, testing, scheduling, and investigating data models using a single, fully managed service through a web-based user interface (UI).
 
 You can learn about plans and pricing on [www.getdbt.com](https://www.getdbt.com/pricing/). Learn more about the [<Constant name="dbt_platform" /> features](/docs/cloud/about-cloud/dbt-cloud-features) and try one of the [<Constant name="cloud" /> quickstarts](/docs/get-started-dbt).
 
