@@ -22,25 +22,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-
-## Supported features
-
-- [x] Table materialization
-- [x] View materialization
-- [x] Incremental materialization
-- [x] Microbatch incremental materialization
-- [x] Materialized View materialization (experimental)
-- [x] Seeds
-- [x] Sources
-- [x] Docs generate
-- [x] Tests
-- [x] Snapshots
-- [x] Most dbt-utils macros (now included in dbt-core)
-- [x] Ephemeral materialization
-- [x] Distributed table materialization (experimental)
-- [x] Distributed incremental materialization (experimental)
-- [x] Contracts
-
 ## Connecting to ClickHouse
 
 To connect to ClickHouse from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles)
@@ -83,6 +64,36 @@ profile: 'clickhouse-service'
 ### Test connection
 
 Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]`, indicating a successful connection.
+
+## Supported features
+
+### dbt features
+
+Type | Supported? | Details
+-----|------------|----------------
+Contracts | YES | 
+Docs generate | YES |
+Most dbt-utils macros | YES | (now included in dbt-core) 
+Seeds | YES | 
+Sources | YES | 
+Snapshots | YES | 
+Tests | YES | 
+
+### Materializations
+
+Type | Supported? | Details
+-----|------------|----------------
+Table | YES | Creates a [table](https://clickhouse.com/docs/en/operations/system-tables/tables/). See below for the list of supported engines.
+View | YES | Creates a [view](https://clickhouse.com/docs/en/sql-reference/table-functions/view/).
+Incremental | YES | Creates a table if it doesn't exist, and then writes only updates to it.
+Microbatch incremental | YES | 
+Ephemeral materialization | YES | Creates a ephemeral/CTE materialization. This model is internal to dbt and does not create any database objects.
+Materialized View | YES, Experimental | Creates a [materialized view](https://clickhouse.com/docs/en/materialized-view).
+Distributed table materialization | YES, Experimental | Creates a [distributed table](https://clickhouse.com/docs/en/engines/table-engines/special/distributed).
+Distributed incremental materialization | YES, Experimental | Incremental model based on the same idea as distributed table. Note that not all strategies are supported, visit [this](https://github.com/ClickHouse/dbt-clickhouse?tab=readme-ov-file#distributed-incremental-materialization) for more info.
+Dictionary materialization | YES, Experimental | Creates a [dictionary](https://clickhouse.com/docs/en/engines/table-engines/special/dictionary).
+
+**Note**: Community-developed features are labeled as experimental. Despite this designation, many of these features, like materialized views, are widely adopted and successfully used in production environments.
 
 ## Documentation
 
