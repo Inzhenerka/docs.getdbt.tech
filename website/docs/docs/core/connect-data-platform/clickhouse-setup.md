@@ -62,8 +62,9 @@ clickhouse-service:
       password: [ <empty string> ] # Password for the user
       secure: [ False ] # Use TLS (native protocol) or HTTPS (http protocol)
 
-      # You can find all the configurations options in the ClickHouse documentation: https://clickhouse.com/docs/integrations/dbt
 ```
+
+For a complete list of configuration options, see the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
 </File>
 
 ### Create a dbt project
