@@ -11,6 +11,8 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 import FusionDWH from '/snippets/_fusion-dwh.md';
+import FusionFeaturesTable from '/snippets/_fusion-features-table.md';
+import FusionAvailability from '/snippets/_fusion_availability.md';
 
 ## Introduction
 
@@ -30,7 +32,11 @@ Fusion and the powerful features that the engine provides are available in the f
 - **dbt CLI:** If you are using your local machine for development, see the [dbt Fusion engine installation guide](/docs/fusion/install-fusion) for instructions for installing it on your local machine.
 - **VS Code extension** If you are using the [Visual Studio Code (VS Code)](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) IDE, you can get hands on with many of Fusions powerful features directly in your editor by installing the [dbt extension](/docs/install-dbt-extension).
 
-Read more [about the dbt Fusion engine](/docs/fusion/about-fusion) to get a better understanding of what's new, what's changed, and what's been deprecated.
+Read more [about the dbt Fusion engine](/docs/fusion) to get a better understanding of what's new, what's changed, and what's been deprecated.
+
+<FusionFeaturesTable />
+
+<FusionAvailability/>
 
 ## Prerequisites
 
