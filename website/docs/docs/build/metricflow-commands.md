@@ -632,7 +632,7 @@ To query multiple metrics, group bys, or where statements in your command, follo
   - Multiple dimension/entity example: `dbt sl query --metrics accounts_active,users_active --group-by metric_time__week,accounts__plan_tier`
  
 - To query multiple where statements, use the `--where` syntax and wrap the statement in quotes:
-  - Multiple where statement example: `dbt sl query --metrics accounts_active,users_active --group-by metric_time__week,accounts__plan_tier --where "metric_time__week >= '2024-02-01' and "accounts__plan_tier = 'coco'"`
+  - Multiple where statement example: `dbt sl query --metrics accounts_active,users_active --group-by metric_time__week,accounts__plan_tier --where "metric_time__week >= '2024-02-01'" --where "accounts__plan_tier = 'coco'"`
 
 </DetailsToggle>
 
