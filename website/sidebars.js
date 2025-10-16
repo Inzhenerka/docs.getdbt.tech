@@ -80,7 +80,7 @@ const sidebarSettings = {
             "docs/cloud/migration",
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Connect your data platforms",
               link: {
                 type: "doc",
                 id: "docs/cloud/connect-data-platform/about-connections",
@@ -94,7 +94,8 @@ const sidebarSettings = {
                 "docs/cloud/connect-data-platform/connect-databricks",
                 "docs/cloud/connect-data-platform/connect-microsoft-fabric",
                 "docs/cloud/connect-data-platform/connect-onehouse",
-                "docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-redshift",
                 "docs/cloud/connect-data-platform/connect-starburst-trino",
                 "docs/cloud/connect-data-platform/connect-snowflake",
                 "docs/cloud/connect-data-platform/connect-teradata",
@@ -256,7 +257,11 @@ const sidebarSettings = {
               items: [
                 "docs/fusion/connect-data-platform-fusion/profiles.yml",
                 "docs/fusion/connect-data-platform-fusion/connection-profiles",
+                "docs/fusion/connect-data-platform-fusion/bigquery-setup",
+                "docs/fusion/connect-data-platform-fusion/databricks-setup",
+                "docs/fusion/connect-data-platform-fusion/redshift-setup",
                 "docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup",
+                "docs/fusion/connect-data-platform-fusion/snowflake-setup",
               ],
             },
             {
@@ -272,7 +277,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Connect dbt Core to your data platform",
               link: {
                 type: "doc",
                 id: "docs/core/connect-data-platform/about-core-connections",
@@ -446,6 +451,7 @@ const sidebarSettings = {
             "docs/build/snapshots",
             "docs/build/seeds",
             "docs/build/jinja-macros",
+            "docs/build/udfs",
             "docs/build/sources",
             "docs/build/exposures",
             "docs/build/groups",
@@ -647,6 +653,7 @@ const sidebarSettings = {
           items: [
             "docs/deploy/state-aware-about",
             "docs/deploy/state-aware-setup",
+            "docs/deploy/state-aware-interface",
           ],
         },
         {
@@ -1094,6 +1101,7 @@ const sidebarSettings = {
         "reference/project-configs/config-version",
         "reference/project-configs/dispatch-config",
         "reference/project-configs/docs-paths",
+        "reference/project-configs/function-paths",
         "reference/project-configs/macro-paths",
         "reference/project-configs/name",
         "reference/project-configs/on-run-start-on-run-end",
@@ -1335,6 +1343,18 @@ const sidebarSettings = {
           items: [
             "reference/macro-properties",
             "reference/resource-properties/arguments",
+          ],
+        },
+        {
+          type: "category",
+          label: "For functions",
+          link: { type: "doc", id: "reference/function-properties" },
+          items: [
+            "reference/function-properties",
+            "reference/function-configs",
+            "reference/resource-properties/type",
+            "reference/resource-properties/returns",
+            "reference/resource-properties/function-arguments",
           ],
         },
       ],

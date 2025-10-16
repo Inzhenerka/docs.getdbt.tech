@@ -3,7 +3,7 @@ title: freshness
 description: "Read this guide to understand the `freshness` configuration in dbt."
 id: "freshness"
 ---
-# freshness <Lifecycle status="beta,managed,managed_plus" />
+# freshness <Lifecycle status="private_preview,managed,managed_plus" />
  
 <VersionCallout version="1.10" />
 
