@@ -11,6 +11,8 @@ The following are the current [behavior change flags](/docs/reference/global-con
 | [`use_info_schema_for_columns`](#use-information-schema-for-columns) | 1.9.0                   | TBD                        |
 | [`use_user_folder_for_python`](#use-users-folder-for-python-model-notebooks)  | 1.9.0                   | TBD                        |
 | [`use_materialization_v2`](#use-restructured-materializations)      | 1.10.0                  | TBD                        |
+| [`use_managed_iceberg`](#use-managed-iceberg)  | 1.11.0  |  TBD                                                     |
+| [`use_replace_on_for_insert_overwrite`](#use-replace-on-for-insert_overwrite-strategy)   | 1.11.0   | TBD                    |
 
 ## Use information schema for columns
 
@@ -178,3 +180,11 @@ models:
 ```
 
 </File>
+
+## Use managed Iceberg
+
+The `use_managed_iceberg` flag is `False` by default and results in a [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability) table when `table_format` is set to `iceberg`. When this flag is set to `True`, the table is created as a [managed Iceberg table](https://docs.databricks.com/aws/en/tables/managed).
+
+## Use `replace on` for `insert_overwrite` strategy
+
+The `use_replace_on_for_insert_overwrite` flag is only relevant when using incremental models with the `insert_overwrite` strategy on SQL warehouses. The flag is `True` by default and results in using the `replace on` syntax to perform partition overwrites. When the flag is set to `False`, partition overwrites will be performed via `insert overwrite` with dynamic partition overwrite. The latter is only officially supported for cluster computes, and will truncate the entire table when used with SQL warehouses.
