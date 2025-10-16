@@ -6,7 +6,8 @@ displayed_sidebar: "docs"
 ---
 
 import FusionAdapters from '/snippets/_fusion-dwh.md';
-import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
+import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md'
 
 <FusionLifecycle />
 
@@ -23,6 +24,9 @@ At the same time, we want to take this opportunity to _strengthen the framework_
 That work is documented below — it should be simple, straightforward, and in many cases, auto-fixable with the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper.
 
 You can find more information about what's changing in the dbt Fusion engine [changelog](https://github.com/dbt-labs/dbt-fusion/blob/main/CHANGELOG.md).
+
+
+<FusionUpgradeSteps />
 
 ### Supported adapters
 
@@ -353,3 +357,4 @@ return('xyzabc')
 import FusionPackages from '/snippets/_fusion-supported-packages.md';
 
 <FusionPackages />
+
