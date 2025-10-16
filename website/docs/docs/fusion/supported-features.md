@@ -16,18 +16,13 @@ Learn about the features supported by the dbt Fusion engine, including requireme
 
 import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 import FusionDWH from '/snippets/_fusion-dwh.md';
+import FusionFeaturesTable from '/snippets/_fusion-features-table.md';
 
 <VersionBlock lastVersion="1.99">
 
 <FusionLifecycle />
 
 </VersionBlock>
-
-### Parity with dbt Core
-
-Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. Fusion already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
-
-Note that we have removed some deprecated features, and introduced more-rigorous validation of erroneous project code. Refer to the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) for details.
 
 ## Requirements
 
@@ -36,7 +31,15 @@ To use Fusion in your dbt project:
   <FusionDWH /> 
 - Have only SQL models defined in your project. Python models are not currently supported because Fusion cannot parse these to extract dependencies (refs) on other models. <!-- [TODO: Link to dbt-fusion Python issue.] -->
 
-### Limitations
+## Parity with dbt Core
+
+Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. Fusion already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
+
+Note that we have removed some deprecated features, and introduced more-rigorous validation of erroneous project code. Refer to the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) for details.
+
+<FusionFeaturesTable />
+
+## Limitations
 
 If your project is using any of the features listed in the following table, you can use Fusion, but you won't be able to fully migrate all your workloads because you have:
 - Models that leverage specific materialization features may be unable to run or may be missing some desirable configurations.

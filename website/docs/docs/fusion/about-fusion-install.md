@@ -7,13 +7,17 @@ id: about-fusion-install
 # About Fusion local installation <Lifecycle status="preview" />
 
 import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
+import FusionFeaturesTable from '/snippets/_fusion-features-table.md';
+import FusionAvailability from '/snippets/_fusion_availability.md';
+import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 
 <FusionLifecycle />
 
-import FusionPrereqs from '/snippets/_fusion-prereqs.md';
-
 <FusionPrereqs />
- 
+
+## Getting started
+If you're ready to get started, choose one of the following options. If you're not sure which option is best for you, see the [What's available where?](#whats-available-where) section.
+
 <div className="grid--3-col">
 
 <Card
@@ -35,3 +39,9 @@ import FusionPrereqs from '/snippets/_fusion-prereqs.md';
     icon="dbt-bit"/>
 
 </div>
+
+## What's available where?
+
+<FusionFeaturesTable />
+
+<FusionAvailability/>
