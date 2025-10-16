@@ -52,7 +52,7 @@ seeds:
     config:
       [quote_columns](/reference/resource-configs/quote_columns): true | false
       [column_types](/reference/resource-configs/column_types): {column_name: datatype}
-      [delimiter](/reference/resource-configs/grants): <string>
+      [delimiter](/reference/resource-configs/delimiter): <string>
 
 ```
 
