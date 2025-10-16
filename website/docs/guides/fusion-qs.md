@@ -14,9 +14,9 @@ import FusionDWH from '/snippets/_fusion-dwh.md';
 
 ## Introduction
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
-<FusionBeta />
+<FusionLifecycle />
 
 The dbt Fusion engine is a powerful new approach to classic dbt ideas! Completely rebuilt from the ground up in Rust, Fusion enables you to compile and run your dbt projects faster than ever. 
 

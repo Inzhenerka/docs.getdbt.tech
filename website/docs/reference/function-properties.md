@@ -2,6 +2,8 @@
 title: Function properties
 ---
 
+<VersionCallout version="1.11" /> 
+
 Function properties can be declared in `.yml` files under a `functions` key.
 
 We recommend that you put them in the `functions/` directory. You can name these files `schema.yml` or `whatever_you_want.yml`, and nest them in subfolders within that directory.
