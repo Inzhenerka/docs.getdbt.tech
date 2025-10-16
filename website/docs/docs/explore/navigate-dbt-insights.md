@@ -134,3 +134,26 @@ Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to
 
 - **Generate SQL** tab - Build queries in <Constant name="query_page" /> with natural language prompts to explore and query data with an intuitive, context-rich interface. For more information, see [Build queries](/docs/cloud/use-dbt-copilot#build-queries).
 
+## LSP features
+
+The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
+
+- **Live CTE previews:** Preview a CTE’s output for faster validation and debugging.
+
+    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="90%" title="Preview CTE in Insights" />
+
+- **Real-time error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
+
+    <Lightbox src="/img/docs/dbt-insights/sql-validation.png" width="90%" title="Live error detection" />
+
+- **`ref` suggestions:** Autocomplete model names when using the `ref()` function to reference other models in your project.
+  
+    <Lightbox src="/img/docs/dbt-insights/ref-autocomplete.png" width="90%" title="ref suggestions in Insights" />
+
+- **Hover insights:** View context on tables, columns, and functions without leaving your code. Hover over any SQL element to see details like column names and data types.
+
+    <DocCarousel slidesPerView={1}>
+    <Lightbox src="/img/docs/dbt-insights/column-info.png" width="60%" title="Sample column details" />
+    <Lightbox src="/img/docs/dbt-insights/column-hover.png" width="60%" title="Sample column details" />
+    </DocCarousel>
+

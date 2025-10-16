@@ -1,9 +1,10 @@
 ---
-title: "Upgrade dbt version in Cloud"
+title: "Upgrade versions in dbt platform"
 id: "upgrade-dbt-version-in-cloud"
 ---
 
 import FusionDWH from '/snippets/_fusion-dwh.md';
+import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
 
 In <Constant name="cloud" />, both [jobs](/docs/deploy/jobs) and [environments](/docs/dbt-cloud-environments) are configured to use a specific version of <Constant name="core" />. The version can be upgraded at any time.
 
@@ -103,6 +104,8 @@ To begin the process of upgrading to <Constant name="fusion" /> with the assista
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/autofix-success.png" width="60%" title="You're now ready to upgrade to Fusion in your development environment!"/>
 
 Now that you've upgraded your development environment to <Constant name="Fusion" />, you're ready to start the process of upgrading your Production, Staging, and General environments. Follow your organization's standard procedures and use the [release tracks](#release-tracks) to upgrade.
+
+<FusionUpgradeSteps />
 
 ## Jobs
 
