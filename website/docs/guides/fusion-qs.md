@@ -102,7 +102,7 @@ The following are the essential steps from the [<Constant name="fusion_engine" /
     ```bash
     dbtf --version
     ```
-2. You should see the following output:
+2. You should see output similar to the following:
     ```bash
     dbt-fusion 2.0.0-preview.45
     ```
