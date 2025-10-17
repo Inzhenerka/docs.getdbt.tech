@@ -174,20 +174,31 @@ You can connect to external Iceberg-compatible catalogs, such as Polaris and Uni
 
 These are the additional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties`. 
 
+#### Built-In Catalog
+
 | Field | Required | Accepted Values |
 | --- | --- | --- |
-| `storage_serialization_policy` | Optional | `COMPATIBLE` or `OPTIMIZED`     |
-| `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
-| `data_retention_time_in_days` | Optional | Standard Account: `1`, Enterprise or higher: `0` to `90`, default `1`  |
 | `change_tracking` | Optional | `True` or `False`    |
+| `data_retention_time_in_days` | Optional | Standard Account: `1`, Enterprise or higher: `0` to `90`, default `1`  |
+| `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
+| `storage_serialization_policy` | Optional | `COMPATIBLE` or `OPTIMIZED`     |
+
+#### Rest Catalog
+
+| Field | Required | Accepted Values |
+| --- | --- | --- |
+| `auto_refresh` | Optional | `True` or `False`    |
 | `catalog_linked_database` | Required if you are using the iceberg_rest `catalog type`. | catalog linked database name.   |
+| `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
+| `target_file_size` | Optional | values like `'AUTO'`, `'16MB'`, `'32MB'`, `'64MB'`, `'128MB'`, etc., case insensitive  |
 
 -  **storage_serialization_policy:** The serialization policy tells Snowflake what kind of encoding and compression to perform on the table data files. If not specified at table creation, the table inherits the value set at the schema, database, or account level. If the value isn’t specified at any level, the table uses the default value. You can’t change the value of this parameter after table creation.
 - **max_data_extension_time_in_days:** The maximum number of days Snowflake can extend the data retention period for tables to prevent streams on the tables from becoming stale. The `MAX_DATA_EXTENSION_TIME_IN_DAYS` parameter enables you to limit this automatic extension period to control storage costs for data retention, or for compliance reasons. 
 - **data_retention_time_in_days:** For managed Iceberg tables, you can set a retention period for Snowflake Time Travel and undropping the table over the default account values. For tables that use an external catalog, Snowflake uses the value of the DATA_RETENTION_TIME_IN_DAYS parameter to set a retention period for Snowflake Time Travel and undropping the table. When the retention period expires, Snowflake does not delete the Iceberg metadata or snapshots from your external cloud storage.
 - **change_tracking:** Specifies whether to enable change tracking on the table.
 - **catalog_linked_database:** [Catalog-linked databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) (CLD) in Snowflake ensures that Snowflake can automatically sync metadata (including namespaces and iceberg tables) from the external Iceberg Catalog and registers them as remote tables in the catalog-linked database. The reason we require the usage of Catalog-linked databases for building Iceberg tables with external catalogs is that without it, dbt will be unable to truly manage the table end-to-end. Snowflake does not support dropping the Iceberg table on non-CLDs in the external catalog; instead, it only allows unlinking the Snowflake table, which creates a discrepancy with how dbt expects to manage the materialized object.
-
+- **auto_refresh:** Specifies whether Snowflake should automatically poll the external Iceberg catalog for metadata updates. If `REFRESH_INTERVAL_SECONDS` isn’t set on the catalog integration, the default refresh interval is 30 seconds. 
+- **target_file_size:** specifies a target Parquet file size. Default is `AUTO`.
 
 ### Configure catalog integration for managed Iceberg tables
 
