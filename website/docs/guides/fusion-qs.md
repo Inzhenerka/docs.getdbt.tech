@@ -132,7 +132,7 @@ Now let's create your first dbt project powered by <Constant name="fusion" />!
     dbtf init
     ```
 
-    If you do already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` to replace `profile: jaffle_shop` with `profile: <YOUR-PROFILE-NAME>`.
+    - If you already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` to replace `profile: jaffle_shop` with `profile: <YOUR-PROFILE-NAME>`.
 
     ```bash
     dbtf init --skip-profile-setup
