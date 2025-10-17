@@ -246,11 +246,9 @@ This is just the start. There is so much more available and so much more coming.
 
 </ConfettiTrigger>
 
-
 ## Troubleshooting
 
 If you run into any issues, check out the troubleshooting section below.
-
 
 <Expandable  alt_header="dbt platform configurations">
 
