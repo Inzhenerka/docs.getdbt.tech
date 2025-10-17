@@ -125,20 +125,15 @@ The dbt VS Code extension is available in the [Visual Studio extension marketpla
 ## Initialize the Jaffle Shop project
 Now let's create your first dbt project powered by <Constant name="fusion" />!
 
-1. Set up an example project and configure a database connection profile. 
-   
-   - If you *do not* already have a connection profile that you want to use, start with this command and prompts will guide you through configuring a profile:
-    ```bash
-    dbtf init
-    ```
-
+1. Run `dbt init` to set up an example project and configure a database connection profile.
+   - If you *do not* already have a connection profile that you want to use, start with `dbt init` abd use the prompts to configure a profile:
     - If you already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` to replace `profile: jaffle_shop` with `profile: <YOUR-PROFILE-NAME>`.
 
     ```bash
     dbtf init --skip-profile-setup
     ```
 
-    If you created new credentials through the interactive prompts, `init` automatically runs `dbtf debug` at the end. This ensures the newly created profile establishes a valid connection with the database.
+    - If you created new credentials through the interactive prompts, `init` automatically runs `dbtf debug` at the end. This ensures the newly created profile establishes a valid connection with the database.
 
 2. Change directories into your newly created project:
     ```bash
@@ -185,10 +180,20 @@ Now that your project works, open it in VS Code and see Fusion in action:
 Now you're ready to see some of these awesome features in action!
 
 <!--no toc -->
-- [Preview data and code](#preview-data-and-code)
-- [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
-- [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
-- [Speeding up common dbt commands](#speeding-up-common-dbt-commands)
+- [Introduction](#introduction)
+  - [About the dbt Fusion engine](#about-the-dbt-fusion-engine)
+- [Prerequisites](#prerequisites)
+  - [What you’ll learn](#what-youll-learn)
+- [Installation](#installation)
+  - [Verify the  installation](#verify-the--installation)
+  - [Install the dbt VS Code extension](#install-the-dbt-vs-code-extension)
+- [Initialize the Jaffle Shop project](#initialize-the-jaffle-shop-project)
+- [Explore with the dbt VS Code extension](#explore-with-the-dbt-vs-code-extension)
+    - [Preview data and code](#preview-data-and-code)
+    - [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
+    - [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
+    - [Speed up common dbt commands](#speed-up-common-dbt-commands)
+- [Troubleshooting](#troubleshooting)
 
 #### Preview data and code
 
