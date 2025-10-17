@@ -138,7 +138,7 @@ Now let's create your first dbt project powered by <Constant name="fusion" />!
     dbtf init --skip-profile-setup
     ```
 
-    If you created new credentials through the interactive prompts, `init` will automatically run `dbtf debug` at the end. This will check to ensure the newly created profile establishes a valid connection with the database.
+    If you created new credentials through the interactive prompts, `init` automatically runs `dbtf debug` at the end. This ensures the newly created profile establishes a valid connection with the database.
 
 2. Change directories into your newly created project:
     ```bash
