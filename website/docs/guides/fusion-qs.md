@@ -114,7 +114,7 @@ You can run these commands using `dbt`, or use `dbtf` as an unambiguous alias fo
 
 The dbt VS Code extension is available in the [Visual Studio extension marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt). Download it directly from your VS Code editor:
 
-1. Navigate to the **Extensions** tab of VS Code (or Cursor)
+1. Navigate to the **Extensions** tab of VS Code (or Cursor).
 2. Search for `dbt` and choose the one from the publisher `dbt Labs Inc`.
     <Lightbox src="/img/docs/extension/extension-marketplace.png" width="60%" title="Search for the extension"/>
 3. Click **Install**.
