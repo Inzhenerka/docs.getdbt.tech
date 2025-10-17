@@ -127,7 +127,7 @@ Now let's create your first dbt project powered by <Constant name="fusion" />!
 
 1. Set up an example project and configure a database connection profile. 
    
-   If you *do not* already have a connection profile that you want to use, start with this command and prompts will guide you through configuring a profile:
+   - If you *do not* already have a connection profile that you want to use, start with this command and prompts will guide you through configuring a profile:
     ```bash
     dbtf init
     ```
