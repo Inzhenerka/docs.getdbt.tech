@@ -268,7 +268,7 @@ If you receive a `no active LSP for this workspace` error message or aren't seei
 If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
 
 1. Check extension version — Ensure that you're using the latest available version of the dbt extension by:
-   - Opening the Extensions page in your editor, or
+   - Opening the **Extensions** page in your editor, or
    - Going to the **Output** tab and looking for the version number, or
    - Running `dbtf --version` in the terminal.
 2. Reinstall the LSP — If the version is correct, reinstall the LSP:
