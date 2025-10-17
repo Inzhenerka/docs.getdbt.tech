@@ -46,7 +46,7 @@ To take full advantage of this guide, you'll need to meet the following prerequi
     <FusionDWH /> 
 - You need a macOS (Terminal), Linux, or Windows (Powershell) machine to run the <Constant name="fusion_engine" />. 
 - You need to have [Visual Studio Code](https://code.visualstudio.com/) installed. The [Cursor](https://www.cursor.com/en) code editor will also work, but these instructions will focus on VS Code.
-- You'll need admin or install privileges on your machine.  
+- You need admin or install privileges on your machine.  
 
 ### What you’ll learn
 
