@@ -34,25 +34,12 @@ The following table outlines the configuration fields required to set up a catal
 | :---- | :---- | :---- | :---- |
 | name | Name of the Catalog on Databricks | Yes | “my_unity_catalog” |
 | catalog_type | Type of catalog  | Yes | unity, hive_metastore |
-| external_volume | Storage location of your data | Optional | See Databricks [documentation](https://docs.databricks.com/aws/en/volumes/managed-vs-external) |
-| table_format | Table Format for your dbt models will be materialized as  | Optional | Defaults to `delta` unless overwritten in Databricks account. 
-| adapter_properties: | Additional Platform-Specific Properties.  | Optional | See below for acceptable values	 |
+| table_format | Table Format for your dbt models will be materialized as  | Optional | Fixed to `iceberg` for `catalog_type=unity` and `default` for `hive_metastore` 
+| file_format | File Format for your dbt models will be materialized as  | Optional | Defaults to `delta` unless overwritten in Databricks account. 
 
-### Adapter Properties
+#### Note
 
-These are the additional configurations that can be supplied and nested under `adapter_properties` to add in more configurability. 
-| Field | Description | Required | Accepted values |
-| :---- | :---- | :---- | :---- |
-| table_format | Table Format for your dbt models will be materialized as  | Optional | Defaults to `delta` unless overwritten in Databricks account. |
-| adapter_properties: | Additional Platform-Specific Properties.  | Optional | See below for acceptable values	 |
-
-
-Example:
-
-```yaml
-adapter_properties:
-  file_format: parquet
-```
+On Databricks, if a model has `catalog_name=<>` in its model config, the catalog name becomes the catalog part of the model's FQN. For example, if the catalog is named my_database, a model with `catalog_name='my_database'` is materialized as `my_database`.<schema>.<model>`.
 
 ### Configure catalog integration for managed Iceberg tables
 
@@ -68,9 +55,7 @@ catalogs:
       - name: unity_catalog_integration
         table_format: iceberg
         catalog_type: unity
-        adapter_properties:
-          file_format: parquet
-
+        file_format: delta   
 ```
 
 2. Add the `catalog_name` config parameter in either the SQL config (inside the .sql model file), property file (model folder), or your `dbt_project.yml`. <br />
