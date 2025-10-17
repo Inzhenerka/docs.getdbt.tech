@@ -129,9 +129,9 @@ Now let's create your first dbt project powered by <Constant name="fusion" />!
    - If you *do not* have a connection profile that you want to use, start with `dbt init` and use the prompts to configure a profile:
     - If you already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` to replace `profile: jaffle_shop` with `profile: <YOUR-PROFILE-NAME>`.
 
-    ```bash
-    dbtf init --skip-profile-setup
-    ```
+        ```bash
+        dbtf init --skip-profile-setup
+        ```
 
     - If you created new credentials through the interactive prompts, `init` automatically runs `dbtf debug` at the end. This ensures the newly created profile establishes a valid connection with the database.
 
