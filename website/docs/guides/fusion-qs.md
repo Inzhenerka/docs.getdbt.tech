@@ -254,7 +254,7 @@ If you don’t configure this correctly, cross-platform references will not reso
 
 <Expandable alt_header="dbt extension not activating">
 
-If the dbt extension has activated successfully, you will see the dbt Extension label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the dbt Extension button.
+If the dbt extension has activated successfully, you will see the **dbt Extension** label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.
 
 If the dbt extension label is not present, then it is likely that the dbt extension was not installed successfully. If this happens, try uninstalling the extension, restarting your editor, and then reinstalling the extension.
 
