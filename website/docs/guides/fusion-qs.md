@@ -272,7 +272,7 @@ If you've confirmed the dbt extension is installed correctly but don't see LSP f
    - Going to the Output tab and looking for the version number, or
    - Running `dbtf --version` in the terminal.
 2. Reinstall the LSP — If the version is correct, reinstall the LSP:
-   - Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux).
+   1. Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux).
    2. Paste `dbt: Reinstall dbt LSP` and enter.
 
 This command downloads the LSP and re-activates the extension to resolve the error.
