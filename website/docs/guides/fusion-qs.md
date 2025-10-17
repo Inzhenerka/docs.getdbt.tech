@@ -179,7 +179,7 @@ Now that your project works, open it in VS Code and see Fusion in action:
     ```bash
         models/marts/orders.sql
     ```
-5. Locate **Lineage** and **Query Results** in the lower panel and the **dbt icon** in the upper right corner next to your editor groups. If you see all of these, the extension is installed correctly and running!
+5. Locate **Lineage** and **Query Results** in the lower panel, and the **dbt icon** in the upper right corner next to your editor groups. If you see all of these, the extension is installed correctly and running!
     <Lightbox src="/img/docs/extension/extension-running.png" width="80%" title="The VS Code UI with the extension running."/>
 
 Now you're ready to see some of these awesome features in action!
