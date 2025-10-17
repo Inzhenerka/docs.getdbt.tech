@@ -198,7 +198,7 @@ These are the additional configurations, unique to Snowflake, that can be suppli
 - **change_tracking:** Specifies whether to enable change tracking on the table.
 - **catalog_linked_database:** [Catalog-linked databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database) (CLD) in Snowflake ensures that Snowflake can automatically sync metadata (including namespaces and iceberg tables) from the external Iceberg Catalog and registers them as remote tables in the catalog-linked database. The reason we require the usage of Catalog-linked databases for building Iceberg tables with external catalogs is that without it, dbt will be unable to truly manage the table end-to-end. Snowflake does not support dropping the Iceberg table on non-CLDs in the external catalog; instead, it only allows unlinking the Snowflake table, which creates a discrepancy with how dbt expects to manage the materialized object.
 - **auto_refresh:** Specifies whether Snowflake should automatically poll the external Iceberg catalog for metadata updates. If `REFRESH_INTERVAL_SECONDS` isn’t set on the catalog integration, the default refresh interval is 30 seconds. 
-- **target_file_size:** specifies a target Parquet file size. Default is `AUTO`.
+- **target_file_size:** Specifies a target Parquet file size. Default is `AUTO`.
 
 ### Configure catalog integration for managed Iceberg tables
 
