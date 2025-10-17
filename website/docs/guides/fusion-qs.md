@@ -221,7 +221,7 @@ Code smarter, not harder. The autocomplete and context clues help avoid mistakes
 1. Hover over any `*` to see the list of column names and data types being selected.
     <Lightbox src="/img/docs/extension/hover-star.png" width="80%" title="Hovering over * to see column names and data types."/>
 
-#### Speeding up common dbt commands
+#### Speed up common dbt commands
 
 Testing, testing... is this mic on? It is and it's ready to execute your commands with blazing fast speeds! When you want to test your code against various dbt commands: 
 
