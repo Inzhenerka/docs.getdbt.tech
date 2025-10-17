@@ -20,7 +20,7 @@ Refer to [Snowflake configurations](/reference/resource-configs/snowflake-config
 
 We recommend using the Iceberg catalog configuration and applying the catalog in the model config for ease of use and to future-proof your code. Using `table_format = 'iceberg'` directly on the model configuration is a legacy approach and limits usage to just Snowflake Horizon as the catalog. Catalog support is available on dbt 1.10+
 
-## Creating Iceberg Tables
+## Creating Iceberg tables
 
 dbt supports creating Iceberg tables for three of the Snowflake materializations: 
 
@@ -155,7 +155,7 @@ After you have created the external catalog integration, you will be able to do 
 
 - **Sync Snowflake-managed tables to an external catalog:** You can create a Snowflake Iceberg table that Snowflake manages via a cloud storage location and then register/sync that table to the external catalog. This allows other engines to discover the table.
 
-## dbt Catalog Integration Configurations for Snowflake
+## dbt Catalog integration configurations for Snowflake
 
 The following table outlines the configuration fields required to set up a catalog integration for [Iceberg tables in Snowflake](/reference/resource-configs/snowflake-configs#iceberg-table-format).
 
@@ -170,22 +170,22 @@ The following table outlines the configuration fields required to set up a catal
 
 You can connect to external Iceberg-compatible catalogs, such as Polaris and Unity Catalog, via the Iceberg REST `catalog_type`. Please note that we only support Iceberg REST with [Catalog Linked Databases](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database). 
 
-### Adapter Properties
+### Adapter properties
 
 These are the additional configurations, unique to Snowflake, that can be supplied and nested under `adapter_properties`. 
 
-#### Built-In Catalog
+#### Built-in catalog
 
-| Field | Required | Accepted Values |
+| Field | Required | Accepted values |
 | --- | --- | --- |
 | `change_tracking` | Optional | `True` or `False`    |
 | `data_retention_time_in_days` | Optional | Standard Account: `1`, Enterprise or higher: `0` to `90`, default `1`  |
 | `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
 | `storage_serialization_policy` | Optional | `COMPATIBLE` or `OPTIMIZED`     |
 
-#### REST Catalog
+#### REST catalog
 
-| Field | Required | Accepted Values |
+| Field | Required | Accepted values |
 | --- | --- | --- |
 | `auto_refresh` | Optional | `True` or `False`    |
 | `catalog_linked_database` | Required for `catalog type: iceberg_rest`. | catalog linked database name.   |
