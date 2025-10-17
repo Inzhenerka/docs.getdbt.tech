@@ -26,7 +26,7 @@ To set up Databricks for reading and querying external tables, configure [Lakeho
 We do not currently support the new Private Priview features of Databricks managed Iceberg tables. 
 
 
-## dbt Catalog Integration Configurations for Databricks
+## dbt Catalog integration configurations for Databricks
 
 The following table outlines the configuration fields required to set up a catalog integration for [Iceberg compatible tables in Databricks](https://docs.databricks.com/aws/en/delta/uniform).
 
