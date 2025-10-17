@@ -34,7 +34,7 @@ The following table outlines the configuration fields required to set up a catal
 | :---- | :---- | :---- | :---- |
 | name | Name of the Catalog on Databricks | Yes | “my_unity_catalog” |
 | catalog_type | Type of catalog  | Yes | unity, hive_metastore |
-| table_format | Table Format for your dbt models will be materialized as  | Optional | Fixed to `iceberg` for `catalog_type=unity` and `default` for `hive_metastore` 
+| table_format | Format for tables created by dbt models.  | Optional | Automatically set to `iceberg` for `catalog_type=unity`; and `default` for `hive_metastore`. |
 | file_format | Format used for dbt model outputs.   | Optional | Defaults to `delta` unless overwritten in Databricks account.  |
 
 #### Note
