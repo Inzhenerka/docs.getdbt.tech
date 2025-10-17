@@ -188,7 +188,7 @@ These are the additional configurations, unique to Snowflake, that can be suppli
 | Field | Required | Accepted Values |
 | --- | --- | --- |
 | `auto_refresh` | Optional | `True` or `False`    |
-| `catalog_linked_database` | Required if you are using the iceberg_rest `catalog type`. | catalog linked database name.   |
+| `catalog_linked_database` | Required for `catalog type: iceberg_rest`. | catalog linked database name.   |
 | `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
 | `target_file_size` | Optional | values like `'AUTO'`, `'16MB'`, `'32MB'`, `'64MB'`, `'128MB'`, etc., case insensitive  |
 
