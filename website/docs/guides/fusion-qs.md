@@ -263,7 +263,7 @@ Note: It is possible to "hide" status bar items in VS Code. Double-check if the 
 
 <Expandable alt_header="Missing dbt LSP features">
 
-If you receive a no active LSP for this workspace error message or aren't seeing dbt Language Server (LSP) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general troubleshooting steps mentioned earlier.
+If you receive a `no active LSP for this workspace` error message or aren't seeing dbt Language Server (LSP) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general troubleshooting steps mentioned earlier.
 
 If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
 
