@@ -183,7 +183,7 @@ These are the additional configurations, unique to Snowflake, that can be suppli
 | `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
 | `storage_serialization_policy` | Optional | `COMPATIBLE` or `OPTIMIZED`     |
 
-#### Rest Catalog
+#### REST Catalog
 
 | Field | Required | Accepted Values |
 | --- | --- | --- |
