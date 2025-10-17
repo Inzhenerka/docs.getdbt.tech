@@ -39,7 +39,7 @@ The following table outlines the configuration fields required to set up a catal
 
 #### Note
 
-On Databricks, if a model has `catalog_name=<>` in its model config, the catalog name becomes the catalog part of the model's FQN. For example, if the catalog is named my_database, a model with `catalog_name='my_database'` is materialized as `my_database`.<schema>.<model>`.
+On Databricks, if a model has `catalog_name=<>` in its model config, the catalog name becomes the catalog part of the model's FQN. For example, if the catalog is named `my_database`, a model with `catalog_name='my_database'` is materialized as `my_database.<schema>.<model>`.
 
 ### Configure catalog integration for managed Iceberg tables
 
