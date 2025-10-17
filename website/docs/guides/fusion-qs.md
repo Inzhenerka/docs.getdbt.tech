@@ -172,7 +172,7 @@ Want to see <Constant name="fusion" /> in action? Check out the following video 
 
 Now that your project works, open it in VS Code and see Fusion in action:
 
-1. In VS Code, open the **View** menu and click **Command Palette** then type **Workspaces: Add Folder to Workspace**.
+1. In VS Code, open the **View** menu and click **Command Palette**. Enter **Workspaces: Add Folder to Workspace**.
 2. Select your `jaffle_shop` folder
 3. If you skip this step, the [dbt language server](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server) (LSP) will not run. The LSP enables features like autocomplete, hover info, and inline error highlights.
 4. Open a model file to see the definition for the `orders` model. This is the model we'll use in all of the examples below.
