@@ -1,5 +1,6 @@
 <Constant name="fusion_engine" /> powers dbt development everywhere — in the [<Constant name="dbt_platform" />](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine), VS Code/Cursor, and locally.
-Features vary by environment; see the following table and choose the best <Constant name="fusion" />-friendly setup for you:
+
+Features vary by environment. Whether you’re new to dbt or already set up, the following table shows which Fusion-friendly tools you can use and what’s available where.
 
 <!-- table 1 for orientation (“Which tool should I use?”)-->
 |  <div style={{width:'120px'}}>Developing in</div> | <div style={{width:'220px'}}>Fusion-friendly tool you can use</div>  | <div style={{width:'125px'}}>Supports projects in</div> | Fusion features |
