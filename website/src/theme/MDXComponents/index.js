@@ -48,7 +48,6 @@ import ConfettiTrigger from '@site/src/components/confetti/';
 import VersionCallout from '@site/src/components/versionCallout';
 import IntroText from '@site/src/components/IntroText';
 import Constant from '@site/src/components/constant';
-import CopyPage from '@site/src/components/copyPage';
 
 const MDXComponents = {
   Head,
@@ -104,6 +103,5 @@ const MDXComponents = {
   VersionCallout: VersionCallout,
   IntroText: IntroText,
   Constant: Constant,
-  CopyPage: CopyPage,
 };
 export default MDXComponents;
