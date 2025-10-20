@@ -30,7 +30,7 @@ const LLM_SERVICES = {
   }
 };
 
-function CopyPage({ pageContent }) {
+function CopyPage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const dropdownRef = useRef(null);
@@ -63,10 +63,8 @@ function CopyPage({ pageContent }) {
   const handleCopyPage = async () => {
     try {
       // Get the current page content as markdown
-      const markdownContent = pageContent || rawMarkdownContent;
-      
-      if (markdownContent) {
-        copyToClipboard(markdownContent);
+      if (rawMarkdownContent) {
+        copyToClipboard(rawMarkdownContent);
         setIsDropdownOpen(false);
       } else {
         console.error('No markdown content available to copy');

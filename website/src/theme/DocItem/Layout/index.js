@@ -189,8 +189,7 @@ export default function DocItemLayout({children}) {
           <article>
           <div className={styles.copyPageContainer}>
             <DocBreadcrumbs />
-            
-              <CopyPage />
+            <CopyPage />
             </div>
             <DocVersionBadge />
             {docTOC.mobile}
