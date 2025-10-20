@@ -23,100 +23,42 @@ function removeFrontmatter(content) {
 }
 
 /**
- * Normalize metadata.source to match rawMarkdownData keys
- * @param {string} source - The source path from metadata
- * @returns {string} Normalized path
- */
-function normalizeMetadataSource(source) {
-  // Remove common prefixes like @site/, @docusaurus/, website/, etc.
-  return source
-    .replace(/^@site\/website\/docs\//, '')
-    .replace(/^@site\/docs\//, '')
-    .replace(/^@site\//, '')
-    .replace(/^website\/docs\//, '')
-    .replace(/^docs\/docs\//, 'docs/') // Handle double docs/ from website/docs/docs/
-    .replace(/^\.\.\//, '');
-}
-
-/**
- * Generate potential file paths based on URL path
- * Handles cases where the URL doesn't match the filename due to custom frontmatter IDs
- * @param {string} pathname - The URL pathname
- * @returns {Array<string>} Array of potential file paths to try
- */
-function generatePotentialPaths(pathname) {
-  const urlParts = pathname.split('/').filter(part => part.length > 0);
-  const potentialPaths = [];
-
-  if (urlParts.length === 0) {
-    return ['docs/index.md', 'index.md'];
-  }
-
-  const lastPart = urlParts[urlParts.length - 1];
-  const basePath = urlParts.join('/');
-
-  // Strategy 1: Direct match (URL path matches file path)
-  potentialPaths.push(`${basePath}.md`);
-
-  // Strategy 2: Try common filename patterns that differ from URL
-  // These patterns come from frontmatter "id" fields that create different URLs
-  const filenameVariations = [
-    `${lastPart}-qs`,      // quickstart guides: /guides/fusion -> fusion-qs.md
-    `apis-${lastPart}`,    // API docs: /docs/dbt-cloud-apis/overview -> apis-overview.md
-    `schema-${lastPart}`,  // Schema docs
-    `sl-${lastPart}`,      // Semantic layer docs
-  ];
-
-  for (const variation of filenameVariations) {
-    const pathWithVariation = [...urlParts.slice(0, -1), variation].join('/');
-    potentialPaths.push(`${pathWithVariation}.md`);
-  }
-
-  return potentialPaths;
-}
-
-/**
  * Hook to get raw markdown content for the current page
- * Uses Docusaurus metadata for reliable file path resolution
+ * Uses the pathByIdMap from the plugin to resolve custom frontmatter IDs
  * @returns {string} The raw markdown content or null if not available
  */
 export function useRawMarkdownContent() {
   try {
-    const { useDoc } = require('@docusaurus/plugin-content-docs/client');
     const { usePluginData } = require('@docusaurus/useGlobalData');
-    const { rawMarkdownData } = usePluginData('docusaurus-build-raw-markdown-data-plugin');
+    const pluginData = usePluginData('docusaurus-build-raw-markdown-data-plugin');
+    const { rawMarkdownData, pathByIdMap } = pluginData || {};
 
     if (!rawMarkdownData) {
       return null;
     }
 
-    // Strategy 1: Use Docusaurus metadata (most reliable when available)
-    try {
-      const { metadata } = useDoc();
-      if (metadata?.source) {
-        const normalizedSource = normalizeMetadataSource(metadata.source);
-        if (rawMarkdownData[normalizedSource]) {
-          return removeFrontmatter(rawMarkdownData[normalizedSource]);
-        }
-      }
-    } catch (docError) {
-      // useDoc() not available on this page type, will use fallback
-    }
-
-    // Strategy 2: Fallback to URL-based path matching
-    // This handles cases where useDoc() fails or metadata.source doesn't match
+    // Get the current URL pathname (query parameters are automatically excluded)
     const pathname = window.location.pathname;
-    const potentialPaths = generatePotentialPaths(pathname);
+    const urlPath = pathname.split('/').filter(part => part.length > 0).join('/');
 
+    // Try to find the markdown content using multiple strategies
+    const potentialPaths = [
+      // Strategy 1: Direct path match (URL matches filename)
+      `${urlPath}.md`,
+      `${urlPath}.mdx`,
+
+      // Strategy 2: Use the ID mapping (handles custom frontmatter IDs)
+      // This is the key to solving the problem - the plugin pre-computed this for us!
+      pathByIdMap?.[`${urlPath}.md`],
+      pathByIdMap?.[`${urlPath}.mdx`],
+    ].filter(Boolean); // Remove null/undefined entries
+
+    // Try each potential path
     for (const filePath of potentialPaths) {
       if (rawMarkdownData[filePath]) {
         return removeFrontmatter(rawMarkdownData[filePath]);
       }
     }
-
-    // If we still haven't found it, log for debugging
-    console.debug('Failed to find markdown content for:', pathname);
-    console.debug('Tried paths:', potentialPaths);
 
     return null;
   } catch (error) {
