@@ -2,6 +2,32 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useRawMarkdownContent, } from '../../utils/markdown-utils';
 
+// Configuration for different LLM services
+const LLM_SERVICES = {
+  chatgpt: {
+    name: 'ChatGPT',
+    url: 'https://chatgpt.com/?hints=search&prompt=Read+from+{url}+so+I+can+ask+questions+about+it.',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    ),
+    subtitle: 'Ask questions about this page'
+  },
+  claude: {
+    name: 'Claude',
+    url: 'https://claude.ai/?prompt=Read+from+{url}+so+I+can+ask+questions+about+it.',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    ),
+    subtitle: 'Ask questions about this page'
+  }
+};
+
 function CopyPage({ pageContent }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -48,16 +74,22 @@ function CopyPage({ pageContent }) {
     }
   };
 
-  const handleOpenInChatGPT = () => {
+  const handleOpenInLLM = (serviceKey) => {
     try {
+      const service = LLM_SERVICES[serviceKey];
+      if (!service) {
+        console.error(`Unknown LLM service: ${serviceKey}`);
+        return;
+      }
+
       const currentUrl = window.location.href;
       const encodedUrl = encodeURIComponent(currentUrl);
-      const chatGptUrl = `https://chatgpt.com/?hints=search&prompt=Read+from+${encodedUrl}+so+I+can+ask+questions+about+it.`;
+      const llmUrl = service.url.replace('{url}', encodedUrl);
       
-      window.open(chatGptUrl, '_blank');
+      window.open(llmUrl, '_blank');
       setIsDropdownOpen(false);
     } catch (error) {
-      console.error('Error opening in ChatGPT:', error);
+      console.error(`Error opening in ${serviceKey}:`, error);
     }
   };
 
@@ -94,19 +126,19 @@ function CopyPage({ pageContent }) {
               <div className={styles.dropdownItemSubtitle}>Copy page as Markdown for LLMs</div>
             </div>
           </button>
-          <button
-            className={styles.dropdownItem}
-            onClick={handleOpenInChatGPT}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-            </svg>
-            <div className={styles.dropdownItemContent}>
-              <div className={styles.dropdownItemTitle}>Open in ChatGPT</div>
-              <div className={styles.dropdownItemSubtitle}>Ask questions about this page</div>
-            </div>
-          </button>
+          {Object.entries(LLM_SERVICES).map(([serviceKey, service]) => (
+            <button
+              key={serviceKey}
+              className={styles.dropdownItem}
+              onClick={() => handleOpenInLLM(serviceKey)}
+            >
+              {service.icon}
+              <div className={styles.dropdownItemContent}>
+                <div className={styles.dropdownItemTitle}>Open in {service.name}</div>
+                <div className={styles.dropdownItemSubtitle}>{service.subtitle}</div>
+              </div>
+            </button>
+          ))}
         </div>
       )}
       
