@@ -65,8 +65,6 @@ To use this generic test, specify it by name in the `data_tests` property of a m
 <File name='models/<filename>.yml'>
 
 ```yaml
-
-
 models:
   - name: users
     columns:
