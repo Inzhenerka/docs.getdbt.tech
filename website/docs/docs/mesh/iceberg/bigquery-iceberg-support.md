@@ -30,7 +30,7 @@ The following table outlines the configuration fields required to set up a catal
 | `external_volume`| yes      | `gs://<bucket_name>`                                                                    |
 | `table_format`   | yes      | `iceberg`                                                                               |
 | `catalog_type`   | yes      | `biglake_metastore`                                                                     |
-| `file_format`    | optional | `default`,`parquet`                                                                     |
+| `file_format`    | yes      | `default`,`parquet`                                                                     |
 
 dbt has an additonal configuration: `storage_uri` that the user can use on the model configuration to override the catalog integration path to supply the entire `storage_uri` path directly.
 
@@ -48,6 +48,7 @@ catalogs:
       - name: biglake_metastore
         external_volume: 'gs://mydbtbucket'
         table_format: iceberg
+        file_format: parquet
         catalog_type: biglake_metastore
 
 ```
@@ -60,7 +61,7 @@ catalogs:
 {{
     config(
         materialized='table',
-        catalog_name = my_bigquery_iceberg_catalog
+        catalog_name = 'my_bigquery_iceberg_catalog'
 
     )
 }}

@@ -64,10 +64,12 @@ flags:
   require_batched_execution_for_custom_microbatch_strategy: False
   require_nested_cumulative_type_params: False
   validate_macro_args: False
-  require_generic_test_arguments_property: False
+  require_generic_test_arguments_property: True
 ```
 
 </File>
+
+#### dbt Core behavior changes
 
 This table outlines which month of the "Latest" release track in <Constant name="cloud" /> and which version of <Constant name="core" /> contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
 
@@ -76,16 +78,28 @@ This table outlines which month of the "Latest" release track in <Constant name=
 | [require_explicit_package_overrides_for_builtin_materializations](#package-override-for-built-in-materialization) | 2024.04          | 2024.06             | 1.6.14, 1.7.14  | 1.8.0             |
 | [require_resource_names_without_spaces](#no-spaces-in-resource-names)                           | 2024.05          | 2025.05                | 1.8.0           | 1.10.0             |
 | [source_freshness_run_project_hooks](#project-hooks-with-source-freshness)                              | 2024.03          | 2025.05                | 1.8.0           | 1.10.0             |
-| [restrict_direct_pg_catalog_access](/reference/global-configs/redshift-changes#the-restrict_direct_pg_catalog_access-flag) [Redshift]   | 2024.09          | TBD*                | dbt-redshift v1.9.0           | 1.9.0             |
 | [skip_nodes_if_on_run_start_fails](#failures-in-on-run-start-hooks)                                | 2024.10          | TBD*                | 1.9.0           | TBD*              |
 | [state_modified_compare_more_unrendered_values](#source-definitions-for-state)                   | 2024.10          | TBD*                | 1.9.0           | TBD*              |
 | [require_yaml_configuration_for_mf_time_spines](#metricflow-time-spine-yaml)                  | 2024.10          | TBD*                | 1.9.0           | TBD*              |
 | [require_batched_execution_for_custom_microbatch_strategy](#custom-microbatch-strategy)                  | 2024.11         | TBD*                | 1.9.0           | TBD*              |
 | [require_nested_cumulative_type_params](#cumulative-metrics)         |   2024.11         | TBD*                 | 1.9.0           | TBD*            |
 | [validate_macro_args](#macro-argument-validation)         | 2025.03           | TBD*                 | 1.10.0          | TBD*            | 
-| [require_generic_test_arguments_property](#generic-test-arguments-property) | 2025.07 | TBD* | 1.10.5 | TBD* |
+| [require_generic_test_arguments_property](#generic-test-arguments-property) | 2025.07 | 2025.08 | 1.10.5 | 1.10.8 |
+
+#### dbt adapter behavior changes
+
+This table outlines which version of the dbt adapter contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
+
+| Flag                          | dbt-ADAPTER: Intro | dbt-ADAPTER: Maturity |
+| ----------------------------- | ----------------------- | -------------------------- |
+| [use_info_schema_for_columns](/reference/global-configs/databricks-changes#use-information-schema-for-columns) | Databricks 1.9.0                   | TBD                        |
+| [use_user_folder_for_python](/reference/global-configs/databricks-changes#use-users-folder-for-python-model-notebooks)  | Databricks 1.9.0                   | TBD                        |
+| [use_materialization_v2](/reference/global-configs/databricks-changes#use-restructured-materializations)      | Databricks 1.10.0                  | TBD                        |
+| [enable_truthy_nulls_equals_macro](/reference/global-configs/snowflake-changes#the-enable_truthy_nulls_equals_macro-flag) | Snowflake 1.9.0 | TBD | 
+| [restrict_direct_pg_catalog_access](/reference/global-configs/redshift-changes#the-restrict_direct_pg_catalog_access-flag) | Redshift 1.9.0 | TBD |
 
 When the <Constant name="cloud" /> Maturity is "TBD," it means we have not yet determined the exact date when these flags' default values will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
+
 - Migrate your project to support the new behavior, and then set the flag to `True` to stop seeing the warnings.
 - Set the flag to `False`. You will continue to see warnings, and you will retain the legacy behavior even after the maturity date (when the default value changes).
 
@@ -260,7 +274,9 @@ When you set the `validate_macro_args` flag to `True`, dbt will:
 
 dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
 
-By default, the `require_generic_test_arguments_property` flag is set to `False`, so using this `arguments` property is optional. If you do use `arguments` while the flag is `False`, dbt will recognize it but raise the `ArgumentsPropertyInGenericTestDeprecation` warning to let you know that the flag will eventually default to `True` and become required.
+In "Latest", the `require_generic_test_arguments_property` flag is set to `True` by default. In dbt Core versions prior to 1.10.8, the default value is `False`. Using the `arguments` property in test definitions is optional in either case.
+
+If you do use `arguments` while the flag is `False`, dbt will recognize it but raise the `ArgumentsPropertyInGenericTestDeprecation` warning. This warning lets you know that the flag will eventually default to `True` across all releases and will be parsed as keyword arguments to the data test.
 
 Here's an example using the new `arguments` property:
 

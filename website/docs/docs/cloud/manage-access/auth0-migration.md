@@ -13,13 +13,9 @@ If you have not yet configured SSO in <Constant name="cloud" />, refer instead t
 
 ## Start the migration
 
-The Auth0 migration feature is being rolled out incrementally to customers who have SSO features already enabled. When the migration option has been enabled on your account, you will see **SSO Updates Available** on the right side of the menu bar, near the settings icon. 
+The Auth0 migration feature is being rolled out incrementally to customers who have SSO features already enabled. When the migration option has been enabled on your account, you will see **SSO Update Required** on the right side of the menu bar, near the settings icon. 
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/sso-migration-available.png" title="SSO migration available"/>
-
-Alternatively, you can start the process from the **Settings** page in the **Single Sign-on** pane. Click the **Begin Migration** button to start. 
-
-<Lightbox src="/img/docs/dbt-cloud/access-control/begin-migration.png" title="Begin Migration"/>
+Alternatively, you can start the process by clicking your account name at the bottom left-hand menu and going to **Account settings** > **Single sign-on**. Click the **Begin Migration** button to start.
 
 :::warning vanity urls
 
@@ -68,9 +64,7 @@ Here is an example of an updated SAML 2.0 setup in Okta.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/new-okta-completed.png" title="New Okta configuration completed"/>
 
-3. Toggle the `Enable new SSO authentication` option to ensure the traffic is routed correctly. _The new SSO migration action is final and cannot be undone_
-
-<Lightbox src="/img/docs/dbt-cloud/access-control/saml-enable.png" title="Enable new SSO for SAML/Okta"/>
+3. Toggle the `Enable new SSO authentication` option to ensure the traffic is routed correctly. _The new SSO migration action is final and cannot be undone._
 
 4. Save the settings and test the new configuration using the SSO login URL provided on the settings page. 
 
@@ -96,9 +90,7 @@ The new values for these fields can be found in <Constant name="cloud" /> by nav
 
     <Lightbox src="/img/docs/dbt-cloud/access-control/entra-id-saml.png" width="90%" title="Completed configuration of the SAML fields in Entra ID"/>
 
-3. Toggle the `Enable new SSO authentication` option to ensure the traffic is routed correctly. _The new SSO migration action is final and cannot be undone_
-
-<Lightbox src="/img/docs/dbt-cloud/access-control/saml-enable.png" title="Enable new SSO for SAML/Okta"/>
+3. Toggle the `Enable new SSO authentication` option to ensure the traffic is routed correctly. _The new SSO migration action is final and cannot be undone._
 
 4. Save the settings and test the new configuration using the SSO login URL provided on the settings page.
 
@@ -128,7 +120,6 @@ You must complete the domain authorization before you toggle `Enable New SSO Aut
 
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/azure-enable.png" title="Enable new SSO"/>
 
 ## Google Workspace
 
@@ -156,5 +147,4 @@ You must complete the domain authorization before you toggle `Enable New SSO Aut
 
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/google-enable.png" title="Enable new SSO for Google Workspace"/>
 

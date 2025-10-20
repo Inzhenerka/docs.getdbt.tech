@@ -70,14 +70,14 @@ var siteSettings = {
       //debug: true,
     },
     announcementBar: {
-      id: "virtual-event",
+      id: "dbt-workshop",
       content:
-        "Join our live event: Modernize self-service analytics with dbt — cut costs, reduce bottlenecks, and keep the tools analysts love. Register now.",
+        "✨ Live virtual event -- Experience the dbt Fusion engine with Tristan Handy and Elias DeFaria on October 28th!",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://www.getdbt.com/resources/webinars/empowering-data-analysts-showcase-series-part-one",
+      "https://www.getdbt.com/resources/webinars/speed-simplicity-cost-savings-experience-the-dbt-fusion-engine",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
@@ -119,16 +119,16 @@ var siteSettings = {
               activeBaseRegex: "docs/(?!(dbt-cloud))",
             },
             {
-              label: "API docs",
-              to: "/docs/dbt-cloud-apis/overview",
+              label: "References",
+              to: "reference/references-overview",
             },
             {
               label: "Best practices",
               to: "/best-practices",
             },
             {
-              label: "Release notes",
-              to: "/docs/dbt-versions/dbt-cloud-release-notes",
+              to: "/blog",
+              label: "Developer blog",
             },
           ],
         },
@@ -138,26 +138,33 @@ var siteSettings = {
           position: "right",
         },
         {
-          to: "reference/references-overview",
-          label: "Reference",
+          to: "/docs/dbt-cloud-apis/overview",
+          label: "APIs",
           position: "right",
-          activeBasePath: "reference",
         },
         {
-          label: "Resources",
+          label: "Help",
           position: "right",
           items: [
             {
+              label: "Release notes",
+              to: "/docs/dbt-versions/dbt-cloud-release-notes",
+            },
+            {
+              label: "FAQs",
+              to: "/docs/faqs",
+            },
+            {
+              label: "Support and billing",
+              to: "/docs/dbt-support",
+            },
+            {
+              label: "Fusion Diaries",
+              href: "https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements",
+            },
+            {
               label: "Courses",
               href: "https://learn.getdbt.com",
-            },
-            {
-              label: "Best practices",
-              to: "/best-practices",
-            },
-            {
-              label: "Developer blog",
-              to: "/blog",
             },
           ],
         },
@@ -203,6 +210,13 @@ var siteSettings = {
             },
           ],
         },
+        {
+          label: "Install VS Code extension",
+          position: "right",
+          to: "https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt",
+          id: "nav-install-vs-code-extension",
+          className: "nav-install-dbt-extension",
+        },
       ],
     },
     footer: {
@@ -214,8 +228,24 @@ var siteSettings = {
             data-ft-workflow-tag="docs" 
             config-ft-greeting-message="Welcome to dbt Product docs! Ask a question."
             config-ft-widget-header-title = "Ask a question"
+            config-ft-privacy-policy = "We're pleased to offer this complimentary chatbot service, powered by Forethought.ai, to optimize your experience and productivity. Your use of this chatbot is subject to, and may be retained pursuant to, the terms of the privacy policy available for review at <a href='https://www.getdbt.com/cloud/privacy-policy' target='_blank'>https://www.getdbt.com/cloud/privacy-policy</a>."
           ></script>
+          <div class='bottom-cta'>
+            <div class='container'>
+              <div class='cta-section-text'>
+                <span class="eyebrow">Get started</span>
+                <h2 class="heading-2">Start building with dbt.</h2>
+                <p>The free dbt VS Code extension is the best way to develop locally with the dbt Fusion Engine.</p>
+              </div>
+              <div class="cta-section">
+                <a href="https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt" target="_blank" class="primary-cta">Install free extension</a>
+                <a href="https://www.getdbt.com/contact" target="_blank" class="secondary-cta">Request your demo</a>
+              </div>
+            </div>
+          </div>
 
+          <div class="sub-footer">
+          <div class="container">
           <div class="footer-logo">
             <a href="/">
               <img src="/img/dbt-logo-light.svg?v=2" alt="dbt Labs" />
@@ -225,6 +255,7 @@ var siteSettings = {
           <div class="footer-grid">
             <div class="footer-grid-item">
               <h5 class="heading-5">Resources</h5>
+              <a href='/docs/about-dbt-extension'>VS Code Extension</a>
               <a href="https://www.getdbt.com/resources" target="_blank">Resource Hub</a>
               <a href="https://www.getdbt.com/dbt-learn" target="_blank">dbt Learn</a>
               <a href="https://www.getdbt.com/dbt-certification" target="_blank">Certification</a>
@@ -269,6 +300,8 @@ var siteSettings = {
               <a href='https://www.getdbt.com/security/'>Security</a>
               <button id="ot-sdk-btn" onclick="openPreferenceCenter()">Cookie Settings</button>
             </div>
+          </div>
+          </div>
           </div>
           `,
         },
@@ -333,6 +366,133 @@ var siteSettings = {
         mode: "auto",
       },
     ],
+    [
+      "@signalwire/docusaurus-plugin-llms-txt",
+      {
+        generate: {
+          enableMarkdownFiles: true,
+          enableLlmsFullTxt: true,
+          relativePaths: false,
+        },
+        include: {
+          includeBlog: false,
+          includePages: false,
+          includeDocs: true,
+        },
+        // Content organization
+        structure: {
+          sections: [
+            {
+              id: "getting-started",
+              name: "Getting Started",
+              routes: [
+                { route: "/docs/introduction" },
+                { route: "/docs/get-started-dbt" },
+                { route: "/docs/configuration-checklist" },
+              ],
+            },
+            {
+              id: "set-up-dbt",
+              name: "Set up dbt",
+              routes: [
+                { route: "/docs/about-setup" },
+                { route: "/docs/environments-in-dbt" },
+                { route: "/docs/running-a-dbt-project/**" },
+              ],
+              subsections: [
+                {
+                  id: "dbt-platform",
+                  name: "dbt platform",
+                  routes: [
+                    { route: "/docs/about-cloud-setup" },
+                    { route: "/docs/cloud/account-settings" },
+                    { route: "/docs/cloud/account-integrations" },
+                    { route: "/docs/dbt-cloud-environments" },
+                    { route: "/docs/cloud/migration" },
+                  ],
+                  subsections: [
+                    {
+                      id: "connect-data-platform",
+                      name: "Connect data platform",
+                      routes: [{ route: "/docs/cloud/connect-data-platform/**" }],
+                    },
+                    {
+                      id: "manage-access",
+                      name: "Manage access",
+                      routes: [{ route: "/docs/cloud/manage-access/**" }],
+                    },
+                    {
+                      id: "git",
+                      name: "Git",
+                      routes: [{ route: "/docs/cloud/git/**" }],
+                    },
+                    {
+                      id: "secure",
+                      name: "Secure",
+                      routes: [{ route: "/docs/cloud/secure/**" }],
+                    },
+                  ],
+                },
+                {
+                  id: "dbt-core-and-fusion",
+                  name: "dbt Core and Fusion",
+                  routes: [
+                    { route: "/docs/about-dbt-install" },
+                    { route: "/docs/core/dbt-core-environments" },
+                  ],
+                  subsections: [
+                    {
+                      id: "install-dbt-fusion-engine",
+                      name: "Install dbt Fusion engine",
+                      routes: [
+                        { route: "/docs/fusion/about-fusion-install" },
+                        { route: "/docs/fusion/install-dbt-extension" },
+                        { route: "/docs/fusion/install-fusion-cli" },
+                      ],
+                    },
+                    {
+                      id: "install-dbt-core",
+                      name: "Install dbt Core",
+                      routes: [
+                        { route: "/docs/core/installation-overview" },
+                        { route: "/docs/core/docker-install" },
+                        { route: "/docs/core/pip-install" },
+                        { route: "/docs/core/source-install" },
+                      ],
+                    },
+                    {
+                      id: "core-connect-data-platform",
+                      name: "Connect data platform",
+                      routes: [
+                        { route: "/docs/core/connect-data-platform/**" },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: "fusion",
+              name: "Fusion",
+              routes: [{ route: "/docs/fusion/**" }],
+            },
+            {
+              id: "platform",
+              name: "Platform",
+              routes: [{ route: "/docs/cloud/**" }],
+            },
+            {
+              id: "api-reference",
+              name: "API Reference",
+              routes: [{ route: "/docs/dbt-cloud-apis/**" }],
+            },
+          ],
+          siteTitle: "dbt Developer Hub",
+          siteDescription:
+            "End user documentation, guides and technical reference for dbt",
+        },
+      },
+    ],
   ],
   scripts: [
     {
@@ -343,8 +503,8 @@ var siteSettings = {
       src: "https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js",
       defer: true,
     },
-    { 
-      src: '/js/checkboxes.js', 
+    {
+      src: "/js/checkboxes.js",
       async: true,
     },
     "https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js",
@@ -353,6 +513,11 @@ var siteSettings = {
     "/js/onetrust.js",
     "/js/mutiny.js",
     "/js/hide-forethought.js",
+    {
+      src: "https://www.google.com/recaptcha/api.js?render=6LeIksMrAAAAABYsWNCpUv15lXXzEZj91zdDCymo",
+      async: true,
+      defer: true,
+    },
   ],
   stylesheets: [
     "/css/fonts.css",

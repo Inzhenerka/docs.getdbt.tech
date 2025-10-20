@@ -16,6 +16,57 @@ pagination_prev: null
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## October 2025
+
+### Coalesce 2025 announcements
+
+The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
+
+- **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
+  - [About data platform connections](/docs/cloud/connect-data-platform/about-connections) lists all available <Constant name="dbt_platform" /> connections on Fusion and the supported authentication methods per connection. 
+- **New**: Fusion‑specific configuration is now available for BigQuery, Databricks, Redshift, and Snowflake. For more information, see [Connect Fusion to your data platform](/docs/fusion/connect-data-platform-fusion/profiles.yml).
+- **Alpha**: The `dbt-salesforce` adapter is available via the <Constant name="fusion_engine" /> CLI. Note that this connection is in the Alpha product stage and is not production-ready. For more information, see [Salesforce Data Cloud setup](/docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup).
+- **Private preview**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in private preview!
+  - **New**: You can now [enable state-aware orchestration](/docs/deploy/state-aware-setup) by selecting **Enable Fusion cost optimization features** in your job settings. Previously, you had to disable **Force node selection** to enable state-aware orchestration.  
+  - **Private beta**: The [Efficient Testing feature](/docs/deploy/state-aware-about#efficient-testing-in-state-aware-orchestration) is now available in private beta. This feature reduces warehouse costs by avoiding redundant data tests and combining multiple tests in a single query.
+  - **New**: To improve visibility into state‑aware orchestration and provide better control when you need to reset cached state, the following [UI enhancements](/docs/deploy/state-aware-interface) are introduced:
+    - **Models built and reused chart** on your **Account home**
+    - New charts in the **Overview** section of your job that display **Recent runs**, **Total run duration**, **Models built**, and **Models reused**
+    - A new structure to view logs grouped by models, with a **Reused** tab to quickly find reused models
+    - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
+    - **Clear cache** button on the **Environments** page to reset cached state when needed
+- **New**: [dbt <Constant name="query_page" />](/docs/explore/dbt-insights) is now generally available (GA)!
+  - **Private beta**: The [<Constant name="copilot" /> agent](/docs/explore/navigate-dbt-insights#dbt-copilot) is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. For more information, see [Analyze data with the Copilot agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-copilot-agent).
+  - **Beta**: dbt <Constant name="query_page" /> now has a [Query Builder](/docs/explore/navigate-dbt-insights#query-builder), where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
+  - **Enhancement**: In [dbt <Constant name="query_page" />](/docs/explore/dbt-insights), projects upgraded to the [<Constant name="fusion_engine" />](/docs/fusion/about-fusion) get [Language Server Protocol (LSP) features](/docs/explore/navigate-dbt-insights#lsp-features) and their compilation running on <Constant name="fusion" />.
+- **New**: [MetricFlow](/docs/build/about-metricflow) is now developed and maintained as part of the [Open Semantic Interchange (OSI)](https://www.snowflake.com/en/blog/open-semantic-interchange-ai-standard/) initiative, and is distributed under the [Apache 2.0 license](https://github.com/dbt-labs/metricflow/blob/main/LICENSE). For more information, see the blog post about [Open sourcing MetricFlow](https://www.getdbt.com/blog/open-source-metricflow-governed-metrics).
+
+### Pre-Coalesce 
+
+- **Behavior change**: <Constant name="dbt_platform" /> [access URLs](/docs/cloud/about-cloud/access-regions-ip-addresses) for accounts in the US multi-tenant (US MT) region are transitioning from `cloud.getdbt.com` to dedicated domains on `dbt.com` (for example, `us1.dbt.com`). Users will be automatically redirected, which means no action is required. EMEA and APAC MT accounts are not impacted by this change and will be updated by the end of November 2025.
+
+  Organizations that use network allow-listing should add `YOUR_ACCESS_URL.dbt.com` to their allow list (for example, if your access URL is `ab123.us1.dbt.com`, add the entire domain `ab123.us1.dbt.com` to your allow list). 
+    
+  All OAuth, Git, and public API integrations will continue to work with the previous domain. View the updated access URL in <Constant name="dbt_platform" />'s **Account settings** page.
+
+  For questions, contact [support@getdbt.com](mailto:support@getdbt.com).
+
+- **Enhancement**:
+  - **<Constant name="fusion" /> MCP tools** &mdash; Added <Constant name="fusion" /> tools that support `compile_sql` and `get_column_lineage` (Fusion-exclusive) for both [Remote](/docs/dbt-ai/about-mcp#fusion-tools-remote) and [Local](/docs/dbt-ai/about-mcp#fusion-tools-local) usage. Remote <Constant name="fusion" /> tools defer to your prod environment by default (set with `x-dbt-prod-environment-id`); you can disable deferral with `x-dbt-fusion-disable-defer=true`. Refer to [set up remote MCP](/docs/dbt-ai/setup-remote-mcp) for more info.
+  - **Local MCP OAuth** &mdash; You can now authenticate the local dbt MCP server to the dbt platform with OAuth (supported docs for [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor), and [VS Code](/docs/dbt-ai/integrate-mcp-vscode)), reducing local secret management and standardizing setup. Refer to [dbt platform authentication](/docs/dbt-ai/setup-local-mcp#dbt-platform-authentication) for more information.
+- **Behavior change**: The CodeGenCodeLens feature for creating models from your sources with a click of a button has been temporarily removed from the <Constant name="cloud_ide" /> due to compatibility issues. We plan to reintroduce this feature in the near future for both the IDE and the VS Code extension.
+
+## September 2025
+
+- **Fix**: Improved how [MetricFlow](/docs/build/about-metricflow) handles [offset metrics](/docs/build/derived) for more accurate results when querying time-based data. MetricFlow now joins data _after_ aggregation when the query grain matches the offset grain. Previously, when querying offset metrics, the offset join was applied _before_ aggregation, which could exclude some values from the total time period.
+
+## August 2025
+
+- **Fix**: Resolved a bug that caused [saved query](/docs/build/saved-queries) exports to fail during `dbt build` with `Unable to get saved_query` errors. 
+- **New**: The <Constant name="semantic_layer" /> GraphQL API now has a [`queryRecords`](/docs/dbt-cloud-apis/sl-graphql#query-records) endpoint. With this endpoint, you can view the query history both for Insights and <Constant name="semantic_layer" /> queries.
+- **Fix**: Resolved a bug that caused <Constant name="semantic_layer" /> queries with a trailing whitespace to produce an error. This issue mostly affected [Push.ai](https://docs.push.ai/data-sources/semantic-layers/dbt) users and is fixed now. 
+- **New**: You can now use [personal access tokens (PATs)](/docs/dbt-cloud-apis/user-tokens) to authenticate in the Semantic Layer. This enables user-level authentication and reduces the need for sharing tokens between users. When you authenticate using PATs, queries are run using your personal development credentials. For more information, see [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
+
 ## July 2025
 
 - **New**: The [Tableau Cloud](https://www.tableau.com/products/cloud-bi) integration with Semantic Layer is now available. For more information, see [Tableau](/docs/cloud-integrations/semantic-layer/tableau).
@@ -57,7 +108,7 @@ The following features are new or enhanced as part of our [dbt Launch Showcase](
 - **New**: [State-aware orchestration](/docs/deploy/state-aware-about) is now in beta! Every time a new job in Fusion runs, state-aware orchestration automatically determines which models to build by detecting changes in code or data.
 - **New**: With Hybrid Projects, your organization can adopt complementary dbt Core and dbt Cloud workflows and seamlessly integrate these workflows by automatically uploading dbt Core artifacts into dbt Cloud. [Hybrid Projects](/docs/deploy/hybrid-projects) is now available as a preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing). 
 - **New**: [System for Cross-Domain Identity Management (SCIM)](/docs/cloud/manage-access/scim) through Okta is now GA.
-- **New**: dbt now acts as a [Model Context Protocol](/docs/dbt-cloud-apis/mcp) (MCP) server, allowing seamless integration of AI tools with data warehouses through a standardized framework.
+- **New**: dbt now acts as a [Model Context Protocol](/docs/dbt-ai/about-mcp) (MCP) server, allowing seamless integration of AI tools with data warehouses through a standardized framework.
 - **New**: The [quickstart guide for data analysts](/guides/analyze-your-data) is now available. With dbt, data analysts can use built-in, AI-powered tools to build governed data models, explore how they’re built, and run their own analysis.
 - **New**: You can view your [usage metering and limiting in dbt Copilot](/docs/cloud/billing#dbt-copilot-usage-metering-and-limiting) on the billing page of your dbt Cloud account.
 - **New**: You can use Copilot to create a `dbt-styleguide.md` for dbt projects. The generated style guide template includes SQL style guidelines, model organization and naming conventions, model configurations and testing practices, and recommendations to enforce style rules. For more information, see [Copilot style guide](/docs/cloud/copilot-styleguide).
@@ -84,7 +135,7 @@ The following features are new or enhanced as part of our [dbt Launch Showcase](
 ## April 2025
 
 - **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) now supports lazy loading for large fields for `dimensions`, `entities`, and `measures` on `Metric` objects. For more information, see [Lazy loading for large fields](/docs/dbt-cloud-apis/sl-python#lazy-loading-for-large-fields).
-- **Enhancement**: The <Constant name="semantic_layer" /> now supports [SSH tunneling for Postgres or Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) connections. Refer to [Set up the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) for more information.
+- **Enhancement**: The <Constant name="semantic_layer" /> now supports SSH tunneling for [Postgres](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) or [Redshift](/docs/cloud/connect-data-platform/connect-redshift) connections. Refer to [Set up the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) for more information.
 - **Behavior change**: Users assigned the [`job admin` permission set](/docs/cloud/manage-access/enterprise-permissions#job-admin) now have access to set up integrations for projects, including the [Tableau](/docs/cloud-integrations/downstream-exposures-tableau) integration to populate downstream exposures.
 
 ## March 2025

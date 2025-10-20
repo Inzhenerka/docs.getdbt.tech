@@ -40,7 +40,7 @@ definition:
   'tag:nightly'
 ```
 
-This simple syntax supports use of the `+`, `@`, and `*` [graph](/reference/node-selection/graph-operators) operators, but it does not support [set](/reference/node-selection/set-operators) operators or `exclude`.
+This simple syntax supports use of the `+`, `@`, and `*` [graph](/reference/node-selection/graph-operators) operators, [set](/reference/node-selection/set-operators) operators, and `exclude`.
 
 ### Key-value
 

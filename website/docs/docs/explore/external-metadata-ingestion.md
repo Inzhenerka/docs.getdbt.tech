@@ -44,6 +44,7 @@ These credentials are configured separately from dbt environment credentials and
 3. Select an existing connection or create a [**New connection**](/docs/cloud/connect-data-platform/connect-snowflake) where you want to ingest metadata from.
 4. Scroll to the bottom of the page and click **Add credentials** in **Platform metadata credentials**.
     - Enter the necessary credentials. These should have warehouse-level visibility across relevant databases and schemas.
+    - If you have multiple connections that reference the same account identifier, you will only be prompted to add platform metadata credentials to one of them. Other connections using the same account identifier will display a message indicating that platform metadata credentials are already configured. 
 5. Select the **External metadata ingestion** option.
     - This allows metadata from this connection to populate the <Constant name="explorer" />.
     - *Optional*: Enable additional features such as **cost optimization** in the **Features** section under **Platform metadata credentials**.
@@ -68,9 +69,10 @@ CREATE OR REPLACE ROLE dbt_metadata_role;
 2. Grant access to a warehouse to run queries to view metadata:
 
 ```sql
-GRANT OPERATE, USAGE ON WAREHOUSE "<your-warehouse>" TO ROLE dbt_metadata_role;
+GRANT USAGE ON WAREHOUSE "<your-warehouse>" TO ROLE dbt_metadata_role;
 ```
 
+If your warehouse needs to be restarted for metadata ingestions (doesn't have auto-resume enabled), you may need to grant `OPERATE` permissions to the role as well. 
 If you do not already have a user, create a dbt-specific user for metadata access. Replace `<your-password>` with a strong password and `<your-warehouse>` with the warehouse name used above:
 
 ```sql
@@ -148,7 +150,7 @@ The following are best practices for external metadata ingestion, designed to en
 - Use filters to limit ingestion to relevant assets:
     - For example: restrict to production schemas only, or ignore transient/temp schemas.
 
-Note that, external metadata ingestion runs once per day at 5 PM UTC.
+External metadata ingestion runs daily at 5 PM UTC, and also runs immediately each time you update and save credentials.
 
 
 

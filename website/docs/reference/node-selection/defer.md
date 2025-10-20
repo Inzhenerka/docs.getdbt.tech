@@ -6,7 +6,7 @@ Defer is a powerful feature that makes it possible to run a subset of models or 
 
 <Lightbox src src="/img/docs/reference/defer-diagram.png" width="50%" title="Use 'defer' to modify end-of-pipeline models by pointing to production models, instead of running everything upstream." />
 
-Defer requires that a manifest from a previous dbt invocation be passed to the `--state` flag or env var. Together with the `state:` selection method, these features enable "Slim CI". Read more about [state](/reference/node-selection/syntax#about-node-selection).
+Defer requires that a manifest from a previous dbt invocation be passed to the `--state` flag or env var. Together with the `state:` selection method, these features enable "Slim CI". Read more about [state](/reference/node-selection/state-selection).
 
 An alternative command that accomplishes similar functionality for different use cases is `dbt clone` - see the docs for [clone](/reference/commands/clone#when-to-use-dbt-clone-instead-of-deferral) for more information.
 
@@ -143,8 +143,9 @@ models:
       - name: id
         data_tests:
           - relationships:
-              to: ref('model_a')
-              field: id
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('model_a')
+                field: id
 ```
 
 (A bit silly, since all the data in `model_b` had to come from `model_a`, but suspend your disbelief.)

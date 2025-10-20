@@ -36,6 +36,7 @@ The following example is a list of all available configurations in the `dbt_proj
 [snapshot-paths](/reference/project-configs/snapshot-paths): [directorypath]
 [docs-paths](/reference/project-configs/docs-paths): [directorypath]
 [asset-paths](/reference/project-configs/asset-paths): [directorypath]
+[function-paths](/reference/project-configs/function-paths): [directorypath]
 
 [packages-install-path](/reference/project-configs/packages-install-path): directorypath
 
@@ -59,7 +60,8 @@ The following example is a list of all available configurations in the `dbt_proj
   database: true | false
   schema: true | false
   identifier: true | false
-
+  snowflake_ignore_case: true | false  # Fusion-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
+                                       # Ignored by dbt Core and other adapters.
 metrics:
   [<metric-configs>](/docs/build/metrics-overview)
 
@@ -95,6 +97,9 @@ vars:
     search_order: [packagename]
 
 [restrict-access](/docs/mesh/govern/model-access): true | false
+
+functions:
+  [<function-configs>](/reference/function-configs)
 
 ```
 

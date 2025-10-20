@@ -31,11 +31,70 @@ New features and functionality available in <Constant name="core" /> v1.10
 
 Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 
+### Move standalone anchors under `anchors:` key
+
+As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees an unexpected top-level key in a YAML file. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. You can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
+
+For example, rather than using this configuration:
+
+<File name='models/_models.yml'>
+
+```yml
+id_column: &id_column_alias
+  name: id
+  description: This is a unique identifier.
+  data_type: int
+  data_tests:
+    - not_null
+    - unique
+
+models:
+  - name: my_first_model
+    columns: 
+      - *id_column_alias
+      - name: unrelated_column_a
+        description: This column is not repeated in other models.
+  - name: my_second_model
+    columns: 
+      - *id_column_alias
+```
+
+</File>
+
+Move the anchor under the `anchors:` key instead:
+
+<File name='models/_models.yml'>
+
+```yml
+anchors: 
+  - &id_column_alias
+      name: id
+      description: This is a unique identifier.
+      data_type: int
+      data_tests:
+        - not_null
+        - unique
+
+models:
+  - name: my_first_model
+    columns: 
+      - *id_column_alias
+      - name: unrelated_column_a
+        description: This column is not repeated in other models
+  - name: my_second_model
+    columns: 
+      - *id_column_alias
+```
+
+</File>
+
+This move is only necessary for fragments defined outside of the main YAML structure. For more information about this new key, see [anchors](/reference/resource-properties/anchors).
+
 ### Parsing `catalogs.yml`
 
 dbt Core can now parse the `catalogs.yml` file. This is an important milestone in the journey to supporting external catalogs for Iceberg tables, as it enables write integrations. You'll be able to provide a config specifying a catalog integration for your producer model:
 
-For example: 
+For example:
 
 ```yml
 
@@ -257,5 +316,3 @@ The `warn_error_option` options for `include` and `exclude` have been deprecated
 - Provide the [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) property for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the [built-in query](https://github.com/dbt-labs/dbt-adapters/blob/6c41bedf27063eda64375845db6ce5f7535ef6aa/dbt/include/global_project/macros/adapters/freshness.sql#L4-L16), which uses the `loaded_at_field`). You cannot define `loaded_at_query` if the `loaded_at_field` config is also provided.
 
 - Provide validation for macro arguments using the [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) flag, which is disabled by default. When enabled, this flag checks that documented macro argument names match those in the macro definition and validates their types against a supported format. Previously, dbt did not enforce standard argument types, treating the type field as documentation-only. If no arguments are documented, dbt infers them from the macro and includes them in the manifest.json file. Learn more about [supported types](/reference/resource-properties/arguments#supported-types). 
-
-- [Cost management](/docs/cloud/cost-management) is coming soon to <Constant name="core" />! Select features will be introduced in <Constant name="core" /> v1.10, with many more to follow in v1.11. Be sure to upgrade so you can take advantage of these features when they launch in 2025.

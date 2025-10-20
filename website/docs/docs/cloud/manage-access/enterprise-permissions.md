@@ -89,13 +89,13 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Database admin">
 
-Database admins manage the connections and configurations between <Constant name="cloud" /> and the underlying databases. 
+Database admins manage configurations between <Constant name="cloud" /> and the underlying databases. 
 
 Notable features: 
 - Database admin is a project-level set. 
-- Can set up and maintain database connections, environment variables, and <Constant name="semantic_layer" /> configs.
+- Can set up and maintain environment variables and <Constant name="semantic_layer" /> configs.
 - Helpful for scenarios where your data warehouse admins only need access to <Constant name="cloud" /> to configure connections. 
-- Read-only access to Git repo, job, and run settings. 
+- Read-only access to connections, Git repo, job, and run settings. 
 - Can access <Constant name="explorer" />.
 
 </Expandable>
@@ -109,6 +109,12 @@ Notable features:
 - Read-only access to the underlying configs for environments, jobs, runs, and Git.
 - Users manage their credentials to data warehouses and Git. 
 - Can access <Constant name="explorer" />.
+
+</Expandable>
+<Expandable alt_header="Fusion admin">
+This permission set is used exclusively to enable users to interact with the Fusion upgrade workflows. We recommend limiting this permission to users and projects that are Fusion-ready. 
+
+See the [dbt platform Fusion upgrade](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) docs for more information.
 
 </Expandable>
 <Expandable alt_header="Git admin">
@@ -193,7 +199,7 @@ Notable features:
 </Expandable>
 <Expandable alt_header="Security admin">
 
-Security admins have limited access to the security settings and policies for the <Constant name="cloud" /> account. This is intended for members of a security team who need to ensure compliance with security standards and oversee the implementation of best security practices across the account. This permission set is frequently paired with the [IT license-type](/docs/cloud/manage-access/seats-and-users#licenses). 
+Security admins have limited access to the security settings and policies for the <Constant name="cloud" /> account. This is intended for members of a security team who need to ensure compliance with security standards and oversee the implementation of best security practices across the account. The [IT license-type](/docs/cloud/manage-access/seats-and-users#licenses) includes this permission set by default. 
 
 Notable features:
 - Security admin is an account-level set. 
@@ -213,16 +219,17 @@ Notable features:
 - No other access to <Constant name="cloud" /> features. 
 
 </Expandable>
-<Expandable alt_header="Stakeholder">
+<Expandable alt_header="Stakeholder and Read-Only">
 
-Stakeholder is a read-only permission set, similar to viewer, but without access to sensitive content such as account settings or billing information. Useful for personas who need to monitor projects and their configurations.
+The Stakeholder and Read-Only are identical permission sets that are similar to Viewer, but without access to sensitive content such as account settings, billing information, or audit logs. Useful for personas who need to monitor projects and their configurations.
 
 Notable features: 
 - Stakeholder is a project-level set.
 - Read-only access to projects, environments, jobs, and runs.
 - Read-only access to user and group information.
-- No access to the IDE. 
 - Can access <Constant name="explorer" />.
+- No access to the IDE.
+- Limited access to audit log content that excludes sensitive information, such as user settings and account-level changes.
 
 </Expandable>
 <Expandable alt_header="Team admin">
@@ -243,6 +250,7 @@ The Viewer permission set is frequently paired with the [Read-only license-type]
 Notable features:
 - Viewer is an account-level set.
 - Read-only access to all settings, projects, environments, and runs.
+- Read-only access to audit logs, including sensitive account-level information.
 - No access to the IDE. 
 - Can access <Constant name="explorer" />
 

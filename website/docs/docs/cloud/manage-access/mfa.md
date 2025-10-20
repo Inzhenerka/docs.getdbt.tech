@@ -15,7 +15,8 @@ sidebar: null
 
 <Constant name="cloud" /> provides multiple options for multi-factor authentication (MFA), which adds an extra layer of security to username and password logins. MFA is available across <Constant name="cloud" /> plans for users with username and password logins only. The available MFA methods are:
 
-- SMS verification code (US-based phone numbers only)
+- SMS verification code
+    - Currently, only phone numbers with the North American Numbering Plan (NANP) +1 country code are supported.
 - Authenticator app
 - Webauthn-compliant security key
 
@@ -33,11 +34,11 @@ Choose the next steps based on your preferred enrollment selection:
 
 2. Select the +1 country code, enter your phone number in the field, and click **Continue**.
 
-<Lightbox src="/img/docs/dbt-cloud/sms-enter-phone.png" title="The phone number selection, including a dropdown for country code." />
+<Lightbox src="/img/docs/dbt-cloud/sms-enter-phone.png" width="60%" title="The phone number selection, including a dropdown for country code." />
 
 3. You will receive an SMS message with a six digit code. Enter the code in <Constant name="cloud" />.
 
-<Lightbox src="/img/docs/dbt-cloud/enter-code.png" title="Enter the 6-digit code." />
+<Lightbox src="/img/docs/dbt-cloud/enter-code.png" width="60%" title="Enter the 6-digit code." />
 
 </Expandable>
 

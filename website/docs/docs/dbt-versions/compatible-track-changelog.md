@@ -10,6 +10,122 @@ Each monthly "Compatible" release includes functionality matching up-to-date ope
 
 For more information, see [release tracks](/docs/dbt-versions/cloud-release-tracks).
 
+## September 2025
+
+Release Date: September 10, 2025
+
+This compatible release includes functionality from the following versions of dbt Core OSS:
+
+```
+dbt-core==1.10.11
+
+# shared interfaces
+dbt-adapters==1.16.6
+dbt-common==1.29.0
+dbt-semantic-interfaces==0.9.0
+
+# adapters
+dbt-athena==1.9.5
+dbt-bigquery==1.10.2
+dbt-databricks==1.10.12
+dbt-extractor==0.6.0
+dbt-fabric==1.9.4
+dbt-postgres==1.9.1
+dbt-protos==1.0.348
+dbt-redshift==1.9.5
+dbt-sl-sdk[sync]==0.13.0
+dbt-snowflake==1.10.2
+dbt-spark==1.9.3
+dbt-synapse==1.8.4
+dbt-teradata==1.10.0
+dbt-trino==1.9.3
+```
+
+Changelogs:
+- [dbt-core 1.10.11](https://github.com/dbt-labs/dbt-core/blob/1.10.latest/CHANGELOG.md#dbt-core-11011---september-04-2025)
+- [dbt-adapters 1.16.6](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/CHANGELOG.md#dbt-adapters-1166---september-03-2025)
+- [dbt-common 1.29.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md#dbt-common-1290---september-04-2025)
+- [dbt-athena 1.9.4](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-athena/CHANGELOG.md#dbt-athena-194---april-28-2025)
+- [dbt-bigquery 1.10.2](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-bigquery/CHANGELOG.md#dbt-bigquery-1101---july-29-2025)
+- [dbt-databricks 1.10.12](https://github.com/databricks/dbt-databricks/blob/main/CHANGELOG.md#dbt-databricks-11012-september-8-2025)
+- [dbt-fabric 1.9.4](https://github.com/microsoft/dbt-fabric/releases/tag/v1.9.4)
+- [dbt-postgres 1.9.1](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-postgres/CHANGELOG.md#changelog)
+- [dbt-redshift 1.9.5](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-redshift/CHANGELOG.md#dbt-redshift-195---may-13-2025)
+- [dbt-snowflake 1.10.2](http://github.com/dbt-labs/dbt-adapters/blob/main/dbt-snowflake/CHANGELOG.md)
+- [dbt-spark 1.9.3](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-spark/CHANGELOG.md#dbt-spark-193---july-16-2025)
+- [dbt-synapse 1.8.4](https://github.com/microsoft/dbt-synapse/blob/v1.8.latest/CHANGELOG.md)
+- [dbt-teradata 1.10.0](https://github.com/Teradata/dbt-teradata/releases/tag/v1.10.0)
+- [dbt-trino 1.9.3](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-193---july-22-2025)
+
+## August 2025
+
+Release date: August 12, 2025
+
+### Notable dbt Core OSS changes
+
+This compatible upgrade brings in a minor update to `dbt-core`, from `dbt-core==1.9.8` to `dbt-core==1.10.8`. Some noteworthy changes from this minor version include:
+* Introduction of several new [deprecations](/reference/deprecations) that warn about project incompatibilities between dbt Core and Fusion engines.
+* Support for defining `meta` and `tags` within `config` of columns and exposures, as well as defining `freshness` within `config` of sources. These changes lead to manifest.json minor schema evolutions which may cause an intermittent increase in false positives during `state:modified` comparisons.
+
+### dbt cloud-based platform 
+
+### Fixes
+
+- Update generate publications script to add project and env id in generated publication file
+- Use JSON stream for publication artifact generation script
+- Get environment variables correctly from environment for publication artifacts
+- Adding `--resource-type` and `--exclude-resource-type` flags to Semantic Layer commands
+- Azure DevOps Private Packages are now properly matched with Private Package Definition in packages.yml
+
+### Under the Hood
+
+- Prepare support for Private Package's URLs with multiple levels
+- Disable telemetry client logger
+- Update semantic layer SDK to 0.11
+
+This release includes functionality from the following versions of dbt Core OSS:
+
+```
+dbt-core==1.10.8
+
+# shared interfaces
+dbt-adapters==1.16.3
+dbt-common==1.27.1
+dbt-semantic-interfaces==0.9.0
+dbt-extractor==0.6.0
+dbt-protos==1.0.348
+
+# dbt-adapters
+dbt-athena==1.9.4
+dbt-bigquery==1.10.1
+dbt-databricks==1.10.10
+dbt-fabric==1.9.4
+dbt-postgres==1.9.0
+dbt-redshift==1.9.5
+dbt-snowflake==1.10.0
+dbt-spark==1.9.3
+dbt-synapse==1.8.2
+dbt-teradata==1.9.3
+dbt-trino==1.9.3
+```
+
+Changelogs:
+- [dbt-core 1.10.8](https://github.com/dbt-labs/dbt-core/blob/1.10.latest/CHANGELOG.md#dbt-core-1108---august-12-2025)
+- [dbt-adapters 1.16.3](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/CHANGELOG.md#dbt-adapters-1163---july-21-2025)
+- [dbt-common 1.25.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md#dbt-common-1271---july-21-2025)
+- [dbt-athena 1.9.4](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-athena/CHANGELOG.md#dbt-athena-194---april-28-2025)
+- [dbt-bigquery 1.10.1](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-bigquery/CHANGELOG.md#dbt-bigquery-1101---july-29-2025)
+- [dbt-databricks 1.9.7](https://github.com/databricks/dbt-databricks/blob/main/CHANGELOG.md#dbt-databricks-1109-august-7-2025)
+- [dbt-fabric 1.9.4](https://github.com/microsoft/dbt-fabric/releases/tag/v1.9.4)
+- [dbt-postgres 1.9.0](https://github.com/dbt-labs/dbt-postgres/blob/main/CHANGELOG.md#dbt-postgres-190---december-09-2024)
+- [dbt-redshift 1.9.5](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-redshift/CHANGELOG.md#dbt-redshift-195---may-13-2025)
+- [dbt-snowflake 1.10.0](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-snowflake/CHANGELOG.md#dbt-snowflake-1100-rc3---june-24-2025)
+- [dbt-spark 1.9.3](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-spark/CHANGELOG.md#dbt-spark-193---july-16-2025)
+- [dbt-synapse 1.8.2](https://github.com/microsoft/dbt-synapse/blob/v1.8.latest/CHANGELOG.md)
+- [dbt-teradata 1.9.3](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.3)
+- [dbt-trino 1.9.3](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-193---july-22-2025)
+
+
 ## July 2025
 
 The compatible release slated for July 2025 will be skipped in order to further stabilize the minor upgrade of `dbt-core==1.10.0` ([released June 16, 2025](https://pypi.org/project/dbt-core/1.10.0/)) across the dbt platform. 

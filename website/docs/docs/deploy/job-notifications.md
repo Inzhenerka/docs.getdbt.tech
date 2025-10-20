@@ -7,7 +7,7 @@ description: "Set up notifications in dbt to receive email or Slack alerts about
 
 Set up notifications in <Constant name="cloud" /> to receive email or Slack alerts about the status of a job run. You can choose to be notified by one or more of the following job run statuses: 
 
-- **Succeeds** option &mdash; A job run completed successfully.
+- **Succeeds** option &mdash; A job run completed successfully with no warnings or errors.
 - **Warns** option &mdash; A job run encountered warnings from [data tests](/docs/build/data-tests) or [source freshness](/docs/deploy/source-freshness) checks (if applicable).
 - **Fails** option &mdash; A job run failed to complete. 
 - **Is canceled** option &mdash; A job run is canceled.
@@ -23,11 +23,20 @@ You can receive email alerts about jobs by configuring the <Constant name="cloud
 
 ### Configure email notifications
 
-1. Select your profile icon and then click **Notification settings**.
-1. By default, <Constant name="cloud" /> sends notifications to the email address that's in your **User profile** page.
+1. Select your profile icon and then click **Notification settings**. 
+2. By default, <Constant name="cloud" /> sends notifications to the email address that's in your **User profile** page.
 
-    If you're an account admin, you can choose a different email address to receive notifications. Select the **Notification email** dropdown and choose another address from the list. The list includes **Internal Users** with access to the account and **External Emails** that have been added. 
-    - To add an external email address, select the **Notification email** dropdown and choose **Add external email**. After you add the external email, it becomes available for selection in the **Notification email** dropdown list. External emails can be addresses that are outside of your <Constant name="cloud" /> account and also for third-party integrations like [channels in Microsoft Teams](https://support.microsoft.com/en-us/office/tip-send-email-to-a-channel-2c17dbae-acdf-4209-a761-b463bdaaa4ca) and [PagerDuty email integration](https://support.pagerduty.com/docs/email-integration-guide).
+    If you're an account admin, you can choose a different email address to receive notifications:
+    1. Under Job notifications, click the **Notification email** dropdown.
+    2. Select another address from the list.
+       The list includes **Internal Users** with access to the account and **External Emails** that have been added.  
+    3. To add an external email address, click the **Notification email** dropdown
+    4. Click **Add external email**.
+    5. Enter the email address, and click Add user.
+       After adding an external email, it becomes available for selection in the **Notification email** dropdown list. External emails can be addresses that are outside of your <Constant name="cloud" /> account and also for third-party integrations like [channels in Microsoft Teams](https://support.microsoft.com/en-us/office/tip-send-email-to-a-channel-2c17dbae-acdf-4209-a761-b463bdaaa4ca) and [PagerDuty email integration](https://support.pagerduty.com/docs/email-integration-guide).
+       :::note
+       External emails and their notification settings persist until edited or removed even if you remove the admin who added them from the account.
+       :::
 
     <Lightbox src="/img/docs/deploy/example-notification-external-email.png" width="50%" title="Example of the Notification email dropdown"/>
 

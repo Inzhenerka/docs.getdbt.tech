@@ -4,9 +4,15 @@ description: "Manage your data warehouse costs in dbt"
 sidebar_label: About cost management
 ---
 
-# About cost management in dbt <Lifecycle status='preview,managed,managed_plus' />
+# About cost management <Lifecycle status='private_preview,managed,managed_plus' />
 
-The cost management dashboard in <Constant name="cloud" /> gives you valuable insight into how your dbt projects impact your data warehouse costs. They will help you optimize your warehouse spending by visualizing how features, including models, tests, snapshots, and other resources, influence costs over time so that you can take action, report to stakeholders, and optimize development workflows.
+:::info Private preview
+
+Cost management features are in private preview. If you're interested in joining the preview, please contact your account manager.
+
+:::
+
+The cost management dashboard in the <Constant name="dbt_platform" /> gives you valuable insight into how your dbt projects impact your data warehouse costs. They will help you optimize your warehouse spending by visualizing how features, including models, tests, snapshots, and other resources, influence costs over time so that you can take action, report to stakeholders, and optimize development workflows.
 
 Currently, only Snowflake is supported. Support for more adapters is coming in the future.
 
@@ -25,9 +31,10 @@ The cost management dashboard and features are currently only available to custo
 To configure the cost management tools, you must have the following:
 
 - Proper [permission set](/docs/cloud/manage-access/enterprise-permissions) to configure connections in <Constant name="cloud" /> (such as account admin or project creator).
-- Proper [privileges](https://docs.snowflake.com/en/user-guide/security-access-control-privileges) in Snowflake to create a user and assign them database access.
+- Proper [privileges](https://docs.snowflake.com/en/user-guide/security-access-control-privileges) in Snowflake to create a user and assign them database access. 
 - A supported data warehouse. Note: Only Snowflake is supported at this time. More warehouses coming soon!
 - A <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing).
+
 
 
 ## Set up in Snowflake
@@ -59,6 +66,8 @@ GRANT ROLE dbt_cost_management TO USER dbt_cost_user;
 
 GRANT USAGE ON DATABASE SNOWFLAKE TO ROLE dbt_cost_management;
 GRANT USAGE ON SCHEMA SNOWFLAKE.ACCOUNT_USAGE TO ROLE dbt_cost_management;
+GRANT USAGE ON WAREHOUSE YOUR_WAREHOUSE TO ROLE dbt_cost_management;
+ALTER USER dbt_cost_user SET DEFAULT_WAREHOUSE = 'YOUR_WAREHOUSE';
 
 GRANT SELECT ON VIEW SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY TO ROLE dbt_cost_management;
 GRANT SELECT ON VIEW SNOWFLAKE.ACCOUNT_USAGE.QUERY_ATTRIBUTION_HISTORY TO ROLE dbt_cost_management;
@@ -95,7 +104,8 @@ Once the user is created and assigned proper privileges, it's time to configure 
 
 Configuring the cost management features requires both a connection and a user component:
 
-- **[Connection setup](#connection-setup):** Set up the credentials used to access the data warehouse information. Use the connection associated with your main account identifier (name or ID). Only one unique [connection](/docs/cloud/connect-data-platform/about-connections#connection-management) per warehouse needs to have the credentials configured. If you have multiple connections that reference the same account identifier, you only need to add platform metadata credentials to one of them.
+- **[Connection setup](#connection-setup):** Set up the credentials used to access the data warehouse information. Use the connection associated with your main account identifier (name or ID). Only one unique [connection](/docs/cloud/connect-data-platform/about-connections#connection-management) per warehouse needs to have the credentials configured. 
+    - If you have multiple connections that reference the same account identifier, you will only be prompted to add platform metadata credentials to one of them. Other connections using the same account identifier will display a message indicating that platform metadata credentials are already configured. 
 - **[Provision user access](#provision-user-access):** Add new permissions to users and/or groups to regulate access to the dashboard.
 
 ### Connection setup
@@ -252,5 +262,4 @@ The following are some of the known limitations and caveats for the cost managem
 - The consumption metric includes all queries of a given model in the warehouse, beyond just analytics use cases, so it is best for relative comparison between resources.
 - The consumption metric relies on mapping the dbt models to their tables in the warehouse, so it may be imprecise depending on how those mappings change.
 - A dbt run results in multiple executions (run steps) issuing queries, which makes it less intuitive to reason about. In the future, we'll be moving toward more run-centric metrics (grouping/aggregating).
-- Core costs are dependent on using dbt v1.10 or higher to associate queries with dbt workloads.
 - Snowflake can take up to 72 hours to report accurate cost data, so the past three days may undercount until the data is updated.

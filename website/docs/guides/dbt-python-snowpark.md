@@ -293,7 +293,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/2-credentials-edit-schema-name.png" title="Credentials edit schema name"/>
 
-3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name (`hwatson` is used in the lab screenshots). Be sure to click **Save** for your changes!
+3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name. Be sure to click **Save** for your changes!
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" title="Save new schema name"/>
 
 4. We now have our own personal development schema, amazing! When we run our first dbt models they will build into this schema.
@@ -482,8 +482,9 @@ sources:
           - name: stop
             data_tests:
               - accepted_values:
-                  values: [1,2,3,4,5,6,7,8]
-                  quote: false            
+                    arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                        values: [1,2,3,4,5,6,7,8]
+                        quote: false            
       - name: races 
         description: One race per row. Importantly this table contains the race year to understand trends. 
         columns:
@@ -1753,8 +1754,9 @@ Since the output of our Python models are tables, we can test SQL and Python mod
               description: year of the race
               data_tests:
                 - relationships:
-                  to: ref('int_lap_times_years')
-                  field: race_year
+                    arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                        to: ref('int_lap_times_years')
+                        field: race_year
     ```
 
 2. Let’s unpack the code we have here. We have both our aggregates models with the model name to know the object we are referencing and the description of the model that we’ll populate in our documentation. At the column level (a level below our model), we are providing the column name followed by our tests. We want to ensure our `constructor_name` is unique since we used a pandas `groupby` on `constructor_name` in the model `fastest_pit_stops_by_constructor`. Next, we want to ensure our `race_year` has referential integrity from the model we selected from `int_lap_times_years` into our subsequent `lap_times_moving_avg` model.

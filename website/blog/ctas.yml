@@ -20,11 +20,11 @@
   subheader: Watch Coalesce 2023 highlights and full sessions, dbt Labs' annual analytics engineering conference.
   button_text: Watch the talks
   url: https://www.youtube.com/playlist?list=PL0QYlrC86xQnT3HLh-XgvoTf9F3lbsADf
-- name: coalesce_2024_signup
-  header: Be part of Coalesce 2024
+- name: coalesce_2025_signup
+  header: Be part of Coalesce 2025
   subheader: Coalesce is the premiere analytics engineering conference! Sign up now for innovation, collaboration, and inspiration. Don't miss out!
   button_text: Register now
-  url: https://coalesce.getdbt.com/register
+  url: https://coalesce.getdbt.com/5Y3oaq/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2026_coalesce-2025_aw&utm_content=coalesce____&utm_term=all_all__1
 - name: coalesce_2024_catchup
   header: Missed Coalesce 2024?
   subheader: Catch up on Coalesce 2024 and register to access a select number of on-demand sessions.
@@ -35,13 +35,24 @@
   subheader: Join us on March 19th or 20th to hear from dbt Labs product leads about exciting new and coming-soon features designed to supercharge data developer workflows.
   button_text: Save your seat
   url: https://www.getdbt.com/resources/webinars/dbt-developer-day
-- name: launch_showcase_2025
-  header: 2025 dbt Launch Showcase 
-  subheader: Join us on May 28 to hear from our executives and product leaders about the latest features landing in dbt.
+- name: fast_track_to_dbt_2025
+  header: Fast track to dbt workshop
+  subheader: Join our live virtual workshop! Fast track to dbt — build and run your first dbt models.
   button_text: Save your seat
-  url: https://www.getdbt.com/resources/webinars/2025-dbt-cloud-launch-showcase
+  url: https://www.getdbt.com/resources/webinars/fast-track-to-dbt-workshop
 - name: on_demand_launch_showcase_2025
   header: 2025 dbt Launch Showcase on-demand 
   subheader: Watch our annual dbt Launch Showcase to hear from our executives and product leaders about the latest features landing in dbt. 
   button_text: Watch the talks
   url: https://www.getdbt.com/resources/webinars/2025-dbt-cloud-launch-showcase
+- name: vs_code_extension
+  header: VS Code extension
+  subheader: The free dbt VS Code extension is the best way to develop locally in dbt.
+  button_text: Install free extension
+  icon: vsce
+  url: /docs/install-dbt-extension
+- name: fusion_engine
+  header: Live virtual event 
+  subheader: Experience the dbt Fusion engine with Tristan Handy and Elias DeFaria on October 28th
+  button_text: Save your seat
+  url: https://www.getdbt.com/resources/webinars/speed-simplicity-cost-savings-experience-the-dbt-fusion-engine

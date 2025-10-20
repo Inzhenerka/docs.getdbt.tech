@@ -2,6 +2,7 @@
 title: "Snowflake configurations"
 id: "snowflake-configs"
 description: "Snowflake Configurations - Read this in-depth guide to learn about configurations in dbt."
+tags: ['Snowflake', 'dbt Fusion', 'dbt Core']
 ---
 
 ## Iceberg table format
@@ -29,9 +30,6 @@ Dynamic tables are supported with the following configuration parameters:
 | [`refresh_mode`](#refresh-mode)       | `<string>` | no       | `AUTO`      | refresh        |
 | [`initialize`](#initialize)     | `<string>` | no       | `ON_CREATE` | n/a   |
 
-</VersionBlock>
-
-<VersionBlock firstVersion="1.9">
 
 <Tabs
   groupId="config-languages"

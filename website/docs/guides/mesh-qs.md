@@ -73,14 +73,26 @@ To [create](/docs/cloud/about-cloud-setup) a new project in <Constant name="clou
 6. Click **Next** if the test succeeded. If it fails, you might need to go back and double-check your settings.
    - For this guide, make sure you create a single [development](/docs/dbt-cloud-environments#create-a-development-environment) and [Deployment](/docs/deploy/deploy-environments) per project.
      - For "Jaffle | Data Analytics", set the default database to `jaffle_da`.
-     - For "Jaffle | Finance", set the default database to `jaffle_finance`
-
-<Lightbox src="/img/guides/dbt-mesh/create-new-project.gif" width="80%" title="Navigate to 'Account settings' and then click + 'New Project' to create new projects in dbt" /> 
-
+     - For "Jaffle | Finance", set the default database to `jaffle_finance`.
 7. Continue the prompts to complete the project setup. Once configured, each project should have:
     - A data platform connection
     - New git repo
     - One or more [environments](/docs/deploy/deploy-environments) (such as development, deployment)
+
+<DocCarousel slidesPerView={1}>
+
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" width="90%" title="Navigate to Account settings." />
+
+<Lightbox src="/img/guides/dbt-mesh/select_projects.png" width="30%" title="Select projects from the menu." />
+
+<Lightbox src="/img/guides/dbt-mesh/create_a_new_project.png" width="95%" title="Create a new project in the Studio IDE." />
+
+<Lightbox src="/img/guides/dbt-mesh/enter_project_name.png" width="95%" title="Name your project." />
+
+<Lightbox src="/img/guides/dbt-mesh/select_a_connection.png" width="95%" title="Select the relevant connection for your projects." />
+
+</DocCarousel>
+
 
 ### Create a production environment
 In <Constant name="cloud" />, each project can have one deployment environment designated as "Production.". You must set up a ["Production" or "Staging" deployment environment](/docs/deploy/deploy-environments) for each project you want to "mesh" together. This enables you to leverage <Constant name="explorer" /> in the [later steps](/guides/mesh-qs?step=5#create-and-run-a-dbt-cloud-job) of this guide.
@@ -291,14 +303,14 @@ Before a downstream team can leverage assets from this foundational project, you
 To run your first deployment <Constant name="cloud" /> job, you will need to create a new <Constant name="cloud" /> job.  
 1. Click **Deploy** and then **Jobs**. 
 2. Click **Create job** and then **Deploy job**.
-3. Select the **Generate docs on run** option. This will reflect the state of this project in the **Explore** section.
+3. Select the **Generate docs on run** option. This will hydrate your metadata in <Constant name="explorer"/>.
 
 <Lightbox src="/img/guides/dbt-mesh/generate_docs_on_run.png" width="75%" title=" Select the 'Generate docs on run' option when configuring your dbt job." />
 
 4. Then, click **Run now** to trigger the job.
 <Lightbox src="/img/guides/dbt-mesh/job_run_now.png" width="80%" title="Trigger a job by clicking the 'Run now' button." />
 
-5. After the run is complete, click **Explore** from the upper menu bar. You should now see your lineage, tests, and documentation coming through successfully.
+5. After the run is complete, navigate to <Constant name="explorer"/>. You should now see your lineage, tests, and documentation coming through successfully.
 
 For details on how <Constant name="cloud" /> uses metadata from the Staging environment to resolve references in downstream projects, check out the section on [Staging with downstream dependencies](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
 

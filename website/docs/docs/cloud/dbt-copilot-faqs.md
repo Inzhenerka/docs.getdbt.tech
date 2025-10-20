@@ -90,12 +90,6 @@ The user clicks the <Constant name="copilot" /> button. Aside from authenticatio
 
 </Expandable>
 
-<Expandable alt_header="Does dbt Copilot access my warehouse data?">
-
-To provide the services, <Constant name="copilot" /> utilizes the data entered by the user in addition to metadata, including column names, model SQL, the model's name, and model documentation. The row-level data from the warehouse is never used or sent by dbt Labs to a third-party provider without action by the user. The user is responsible for double-checking output for completeness and accuracy.
-
-</Expandable>
-
 <Expandable alt_header="Can dbt Copilot data be deleted upon client written request?">
 
 To the extent client identifies personal or sensitive information uploaded by or on behalf of client to dbt Labs systems by the user in error, such data can be deleted within 30 days of written request.
@@ -111,7 +105,7 @@ No, dbt Labs will not dispute your ownership of any code or artifacts unique to 
 
 <Expandable alt_header="Does dbt Labs have terms in place for dbt Copilot?">
 
-Clients who signed with terms after January 2024 don't need additional terms prior to enabling <Constant name="copilot" />. Longer term clients have also protected their data through confidentiality and data deletion obligations. In the event client prefer additional terms, clients may enter into the presigned AI & Beta Addendum available at [here](https://app.hellosign.com/s/LwqigFvP) (the dbt Labs signature will be dated as of the date the client signs).
+Clients who signed with terms after January 2024 don't need additional terms prior to enabling <Constant name="copilot" />. Longer term clients have also protected their data through confidentiality and data deletion obligations. In the event client prefer additional terms, clients may enter into the presigned AI & Beta Addendum available at [here](https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=85817ff4-9ce5-4fae-8e34-20b854fdb52a&env=na2&acct=858db9e4-4a6d-48df-954f-84ece3303aac&v=2) (the dbt Labs signature will be dated as of the date the client signs).
 
 </Expandable>
 
