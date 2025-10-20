@@ -80,10 +80,6 @@
   background: #f9fafb;
 }
 
-.dropdownItem:first-child {
-  border-bottom: 1px solid #f3f4f6;
-}
-
 .dropdownItem svg {
   color: #6b7280;
   flex-shrink: 0;
@@ -199,10 +195,6 @@
 
 [data-theme='dark'] .dropdownItem:hover {
   background: #374151;
-}
-
-[data-theme='dark'] .dropdownItem:first-child {
-  border-bottom-color: #374151;
 }
 
 [data-theme='dark'] .copyIcon,

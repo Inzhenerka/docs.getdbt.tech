@@ -9,8 +9,9 @@ const LLM_SERVICES = {
     url: 'https://chatgpt.com/?hints=search&prompt=Read+from+{url}+so+I+can+ask+questions+about+it.',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15,3 21,3 21,9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
       </svg>
     ),
     subtitle: 'Ask questions about this page'
@@ -20,8 +21,9 @@ const LLM_SERVICES = {
     url: 'https://claude.ai/?prompt=Read+from+{url}+so+I+can+ask+questions+about+it.',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15,3 21,3 21,9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
       </svg>
     ),
     subtitle: 'Ask questions about this page'
