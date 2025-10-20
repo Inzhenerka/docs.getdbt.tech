@@ -23,6 +23,59 @@ function removeFrontmatter(content) {
 }
 
 /**
+ * Normalize metadata.source to match rawMarkdownData keys
+ * @param {string} source - The source path from metadata
+ * @returns {string} Normalized path
+ */
+function normalizeMetadataSource(source) {
+  // Remove common prefixes like @site/, @docusaurus/, website/, etc.
+  return source
+    .replace(/^@site\/website\/docs\//, '')
+    .replace(/^@site\/docs\//, '')
+    .replace(/^@site\//, '')
+    .replace(/^website\/docs\//, '')
+    .replace(/^docs\/docs\//, 'docs/') // Handle double docs/ from website/docs/docs/
+    .replace(/^\.\.\//, '');
+}
+
+/**
+ * Generate potential file paths based on URL path
+ * Handles cases where the URL doesn't match the filename due to custom frontmatter IDs
+ * @param {string} pathname - The URL pathname
+ * @returns {Array<string>} Array of potential file paths to try
+ */
+function generatePotentialPaths(pathname) {
+  const urlParts = pathname.split('/').filter(part => part.length > 0);
+  const potentialPaths = [];
+
+  if (urlParts.length === 0) {
+    return ['docs/index.md', 'index.md'];
+  }
+
+  const lastPart = urlParts[urlParts.length - 1];
+  const basePath = urlParts.join('/');
+
+  // Strategy 1: Direct match (URL path matches file path)
+  potentialPaths.push(`${basePath}.md`);
+
+  // Strategy 2: Try common filename patterns that differ from URL
+  // These patterns come from frontmatter "id" fields that create different URLs
+  const filenameVariations = [
+    `${lastPart}-qs`,      // quickstart guides: /guides/fusion -> fusion-qs.md
+    `apis-${lastPart}`,    // API docs: /docs/dbt-cloud-apis/overview -> apis-overview.md
+    `schema-${lastPart}`,  // Schema docs
+    `sl-${lastPart}`,      // Semantic layer docs
+  ];
+
+  for (const variation of filenameVariations) {
+    const pathWithVariation = [...urlParts.slice(0, -1), variation].join('/');
+    potentialPaths.push(`${pathWithVariation}.md`);
+  }
+
+  return potentialPaths;
+}
+
+/**
  * Hook to get raw markdown content for the current page
  * Uses Docusaurus metadata for reliable file path resolution
  * @returns {string} The raw markdown content or null if not available
@@ -37,94 +90,33 @@ export function useRawMarkdownContent() {
       return null;
     }
 
-    // Try to get metadata from useDoc hook (most reliable method)
+    // Strategy 1: Use Docusaurus metadata (most reliable when available)
     try {
       const { metadata } = useDoc();
-
-      // metadata.source contains the actual source file path
-      // It can be in different formats, so try multiple approaches
       if (metadata?.source) {
-        // Try direct match first
-        if (rawMarkdownData[metadata.source]) {
-          return removeFrontmatter(rawMarkdownData[metadata.source]);
+        const normalizedSource = normalizeMetadataSource(metadata.source);
+        if (rawMarkdownData[normalizedSource]) {
+          return removeFrontmatter(rawMarkdownData[normalizedSource]);
         }
-
-        // Try removing @site/ prefix if present
-        const sourceWithoutSite = metadata.source.replace(/^@site\//, '');
-        if (rawMarkdownData[sourceWithoutSite]) {
-          return removeFrontmatter(rawMarkdownData[sourceWithoutSite]);
-        }
-
-        // Try adding docs/ prefix if not present
-        if (!sourceWithoutSite.startsWith('docs/')) {
-          const sourceWithDocs = `docs/${sourceWithoutSite}`;
-          if (rawMarkdownData[sourceWithDocs]) {
-            return removeFrontmatter(rawMarkdownData[sourceWithDocs]);
-          }
-        }
-
-        console.debug('metadata.source found but not in rawMarkdownData:', metadata.source);
-        console.debug('Available keys sample:', Object.keys(rawMarkdownData).slice(0, 5));
       }
     } catch (docError) {
-      // useDoc() might not be available on all pages, fall back to path matching
-      console.debug('useDoc not available, falling back to path matching:', docError.message);
+      // useDoc() not available on this page type, will use fallback
     }
 
-    // Fallback: Try direct path matching as backup
-    // Strip query parameters and hash from the pathname
-    const currentPath = window.location.pathname;
-    const urlParts = currentPath.split('/').filter(part => part.length > 0);
+    // Strategy 2: Fallback to URL-based path matching
+    // This handles cases where useDoc() fails or metadata.source doesn't match
+    const pathname = window.location.pathname;
+    const potentialPaths = generatePotentialPaths(pathname);
 
-    // Build potential file paths
-    const potentialPaths = [];
-    const lastPart = urlParts[urlParts.length - 1];
-    const basePath = urlParts.join('/');
-
-    // Direct path match (the URL path should match the file path)
-    potentialPaths.push(`${basePath}.md`);
-
-    // Known content directories in the docs folder
-    const knownContentDirs = ['docs', 'guides', 'reference', 'best-practices', 'community',
-                               'faqs', 'release-notes', 'sql-reference', 'terms'];
-
-    // For paths not starting with known content directories, try adding docs/ prefix
-    if (urlParts[0] && !knownContentDirs.includes(urlParts[0])) {
-      potentialPaths.push(`docs/${basePath}.md`);
-    }
-
-    // Try with common prefixes on the last part (like 'apis-', 'schema-', 'sl-')
-    if (urlParts.length > 0) {
-      const commonPrefixes = ['apis-', 'schema-', 'sl-'];
-      for (const prefix of commonPrefixes) {
-        const pathWithPrefix = [...urlParts.slice(0, -1), `${prefix}${lastPart}`].join('/');
-        potentialPaths.push(`${pathWithPrefix}.md`);
-      }
-    }
-
-    // Try with -qs suffix (common pattern for quickstart guides)
-    if (urlParts.length > 0) {
-      const pathWithQs = [...urlParts.slice(0, -1), `${lastPart}-qs`].join('/');
-      potentialPaths.push(`${pathWithQs}.md`);
-    }
-
-    // Try with index.md for root or trailing slash paths
-    if (basePath === '' || currentPath.endsWith('/')) {
-      potentialPaths.push('docs/index.md');
-      potentialPaths.push('index.md');
-    }
-
-    // Try each potential path
     for (const filePath of potentialPaths) {
       if (rawMarkdownData[filePath]) {
         return removeFrontmatter(rawMarkdownData[filePath]);
       }
     }
 
-    // Debug logging to help identify the issue
-    console.debug('Failed to find markdown content for path:', currentPath);
-    console.debug('Attempted paths:', potentialPaths);
-    console.debug('Available markdown paths sample:', Object.keys(rawMarkdownData).slice(0, 10));
+    // If we still haven't found it, log for debugging
+    console.debug('Failed to find markdown content for:', pathname);
+    console.debug('Tried paths:', potentialPaths);
 
     return null;
   } catch (error) {
