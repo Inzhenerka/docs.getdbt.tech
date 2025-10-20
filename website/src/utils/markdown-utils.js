@@ -112,19 +112,3 @@ export function useRawMarkdownContent() {
     return null;
   }
 }
-
-/**
- * Gets the current page title
- * @returns {string} The page title
- */
-export function getCurrentPageTitle() {
-  // Try to get the main heading first
-  const mainHeading = document.querySelector('.markdown h1, article h1, main h1');
-  if (mainHeading) {
-    return mainHeading.textContent.trim();
-  }
-  
-  // Fallback to page title
-  const titleElement = document.querySelector('h1, .page-title, title');
-  return titleElement ? titleElement.textContent.trim() : document.title;
-} 
