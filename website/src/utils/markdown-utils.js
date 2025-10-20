@@ -29,6 +29,11 @@ function removeFrontmatter(content) {
  */
 export function useRawMarkdownContent() {
   try {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
     const { usePluginData } = require('@docusaurus/useGlobalData');
     const pluginData = usePluginData('docusaurus-build-raw-markdown-data-plugin');
     const { rawMarkdownData, pathByIdMap } = pluginData || {};
