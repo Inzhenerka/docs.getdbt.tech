@@ -12,7 +12,7 @@ import getSvgIcon from '../../utils/get-svg-icon';
  * - Full keyboard navigation and accessibility support
  * - Error handling and user feedback
  */
-function CopyPage() {
+function CopyPage({ dropdownRight = false }) {
   const {
     isDropdownOpen,
     copySuccess,
@@ -40,7 +40,7 @@ function CopyPage() {
 
       {isDropdownOpen && (
         <div
-          className={styles.dropdown}
+          className={`${styles.dropdown} ${dropdownRight ? styles.dropdownRight : ''}`}
           role="menu"
           aria-label="Copy page menu"
         >

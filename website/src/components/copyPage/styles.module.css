@@ -59,6 +59,10 @@
   overflow: hidden;
 }
 
+.dropdownRight {
+  left: 0;
+}
+
 .dropdownItem {
   display: flex;
   align-items: center;
