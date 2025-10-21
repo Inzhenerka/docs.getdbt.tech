@@ -80,7 +80,7 @@ Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
 ```
 
 ## Functions
-_Available from dbt Core v1.11 or Fusion_
+_Available from dbt Core v1.11 and in the <Constant name="fusion_engine" />_
 
 The `build` command runs [user-defined functions](/docs/build/udfs) as part of the DAG execution. To build or rebuild only `functions` in your project, run `dbt build --select "resource_type:function"`. For example:
 
