@@ -104,8 +104,9 @@ export function useCopyPage() {
     }
 
     try {
-      const currentUrl = window.location.href;
-      const encodedUrl = encodeURIComponent(currentUrl);
+      // Always use the production domain to avoid localhost/preview URLs in LLM context
+      const productionUrl = `https://docs.getdbt.com${window.location.pathname}${window.location.search}${window.location.hash}`;
+      const encodedUrl = encodeURIComponent(productionUrl);
       const llmUrl = service.url.replace('{url}', encodedUrl);
 
       window.open(llmUrl, '_blank', 'noopener,noreferrer');
