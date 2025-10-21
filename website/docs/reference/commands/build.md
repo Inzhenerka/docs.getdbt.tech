@@ -5,10 +5,11 @@ id: "build"
 ---
 
 The `dbt build` command will:
-- run models
-- test tests
-- snapshot snapshots
-- seed seeds
+- run [models](/docs/build/models)
+- test [tests](/docs/build/data-tests)
+- snapshot [snapshots](/docs/build/snapshots)
+- seed [seeds](/docs/build/seeds)
+- run [user-defined functions](/docs/build/udfs) (available from dbt Core v1.11 or Fusion)
 
 In DAG order, for selected resources or an entire project.
 
@@ -76,4 +77,16 @@ Found 1 model, 4 tests, 1 snapshot, 1 analysis, 341 macros, 0 operations, 1 seed
 Completed successfully
 
 Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
+```
+
+## Functions
+_Available from dbt Core v1.11 or Fusion_
+
+The `build` command runs [user-defined functions](/docs/build/udfs) as part of the DAG execution. To build or rebuild only `functions` in your project, run `dbt build --select "resource_type:function"`. For example:
+
+```bash
+dbt build --select "resource_type:function"
+dbt-fusion 2.0.0-preview.45
+ Succeeded [  0.98s] function dbt_mwong.whoami (function)
+ Succeeded [  1.12s] function dbt_mwong.area_of_circle (function)
 ```
