@@ -1736,7 +1736,6 @@ Since the output of our Python models are tables, we can test SQL and Python mod
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" width="60%" title="The aggregates.yml file in our file tree"/>
 
     ```yaml
-    version: 2
 
     models:
         - name: fastest_pit_stops_by_constructor
