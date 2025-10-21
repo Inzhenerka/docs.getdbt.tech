@@ -24,7 +24,7 @@ This page explains how to use <Constant name="copilot" /> to:
 - [Analyze data with the <Constant name="copilot" /> agent](#analyze-data-with-the-copilot-agent) &mdash; Use <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking a natural language question to the <Constant name="copilot" /> agent.
 
 :::tip
-If you enjoy video courses, check out our [dbt Copilot on-demand course](https://learn.getdbt.com/learn/course/dbt-copilot/welcome-to-dbt-copilot/welcome-5-mins) to learn how to use <Constant name="copilot" /> to generate resources, and more!
+Check out our [dbt Copilot on-demand course](https://learn.getdbt.com/learn/course/dbt-copilot/welcome-to-dbt-copilot/welcome-5-mins) to learn how to use <Constant name="copilot" /> to generate resources, and more!
 :::
 
 ## Generate resources 
