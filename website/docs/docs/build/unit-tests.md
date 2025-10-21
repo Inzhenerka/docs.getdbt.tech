@@ -32,7 +32,7 @@ There is an additional type of test to dbt - unit tests. In software programming
 - Redshift sources need to be in the same database as the models.
 
 :::tip
-If you enjoy video courses, check out our [Unit tests on-demand course](https://learn.getdbt.com/learn/course/unit-testing/welcome-to-unit-testing-5min/introduction-to-unit-testing) to learn how to add unit tests and more!
+Check out our [Unit tests on-demand course](https://learn.getdbt.com/learn/course/unit-testing/welcome-to-unit-testing-5min/introduction-to-unit-testing) to learn how to add unit tests and more!
 :::
 
 Read the [reference doc](/reference/resource-properties/unit-tests) for more details about formatting your unit tests.
