@@ -87,6 +87,6 @@ The `build` command runs [user-defined functions](/docs/build/udfs) as part of t
 ```bash
 dbt build --select "resource_type:function"
 dbt-fusion 2.0.0-preview.45
- Succeeded [  0.98s] function dbt_mwong.whoami (function)
+ Succeeded [  0.98s] function dbt_schema.whoami (function)
  Succeeded [  1.12s] function dbt_mwong.area_of_circle (function)
 ```
