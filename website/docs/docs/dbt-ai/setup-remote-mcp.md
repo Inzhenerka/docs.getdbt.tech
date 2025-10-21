@@ -5,9 +5,11 @@ description: "Learn how to set up the remote dbt-mcp server"
 id: "setup-remote-mcp"
 ---
 
-# Set up remote MCP <Lifecycle status="self_service,managed,managed_plus,beta" />
-
 The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on the cloud-based dbt platform.
+
+import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
+
+<MCPCreditUsage />
 
 1. Ensure that you have [AI Features](https://docs.getdbt.com/docs/cloud/enable-dbt-copilot) turned on.
 2. Obtain the following information from dbt Platform:
@@ -30,6 +32,17 @@ The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on t
   | --- | --- | --- |
   | x-dbt-dev-environment-id | Required for `execute_sql` | Your dbt Cloud development environment ID |
   | x-dbt-user-id | Required for `execute_sql` | Your dbt Cloud user ID ([docs](https://docs.getdbt.com/faqs/Accounts/find-user-id)) |
+
+  **Additional configuration for Fusion tools**
+
+Fusion tools, by default, defer to the environment provided via `x-dbt-prod-environment-id` for model and table metadata.
+
+  | Header | Required | Description |
+  | --- | --- | --- |
+  | x-dbt-dev-environment-id | Required| Your dbt platform development environment ID |
+  | x-dbt-user-id | Required | Your dbt platform user ID ([docs](/faqs/Accounts/find-user-id)) |
+  | x-dbt-fusion-disable-defer | Optional | Default: `false`. When set to `true`, fusion tools will not defer to the production environment and use the models and table metadata from the development environment (`x-dbt-dev-environment-id`) instead. |
+
 
   **Configuration to disable tools**
   | Header | Required  | Description |

@@ -5,7 +5,7 @@ description: "Learn about the dbt MCP server"
 id: "about-mcp"
 ---
 
-# About dbt Model Context Protocol (MCP) <Lifecycle status="beta" />
+# About dbt Model Context Protocol (MCP)
 
 As AI becomes more deeply integrated into data workflows, dbt users need a seamless way to access and integrate dbt's structured metadata and execution context effectively. This page provides an overview of dbt's MCP Server, which exposes this context, supporting use cases such as conversational access to data, agent-driven automation of dbt workflows, and AI-assisted development.
 
@@ -26,7 +26,7 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 You can install dbt MCP locally or remotely:
 
-- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
+- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp) <Lifecycle status="beta" />
 - [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
 
 ## Available Tools
@@ -42,6 +42,7 @@ Here are the categories of tools supported based on what form of the MCP Server 
 | SQL  | ✅ | ✅ |
 | Metadata Discovery| ✅ | ✅ |
 | Administrative API | ✅ | ❌ |
+| Fusion Tools | ✅ | ✅ |
 | Disable tools | ✅ | ✅ |
 
 Note that access to the Discovery API and the Semantic Layer API is limited depending on your [plan type](https://www.getdbt.com/pricing).
@@ -112,6 +113,22 @@ These tools help automate boilerplate code generation for dbt projects files. To
 - `generate_source`: Creates source YAML definitions from database schemas.
 - `generate_model_yaml`: Generates documentation YAML for existing dbt models, including column names, data types, and description placeholders.
 - `generate_staging_model`: Creates staging SQL models from sources to transform raw source data into clean staging models.
+
+### Fusion tools (Remote)
+
+A set of tools that leverage the <Constant name="fusion" /> engine for advanced SQL compilation and column-level lineage analysis.
+
+- `compile_sql`: Compiles a SQL statement in the context of the current project and environment.
+- `get_column_lineage`: <Constant name="fusion" /> exclusive! Get column lineage information across a project DAG for a specific column.
+
+import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
+
+<MCPCreditUsage />
+
+### Fusion tools (Local)
+A set of tools that leverage the <Constant name="fusion" /> engine through a locally running <Constant name="fusion" /> Language Server Protocol (LSP) in VS Code or Cursor with the dbt VS Code extension.
+
+- `get_column_lineage`: <Constant name="fusion" /> exclusive! Gets column lineage information across a project DAG for a specific column.
 
 ## MCP integrations
 

@@ -67,7 +67,7 @@ $ dbt parse
 
 ### Selection syntax
 
-There is not specific [node selection syntax](/reference/node-selection/syntax) for `deprecation_date`. [Programmatic invocations](/reference/programmatic-invocations) is one way to identify deprecated models (potentially in conjunction with [dbt list](/reference/commands/list)). e.g., `dbt -q ls  --output json --output-keys database schema alias deprecation_date`.
+There is not specific [node selection syntax](/reference/node-selection/syntax) for `deprecation_date`. [Programmatic invocations](/reference/programmatic-invocations) is one way to identify deprecated models (potentially in conjunction with [dbt list](/reference/commands/list)). e.g., `dbt ls -q --output json --output-keys database schema alias deprecation_date`.
 
 ### Deprecation process
 
