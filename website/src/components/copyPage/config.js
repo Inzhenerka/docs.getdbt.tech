@@ -11,7 +11,7 @@ export const LLM_SERVICES = {
   },
   claude: {
     name: 'Claude',
-    url: 'https://claude.ai/?prompt=Read+from+{url}+so+I+can+ask+questions+about+it.',
+    url: 'https://claude.ai/new?q=Read+from+{url}+so+I+can+ask+questions+about+it.',
     subtitle: 'Ask questions about this page'
   }
 };
