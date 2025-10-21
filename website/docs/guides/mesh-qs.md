@@ -63,7 +63,7 @@ For example, the always-enterprising and fictional account "Jaffle Labs" will cr
 
 To [create](/docs/cloud/about-cloud-setup) a new project in <Constant name="cloud" />:
 
-1. From **Account settings**, go to **Projects**. Click **New Project**.
+1. From **Account settings**, go to **Projects**. Click **New project**.
 2. Enter a project name and click **Continue**.
    - Use "Jaffle | Data Analytics" for one project
    - Use "Jaffle | Finance" for the other project
