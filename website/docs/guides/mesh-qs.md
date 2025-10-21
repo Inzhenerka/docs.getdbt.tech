@@ -135,7 +135,6 @@ Now that you've set up the foundational project, let's start building the data a
   <File name='models/staging/sources.yml'>
 
   ```yaml
-  version: 2
 
   sources:
     - name: jaffle_shop
@@ -242,7 +241,6 @@ To make `fct_orders` publicly available:
   <File name='models/core/core.yml'>
 
   ```yaml
-  version: 2
 
   models:
     - name: fct_orders
@@ -345,7 +343,6 @@ Now that you've set up the foundational project, let's start building the data a
     <File name='models/staging/sources.yml'>
 
     ```yml
-    version: 2
 
     sources:
       - name: stripe
@@ -483,7 +480,6 @@ In this section, you will set up model versions by the Data Analytics team as th
 
 ```yaml
 
-version: 2
 
 models:
   - name: fct_orders
