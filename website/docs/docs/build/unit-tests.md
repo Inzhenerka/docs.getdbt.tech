@@ -31,7 +31,7 @@ There is an additional type of test to dbt - unit tests. In software programming
 - Redshift customers need to be aware of a [limitation when building unit tests](/reference/resource-configs/redshift-configs#unit-test-limitations) that requires a workaround.
 - Redshift sources need to be in the same database as the models.
 
-:::info
+:::tip
 If you enjoy video courses, check out our [Unit tests on-demand course](https://learn.getdbt.com/learn/course/unit-testing/welcome-to-unit-testing-5min/introduction-to-unit-testing) to learn how to add unit tests and more!
 :::
 
