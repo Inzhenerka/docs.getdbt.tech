@@ -9,7 +9,7 @@ The `dbt build` command will:
 - test [tests](/docs/build/data-tests)
 - snapshot [snapshots](/docs/build/snapshots)
 - seed [seeds](/docs/build/seeds)
-- run [user-defined functions](/docs/build/udfs) (available from dbt Core v1.11 and in the <Constant name="fusion_engine")
+- run [user-defined functions](/docs/build/udfs) (available from dbt Core v1.11 and in the <Constant name="fusion_engine" />)
 
 In DAG order, for selected resources or an entire project.
 
