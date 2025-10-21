@@ -42,7 +42,7 @@ The following examples show how to use the `dbt ls` command to list resources in
   - [Listing schema tests of incremental models](#listing-schema-tests-of-incremental-models)
   - [Listing JSON output](#listing-json-output)
   - [Listing JSON output with custom keys](#listing-json-output-with-custom-keys)
-  - [Listing Semantic models](#listing-semantic-models)
+  - [Listing semantic models](#listing-semantic-models)
   - [Listing functions](#listing-functions)
 
 #### Listing models by package
