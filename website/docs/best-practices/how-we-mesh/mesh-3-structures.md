@@ -18,7 +18,7 @@ At a high level, you’ll need to decide:
 - Where to draw the lines between your dbt Projects -- i.e. how do you determine where to split your DAG and which models go in which project?
 - How to manage your code -- do you want multiple dbt Projects living in the same repository (mono-repo) or do you want to have multiple repos with one repo per project?
 
-import MeshCourseCallout from '../../snippets/_mesh-course-callout.md';
+import MeshCourseCallout from '/snippets/_mesh-course-callout.md';
 <MeshCourseCallout />
 
 ## Define your project interfaces by splitting your DAG
