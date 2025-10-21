@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { useCopyPage } from '../../utils/use-copy-page';
-import { CopyIcon, ExternalLinkIcon, ChevronDownIcon } from './icons';
+import getSvgIcon from '../../utils/get-svg-icon';
 
 /**
  * CopyPage Component
@@ -33,9 +33,9 @@ function CopyPage() {
         aria-expanded={isDropdownOpen}
         aria-haspopup="true"
       >
-        <CopyIcon className={styles.copyIcon} />
+        {getSvgIcon("copy", { className: styles.copyIcon })}
         Copy page
-        <ChevronDownIcon className={styles.dropdownIcon} />
+        {getSvgIcon("chevron-down", { className: styles.dropdownIcon })}
       </button>
 
       {isDropdownOpen && (
@@ -50,7 +50,7 @@ function CopyPage() {
             role="menuitem"
             tabIndex="0"
           >
-            <CopyIcon />
+            {getSvgIcon("copy", {})}
             <div className={styles.dropdownItemContent}>
               <div className={styles.dropdownItemTitle}>Copy page</div>
               <div className={styles.dropdownItemSubtitle}>
@@ -67,7 +67,7 @@ function CopyPage() {
               role="menuitem"
               tabIndex="0"
             >
-              <ExternalLinkIcon />
+              {getSvgIcon("external-link", {})}
               <div className={styles.dropdownItemContent}>
                 <div className={styles.dropdownItemTitle}>
                   Open in {service.name}
