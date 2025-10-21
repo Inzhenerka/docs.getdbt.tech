@@ -18,7 +18,8 @@ Is <Constant name="mesh" /> a good fit in this scenario? Absolutely! There is no
 
 - **Managing shared macros**: Teams operating at this scale will benefit from a separate repository containing a dbt package of reusable utility macros that all other projects will install. This is different from public models, which provide data-as-a-service (a set of “API endpoints”) — this is distributed as a **library**. This package can also standardize imports of other third-party packages, as well as providing wrappers / shims for those macros. This package should have a dedicated team of maintainers — probably the central platform team, or a set of “superusers” from domain-aligned data modeling teams.
 
-import MeshCourseCallout from '../../snippets/_mesh-course-callout.md';
+import MeshCourseCallout from '/snippets/_mesh-course-callout.md';
+
 <MeshCourseCallout />
 
 ### Adoption challenges

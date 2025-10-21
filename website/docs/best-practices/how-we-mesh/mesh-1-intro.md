@@ -22,5 +22,6 @@ For additional information, refer to the [<Constant name="mesh" /> FAQs](/best-p
 - Develop an intuition for various **<Constant name="mesh" /> patterns** and how to design a multi-project architecture for your organization.
 - Establish recommended steps to **incrementally adopt** these patterns in your dbt implementation.
 
-import MeshCourseCallout from '../../snippets/_mesh-course-callout.md';
+import MeshCourseCallout from '/snippets/_mesh-course-callout.md';
+
 <MeshCourseCallout />

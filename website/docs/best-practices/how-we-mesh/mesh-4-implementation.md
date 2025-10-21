@@ -29,11 +29,9 @@ When attempting to define your project interfaces, you should consider investiga
 
 Let's go through an example process of taking a monolithing project, using groups and access to define the interfaces, and then splitting it into multiple projects.
 
-import MeshCourseCallout from '../../snippets/_mesh-course-callout.md';
+import MeshCourseCallout from '/snippets/_mesh-course-callout.md';
+
 <MeshCourseCallout />
-
-To learn more,  
-
 
 ## Defining project interfaces with groups and access
 
