@@ -23,6 +23,10 @@ This page explains how to use <Constant name="copilot" /> to:
 - [Build queries](#build-queries) &mdash; Use <Constant name="copilot" /> to generate queries in [<Constant name="query_page" />](/docs/explore/dbt-insights) for exploratory data analysis using natural language prompts.
 - [Analyze data with the <Constant name="copilot" /> agent](#analyze-data-with-the-copilot-agent) &mdash; Use <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking a natural language question to the <Constant name="copilot" /> agent.
 
+:::tip
+Check out our [dbt Copilot on-demand course](https://learn.getdbt.com/learn/course/dbt-copilot/welcome-to-dbt-copilot/welcome-5-mins) to learn how to use <Constant name="copilot" /> to generate resources, and more!
+:::
+
 ## Generate resources 
 
 <CopilotResources/>
