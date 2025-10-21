@@ -43,7 +43,7 @@ There are two ways of defining data tests in dbt:
 Defining data tests is a great way to confirm that your outputs and inputs are as expected, and helps prevent regressions when your code changes. Because you can use them over and over again, making similar assertions with minor variations, generic data tests tend to be much more common—they should make up the bulk of your dbt data testing suite. That said, both ways of defining data tests have their time and place.
 
 :::tip Creating your first data tests
-If you're new to dbt, we recommend that you check out our [quickstart guide](/guides) to build your first dbt project with models and tests.
+If you're new to dbt, we recommend that you check out our [online dbt Fundamentals course](https://learn.getdbt.com/learn/course/dbt-fundamentals/data-tests-30min/building-tests?page=1) or [quickstart guide](/guides) to build your first dbt project with models and tests.
 :::
 
 ## Singular data tests
