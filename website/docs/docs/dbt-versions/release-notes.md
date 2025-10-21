@@ -17,6 +17,7 @@ pagination_prev: null
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
 ## October 2025
+- **Enhancement**:  The CodeGenCodeLen feature has been re-introduced to the <Constant name="cloud_ide" />. This feature was [temporarily](#pre-coalesce) removed in the previous release due to compatibility issues.
 
 ### Coalesce 2025 announcements
 
