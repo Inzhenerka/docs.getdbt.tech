@@ -1,7 +1,7 @@
 /**
- * Removes frontmatter from markdown content
+ * Removes frontmatter from markdown content and extracts the title
  * @param {string} content - The markdown content that may contain frontmatter
- * @returns {string} The content without frontmatter
+ * @returns {string} The content without frontmatter, with title as H1 if present
  */
 function removeFrontmatter(content) {
   if (!content) return content;
@@ -9,11 +9,33 @@ function removeFrontmatter(content) {
   // Check if content starts with frontmatter (--- on first line)
   const lines = content.split('\n');
   if (lines.length > 0 && lines[0].trim() === '---') {
+    let title = null;
+    
     // Find the closing ---
     for (let i = 1; i < lines.length; i++) {
       if (lines[i].trim() === '---') {
-        // Return content after the closing ---
-        return lines.slice(i + 1).join('\n').trim();
+        // Extract title from frontmatter if it exists
+        const frontmatterLines = lines.slice(1, i);
+        for (const line of frontmatterLines) {
+          // Match "title: value" or 'title: "value"' or "title: 'value'"
+          const titleMatch = line.match(/^title:\s*['"]?(.+?)['"]?\s*$/);
+          if (titleMatch) {
+            title = titleMatch[1].trim();
+            // Remove surrounding quotes if they exist
+            title = title.replace(/^["']|["']$/g, '');
+            break;
+          }
+        }
+        
+        // Get content after frontmatter
+        const contentAfterFrontmatter = lines.slice(i + 1).join('\n').trim();
+        
+        // If we found a title and content doesn't already start with H1, prepend it
+        if (title && !contentAfterFrontmatter.match(/^#\s+/)) {
+          return `# ${title}\n\n${contentAfterFrontmatter}`;
+        }
+        
+        return contentAfterFrontmatter;
       }
     }
   }
