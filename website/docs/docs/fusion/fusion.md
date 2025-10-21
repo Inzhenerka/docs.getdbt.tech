@@ -9,12 +9,10 @@ pagination_prev: "docs/introduction"
 import FusionFeaturesTable from '/snippets/_fusion-features-table.md';
 import FusionAvailability from '/snippets/_fusion_availability.md';
 
-<IntroText><Constant name="fusion" /> is the next-generation engine built on Rust, that powers development across the <Constant name="dbt_platform" /> (formerly dbt Cloud), the VS Code extension, and local environments.</IntroText>
+<IntroText><Constant name="fusion" /> is the next-generation engine built in Rust, that powers development across the <Constant name="dbt_platform" /> (formerly dbt Cloud), and local development in VS Code and Cursor.</IntroText>
 
-- It’s faster, smarter, and more consistent &mdash; bringing static analysis, instant feedback, and more &mdash; to every dbt workflow, and an integrated VS Code experience through the [Language Server Protocol (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server), which enables features like autocomplete, hover info, and inline error highlights.
-- <Constant name="fusion" /> elevates [<Constant name="core" />](/docs/about-dbt-install), our open source software (OSS) engine, to a new level of performance and developer experience. It can be installed locally to accelerate dbt projects.
-- <Constant name="fusion_engine" /> includes a mix of [source-available (ELv2)](https://www.elastic.co/licensing/elastic-license), open-source (Apache 2.0), and proprietary components. Refer to [<Constant name="fusion" /> licensing details](https://www.getdbt.com/licenses-faq) for more information.
-
+- It’s faster, smarter, and more cost-efficient &mdash; bringing SQL comprehension and state awareness, instant feedback, and more &mdash; to every dbt workflow, and an integrated VS Code experience through the [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) and [Language Server Protocol (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server), which enables features like autocomplete, hover info, and inline error highlights.
+- Like <Constant name="core" />, you can install <Constant name="fusion" /> locally from the CLI to power local workflows. For a hyper-fast and intelligent development experience powered by <Constant name="fusion" />, [install the VS Code extension](/docs/fusion/install-dbt-extension).
 ## Getting started
 
 <FusionAvailability/>
