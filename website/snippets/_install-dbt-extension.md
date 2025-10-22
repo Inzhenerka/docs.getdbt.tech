@@ -151,7 +151,7 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 
 ## Configure environment variables
 
-You need to configure environment variables in order to use the extension's features. You can configure environment variables in a couple of different ways (for example, user-level or workspace-level). 
+You need to configure [environment variables](/docs/build/environment-variables) (for example, [`DBT_ENV_VAR1`](/reference/dbt-jinja-functions/env_var)) in order to use the extension's features. You can configure environment variables in a couple of different ways (for example, user-level or workspace-level). 
 
 This set up will explain how to configure environment variables at the user-level. Use the following table to see which works best for you:
 
