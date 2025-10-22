@@ -20,7 +20,7 @@ functions:
 
 The `volatility` config is an optional config that describes how predictable a UDF’s output is. Warehouses use this to decide if results can be cached, reordered, or inlined. Setting the appropriate volatility helps prevent incorrect results when a function isn’t safe to cache or reorder.
 
-In dbt, the default `volatility` value is unset (`null`). If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies.
+By default, dbt does not specify a volatility value (`null`). If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies.
 
 ## Supported volatility types
 
