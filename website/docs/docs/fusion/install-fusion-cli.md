@@ -57,6 +57,10 @@ dbtf --version
 
 This location is automatically added to your path to easily execute the `dbtf` command, but it requires reloading your shell.
 
+## Configure environment variables
+
+After verifying the installation, you can configure environment variables to run commands in the terminal or using the VS Code extension buttons and menus. Refer to [Configure environment variables](/docs/fusion/install-dbt-extension#configure-environment-variables) for more information.
+
 ## Update Fusion
 
 The following command will update to the latest version of Fusion and adapter code:
