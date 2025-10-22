@@ -43,6 +43,6 @@ A non-deterministic function may return different results for the same inputs. W
 - [User-defined functions](/docs/build/udfs)
 - [Function properties](/reference/function-properties)
 - [Function configurations](/reference/function-configs)
-- [Types](/reference/resource-configs/types)
+- [Types](/reference/resource-configs/type)
 - [Arguments](/reference/resource-properties/function-arguments)
 - [Returns](/reference/resource-properties/returns)

@@ -17,8 +17,8 @@ functions:
     [description](/reference/resource-properties/description): <markdown_string> # optional
     [config](/reference/resource-properties/config): # optional
       [<function_config>](/reference/function-configs): <config_value>
-      [type](/reference/resource-config/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
-      [volatility](/reference/resource-config/volatility): deterministic | stable | non-deterministic # optional
+      [type](/reference/resource-configs/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
+      [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # optional
       [docs](/reference/resource-configs/docs):
         show: true | false
         node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")

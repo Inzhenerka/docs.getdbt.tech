@@ -49,8 +49,8 @@ functions:
 functions:
   - name: [<function-name>]
     config:
-      [type](/reference/resource-config/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
-      [volatility](/reference/resource-config/volatility): deterministic | stable | non-deterministic # optional
+      [type](/reference/resource-configs/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
+      [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # optional
       # Standard configs that apply to functions
       [database](/reference/resource-configs/database): <string>
       [schema](/reference/resource-properties/schema): <string>
