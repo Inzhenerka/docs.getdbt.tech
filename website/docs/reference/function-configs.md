@@ -49,6 +49,8 @@ functions:
 functions:
   - name: [<function-name>]
     config:
+      [type](/reference/resource-config/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
+      [volatility](/reference/resource-config/volatility): deterministic | stable | non-deterministic # optional
       # Standard configs that apply to functions
       [database](/reference/resource-configs/database): <string>
       [schema](/reference/resource-properties/schema): <string>
@@ -228,6 +230,8 @@ functions:
   - name: is_positive_int
     description: Determines if a string represents a positive integer
     config:
+      type: scalar
+      volatility: deterministic
       database: analytics
       schema: udf_schema
     arguments:

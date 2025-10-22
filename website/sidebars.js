@@ -1352,7 +1352,8 @@ const sidebarSettings = {
           items: [
             "reference/function-properties",
             "reference/function-configs",
-            "reference/resource-properties/type",
+            "reference/resource-configs/type",
+            "reference/resource-configs/volatility",
             "reference/resource-properties/returns",
             "reference/resource-properties/function-arguments",
           ],

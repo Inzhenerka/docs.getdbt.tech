@@ -15,9 +15,10 @@ We recommend that you put them in the `functions/` directory. You can name these
 functions:
   - name: <string> # required
     [description](/reference/resource-properties/description): <markdown_string> # optional
-    [type](/reference/resource-properties/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
     [config](/reference/resource-properties/config): # optional
       [<function_config>](/reference/function-configs): <config_value>
+      [type](/reference/resource-config/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
+      [volatility](/reference/resource-config/volatility): deterministic | stable | non-deterministic # optional
       [docs](/reference/resource-configs/docs):
         show: true | false
         node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
@@ -43,8 +44,9 @@ functions:
 functions:
   - name: is_positive_int
     description: Determines if a string represents a positive (+) integer
-    type: scalar
     config:
+      type: scalar
+      volatility: deterministic
       database: analytics
       schema: udf_schema
     arguments:
