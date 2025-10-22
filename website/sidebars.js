@@ -359,7 +359,7 @@ const sidebarSettings = {
         "docs/cloud/about-cloud-develop-defer",
         {
           type: "category",
-          label: "dbt VS Code Extension",
+          label: "dbt VS Code extension",
           collapsed: true,
           link: { type: "doc", id: "docs/about-dbt-extension" },
           items: [
