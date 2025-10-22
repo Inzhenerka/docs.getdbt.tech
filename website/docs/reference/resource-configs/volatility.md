@@ -32,7 +32,7 @@ A deterministic function always returns the same output for the same input. Beca
 
 A stable function returns the same value throughout a single query execution, but its result may change across different executions.
 
-### non-detetministic
+### non-deterministic
 
 A non-deterministic function may return different results for the same inputs. Warehouses should not cache these results or reorder expressions in ways that assume stability.
 
