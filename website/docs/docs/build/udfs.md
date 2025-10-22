@@ -200,7 +200,7 @@ In dbt, you can use the following values for the `volatility` config:
 | `stable` | Returns the same value within a single query execution, but may change across executions.| `now()` |
 | `non-deterministic` | May return different results for the same inputs. Warehouses shouldn't cache or reorder assuming stable results. | `first()`, `random()` |
 
-Defining a function's volatility lets the data warehouse do optimizations when executing the function. In dbt, the default is unset (`null`). If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies.
+Defining a function's volatility lets the data warehouse do optimizations when executing the function. By default, dbt does not specify a volatility value (`null`). If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies.
 
 <Expandable alt_header="Warehouse-specific volatility keywords">
 
