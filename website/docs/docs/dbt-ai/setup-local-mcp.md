@@ -7,7 +7,7 @@ id: "setup-local-mcp"
 
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-# Set up local MCP <Lifecycle status="beta" />
+# Set up local MCP
 
 [The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine. Set up the local dbt MCP server with the following directions: 
 
