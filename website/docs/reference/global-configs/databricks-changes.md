@@ -59,7 +59,6 @@ With the `use_materialization_v2` flag set to `True`, there are two model config
  <File name="schema.yml">
  
  ```yaml
- version: 2
   
  models:
    - name: market_summary
@@ -88,7 +87,6 @@ As such, we must replace the view whenever you change its description
  <File name="schema.yml">
  
  ```yaml
- version: 2
   
  models:
    - name: market_summary
@@ -167,7 +165,6 @@ The following example shows how to configure this:
 <File name="schema.yml">
 
 ```yaml
-version: 2
  
 models:
   - name: incremental_market_updates
