@@ -231,7 +231,7 @@ functions:
 ```
 </File>
 
-The `volatility` value you set in a function is propagated in the adapter with the right keyword. For example:
+The `volatility` value you define is passed to the adapter, which adds the correct keyword for your data warehouse. For example:
 <!--verify accuracy of samples-->
 <Tabs>
 
