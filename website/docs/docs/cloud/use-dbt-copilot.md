@@ -61,7 +61,7 @@ To begin building SQL queries with natural language prompts in <Constant name="q
 
 ## Analyze data with the Analyst agent <Lifecycle status='private_beta' />
 
-Use dbt <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking natural language questions to the [<Constant name="query_page" />](/docs/explore/dbt-insights) Analyst agent. To get access to the Analyst agent, [join the waitlist](https://www.getdbt.com/product/dbt-agents#dbt-Agents-signup).
+Use dbt <Constant name="copilot" /> to analyze your data and get contextualized results in real time by asking natural language questions to the [<Constant name="query_page" />](/docs/explore/dbt-insights) Analyst agent. To request access to the Analyst agent, [join the waitlist](https://www.getdbt.com/product/dbt-agents#dbt-Agents-signup).
 
 Before you begin, make sure you can [access <Constant name="query_page" />](/docs/explore/access-dbt-insights).
 
