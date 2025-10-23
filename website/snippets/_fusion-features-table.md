@@ -2,20 +2,20 @@
 
 ## Features and capabilities
 <!-- table 2 for feature comparison (“What’s available where?”)-->
-<Constant name="fusion_engine" /> (built on Rust) gives your team 30x faster performance and comes with different features depending on where you use it. It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level features_ (like IntelliSense, hover info, and inline errors) through the LSP.
+- <Constant name="fusion_engine" /> (built on Rust) gives your team 30x faster performance and comes with different features depending on where you use it. 
+- It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level features_ (like IntelliSense, hover info, and inline errors) through the LSP.
+- To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
 If you're not sure what is available where, check out the following table.
 
-To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
+> ✅ = Available | 🟡 = Partial / at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
-> **Legend:** ✅ = Available | 🟡 = Partial / compile-time only | ❌ = Not available | Coming soon = Not yet available
-
-| **Category / Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code + Fusion** | **<Constant name="dbt_platform" />***<br/><small>(<Constant name="cloud_ide" />/<Constant name="visual_editor" />)</small> |
+| **Category / Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** |
 |:---------------------------|:--------------------:|:--------------------:|:------------------:|:----------------------:|
 | **Engine performance** |  |  |  |  |
 | SQL parsing & compilation | ✅ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ |
-| Faster parse / compile | ❌ | ✅ | ✅ | ✅ |
+| 30xh faster parse / compile | ❌ | ✅ | ✅ | ✅ |
 | Incremental compilation | ❌ | ✅ | ✅ | ✅ |
 | **Editor and development experience** |  |  |  |  |
 | IntelliSense / autocomplete / hover info | ❌ | ❌ | ✅ | ✅ |
@@ -25,13 +25,13 @@ To stay up-to-date on the latest features and capabilities, check out the [Fusio
 | Go-to definition / references | ❌ | ❌ | ✅ | Coming soon |
 | Column-level lineage (in editor) | ❌ | ❌ | ✅ | Coming soon |
 | **Platform and governance** |  |  |  |  |
+| Advanced CI compare changes | ❌ | ❌  | ✅ | ✅ |
+| dbt Mesh | ❌ | ❌  | ✅ | ✅ |
 | State-aware orchestration (SAO) | ❌ | ❌ | ❌ | ✅ |
 | Governance (PII / PHI tracking) | ❌ | ❌ | ❌ | Coming soon |
 | CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | ❌ | Coming soon |
-| Advanced CI compare changes | ❌ | ❌  | ✅ | ✅ |
-| dbt Mesh | ❌ | ❌  | ✅ | ✅ |
 
-*[<Constant name="query_page" />](/docs/explore/dbt-insights) (our explore and query tool) also runs on the <Constant name="fusion_engine" /> and has the following [LSP features](/docs/explore/navigate-dbt-insights#lsp-features). <Constant name="fusion"/> support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.
+*Support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.
 
 #### Additional considerations
 Here are some additional considerations if using the Fusion CLI or VS Code extension:
