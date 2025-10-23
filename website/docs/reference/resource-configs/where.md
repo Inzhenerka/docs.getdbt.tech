@@ -53,7 +53,7 @@ models:
       - name: other_column
         data_tests:
           - not_null:
-              arguments: 
+              config: 
                 where: "date_column < current_date"
 ```
 
