@@ -17,11 +17,13 @@ pagination_prev: null
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
 ## October 2025
+- **Enhancement**:  The CodeGenCodeLen feature has been re-introduced to the <Constant name="cloud_ide" />. This feature was [temporarily](#pre-coalesce) removed in the previous release due to compatibility issues.
 
 ### Coalesce 2025 announcements
 
 The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
 
+- **New**: The [dbt MCP server](/docs/dbt-ai/about-mcp) is now generally available (GA). For more information on the dbt MCP server and dbt Agents, refer to the [Announcing dbt Agents and the remote dbt MCP Server: Trusted AI for analytics](https://www.getdbt.com/blog/dbt-agents-remote-dbt-mcp-server-trusted-ai-for-analytics) blog post.
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
   - [About data platform connections](/docs/cloud/connect-data-platform/about-connections) lists all available <Constant name="dbt_platform" /> connections on Fusion and the supported authentication methods per connection. 
 - **New**: Fusion‑specific configuration is now available for BigQuery, Databricks, Redshift, and Snowflake. For more information, see [Connect Fusion to your data platform](/docs/fusion/connect-data-platform-fusion/profiles.yml).
