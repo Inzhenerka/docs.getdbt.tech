@@ -68,12 +68,12 @@ Use dbt <Constant name="copilot" /> to analyze your data and get contextualized 
 3. In the dbt <Constant name="copilot" /> prompt box, enter your question.
 4. Click **↑** to submit your question.
 
-   The Analyst agent then translates natural language questions into structured queries, executes queries against governed dbt models and metrics, and returns results with references, assumptions, and possible next steps.
+   The agent then translates natural language questions into structured queries, executes queries against governed dbt models and metrics, and returns results with references, assumptions, and possible next steps.
 
-   The Analyst agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
+   The agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
 
-5. Confirm the results or continue asking the Analyst agent for more insights about your data. 
+5. Confirm the results or continue asking the agent for more insights about your data. 
 
-Your conversation with the Analyst agent remains even if you switch tabs within dbt <Constant name="query_page" />. However, they disappear when you navigate out of <Constant name="query_page" /> or when you close your browser.
+Your conversation with the agent remains even if you switch tabs within dbt <Constant name="query_page" />. However, they disappear when you navigate out of <Constant name="query_page" /> or when you close your browser.
 
 <Lightbox src="/img/docs/dbt-insights/insights-copilot-agent.png" width="60%" title="Using the Analyst agent in Insights" />
