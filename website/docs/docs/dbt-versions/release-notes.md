@@ -19,7 +19,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 ## October 2025
 - **New**: The [docs.getdbt.com](http://docs.getdbt.com/) documentation site has introduced an LLM Context menu on all product documentation and guide pages. This menu provides users with quick options to interact with the current page using LLMs. You can can now:
   - Copy the page as raw Markdown &mdash; This makes it easier to reference or reuse documentation content.
-  - Open the page directly in ChatGPT or Claude: Automatically sharing the page’s content with the LLM, allowing you to start a chat with full page context preloaded.
+  - Open the page directly in ChatGPT or Claude &mdash; This redirects you to a chat with the LLM and automatically loads a message asking it to read the page, helping you start a conversation with context from the page.
   <Lightbox src="/img/llm-menu.png" width="80%" title="LLM Context menu on documentation pages" />
 - **Enhancement**:  The CodeGenCodeLen feature has been re-introduced to the <Constant name="cloud_ide" />. This feature was [temporarily](#pre-coalesce) removed in the previous release due to compatibility issues.
 
