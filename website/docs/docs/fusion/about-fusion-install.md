@@ -42,6 +42,6 @@ If you're ready to get started, choose one of the following options. If you're n
 
 ## What's available where?
 
-<FusionFeaturesTable />
-
 <FusionAvailability/>
+
+<FusionFeaturesTable />
