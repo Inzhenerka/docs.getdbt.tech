@@ -114,7 +114,9 @@ Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to
 
 <Lightbox src="/img/docs/dbt-insights/insights-copilot-tabs.png" width="90%" title="dbt Copilot in Insights" />
 
-- **Agent** tab<Lifecycle status='private_beta' /> - Ask questions to the Analyst agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. Some sample questions: 
+- **Agent** tab<Lifecycle status='private_beta' /> - Ask questions to the Analyst agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. To get access to the Analyst agent, [join the waitlist](https://www.getdbt.com/product/dbt-agents#dbt-Agents-signup).  
+
+  Some sample questions you can ask the agent: 
 
   - _What region are my sales growing the fastest?_ 
   - _What was the revenue last month?_
