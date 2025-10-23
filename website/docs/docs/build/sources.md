@@ -208,7 +208,7 @@ Set [source freshness snapshots](/docs/deploy/source-freshness#enabling-source-f
 
 ### Filter
 
-Some databases can have tables where a filter over certain columns are required, in order prevent a full scan of the table, which could be costly. In order to do a freshness check on such tables a `filter` argument can be added to the configuration, e.g. `filter: _etl_loaded_at >= date_sub(current_date(), interval 1 day)`. For the example above, the resulting query would look like
+Some databases can have tables where a filter over certain columns are required, in order prevent a full scan of the table, which could be costly. In order to do a freshness check on such tables a `filter` argument can be added to the configuration, for example, `filter: _etl_loaded_at >= date_sub(current_date(), interval 1 day)`. For the example above, the resulting query would look like
 
 ```sql
 select
