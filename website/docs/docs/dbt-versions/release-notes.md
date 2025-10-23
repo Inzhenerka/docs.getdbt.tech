@@ -17,7 +17,7 @@ pagination_prev: null
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
 ## October 2025
-- **New**: The docs.getdbt.com documentation site has introduced an LLM Context menu on all product documentation and guide pages. This menu provides users with quick options to interact with the current page using LLMs. You can can now:
+- **New**: The [docs.getdbt.com](http://docs.getdbt.com/) documentation site has introduced an LLM Context menu on all product documentation and guide pages. This menu provides users with quick options to interact with the current page using LLMs. You can can now:
   - Copy the page as raw Markdown: making it easier to reference or reuse documentation content.
   - Open the page directly in ChatGPT or Claude: Automatically sharing the page’s content with the LLM, allowing you to start a chat with full page context preloaded.
   <Lightbox src="/img/llm-menu.png" width="80%" title="LLM Context menu on documentation pages" />
