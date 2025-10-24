@@ -12,7 +12,7 @@ Values:
 - `off`: Disable static analysis for all models in the run.
 - `unsafe`: Use JIT ("unsafe") static analysis for all models in the run.
 
-If not set, Fusion uses its defaults: AOT static analysis (`on`) for eligible models and JIT ("unsafe") for introspective branches. See [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis).
+If not set, Fusion uses its defaults: AOT static analysis (`on`) for eligible models and JIT (`unsafe`) for introspective branches. See [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) for more information.
 
 <File name='Usage'>
 
