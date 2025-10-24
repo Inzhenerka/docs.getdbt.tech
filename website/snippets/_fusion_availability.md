@@ -5,7 +5,7 @@ Try out the [<Constant name="fusion" /> quickstart](/guides/fusion) and check ou
 
 <Constant name="fusion_engine" /> powers dbt development everywhere — in the [<Constant name="dbt_platform" />](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine), [VS Code/Cursor](/docs/about-dbt-extension), and [locally](/docs/fusion/install-fusion-cli). <Constant name="fusion"/> in the <Constant name="dbt_platform"/> is available in private preview. Contact your account team for access. <Lifecycle status="private_preview" />
 
-Features vary by environment. Whether you’re new to dbt or already set up, check out the following table to see which Fusion-friendly tools you can use and what’s available where.
+Features vary depending on how Fusion is implemented. Whether you’re new to dbt or already set up, check out the following table to see which Fusion-friendly features you can use.
 
 <!-- table 1 for orientation (“Which tool should I use?”)-->
 
