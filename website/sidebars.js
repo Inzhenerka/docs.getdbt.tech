@@ -366,6 +366,7 @@ const sidebarSettings = {
             "docs/about-dbt-extension",
             "docs/dbt-extension-features", 
             "docs/install-dbt-extension",
+            "docs/use-dbt-extension",
           ],
         },
         {
