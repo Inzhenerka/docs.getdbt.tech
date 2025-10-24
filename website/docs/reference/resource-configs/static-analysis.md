@@ -151,4 +151,4 @@ from {{ ref('my_model') }}
 ## Considerations
 
 - Disabling static analysis means that features of the VS Code extension that depend on SQL comprehension will be unavailable.
-- Static analysis might fail (for example, dynamic SQL constructs or unrecognized UDFs) and requires `static_analysis: off`. For more examples, refer to [When should I turn static analysis off?](/docs/fusion/new-concepts#when-should-i-turn-static-analysis-off).
+- Static analysis might fail in some cases (for example, dynamic SQL constructs or unrecognized UDFs) and may require setting `static_analysis: off`. For more examples, refer to [When should I turn static analysis off?](/docs/fusion/new-concepts#when-should-i-turn-static-analysis-off).
