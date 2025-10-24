@@ -15,7 +15,7 @@ The `static_analysis` config is available in the <Constant name="fusion_engine"/
 
 <Tabs>
 
-<TabItem value="dbt_project.yml" label="dbt_project.yml">
+<TabItem value="dbt_project.yml" label="Project file">
 
 <File name='dbt_project.yml'>
 
@@ -30,7 +30,7 @@ models:
 
 </TabItem>
 
-<TabItem value="filename.yml">
+<TabItem value="Property file">
 
 <File name='models/filename.yml'>
 
@@ -44,7 +44,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="model_name.sql">
+<TabItem value="SQL config">
 
 <File name='models/model_name.sql'>
 
