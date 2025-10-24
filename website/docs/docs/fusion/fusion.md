@@ -7,8 +7,6 @@ pagination_next: "docs/fusion/about-fusion"
 pagination_prev: "docs/introduction"
 ---
 
-import FusionFeaturesTable from '/snippets/_fusion-features-table.md';
-import FusionAvailability from '/snippets/_fusion_availability.md';
 
 <IntroText><Constant name="fusion" /> is the next-generation engine built in Rust, that powers development across the <Constant name="dbt_platform" /> (formerly dbt Cloud), and local development in VS Code and Cursor.</IntroText>
 
@@ -29,7 +27,6 @@ Choose one of the following paths to get started with the dbt Fusion engine.
     body="Learn about the dbt Fusion engine and how it works."
     link="/docs/fusion/about-fusion"
     icon="dbt-bit"/>
-
 
 <Card
     title="New concepts in Fusion"
@@ -56,4 +53,3 @@ Choose one of the following paths to get started with the dbt Fusion engine.
     icon="dbt-bit"/>
 
 </div>
-
