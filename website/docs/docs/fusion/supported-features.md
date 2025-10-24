@@ -32,7 +32,7 @@ To use Fusion in your dbt project:
 
 ## Parity with dbt Core
 
-Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. Fusion already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
+Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. <Constant name="fusion" /> already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
 
 Note that we have removed some deprecated features, and introduced more-rigorous validation of erroneous project code. Refer to the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) for details.
 
