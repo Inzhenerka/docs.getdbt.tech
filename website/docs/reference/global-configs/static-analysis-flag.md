@@ -10,9 +10,9 @@ Use the `--static-analysis` flag to override model-level `static_analysis` behav
 Values:
 
 - `off`: Disable static analysis for all models in the run.
-- `unsafe`: Use JIT ("unsafe") static analysis for all models in the run.
+- `unsafe`: Use Just-in-time (JIT) static analysis for all models in the run.
 
-If not set, Fusion uses its defaults: AOT static analysis (`on`) for eligible models and JIT (`unsafe`) for introspective branches. See [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) for more information.
+If not set, Fusion uses its defaults: Ahead-of-time (AOT) static analysis (`on`) for eligible models and JIT (`unsafe`) for introspective branches. See [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) for more information.
 
 <File name='Usage'>
 
@@ -22,5 +22,7 @@ dbt run --static-analysis unsafe
 ```
 
 </File>
+
+## Related docs
 
 Also check out the model-level [`static_analysis` (resource config)](/reference/resource-configs/static-analysis) and [About flags](/reference/global-configs/about-global-configs) pages for more details.
