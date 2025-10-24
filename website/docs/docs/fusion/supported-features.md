@@ -54,7 +54,7 @@ If you're not sure what is available where, check out the following table.
 | SQL compilation | ✅ | ✅ | ✅ | ✅ |
 | SQL compilation and parsing (SQL understanding) | ❌ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ |
-| 30xh faster parse / compile | ❌ | ✅ | ✅ | ✅ |
+| Up to 30x faster parse / compile | ❌ | ✅ | ✅ | ✅ |
 | Incremental compilation | ❌ | ❌ | ✅ | ✅ |
 | **Editor and development experience** |  |  |  |  |
 | IntelliSense / autocomplete / hover info | ❌ | ❌ | ✅ | ✅ |
