@@ -9,7 +9,7 @@ sidebar_label: "static_analysis"
 
 :::info
 
-The `static_analysis` config is available in the <Constant name="fusion_engine"/> only. It has no effect in <Constant name="core" />, is ignored, and won't error. To learn more about <Constant name="fusion"/> , check out [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis).
+The `static_analysis` config is available in the <Constant name="fusion_engine"/> only. It isn't available in <Constant name="core" /> and will be ignored. To learn more about <Constant name="fusion"/> , check out [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis).
 
 :::
 
