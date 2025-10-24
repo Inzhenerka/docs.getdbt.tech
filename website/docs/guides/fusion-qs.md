@@ -181,20 +181,10 @@ Now that your project works, open it in VS Code and see Fusion in action:
 Now you're ready to see some of these awesome features in action!
 
 <!--no toc -->
-- [Introduction](#introduction)
-  - [About the dbt Fusion engine](#about-the-dbt-fusion-engine)
-- [Prerequisites](#prerequisites)
-  - [What you’ll learn](#what-youll-learn)
-- [Installation](#installation)
-  - [Verify the  installation](#verify-the--installation)
-  - [Install the dbt VS Code extension](#install-the-dbt-vs-code-extension)
-- [Initialize the Jaffle Shop project](#initialize-the-jaffle-shop-project)
-- [Explore with the dbt VS Code extension](#explore-with-the-dbt-vs-code-extension)
-    - [Preview data and code](#preview-data-and-code)
-    - [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
-    - [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
-    - [Speed up common dbt commands](#speed-up-common-dbt-commands)
-- [Troubleshooting](#troubleshooting)
+- [Preview data and code](#preview-data-and-code)
+- [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
+- [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
+- [Speed up common dbt commands](#speed-up-common-dbt-commands)
 
 #### Preview data and code
 
