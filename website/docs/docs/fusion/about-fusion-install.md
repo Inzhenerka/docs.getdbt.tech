@@ -6,9 +6,7 @@ id: about-fusion-install
 
 # About Fusion local installation <Lifecycle status="preview" />
 
-import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
-import FusionFeaturesTable from '/snippets/_fusion-features-table.md';
-import FusionAvailability from '/snippets/_fusion_availability.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md'
 import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 
 <FusionLifecycle />
@@ -16,7 +14,8 @@ import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 <FusionPrereqs />
 
 ## Getting started
-If you're ready to get started, choose one of the following options. If you're not sure which option is best for you, see the [What's available where?](#whats-available-where) section.
+
+If you're ready to get started, choose one of the following options. To learn more about which tool is best for you, see the [Fusion availability](/docs/fusion/fusion-availability) page.
 
 <div className="grid--3-col">
 
@@ -40,8 +39,4 @@ If you're ready to get started, choose one of the following options. If you're n
 
 </div>
 
-## What's available where?
 
-<FusionAvailability/>
-
-<FusionFeaturesTable />
