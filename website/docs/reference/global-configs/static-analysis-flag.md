@@ -1,5 +1,5 @@
 ---
-title: "--static-analysis flag"
+title: "Static analysis"
 id: "static-analysis-flag"
 description: "Use the --static-analysis flag to override model-level static_analysis behavior for a single run."
 sidebar: "Static analysis"
