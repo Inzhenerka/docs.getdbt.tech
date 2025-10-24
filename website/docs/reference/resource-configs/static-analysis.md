@@ -133,7 +133,7 @@ models:
 
 #### Disable static analysis in SQL for a model using a custom UDF
 
-This example shows how to disable static analysis for a model using a custom [user-defined function (UDF)](/docs/build/udfs) in a sql file.
+This example shows how to disable static analysis for a model using a custom [user-defined function (UDF)](/docs/build/udfs) in a SQL file.
 
 <File name='models/my_udf_using_model.sql'>
 
