@@ -13,6 +13,7 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/fusion/fusion" },
       items: [
         "docs/fusion/fusion",
+        "docs/fusion/fusion-availability",
         "docs/fusion/about-fusion",
         "docs/fusion/new-concepts",
         "docs/fusion/supported-features",
