@@ -41,7 +41,7 @@ Note that we have removed some deprecated features and introduced more rigorous 
 ## Features and capabilities
 <!-- table 2 for feature comparison (“What’s available where?”)-->
 - <Constant name="fusion_engine" /> (built on Rust) gives your team 30x faster performance and comes with different features depending on where you use it. 
-- It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level features_ (like IntelliSense, hover info, and inline errors) through the LSP.
+- It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level_ features (like IntelliSense, hover info, and inline errors) through the LSP.
 - To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
 If you're not sure what features are available, check out the following table.
