@@ -44,7 +44,7 @@ Note that we have removed some deprecated features, and introduced more-rigorous
 - It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level features_ (like IntelliSense, hover info, and inline errors) through the LSP.
 - To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
-If you're not sure what is available where, check out the following table.
+If you're not sure what features are available, check out the following table.
 
 > ✅ = Available | 🟡 = Partial / at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
