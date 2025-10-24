@@ -13,7 +13,7 @@ You can develop in your browser using a <Constant name="cloud" />-powered comman
 
 To get started, you'll need a [<Constant name="cloud" />](https://www.getdbt.com/signup) account and a developer license. For a more comprehensive guide about developing in dbt, refer to the [quickstart guides](/docs/get-started-dbt).
 
-If you're ready to get started, choose one of the following options.
+Choose the option that best fits your needs:
 
 <div className="grid--2-col" >
 
