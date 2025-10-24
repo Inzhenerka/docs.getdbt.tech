@@ -35,7 +35,7 @@ This quickstart guide will get you from zero to running your first dbt project w
 | **dbt CLI (local)** | [Install <Constant name="fusion_engine" />](/docs/fusion/install-fusion) locally following this guide. |
 | **VS Code / Cursor IDE** | [Install the dbt extension](/docs/install-dbt-extension) to unlock <Constant name="fusion" />'s interactive power in your editor. |
 
-To learn more about which tool is best for you, see the [Fusion availability](/docs/fusion/fusion-availability) page. To learn about the <Constant name="fusion_engine" /> and how it works, read more [about the dbt Fusion engine](/docs/about-fusion).
+To learn more about which tool is best for you, see the [Fusion availability](/docs/fusion/fusion-availability) page. To learn about the <Constant name="fusion_engine" /> and how it works, read more [about the dbt Fusion engine](/docs/fusion/about-fusion).
 
 
 ## Prerequisites
@@ -180,21 +180,11 @@ Now that your project works, open it in VS Code and see Fusion in action:
 
 Now you're ready to see some of these awesome features in action!
 
-<!--no toc -->
-- [Introduction](#introduction)
-  - [About the dbt Fusion engine](#about-the-dbt-fusion-engine)
-- [Prerequisites](#prerequisites)
-  - [What you’ll learn](#what-youll-learn)
-- [Installation](#installation)
-  - [Verify the  installation](#verify-the--installation)
-  - [Install the dbt VS Code extension](#install-the-dbt-vs-code-extension)
-- [Initialize the Jaffle Shop project](#initialize-the-jaffle-shop-project)
-- [Explore with the dbt VS Code extension](#explore-with-the-dbt-vs-code-extension)
-    - [Preview data and code](#preview-data-and-code)
-    - [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
-    - [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
-    - [Speed up common dbt commands](#speed-up-common-dbt-commands)
-- [Troubleshooting](#troubleshooting)
+<!-- no toc -->
+- [Preview data and code](#preview-data-and-code)
+- [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
+- [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
+- [Speed up common dbt commands](#speed-up-common-dbt-commands)
 
 #### Preview data and code
 
