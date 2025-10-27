@@ -73,7 +73,7 @@ If you're not sure what features are available, check out the following table.
 *Support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.
 
 #### Additional considerations
-Here are some additional considerations if using the Fusion CLI or VS Code extension:
+Here are some additional considerations if using the Fusion CLI without the VS Code extension or the VS Code extension without the Fusion CLI:
     - **Fusion CLI** ([binary](/blog/dbt-fusion-engine-components))
       - Free to use and runs on the <Constant name="fusion_engine" /> (distinct from <Constant name="core" />). 
       - Benefits from Fusion engine’s performance for `parse`, `compile`, `build`, and `run`, but _doesn't_ include visual and interactive [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.  
@@ -81,7 +81,7 @@ Here are some additional considerations if using the Fusion CLI or VS Code exten
     - **dbt VS Code extension**
       - Free to use and runs on the <Constant name="fusion_engine" />; register your email within 14 days. 
       - Benefits from <Constant name="fusion" /> engine’s performance for `parse`, `compile`, `build`, and `run`, and also includes visual and interactive [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.
-      - Capped at 15 users per organization. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information
+      - Capped at 15 users per organization. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
       - If you already have a <Constant name="dbt_platform" /> user account (even if a trial expired), sign in with the same email. Unlock or reset it if locked.  
       - Requires both `profiles.yml` and `dbt_cloud.yml` files.
 
