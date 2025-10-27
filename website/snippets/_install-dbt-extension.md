@@ -12,7 +12,7 @@ To use the extension, you must meet the following prerequisites:
 | **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
-| (Optional) **Environment variables** | If your dbt project uses environment variables, [configure them](/docs/use-dbt-extension#configure-environment-variables) to use the extension's features. |
+| (Optional) **Environment variables** | If your dbt project uses environment variables, [configure them](/docs/configure-dbt-extension#set-environment-variables-locally) to use the extension's features. |
 
 ## Installation instructions
 
