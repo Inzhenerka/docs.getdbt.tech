@@ -64,7 +64,7 @@ Changelogs:
 
 ## September 2025
 
-Release Date: September 10, 2025
+Release date: September 10, 2025
 
 This compatible release includes functionality from the following versions of dbt Core OSS:
 
