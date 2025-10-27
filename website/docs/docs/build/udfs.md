@@ -51,7 +51,6 @@ To define UDFs in dbt, refer to the following steps:
 
     REGEXP_INSTR(a_string, r'^[0-9]+$')
     ```
-    <!--check if this sample should be revised-->
 
     </File>
 
