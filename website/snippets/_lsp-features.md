@@ -1,4 +1,4 @@
-|                              | VS Code extension + Fusion | Studio IDE | Insights |
+|                              | VS Code extension | Studio IDE | Insights |
 |------------------------------|:--------------------------:|:----------:|:--------:|
 | Autocomplete column names    | ✅                          | ✅          | ❌        |
 | Autocomplete function names  | ✅                          | ✅          | ❌        |
