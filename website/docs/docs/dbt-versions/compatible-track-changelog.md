@@ -17,7 +17,7 @@ Release Date: October 23, 2025
 ### dbt cloud-based platform 
 
 ### Under the Hood
-- Add instrumentation to adapter methods for reliable debugging traces at the adapter boundary.
+- Add instrumentation to adapter methods for reliable debugging traces at the adapter boundary
 
 This compatible release includes functionality from the following versions of dbt Core OSS:
 
