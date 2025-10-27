@@ -32,19 +32,19 @@ To use Fusion in your dbt project:
 
 ## Parity with dbt Core
 
-Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. Fusion already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
+Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. <Constant name="fusion" /> already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
 
-Note that we have removed some deprecated features, and introduced more-rigorous validation of erroneous project code. Refer to the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) for details.
+Note that we have removed some deprecated features and introduced more rigorous validation of erroneous project code. Refer to the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) for details.
 
 
 
 ## Features and capabilities
 <!-- table 2 for feature comparison (“What’s available where?”)-->
-- <Constant name="fusion_engine" /> (built on Rust) gives your team 30x faster performance and comes with different features depending on where you use it. 
-- It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level features_ (like IntelliSense, hover info, and inline errors) through the LSP.
+- <Constant name="fusion_engine" /> (built on Rust) gives your team up to 30x faster performance and comes with different features depending on where you use it. 
+- It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level_ features (like IntelliSense, hover info, and inline errors) through the LSP.
 - To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
-If you're not sure what is available where, check out the following table.
+If you're not sure what features are available, check out the following table.
 
 > ✅ = Available | 🟡 = Partial / at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
@@ -54,7 +54,7 @@ If you're not sure what is available where, check out the following table.
 | SQL compilation | ✅ | ✅ | ✅ | ✅ |
 | SQL compilation and parsing (SQL understanding) | ❌ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ |
-| 30xh faster parse / compile | ❌ | ✅ | ✅ | ✅ |
+| Up to 30x faster parse / compile | ❌ | ✅ | ✅ | ✅ |
 | Incremental compilation | ❌ | ❌ | ✅ | ✅ |
 | **Editor and development experience** |  |  |  |  |
 | IntelliSense / autocomplete / hover info | ❌ | ❌ | ✅ | ✅ |
@@ -79,7 +79,7 @@ Here are some additional considerations if using the Fusion CLI or VS Code exten
       - Benefits from Fusion engine’s performance for `parse`, `compile`, `build`, and `run`, but _doesn't_ include visual and interactive [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.  
       - Requires `profiles.yml` only (no `dbt_cloud.yml`).
     - **dbt VS Code extension**
-      - Free to use and runs with the <Constant name="fusion_engine" />; register your email after 14 days. 
+      - Free to use and runs on the <Constant name="fusion_engine" />; register your email within 14 days. 
       - Benefits from <Constant name="fusion" /> engine’s performance for `parse`, `compile`, `build`, and `run`, and also includes visual and interactive [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.
       - Capped at 15 users per organization.
       - If you already have a <Constant name="dbt_platform" /> user account (even if a trial expired), sign in with the same email. Unlock or reset it if locked.  

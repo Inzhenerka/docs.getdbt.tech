@@ -8,7 +8,7 @@ pagination_prev: "docs/introduction"
 ---
 
 
-<IntroText><Constant name="fusion" /> is the next-generation engine built in Rust, that powers development across the <Constant name="dbt_platform" /> (formerly dbt Cloud), and local development in VS Code / Cursor, and the CLI.</IntroText>
+<IntroText><Constant name="fusion_engine" /> is the next-generation engine built in Rust, that powers development across the <Constant name="dbt_platform" /> (formerly dbt Cloud), and local development in VS Code and Cursor, and the CLI.</IntroText>
 
 Fusion is faster, smarter, and more cost-efficient &mdash; bringing SQL comprehension and state awareness, instant feedback, and more &mdash; to every dbt workflow, and an integrated VS Code experience through the [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) and [Language Server Protocol (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server), which enables features like live CTE previews, hover info, error highlighting, and more.
 
@@ -48,7 +48,7 @@ Choose one of the following paths to get started with the dbt Fusion engine.
 
 <Card
     title="Upgrade to Fusion"
-    body="Learn how to upgrade to the dbt Fusion engine."
+    body="Learn how to upgrade your cloud-hosted environments to the dbt Fusion engine."
     link="/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine in the dbt platform"
     icon="dbt-bit"/>
 
