@@ -12,7 +12,7 @@ For more information, see [release tracks](/docs/dbt-versions/cloud-release-trac
 
 ## October 2025
 
-Release Date: October 23, 2025
+Release date: October 23, 2025
 
 ### dbt cloud-based platform 
 
