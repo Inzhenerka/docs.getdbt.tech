@@ -21,7 +21,7 @@ This section explains how to set and override environment variables in <Constant
 - [Setting environment variables at the project and environment level](#setting-environment-variables-at-the-project-and-environment-level)
 - [Overriding environment variables at the job level](#overriding-environment-variables-at-the-job-level)
 - [Overriding environment variables at the personal level](#overriding-environment-variables-at-the-personal-level)
-- [Local environment variables (VS Code extension)](#local-environment-variables-vs-code-extension)
+- [Local environment variables (VS Code extension)](#llocal-environment-variables)
 
 #### Order of precedence
 
