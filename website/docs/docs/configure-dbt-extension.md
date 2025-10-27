@@ -12,7 +12,7 @@ This page explains how to configure local setup for the dbt VS Code extension an
 
 ## Prepare your local environment
 
-This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, you don't need to do anything here. If you haven't yet set up your local environment, follow the steps in the [later section](#set-environment-variables-locally). 
+This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, you don't need to do anything here. 
 
 If you're a <Constant name="dbt_platform" /> user new to the extension or VS Code/Cursor, you'll need to set up your local environment to mirror your <Constant name="dbt_platform" /> environment and follow these steps.
 
