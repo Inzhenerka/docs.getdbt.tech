@@ -20,7 +20,11 @@ functions:
 
 The `volatility` config is an optional config that describes how predictable a UDF’s output is. Warehouses use this to decide if results can be cached, reordered, or inlined. Setting the appropriate volatility helps prevent incorrect results when a function isn’t safe to cache or reorder.
 
-By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies.
+By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies &mdash; except in Redshift. In Redshift, dbt sets `non-deterministic` (`VOLATILE`) by default if no volatility is specified, because Redshift requires an explicit volatility and `VOLATILE` is the safest assumption.
+
+import Volatility from '/snippets/_warehouse-volatility.md';
+
+<Volatility />
 
 ## Supported volatility types
 
@@ -30,7 +34,7 @@ A deterministic function always returns the same output for the same input. Beca
 
 ### stable
 
-A stable function returns the same value throughout a single query execution, but its result may change across different executions.
+A stable function returns the same value throughout a single query execution, but its result may change across different executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords).
 
 ### non-deterministic
 

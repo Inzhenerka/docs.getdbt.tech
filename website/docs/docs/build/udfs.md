@@ -49,7 +49,7 @@ To define UDFs in dbt, refer to the following steps:
 
     ```sql
 
-    REGEXP_CONTAINS(a_string, r'^[0-9]+$')
+    REGEXP_INSTR(a_string, r'^[0-9]+$')
     ```
     <!--check if this sample should be revised-->
 
@@ -69,12 +69,13 @@ To define UDFs in dbt, refer to the following steps:
         config:
           schema: udf_schema
           database: udf_db
+          volatility: deterministic
         arguments: # optional
           - name: a_string # required if arguments is specified
             data_type: string # required if arguments is specified
             description: The string that I want to check if it's representing a positive integer (like "10") 
         returns: # required
-          data_type: boolean # required
+          data_type: integer # required
     ```
     </File>
 
@@ -108,21 +109,23 @@ To define UDFs in dbt, refer to the following steps:
     <TabItem value="Snowflake">
     ```sql
     CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
-    RETURNS BOOLEAN
+    RETURNS INTEGER
     LANGUAGE SQL
+    IMMUTABLE
     AS $$
-      REGEXP_CONTAINS(a_string, r'^[0-9]+$')
+      REGEXP_INSTR(a_string, '^[0-9]+$')
     $$;
     ```
+
     </TabItem>
 
     <TabItem value="Redshift">
     ```sql
-    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(VARCHAR)
-    RETURNS BOOLEAN
-    VOLATILE
+    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int(a_string VARCHAR)
+    RETURNS INTEGER
+    IMMUTABLE
     AS $$
-      REGEXP_CONTAINS($1, r'^[0-9]+$')
+      SELECT REGEXP_INSTR(a_string, '^[0-9]+$')
     $$ LANGUAGE SQL;
     ```
     </TabItem>
@@ -130,30 +133,33 @@ To define UDFs in dbt, refer to the following steps:
     <TabItem value="BigQuery">
     ```sql
     CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
-    RETURNS BOOLEAN
+    RETURNS INT64
     AS (
-      REGEXP_CONTAINS(a_string, r'^[0-9]+$')
+      REGEXP_INSTR(a_string, r'^[0-9]+$')
     );
+
     ```
     </TabItem>
 
     <TabItem value="Databricks">
     ```sql
     CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
-    RETURNS BOOLEAN
-    LANGUAGE SQL
-    RETURN
-      REGEXP_CONTAINS(a_string, r'^[0-9]+$');
+    RETURNS INT
+    DETERMINISTIC
+    RETURN regexp_instr(a_string, '^[0-9]+$');
     ```
     </TabItem>
 
     <TabItem value="Postgres">
+
     ```sql
-    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
-    RETURNS BOOLEAN
+    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int_pos(a_string text)
+    RETURNS int
+    LANGUAGE sql
+    IMMUTABLE
     AS $$
-      REGEXP_CONTAINS(a_string, r'^[0-9]+$')
-    $$ LANGUAGE SQL;
+      SELECT regexp_instr(a_string, '^[0-9]+$')
+    $$;
     ```
     </TabItem>
   
@@ -197,21 +203,10 @@ In dbt, you can use the following values for the `volatility` config:
 | Value | Description | Example |
 | --- | --- | --- |
 | `deterministic` | Always returns the same output for the same input. Safe for aggressive optimizations and caching. | `substr()` |
-| `stable` | Returns the same value within a single query execution, but may change across executions.| `now()` |
+| `stable` | Returns the same value within a single query execution, but may change across executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/docs/build/udfs#warehouse-specific-volatility-keywords).| `now()` |
 | `non-deterministic` | May return different results for the same inputs. Warehouses shouldn't cache or reorder assuming stable results. | `first()`, `random()` |
 
-Defining a function's volatility lets the data warehouse do optimizations when executing the function. By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies.
-
-<Expandable alt_header="Warehouse-specific volatility keywords">
-
-Different warehouses show volatility controls with different keywords and default values:
-
-- [Snowflake](https://docs.snowflake.com/en/sql-reference/sql/create-function#sql-handler): `VOLATILE` / `IMMUTABLE` (default is `VOLATILE`)
-- [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_FUNCTION.html#r_CREATE_FUNCTION-synopsis): `VOLATILE` / `STABLE` / `IMMUTABLE` (default is `VOLATILE`)
-- BigQuery does not support volatility; behavior is inferred.
-- [Databricks](https://docs.databricks.com/aws/en/udf/unity-catalog#set-deterministic-if-your-function-produces-consistent-results): `DETERMINISTIC` (assumed `nondeterministic` unless declared)
-
-</Expandable>
+Defining a function's volatility lets the data warehouse do optimizations when executing the function. By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies &mdash; except in Redshift. In Redshift, dbt sets `non-deterministic` (`VOLATILE`) by default if no volatility is specified, because Redshift requires an explicit volatility and `VOLATILE` is the safest assumption.
 
 To set a function's volatility, refer to the following example: 
 
@@ -231,48 +226,11 @@ functions:
 ```
 </File>
 
-The `volatility` value you define is passed to the adapter, which adds the correct keyword for your data warehouse. For example:
-<!--verify accuracy of samples-->
-<Tabs>
+The `volatility` value you define is passed to the adapter, which adds the correct keyword for your data warehouse. 
 
-<TabItem value="Snowflake">
+import Volatility from '/snippets/_warehouse-volatility.md';
 
-```sql
-CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
-RETURNS BOOLEAN
-LANGUAGE SQL
-IMMUTABLE
-AS $$
-  REGEXP_LIKE(a_string, '^[0-9]+$')
-$$;
-```
-</TabItem>
-
-<TabItem value="Redshift">
-
-```sql
-CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string VARCHAR)
-RETURNS BOOLEAN
-STABLE
-AS $$
-  REGEXP_INSTR(a_string, '^[0-9]+$') > 0
-$$ LANGUAGE SQL;
-```
-</TabItem>
-
-<TabItem value="Databricks">
-
-```sql
-CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
-RETURNS BOOLEAN
-LANGUAGE SQL
-DETERMINISTIC
-RETURN
-  regexp_like(a_string, '^[0-9]+$');
-```
-</TabItem>
-  
-</Tabs>
+<Volatility />
 
 ## Using UDFs in unit tests
 
