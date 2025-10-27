@@ -12,7 +12,7 @@ This page explains how to configure local setup for the dbt VS Code extension an
 
 ## Prepare your local environment
 
-This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, skip to the [next section](#set-environment-variables-locally). 
+This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, you don't need to do anything here. If you haven't yet set up your local environment, follow the steps in the [later section](#set-environment-variables-locally). 
 
 If you're a <Constant name="dbt_platform" /> user new to the extension or VS Code/Cursor, you'll need to set up your local environment to mirror your <Constant name="dbt_platform" /> environment and follow these steps.
 
@@ -34,11 +34,11 @@ If you're a <Constant name="dbt_platform" /> user new to the extension or VS Cod
 
 The extension and CLI uses environment variables for authentication and configuration. The following table shows the different options and when to use them:
 
-| Location | Affects | Session state | Use when |
+| Location | Affects | Session state | When to use |
 |-----------|----------|-----------|-----------|
 | [**Shell profile** ](#configure-at-the-os--shell-level)| Terminal  | ✅ Permanent | Variables remain active globally and available across terminal sessions.|
 | [**VS Code/Cursor settings**](#configure-in-the-vs-code-extension-settings) | Extension menus + <Term id="lsp" /> | ✅ Per VS Code/Cursor profile | Editor-only workflows using the extension menu actions. |
-| [**One terminal session**](#configure-in-the-terminal-session)  | Current terminal only | ❌ Temporary | Quick testing. |
+| [**One terminal session**](#configure-in-the-terminal-session)  | Current terminal only | ❌ Temporary | One off quick testing. |
 
 :::tip 
 If you want to use both the VS Code extension menus and terminal to run dbt commands, define your variables in both the `shell` profile so they remain active globally and in VS Code/Cursor settings if you use extension menu actions.
@@ -51,9 +51,9 @@ Define variables once at the OS or shell level to ensure they're available to al
 <TabItem value="mac-linux" label="Mac / Linux">
 
 1. Open your shell configuration file in a text editor using the following commands: (If the file does not exist, create it using a text editor using `vi ~/.zshrc` or `vi ~/.bashrc`).
-   ```bash
-   open -e ~/.zshrc ## for zsh (macOS)
-   nano ~/.bashrc ## for bash (Linux or older macOS)
+    ```bash
+    open -e ~/.zshrc ## for zsh (macOS)
+    nano ~/.bashrc ## for bash (Linux or older macOS)
    ```
 2. A file will open up and you can add your environment variables to the file. For example:
       - For zsh (macOS):
@@ -107,7 +107,7 @@ The following steps will explain how to configure environment variables using Po
 
 #### Configure in the VS Code extension settings
 
-To use the dbt extension menu actions/buttons, you can configure environment variables directly in the [User Settings](vscode://settings/dbt.environmentVariables) interface, in any `.env` file at the root level, or in the [JSON](vscode://command/workbench.action.openSettingsJson) file.  
+To use the dbt extension menu actions/buttons, you can configure environment variables directly in the [User Settings](vscode://settings/dbt.environmentVariables) interface or in any `.env` file at the root level.
 - Configuring in the User Settings works with the dbt extension buttons and menus (for LSP, "Show build menu," and so on).
 - Not inherited by the VS Code terminal or external shells.
 - Running a dbt command in the terminal won't fetch or use these variables.
@@ -127,7 +127,7 @@ To configure environment variables in VS Code/Cursor:
 </TabItem>
 
 <TabItem value="env-file" label="Open .env file">
-1. In your dbt project, create a `.env` file at the root level.
+1. In your dbt project, create a `.env` file at the root level (same level as your `dbt_project.yml` file).
 2. Add your environment variables to the file. For example:
     ```env
     DBT_ENV_VAR1=my_value
@@ -138,6 +138,7 @@ To configure environment variables in VS Code/Cursor:
 5. Verify the changes by running a dbt command using the extension menu button on the top right corner and checking the output.
 </TabItem>
 
+<!-- commenting out as this might not be the best way to configure environment variables and we're recommending the .env file instead https://github.com/dbt-labs/dbt-core/issues/12106
 <TabItem value="settings-json" label="Open Settings (JSON)">
 1. Open the [Command Palette](https://code.visualstudio.com/docs/configure/settings#_user-settings) (Cmd + Shift + P for Mac, Ctrl + Shift + P for Windows/Linux).
 2. Then select **Preferences: Open Settings (JSON)** in the dropdown menu. 
@@ -154,6 +155,7 @@ To configure environment variables in VS Code/Cursor:
 6. Reload the VS Code extension to apply the changes.
 7. Verify the changes by running a dbt command and checking the output.
 </TabItem>
+-->
 </Tabs>
 
 #### Configure in the terminal session
@@ -193,3 +195,9 @@ To configure environment variables in the terminal session:
     </Tabs>
 2. Verify the changes by running a dbt command and checking the output.
 
+## Next steps
+Now that you've configured your local environment, you can start using the dbt extension to streamline your dbt development workflows. Check out the following resources to get started:
+
+- [About the dbt extension](/docs/about-dbt-extension)
+- [dbt extension features](/docs/dbt-extension-features)
+- [Register the extension](/docs/install-dbt-extension#register-the-extension)

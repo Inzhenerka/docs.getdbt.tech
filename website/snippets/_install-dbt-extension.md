@@ -35,8 +35,10 @@ In VS Code:
 4. If the dbt Fusion engine is not already installed on your machine, the extension will prompt you to download and install it. Follow the steps shown in the notification to complete the installation.
     <Lightbox src="/img/docs/extension/install-dbt-fusion-engine.png" width="60%" title="Follow the prompt to install the dbt Fusion engine"/>
 5. Run the VS Code extension [upgrade tool](#upgrade-to-fusion) to ensure your dbt project is Fusion ready and help you fix any errors and deprecations.
-6. You're all set up! See [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
+6. You're all set up! See [getting started](#getting-started) and [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
     <Lightbox src="/img/docs/extension/kitchen-sink.png" width="90%" title="Showing lineage and compiled code in the extension"/>
+7. (Optional) If you're new to the extension or VS Code/Cursor, you can set your local environment to mirror your <Constant name="dbt_platform" /> environment. 
+8. (Optional) Configure environment variables to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension#configure-environment-variables) page for more information.
 
 ## Getting started
 
@@ -149,6 +151,10 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 6. To update your registration in VS Code, open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)), then select `dbt: Register dbt extension` to complete the registration.
 
 </Expandable>
+
+## (Optional) Configure environment variables {#configure-environment-variables}
+
+If your dbt project uses environment variables, you can configure them to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension) page for more information.
 
 ## Troubleshooting
 <!-- This anchor is linked from the  VS Code extension. Please do not change it -->
