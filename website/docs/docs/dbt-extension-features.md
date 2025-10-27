@@ -16,7 +16,7 @@ The following extension features help you get more done, fast:
 - **[Lightning-fast parse times](#lightning-fast-parse-times):** Parse even the largest projects up to 30x faster than dbt Core.
 - **[Powerful IntelliSense](#powerful-intellisense):** Autocomplete SQL functions, model names, columns, macros, and more.
 - **[Instant refactoring](#instant-refactoring):** Rename models or columns and see references update project-wide.
-- **[Go-to-definition](#go-to-definition-and-reference):** Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros.
+- **[Go-to-definition](#go-to-definition-and-reference):** Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros. Excludes definitions from installed packages.
 - **[Hover insights](#hover-insights):** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
 - **[Live CTE previews](#live-preview-for-models-and-ctes):** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
 - **[Rich lineage in context](#rich-lineage-in-context):** See lineage at the column or table level as you develop with no context switching or breaking the flow.
@@ -81,7 +81,7 @@ Note: Renaming models and columns is not yet supported for snapshots, or any res
 
 ### Go-to-definition and reference
 
-Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros.
+Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros. Excludes definitions from installed packages.
 
 Usage:
 - Command or Ctrl-click to go to the definition for an identifier.
