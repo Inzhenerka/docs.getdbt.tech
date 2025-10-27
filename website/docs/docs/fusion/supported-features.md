@@ -14,12 +14,12 @@ Learn about the features supported by the dbt Fusion engine, including requireme
 
 </IntroText>
 
-import FusionBeta from '/snippets/_fusion-beta-callout.md';
+import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 import FusionDWH from '/snippets/_fusion-dwh.md';
 
 <VersionBlock lastVersion="1.99">
 
-<FusionBeta />
+<FusionLifecycle />
 
 </VersionBlock>
 
@@ -44,7 +44,7 @@ If your project is using any of the features listed in the following table, you 
 - Workflows built around complementary features of the dbt platform (like model-level notifications, Advanced CI, and Semantic Layer) that Fusion does not yet support.
 
 :::note
-We have been moving quickly to implement many of these features during the Beta and Preview periods, ahead of General Availability. Read more about [the path to GA](/blog/dbt-fusion-engine-path-to-ga), and track our progress in the [`dbt-fusion` milestones](https://github.com/dbt-labs/dbt-fusion/milestones).
+We have been moving quickly to implement many of these features ahead of General Availability. Read more about [the path to GA](/blog/dbt-fusion-engine-path-to-ga), and track our progress in the [`dbt-fusion` milestones](https://github.com/dbt-labs/dbt-fusion/milestones).
 :::
 
 import FusionFeatures from '/snippets/_fusion-missing-features.md';
