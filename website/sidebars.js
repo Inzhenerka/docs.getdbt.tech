@@ -358,6 +358,7 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/cloud/about-develop-dbt" },
       items: [
         "docs/cloud/about-develop-dbt",
+        "docs/about-dbt-lsp",
         "docs/cloud/about-cloud-develop-defer",
         {
           type: "category",
