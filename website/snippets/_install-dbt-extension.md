@@ -5,9 +5,13 @@ The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsI
 
 To use the extension, you must meet the following prerequisites:
 
-- <Constant name="fusion_engine" /> &mdash; The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" />. Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time, before or after installing the extension.
-- Editor &mdash; You're using the [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor.
-- Operating systems &mdash; You're using a macOS, Windows, or Linux-based computer. 
+| Prerequisite | Details |
+| --- | --- |
+| **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
+|  | Registration &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.  The VS Code extension is free for organizations for up to 15 users.<br /><br /> ⁃ Don't have a dbt account? &mdash; Follow the VS Code “get started” flow to register and verify your email.<br />⁃ Returning user? &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in. |
+| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
+| **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
+| **Operating systems** | macOS, Windows, or Linux-based computer. |
 
 ## Installation instructions
 
@@ -47,7 +51,6 @@ To get started with the extension:
     - **Explore features:** Opens the [documentation](/docs/about-dbt-extension) so you can learn more about all the extension has to offer.
     - **Register:** Launches the registration workflow so you can continue to use the extension beyond the trial period.
 
-
 ## Upgrade to Fusion
 
 :::note
@@ -75,6 +78,9 @@ This will start the upgrade tool and guide you through the Fusion upgrade with a
 - **Ready to run a dbtf debug?** (If there is an existing `profiles.yml` file): Validates that your project is configured correctly and can connect to your data warehouse.
 - **Ready to run a dbtf parse?**: Your dbt project will be parsed to check for compatibility with <Constant name="fusion" />.
     - If any issues are encountered during the parsing, you'll be given the option to run the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) tool to resolve the errors. If you opt to not run the tool during the upgrade processes, you can always run it later or manually fix any errors. However, the upgrade tool cannot continue until the errors are resolved.
+        :::tip AI Agents
+        There are cases where dbt-autofix may not resolve all errors and requires manual intervention. For those cases, the dbt-autofix tool provides an [AI Agents.md](https://github.com/dbt-labs/dbt-autofix/blob/main/AGENTS.md) file to enable AI agents to help with migration work after dbt-autofix has completed its part.
+        :::
 - **Ready to run a ‘dbtf compile -static-analysis off’?** (Only runs once the parse passes): Compiles your project without any static analysis, mimicking dbt Core. This compile only renders Jinja into SQL, so <Constant name="fusion" />'s advanced SQL comprehension is temporarily disabled. 
 - **Ready to run a ‘dbtf compile’?**: Compiles your project with full <Constant name="fusion" /> static analysis. It checks that your SQL code is valid in the context of your warehouse's tables and columns. 
 
@@ -89,7 +95,7 @@ Users must complete registration within 14 days of installing the dbt extension.
 - Users without an existing dbt account can register quickly and easily through an online registration form. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
 - Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file.
 
-The VS Code extension is free for organizations for up to 15 users.
+The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
 
 ### New user registration
 
@@ -146,36 +152,9 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 ## Troubleshooting
 <!-- This anchor is linked from the  VS Code extension. Please do not change it -->
 
-#### dbt platform configurations
+import FusionTroubleshooting from '/snippets/_fusion-troubleshooting.md';
 
-If you're a cloud-based dbt platform user who has the `dbt-cloud:` config in the `dbt_project.yml` file and are also using [dbt Mesh](/docs/mesh/about-mesh), you must have the project ID configured:
-
-```yaml
-dbt-cloud:
-  project-id: 12345 # Required
-```
-
-If you don’t configure this correctly, cross-platform references will not resolve properly, and you will encounter errors executing dbt commands.
-
-#### General troubleshooting tips
-
-If the dbt extension has activated successfully, you will see the `dbt Extension` label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.
-
-If the dbt extension label is not present, then it is likely that the dbt extension was not installed successfully. If this happens, try uninstalling the extension, restarting your editor, and then reinstalling the extension.
-
-Note: It is possible to "hide" status bar items in VS Code. Double-check if the **dbt Extension** status bar label is hidden by right-clicking on the status bar in your editor. If you see **dbt Extension** in the right-click menu, then the extension has installed successfully.
-
-#### Missing dbt LSP features
-
-If you are not seeing dbt LSP features in your editor, first consult the general troubleshooting steps above. If you have confirmed that the dbt extension is installed correctly, but you still do not see dbt Language Server features (for example, autocomplete, go-to-definition, hover text):
- - Check the version of your dbt extension on the extensions page in your editor. Ensure that you are using the latest available version of the dbt extension.
- - Try reinstalling the dbt Language Server by pressing `cmd+shift+P` (macOS) or `ctrl+shift+P` (Windows/Linux) and selecting the `dbt: Reinstall dbt LSP` command.
-
-#### Unsupported dbt version
-
-If you see an error message indicating that your version of dbt is unsupported, then there is likely a problem with your environment.
-- Check the **dbt Path** setting in your VS Code settings. If this path is set, ensure that it is pointing to a valid <Constant name="fusion_engine" />  executable.
-- If necessary, you can also install the <Constant name="fusion_engine" />  directly using these instructions: [Install the Fusion CLI](/docs/fusion/install-fusion).
+<FusionTroubleshooting />
 
 import AboutFusion from '/snippets/_about-fusion.md';
 
