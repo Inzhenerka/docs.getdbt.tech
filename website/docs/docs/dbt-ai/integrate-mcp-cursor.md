@@ -5,8 +5,6 @@ description: "Guide to set up Cursor with dbt-mcp"
 id: "integrate-mcp-cursor"
 ---
 
-# Integrate Cursor with dbt MCP <Lifecycle status="beta" />
-
 [Cursor](https://docs.cursor.com/context/model-context-protocol) is an AI-powered code editor, powered by Microsoft Visual Studio Code (VS Code). 
 
 After setting up your MCP server, you connect it to Cursor. Log in to Cursor and follow the steps that align with your hosting method.
