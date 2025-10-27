@@ -79,7 +79,7 @@ Here are some additional considerations if using the Fusion CLI or VS Code exten
       - Benefits from Fusion engine’s performance for `parse`, `compile`, `build`, and `run`, but _doesn't_ include visual and interactive [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.  
       - Requires `profiles.yml` only (no `dbt_cloud.yml`).
     - **dbt VS Code extension**
-      - Free to use and runs with the <Constant name="fusion_engine" />; register your email after 14 days. 
+      - Free to use and runs on the <Constant name="fusion_engine" />; register your email within 14 days. 
       - Benefits from <Constant name="fusion" /> engine’s performance for `parse`, `compile`, `build`, and `run`, and also includes visual and interactive [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.
       - Capped at 15 users per organization.
       - If you already have a <Constant name="dbt_platform" /> user account (even if a trial expired), sign in with the same email. Unlock or reset it if locked.  
