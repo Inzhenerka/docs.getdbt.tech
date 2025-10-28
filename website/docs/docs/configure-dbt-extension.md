@@ -41,7 +41,7 @@ The extension and CLI use environment variables for authentication and configura
 |-----------|----------|-----------|-----------|
 | [**Shell profile** ](#configure-at-the-os--shell-level)| Terminal  | ✅ Permanent | Variables remain active globally and available across terminal sessions.|
 | [**VS Code/Cursor settings**](#configure-in-the-vs-code-extension-settings) | Extension menus + <Term id="lsp" /> | ✅ Per VS Code/Cursor profile | Editor-only workflows using the extension menu actions. |
-| [**One terminal session**](#configure-in-the-terminal-session)  | Current terminal only | ❌ Temporary | One off quick testing. |
+| [**Terminal session**](#configure-in-the-terminal-session)  | Current terminal only | ❌ Temporary | One off testing. |
 
 :::tip 
 If you want to use both the VS Code extension menus and terminal to run dbt commands, define your variables in both the `shell` profile so they remain active globally and in VS Code/Cursor settings if you use extension menu actions.
