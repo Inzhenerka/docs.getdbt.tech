@@ -48,7 +48,7 @@ If you want to use both the VS Code extension menus and terminal to run dbt comm
 :::
 
 #### Configure at the OS / shell level
-Define variables once at the OS or shell level to ensure they're available to all terminals. Even if you close a terminal window, the variables will remain available to you.
+Define variables once at the OS or shell level to ensure they're available to all terminal sessions. Even if you close a terminal window, the variables will remain available to you.
 
 <Tabs>
 <TabItem value="mac-linux" label="Mac / Linux">
