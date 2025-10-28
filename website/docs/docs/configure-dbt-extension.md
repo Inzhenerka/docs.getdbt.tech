@@ -47,7 +47,7 @@ The extension and CLI use environment variables for authentication and configura
 If you want to use both the VS Code extension menus and terminal to run dbt commands, define your variables in both the `shell` profile so they remain active globally and in VS Code/Cursor settings if you use extension menu actions.
 :::
 
-#### Configure at the OS / shell level
+#### Configure at the OS or shell level
 Define variables once at the OS or shell level to ensure they're available to all terminal sessions. Even if you close a terminal window, the variables will remain available to you.
 
 <Tabs>
