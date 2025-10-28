@@ -5,9 +5,13 @@ id: "configure-dbt-extension"
 description: "Prepare your local environment (files, env vars, connectivity) so the VS Code extension and terminal both work smoothly."
 ---
 
-This page explains how to configure local setup for the dbt VS Code extension and configure environment variables, if your project uses them. The steps differ slightly depending on whether you use <Constant name="dbt_platform" /> or <Constant name="core" />.
+Whether you currently use <Constant name="dbt_platform" /> or self-hosted <Constant name="core" />, use this page to configure local setup for the dbt VS Code extension and configure environment variables, if your project uses them. 
 
-- <Constant name="dbt_platform" /> &mdash; You’ll mirror your <Constant name="dbt_platform" /> environment locally to unlock <Constant name="fusion" />-powered features like <Constant name="mesh" />, deferral, and so on.
+If you're new to dbt or getting started with a new project, you can skip this page and check out our [Quickstart for the <Constant name="fusion_engine"/>](/guides/fusion?step=1) to get started with the dbt extension.
+
+The steps differ slightly depending on whether you use <Constant name="dbt_platform" /> or <Constant name="core" />.
+
+- <Constant name="dbt_platform" /> &mdash; You’ll mirror your <Constant name="dbt_platform" /> environment locally to unlock <Constant name="fusion" />-powered features like <Constant name="mesh" />, deferral, and so on. You'll also set up environment variables to leverage the VS Code extension's features.
 - <Constant name="core" /> &mdash; You’ll confirm that your existing local setup and environment variables work seamlessly with the <Constant name="fusion_engine" /> and VS Code extension.
 
 ## Prepare your local environment
