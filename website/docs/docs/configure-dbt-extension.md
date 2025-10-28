@@ -98,7 +98,7 @@ The following steps will explain how to configure environment variables using Po
 
 **GUI (Environment Variables)**
 1. Press **Start** → search for **Environment Variables** → open **Edit the system environment variables**. 
-2. Click **Environment Variables…**.
+2. From the **Advanced** tab of the System Properties, click **Environment Variables…**.
 3. Under **User variables**, click **New…**.
 4. Add the variables and values. For example:
     - Variable name: `DBT_ENV_VAR1`
