@@ -10,8 +10,10 @@ const sidebarSettings = {
       type: "category",
       label: "dbt Fusion engine",
       collapsed: true,
-      link: { type: "doc", id: "docs/fusion/about-fusion" },
+      link: { type: "doc", id: "docs/fusion/fusion" },
       items: [
+        "docs/fusion/fusion",
+        "docs/fusion/fusion-availability",
         "docs/fusion/about-fusion",
         "docs/fusion/new-concepts",
         "docs/fusion/supported-features",
@@ -80,7 +82,7 @@ const sidebarSettings = {
             "docs/cloud/migration",
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Connect your data platforms",
               link: {
                 type: "doc",
                 id: "docs/cloud/connect-data-platform/about-connections",
@@ -94,7 +96,8 @@ const sidebarSettings = {
                 "docs/cloud/connect-data-platform/connect-databricks",
                 "docs/cloud/connect-data-platform/connect-microsoft-fabric",
                 "docs/cloud/connect-data-platform/connect-onehouse",
-                "docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-postgresql-alloydb",
+                "docs/cloud/connect-data-platform/connect-redshift",
                 "docs/cloud/connect-data-platform/connect-starburst-trino",
                 "docs/cloud/connect-data-platform/connect-snowflake",
                 "docs/cloud/connect-data-platform/connect-teradata",
@@ -248,6 +251,23 @@ const sidebarSettings = {
             },
             {
               type: "category",
+              label: "Connect Fusion to your data platform",
+              link: {
+                type: "doc",
+                id: "docs/fusion/connect-data-platform-fusion/profiles.yml",
+              },
+              items: [
+                "docs/fusion/connect-data-platform-fusion/profiles.yml",
+                "docs/fusion/connect-data-platform-fusion/connection-profiles",
+                "docs/fusion/connect-data-platform-fusion/bigquery-setup",
+                "docs/fusion/connect-data-platform-fusion/databricks-setup",
+                "docs/fusion/connect-data-platform-fusion/redshift-setup",
+                "docs/fusion/connect-data-platform-fusion/salesforce-data-cloud-setup",
+                "docs/fusion/connect-data-platform-fusion/snowflake-setup",
+              ],
+            },
+            {
+              type: "category",
               label: "Install dbt Core",
               link: { type: "doc", id: "docs/core/installation-overview" },
               items: [
@@ -259,7 +279,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Connect dbt Core to your data platform",
               link: {
                 type: "doc",
                 id: "docs/core/connect-data-platform/about-core-connections",
@@ -339,6 +359,7 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/cloud/about-develop-dbt" },
       items: [
         "docs/cloud/about-develop-dbt",
+        "docs/about-dbt-lsp",
         "docs/cloud/about-cloud-develop-defer",
         {
           type: "category",
@@ -434,6 +455,7 @@ const sidebarSettings = {
             "docs/build/snapshots",
             "docs/build/seeds",
             "docs/build/jinja-macros",
+            "docs/build/udfs",
             "docs/build/sources",
             "docs/build/exposures",
             "docs/build/groups",
@@ -635,6 +657,7 @@ const sidebarSettings = {
           items: [
             "docs/deploy/state-aware-about",
             "docs/deploy/state-aware-setup",
+            "docs/deploy/state-aware-interface",
           ],
         },
         {
@@ -1082,6 +1105,7 @@ const sidebarSettings = {
         "reference/project-configs/config-version",
         "reference/project-configs/dispatch-config",
         "reference/project-configs/docs-paths",
+        "reference/project-configs/function-paths",
         "reference/project-configs/macro-paths",
         "reference/project-configs/name",
         "reference/project-configs/on-run-start-on-run-end",
@@ -1134,6 +1158,7 @@ const sidebarSettings = {
         "reference/resource-configs/snowflake-configs",
         "reference/resource-configs/trino-configs",
         "reference/resource-configs/starrocks-configs",
+        "reference/resource-configs/data-cloud-configs",
         "reference/resource-configs/teradata-configs",
         "reference/resource-configs/upsolver-configs",
         "reference/resource-configs/vertica-configs",
@@ -1205,6 +1230,7 @@ const sidebarSettings = {
             "reference/resource-configs/plus-prefix",
             "reference/resource-configs/pre-hook-post-hook",
             "reference/resource-configs/schema",
+            "reference/resource-configs/static-analysis",
             "reference/resource-configs/tags",
             "reference/resource-configs/unique_key",
           ],
@@ -1323,6 +1349,18 @@ const sidebarSettings = {
           items: [
             "reference/macro-properties",
             "reference/resource-properties/arguments",
+          ],
+        },
+        {
+          type: "category",
+          label: "For functions",
+          link: { type: "doc", id: "reference/function-properties" },
+          items: [
+            "reference/function-properties",
+            "reference/function-configs",
+            "reference/resource-properties/type",
+            "reference/resource-properties/returns",
+            "reference/resource-properties/function-arguments",
           ],
         },
       ],
@@ -1453,6 +1491,7 @@ const sidebarSettings = {
                 "reference/global-configs/print-output",
                 "reference/global-configs/record-timing-info",
                 "reference/global-configs/resource-type",
+                "reference/global-configs/static-analysis-flag",
                 "reference/global-configs/warnings",
               ],
             },
