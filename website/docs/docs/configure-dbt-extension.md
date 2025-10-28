@@ -96,7 +96,7 @@ The following steps will explain how to configure environment variables using Po
 2. Then, restart VS Code or select **Developer: Reload Window** for changes to take effect.
 3. Verify the changes by running `echo $DBT_ENV_VAR1` and `echo $DBT_ENV_VAR2` in the terminal.
 
-**GUI (Environment Variables)**
+**System properties (Environment Variables)**
 1. Press **Start** → search for **Environment Variables** → open **Edit the system environment variables**. 
 2. From the **Advanced** tab of the System Properties, click **Environment Variables…**.
 3. Under **User variables**, click **New…**.
