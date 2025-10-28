@@ -216,7 +216,7 @@ functions:
   - name: is_positive_int
     description: Check whether a string is a positive integer
     config:
-      volatility: deterministic # stable | non-deterministic | null (no value)
+      volatility: deterministic # Optional: stable | non-deterministic | deterministic
     arguments:
       - name: a_string
         data_type: string
