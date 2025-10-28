@@ -161,16 +161,14 @@ models:
   - name: customers
     columns:
       - name: customer_id
-        config:
-          databricks_tags:
-            data_classification: "public"
+        databricks_tags:
+          data_classification: "public"
       - name: email
-        config:
-          databricks_tags:
-            data_classification: "pii"
-          column_mask:
-            function: my_catalog.my_schema.mask_email
-            using_columns: "customer_id, 'literal string'"
+        databricks_tags:
+          data_classification: "pii"
+        column_mask:
+          function: my_catalog.my_schema.mask_email
+          using_columns: "customer_id, 'literal string'"
 ```
 
 </File>
@@ -714,7 +712,6 @@ def model(dbt, session):
     ...
 ```
 ```yml
-version: 2
 models:
   - name: my_python_model
     config:
