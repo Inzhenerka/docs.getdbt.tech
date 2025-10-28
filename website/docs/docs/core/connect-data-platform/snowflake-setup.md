@@ -256,7 +256,7 @@ The "base" configs for Snowflake targets are shown below. Note that you should a
 | connect_retries | No | The number of times to retry after an unsuccessful connection |
 | connect_timeout | No | The number of seconds to sleep between failed connection retries |
 | reuse_connections | No | A boolean flag indicating whether to reuse idle connections to help reduce total connections opened. Default is `False`. |
-| platform_detection_timeout_seconds | No | Timeout in seconds for platform detection. Default value is `0.0`. Set to a non-zero value if using Workload Identity Federation (WIF) authentication.|
+| platform_detection_timeout_seconds | No | Timeout (in seconds) for platform detection. Defaults to `0.0`. Set to a positive value if using Workload Identity Federation (WIF) authentication.|
 
 ### account
 For AWS accounts in the US West default region, you can use `abc123` (without any other segments). For some AWS accounts you will have to append the region and/or cloud platform. For example, `abc123.eu-west-1` or `abc123.eu-west-2.aws`. 
