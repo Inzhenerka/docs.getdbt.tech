@@ -91,7 +91,7 @@ The following steps will explain how to configure environment variables using Po
     [Environment]::SetEnvironmentVariable("DBT_ENV_VAR1","my_value","User")
     [Environment]::SetEnvironmentVariable("DBT_ENV_VAR2","another_value","User")
     ```
-1. This saves the variables permanently for your user account. (To make them available system-wide for all users, replace "User" with "Machine" (requires admin rights)).
+1. This saves the variables permanently for your user account. To make them available system-wide for all users, replace "User" with "Machine" (requires admin rights).
 2. Then, restart VS Code or select **Developer: Reload Window** for changes to take effect.
 3. Verify the changes by running `echo $DBT_ENV_VAR1` and `echo $DBT_ENV_VAR2` in the terminal.
 
