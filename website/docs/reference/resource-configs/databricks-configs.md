@@ -238,7 +238,9 @@ insert into table analytics.databricks_incremental
 
 ### The `insert_overwrite` strategy
 
-This strategy is most effective when specified alongside a `partition_by` or `liquid_clustered_by` clause in your model config. dbt will run an [atomic `insert into ... replace on` statement](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) that dynamically replaces all partitions/clusters included in your query. Be sure to re-select _all_ of the relevant data for a partition/cluster when using this incremental strategy. 
+The `insert_overwrite` strategy updates data in a table by replacing existing records instead of just adding new ones. This strategy is most effective when specified alongside a `partition_by` or `liquid_clustered_by` clause in your model config, which helps identify the specific partitions or clusters affected by your query. dbt will run an [atomic `insert into ... replace on` statement](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) that dynamically replaces all partitions/clusters included in your query, instead of rebuilding the entire table. 
+
+**Important!** Be sure to re-select _all_ of the relevant data for a partition or cluster when using this incremental strategy. 
 
 When using `liquid_clustered_by`, the `replace on` keys used will be the same as the `liquid_clustered_by` keys (same as `partition_by` behavior). 
 
