@@ -180,7 +180,7 @@ models:
 
 ## Use managed Iceberg
 
-The `use_managed_iceberg` flag is `False` by default and results in a [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability) table when `table_format` is set to `iceberg`. When this flag is set to `True`, the table is created as a [managed Iceberg table](https://docs.databricks.com/aws/en/tables/managed).
+When you set `table_format` to `iceberg`, the `use_managed_iceberg` flag controls how the table is created. By default, this flag is set to `False` and dbt creates a [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability) table. When set to `True`, dbt creates a [managed Iceberg](https://docs.databricks.com/aws/en/tables/managed) table.
 
 ## Use `replace on` for `insert_overwrite` strategy
 
