@@ -373,7 +373,7 @@ create or replace table my_database.my_schema.my_table as (
 
 ### Dynamic table clustering
 
-Starting dbt Core v1.x, the `cluster_by` configuration is supported in dynamic tables. When applied to a dynamic table, dbt includes the clustering specification in the `CREATE DYNAMIC TABLE` statement.
+Starting dbt Core v1.x, the `cluster_by` configuration is supported in dynamic tables. When set, dbt includes the clustering specification in the `CREATE DYNAMIC TABLE` statement.
 
 For example:
 
@@ -414,7 +414,7 @@ as (
 );
 ```
 
-Note that unlike regular tables, dynamic tables apply clustering at the time the table was created. They don't require a separate `ALTER TABLE` statement.
+Clustering for dynamic tables is specified at creation via `CLUSTER BY` in the `CREATE DYNAMIC TABLE` statement. A separate `ALTER TABLE` statement isn’t required.
 
 ### Automatic clustering
 
