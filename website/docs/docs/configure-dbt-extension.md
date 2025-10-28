@@ -35,7 +35,7 @@ This section explains how to prepare your local environment to mirror your dbt p
 
 ## Set environment variables locally
 
-The extension and CLI uses environment variables for authentication and configuration. The following table shows the different options and when to use them:
+The extension and CLI use environment variables for authentication and configuration. The following table shows the different options and when to use them:
 
 | Location | Affects | Session state | When to use |
 |-----------|----------|-----------|-----------|
