@@ -33,7 +33,7 @@ dbt supports creating Iceberg tables for three of the Snowflake materializations
 Snowflake has support for Iceberg tables via built-in and external catalogs, including:
 - Snowflake Horizon (the built-in catalog) 
 - Polaris/Open Catalog (managed Polaris)
-- Glue Data Catalog (Not supported in dbt-snowflake)
+- Glue Data Catalog (Supported in dbt-snowflake through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create) with Iceberg REST)
 - Iceberg REST Compatible 
 
 dbt supports the Snowflake built-in catalog and Iceberg REST-compatible catalogs (including Polaris and Unity Catalog) on dbt-snowflake. 
@@ -76,7 +76,7 @@ Executing this will register the external Polaris catalog with Snowflake. Once c
 
 </TabItem>
 
-<TabItem value="Glue data catalog" >
+<TabItem value="Glue Data Catalog" >
 
 To configure Glue Data Catalog as the external catalog, you will need to set up two prerequisites:
 
@@ -99,6 +99,27 @@ CREATE CATALOG INTEGRATION my_glue_catalog_int
 ```
 Glue Data Catalog supports the Iceberg REST specification so that you can connect to Glue via the Iceberg REST API.
 
+#### Table materialization in dbt-snowflake
+
+dbt-snowflake supports basic table materialization with a catalog-linked database in Glue using Iceberg REST. Note that incremental materializations are not yet supported. This feature requires:
+
+- **A catalog-linked database:** You must use a catalog-linked database configured for your Glue Catalog integration.
+- **Lowercase identifiers:** Table and column names must be lowercase and surrounded by double quotes for Glue compatibility.
+
+To specify Glue as the catalog-linked database type, add `catalog_linked_database_type: glue` under the `adapter_properties` section:
+
+```yml
+catalogs:
+  - name: my_glue_catalog
+    active_write_integration: glue_rest
+    write_integrations:
+      - name: glue_rest
+        catalog_type: iceberg_rest
+        table_format: iceberg
+        adapter_properties:
+          catalog_linked_database: catalog_linked_db_glue
+          catalog_linked_database_type: glue
+```
 </TabItem>
 
 <TabItem value="Iceberg REST API">
@@ -188,9 +209,10 @@ These are the additional configurations, unique to Snowflake, that can be suppli
 | Field | Required | Accepted values |
 | --- | --- | --- |
 | `auto_refresh` | Optional | `True` or `False`    |
-| `catalog_linked_database` | Required for `catalog type: iceberg_rest`. | catalog linked database name.   |
+| `catalog_linked_database` | Required for `catalog type: iceberg_rest` | Catalog-linked database name   |
+| `catalog_linked_database_type` | Optional | Catalog-linked database type. For example, `glue`  |
 | `max_data_extension_time_in_days` | Optional |  `0` to `90` with a default of `14`  |
-| `target_file_size` | Optional | values like `'AUTO'`, `'16MB'`, `'32MB'`, `'64MB'`, `'128MB'`, etc., case insensitive  |
+| `target_file_size` | Optional | Values like `'AUTO'`, `'16MB'`, `'32MB'`, `'64MB'`, `'128MB'`. Case-insensitive  |
 
 -  **storage_serialization_policy:** The serialization policy tells Snowflake what kind of encoding and compression to perform on the table data files. If not specified at table creation, the table inherits the value set at the schema, database, or account level. If the value isn’t specified at any level, the table uses the default value. You can’t change the value of this parameter after table creation.
 - **max_data_extension_time_in_days:** The maximum number of days Snowflake can extend the data retention period for tables to prevent streams on the tables from becoming stale. The `MAX_DATA_EXTENSION_TIME_IN_DAYS` parameter enables you to limit this automatic extension period to control storage costs for data retention, or for compliance reasons. 
