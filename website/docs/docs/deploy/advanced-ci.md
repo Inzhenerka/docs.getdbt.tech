@@ -67,7 +67,7 @@ If using dynamic data masking in the data warehouse, the cached data will no lon
 
 Compare changes works by running SQL statements on the current connection (the environment that the CI job is running in) to compare the CI model (e.g. `ci.dbt_cloud_123.foo`) to it's production counterpart (e.g. `prod.analytics.foo`). If the CI job defers to a Production job (in a different environment) that has a different connection, then the compare changes feature will not work as expected. An example of this would be:
 * CI job builds models (e.g. `ci.dbt_cloud_123.foo`) using a connection that has a hostname of `abc123.rds.amazonaws.com`.
-* Your CI job defers to a Production job that builds models (e.g. `prod.analytics.foo` using a connection that has a hostname of `def456.rds.amazonaws.com`.
-The reason that this will cause compare chaanges to not work as expect is because it is generally not possible to query / observe the production object (`prod.analytics.foo`) when the CI job's environment is connected to a different host.
+* Your CI job defers to a Production job that builds models (e.g. `prod.analytics.foo`) using a connection that has a hostname of `def456.rds.amazonaws.com`.
+The reason that this will cause compare chaanges to not work as expected is because it is generally not possible to query / observe the production object (`prod.analytics.foo`) on the production host when the CI job's environment is connected to a different host.
 
 <Lightbox src="/img/docs/deploy/compare-credentials.png" width="60%" title="Example of credentials in the user settings" />
