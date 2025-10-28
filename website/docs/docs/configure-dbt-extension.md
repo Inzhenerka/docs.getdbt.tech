@@ -18,7 +18,6 @@ The steps differ slightly depending on whether you use <Constant name="dbt_platf
 
 This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, you don't need to do anything here. 
 
-If you're a <Constant name="dbt_platform" /> user new to the extension or VS Code/Cursor, you'll need to set up your local environment to mirror your <Constant name="dbt_platform" /> environment and follow these steps.
 
 1. [Clone](https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository) your dbt project locally by cloning your <Constant name="dbt_platform" /> repo (from your Git provider).  
 2. Ensure you have a dbt [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml). This file defines your data warehouse connection. If you don't have one, you'll go through the dbt configuration processes to set it up. 
