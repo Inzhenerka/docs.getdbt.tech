@@ -74,7 +74,7 @@ Define variables once at the OS or shell level to ensure they're available to al
         ```
 3. Save the file.  
 4. Start a new shell session by closing and reopening the terminal or running `source ~/.zshrc` or `source ~/.bashrc` in the terminal.
-5. Then verify the variables by running `echo $DBT_ENV_VAR1` and `echo $DBT_ENV_VAR2` in the terminal.<br />
+5. Verify the variables by running `echo $DBT_ENV_VAR1` and `echo $DBT_ENV_VAR2` in the terminal.<br />
 
 If you see the value printed back in the terminal, you're all set! These variables will now be available:
 - In all future terminal sessions
