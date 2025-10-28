@@ -314,8 +314,8 @@ Snowflake's `merge` statement fails with a "nondeterministic merge" error if the
 
 dbt supports [table clustering](https://docs.snowflake.net/manuals/user-guide/tables-clustering-keys.html) on Snowflake. To control clustering for a <Term id="table" /> or incremental model, use the `cluster_by` config. When this configuration is applied, dbt will do two things:
 
-1. It will implicitly order the table results by the specified `cluster_by` fields
-2. It will add the specified clustering keys to the target table
+1. It will implicitly order the table results by the specified `cluster_by` fields.
+2. It will add the specified clustering keys to the target table.
 
 By using the specified `cluster_by` fields to order the table, dbt minimizes the amount of work required by Snowflake's automatic clustering functionality. If an incremental model is configured to use table clustering, then dbt will also order the staged dataset before merging it into the destination table. As such, the dbt-managed table should always be in a mostly clustered state.
 
@@ -369,6 +369,52 @@ create or replace table my_database.my_schema.my_table as (
 
  alter table my_database.my_schema.my_table cluster by (session_start);
 ```
+
+
+### Dynamic table clustering
+
+Starting dbt Core v1.x, the `cluster_by` configuration is supported in dynamic tables. When applied to a dynamic table, dbt includes the clustering specification in the `CREATE DYNAMIC TABLE` statement.
+
+For example:
+
+```sql
+{{ config(
+    materialized='dynamic_table',
+    snowflake_warehouse='COMPUTE_WH',
+    target_lag='1 minute',
+    cluster_by=['session_start', 'user_id']
+) }}
+
+select
+    session_id,
+    user_id,
+    min(event_time) as session_start,
+    max(event_time) as session_end,
+    count(*) as count_pageviews
+from {{ source('snowplow', 'event') }}
+group by 1, 2
+```
+
+This config generates the following SQL code when compiled:
+
+```sql
+create or replace dynamic table my_database.my_schema.my_table
+  target_lag = '1 minute'
+  warehouse = COMPUTE_WH
+  cluster by (session_start, user_id)
+as (
+  select
+    session_id,
+    user_id,
+    min(event_time) as session_start,
+    max(event_time) as session_end,
+    count(*) as count_pageviews
+  from source_table
+  group by 1, 2
+);
+```
+
+Note that unlike regular tables, dynamic tables apply clustering at the time the table was created. They don't require a separate `ALTER TABLE` statement.
 
 ### Automatic clustering
 
