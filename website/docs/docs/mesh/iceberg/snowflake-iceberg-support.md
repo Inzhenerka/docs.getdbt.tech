@@ -101,12 +101,14 @@ Glue Data Catalog supports the Iceberg REST specification so that you can connec
 
 #### Table materialization in dbt-snowflake
 
-dbt-snowflake supports basic table materialization with a catalog-linked database in Glue using Iceberg REST. Note that incremental materializations are not yet supported. This feature requires:
+dbt-snowflake supports basic table materialization with a catalog-linked database in Glue using Iceberg REST. Note that incremental materializations are not yet supported.
 
-- **A catalog-linked database:** You must use a catalog-linked database configured for your Glue Catalog integration.
-- **Lowercase identifiers:** Table and column names must be lowercase and surrounded by double quotes for Glue compatibility.
+This feature requires the following:
 
-To specify Glue as the catalog-linked database type, add `catalog_linked_database_type: glue` under the `adapter_properties` section:
+- **Catalog-linked database:** You must use a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create) configured for your Glue Catalog integration.
+- **Identifier format:** Table and column names must use only alphanumeric characters (letters and numbers), be lowercase, and surrounded by double quotes for Glue compatibility.
+
+To specify Glue as the database type, add `catalog_linked_database_type: glue` under the `adapter_properties` section:
 
 ```yml
 catalogs:
@@ -120,6 +122,7 @@ catalogs:
           catalog_linked_database: catalog_linked_db_glue
           catalog_linked_database_type: glue
 ```
+
 </TabItem>
 
 <TabItem value="Iceberg REST API">
