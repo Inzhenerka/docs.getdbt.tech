@@ -63,4 +63,10 @@ The compare changes feature uses the same credentials as the CI job, as defined 
 
 If using dynamic data masking in the data warehouse, the cached data will no longer be dynamically masked in the Advanced CI output, depending on the permissions of the users who view it. dbt Labs recommends limiting user access to unmasked data or considering using synthetic data for the Advanced CI testing functionality.
 
+## Troubleshooting
+
+Compare changes works by running SQL statements on the current connection (the environment that the CI job is running in). If the CI job defers to a Production job (in a different environment) that has a different connection, then the compare changes feature will not work as expected. An example of this would be:
+* CI job builds models using a connection that has a hostname of `abc123.rds.amazonaws.com`.
+* Your CI job defers to a Production job that builds models using a connection that has a hostname of `def456.rds.amazonaws.com`.
+
 <Lightbox src="/img/docs/deploy/compare-credentials.png" width="60%" title="Example of credentials in the user settings" />
