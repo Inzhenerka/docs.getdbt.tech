@@ -53,7 +53,7 @@ Define variables once at the OS or shell level to ensure they're available to al
 <Tabs>
 <TabItem value="mac-linux" label="Mac / Linux">
 
-1. Open your shell configuration file in a text editor using the following commands: (If the file does not exist, create it using a text editor using `vi ~/.zshrc` or `vi ~/.bashrc`).
+1. Open your shell configuration file in a text editor using the following commands (If the file does not exist, create it using a text editor using `vi ~/.zshrc` or `vi ~/.bashrc`):
     ```bash
     open -e ~/.zshrc ## for zsh (macOS)
     nano ~/.bashrc ## for bash (Linux or older macOS)
