@@ -111,7 +111,7 @@ The following steps will explain how to configure environment variables using Po
 
 #### Configure in the VS Code extension settings
 
-To use the dbt extension menu actions/buttons, you can configure environment variables directly in the [User Settings](vscode://settings/dbt.environmentVariables) interface or in any `.env` file at the root level.
+To use the dbt extension menu actions/buttons, you can configure environment variables directly in the [VS Code User Settings](vscode://settings/dbt.environmentVariables) interface or in any `.env` file at the root level.
 - Configuring in the User Settings works with the dbt extension buttons and menus (for LSP, "Show build menu," and so on).
 - Not inherited by the VS Code terminal or external shells.
 - Running a dbt command in the terminal won't fetch or use these variables.
