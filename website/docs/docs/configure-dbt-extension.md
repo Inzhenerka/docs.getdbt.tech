@@ -82,7 +82,7 @@ If you see the value printed back in the terminal, you're all set! These variabl
 
 </TabItem>
 <TabItem value="windows-cmd" label="Windows Cmd">
-There are two main ways to create persistent environment variables on Windows: through PowerShell or the Environment Variables UI. 
+There are two ways to create persistent environment variables on Windows: through PowerShell or the System Properties. 
 
 The following steps will explain how to configure environment variables using PowerShell.
 
