@@ -22,7 +22,7 @@ This section explains how to prepare your local environment to mirror your dbt p
 1. [Clone](https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository) your dbt project locally by cloning your <Constant name="dbt_platform" /> repo (from your Git provider).  
 2. Ensure you have a dbt [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml). This file defines your data warehouse connection. If you don't have one, you'll go through the dbt configuration processes to set it up. 
 3. Validate your `profiles.yml` and project configuration by running `dbt debug`.
-4. Add a `dbt_cloud.yml` file by going to the <Constant name="dbt_platform" /> project:
+4. Add a `dbt_cloud.yml` file from the <Constant name="dbt_platform" /> Account settings:
    - **Your profile** -> **VS Code Extension** -> **Download credentials**. 
    - Download the `dbt_cloud.yml` file with your [**Personal access Token (PAT)**](/docs/dbt-cloud-apis/user-tokens) included. This then connects the extension to <Constant name="dbt_platform" /> and enables platform features such as <Constant name="mesh" /> and deferral.
    - Check the `project_id` in your `dbt_project.yml` file matching the project you're working on.
