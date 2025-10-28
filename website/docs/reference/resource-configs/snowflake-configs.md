@@ -395,7 +395,7 @@ from {{ source('snowplow', 'event') }}
 group by 1, 2
 ```
 
-This config generates the following SQL code when compiled:
+This config generates the following SQL when compiled:
 
 ```sql
 create or replace dynamic table my_database.my_schema.my_table
