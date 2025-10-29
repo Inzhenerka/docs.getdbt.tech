@@ -14,16 +14,20 @@ The steps differ slightly depending on whether you use <Constant name="dbt_platf
 - <Constant name="dbt_platform" /> &mdash; You’ll mirror your <Constant name="dbt_platform" /> environment locally to unlock <Constant name="fusion" />-powered features like <Constant name="mesh" />, deferral, and so on. If your project has environment variables, you'll also set them locally to leverage the VS Code extension's features.
 - Self-hosted &mdash; When you self-host with <Constant name="fusion" /> or are upgrading from <Constant name="core" /> to <Constant name="fusion" />, you’ll most likely already have a local setup and environment variables. Use this page to confirm that your existing local setup and environment variables work seamlessly with the <Constant name="fusion_engine" /> and VS Code extension.
 
-## Prepare your local environment
+## Prerequisites
 
-The following instructions show how to configure your self-hosted dbt project to mirror your <Constant name="dbt_platform" /> project environment. If you already have your local environment set up, you don't need to do anything here.  
+- <Constant name="fusion_engine" /> installed
+- Downloaded and installed the dbt VS Code extension
+- Basic understanding of [Git workflows](/docs/cloud/git/version-control-basics) and [dbt project structure](/best-practices/how-we-structure/1-guide-overview)
+- [Developer or analyst license](www.getdbt.com/pricing) if you're using <Constant name="dbt_platform" />
 
+## Prepare your local setup 
 
-1. [Clone](https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository) your dbt project locally by cloning your <Constant name="dbt_platform" /> repo (from your Git provider).  
-2. Ensure you have a dbt [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml). This file defines your data warehouse connection. If you don't have one, you'll go through the dbt configuration processes to set it up. 
+1. [Clone](https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository) your dbt project repository from your Git provider to your local machine. If you use <Constant name="dbt_platform" />, clone the same repo connected to your project.
+2. Ensure you have a dbt [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml). This file defines your data warehouse connection. If you don't have one, run `dbt init` in the terminal to configure your adapter. 
 3. Validate your `profiles.yml` and project configuration by running `dbt debug`.
 4. Add a `dbt_cloud.yml` file from the <Constant name="dbt_platform" /> Account settings:
-   - **Your profile** -> **VS Code Extension** -> **Download credentials**. 
+   - Navigate to **Your profile** -> **VS Code Extension** -> **Download credentials**.
    - Download the `dbt_cloud.yml` file with your [**Personal access Token (PAT)**](/docs/dbt-cloud-apis/user-tokens) included and place it in the `~/.dbt/` directory. This then registers and connects the extension to <Constant name="dbt_platform" /> and enables platform features such as <Constant name="mesh" /> and deferral.
    - Check the `project_id` in your `dbt_project.yml` file matching the project you're working on.
 5. Confirm connection from your workstation. Your local computer connects directly to your data warehouse and Git.  
