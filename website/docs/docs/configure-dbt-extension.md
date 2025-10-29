@@ -2,7 +2,7 @@
 title: "Configure the dbt VS Code extension"
 sidebar_label: "Configure dbt extension"
 id: "configure-dbt-extension"
-description: "Prepare your local environment (files, env vars, connectivity) so the VS Code extension and terminal both work smoothly."
+description: "Optimize your VS Code extension environment (files, env vars, connectivity)."
 ---
 
 Whether you currently use <Constant name="dbt_platform" /> or self-hosted <Constant name="core" />, use this page to configure local setup for the dbt VS Code extension and configure environment variables, if your project uses them. 
