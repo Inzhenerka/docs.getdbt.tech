@@ -78,6 +78,6 @@ In the following example, the CI job can’t access the production model to comp
   - The dbt CI job in environment `ci.dbt_cloud_123.foo` that connects to host `abc123.rds.amazonaws.com`
   - The dbt production job in environment `prod.analytics.foo` that connects to host `def456.rds.amazonaws.com`
 
-</Expandable>
+</ Expandable>
 
 
