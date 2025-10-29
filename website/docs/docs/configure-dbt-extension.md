@@ -2,7 +2,7 @@
 title: "Configure the dbt VS Code extension"
 sidebar_label: "Configure dbt extension"
 id: "configure-dbt-extension"
-description: "Prepare your local environment (files, env vars, connectivity) so the VS Code extension and terminal both work smoothly."
+description: "Optimize your VS Code extension environment (files, env vars, connectivity)."
 ---
 
 Whether you currently use <Constant name="dbt_platform" /> or self-host with <Constant name="fusion" />, or you’re a <Constant name="core" /> user upgrading to <Constant name="fusion" />, follow the instructions on this page to configure your local setup for the dbt VS Code extension and set environment variables if your project uses them.
@@ -16,7 +16,7 @@ The steps differ slightly depending on whether you use <Constant name="dbt_platf
 
 ## Prepare your local environment
 
-This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, you don't need to do anything here. 
+The following instructions show how to configure your self-hosted dbt project to mirror your <Constant name="dbt_platform" /> project environment. If you already have your local environment set up, you don't need to do anything here.  
 
 
 1. [Clone](https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository) your dbt project locally by cloning your <Constant name="dbt_platform" /> repo (from your Git provider).  
