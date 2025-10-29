@@ -169,6 +169,7 @@ Insights offers a robust save feature for quickly finding the queries you use mo
 - View saved Insight details including description and creation date in the **Overview** tab.
 - View the Insight history in the **Version history** tab. Click a version to compare it the current and view changes. 
 
+
 ## Considerations 
 - <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
 - Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.

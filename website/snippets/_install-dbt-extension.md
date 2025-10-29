@@ -8,7 +8,7 @@ To use the extension, you must meet the following prerequisites:
 | Prerequisite | Details |
 | --- | --- |
 | **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
-|  | _Registration_ &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.<br /><br /> ⁃ _Don't have a dbt account?_ Follow the VS Code “get started” flow to register and verify your email.<br /><br /> ⁃ _Returning user?_ If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you cannot log into the account associated with your email or if it's locked, reach out to dbt Support to have it unlocked or reset before logging in. |
+|  | Registration &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.  The VS Code extension is free for organizations for up to 15 users.<br /><br /> ⁃ Don't have a dbt account? &mdash; Follow the VS Code “get started” flow to register and verify your email.<br />⁃ Returning user? &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in. |
 | **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
@@ -50,7 +50,6 @@ To get started with the extension:
     - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date.
     - **Explore features:** Opens the [documentation](/docs/about-dbt-extension) so you can learn more about all the extension has to offer.
     - **Register:** Launches the registration workflow so you can continue to use the extension beyond the trial period.
-
 
 ## Upgrade to Fusion
 
@@ -96,7 +95,7 @@ Users must complete registration within 14 days of installing the dbt extension.
 - Users without an existing dbt account can register quickly and easily through an online registration form. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
 - Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file.
 
-The VS Code extension is free for organizations for up to 15 users.
+The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
 
 ### New user registration
 
@@ -153,44 +152,9 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 ## Troubleshooting
 <!-- This anchor is linked from the  VS Code extension. Please do not change it -->
 
-#### dbt platform configurations
+import FusionTroubleshooting from '/snippets/_fusion-troubleshooting.md';
 
-If you're a cloud-based dbt platform user who has the `dbt-cloud:` config in the `dbt_project.yml` file and are also using [dbt Mesh](/docs/mesh/about-mesh), you must have the project ID configured:
-
-```yaml
-dbt-cloud:
-  project-id: 12345 # Required
-```
-
-If you don’t configure this correctly, cross-platform references will not resolve properly, and you will encounter errors executing dbt commands.
-
-#### General troubleshooting tips
-
-If the dbt extension has activated successfully, you will see the `dbt Extension` label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.
-
-If the dbt extension label is not present, then it is likely that the dbt extension was not installed successfully. If this happens, try uninstalling the extension, restarting your editor, and then reinstalling the extension.
-
-Note: It is possible to "hide" status bar items in VS Code. Double-check if the **dbt Extension** status bar label is hidden by right-clicking on the status bar in your editor. If you see **dbt Extension** in the right-click menu, then the extension has installed successfully.
-
-#### Missing dbt LSP features
-
-If you receive a `no active LSP for this workspace` error message or aren't seeing [dbt Language Server (LSP)](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general [troubleshooting steps](#troubleshooting) mentioned earlier. 
-
-If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
-1. Check extension version &mdash; Ensure that you're using the latest available version of the dbt extension by:
-    - Opening the Extensions page in your editor, or
-    - Going to the **Output** tab and looking for the version number.
-2. Reinstall the LSP &mdash; If the version is correct, reinstall the LSP:
-   1. Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux).
-   2. Paste `dbt: Reinstall dbt LSP` and enter.
-
-This command downloads the LSP and re-activates the extension to resolve the error.
-
-#### Unsupported dbt version
-
-If you see an error message indicating that your version of dbt is unsupported, then there is likely a problem with your environment.
-- Check the **dbt Path** setting in your VS Code settings. If this path is set, ensure that it is pointing to a valid <Constant name="fusion_engine" />  executable.
-- If necessary, you can also install the <Constant name="fusion_engine" />  directly using these instructions: [Install the Fusion CLI](/docs/fusion/install-fusion).
+<FusionTroubleshooting />
 
 import AboutFusion from '/snippets/_about-fusion.md';
 

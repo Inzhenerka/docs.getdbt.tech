@@ -72,12 +72,12 @@ var siteSettings = {
     announcementBar: {
       id: "dbt-workshop",
       content:
-        "Register now for Coalesce 2025 ✨ The Analytics Engineering Conference!",
+        "✨ Live virtual event -- Experience the dbt Fusion engine with Tristan Handy and Elias DeFaria on October 28th!",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://coalesce.getdbt.com/5Y3oaq/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2026_coalesce-2025_aw&utm_content=coalesce____&utm_term=all_all__",
+      "https://www.getdbt.com/resources/webinars/speed-simplicity-cost-savings-experience-the-dbt-fusion-engine",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
@@ -358,6 +358,7 @@ var siteSettings = {
     path.resolve("plugins/buildSpotlightIndexPage"),
     path.resolve("plugins/buildQuickstartIndexPage"),
     path.resolve("plugins/buildRSSFeeds"),
+    path.resolve("plugins/buildRawMarkdownData"),
     [
       "vercel-analytics",
       {

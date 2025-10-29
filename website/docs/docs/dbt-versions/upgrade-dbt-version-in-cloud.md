@@ -1,9 +1,10 @@
 ---
-title: "Upgrade dbt version in Cloud"
+title: "Upgrade versions in dbt platform"
 id: "upgrade-dbt-version-in-cloud"
 ---
 
 import FusionDWH from '/snippets/_fusion-dwh.md';
+import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
 
 In <Constant name="cloud" />, both [jobs](/docs/deploy/jobs) and [environments](/docs/dbt-cloud-environments) are configured to use a specific version of <Constant name="core" />. The version can be upgraded at any time.
 
@@ -45,7 +46,7 @@ Configure your project to use a different dbt version than what's configured in 
 
 ## dbt Fusion engine <Lifecycle status="private_preview" />
 
-dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in private preview on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
+dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion), a ground-up rebuild of dbt. This is currently in private preview on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
 - If you don't see the `Latest Fusion` release track as an option, you should check with your dbt Labs account team about eligibility.
 - To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and read more about the changes in our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 - Make sure you're using a supported adapter and authentication method:
@@ -103,6 +104,8 @@ To begin the process of upgrading to <Constant name="fusion" /> with the assista
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/autofix-success.png" width="60%" title="You're now ready to upgrade to Fusion in your development environment!"/>
 
 Now that you've upgraded your development environment to <Constant name="Fusion" />, you're ready to start the process of upgrading your Production, Staging, and General environments. Follow your organization's standard procedures and use the [release tracks](#release-tracks) to upgrade.
+
+<FusionUpgradeSteps />
 
 ## Jobs
 
