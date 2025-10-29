@@ -1,6 +1,6 @@
 If you run into any issues, check out the troubleshooting section below.
 
-<Expandable alt_header="How to create a .dbt directory and move your file">
+<Expandable alt_header="How to create a .dbt directory in root and move config files">
 
 If you've never had a `.dbt` directory, you should perform the following recommended steps to create one. If you already have a `.dbt` directory, move the `dbt_cloud.yml` file into it.
 
