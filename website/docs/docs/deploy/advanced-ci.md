@@ -65,9 +65,16 @@ If using dynamic data masking in the data warehouse, the cached data will no lon
 
 ## Troubleshooting
 
-Compare changes works by running SQL statements on the current connection (the environment that the CI job is running in) to compare the CI model (e.g. `ci.dbt_cloud_123.foo`) to it's production counterpart (e.g. `prod.analytics.foo`). If the CI job defers to a Production job (in a different environment) that has a different connection, then the compare changes feature will not work as expected. An example of this would be:
-* CI job builds models (e.g. `ci.dbt_cloud_123.foo`) using a connection that has a hostname of `abc123.rds.amazonaws.com`.
-* Your CI job defers to a Production job that builds models (e.g. `prod.analytics.foo`) using a connection that has a hostname of `def456.rds.amazonaws.com`.
-The reason that this will cause compare chaanges to not work as expected is because it is generally not possible to query / observe the production object (`prod.analytics.foo`) on the production host when the CI job's environment is connected to a different host.
+<Expandable alt_header="Compare changes CI models need to be on same database host/connection"/>
+
+Compare Changes only works if both CI and production models live on the same database host/connection. Compare Changes runs SQL queries in the current CI job’s environment to compare the CI model (like `ci.dbt_cloud_123.foo`) to the production model (`prod.analytics.foo`).
+
+If the CI job defers to a production job that's on a different database connection or host, then the compare changes feature will not work as expected. This is because the CI environment can't access or query production objects on another host. In the following example, the CI job can’t access the production model to compare them because they’re on different database hosts:
+
+  - The CI job connects to `abc123.rds.amazonaws.com`
+  - The production job connects to `def456.rds.amazonaws.com`
+
+</Expandable>
+
 
 <Lightbox src="/img/docs/deploy/compare-credentials.png" width="60%" title="Example of credentials in the user settings" />
