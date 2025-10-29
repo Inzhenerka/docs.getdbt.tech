@@ -67,7 +67,7 @@ If using dynamic data masking in the data warehouse, the cached data will no lon
 
 ## Troubleshooting
 
-<Expandable alt_header="Compare changes CI models need to be on same database host/connection"/>
+<Expandable alt_header="Compare changes CI models need to be on same database host/connection">
 
 Compare Changes only works if both CI and production models live on the same database host/connection. Compare Changes runs SQL queries in the current CI job’s environment to compare the CI model (like `ci.dbt_cloud_123.foo`) to the production model (`prod.analytics.foo`).
 
