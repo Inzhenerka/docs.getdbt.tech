@@ -36,7 +36,7 @@ There are four levels of environment variables:
  3. The environment level, which can in turn be overridden again at
  4. The job level (job override) or in the <Constant name="cloud_ide" /> for an individual dev (personal override). (_highest precedence_)
 
-#### Setting environment variables at the project and environment level 
+#### Setting environment variables
 
 To set environment variables at the project and environment level, click **Orchestration** in the left-side menu, then select **Environments**. Click **Environment variables** to add and update your environment variables.
 
