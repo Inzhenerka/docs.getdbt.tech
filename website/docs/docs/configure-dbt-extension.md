@@ -1,6 +1,6 @@
 ---
-title: "Configure the dbt VS Code extension"
-sidebar_label: "Configure dbt extension"
+title: "Configure your local setup"
+sidebar_label: "Configure your local setup"
 id: "configure-dbt-extension"
 description: "Optimize your VS Code extension environment (files, env vars, connectivity)."
 ---
@@ -203,6 +203,18 @@ To configure environment variables in the terminal session:
     </TabItem>
     </Tabs>
 2. Verify the changes by running a dbt command and checking the output.
+
+
+
+## Configure the dbt extension
+<!-- moved content from website/docs/docs/fusion/install-fusion-cli.md to here -->
+
+After installing the dbt extension and configuring your local setup, you may want to configure it to better fit your development workflow:
+
+1. Open the VS Code settings by pressing `Ctrl+,` (Windows/Linux) or `Cmd+,` (Mac).
+2. Search for `dbt`. On this page, you can adjust the extension’s configuration options to fit your needs.
+
+<Lightbox src="/img/docs/extension/dbt-extension-settings.png" width="70%" title="dbt extension settings within the VS Code settings."/>
 
 ## Next steps
 Now that you've configured your local environment, you can start using the dbt extension to streamline your dbt development workflows. Check out the following resources to get started:
