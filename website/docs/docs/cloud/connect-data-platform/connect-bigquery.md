@@ -179,7 +179,7 @@ Job retry deadline seconds is the maximum amount of time BigQuery will spend ret
 
 Job creation timeout seconds is the maximum time BigQuery will wait to start the job. If the job doesn’t start within that time, it times out.
 
-Starting dbt Core v1.x, when jobs exceed their configured timeout, dbt-bigquery attempts to cancel the job. The cancellation call is wrapped in error handling because it's possible that the job has already completed by the time the cancellation is attempted.
+Starting in dbt Core v1.10, when jobs exceed their configured timeout, dbt-bigquery sends a cancellation request to the BigQuery job. If the request succeeds, dbt cancels the job. If the request fails, the BigQuery job may continue running in the background until it finishes or is manually canceled.
 
 </Expandable>
 
