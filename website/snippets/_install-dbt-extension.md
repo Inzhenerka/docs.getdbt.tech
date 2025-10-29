@@ -93,7 +93,7 @@ Once the upgrade is completed, you're ready to dive into all the features that t
 Users must complete registration within 14 days of installing the dbt extension. There are two ways to register:
 
 - Users without an existing dbt account can register quickly and easily through an online registration form. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
-- Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file. To learn how to configure a `dbt_cloud.yml` file, see [Troubleshooting](#troubleshooting).
+- Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file. To learn how to configure the extension with a `dbt_cloud.yml` file, see [Troubleshooting](#troubleshooting).
 
 The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
 
