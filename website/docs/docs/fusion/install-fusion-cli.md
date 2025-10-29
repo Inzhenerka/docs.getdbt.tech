@@ -59,7 +59,7 @@ This location is automatically added to your path to easily execute the `dbtf` c
 
 ## Configure environment variables
 
-After verifying the installation, you can configure environment variables to run commands in the terminal or using the VS Code extension buttons and menus. Refer to [Configure environment variables](/docs/fusion/install-dbt-extension#configure-environment-variables) for more information.
+If you have environment variables in your project, you can configure them to run commands in the terminal or using the VS Code extension buttons and menus. Refer to [Configure environment variables](/docs/fusion/install-dbt-extension#configure-environment-variables) for more information.
 
 ## Update Fusion
 
