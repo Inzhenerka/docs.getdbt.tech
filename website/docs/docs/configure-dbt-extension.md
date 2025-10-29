@@ -5,7 +5,12 @@ id: "configure-dbt-extension"
 description: "Optimize your VS Code extension environment (files, env vars, connectivity)."
 ---
 
-Whether you currently use <Constant name="dbt_platform" /> or self-host with <Constant name="fusion" />, or you’re a <Constant name="core" /> user upgrading to <Constant name="fusion" />, follow the instructions on this page to configure your local setup for the dbt VS Code extension and set environment variables if your project uses them.
+Whether you currently use <Constant name="dbt_platform" /> or self-host with <Constant name="fusion" />, or you’re a <Constant name="core" /> user upgrading to <Constant name="fusion" />, follow the instructions on this page to:
+
+<!-- no toc -->
+- [Prepare your local setup](#prepare-your-local-setup)
+- [Set environment variables locally](#set-environment-variables-locally)
+- [Configure the dbt extension](#configure-the-dbt-extension)
 
 If you're new to dbt or getting started with a new project, you can skip this page and check out our [Quickstart for the <Constant name="fusion_engine"/>](/guides/fusion?step=1) to get started with the dbt extension.
 
