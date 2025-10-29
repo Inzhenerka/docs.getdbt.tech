@@ -101,7 +101,7 @@ Glue Data Catalog supports the Iceberg REST specification so that you can connec
 
 #### Table materialization in dbt-snowflake
 
-Starting dbt Core v1.x, dbt-snowflake supports basic table materialization on Iceberg tables registered in a Glue catalog through a catalog-linked database. Note that incremental materializations are not yet supported.
+Starting with dbt Core v1.11, dbt-snowflake supports basic table materialization on Iceberg tables registered in a Glue catalog through a catalog-linked database. Note that incremental materializations are not yet supported.
 
 This feature requires the following:
 
