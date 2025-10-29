@@ -16,7 +16,7 @@ The steps differ slightly depending on whether you use <Constant name="dbt_platf
 
 ## Prepare your local environment
 
-This section explains how to prepare your local environment to mirror your dbt project environment. If you already have your local environment set up, you don't need to do anything here. 
+The following instructions show how to configure your self-hosted dbt project to mirror your <Constant name="dbt_platform" /> project environment. If you already have your local environment set up, you don't need to do anything here.  
 
 
 1. [Clone](https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository) your dbt project locally by cloning your <Constant name="dbt_platform" /> repo (from your Git provider).  
