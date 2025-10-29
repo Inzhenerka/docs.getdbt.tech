@@ -18,10 +18,10 @@ This section explains how to set and override environment variables in <Constant
 
 <!-- no toc -->
 - [Order of precedence](#order-of-precedence)
-- [Setting environment variables at the project and environment level](#setting-environment-variables-at-the-project-and-environment-level)
+- [Setting environment variables](#setting-environment-variables)
 - [Overriding environment variables at the job level](#overriding-environment-variables-at-the-job-level)
 - [Overriding environment variables at the personal level](#overriding-environment-variables-at-the-personal-level)
-- [Local environment variables (VS Code extension)](#llocal-environment-variables)
+- [Local environment variables (VS Code extension)](#vs-code-extension-environment-variables)
 
 #### Order of precedence
 
