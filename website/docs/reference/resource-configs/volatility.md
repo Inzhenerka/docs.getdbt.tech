@@ -46,7 +46,7 @@ For example, the result for the `concat(session_user(), ' ', last_name)` functio
 
 A `non-deterministic` function may return different results for the same inputs. Warehouses should not cache these results or reorder expressions in ways that assume stability.
 
-For example, the result for the `concat(random(), ' ', last_name)` function changes every time because of randomization.
+For example, the result for the `concat(random(), ' ', last_name)` function returns a different result on each call because `random()` produces a new value every time.
 
 ## Related documentation
 
