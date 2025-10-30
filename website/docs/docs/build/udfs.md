@@ -56,6 +56,8 @@ To define UDFs in dbt, refer to the following steps:
 
     **Note**: You can specify configs in the SQL file or in the corresponding YAML file in Step 2. 
 
+    You can also create Python UDFs in the `functions` directory. For more information, see [Defining Python UDFs](#defining-python-udfs).
+
 2. Specify the function name and define the config, properties, return type, and optional arguments in a corresponding YAML file. For example:
 
 
@@ -230,6 +232,86 @@ The `volatility` value you define is passed to the adapter, which adds the corre
 import Volatility from '/snippets/_warehouse-volatility.md';
 
 <Volatility />
+
+### Defining Python UDFs
+
+You can define Python UDFs in your dbt project and use them in SQL queries, both inside and outside of dbt. Python UDFs are currently supported in Snowflake and BigQuery. 
+
+A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL. This makes it easier to apply complex data transformations, calculations, or logic that would be difficult to define in SQL.
+
+To define Python UDFs in dbt, refer to the following steps:
+
+1. Create a Python file under the `functions` directory. For example:
+
+    <File name='functions/my_function.py'>
+
+    ```py
+    def main(an_int):
+      return an_int + secret_int_a() + secret_int_b()
+
+    def secret_int_a():
+      return 2
+
+    def secret_int_b():
+      return 3
+    ```
+    </File>
+
+2. Specify the function name and define the configs, properties, return type, and optional arguments in a corresponding YAML file.
+
+    The following configs are required when defining a Python UDF: 
+
+    - `runtime_version` &mdash; Specify the Python version to run.
+
+      <Expandable alt_header="Supported values">
+
+      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
+      - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
+
+      </Expandable>
+
+    - `entry_point` &mdash; Specify the Python function to be called.
+
+    For example:
+
+    <File name='functions/schema.yml'>
+
+    ```yml
+    functions:
+      - name: my_function
+        description: Adds two secret numbers to initial number
+        config:
+          runtime_version: "3.11" # required
+          entry_point: main # required
+        arguments:
+          - name: an_int
+            data_type: int
+        returns:
+          data_type: int
+    ```
+    </File>
+
+    This example generates the following `CREATE` UDF statement in Snowflake:
+
+    ```sql
+    CREATE OR REPLACE FUNCTION my_function(an_int INT)
+      RETURNS INT
+      LANGUAGE PYTHON
+      RUNTIME_VERSION = '3.11'
+      HANDLER = 'main'
+    AS $$
+    def main(an_int):
+      return an_int + secret_int_a() + secret_int_b()
+
+    def secret_int_a():
+      return 2
+
+    def secret_int_b():
+      return 3
+    $$;
+    ```
+
+3. Reference the UDF in a model and run `dbt compile`. Refer to Steps 3 and 4 of [Defining UDFs in dbt](#defining-udfs-in-dbt) for more information.
 
 ## Using UDFs in unit tests
 
