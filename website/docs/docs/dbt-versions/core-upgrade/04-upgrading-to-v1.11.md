@@ -56,7 +56,7 @@ These warnings help you proactively identify and update deprecated configuration
 
 ### Snowflake
 
-- dbt-snowflake supports basic table materialization on Iceberg tables registered in a Glue catalog through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). For more information, see [Table materialization in dbt-snowflake](/docs/mesh/iceberg/snowflake-iceberg-support#table-materialization-in-dbt-snowflake).
+- The Snowflake adapter supports basic table materialization on Iceberg tables registered in a Glue catalog through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). For more information, see [Table materialization in dbt-snowflake](/docs/mesh/iceberg/snowflake-iceberg-support#table-materialization-in-dbt-snowflake).
 
 ## Quick hits
 

@@ -319,7 +319,7 @@ The `warn_error_option` options for `include` and `exclude` have been deprecated
 
 ### BigQuery
 
-- When jobs exceed their configured timeout, dbt-bigquery sends a cancellation request to the BigQuery job. If the request succeeds, dbt cancels the job. If the request fails, the BigQuery job may continue running in the background until it finishes or is manually canceled.
+- `dbt-bigquery` cancels BigQuery jobs that exceed their configured timeout by sending a cancellation request. If the request succeeds, dbt stops the job. If the request fails, the BigQuery job may keep running in the background until it finishes or you cancel it manually.
 
 
 ## Quick hits
