@@ -93,7 +93,7 @@ To define UDFs in dbt, refer to the following steps:
     functions:
 	  - name: string 
 	    description: string
-      config:
+      	config:
 	      type: scalar # default value
     ```
 
