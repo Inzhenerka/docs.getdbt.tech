@@ -14,7 +14,7 @@ dbt supports materializing the table in Iceberg table format in two different wa
 
 You need to create a `catalogs.yml` file to use the integration and apply that integration on the config level.
 
-Refer to [Configure catalog integration](t#configure-catalog-integration-for-managed-iceberg-tables) for more information.
+Refer to [Configure catalog integration](#configure-catalog-integration-for-managed-iceberg-tables) for more information.
 
 :::
 
