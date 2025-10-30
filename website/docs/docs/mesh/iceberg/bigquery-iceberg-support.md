@@ -208,7 +208,7 @@ catalogs:
 
 :::info Legacy model configuration for base_location
 
-For backwards compatibility, dbt Fusion also supports setting `base_location` properties and `storage_uri` as top-level model configuration fields. `adapter_properties` configs take precedence over legacy configs.
+For backwards compatibility, dbt <Constant name="fusion"/> also supports setting `base_location` properties and `storage_uri` as top-level model configuration fields. `adapter_properties` configs take precedence over legacy configs.
 
 For example, in the following model config, `base_location_root`=`bar` overrides `base_location_root`=`foo`.
 
