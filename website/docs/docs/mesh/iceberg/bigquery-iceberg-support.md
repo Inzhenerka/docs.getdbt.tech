@@ -50,7 +50,7 @@ The following table outlines the configuration fields required to set up a catal
 
 ### Adapter properties
 
-These are the additional configurations, unique to BigQuery, that can be supplied and nested under `adapter_properties`.
+Supply and nest these additional configurations, unique to BigQuery, under the `adapter_properties` field.
 
 | Field | Type   | Required | Description   | Note   |
 | ------ | ----- | -------- | ------------- | ------ |
