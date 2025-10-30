@@ -19,6 +19,8 @@ functions:
       [<function_config>](/reference/function-configs): <config_value>
       [type](/reference/resource-configs/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
       [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # optional
+      [runtime_version](/reference/resource-configs/runtime-version): <string> # required for Python UDFs
+      [entry_point](/reference/resource-configs/entry-point): <string> # required for Python UDFs
       [docs](/reference/resource-configs/docs):
         show: true | false
         node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
