@@ -58,7 +58,9 @@ Supply and nest these additional configurations, unique to BigQuery, under the `
 | `base_location_subpath` | String | No     | An optional suffix to add to the `base_location` path that dbt automatically specifies.     | Only configurable per-model |
 | `storage_uri` | String | No     | If provided, the input will override the dbt storage_uri value. | Only configurable per-model |
 
-See [Base location](#base-location) for more information about these properties.
+These properties can be set in model configurations under the `adapter_properties` field, or as top-level fields themselves. If present in both places, the value set under `adapter_properties` will take precedence.
+
+See [Base location](#base-location) for more information.
 
 </VersionBlock>
 
