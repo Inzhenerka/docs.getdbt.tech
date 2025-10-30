@@ -93,7 +93,8 @@ To define UDFs in dbt, refer to the following steps:
     functions:
 	  - name: string 
 	    description: string
-	    type: scalar # default value
+      config:
+	      type: scalar # default value
     ```
 
     If not explicitly specified, the `type` property defaults to `scalar`.
@@ -195,15 +196,17 @@ After defining a UDF, if you update the SQL file that contains its function body
 
 ### Setting `volatility` in UDFs
 
-Volatility is an optional config that describes how predictable a UDF’s output is. Warehouses use this to decide if results can be cached, reordered, or inlined. Setting the appropriate volatility helps prevent incorrect results when a function isn’t safe to cache or reorder.
+import VolatilityDefinition from '/snippets/_volatility-definition.md';
+
+<VolatilityDefinition />
 
 In dbt, you can use the following values for the `volatility` config:
 
 | Value | Description | Example |
 | --- | --- | --- |
-| `deterministic` | Always returns the same output for the same input. Safe for aggressive optimizations and caching. | `substr()` |
-| `stable` | Returns the same value within a single query execution, but may change across executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/docs/build/udfs#warehouse-specific-volatility-keywords).| `now()` |
-| `non-deterministic` | May return different results for the same inputs. Warehouses shouldn't cache or reorder assuming stable results. | `first()`, `random()` |
+| `deterministic` | Always returns the same output for the same input. Safe for aggressive optimizations and caching. | `substr()` &mdash; Produces the same substring when given the same string and parameters. |
+| `stable` | Returns the same value within a single query execution, but may change across executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/docs/build/udfs#warehouse-specific-volatility-keywords).| `now()` &mdash; Returns the current timestamp the moment a query starts; constant within a single query but different across runs. |
+| `non-deterministic` | May return different results for the same inputs. Warehouses shouldn't cache or reorder assuming stable results. | `first()` &mdash; May return different rows depending on query plan or ordering. <br></br>`random()` &mdash; Produces a random number that varies with each call, even with identical inputs. |
 
 Defining a function's volatility lets the data warehouse do optimizations when executing the function. By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies &mdash; except in Redshift. In Redshift, dbt sets `non-deterministic` (`VOLATILE`) by default if no volatility is specified, because Redshift requires an explicit volatility and `VOLATILE` is the safest assumption.
 
