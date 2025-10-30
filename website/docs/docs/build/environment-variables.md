@@ -87,7 +87,7 @@ To refresh the <Constant name="cloud_ide" /> mid-development, click on either th
 
 There are some known issues with partial parsing of a project and changing environment variables mid-session in the IDE. If you find that your dbt project is not compiling to the values you've set, try deleting the `target/partial_parse.msgpack` file in your dbt project which will force dbt to re-compile your whole project.
 
-#### VS Code extension environment variables
+#### Local environment variables
 
 If you are using the dbt VS Code extension, you can set environment variables locally in your shell profile (`~/.zshrc` or `~/.bashrc`) or in a `.env` file at the root level of your dbt project.
 
