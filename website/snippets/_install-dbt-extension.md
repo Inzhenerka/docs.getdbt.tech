@@ -9,7 +9,7 @@ To use the extension, you must meet the following prerequisites:
 | --- | --- |
 | **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
 |  | Registration &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.  The VS Code extension is free for organizations for up to 15 users.<br /><br /> ⁃ Don't have a dbt account? &mdash; Follow the VS Code “get started” flow to register and verify your email.<br />⁃ Returning user? &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in. |
-| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
+| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file [configured](/docs/install-dbt-extension#how-to-create-a-dbt-directory-in-root-and-move-config-files) in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
 
@@ -93,7 +93,7 @@ Once the upgrade is completed, you're ready to dive into all the features that t
 Users must complete registration within 14 days of installing the dbt extension. There are two ways to register:
 
 - Users without an existing dbt account can register quickly and easily through an online registration form. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
-- Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file.
+- Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file. To learn how to configure the extension with a `dbt_cloud.yml` file, see [Troubleshooting](#troubleshooting).
 
 The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
 
@@ -132,7 +132,7 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 3. Under the **Your profile** section, click **VS Code Extension**. 
 4. In the **Set up your credentials** section, click **Download credentials**. This downloads the `dbt_cloud.yml` file. 
     <Lightbox src="/img/docs/extension/download-registration-2.png" width="60%" title="Download the dbt_cloud.yml file to complete registration."/>
-5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory.
+5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory. Refer to [Troubleshooting](#troubleshooting) for more information on how to move a `dbt_cloud.yml` file.
 6. To update your registration in VS Code, open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)), then select `dbt: Register dbt extension` to complete the registration.
 
 </Expandable>
@@ -144,7 +144,7 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 3. Under the **Your profile** section, click **CLI**. 
 4. In the **Configure Cloud authentication** section, click **Download CLI configuration file**. This downloads the `dbt_cloud.yml` file. 
     <Lightbox src="/img/docs/extension/download-registration.png" width="60%" title="Download the dbt_cloud.yml file to complete registration."/>
-5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory.
+5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory. Refer to [Troubleshooting](#troubleshooting) for more information on how to move a `dbt_cloud.yml` file.
 6. To update your registration in VS Code, open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)), then select `dbt: Register dbt extension` to complete the registration.
 
 </Expandable>
