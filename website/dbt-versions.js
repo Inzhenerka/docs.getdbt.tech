@@ -35,7 +35,7 @@ exports.versions = [
   },
   {
     version: "1.9",
-    customDisplay: "dbt Core v1.9 (Extended)",
+    customDisplay: "Core v1.9 (Extended)",
     EOLDate: "2025-12-08",
   },
 ];
