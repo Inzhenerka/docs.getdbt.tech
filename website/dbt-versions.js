@@ -16,7 +16,7 @@
 exports.versions = [
   {
     version: "1.12",
-    customDisplay: "Latest (dbt platform)",
+    customDisplay: "dbt platform (latest)",
   },
   {
     version: "2.0",
@@ -25,17 +25,17 @@ exports.versions = [
   },
  {
     version: "1.11",
-    customDisplay: "Latest (dbt Core v1.11 Beta)",
+    customDisplay: "Core v1.11 Beta",
     isPrerelease: true,
   },
   {
     version: "1.10",
-    customDisplay: "Compatible (dbt Core v1.10)",
+    customDisplay: "Core v1.10 (compatible)",
     EOLDate: "2026-06-15",
   },
   {
     version: "1.9",
-    customDisplay: "Extended (dbt Core v1.9)",
+    customDisplay: "dbt Core v1.9 (extended)",
     EOLDate: "2025-12-08",
   },
 ];
