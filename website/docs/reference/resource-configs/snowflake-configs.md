@@ -414,7 +414,7 @@ as (
 );
 ```
 
-Clustering for dynamic tables is specified at creation via `CLUSTER BY` in the `CREATE DYNAMIC TABLE` statement. A separate `ALTER TABLE` statement isn’t required.
+You can specify clustering for dynamic tables when you create them using `CLUSTER BY` in the `CREATE DYNAMIC TABLE` statement. You don’t need to run a separate `ALTER TABLE` statement.
 
 ### Automatic clustering
 
