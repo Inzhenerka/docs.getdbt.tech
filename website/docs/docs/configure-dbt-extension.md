@@ -46,7 +46,11 @@ In this section, we'll walk you through the steps to prepare your local setup fo
 
 ## Set environment variables locally
 
-The extension and CLI use environment variables for authentication and configuration. The following table shows the different options and when to use them:
+Environment variables are used for authentication and configuration.
+
+This section is most relevant for [dbt VS Code extension](/docs/about-dbt-extension) and <Constant name="dbt_platform"/> users who have environment variables configured as part of their workspace setup. If you’re using <Constant name="fusion"/> locally, you can also install the VS Code extension and use its features and actions &mdash; you just may not need to configure these variables unless your setup specifically requires them.
+
+The following table shows the different options and when to use them:
 
 | Location | Affects | Session state | When to use |
 |-----------|----------|-----------|-----------|
