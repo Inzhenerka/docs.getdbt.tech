@@ -14,11 +14,11 @@ dbt supports materializing the table in Iceberg table format in two different wa
 
 You need to create a `catalogs.yml` file to use the integration and apply that integration on the config level.
 
-Refer to [Snowflake configurations](/reference/resource-configs/snowflake-configs) for more information.
+Refer to [Configure catalog integration](#configure-catalog-integration-for-managed-iceberg-tables) for more information.
 
 :::
 
-We recommend using the Iceberg catalog configuration and applying the catalog in the model config for ease of use and to future-proof your code. Using `table_format = 'iceberg'` directly on the model configuration is a legacy approach and limits usage to just Snowflake Horizon as the catalog. Catalog support is available on dbt 1.10+
+We recommend using the Iceberg catalog configuration and applying the catalog in the model config for ease of use and to future-proof your code. Using `table_format = 'iceberg'` directly on the model configuration is a legacy approach and limits usage to just Snowflake Horizon as the catalog. Catalog support is available on dbt 1.10+.
 
 ## Creating Iceberg tables
 
@@ -223,7 +223,7 @@ catalogs:
 2. Add the `catalog_name` config parameter in either the SQL config (inside the .sql model file), property file (model folder), or your `dbt_project.yml`. <br />
 <br />An example of `iceberg_model.sql`:
 
-```yaml
+```sql
 
 {{
     config(
