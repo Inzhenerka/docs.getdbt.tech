@@ -87,7 +87,7 @@ Here are some additional considerations if using the Fusion CLI without the VS C
 
 ## Limitations
 
-If your project is using any of the features listed in the following table, you can use Fusion, but you won't be able to fully migrate all your workloads because you have:
+If your project is using any of the features or external tooling listed in the following table, you can use Fusion, but you won't be able to fully migrate all your workloads because you have:
 - Models that leverage specific materialization features may be unable to run or may be missing some desirable configurations.
 - Tooling that expects dbt Core's exact log output. Fusion's logging system is currently unstable and incomplete.
 - Workflows built around complementary features of the dbt platform (like model-level notifications, Advanced CI, and Semantic Layer) that Fusion does not yet support.
