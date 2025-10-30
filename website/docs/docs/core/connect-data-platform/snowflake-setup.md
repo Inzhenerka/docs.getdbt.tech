@@ -271,6 +271,8 @@ The `client_session_keep_alive` feature is intended to keep Snowflake sessions a
 
 ### platform_detection_timeout_seconds
 
+The Snowflake connector uses the `platform_detection_timeout_seconds` parameter to determine how long it waits to detect the cloud platform for a connection. This parameter is available starting in <Constant name="core"/> v1.10.
+
 The `platform_detection_timeout_seconds` parameter controls how long the Snowflake connector waits when detecting the cloud platform where the connection is being made. Available starting in dbt Core v1.10.
 
 - Set to `0.0` (default) to disable cloud platform detection for faster connections.
