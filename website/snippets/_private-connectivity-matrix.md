@@ -1,9 +1,9 @@
 ## Private connectivity feature matrix
 
-The following feature chart outlines the availability of private connectivity features across <constant name="dbt_platform" /> multi-tenant (MT) and single-tenant (ST) environments. 
-✅ = Available
-❌ = Not currently supported
-\*-\* = Not applicable
+The following feature chart outlines the availability of private connectivity features across <constant name="dbt_platform" /> multi-tenant (MT) and single-tenant (ST) environments. <br /> 
+✅ = Available <br />
+❌ = Not currently supported <br />
+\- = Not applicable <br/>
 
 | Connectivity Type                                 | AWS MT | AWS ST | Azure MT | Azure ST | GCP MT |
 |:--------------------------------------------------|:------:|:------:|:--------:|:--------:|:--------:|
