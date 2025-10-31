@@ -1,6 +1,6 @@
 ## Private connectivity feature matrix
 
-The following feature chart outlines private connectivity feature availability across <constant name="dbt_platform" /> multi-tenant (MT) and single-tenant (ST) environments. 
+The following feature chart outlines the availability of private connectivity features across <constant name="dbt_platform" /> multi-tenant (MT) and single-tenant (ST) environments. 
 ✅ = Available
 ❌ = Not currently supported
 \*-\* = Not applicable
