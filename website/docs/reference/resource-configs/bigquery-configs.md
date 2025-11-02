@@ -394,7 +394,7 @@ By default, labels are not applied to jobs directly. However, you can enable job
         target_name=target.get('target_name'),
     ) -%}
     {%- if node is not none -%}
-      {%- do comment_dict.update(node.config.get("labels")) -%}
+      {%- do comment_dict.update(node.config.get("labels", {})) -%}
     {% else %}
       {%- do comment_dict.update(node_id='internal') -%}
     {%- endif -%}
