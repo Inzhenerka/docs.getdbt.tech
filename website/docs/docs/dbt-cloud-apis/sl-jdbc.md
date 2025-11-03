@@ -125,6 +125,8 @@ select NAME, QUERYABLE_GRANULARITIES from {{
 
 </Expandable>
 
+<VersionBlock lastVersion="1.9">
+
 <Expandable alt_header="Fetch metrics by substring search">
 
 You can filter your metrics to include only those that contain a specific substring (sequence of characters contained within a larger string (text)). Use the `search` argument to specify the substring you want to match.
@@ -136,6 +138,7 @@ select * from {{ semantic_layer.metrics(search='order') }}
 If no substring is provided, the query returns all metrics.
 
 </Expandable> 
+</VersionBlock>
 
 <Expandable alt_header="Paginate metadata calls">
 
