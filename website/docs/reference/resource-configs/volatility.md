@@ -34,19 +34,19 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 
 A `deterministic` function always returns the same output for the same input. Because its results are predictable, the warehouse can safely apply aggressive optimizations and caching.
 
-For example, `concat(first_name, ' ', last_name)` always returns the same full name for the same inputs.
+For example, `substr()` returns the same substring when given the same string and parameters.
 
 ### `stable`
 
 A `stable` function returns the same value throughout a single query execution, but its result may change across different executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords).
 
-For example, the result for `concat(session_user(), ' ', last_name)` stays the same for one query, but might change between users or runs.
+For example, `now()` returns the current timestamp the moment a query starts. Its value is constant within a single query but different across runs.
 
 ### `non-deterministic`
 
 A `non-deterministic` function may return different results for the same inputs. Warehouses should not cache these results or reorder expressions in ways that assume stability.
 
-For example, `concat(random(), ' ', last_name)` returns a different result on each call because `random()` produces a new value every time.
+For example, `first()` may return different rows depending on the query plan or ordering. `random()` returns a random number that varies with each call, even with identical inputs.
 
 ## Related documentation
 
