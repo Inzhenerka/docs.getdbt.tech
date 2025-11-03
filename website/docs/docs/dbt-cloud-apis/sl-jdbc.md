@@ -210,7 +210,7 @@ To query values, the following parameters are available. Your query must have _e
 
 ### Note on time dimensions and `metric_time`
 
-You will notice that in the list of dimensions for all metrics, there is a dimension called `metric_time`. `Metric_time` is a reserved keyword for aggregation time dimensions. For any time-series metric, the `metric_time` keyword should always be available for use in queries. This is a common dimension across *all* metrics in a semantic graph. 
+You will notice that in the list of dimensions for all metrics, there is a dimension called `metric_time`. `Metric_time` is a reserved keyword for any metric's default aggregation time dimension. For any time-series metric, the `metric_time` keyword should always be available for use in queries. This is a common dimension across *all* metrics in a semantic graph. 
 
 You can look at a single metric or hundreds of metrics, and if you group by `metric_time`, it will always give you the correct time series.
 
