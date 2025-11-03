@@ -125,7 +125,7 @@ select NAME, QUERYABLE_GRANULARITIES from {{
 
 </Expandable>
 
-<VersionBlock lastVersion="1.9">
+<VersionBlock lastVersion="1.99">
 
 <Expandable alt_header="Fetch metrics by substring search">
 
