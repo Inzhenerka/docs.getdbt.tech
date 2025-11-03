@@ -17,7 +17,7 @@ Learn how to navigate the state-aware orchestration interface for better visibil
 When you go to your **Account home**, you'll see a chart showing the number of models built and reused, giving you visibility into how state-aware orchestration is optimizing your data builds. This chart helps you to:
 
 - **Track effectiveness of state-aware orchestration** &mdash; See how state-aware orchestration reduces unnecessary model rebuilds by only building models when there are changes to the data or code⁠. This chart provides transparency into how the optimization is working across your dbt implementation.
-⁠- **Analyze build patterns** &mdash; Gain insights into your project's build frequency and identify opportunities for further optimization.
+- **Analyze build patterns** &mdash; Gain insights into your project's build frequency and identify opportunities for further optimization.
 
 You can also view the number of reused models per project in the Accounts home page.
 
