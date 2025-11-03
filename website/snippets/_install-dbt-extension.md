@@ -12,6 +12,7 @@ To use the extension, you must meet the following prerequisites:
 | **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file [configured](/docs/install-dbt-extension#how-to-create-a-dbt-directory-in-root-and-move-config-files) in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
+| (Optional) **Environment variables** | If your dbt project uses environment variables, [configure them](/docs/configure-dbt-extension#set-environment-variables-locally) to use the extension's features. |
 
 ## Installation instructions
 
@@ -26,7 +27,7 @@ Read the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/cat
 In VS Code:
 
 1. Navigate to the **Extensions** tab of your editor and search for `dbt`. Locate the extension from the publisher `dbtLabsInc` or `dbt Labs Inc`. Click **Install**.
-    <Lightbox src="/img/docs/extension/extension-marketplace.png" width="60%" title="Search for the extension"/>
+    <Lightbox src="/img/docs/extension/extension-marketplace.png" width="90%" title="Search for the extension"/>
 2. Open a dbt project in your VS Code environment if you haven't already. Make sure it is added to your current workspace. If you see a **dbt Extension** label in your editor's status bar, then the extension has installed successfully. You can hover over this **dbt Extension** label to see diagnostic information about the extension.
     <Lightbox src="/img/docs/extension/dbt-extension-statusbar.png" width="60%" title="If you see the 'dbt Extension` label, the extension is activated"/>
 3. Once the dbt extension is activated, it will automatically begin downloading the correct dbt Language Server for your operating system.
@@ -34,8 +35,10 @@ In VS Code:
 4. If the dbt Fusion engine is not already installed on your machine, the extension will prompt you to download and install it. Follow the steps shown in the notification to complete the installation.
     <Lightbox src="/img/docs/extension/install-dbt-fusion-engine.png" width="60%" title="Follow the prompt to install the dbt Fusion engine"/>
 5. Run the VS Code extension [upgrade tool](#upgrade-to-fusion) to ensure your dbt project is Fusion ready and help you fix any errors and deprecations.
-6. You're all set up! See [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
-    <Lightbox src="/img/docs/extension/kitchen-sink.png" width="60%" title="Showing lineage and compiled code in the extension"/>
+6. You're all set up! See [getting started](#getting-started) and [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
+    <Lightbox src="/img/docs/extension/kitchen-sink.png" width="90%" title="Showing lineage and compiled code in the extension"/>
+7. (Optional) If you're new to the extension or VS Code/Cursor, you can set your local environment to mirror your <Constant name="dbt_platform" /> environment. 
+8. (Optional) Configure environment variables to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension#configure-environment-variables) page for more information.
 
 ## Getting started
 
@@ -44,7 +47,7 @@ Once the dbt VS Code extension has been installed in your environment, the dbt l
 To get started with the extension:
 1. From the sidebar menu, click the dbt logo to open the menu and expand the **Get started** section. 
 2. Click the **dbt Walkthrough** status bar to view the welcome screen.
-    <Lightbox src="/img/docs/extension/welcome-screen.png" width="60%" title="dbt VS Code extension welcome screen."/>
+    <Lightbox src="/img/docs/extension/welcome-screen.png" width="80%" title="dbt VS Code extension welcome screen."/>
 3. Click through the items to get started with the extension:
     - **Open your dbt project:** Launches file explorer so you can select the dbt project you want to open with Fusion.
     - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date.
@@ -64,7 +67,7 @@ The dbt extension provides a built-in upgrade tool to walk you through the proce
 1. From the VS Code sidebar menu, click the **dbt logo**.
 2. In the resulting pane, open the **Get started** section and click the **Get started** button. 
 
-    <Lightbox src="/img/docs/extension/fusion-onboarding-experience.png" title="The dbt extension help pane and upgrade assistant." width="60%" /> 
+    <Lightbox src="/img/docs/extension/fusion-onboarding-experience.png" width="80%" title="The dbt extension help pane and upgrade assistant." /> 
 
 You can also manually start this process by opening a CLI window and running: 
 
@@ -84,7 +87,7 @@ This will start the upgrade tool and guide you through the Fusion upgrade with a
 - **Ready to run a ‘dbtf compile -static-analysis off’?** (Only runs once the parse passes): Compiles your project without any static analysis, mimicking dbt Core. This compile only renders Jinja into SQL, so <Constant name="fusion" />'s advanced SQL comprehension is temporarily disabled. 
 - **Ready to run a ‘dbtf compile’?**: Compiles your project with full <Constant name="fusion" /> static analysis. It checks that your SQL code is valid in the context of your warehouse's tables and columns. 
 
-    <Lightbox src="/img/docs/extension/fusion-onboarding-complete.png" title="The message received when you have completed upgrading your project to the dbt Fusion engine." width="60%" /> 
+    <Lightbox src="/img/docs/extension/fusion-onboarding-complete.png" width="70%" title="The message received when you have completed upgrading your project to the dbt Fusion engine." /> 
 
 Once the upgrade is completed, you're ready to dive into all the features that the <Constant name="fusion_engine" /> has to offer!
 
@@ -101,10 +104,10 @@ The VS Code extension is free for organizations for up to 15 users. See the [acc
 
 If you do not already have a dbt account, you'll need to get registered. This only takes a minute!
 1. Click the registration prompt in your editor.
-     <Lightbox src="/img/docs/extension/registration-prompt.png" width="60%" title="The extension registration prompt in VS Code."/>
+     <Lightbox src="/img/docs/extension/registration-prompt.png" width="70%" title="The extension registration prompt in VS Code."/>
 2. Accept any prompts to open the link in your browser.
 3. Fill out the registration form, then click **Continue**.
-    <Lightbox src="/img/docs/extension/registration-screen.png" width="60%" title="The extension registration page in the browser."/>
+    <Lightbox src="/img/docs/extension/registration-screen.png" width="70%" title="The extension registration page in the browser."/>
 4. You will receive an email with a verification link. Once you click it, your registration is complete!
 
 ### Accessing your dbt account
@@ -131,7 +134,7 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 2. Click your account name at the bottom of the left-side menu and click **Account settings**.
 3. Under the **Your profile** section, click **VS Code Extension**. 
 4. In the **Set up your credentials** section, click **Download credentials**. This downloads the `dbt_cloud.yml` file. 
-    <Lightbox src="/img/docs/extension/download-registration-2.png" width="60%" title="Download the dbt_cloud.yml file to complete registration."/>
+    <Lightbox src="/img/docs/extension/download-registration-2.png" width="70%" title="Download the dbt_cloud.yml file to complete registration."/>
 5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory. Refer to [Troubleshooting](#troubleshooting) for more information on how to move a `dbt_cloud.yml` file.
 6. To update your registration in VS Code, open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)), then select `dbt: Register dbt extension` to complete the registration.
 
@@ -143,11 +146,15 @@ file during registration. If you do not have a `~/.dbt/dbt_cloud.yml` file downl
 2. Click your account name at the bottom of the left-side menu and click **Account settings**.
 3. Under the **Your profile** section, click **CLI**. 
 4. In the **Configure Cloud authentication** section, click **Download CLI configuration file**. This downloads the `dbt_cloud.yml` file. 
-    <Lightbox src="/img/docs/extension/download-registration.png" width="60%" title="Download the dbt_cloud.yml file to complete registration."/>
+    <Lightbox src="/img/docs/extension/download-registration.png" width="70%" title="Download the dbt_cloud.yml file to complete registration."/>
 5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory. Refer to [Troubleshooting](#troubleshooting) for more information on how to move a `dbt_cloud.yml` file.
 6. To update your registration in VS Code, open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)), then select `dbt: Register dbt extension` to complete the registration.
 
 </Expandable>
+
+## (Optional) Configure environment variables {#configure-environment-variables}
+
+If your dbt project uses environment variables, you can configure them to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension) page for more information.
 
 ## Troubleshooting
 <!-- This anchor is linked from the  VS Code extension. Please do not change it -->
