@@ -338,6 +338,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/watsonx-presto-setup",
                 "docs/core/connect-data-platform/watsonx-spark-setup",
                 "docs/core/connect-data-platform/yellowbrick-setup",
+                "docs/core/connect-data-platform/ydb-setup",
                 "docs/core/connect-data-platform/maxcompute-setup",
               ],
             },
@@ -363,13 +364,14 @@ const sidebarSettings = {
         "docs/cloud/about-cloud-develop-defer",
         {
           type: "category",
-          label: "dbt VS Code Extension",
+          label: "dbt VS Code extension",
           collapsed: true,
           link: { type: "doc", id: "docs/about-dbt-extension" },
           items: [
             "docs/about-dbt-extension",
-            "docs/dbt-extension-features", 
+            "docs/dbt-extension-features",
             "docs/install-dbt-extension",
+            "docs/configure-dbt-extension",
           ],
         },
         {
