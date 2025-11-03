@@ -291,8 +291,11 @@ To define Python UDFs in dbt, refer to the following steps:
     ```
     </File>
 
-    This example generates the following `CREATE` UDF statement in Snowflake:
+    This example generates the following `CREATE` UDF statement:
 
+    <Tabs>
+
+    <TabItem value="Snowflake">
     ```sql
     CREATE OR REPLACE FUNCTION my_function(an_int INT)
       RETURNS INT
@@ -310,6 +313,27 @@ To define Python UDFs in dbt, refer to the following steps:
       return 3
     $$;
     ```
+    </TabItem>
+
+    <TabItem value="BigQuery">
+    ```sql
+    CREATE OR REPLACE FUNCTION my_function(an_int INT64)
+    RETURNS INT64
+    LANGUAGE python
+    OPTIONS(runtime_version="python-3.11", entry_point="main")
+    AS r'''
+      def main(an_int):
+        return an_int + secret_int_a() + secret_int_b()
+
+      def secret_int_a():
+        return 2
+
+      def secret_int_b():
+        return 3
+    ''';
+    ```
+    </TabItem>
+    </Tabs>
 
 3. Reference the UDF in a model and run `dbt compile`. Refer to Steps 3 and 4 of [Defining UDFs in dbt](#defining-udfs-in-dbt) for more information.
 
