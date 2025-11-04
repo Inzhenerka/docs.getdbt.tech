@@ -104,7 +104,7 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    gcloud storage buckets add-iam-policy-binding gs://${GOOGLE_CLOUD_PROJECT}-bucket --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/storage.admin
    ```
 
-### Configure BigQuery in dbt platform
+### Configure BigQuery in the dbt platform
 
 When setting up your BigQuery DataFrames connection in the <Constant name="dbt_platform"/>, make sure you:
 1. Select **BigQuery (Legacy)** as your adapter.
