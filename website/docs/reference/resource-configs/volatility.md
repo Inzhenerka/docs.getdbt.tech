@@ -18,7 +18,9 @@ functions:
 
 ## Definition
 
-The `volatility` config is an optional config that describes how predictable a UDF’s output is. Warehouses use this to decide if results can be cached, reordered, or inlined. Setting the appropriate volatility helps prevent incorrect results when a function isn’t safe to cache or reorder.
+import VolatilityDefinition from '/snippets/_volatility-definition.md';
+
+<VolatilityDefinition />
 
 By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies &mdash; except in Redshift. In Redshift, dbt sets `non-deterministic` (`VOLATILE`) by default if no volatility is specified, because Redshift requires an explicit volatility and `VOLATILE` is the safest assumption.
 
@@ -28,17 +30,23 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 
 ## Supported volatility types
 
-### deterministic
+### `deterministic`
 
-A deterministic function always returns the same output for the same input. Because its results are predictable, the warehouse can safely apply aggressive optimizations and caching.
+A `deterministic` function always returns the same output for the same input. Because its results are predictable, the warehouse can safely apply aggressive optimizations and caching.
 
-### stable
+For example, `substr()` returns the same substring when given the same string and parameters.
 
-A stable function returns the same value throughout a single query execution, but its result may change across different executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords).
+### `stable`
 
-### non-deterministic
+A `stable` function returns the same value throughout a single query execution, but its result may change across different executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords).
 
-A non-deterministic function may return different results for the same inputs. Warehouses should not cache these results or reorder expressions in ways that assume stability.
+For example, `now()` returns the current timestamp the moment a query starts. Its value is constant within a single query but different across runs.
+
+### `non-deterministic`
+
+A `non-deterministic` function may return different results for the same inputs. Warehouses should not cache these results or reorder expressions in ways that assume stability.
+
+For example, `first()` may return different rows depending on the query plan or ordering. `random()` returns a random number that varies with each call, even with identical inputs.
 
 ## Related documentation
 
