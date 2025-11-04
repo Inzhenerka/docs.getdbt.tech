@@ -172,7 +172,7 @@ GROUP BY product_id
 
 DeltaStream supports two types of model definitions for infrastructure components:
 
-1. **Managed Resources (Models)** - Automatically included in the dbt <Term id="dag'>
+1. **Managed Resources (Models)** - Automatically included in the dbt <Term id="dag"/>
 2. **Unmanaged Resources (Sources)** - Created on-demand using specific macros
 
 ### Should you use managed or unmanaged resources?
