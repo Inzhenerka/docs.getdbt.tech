@@ -50,8 +50,9 @@ The following example is a list of all available configurations in the `dbt_proj
   [<global-configs>](/reference/global-configs/project-flags)
 
 [dbt-cloud](/docs/cloud/cloud-cli-installation):
-  [project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli): project_id # Required
-  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli): environment_id # Optional
+  [project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cli): project_id # Required
+  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cli): environment_id # Optional
+  [account-host](/docs/cloud/about-cloud/access-regions-ip-addresses): account-host # Defaults to 'cloud.getdbt.com'; Required if use a different Access URL
 
 [exposures](/docs/build/exposures):
   +[enabled](/reference/resource-configs/enabled): true | false
