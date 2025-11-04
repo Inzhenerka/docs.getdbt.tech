@@ -13,20 +13,70 @@ Claude is an AI assistant from Anthropic with two primary interfaces:
 
 ## Claude Code
 
-You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads. 
+You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads.
 
 ### Setup with local dbt MCP server
 
 Prerequisites:
-- Have an `.env` file with your environment variables 
-- Local dbt-mcp setup
+- Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp)
+- Know your configuration method (OAuth, dbt Core only, or environment variables)
 
-1. Run the following command to add the MCP server to Claude Code:
+#### Using OAuth or environment variables directly (recommended)
+
+The preferred method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
+
+```bash
+# First, add the MCP server
+claude mcp add dbt -- uvx dbt-mcp
+
+# Then edit the configuration to add environment variables
+claude mcp edit dbt
+```
+
+In the configuration editor, add your environment variables based on your use case:
+
+<Tabs>
+<TabItem value="dbt Core only">
+
+For <Constant name="core" /> only (no dbt platform):
+```json
+{
+  "command": "uvx",
+  "args": ["dbt-mcp"],
+  "env": {
+    "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
+    "DBT_PATH": "/path/to/your/dbt/executable"
+  }
+}
+```
+
+</TabItem>
+<TabItem value="OAuth with dbt platform">
+
+For OAuth authentication (requires static subdomain):
+```json
+{
+  "command": "uvx",
+  "args": ["dbt-mcp"],
+  "env": {
+    "DBT_HOST": "https://your-subdomain.us1.dbt.com",
+    "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
+    "DBT_PATH": "/path/to/your/dbt/executable"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+#### Using an `.env` file
+
+If you prefer to manage environment variables in a separate file:
 
 ```bash
 claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
-Remember to update the file path. 
+Replace `<path-to-.env-file>` with the full path to your `.env` file. 
 
 ### Claude Code scopes
 
@@ -46,34 +96,88 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 
 ## Claude for desktop
 
-1. Go to the Claude settings. Click on the Claude menu in your system’s menu bar (not the settings within the Claude window itself) and select **Settings…**
+1. Go to the Claude settings. Click on the Claude menu in your system's menu bar (not the settings within the Claude window itself) and select **Settings…**
 2. In the Settings window, navigate to the **Developer** tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
 3. Click the **Edit Config** button and open the configuration file with a text editor.
-4. Replace the contents of the configuration file with [your correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server):
+4. Add your server configuration based on your use case. Choose the [correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server) from the options below:
 
-    For local MCP:
+    <Tabs>
+
+    <TabItem value="Local MCP with OAuth (Recommended)">
+
+    #### Local MCP with dbt platform authentication <Lifecycle status="managed, managed_plus" />
+
+    **Best for:** Users who want seamless OAuth authentication with the <Constant name="dbt_platform" />
+
+    <MCPExample />
+
+    </TabItem>
+
+    <TabItem value="Local MCP (dbt Core only)">
+
+    **Best for:** Users who only want to use dbt CLI commands with <Constant name="Core" />
+
     ```json 
     {
       "mcpServers": {
-        "dbt-mcp": {
-         "command": "uvx",
-         "args": [
-           "--env-file",
-            "<environment_variable_file.env",
-            "dbt-mcp"
-          ]
+        "dbt": {
+          "command": "uvx",
+          "args": ["dbt-mcp"],
+          "env": {
+            "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
+            "DBT_PATH": "/path/to/your/dbt/executable"
+          }
         }
       }
     }
     ```
 
-    #### Local MCP with dbt platform authentication <Lifecycle status="managed, managed_plus" />
+    Finding your paths:
+    - **DBT_PROJECT_DIR**: Full path to the folder containing your `dbt_project.yml` file
+    - **DBT_PATH**: Find by running `which dbt` in Terminal (macOS/Linux) or `where dbt` (Windows) in Powershell
 
-    Additionally, you can configure the local MCP server to authenticate against your dbt platform environment using OAuth. Substitute the previous local MCP JSON with one of the following:
+    </TabItem>
 
-    <MCPExample />
+    <TabItem value="Local MCP (Advanced)">
 
-5. Save the file. Upon a successful restart of Claude Desktop, you’ll see an MCP server indicator in the bottom-right corner of the conversation input box.
+    **Best for:** Advanced users who need custom environment variables
+
+    Using the `env` field (recommended):
+    ```json 
+    {
+      "mcpServers": {
+        "dbt": {
+          "command": "uvx",
+          "args": ["dbt-mcp"],
+          "env": {
+            "DBT_HOST": "cloud.getdbt.com",
+            "DBT_TOKEN": "your-token-here",
+            "DBT_PROD_ENV_ID": "12345",
+            "DBT_PROJECT_DIR": "/path/to/project",
+            "DBT_PATH": "/path/to/dbt"
+          }
+        }
+      }
+    }
+    ```
+
+    Using an .env file (alternative):
+    ```json 
+    {
+      "mcpServers": {
+        "dbt": {
+          "command": "uvx",
+          "args": ["--env-file", "/path/to/.env", "dbt-mcp"]
+        }
+      }
+    }
+    ```
+
+    </TabItem>
+
+    </Tabs>
+
+5. Save the file. Upon a successful restart of Claude Desktop, you'll see an MCP server indicator in the bottom-right corner of the conversation input box.
 
 For debugging, you can find the Claude desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
 

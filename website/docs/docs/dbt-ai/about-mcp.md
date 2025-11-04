@@ -24,10 +24,32 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 ## Server Access
 
-You can install dbt MCP locally or remotely:
+The dbt MCP server can be installed in two ways: locally or remotely. Choose the setup that best fits your workflow:
 
-- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp) 
-- [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
+### Local MCP server
+
+**Best for:** Full development workflow including build and manage.
+
+The [local MCP server](/docs/dbt-ai/setup-local-mcp) runs on your machine and requires installing `uvx` (which installs dbt-mcp locally). This option provides:
+- Full access to dbt CLI commands (`dbt run`, `dbt build`, `dbt test`, and more)
+- Support for <Constant name="core" />, <Constant name="cloud_cli" />, and <Constant name="fusion_engine" />
+- Ability to work with local dbt projects without requiring a <Constant name="dbt_platform" /> account
+- Optional integration with <Constant name="dbt_platform" /> APIs for metadata discovery and Semantic Layer access
+
+:::tip Configuring local MCP
+To disable tools that call remote APIs (Discovery API, Semantic Layer API) if you're operating exclusively within an IDE or working with <Constant name="core" /> only. You can disable these tools using environment variables like `DISABLE_DISCOVERY=true` and `DISABLE_SEMANTIC_LAYER=true`.
+:::
+
+### Remote MCP server
+
+**Best for:** Consumption and management use cases without local setup.
+
+The [remote MCP server](/docs/dbt-ai/setup-remote-mcp) connects to the <Constant name="dbt_platform" /> via HTTP and requires no local installation. This option is useful when:
+- You don't want to or are restricted from installing additional software on your system.
+- Your use case is primarily consumption-based (querying metrics, exploring metadata, viewing lineage).
+- You want to manage dbt platform resources (trigger jobs, view runs, access artifacts).
+
+
 
 ## Available Tools
 
@@ -141,7 +163,30 @@ We have also created integration guides for the following clients:
 
 ## Troubleshooting
 
-- Some MCP clients may be unable to find `uvx` from the JSON config. This will result in error messages like `Could not connect to MCP server dbt-mcp`. If this happens, try finding the full path to `uvx` with `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
+### Local MCP setup issues
+
+#### Can't find `uvx` executable
+
+Some MCP clients may be unable to find `uvx` from the JSON config. This will result in error messages like `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT`, or similar.
+
+**Solution:** Locate the full path to `uvx` and use it in your configuration:
+
+- **macOS/Linux:** Run `which uvx` in your Terminal.
+- **Windows:** Run `where uvx` in CMD or PowerShell.
+
+Then update your JSON configuration to use the full path:
+```json
+{
+  "mcpServers": {
+    "dbt": {
+      "command": "/full/path/to/uvx", # For example, on macOS with Homebrew: "command": "/opt/homebrew/bin/uvx"
+      "args": ["dbt-mcp"],
+      "env": { ... }
+    }
+  }
+}
+```
+
 
 ## Resources
 - For more information, refer to our blog on [Introducing the dbt MCP Server](/blog/introducing-dbt-mcp-server#getting-started).

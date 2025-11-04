@@ -7,11 +7,97 @@ id: "setup-local-mcp"
 
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-[The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine. Set up the local dbt MCP server with the following directions: 
+[The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine and supports <Constant name="core" />, <Constant name="fusion_engine" />, and <Constant name="cloud_cli" />. You can use it with or without a <Constant name="dbt_platform" /> account.
+
+## Prerequisites
 
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to run `dbt-mcp` and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment.
+2. Have a local dbt project (if you want to use dbt CLI commands)
 
-2. Create an `.env` file to set your environment variables. You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
+## Setup options
+
+Choose the setup method that best fits your workflow:
+
+### OAuth authentication with dbt platform (recommended) <Lifecycle status="managed, managed_plus" />
+
+This method uses OAuth to authenticate with your <Constant name="dbt_platform" /> account. It's the simplest setup and doesn't require managing tokens or environment variables manually.
+
+:::info Static subdomains required
+
+Only accounts with static subdomains (for example, abc123.us1.dbt.com) can use OAuth with MCP servers. All accounts are in the process of being migrated to static subdomains by December 2025. Contact support for more information.
+
+:::
+
+#### Configuration options
+
+<MCPExample />
+
+Once configured, your session connects to the dbt platform account, starts the OAuth authentication workflow, and then opens your account where you can select the project you want to reference.
+
+<Lightbox src="/img/mcp/select-project.png" width="60%" title="Select your dbt platform project"/>
+
+After completing OAuth setup, skip to [step 3 (Test your configuration)](#3-optional-test-your-configuration).
+
+### CLI only (no dbt platform)
+
+If you're using the <Constant name="core" /> or <Constant name="fusion" /> CLI and don't need access to <Constant name="dbt_platform" /> features (Discovery API, Semantic Layer, Administrative API), you can set up local MCP with just your dbt project information.
+
+Add this configuration to your MCP client (refer to the specific [integration guides](#4-set-up-your-mcp-client) for exact file locations):
+
+```json
+{
+  "mcpServers": {
+    "dbt": {
+      "command": "uvx",
+      "args": ["dbt-mcp"],
+      "env": {
+        "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
+        "DBT_PATH": "/path/to/your/dbt/executable"
+      }
+    }
+  }
+}
+```
+
+#### Locating your paths
+
+<Tabs>
+<TabItem value="macOS/Linux">
+
+1. **DBT_PROJECT_DIR**: The full path to your dbt project folder
+   - Example: `/Users/yourname/dbt-projects/my_project`
+   - This is the folder containing your `dbt_project.yml` file
+
+2. **DBT_PATH**: Find your dbt executable path by running in terminal:
+   ```bash
+   which dbt
+   ```
+   - Example output: `/opt/homebrew/bin/dbt`
+   - Use this exact path in your configuration
+
+</TabItem>
+<TabItem value="Windows">
+
+1. **DBT_PROJECT_DIR**: The full path to your dbt project folder
+   - Example: `C:\Users\yourname\dbt-projects\my_project`
+   - This is the folder containing your `dbt_project.yml` file
+   - Use forward slashes or escaped backslashes: `C:/Users/yourname/dbt-projects/my_project`
+
+2. **DBT_PATH**: Find your dbt executable path by running in Command Prompt or PowerShell:
+   ```bash
+   where dbt
+   ```
+   - Example output: `C:\Python39\Scripts\dbt.exe`
+   - Use forward slashes or escaped backslashes: `C:/Python39/Scripts/dbt.exe`
+
+</TabItem>
+</Tabs>
+
+After completing this setup, skip to [step 3 (Test your configuration)](#3-optional-test-your-configuration).
+
+### Advanced: Environment variable configuration
+
+If you need to configure multiple environment variables or prefer to manage them separately, you can use environment variables. You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
     <Tabs>
 
     <TabItem value="Sample file">
@@ -34,13 +120,31 @@ import MCPExample from '/snippets/_mcp-config-files.md';
     <TabItem value="API and SQL tool settings">
       | Environment Variable | Required | Description |
       | --- | --- | --- |
-      | DBT_HOST | Required | Your dbt platform [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). If you're using Multi-cell, exclude the `ACCOUNT_PREFIX` from the hostname. The default is `cloud.getdbt.com`.  |
-      | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell `ACCOUNT_PREFIX`. If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses).  |
+      | DBT_HOST | Required | Your dbt platform [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). **Important:** For Multi-cell accounts, exclude the account prefix from the hostname. The default is `cloud.getdbt.com`. |
+      | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell account prefix here (not in DBT_HOST). If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](/docs/cloud/about-cloud/access-regions-ip-addresses). |
       | DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/>**Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
-      | DBT_ACCOUNT_ID | Required for Administrative API tools | Your [dbt account ID](https://docs.getdbt.com/faqs/Accounts/find-user-id) |
-      | DBT_PROD_ENV_ID | Required | Your dbt Cloud production environment ID |
-      | DBT_DEV_ENV_ID | Optional | Your dbt Cloud development environment ID |
-      | DBT_USER_ID | Optional | Your dbt Cloud user ID ([docs](https://docs.getdbt.com/faqs/Accounts/find-user-id)) |
+      | DBT_ACCOUNT_ID | Required for Administrative API tools | Your [dbt account ID](/faqs/Accounts/find-user-id) |
+      | DBT_PROD_ENV_ID | Required | Your dbt platform production environment ID |
+      | DBT_DEV_ENV_ID | Optional | Your dbt platform development environment ID |
+      | DBT_USER_ID | Optional | Your dbt platform user ID ([docs](/faqs/Accounts/find-user-id)) |
+      
+      **Multi-cell configuration examples:**
+      
+      ✅ **Correct configuration:**
+      ```bash
+      DBT_HOST=us1.dbt.com
+      MULTICELL_ACCOUNT_PREFIX=abc123
+      ```
+      
+      ❌ **Incorrect configuration (common mistake):**
+      ```bash
+      DBT_HOST=abc123.us1.dbt.com  # Don't include prefix in host!
+      # MULTICELL_ACCOUNT_PREFIX not set
+      ```
+      
+      If your full URL is `abc123.us1.dbt.com`, separate it as:
+      - `DBT_HOST=us1.dbt.com`
+      - `MULTICELL_ACCOUNT_PREFIX=abc123`
         </TabItem>
 
     <TabItem value="dbt CLI settings">
@@ -48,14 +152,40 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
       | Environment Variable | Required | Description | Example |
       | --- | --- | --- | --- |
-      | DBT_PROJECT_DIR | Required | The path to where the repository of your dbt project is hosted locally.  | /Users/myname/reponame |
-      | DBT_PATH | Required | The path to your dbt executable (Core/Fusion/Cloud CLI). You can find your dbt executable by running `which dbt` | /opt/homebrew/bin/dbt |
+      | DBT_PROJECT_DIR | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
+      | DBT_PATH | Required | The full path to your dbt executable (Core/Fusion/Cloud CLI). See below for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
       | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
 
-      You can set any environment variable supported by your dbt executable, like [for the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
+      **Locating your `DBT_PATH`:**
+      
+      <Tabs>
+      <TabItem value="macOS/Linux">
+      
+      Run this command in your terminal:
+      ```bash
+      which dbt
+      ```
+      Example output: `/opt/homebrew/bin/dbt`
+      
+      </TabItem>
+      <TabItem value="Windows">
+      
+      Run this command in Command Prompt or PowerShell:
+      ```bash
+      where dbt
+      ```
+      Example output: `C:\Python39\Scripts\dbt.exe`
+      
+      **Note:** Use forward slashes in your configuration: `C:/Python39/Scripts/dbt.exe`
+      
+      </TabItem>
+      </Tabs>
 
-      `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command.
-      You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
+      **Additional notes:**
+      
+      - You can set any environment variable supported by your dbt executable, like [the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). 
+      - dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
+      - `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command. You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
     </TabItem>
 
     <TabItem value="Disabling tools">
@@ -74,53 +204,66 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
     </Tabs>
 
-3. (Optional) Test your configuration:
+#### Using environment variables in your MCP client configuration
 
-    In a terminal, run the following command to test your setup:
-    ```bash
-    uvx --env-file <path-to-.env-file> dbt-mcp
-    ```
+The preferred way to configure your MCP client is to use the `env` field in your JSON configuration file. This keeps all configuration in one file:
 
-    If there are no errors, `uv` and the `.env` file are set up correctly and you can move on to the next step.
-
-4. Set up your MCP client:
-
-    After creating your `.env` file, you can move on to our guides on connecting dbt-mcp to tools like Claude Desktop or Cursor or to creating a configuration file. This is dependent on what tools you want to integrate with.
-
-
-    #### Example configuration
-    For some tools,  you may need an additional configuration file to upload to connect to dbt-mcp.
-    Here is a sample configuration JSON file that you can use to connect to the MCP tools. Be sure to replace the sections within `<>`:
-
-    ```json
-    {
-      "mcpServers": {
-        "dbt-mcp": {
-          "command": "uvx",
-          "args": [
-            "--env-file",
-            "<path-to-.env-file>",
-            "dbt-mcp"
-          ]
-        }
+```json
+{
+  "mcpServers": {
+    "dbt": {
+      "command": "uvx",
+      "args": ["dbt-mcp"],
+      "env": {
+        "DBT_HOST": "cloud.getdbt.com",
+        "DBT_TOKEN": "your-token-here",
+        "DBT_PROD_ENV_ID": "12345",
+        "DBT_PROJECT_DIR": "/path/to/project",
+        "DBT_PATH": "/path/to/dbt"
       }
     }
-    ```
+  }
+}
+```
 
-    `<path-to-.env-file>` is where you saved the `.env` file from the setup step.
+#### Using an `.env` file
 
-## dbt platform authentication
+If you prefer to manage environment variables in a separate file, you can create an `.env` file and reference it:
 
-The local MCP server integrates with your existing cloud-based dbt platform OAuth integration with a simple configuration file in the client. Reference the following sample configurations (configs may vary depending on the client):
+```json
+{
+  "mcpServers": {
+    "dbt": {
+      "command": "uvx",
+      "args": ["--env-file", "/path/to/.env", "dbt-mcp"]
+    }
+  }
+}
+```
 
-:::info Static subdomains
+However, this approach requires managing two files instead of one.
 
-Only accounts with static subdomains (for example, abc123.us1.dbt.com) can use OAuth with MCP servers. All accounts are in the process of being migrated to static subdomains by December 2025. Please contact support for more information.
+## 3. (Optional) Test your configuration
 
-:::
+In your command line tool, run the following to test your setup:
 
-<MCPExample />
+**If using the env field in JSON:**
+```bash
+export DBT_PROJECT_DIR=/path/to/project
+export DBT_PATH=/path/to/dbt
+uvx dbt-mcp
+```
 
-Once configured, your session connects to the dbt platform account, starts the OAuth authentication workflow, and then opens your account where you can select the project you want to reference.
+**If using an .env file:**
+```bash
+uvx --env-file <path-to-.env-file> dbt-mcp
+```
 
-<Lightbox src="/img/mcp/select-project.png" width="60%" title="Select your dbt platform project"/>
+If there are no errors, your configuration is correct.
+
+## 4. Set up your MCP client
+
+After completing your configuration, follow the specific integration guide for your chosen tool:
+- [Claude](/docs/dbt-ai/integrate-mcp-claude)
+- [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
+- [VS Code](/docs/dbt-ai/integrate-mcp-vscode)

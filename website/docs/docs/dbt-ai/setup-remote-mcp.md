@@ -5,11 +5,25 @@ description: "Learn how to set up the remote dbt-mcp server"
 id: "setup-remote-mcp"
 ---
 
-The remote server uses an HTTP connection and makes calls to dbt-mcp hosted on the cloud-based dbt platform.
+The remote MCP server uses an HTTP connection and makes calls to dbt-mcp hosted on the cloud-based <Constant name="dbt_platform" /> This setup requires no local installation and is ideal for consumption and management use cases.
+
+## When to use remote MCP
+
+The remote MCP server is the ideal choice when:
+- You don't want to or are restricted from installing additional software (`uvx`, `dbt-mcp`) on your system.
+- Your primary use case is **consumption-based**: querying metrics, exploring metadata, viewing lineage.
+- You want to **manage dbt platform resources**: trigger jobs, view runs, access artifacts.
+- You need access to Semantic Layer and Discovery APIs without maintaining a local dbt project.
+
+:::info Note on dbt CLI commands
+Remote MCP does not support dbt CLI commands (`dbt run`, `dbt build`, `dbt test`, and more). If you need to execute dbt CLI commands, use the [local MCP server](/docs/dbt-ai/setup-local-mcp) instead.
+:::
 
 import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
 
 <MCPCreditUsage />
+
+## Setup instructions
 
 1. Ensure that you have [AI features](https://docs.getdbt.com/docs/cloud/enable-dbt-copilot) turned on.
 2. Obtain the following information from dbt platform:
