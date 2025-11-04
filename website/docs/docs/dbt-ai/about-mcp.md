@@ -28,7 +28,7 @@ The dbt MCP server can be installed in two ways: locally or remotely. Choose the
 
 ### Local MCP server
 
-**Best for:** Full development workflow including build and manage.
+The local MCP server from dbt offers full development workflows, including build and manage.
 
 The [local MCP server](/docs/dbt-ai/setup-local-mcp) runs on your machine and requires installing `uvx` (which installs dbt-mcp locally). This option provides:
 - Full access to dbt CLI commands (`dbt run`, `dbt build`, `dbt test`, and more)
@@ -42,7 +42,7 @@ To disable tools that call remote APIs (Discovery API, Semantic Layer API) if yo
 
 ### Remote MCP server
 
-**Best for:** Consumption and management use cases without local setup.
+The remote MCP server from dbt offers both consumption and management use cases without local setup.
 
 The [remote MCP server](/docs/dbt-ai/setup-remote-mcp) connects to the <Constant name="dbt_platform" /> via HTTP and requires no local installation. This option is useful when:
 - You don't want to or are restricted from installing additional software on your system.
