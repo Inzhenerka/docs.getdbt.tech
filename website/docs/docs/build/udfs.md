@@ -121,7 +121,7 @@ To define UDFs in dbt, refer to the following steps:
 
     <TabItem value="Redshift">
     ```sql
-    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int(a_string VARCHAR)
+    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string VARCHAR)
     RETURNS INTEGER
     IMMUTABLE
     AS $$
