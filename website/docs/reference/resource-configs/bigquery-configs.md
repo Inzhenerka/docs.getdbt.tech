@@ -375,7 +375,7 @@ models:
 
 <Lightbox src="/img/docs/building-a-dbt-project/building-models/73eaa8a-Screen_Shot_2020-01-20_at_12.12.54_PM.png" title="Viewing labels in the BigQuery console"/>
 
-#### Applying labels to jobs
+### Applying labels to jobs
 
 While the `labels` configuration applies labels to the tables and views created by dbt, you can also apply labels to the BigQuery _jobs_ that dbt runs. Job labels are useful for tracking query costs, monitoring job performance, and organizing your BigQuery job history by dbt metadata.
 
