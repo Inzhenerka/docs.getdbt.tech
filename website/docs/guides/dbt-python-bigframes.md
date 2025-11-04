@@ -117,7 +117,7 @@ This is required so that BigFrames jobs execute correctly.
 
 Refer [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquery) for more info on how to connect to BigQuery in <Constant name="dbt_platform"/>.
 
-<Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="50%" title="Configure BigQuery in dbt platform"/>
+<Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="30%" title="Configure BigQuery in dbt platform"/>
 
 ## Create, configure, and execute your Python models
 
