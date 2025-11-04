@@ -7,7 +7,7 @@ meta:
   github_repo: 'deltastreaminc/dbt-deltastream'
   pypi_package: 'dbt-deltastream'
   min_core_version: 'v1.10.0'
-  cloud_support: Not Supported
+  cloud_support: Not supported
   min_supported_version: '?'
   slack_channel_name: '#db-deltastream'
   platform_name: 'DeltaStream'
@@ -32,13 +32,13 @@ to your `profiles.yml` file. A DeltaStream profile conforms to the following syn
     <target-name>:
       type: deltastream
       
-      # Required Parameters
+      # Required parameters
       token: [ your-api-token ] # Authentication token for DeltaStream API
       database: [ your-database ] # Target database name
       schema: [ your-schema ] # Target schema name
       organization_id: [ your-org-id ] # Organization identifier
       
-      # Optional Parameters
+      # Optional parameters
       url: [ https://api.deltastream.io/v2 ] # DeltaStream API URL, defaults to https://api.deltastream.io/v2
       timezone: [ UTC ] # Timezone for operations, defaults to UTC
       session_id: [ <empty string> ] # Custom session identifier for debugging purpose
@@ -49,7 +49,7 @@ to your `profiles.yml` file. A DeltaStream profile conforms to the following syn
 
 </File>
 
-### Description of DeltaStream Profile Fields
+### Description of DeltaStream profile fields
 
 | Field             | Required | Description                                                                                                                                                                                                                                                                                                                                                      |
 |-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -65,7 +65,7 @@ to your `profiles.yml` file. A DeltaStream profile conforms to the following syn
 | `store`           | ❌        | Target default store name. Stores represent external system connections (Kafka, PostgreSQL, etc.) in DeltaStream.                                                                                                                                                                                                                                            |
 | `compute_pool`    | ❌        | Compute pool name to be used for models that require computational resources. If not specified, uses the default compute pool.                                                                                                                                                                                                                                |
 
-## Security Best Practices
+## Security best practices
 
 When configuring your project for production, it is strongly recommended to use environment variables to store sensitive information such as the authentication token:
 
@@ -85,11 +85,11 @@ your_profile_name:
 
 </File>
 
-## Troubleshooting Connections
+## Troubleshooting connections
 
 If you encounter issues connecting to DeltaStream from dbt, verify the following:
 
-### Authentication Issues
+### Authentication issues
 
 - Ensure your API token is valid and has not expired
 - Verify the token has appropriate permissions for the target organization
