@@ -155,7 +155,7 @@ If you need to configure multiple environment variables or prefer to manage them
       | DBT_PROJECT_DIR | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
       | DBT_PATH | Required | The full path to your dbt executable (Core/Fusion/Cloud CLI). See below for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
       | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
-
+    </TabItem>
       **Locating your `DBT_PATH`:**
       
       <Tabs>
