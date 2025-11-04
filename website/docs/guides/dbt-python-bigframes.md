@@ -106,18 +106,20 @@ The dbt BigFrames submission method supports both service account and OAuth cred
 
 ### Configure BigQuery in the dbt platform
 
-When setting up your BigQuery DataFrames connection in the <Constant name="dbt_platform"/>, make sure you:
-1. Select **BigQuery (Legacy)** as your adapter.
-2. Under **Optional Settings**, enter values for the following fields:
+To set up your BigQuery DataFrames connection in the <Constant name="dbt_platform"/>, refer to the following steps:
+1. Go to **Account settings** > **Connections**. Click **New connection**. 
+2. In the **Type** section, select **BigQuery**.
+3. Select **BigQuery (Legacy)** as your adapter.
+2. Under **Optional settings**, enter values for the following fields:
     - **Google Cloud Storage Bucket** (for example: `dbt_name_bucket`)
     - **Dataproc Region** (for example: `us-central1`)
 3. Click **Save**.
  
 This is required so that BigFrames jobs execute correctly.
 
-Refer [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquery) for more info on how to connect to BigQuery in <Constant name="dbt_platform"/>.
+Refer to [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquery) for more info on how to connect to BigQuery in the <Constant name="dbt_platform"/>.
 
-<Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="30%" title="Configure BigQuery in dbt platform"/>
+<Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="30%" title="Configure BigQuery in the dbt platform"/>
 
 ## Create, configure, and execute your Python models
 
