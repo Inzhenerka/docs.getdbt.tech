@@ -97,7 +97,7 @@ To define UDFs in dbt, refer to the following steps:
 	      type: scalar # default value
     ```
 
-    If not explicitly specified, the `type` property defaults to `scalar`.
+    If not explicitly specified, the `type` config defaults to `scalar`.
 
     </Expandable>
     -->
