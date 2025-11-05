@@ -49,7 +49,7 @@ To define UDFs in dbt, refer to the following steps:
 
     ```sql
 
-    REGEXP_INSTR(a_string, r'^[0-9]+$')
+    REGEXP_INSTR(a_string, '^[0-9]+$')
     ```
 
     </File>
