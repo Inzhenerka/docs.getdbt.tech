@@ -9,6 +9,7 @@ import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
 import { getSpotlightMember } from '../utils/get-spotlight-member';
 import Link from '@docusaurus/Link';
 import BlogPostCard from '@site/src/components/blogPostCard';
+import StructuredData from '@site/src/components/StructuredData';
 
 const bannerAnimation = require('@site/static/img/banner-white.svg');
 
@@ -66,7 +67,7 @@ function Home() {
     spotlightSection = spotlightMember;
   }
 
-  // note: we've removed the in-hero search input so that we can rely on navbar DocSearch (⌘K) only. 
+  // note: we've removed the in-hero search input so that we can rely on navbar DocSearch (⌘K) only.
 
   return (
     <>
@@ -76,6 +77,13 @@ function Home() {
           content="ex1EMwuCGU33-nOpoOajLXEpMPgUYK5exBWePCu-0l0"
         />
       </Head>
+      <StructuredData
+        type="WebPage"
+        title="The dbt Developer Hub"
+        description="Find everything you need to build, document, and collaborate with dbt — faster."
+        url={siteConfig.url}
+        tags={['dbt', 'documentation', 'developer hub', 'data transformation']}
+      />
       <Layout permalink="/">
         <div
           className="container container--fluid home"
