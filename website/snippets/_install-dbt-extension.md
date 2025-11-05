@@ -130,51 +130,35 @@ Now that you have activated your dbt developer account, you can access features 
 ### Register with an existing dbt account 
 <!-- This anchor is linked from the VS Code registration page. Please do not change it -->
 
-During the VS Code extension registration workflow it can detect if you already have a <Constant name="dbt_platform" /> account or previously created one in the past (no need to create a new one!). If so, you can use the same account to connect the extension using your `dbt_cloud.yml` file, which securely stores your <Constant name="dbt_platform"/> account credentials for authentication.
-
-If you've never created a <Constant name="dbt_platform"/> account, skip this section and follow the earlier [New user registration](#new-user-registration) steps.
+During the VS Code extension registration workflow it can detect if you already have a <Constant name="dbt_platform" /> account or previously created one in the past (no need to create a new one!). 
+- If you already have a <Constant name="dbt_platform" /> account, you will need to use the same account to connect the extension. 
+- If you've never created a <Constant name="dbt_platform"/> account, skip this section and follow the earlier [New user registration](#new-user-registration) steps.
+- The extension will use the `dbt_cloud.yml` file from your <Constant name="dbt_platform"/> account, which securely stores your <Constant name="dbt_platform"/> account credentials for authentication. You can download this file from your <Constant name="dbt_platform"/>'s **Account settings** page.
 
 #### How the registration works
-- If a `dbt_cloud.yml` file already exists in your `~/.dbt/` folder, the extension automatically detects in the registration flow and uses it.
-- If you don’t have the file yet, you’ll need to download it from the <Constant name="dbt_platform"/>. There are two ways to download it, depending on whether your account has [<Constant name="fusion_engine" /> enabled](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine). By enabled, we mean that your account has been upgraded to use the <Constant name="fusion_engine" />. If you're not sure, check your **Environment settings** in the <Constant name="dbt_platform"/>.
+- If a `dbt_cloud.yml` file already exists in your `~/.dbt/` or `C:\Users\[username]\.dbt` folder, the extension automatically detects it in the registration flow and uses it.
+- If you don’t have the file yet, you’ll need to download it from the <Constant name="dbt_platform"/>.
 
-<Tabs>
-<TabItem value="Accounts with Fusion enabled">
+#### Download the `dbt_cloud.yml` file
 
-If you already have a <Constant name="fusion_engine" /> enabled account, follow these steps:
+Follow these steps to download the `dbt_cloud.yml` file:
 
 1. Log in to your dbt Cloud account and click your account name at the bottom left. 
    - If you can't login, follow the [accessing your dbt account](#accessing-your-dbt-account) steps.
 2. Select **Account settings**.
 3. Under **Your profile**, click **VS Code Extension**.
 4. In the **Set up your credentials** section, click **Download credential**s to download the `dbt_cloud.yml` file.
+5. Download the `dbt_cloud.yml` file to complete registration.
 <Lightbox src="/img/docs/extension/download-registration-2.png" width="70%" title="Download the dbt_cloud.yml file to complete registration."/>
-5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory. For detailed instructions on how to create a `.dbt` directory and move the file, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
-6. Then go back to VS Code and open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)).  
-7. Run `dbt: Register dbt extension` to complete registration.
-8. If you run into any issues, reach out to [support](/docs/dbt-support) &mdash; we're here to help!
-</TabItem>
 
-<TabItem value="Accounts without Fusion enabled">
+6. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` or `C:\Users\[username]\.dbt` directory. For detailed instructions on how to create a `.dbt` directory and move the file, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
+7. Then go back to VS Code and open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)).  
+8. Run `dbt: Register dbt extension` to complete registration.
+9. If you run into any issues, reach out to [support](/docs/dbt-support) &mdash; we're here to help!
 
-If you don't have <Constant name="fusion_engine" /> enabled in your account, follow these steps:
+## Configure environment variables {#configure-environment-variables}
 
-1. Log in to your dbt Cloud account and click your account name at the bottom left. 
-   - If you can't login, follow the [accessing your dbt account](#accessing-your-dbt-account) steps.
-2. Select **Account settings**.
-3. Under **Your profile**, click **CLI**.
-4. In the **Configure Cloud authentication** section, click **Download CLI configuration file** to download the `dbt_cloud.yml` file.
-<Lightbox src="/img/docs/extension/download-registration.png" width="70%" title="Download the dbt_cloud.yml file to complete registration."/>
-5. Move the downloaded `dbt_cloud.yml` file to your `~/.dbt/` directory. For detailed instructions on how to create a `.dbt` directory and move the file, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
-6. Then go back to VS Code and open the command palette (`ctrl+shift+P` (Windows/Linux) or `cmd+shift+p` (macOS)). 
-7. Run `dbt: Register dbt extension` to complete registration.
-8. If you run into any issues, reach out to [support](/docs/dbt-support) &mdash; we're here to help!
-
-</TabItem> 
-</Tabs>
-
-
-## (Optional) Configure environment variables {#configure-environment-variables}
+_This section is optional and only applies if you haven't already configured environment variables locally._
 
 If your dbt project uses environment variables, you can configure them to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension) page for more information.
 
