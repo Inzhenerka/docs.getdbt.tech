@@ -176,9 +176,9 @@ models:
 ## Incremental models
 _Available in versions 1.9 or higher_
 
-:::caution Breaking Change in v1.11.0
+:::caution Breaking change in v1.11.0
 
-**dbt-databricks v1.11.0 requires Databricks Runtime 12.2 LTS or higher** for incremental models.
+<Expandable alt_header="dbt-databricks v1.11.0 requires Databricks Runtime 12.2 LTS or higher** for incremental models"/>
 
 This version introduces a fix for column order mismatches in incremental models by using Databricks' `INSERT BY NAME` syntax (available since DBR 12.2). This prevents data corruption that could occur when column order changed in models using `on_schema_change: sync_all_columns`.
 
@@ -190,6 +190,7 @@ This breaking change affects all incremental strategies: `append`, `insert_overw
 
 For more details on v1.11.0 changes, see the [dbt-databricks v1.11.0 changelog](https://github.com/databricks/dbt-databricks/blob/main/CHANGELOG.md).
 
+</Expandable>
 :::
 
 dbt-databricks plugin leans heavily on the [`incremental_strategy` config](/docs/build/incremental-strategy). This config tells the incremental materialization how to build models in runs beyond their first. It can be set to one of six values:
