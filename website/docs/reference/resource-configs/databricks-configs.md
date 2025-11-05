@@ -178,7 +178,7 @@ _Available in versions 1.9 or higher_
 
 :::caution Breaking change in v1.11.0
 
-<Expandable alt_header='<span style="color:black">dbt-databricks v1.11.0 requires Databricks Runtime 12.2 LTS or higher for incremental models</span>'>
+<DetailsToggle alt_header="dbt-databricks v1.11.0 requires Databricks Runtime 12.2 LTS or higher for incremental models</span>">
 
 This version introduces a fix for column order mismatches in incremental models by using Databricks' `INSERT BY NAME` syntax (available since DBR 12.2). This prevents data corruption that could occur when column order changed in models using `on_schema_change: sync_all_columns`.
 
@@ -190,7 +190,7 @@ This breaking change affects all incremental strategies: `append`, `insert_overw
 
 For more details on v1.11.0 changes, see the [dbt-databricks v1.11.0 changelog](https://github.com/databricks/dbt-databricks/blob/main/CHANGELOG.md).
 
-</ Expandable>
+</ DetailsToggle>
 
 :::
 
