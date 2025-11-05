@@ -199,7 +199,7 @@ export default function DocItemLayout({children}) {
 
   return (
     <div className="row">
-      {isGuidesRoute && (
+      {isGuidesRoute ? (
         <StructuredData
           type="HowTo"
           title={frontMatter?.title}
@@ -208,6 +208,15 @@ export default function DocItemLayout({children}) {
           date={formatDate(metadata?.lastUpdatedAt)}
           tags={frontMatter?.tags || []}
           totalTime={frontMatter?.time_to_complete}
+        />
+      ) : (
+        <StructuredData
+          type="WebPage"
+          title={frontMatter?.title}
+          description={frontMatter?.description || frontMatter?.hoverSnippet}
+          url={fullUrl}
+          date={formatDate(metadata?.lastUpdatedAt)}
+          tags={frontMatter?.tags || []}
         />
       )}
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>

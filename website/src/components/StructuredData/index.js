@@ -4,6 +4,7 @@ import {
   getCommonProperties,
   generateBlogPostingSchema,
   generateHowToSchema,
+  generateWebPageSchema,
 } from "./schemaGenerators";
 
 export default function StructuredData({
@@ -43,6 +44,11 @@ export default function StructuredData({
     jsonLd = generateHowToSchema({
       date,
       totalTime,
+      commonProperties,
+    });
+  } else if (type === "WebPage") {
+    jsonLd = generateWebPageSchema({
+      date,
       commonProperties,
     });
   }

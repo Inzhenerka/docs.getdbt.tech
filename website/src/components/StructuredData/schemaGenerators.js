@@ -68,3 +68,25 @@ export function generateHowToSchema({ date, totalTime, commonProperties }) {
 
   return schema;
 }
+
+/**
+ * Generate WebPage schema
+ */
+export function generateWebPageSchema({ date, commonProperties }) {
+  const schema = {
+    ...commonProperties,
+    "@type": "WebPage",
+    author: {
+      "@type": "Organization",
+      name: "dbt Labs",
+    },
+  };
+
+  // Add dates if provided
+  if (date) {
+    schema.datePublished = date;
+    schema.dateModified = date;
+  }
+
+  return schema;
+}
