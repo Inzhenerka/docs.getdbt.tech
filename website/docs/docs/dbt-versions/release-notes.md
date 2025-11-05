@@ -17,7 +17,7 @@ pagination_prev: null
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
 ## October 2025
-- **New**: The Snowflake adapter now supports basic table materialization on Iceberg tables registered in a Glue catalog through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). For more information, see [Table materialization in dbt-snowflake](/docs/mesh/iceberg/snowflake-iceberg-support#table-materialization-in-dbt-snowflake).
+- **New**: The Snowflake adapter now supports basic table materialization on Iceberg tables registered in a Glue catalog through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). For more information, see [Table materialization in the Snowflake adapter](/docs/mesh/iceberg/snowflake-iceberg-support#table-materialization-in-dbt-snowflake).
 - **New**: You can use the `platform_detection_timeout_seconds` parameter to control how long the Snowflake connector waits when detecting the cloud platform where the connection is being made. For more information, see [Snowflake setup](/docs/core/connect-data-platform/snowflake-setup#platform_detection_timeout_seconds).
 - **New**: The `cluster_by` configuration is supported in dynamic tables. For more information, see [Dynamic table clustering](/reference/resource-configs/snowflake-configs#dynamic-table-clustering).
 - **New**: When jobs exceed their configured timeout, the BigQuery adapter sends a cancellation request to the BigQuery job. For more information, see [Connect BigQuery](/docs/cloud/connect-data-platform/connect-bigquery#job-creation-timeout-seconds).
