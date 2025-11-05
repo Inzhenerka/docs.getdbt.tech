@@ -647,8 +647,8 @@ The `delete+insert` incremental strategy requires:
 
 The `delete+insert` strategy is a simpler alternative to the `merge` strategy for cases where you want to replace matching records without the complexity of updating specific columns. This strategy works in two steps:
 
-1. **Delete**: Remove all rows from the target table where the `unique_key` matches rows in the new data
-2. **Insert**: Insert all new rows from the staging data
+1. **Delete**: Remove all rows from the target table where the `unique_key` matches rows in the new data.
+2. **Insert**: Insert all new rows from the staging data.
 
 This strategy is particularly useful when:
 - You want to replace entire records rather than update specific columns

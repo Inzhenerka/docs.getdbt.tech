@@ -18,14 +18,14 @@ The following are the current [behavior change flags](/docs/reference/global-con
 
 :::caution Removed in v1.11.0
 
-The `use_info_schema_for_columns` flag has been **removed** as of dbt-databricks v1.11.0. The adapter now uses `DESCRIBE EXTENDED ... AS JSON` (available in DBR 16.2+) to efficiently retrieve complex type information, eliminating the need for this flag.
+The `use_info_schema_for_columns` flag has been **removed** as of dbt-databricks v1.11.0. The adapter now uses [`DESCRIBE EXTENDED ... AS JSON`](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-aux-describe-table) (available in DBR 16.2+) to efficiently retrieve complex type information, eliminating the need for this flag.
 
 If you're still using this flag in your project configuration, you can safely remove it. The new approach provides better performance and doesn't require the `REPAIR TABLE` operations that were needed with `information_schema`.
 
 :::
 
-### Legacy documentation (for versions < 1.11)
-
+### Legacy documentation
+_This applies to dbt-databricks versions v1.11 and older_
 The `use_info_schema_for_columns` flag was `False` by default in versions 1.9 and 1.10.
 
 Setting this flag to `True` would use `information_schema` rather than `describe extended` to get column metadata for Unity Catalog tables. This setting helped avoid issues where `describe extended` truncates information when the type is a complex struct.
@@ -47,12 +47,12 @@ As of dbt-databricks v1.11.0, the `use_user_folder_for_python` flag defaults to 
 
 The `use_user_folder_for_python` flag controls where uploaded Python model notebooks are stored in Databricks:
 
-- **`True` (default in v1.11+)**: Notebooks are written to `/Users/{{current user}}/{{catalog}}/{{schema}}/`
-- **`False` (default in v1.9-v1.10)**: Notebooks are written to `/Shared/dbt_python_models/{{schema}}/`
+- **`True` (default in v1.11+)**: Notebooks are written to `/Users/{{current user}}/{{catalog}}/{{schema}}/`.
+- **`False` (default in v1.9-v1.10)**: Notebooks are written to `/Shared/dbt_python_models/{{schema}}/`.
 
-Writing to the `Shared` folder is deprecated by Databricks as it does not align with governance best practices. Using user-specific folders provides better isolation, access control, and aligns with Unity Catalog security models.
+Databricks deprecated writing to the `Shared` folder as it doesn't align with governance best practices. Using user-specific folders provides better isolation, access control, and aligns with Unity Catalog security models.
 
-If you need to preserve the legacy behavior for backward compatibility, you can explicitly set this flag to `False` in your `dbt_project.yml`:
+To preserve the legacy behavior for backward compatibility, you can explicitly set this flag to `False` in your `dbt_project.yml`:
 
 ```yaml
 flags:
@@ -69,9 +69,9 @@ When set to `True`, `dbt-databricks` uses the updated logic for all model types 
 
 These configs aren't required to receive the core benefits of this flag &mdash; like better performance and column/constraint functionality &mdash; but they are gated behind the flag because they introduce more significant changes to how materializations behave.
 
-The default value of this flag remains `False` in v1.11.0.
+In v1.11.0, this flag will stay set to `False` by default. Based on feedback about the new materialization’s lack of atomicity (all-or-nothing updates), we won’t enable it automatically. We’ll explore other ways to achieve the same benefits without losing atomicity.
 Given feedback about lack of atomicity of the new materialization approach, we will not be flipping this flag to `True`.
-Instead we will be investigating new ways to provide the same benefits while maintaining atomicity.
+Instead, we will be investigating new ways to provide the same benefits while maintaining atomicity.
 
 ### Changes to the Seed materialization
 
