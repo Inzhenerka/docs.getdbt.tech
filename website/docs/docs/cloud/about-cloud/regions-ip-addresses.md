@@ -19,7 +19,7 @@ description: "Available regions and ip addresses"
 | EMEA  | Azure <br /> North Europe (Ireland)  |    **Cell based:** ACCOUNT_PREFIX.eu2.dbt.com  | 20.13.190.192/26   | All Enterprise plans | [EMEA Cell 1 AZURE](https://status.getdbt.com/emea-cell-1-azure) |
 | EMEA  | GCP <br /> (London)  |  [eu3.dbt.com](https://eu3.dbt.com)  |  34.33.2.0/26  | All Enterprise plans | [EU Cell 1 GCP](https://status.getdbt.com/eu-cell-1-gcp) |
 | APAC  | 	AWS ap-southeast-2  (Sydney)| [au.dbt.com](https://au.dbt.com) | 52.65.89.235 <br /> 3.106.40.33 <br /> 13.239.155.206 <br />|  All Enterprise plans | [APAC AWS](https://status.getdbt.com/apac-aws) |
-| Japan | AWS ap-northeast-1 (Tokyo) | [jp1.dbt.com](https://jp1.dbt.com) | 35.76.76.152 <br />  54.238.211.79 <br /> 13.115.236.233 <br /> | All Enteprise plans | [Japan AWS](https://status.getdbt.com/jp-cell-1-aws) | 
+| Japan | AWS ap-northeast-1 (Tokyo) | [jp1.dbt.com](https://jp1.dbt.com) | 35.76.76.152 <br />  54.238.211.79 <br /> 13.115.236.233 <br /> | All Enteprise plans | [JP Cell 1 AWS](https://status.getdbt.com/jp-cell-1-aws) | 
 | Virtual Private dbt or Single tenant | Customized |  Customized | Ask [Support](/community/resources/getting-help#dbt-cloud-support) for your IPs | All Enterprise plans | Customized |
 
 
