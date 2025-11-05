@@ -101,7 +101,7 @@ CREATE CATALOG INTEGRATION my_glue_catalog_int
 ```
 Glue Data Catalog supports the Iceberg REST specification so that you can connect to Glue via the Iceberg REST API.
 
-#### Table materialization in dbt-snowflake
+#### Table materialization in Snowflake
 
 Starting in dbt Core v1.11, dbt-snowflake supports basic table materialization on Iceberg tables registered in a Glue catalog through a catalog-linked database. Note that incremental materializations are not yet supported.
 
