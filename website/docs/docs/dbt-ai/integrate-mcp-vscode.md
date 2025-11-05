@@ -34,19 +34,18 @@ To get started, in VS Code:
 
 5. Add your server configuration (`dbt`) to the provided `mcp.json` file as one of the servers:
 
-    <Tabs>
+    <Expandable alt_header="Local MCP with dbt platform OAuth" >
 
-    <TabItem value="Local MCP with OAuth (Recommended)">
 
-    Local MCP with OAuth is best for users who want to use OAuth authentication with the <Constant name="dbt_platform" />
+    Local MCP with OAuth is for users who want to use the <Constant name="dbt_platform" /> features.
     
     Choose your configuration based on your use case:
 
     <MCPExample />
 
-    </TabItem>
+    </Expandable>
 
-    <TabItem value="Local MCP (dbt Core only)">
+    <Expandable alt_header="Local MCP (CLI only)">
 
     For users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion" />
 
@@ -73,9 +72,9 @@ To get started, in VS Code:
       - macOS/Linux: Run `which dbt` 
       - Windows: Run `where dbt`
 
-    </TabItem>
+    </Expandable>
 
-    <TabItem value="Local MCP (Advanced)">
+    <Expandable alt_header="Local MCP with .env">
 
     Advanced users who need custom environment variables or service token authentication
 
@@ -112,9 +111,9 @@ To get started, in VS Code:
     }
     ```
 
-    </TabItem>
+    </Expandable>
 
-    <TabItem value="Remote MCP server">
+    <Expandable alt_header="Remote MCP server">
 
     Remove MCP server configurations for users who want to use <Constant name="dbt_platform" /> features without local MCP installation:
 
@@ -134,9 +133,8 @@ To get started, in VS Code:
 
     Replace `<host>`, `<token>`, and `<prod-id>` with your actual values. For more details, see the [remote MCP setup guide](/docs/dbt-ai/setup-remote-mcp).
 
-    </TabItem>
+    </Expandable>
 
-    </Tabs>
 
 6. You can start, stop, and configure your MCP servers by:
       - Running the `MCP: List Servers` command from the Command Palette (Control/Command + Shift + P) and selecting the server.

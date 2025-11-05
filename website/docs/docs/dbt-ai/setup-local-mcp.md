@@ -11,14 +11,14 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 ## Prerequisites
 
-1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to run `dbt-mcp` and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment.
-2. Have a local dbt project (if you want to use dbt CLI commands)
+- [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to run `dbt-mcp` and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment.
+- Have a local dbt project (if you want to use dbt CLI commands)
 
 ## Setup options
 
 Choose the setup method that best fits your workflow:
 
-### OAuth authentication with dbt platform (recommended) <Lifecycle status="managed, managed_plus" />
+### OAuth authentication with dbt platform <Lifecycle status="managed, managed_plus" />
 
 This method uses OAuth to authenticate with your <Constant name="dbt_platform" /> account. It's the simplest setup and doesn't require managing tokens or environment variables manually.
 
@@ -61,8 +61,7 @@ Add this configuration to your MCP client (refer to the specific [integration gu
 
 #### Locating your paths
 
-<Tabs>
-<TabItem value="macOS/Linux">
+**macOS/Linux:**
 
 1. **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `/Users/yourname/dbt-projects/my_project`
@@ -75,8 +74,7 @@ Add this configuration to your MCP client (refer to the specific [integration gu
    - Example output: `/opt/homebrew/bin/dbt`
    - Use this exact path in your configuration
 
-</TabItem>
-<TabItem value="Windows">
+**Windows:**
 
 1. **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `C:\Users\yourname\dbt-projects\my_project`
@@ -90,119 +88,107 @@ Add this configuration to your MCP client (refer to the specific [integration gu
    - Example output: `C:\Python39\Scripts\dbt.exe`
    - Use forward slashes or escaped backslashes: `C:/Python39/Scripts/dbt.exe`
 
-</TabItem>
-</Tabs>
-
 After completing this setup, skip to [step 3 (Test your configuration)](#3-optional-test-your-configuration).
 
-### Advanced: Environment variable configuration
+### Environment variable configuration
 
 If you need to configure multiple environment variables or prefer to manage them separately, you can use environment variables. You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
-    <Tabs>
+## Sample environment file
 
-    <TabItem value="Sample file">
-      Here is an example of the file:
+Here is an example of the file:
 
-        ```code
-        DBT_HOST=cloud.getdbt.com
-        DBT_PROD_ENV_ID=your-production-environment-id
-        DBT_DEV_ENV_ID=your-development-environment-id
-        DBT_USER_ID=your-user-id
-        DBT_ACCOUNT_ID=your-account-id
-        DBT_TOKEN=your-service-token
-        DBT_PROJECT_DIR=/path/to/your/dbt/project
-        DBT_PATH=/path/to/your/dbt/executable
-        MULTICELL_ACCOUNT_PREFIX=your-account-prefix
-        ```
-      You will need this file for integrating with MCP-compatible tools.
-    </TabItem>
+```code
+DBT_HOST=cloud.getdbt.com
+DBT_PROD_ENV_ID=your-production-environment-id
+DBT_DEV_ENV_ID=your-development-environment-id
+DBT_USER_ID=your-user-id
+DBT_ACCOUNT_ID=your-account-id
+DBT_TOKEN=your-service-token
+DBT_PROJECT_DIR=/path/to/your/dbt/project
+DBT_PATH=/path/to/your/dbt/executable
+MULTICELL_ACCOUNT_PREFIX=your-account-prefix
+```
+You will need this file for integrating with MCP-compatible tools.
 
-    <TabItem value="API and SQL tool settings">
-      | Environment Variable | Required | Description |
-      | --- | --- | --- |
-      | DBT_HOST | Required | Your dbt platform [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). **Important:** For Multi-cell accounts, exclude the account prefix from the hostname. The default is `cloud.getdbt.com`. |
-      | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell account prefix here (not in DBT_HOST). If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](/docs/cloud/about-cloud/access-regions-ip-addresses). |
-      | DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/>**Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
-      | DBT_ACCOUNT_ID | Required for Administrative API tools | Your [dbt account ID](/faqs/Accounts/find-user-id) |
-      | DBT_PROD_ENV_ID | Required | Your dbt platform production environment ID |
-      | DBT_DEV_ENV_ID | Optional | Your dbt platform development environment ID |
-      | DBT_USER_ID | Optional | Your dbt platform user ID ([docs](/faqs/Accounts/find-user-id)) |
-      
-      **Multi-cell configuration examples:**
-      
-      ✅ **Correct configuration:**
-      ```bash
-      DBT_HOST=us1.dbt.com
-      MULTICELL_ACCOUNT_PREFIX=abc123
-      ```
-      
-      ❌ **Incorrect configuration (common mistake):**
-      ```bash
-      DBT_HOST=abc123.us1.dbt.com  # Don't include prefix in host!
-      # MULTICELL_ACCOUNT_PREFIX not set
-      ```
-      
-      If your full URL is `abc123.us1.dbt.com`, separate it as:
-      - `DBT_HOST=us1.dbt.com`
-      - `MULTICELL_ACCOUNT_PREFIX=abc123`
-        </TabItem>
+## API and SQL tool settings
 
-    <TabItem value="dbt CLI settings">
-      The local dbt-mcp supports all flavors of dbt, including dbt Core and the dbt Fusion engine.
+| Environment Variable | Required | Description |
+| --- | --- | --- |
+| DBT_HOST | Required | Your dbt platform [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). **Important:** For Multi-cell accounts, exclude the account prefix from the hostname. The default is `cloud.getdbt.com`. |
+| MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell account prefix here (not in DBT_HOST). If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](/docs/cloud/about-cloud/access-regions-ip-addresses). |
+| DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/>**Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
+| DBT_ACCOUNT_ID | Required for Administrative API tools | Your [dbt account ID](/faqs/Accounts/find-user-id) |
+| DBT_PROD_ENV_ID | Required | Your dbt platform production environment ID |
+| DBT_DEV_ENV_ID | Optional | Your dbt platform development environment ID |
+| DBT_USER_ID | Optional | Your dbt platform user ID ([docs](/faqs/Accounts/find-user-id)) |
 
-      | Environment Variable | Required | Description | Example |
-      | --- | --- | --- | --- |
-      | DBT_PROJECT_DIR | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
-      | DBT_PATH | Required | The full path to your dbt executable (Core/Fusion/Cloud CLI). See below for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
-      | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
-    </TabItem>
-      **Locating your `DBT_PATH`:**
-      
-      <Tabs>
-      <TabItem value="macOS/Linux">
-      
-      Run this command in your terminal:
-      ```bash
-      which dbt
-      ```
-      Example output: `/opt/homebrew/bin/dbt`
-      
-      </TabItem>
-      <TabItem value="Windows">
-      
-      Run this command in Command Prompt or PowerShell:
-      ```bash
-      where dbt
-      ```
-      Example output: `C:\Python39\Scripts\dbt.exe`
-      
-      **Note:** Use forward slashes in your configuration: `C:/Python39/Scripts/dbt.exe`
-      
-      </TabItem>
-      </Tabs>
+**Multi-cell configuration examples:**
 
-      **Additional notes:**
-      
-      - You can set any environment variable supported by your dbt executable, like [the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). 
-      - dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
-      - `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command. You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
-    </TabItem>
+✅ **Correct configuration:**
+```bash
+DBT_HOST=us1.dbt.com
+MULTICELL_ACCOUNT_PREFIX=abc123
+```
 
-    <TabItem value="Disabling tools">
-      You can disable the following tool access on the local `dbt-mcp`:
+❌ **Incorrect configuration (common mistake):**
+```bash
+DBT_HOST=abc123.us1.dbt.com  # Don't include prefix in host!
+# MULTICELL_ACCOUNT_PREFIX not set
+```
 
-      | Name                     | Default | Description                                                                     |
-      | ------------------------ | ------- | ------------------------------------------------------------------------------- |
-      | `DISABLE_DBT_CLI`        | `false` | Set this to `true` to disable dbt Core, dbt Cloud CLI, and dbt Fusion MCP tools |
-      | `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools                    |
-      | `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
-      | `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Administrative API MCP tools                         |
-      | `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
-      | `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package) |
-      | `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
-    </TabItem>
+If your full URL is `abc123.us1.dbt.com`, separate it as:
+- `DBT_HOST=us1.dbt.com`
+- `MULTICELL_ACCOUNT_PREFIX=abc123`
 
-    </Tabs>
+## dbt CLI settings
+
+The local dbt-mcp supports all flavors of dbt, including dbt Core and the dbt Fusion engine.
+
+| Environment Variable | Required | Description | Example |
+| --- | --- | --- | --- |
+| DBT_PROJECT_DIR | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
+| DBT_PATH | Required | The full path to your dbt executable (Core/Fusion/Cloud CLI). See below for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
+| DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
+
+### Locating your `DBT_PATH`
+
+**macOS/Linux:**
+
+Run this command in your terminal:
+```bash
+which dbt
+```
+Example output: `/opt/homebrew/bin/dbt`
+
+**Windows:**
+
+Run this command in Command Prompt or PowerShell:
+```bash
+where dbt
+```
+Example output: `C:\Python39\Scripts\dbt.exe`
+
+**Note:** Use forward slashes in your configuration: `C:/Python39/Scripts/dbt.exe`
+
+**Additional notes:**
+
+- You can set any environment variable supported by your dbt executable, like [the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). 
+- dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
+- `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command. You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
+
+## Disabling tools
+
+You can disable the following tool access on the local `dbt-mcp`:
+
+| Name                     | Default | Description                                                                     |
+| ------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `DISABLE_DBT_CLI`        | `false` | Set this to `true` to disable dbt Core, dbt Cloud CLI, and dbt Fusion MCP tools |
+| `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools                    |
+| `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
+| `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Administrative API MCP tools                         |
+| `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
+| `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package) |
+| `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
 
 #### Using environment variables in your MCP client configuration
 

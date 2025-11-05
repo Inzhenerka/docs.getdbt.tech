@@ -19,9 +19,9 @@ You can set up Claude Code with both the local and remote `dbt-mcp` server. We r
 
 Prerequisites:
 - Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp)
-- Know your configuration method (OAuth, dbt Core only, or environment variables)
+- Know your configuration method (OAuth, dbt Core or Fusion, or environment variables)
 
-#### Using OAuth or environment variables directly (recommended)
+#### Using OAuth or environment variables directly
 
 The preferred method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
 
@@ -36,7 +36,7 @@ claude mcp edit dbt
 In the configuration editor, add your environment variables based on your use case:
 
 <Tabs>
-<TabItem value="dbt Core only">
+<TabItem value="CLI only">
 
 For <Constant name="core" /> only (no dbt platform):
 ```json
@@ -101,21 +101,20 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 3. Click the **Edit Config** button and open the configuration file with a text editor.
 4. Add your server configuration based on your use case. Choose the [correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server) from the options below:
 
-    <Tabs>
 
-    <TabItem value="Local MCP with OAuth (Recommended)">
+    <Expandable alt_header="Local MCP with OAuth">
 
     #### Local MCP with dbt platform authentication <Lifecycle status="managed, managed_plus" />
 
-    **Best for:** Users who want seamless OAuth authentication with the <Constant name="dbt_platform" />
+    Configuration for users who want seamless OAuth authentication with the <Constant name="dbt_platform" />
 
     <MCPExample />
 
-    </TabItem>
+    </Expandable>
 
-    <TabItem value="Local MCP (dbt Core only)">
+    <Expandable alt_header="Local MCP (CLI only)">
 
-    **Best for:** Users who only want to use dbt CLI commands with <Constant name="Core" />
+    Local configuration for users who only want to use dbt CLI commands with <Constant name="Core" /> or <Constant name="fusion" />
 
     ```json 
     {
@@ -136,11 +135,11 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
     - **DBT_PROJECT_DIR**: Full path to the folder containing your `dbt_project.yml` file
     - **DBT_PATH**: Find by running `which dbt` in Terminal (macOS/Linux) or `where dbt` (Windows) in Powershell
 
-    </TabItem>
+    </Expandable>
 
-    <TabItem value="Local MCP (Advanced)">
+    <Expandable alt_header="Local MCP with .env">
 
-    **Best for:** Advanced users who need custom environment variables
+    Advanced configuration for users who need custom environment variables
 
     Using the `env` field (recommended):
     ```json 
@@ -173,9 +172,8 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
     }
     ```
 
-    </TabItem>
+    </Expandable>
 
-    </Tabs>
 
 5. Save the file. Upon a successful restart of Claude Desktop, you'll see an MCP server indicator in the bottom-right corner of the conversation input box.
 
