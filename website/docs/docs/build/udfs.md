@@ -64,7 +64,7 @@ To define UDFs in dbt, refer to the following steps:
     ```yml
     functions:
       - name: is_positive_int # required
-        description: My UDF that determines if a string represents a positive (+) integer # required
+        description: My UDF that determines if a string represents a positive (+) integer # optional
         config:
           schema: udf_schema
           database: udf_db
