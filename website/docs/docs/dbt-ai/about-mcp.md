@@ -47,7 +47,6 @@ The remote MCP server from dbt offers data consumption use cases without local s
 The [remote MCP server](/docs/dbt-ai/setup-remote-mcp) connects to the <Constant name="dbt_platform" /> via HTTP and requires no local installation. This option is useful when:
 - You don't want to or are restricted from installing additional software on your system.
 - Your use case is primarily consumption-based (querying metrics, exploring metadata, viewing lineage).
-- You want to manage dbt platform resources (trigger jobs, view runs, access artifacts).
 
 
 
