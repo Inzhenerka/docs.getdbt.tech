@@ -38,7 +38,7 @@ In the configuration editor, add your environment variables based on your use ca
 <Tabs>
 <TabItem value="CLI only">
 
-For <Constant name="core" /> only (no dbt platform):
+For <Constant name="core" /> or <Constant name="fusion" /> only (no dbt platform):
 ```json
 {
   "command": "uvx",

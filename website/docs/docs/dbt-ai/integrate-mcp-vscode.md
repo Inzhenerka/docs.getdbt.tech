@@ -10,7 +10,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 [Microsoft Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) is a powerful and popular integrated development environment (IDE).
 
 These instructions are for integrating dbt MCP and VS Code. Before starting, ensure you have:
-- Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp) or [remote MCP setup](/docs/dbt-ai/setup-remote-mcp)
+- Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp)
 - VS Code installed with the latest updates
 - (For local MCP with CLI) Your dbt project paths are configured
 
@@ -112,29 +112,6 @@ To get started, in VS Code:
     ```
 
     </Expandable>
-
-    <Expandable alt_header="Remote MCP server">
-
-    Remove MCP server configurations for users who want to use <Constant name="dbt_platform" /> features without local MCP installation:
-
-    ```json
-    {
-      "servers": {
-        "dbt": {
-          "url": "https://<host>/api/ai/v1/mcp/",
-          "headers": {
-            "Authorization": "token <token>",
-            "x-dbt-prod-environment-id": "<prod-id>"
-          }
-        }
-      }
-    }
-    ```
-
-    Replace `<host>`, `<token>`, and `<prod-id>` with your actual values. For more details, see the [remote MCP setup guide](/docs/dbt-ai/setup-remote-mcp).
-
-    </Expandable>
-
 
 6. You can start, stop, and configure your MCP servers by:
       - Running the `MCP: List Servers` command from the Command Palette (Control/Command + Shift + P) and selecting the server.

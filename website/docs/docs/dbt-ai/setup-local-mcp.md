@@ -253,3 +253,27 @@ After completing your configuration, follow the specific integration guide for y
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
+
+## Troubleshooting
+
+#### Can't find `uvx` executable
+
+Some MCP clients may be unable to find `uvx` from the JSON config. This will result in error messages like `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT`, or similar.
+
+**Solution:** Locate the full path to `uvx` and use it in your configuration:
+
+- **macOS/Linux:** Run `which uvx` in your Terminal.
+- **Windows:** Run `where uvx` in CMD or PowerShell.
+
+Then update your JSON configuration to use the full path:
+```json
+{
+  "mcpServers": {
+    "dbt": {
+      "command": "/full/path/to/uvx", # For example, on macOS with Homebrew: "command": "/opt/homebrew/bin/uvx"
+      "args": ["dbt-mcp"],
+      "env": { ... }
+    }
+  }
+}
+```

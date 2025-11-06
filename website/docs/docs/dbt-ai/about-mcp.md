@@ -36,10 +36,6 @@ The [local MCP server](/docs/dbt-ai/setup-local-mcp) runs on your machine and re
 - Ability to work with local dbt projects without requiring a <Constant name="dbt_platform" /> account
 - Optional integration with <Constant name="dbt_platform" /> APIs for metadata discovery and Semantic Layer access
 
-:::tip Configuring local MCP
-To disable tools that call remote APIs (Discovery API, Semantic Layer API) if you're operating exclusively within an IDE or working with <Constant name="core" /> only. You can disable these tools using environment variables like `DISABLE_DISCOVERY=true` and `DISABLE_SEMANTIC_LAYER=true`.
-:::
-
 ### Remote MCP server
 
 The remote MCP server from dbt offers data consumption use cases without local setup.
@@ -159,33 +155,6 @@ We have also created integration guides for the following clients:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
-
-## Troubleshooting
-
-### Local MCP setup issues
-
-#### Can't find `uvx` executable
-
-Some MCP clients may be unable to find `uvx` from the JSON config. This will result in error messages like `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT`, or similar.
-
-**Solution:** Locate the full path to `uvx` and use it in your configuration:
-
-- **macOS/Linux:** Run `which uvx` in your Terminal.
-- **Windows:** Run `where uvx` in CMD or PowerShell.
-
-Then update your JSON configuration to use the full path:
-```json
-{
-  "mcpServers": {
-    "dbt": {
-      "command": "/full/path/to/uvx", # For example, on macOS with Homebrew: "command": "/opt/homebrew/bin/uvx"
-      "args": ["dbt-mcp"],
-      "env": { ... }
-    }
-  }
-}
-```
-
 
 ## Resources
 - For more information, refer to our blog on [Introducing the dbt MCP Server](/blog/introducing-dbt-mcp-server#getting-started).
