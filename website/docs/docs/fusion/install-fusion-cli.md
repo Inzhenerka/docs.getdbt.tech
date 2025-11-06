@@ -5,26 +5,13 @@ keywords: ["dbt Fusion engine", "Fusion", "Install Fusion", "Update Fusion", "Fu
 id: install-fusion-cli
 ---
 
-# Install Fusion from the CLI <Lifecycle status="preview" />
-
-Fusion can be installed via the command line from our official content delivery network (CDN):
-
 import FusionManualInstall from '/snippets/_fusion-manual-install.md';
 
+# Install Fusion from the CLI <Lifecycle status="preview" />
+
+Fusion can be installed via the command line from our official content delivery network (CDN).
+
 <FusionManualInstall />
-
-## Verify the installation
-
-After installation, open a new command-line window and verify that Fusion is installed correctly by checking the version. You can run these commands using `dbt`, or use `dbtf` as an unambiguous alias for Fusion, if you have another dbt CLI installed on your machine.
-
-```bash
-dbtf --version
-```
-
-- **macOS** & **Linux**: `$HOME/.local/bin/dbt`
-- **Windows:** `C:\Users\<YourUsername>\.local\bin\dbt.exe`
-
-This location is automatically added to your path to easily execute the `dbtf` command, but it requires reloading your shell.
 
 ## Update Fusion
 

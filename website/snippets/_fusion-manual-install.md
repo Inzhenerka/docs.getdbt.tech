@@ -39,12 +39,18 @@ If you already have the <Constant name="fusion_engine" /> installed, you can ski
     </TabItem>
     </Tabs>
 
-2. Verify the installation by checking the version and running the following command:
-```bash
-dbtf --version
-```
+2. Run the following command to verify you've installed <Constant name="fusion" />:
+    ```bash
+    dbtf --version
+    ```
+    You can use `dbt` or its <Constant name="fusion" /> alias `dbtf` (handy if you already have another dbt CLI installed). Default install path:
 
-1. Follow the [getting started](/docs/install-dbt-extension#getting-started) guide to get started with the extension. You can get started by either:
+       - macOS/Linux: `$HOME/.local/bin/dbt`
+       - Windows: `C:\Users\<username>\.local\bin\dbt.exe`
+
+    The installer adds this path automatically, but you may need to reload your shell for the `dbtf` command to work.
+
+3. Follow the [getting started](/docs/install-dbt-extension#getting-started) guide to get started with the extension. You can get started by either:
    - Running `dbtf init` to use terminal onboarding,
    - Running **Run dbt: Register dbt extension** in the command palette,
    - Using the **Get started** button in the extension menu.

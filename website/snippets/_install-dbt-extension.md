@@ -49,7 +49,7 @@ You're all set up with the dbt extension! The next steps are:
 
 ## Getting started
 
-Once the dbt VS Code extension has been installed in your environment, the dbt logo will appear on the sidebar. From here, you can access workflows to help you get started, offers information about the extension and your dbt project, and provides helpful links to guide you. For more information, see the [the dbt extension menu](/docs/about-dbt-extension#the-dbt-extension-menu) documentation. 
+Once the <Constant name="fusion_engine"/> and dbt VS Code extension has been installed in your environment, the dbt logo will appear on the sidebar. From here, you can access workflows to help you get started, offers information about the extension and your dbt project, and provides helpful links to guide you. For more information, see the [the dbt extension menu](/docs/about-dbt-extension#the-dbt-extension-menu) documentation. 
 
 You can get started with the extension a couple of ways: 
 - Running `dbtf init` to use terminal onboarding,
