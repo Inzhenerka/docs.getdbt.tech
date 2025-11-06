@@ -160,9 +160,9 @@ For detailed instructions on how to create a `.dbt` directory and move the file,
 8. Run `dbt: Register dbt extension` to complete registration.
 9. If you run into any issues, reach out to [support](/docs/dbt-support) &mdash; we're here to help!
 
-## Configure environment variables {#configure-environment-variables}
+## Configure environment variables locally {#configure-environment-variables}
 
-_This section is optional and only applies if you haven't already configured environment variables locally._
+_This section is optional. You only need to configure environment variables locally if your dbt project uses environment variables that are already configured in the dbt platform._
 
 If your dbt project uses environment variables, you can configure them to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension) page for more information.
 
