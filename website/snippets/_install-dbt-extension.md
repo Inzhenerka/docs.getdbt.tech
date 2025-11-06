@@ -1,5 +1,13 @@
 
+import FusionManualInstall from '/snippets/_fusion-manual-install.md';
+
 The [dbt extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) for VS Code and Cursor, powered by the <Constant name="fusion_engine" />, streamlines dbt development workflows. 
+
+:::note
+
+This is the only official dbt Labs VS Code extension. Other extensions _can_ work alongside the dbt VS Code extension, but they aren’t tested or supported by dbt Labs. Read the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) for the latest updates.
+
+:::
 
 ## Prerequisites
 
@@ -7,24 +15,15 @@ To use the extension, you must meet the following prerequisites:
 
 | Prerequisite | Details |
 | --- | --- |
-| **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). Installing the extension prompts for installation of the <Constant name="fusion_engine" />. You can also [manually install](/docs/fusion/install-fusion) it at any time.|
-|  | Registration &mdash; After installation, use the extension for 14 days, then register your email or log in with your existing <Constant name="dbt_platform" /> account to continue using it.  The VS Code extension is free for organizations for up to 15 users.<br /><br /> ⁃ Don't have a dbt account? &mdash; Follow the VS Code “get started” flow to register and verify your email.<br />⁃ Returning user? &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in. |
-| **Project files** | Your dbt project needs a `profiles.yml` configuration file.<br /><br />⁃ dbt platform users need to have a `dbt_cloud.yml` file as well as a `profiles.yml` file [configured](/docs/install-dbt-extension#how-to-create-a-dbt-directory-in-root-and-move-config-files) in their dbt project.<br /><br />⁃ Note that having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
+| **<Constant name="fusion_engine" />**  | The [dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview) requires the <Constant name="fusion_engine" /> binary (a small executable program). The extension will prompt you to install it, or you can [install it manually](#install-fusion-manually) at any time. <br /><br />[Register your email](#register-the-extension) within 14 days of installing the dbt extension.  Free for up to 15 users.  |
+| **Project files** | - You need a `profiles.yml` configuration file.<br /><br />⁃ Existing <Constant name="dbt_platform" /> users need to [download](#download-the-dbt_cloudyml-file) a `dbt_cloud.yml` file as well as a `profiles.yml` file configured in their dbt project.<br /><br />⁃ Having a <Constant name="dbt_platform" /> user account isn't the same as having a <Constant name="dbt_platform" /> project — you  don't need a <Constant name="dbt_platform" /> project to use the extension. |
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
-| (Optional) **Environment variables** | If your dbt project uses environment variables, [configure them](/docs/configure-dbt-extension#set-environment-variables-locally) to use the extension's features. |
+|  **Configure your local setup** (Optional) | [Configure the extension](/docs/configure-dbt-extension) to mirror your dbt environment locally and set any environment variables locally to use the VS Code extension features. |
 
-## Installation instructions
+## Install the extension
 
-:::note
-
-This is the only official dbt Labs VS Code extension. Other extensions _can_ work alongside the dbt VS Code extension, but they aren’t tested or supported by dbt Labs.
-
-Read the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) for the latest updates.
-
-::: 
-
-In VS Code:
+To install the dbt VS Code extension, follow these steps in VS Code or Cursor:
 
 1. Navigate to the **Extensions** tab of your editor and search for `dbt`. Locate the extension from the publisher `dbtLabsInc` or `dbt Labs Inc`. Click **Install**.
     <Lightbox src="/img/docs/extension/extension-marketplace.png" width="90%" title="Search for the extension"/>
@@ -32,13 +31,21 @@ In VS Code:
     <Lightbox src="/img/docs/extension/dbt-extension-statusbar.png" width="60%" title="If you see the 'dbt Extension` label, the extension is activated"/>
 3. Once the dbt extension is activated, it will automatically begin downloading the correct dbt Language Server for your operating system.
     <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="The dbt Language Server will be installed automatically"/>
-4. If the dbt Fusion engine is not already installed on your machine, the extension will prompt you to download and install it. Follow the steps shown in the notification to complete the installation.
+4. If the dbt Fusion engine is not already installed on your machine, the extension will prompt you to download and install it. Follow the steps shown in the notification to complete the installation. If you haven't installed it yet, you can [install it manually](#install-fusion-manually).
     <Lightbox src="/img/docs/extension/install-dbt-fusion-engine.png" width="60%" title="Follow the prompt to install the dbt Fusion engine"/>
 5. Run the VS Code extension [upgrade tool](#upgrade-to-fusion) to ensure your dbt project is Fusion ready and help you fix any errors and deprecations.
-6. You're all set up! See [getting started](#getting-started) and [about the dbt extension](/docs/about-dbt-extension) for more information on how to use the dbt extension.
-    <Lightbox src="/img/docs/extension/kitchen-sink.png" width="90%" title="Showing lineage and compiled code in the extension"/>
-7. (Optional) If you're new to the extension or VS Code/Cursor, you [can set your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment. 
-8. (Optional) Configure environment variables to use the extension's features. See the [Configure environment variables](/docs/configure-dbt-extension#configure-environment-variables) page for more information.
+
+6. (Optional) If you're new to the extension or VS Code/Cursor, you [can set your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment and [set any environment variables](/docs/configure-dbt-extension#configure-environment-variables) locally to use the VS Code extension features.
+
+You're all set up with the dbt extension! The next steps are:
+- Follow the [getting started](#getting-started) guide to get started with the extension.
+- [Install the dbt Fusion engine manually](#install-fusion-manually) if you haven't already.
+- [Register your email](#register-the-extension) to continue using the extension beyond the trial period.
+- Review the [about the dbt extension](/docs/about-dbt-extension) documentation to learn more about the extension and its features.
+
+#### Install Fusion manually
+
+    <FusionManualInstall />
 
 ## Getting started
 
@@ -101,8 +108,8 @@ Once the upgrade is completed, you're ready to dive into all the features that t
 
 Users must complete registration within 14 days of installing the dbt extension. There are two ways to register:
 
-- Users without an existing dbt account can register quickly and easily through an online registration form. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
-- Users with an existing dbt account can connect their account using a `dbt_cloud.yml` credentials file. To learn how to configure the extension with a `dbt_cloud.yml` file, see [Troubleshooting](#troubleshooting).
+- [Don't have a dbt account?](#new-user-registration) &mdash; Follow the VS Code “get started” flow to register and verify your email. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
+- [Returning user or existing <Constant name="dbt_platform" /> user?](#register-with-an-existing-dbt-account) &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in.
 
 The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
 
@@ -151,12 +158,11 @@ Follow these steps to download the `dbt_cloud.yml` file:
 5. Download the `dbt_cloud.yml` file to complete registration.
 <Lightbox src="/img/docs/extension/download-registration-2.png" width="70%" title="Download the dbt_cloud.yml file to complete registration."/>
 
-6. Move the downloaded `dbt_cloud.yml` file to your dbt directory:
+6. Move the downloaded `dbt_cloud.yml` file to your dbt directory (see [this FAQ](/docs/install-dbt-extension#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file) for instructions on how to create a `.dbt` directory and move the file):
     - macOS/Linux: `~/.dbt/`
     - Windows: `C:\Users\[username]\.dbt\`
 
-For detailed instructions on how to create a `.dbt` directory and move the file, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
-7. Then go back to VS Code and open the command palette (`Ctrl + Shift + P` (Windows/Linux) or `Cmd + Shift + P` (macOS)).  
+7. Then go back to VS Code and open the command palette: `Ctrl + Shift + P` (Windows/Linux) or `Cmd + Shift + P` (macOS).  
 8. Run `dbt: Register dbt extension` to complete registration.
 9. If you run into any issues, reach out to [support](/docs/dbt-support) &mdash; we're here to help!
 
