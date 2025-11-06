@@ -14,7 +14,6 @@ When you use only the dbt platform, the CLI tools are automatically disabled. Yo
       "args": ["dbt-mcp"],
       "env": {
         "DBT_HOST": "https://<your-dbt-host-with-custom-subdomain>",
-        "DISABLE_DBT_CLI": "true"
       }
     }
   }
