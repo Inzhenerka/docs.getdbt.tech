@@ -7,7 +7,7 @@ pagination_next: null
 pagination_prev: null
 ---
 
-The <Constant name="fusion_engine" /> is here! We currently offer it as a [private preview](/docs/dbt-versions/product-lifecycles#the-dbt-platform) on the <Constant name="dbt_platform" />. Even if we haven't enabled it for your account, you can still take steps to prepare your projects for upgrade. If this is all new to you, first [read about <Constant name="fusion" />](/docs/fusion), what it is, its current state, and the features available. Then reference this checklist to begin preparing your projects for <Constant name="fusion" />.
+The <Constant name="fusion_engine" /> is here! We currently offer it as a [private preview](/docs/dbt-versions/product-lifecycles#the-dbt-platform) on the <Constant name="dbt_platform" />. Even if we haven't enabled it for your account, you can still start preparing your projects for upgrade. Use this checklist to ensure a smooth upgrade once <Constant name="fusion" /> becomes available. If this is all new to you, first [learn about <Constant name="fusion" />](/docs/fusion), its current state, and the features available. 
 
 ## Preparing for Fusion
 
