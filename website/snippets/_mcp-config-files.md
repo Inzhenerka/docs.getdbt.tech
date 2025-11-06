@@ -21,7 +21,7 @@ When you use only the dbt platform, the CLI tools are automatically disabled. Yo
 }
 ```
 
-**Note:** Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `https://abc123.us1.dbt.com`). This enables OAuth authentication without requiring local dbt installation.
+**Note:** Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `abc123.us1.dbt.com`). This enables OAuth authentication without requiring local dbt installation.
 
 </TabItem>
 
