@@ -42,7 +42,7 @@ To disable tools that call remote APIs (Discovery API, Semantic Layer API) if yo
 
 ### Remote MCP server
 
-The remote MCP server from dbt offers both consumption and management use cases without local setup.
+The remote MCP server from dbt offers data consumption use cases without local setup.
 
 The [remote MCP server](/docs/dbt-ai/setup-remote-mcp) connects to the <Constant name="dbt_platform" /> via HTTP and requires no local installation. This option is useful when:
 - You don't want to or are restricted from installing additional software on your system.
