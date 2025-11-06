@@ -20,6 +20,7 @@ To use the extension, you must meet the following prerequisites:
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
 |  **Configure your local setup** (Optional) | [Configure the extension](/docs/configure-dbt-extension) to mirror your dbt environment locally and set any environment variables locally to use the VS Code extension features. |
+| **Run dbt-autofix** (Optional) | [Run dbt-autofix](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-autofix) to fix any errors and deprecations in your dbt project. Review the [Limitations](/docs/fusion/supported-features#limitations) section to learn about the features that aren't currently supported by <Constant name="fusion" />. |
 
 ## Install the extension
 
