@@ -40,9 +40,9 @@ To install the dbt VS Code extension, follow these steps in VS Code or Cursor:
 
 You're all set up with the dbt extension! The next steps are:
 - Follow the [getting started](#getting-started) guide to get started with the extension.
-- [Install the dbt Fusion engine manually](#install-fusion-manually) if you haven't already.
-- [Register your email](#register-the-extension) to continue using the extension beyond the trial period.
-- Review the [about the dbt extension](/docs/about-dbt-extension) documentation to learn more about the extension and its features.
+- [Install the dbt Fusion engine] (#install-fusion-manually) from the command line, if you haven't already.
+- [Register the extension](#register-the-extension) with your email address or <Constant name="dbt_platform" /> account to continue using it beyond the trial period.
+- Review the [about the dbt extension](/docs/about-dbt-extension) documentation to learn more about its features and functionality.
 
 #### Install Fusion manually
 
@@ -50,7 +50,7 @@ You're all set up with the dbt extension! The next steps are:
 
 ## Getting started
 
-Once the <Constant name="fusion_engine"/> and dbt VS Code extension has been installed in your environment, the dbt logo will appear on the sidebar. From here, you can access workflows to help you get started, offers information about the extension and your dbt project, and provides helpful links to guide you. For more information, see the [the dbt extension menu](/docs/about-dbt-extension#the-dbt-extension-menu) documentation. 
+Once the <Constant name="fusion_engine"/> and dbt VS Code extension have been installed in your environment, the dbt logo will appear on the sidebar. From here, you can access workflows to help you get started, offers information about the extension and your dbt project, and provides helpful links to guide you. For more information, see the [the dbt extension menu](/docs/about-dbt-extension#the-dbt-extension-menu) documentation. 
 
 You can get started with the extension a couple of ways: 
 - Running `dbtf init` to use terminal onboarding,
@@ -109,7 +109,7 @@ Once the upgrade is completed, you're ready to dive into all the features that t
 
 Users must complete registration within 14 days of installing the dbt extension. There are two ways to register:
 
-- [Don't have a dbt account?](#new-user-registration) &mdash; Follow the VS Code “get started” flow to register and verify your email. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
+- [Don't have a dbt account?](#new-user-registration) &mdash; Follow the VS Code [“get started”](/docs/install-dbt-extension#getting-started) workflow to register and verify your email. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
 - [Returning user or existing <Constant name="dbt_platform" /> user?](#register-with-an-existing-dbt-account) &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in.
 
 The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
