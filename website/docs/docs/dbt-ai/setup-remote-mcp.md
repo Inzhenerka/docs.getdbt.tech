@@ -12,7 +12,6 @@ The remote MCP server uses an HTTP connection and makes calls to dbt-mcp hosted 
 The remote MCP server is the ideal choice when:
 - You don't want to or are restricted from installing additional software (`uvx`, `dbt-mcp`) on your system.
 - Your primary use case is **consumption-based**: querying metrics, exploring metadata, viewing lineage.
-- You want to **manage dbt platform resources**: trigger jobs, view runs, access artifacts.
 - You need access to Semantic Layer and Discovery APIs without maintaining a local dbt project.
 
 :::info Note on dbt CLI commands
