@@ -20,7 +20,7 @@ The <Constant name="fusion_engine" /> is here! We currently offer it as a [priva
     1. [ ] The most commonly used dbt Labs managed packages (such as `dbt_utils` and `dbt_project_evaluator`) are already compatible with <Constant name="fusion" />, as are a large number of external and community packages. We list many known supported packages [here](https://docs.getdbt.com/docs/fusion/supported-features#package-support), but more exist. 
     2. [ ] Check with your package repositories to be sure. If a package you use is not yet compatible, we recommend opening an issue with the maintainer, making the contribution yourself, or removing the package temporarily before you upgrade.
 4. [ ] **[Check for known Fusion limitations](/docs/fusion/supported-features#limitations):** Your project may implement features that currently have limited or no availability in <Constant name="fusion" />. 
-    1. [ ] If you do not need these features, you can remove them from your project to make it <Constant name="fusion" /> compatible. 
+    1. [ ] Remove unnecessary features from your project to make it <Constant name="fusion" /> compatible. 
     2. [ ] Monitor progress for critical features, knowing we are working to bring them to <Constant name="fusion" /> . You can monitor their progress using the linked issues. 
 5. [ ] **Review jobs configured in the <Constant name="dbt_platform" />:** We determine <Constant name="fusion" /> eligibility using data from your job runs. 
     1. [ ] Ensure you have at least one job running in each of your projects in the <Constant name="dbt_platform" />. 
