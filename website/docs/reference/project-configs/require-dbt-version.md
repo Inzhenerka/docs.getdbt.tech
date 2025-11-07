@@ -159,6 +159,6 @@ Found 13 models, 2 tests, 1 archives, 0 analyses, 204 macros, 2 operations....
 
 See [global configs](/reference/global-configs/version-compatibility) for usage details.
 
-## Recommendation
-* This is a recommended configuration
+## Recommendation 
+* This is a recommended configuration.
 * Before v1, you should pin your required dbt version to a minor release. After v1, you should pin to a major release (see above [example](#pin-to-a-range))
