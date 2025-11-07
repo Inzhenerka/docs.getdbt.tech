@@ -449,7 +449,7 @@ packages:
 
 </File>
 
-7. Create a MetricFlow time spine model following the [MetricFlow time spine guide](/guides/mf-time-spine?step=1). This replaces the old dbt_utils approach and avoids deprecation warnings.
+7. Create a MetricFlow time spine model following the [MetricFlow time spine guide](/guides/mf-time-spine?step=1). If you've got an existing time spine in your project configured before v1.9, this method replaces the old `dbt_utils` approach, avoids deprecation warnings when using v1.10+, and is required for upgrading to the <Constant name="fusion_engine" />.
 
 8. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run message and also see in the run details that dbt has successfully built your models.
 
