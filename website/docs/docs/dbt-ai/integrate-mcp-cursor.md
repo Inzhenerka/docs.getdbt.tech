@@ -21,16 +21,16 @@ Click one of the following application links with Cursor open to automatically c
 
 <TabItem value="CLI only (dbt Core and Fusion)">
 
-Local configuration for users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion" /> (no dbt platform features).
+Local configuration for users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion_engine" /> (no <Constant name="dbt_platform" /> features).
 
 [Add dbt Core or Fusion to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX1BST0pFQ1RfRElSIjoiL3BhdGgvdG8veW91ci9kYnQvcHJvamVjdCIsIkRCVF9QQVRIIjoiL3BhdGgvdG8veW91ci9kYnQvZXhlY3V0YWJsZSJ9LCJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl19)
 
 After clicking:
-1. Update `DBT_PROJECT_DIR` with the full path to your dbt project (the folder containing `dbt_project.yml`)
+1. Update `DBT_PROJECT_DIR` with the full path to your dbt project (the folder containing `dbt_project.yml`).
 2. Update `DBT_PATH` with the full path to your dbt executable:
-   - macOS/Linux: Run `which dbt` in terminal
-   - Windows: Run `where dbt` in Command Prompt or PowerShell
-3. Save the configuration
+   - macOS/Linux: Run `which dbt` in Terminal.
+   - Windows: Run `where dbt` in Command Prompt or PowerShell.
+3. Save the configuration.
 
 </TabItem>
 
@@ -42,9 +42,9 @@ Configuration settings for users who want OAuth authentication with the <Constan
 - [dbt platform + CLI](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX0hPU1QiOiJodHRwczovLzx5b3VyLWRidC1ob3N0LXdpdGgtY3VzdG9tLXN1YmRvbWFpbj4iLCJEQlRfUFJPSkVDVF9ESVIiOiIvcGF0aC90by9wcm9qZWN0IiwiREJUX1BBVEgiOiJwYXRoL3RvL2RidC9leGVjdXRhYmxlIn0sImNvbW1hbmQiOiJ1dngiLCJhcmdzIjpbImRidC1tY3AiXX0%3D)
 
 After clicking:
-1. Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `abc123.us1.dbt.com`)
-2. (For dbt platform + CLI) Update `DBT_PROJECT_DIR` and `DBT_PATH` as described above
-3. Save the configuration
+1. Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `abc123.us1.dbt.com`).
+2. (For <Constant name="dbt_platform" /> + CLI) Update `DBT_PROJECT_DIR` and `DBT_PATH` as described above.
+3. Save the configuration.
 
 </TabItem>
 
@@ -58,8 +58,8 @@ If you need custom environment variable configuration or prefer to use service t
 
     [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl0sImVudiI6e319)
 
-2. In the template, add your environment variables to the `env` section based on your needs
-3. Save the configuration
+2. In the template, add your environment variables to the `env` section based on your needs.
+3. Save the configuration.
 
 #### Using an `.env` file
 

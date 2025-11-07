@@ -23,7 +23,7 @@ Prerequisites:
 
 #### Using OAuth or environment variables directly
 
-The preferred method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
+The recommended method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
 
 ```bash
 # First, add the MCP server
@@ -38,7 +38,7 @@ In the configuration editor, add your environment variables based on your use ca
 <Tabs>
 <TabItem value="CLI only">
 
-For <Constant name="core" /> or <Constant name="fusion" /> only (no dbt platform):
+For <Constant name="core" /> or <Constant name="fusion" /> only (no <Constant name="dbt_platform" />):
 ```json
 {
   "command": "uvx",
@@ -96,10 +96,10 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 
 ## Claude for desktop
 
-1. Go to the Claude settings. Click on the Claude menu in your system's menu bar (not the settings within the Claude window itself) and select **Settings…**
+1. Go to the Claude settings. Click on the Claude menu in your system's menu bar (not the settings within the Claude window itself) and select **Settings…**.
 2. In the Settings window, navigate to the **Developer** tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
 3. Click the **Edit Config** button and open the configuration file with a text editor.
-4. Add your server configuration based on your use case. Choose the [correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server) from the options below:
+4. Add your server configuration based on your use case. Choose the [correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server) from the following options:
 
 
     <Expandable alt_header="Local MCP with OAuth">
@@ -114,7 +114,7 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 
     <Expandable alt_header="Local MCP (CLI only)">
 
-    Local configuration for users who only want to use dbt CLI commands with <Constant name="Core" /> or <Constant name="fusion" />
+    Local configuration for users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion" />
 
     ```json 
     {
