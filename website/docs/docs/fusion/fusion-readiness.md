@@ -39,7 +39,7 @@ The most commonly used dbt Labs managed packages (such as `dbt_utils` and `dbt_p
 Your project may implement features that <Constant name="fusion" /> currently [limits](/docs/fusion/supported-features#limitations) or doesn't support. 
 
 - [ ] Remove unnecessary features from your project to make it <Constant name="fusion" /> compatible. 
-- [ ] Monitor progress for critical features, knowing we are working to bring them to <Constant name="fusion" />. You can monitor their progress using the linked issues. 
+- [ ] Monitor progress for critical features, knowing we are working to bring them to <Constant name="fusion" />. You can monitor their progress using the issues linked in the [limitations table](/docs/fusion/supported-features#limitations). 
 
 ### 5. Review jobs configured in the dbt platform
 
