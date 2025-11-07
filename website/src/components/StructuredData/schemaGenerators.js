@@ -70,6 +70,28 @@ export function generateHowToSchema({ date, totalTime, commonProperties }) {
 }
 
 /**
+ * Generate TechArticle schema
+ */
+export function generateTechArticleSchema({ date, commonProperties }) {
+  const schema = {
+    ...commonProperties,
+    "@type": "TechArticle",
+    author: {
+      "@type": "Organization",
+      name: "dbt Labs",
+    },
+  };
+
+  // Add dates if provided
+  if (date) {
+    schema.datePublished = date;
+    schema.dateModified = date;
+  }
+
+  return schema;
+}
+
+/**
  * Generate WebPage schema
  */
 export function generateWebPageSchema({ date, commonProperties }) {

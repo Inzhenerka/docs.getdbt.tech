@@ -1,14 +1,16 @@
 import React from "react";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { useLocation } from "@docusaurus/router";
 import {
   getCommonProperties,
   generateBlogPostingSchema,
   generateHowToSchema,
+  generateTechArticleSchema,
   generateWebPageSchema,
 } from "./schemaGenerators";
 
 export default function StructuredData({
-  type = "BlogPosting",
+  type,
   title,
   description,
   authors,
@@ -19,6 +21,20 @@ export default function StructuredData({
   totalTime,
 }) {
   const { siteConfig } = useDocusaurusContext();
+  const location = useLocation();
+
+  // Determine the schema type based on route if not explicitly provided
+  let schemaType = type;
+  if (!schemaType) {
+    // Check route to determine appropriate schema type
+    if (location.pathname.includes("/guides/")) {
+      schemaType = "HowTo";
+    } else if (location.pathname.startsWith("/docs")) {
+      schemaType = "TechArticle";
+    } else {
+      schemaType = "WebPage";
+    }
+  }
 
   // Get common properties shared across all schema types
   const commonProperties = getCommonProperties({
@@ -32,7 +48,7 @@ export default function StructuredData({
   // Generate schema based on type
   let jsonLd;
 
-  if (type === "BlogPosting") {
+  if (schemaType === "BlogPosting") {
     jsonLd = generateBlogPostingSchema({
       title,
       authors,
@@ -40,13 +56,18 @@ export default function StructuredData({
       imageUrl,
       commonProperties,
     });
-  } else if (type === "HowTo") {
+  } else if (schemaType === "HowTo") {
     jsonLd = generateHowToSchema({
       date,
       totalTime,
       commonProperties,
     });
-  } else if (type === "WebPage") {
+  } else if (schemaType === "TechArticle") {
+    jsonLd = generateTechArticleSchema({
+      date,
+      commonProperties,
+    });
+  } else if (schemaType === "WebPage") {
     jsonLd = generateWebPageSchema({
       date,
       commonProperties,

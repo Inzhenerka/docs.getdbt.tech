@@ -183,11 +183,9 @@ export default function DocItemLayout({children}) {
   const {frontMatter, metadata} = useDoc();
   const searchWeight = frontMatter?.search_weight && frontMatter.search_weight
 
-  // Check if the current route contains /guides/
+  // Construct full URL for structured data
   const location = useLocation();
   const isGuidesRoute = location.pathname.includes('/guides/');
-
-  // Construct full URL for guides
   const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
   const fullUrl = `${siteUrl}${location.pathname}`;
 
@@ -199,26 +197,14 @@ export default function DocItemLayout({children}) {
 
   return (
     <div className="row">
-      {isGuidesRoute ? (
-        <StructuredData
-          type="HowTo"
-          title={frontMatter?.title}
-          description={frontMatter?.description || frontMatter?.hoverSnippet}
-          url={fullUrl}
-          date={formatDate(metadata?.lastUpdatedAt)}
-          tags={frontMatter?.tags || []}
-          totalTime={frontMatter?.time_to_complete}
-        />
-      ) : (
-        <StructuredData
-          type="WebPage"
-          title={frontMatter?.title}
-          description={frontMatter?.description || frontMatter?.hoverSnippet}
-          url={fullUrl}
-          date={formatDate(metadata?.lastUpdatedAt)}
-          tags={frontMatter?.tags || []}
-        />
-      )}
+      <StructuredData
+        title={frontMatter?.title}
+        description={frontMatter?.description || frontMatter?.hoverSnippet}
+        url={fullUrl}
+        date={formatDate(metadata?.lastUpdatedAt)}
+        tags={frontMatter?.tags || []}
+        totalTime={frontMatter?.time_to_complete}
+      />
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
