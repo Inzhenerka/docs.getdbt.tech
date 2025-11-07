@@ -63,25 +63,25 @@ Add this configuration to your MCP client (refer to the specific [integration gu
 
 **macOS/Linux:**
 
-1. **DBT_PROJECT_DIR**: The full path to your dbt project folder
+- **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `/Users/yourname/dbt-projects/my_project`
-   - This is the folder containing your `dbt_project.yml` file
+   - This is the folder containing your `dbt_project.yml` file.
 
-2. **DBT_PATH**: Find your dbt executable path by running in terminal:
+- **DBT_PATH**: Find your dbt executable path by running in terminal:
    ```bash
    which dbt
    ```
    - Example output: `/opt/homebrew/bin/dbt`
-   - Use this exact path in your configuration
+   - Use this exact path in your configuration.
 
 **Windows:**
 
-1. **DBT_PROJECT_DIR**: The full path to your dbt project folder
+- **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `C:\Users\yourname\dbt-projects\my_project`
-   - This is the folder containing your `dbt_project.yml` file
+   - This is the folder containing your `dbt_project.yml` file.
    - Use forward slashes or escaped backslashes: `C:/Users/yourname/dbt-projects/my_project`
 
-2. **DBT_PATH**: Find your dbt executable path by running in Command Prompt or PowerShell:
+- **DBT_PATH**: Find your dbt executable path by running in Command Prompt or PowerShell:
    ```bash
    where dbt
    ```
@@ -92,7 +92,7 @@ After completing this setup, skip to [step 3 (Test your configuration)](#3-optio
 
 ### Environment variable configuration
 
-If you need to configure multiple environment variables or prefer to manage them separately, you can use environment variables. You will need to configure environment variables to access the tools. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
+If you need to configure multiple environment variables or prefer to manage them separately, you can use environment variables. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
 ## Sample environment file
 
 Here is an example of the file:
@@ -114,13 +114,13 @@ You will need this file for integrating with MCP-compatible tools.
 
 | Environment Variable | Required | Description |
 | --- | --- | --- |
-| DBT_HOST | Required | Your dbt platform [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). **Important:** For Multi-cell accounts, exclude the account prefix from the hostname. The default is `cloud.getdbt.com`. |
+| `DBT_HOST` | Required | Your <Constant name="dbt_platform" /> [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). **Important:** For Multi-cell accounts, exclude the account prefix from the hostname. The default is `cloud.getdbt.com`. |
 | MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell account prefix here (not in DBT_HOST). If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](/docs/cloud/about-cloud/access-regions-ip-addresses). |
-| DBT_TOKEN | Required | Your personal access token or service token from the dbt platform. <br/>**Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
+| DBT_TOKEN | Required | Your personal access token or service token from the <Constant name="dbt_platform" />. <br/>**Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
 | DBT_ACCOUNT_ID | Required for Administrative API tools | Your [dbt account ID](/faqs/Accounts/find-user-id) |
-| DBT_PROD_ENV_ID | Required | Your dbt platform production environment ID |
-| DBT_DEV_ENV_ID | Optional | Your dbt platform development environment ID |
-| DBT_USER_ID | Optional | Your dbt platform user ID ([docs](/faqs/Accounts/find-user-id)) |
+| DBT_PROD_ENV_ID | Required | Your <Constant name="dbt_platform" /> production environment ID |
+| DBT_DEV_ENV_ID | Optional | Your <Constant name="dbt_platform" /> development environment ID |
+| DBT_USER_ID | Optional | Your <Constant name="dbt_platform" /> user ID ([docs](/faqs/Accounts/find-user-id)) |
 
 **Multi-cell configuration examples:**
 
@@ -142,19 +142,19 @@ If your full URL is `abc123.us1.dbt.com`, separate it as:
 
 ## dbt CLI settings
 
-The local dbt-mcp supports all flavors of dbt, including dbt Core and the dbt Fusion engine.
+The local dbt-mcp supports all flavors of dbt, including <Constant name="core" /> and <Constant name="fusion_engine" />.
 
 | Environment Variable | Required | Description | Example |
 | --- | --- | --- | --- |
-| DBT_PROJECT_DIR | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
-| DBT_PATH | Required | The full path to your dbt executable (Core/Fusion/Cloud CLI). See below for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
+| `DBT_PROJECT_DIR` | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
+| DBT_PATH | Required | The full path to your dbt executable (<Constant name="core" />/<Constant name="fusion" />/<Constant name="cloud_cli" />). See the next section for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
 | DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
 
 ### Locating your `DBT_PATH`
 
 **macOS/Linux:**
 
-Run this command in your terminal:
+Run this command in your Terminal:
 ```bash
 which dbt
 ```
@@ -172,7 +172,7 @@ Example output: `C:\Python39\Scripts\dbt.exe`
 
 **Additional notes:**
 
-- You can set any environment variable supported by your dbt executable, like [the ones supported in dbt Core](/reference/global-configs/about-global-configs#available-flags). 
+- You can set any environment variable supported by your dbt executable, like [the ones supported in <Constant name="core" />](/reference/global-configs/about-global-configs#available-flags). 
 - dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
 - `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command. You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
 
@@ -182,17 +182,17 @@ You can disable the following tool access on the local `dbt-mcp`:
 
 | Name                     | Default | Description                                                                     |
 | ------------------------ | ------- | ------------------------------------------------------------------------------- |
-| `DISABLE_DBT_CLI`        | `false` | Set this to `true` to disable dbt Core, dbt Cloud CLI, and dbt Fusion MCP tools |
-| `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools                    |
-| `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools                     |
-| `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Administrative API MCP tools                         |
-| `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools                                |
-| `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package) |
-| `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools    |
+| `DISABLE_DBT_CLI`        | `false` | Set this to `true` to disable <Constant name="core" />, <Constant name="cloud_cli" />, and dbt <Constant name="fusion" /> MCP tools. |
+| `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools.                    |
+| `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools.                     |
+| `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Administrative API MCP tools.                         |
+| `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools.                                |
+| `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package). |
+| `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools.    |
 
 #### Using environment variables in your MCP client configuration
 
-The preferred way to configure your MCP client is to use the `env` field in your JSON configuration file. This keeps all configuration in one file:
+The recommended way to configure your MCP client is to use the `env` field in your JSON configuration file. This keeps all configuration in one file:
 
 ```json
 {
@@ -233,14 +233,14 @@ However, this approach requires managing two files instead of one.
 
 In your command line tool, run the following to test your setup:
 
-**If using the env field in JSON:**
+**If using the `env` field in JSON:**
 ```bash
 export DBT_PROJECT_DIR=/path/to/project
 export DBT_PATH=/path/to/dbt
 uvx dbt-mcp
 ```
 
-**If using an .env file:**
+**If using an `.env` file:**
 ```bash
 uvx --env-file <path-to-.env-file> dbt-mcp
 ```
