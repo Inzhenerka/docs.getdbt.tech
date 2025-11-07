@@ -71,7 +71,7 @@ To get started, in VS Code:
       - macOS/Linux: Run `pwd` from your project folder.
       - Windows: Run `cd` from your project folder in Command Prompt.
     - **DBT_PATH**: Path to dbt executable
-      - macOS/Linux: Run `which dbt` 
+      - macOS/Linux: Run `which dbt`.
       - Windows: Run `where dbt`.
 
     </Expandable>
