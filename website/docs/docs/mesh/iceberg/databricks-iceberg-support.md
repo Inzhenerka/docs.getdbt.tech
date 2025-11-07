@@ -58,7 +58,7 @@ catalogs:
         file_format: delta   
 ```
 
-2. Add the `catalog_name` config parameter in either the SQL config (inside the .sql model file), property file (model folder), or your `dbt_project.yml`. <br />
+2. Add the `catalog_name` config parameter in either the SQL file config (inside the .sql model file), property file (model folder), or your `dbt_project.yml`. <br />
 <br />
 
 An example of `iceberg_model.sql`:

@@ -10,7 +10,7 @@ datatype: string | [string]
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'other-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'SQL file config', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">

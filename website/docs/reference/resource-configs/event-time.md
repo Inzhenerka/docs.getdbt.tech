@@ -118,7 +118,7 @@ sources:
 
 ## Definition
 
-dbt uses `event_time` to understand when an event occurred. Configure it in your project file (`dbt_project.yml`), property file (`models/properties.yml`), or SQL config file for [models](/docs/build/models), [seeds](/docs/build/seeds), or [sources](/docs/build/sources).
+dbt uses `event_time` to understand when an event occurred. Configure it in your project file (`dbt_project.yml`), property file (`models/properties.yml`), or SQL file config for [models](/docs/build/models), [seeds](/docs/build/seeds), or [sources](/docs/build/sources).
 
 <EventTimeRequired/>
 

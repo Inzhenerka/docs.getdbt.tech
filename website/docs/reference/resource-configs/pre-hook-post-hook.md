@@ -204,7 +204,7 @@ To achieve this behavior, you can use one of the following syntaxes:
 <Tabs>
 <TabItem value="beforebegin" label="Use before_begin and after_commit">
 
-#### SQL config: use the `before_begin` and `after_commit` helper macros
+#### SQL file config: use the `before_begin` and `after_commit` helper macros
 
 <File name='models/<modelname>.sql'>
 
@@ -225,7 +225,7 @@ select ...
 
 <TabItem value="dictionary" label="Use a dictionary">
 
-#### SQL config: use a dictionary
+#### SQL file config: use a dictionary
 <File name='models/<modelname>.sql'>
 
 ```sql

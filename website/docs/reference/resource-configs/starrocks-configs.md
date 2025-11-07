@@ -14,7 +14,7 @@ A dbt model can be configured using the following syntax:
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'SQL file config', value: 'config', },
   ]
 }>
 

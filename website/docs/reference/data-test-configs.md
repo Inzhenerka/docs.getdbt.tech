@@ -32,7 +32,7 @@ Click the link on each configuration option to read more about what it can do.
   defaultValue="project-yaml"
   values={[
     { label: 'Project file', value: 'project-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'SQL file config', value: 'config', },
     { label: 'Property file', value: 'property-yaml', },
   ]
 }>
@@ -133,7 +133,7 @@ This configuration mechanism is supported for specific instances of generic test
   defaultValue="project-yaml"
   values={[
     { label: 'Project file', value: 'project-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'SQL file config', value: 'config', },
     { label: 'Property file', value: 'property-yaml', },
   ]
 }>

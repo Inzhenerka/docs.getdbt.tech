@@ -37,7 +37,7 @@ Dynamic tables are supported with the following configuration parameters:
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'SQL file config', value: 'config', },
   ]
 }>
 
@@ -518,7 +518,7 @@ The default warehouse that dbt uses can be configured in your [Profile](/docs/co
   values={[
     { label: 'Project file', value: 'dbt_project.yml', },
     { label: 'Property file', value: 'models/my_model.yml', },
-    { label: 'SQL config', value: 'models/events/sessions.sql', },
+    { label: 'SQL file config', value: 'models/events/sessions.sql', },
     ]}
 >
 

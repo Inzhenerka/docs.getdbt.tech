@@ -32,7 +32,7 @@ course="Snapshots"
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config-resource', },
+    { label: 'SQL file config', value: 'config-resource', },
   ]
 }>
 
@@ -168,7 +168,7 @@ If you use one of the latest configs, such as `dbt_valid_to_current`, without mi
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'SQL file config', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">

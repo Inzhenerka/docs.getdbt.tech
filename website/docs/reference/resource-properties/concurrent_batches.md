@@ -23,7 +23,7 @@ models:
 </TabItem>
 
 
-<TabItem value="SQL config">
+<TabItem value="SQL file config">
 
 <File name='models/my_model.sql'>
 
