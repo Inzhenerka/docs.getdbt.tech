@@ -22,9 +22,9 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 <-->
 
-## Server Access
+## Server access
 
-The dbt MCP server can be used in two ways: locally or remotely. Choose the setup that best fits your workflow:
+You can use the dbt MCP server in two ways: locally or remotely. Choose the setup that best fits your workflow:
 
 ### Local MCP server
 
@@ -41,12 +41,12 @@ The [local MCP server](/docs/dbt-ai/setup-local-mcp) runs on your machine and re
 The remote MCP server from dbt offers data consumption use cases without local setup.
 
 The [remote MCP server](/docs/dbt-ai/setup-remote-mcp) connects to the <Constant name="dbt_platform" /> via HTTP and requires no local installation. This option is useful when:
-- You don't want to or are restricted from installing additional software on your system.
-- Your use case is primarily consumption-based (querying metrics, exploring metadata, viewing lineage).
+- You either don’t want to install, or are restricted from installing, additional software on your system.
+- Your use case is primarily consumption-based (for example, querying metrics, exploring metadata, viewing lineage).
 
 
 
-## Available Tools
+## Available tools
 
 ### Supported
 The dbt MCP server has access to many parts of the dbt experience related to development, deployment, and discovery. Here are the categories of tools supported based on what form of the MCP server you connect to as well as detailed information on exact commands or queries available to the LLM.
