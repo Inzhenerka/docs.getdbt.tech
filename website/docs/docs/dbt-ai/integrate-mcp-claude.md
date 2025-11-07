@@ -15,11 +15,11 @@ Claude is an AI assistant from Anthropic with two primary interfaces:
 
 You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads.
 
-### Setup with local dbt MCP server
+### Set up with local dbt MCP server
 
 Prerequisites:
-- Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp)
-- Know your configuration method (OAuth, dbt Core or Fusion, or environment variables)
+- Complete the [local MCP setup](/docs/dbt-ai/setup-local-mcp).
+- Know your configuration method (OAuth <Constant name="dbt_core"/> or <Constant name="fusion"/>, or environment variables)
 
 #### Using OAuth or environment variables directly
 
