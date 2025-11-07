@@ -12,7 +12,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 These instructions are for integrating dbt MCP and VS Code. Before starting, ensure you have:
 - Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp)
 - Installed VS Code with the latest updates
-- (For local MCP with CLI) Your dbt project paths are configured
+- (For local MCP with CLI) Configured your dbt project paths
 
 ## Set up with local dbt MCP server
 
