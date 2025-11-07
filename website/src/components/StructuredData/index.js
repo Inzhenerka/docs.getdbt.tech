@@ -15,6 +15,7 @@ export default function StructuredData({
   description,
   authors,
   date,
+  dateModified,
   url,
   imageUrl,
   tags,
@@ -41,6 +42,8 @@ export default function StructuredData({
     title,
     description,
     url,
+    date,
+    dateModified,
     tags,
     siteConfig,
   });
@@ -52,24 +55,20 @@ export default function StructuredData({
     jsonLd = generateBlogPostingSchema({
       title,
       authors,
-      date,
       imageUrl,
       commonProperties,
     });
   } else if (schemaType === "HowTo") {
     jsonLd = generateHowToSchema({
-      date,
       totalTime,
       commonProperties,
     });
   } else if (schemaType === "TechArticle") {
     jsonLd = generateTechArticleSchema({
-      date,
       commonProperties,
     });
   } else if (schemaType === "WebPage") {
     jsonLd = generateWebPageSchema({
-      date,
       commonProperties,
     });
   }

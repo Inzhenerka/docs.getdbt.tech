@@ -5,12 +5,14 @@
 /**
  * Generate common properties shared across all schema types
  */
-export function getCommonProperties({ title, description, url, tags, siteConfig }) {
-  return {
+export function getCommonProperties({ title, description, url, date, dateModified, tags, siteConfig }) {
+  const properties = {
     "@context": "https://schema.org",
     name: title,
     description: description,
     url: url,
+    inLanguage: "en-US",
+    mainEntityOfPage: url,
     keywords: tags?.map((tag) => (typeof tag === 'string' ? tag : tag.label)).join(","),
     publisher: {
       "@type": "Organization",
@@ -21,12 +23,25 @@ export function getCommonProperties({ title, description, url, tags, siteConfig 
       },
     },
   };
+
+  // Add dates if provided
+  if (date) {
+    properties.datePublished = date;
+  }
+  if (dateModified) {
+    properties.dateModified = dateModified;
+  } else if (date) {
+    // Fallback to datePublished if dateModified not provided
+    properties.dateModified = date;
+  }
+
+  return properties;
 }
 
 /**
  * Generate BlogPosting schema
  */
-export function generateBlogPostingSchema({ title, authors, date, imageUrl, commonProperties }) {
+export function generateBlogPostingSchema({ title, authors, imageUrl, commonProperties }) {
   return {
     ...commonProperties,
     "@type": "BlogPosting",
@@ -36,8 +51,6 @@ export function generateBlogPostingSchema({ title, authors, date, imageUrl, comm
         "@type": "Person",
         name: author.name,
       })) || [],
-    datePublished: date,
-    dateModified: date,
     image: imageUrl,
   };
 }
@@ -45,7 +58,7 @@ export function generateBlogPostingSchema({ title, authors, date, imageUrl, comm
 /**
  * Generate HowTo schema
  */
-export function generateHowToSchema({ date, totalTime, commonProperties }) {
+export function generateHowToSchema({ totalTime, commonProperties }) {
   const schema = {
     ...commonProperties,
     "@type": "HowTo",
@@ -54,12 +67,6 @@ export function generateHowToSchema({ date, totalTime, commonProperties }) {
       name: "dbt Labs",
     },
   };
-
-  // Add dates if provided
-  if (date) {
-    schema.datePublished = date;
-    schema.dateModified = date;
-  }
 
   // Add totalTime if provided (should be in ISO 8601 duration format, e.g., "PT30M")
   if (totalTime) {
@@ -72,8 +79,8 @@ export function generateHowToSchema({ date, totalTime, commonProperties }) {
 /**
  * Generate TechArticle schema
  */
-export function generateTechArticleSchema({ date, commonProperties }) {
-  const schema = {
+export function generateTechArticleSchema({ commonProperties }) {
+  return {
     ...commonProperties,
     "@type": "TechArticle",
     author: {
@@ -81,21 +88,13 @@ export function generateTechArticleSchema({ date, commonProperties }) {
       name: "dbt Labs",
     },
   };
-
-  // Add dates if provided
-  if (date) {
-    schema.datePublished = date;
-    schema.dateModified = date;
-  }
-
-  return schema;
 }
 
 /**
  * Generate WebPage schema
  */
-export function generateWebPageSchema({ date, commonProperties }) {
-  const schema = {
+export function generateWebPageSchema({ commonProperties }) {
+  return {
     ...commonProperties,
     "@type": "WebPage",
     author: {
@@ -103,12 +102,4 @@ export function generateWebPageSchema({ date, commonProperties }) {
       name: "dbt Labs",
     },
   };
-
-  // Add dates if provided
-  if (date) {
-    schema.datePublished = date;
-    schema.dateModified = date;
-  }
-
-  return schema;
 }
