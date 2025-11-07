@@ -51,7 +51,7 @@ require-dbt-version: >=1.0.0 # No quotes? No good
 require-dbt-version: ">= 1.0.0" # Don't put whitespace after the equality signs
 ```
 
-#### Avoid unbounded version ranges
+#### Avoid unbounded upper limits
 
 Having an unbounded upper limit in `require-dbt-version` (for example, `" >=1.0.0"`) is _not recommended_ because a project may break when dbt releases a new major release. We recommend always [defining both lower and upper version bounds](#pin-to-a-range) (for example, `">=1.0.0,<3.0.0"`) to ensure stability across releases.
 
