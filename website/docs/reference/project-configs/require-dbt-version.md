@@ -30,6 +30,8 @@ When you set this configuration, dbt sends a helpful error message for any user 
 
 If this configuration is not specified, no version check will occur.
 
+Before v1, we recommend you pin your required dbt version to a minor release. After v1, you should pin to a major release. See [pin to a range](#pin-to-a-range) for more details.
+
 :::info <Constant name="cloud" /> release tracks 
 
 <Snippet path="_config-dbt-version-check" />
@@ -158,7 +160,3 @@ Found 13 models, 2 tests, 1 archives, 0 analyses, 204 macros, 2 operations....
 ```
 
 See [global configs](/reference/global-configs/version-compatibility) for usage details.
-
-## Recommendation 
-* This is a recommended configuration.
-* Before v1, you should pin your required dbt version to a minor release. After v1, you should pin to a major release (see above [example](#pin-to-a-range))
