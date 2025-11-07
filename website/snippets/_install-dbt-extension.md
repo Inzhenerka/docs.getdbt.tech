@@ -9,6 +9,8 @@ This is the only official dbt Labs VS Code extension. Other extensions _can_ wor
 
 :::
 
+Before installing, make sure to review the [Limitations](/docs/fusion/supported-features#limitations) page as some features don't support <Constant name="fusion"/> just yet.
+
 ## Prerequisites
 
 To use the extension, you must meet the following prerequisites:
@@ -39,10 +41,10 @@ To install the dbt VS Code extension, follow these steps in VS Code or Cursor:
 6. (Optional) If you're new to the extension or VS Code/Cursor, you [can set your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment and [set any environment variables](/docs/configure-dbt-extension#configure-environment-variables) locally to use the VS Code extension features.
 
 You're all set up with the dbt extension! The next steps are:
-- Follow the [getting started](#getting-started) guide to get started with the extension.
+- Follow the [getting started](#getting-started) guide to begin the terminal onboarding workflow and configure your set up.
+- Review the [limitations and unsupported features](/docs/fusion/supported-features#limitations) to prepare your project.
 - [Install the dbt Fusion engine] (#install-fusion-manually) from the command line, if you haven't already.
 - [Register the extension](#register-the-extension) with your email address or <Constant name="dbt_platform" /> account to continue using it beyond the trial period.
-- Review the [about the dbt extension](/docs/about-dbt-extension) documentation to learn more about its features and functionality.
 
 #### Install Fusion manually
 
