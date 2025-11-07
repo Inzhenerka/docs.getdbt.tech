@@ -54,9 +54,9 @@ To define UDFs in dbt, refer to the following steps:
 
     </File>
 
-    **Note**: You can specify configs in the SQL file or in the corresponding YAML file in Step 2. 
+    **Note**: You can specify configs in the SQL file or in the corresponding property file in Step 2. 
 
-2. Specify the function name and define the config, properties, return type, and optional arguments in a corresponding YAML file. For example:
+2. Specify the function name and define the config, properties, return type, and optional arguments in a corresponding property file. For example:
 
 
     <File name='functions/schema.yml'>
@@ -80,7 +80,7 @@ To define UDFs in dbt, refer to the following steps:
     <!--other types not yet supported
     <Expandable alt_header="Supported UDF types">
 
-    You can use these values for the `type` property when you define a function in a YAML file.
+    You can use these values for the `type` property when you define a function in a property file.
 
     - `scalar` - Returns a single value per row
     - `aggregate` - Returns a single value per group, aggregating several rows

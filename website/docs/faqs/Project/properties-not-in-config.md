@@ -1,7 +1,7 @@
 ---
-title: Can I add tests and descriptions in a config block?
-description: "Types of properties defined in config blocks"
-sidebar_label: 'Types of properties defined in config blocks'
+title: Can I add tests and descriptions in a SQL file config?
+description: "Types of properties defined in SQL file configs"
+sidebar_label: 'Types of properties defined in SQL file configs'
 id: properties-not-in-config
 
 ---

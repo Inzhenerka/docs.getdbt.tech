@@ -109,7 +109,7 @@ with the following configuration parameters:
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'SQL config', value: 'config', },
   ]
 }>
 

@@ -29,7 +29,7 @@ When building out the structure of your project, you should consider these impac
 
 * **How would people run dbt commands** &mdash; Selecting a path
 * **How would people navigate within the project** &mdash; Whether as developers in the <Constant name="cloud_ide" /> or stakeholders from the docs
-* **How would people configure the models** &mdash; Some bulk configurations are easier done at the directory level so people don’t have to remember to do everything in a config block with each new model
+* **How would people configure the models** &mdash; Some bulk configurations are easier done at the directory level so people don't have to remember to do everything in a SQL file config with each new model
 
 ## Project configuration
 Every dbt project includes a project configuration file called `dbt_project.yml`. It defines the directory of the dbt project and other project configurations.

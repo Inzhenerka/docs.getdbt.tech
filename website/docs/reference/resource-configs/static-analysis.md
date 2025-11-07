@@ -65,7 +65,7 @@ from {{ ref('my_model') }}
 
 ## Definition
 
-You can configure if and when the <Constant name="fusion_engine" /> performs static SQL analysis for a model. Configure the `static_analysis` config in your `dbt_project.yml` file, model YAML file, or in the `config` block of your model file. Refer to [rendering strategies](/docs/fusion/new-concepts#rendering-strategies) for more information on how the <Constant name="fusion_engine" /> renders models.
+You can configure if and when the <Constant name="fusion_engine" /> performs static SQL analysis for a model. Configure the `static_analysis` config in your `dbt_project.yml` file, model property file, or in the SQL config of your model file. Refer to [rendering strategies](/docs/fusion/new-concepts#rendering-strategies) for more information on how the <Constant name="fusion_engine" /> renders models.
 
 The following values are available for `static_analysis`:
 

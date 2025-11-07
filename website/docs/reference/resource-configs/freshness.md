@@ -43,7 +43,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="Config block">
+<TabItem value="sql" label="SQL config">
 <File name="models/<filename>.sql">
   
 ```sql
@@ -199,7 +199,7 @@ If you want to build every hour on just weekdays (Monday to Friday), you can use
 </File>
 </TabItem>
 
-<TabItem value="sql" label="Config block">
+<TabItem value="sql" label="SQL config">
 <File name="models/<filename>.sql">
   
 ```sql

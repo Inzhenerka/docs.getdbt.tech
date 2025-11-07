@@ -24,7 +24,7 @@ A dbt model can be created as a Firebolt fact <Term id="table" /> and configured
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'SQL config', value: 'config', },
   ]
 }>
 
@@ -132,7 +132,7 @@ A dbt model can be materialized as a Firebolt dimension table and configured usi
   values={[
     { label: 'Project file', value: 'project-yaml', },
     { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'SQL config', value: 'config', },
   ]
 }>
 

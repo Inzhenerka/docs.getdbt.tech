@@ -195,7 +195,7 @@ models:
 </File>
 
 </TabItem>
-<TabItem value="sql" label="Config block">
+<TabItem value="sql" label="SQL config">
 
 <File name="models/<filename>.sql">
   
