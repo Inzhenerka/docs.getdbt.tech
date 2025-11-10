@@ -26,11 +26,9 @@ require-dbt-version: version-range | [version-range]
 
 You can use `require-dbt-version` to restrict your project to only work with a range of dbt versions. 
 
-When you set this configuration, dbt sends a helpful error message for any user who attempts to run the project with an unsupported version of dbt. This can be useful for package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) to ensure that users' dbt version is compatible with the package. Setting this configuration might also help your whole team remain synchronized on the same version of dbt for local development, to avoid compatibility issues from changed behavior.
+When you set this configuration, dbt issues error messages for packages on the [dbt Packages hub](https://hub.getdbt.com/) that specify a `require_dbt_version` that doesn't match. This can be useful for package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) to ensure that users' dbt version is compatible with the package. Setting this configuration might also help your whole team remain synchronized on the same version of dbt for local development, to avoid compatibility issues from changed behavior.
 
-If this configuration is not specified, no version check will occur.
-
-Before v1, we recommend you pin your required dbt version to a minor release. After v1, you should pin to a major release. See [pin to a range](#pin-to-a-range) for more details.
+You should pin to a major release. See [pin to a range](#pin-to-a-range) for more details. If this configuration isn't specified, no version check will occur.
 
 :::info <Constant name="cloud" /> release tracks 
 
@@ -53,7 +51,7 @@ require-dbt-version: ">= 1.0.0" # Don't put whitespace after the equality signs
 
 #### Avoid unbounded upper limits
 
-Having an unbounded upper limit in `require-dbt-version` (for example, `" >=1.0.0"`) is _not recommended_ because a project may break when dbt releases a new major version. We recommend always [defining both lower and upper version bounds](#pin-to-a-range) (for example, `">=1.0.0,<3.0.0"`) to ensure stability across releases.
+We don't recommend having an unbounded `require-dbt-version` (for example, `">=1.0.0"`). Without an upper limit, a project may break when dbt releases a new major version. We recommend [defining both lower and upper bounds](#pin-to-a-range), such as `">=1.0.0,<3.0.0"`, to ensure stability across releases. 
 
 ## Examples
 
@@ -65,7 +63,7 @@ The following examples showcase how to use the `require-dbt-version`:
 - [Require a specific dbt version](#require-a-specific-dbt-version) &mdash; Restrict your project to run only with an exact version of <Constant name="core" />.
 
 ### Specify a minimum dbt version
-Use a `>=` operator for a minimum boundary. In the following example, this project will run with any version of dbt greater than or equal to 1.0.0.
+Use a `>=` operator to specify a lower and an upper limit. In the following example, this project will run with any version of dbt greater than or equal to 1.0.0.
 
 
 <File name='dbt_project.yml'>
