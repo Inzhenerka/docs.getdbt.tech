@@ -50,7 +50,3 @@ If you already have the <Constant name="fusion_engine" /> installed, you can ski
 
     The installer adds this path automatically, but you may need to reload your shell for the `dbtf` command to work.
 
-3. Follow the [getting started](/docs/install-dbt-extension#getting-started) guide to get started with the extension. You can get started by either:
-   - Running `dbtf init` to use terminal onboarding,
-   - Running **Run dbt: Register dbt extension** in the command palette,
-   - Using the **Get started** button in the extension menu.
