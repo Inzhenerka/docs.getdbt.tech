@@ -6,8 +6,8 @@ default_value: None
 
 :::info Fusion compatibility
 The `require-dbt-version` also signals whether a project or package supports <Constant name="fusion_engine"/> (`2.0.0` and higher). 
-- If your version range includes 2.0 and higher, <Constant name="fusion"/> treats it as compatible. 
-- Initially, <Constant name="fusion"/> will show a warning when a project or package excludes 2.0+. 
+- If your version range includes 2.0 and higher, it's compatible with <Constant name="fusion"/>. 
+- Initially, <Constant name="fusion"/> will show a warning when a project's or package's `require-dbt-version` excludes 2.0+. 
 - In a future release, this will error, matching <Constant name="core"/> behavior. 
 - You can [bypass version checks](#disabling-version-checks) with `--no-version-check`. 
 
@@ -53,7 +53,7 @@ require-dbt-version: ">= 1.0.0" # Don't put whitespace after the equality signs
 
 #### Avoid unbounded upper limits
 
-Having an unbounded upper limit in `require-dbt-version` (for example, `" >=1.0.0"`) is _not recommended_ because a project may break when dbt releases a new major release. We recommend always [defining both lower and upper version bounds](#pin-to-a-range) (for example, `">=1.0.0,<3.0.0"`) to ensure stability across releases.
+Having an unbounded upper limit in `require-dbt-version` (for example, `" >=1.0.0"`) is _not recommended_ because a project may break when dbt releases a new major version. We recommend always [defining both lower and upper version bounds](#pin-to-a-range) (for example, `">=1.0.0,<3.0.0"`) to ensure stability across releases.
 
 ## Examples
 
