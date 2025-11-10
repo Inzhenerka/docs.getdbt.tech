@@ -157,7 +157,7 @@ If you're using VS Code with Windows Subsystem for Linux (WSL), make sure you've
 ### Server not starting
 
 Check the MCP server status:
-1. Run `MCP: List Servers` from the Command Palette (Control/Command + Shift + P)
+1. Run `MCP: List Servers` from the Command Palette (Control/Command + Shift + P).
 2. Look for any error messages next to the dbt server.
 3. Click on the server to see detailed logs.
 
