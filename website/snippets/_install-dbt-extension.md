@@ -9,9 +9,9 @@ This is the only official dbt Labs VS Code extension. Other extensions _can_ wor
 
 :::
 
-Before installing, make sure to review the [Limitations](/docs/fusion/supported-features#limitations) page as some features don't support <Constant name="fusion"/> just yet.
-
 ## Prerequisites
+
+Before installing, make sure to review the [Limitations](/docs/fusion/supported-features#limitations) page as some features don't support <Constant name="fusion"/> just yet.
 
 To use the extension, you must meet the following prerequisites:
 
@@ -22,7 +22,7 @@ To use the extension, you must meet the following prerequisites:
 | **Editor** | [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.com/en) code editor. |
 | **Operating systems** | macOS, Windows, or Linux-based computer. |
 |  **Configure your local setup** (Optional) | [Configure the extension](/docs/configure-dbt-extension) to mirror your dbt environment locally and set any environment variables locally to use the VS Code extension features. |
-| **Run dbt-autofix** (Optional) | [Run dbt-autofix](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-autofix) to fix any errors and deprecations in your dbt project. Review the [Limitations](/docs/fusion/supported-features#limitations) section to learn about the features that aren't currently supported by <Constant name="fusion" />. |
+| **Run dbt-autofix** (Optional) | [Run dbt-autofix](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-autofix) to fix any errors and deprecations in your dbt project. |
 
 ## Install the extension
 
@@ -40,10 +40,10 @@ To install the dbt VS Code extension, follow these steps in VS Code or Cursor:
 6. (Optional) If you're new to the extension or VS Code/Cursor, you [can set your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment and [set any environment variables](/docs/configure-dbt-extension#configure-environment-variables) locally to use the VS Code extension features.
 
 You're all set up with the dbt extension! The next steps are:
-- Follow the [getting started](#getting-started) guide to begin the terminal onboarding workflow and configure your set up.
-- Review the [limitations and unsupported features](/docs/fusion/supported-features#limitations) to prepare your project.
-- [Install the dbt Fusion engine] (#install-fusion-manually) from the command line, if you haven't already.
+- Follow the [getting started](#getting-started) section to begin the terminal onboarding workflow and configure your set up. If you encounter any parsing errors, you can also run the[`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to resolve them.
+- [Install the dbt Fusion engine](#install-fusion-manually) from the command line, if you haven't already.
 - [Register the extension](#register-the-extension) with your email address or <Constant name="dbt_platform" /> account to continue using it beyond the trial period.
+- Review the [limitations and unsupported features](/docs/fusion/supported-features#limitations) if you haven't already.
 
 #### Install Fusion manually
 
@@ -65,7 +65,7 @@ The following steps explain how to get started using the **Get started** button 
     <Lightbox src="/img/docs/extension/welcome-screen.png" width="80%" title="dbt VS Code extension welcome screen."/>
 3. Click through the items to get started with the extension:
     - **Open your dbt project:** Launches file explorer so you can select the dbt project you want to open with Fusion.
-    - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date.
+    - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date. If you encounter any parsing errors, you can also run the[`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to resolve them.
     - **Explore features:** Opens the [documentation](/docs/about-dbt-extension) so you can learn more about all the extension has to offer.
     - **Register:** Launches the registration workflow so you can continue to use the extension beyond the trial period.
 
