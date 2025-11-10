@@ -49,7 +49,7 @@ To define UDFs in dbt, refer to the following steps:
 
     ```sql
 
-    REGEXP_INSTR(a_string, r'^[0-9]+$')
+    REGEXP_INSTR(a_string, '^[0-9]+$')
     ```
 
     </File>
@@ -66,7 +66,7 @@ To define UDFs in dbt, refer to the following steps:
     ```yml
     functions:
       - name: is_positive_int # required
-        description: My UDF that determines if a string represents a positive (+) integer # required
+        description: My UDF that determines if a string represents a positive (+) integer # optional
         config:
           schema: udf_schema
           database: udf_db
@@ -99,7 +99,7 @@ To define UDFs in dbt, refer to the following steps:
 	      type: scalar # default value
     ```
 
-    If not explicitly specified, the `type` property defaults to `scalar`.
+    If not explicitly specified, the `type` config defaults to `scalar`.
 
     </Expandable>
     -->
@@ -123,7 +123,7 @@ To define UDFs in dbt, refer to the following steps:
 
     <TabItem value="Redshift">
     ```sql
-    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int(a_string VARCHAR)
+    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string VARCHAR)
     RETURNS INTEGER
     IMMUTABLE
     AS $$
@@ -174,7 +174,7 @@ To define UDFs in dbt, refer to the following steps:
     ```sql
     select
         maybe_positive_int_column,
-        {{ function('is_positive_int') }}(maybe_positive_int_column)
+        {{ function('is_positive_int') }}(maybe_positive_int_column) as is_positive_int
     from {{ ref('a_model_i_like') }}
     ```
     </File>
