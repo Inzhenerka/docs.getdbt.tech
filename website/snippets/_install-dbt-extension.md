@@ -48,6 +48,10 @@ You're all set up with the dbt extension! The next steps are:
 #### Install Fusion manually
 
     <FusionManualInstall />
+3. Follow the [getting started](/docs/install-dbt-extension#getting-started) guide to get started with the extension. You can get started by either:
+   - Running `dbtf init` to use terminal onboarding,
+   - Running **Run dbt: Register dbt extension** in the command palette,
+   - Using the **Get started** button in the extension menu.
 
 ## Getting started
 
