@@ -111,7 +111,7 @@ Once the upgrade is completed, you're ready to dive into all the features that t
 Users must complete registration within 14 days of installing the dbt extension. There are two ways to register:
 
 - [Don't have a dbt account?](#new-user-registration) &mdash; Follow the VS Code [“get started”](/docs/install-dbt-extension#getting-started) workflow to register and verify your email. For the initial installation, you only need to provide your name and email address to complete the registration. Subsequent installations will require you to complete the entire [dbt account registration process](#accessing-your-dbt-account) to use the extension. 
-- [Returning user or existing <Constant name="dbt_platform" /> user?](#register-with-an-existing-dbt-account) &mdash; If you have an existing <Constant name="dbt_platform" /> (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in.
+- [Returning user or existing <Constant name="dbt_platform" /> user?](#register-with-an-existing-dbt-account) &mdash; If you have an existing <Constant name="dbt_platform" /> or previously created one in the past (whether expired or active), no need to register! Just log in with the same email to prevent duplicate accounts. If you can't log in or if it's locked, reach out to [dbt Support](mailto:support@getdbt.com) to have it unlocked or reset before logging in.
 
 The VS Code extension is free for organizations for up to 15 users. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
 
