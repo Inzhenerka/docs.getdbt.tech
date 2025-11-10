@@ -80,7 +80,7 @@ Remember, having an unbounded upper limit isn't recommended. Instead, check out 
 Use a comma-separated list for an upper and lower bound. You can define a version range either as a YAML list (using square brackets) or as a comma-delimited string.
 
 - [General range](#general-range) &mdash; Use a comma separated list to specify an upper and lower bound.
-- [Fusion-compatible range](#fusion-compatible-range) &mdash; Include 2.0.0 or greater in your version range to signal compatibility with the <Constant name="fusion_engine"/>.
+- [Fusion-compatible range](#fusion-compatible-range): Include 2.0.0 or greater in your version range to signal compatibility with the <Constant name="fusion_engine"/>.
 
 #### General range
 In the following examples, this project will run with dbt 1.x.x:
