@@ -12,6 +12,8 @@ UDFs are particularly valuable for sharing logic across multiple tools, standard
 
 dbt creates, updates, and renames UDFs as part of DAG execution. The UDF is built in the warehouse before the model that references it. Refer to [listing and selecting UDFs](/docs/build/udfs#listing-and-selecting-udfs) for more info on how to build UDFs in your project.
 
+Refer to [Function properties](/reference/function-properties) or [Function configurations](/reference/function-configs) for more information on the configs/properties for UDFs.
+
 ## Prerequisites
 
 * Make sure you're using dbt platform's **Latest Fusion** or **Latest** [release track](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.11.
