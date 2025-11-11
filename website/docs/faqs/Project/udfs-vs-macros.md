@@ -21,6 +21,7 @@ UDFs let you create reusable warehouse functions for data validation, custom for
 
 </Expandable>
 
+
 <Expandable alt_header="You want dbt to manage the function lifecycle">
 
 dbt manages UDFs as part of your DAG execution, ensuring they're created before models that reference them. You can version control UDF definitions alongside your models, test changes in development environments, and deploy them together through CI/CD pipelines.
@@ -38,6 +39,15 @@ Jinja influences the function when it’s created, whereas arguments influence i
 
 </Expandable>
 
+<Expandable alt_header="You need Python logic that runs in your warehouse">
+
+A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL.  
+This makes it easier to apply complex transformations, calculations, or logic that would be difficult or verbose to express in SQL.  
+
+Python UDFs support conditionals and looping within the function logic itself (using Python syntax), and execute at runtime, not at compile time like macros.
+
+</Expandable>
+
 ## Use macros when:
 
 <Expandable alt_header="You need to generate SQL at compile time">
@@ -51,7 +61,7 @@ Macros generate SQL dynamically **before** it's sent to the warehouse (at compil
 UDFs execute **at query runtime** in the warehouse. While they can use Jinja templating in their definitions, they don't generate new SQL queries—they're pre-defined functions that get called by your SQL.
 
 :::note Expanding UDFs
-Currently, only SQL UDFs are supported. Python, Java, and Scala UDFs are planned for future releases. Once Python UDFs are available, they'll support conditionals and looping within the function logic itself (using Python syntax), but they'll still execute at runtime, not at compile time like macros.
+Currently, SQL and Python UDFs are supported. Java and Scala UDFs are planned for future releases. Python UDFs support conditionals and looping within the function logic itself (using Python syntax), and execute at runtime, not at compile time like macros.
 :::
 
 </Expandable>

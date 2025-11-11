@@ -41,9 +41,14 @@ dbt creates, updates, and renames UDFs as part of DAG execution. The UDF is buil
 
 ## Defining UDFs in dbt
 
-To define UDFs in dbt, refer to the following steps:
+You can define SQL and Python UDFs in dbt. Follow these steps to define UDFs in dbt:
 
-1. Create a SQL file under the `functions` directory. For example:
+1. Create a SQL or Python file under the `functions` directory. For example:
+
+    <Tabs>
+
+    <TabItem value="SQL">
+    Define a SQL UDF in a SQL file. For example, this UDF checks if a string represents a positive integer:
 
     <File name='functions/is_positive_int.sql'>
 
@@ -54,12 +59,34 @@ To define UDFs in dbt, refer to the following steps:
 
     </File>
 
-    **Note**: You can specify configs in the SQL file or in the corresponding YAML file in Step 2. 
+    </TabItem>
+    <TabItem value="Python">
+    You can define Python UDFs in your dbt project and use them in SQL queries, both inside and outside of dbt. Python UDFs are currently supported in Snowflake and BigQuery.
 
-    You can also create Python UDFs in the `functions` directory. For more information, see [Defining Python UDFs](#defining-python-udfs).
+    A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL. This makes it easier to apply complex data transformations, calculations, or logic that would be difficult to define in SQL.
+
+    <File name='functions/is_positive_int.py'>
+
+    ```py
+    import re
+    
+    def main(a_string):
+        """
+        Return 1 if a_string represents a positive integer (e.g., "10", "+8" not allowed here),
+        else 0.
+        """
+        return 1 if re.search(r'^[0-9]+$', a_string or '') else 0
+    ```
+    </File>
+    </TabItem>
+    </Tabs>
+
+    **Note**: You can specify configs in the SQL file or in the corresponding YAML file in next step (Step 2). 
 
 2. Specify the function name and define the config, properties, return type, and optional arguments in a corresponding YAML file. For example:
 
+    <Tabs>
+    <TabItem value="SQL">
 
     <File name='functions/schema.yml'>
 
@@ -155,7 +182,7 @@ To define UDFs in dbt, refer to the following steps:
     <TabItem value="Postgres">
 
     ```sql
-    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int_pos(a_string text)
+    CREATE OR REPLACE FUNCTION udf_schema.is_positive_in(a_string text)
     RETURNS int
     LANGUAGE sql
     IMMUTABLE
@@ -165,6 +192,71 @@ To define UDFs in dbt, refer to the following steps:
     ```
     </TabItem>
   
+    </Tabs>
+    </TabItem>
+    <TabItem value="Python">
+    
+    The following configs are required when defining a Python UDF: 
+
+    - [`runtime_version`](/reference/resource-configs/runtime-version) &mdash; Specify the Python version to run. Supported values are:
+      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
+      - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
+    - [`entry_point`](/reference/resource-configs/entry-point) &mdash; Specify the Python function to be called.
+
+    
+    For example:
+
+    <File name='functions/schema.yml'>
+
+    ```yml
+      functions:
+        - name: is_positive_int
+          description: Returns 1 if a_string matches ^[0-9]+$, else 0
+          config:
+            runtime_version: "3.11"   # required
+            entry_point: main         # required
+          arguments:
+            - name: a_string
+              data_type: string
+          returns:
+            data_type: integer
+    ```
+    </File>
+
+    This example generates the following `CREATE` UDF statement:
+
+    <Tabs>
+
+    <TabItem value="Snowflake">
+    ```sql
+    CREATE OR REPLACE FUNCTION is_positive_int(a_string STRING)
+      RETURNS INTEGER
+      LANGUAGE PYTHON
+      RUNTIME_VERSION = '3.11'
+      HANDLER = 'main'
+    AS $$
+    import re
+    def main(a_string):
+      return 1 if re.search(r'^[0-9]+$', a_string or '') else 0
+    $$;
+    ```
+    </TabItem>
+
+    <TabItem value="BigQuery">
+    ```sql
+    CREATE OR REPLACE FUNCTION is_positive_int(a_string STRING)
+    RETURNS INT64
+    LANGUAGE python
+    OPTIONS(runtime_version="python-3.11", entry_point="main")
+    AS r'''
+      import re
+      def main(a_string):
+        return 1 if re.search(r'^[0-9]+$', a_string or '') else 0
+    ''';
+    ```
+    </TabItem>
+    </Tabs>
+    </TabItem>
     </Tabs>
 
 3. Reference the UDF in a model using the `{{ function(...) }}` macro. For example:
@@ -191,10 +283,10 @@ To define UDFs in dbt, refer to the following steps:
     ```
     </File>
 
-    In your DAG, a UDF node is created from the SQL and YAML definitions, and there will be a dependency between `is_positive_int` → `my_model`.
+    In your DAG, a UDF node is created from the SQL/Python and YAML definitions, and there will be a dependency between `is_positive_int` → `my_model`.
    <Lightbox src="/img/docs/building-a-dbt-project/UDF-DAG.png" width="85%" title="The DAG for the UDF node" />
 
-After defining a UDF, if you update the SQL file that contains its function body (`is_positive_int.sql` in this example) or its configurations, your changes will be applied to the UDF in the warehouse next time you `build`.
+After defining a UDF, if you update the SQL/Python file that contains its function body (`is_positive_int.sql` in this example) or its configurations, your changes will be applied to the UDF in the warehouse next time you `build`.
 
 ### Setting `volatility` in UDFs
 
@@ -236,109 +328,6 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 
 <Volatility />
 
-### Defining Python UDFs
-
-You can define Python UDFs in your dbt project and use them in SQL queries, both inside and outside of dbt. Python UDFs are currently supported in Snowflake and BigQuery. 
-
-A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL. This makes it easier to apply complex data transformations, calculations, or logic that would be difficult to define in SQL.
-
-To define Python UDFs in dbt, refer to the following steps:
-
-1. Create a Python file under the `functions` directory. For example:
-
-    <File name='functions/my_function.py'>
-
-    ```py
-    def main(an_int):
-      return an_int + secret_int_a() + secret_int_b()
-
-    def secret_int_a():
-      return 2
-
-    def secret_int_b():
-      return 3
-    ```
-    </File>
-
-2. Specify the function name and define the configs, properties, return type, and optional arguments in a corresponding YAML file.
-
-    The following configs are required when defining a Python UDF: 
-
-    - `runtime_version` &mdash; Specify the Python version to run.
-
-      <Expandable alt_header="Supported values">
-
-      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
-      - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
-
-      </Expandable>
-
-    - `entry_point` &mdash; Specify the Python function to be called.
-
-    For example:
-
-    <File name='functions/schema.yml'>
-
-    ```yml
-    functions:
-      - name: my_function
-        description: Adds two secret numbers to initial number
-        config:
-          runtime_version: "3.11" # required
-          entry_point: main # required
-        arguments:
-          - name: an_int
-            data_type: int
-        returns:
-          data_type: int
-    ```
-    </File>
-
-    This example generates the following `CREATE` UDF statement:
-
-    <Tabs>
-
-    <TabItem value="Snowflake">
-    ```sql
-    CREATE OR REPLACE FUNCTION my_function(an_int INT)
-      RETURNS INT
-      LANGUAGE PYTHON
-      RUNTIME_VERSION = '3.11'
-      HANDLER = 'main'
-    AS $$
-    def main(an_int):
-      return an_int + secret_int_a() + secret_int_b()
-
-    def secret_int_a():
-      return 2
-
-    def secret_int_b():
-      return 3
-    $$;
-    ```
-    </TabItem>
-
-    <TabItem value="BigQuery">
-    ```sql
-    CREATE OR REPLACE FUNCTION my_function(an_int INT64)
-    RETURNS INT64
-    LANGUAGE python
-    OPTIONS(runtime_version="python-3.11", entry_point="main")
-    AS r'''
-      def main(an_int):
-        return an_int + secret_int_a() + secret_int_b()
-
-      def secret_int_a():
-        return 2
-
-      def secret_int_b():
-        return 3
-    ''';
-    ```
-    </TabItem>
-    </Tabs>
-
-3. Reference the UDF in a model and run `dbt compile`. Refer to Steps 3 and 4 of [Defining UDFs in dbt](#defining-udfs-in-dbt) for more information.
 
 ## Using UDFs in unit tests
 
@@ -382,7 +371,7 @@ Use the [`build` command](/reference/commands/build#functions) to select UDFs wh
 For more information about selecting UDFs, see the examples in [Node selector methods](/reference/node-selection/methods#file).
 
 ## Limitations
-- Creating UDFs in other languages (for example, Python, Java, or Scala) is not yet supported. 
+- Creating UDFs in other languages (for example, Java or Scala) is not yet supported. 
 - Only <Term id="scalar">scalar</Term> functions are currently supported.
 
 ## Related FAQs
