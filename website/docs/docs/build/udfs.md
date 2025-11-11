@@ -224,7 +224,9 @@ Follow these steps to define UDFs in dbt:
             data_type: integer
     ```
     </File>
-    Something to note is that `volatility` is accepted in dbt for Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility) for more information.
+   :::info volatility warehouse-specific
+   Something to note is that `volatility` is accepted in dbt for Python UDFs, but the handling  of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords) for more information.
+    :::
 
     This `functions/schema.yml` file example generates the following `CREATE` UDF statement:
 
