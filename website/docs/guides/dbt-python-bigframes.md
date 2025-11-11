@@ -63,6 +63,14 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    b. Enable the BigQuery API which also enables the following additional APIs automatically
       * [BigQuery API's](https://cloud.google.com/bigquery/docs/enable-assets#automatic-api-enablement)
 
+   c. Required API's
+   - BigQuery API: For all core BigQuery operations.
+   - Vertex AI API: To use the Colab Enterprise executor service.
+   - Cloud Storage API: For staging code and logs.
+   - IAM API: For managing permissions.
+   - Compute Engine API: As an underlying dependency for the notebook runtime environment.
+   - Dataform API: For managing the notebook code assets within BigQuery.
+
 
 2. **Create a service account and grant IAM permissions**
 
@@ -82,6 +90,14 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    #Grant Colab Entperprise User
    gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/aiplatform.colabEnterpriseUser
    ```
+
+   **Important! When using a Shared VPC**
+
+   When using Colab Enterprise in a Shared VPC environment, additional roles are required for the following service accounts on the Shared VPC host project:
+
+   - Vertex AI P4SA (service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com): This service account always requires the Compute Network User (roles/compute.networkUser) role on the Shared VPC host project.
+
+   - Colab Enterprise P6SA (service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com): This service account also needs the Compute Network User (roles/compute.networkUser) role on the Shared VPC host project. 
 
 3. *(Optional)* **Create a test BigQuery Dataset**
 
