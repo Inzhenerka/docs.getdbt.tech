@@ -90,15 +90,16 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    #Grant Colab Entperprise User
    gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/aiplatform.colabEnterpriseUser
    ```
-
-   **Important! When using a Shared VPC**
-
+   
+   :::info When using a Shared VPC
    When using Colab Enterprise in a Shared VPC environment, additional roles are required for the following service accounts on the Shared VPC host project:
+   - Vertex AI P4SA (`service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com`): This service account always requires the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
+     project. Replace `<PROJECT_NUMBER>` with the project number.
+   - Colab Enterprise P6SA (`service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com`): This service account also needs the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
+     project. Replace `<PROJECT_NUMBER>` with the project number.
+   :::
 
-   - Vertex AI P4SA (`service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com`): This service account always requires the Compute Network User (roles/compute.networkUser) role on the Shared VPC host project. Replacing `<PROJECT_NUMBER>` with the project number.
-   - Colab Enterprise P6SA (`service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com`): This service account also needs the Compute Network User (roles/compute.networkUser) role on the Shared VPC host project. Replacing `<PROJECT_NUMBER>` with the project number.
- 
-3. *(Optional)* **Create a test BigQuery Dataset**
+4. *(Optional)* **Create a test BigQuery Dataset**
 
    Create a new BigQuery Dataset if you don't already have one:
 
@@ -107,7 +108,7 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    bq mk --location=${REGION} echo "${GOOGLE_CLOUD_PROJECT}" | tr '-' '_'_dataset
    ```
 
-4. **Create a GCS bucket to stage the python code, and store logs**
+5. **Create a GCS bucket to stage the python code, and store logs**
 
    For temporary log and code storage, please create a GCS bucket and assign the required permissions:
 
