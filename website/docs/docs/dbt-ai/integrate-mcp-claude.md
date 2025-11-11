@@ -13,7 +13,7 @@ Claude is an AI assistant from Anthropic with two primary interfaces:
 
 ## Claude Code
 
-You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads.
+You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads. See the [About MCP](/docs/dbt-ai/about-mcp#server-access) page for more more information about local and remote server features.
 
 ### Set up with local dbt MCP server
 
@@ -25,15 +25,18 @@ Prerequisites:
 
 The recommended method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
 
-```bash
-# First, add the MCP server
-claude mcp add dbt -- uvx dbt-mcp
+1. Add the MCP server:
 
-# Then edit the configuration to add environment variables
-claude mcp edit dbt
-```
+  ```bash
+  claude mcp add dbt -- uvx dbt-mcp
+  ```
+2. Open the configuration editor:
 
-In the configuration editor, add your environment variables based on your use case:
+  ```bash
+  claude mcp edit dbt
+  ```
+
+3. In the configuration editor, add your environment variables based on your use case:
 
 <Tabs>
 <TabItem value="CLI only">

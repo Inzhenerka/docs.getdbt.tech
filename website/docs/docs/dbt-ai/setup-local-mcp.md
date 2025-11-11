@@ -61,7 +61,9 @@ Add this configuration to your MCP client (refer to the specific [integration gu
 
 #### Locating your paths
 
-**macOS/Linux:**
+Follow the appropriate instructions for your OS to locate your path:
+
+<Expandable alt_header="macOS/Linux" />
 
 - **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `/Users/yourname/dbt-projects/my_project`
@@ -74,7 +76,9 @@ Add this configuration to your MCP client (refer to the specific [integration gu
    - Example output: `/opt/homebrew/bin/dbt`
    - Use this exact path in your configuration.
 
-**Windows:**
+</Expandable>
+
+<Expandable alt_header="Windows" >
 
 - **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `C:\Users\yourname\dbt-projects\my_project`
@@ -88,12 +92,13 @@ Add this configuration to your MCP client (refer to the specific [integration gu
    - Example output: `C:\Python39\Scripts\dbt.exe`
    - Use forward slashes or escaped backslashes: `C:/Python39/Scripts/dbt.exe`
 
+</Expandable>
+
 After completing this setup, skip to [step 3 (Test your configuration)](#3-optional-test-your-configuration).
 
 ### Environment variable configuration
 
 If you need to configure multiple environment variables or prefer to manage them separately, you can use environment variables. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
-## Sample environment file
 
 Here is an example of the file:
 
@@ -152,7 +157,9 @@ The local dbt-mcp supports all flavors of dbt, including <Constant name="core" /
 
 ### Locating your `DBT_PATH`
 
-**macOS/Linux:**
+Follow the instructions for your OS to locate your `DBT_PATH`:
+
+<Expandable alt_header="macOS/Linux" >
 
 Run this command in your Terminal:
 ```bash
@@ -160,7 +167,9 @@ which dbt
 ```
 Example output: `/opt/homebrew/bin/dbt`
 
-**Windows:**
+</Expandable>
+
+<Expandable alt_header="Windows" >
 
 Run this command in Command Prompt or PowerShell:
 ```bash
@@ -169,6 +178,8 @@ where dbt
 Example output: `C:\Python39\Scripts\dbt.exe`
 
 **Note:** Use forward slashes in your configuration: `C:/Python39/Scripts/dbt.exe`
+
+</Expandable>
 
 **Additional notes:**
 
