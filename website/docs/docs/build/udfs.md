@@ -65,8 +65,7 @@ Follow these steps to define UDFs in dbt:
 
     </TabItem>
     <TabItem value="Python">
-    Define a Python UDF in a Python file.
-
+    Define a Python UDF in a Python file. The Python function returns 1 if `a_string` represents a positive integer (like "10", "+8" not allowed).
 
     <File name='functions/is_positive_int.py'>
 
@@ -210,10 +209,12 @@ Follow these steps to define UDFs in dbt:
     ```yml
       functions:
         - name: is_positive_int
-          description: My UDF that determines if a string represents a positive (+) integer # optional
+          description: My UDF that determines if a string represents a positive (+) integer. Returns 1 if a_string represents a positive integer (like "10", "+8" not allowed here). # optional
           config:
             runtime_version: "3.11"   # required
-            entry_point: main         # required
+            entry_point: main      
+            schema: udf_schema
+            database: udf_db
           arguments:
             - name: a_string
               data_type: string
