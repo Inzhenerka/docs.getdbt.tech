@@ -216,7 +216,7 @@ Follow these steps to define UDFs in dbt:
             entry_point: main      
             schema: udf_schema
             database: udf_db
-            volatility: deterministic  # behavior is warehouse-specific; see note after this example
+            volatility: deterministic  
           arguments:
             - name: a_string
               data_type: string
@@ -224,9 +224,7 @@ Follow these steps to define UDFs in dbt:
             data_type: integer
     ```
     </File>
-   :::info volatility warehouse-specific
-   Something to note is that `volatility` is accepted in dbt for Python UDFs, but the handling  of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords) for more information.
-    :::
+
 
     This `functions/schema.yml` file example generates the following `CREATE` UDF statement:
 
@@ -264,7 +262,12 @@ Follow these steps to define UDFs in dbt:
     </TabItem>
     </Tabs>
 
-3. Reference the UDF in a model using the `{{ function(...) }}` macro. For example:
+
+	:::info volatility warehouse-specific
+   	Something to note is that `volatility` is accepted in dbt for both SQL and Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords) for more information.
+    :::
+
+4. Reference the UDF in a model using the `{{ function(...) }}` macro. For example:
 
     <File name="models/my_model.sql">
 
@@ -276,7 +279,7 @@ Follow these steps to define UDFs in dbt:
     ```
     </File>
 
-4. Run `dbt compile`. In the following example, the `{{ function('is_positive_int') }}` is replaced by the UDF name `udf_db.udf_schema.is_positive_int`.
+5. Run `dbt compile`. In the following example, the `{{ function('is_positive_int') }}` is replaced by the UDF name `udf_db.udf_schema.is_positive_int`.
 
     <File name="models/my_model.sql">
 
