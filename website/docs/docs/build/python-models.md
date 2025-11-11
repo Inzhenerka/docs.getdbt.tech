@@ -630,11 +630,10 @@ def model(dbt, session):
 
 #### Code reuse
 
-Currently, Python functions defined in one dbt model can't be imported and reused in other models. This is something dbt Labs would like to support, so there are two patterns we're considering:
+To re-use a Python function across multiple dbt models, you can define [Python UDFs](/docs/build/udfs) under `/functions` with a matching YAML file. These UDFs live in your warehouse and can be reused across tools (BI, notebooks, SQL clients). 
 
-- **Project-defined UDFs (managed by dbt):** [Define SQL or Python UDFs](/docs/build/udfs) under `/functions` with a matching YAML file. These UDFs live in your warehouse and can be reused across tools (BI, notebooks, SQL clients).
-- Creating and registering **"named" UDFs** &mdash; This process is different across data platforms and has some performance limitations. For example, Snowpark supports [vectorized UDFs](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) for pandas-like functions that you can execute in parallel.
-- **Private Python packages** &mdash; In addition to importing reusable functions from public PyPI packages, many data platforms support uploading custom Python assets and registering them as packages. The upload process looks different across platforms, but your code’s actual `import` looks the same.
+In the future, we're considering also adding support for Private Python packages. In addition to importing reusable functions from public PyPI packages, many data platforms support uploading custom Python assets and registering them as packages. The upload process looks different across platforms, but your code’s actual `import` looks the same.
+
 
 :::note ❓ dbt questions
 
