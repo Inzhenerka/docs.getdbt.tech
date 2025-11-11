@@ -105,7 +105,7 @@ Providing a non-unique key will result in unexpected snapshot results. dbt **wil
 
 ## Default
 
-This parameter is optional. If you don't provide a `unique_key`, adapters will default to using `incremental_strategy: append`.
+This parameter is optional. If you don't provide a `unique_key`, your adapter will default to using `incremental_strategy: append`.
 
 If you leave out the `unique_key` parameter and use strategies like `merge`, `insert_overwrite`, `delete+insert`, or `microbatch`, the adapter will fall back to using `incremental_strategy: append`.
 
