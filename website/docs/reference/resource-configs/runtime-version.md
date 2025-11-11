@@ -12,7 +12,6 @@ functions:
   - name: <function name>
     config:
       runtime_version: <string> # required for Python UDFs
-      entry_point: <string> # required for Python UDFs
 ```
 
 </File>
@@ -26,7 +25,18 @@ When creating Python UDFs, specify the Python version to run in `runtime_version
 - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
 - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
 
+## Example
+In this example, we're using the Python version `3.11` for the UDF.
 
+<File name='functions/schema.yml'>
+
+```yaml
+functions:
+  - name: is_positive_int
+    config:
+      runtime_version: "3.11"
+```
+</File>
 ## Related documentation
 
 - [User-defined functions](/docs/build/udfs)

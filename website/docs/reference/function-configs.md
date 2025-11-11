@@ -129,26 +129,6 @@ functions:
 </TabItem>
 </Tabs>
 
-### Configurations for Python functions
-
-<File name='functions/schema.yml'>
-
-```yaml
-
-functions:
-  - name: [<function-name>]
-    config:
-      [enabled](/reference/resource-configs/enabled): true | false
-      [tags](/reference/resource-configs/tags): <string> | [<string>]
-      [database](/reference/resource-configs/database): <string>
-      [schema](/reference/resource-properties/schema): <string>
-      [alias](/reference/resource-configs/alias): <string>
-      [meta](/reference/resource-configs/meta): {<dictionary>}
-
-```
-
-</File>
-
 
 ## Configuring functions
 Functions are configured in YAML files, either in `dbt_project.yml` or within an individual function's YAML properties file. The function body is defined in a SQL file in the `functions/` directory.
