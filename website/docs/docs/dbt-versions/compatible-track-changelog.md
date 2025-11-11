@@ -17,8 +17,8 @@ Release date: November 11, 2025
 ### dbt cloud-based platform 
 
 ### Under the Hood
-- Record source column schemas when DBT_RECORDER_MODE is set
-- Issue additional column schema retrieval for hardcoded relation references in sql
+- Record source column schemas when `DBT_RECORDER_MODE` is set
+- Issue additional column schema retrieval for hardcoded relation references in SQL
 - Make source schema recording cache thread-safe
 - Record column schemas for deferred relations and unselected dependencies
 
