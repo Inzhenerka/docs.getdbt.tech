@@ -57,8 +57,9 @@ Follow these steps to define UDFs in dbt:
     <File name='functions/is_positive_int.sql'>
 
     ```sql
+    REGEXP_INSTR(a_string, '^[0-9]+$') # syntax for BigQuery, Snowflake, and Redshift
 
-    REGEXP_INSTR(a_string, '^[0-9]+$')
+    regexp_instr(a_string, '^[0-9]+$') # syntax for Postgres and Databricks
     ```
 
     </File>
