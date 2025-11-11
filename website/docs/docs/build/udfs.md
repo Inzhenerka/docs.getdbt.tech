@@ -43,14 +43,16 @@ Refer to [Function properties](/reference/function-properties) or [Function conf
 
 ## Defining UDFs in dbt
 
-You can define SQL and Python UDFs in dbt. Follow these steps to define UDFs in dbt:
+You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently supported in Snowflake and BigQuery.
 
-1. Create a SQL or Python file under the `functions` directory. For example:
+Follow these steps to define UDFs in dbt:
+
+1. Create a SQL or Python file under the `functions` directory. For example, this UDF checks if a string represents a positive integer:
 
     <Tabs>
 
     <TabItem value="SQL">
-    Define a SQL UDF in a SQL file. For example, this UDF checks if a string represents a positive integer:
+    Define a SQL UDF in a SQL file.
 
     <File name='functions/is_positive_int.sql'>
 
@@ -63,9 +65,8 @@ You can define SQL and Python UDFs in dbt. Follow these steps to define UDFs in 
 
     </TabItem>
     <TabItem value="Python">
-    You can define Python UDFs in your dbt project and use them in SQL queries, both inside and outside of dbt. Python UDFs are currently supported in Snowflake and BigQuery.
+    Define a Python UDF in a Python file.
 
-    A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL. This makes it easier to apply complex data transformations, calculations, or logic that would be difficult to define in SQL.
 
     <File name='functions/is_positive_int.py'>
 
@@ -184,7 +185,7 @@ You can define SQL and Python UDFs in dbt. Follow these steps to define UDFs in 
     <TabItem value="Postgres">
 
     ```sql
-    CREATE OR REPLACE FUNCTION udf_schema.is_positive_in(a_string text)
+    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int(a_string text)
     RETURNS int
     LANGUAGE sql
     IMMUTABLE
@@ -213,7 +214,7 @@ You can define SQL and Python UDFs in dbt. Follow these steps to define UDFs in 
     ```yml
       functions:
         - name: is_positive_int
-          description: Returns 1 if a_string matches ^[0-9]+$, else 0
+          description: My UDF that determines if a string represents a positive (+) integer # optional
           config:
             runtime_version: "3.11"   # required
             entry_point: main         # required
@@ -288,7 +289,7 @@ You can define SQL and Python UDFs in dbt. Follow these steps to define UDFs in 
     In your DAG, a UDF node is created from the SQL/Python and YAML definitions, and there will be a dependency between `is_positive_int` → `my_model`.
    <Lightbox src="/img/docs/building-a-dbt-project/UDF-DAG.png" width="85%" title="The DAG for the UDF node" />
 
-After defining a UDF, if you update the SQL/Python file that contains its function body (`is_positive_int.sql` in this example) or its configurations, your changes will be applied to the UDF in the warehouse next time you `build`.
+After defining a UDF, if you update the SQL/Python file that contains its function body (`is_positive_int.sql` or `is_positive_int.py` in this example) or its configurations, your changes will be applied to the UDF in the warehouse next time you `build`.
 
 ### Setting `volatility` in UDFs
 
