@@ -293,7 +293,7 @@ When the `require_all_warnings_handled_by_warn_error` flag is set to `True`, we 
    - If the build fails because warnings are already treated as errors (via `--warn-error` or `--warn-error-options`), fix those first and re-run.
 2. Review the logs:
    - If you see warnings, you have warnings that aren’t currently handled by `--warn-error`/`--warn-error-options`. Continue to the next step.
-   - If there are no warnings, proceed to enable the flag in the next step.
+   - If there are no warnings, enable the flag in all environments and that's it!
 3. Enable `require_all_warnings_handled_by_warn_error` in your development environment and fix any warnings that now surface as errors.
 4. Enable the flag in your CI environment (if you have one) and ensure builds pass.
 5. Enable the flag in your production environment.
