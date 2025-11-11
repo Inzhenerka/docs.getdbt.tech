@@ -20,6 +20,16 @@ functions:
 
 When creating Python UDFs, specify the Python function to be called in `entry_point`.
 
+Different warehouses show different names for the entry point function. Check out the following table for the different names:
+
+| Warehouse | Python UDF support in dbt | How `entry_point` is used | Example DDL generated |
+| -- | -- | -- | --| 
+| Snowflake | ✅ | Becomes the `HANDLER` name in `LANGUAGE PYTHON UDF` | `CREATE OR REPLACE FUNCTION my_function(a_string STRING) RETURNS INT LANGUAGE PYTHON RUNTIME_VERSION = '3.11' HANDLER = 'main' AS $$\n# ...python file contents...\n$$;` |
+|BigQuery | ✅ | Becomes the entry_point in `OPTIONS(...)` | `CREATE OR REPLACE FUNCTION my_function(a_string STRING) RETURNS INT64 LANGUAGE python OPTIONS(runtime_version='python-3.11', entry_point='main') AS r''' \n# ...python file contents...\n''';` | 
+|Databricks | ❌ (via dbt functions) | Not supported as a dbt function resource | 
+| Redshift | ❌ (Python UDFs not supported) | — | — | 
+|Postgres | ❌ (Python UDFs not supported) | — | — |
+
 ## Example
 For example, if you have a Python UDF in `functions/my_function.py` with the following code which uses the function `main` as the entry point:
 

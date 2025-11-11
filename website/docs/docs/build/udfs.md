@@ -215,6 +215,7 @@ Follow these steps to define UDFs in dbt:
             entry_point: main      
             schema: udf_schema
             database: udf_db
+            volatility: deterministic  # behavior is warehouse-specific; see note after this example
           arguments:
             - name: a_string
               data_type: string
@@ -222,8 +223,9 @@ Follow these steps to define UDFs in dbt:
             data_type: integer
     ```
     </File>
+    Something to note is that `volatility` is accepted in dbt for Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility) for more information.
 
-    This example generates the following `CREATE` UDF statement:
+    This `functions/schema.yml` file example generates the following `CREATE` UDF statement:
 
     <Tabs>
 
