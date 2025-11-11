@@ -229,7 +229,7 @@ Follow these steps to define UDFs in dbt:
 
     <TabItem value="Snowflake">
     ```sql
-    CREATE OR REPLACE FUNCTION is_positive_int(a_string STRING)
+    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
       RETURNS INTEGER
       LANGUAGE PYTHON
       RUNTIME_VERSION = '3.11'
@@ -244,7 +244,7 @@ Follow these steps to define UDFs in dbt:
 
     <TabItem value="BigQuery">
     ```sql
-    CREATE OR REPLACE FUNCTION is_positive_int(a_string STRING)
+    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
     RETURNS INT64
     LANGUAGE python
     OPTIONS(runtime_version="python-3.11", entry_point="main")
