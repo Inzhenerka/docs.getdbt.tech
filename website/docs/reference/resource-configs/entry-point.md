@@ -25,7 +25,7 @@ Different warehouses show different names for the entry point function. Check ou
 | Warehouse | Python UDF support in dbt| How `entry_point` is used | 
 | -- | -- | -- | 
 | Snowflake | ✅ | Becomes the `HANDLER` name in `LANGUAGE PYTHON UDF` | 
-|BigQuery | ✅ | Becomes the entry_point in `OPTIONS(...)` | 
+|BigQuery | ✅ | Becomes the `entry_point` in `OPTIONS(...)` | 
 |Databricks | ❌  |- | 
 | Redshift | ❌ | — | 
 |Postgres | ❌  | — | 
