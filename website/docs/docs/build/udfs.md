@@ -264,7 +264,7 @@ Follow these steps to define UDFs in dbt:
 
 
 	:::info volatility warehouse-specific
-   	Something to note is that `volatility` is accepted in dbt for both SQL and Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords) for more information.
+   	Something to note is that `volatility` is accepted in dbt for both SQL and Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [setting volatility](#setting-volatility-in-udfs) for more information.
     :::
 
 4. Reference the UDF in a model using the `{{ function(...) }}` macro. For example:
