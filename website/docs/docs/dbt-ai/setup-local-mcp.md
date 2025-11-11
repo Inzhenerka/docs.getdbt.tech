@@ -24,7 +24,7 @@ This method uses OAuth to authenticate with your <Constant name="dbt_platform" /
 
 :::info Static subdomains required
 
-Only accounts with static subdomains (for example, abc123.us1.dbt.com) can use OAuth with MCP servers. All accounts are in the process of being migrated to static subdomains by December 2025. Contact support for more information.
+Only accounts with static subdomains (for example, `abc123.us1.dbt.com`) can use OAuth with MCP servers. All accounts are in the process of being migrated to static subdomains by December 2025. Contact support for more information.
 
 :::
 
@@ -229,7 +229,7 @@ If you prefer to manage environment variables in a separate file, you can create
 
 However, this approach requires managing two files instead of one.
 
-## 3. (Optional) Test your configuration
+## (Optional) Test your configuration
 
 In your command line tool, run the following to test your setup:
 
@@ -247,7 +247,7 @@ uvx --env-file <path-to-.env-file> dbt-mcp
 
 If there are no errors, your configuration is correct.
 
-## 4. Set up your MCP client
+## Set up your MCP client
 
 After completing your configuration, follow the specific integration guide for your chosen tool:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
