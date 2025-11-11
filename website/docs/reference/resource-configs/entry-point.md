@@ -21,7 +21,7 @@ functions:
 When creating Python UDFs, specify the Python function to be called in `entry_point`.
 
 ## Example
-For example, if you have a Python UDF in `functions/my_function.py` with the following code which has a function named `main` as the entry point:
+For example, if you have a Python UDF in `functions/my_function.py` with the following code which uses the function `main` as the entry point:
 
 <File name='functions/my_function.py'>
 
