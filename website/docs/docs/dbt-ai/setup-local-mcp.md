@@ -63,7 +63,7 @@ Add this configuration to your MCP client (refer to the specific [integration gu
 
 Follow the appropriate instructions for your OS to locate your path:
 
-<Expandable alt_header="macOS/Linux" />
+<Expandable alt_header="macOS/Linux" >
 
 - **DBT_PROJECT_DIR**: The full path to your dbt project folder
    - Example: `/Users/yourname/dbt-projects/my_project`
