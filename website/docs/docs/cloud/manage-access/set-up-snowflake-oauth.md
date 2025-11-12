@@ -8,7 +8,7 @@ id: "set-up-snowflake-oauth"
 
 :::info Subdomain migration
 
-We're migrating <Constant name="dbt_platform" /> [multi-tenant accounts worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses) to static subdomains. Once we complete the migration, we will automatically redirect you from the `cloud.getdbt.com` URL to your new URL (for example, `abc123.us1.dbt.com`), which you can find in your account settings. If your organization has network allow-listing, add the `us1.dbt.com` domain to your allow list. 
+We're migrating <Constant name="dbt_platform" /> [multi-tenant accounts worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses) to static subdomains. Once we complete the migration, we will automatically redirect you from the original URL (for example, `cloud.getdbt.com`) to your new URL with a static subdomain (for example, `abc123.us1.dbt.com`), which you can find in your account settings. If your organization has network allow-listing, add the `us1.dbt.com` domain to your allow list. 
 
 The migration may require additional actions in your Snowflake account. See [subdomain migration](#subdomain-migration) for more information.
 
