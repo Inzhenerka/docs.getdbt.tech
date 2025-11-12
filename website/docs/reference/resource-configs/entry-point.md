@@ -20,15 +20,12 @@ functions:
 
 When creating Python UDFs, specify the Python function to be called in `entry_point`.
 
-Different warehouses show different names for the entry point function. Check out the following table for the different names:
+Python UDFs are currently supported in Snowflake and BigQuery. Each warehouse uses a different name for the entry point function. The following table shows what they’re called:
 
 | Warehouse | Support for dbt Python UDFs | How `entry_point` is used | 
 | -- | -- | -- | 
 | Snowflake | ✅ | Becomes the `HANDLER` name in `LANGUAGE PYTHON UDF` | 
-|BigQuery | ✅ | Becomes the `entry_point` in `OPTIONS(...)` | 
-|Databricks | ❌| — | 
-| Redshift | ❌ | — | 
-|Postgres | ❌  | — | 
+| BigQuery | ✅ | Becomes the `entry_point` in `OPTIONS(...)` |  
 
 ## Example
 For example, if you have a Python UDF in `functions/my_function.py` with the following code which uses the function `main` as the entry point:
