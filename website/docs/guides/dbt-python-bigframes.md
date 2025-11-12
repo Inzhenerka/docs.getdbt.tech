@@ -89,10 +89,10 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    
    :::info When using a Shared VPC
    When using Colab Enterprise in a Shared VPC environment, additional roles are required for the following service accounts on the Shared VPC host project:
-   - Vertex AI P4SA (`service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com`): This service account always requires the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
-     project. Replace `<PROJECT_NUMBER>` with the project number.
-   - Colab Enterprise P6SA (`service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com`): This service account also needs the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
-     project. Replace `<PROJECT_NUMBER>` with the project number.
+       - Vertex AI P4SA (`service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com`): This service account always requires the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
+         project. Replace `<PROJECT_NUMBER>` with the project number.
+       - Colab Enterprise P6SA (`service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com`): This service account also needs the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
+         project. Replace `<PROJECT_NUMBER>` with the project number.
    :::
 
 4. *(Optional)* **Create a test BigQuery Dataset**
