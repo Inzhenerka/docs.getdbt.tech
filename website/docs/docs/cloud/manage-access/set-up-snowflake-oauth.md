@@ -6,9 +6,11 @@ id: "set-up-snowflake-oauth"
 
 # Set up Snowflake OAuth <Lifecycle status="managed, managed_plus" />
 
-:::info Enterprise-tier feature
+:::info Subdomain migration
 
-This guide describes a feature available on <Constant name="cloud" /> Enterprise and Enterprise+ plans. If you’re interested in learning more about our Enterprise-tier plans, contact us at sales@getdbt.com.
+We're migrating <Constant name="dbt_platform" /> [US-based multi-tenant accounts](/docs/cloud/about-cloud/access-regions-ip-addresses) to static subdomains. Once we complete the migration, we will automatically redirect you from the `cloud.getdbt.com` URL to your new URL (for example, `abc123.us1.dbt.com`) and you can find this URL in your account settings. If your organization has network allow-listing, add the `us1.dbt.com` domain to your allow list. 
+
+The migration may require additional actions in your Snowflake account. See [subdomain migration](#subdomain-migration) for more information.
 
 :::
 
@@ -116,6 +118,15 @@ Once a user has authorized <Constant name="cloud" /> with Snowflake via their id
 
 ### Setting up multiple dbt projects with Snowflake 0Auth
 If you are planning to set up the same Snowflake account to different <Constant name="cloud" /> projects, you can use the same security integration for all of the projects.
+
+## Subdomain migration
+
+If you're a [US hosted multi-tenant account](/docs/cloud/about-cloud/access-regions-ip-addresses) being migrated to a static subdomain, you may need to take additional action in your Snowflake account to prevent service disruptions.
+
+Snowflake limits each security integration (`CREATE SECURITY INTEGRATION … TYPE = OAUTH`) to a single redirect URI. If you configured your OAuth integration with `cloud.getdbt.com`, you must take one of two courses of action: 
+
+- **Configure an additional security integration:** In your Snowflake account, you will have one with the original `cloud.getdbt.com/complete/snowflake` as the redirect URI, and another using the new static subdomain.
+- **Use a single security integration:** One with the new static subdomain as the redirect URI. In this scenario, you must recreate all of your [existing connections](/docs/cloud/connect-data-platform/about-connections#connection-management).
 
 ### Troubleshooting
 
