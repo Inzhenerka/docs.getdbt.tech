@@ -22,11 +22,11 @@ When creating Python UDFs, specify the Python function to be called in `entry_po
 
 Different warehouses show different names for the entry point function. Check out the following table for the different names:
 
-| Warehouse | Python UDF support in dbt| How `entry_point` is used | 
+| Warehouse | Support for dbt Python UDFs | How `entry_point` is used | 
 | -- | -- | -- | 
 | Snowflake | ✅ | Becomes the `HANDLER` name in `LANGUAGE PYTHON UDF` | 
 |BigQuery | ✅ | Becomes the `entry_point` in `OPTIONS(...)` | 
-|Databricks | ❌  |- | 
+|Databricks | ❌| — | 
 | Redshift | ❌ | — | 
 |Postgres | ❌  | — | 
 
