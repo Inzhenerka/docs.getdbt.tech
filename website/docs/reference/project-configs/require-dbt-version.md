@@ -4,15 +4,6 @@ description: "Read this guide to understand the require-dbt-version configuratio
 default_value: None
 ---
 
-:::info Fusion compatibility
-The `require-dbt-version` signals whether a project or package supports <Constant name="fusion_engine"/> (`2.0.0` and higher). 
-- If your version range includes 2.0 and higher, it's compatible with <Constant name="fusion"/>. 
-- Initially, <Constant name="fusion"/> will show a warning when a project's or package's `require-dbt-version` excludes 2.0+. 
-- In a future release, this will error, matching <Constant name="core"/> behavior. 
-- You can [bypass version checks](#disabling-version-checks) with `--no-version-check`. 
-
-Refer to [pin to a range](#pin-to-a-range) for more info.
-:::
 
 <File name='dbt_project.yml'>
 
@@ -24,9 +15,13 @@ require-dbt-version: version-range | [version-range]
 
 ## Definition
 
-You can use `require-dbt-version` to restrict your project to only work with a range of dbt versions. 
+You can use `require-dbt-version` to restrict your project to only work with a range of dbt versions.
 
-When you set this configuration, dbt issues error messages for any user who attempts to run the package with an unsupported version of dbt. This is currently only enforced for packages on the [dbt Packages hub](https://hub.getdbt.com/). This can be useful for package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) to ensure that users' dbt version is compatible with the package. Setting this configuration might also help your whole team remain synchronized on the same version of dbt for local development, to avoid compatibility issues from changed behavior.
+When you set this configuration:
+- dbt issues error messages for packages on the [dbt Packages hub](https://hub.getdbt.com/) that specify a `require_dbt_version` that doesn't match. 
+- This can be useful for package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) to ensure that users' dbt version is compatible with the package. 
+- Signals [compatibility with <Constant name="fusion_engine"/>](#fusion-compatibility) (`2.0.0` and higher).
+- It might also help your whole team remain synchronized on the same version of dbt for local development, to avoid compatibility issues from changed behavior.
 
 You should pin to a major release. See [pin to a range](#pin-to-a-range) for more details. If this configuration isn't specified, no version check will occur.
 
@@ -53,6 +48,25 @@ require-dbt-version: ">= 1.0.0" # Don't put whitespace after the equality signs
 
 We don't recommend having an unbounded `require-dbt-version` (for example, `">=1.0.0"`). Without an upper limit, a project may break when dbt releases a new major version. We recommend [defining both lower and upper bounds](#pin-to-a-range), such as `">=1.0.0,<3.0.0"`, to ensure stability across releases. 
 
+## Fusion compatibility
+The `require-dbt-version` also signals whether a project or package supports <Constant name="fusion_engine"/> (`2.0.0` and higher).
+
+- If it excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching <Constant name="core"/> behavior.
+- You can [bypass version checks](#disabling-version-checks) with `--no-version-check`. 
+
+Refer to [pin to a range](#pin-to-a-range) for more info.
+
+### dbt-autofix behavior
+
+[`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix) automatically scans your dbt project for deprecated configurations and updates them to align with the latest best practices and prepare for <Constant name="fusion"/> migration. When it runs, it'll also check your `packages.yml` to determine which packages it can automatically upgrade:
+
+- <Constant name="fusion"/> compatibility &mdash; `dbt-autofix`  checks whether a package’s `require-dbt-version` includes `2.0.0` or higher, signaling <Constant name="fusion"/> support.
+- Package eligibility &mdash; `dbt-autofix` automatically upgrades only packages that are <Constant name="fusion"/>-eligible (with `require-dbt-version` including `2.0.0` or higher) and verified safe for upgrade.
+- Upgrade logic &mdash; If both checks pass, `dbt-autofix`  upgrades the package to the lowest <Constant name="fusion"/>-compatible version.
+
+This ensures that `dbt-autofix`  only updates packages that are confirmed to work with <Constant name="fusion"/> and avoids updating packages that are known to be incompatible with <Constant name="fusion"/>.
+
+
 ## Examples
 
 The following examples showcase how to use the `require-dbt-version`:
@@ -77,45 +91,24 @@ require-dbt-version: ">=1.0.0"
 Remember, having an unbounded upper limit isn't recommended. Instead, check out the [pin to a range](#pin-to-a-range) example to define a range with both a lower and upper limit to ensure stability across releases.
 
 ### Pin to a range
-Use a comma-separated list for an upper and lower bound. You can define a version range either as a YAML list (using square brackets) or as a comma-delimited string.
+Use a comma separated list for an upper and lower bound. You can define a version range either as a YAML list (using square brackets) or as a comma-delimited string &mdash; both forms are valid and work.
 
-- [General range](#general-range) &mdash; Use a comma separated list to specify an upper and lower bound.
-- [Fusion-compatible range](#fusion-compatible-range): Include 2.0.0 or greater in your version range to signal compatibility with the <Constant name="fusion_engine"/>.
-
-#### General range
-In the following examples, this project will run with dbt 1.x.x:
+To signal compatibility with the <Constant name="fusion_engine"/>, include `2.0.0` or higher in your version range. Both of the following formats are valid:
 
 <File name='dbt_project.yml'>
 
 ```yaml
-require-dbt-version: [">=1.0.0", "<2.0.0"] # with a YAML list
+require-dbt-version: [">=1.10.0", "<3.0.0"]
 
-# OR
+# or
 
-require-dbt-version: ">=1.0.0,<2.0.0" # with a comma-delimited string
-
+require-dbt-version: ">=1.10.0,<3.0.0"
 ```
 </File>
 
-#### Fusion-compatible range
+If your range excludes 2.0.0 (for example, `>=1.6.0,<2.0.0`), <Constant name="fusion"/> will show a warning now and error in a future release. You can [bypass version checks](#disabling-version-checks) with `--no-version-check`.
 
-To signal compatibility with the <Constant name="fusion_engine"/>, include 2.0.0 or greater in your version range.
-
-<File name='dbt_project.yml'>
-
-```yaml
-require-dbt-version: [">=1.10.0", "<3.0.0"] # with a YAML list
-
-# OR
-
-require-dbt-version: ">=1.10.0,<3.0.0" # with a comma-delimited string
-```
-</File>
-
-If your range excludes 2.0.0 (for example, `>=1.6.0,<2.0.0`), <Constant name="fusion"/> will show a warning today and then an error in a future release. You can bypass version checks with `--no-version-check`.
-
- 
-### Require a specific dbt version
+ ### Require a specific dbt version
 
 :::info Not recommended
 Pinning to a specific dbt version is discouraged because it limits project flexibility and can cause compatibility issues, especially with dbt packages. It's recommended to [pin to a major release](#pin-to-a-range), using a version range (for example, `">=1.0.0", "<2.0.0"`) for broader compatibility and to benefit from updates.
