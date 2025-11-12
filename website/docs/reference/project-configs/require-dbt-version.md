@@ -60,9 +60,9 @@ Refer to [pin to a range](#pin-to-a-range) for more info on how to define a vers
 
 [`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix) automatically scans your dbt project for deprecated configurations and updates them to align with the latest best practices and prepare for <Constant name="fusion"/> migration. When it runs, it'll also check your `packages.yml` to determine which packages it can automatically upgrade:
 
-- <Constant name="fusion"/> compatibility &mdash; `dbt-autofix`  checks whether a package’s `require-dbt-version` includes `2.0.0` or higher, signaling <Constant name="fusion"/> support.
+- <Constant name="fusion"/> compatibility &mdash; `dbt-autofix` checks whether a package’s `require-dbt-version` includes `2.0.0` or higher, signaling <Constant name="fusion"/> support.
 - Package eligibility &mdash; `dbt-autofix` automatically upgrades only packages that are <Constant name="fusion"/>-eligible (with `require-dbt-version` including `2.0.0` or higher) and verified safe for upgrade.
-- Upgrade logic &mdash; If both checks pass, `dbt-autofix`  upgrades the package to the lowest <Constant name="fusion"/>-compatible version.
+- Upgrade logic &mdash; If both checks pass, the tool upgrades the package to the lowest <Constant name="fusion"/>-compatible version.
 
 This ensures that `dbt-autofix`  only updates packages that are confirmed to work with <Constant name="fusion"/> and avoids updating packages that are known to be incompatible with <Constant name="fusion"/>.
 
