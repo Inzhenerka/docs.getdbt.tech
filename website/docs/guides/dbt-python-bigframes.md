@@ -63,8 +63,8 @@ The dbt BigFrames submission method supports both service account and OAuth cred
    b. Enable the BigQuery API which also enables the following additional APIs automatically
       * [BigQuery API's](https://cloud.google.com/bigquery/docs/enable-assets#automatic-api-enablement)
 
-   c. Required API's
-   - BigQuery API: For all core BigQuery operations.
+   c. Required API's:
+   - ***BigQuery API:*** For all core BigQuery operations.
    - Vertex AI API: To use the Colab Enterprise executor service.
    - Cloud Storage API: For staging code and logs.
    - IAM API: For managing permissions.
