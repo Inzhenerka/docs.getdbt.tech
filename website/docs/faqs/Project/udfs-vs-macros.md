@@ -7,7 +7,7 @@ id: udfs-vs-macros
 
 Both user-defined functions (UDFs) and macros let you reuse logic across your dbt project, but they work in fundamentally different ways. Here's when to use each:
 
-## Use UDFs when:
+#### Use UDFs when:
 
 <Expandable alt_header="You need logic accessible outside dbt">
 
@@ -49,7 +49,7 @@ Python UDFs support conditionals and looping within the function logic itself (u
 
 </Expandable>
 
-## Use macros when:
+#### Use macros when:
 
 <Expandable alt_header="You need to generate SQL at compile time">
 
@@ -97,7 +97,7 @@ Macros don't create anything in your warehouse; they just generate SQL at compil
 
 </Expandable>
 
-## Can I use both together?
+#### Can I use both together?
 
 Yes! You can use a macro to call a UDF or call a macro from within a UDF, combining the benefits of both. So the following example shows how to use a macro to define default values for arguments alongside your logic, for your UDF
 
@@ -107,7 +107,7 @@ Yes! You can use a macro to call a UDF or call a macro from within a UDF, combin
 {% endmacro %}
 ```
 
-## Related documentation
+#### Related documentation
 
 - [User-defined functions](/docs/build/udfs)
 - [Jinja macros](/docs/build/jinja-macros)
