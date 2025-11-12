@@ -19,12 +19,9 @@ In this guide, you'll learn how to set up dbt so you can use it with BigQuery Da
 * Build scalable data transformation pipelines using dbt and Google Cloud, with SQL and Python.
 * Leverage BigFrames from dbt for scalable BigQuery SQL.
 
-
 In addition to the existing dataproc/pyspark based submission methods for executing python models, you can now use the BigFrames submission method to execute Python models with  pandas-like and scikit-like APIs,  without the need of any Spark setup or knowledge.
 
-
 BigQuery DataFrames is an open source Python package that transpiles pandas and scikit-learn code to scalable BigQuery SQL. The dbt-bigquery adapter relies on the BigQuery Studio Notebook Executor Service to run the Python client side code.
-
 
 ### Prerequisites
 
@@ -41,7 +38,7 @@ Here's what you'll build in two parts:
 - Google Cloud project setup
     - A one-time setup to configure the Google Cloud project you’ll be working with.
 - Build and Run the Python Model
-  - Create, configure, and execute a Python model using BigQuery DataFrames and dbt. 
+    - Create, configure, and execute a Python model using BigQuery DataFrames and dbt. 
 
 You will set up the environments, build scalable pipelines in dbt, and execute a python model.
 
@@ -57,19 +54,18 @@ The dbt BigFrames submission method supports both service account and OAuth cred
 1. **Create a new Google Cloud Project**
 
    a. Your new project will have the following list of APIs already enabled, including BigQuery, which is required.
-
       * [Default APIs](https://cloud.google.com/service-usage/docs/enabled-service#default)
 
    b. Enable the BigQuery API which also enables the following additional APIs automatically
       * [BigQuery API's](https://cloud.google.com/bigquery/docs/enable-assets#automatic-api-enablement)
 
    c. Required API's:
-   - ***BigQuery API:*** For all core BigQuery operations.
-   - Vertex AI API: To use the Colab Enterprise executor service.
-   - Cloud Storage API: For staging code and logs.
-   - IAM API: For managing permissions.
-   - Compute Engine API: As an underlying dependency for the notebook runtime environment.
-   - Dataform API: For managing the notebook code assets within BigQuery.
+   - **BigQuery API:** For all core BigQuery operations.
+   - **Vertex AI API:** To use the Colab Enterprise executor service.
+   - **Cloud Storage API:** For staging code and logs.
+   - **IAM API:** For managing permissions.
+   - **Compute Engine API:** As an underlying dependency for the notebook runtime environment.
+   - **Dataform API:** For managing the notebook code assets within BigQuery.
 
 
 2. **Create a service account and grant IAM permissions**
