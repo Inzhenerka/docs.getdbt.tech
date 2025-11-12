@@ -39,6 +39,14 @@ Jinja influences the function when it’s created, whereas arguments influence i
 
 </Expandable>
 
+<Expandable alt_header="You want to define Python UDFs in your dbt project"/>
+
+You can define Python UDFs in your dbt project and use them in SQL queries, both inside and outside of dbt. Python UDFs are currently supported in Snowflake and BigQuery.
+
+Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL. This makes it easier to apply complex data transformations, calculations, or logic that would be difficult to define in SQL.
+
+</Expanable>
+
 <Expandable alt_header="You need Python logic that runs in your warehouse">
 
 A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL.  
