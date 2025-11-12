@@ -121,7 +121,7 @@ If you are planning to set up the same Snowflake account to different <Constant 
 
 ## Subdomain migration
 
-If you're a [US hosted multi-tenant account](/docs/cloud/about-cloud/access-regions-ip-addresses) being migrated to a static subdomain, you may need to take additional action in your Snowflake account to prevent service disruptions.
+If you're a [multi-tenant account](/docs/cloud/about-cloud/access-regions-ip-addresses) being migrated to a static subdomain, you may need to take additional action in your Snowflake account to prevent service disruptions.
 
 Snowflake limits each security integration (`CREATE SECURITY INTEGRATION … TYPE = OAUTH`) to a single redirect URI. If you configured your OAuth integration with `cloud.getdbt.com`, you must take one of two courses of action: 
 
