@@ -43,9 +43,7 @@ Refer to [Function properties](/reference/function-properties) or [Function conf
 
 ## Defining UDFs in dbt
 
-You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently supported in Snowflake and BigQuery.
-
-Follow these steps to define UDFs in dbt:
+You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently supported in Snowflake and BigQuery. Follow these steps to define UDFs in dbt:
 
 1. Create a SQL or Python file under the `functions` directory. For example, this UDF checks if a string represents a positive integer:
 
@@ -362,7 +360,7 @@ For more information about selecting UDFs, see the examples in [Node selector me
 
 ## Limitations
 - Creating UDFs in other languages (for example, Java or Scala) is not yet supported. 
-- Creating Python UDFs are currently supported in Snowflake and BigQuery only,other warehouses isn't yet supported.
+- Creating Python UDFs are currently supported in Snowflake and BigQuery only. Other warehouses aren't yet supported.
 - Only <Term id="scalar">scalar</Term> functions are currently supported.
 
 ## Related FAQs
