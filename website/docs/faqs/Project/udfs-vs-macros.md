@@ -39,20 +39,13 @@ Jinja influences the function when it’s created, whereas arguments influence i
 
 </Expandable>
 
-<Expandable alt_header="You want to define Python UDFs in your dbt project"/>
-
-You can define Python UDFs in your dbt project and use them in SQL queries, both inside and outside of dbt. Python UDFs are currently supported in Snowflake and BigQuery.
-
-Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL. This makes it easier to apply complex data transformations, calculations, or logic that would be difficult to define in SQL.
-
-</Expanable>
 
 <Expandable alt_header="You need Python logic that runs in your warehouse">
 
 A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL.  
 This makes it easier to apply complex transformations, calculations, or logic that would be difficult or verbose to express in SQL.  
 
-Python UDFs support conditionals and looping within the function logic itself (using Python syntax), and execute at runtime, not at compile time like macros.
+Python UDFs support conditionals and looping within the function logic itself (using Python syntax), and execute at runtime, not at compile time like macros. Python UDFs are currently supported in Snowflake and BigQuery.
 
 </Expandable>
 
@@ -69,14 +62,14 @@ Macros generate SQL dynamically **before** it's sent to the warehouse (at compil
 UDFs execute **at query runtime** in the warehouse. While they can use Jinja templating in their definitions, they don't generate new SQL queries—they're pre-defined functions that get called by your SQL.
 
 :::note Expanding UDFs
-Currently, SQL and Python UDFs are supported. Java and Scala UDFs are planned for future releases. Python UDFs support conditionals and looping within the function logic itself (using Python syntax), and execute at runtime, not at compile time like macros.
+Currently, SQL and Python UDFs are supported. Java and Scala UDFs are planned for future releases. 
 :::
 
 </Expandable>
 
 <Expandable alt_header="You want to generate DDL or DML statements">
 
-Macros can create entire model definitions, tests, or any SQL statement. UDFs are limited to returning values or tables.
+Currently, SQL and Python UDFs are supported. Java and Scala UDFs are planned for future releases. 
 
 </Expandable>
 

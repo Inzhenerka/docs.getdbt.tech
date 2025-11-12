@@ -10,7 +10,7 @@ User-defined functions (UDFs) enable you to define and register custom functions
 
 UDFs are particularly valuable for sharing logic across multiple tools, standardizing complex business calculations, improving performance for compute-intensive operations (since they're compiled and optimized by your warehouse's query engine), and version controlling custom logic within your dbt project.
 
-dbt creates, updates, and renames UDFs as part of DAG execution. The UDF is built in the warehouse before the model that references it. Refer to [listing and selecting UDFs](/docs/build/udfs#listing-and-selecting-udfs) for more info on how to build UDFs in your project.
+dbt creates, updates, and renames UDFs as part of DAG execution. The UDF is built in the warehouse before the model that references it. Refer to [listing and building UDFs](/docs/build/udfs#listing-and-building-udfs) for more info on how to build UDFs in your project.
 
 Refer to [Function properties](/reference/function-properties) or [Function configurations](/reference/function-configs) for more information on the configs/properties for UDFs.
 
@@ -66,7 +66,7 @@ Follow these steps to define UDFs in dbt:
 
     </TabItem>
     <TabItem value="Python">
-    Define a Python UDF in a Python file. The Python function returns 1 if `a_string` represents a positive integer (like "10", "+8" not allowed).
+    Define a Python UDF in a Python file. 
 
     <File name='functions/is_positive_int.py'>
 
@@ -91,20 +91,21 @@ Follow these steps to define UDFs in dbt:
 
     ```yml
     functions:
-      - name: is_positive_int # required
-        description: My UDF that determines if a string represents a positive (+) integer # optional
+      - name: is_positive_int       # required
+        description: My UDF that returns 1 if a string represents a naked positive integer (like "10", "+8" is not allowed). # optional
         config:
           schema: udf_schema
           database: udf_db
           volatility: deterministic
-        arguments: # optional
-          - name: a_string # required if arguments is specified
-            data_type: string # required if arguments is specified
+        arguments:                  # optional
+          - name: a_string          # required if arguments is specified
+            data_type: string       # required if arguments is specified
             description: The string that I want to check if it's representing a positive integer (like "10") 
-        returns: # required
-          data_type: integer # required
+        returns:                    # required
+          data_type: integer        # required 
     ```
     </File>
+    </TabItem>
 
     <!--other types not yet supported
     <Expandable alt_header="Supported UDF types">
@@ -130,11 +131,70 @@ Follow these steps to define UDFs in dbt:
     </Expandable>
     -->
     
-    The rendered `CREATE` UDF statement depends on which adapter you’re using. For example:
+    <TabItem value="Python">
+    
+    The following configs are required when defining a Python UDF: 
+
+    - [`runtime_version`](/reference/resource-configs/runtime-version) &mdash; Specify the Python version to run. Supported values are:
+      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
+      - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
+    - [`entry_point`](/reference/resource-configs/entry-point) &mdash; Specify the Python function to be called.
+
+    
+    For example:
+
+    <File name='functions/schema.yml'>
+
+    ```yml
+      functions:
+        - name: is_positive_int # required
+          description: My UDF that returns 1 if a string represents a naked positive integer (like "10", "+8" is not allowed). # optional
+          config:
+            runtime_version: "3.11"   # required
+            entry_point: main         # required
+            schema: udf_schema
+            database: udf_db
+            volatility: deterministic  
+          arguments:                   # optional
+            - name: a_string           # required if arguments is specified
+              data_type: string        # required if arguments is specified
+              description: The string that I want to check if it's representing a positive integer (like "10") 
+          returns:                    # required
+            data_type: integer        # required
+    ```
+    </File>
+    </TabItem>
+    </Tabs>
+
+    :::info volatility warehouse-specific
+   	Something to note is that `volatility` is accepted in dbt for both SQL and Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility) for more information.
+    :::
+
+3. Run one of the following `dbt build` commands to build your UDFs and create them in the warehouse:
+
+    Build all UDFs:
+    
+    ```bash
+    dbt build --select "resource_type:function"
+    ```
+
+    Or build a specific UDF:
+
+    ```bash
+    dbt build --select is_positive_int
+    ```
+
+     When you run `dbt build`, both the `functions/schema.yml` file and the corresponding SQL or Python file (for example, `functions/is_positive_int.sql` or `functions/is_positive_int.py`) work together to generate the `CREATE FUNCTION` statement.
+     
+     The rendered `CREATE FUNCTION` statement depends on which adapter you're using. For example:
 
     <Tabs>
 
+    <TabItem value="SQL">
+
+    <Tabs>
     <TabItem value="Snowflake">
+
     ```sql
     CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
     RETURNS INTEGER
@@ -193,41 +253,8 @@ Follow these steps to define UDFs in dbt:
   
     </Tabs>
     </TabItem>
+
     <TabItem value="Python">
-    
-    The following configs are required when defining a Python UDF: 
-
-    - [`runtime_version`](/reference/resource-configs/runtime-version) &mdash; Specify the Python version to run. Supported values are:
-      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
-      - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
-    - [`entry_point`](/reference/resource-configs/entry-point) &mdash; Specify the Python function to be called.
-
-    
-    For example:
-
-    <File name='functions/schema.yml'>
-
-    ```yml
-      functions:
-        - name: is_positive_int
-          description: My UDF that determines if a string represents a positive (+) integer. Returns 1 if a_string represents a positive integer (like "10", "+8" not allowed here). # optional
-          config:
-            runtime_version: "3.11"   # required
-            entry_point: main      
-            schema: udf_schema
-            database: udf_db
-            volatility: deterministic  
-          arguments:
-            - name: a_string
-              data_type: string
-          returns:
-            data_type: integer
-    ```
-    </File>
-
-
-    This `functions/schema.yml` file example generates the following `CREATE` UDF statement:
-
     <Tabs>
 
     <TabItem value="Snowflake">
@@ -262,11 +289,6 @@ Follow these steps to define UDFs in dbt:
     </TabItem>
     </Tabs>
 
-
-	:::info volatility warehouse-specific
-   	Something to note is that `volatility` is accepted in dbt for both SQL and Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [setting volatility](#setting-volatility-in-udfs) for more information.
-    :::
-
 4. Reference the UDF in a model using the `{{ function(...) }}` macro. For example:
 
     <File name="models/my_model.sql">
@@ -279,7 +301,7 @@ Follow these steps to define UDFs in dbt:
     ```
     </File>
 
-5. Run `dbt compile`. In the following example, the `{{ function('is_positive_int') }}` is replaced by the UDF name `udf_db.udf_schema.is_positive_int`.
+5. Run `dbt compile` to see how the UDF is referenced. In the following example, the `{{ function('is_positive_int') }}` is replaced by the UDF name `udf_db.udf_schema.is_positive_int`.
 
     <File name="models/my_model.sql">
 
@@ -295,46 +317,6 @@ Follow these steps to define UDFs in dbt:
    <Lightbox src="/img/docs/building-a-dbt-project/UDF-DAG.png" width="85%" title="The DAG for the UDF node" />
 
 After defining a UDF, if you update the SQL/Python file that contains its function body (`is_positive_int.sql` or `is_positive_int.py` in this example) or its configurations, your changes will be applied to the UDF in the warehouse next time you `build`.
-
-### Setting `volatility` in UDFs
-
-import VolatilityDefinition from '/snippets/_volatility-definition.md';
-
-<VolatilityDefinition />
-
-In dbt, you can use the following values for the `volatility` config:
-
-| Value | Description | Example |
-| --- | --- | --- |
-| `deterministic` | Always returns the same output for the same input. Safe for aggressive optimizations and caching. | `substr()` &mdash; Produces the same substring when given the same string and parameters. |
-| `stable` | Returns the same value within a single query execution, but may change across executions. Not supported by all warehouses. For more information, see [Warehouse-specific volatility keywords](/docs/build/udfs#warehouse-specific-volatility-keywords).| `now()` &mdash; Returns the current timestamp the moment a query starts; constant within a single query but different across runs. |
-| `non-deterministic` | May return different results for the same inputs. Warehouses shouldn't cache or reorder assuming stable results. | `first()` &mdash; May return different rows depending on query plan or ordering. <br></br>`random()` &mdash; Produces a random number that varies with each call, even with identical inputs. |
-
-Defining a function's volatility lets the data warehouse do optimizations when executing the function. By default, dbt does not specify a volatility value. If you don’t set volatility, dbt generates a `CREATE` statement without a volatility keyword, and the warehouse’s default behavior applies &mdash; except in Redshift. In Redshift, dbt sets `non-deterministic` (`VOLATILE`) by default if no volatility is specified, because Redshift requires an explicit volatility and `VOLATILE` is the safest assumption.
-
-To set a function's volatility, refer to the following example: 
-
-<File name='functions/schema.yml'>
-
-```yaml
-functions:
-  - name: is_positive_int
-    description: Check whether a string is a positive integer
-    config:
-      volatility: deterministic # Optional: stable | non-deterministic | deterministic
-    arguments:
-      - name: a_string
-        data_type: string
-    returns:
-      data_type: boolean
-```
-</File>
-
-The `volatility` value you define is passed to the adapter, which adds the correct keyword for your data warehouse. 
-
-import Volatility from '/snippets/_warehouse-volatility.md';
-
-<Volatility />
 
 
 ## Using UDFs in unit tests
@@ -370,7 +352,7 @@ unit_tests:
 ```
 </File>
 
-## Listing and selecting UDFs
+## Listing and building UDFs
 
 Use the [`list` command](/reference/commands/list#listing-functions) to list UDFs in your project: `dbt list --select "resource_type:function"` or `dbt list --resource-type function`.
 
@@ -380,6 +362,7 @@ For more information about selecting UDFs, see the examples in [Node selector me
 
 ## Limitations
 - Creating UDFs in other languages (for example, Java or Scala) is not yet supported. 
+- Creating Python UDFs are currently supported in Snowflake and BigQuery only,other warehouses isn't yet supported.
 - Only <Term id="scalar">scalar</Term> functions are currently supported.
 
 ## Related FAQs
