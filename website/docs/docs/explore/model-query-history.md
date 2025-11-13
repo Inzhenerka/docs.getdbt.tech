@@ -59,7 +59,7 @@ To enable model query history in <Constant name="cloud" />, follow these steps:
    To re-enable it, please reach out to [dbt Support](mailto:support@getdbt.com). 
 
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.jpg" width="95%" title="Enable query history in your environment settings." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.png" width="95%" title="Enable query history in your environment settings." />
 
 
 
