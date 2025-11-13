@@ -281,7 +281,7 @@ Note that enabling this for projects that use `--warn-error` (or `--warn-error-o
 
 <Expandable alt_header="Recommended steps to enable the flag">
 
-When the `require_all_warnings_handled_by_warn_error` flag is set to `True`, we recommend the following rollout plan:
+We recommend the following rollout plan when setting the `require_all_warnings_handled_by_warn_error` flag to `True`:
 
 1. Run a full build without partial parsing to surface parse-time warnings, and confirm it finishes successfully:
 
