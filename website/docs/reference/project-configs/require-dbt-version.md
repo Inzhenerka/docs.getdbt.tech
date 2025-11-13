@@ -56,7 +56,7 @@ The `require-dbt-version` also signals whether a project or package supports the
 
 Refer to [pin to a range](#pin-to-a-range) for more info on how to define a version range.§
 
-<Expandable alt_header="Use dbt-autofix to update your dbt project to the latest best practices"/>
+<Expandable alt_header="Use dbt-autofix to update your dbt project to the latest best practices">
 
 [`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix) automatically scans your dbt project for deprecated configurations and updates them to align with the latest best practices and prepare for <Constant name="fusion"/> migration. When it runs, it'll also check your `packages.yml` to determine which packages it can automatically upgrade:
 
