@@ -125,8 +125,8 @@ If you're a [multi-tenant account](/docs/cloud/about-cloud/access-regions-ip-add
 
 Snowflake limits each security integration (`CREATE SECURITY INTEGRATION … TYPE = OAUTH`) to a single redirect URI. If you configured your OAuth integration with `cloud.getdbt.com`, you must take one of two courses of action: 
 
-- **Configure an additional security integration:** In your Snowflake account, you will have one with the original URL (for example, `cloud.getdbt.com/complete/snowflake`) as the redirect URI, and another using the new static subdomain. Refer to our [regions & IP addresses page](/docs/cloud/about-cloud/access-regions-ip-addresses) for a complete list of the original domains in your region (they're marked as "multi-tenant" on the chart).
-- **Use a single security integration:** One with the new static subdomain as the redirect URI. In this scenario, you must recreate all of your [existing connections](/docs/cloud/connect-data-platform/about-connections#connection-management).
+- **Configure an additional security integration:** In your Snowflake account, you will have one with the original URL (for example, `cloud.getdbt.com/complete/snowflake`) as the redirect URI, and another using the new static subdomain. Refer to our [regions & IP addresses page](/docs/cloud/about-cloud/access-regions-ip-addresses) for a complete list of the original domains in your region (marked as "multi-tenant" on the chart).
+- **Use a single security integration:** Create one that uses the new static subdomain as the redirect URI. In this scenario, you must recreate all of your [existing connections](/docs/cloud/connect-data-platform/about-connections#connection-management).
 
 ### Troubleshooting
 
