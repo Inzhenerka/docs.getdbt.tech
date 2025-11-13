@@ -22,18 +22,34 @@ There are two ways to access the dbt-mcp server: locally hosted or remotely host
 
 <-->
 
-## Server Access
+## Server access
 
-You can install dbt MCP locally or remotely:
+You can use the dbt MCP server in two ways: locally or remotely. Choose the setup that best fits your workflow:
 
-- [Local MCP server setup guide](/docs/dbt-ai/setup-local-mcp)
-- [Remote MCP server setup guide](/docs/dbt-ai/setup-remote-mcp)
+### Local MCP server
+
+The local MCP server provides the best experience for development workflows, like authoring dbt models, tests, and documentation.
+
+The [local MCP server](/docs/dbt-ai/setup-local-mcp) runs on your machine and requires installing `uvx` (which installs dbt-mcp locally). This option provides:
+- Full access to dbt CLI commands (`dbt run`, `dbt build`, `dbt test`, and more)
+- Support for <Constant name="core" />, <Constant name="cloud_cli" />, and <Constant name="fusion_engine" />
+- Ability to work with local dbt projects without requiring a <Constant name="dbt_platform" /> account
+- Optional integration with <Constant name="dbt_platform" /> APIs for metadata discovery and Semantic Layer access
+
+### Remote MCP server
+
+The remote MCP server from dbt offers data consumption use cases without local setup.
+
+The [remote MCP server](/docs/dbt-ai/setup-remote-mcp) connects to the <Constant name="dbt_platform" /> via HTTP and requires no local installation. This option is useful when:
+- You either don’t want to install, or are restricted from installing, additional software on your system.
+- Your use case is primarily consumption-based (for example, querying metrics, exploring metadata, viewing lineage).
+
 
 import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
 
 <MCPCreditUsage />
 
-## Available Tools
+## Available tools
 
 ### Supported
 The dbt MCP server has access to many parts of the dbt experience related to development, deployment, and discovery. Here are the categories of tools supported based on what form of the MCP server you connect to as well as detailed information on exact commands or queries available to the LLM.
@@ -144,10 +160,6 @@ We have also created integration guides for the following clients:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
-
-## Troubleshooting
-
-- Some MCP clients may be unable to find `uvx` from the JSON config. This will result in error messages like `Could not connect to MCP server dbt-mcp`. If this happens, try finding the full path to `uvx` with `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
 
 ## Resources
 - For more information, refer to our blog on [Introducing the dbt MCP Server](/blog/introducing-dbt-mcp-server#getting-started).
