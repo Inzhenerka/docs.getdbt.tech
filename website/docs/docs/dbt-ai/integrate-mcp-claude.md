@@ -21,65 +21,6 @@ Prerequisites:
 - Complete the [local MCP setup](/docs/dbt-ai/setup-local-mcp).
 - Know your configuration method (OAuth <Constant name="dbt_core"/> or <Constant name="fusion"/>, or environment variables)
 
-#### Using OAuth or environment variables directly
-
-The recommended method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
-
-1. Add the MCP server:
-
-  ```bash
-  claude mcp add dbt -- uvx dbt-mcp
-  ```
-2. Open the configuration editor:
-
-  ```bash
-  claude mcp edit dbt
-  ```
-
-3. In the configuration editor, add your environment variables based on your use case:
-
-<Tabs>
-<TabItem value="CLI only">
-
-For <Constant name="core" /> or <Constant name="fusion" /> only (no <Constant name="dbt_platform" />):
-```json
-{
-  "command": "uvx",
-  "args": ["dbt-mcp"],
-  "env": {
-    "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
-    "DBT_PATH": "/path/to/your/dbt/executable"
-  }
-}
-```
-
-</TabItem>
-<TabItem value="OAuth with dbt platform">
-
-For OAuth authentication (requires static subdomain):
-```json
-{
-  "command": "uvx",
-  "args": ["dbt-mcp"],
-  "env": {
-    "DBT_HOST": "https://your-subdomain.us1.dbt.com",
-    "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
-    "DBT_PATH": "/path/to/your/dbt/executable"
-  }
-}
-```
-
-</TabItem>
-</Tabs>
-
-#### Using an `.env` file
-
-If you prefer to manage environment variables in a separate file:
-
-```bash
-claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
-```
-Replace `<path-to-.env-file>` with the full path to your `.env` file. 
 
 ### Claude Code scopes
 
@@ -97,7 +38,7 @@ claude mcp add dbt -s project -- uvx --env-file <path-to-.env-file> dbt-mcp
 For more information on scopes, refer to [Understanding MCP server scopes](https://docs.anthropic.com/en/docs/claude-code/mcp#understanding-mcp-server-scopes).
 
 
-## Claude for desktop
+### Claude for desktop
 
 1. Go to the Claude settings. Click on the Claude menu in your system's menu bar (not the settings within the Claude window itself) and select **Settings…**.
 2. In the Settings window, navigate to the **Developer** tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
@@ -181,6 +122,66 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 5. Save the file. Upon a successful restart of Claude Desktop, you'll see an MCP server indicator in the bottom-right corner of the conversation input box.
 
 For debugging, you can find the Claude desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
+
+#### Using OAuth or environment variables directly
+
+The recommended method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
+
+1. Add the MCP server:
+
+  ```bash
+  claude mcp add dbt -- uvx dbt-mcp
+  ```
+2. Open the configuration editor:
+
+  ```bash
+  claude mcp edit dbt
+  ```
+
+3. In the configuration editor, add your environment variables based on your use case:
+
+<Tabs>
+<TabItem value="CLI only">
+
+For <Constant name="core" /> or <Constant name="fusion" /> only (no <Constant name="dbt_platform" />):
+```json
+{
+  "command": "uvx",
+  "args": ["dbt-mcp"],
+  "env": {
+    "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
+    "DBT_PATH": "/path/to/your/dbt/executable"
+  }
+}
+```
+
+</TabItem>
+<TabItem value="OAuth with dbt platform">
+
+For OAuth authentication (requires static subdomain):
+```json
+{
+  "command": "uvx",
+  "args": ["dbt-mcp"],
+  "env": {
+    "DBT_HOST": "https://your-subdomain.us1.dbt.com",
+    "DBT_PROJECT_DIR": "/path/to/your/dbt/project",
+    "DBT_PATH": "/path/to/your/dbt/executable"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+#### Using an `.env` file
+
+If you prefer to manage environment variables in a separate file:
+
+```bash
+claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
+```
+Replace `<path-to-.env-file>` with the full path to your `.env` file. 
 
 
 ## Troubleshooting

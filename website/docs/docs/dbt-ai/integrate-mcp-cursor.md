@@ -12,6 +12,9 @@ After setting up your MCP server, you connect it to Cursor. Log in to Cursor and
 ## Set up with local dbt MCP server
 
 Choose your setup based on your workflow:
+- OAuth for <Constant name="dbt_platform" /> connections
+- CLI only if using <Constant name="core" /> or the <Constant name="fusion_engine" /> locally. 
+- Configure environment variables if you're using them in your <Constant name="dbt_platform" /> account.
 
 ### OAuth or CLI
 
@@ -68,7 +71,6 @@ If you prefer to manage environment variables in a separate file, click this lin
 [Add to Cursor (with .env file)](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt-mcp&config=eyJjb21tYW5kIjoidXZ4IC0tZW52LWZpbGUgPGVudi1maWxlLXBhdGg%252BIGRidC1tY3AifQ%3D%3D)
 
 Then update `<env-file-path>` with the full path to your `.env` file.
-
 
 
 ## Set up with remote dbt MCP server
