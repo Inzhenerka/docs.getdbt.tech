@@ -56,16 +56,17 @@ The `require-dbt-version` also signals whether a project or package supports the
 
 Refer to [pin to a range](#pin-to-a-range) for more info on how to define a version range.§
 
-#### dbt-autofix behavior
+<Expandable alt_header="Use dbt-autofix to update your dbt project to the latest best practices"/>
 
 [`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix) automatically scans your dbt project for deprecated configurations and updates them to align with the latest best practices and prepare for <Constant name="fusion"/> migration. When it runs, it'll also check your `packages.yml` to determine which packages it can automatically upgrade:
 
 - <Constant name="fusion"/> compatibility &mdash; `dbt-autofix` checks whether a package’s `require-dbt-version` includes `2.0.0` or higher, signaling <Constant name="fusion"/> support.
-- Package eligibility &mdash; `dbt-autofix` automatically upgrades only packages that are <Constant name="fusion"/>-eligible (with `require-dbt-version` including `2.0.0` or higher) and verified safe for upgrade.
+- Package eligibility &mdash; `dbt-autofix` automatically checks if a package is <Constant name="fusion"/>-eligible (with `require-dbt-version` including `2.0.0` or higher) and verified safe for upgrade.
 - Upgrade logic &mdash; If both checks pass, the tool upgrades the package to the lowest <Constant name="fusion"/>-compatible version.
 
 This ensures that `dbt-autofix`  only updates packages that are confirmed to work with <Constant name="fusion"/> and avoids updating packages that are known to be incompatible with <Constant name="fusion"/>.
 
+</Expandable>
 
 ## Examples
 
@@ -77,13 +78,13 @@ The following examples showcase how to use the `require-dbt-version`:
 - [Require a specific dbt version](#require-a-specific-dbt-version) &mdash; Restrict your project to run only with an exact version of <Constant name="core" />.
 
 ### Specify a minimum dbt version
-Use a `>=` operator to specify a lower and an upper limit. In the following example, this project will run with any version of dbt greater than or equal to 1.0.0.
-
+Use a `>=` operator to specify a lower and an upper limit. For example:
 
 <File name='dbt_project.yml'>
 
-```yml
-require-dbt-version: ">=1.0.0"
+```yml 
+require-dbt-version: ">=1.9.0" # Signals this project will only work with versions 1.9 and higher.
+require-dbt-version: ">=2.0.0" # Signals this project will only work with Fusion-compatible versions of dbt/packages.
 ```
 
 </File>
