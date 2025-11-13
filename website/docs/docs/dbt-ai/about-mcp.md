@@ -62,7 +62,6 @@ The dbt MCP server has access to many parts of the dbt experience related to dev
 | Metadata Discovery| ✅ | ✅ |
 | Administrative API | ✅ | ❌ |
 | Fusion Tools | ✅ | ✅ |
-| Search Tools | ✅ | ✅ |
 
 Note that access to the Discovery API and the Semantic Layer API is limited depending on your [plan type](https://www.getdbt.com/pricing).
 
@@ -103,7 +102,8 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 - `get_all_sources`: Gets all source tables with metadata and freshness information
 - `get_exposures`: Gets all exposures
 - `get_exposure_details`: Gets details for a specific exposure or a list of exposures
-
+- `keyword_search`: Searches artifacts from <Constant name="dbt_platform"/> runs by using exact string matching against fields such as code, descriptions, and names.
+- `get_related_models`: Uses semantic search to find dbt models that are similar to the query, even if there isn't an exact string match.
 
 ### Administrative API
 
@@ -144,13 +144,6 @@ A set of tools that leverage the <Constant name="fusion" /> engine for advanced 
 A set of tools that leverage the <Constant name="fusion" /> engine through a locally running <Constant name="fusion" /> Language Server Protocol (LSP) in VS Code or Cursor with the dbt VS Code extension.
 
 - `get_column_lineage`: <Constant name="fusion" /> exclusive! Get column lineage information across a project DAG for a specific column.
-
-### Search tools (remote)
-
-Search tools help you find dbt resources quickly.
-
-- `keyword_search`: Searches artifacts from <Constant name="dbt_platform"/> runs by using exact string matching against fields such as code, descriptions, and names.
-- `get_related_models`: Uses semantic search to find dbt models that are similar to the query, even if there isn't an exact string match. 
 
 ## MCP integrations
 
