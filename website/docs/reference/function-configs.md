@@ -51,6 +51,8 @@ functions:
     config:
       [type](/reference/resource-configs/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
       [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # optional
+      [runtime_version](/reference/resource-configs/runtime-version): <string> # required for Python UDFs
+      [entry_point](/reference/resource-configs/entry-point): <string> # required for Python UDFs
       # Standard configs that apply to functions
       [database](/reference/resource-configs/database): <string>
       [schema](/reference/resource-properties/schema): <string>
@@ -126,6 +128,7 @@ functions:
 
 </TabItem>
 </Tabs>
+
 
 ## Configuring functions
 Functions are configured in YAML files, either in `dbt_project.yml` or within an individual function's YAML properties file. The function body is defined in a SQL file in the `functions/` directory.

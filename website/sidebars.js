@@ -1363,6 +1363,8 @@ const sidebarSettings = {
             "reference/function-configs",
             "reference/resource-configs/type",
             "reference/resource-configs/volatility",
+            "reference/resource-configs/runtime-version",
+            "reference/resource-configs/entry-point",
             "reference/resource-properties/returns",
             "reference/resource-properties/function-arguments",
           ],
