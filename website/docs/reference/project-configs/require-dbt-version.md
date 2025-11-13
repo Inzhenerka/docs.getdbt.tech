@@ -18,12 +18,12 @@ require-dbt-version: version-range | [version-range]
 You can use `require-dbt-version` to restrict your project to only work with a range of dbt versions.
 
 When you set this configuration:
-- dbt issues error messages for packages on the [dbt Packages hub](https://hub.getdbt.com/) that specify a `require_dbt_version` that doesn't match. 
-- This can be useful for package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) to ensure that users' dbt version is compatible with the package. 
-- Signals [compatibility with <Constant name="fusion_engine"/>](#fusion-compatibility) (`2.0.0` and higher).
+- If you have installed packages from the [dbt Packages hub](https://hub.getdbt.com/) that specify a `require_dbt_version` that doesn't match, running dbt commands will result in an error. 
+- It helps package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) ensure that users' dbt version is compatible with the package. 
+- It signals [compatibility with <Constant name="fusion_engine"/>](#fusion-compatibility) (`2.0.0` and higher).
 - It might also help your whole team remain synchronized on the same version of dbt for local development, to avoid compatibility issues from changed behavior.
 
-You should pin to a major release. See [pin to a range](#pin-to-a-range) for more details. If this configuration isn't specified, no version check will occur.
+You must pin to a major release. See [pin to a range](#pin-to-a-range) for more details. If this configuration isn't specified, no version check will occur.
 
 :::info <Constant name="cloud" /> release tracks 
 
@@ -46,7 +46,7 @@ require-dbt-version: ">= 1.0.0" # Don't put whitespace after the equality signs
 
 #### Avoid unbounded upper limits
 
-We don't recommend having an unbounded `require-dbt-version` (for example, `">=1.0.0"`). Without an upper limit, a project may break when dbt releases a new major version. We recommend [defining both lower and upper bounds](#pin-to-a-range), such as `">=1.0.0,<3.0.0"`, to ensure stability across releases. 
+We recommend [defining both lower and upper bounds](#pin-to-a-range), such as `">=1.0.0,<3.0.0"`, to ensure stability across releases.  We don't recommend having an unbounded `require-dbt-version` (for example, `">=1.0.0"`). Without an upper limit, a project may break when dbt releases a new major version. 
 
 ## Fusion compatibility
 The `require-dbt-version` also signals whether a project or package supports the <Constant name="fusion_engine"/> (`2.0.0` and higher).
