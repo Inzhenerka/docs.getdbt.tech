@@ -55,9 +55,12 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
     <File name='functions/is_positive_int.sql'>
 
     ```sql
-    REGEXP_INSTR(a_string, '^[0-9]+$') # syntax for BigQuery, Snowflake, and Redshift
+    # syntax for BigQuery, Snowflake, and Databricks
+    REGEXP_INSTR(a_string, '^[0-9]+$') 
+    
+    # syntax for Redshift and Postgres
+    SELECT REGEXP_INSTR(a_string, '^[0-9]+$')
 
-    regexp_instr(a_string, '^[0-9]+$') # syntax for Postgres and Databricks
     ```
 
     </File>
@@ -232,7 +235,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
     CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
     RETURNS INT
     DETERMINISTIC
-    RETURN regexp_instr(a_string, '^[0-9]+$');
+    RETURN REGEXP_INSTR(a_string, '^[0-9]+$');
     ```
     </TabItem>
 

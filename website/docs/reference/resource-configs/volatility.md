@@ -41,6 +41,7 @@ In dbt, you can use the following values for the `volatility` config:
 | `non-deterministic` | May return different results for the same inputs. Warehouses shouldn't cache or reorder assuming stable results. | `first()` &mdash; May return different rows depending on query plan or ordering. <br></br>`random()` &mdash; Produces a random number that varies with each call, even with identical inputs. |
 
 ## Example
+
 In this example, we're using the `deterministic` volatility for the `is_positive_int` function:
 
 <File name='functions/schema.yml'>
