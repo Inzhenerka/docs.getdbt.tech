@@ -105,7 +105,7 @@ The following steps will explain how to configure environment variables using Po
   ```powershell
     [Environment]::SetEnvironmentVariable("DBT_ENV_VAR1","my_value","User")
     [Environment]::SetEnvironmentVariable("DBT_ENV_VAR2","another_value","User")
-    ```
+  ```
 1. This saves the variables permanently for your user account. To make them available system-wide for all users, replace "User" with "Machine" (requires admin rights).
 2. Then, restart VS Code or select **Developer: Reload Window** for changes to take effect.
 3. Verify the changes by running `echo $DBT_ENV_VAR1` and `echo $DBT_ENV_VAR2` in the terminal.
@@ -125,8 +125,9 @@ The following steps will explain how to configure environment variables using Po
 
 #### Configure in the VS Code extension settings
 
-To use the dbt extension menu actions/buttons, you can configure environment variables directly in the [VS Code User Settings](vscode://settings/dbt.environmentVariables) interface or in any `.env` file at the root level.
-- Configuring in the User Settings works with the dbt extension buttons and menus (for <Term id="lsp" />, "Show build menu," and so on).
+To use the dbt extension menu actions/buttons, you can configure environment variables directly in the [VS Code User Settings](vscode://settings/dbt.environmentVariables) interface or in any `.env` file at the root level. This includes both your custom variables and any automatic [<Constnt name="dbt_platform"/> variables](/docs/build/environment-variables) (like `DBT_CLOUD_ENVIRONMENT_NAME`) that your project depends on.
+
+- Configuring in the **User Settings** works with the dbt extension buttons and menus (for <Term id="lsp" />, "Show build menu," and so on).
 - Not inherited by the VS Code terminal or external shells.
 - Running a dbt command in the terminal won't fetch or use these variables.
 
