@@ -131,10 +131,10 @@ A set of tools that leverage the <Constant name="fusion" /> engine through a loc
 
 ### Search tools (remote)
 
-Search tools allow discovering dbt resources with search.
+Search tools help you find dbt resources quickly.
 
-- `keyword_search`: Searches artifacts from dbt Platform runs by using exact string matching against fields such as code, descriptions, and names.
-- `get_related_models`: Uses semantic search to find dbt models that are similar to the query, but not necessarily an exact string match.
+- `keyword_search`: Searches artifacts from <Constant name="dbt_platform"/> runs by using exact string matching against fields such as code, descriptions, and names.
+- `get_related_models`: Uses semantic search to find dbt models that are similar to the query, even if there isn't an exact string match. 
 
 ## MCP integrations
 
