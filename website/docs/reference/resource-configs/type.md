@@ -2,6 +2,7 @@
 title: type
 sidebar_label: "type"
 id: type
+description: "The type config specifies the type of user-defined function you're creating."
 ---
 <VersionCallout version="1.11" /> 
 
@@ -11,7 +12,7 @@ id: type
 functions:
   - name: <function name>
     config:
-      type: scalar | aggregate | table  # aggregate and table coming soon
+      type: scalar | aggregate | table  # scalar & aggregate partially supported, table coming soon
 ```
 
 </File>
@@ -22,9 +23,26 @@ The `type` config specifies the type of user-defined function (UDF) you're creat
 
 ## Supported function types
 
+The following function types are supported:
+<!-- no toc -->
+- [scalar (default)](#scalar-default)
+- [aggregate](#aggregate)
+- [table](#table)
+
+Support for `type` differs based on the warehouse and language (SQL or Python) you're using:
+
+| Adapter	| scalar SQL	| scalar Python	| aggregate SQL	| aggregate Python | table SQL | table Python |
+| --- | --- | --- | --- | --- | --- | --- |
+| dbt-bigquery	| ✅	| ✅	| ✅	| ❌ | ❌ | ❌ |
+| dbt-snowflake	| ✅	| ✅	| ❌	| ✅ | ❌ | ❌ |
+| dbt-databricks	| ✅	| ❌	| ❌	| ❌ | ❌ | ❌ |
+| dbt-postgres	| ✅	| ❌	| ❌	| ❌ | ❌ | ❌ |
+| dbt-redshift	| ✅	| ❌	| ❌	| ❌ | ❌ | ❌ |
+
 ### scalar (default)
 
 A scalar function returns a single value for each row of input. This is the most common type of UDF.
+
 
 **Example use cases:**
 - Data validation (checking if a string matches a pattern)
@@ -51,10 +69,12 @@ functions:
 ### aggregate
 
 Aggregate functions operate on multiple rows and return a single value. These functions are used in `GROUP BY` operations.
-:::note Coming soon
-Support for aggregate functions is planned for a future release.
-:::
 
+Aggregate functions are supported only for:
+- Python functions on Snowflake
+- SQL functions on BigQuery
+
+More warehouse and language support is planned for a future release.
 
 **Example:**
 
