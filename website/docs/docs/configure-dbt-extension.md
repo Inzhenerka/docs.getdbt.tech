@@ -129,7 +129,7 @@ To use the dbt extension menu actions/buttons, you can configure environment var
 
 - Configure variables in the VS Code **User Settings** or in any `.env` file to have them recognized by the extension. For example, when using <Term id="lsp" /> -powered features, "Show build menu," and more.
 - VS Code does not inherit variables set by the VS Code terminal or external shells.
-- Running a dbt command in the terminal won't fetch or use these variables.
+- The terminal uses system environmental variables, and does not inherit variables set in the dbt VS Code extension config. For example, running a dbt command in the terminal won't fetch or use the dbt VS Code extension variables.
 
 To configure environment variables in VS Code/Cursor:
 
