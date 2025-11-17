@@ -913,7 +913,7 @@ const sidebarSettings = {
         "docs/dbt-versions/experimental-features",
         {
           type: "category",
-          label: "dbt Core upgrade guides",
+          label: "dbt version upgrade guides",
           link: {
             type: "generated-index",
             title: "Version upgrade guides",
