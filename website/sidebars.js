@@ -904,8 +904,9 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Available dbt versions",
-      link: { type: "doc", id: "docs/dbt-versions/core" },
+      link: { type: "doc", id: "docs/dbt-versions/about-versions" },
       items: [
+        "docs/dbt-versions/about-versions",
         "docs/dbt-versions/core",
         "docs/dbt-versions/cloud-release-tracks",
         "docs/dbt-versions/upgrade-dbt-version-in-cloud",
@@ -917,7 +918,7 @@ const sidebarSettings = {
           link: {
             type: "generated-index",
             title: "Version upgrade guides",
-            description: "Learn what's new in the latest version of dbt Core.",
+            description: "Learn what's new in the latest version of dbt.",
             slug: "/docs/dbt-versions/core-upgrade",
           },
           items: [
