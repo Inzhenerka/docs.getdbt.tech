@@ -5,6 +5,7 @@ id: "about-versions"
 sidebar: "Available dbt versions"
 pagination_next: null
 pagination_prev: null
+hide_table_of_contents: true
 ---
 
 Whether you're using the CLI or working within the <Constant name="dbt_platform" />, your environments are aligned with a versioned release of dbt.
@@ -19,13 +20,13 @@ Whether you're using the CLI or working within the <Constant name="dbt_platform"
 
 <Card
     title="dbt Release Tracks"
-    body="Learn about how versions of dbt align with the release tracks availble on the dbt platform."
+    body="Learn about how versions of dbt align with the release tracks available on the dbt platform."
     link="/docs/dbt-versions/cloud-release-tracks"
     icon="dbt-bit"/>
 
 <Card
     title="Upgrade versions in dbt platform"
-    body="Instructions for upgrading your dbt platform projects to the latest version of dbt, include the Fusion Engine."
+    body="Instructions for upgrading your dbt platform projects to the latest version of dbt, including the Fusion Engine."
     link="/docs/dbt-versions/upgrade-dbt-version-in-cloud"
     icon="dbt-bit"/>
 
