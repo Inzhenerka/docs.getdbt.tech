@@ -123,7 +123,7 @@ If you already have a SQL model that defines your time spine, you can reference 
   ```
   </File>
 
-2. After adding the YAML configuration, delete the existing `metricflow_time_spine.sql` file from your project to avoid any issues.
+2. After adding the YAML configuration and ensuring you have a SQL model that defines the time spine, you can delete the existing `metricflow_time_spine.sql` file from your project to avoid any deprecation warnings and errors.
 
 3. Test the configuration to ensure compatibility with your production jobs.
 
