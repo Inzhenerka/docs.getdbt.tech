@@ -85,7 +85,7 @@ Use a `>=` operator to specify a lower and an upper limit. For example:
 
 ```yml 
 require-dbt-version: ">=1.9.0" # project will only work with versions 1.9 and higher.
-require-dbt-version: ">=2.0.0" # project will only work with the dbt Fusion engine (v2.0.0) and higher.
+require-dbt-version: ">=2.0.0" # project will only work with the dbt Fusion engine (v2.0.0 and higher).
 ```
 
 </File>
