@@ -105,7 +105,7 @@ For an example project, refer to our [Jaffle shop](https://github.com/dbt-labs/j
 
 ### Migrating from SQL to YAML
 
-If you already have a SQL model that defines your time spine, you can reference that model directly in the YAML file. If you don't have a SQL model that defines your time spine, identify and update it before proceeding to the following steps. 
+If you already have a SQL model that defines your time spine, you can reference that model directly in the YAML file. If you don't have a SQL model that defines your time spine, add one before proceeding to the following steps. 
 
 1. Add the following configuration to a new or existing YAML file using the [`models` key](/reference/model-properties) for the time spine in your `models/` directory. Name the YAML file whatever you want (for example, `util/_models.yml`):
 
