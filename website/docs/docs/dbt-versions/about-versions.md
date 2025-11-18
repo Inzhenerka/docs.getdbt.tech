@@ -19,7 +19,7 @@ Whether you're using the CLI or working within the <Constant name="dbt_platform"
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Release Tracks"
+    title="About release tracks"
     body="Learn about how versions of dbt align with the release tracks available on the dbt platform."
     link="/docs/dbt-versions/cloud-release-tracks"
     icon="dbt-bit"/>
@@ -31,7 +31,7 @@ Whether you're using the CLI or working within the <Constant name="dbt_platform"
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Product lifecycles"
+    title="Product lifecycles"
     body="Learn about the dbt product lifecycles from beta through end of life."
     link="/docs/dbt-versions/product-lifecycles"
     icon="dbt-bit"/>
