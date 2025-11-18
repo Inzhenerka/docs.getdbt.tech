@@ -86,7 +86,10 @@ The model query history feature uses the credentials in your production environm
      Without this grant, model query history won't display any data. For more details, view the snowflake docs [here](https://docs.snowflake.com/en/sql-reference/account-usage#enabling-other-roles-to-use-schemas-in-the-snowflake-database). 
 
 #### BigQuery model query history
-Model query history uses the metadata from the [`INFORMATION_SCHEMA.JOBS` view](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs) in BigQuery. To access this, the user configured for your production environment must have the `roles/bigquery.resourceViewer` [IAM role](https://docs.cloud.google.com/bigquery/docs/access-control#bigquery.resourceViewer) for your BigQuery project.
+The model query history uses metadata from the [`INFORMATION_SCHEMA.JOBS` view](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs) in BigQuery. To access this, the user configured for your production environment must have a proper [IAM role](https://docs.cloud.google.com/bigquery/docs/access-control#bigquery.resourceViewer) for your BigQuery project:
+
+- If you're using a BigQuery provided role, we recommend `roles/bigquery.resourceViewer`.
+- If you're using a customer role, it must have the `bigquery.jobs.listAll` permission assigned.
 
 ## View query history in Explorer
 
