@@ -94,7 +94,7 @@ Follow the appropriate instructions for your OS to locate your path:
 
 </Expandable>
 
-After completing this setup, skip to [step 3 (Test your configuration)](#3-optional-test-your-configuration).
+After completing this setup, skip to [Test your configuration](#optional-test-your-configuration).
 
 ### Environment variable configuration
 
