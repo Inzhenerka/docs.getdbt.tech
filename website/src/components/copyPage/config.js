@@ -13,6 +13,11 @@ export const LLM_SERVICES = {
     name: 'Claude',
     url: 'https://claude.ai/new?q=Read+from+{url}+so+I+can+ask+questions+about+it.',
     subtitle: 'Ask questions about this page'
+  },
+  perplexity: {
+    name: 'Perplexity',
+    url: 'https://www.perplexity.ai/search/new?q=Read+from+{url}+so+I+can+ask+questions+about+it.',
+    subtitle: 'Ask questions about this page'
   }
 };
 
