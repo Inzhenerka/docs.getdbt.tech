@@ -10,12 +10,14 @@ description: "The type config specifies the type of user-defined function you're
 
 ```yml
 functions:
-  - name: <function name>
+  - name: function_name
     config:
-      type: scalar | aggregate | table  # scalar & aggregate partially supported, table coming soon
+      type: scalar | aggregate | table  # scalar & aggregate partially supported, table not supported
 ```
 
 </File>
+
+In the future, we're considering adding support for `table` type. Refer to [this issue](https://github.com/dbt-labs/dbt-core/issues/11917) to track the progress and provide any feedback.
 
 ## Definition
 
@@ -27,7 +29,6 @@ The following function types are supported:
 <!-- no toc -->
 - [scalar (default)](#scalar-default)
 - [aggregate](#aggregate)
-- [table](#table)
 
 Support for `type` differs based on the warehouse and language (SQL or Python) you're using:
 
@@ -68,7 +69,7 @@ functions:
 
 ### aggregate
 
-Aggregate functions operate on multiple rows and return a single value. These functions are used in `GROUP BY` operations.
+Aggregate functions operate on multiple rows and return a single value &mdash; for example, summing values or calculating an average across a group. These functions are used in `GROUP BY` operations.
 
 Aggregate functions are supported only for:
 - Python functions on Snowflake
@@ -76,7 +77,9 @@ Aggregate functions are supported only for:
 
 More warehouse and language support is planned for a future release.
 
-**Example:**
+**Example use cases:**
+- Calculating totals or averages for groups of data (for example, total sales per customer)
+- Aggregating data over time (for example, daily, monthly, or yearly totals)
 
 <File name='functions/schema.yml'>
 
@@ -96,15 +99,6 @@ functions:
 
 </File>
 
-### table
-
-Table functions return a table (multiple rows and columns) rather than a single value.
-
-:::note Coming soon
-Support for table functions is planned for a future release.
-:::
-
-
 ## Related documentation
 
 - [User-defined functions](/docs/build/udfs)
@@ -113,4 +107,3 @@ Support for table functions is planned for a future release.
 - [Volatility](/reference/resource-configs/volatility)
 - [Arguments](/reference/resource-properties/function-arguments)
 - [Returns](/reference/resource-properties/returns)
-
