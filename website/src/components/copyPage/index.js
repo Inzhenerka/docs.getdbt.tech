@@ -20,7 +20,6 @@ function CopyPage({ dropdownRight = false }) {
     llmServices,
     dropdownRef,
     handleCopyPage,
-    handleOpenInLLM,
     toggleDropdown,
   } = useCopyPage();
 
@@ -38,49 +37,49 @@ function CopyPage({ dropdownRight = false }) {
         {getSvgIcon("chevron-down", { className: styles.dropdownIcon })}
       </button>
 
-      {isDropdownOpen && (
-        <div
-          className={`${styles.dropdown} ${dropdownRight ? styles.dropdownRight : ''}`}
-          role="menu"
-          aria-label="Copy page menu"
+      <div
+        className={`${styles.dropdown} ${dropdownRight ? styles.dropdownRight : ''} ${!isDropdownOpen ? styles.dropdownHidden : ''}`}
+        role="menu"
+        aria-label="Copy page menu"
+        aria-hidden={!isDropdownOpen}
+      >
+        <button
+          className={styles.dropdownItem}
+          onClick={handleCopyPage}
+          role="menuitem"
+          tabIndex={isDropdownOpen ? "0" : "-1"}
         >
-          <button
+          {getSvgIcon("copy", {})}
+          <div className={styles.dropdownItemContent}>
+            <div className={styles.dropdownItemTitle}>Copy page</div>
+            <div className={styles.dropdownItemSubtitle}>
+              Copy page as Markdown for LLMs
+            </div>
+          </div>
+        </button>
+
+        {Object.entries(llmServices).map(([serviceKey, service]) => (
+          <a
+            key={serviceKey}
+            id={service.id}
             className={styles.dropdownItem}
-            onClick={handleCopyPage}
+            href={service.computedUrl}
+            target="_blank"
             role="menuitem"
-            tabIndex="0"
+            tabIndex={isDropdownOpen ? "0" : "-1"}
           >
-            {getSvgIcon("copy", {})}
+            {getSvgIcon("external-link", {})}
             <div className={styles.dropdownItemContent}>
-              <div className={styles.dropdownItemTitle}>Copy page</div>
+              <div className={styles.dropdownItemTitle}>
+                Open in {service.name}
+              </div>
               <div className={styles.dropdownItemSubtitle}>
-                Copy page as Markdown for LLMs
+                {service.subtitle}
               </div>
             </div>
-          </button>
-
-          {Object.entries(llmServices).map(([serviceKey, service]) => (
-            <a
-              key={serviceKey}
-              id={service.id}
-              className={styles.dropdownItem}
-              href={service.computedUrl}
-              target="_blank"
-              role="menuitem"
-            >
-              {getSvgIcon("external-link", {})}
-              <div className={styles.dropdownItemContent}>
-                <div className={styles.dropdownItemTitle}>
-                  Open in {service.name}
-                </div>
-                <div className={styles.dropdownItemSubtitle}>
-                  {service.subtitle}
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      )}
+          </a>
+        ))}
+      </div>
 
       {copySuccess && (
         <div
