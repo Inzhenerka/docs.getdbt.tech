@@ -62,6 +62,7 @@ function CopyPage({ dropdownRight = false }) {
           {Object.entries(llmServices).map(([serviceKey, service]) => (
             <button
               key={serviceKey}
+              id={service.id}
               className={styles.dropdownItem}
               onClick={() => handleOpenInLLM(serviceKey)}
               role="menuitem"
