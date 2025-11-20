@@ -12,8 +12,13 @@ import Link from '@docusaurus/Link';
  * - Open page in configured LLM services (ChatGPT, Claude, etc.)
  * - Full keyboard navigation and accessibility support
  * - Error handling and user feedback
+ *
+ * @param {Object} props
+ * @param {boolean} [props.dropdownRight=false] - Align dropdown to the right (used on guides pages)
+ * @param {string} [props.pageUrl] - Fully qualified canonical URL for the current page,
+ *   used to build LLM links. If omitted, the hook will fall back to window.location.
  */
-function CopyPage({ dropdownRight = false }) {
+function CopyPage({ dropdownRight = false, pageUrl }) {
   const {
     isDropdownOpen,
     copySuccess,
@@ -22,7 +27,7 @@ function CopyPage({ dropdownRight = false }) {
     dropdownRef,
     handleCopyPage,
     toggleDropdown,
-  } = useCopyPage();
+  } = useCopyPage({ pageUrl });
 
   return (
     <div className={styles.copyPageContainer} ref={dropdownRef}>
