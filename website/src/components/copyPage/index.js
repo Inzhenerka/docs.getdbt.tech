@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.css';
 import { useCopyPage } from '../../utils/use-copy-page';
 import getSvgIcon from '../../utils/get-svg-icon';
+import Link from '@docusaurus/Link';
 
 /**
  * CopyPage Component
@@ -59,7 +60,7 @@ function CopyPage({ dropdownRight = false }) {
         </button>
 
         {Object.entries(llmServices).map(([serviceKey, service]) => (
-          <a
+          <Link
             key={serviceKey}
             id={service.id}
             className={styles.dropdownItem}
@@ -77,7 +78,7 @@ function CopyPage({ dropdownRight = false }) {
                 {service.subtitle}
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
 
