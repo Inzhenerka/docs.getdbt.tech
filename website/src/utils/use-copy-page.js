@@ -14,6 +14,22 @@ export function useCopyPage() {
   const dropdownRef = useRef(null);
   const rawMarkdownContent = useRawMarkdownContent();
 
+  // Compute LLM service URLs with the current page URL
+  const llmServicesWithUrls = Object.entries(LLM_SERVICES).reduce((acc, [key, service]) => {
+    // Always use the production domain to avoid localhost/preview URLs in LLM context
+    const productionUrl = typeof window !== 'undefined' 
+      ? `https://docs.getdbt.com${window.location.pathname}${window.location.search}${window.location.hash}`
+      : '';
+    const encodedUrl = encodeURIComponent(productionUrl);
+    const llmUrl = service.url.replace('{url}', encodedUrl);
+    
+    acc[key] = {
+      ...service,
+      computedUrl: llmUrl
+    };
+    return acc;
+  }, {});
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -132,7 +148,7 @@ export function useCopyPage() {
     copySuccess,
     error,
     rawMarkdownContent,
-    llmServices: LLM_SERVICES,
+    llmServices: llmServicesWithUrls,
 
     // Refs
     dropdownRef,

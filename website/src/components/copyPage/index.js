@@ -60,13 +60,13 @@ function CopyPage({ dropdownRight = false }) {
           </button>
 
           {Object.entries(llmServices).map(([serviceKey, service]) => (
-            <button
+            <a
               key={serviceKey}
               id={service.id}
               className={styles.dropdownItem}
-              onClick={() => handleOpenInLLM(serviceKey)}
+              href={service.computedUrl}
+              target="_blank"
               role="menuitem"
-              tabIndex="0"
             >
               {getSvgIcon("external-link", {})}
               <div className={styles.dropdownItemContent}>
@@ -77,7 +77,7 @@ function CopyPage({ dropdownRight = false }) {
                   {service.subtitle}
                 </div>
               </div>
-            </button>
+            </a>
           ))}
         </div>
       )}

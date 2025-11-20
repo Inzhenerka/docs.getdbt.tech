@@ -78,10 +78,12 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   text-align: left;
+  text-decoration: none;
 }
 
 .dropdownItem:hover {
   background: #f9fafb;
+  text-decoration: none;
 }
 
 .dropdownItem svg {
@@ -95,6 +97,7 @@
   align-items: flex-start;
   gap: 2px;
   flex: 1;
+  text-decoration: none !important;
 }
 
 .dropdownItemTitle {
@@ -104,11 +107,20 @@
   line-height: 1.2;
 }
 
+.dropdownItemTitle:hover {
+  text-decoration: none !important;
+}
+
 .dropdownItemSubtitle {
   font-size: 0.75rem;
   font-weight: 400;
   color: #6b7280;
   line-height: 1.2;
+  text-decoration: none !important;
+}
+
+.dropdownItemSubtitle:hover {
+  text-decoration: none !important;
 }
 
 .success {
@@ -216,6 +228,7 @@
 
 [data-theme='dark'] .dropdownItem:hover {
   background: #374151;
+  text-decoration: none;
 }
 
 [data-theme='dark'] .copyIcon,
