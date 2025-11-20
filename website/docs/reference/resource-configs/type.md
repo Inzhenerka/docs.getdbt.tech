@@ -12,7 +12,7 @@ description: "The type config specifies the type of user-defined function you're
 functions:
   - name: function_name
     config:
-      type: scalar | aggregate | table  # scalar & aggregate partially supported, table not supported
+      type: scalar | aggregate 
 ```
 
 </File>
@@ -32,13 +32,13 @@ The following function types are supported:
 
 Support for `type` differs based on the warehouse and language (SQL or Python) you're using:
 
-| Adapter	| scalar SQL	| scalar Python	| aggregate SQL	| aggregate Python | table SQL | table Python |
-| --- | --- | --- | --- | --- | --- | --- |
-| dbt-bigquery	| ✅	| ✅	| ✅	| ❌ | ❌ | ❌ |
-| dbt-snowflake	| ✅	| ✅	| ❌	| ✅ | ❌ | ❌ |
-| dbt-databricks	| ✅	| ❌	| ❌	| ❌ | ❌ | ❌ |
-| dbt-postgres	| ✅	| ❌	| ❌	| ❌ | ❌ | ❌ |
-| dbt-redshift	| ✅	| ❌	| ❌	| ❌ | ❌ | ❌ |
+| Adapter	| scalar SQL	| scalar Python	| aggregate SQL	| aggregate Python |
+| --- | --- | --- | --- | --- |
+| dbt-bigquery	| ✅	| ✅	| ✅	| ❌ |
+| dbt-snowflake	| ✅	| ✅	| ❌	| ✅ |
+| dbt-databricks	| ✅	| ❌	| ❌	| ❌ |
+| dbt-postgres	| ✅	| ❌	| ❌	| ❌ |
+| dbt-redshift	| ✅	| ❌	| ❌	| ❌ |
 
 ### scalar (default)
 
@@ -71,11 +71,10 @@ functions:
 
 Aggregate functions operate on multiple rows and return a single value &mdash; for example, summing values or calculating an average across a group. These functions are used in `GROUP BY` operations.
 
-Aggregate functions are supported only for:
+Aggregate functions are currently supported only for:
 - Python functions on Snowflake
 - SQL functions on BigQuery
 
-More warehouse and language support is planned for a future release.
 
 **Example use cases:**
 - Calculating totals or averages for groups of data (for example, total sales per customer)
