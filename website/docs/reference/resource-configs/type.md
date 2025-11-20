@@ -69,7 +69,7 @@ functions:
 
 ### aggregate
 
-Aggregate functions operate on multiple rows and return a single value &mdash; for example, summing values or calculating an average across a group. These functions are used in `GROUP BY` operations.
+Aggregate functions operate on multiple rows and return a single value &mdash; for example, they sum values or calculate an average for a group. Queries use these functions in `GROUP BY` operations.
 
 Aggregate functions are currently supported only for:
 - Python functions on Snowflake
