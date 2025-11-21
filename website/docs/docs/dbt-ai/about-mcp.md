@@ -101,9 +101,14 @@ To learn more about the dbt Discovery API, click [here](/docs/dbt-cloud-apis/dis
 - `get_model_health`: Gets health signals for a specific model
 - `get_all_sources`: Gets all source tables with metadata and freshness information
 - `get_exposures`: Gets all exposures
-- `get_exposure_details`: Gets details for a specific exposure or a list of exposures
+- `get_exposure_details`: Gets details for a specific exposure
 - `search`: Searches artifacts from <Constant name="dbt_platform"/> runs by using exact string matching against fields such as code, descriptions, and names.
 - `get_related_models`: Uses semantic search to find dbt models that are similar to the query, even if there isn't an exact string match.
+- `get_macro_details`: Gets details for a specific macro
+- `get_seed_details`: Gets details for a specific seed
+- `get_semantic_model_details`: Gets details for a specific semantic model
+- `get_snapshot_details`: Gets details for a specific snapshot
+- `get_test_details`: Gets details for a specific test
 
 ### Administrative API
 
