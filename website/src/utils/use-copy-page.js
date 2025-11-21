@@ -22,11 +22,22 @@ export function useCopyPage({ pageUrl } = {}) {
   // Compute the canonical URL for this page.
   // Prefer an explicit pageUrl (from Docusaurus metadata) so SSR markup
   // already includes the correct URL, avoiding empty prompts before hydration.
-  const canonicalUrl =
-    pageUrl ||
-    (typeof window !== 'undefined'
-      ? `https://docs.getdbt.com${window.location.pathname}${window.location.search}${window.location.hash}`
-      : '');
+  let canonicalUrl = '';
+
+  // Always normalize to the production docs domain for LLM links,
+  // regardless of preview/localhost environment.
+  if (pageUrl) {
+    try {
+      const parsed = new URL(pageUrl);
+      canonicalUrl = `https://docs.getdbt.com${parsed.pathname}${parsed.search}${parsed.hash}`;
+    } catch (e) {
+      // If parsing fails for any reason, fall back to using the raw pageUrl
+      // (still better than an empty string), but this should be rare.
+      canonicalUrl = pageUrl;
+    }
+  } else if (typeof window !== 'undefined') {
+    canonicalUrl = `https://docs.getdbt.com${window.location.pathname}${window.location.search}${window.location.hash}`;
+  }
 
   // Compute LLM service URLs with the current page URL
   const llmServicesWithUrls = Object.entries(LLM_SERVICES).reduce((acc, [key, service]) => {
