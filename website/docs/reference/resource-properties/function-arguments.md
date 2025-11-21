@@ -10,13 +10,13 @@ import ArgumentsShared from '/snippets/_arguments-shared.md';
 
 ```yml
 
-
 functions:
   - name: <function name>
     arguments:
       - name: <arg name>
         data_type: <string> # warehouse-specific
         description: <markdown_string>
+        default_value: <string> # available in Snowflake and Postgres
 
 ```
 
@@ -54,6 +54,32 @@ Refer to your warehouse documentation for the complete list of supported data ty
 ### description
 
 An optional markdown string describing the argument. This is helpful for documentation purposes.
+
+### default_value
+
+The `default_value` is an optional property that you can use to define a default value for a function argument. If no value is provided for that argument, the warehouse uses the default. Setting a `default_value` makes the argument optional. This property is supported in [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) and [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
+
+When using this property, note that the order of your argument definitions is important. Arguments without default values should _not_ come after arguments with default values. For example: 
+
+<File name='functions/schema.yml'>
+
+```yml
+functions:
+  - name: sum_2_values
+    description: Add two values together
+    arguments:
+      - name: val1 # this argument comes first because it has no default value
+        data_type: integer
+        description: The first value
+      - name: val2
+        data_type: integer
+        description: The second value
+        default_value: 0 
+    returns:
+      data_type: integer
+```
+
+</File>
 
 ## Examples
 

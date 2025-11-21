@@ -102,6 +102,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
           - name: a_string          # required if arguments is specified
             data_type: string       # required if arguments is specified
             description: The string that I want to check if it's representing a positive integer (like "10") 
+            default_value: 1        # optional, available in Snowflake and Postgres
         returns:                    # required
           data_type: integer        # required 
     ```
@@ -159,7 +160,8 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
           arguments:                   # optional
             - name: a_string           # required if arguments is specified
               data_type: string        # required if arguments is specified
-              description: The string that I want to check if it's representing a positive integer (like "10") 
+              description: The string that I want to check if it's representing a positive integer (like "10")
+              default_value: 1         # optional, available in Snowflake and Postgres
           returns:                    # required
             data_type: integer        # required
     ```
@@ -197,7 +199,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
     <TabItem value="Snowflake">
 
     ```sql
-    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
+    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING DEFAULT '1')
     RETURNS INTEGER
     LANGUAGE SQL
     IMMUTABLE
@@ -242,7 +244,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
     <TabItem value="Postgres">
 
     ```sql
-    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int(a_string text)
+    CREATE OR REPLACE FUNCTION udf_schema.is_positive_int(a_string text DEFAULT '1')
     RETURNS int
     LANGUAGE sql
     IMMUTABLE
