@@ -19,7 +19,7 @@ You can use `require-dbt-version` to signal that your package is compatible with
 
 ### Who is this for?
 
-This guide is for any dbt package maintainer, like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that are looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes.
+This guide is for any [dbt package maintainer](/guides/building-packages), like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that are looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes.
 
 In this guide, we'll go over:
 
@@ -28,6 +28,8 @@ In this guide, we'll go over:
 - Cutting a new release of your package with the updated `require-dbt-version` config.
 - Adding a badge to your package to indicate that it is compatible with <Constant name="fusion"/> - is this right?
 - Updating your README to note that the package is compatible with <Constant name="fusion"/>.
+
+If you're interested in creating a new package from scratch, we recommend using the [dbt package guide](/guides/building-packages) to get started.
 
 ## Requirements
 
