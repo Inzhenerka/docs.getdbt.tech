@@ -31,3 +31,5 @@ The following packages are verified and supported on the <Constant name="fusion_
 - [Snowflake-Labs/dbt_semantic_view](https://github.com/Snowflake-Labs/dbt_semantic_view)
 
 Additionally, the Fivetran `source` and `transformation` packages have been combined into a single package. If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
+
+Package maintainers that would like make their package compatible with <Constant name="fusion"/> can refer to the [Fusion package compatibility guide](/guides/fusion-package-compat) for instructions.
