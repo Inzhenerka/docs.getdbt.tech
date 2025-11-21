@@ -102,7 +102,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
           - name: a_string          # required if arguments is specified
             data_type: string       # required if arguments is specified
             description: The string that I want to check if it's representing a positive integer (like "10") 
-            default_value: 1        # optional, available in Snowflake and Postgres
+            default_value: "1"       # optional, available in Snowflake and Postgres
         returns:                    # required
           data_type: integer        # required 
     ```
@@ -161,7 +161,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
             - name: a_string           # required if arguments is specified
               data_type: string        # required if arguments is specified
               description: The string that I want to check if it's representing a positive integer (like "10")
-              default_value: 1         # optional, available in Snowflake and Postgres
+              default_value: "1"       # optional, available in Snowflake and Postgres
           returns:                    # required
             data_type: integer        # required
     ```
