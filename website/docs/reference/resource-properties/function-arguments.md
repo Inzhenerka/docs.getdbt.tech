@@ -16,7 +16,7 @@ functions:
       - name: <arg name>
         data_type: <string> # warehouse-specific
         description: <markdown_string>
-        default_value: <string | boolean | integer> # available in Snowflake and Postgres
+        default_value: <string | boolean | integer> # optional, available in Snowflake and Postgres
 
 ```
 
@@ -57,7 +57,7 @@ An optional markdown string describing the argument. This is helpful for documen
 
 ### default_value
 
-The `default_value` is an optional property that you can use to define a default value for a function argument. If no value is provided for that argument, the warehouse uses the default. Setting a `default_value` makes the argument optional. This property is supported in [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) and [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
+The `default_value` is an optional property that you can use to define a default value for a function argument. If no value is provided for that argument, the warehouse uses the specified default. Setting a `default_value` makes the argument optional. This property is supported in [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) and [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
 
 When using this property, note that the order of your argument definitions is important. Arguments without default values should _not_ come after arguments with default values. For example: 
 
@@ -78,6 +78,10 @@ functions:
     returns:
       data_type: integer
 ```
+
+In this example:
+- `val1` has no `default_value`, so it’s required.
+- `val2` has a `default_value` of `0`, so it’s optional. If you don’t provide a value for `val2`, the function uses `0` instead.
 
 </File>
 

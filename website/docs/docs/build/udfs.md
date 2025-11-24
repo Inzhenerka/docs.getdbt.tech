@@ -262,7 +262,7 @@ You can define SQL and Python UDFs in dbt. Note: Python UDFs are currently suppo
 
     <TabItem value="Snowflake">
     ```sql
-    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING)
+    CREATE OR REPLACE FUNCTION udf_db.udf_schema.is_positive_int(a_string STRING DEFAULT '1')
       RETURNS INTEGER
       LANGUAGE PYTHON
       RUNTIME_VERSION = '3.11'
