@@ -91,7 +91,7 @@ If your package includes an `integration_tests/` folder ([like `dbt-utils`](http
 
 If you don’t have integration tests:
 
-1. Create a small, <Constant name="fusion"/>-compatible dbt project that installs your package. 
+1. Create a small, <Constant name="fusion"/>-compatible dbt project that installs your package and has a `packages.yml` or `dependencies.yml` file. 
 2. Run it with <Constant name="fusion"/> using the `dbtf run` command.
 3. Confirm that models build successfully and that there are no warnings. If there are errors/warnings, you'll need to fix them first. If you still have issues, reach out to the [#package-ecosystem channel](https://getdbt.slack.com/archives/CU4MRJ7QB) on Slack for help.
 
