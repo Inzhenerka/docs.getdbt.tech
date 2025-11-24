@@ -16,8 +16,8 @@ level: 'Advanced'
 Thank you for being part of the [dbt package community](https://getdbt.slack.com/archives/CU4MRJ7QB) and maintaining [dbt packages](https://hub.getdbt.com/)! Your work makes dbt’s ecosystem possible and helps thousands of teams reuse trusted models and macros to build faster, more reliable analytics.
 
 This guide will help you upgrade your dbt packages to be [<Constant name="fusion" />](/docs/fusion)-compatible. A <Constant name="fusion" />-compatible package:
-- Supports [<Constant name="fusion_engine" />](/docs/fusion) version `2.0.0`, 
-- Uses the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) to signal compatibility in the dbt package hub,
+- Supports [<Constant name="fusion_engine" />](/docs/fusion) version `2.0.0`
+- Uses the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) to signal compatibility in the dbt package hub
 - aligns with the latest JSON schema introduced in dbt <Constant name="core"/> v1.10.0.
 
 In this guide, we'll go over:
@@ -35,7 +35,7 @@ If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and err
 
 This guide assumes you're using the command line and Git to make changes in your package repository. If you're interested in creating a new package from scratch, we recommend using the [dbt package guide](/guides/building-packages) to get started.
 
-## Requirements
+## Prerequisites
 
 Before you begin, make sure you meet the following:
 
@@ -44,6 +44,7 @@ Before you begin, make sure you meet the following:
   - Run the command `uvx dbt-autofix` for the latest version of the tool. For more installation options, see the [official `dbt-autofix` doc](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
 - Repository access &mdash; You’ll need permission to create a branch and release updates/a new version of your package. You’ll need to tag a new version of your package once it’s <Constant name="fusion"/>-compatible.
 - A <Constant name="fusion"/> installation or test environment &mdash; You can use <Constant name="fusion"/> locally (using the `dbtf` binary) or in your CI pipeline to validate compatibility.
+- You use the command line and Git to make changes in your package repository.
 
 ## Upgrade the package
 This section of the guide will go over how to upgrade your package to be compatible with <Constant name="fusion"/> by:
