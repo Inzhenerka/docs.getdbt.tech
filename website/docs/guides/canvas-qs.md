@@ -4,7 +4,7 @@ id: "canvas"
 level: 'Beginner'
 icon: 'dbt'
 hide_table_of_contents: true
-tags: ['Canvas','Analyst', 'dbt platform','Model']
+tags: ['Canvas', 'Analyst', 'dbt platform', 'Model']
 recently_updated: true
 ---
 
