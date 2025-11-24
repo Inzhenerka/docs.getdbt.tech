@@ -31,7 +31,7 @@ In this guide, we'll go over:
 
 This guide is for any dbt package maintainer, like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that are looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. 
 
-If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching <Constant name="core"/> behavior. 
+A users stores their package in a `packages.yml` or `dependencies.yml` file. If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching <Constant name="core"/> behavior. 
 
 This guide assumes you're using the command line and Git to make changes in your package repository. If you're interested in creating a new package from scratch, we recommend using the [dbt package guide](/guides/building-packages) to get started.
 
