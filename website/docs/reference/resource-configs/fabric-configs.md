@@ -90,7 +90,7 @@ vars:
 </File>
 
 ## Views
-Views can be created using the `view` materialization:
+You can create views using the `view` materialization:
 
 ```sql
 {{ config(materialized='view') }}
