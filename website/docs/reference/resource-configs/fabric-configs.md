@@ -58,7 +58,7 @@ models:
 
 </Tabs>
 
-> **Limitation:** Nested CTEs (Common Table Expressions) are not supported in model materialization. Models using multiple nested CTEs may fail during compilation or execution.
+> **Limitation:** Nested <Term id="cte"/> aren't supported in model materialization. Models using multiple nested CTEs may fail during compilation or execution.
 
 ## Table Clone
 The `table_clone` materialization creates a physical copy of an existing table using Fabric’s cloning capabilities. This is useful for versioning, branching, or snapshot-like workflows.
