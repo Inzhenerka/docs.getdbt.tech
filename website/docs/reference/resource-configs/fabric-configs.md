@@ -121,7 +121,7 @@ Indexes are not supported by Microsoft Fabric Data Warehouse. Any Indexes provid
 
 Grants with auto provisioning is not supported by Microsoft Fabric Data Warehouse at this time.
 
-## Incremental Models
+## Incremental models
 
 Incremental materializations are supported with multiple strategies. In **dbt-fabric**, the **default strategy is `merge`**, introduced in v1.9.7. Other supported strategies include `append`, `delete+insert`, and `microbatch`.
 
