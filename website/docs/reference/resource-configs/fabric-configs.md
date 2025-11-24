@@ -11,7 +11,7 @@ Ephemeral materialization is not supported due to T-SQL not supporting nested CT
 
 ### Tables
 
-Tables are the default materialization in dbt-fabric. When a model is configured as a table, dbt will create or replace the table in Fabric Data Warehouse on each run.
+Tables are the default materialization in dbt-fabric. When you configure a model as a table, dbt will create or replace the table in Fabric Data Warehouse on each run.
 
 <Tabs
 defaultValue="model"
