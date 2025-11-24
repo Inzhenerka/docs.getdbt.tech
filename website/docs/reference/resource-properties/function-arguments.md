@@ -16,7 +16,7 @@ functions:
       - name: <arg name>
         data_type: <string> # warehouse-specific
         description: <markdown_string>
-        default_value: <string> # available in Snowflake and Postgres
+        default_value: <string | boolean | integer> # available in Snowflake and Postgres
 
 ```
 
