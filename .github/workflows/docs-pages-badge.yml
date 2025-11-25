@@ -60,23 +60,19 @@ jobs:
       - name: Write Shields endpoint JSONs
         run: |
           write_badge () {
-            local FILE="$1"; local LABEL="$2"; local VALUE="$3"
-            cat > ".badges/${FILE}" <<EOF
-            {
-              "schemaVersion": 1,
-              "label": "${LABEL}",
-              "message": "${VALUE}",
-              "color": "informational"
-            }
-            EOF
+            file="$1"; label="$2"; value="$3"
+            jq -n --arg label "$label" --arg message "$value" \
+              '{schemaVersion:1,label:$label,message:$message,color:"informational"}' \
+              > ".badges/${file}"
           }
 
-          write_badge "docs.json"            "docs pages"          "${{ steps.counts.outputs.docs }}"
-          write_badge "best-practices.json"  "best practices"      "${{ steps.counts.outputs.best }}"
-          write_badge "faqs.json"            "faqs"                "${{ steps.counts.outputs.faqs }}"
-          write_badge "guides.json"          "guides"              "${{ steps.counts.outputs.guides }}"
-          write_badge "reference.json"       "reference"           "${{ steps.counts.outputs.reference }}"
-          write_badge "total.json"           "docs total"          "${{ steps.counts.outputs.total }}"
+          write_badge "docs.json"            "docs pages"     "${{ steps.counts.outputs.docs }}"
+          write_badge "best-practices.json"  "best practices" "${{ steps.counts.outputs.best }}"
+          write_badge "faqs.json"            "faqs"           "${{ steps.counts.outputs.faqs }}"
+          write_badge "guides.json"          "guides"         "${{ steps.counts.outputs.guides }}"
+          write_badge "reference.json"       "reference"      "${{ steps.counts.outputs.reference }}"
+          write_badge "total.json"           "docs total"     "${{ steps.counts.outputs.total }}"
+
 
       - name: Commit badge JSONs to the branch
         run: |
