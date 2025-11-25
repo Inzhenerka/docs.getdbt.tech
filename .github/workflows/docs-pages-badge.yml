@@ -2,7 +2,7 @@ name: Docs total pages badge
 
 on:
   push:
-    branches: ["current"]           # only update when current changes
+    branches: ["**"]           # only update when current changes
     paths:
       - "website/**"
       - "**/*.md"
