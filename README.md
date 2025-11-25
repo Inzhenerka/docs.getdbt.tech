@@ -4,7 +4,7 @@ _We use [docusaurus](https://v2.docusaurus.io/) to power [docs.getdbt.com](https
 [![Open issues](https://img.shields.io/github/issues/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/issues)
 [![Open PRs](https://img.shields.io/github/issues-pr/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/pulls)
 [![Slack](https://img.shields.io/badge/Slack-Join%20the%20dbt%20Community-4A154B?logo=slack&logoColor=white)](https://docs.getdbt.com/community/join)
-[![Total](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/total.json)](https://github.com/dbt-labs/docs.getdbt.com/tree/ee6f59e611134de0b7e71d78dbcaa1a26adf5819/.badges)
+[![Total](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/current/.badges/total.json)](https://github.com/dbt-labs/docs.getdbt.com/tree/ee6f59e611134de0b7e71d78dbcaa1a26adf5819/.badges)
 
 
 #### Table of Contents
