@@ -3,11 +3,8 @@ _We use [docusaurus](https://v2.docusaurus.io/) to power [docs.getdbt.com](https
 <!-- docs repo stats -->
 [![Open issues](https://img.shields.io/github/issues/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/issues)
 [![Open PRs](https://img.shields.io/github/issues-pr/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/pulls)
-![Docs total](https://img.shields.io/badge/dynamic/json
-?url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fcode%3Fq%3Drepo%3Adbt-labs%2Fdocs.getdbt.com%2Bextension%3Amd%2B(path%3Awebsite%2Fdocs%20OR%20path%3Awebsite%2Fsnippets)
-&query=$.total_count
-&label=docs%20total
-&color=informational)
+![Docs total](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fcode%3Fq%3Drepo%3Adbt-labs%2Fdocs.getdbt.com%2B(extension%3Amd%20OR%20extension%3Amdx)%2B(path%3Awebsite%2Fdocs%20OR%20path%3Awebsite%2Fsnippets)&query=$.total_count&label=docs%20total&color=informational&cacheSeconds=1800)
+
 [![Slack](https://img.shields.io/badge/Slack-Join%20the%20dbt%20Community-4A154B?logo=slack&logoColor=white)](https://docs.getdbt.com/community/join)
 
 #### Table of Contents
