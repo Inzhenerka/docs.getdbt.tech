@@ -407,11 +407,11 @@ Rolling back to `Latest` will disable <Constant name="fusion" />-specific featur
 
 You've successfully upgraded your entire dbt platform project to <Constant name="fusion" />! Your team can now benefit from:
 
-- ⚡ **Up to 30x faster parsing and compilation**
-- 💰 **30%+ reduction in warehouse costs** (with state-aware orchestration)
-- 🔍 **Enhanced SQL validation and error messages**
-- 🚀 **State-aware orchestration** for intelligent model rebuilding
-- 🛠️ **Modern development experience** 
+- ⚡ Up to 30x faster parsing and compilation
+- 💰 30%+ reduction in warehouse costs (with state-aware orchestration)
+- 🔍 Enhanced SQL validation and error messages
+- 🚀 State-aware orchestration for intelligent model rebuilding
+- 🛠️ Modern development tools
 
 For your next steps:
 
