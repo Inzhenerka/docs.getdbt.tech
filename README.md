@@ -72,3 +72,4 @@ You can click a link available in a Vercel bot PR comment to see and review your
 
 Advisory:
 - If you run into an `fatal error: 'vips/vips8' file not found` error when you run `npm install`, you may need to run `brew install vips`. Warning: this one will take a while -- go ahead and grab some coffee!
+
