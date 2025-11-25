@@ -1,14 +1,12 @@
-name: Docs total pages badge
+name: Docs total pages badge (test)
 
 on:
   push:
-    branches: ["current"]              # only update when current changes
+    branches: ["test-badge"]
     paths:
       - "website/**"
-      - "**/*.md"                      # only .md impacts count
-  schedule:
-    - cron: "0 6 * * *"                # optional: refresh daily at 06:00 UTC
-  workflow_dispatch:                    # allow manual runs
+      - "**/*.md"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -18,64 +16,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0               # we push a commit
-          # ref: current               # (optional) be explicit for scheduled runs
+        with: { fetch-depth: 0 }
 
-      - name: Ensure jq is available
+      - name: Ensure jq
         run: |
-          if ! command -v jq >/dev/null 2>&1; then
-            sudo apt-get update && sudo apt-get install -y jq
-          fi
+          command -v jq >/dev/null || { sudo apt-get update && sudo apt-get install -y jq; }
 
-      - name: Count total pages (.md only in website/docs + website/snippets)
+      - name: Count total (.md in website/docs + website/snippets)
         id: counts
-        shell: bash
         run: |
-          set -euo pipefail
           mkdir -p .badges
+          count() { [[ -d "$1" ]] && find "$1" -type f -iname "*.md" \
+            -not -path "*/_partials/*" -not -path "*/_includes/*" -not -path "*/_components/*" | wc -l | tr -d ' ' || echo 0; }
+          DOCS=$(count website/docs)
+          SNIPPETS=$(count website/snippets)
+          echo "total=$((DOCS + SNIPPETS))" >> "$GITHUB_OUTPUT"
 
-          count_dir () {
-            local DIR="$1"
-            if [[ -d "$DIR" ]]; then
-              find "$DIR" -type f -iname "*.md" \
-                -not -path "*/_partials/*" \
-                -not -path "*/_includes/*" \
-                -not -path "*/_components/*" \
-              | wc -l | tr -d ' '
-            else
-              echo 0
-            fi
-          }
-
-          DOCS=$(count_dir website/docs)
-          SNIPPETS=$(count_dir website/snippets)
-          TOTAL=$(( DOCS + SNIPPETS ))
-          echo "total=${TOTAL}" >> "$GITHUB_OUTPUT"
-
-      - name: Write Shields endpoint JSON (total only)
+      - name: Write badge JSON
         run: |
           jq -n --arg label "docs total" --arg message "${{ steps.counts.outputs.total }}" \
-            '{schemaVersion:1,label:$label,message:$message,color:"informational"}' \
-            > ".badges/total.json"
+            '{schemaVersion:1,label:$label,message:$message,color:"informational",cacheSeconds:3600}' \
+            > .badges/total.json
 
-      - name: Commit badge JSON to current
+      - name: Commit to test-badge
         run: |
-          git config --global user.name  "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .badges/total.json
-          if git diff --cached --quiet; then
-            echo "No badge changes to commit."
-            exit 0
-          fi
-          git commit -m "chore: update docs total pages badge"
-          git pull --rebase origin current || true
-          git push origin HEAD:current
-
-      - name: Summary
-        run: |
-          {
-            echo "### Docs total pages"
-            echo ""
-            echo "**${{ steps.counts.outputs.total }}** (counts .md in website/docs + website/snippets)"
-          } >> $GITHUB_STEP_SUMMARY
+          git diff --cached --quiet && { echo "No changes."; exit 0; }
+          git commit -m "chore(badges): update docs total (test)"
+          git push origin HEAD:test-badge
