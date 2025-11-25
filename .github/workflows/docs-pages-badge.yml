@@ -9,6 +9,8 @@ on:
       - "**/*.mdx"
   workflow_dispatch:
 
+permissions:
+  contents: read
 jobs:
   make-badge:
     runs-on: ubuntu-latest
