@@ -13,14 +13,14 @@ import FusionAdapters from '/snippets/_fusion-dwh.md';
 
 ## Introduction
 
-The <Constant name="fusion_engine" /> represents the next evolution of data transformation. dbt has been rebuilt from the ground up but at its most basic, <Constant name="fusion" /> is a new version, and moving to it is the same as upgrading between <Constant name="core" /> versions in the <Constant name="dbt_platform" />. Once your project is <Constant name="fusion" />-ready, it's only a matter of pulling a few levers to make the move, but you have some flexibility in how you do so, especially in your development environments. 
+The <Constant name="fusion_engine" /> represents the next evolution of data transformation. dbt has been rebuilt from the ground up but at its most basic, <Constant name="fusion" /> is a new version, and moving to it is the same as upgrading between <Constant name="core" /> versions in the <Constant name="dbt_platform" />. Once your project is <Constant name="fusion" /> ready, it's only a matter of pulling a few levers to make the move, but you have some flexibility in how you do so, especially in your development environments. 
 
 :::info Fusion availability
 
 <Constant name="fusion" /> on the <Constant name="dbt_platform" /> is currently in `Private preview`. Enabling it for your account depends on your plan:
 
 - **Enteprise and Enterprise+ plans:** Contact your account manager to enable <Constant name="fusion" /> for your environment.
-- **Developer and Starter plans:** Complete the steps in the [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade) guide to become <Constant name="fusion" />-eligible and it will be enabled for your account automatically.
+- **Developer and Starter plans:** Complete the steps in the [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade) guide to become <Constant name="fusion" /> eligible and it will be enabled for your account automatically.
 
 :::
 
@@ -38,7 +38,7 @@ Before upgrading your development environment, confirm:
 
 ## Upgrade your development environment
 
-With your project prepared and tested on the `Latest` release track, you're ready to upgrade your development environment to <Constant name="fusion" />. The <Constant name="dbt_platform" /> provides a guided upgrade assistant that walks you through the process and helps validate your project is <Constant name="fusion" />-ready.
+With your project prepared and tested on the `Latest` release track, you're ready to upgrade your development environment to <Constant name="fusion" />. The <Constant name="dbt_platform" /> provides a guided upgrade assistant that walks you through the process and helps validate your project is <Constant name="fusion" /> ready.
 
 :::tip Start with development
 
@@ -103,7 +103,9 @@ If deprecation warnings are found, use the autofix tool to resolve them:
 For detailed information about the autofix process, see [Fix deprecation warnings](/docs/cloud/dbt-cloud-ide/autofix-deprecations).
 
 :::info Manual fixes required?
+
 If the autofix tool can't resolve all deprecations automatically, you'll need to fix them manually. Review the warning messages for specific guidance, make the necessary changes in your code, then run **Check deprecation warnings** again.
+
 :::
 
 ### Step 4: Enable Fusion
@@ -149,7 +151,9 @@ Before declaring victory, test your typical development workflows:
 5. Verify git operations (commit, push, pull) work as expected
 
 :::tip Share feedback
+
 If you encounter any unexpected behavior or have feedback about the <Constant name="fusion" /> experience, share it with your account team or [dbt Support](/docs/dbt-support).
+
 :::
 
 ### What about production?
@@ -168,11 +172,13 @@ When you're ready to upgrade production, you'll update your deployment environme
 After successfully upgrading and testing your development environment, the next step is upgrading your staging or other intermediate deployment environments. These environments serve as a critical validation layer before promoting <Constant name="fusion" /> to production, allowing you to test with production-like data and workflows while limiting risk.
 
 :::tip Why upgrade staging first?
+
 Staging environments provide:
 - A final validation layer for <Constant name="fusion" /> with production-scale data
 - The ability to test scheduled jobs and deployment workflows
 - An opportunity to verify integrations and downstream dependencies
 - A safe environment to identify performance characteristics before production
+
 :::
 
 ### What is a staging environment?
@@ -236,6 +242,7 @@ Test any integrations or dependencies that rely on your staging environment:
 Repeat for other intermediate environments
 
 :::caution Found an issue?
+
 If you encounter problems in staging:
 - Review the [Fusion limitations](/docs/fusion/supported-features#limitations) to see if it's a known issue.
 - Check job logs for specific error messages.
@@ -243,6 +250,7 @@ If you encounter problems in staging:
 - Contact [dbt Support](/docs/dbt-support) or your account team for assistance.
 
 You can revert the staging environment to `Latest` release track while investigating.
+
 :::
 
 ### How long should I test in staging?
@@ -263,11 +271,11 @@ Congratulations! You've successfully upgraded development and staging environmen
 
 :::caution Production environment upgrade considerations
 
-Upgrading production is a critical operation. While <Constant name="fusion" /> is production-ready and has been thoroughly tested in your dev and staging environments, follow these best practices:
-- **Plan the upgrade during a low-traffic window** to minimize impact.
-- **Notify stakeholders** about the maintenance window.
-- **Have a rollback plan** ready (reverting to `Latest` release track).
-- **Monitor closely** for the first few job runs after upgrading.
+Upgrading production is a critical operation. While <Constant name="fusion" /> is production ready and has been thoroughly tested in your dev and staging environments, follow these best practices:
+- Plan the upgrade during a low-traffic window to minimize impact.
+- Notify stakeholders about the maintenance window.
+- Have a rollback plan ready (reverting to `Latest` release track).
+- Monitor closely for the first few job runs after upgrading.
 
 :::
 
@@ -378,16 +386,6 @@ Some jobs might have [version overrides](/docs/dbt-versions/upgrade-dbt-version-
 3. If a job has a version override (showing in the **dbt Version** section), click **Edit**.
 4. Remove the override to let the job inherit the environment's <Constant name="fusion" /> setting.
 5. Click **Save**.
-
-### What to expect after upgrading
-
-With production on <Constant name="fusion" />, you'll experience:
-
-- **Faster parsing and compilation**: Up to 30x improvement in these steps
-- **Reduced warehouse costs**: State-aware orchestration rebuilds only changed models (30%+ cost savings typical)
-- **Better SQL validation**: More detailed error messages and inline validation
-- **Improved development experience**: If you installed the VS Code extension, you get live CTE previews, column-level lineage, and more
-- **Performance improvements**: Overall job run times should decrease, especially for large projects
 
 ### Rollback procedure
 

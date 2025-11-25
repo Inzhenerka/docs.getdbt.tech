@@ -39,7 +39,9 @@ If you have multiple dbt projects you want to upgrade to <Constant name="fusion"
 Before upgrading to <Constant name="fusion" />, you need to move your environments to the `Latest` [release track](/docs/dbt-versions/cloud-release-tracks). The `Latest` track includes all the features and tooling to help you prepare for <Constant name="fusion" />, and ensures the smoothest upgrade experience by validating that your project doesn't rely on deprecated behaviors.
 
 :::tip Test before you deploy
+
 Always test version upgrades in development first. Use the [Override dbt version](#step-1-test-in-development-using-override) feature to safely try the `Latest` release track without affecting your team or production runs.
+
 :::
 
 ### Step 1: Test in development (using override)
@@ -70,7 +72,9 @@ After successfully testing with the override, upgrade the development environmen
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Upgrade environment to Latest release track"/>
 
 :::info Remove your override
+
 Once your development environment is upgraded, you can remove your personal override by returning to your account credentials and selecting the same version as your environment.
+
 :::
 
 ### Step 3: Upgrade staging and pre-production
@@ -129,7 +133,9 @@ Before running the autofix tool, create a new branch to isolate your changes:
 4. Click **Create** to switch to your new branch.
 
 :::warning Save before autofixing
+
 The autofix tool will modify files in your project. Make sure to commit or stash any unsaved work to avoid losing changes.
+
 :::
 
 ### Step 2: Run the autofix tool
@@ -266,23 +272,23 @@ Update your `packages.yml` or `dependencies.yml` file with the latest compatible
 2. Update each package version to the latest compatible version.
 3. Save the file.
 
-**Before update:**
-```yaml
-packages:
-  - package: dbt-labs/dbt_utils
-    version: 0.9.6
-  - package: dbt-labs/codegen
-    version: 0.9.0
-```
+   Before update:
+   ```yaml
+   packages:
+   - package: dbt-labs/dbt_utils
+      version: 0.9.6
+   - package: dbt-labs/codegen
+      version: 0.9.0
+   ```
 
-**After update:**
-```yaml
-packages:
-  - package: dbt-labs/dbt_utils
-    version: [">=1.0.0", "<2.0.0"]
-  - package: dbt-labs/codegen
-    version: [">=0.12.0", "<1.0.0"]
-```
+   After update:
+   ```yaml
+   packages:
+   - package: dbt-labs/dbt_utils
+      version: [">=1.0.0", "<2.0.0"]
+   - package: dbt-labs/codegen
+      version: [">=0.12.0", "<1.0.0"]
+   ```
 
 ### Step 4: Install updated packages
 
@@ -299,7 +305,9 @@ The `--upgrade` flag ensures dbt installs the latest versions within your specif
 3. Check that the `package-lock.yml` file was updated with the new package versions.
 
 :::info About package-lock.yml
+
 The `package-lock.yml` file pins your packages to specific versions for reproducible builds. We recommend committing this file to version control so your entire team uses the same package versions.
+
 :::
 
 ### Step 5: Test your project with updated packages
@@ -337,7 +345,9 @@ Once you've verified the updated packages work correctly:
 While <Constant name="fusion" /> supports most of <Constant name="core" />'s capabilities, some features have limited support or are still in development. Before upgrading, review your project to identify any features that <Constant name="fusion" /> doesn't yet fully support. This allows you to plan accordingly — whether that means removing non-critical features, implementing workarounds, or waiting for specific features to become available.
 
 :::note Fusion is rapidly evolving
+
 Many limitations are being addressed as <Constant name="fusion" /> moves toward General Availability. You can track progress on specific features through the [dbt-fusion GitHub milestones](https://github.com/dbt-labs/dbt-fusion/milestones) and stay updated via the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements).
+
 :::
 
 ### Step 1: Review the limitations table
@@ -347,32 +357,32 @@ Start by understanding which features have limited or no support in <Constant na
 Visit the [Fusion supported features page](/docs/fusion/supported-features#limitations) and review the limitations table to see features that may affect your project.
 
 Common limitations include:
-- **Python models** — Not currently supported (Fusion cannot parse Python to extract dependencies)
-- **Microbatch incremental strategy** — Not yet available
-- **Model-level notifications** — Job-level notifications work, model-level don't yet
-- **Semantic Layer development** — Active semantic model development should stay on <Constant name="core" />
+- **Python models:** Not currently supported (Fusion cannot parse Python to extract dependencies)
+- **Microbatch incremental strategy:**  Not yet available
+- **Model-level notifications:** Job-level notifications work, model-level don't yet
+- **Semantic Layer development:** Active semantic model development should stay on <Constant name="core" />
 - **SQLFluff linting** — Not integrated yet (though linting will be built into Fusion directly)
 
 ### Step 2: Search your project for limited features
 
 Check if your project uses any features with limited support:
 
-1. **Check for Python models:**
+1. Check for Python models:
    - In the <Constant name="cloud_ide" />, look in your `models/` directory
    - Search for files with `.py` extensions
    - If found, you'll need to either remove them or keep those models on <Constant name="core" />
 
-2. **Review your `dbt_project.yml` for specific configurations:**
+2. Review your `dbt_project.yml` for specific configurations:
    - Look for `store_failures` settings
    - Check for custom materializations beyond `view`, `table`, and `incremental`
    - Review any `warn-error` or `warn-error-options` configurations
 
-3. **Check your job configurations:**
+3. Check your job configurations:
    - Review any jobs using `--fail-fast` flag
    - Identify jobs using `--store-failures`
    - Note any Advanced CI "compare changes" workflows
 
-4. **Review model governance settings:**
+4. Review model governance settings:
    - Search for models with `deprecation_date` set
    - Note these may not generate deprecation warnings yet in <Constant name="fusion" />
 
@@ -396,7 +406,7 @@ For each limitation that affects your project, determine its criticality:
 
 Based on your assessment, decide how to handle each limitation:
 
-- **Remove non-critical features:**
+- Remove non-critical features:
 
     Temporarily disable features you can live without:
    ```yaml
@@ -411,12 +421,12 @@ Based on your assessment, decide how to handle each limitation:
      materialized='incremental'
    ) }}
    ```
-- **Implement workarounds:** For low-impact features.
+- Implement workarounds for low-impact features.
    - Use job-level notifications instead of model-level
    - Run SQLFluff linting separately in CI with <Constant name="core" />
    - Use standard state selection instead of granular subselectors
 
-- **Plan hybrid environments:** For critical unsupported features.
+- Plan hybrid environments for critical unsupported features.
    - Keep specific jobs on <Constant name="core" /> (like Semantic Layer exports)
    - Migrate development and most production workloads to <Constant name="fusion" />
    - Document which jobs need to remain on <Constant name="core" /> and why
@@ -446,4 +456,4 @@ Stay up-to-date with feature availability:
 
 With limitations identified and addressed, you've completed all the preparation steps. Your project is now ready to upgrade to <Constant name="fusion" />!
 
-** Link to upgrade guide forthcoming **
+Check out [Part 2: Making the move](/guide/upgrade-to-fusion)
