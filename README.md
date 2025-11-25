@@ -10,14 +10,7 @@ _We use [docusaurus](https://v2.docusaurus.io/) to power [docs.getdbt.com](https
 <!-- Page count (filled by the workflow below) -->
 **Section page counts**
 
-[![Docs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/docs.json)](https://docs.getdbt.com/docs)
-[![Best practices](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/best-practices.json)](https://docs.getdbt.com/best-practices)
-[![FAQs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/faqs.json)](https://docs.getdbt.com)
-[![Guides](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/guides.json)](https://docs.getdbt.com/guides)
-[![Reference](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/reference.json)](https://docs.getdbt.com/reference)
 [![Total](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/total.json)](https://docs.getdbt.com)
-
-
 
 
 #### Table of Contents

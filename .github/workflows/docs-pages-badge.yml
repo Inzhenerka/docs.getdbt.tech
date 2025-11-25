@@ -1,4 +1,4 @@
-name: Docs section badges
+name: Docs total pages badge
 
 on:
   push:
@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 jobs:
-  compute-badges:
+  compute-badge:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,16 +24,13 @@ jobs:
       - name: Ensure jq is available
         run: |
           if ! command -v jq >/dev/null 2>&1; then
-            sudo apt-get update
-            sudo apt-get install -y jq
+            sudo apt-get update && sudo apt-get install -y jq
           fi
 
       - name: Determine target branch
-        run: |
-          # For PRs: use source branch; for pushes: use the ref name
-          echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
+        run: echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
-      - name: Count pages per section
+      - name: Count total pages (docs + best practices + faqs + guides + reference + snippets)
         id: counts
         shell: bash
         run: |
@@ -46,7 +43,6 @@ jobs:
               find "$DIR" -type f \( -iname "*.md" -o -iname "*.mdx" \) \
                 -not -path "*/_partials/*" \
                 -not -path "*/_includes/*" \
-                -not -path "*/_snippets/*" \
                 -not -path "*/_components/*" \
               | wc -l | tr -d ' '
             else
@@ -54,68 +50,49 @@ jobs:
             fi
           }
 
-          DOCS=$(count_dir website/docs/docs)
-          BEST=$(count_dir website/docs/best-practices)
-          FAQS=$(count_dir website/docs/faqs)
-          GUIDES=$(count_dir website/docs/guides)
-          REF=$(count_dir website/docs/reference)
-          TOTAL=$(( DOCS + BEST + FAQS + GUIDES + REF ))
-
-          echo "docs=${DOCS}"       >> $GITHUB_OUTPUT
-          echo "best=${BEST}"       >> $GITHUB_OUTPUT
-          echo "faqs=${FAQS}"       >> $GITHUB_OUTPUT
-          echo "guides=${GUIDES}"   >> $GITHUB_OUTPUT
-          echo "reference=${REF}"   >> $GITHUB_OUTPUT
-          echo "total=${TOTAL}"     >> $GITHUB_OUTPUT
-
-      - name: Write Shields endpoint JSONs
-        run: |
-          write_badge () {
-            file="$1"; label="$2"; value="$3"
-            jq -n --arg label "$label" --arg message "$value" \
-              '{schemaVersion:1,label:$label,message:$message,color:"informational"}' \
-              > ".badges/${file}"
+          count_any () {
+            local SUM=0
+            for d in "$@"; do
+              SUM=$(( SUM + $(count_dir "$d") ))
+            done
+            echo "$SUM"
           }
 
-          write_badge "docs.json"            "docs pages"     "${{ steps.counts.outputs.docs }}"
-          write_badge "best-practices.json"  "best practices" "${{ steps.counts.outputs.best }}"
-          write_badge "faqs.json"            "faqs"           "${{ steps.counts.outputs.faqs }}"
-          write_badge "guides.json"          "guides"         "${{ steps.counts.outputs.guides }}"
-          write_badge "reference.json"       "reference"      "${{ steps.counts.outputs.reference }}"
-          write_badge "total.json"           "docs total"     "${{ steps.counts.outputs.total }}"
+          DOCS=$(count_any website/docs)
+          BEST=$(count_any website/best-practices website/docs/best-practices)
+          FAQS=$(count_any website/faqs website/docs/faqs)
+          GUIDES=$(count_any website/guides website/docs/guides)
+          REF=$(count_any website/reference website/docs/reference)
+          SNIPPETS=$(count_any website/snippets website/snippets)
 
-      # Only push back to the branch when:
-      # - It's not a PR from a fork (those don't have write perms)
-      # - And there are actual changes
-      - name: Commit badge JSONs to the branch
+          TOTAL=$(( DOCS + BEST + FAQS + GUIDES + REF + SNIPPETS ))
+
+          echo "total=${TOTAL}" >> "$GITHUB_OUTPUT"
+
+      - name: Write Shields endpoint JSON (total only)
+        run: |
+          jq -n --arg label "docs total" --arg message "${{ steps.counts.outputs.total }}" \
+            '{schemaVersion:1,label:$label,message:$message,color:"informational"}' \
+            > ".badges/total.json"
+
+      - name: Commit badge JSON to branch
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
         run: |
           git config --global user.name  "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Stage the .badges folder (safe even if unchanged)
-          git add .badges
-
-          # Exit if there’s nothing new to commit
+          git add .badges/total.json
           if git diff --cached --quiet; then
             echo "No badge changes to commit."
             exit 0
           fi
-
-          git commit -m "chore: update docs section badges"
+          git commit -m "chore: update docs total pages badge"
           git pull --rebase origin "${BRANCH}" || true
           git push origin "HEAD:${BRANCH}"
 
       - name: Summary
         run: |
           {
-            echo "### Page counts by section"
+            echo "### Docs total pages"
             echo ""
-            echo "- **Docs:** ${{ steps.counts.outputs.docs }}"
-            echo "- **Best practices:** ${{ steps.counts.outputs.best }}"
-            echo "- **FAQs:** ${{ steps.counts.outputs.faqs }}"
-            echo "- **Guides:** ${{ steps.counts.outputs.guides }}"
-            echo "- **Reference:** ${{ steps.counts.outputs.reference }}"
-            echo ""
-            echo "**Total:** ${{ steps.counts.outputs.total }}"
+            echo "**${{ steps.counts.outputs.total }}** (includes snippets)"
           } >> $GITHUB_STEP_SUMMARY
