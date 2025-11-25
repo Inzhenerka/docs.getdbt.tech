@@ -1,11 +1,36 @@
 _We use [docusaurus](https://v2.docusaurus.io/) to power [docs.getdbt.com](https://docs.getdbt.com/)._
 
+<!-- docs repo stats -->
+[![Open issues](https://img.shields.io/github/issues/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/issues)
+[![Open PRs](https://img.shields.io/github/issues-pr/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/pulls)
+[![Contributors](https://img.shields.io/github/contributors/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/graphs/contributors)
+
+<!-- Slack / community -->
+[![Slack](https://img.shields.io/badge/Slack-Join%20the%20dbt%20Community-4A154B?logo=slack&logoColor=white)](https://docs.getdbt.com/community/join)
+
+<!-- Page count (filled by the workflow below) -->
+**Section page counts**
+
+[![Docs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/docs.json)](https://docs.getdbt.com/docs)
+[![Best practices](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/best-practices.json)](https://docs.getdbt.com/best-practices)
+[![FAQs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/faqs.json)](https://docs.getdbt.com)
+[![Guides](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/guides.json)](https://docs.getdbt.com/guides)
+[![Reference](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/reference.json)](https://docs.getdbt.com/reference)
+[![Total](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/test-badge/.badges/total.json)](https://docs.getdbt.com)
+
+
+
+
 #### Table of Contents
 
-* [Code of Conduct](#Code-of-conduct)
-* [Contributing](#contributing)  
-* [Writing content](#writing-content)
-* [Running the docs site locally](#running-the-docs-site-locally)
+- [Code of conduct](#code-of-conduct)
+- [Contributing](#contributing)
+- [Writing content](#writing-content)
+  - [SME and editorial reviews](#sme-and-editorial-reviews)
+  - [Versioning and single-sourcing content](#versioning-and-single-sourcing-content)
+  - [Adding tabbed components to a page](#adding-tabbed-components-to-a-page)
+- [Running the Docs site locally](#running-the-docs-site-locally)
+  - [Prerequisites](#prerequisites)
 
 # Code of conduct
 

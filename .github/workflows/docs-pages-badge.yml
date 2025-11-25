@@ -1,0 +1,105 @@
+name: Docs section badges
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "website/**"
+      - "**/*.md"
+      - "**/*.mdx"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compute-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Count pages per section
+        id: counts
+        shell: bash
+        run: |
+          mkdir -p .badges
+
+          count_dir () {
+            local DIR="$1"
+            # if the folder doesn't exist, count = 0
+            if [[ -d "$DIR" ]]; then
+              # count .md and .mdx, exclude common partial/snippet folders
+              find "$DIR" -type f \( -iname "*.md" -o -iname "*.mdx" \) \
+                -not -path "*/_partials/*" \
+                -not -path "*/_includes/*" \
+                -not -path "*/_snippets/*" \
+                -not -path "*/_components/*" \
+                | wc -l | tr -d ' '
+            else
+              echo 0
+            fi
+          }
+
+          DOCS=$(count_dir website/docs)
+          BEST=$(count_dir website/best-practices)
+          FAQS=$(count_dir website/faqs)
+          GUIDES=$(count_dir website/guides)
+          REF=$(count_dir website/reference)
+          TOTAL=$(( DOCS + BEST + FAQS + GUIDES + REF ))
+
+          echo "docs=${DOCS}"       >> $GITHUB_OUTPUT
+          echo "best=${BEST}"       >> $GITHUB_OUTPUT
+          echo "faqs=${FAQS}"       >> $GITHUB_OUTPUT
+          echo "guides=${GUIDES}"   >> $GITHUB_OUTPUT
+          echo "reference=${REF}"   >> $GITHUB_OUTPUT
+          echo "total=${TOTAL}"     >> $GITHUB_OUTPUT
+
+      - name: Write Shields endpoint JSONs
+        run: |
+          write_badge () {
+            local FILE="$1"; local LABEL="$2"; local VALUE="$3"
+            cat > ".badges/${FILE}" <<EOF
+            {
+              "schemaVersion": 1,
+              "label": "${LABEL}",
+              "message": "${VALUE}",
+              "color": "informational"
+            }
+            EOF
+          }
+
+          write_badge "docs.json"            "docs pages"          "${{ steps.counts.outputs.docs }}"
+          write_badge "best-practices.json"  "best practices"      "${{ steps.counts.outputs.best }}"
+          write_badge "faqs.json"            "faqs"                "${{ steps.counts.outputs.faqs }}"
+          write_badge "guides.json"          "guides"              "${{ steps.counts.outputs.guides }}"
+          write_badge "reference.json"       "reference"           "${{ steps.counts.outputs.reference }}"
+          write_badge "total.json"           "docs total"          "${{ steps.counts.outputs.total }}"
+
+      - name: Commit badge JSONs to the branch
+        run: |
+          if [[ -n "$(git status --porcelain .badges/*.json)" ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .badges/*.json
+            git commit -m "chore: update docs section badges"
+            git push
+          else
+            echo "No badge changes to commit."
+          fi
+
+      - name: Summary
+        run: |
+          {
+            echo "### Page counts by section"
+            echo ""
+            echo "- **Docs:** ${{ steps.counts.outputs.docs }}"
+            echo "- **Best practices:** ${{ steps.counts.outputs.best }}"
+            echo "- **FAQs:** ${{ steps.counts.outputs.faqs }}"
+            echo "- **Guides:** ${{ steps.counts.outputs.guides }}"
+            echo "- **Reference:** ${{ steps.counts.outputs.reference }}"
+            echo ""
+            echo "**Total:** ${{ steps.counts.outputs.total }}"
+          } >> $GITHUB_STEP_SUMMARY
