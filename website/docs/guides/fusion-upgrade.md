@@ -9,6 +9,8 @@ tags: ['dbt Fusion engine', 'dbt platform','Quickstart']
 recently_updated: true
 ---
 
+import FusionAdapters from '/snippets/_fusion-dwh.md';
+
 ## Introduction
 
 The <Constant name="fusion_engine" /> represents the next evolution of data transformation. dbt has been rebuilt from the ground up but at its most basic, <Constant name="fusion" /> is a new version, and moving to it is the same as upgrading between <Constant name="core" /> versions in the <Constant name="dbt_platform" />. Once your project is <Constant name="fusion" />-ready, it's only a matter of pulling a few levers to make the move, but you have some flexibility in how you do so, especially in your development environments. 
@@ -27,6 +29,8 @@ The <Constant name="fusion_engine" /> represents the next evolution of data tran
 Before upgrading your development environment, confirm:
 
 - Your project is on the `Latest` release track (completed in [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade))
+- Your project must be using a supported adapter and auth method.    
+    <FusionAdapters/>
 - You have a developer license in <Constant name="dbt_platform" />
 - <Constant name="fusion" /> has been enabled for your account
 - You have appropriate permissions to modify environments (see [Assign upgrade access](#assign-upgrade-access-optional) if restricted)

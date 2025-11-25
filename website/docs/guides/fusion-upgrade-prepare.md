@@ -1,5 +1,5 @@
 ---
-title: "Upgrade to Fusion Part 1: Preparing to upgrade"
+title: "Upgrade to Fusion part 1: Preparing to upgrade"
 id: "prepare-fusion-upgrade"
 level: 'Intermediate'
 icon: 'zap'
@@ -7,6 +7,8 @@ hide_table_of_contents: true
 tags: ['dbt Fusion engine', 'dbt platform','Quickstart']
 recently_updated: true
 ---
+
+import FusionAdapters from '/snippets/_fusion-dwh.md';
 
 ## Introduction
 
@@ -21,10 +23,10 @@ This guide will cover the preparations for upgrading to the <Constant name="fusi
 To follow the steps in this guide, you must meet the following prerequisites:
 
 - You're using a <Constant name="dbt_platform" /> account on any tier.
-- Your project must be using a supported adapter and auth method.
-    import FusionAdapters from '/snippets/_fusion-dwh.md';
-    <FusionAdapters />
+- You have a developer license.
 - You have [proper permissions](/docs/cloud/manage-access/enterprise-permissions) to edit projects.
+- While not a strict requirement, it's strongly recommended you focus on a project using a <Constant name="fusion" /> supported adapter:
+    <FusionAdapters/>
 
 :::tip Upgrading your first project
 
