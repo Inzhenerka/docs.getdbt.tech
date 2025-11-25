@@ -228,7 +228,7 @@ If you have scheduled jobs in your staging environment, monitor their next sched
 
 Test any integrations or dependencies that rely on your staging environment:
 
-1. **Cross-project references**: If using [dbt Mesh](/docs/collaborate/govern/project-dependencies), verify downstream projects can still reference your staging models
+1. **Cross-project references**: If using [dbt Mesh](/docs/mesh/govern/project-dependencies), verify downstream projects can still reference your staging models
 2. **BI tools**: Check that any BI tools or dashboards connected to staging still function correctly
 3. **Downstream consumers**: Notify teams that consume staging data to verify their processes still work
 4. **CI/CD workflows**: Run any CI jobs that target staging to ensure they execute properly
@@ -422,7 +422,7 @@ For your next steps:
 - **Optimize further**: Explore [advanced state-aware configurations](/docs/deploy/state-aware-setup#advanced-configurations) to fine-tune refresh intervals.
 - **Monitor savings**: Use the [state-aware interface](/docs/deploy/state-aware-interface) to track models built vs. reused.
 - **Train your team**: Share <Constant name="fusion" /> features and best practices with your team.
-- **Explore new features**: Check out [column-level lineage](/docs/collaborate/column-level-lineage), [live CTE previews](/docs/cloud/dbt-cloud-ide/lint-format#preview-ctes), and other <Constant name="fusion" />-powered capabilities.
+- **Explore new features**: Check out [column-level lineage](/docs/explore/column-level-lineage), [live CTE previews](/docs/cloud/dbt-cloud-ide/lint-format#preview-ctes), and other <Constant name="fusion" />-powered capabilities.
 - **Stay informed**: Follow the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) for updates on new features.
 
 :::tip Share your success
