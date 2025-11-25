@@ -2,7 +2,7 @@ name: Docs total pages badge
 
 on:
   push:
-    branches: ["**"]
+    branches: ["current"]
     paths:
       - "website/**"
       - "**/*.md"
