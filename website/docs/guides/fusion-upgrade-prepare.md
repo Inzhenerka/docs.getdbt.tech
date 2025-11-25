@@ -456,4 +456,4 @@ Stay up-to-date with feature availability:
 
 With limitations identified and addressed, you've completed all the preparation steps. Your project is now ready to upgrade to <Constant name="fusion" />!
 
-Check out [Part 2: Making the move](/guide/upgrade-to-fusion)
+Check out [Part 2: Making the move](/guides/upgrade-to-fusion)
