@@ -60,7 +60,7 @@ As long as you comply with the [three restrictions in ELv2](http://www.getdbt.co
 
 Artifact type: Precompiled binary
 
-How to access: download following the instructions [here](/docs/fusion/install-fusion#install-fusion)
+How to access: download following the instructions [here](/docs/fusion/install-fusion-cli)
 
 License: ELv2
 
