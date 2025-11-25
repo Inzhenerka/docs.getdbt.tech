@@ -2,13 +2,13 @@ name: Docs total pages badge
 
 on:
   push:
-    branches: ["**"]           # only update when current changes
+    branches: ["current"]              # only update when current changes
     paths:
       - "website/**"
-      - "**/*.md"
+      - "**/*.md"                      # only .md impacts count
   schedule:
-    - cron: "0 6 * * *"             # optional: refresh daily at 06:00 UTC
-  workflow_dispatch:                 # allow manual runs
+    - cron: "0 6 * * *"                # optional: refresh daily at 06:00 UTC
+  workflow_dispatch:                    # allow manual runs
 
 permissions:
   contents: write
@@ -19,7 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0             # we push a commit
+          fetch-depth: 0               # we push a commit
+          # ref: current               # (optional) be explicit for scheduled runs
 
       - name: Ensure jq is available
         run: |
