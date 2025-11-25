@@ -11,11 +11,18 @@ Use `dbt show` to:
 - Run that query against the data warehouse
 - Preview the results in the terminal
 
+## How it works
+
 By default, `dbt show` will display the first 5 rows from the query result. This can be customized by passing the flag `--limit n`, where `n` is the number of rows to display.
 
-The results of the preview query are not materialized in the data warehouse, or stored in any dbt file. They are only included in dbt's logs and displayed in the terminal. Note also that, if previewing a model, dbt will always compile and run the compiled query from source. It will not select from the already-materialized database relation, even if you've just run the model. (We may support that in the future; if you're interested, upvote or comment on [dbt-core#7391](https://github.com/dbt-labs/dbt-core/issues/7391).)
+- The `--limit` flag modifies the underlying SQL and not just the number of rows displayed. This is so that only `n` rows are retrieved from the data warehouse. 
+- This means dbt wraps your model's query in a subquery or CTE and applies a SQL `limit n` clause so that your data warehouse only processes and returns that number of rows, making it significantly faster for large datasets.
+- The results of the preview query are only included in dbt's logs and displayed in the terminal and aren't materialized in the data warehouse or stored in any dbt file, except if you use `dbt show --inline`.
+  - The `--inline` flags enables you to run ad-hoc SQL, which means dbt can't ensure the query doesn't modify the data warehouse. To ensure no changes are made, use a profile or role with read-only permissions, which are managed directly in your data warehouse. For example: `dbt show --inline "select * from my_table" --profile my-read-only-profile`.
+- If previewing a model, dbt will always compile and run the compiled query from source. It will not select from the already-materialized database relation, even if you've just run the model. (We may support that in the future; if you're interested, upvote or comment on [dbt-core#7391](https://github.com/dbt-labs/dbt-core/issues/7391).)
 
-Example:
+
+## Example
 
 ```
 dbt show --select "model_name.sql"
