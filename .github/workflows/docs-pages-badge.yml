@@ -1,48 +1,43 @@
-name: Docs total pages badge (test)
+name: Docs total pages badge (gist)
 
 on:
   push:
-    branches: ["test-badge"]
+    branches: ["current"]
     paths:
       - "website/**"
       - "**/*.md"
+  schedule:
+    - cron: "0 6 * * *"   # optional: daily refresh
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  compute-badge:
+  make-badge:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
 
       - name: Ensure jq
         run: |
           command -v jq >/dev/null || { sudo apt-get update && sudo apt-get install -y jq; }
 
-      - name: Count total (.md in website/docs + website/snippets)
-        id: counts
+      - name: Count .md in website/docs + website/snippets
+        id: count
+        shell: bash
         run: |
-          mkdir -p .badges
           count() { [[ -d "$1" ]] && find "$1" -type f -iname "*.md" \
-            -not -path "*/_partials/*" -not -path "*/_includes/*" -not -path "*/_components/*" | wc -l | tr -d ' ' || echo 0; }
+            -not -path "*/_partials/*" -not -path "*/_includes/*" -not -path "*/_components/*" \
+            | wc -l | tr -d ' ' || echo 0; }
           DOCS=$(count website/docs)
-          SNIPPETS=$(count website/snippets)
-          echo "total=$((DOCS + SNIPPETS))" >> "$GITHUB_OUTPUT"
+          SNIPS=$(count website/snippets)
+          echo "total=$((DOCS + SNIPS))" >> "$GITHUB_OUTPUT"
 
-      - name: Write badge JSON
-        run: |
-          jq -n --arg label "docs total" --arg message "${{ steps.counts.outputs.total }}" \
-            '{schemaVersion:1,label:$label,message:$message,color:"informational",cacheSeconds:3600}' \
-            > .badges/total.json
-
-      - name: Commit to test-badge
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .badges/total.json
-          git diff --cached --quiet && { echo "No changes."; exit 0; }
-          git commit -m "chore(badges): update docs total (test)"
-          git push origin HEAD:test-badge
+      - name: Update badge JSON in Gist
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: 618181e9b63cd72035c4eef203705cec
+          filename: docs_total.json
+          label: docs total
+          message: ${{ steps.count.outputs.total }}
+          color: informational
+          cacheSeconds: 3600
