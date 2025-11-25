@@ -1,10 +1,11 @@
-_We use [docusaurus](https://v2.docusaurus.io/) to power [docs.getdbt.com](https://docs.getdbt.com/)._
-
 <!-- docs repo stats -->
 [![Open issues](https://img.shields.io/github/issues/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/issues)
 [![Open PRs](https://img.shields.io/github/issues-pr/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/pulls)
-[![Docs total](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fmirnawong1%2F618181e9b63cd72035c4eef203705cec%2Fraw%2Fdocs_total.json&cacheSeconds=3600)](https://docs.getdbt.com)
+[![Docs total](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fmirnawong1%2F618181e9b63cd72035c4eef203705cec%2Fraw%2Fdocs_total.json)](https://docs.getdbt.com)
 [![Slack](https://img.shields.io/badge/Slack-Join%20the%20dbt%20Community-4A154B?logo=slack&logoColor=white)](https://docs.getdbt.com/community/join)
+
+_We use [docusaurus](https://v2.docusaurus.io/) to power [docs.getdbt.com](https://docs.getdbt.com/)._
+
 
 #### Table of Contents
 
@@ -72,4 +73,3 @@ You can click a link available in a Vercel bot PR comment to see and review your
 
 Advisory:
 - If you run into an `fatal error: 'vips/vips8' file not found` error when you run `npm install`, you may need to run `brew install vips`. Warning: this one will take a while -- go ahead and grab some coffee!
-
