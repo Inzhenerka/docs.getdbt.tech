@@ -19,25 +19,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Ensure jq is available
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y jq
+          fi
+
+      - name: Determine target branch
+        run: |
+          # For PRs: use source branch; for pushes: use the ref name
+          echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
       - name: Count pages per section
         id: counts
         shell: bash
         run: |
+          set -euo pipefail
           mkdir -p .badges
 
           count_dir () {
             local DIR="$1"
-            # if the folder doesn't exist, count = 0
             if [[ -d "$DIR" ]]; then
-              # count .md and .mdx, exclude common partial/snippet folders
               find "$DIR" -type f \( -iname "*.md" -o -iname "*.mdx" \) \
                 -not -path "*/_partials/*" \
                 -not -path "*/_includes/*" \
                 -not -path "*/_snippets/*" \
                 -not -path "*/_components/*" \
-                | wc -l | tr -d ' '
+              | wc -l | tr -d ' '
             else
               echo 0
             fi
@@ -73,18 +84,27 @@ jobs:
           write_badge "reference.json"       "reference"      "${{ steps.counts.outputs.reference }}"
           write_badge "total.json"           "docs total"     "${{ steps.counts.outputs.total }}"
 
-
+      # Only push back to the branch when:
+      # - It's not a PR from a fork (those don't have write perms)
+      # - And there are actual changes
       - name: Commit badge JSONs to the branch
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
         run: |
-          if [[ -n "$(git status --porcelain .badges/*.json)" ]]; then
-            git config user.name  "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add .badges/*.json
-            git commit -m "chore: update docs section badges"
-            git push
-          else
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Stage the .badges folder (safe even if unchanged)
+          git add .badges
+
+          # Exit if there’s nothing new to commit
+          if git diff --cached --quiet; then
             echo "No badge changes to commit."
+            exit 0
           fi
+
+          git commit -m "chore: update docs section badges"
+          git pull --rebase origin "${BRANCH}" || true
+          git push origin "HEAD:${BRANCH}"
 
       - name: Summary
         run: |
