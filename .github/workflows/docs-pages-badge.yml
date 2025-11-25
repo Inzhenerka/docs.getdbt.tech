@@ -30,7 +30,7 @@ jobs:
       - name: Determine target branch
         run: echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
-      - name: Count total pages (docs + best practices + faqs + guides + reference + snippets)
+      - name: Count total pages (docs + snippets)
         id: counts
         shell: bash
         run: |
@@ -59,13 +59,9 @@ jobs:
           }
 
           DOCS=$(count_any website/docs)
-          BEST=$(count_any website/best-practices website/docs/best-practices)
-          FAQS=$(count_any website/faqs website/docs/faqs)
-          GUIDES=$(count_any website/guides website/docs/guides)
-          REF=$(count_any website/reference website/docs/reference)
           SNIPPETS=$(count_any website/snippets website/snippets)
 
-          TOTAL=$(( DOCS + BEST + FAQS + GUIDES + REF + SNIPPETS ))
+          TOTAL=$(( DOCS + SNIPPETS ))
 
           echo "total=${TOTAL}" >> "$GITHUB_OUTPUT"
 
