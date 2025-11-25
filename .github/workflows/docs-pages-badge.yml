@@ -54,11 +54,11 @@ jobs:
             fi
           }
 
-          DOCS=$(count_dir website/docs)
-          BEST=$(count_dir website/best-practices)
-          FAQS=$(count_dir website/faqs)
-          GUIDES=$(count_dir website/guides)
-          REF=$(count_dir website/reference)
+          DOCS=$(count_dir website/docs/docs)
+          BEST=$(count_dir website/docs/best-practices)
+          FAQS=$(count_dir website/docs/faqs)
+          GUIDES=$(count_dir website/docs/guides)
+          REF=$(count_dir website/docs/reference)
           TOTAL=$(( DOCS + BEST + FAQS + GUIDES + REF ))
 
           echo "docs=${DOCS}"       >> $GITHUB_OUTPUT
