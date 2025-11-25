@@ -81,7 +81,7 @@ As long as you comply with the three restrictions in ELv2,
 
 Artifact type: Precompiled binary and managed service
 
-Available at: [Download binary](/docs/fusion/install-fusion#install-fusion) and [sign up for the service](http://getdbt.com/signup)
+Available at: [Download binary](/docs/fusion/install-fusion-cli) and [sign up for the service](http://getdbt.com/signup)
 
 License: ELv2 (binary) and Proprietary (service)
 
