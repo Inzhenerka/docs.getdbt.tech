@@ -28,7 +28,7 @@ The <Constant name="fusion_engine" /> represents the next evolution of data tran
 
 Before upgrading your development environment, confirm:
 
-- Your project is on the `Latest` release track (completed in [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade))
+- Your project is on the `Latest` release track (completed in [Part 1: Preparing to upgrade](/guides/prepare-fusion-upgrade))
 - Your project must be using a supported adapter and auth method.    
     <FusionAdapters/>
 - You have a developer license in <Constant name="dbt_platform" />
