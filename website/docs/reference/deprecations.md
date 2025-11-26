@@ -338,9 +338,9 @@ config:
 
 ### DuplicateNameDistinctNodeTypesDeprecation
 
-This warning is raised when two unversioned resources in the same package share the same name (for example, a model and a seed both named `sales`). Previously, dbt did not always detect these name conflicts, which meant duplicate names could sometimes point to the wrong resource.
+This warning is raised when two unversioned resources in the same package share the same name (for example, a model and a seed both named `sales`) and the `require_unique_project_resource_names` flag is set to `False`. Previously, dbt did not always detect these name conflicts, which meant duplicate names could sometimes point to the wrong resource.
 
-When the `require_unique_project_resource_names` flag is set to `False` and two unversioned resources in the same package share the same name, dbt continues to run and raises a `DuplicateResourceNameDeprecation` warning. When set to `True`, dbt raises a `DuplicateResourceNameError`.
+When the `require_unique_project_resource_names` flag is set to `True`, dbt raises a `DuplicateResourceNameError`. For more information, see [Unique project resource names](/reference/global-configs/behavior-changes#unique-project-resource-names).
 
 #### DuplicateNameDistinctNodeTypesDeprecation warning resolution
 

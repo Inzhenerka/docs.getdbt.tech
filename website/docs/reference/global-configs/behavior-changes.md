@@ -353,9 +353,7 @@ The `require_unique_project_resource_names` flag enforces uniqueness of resource
 
 The `require_unique_project_resource_names` flag is set to `False` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateResourceNameDeprecation`](/reference/deprecations##duplicatenamedistinctnodetypesdeprecation) warning. When set to `True`, dbt raises a `DuplicateResourceNameError`.
 
-For example,
-
-If your project contains both:
+For example, if your project contains a model and a seed named `sales`:
 
 ```
 models/sales.sql
