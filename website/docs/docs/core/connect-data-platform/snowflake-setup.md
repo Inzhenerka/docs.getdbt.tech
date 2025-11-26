@@ -170,6 +170,12 @@ If you encounter the `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8
 
 To use SSO authentication for Snowflake, omit a `password` and instead supply an `authenticator` config set to 'externalbrowser' to your target. 
 
+:::tip
+A single `dbt run` can prompt dozens or hundreds of SSO browser tabs. This can happen when the Snowflake account doesn't have token caching enabled. 
+
+To enable token caching, an admin must set the [Snowflake warehouse's parameter `ALLOW_ID_TOKEN`](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) to `TRUE`. This is configured in Snowflake and not in `profiles.yml`.  
+:::
+
 Refer to the following example:
 
 <File name='~/.dbt/profiles.yml'>
@@ -207,8 +213,6 @@ my-snowflake-db:
 </VersionBlock>
 
 **Note**: By default, every connection that dbt opens will require you to re-authenticate in a browser. The Snowflake connector package supports caching your session token, but it [currently only supports Windows and Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
-
-Refer to the [Snowflake docs](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) for info on how to enable this feature in your account.
 
 ### OAuth authorization
 
