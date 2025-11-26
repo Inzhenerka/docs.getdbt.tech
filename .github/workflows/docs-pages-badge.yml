@@ -2,7 +2,7 @@ name: Docs total pages badge (gist)
 
 on:
   push:
-    branches: ["test-badge"]        # change to "current" for prod
+    branches: ["current"]        # change to "current" for prod
     paths:
       - "website/**"
       - "**/*.md"
