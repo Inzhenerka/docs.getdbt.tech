@@ -54,7 +54,7 @@ We recommend that first-time package authors first develop macros and models for
 When working on your package, we often find it useful to install a local copy of the package in another dbt project — this workflow is described [here](https://discourse.getdbt.com/t/contributing-to-an-external-dbt-package/657).
 
 ### Ensure Fusion compatibility
-If you're building a package, we recommend you ensure it's compatible with [<Constant name="fusion"/>](/docs/fusion) and [<Constant name="core"/>](/docs/about-dbt-install). To ensure <Constant name="fusion"/> compatibility, you can follow the steps in the [Fusion package compatibility guide](/guides/fusion-package-compat).
+If you're building a package, we recommend you ensure it's compatible with [<Constant name="fusion"/>](/docs/fusion) and [<Constant name="core"/>](/docs/about-dbt-install). To ensure <Constant name="fusion"/> compatibility, you can follow the steps in the [Fusion package upgrade guide](/guides/fusion-package-compat).
 
 Doing so will ensure your package is compatible with <Constant name="fusion_engine"/> (and <Constant name="core"/>), but will be displayed with a <Constant name="fusion"/>-compatible badge in dbt package hub.
 
