@@ -43,7 +43,7 @@ To orchestrate downstream exposures, you should meet the following:
 - Have a <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/).
 - Created a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run.
 - Have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in <Constant name="cloud" /> to edit project settings or production environment settings.
-- Configured a [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) whose creator has privileges to view and refresh the data sources used by your exposures. Use a PAT created by:
+- Configured a [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) whose creator has privileges to view and refresh the data sources used by your exposures. The PAT inherits the permissions of its creator. Use a PAT created by:
    - A Tableau server or site administrator
    - A data source owner or a project leader
 
