@@ -21,7 +21,7 @@ jobs:
         run: |
           command -v jq >/dev/null || { sudo apt-get update && sudo apt-get install -y jq; }
 
-      - name: Count .md + .mdx in website/docs + website/snippets
+      - name: Count .md + .mdx in website/docs
         id: count
         shell: bash
         run: |
@@ -30,7 +30,6 @@ jobs:
           echo "Checking directories..."
           ls -la website/ || echo "website/ directory not found"
           [ -d "website/docs" ] && echo "website/docs exists" || echo "website/docs does NOT exist"
-          [ -d "website/snippets" ] && echo "website/snippets exists" || echo "website/snippets does NOT exist"
           
           # Count function with better error handling
           count() {
@@ -45,10 +44,8 @@ jobs:
           }
           
           DOCS=$(count website/docs)
-          SNIPS=$(count website/snippets)
-          TOTAL=$((DOCS + SNIPS))
+          TOTAL=$((DOCS))
           echo "Docs: $DOCS"
-          echo "Snippets: $SNIPS"
           echo "TOTAL: $TOTAL"
           
           # Verify total is a valid number
