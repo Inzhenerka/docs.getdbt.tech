@@ -272,7 +272,7 @@ These settings allow you to customize the MCP server’s logging level to help w
 | ------------------------ | ------- | ------------------------------------------------------------------------------- |
 | `DBT_MCP_LOG_LEVEL`        | `INFO` |  Environment variable to override the MCP server log level. Options are: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`.  |
 
-To see more detail about what’s happening inside the MCP server and help debug issues, you can set the log level to `DEBUG`.
+To see more detail about what’s happening inside the MCP server and help debug issues, you can temporarily set the log level to `DEBUG`.
 
 ## Troubleshooting
 
