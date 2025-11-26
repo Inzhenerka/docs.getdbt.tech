@@ -268,7 +268,7 @@ After completing your configuration, follow the specific integration guide for y
 ## Debug configs
 | Name                     | Default | Description                                                                     |
 | ------------------------ | ------- | ------------------------------------------------------------------------------- |
-| `DBT_MCP_LOG_LEVEL`        | `INFO` | Override the MCP server log level. Options: DEBUG, INFO, WARN, ERROR  |
+| `DBT_MCP_LOG_LEVEL`        | `INFO` | Override the MCP server log level. Options: DEBUG, INFO, WARNING, ERROR, CRITICAL  |
 
 A good way to find out what is happening inside the MCP server and debug issues is to increase the log level to `DEBUG`. 
 
