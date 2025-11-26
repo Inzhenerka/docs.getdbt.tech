@@ -336,6 +336,16 @@ config:
 
 </File>
 
+### DuplicateNameDistinctNodeTypesDeprecation
+
+This warning is raised when two unversioned resources in the same package share the same name (for example, a model and a seed both named `sales`). Previously, dbt did not always detect these name conflicts, which meant duplicate names could sometimes point to the wrong resource.
+
+When the `require_unique_project_resource_names` flag is set to `False` and two unversioned resources in the same package share the same name, dbt continues to run and raises a `DuplicateResourceNameDeprecation` warning. When set to `True`, dbt raises a `DuplicateResourceNameError`.
+
+#### DuplicateNameDistinctNodeTypesDeprecation warning resolution
+
+Rename one of the conflicting resources to ensure all names are unique.
+
 ### DuplicateYAMLKeysDeprecation
 
 This warning is raised when two identical keys exist in the `profiles.yml`. 
