@@ -26,8 +26,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Debug: Check if directories exist
-          echo "Checking directories..."
+          # Debug: Check if directory exists
+          echo "Checking directory..."
           ls -la website/ || echo "website/ directory not found"
           [ -d "website/docs" ] && echo "website/docs exists" || echo "website/docs does NOT exist"
           
@@ -44,7 +44,7 @@ jobs:
           }
           
           DOCS=$(count website/docs)
-          TOTAL=$((DOCS))
+          TOTAL=$DOCS
           echo "Docs: $DOCS"
           echo "TOTAL: $TOTAL"
           
