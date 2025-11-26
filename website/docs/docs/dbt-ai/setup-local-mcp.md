@@ -265,6 +265,13 @@ After completing your configuration, follow the specific integration guide for y
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
 
+## Debug configs
+| Name                     | Default | Description                                                                     |
+| ------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `DBT_MCP_LOG_LEVEL`        | `INFO` | Override the MCP server log level. Options: DEBUG, INFO, WARN, ERROR  |
+
+A good way to find out what is happening inside the MCP server and debug issues is to increase the log level to `DEBUG`. 
+
 ## Troubleshooting
 
 #### Can't find `uvx` executable
