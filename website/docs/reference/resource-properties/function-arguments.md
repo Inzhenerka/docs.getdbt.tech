@@ -59,7 +59,7 @@ An optional markdown string describing the argument. This is helpful for documen
 
 The `default_value` is an optional property that you can use to define a default value for a function argument. If no value is provided for that argument, the warehouse uses the specified default. Setting a `default_value` makes the argument optional. This property is supported in [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) and [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
 
-When using this property, note that the order of your argument definitions is important. Arguments without default values should _not_ come after arguments with default values. For example: 
+When you use `default_value`, the order of your arguments matter. Any required arguments (those without default values) have to come before optional ones. Here's an example with the correct order: 
 
 <File name='functions/schema.yml'>
 
