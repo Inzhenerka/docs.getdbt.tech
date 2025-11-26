@@ -369,7 +369,7 @@ select * from {{ ref('sales') }}
 When the flag is set to `True`, dbt will raise:
 
 ```
-DuplicateResourceNameError: Resource "sales" is defined multiple times
+DuplicateResourceNameError: Found resources with the same name 'sales' in package 'project': 'model.project.sales' and 'seed.project.sales'. Please update one of the resources to have a unique name.
 ```
 
 When this error is raised, you should rename one of the resources, or refactor the project structure to avoid name conflicts.
