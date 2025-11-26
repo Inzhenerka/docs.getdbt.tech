@@ -1,5 +1,5 @@
 ---
-title: "Fusion package compatibility guide"
+title: "Fusion package upgrade guide"
 id: "fusion-package-compat"
 description: "Learn how to upgrade your packages to be compatible with the dbt Fusion engine."
 intro_text: "Learn how to upgrade your packages to be compatible with the dbt Fusion engine."
@@ -47,13 +47,15 @@ Before you begin, make sure you meet the following:
 - You use the command line and Git to make changes in your package repository.
 
 ## Upgrade the package
-This section of the guide will go over how to upgrade your package to be compatible with <Constant name="fusion"/> by:
+This next section of the guide will go over how to upgrade your package to be compatible with <Constant name="fusion"/> by:
 - Using `dbt-autofix` to automatically update your YAML files
 - Testing your package with <Constant name="fusion"/>
 - Updating your `require-dbt-version` config
 - Publishing a new release of your package
 
-### Run dbt-autofix
+If you're ready to get started, let's begin!
+
+## Run dbt-autofix
 
 1. In your dbt package repository, create a branch to work in. For example:
     ```bash
@@ -62,7 +64,7 @@ This section of the guide will go over how to upgrade your package to be compati
 
 2. Ensure you have `dbt-autofix` installed. If you don't have it installed, run the command `uvx dbt-autofix`. For more installation options, see the [official `dbt-autofix` doc](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
 
-3. Run `dbt-autofix` in your package directory so it automatically updates your package code and rewrites YAML to conform to the latest JSON schema:
+3. Run `dbt-autofix deprecations` in your package directory so it automatically updates your package code and rewrites YAML to conform to the latest JSON schema:
     ```bash
     dbt-autofix deprecations
     ```
@@ -72,13 +74,13 @@ This section of the guide will go over how to upgrade your package to be compati
     dbt-autofix deprecations --check
     ```
 
-### Test package with Fusion
+## Test package with Fusion
 
-Now that you've run `dbt-autofix`, let's test your package with <Constant name="fusion"/> to ensure it's compatible before [updating](https://docs.getdbt.com//guides/fusion-package-compat?step=5) your `require-dbt-version` config. Refer to the [<Constant name="fusion"/> limitations documentation](/docs/fusion/supported-features#limitations) for more information on what to look out for. You can test your package by:
+Now that you've run `dbt-autofix`, let's test your package with <Constant name="fusion"/> to ensure it's compatible before [updating](https://docs.getdbt.com//guides/fusion-package-compat?step=5) your `require-dbt-version` config. Refer to the [<Constant name="fusion"/> limitations documentation](/docs/fusion/supported-features#limitations) for more information on what to look out for. You can test your package two ways:
 
 <!-- no toc -->
-- [Running your integration tests with Fusion](#running-your-integration-tests-with-fusion)
-- [Manually validating your package](#manually-validating-your-package)
+- [Running your integration tests with Fusion](#running-your-integration-tests-with-fusion) &mdash; Use if your package includes an `integration_tests/` folder.
+- [Manually validating your package](#manually-validating-your-package) &mdash; Use if your package doesn't have [integration tests](https://docs.getdbt.com/guides/building-packages?step=4). Consider creating one to help validate your package.
 
 #### Running your integration tests with Fusion
 
@@ -95,7 +97,7 @@ If you don’t have integration tests:
 2. Run it with <Constant name="fusion"/> using the `dbtf run` command.
 3. Confirm that models build successfully and that there are no warnings. If there are errors/warnings, you'll need to fix them first. If you still have issues, reach out to the [#package-ecosystem channel](https://getdbt.slack.com/archives/CU4MRJ7QB) on Slack for help.
 
-### Update `require-dbt-version` 
+## Update `require-dbt-version` 
 
 You should only update the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) after testing and confirming that your package works with <Constant name="fusion"/>. 
 
@@ -105,9 +107,13 @@ You should only update the [`require-dbt-version` config](/reference/project-con
     ```
     This signals that your package supports both dbt <Constant name="core"/> and <Constant name="fusion"/>. dbt Labs will use this release metadata to mark your package with a <Constant name="fusion"/>-compatible badge in dbt package hub. Packages without this will not have the <Constant name="fusion"/>-compatible badge displayed.
 
-2. Publish a new release of your package by merging your branch into main.
-3. Update your `README` to note that the package is <Constant name="fusion"/>-compatible.
-4. (Optional) Announce it in [#package-ecosystem on dbt Slack](https://getdbt.slack.com/archives/CU4MRJ7QB) if you’d like.
+2. Commit and push your changes to your repository.
+
+## Publish a new release
+
+1. After committing and pushing your changes, publish a new release of your package by merging your branch into main (or whatever branch you're using for your package).
+2. Update your `README` to note that the package is <Constant name="fusion"/>-compatible.
+3. (Optional) Announce it in [#package-ecosystem on dbt Slack](https://getdbt.slack.com/archives/CU4MRJ7QB) if you’d like.
 
 :::tip CI Fusion testing
 When possible, add a step to your CI pipeline that runs `dbtf build` or equivalent to ensure ongoing <Constant name="fusion"/> compatibility.
@@ -121,7 +127,7 @@ This should then update your package to be <Constant name="fusion"/>-compatible 
 - Updated `require-dbt-version: [">=1.10.0,<3.0.0"]` to include `2.0.0`
 - Published a new release
 - Announced the update (optional)
-- Celebrated your new <Constant name="fusion"/>-compatible badge 🎉
+<!--- Celebrated your new <Constant name="fusion"/>-compatible badge 🎉 -->
 
 ## Final thoughts
 
