@@ -46,6 +46,12 @@ Key features include:
 
 Read more about UDFs, including prerequisites and how to define and use them in the [UDF documentation](/docs/build/udfs).
 
+### Unique project resource names
+
+Starting dbt Core v1.11, the `require_unique_project_resource_names` flag is available to enforce uniqueness of resource names within the same package. When two unversioned resources in the same package have the same name, dbt must decide which one a `ref()` or `source()` refers to. Previously, dbt did not always enforce this check, which meant duplicate names could sometimes point to the wrong resource.
+
+The `require_unique_project_resource_names` flag is set to `False` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateResourceNameDeprecation`](/reference/deprecations##duplicatenamedistinctnodetypesdeprecation) warning. When set to `True`, dbt raises a `DuplicateResourceNameError`. For more information, see [Behavior changes](/reference/global-configs/behavior-changes#unique-project-resource-names).
+
 ### Deprecation warnings enabled by default (coming soon)
 
 Coming soon to dbt Core v1.11, deprecation warnings from JSON Schema validation will be enabled by default when validating your YAML configuration files (such as `schema.yml` and `dbt_project.yml`).
