@@ -98,7 +98,7 @@ my-snowflake-db:
 
 </VersionBlock>
 
-Along with adding the `authenticator` parameter, be sure to run `alter account set allow_client_mfa_caching = true;` in your Snowflake warehouse. Together, these will allow you to easily verify authentication with the DUO Mobile app (skipping this results in push notifications for every model built on every `dbt run`).
+**Note:** To avoid receiving Duo push notifications for every model build, enable [MFA token caching](https://docs.snowflake.com/en/user-guide/security-mfa#label-mfa-token-caching) in your Snowflake warehouse by running `alter account set allow_client_mfa_caching = true;` with the ACCOUNTADMIN role.
 
 ### Key pair authentication
 
@@ -170,12 +170,6 @@ If you encounter the `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8
 
 To use SSO authentication for Snowflake, omit a `password` and instead supply an `authenticator` config set to 'externalbrowser' to your target. 
 
-:::tip
-A single `dbt run` can prompt dozens or hundreds of SSO browser tabs. This can happen when the Snowflake account doesn't have token caching enabled. 
-
-To enable token caching, an admin must set the [Snowflake warehouse's parameter `ALLOW_ID_TOKEN`](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) to `TRUE`. This is configured in Snowflake and not in `profiles.yml`.  
-:::
-
 Refer to the following example:
 
 <File name='~/.dbt/profiles.yml'>
@@ -212,7 +206,8 @@ my-snowflake-db:
 
 </VersionBlock>
 
-**Note**: By default, every connection that dbt opens will require you to re-authenticate in a browser. The Snowflake connector package supports caching your session token, but it [currently only supports Windows and Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
+**Note**: To avoid authentication prompts for every dbt connection (which can result in dozens of SSO tabs opening), enable [connection caching](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use#using-connection-caching-to-minimize-the-number-of-prompts-for-authentication-optional) in your Snowflake warehouse by running `alter account set allow_id_token = true;` with the ACCOUNTADMIN role.
+
 
 ### OAuth authorization
 
