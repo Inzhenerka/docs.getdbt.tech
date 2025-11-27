@@ -58,7 +58,7 @@ An optional markdown string describing the argument. This is helpful for documen
 ### default_value
 
 Use the `default_value` property to make a function argument optional.
-- Arguments without a `default_value` are required, and users must pass a value for them when they use the function.
+- When an argument isn't defined with a `default_value`, it becomes a required argument, and you must pass a value for them when you use the function. If a required argument isn’t passed, the function call fails.
 - Arguments with a `default_value` are optional &mdash; if a users doesn’t pass a value, the warehouse uses the value you set in `default_value`. If a required argument isn’t passed, the function call fails. 
 
 This property is supported in [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) and [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
