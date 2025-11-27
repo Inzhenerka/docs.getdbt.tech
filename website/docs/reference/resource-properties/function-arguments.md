@@ -82,12 +82,35 @@ functions:
     returns:
       data_type: integer
 ```
+</File>
 
 In this example:
 - `val1` has no `default_value`, so it’s required.
 - `val2` has a `default_value` of `0`, so it’s optional. If you don’t provide a value for `val2`, the function uses `0` instead.
 
-</File>
+See the following examples of calling the `sum_2_values` function in SQL and Python:
+
+<Tabs>
+
+<TabItem value="SQL">
+
+```sql
+select sum_2_values(5);        -- val1 = 5, val2 = 0 (default used since user didn't specify val2)
+select sum_2_values(5, 10);    -- val1 = 5, val2 = 10
+select sum_2_values();         -- ❌ error: val1 is required and must be passed
+```
+
+</TabItem>
+<TabItem value="Python">
+
+```py
+sum_2_values(5)                # val1 = 5, val2 = 0 (default used since user didn't specify val2)
+sum_2_values(5, 10)            # val1 = 5, val2 = 10
+sum_2_values()                 # ❌ error: val1 is required and must be passed
+```
+
+</TabItem>
+</Tabs>
 
 ## Examples
 
