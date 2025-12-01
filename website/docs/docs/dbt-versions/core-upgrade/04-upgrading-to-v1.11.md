@@ -48,9 +48,33 @@ Read more about UDFs, including prerequisites and how to define and use them in 
 
 ### Deprecation warnings enabled by default (coming soon)
 
-Coming soon to dbt Core v1.11, deprecation warnings from JSON Schema validation will be enabled by default when validating your YAML configuration files (such as `schema.yml` and `dbt_project.yml`).
+Coming soon to dbt Core v1.11, deprecation warnings from JSON Schema validation will be enabled by default when validating your YAML configuration files (such as `schema.yml` and `dbt_project.yml`) for projects running using the Snowflake, Databricks, BigQuery, Databricks and Redshift adapters.
 
 These warnings help you proactively identify and update deprecated configurations (such as misspelled config keys, deprecated properties, or incorrect data types).
+
+Specifically, the following deprecation warnings will be raised by default: 
+* [CustomKeyInConfigDeprecation](/reference/deprecations#customkeyinconfigdeprecation)
+* [CustomKeyInObjectDeprecation](/reference/deprecations#customkeyinobjectdeprecation)
+* [CustomTopLevelKeyDeprecation](/reference/deprecations#customtoplevelkeydeprecation)
+* [MissingPlusPrefixDeprecation](/reference/deprecations#missingplusprefixdeprecation)
+* [SourceOverrideDeprecation](/reference/deprecations#sourceoverridedeprecation)
+
+Each deprecation type can be silenced using the [warn-error-options] project configuration. For example, to silence all of the above deprecations within `dbt_project.yml`: 
+<File name='dbt_project.yml'>
+
+```yml
+
+flags:
+  warn_error_options:
+    silence:
+      - CustomTopLevelKeyDeprecation
+      - CustomKeyInConfigDeprecation
+      - CustomKeyInObjectDeprecation
+      - MissingPlusPrefixDeprecation
+      - SourceOverrideDeprecation
+```
+</File>     
+
 
 ## Adapter-specific features and functionalities
 
