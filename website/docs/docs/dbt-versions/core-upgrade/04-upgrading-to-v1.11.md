@@ -60,6 +60,28 @@ Specifically, the following deprecation warnings will be raised by default:
 * [SourceOverrideDeprecation](/reference/deprecations#sourceoverridedeprecation)
 
 Each deprecation type can be silenced using the [warn-error-options](reference/global-configs/warnings#configuration) project configuration. For example, to silence all of the above deprecations within `dbt_project.yml`: 
+
+<File name='dbt_project.yml'>
+```yml
+
+flags:
+  warn_error_options:
+    silence:
+      - CustomTopLevelKeyDeprecation
+      - CustomKeyInConfigDeprecation
+      - CustomKeyInObjectDeprecation
+      - MissingPlusPrefixDeprecation
+      - SourceOverrideDeprecation
+```
+</File>
+
+Alternatively, the `--warn-error-options` flag can be used to silence specific deprecations from the command line:
+```sh
+dbt parse --warn-error-options '{"silence": ["CustomTopLevelKeyDeprecation", "CustomKeyInConfigDeprecation", "CustomKeyInObjectDeprecation", "MissingPlusPrefixDeprecation", "SourceOverrideDeprecation"]}'
+```
+
+To silence _all_ deprecation warnings within `dbt_project.yml`:
+
 <File name='dbt_project.yml'>
 
 ```yml
@@ -73,8 +95,13 @@ flags:
       - MissingPlusPrefixDeprecation
       - SourceOverrideDeprecation
 ```
-</File>     
+</File>
 
+Similarly, all deprecation warnings can be silenced via the `--warn-error-options` command line flag:
+
+```sh
+dbt parse --warn-error-options '{"silence": ["Deprecations"]}'
+```
 
 ## Adapter-specific features and functionalities
 
