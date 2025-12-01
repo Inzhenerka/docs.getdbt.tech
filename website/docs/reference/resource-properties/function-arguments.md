@@ -90,7 +90,7 @@ In this example:
 
 See the following examples of calling the `sum_2_values` function:
 
-```sql
+```text
 sum_2_values(5)                # val1 = 5, val2 = 0 (default value used since user did not specify val2)
 sum_2_values(5, 10)            # val1 = 5, val2 = 10
 sum_2_values()                 # ❌ error: val1 is required and must be passed
