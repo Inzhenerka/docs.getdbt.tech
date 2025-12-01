@@ -46,7 +46,7 @@ Key features include:
 
 Read more about UDFs, including prerequisites and how to define and use them in the [UDF documentation](/docs/build/udfs).
 
-### Deprecation warnings enabled by default (coming soon)
+### Deprecation warnings enabled by default
 
 Coming soon to dbt Core v1.11, deprecation warnings from JSON Schema validation will be enabled by default when validating your YAML configuration files (such as `schema.yml` and `dbt_project.yml`) for projects running using the Snowflake, Databricks, BigQuery, Databricks and Redshift adapters.
 
