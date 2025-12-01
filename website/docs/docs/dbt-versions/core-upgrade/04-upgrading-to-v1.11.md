@@ -59,7 +59,7 @@ Specifically, the following deprecation warnings will be raised by default:
 * [MissingPlusPrefixDeprecation](/reference/deprecations#missingplusprefixdeprecation)
 * [SourceOverrideDeprecation](/reference/deprecations#sourceoverridedeprecation)
 
-Each deprecation type can be silenced using the [warn-error-options] project configuration. For example, to silence all of the above deprecations within `dbt_project.yml`: 
+Each deprecation type can be silenced using the [warn-error-options](reference/global-configs/warnings#configuration) project configuration. For example, to silence all of the above deprecations within `dbt_project.yml`: 
 <File name='dbt_project.yml'>
 
 ```yml
