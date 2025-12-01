@@ -50,7 +50,7 @@ Read more about UDFs, including prerequisites and how to define and use them in 
 
 The `require_unique_project_resource_names` flag is now available to enforce the uniqueness of resource names within the same package. When two resources in the same package have the same name, dbt must decide which one a `ref()` or `source()` refers to. Previously, this check was not always enforced, which meant duplicate names could result in dbt referencing the wrong resource.
 
-The `require_unique_project_resource_names` flag is set to `False` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateResourceNameDeprecation`](/reference/deprecations##duplicatenamedistinctnodetypesdeprecation) warning. When set to `True`, dbt raises a `DuplicateResourceNameError`. For more information, see [Behavior changes](/reference/global-configs/behavior-changes#unique-project-resource-names).
+The `require_unique_project_resource_names` flag is set to `False` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateResourceNameDeprecation`](/reference/deprecations##duplicatenamedistinctnodetypesdeprecation) warning. When set to `True`, dbt raises a `DuplicateResourceNameError` error. For more information, see [Behavior changes](/reference/global-configs/behavior-changes#unique-project-resource-names).
 
 ### Deprecation warnings enabled by default (coming soon)
 
