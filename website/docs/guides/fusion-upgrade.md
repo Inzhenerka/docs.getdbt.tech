@@ -5,7 +5,7 @@ id: "upgrade-to-fusion"
 level: 'Intermediate'
 icon: 'zap'
 hide_table_of_contents: true
-tags: ['dbt Fusion engine', 'dbt platform','Quickstart']
+tags: ['dbt Fusion engine', 'dbt platform','Upgrade']
 recently_updated: true
 ---
 
@@ -14,6 +14,14 @@ import FusionAdapters from '/snippets/_fusion-dwh.md';
 ## Introduction
 
 The <Constant name="fusion_engine" /> represents the next evolution of data transformation. dbt has been rebuilt from the ground up but at its most basic, <Constant name="fusion" /> is a new version, and moving to it is the same as upgrading between <Constant name="core" /> versions in the <Constant name="dbt_platform" />. Once your project is <Constant name="fusion" /> ready, it's only a matter of pulling a few levers to make the move, but you have some flexibility in how you do so, especially in your development environments. 
+
+Once you complete the <Constant name="fusion" /> migration, your team will benefit from:
+
+- ⚡ Up to 30x faster parsing and compilation
+- 💰 30%+ reduction in warehouse costs (with state-aware orchestration)
+- 🔍 Enhanced SQL validation and error messages
+- 🚀 State-aware orchestration for intelligent model rebuilding
+- 🛠️ Modern development tools
 
 :::info Fusion availability
 
@@ -28,7 +36,7 @@ The <Constant name="fusion_engine" /> represents the next evolution of data tran
 
 Before upgrading your development environment, confirm:
 
-- Your project is on the `Latest` release track (completed in [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade))
+- Your project is on the `Latest` release track (completed in [Part 1: Preparing to upgrade](/guides/prepare-fusion-upgrade))
 - Your project must be using a supported adapter and auth method.    
     <FusionAdapters/>
 - You have a developer license in <Constant name="dbt_platform" />
@@ -146,7 +154,7 @@ Before declaring victory, test your typical development workflows:
 
 1. Make changes to a model and compile it
 2. Run a subset of models: `dbt run --select model_name`
-3. Execute tests: `dbt test --select model_name`
+3. Execute tests
 4. Preview results in the integrated query tool
 5. Verify git operations (commit, push, pull) work as expected
 
@@ -158,7 +166,7 @@ If you encounter any unexpected behavior or have feedback about the <Constant na
 
 ### What about production?
 
-Your development environment is now on <Constant name="fusion" />, but your production environment and deployment jobs are still running on <Constant name="core" />. This is intentional — it gives you and your team time to:
+Your development environment is now on <Constant name="fusion" />, but your production environment and deployment jobs are still running on <Constant name="core" />. This is intentional as it gives you and your team time to:
 
 - Test <Constant name="fusion" /> thoroughly in development.
 - Build confidence in the new engine.
@@ -261,7 +269,7 @@ The recommended testing period depends on your organization:
 - **Recommended**: Monitor scheduled jobs for 3-7 days to catch any time-based or data-dependent issues.
 - **Enterprise/Complex projects**: Consider 1-2 weeks of testing, especially if you have many downstream dependencies.
 
-Don't rush this phase — thorough testing in staging prevents production disruptions.
+Don't rush this phase. Thorough testing in staging prevents production disruptions.
 
 ---
 
@@ -407,13 +415,7 @@ Rolling back to `Latest` will disable <Constant name="fusion" />-specific featur
 
 🎉 Congratulations!
 
-You've successfully upgraded your entire dbt platform project to <Constant name="fusion" />! Your team can now benefit from:
-
-- ⚡ Up to 30x faster parsing and compilation
-- 💰 30%+ reduction in warehouse costs (with state-aware orchestration)
-- 🔍 Enhanced SQL validation and error messages
-- 🚀 State-aware orchestration for intelligent model rebuilding
-- 🛠️ Modern development tools
+You've successfully upgraded your entire dbt platform project to <Constant name="fusion" />!
 
 For your next steps:
 
