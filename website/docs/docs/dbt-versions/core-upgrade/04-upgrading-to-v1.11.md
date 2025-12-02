@@ -95,11 +95,7 @@ To silence _all_ deprecation warnings within `dbt_project.yml`:
 flags:
   warn_error_options:
     silence:
-      - CustomTopLevelKeyDeprecation
-      - CustomKeyInConfigDeprecation
-      - CustomKeyInObjectDeprecation
-      - MissingPlusPrefixDeprecation
-      - SourceOverrideDeprecation
+      - Deprecations
 ```
 </File>
 
