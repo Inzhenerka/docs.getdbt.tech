@@ -13,12 +13,12 @@ level: 'Advanced'
 
 ## Introduction
 
-Thank you for being part of the [dbt package community](https://getdbt.slack.com/archives/CU4MRJ7QB) and maintaining [dbt packages](https://hub.getdbt.com/)! Your work makes dbt’s ecosystem possible and helps thousands of teams reuse trusted models and macros to build faster, more reliable analytics.
+Thank you for being part of the [dbt's package hub community](https://hub.getdbt.com/) and maintaining [dbt packages](/docs/build/packages)! Your work makes dbt’s ecosystem possible and helps thousands of teams reuse trusted models and macros to build faster, more reliable analytics.
 
 This guide will help you upgrade your dbt packages to be [<Constant name="fusion" />](/docs/fusion)-compatible. A <Constant name="fusion" />-compatible package:
 - Supports [<Constant name="fusion_engine" />](/docs/fusion) version `2.0.0`
 - Uses the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) to signal compatibility in the dbt package hub
-- aligns with the latest JSON schema introduced in dbt <Constant name="core"/> v1.10.0.
+- aligns with the latest JSON schema introduced in dbt <Constant name="core"/> v1.10.0
 
 In this guide, we'll go over:
 
@@ -29,7 +29,7 @@ In this guide, we'll go over:
 
 ### Who is this for?
 
-This guide is for any dbt package maintainer, like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that are looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. 
+This guide is for any dbt package maintainer, like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that's looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. 
 
 A users stores their package in a `packages.yml` or `dependencies.yml` file. If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching <Constant name="core"/> behavior. 
 
