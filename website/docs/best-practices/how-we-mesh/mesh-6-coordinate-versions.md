@@ -21,14 +21,14 @@ For how versioning works at a technical level (YAML structure, contracts, aliasi
 Producers own the creation, rollout, communication, and deprecation of model versions. The following steps go over what producers should do when introducing a new version of a model.
 
 <!-- no toc -->
-  - [Step 1: Decide when a changes needs a new version](#step-1-decide-when-a-changes-needs-a-new-version)
+  - [Step 1: Decide when a change needs a new version](#step-1-decide-when-a-changes-needs-a-new-version)
   - [Step 2: Create the new version safely](#step-2-create-the-new-version-safely)
   - [Step 3: Add a deprecation date](#step-3-add-a-deprecation-date)
   - [Step 4: Communicate the new version](#step-4-communicate-the-new-version)
   - [Step 5: Remove the old version](#step-5-remove-the-old-version)
   - [Step 6: Clean up deprecated versions](#step-6-clean-up-deprecated-versions)
 
-#### Step 1: Decide when a changes needs a new version
+#### Step 1: Decide when a change needs a new version
 
 When creating an original version of a model, use [model contracts](/docs/mesh/govern/model-contracts) to ensure that breaking changes produce errors during development. The model contract ensures you, as a producer, are not changing the shape or data type of the output model. If a change breaks the contract, like removing or changing a column type, this means you should create a new model contract, and thus a new model version.
 
@@ -37,7 +37,7 @@ Here are some examples of breaking changes that might need a new version:
 - Renaming a column
 - Changing a column type
 
-Here's an example of a non-breaking change:
+Here are some examples of non-breaking changes:
 - Adding a new column
 - Fixing a bug in an existing column
 
@@ -68,13 +68,19 @@ After deciding that a change needs a new [version](/reference/resource-propertie
     <File name='models/properties.yml'>
     ```yaml
     models:
-    - name: fishtown_analytics
-      latest_version: 1 # this ensures that downstream consumers using `ref(...)` won’t accidentally start using v2
-      versions:
-        - v: 1 # this represents the old version
-          deprecation_date: "2025-12-31" # this sets the deprecation date for the old version
-        - v: 2 # this represents the new version
+      - name: fishtown_analytics
+        latest_version: 1
+        columns:
+          - name: open_data_infrastructure
+          - name: modern_data_stack   # old column — will be excluded in v2
 
+        versions:
+          - v: 1                 # old version — uses all top-level columns
+          - v: 2                 # new version
+            deprecation_date: "2025-12-31"
+            columns:
+              - include: all
+                exclude: [modern_data_stack]   # <— this removes the column in v2
     ```
     </File>
 2. Merge the new version into the main branch.
@@ -82,14 +88,16 @@ After deciding that a change needs a new [version](/reference/resource-propertie
 4. Verify that the new version builds successfully.
 5. Verify that the deprecation date is set correctly in the dbt run logs.
 
+If a user tries to ref models (like `{{ ref('upstream_project', 'model_name', v=1) }}`) using the `v=1` argument after the deprecation date, the ref call will error once the producer project removes the `v1` version.
+
 #### Step 4: Communicate the new version
 Once you've made the change, communicate the new version to downstream consumers. Let them know that:
-- A new version is available and a deprecation timeline exists
+- A new version is available and a deprecation timeline exists.
 - They can test the new version and [migrate](#best-practices-for-consumers) over. 
-- To test the new version, they can use `v='2'` when `ref`ing' the model: `{{ ref('upstream_project', 'model_name', v='2') }}`.
+- To test the new version, they can use `v='2'` when `ref`ing' the model: `{{ ref('upstream_project', 'model_name', v=2) }}`.
 
 #### Step 5: Remove the old version
-Once the consumers confirm they've tested and migrated over to the new version, you can remove the old version and set the new version as the latest version.
+Once the consumers confirm they've tested and migrated over to the new version, you can set the new version as the latest version:
 
 <File name='models/properties.yml'>
 
@@ -103,7 +111,7 @@ models:
 ```
 </File>
 
-This then updates the default ref to the new version. For example, `{{ ref('upstream_project', 'fishtown_analytics') }}` will now resolve to the `fishtown_analytics_v2` model in the `upstream_project`. If consumers want to use the old version, they can use `v='1'` when `ref`ing' the model: `{{ ref('upstream_project', 'fishtown_analytics', v='1') }}`.
+This then updates the default ref to the new version. For example, `{{ ref('upstream_project', 'fishtown_analytics') }}` will now resolve to the `fishtown_analytics_v2` model in the `upstream_project`. If consumers want to use the old version, they can use `v='1'` when `ref`ing' the model: `{{ ref('upstream_project', 'fishtown_analytics', v=1) }}`.
 
 #### Step 6: Clean up deprecated versions
 
@@ -135,7 +143,7 @@ Soft delete old versions retains all old version to avoid confusion if more mode
 Consumers rely on upstream models and need to make sure that version transitions don’t introduce unintended breakages.
 
 1. Begin writing a cross-project ref to use a public model from a different project. In this case, `{{ ref('upstream_project', 'fishtown_analytics') }}`.
-2. Once you see deprecation warnings, test the latest version of a model by explicitly referencing it in your ref. For example, `{{ ref('upstream_project', 'fishtown_analytics', v='2') }}`. Check if it's a breaking change for you or has any unintended impacts on your project. 
+2. Once you see deprecation warnings, test the latest version of a model by explicitly referencing it in your ref. For example, `{{ ref('upstream_project', 'fishtown_analytics', v=2) }}`. Check if it's a breaking change for you or has any unintended impacts on your project. 
    - If it does, consider explicitly “pinning” to the current, working version of the model before the new version becomes the default: `{{ ref('upstream_project', 'fishtown_analytics', v=1) }}`. Bear in mind that you will need to migrate at some point before the deprecation date.
 3. At some point before the deprecation date, you can migrate to the new version of the model by removing the version specification in your cross-project reference:  `{{ ref('upstream_project', 'fishtown_analytics')` and make any downstream logic changes needed to accommodate this new version.
 
