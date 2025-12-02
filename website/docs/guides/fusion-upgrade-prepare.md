@@ -4,7 +4,7 @@ id: "prepare-fusion-upgrade"
 level: 'Intermediate'
 icon: 'zap'
 hide_table_of_contents: true
-tags: ['dbt Fusion engine', 'dbt platform','Quickstart']
+tags: ['dbt Fusion engine', 'dbt platform', 'Upgrade']
 recently_updated: true
 ---
 
