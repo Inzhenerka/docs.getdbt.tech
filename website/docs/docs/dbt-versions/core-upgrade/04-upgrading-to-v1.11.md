@@ -8,7 +8,7 @@ displayed_sidebar: "docs"
 # Upgrading to v1.11 <Lifecycle status="beta" />
 
 :::note Installing Beta v1.11 on the command line 
-When using Core v1.11 on the command line (not in dbt platform), you need to install a beta version of dbt-core For example, `install --upgrade --pre dbt-core`
+When using Core v1.11 on the command line (not in <Constant name="dbt_platform" />), you need to install a beta version of dbt-core. For example, `install --upgrade --pre dbt-core`.
 :::
 
 ## Resources
@@ -45,6 +45,12 @@ Key features include:
 - **New `function()` macro**: Reference UDFs in your models using the `{{ function('function_name') }}` Jinja macro.
 
 Read more about UDFs, including prerequisites and how to define and use them in the [UDF documentation](/docs/build/udfs).
+
+### Unique project resource names
+
+The `require_unique_project_resource_names` flag is now available to enforce the uniqueness of resource names within the same package. When two resources in the same package have the same name, dbt must decide which one a `ref()` or `source()` refers to. Previously, this check was not always enforced, which meant duplicate names could result in dbt referencing the wrong resource.
+
+The `require_unique_project_resource_names` flag is set to `False` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateNameDistinctNodeTypesDeprecation`](/reference/deprecations#duplicatenamedistinctnodetypesdeprecation) warning. When set to `True`, dbt raises a `DuplicateResourceNameError` error. For more information, see [Behavior changes](/reference/global-configs/behavior-changes#unique-project-resource-names).
 
 ### Deprecation warnings enabled by default
 
