@@ -228,7 +228,7 @@ If a critical package isn't yet compatible with <Constant name="fusion" />:
 Identify which packages your project uses:
 
 1. In the <Constant name="cloud_ide" />, open your project's root directory.
-2. Look for either `packages.yml` or `dependencies.yml` file (both are valid, but `dependencies.yml` is the newer format).
+2. Look for either `packages.yml` or `dependencies.yml` file.
 3. Review the list of packages and their current versions.
 
 Your file will look something like this:
@@ -319,7 +319,7 @@ After upgrading packages, test your project to ensure everything works:
    dbt run --select tag:daily
    ```
 
-2. Run your tests to catch any breaking changes:
+2. Run your tests to catch any breaking changes (exact command may vary):
    ```bash
    dbt test
    ```
@@ -327,7 +327,7 @@ After upgrading packages, test your project to ensure everything works:
 3. If you encounter issues:
    - Review the package's changelog for breaking changes
    - Adjust your code to match new package behavior
-   - If problems persist, temporarily pin to an older compatible version
+   - If problems persist, temporarily pin to an older compatible version (if possible)
 
 ### Step 6: Commit package updates
 
