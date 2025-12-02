@@ -48,7 +48,7 @@ Before you begin, make sure you meet the following:
 
 ## Upgrade the package
 This next section of the guide will go over how to upgrade your package to be compatible with <Constant name="fusion"/> by:
-- [Using `dbt-autofix` to automatically update your YAML files](guides/fusion-package-compat?step=4)
+- [Using `dbt-autofix` to automatically update your YAML files](/guides/fusion-package-compat?step=)
 - [Testing your package with <Constant name="fusion"/>](/guides/fusion-package-compat?step=5)
 - [Updating your `require-dbt-version` config](/guides/fusion-package-compat?step=6)
 - [Publishing a new release of your package](/guides/fusion-package-compat?step=7)
