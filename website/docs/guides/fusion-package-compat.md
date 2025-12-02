@@ -22,10 +22,10 @@ This guide will help you upgrade your dbt packages to be [<Constant name="fusion
 
 In this guide, we'll go over:
 
-- Updating your package to be compatible with <Constant name="fusion"/>,
-- Testing your package with <Constant name="fusion"/>,
-- Updating the `require-dbt-version` config to include `2.0.0`,
-- Updating your README to note that the package is compatible with <Constant name="fusion"/>.
+- Updating your package to be compatible with <Constant name="fusion"/>
+- Testing your package with <Constant name="fusion"/>
+- Updating the `require-dbt-version` config to include `2.0.0`
+- Updating your README to note that the package is compatible with <Constant name="fusion"/>
 
 ### Who is this for?
 
