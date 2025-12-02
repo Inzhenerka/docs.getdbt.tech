@@ -192,7 +192,7 @@ Once you're satisfied with the autofix changes, commit them to your branch:
 
 If the autofix tool reports remaining deprecation warnings that couldn't be automatically fixed:
 
-1. Review the warning messages in the **Command history** panel — each warning includes the file path and line number.
+1. Review the warning messages in the **Command history** panel. Each warning includes the file path and line number.
 2. Manually update the code based on the deprecation guidance:
    - Custom inputs should be moved to the `meta` config.
    - Deprecated properties should be updated to their new equivalents.
@@ -219,7 +219,6 @@ If a critical package isn't yet compatible with <Constant name="fusion" />:
 - Check with the package maintainer about their roadmap
 - Open an issue requesting <Constant name="fusion" /> support
 - Consider contributing the compatibility updates yourself
-- Temporarily remove the package until it's compatible
 
 :::
 
