@@ -56,7 +56,7 @@ Test the `Latest` release track for your individual account without changing the
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-override-version.png" width="60%" title="Override dbt version in your account settings"/>
 
 5. Launch the <Constant name="cloud_ide" /> or <Constant name="cloud_cli" /> and test your normal development workflows.
-6. Verify the override is active by running any dbt command and checking the **System Logs** — the first line should show `Running with dbt=` and your selected version. If the version number is `v1.11` or higher, you're on the right path to <Constant name="fusion" /> readiness.
+6. Verify the override is active by running any dbt command and checking the **System Logs**. The first line should show `Running with dbt=` and your selected version. If the version number is `v1.11` or higher, you're on the right path to <Constant name="fusion" /> readiness.
 
 If everything works as expected, proceed to upgrade your environments. If you encounter deprecation warnings, don't fear! We're going to address those later in this guide. If you encounter errors, revert to your previous version and refer to the [version upgrade guides](/docs/dbt-versions/core-upgrade) to resolve any differences between your current version and the latest available <Constant name="core" /> version.
 
@@ -207,7 +207,7 @@ Once all deprecations are resolved:
 1. Create a pull request in your git provider to merge your deprecation fixes.
 2. Have your team review the changes.
 3. Merge the PR to your main development branch.
-4. Ensure these changes are deployed to your environments before proceeding with the Fusion upgrade.
+4. Ensure these changes are deployed to your environments before proceeding with the <Constant name="fusion" /> upgrade.
 
 ## Validate and upgrade your dbt packages
 
@@ -341,7 +341,7 @@ Once you've verified the updated packages work correctly:
 
 ## Check for known Fusion limitations
 
-While <Constant name="fusion" /> supports most of <Constant name="core" />'s capabilities, some features have limited support or are still in development. Before upgrading, review your project to identify any features that <Constant name="fusion" /> doesn't yet fully support. This allows you to plan accordingly — whether that means removing non-critical features, implementing workarounds, or waiting for specific features to become available.
+While <Constant name="fusion" /> supports most of <Constant name="core" />'s capabilities, some features have limited support or are still in development. Before upgrading, review your project to identify any features that <Constant name="fusion" /> doesn't yet fully support. This allows you to plan accordingly &mdash; whether that means removing non-critical features, implementing workarounds, or waiting for specific features to become available.
 
 :::note Fusion is rapidly evolving
 
@@ -360,7 +360,7 @@ Common limitations include:
 - **Microbatch incremental strategy:**  Not yet available
 - **Model-level notifications:** Job-level notifications work, model-level don't yet
 - **Semantic Layer development:** Active semantic model development should stay on <Constant name="core" />
-- **SQLFluff linting** — Not integrated yet (though linting will be built into Fusion directly)
+- **SQLFluff linting:** Not integrated yet (though linting will be built into <Constant name="fusion" /> directly)
 
 ### Step 2: Search your project for limited features
 
@@ -408,14 +408,18 @@ Based on your assessment, decide how to handle each limitation:
 - Remove non-critical features:
 
     Temporarily disable features you can live without:
-   ```yaml
-   # Before (in model config)
+   
+   Before (in model config): 
+
+   ```SQL
    {{ config(
      materialized='incremental',
      store_failures=true
    ) }}
+   ```
    
-   # After
+   After:
+   ```SQL
    {{ config(
      materialized='incremental'
    ) }}
@@ -425,10 +429,6 @@ Based on your assessment, decide how to handle each limitation:
    - Run SQLFluff linting separately in CI with <Constant name="core" />
    - Use standard state selection instead of granular subselectors
 
-- Plan hybrid environments for critical unsupported features.
-   - Keep specific jobs on <Constant name="core" /> (like Semantic Layer exports)
-   - Migrate development and most production workloads to <Constant name="fusion" />
-   - Document which jobs need to remain on <Constant name="core" /> and why
 
 ### Step 5: Document your findings
 
