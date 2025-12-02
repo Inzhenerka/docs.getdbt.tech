@@ -69,10 +69,11 @@ If you're ready to get started, let's begin!
     dbt-autofix deprecations
     ```
 
-4. (Optional) You can also run `dbt-autofix` as a temporary continuous integration (CI) check until the package is <Constant name="fusion"/>-compatible:
+<!-- 4. (Optional) You can also run `dbt-autofix` as a temporary continuous integration (CI) check until the package is <Constant name="fusion"/>-compatible:
     ```bash
     dbt-autofix deprecations --check
     ```
+-->
 
 ## Test package with Fusion
 
@@ -105,7 +106,7 @@ You should only update the [`require-dbt-version` config](/reference/project-con
     ```yaml
     require-dbt-version: [">=1.10.0,<3.0.0"] 
     ```
-    This signals that your package supports both dbt <Constant name="core"/> and <Constant name="fusion"/>. dbt Labs will use this release metadata to mark your package with a <Constant name="fusion"/>-compatible badge in dbt package hub. Packages without this will not have the <Constant name="fusion"/>-compatible badge displayed.
+    This signals that your package supports both dbt <Constant name="core"/> and <Constant name="fusion"/>. dbt Labs will use this release metadata to mark your package with a <Constant name="fusion"/>-compatible badge in dbt package hub, which we'll introduce shortly. Packages without this will not have the <Constant name="fusion"/>-compatible badge displayed.
 
 2. Commit and push your changes to your repository.
 
@@ -153,7 +154,7 @@ The following are some frequently asked questions about upgrading your package t
 
 <Constant name="fusion"/> and <Constant name="core"/> v1.10+ use the same new authoring layer. Ensuring your package supports `2.0.0` in your `require-dbt-version` config ensures your package is compatible with both.
 
-Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. You'll also be able to display a <Constant name="fusion"/>-compatible badge in dbt package hub.
+Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. Soon, you'll be able to display a <Constant name="fusion"/>-compatible badge in dbt package hub.
 
 If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching dbt <Constant name="core"/> behavior. 
 
