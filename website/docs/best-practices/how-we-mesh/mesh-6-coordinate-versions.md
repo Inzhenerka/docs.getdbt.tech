@@ -76,11 +76,11 @@ After deciding that a change needs a new [version](/reference/resource-propertie
 
         versions:
           - v: 1                 # old version — uses all top-level columns
-          - v: 2                 # new version
             deprecation_date: "2025-12-31"
+          - v: 2                 # new version
             columns:
               - include: all
-                exclude: [column_to_remove]   # <— this removes the column in v2
+                exclude: [column_to_remove]   # <— specify which columns were removed in v2
     ```
     </File>
 2. Merge the new version into the main branch.
