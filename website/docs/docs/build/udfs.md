@@ -366,7 +366,7 @@ For more information about selecting UDFs, see the examples in [Node selector me
 ## Limitations
 - Creating UDFs in other languages (for example, Java or Scala) is not yet supported. 
 - Creating Python UDFs are currently supported in Snowflake and BigQuery only. Other warehouses aren't yet supported.
-- Only <Term id="scalar">scalar</Term> functions are currently supported.
+- Only <Term id="scalar">scalar</Term> and <Term id="aggregate">aggregate</Term> functions are currently supported. For more information, see [Supported function types](/reference/resource-configs/type#supported-function-types).
 
 ## Related FAQs
 
