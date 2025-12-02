@@ -26,6 +26,7 @@ The following packages are verified and supported on the <Constant name="fusion_
 - [GJMcClintock/dbt_tld](https://github.com/GJMcClintock/dbt_tld.git)
 - [godatadriven/dbt_date](https://github.com/godatadriven/dbt-date.git)
 - [kristeligt-dagblad/dbt_ml](https://github.com/kristeligt-dagblad/dbt_ml.git)
+- [LewisDavies/upstream_prod](https://github.com/LewisDavies/upstream-prod.git) (versions 0.9.6 and above)
 - [metaplane/dbt_expectations](https://github.com/metaplane/dbt-expectations.git)
 - [Montreal-Analytics/snowflake_utils](https://github.com/Montreal-Analytics/dbt-snowflake-utils.git)
 - [Snowflake-Labs/dbt_semantic_view](https://github.com/Snowflake-Labs/dbt_semantic_view)
