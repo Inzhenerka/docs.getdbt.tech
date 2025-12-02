@@ -71,8 +71,8 @@ After deciding that a change needs a new [version](/reference/resource-propertie
       - name: fishtown_analytics
         latest_version: 1
         columns:
-          - name: open_data_infrastructure
-          - name: modern_data_stack   # old column — will be excluded in v2
+          - name: column_to_remove
+          - name: column_to_keep
 
         versions:
           - v: 1                 # old version — uses all top-level columns
@@ -80,7 +80,7 @@ After deciding that a change needs a new [version](/reference/resource-propertie
             deprecation_date: "2025-12-31"
             columns:
               - include: all
-                exclude: [modern_data_stack]   # <— this removes the column in v2
+                exclude: [column_to_remove]   # <— this removes the column in v2
     ```
     </File>
 2. Merge the new version into the main branch.
