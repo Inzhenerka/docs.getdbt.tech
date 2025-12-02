@@ -5,7 +5,7 @@ id: "upgrade-to-fusion"
 level: 'Intermediate'
 icon: 'zap'
 hide_table_of_contents: true
-tags: ['dbt Fusion engine', 'dbt platform','Quickstart']
+tags: ['dbt Fusion engine', 'dbt platform','Upgrade']
 recently_updated: true
 ---
 
@@ -146,7 +146,7 @@ Before declaring victory, test your typical development workflows:
 
 1. Make changes to a model and compile it
 2. Run a subset of models: `dbt run --select model_name`
-3. Execute tests: `dbt test --select model_name`
+3. Execute tests
 4. Preview results in the integrated query tool
 5. Verify git operations (commit, push, pull) work as expected
 
