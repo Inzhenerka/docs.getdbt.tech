@@ -145,7 +145,7 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
           - v: 1                 # old version — uses all top-level columns
             deprecation_date: "2025-12-31"
             config:
-              enabled: false  # <— disable the old version# disable deprecated version so it no longer runs
+              enabled: false  #  disable deprecated version so it no longer runs
           - v: 2                 # new version
             columns:
               - include: all
