@@ -117,7 +117,7 @@ You can replicate the guide’s title in a header if needed.
 * Guides contain at least one procedural section, plus at least one additional conceptual, referential, or procedural section.
 * Content within guides follows the content order used throughout the site.
 * Guides should include troubleshooting sections as frequently as possible. See the troubleshooting section below for more information.
-* Guides should include a section explaining who it's for, such as 'Who this is for' or `persona` frontmatter field. This helps communicate the guide's audience and helps set expectations. 
+* Guides should include a section explaining who it's for, such as 'Who this is for' or `persona` frontmatter field (coming soon). This helps communicate the guide's audience and helps set expectations. 
 
 ### Title guidelines for guides
 
