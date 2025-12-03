@@ -88,7 +88,7 @@ After deciding that a change needs a new [version](/reference/resource-propertie
 4. Verify that the new version builds successfully.
 5. Verify that the deprecation date is set correctly in the `dbt run` logs.
 
-If a you try to reference models (for example, `{{ ref('upstream_project', 'model_name', v=1) }}`) using the `v=1` argument after the deprecation date, the `ref` call will fail once the producer project removes the `v1` version.
+If you try to reference models (for example, `{{ ref('upstream_project', 'model_name', v=1) }}`) using the `v=1` argument after the deprecation date, the `ref` call will fail once the producer project removes the `v1` version.
 
 #### Step 4: Communicate the new version
 After creating a new version and setting a deprecation date for the old version, communicate the new version to downstream consumers. Let them know that:
@@ -129,7 +129,7 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
 
 <TabItem value="soft-delete" label="Soft delete (retains continuity)">
 
-Soft deleting old versions retains all old version artifacts to avoid confusion if more model versions get introduced in future, and for continuity. Bear in mind that your version control platform will also have the history of all of these changes.
+"Soft deleting" old versions retains all old version artifacts to avoid confusion if more model versions get introduced in future, and for continuity. Bear in mind that your version control platform will also have the history of all of these changes.
 1. Repoint the `fishtown_analytics` alias to your latest version file (for example,`fishtown_analytics_v2`), or create a view on top of the latest model version.
 2. Use the `enabled` [config option](/reference/resource-configs/enabled) to disable the deprecated model version so that it doesn’t run in dbt jobs and can’t be referenced in a cross-project ref. For example:
        <File name='models/properties.yml'>
