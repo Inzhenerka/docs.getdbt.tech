@@ -15,10 +15,10 @@ level: 'Advanced'
 
 Thank you for being part of the [dbt's package hub community](https://hub.getdbt.com/) and maintaining [packages](/docs/build/packages)! Your work makes dbt’s ecosystem possible and helps thousands of teams reuse trusted models and macros to build faster, more reliable analytics.
 
-This guide will help you upgrade your dbt packages to be [<Constant name="fusion" />](/docs/fusion)-compatible. A <Constant name="fusion" />-compatible package:
+This guide helps you upgrade your dbt packages to be [<Constant name="fusion" />](/docs/fusion)-compatible. A <Constant name="fusion" />-compatible package:
 - Supports [<Constant name="fusion_engine" />](/docs/fusion) version `2.0.0`
 - Uses the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) to signal compatibility in the dbt package hub
-- aligns with the latest JSON schema introduced in dbt <Constant name="core"/> v1.10.0
+- Aligns with the latest JSON schema introduced in <Constant name="core"/> v1.10.0
 
 In this guide, we'll go over:
 
@@ -31,7 +31,7 @@ In this guide, we'll go over:
 
 This guide is for any dbt package maintainer, like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that's looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. 
 
-A users stores their package in a `packages.yml` or `dependencies.yml` file. If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching <Constant name="core"/> behavior. 
+A user stores their package in a `packages.yml` or `dependencies.yml` file. If a package excludes `2.0.0`, <Constant name="fusion"/> warns today and errors in a future release, matching <Constant name="core"/> behavior. 
 
 This guide assumes you're using the command line and Git to make changes in your package repository. If you're interested in creating a new package from scratch, we recommend using the [dbt package guide](/guides/building-packages) to get started.
 
@@ -47,7 +47,7 @@ Before you begin, make sure you meet the following:
 - CLI and Git usage &mdash; You’re comfortable using the command line and Git to update the repository.
 
 ## Upgrade the package
-This next section of the guide will go over how to upgrade your package to be compatible with <Constant name="fusion"/> by:
+This section covers how to upgrade your package to be compatible with <Constant name="fusion"/> by:
 - [Using `dbt-autofix` to automatically update your YAML files](/guides/fusion-package-compat?step=)
 - [Testing your package with <Constant name="fusion"/>](/guides/fusion-package-compat?step=5)
 - [Updating your `require-dbt-version` config](/guides/fusion-package-compat?step=6)
@@ -57,7 +57,7 @@ If you're ready to get started, let's begin!
 
 ## Run dbt-autofix
 
-1. Before you begin, make sure you have `dbt-autofix` installed. If you don't have it installed, run the command `uvx dbt-autofix`. For more installation options, see the [official `dbt-autofix` doc](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation):
+1. Before you begin, make sure you have `dbt-autofix` installed. If you don't have it installed, run the command `uvx dbt-autofix`. For more installation options, see the [official `dbt-autofix` doc](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
 
 2. In your dbt package repository, create a branch to work in. For example:
     ```bash
@@ -101,15 +101,15 @@ If your package doesn't have integration tests, follow these steps:
 
 ## Update `require-dbt-version` 
 
-You should only update the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) after testing and confirming that your package works with <Constant name="fusion"/>. 
+Only update the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) after testing and confirming that your package works with <Constant name="fusion"/>. 
 
 1. Update the `require-dbt-version` in your `dbt_project.yml` to include `2.0.0`. We recommend using a range to ensure stability across releases:
     ```yaml
     require-dbt-version: [">=1.10.0,<3.0.0"] 
     ```
-    This signals that your package supports both dbt <Constant name="core"/> and <Constant name="fusion"/>. dbt Labs will use this release metadata to mark your package with a <Constant name="fusion"/>-compatible badge (to be introduce shortly) in the dbt package hub. Packages without this will not have the <Constant name="fusion"/>-compatible badge displayed.
+    This signals that your package supports both <Constant name="core"/> and <Constant name="fusion"/>. dbt Labs uses this release metadata to mark your package with a <Constant name="fusion"/>-compatible badge (to be introduced shortly) in the dbt package hub. Packages without this metadata don't display the <Constant name="fusion"/>-compatible badge.
 
-3. Commit and push your changes to your repository.
+2. Commit and push your changes to your repository.
 
 ## Publish a new release
 
@@ -121,7 +121,7 @@ You should only update the [`require-dbt-version` config](/reference/project-con
 When possible, add a step to your CI pipeline that runs `dbtf build` or equivalent to ensure ongoing <Constant name="fusion"/> compatibility.
 :::
 
-This should then update your package to be <Constant name="fusion"/>-compatible and be reflected in dbt package hub. To summarize, you've now:
+Your package is now <Constant name="fusion"/>-compatible and the dbt package hub reflects these changes. To summarize, you've now:
 
 - Created a fusion compatible branch
 - Run `dbt-autofix` deprecations
@@ -135,14 +135,14 @@ This should then update your package to be <Constant name="fusion"/>-compatible 
 
 <ConfettiTrigger>
 
-Now that you've upgraded your package to be <Constant name="fusion"/>-compatible, users will be able to use your package with <Constant name="fusion"/>! 🎉!
+Now that you've upgraded your package to be <Constant name="fusion"/>-compatible, users can use your package with <Constant name="fusion"/>! 🎉
 
 By upgrading now, you’re ensuring a smoother experience for users, paving the way for the next generation of dbt projects, and helping dbt <Constant name="fusion"/> reach full stability.
 
 If you have questions or run into issues:
 
 - Join the conversation in the [#package-ecosystem channel](https://getdbt.slack.com/archives/CU4MRJ7QB) on Slack.
-- Open an issue in [dbt-autofix repository](https://github.com/dbt-labs/dbt-autofix/issues) on GitHub
+- Open an issue in the [dbt-autofix repository](https://github.com/dbt-labs/dbt-autofix/issues) on GitHub.
 
 Lastly, thank you for your help in making the dbt ecosystem stronger &mdash; one package at a time 💜.
 </ConfettiTrigger>
@@ -165,12 +165,12 @@ If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and err
 
 Add a separate job that installs <Constant name="fusion"/> (`dbtf`) and runs `dbtf build`. See this [PR](https://github.com/godatadriven/dbt-date/pull/31) for a working example.
 
-You would want to do this to ensure all and any changes to your package are compatible with <Constant name="fusion"/>.
- </Expandable>
+You want to do this to ensure any changes to your package remain compatible with <Constant name="fusion"/>.
+</Expandable>
 
 <Expandable alt_header="How will users know my package is Fusion-compatible?">
 
-Users will know your package is <Constant name="fusion"/>-compatible by seeing 2.0.0 or higher included in the `require-dbt-version` range config.
+Users can identify your package as <Constant name="fusion"/>-compatible by checking for 2.0.0 or higher in the `require-dbt-version` range config.
 
 <Constant name="fusion"/>-compatible packages will soon display a badge on dbt packages hub. This is automatically determined based on your package’s metadata and version requirements.
 
