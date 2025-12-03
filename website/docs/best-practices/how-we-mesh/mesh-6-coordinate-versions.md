@@ -50,14 +50,14 @@ Here are examples of changes that might be breaking depending on your business l
 #### Step 2: Create the new version safely
 After deciding that a change needs a new [version](/reference/resource-properties/versions), follow these steps to create the new version without disrupting existing workflows. Let's say you're removing a column:
 
-1. Create a new version of the model file. For example, `fishtown_analytics_v2.sql`. Each version of a model must have its own SQL file.
+1. Create a new version of the model file. For example, `fishtown_analytics_orders_v2.sql`. Each version of a model must have its own SQL file.
 2. Keep the default version stable. In the model's `properties.yml` file:
    - Set [`versions`](/reference/resource-properties/versions) to include the old version and the new version: `- v: 1` and `- v: 2` respectively.
    - Set the [`latest_version:`](/reference/resource-properties/latest_version) to `latest_version: 1`.
 
     This ensures that downstream consumers using `ref(...)` won’t accidentally start using v2. Without setting this, the default will be the highest numerical version, which could be a breaking change for consumers.
 
-3. Set an [alias](/reference/resource-configs/alias) or create a view over the latest model version. By aliasing or creating a view over the latest model version, you ensure `fishtown_analytics` (without the version suffix) always exists as an object in the warehouse, pointing to the latest version. This also protects external tools and BI dashboards.
+3. Set an [alias](/reference/resource-configs/alias) or create a view over the latest model version. By aliasing or creating a view over the latest model version, you ensure `fishtown_analytics_orders` (without the version suffix) always exists as an object in the warehouse, pointing to the latest version. This also protects external tools and BI dashboards.
 
 #### Step 3: Add a deprecation date
 
@@ -68,7 +68,7 @@ After deciding that a change needs a new [version](/reference/resource-propertie
     <File name='models/properties.yml'>
     ```yaml
     models:
-      - name: fishtown_analytics
+      - name: fishtown_analytics_orders
         latest_version: 1
         columns:
           - name: column_to_remove
@@ -103,7 +103,7 @@ Once the consumers confirm they've tested and migrated over to the new version, 
 
 ```yaml
 models:
-  - name: fishtown_analytics
+  - name: fishtown_analytics_orders
     latest_version: 2 # update from 1 to 2 to set the new version as the latest version
     versions:
       - v: 1 # this represents the old version
@@ -111,7 +111,7 @@ models:
 ```
 </File>
 
-This then updates the default `ref` to the new version. For example, `{{ ref('upstream_project', 'fishtown_analytics') }}` will now resolve to the `fishtown_analytics_v2` model in the `upstream_project`. If consumers want to use the old version, they can use `v=1` when referencing the model: `{{ ref('upstream_project', 'fishtown_analytics', v=1) }}`.
+This then updates the default `ref` to the new version. For example, `{{ ref('upstream_project', 'fishtown_analytics_orders') }}` will now resolve to the `fishtown_analytics_orders_v2` model in the `upstream_project`. If consumers want to use the old version, they can use `v=1` when referencing the model: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=1) }}`.
 
 #### Step 6: Clean up deprecated versions
 
@@ -121,21 +121,21 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
 <TabItem value="hard-delete" label="Hard delete (cleanest)">
 
 "Hard deleting" old versions is the cleanest approach and removes all old version artifacts from your project:
-1. Delete the `fishtown_analytics_v1.sql` file and rename the new version back to `fishtown_analytics.sql`.
+1. Delete the `fishtown_analytics_orders_v1.sql` file and rename the new version back to `fishtown_analytics_orders.sql`.
 2. Delete all version specifications from your `.yml` file.
-3. Drop or delete the `fishtown_analytics_v1` object from your warehouse with a manual script or using a cleanup macro.
+3. Drop or delete the `fishtown_analytics_orders_v1` object from your warehouse with a manual script or using a cleanup macro.
 
 </TabItem>
 
 <TabItem value="soft-delete" label="Soft delete (retains continuity)">
 
 "Soft deleting" old versions retains all old version artifacts to avoid confusion if more model versions get introduced in future, and for continuity. Bear in mind that your version control platform will also have the history of all of these changes.
-1. Repoint the `fishtown_analytics` alias to your latest version file (for example,`fishtown_analytics_v2`), or create a view on top of the latest model version.
+1. Repoint the `fishtown_analytics_orders` alias to your latest version file (for example,`fishtown_analytics_orders_v2`), or create a view on top of the latest model version.
 2. Use the `enabled` [config option](/reference/resource-configs/enabled) to disable the deprecated model version so that it doesn’t run in dbt jobs and can’t be referenced in a cross-project ref. For example:
        <File name='models/properties.yml'>
     ```yaml
     models:
-      - name: fishtown_analytics
+      - name: fishtown_analytics_orders
         latest_version: 1
         columns:
           - name: column_to_remove
@@ -152,7 +152,7 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
                 exclude: [column_to_remove]   # <— specify which columns were removed in v2
     ```
     </File>
-3. Drop or delete the `fishtown_analytics_v1` object from your warehouse with a manual script or appropriate process or using a cleanup macro.
+3. Drop or delete the `fishtown_analytics_orders_v1` object from your warehouse with a manual script or appropriate process or using a cleanup macro.
 
 </TabItem>
 </Tabs>
@@ -165,10 +165,10 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
 ## Best practices for consumers
 Consumers rely on upstream models and need to make sure that version transitions don’t introduce unintended breakages. Refer to the following steps to migrate to the new version:
 
-1. Begin writing a cross-project reference to use a public model from a different project. In this case, `{{ ref('upstream_project', 'fishtown_analytics') }}`.
-2. Once you see deprecation warnings, test the latest version of a model by explicitly referencing it in your `ref`. For example, `{{ ref('upstream_project', 'fishtown_analytics', v=2) }}`. Check if it's a breaking change for you or has any unintended impacts on your project. 
-   - If it does, consider explicitly “pinning” to the current, working version of the model before the new version becomes the default: `{{ ref('upstream_project', 'fishtown_analytics', v=1) }}`. Bear in mind that you will need to migrate at some point before the deprecation date.
-3. Before the deprecation date, you can migrate to the new version of the model by removing the version specification in your cross-project reference:  `{{ ref('upstream_project', 'fishtown_analytics')`. Make any downstream logic changes needed to accommodate this new version.
+1. Begin writing a cross-project reference to use a public model from a different project. In this case, `{{ ref('upstream_project', 'fishtown_analytics_orders') }}`.
+2. Once you see deprecation warnings, test the latest version of a model by explicitly referencing it in your `ref`. For example, `{{ ref('upstream_project', 'fishtown_analytics_orders', v=2) }}`. Check if it's a breaking change for you or has any unintended impacts on your project. 
+   - If it does, consider explicitly “pinning” to the current, working version of the model before the new version becomes the default: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=1) }}`. Bear in mind that you will need to migrate at some point before the deprecation date.
+3. Before the deprecation date, you can migrate to the new version of the model by removing the version specification in your cross-project reference:  `{{ ref('upstream_project', 'fishtown_analytics_orders')`. Make any downstream logic changes needed to accommodate this new version.
 
 Consumers should plan migrations to align with their own team’s release cycles.
 
