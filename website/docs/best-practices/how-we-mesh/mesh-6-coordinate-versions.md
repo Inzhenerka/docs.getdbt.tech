@@ -131,13 +131,36 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
 
 Soft deleting old versions retains all old version artifacts to avoid confusion if more model versions get introduced in future, and for continuity. Bear in mind that your version control platform will also have the history of all of these changes.
 1. Repoint the `fishtown_analytics` alias to your latest version file (for example,`fishtown_analytics_v2`), or create a view on top of the latest model version.
-2. Use the `enabled` [config option](/reference/resource-configs/enabled) to disable the deprecated model version so that it doesn’t run in dbt jobs and can’t be referenced in a cross-project ref
+2. Use the `enabled` [config option](/reference/resource-configs/enabled) to disable the deprecated model version so that it doesn’t run in dbt jobs and can’t be referenced in a cross-project ref. For example:
+       <File name='models/properties.yml'>
+    ```yaml
+    models:
+      - name: fishtown_analytics
+        latest_version: 1
+        columns:
+          - name: column_to_remove
+          - name: column_to_keep
+
+        versions:
+          - v: 1                 # old version — uses all top-level columns
+            deprecation_date: "2025-12-31"
+            config:
+              enabled: false  # <— disable the old version# disable deprecated version so it no longer runs
+          - v: 2                 # new version
+            columns:
+              - include: all
+                exclude: [column_to_remove]   # <— specify which columns were removed in v2
+    ```
+    </File>
 3. Drop or delete the `fishtown_analytics_v1` object from your warehouse with a manual script or appropriate process or using a cleanup macro.
 
 </TabItem>
 </Tabs>
 
+<ConfettiTrigger>
+
 ... and that's it! You should now have a new version of the model and a deprecated version. The next section is meant for consumers to evaluate and migrate to the new version.
+</ConfettiTrigger>
 
 ## Best practices for consumers
 Consumers rely on upstream models and need to make sure that version transitions don’t introduce unintended breakages. Refer to the following steps to migrate to the new version:
