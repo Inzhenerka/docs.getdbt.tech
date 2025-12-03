@@ -123,7 +123,7 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
 "Hard deleting" old versions is the cleanest approach and removes all old version artifacts from your project:
 1. Delete the `fishtown_analytics_v1.sql` file and rename the new version back to `fishtown_analytics.sql`.
 2. Delete all version specifications from your `.yml` file.
-3. Drop or delete the `fishtown_analytics_v1` object from your warehouse with a manual script or appropriate process
+3. Drop or delete the `fishtown_analytics_v1` object from your warehouse with a manual script or using a cleanup macro.
 
 </TabItem>
 
