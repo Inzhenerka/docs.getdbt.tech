@@ -130,7 +130,7 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
 <TabItem value="soft-delete" label="Soft delete (retains continuity)">
 
 "Soft deleting" old versions retains all old version artifacts to avoid confusion if more model versions get introduced in future, and for continuity. Bear in mind that your version control platform will also have the history of all of these changes.
-1. Repoint the `fishtown_analytics_orders` alias to your latest version file (for example,`fishtown_analytics_orders_v2`), or create a view on top of the latest model version.
+1. Repoint the `fishtown_analytics_orders` alias to your latest version file (for example, `fishtown_analytics_orders_v2`), or create a view on top of the latest model version.
 2. Use the `enabled` [config option](/reference/resource-configs/enabled) to disable the deprecated model version so that it doesn’t run in dbt jobs and can’t be referenced in a cross-project ref. For example:
        <File name='models/properties.yml'>
     ```yaml
