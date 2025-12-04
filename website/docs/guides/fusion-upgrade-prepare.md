@@ -69,7 +69,7 @@ After successfully testing your individual development environment with the over
 3. Click the **dbt version** dropdown and select **Latest**.
 4. Click **Save** to apply the changes.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Upgrade environment to Latest release track"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/select-development.png" width="90%" title="Upgrade development environment to Latest dbt Core release track"/>
 
 :::info Remove your override
 
