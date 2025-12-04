@@ -54,9 +54,9 @@ To enable model query history in <Constant name="cloud" />, follow these steps:
 
 <Constant name="cloud" /> automatically enables query history for brand new environments. If query history fails to retrieve data, <Constant name="cloud" /> automatically disables it to prevent unintended warehouse costs.
    - If the failure is temporary (like a network timeout), <Constant name="cloud" /> may retry.
-   - If the issue is persistent across retries (like a missing permissions), <Constant name="cloud" /> disables query history to avoid wasting customer warehouse compute.
+   - If the problem keeps happening (for example, missing permissions), <Constant name="cloud" /> turns off query history so customers don’t waste warehouse compute.
    
-   To attempt to re-enable it, you can hit the **Test Permissions** button in Environment Settings. If the test passes the environment will be re-enabled. 
+   To turn it back on, click **Test Permissions** in **Environment settings**. If the test succeeds, <Constant name="cloud" /> re-enables the environment.
 
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.png" width="95%" title="Enable query history in your environment settings." />
