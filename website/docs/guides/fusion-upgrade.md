@@ -360,7 +360,7 @@ To enable it for existing jobs:
 
 Repeat this for all production jobs to maximize cost savings. For more details, see [Setting up state-aware orchestration](/docs/deploy/state-aware-setup).
 
-::: tip Dropped tables and views
+:::tip Dropped tables and views
 
 If using state-aware orchestration, dbt doesn’t detect a change if a table or view is dropped outside of dbt, as the cache is unique to each dbt platform environment. This means state-aware orchestration will not rebuild that model until either there is new data or a change in the code that the model uses.
 
