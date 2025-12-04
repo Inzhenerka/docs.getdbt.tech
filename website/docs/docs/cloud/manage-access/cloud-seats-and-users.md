@@ -120,14 +120,6 @@ Great work! After completing these steps, your <Constant name="cloud" /> user co
 </TabItem>
 </Tabs>
 
-:::info reinstated users
-
-If you invite a previously deleted user back to your account with the same email address, their personal profile information, including linked accounts, will persist (unless the user deleted the connection from the source account, like GitHub). 
-
-Any previously assigned permissions and access settings are reset, and you will have to reassign them.
-
-:::
-
 ## Managing license types
 
 Licenses can be assigned to users individually or through group membership. To assign a license via group membership, you can manually add a user to a group during the invitation process or assign them to a group after they’ve enrolled in <Constant name="cloud" />. Alternatively, with [SSO configuration](/docs/cloud/manage-access/sso-overview) and [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-) (Enterprise-tier only), users can be automatically assigned to groups. By default, new users in an account are assigned a Developer license.
