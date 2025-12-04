@@ -58,7 +58,7 @@ Test the `Latest` release track for your individual account without changing the
 5. Launch the <Constant name="cloud_ide" /> or <Constant name="cloud_cli" /> and test your normal development workflows.
 6. Verify the override is active by running any dbt command and checking the **System Logs**. The first line should show `Running with dbt=` and your selected version. If the version number is `v1.11` or higher, you're on the right path to <Constant name="fusion" /> readiness.
 
-If everything works as expected, proceed to upgrade your environments. If you encounter deprecation warnings, don't fear! We're going to address those later in this guide. If you encounter errors, revert to your previous version and refer to the [version upgrade guides](/docs/dbt-versions/core-upgrade) to resolve any differences between your current version and the latest available <Constant name="core" /> version.
+If everything works as expected, proceed to the next step to start upgrading your environments. If you encounter deprecation warnings, don't fear! We'll address those [later in this guide](/guides/prepare-fusion-upgrade?step=4). If you encounter errors, revert to your previous version and refer to the [version upgrade guides](/docs/dbt-versions/core-upgrade) to resolve any differences between your current version and the latest available <Constant name="core" /> version.
 
 ### Step 2: Upgrade your development environment
 
