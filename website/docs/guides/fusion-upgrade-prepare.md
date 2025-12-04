@@ -30,7 +30,7 @@ To follow the steps in this guide, you must meet the following prerequisites:
 
 :::tip Upgrading your first project
 
-If you have multiple dbt projects you want to upgrade to <Constant name="fusion" /> , start with smaller, newer, or more familiar projects first. This makes it easier to identify and troubleshoot any issues before upgrading larger, more complex projects.
+Start with smaller, newer, or more familiar projects first. This makes it easier to identify and troubleshoot any issues before upgrading larger, more complex projects.
 
 :::
 
