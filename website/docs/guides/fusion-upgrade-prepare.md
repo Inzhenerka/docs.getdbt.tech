@@ -219,6 +219,7 @@ If a critical package isn't yet compatible with <Constant name="fusion" />:
 - Check with the package maintainer about their roadmap
 - Open an issue requesting <Constant name="fusion" /> support
 - Consider contributing the compatibility updates yourself
+- Try it out anyway! The incompatible portion of the package might not impact your project. 
 
 :::
 
