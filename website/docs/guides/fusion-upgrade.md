@@ -20,7 +20,7 @@ Once you complete the <Constant name="fusion" /> migration, your team will benef
 - ⚡ Up to 30x faster parsing and compilation
 - 💰 30%+ reduction in warehouse costs (with state-aware orchestration)
 - 🔍 Enhanced SQL validation and error messages
-- 🚀 State-aware orchestration for intelligent model rebuilding
+- 🚀 [State-aware orchestration](/docs/deploy/state-aware-about) for intelligent model rebuilding
 - 🛠️ Modern development tools
 
 :::info Fusion availability
@@ -28,7 +28,7 @@ Once you complete the <Constant name="fusion" /> migration, your team will benef
 <Constant name="fusion" /> on the <Constant name="dbt_platform" /> is currently in `Private preview`. Enabling it for your account depends on your plan:
 
 - **Enteprise and Enterprise+ plans:** Contact your account manager to enable <Constant name="fusion" /> for your environment.
-- **Developer and Starter plans:** Complete the steps in the [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade) guide to become <Constant name="fusion" /> eligible and it will be enabled for your account automatically.
+- **Developer and Starter plans:** Complete the steps in the [Part 1: Prepare for upgrade](/guides/prepare-fusion-upgrade) guide to become <Constant name="fusion" /> eligible, and it will be enabled for your account automatically so you can start the upgrade processes.
 
 :::
 
