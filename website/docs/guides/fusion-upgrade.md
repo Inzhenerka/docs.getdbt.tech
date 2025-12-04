@@ -214,7 +214,7 @@ Change your staging environment to use the <Constant name="fusion" /> release tr
 1. In the environment settings, scroll to the **dbt version** section.
 2. Click the **dbt version** dropdown menu.
 3. Select **Latest Fusion** from the list.
-4. Scroll to the bottom and click **Save**.
+4. Scroll to the top and click **Save**.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Select Latest Fusion from the dbt version dropdown"/>
 
