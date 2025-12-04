@@ -62,7 +62,7 @@ If everything works as expected, proceed to the next step to start upgrading you
 
 ### Step 2: Upgrade your development environment
 
-After successfully testing with the override, upgrade the development environment for your entire team (be sure to give them notice!):
+After successfully testing your individual development environment with the override, upgrade the development environment for the entire project (be sure to give your team notice!):
 
 1. Navigate to **Environments** in your project settings.
 2. Select your **Development** environment and click **Edit**.
