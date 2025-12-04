@@ -34,9 +34,9 @@ Start with smaller, newer, or more familiar projects first. This makes it easier
 
 :::
 
-## Upgrade to the latest dbt version
+## Upgrade to the latest dbt Core version
 
-Before upgrading to <Constant name="fusion" />, you need to move your environments to the `Latest` [release track](/docs/dbt-versions/cloud-release-tracks). The `Latest` track includes all the features and tooling to help you prepare for <Constant name="fusion" />, and ensures the smoothest upgrade experience by validating that your project doesn't rely on deprecated behaviors.
+Before upgrading to <Constant name="fusion" />, you need to move your environments to the `Latest` [<Constant name="core" /> release track](/docs/dbt-versions/cloud-release-tracks). The `Latest` track includes all the features and tooling to help you prepare for <Constant name="fusion" />. It ensures the smoothest upgrade experience by validating that your project doesn't rely on deprecated behaviors.
 
 :::tip Test before you deploy
 
@@ -364,7 +364,7 @@ Common limitations include:
 
 ### Step 2: Search your project for limited features
 
-Check if your project uses any features with limited support:
+Check if your project uses any features with limited support. For example:
 
 1. Check for Python models:
    - In the <Constant name="cloud_ide" />, look in your `models/` directory
