@@ -138,7 +138,7 @@ After upgrading, all users need to restart their IDE to connect to the new <Cons
 Confirm your development environment is running <Constant name="fusion" />:
 
 1. Open or create a dbt model file in the <Constant name="cloud_ide" />.
-2. Look for <Constant name="fusion" />-powered features:
+2. Look for <Constant name="fusion" />-powered [features](/docs/fusion/supported-features#features-and-capabilities):
    - Faster parsing and compilation times
    - Enhanced SQL validation and error messages
    - Improved autocomplete functionality
