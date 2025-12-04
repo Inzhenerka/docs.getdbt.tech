@@ -317,7 +317,7 @@ Update your production environment to use <Constant name="fusion" />:
 2. Click the **dbt version** dropdown menu.
 3. Select **Latest Fusion** from the list.
 4. Review your settings one final time to ensure everything is correct.
-5. Scroll to the bottom and click **Save**.
+5. Scroll to the top and click **Save**.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Select Latest Fusion for production"/>
 
@@ -338,7 +338,7 @@ Validate the upgrade by running a job:
 
 If the job succeeds, your production upgrade is successful!
 
-### Step 5: Enable state-aware orchestration (optional but recommended)
+### Step 5: Enable state-aware orchestration (optional but recommended) <Lifecycle status="Enterprise, Enterprise+"/>
 
 One of <Constant name="fusion" />'s most powerful features is [state-aware orchestration](/docs/deploy/state-aware-about), which automatically determines which models need rebuilding based on code or data changes. This can reduce warehouse costs by 30% or more.
 
@@ -422,7 +422,7 @@ For your next steps:
 - **Optimize further**: Explore [advanced state-aware configurations](/docs/deploy/state-aware-setup#advanced-configurations) to fine-tune refresh intervals.
 - **Monitor savings**: Use the [state-aware interface](/docs/deploy/state-aware-interface) to track models built vs. reused.
 - **Train your team**: Share <Constant name="fusion" /> features and best practices with your team.
-- **Explore new features**: Check out [column-level lineage](/docs/explore/column-level-lineage), [live CTE previews](/docs/cloud/dbt-cloud-ide/lint-format#preview-ctes), and other <Constant name="fusion" />-powered capabilities.
+- **Explore new features**: Check out column-level lineage, live CTE previews, and other <Constant name="fusion" />-powered capabilities.
 - **Stay informed**: Follow the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) for updates on new features.
 
 :::tip Share your success
