@@ -59,7 +59,7 @@ If you're on an Enterprise-tier plan and have the correct [permissions](/docs/cl
 
   If you invite a previously deleted user back to your account with the same email address, their personal profile information, including linked accounts, will persist (unless the user deleted the connection from the source account, like GitHub). 
 
-  Permissions and access settings will need to be reassigned.
+  Any previously assigned permissions and access settings are reset, and you will have to reassign them.
 
   :::
 
