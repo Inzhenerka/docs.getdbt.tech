@@ -121,7 +121,7 @@ The autofix tool can resolve many deprecations automatically, including:
 - Correcting unrecognized resource properties
 - Updating deprecated configuration patterns
 
-Check out our [deprecation references](/reference/deprecations) for a complete list.
+Check out the [autofix readme](https://github.com/dbt-labs/dbt-autofix/) for a complete list of the deprecations it addresses.
 
 ### Step 1: Create a new branch
 
