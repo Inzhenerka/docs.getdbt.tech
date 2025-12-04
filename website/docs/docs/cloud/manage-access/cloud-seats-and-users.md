@@ -55,7 +55,7 @@ If you're on an Enterprise-tier plan and have the correct [permissions](/docs/cl
   - Click the [**Invite Users**](/docs/cloud/manage-access/invite-users) button. 
   - For fine-grained permission configuration, refer to [Role based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
 
-  :::info reinstated user
+  :::info reinstated users
 
   If you invite a previously deleted user back to your account with the same email address, their personal profile information, including linked accounts, will persist (unless the user deleted the connection from the source account, like GitHub). 
 
