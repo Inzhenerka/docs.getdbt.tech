@@ -183,16 +183,16 @@ The `microbatch` strategy processes data in bounded time intervals using an even
 select * from raw_events
 ```
 #### Notes
-- `event_time` must be a valid timestamp column.
-- Each batch is processed independently, allowing efficient incremental refresh of large time-series datasets.
-- If no `unique_key` is specified, dbt-fabric defaults to `append`.
+- [`event_time`](/reference/resource-configs/event-time) must be a valid timestamp column.
+- dbt processes each batch independently, allowing efficient incremental refresh of large time-series datasets.
+- If you don't specify a `unique_key`, dbt-fabric defaults to `append`.
 
-For more details, see [Incremental Models](https://docs.getdbt.com/docs/build/incremental-models).
+For more details, see [Incremental models](/docs/build/incremental-models).
 ## Permissions
 
 The Microsoft Entra identity (user or service principal) must be a Fabric Workspace admin to work on the database level at this time. Fine grain access control will be incorporated in the future.
 
-## Cross-Warehouse References
+## Cross-warehouse references
 
 The dbt-fabric adapter supports cross-warehouse queries using `source()` or `ref()` macros.
 
@@ -215,9 +215,15 @@ sources:
 ```
 > To use cross-warehouse references or warehouse snapshots, ensure the identity configured here has access to all referenced Fabric Warehouses.
 
-## Warehouse Snapshots
+## Warehouse snapshots
 
-Microsoft Fabric’s warehouse snapshots are read-only representations of a warehouse at a specific point in time, retained for up to 30 days. They allow analysts to query a stable dataset—regardless of ongoing ETL updates—by “rolling forward” the snapshot timestamp so changes apply atomically. Warehouse snapshots are supported in dbt-fabric and allow tracking changes in Fabric Data Warehouse objects across runs. They are automatically created **before** and **after** `dbt run`, `dbt build`, and `dbt snapshot` commands. Your `profiles.yml` must define workspace_id and warehouse snapshot name to create a warehouse snapshot as a child item of your warehouse. Learn more [here](https://learn.microsoft.com/en-us/fabric/data-warehouse/warehouse-snapshot)
+Microsoft Fabric warehouse snapshots are read-only copies of your warehouse at a specific moment, kept for up to 30 days. They allow analysts query a stable dataset, even while ELT processes are updating the warehouse. By moving the snapshot’s timestamp forward, changes are applied all at once (atomically).
+
+dbt-fabric supports warehouse snapshots, which helps track changes in Fabric Data Warehouse objects between dbt runs. Fabric automatically creates snapshots _before_ and _after_ you run the `dbt run`, `dbt build`, or `dbt snapshot` commands.
+
+To use them, your `profiles.yml` must include the `workspace_id` and the warehouse snapshot name so dbt can create the snapshot as a child item of your warehouse. 
+
+Learn more [here](https://learn.microsoft.com/en-us/fabric/data-warehouse/warehouse-snapshot)
 
 ```yaml
 fabric_dw:
@@ -237,8 +243,8 @@ fabric_dw:
 - After execution, the warehouse snapshot is created with snapshot timestamp.
 
 For additional details:
-- [dbt Snapshot Documentation](https://docs.getdbt.com/docs/build/snapshots)
-- [Fabric Adapter Snapshots Reference](https://docs.getdbt.com/reference/resource-configs/fabric-configs)
+- [dbt snapshot documentation](/docs/build/snapshots)
+- [Fabric adapter snapshots reference](/reference/resource-configs/fabric-configs)
 
 
 ## dbt-utils
