@@ -99,7 +99,7 @@ Under **Properties** check the toggle setting for **User assignment required?** 
 | Microsoft Graph | Delegated | `User.Read` | Yes |
 | Microsoft Graph | Delegated | `Directory.AccessAsUser.All` | Optional — may be required if users are assigned to > 100 groups |
 
-The default scope only requires `User.ReadBasic.All`. If a user is assigned to more than 100 groups, you may need to grant additional permissions such as `Directory.AccessAsUser.All`.  
+The default scope only requires `User.ReadBasic.All`. If you assign a user to more than 100 groups, you may need to grant additional permissions such as `Directory.AccessAsUser.All`.  
 
 16. Save these permissions, then click **Grant admin consent** to grant admin consent for this directory on behalf of all of your users.
 
