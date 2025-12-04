@@ -25,7 +25,7 @@ To follow the steps in this guide, you must meet the following prerequisites:
 - You're using a <Constant name="dbt_platform" /> account on any tier.
 - You have a developer license.
 - You have [proper permissions](/docs/cloud/manage-access/enterprise-permissions) to edit projects.
-- While not a strict requirement, it's strongly recommended you focus on a project using a <Constant name="fusion" /> supported adapter:
+- Your project is using a <Constant name="fusion" /> supported adapter:
     <FusionAdapters/>
 
 :::tip Upgrading your first project
