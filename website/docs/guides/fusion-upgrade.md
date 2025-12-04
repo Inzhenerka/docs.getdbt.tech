@@ -60,12 +60,12 @@ By default, the <Constant name="fusion" /> upgrade assistant is visible to all u
 
 To limit access to the upgrade workflow:
 
-1. Navigate to **Account settings** in <Constant name="dbt_platform" />
-2. Select **Groups** and choose the group to grant access
-3. Click **Edit** and scroll to **Access and permissions**
-4. Click **Add permission** and select **Fusion admin** from the dropdown
-5. Select the project(s) users should access
-6. Click **Save**
+1. Navigate to **Account settings** in <Constant name="dbt_platform" />.
+2. Select **Groups** and choose the group to grant access.
+3. Click **Edit** and scroll to **Access and permissions**.
+4. Click **Add permission** and select **Fusion admin** from the dropdown.
+5. Select the project(s) users should access.
+6. Click **Save**.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/assign-fusion-admin.png" width="60%" title="Assign Fusion admin permissions to groups"/>
 
@@ -75,8 +75,8 @@ For more details on access control, see [Assign access to upgrade](/docs/dbt-ver
 
 Launch the <Constant name="fusion" /> upgrade workflow from your project:
 
-1. Log into <Constant name="dbt_platform" /> and navigate to your project
-2. From the project homepage or sidebar, click **Start Fusion upgrade** or **Get started**
+1. Log into <Constant name="dbt_platform" /> and navigate to your project.
+2. From the project homepage or sidebar, click **Start Fusion upgrade** or **Get started**.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/start-upgrade.png" width="60%" title="Start the Fusion upgrade from the project homepage"/>
 
@@ -86,18 +86,18 @@ You'll be redirected to the <Constant name="cloud_ide" /> with the upgrade assis
 
 Even if you resolved deprecations in Part 1, run a final check to ensure nothing was missed:
 
-1. At the top of the <Constant name="cloud_ide" />, click **Check deprecation warnings**
+1. At the top of the <Constant name="cloud_ide" />, click **Check deprecation warnings**.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Check for deprecation warnings in your project"/>
 
-2. Wait for the parse to complete (this may take a few moments depending on project size)
+2. Wait for the parse to complete (this may take a few moments depending on project size).
 3. Review the results:
    - **No warnings found**: Skip to Step 4 to continue upgrading.
    - **Warnings found**: Continue to Step 3 to resolve them.
 
 ### Step 3: Resolve remaining deprecations
 
-If deprecation warnings are found, use the autofix tool to resolve them:
+If you find deprecation warnings, use the autofix tool to resolve them:
 
 1. In the deprecation warnings list, click **Autofix warnings**.
 2. Review the proposed changes in the dialog.
@@ -118,7 +118,7 @@ If the autofix tool can't resolve all deprecations automatically, you'll need to
 
 ### Step 4: Enable Fusion
 
-Once all deprecations are resolved, upgrade your development environment:
+After you resolve all deprecations, upgrade your development environment:
 
 1. Click the **Enable Fusion** button at the top of the <Constant name="cloud_ide" />.
 2. Confirm the upgrade when prompted.
@@ -137,7 +137,7 @@ After upgrading, all users need to restart their IDE to connect to the new <Cons
 
 Confirm your development environment is running <Constant name="fusion" />:
 
-1. Open or create a dbt model file in the <Constant name="cloud_ide" />
+1. Open or create a dbt model file in the <Constant name="cloud_ide" />.
 2. Look for <Constant name="fusion" />-powered features:
    - Faster parsing and compilation times
    - Enhanced SQL validation and error messages
@@ -146,17 +146,17 @@ Confirm your development environment is running <Constant name="fusion" />:
    ```bash
    dbt compile
    ```
-4. Check the command output for significantly faster performance
+4. Check the command output for significantly faster performance.
 
 ### Step 7: Test your workflows
 
 Before declaring victory, test your typical development workflows:
 
-1. Make changes to a model and compile it
-2. Run a subset of models: `dbt run --select model_name`
-3. Execute tests
-4. Preview results in the integrated query tool
-5. Verify git operations (commit, push, pull) work as expected
+1. Make changes to a model and compile it by running `dbt compile`.
+2. Run a subset of models: `dbt run --select model_name`.
+3. Execute tests.
+4. Preview results in the integrated query tool.
+5. Verify Git operations (commit, push, pull) work as expected.
 
 :::tip Share feedback
 
@@ -200,7 +200,7 @@ If you don't have a staging environment yet, consider creating one before upgrad
 Access the settings for your staging or intermediate environment:
 
 1. Log into <Constant name="dbt_platform" /> and navigate to your project.
-2. Click **Deploy** in the left sidebar.
+2. Click **Orchestration** in the left sidebar.
 3. Select **Environments** from the dropdown.
 4. Click on your staging environment name to open its settings.
 5. Click the **Edit** button in the top right.
@@ -211,7 +211,7 @@ Access the settings for your staging or intermediate environment:
 
 Change your staging environment to use the <Constant name="fusion" /> release track:
 
-1. In the environment settings, scroll to the **dbt Version** section.
+1. In the environment settings, scroll to the **dbt version** section.
 2. Click the **dbt version** dropdown menu.
 3. Select **Latest Fusion** from the list.
 4. Scroll to the bottom and click **Save**.
@@ -242,10 +242,10 @@ If you have scheduled jobs in your staging environment, monitor their next sched
 
 Test any integrations or dependencies that rely on your staging environment:
 
-1. **Cross-project references**: If using [dbt Mesh](/docs/mesh/govern/project-dependencies), verify downstream projects can still reference your staging models
-2. **BI tools**: Check that any BI tools or dashboards connected to staging still function correctly
-3. **Downstream consumers**: Notify teams that consume staging data to verify their processes still work
-4. **CI/CD workflows**: Run any CI jobs that target staging to ensure they execute properly
+1. **Cross-project references**: If using [dbt Mesh](/docs/mesh/govern/project-dependencies), verify downstream projects can still reference your staging models.
+2. **BI tools**: Check that any BI tools or dashboards connected to staging still function correctly.
+3. **Downstream consumers**: Notify teams that consume staging data to verify their processes still work.
+4. **CI/CD workflows**: Run any CI jobs that target staging to ensure they execute properly.
 
 Repeat for other intermediate environments
 
@@ -302,7 +302,7 @@ Choose an optimal time to upgrade production:
 Access your production environment configuration:
 
 1. Log into <Constant name="dbt_platform" /> and navigate to your project.
-2. Click **Deploy** in the left sidebar.
+2. Click **Orchestration** in the left sidebar.
 3. Select **Environments** from the dropdown.
 4. Click on your production environment (typically marked with a **Production** badge).
 5. Click the **Edit** button in the top right.
@@ -313,7 +313,7 @@ Access your production environment configuration:
 
 Update your production environment to use <Constant name="fusion" />:
 
-1. In the environment settings, scroll to the **dbt Version** section.
+1. In the environment settings, scroll to the **dbt version** section.
 2. Click the **dbt version** dropdown menu.
 3. Select **Latest Fusion** from the list.
 4. Review your settings one final time to ensure everything is correct.
@@ -389,9 +389,9 @@ Ensure all systems dependent on your production data still function correctly:
 
 Some jobs might have [version overrides](/docs/dbt-versions/upgrade-dbt-version-in-cloud#override-dbt-version) set from earlier testing. Now that production is on <Constant name="fusion" />, remove these overrides:
 
-1. Navigate to **Deploy** → **Jobs**.
+1. Navigate to **Orchestration** → **Jobs**.
 2. Review each job's settings.
-3. If a job has a version override (showing in the **dbt Version** section), click **Edit**.
+3. If a job has a version override (showing in the **dbt version** section), click **Edit**.
 4. Remove the override to let the job inherit the environment's <Constant name="fusion" /> setting.
 5. Click **Save**.
 
@@ -399,9 +399,9 @@ Some jobs might have [version overrides](/docs/dbt-versions/upgrade-dbt-version-
 
 If you encounter critical issues in production, you can revert your dbt version:
 
-1. Navigate to **Deploy** → **Environments** → **Production**.
+1. Navigate to **Orchestration** → **Environments** → **Production**.
 2. Click **Edit**.
-3. Change **dbt Version** from **Latest Fusion** back to **Latest**.
+3. Change **dbt version** from **Latest Fusion** back to **Latest**.
 4. Click **Save**.
 5. Jobs will use <Constant name="core" /> on their next run.
 
