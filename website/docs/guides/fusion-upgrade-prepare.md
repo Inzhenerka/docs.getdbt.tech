@@ -25,18 +25,18 @@ To follow the steps in this guide, you must meet the following prerequisites:
 - You're using a <Constant name="dbt_platform" /> account on any tier.
 - You have a developer license.
 - You have [proper permissions](/docs/cloud/manage-access/enterprise-permissions) to edit projects.
-- While not a strict requirement, it's strongly recommended you focus on a project using a <Constant name="fusion" /> supported adapter:
+- Your project is using a <Constant name="fusion" /> supported adapter:
     <FusionAdapters/>
 
 :::tip Upgrading your first project
 
-If you have multiple dbt projects you want to upgrade to <Constant name="fusion" /> , start with smaller, newer, or more familiar projects first. This makes it easier to identify and troubleshoot any issues before upgrading larger, more complex projects.
+Start with smaller, newer, or more familiar projects first. This makes it easier to identify and troubleshoot any issues before upgrading larger, more complex projects.
 
 :::
 
-## Upgrade to the latest dbt version
+## Upgrade to the latest dbt Core version
 
-Before upgrading to <Constant name="fusion" />, you need to move your environments to the `Latest` [release track](/docs/dbt-versions/cloud-release-tracks). The `Latest` track includes all the features and tooling to help you prepare for <Constant name="fusion" />, and ensures the smoothest upgrade experience by validating that your project doesn't rely on deprecated behaviors.
+Before upgrading to <Constant name="fusion" />, you need to move your environments to the `Latest` [<Constant name="core" /> release track](/docs/dbt-versions/cloud-release-tracks). The `Latest` track includes all the features and tooling to help you prepare for <Constant name="fusion" />. It ensures the smoothest upgrade experience by validating that your project doesn't rely on deprecated behaviors.
 
 :::tip Test before you deploy
 
@@ -58,7 +58,7 @@ Test the `Latest` release track for your individual account without changing the
 5. Launch the <Constant name="cloud_ide" /> or <Constant name="cloud_cli" /> and test your normal development workflows.
 6. Verify the override is active by running any dbt command and checking the **System Logs**. The first line should show `Running with dbt=` and your selected version. If the version number is `v1.11` or higher, you're on the right path to <Constant name="fusion" /> readiness.
 
-If everything works as expected, proceed to upgrade your environments. If you encounter deprecation warnings, don't fear! We're going to address those later in this guide. If you encounter errors, revert to your previous version and refer to the [version upgrade guides](/docs/dbt-versions/core-upgrade) to resolve any differences between your current version and the latest available <Constant name="core" /> version.
+If everything works as expected, proceed to the next step to start upgrading your environments. If you encounter deprecation warnings, don't fear! We'll address those [later in this guide](/guides/prepare-fusion-upgrade?step=4). If you encounter errors, revert to your previous version and refer to the [version upgrade guides](/docs/dbt-versions/core-upgrade) to resolve any differences between your current version and the latest available <Constant name="core" /> version.
 
 ### Step 2: Upgrade your development environment
 
@@ -121,7 +121,7 @@ The autofix tool can resolve many deprecations automatically, including:
 - Correcting unrecognized resource properties
 - Updating deprecated configuration patterns
 
-Check out our [deprecation references](/reference/deprecations) for a complete list.
+Check out the [autofix readme](https://github.com/dbt-labs/dbt-autofix/) for a complete list of the deprecations it addresses.
 
 ### Step 1: Create a new branch
 
@@ -211,7 +211,7 @@ Once all deprecations are resolved:
 
 ## Validate and upgrade your dbt packages
 
-dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/fusion/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions.
+dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/fusion/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions. Check for packages that support version 2.0.0, or ask the maintainer if you're unsure. 
 
 :::tip What if a package isn't compatible?
 
@@ -219,6 +219,7 @@ If a critical package isn't yet compatible with <Constant name="fusion" />:
 - Check with the package maintainer about their roadmap
 - Open an issue requesting <Constant name="fusion" /> support
 - Consider contributing the compatibility updates yourself
+- Try it out anyway! The incompatible portion of the package might not impact your project. 
 
 :::
 
@@ -364,7 +365,7 @@ Common limitations include:
 
 ### Step 2: Search your project for limited features
 
-Check if your project uses any features with limited support:
+Check if your project uses any features with limited support. For example:
 
 1. Check for Python models:
    - In the <Constant name="cloud_ide" />, look in your `models/` directory
