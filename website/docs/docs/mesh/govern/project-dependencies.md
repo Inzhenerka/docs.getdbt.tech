@@ -11,7 +11,7 @@ keyword: dbt mesh, project dependencies, ref, cross project ref, project depende
 
 <IntroText>
 
-Available on dbt Cloud [Enterprise or Enterprise+](https://www.getdbt.com/pricing) plans.
+Available on dbt [Enterprise or Enterprise+](https://www.getdbt.com/pricing) plans.
 
 </IntroText>
 
