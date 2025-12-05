@@ -43,11 +43,11 @@
     margin-left: 2em;
     margin-bottom: 10px;
     padding: 20px;
-    background-color: var(--color-coalesce-purple-100);
+    background-color: transparent;
 }
 
 :local(html[data-theme='dark'] .body) {
-  background: var(--color-coalesce-purple-950);
+  background: transparent;
 }
 
 :local(.body > p:last-child) {
