@@ -40,7 +40,7 @@ import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
   **Additional configuration for SQL tools**
   | Header | Required | Description |
   | --- | --- | --- |
-  | x-dbt-dev-environment-id | Required for `execute_sql` | Your dbt Cloud development environment ID |
+  | x-dbt-dev-environment-id | Required for `execute_sql` | Your <Constant name="dbt_platform"/> development environment ID |
   | x-dbt-user-id | Required for `execute_sql` | Your <Constant name="dbt_platform"/> user ID ([see docs](/faqs/Accounts/find-user-id)) |
 
   **Additional configuration for Fusion tools**
