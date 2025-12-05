@@ -1,6 +1,7 @@
 :local(.link) :local(.headerText) {
-    color: var(--ifm-link-color);
+    color: rgba(18, 12, 12, 0.862);
     text-decoration: none;
+    font-weight: 600;
     transition: text-decoration 0.3s; /* Smooth transition */
 }
 
@@ -8,6 +9,10 @@
 :local(.link:focus) :local(.headerText) {
     text-decoration: underline;
     cursor: pointer;
+}
+
+:local(html[data-theme='dark'] .link) :local(.headerText) {
+    color: rgba(255, 255, 255, 0.801);
 }
 
 :local(.disclaimer) {
