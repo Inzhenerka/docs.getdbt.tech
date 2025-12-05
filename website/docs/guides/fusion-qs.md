@@ -12,7 +12,7 @@ recently_updated: true
 <div style={{maxWidth: '900px'}}>
 import FusionDWH from '/snippets/_fusion-dwh.md';
 
-## Introduction
+## Introduction <Lifecycle status="preview" />
 
 import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
