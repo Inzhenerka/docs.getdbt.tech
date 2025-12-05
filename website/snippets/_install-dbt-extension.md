@@ -169,7 +169,7 @@ Follow these steps to download the `dbt_cloud.yml` file:
     - macOS/Linux: `~/.dbt/`
     - Windows: `C:\Users\[username]\.dbt\`
 
-For detailed instructions on how to create a `.dbt` directory and move the file, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
+   For detailed instructions on how to create a `.dbt` directory and move the file, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
 7. Then go back to VS Code and open the command palette (`Ctrl + Shift + P` (Windows/Linux) or `Cmd + Shift + P` (macOS)).  
 8. Run `dbt: Register dbt extension` to complete registration.
 9. If you run into any issues, reach out to [support](/docs/dbt-support) &mdash; we're here to help!
