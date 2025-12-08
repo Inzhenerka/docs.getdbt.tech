@@ -19,7 +19,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 ## December 2025
 
 - **New and enhancements:** The dbt [Studio IDE user interface](/docs/cloud/studio-ide/ide-user-interface) has been enhanced to bring more powerful development features to your fingertips:
-  - A newly designed toolbar that brings everything together.
+  -   - A newly designed toolbar that groups all of your action options and project insight tabs for easy access.
   - A dedicated inline **Commands** tab for history and logs.
   - When you upgrade your development environment to the <Constant name="fusion_engine" />, the environment includes a new **Problems** tab that gives you live error detection on issues that could block your project from running successfully. 
  
