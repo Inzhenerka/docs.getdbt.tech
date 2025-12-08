@@ -108,7 +108,7 @@ If you find deprecation warnings, use the autofix tool to resolve them:
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/autofix-success.png" width="60%" title="Success message when deprecations are resolved"/>
 
-For detailed information about the autofix process, see [Fix deprecation warnings](/docs/cloud/dbt-cloud-ide/autofix-deprecations).
+For detailed information about the autofix process, see [Fix deprecation warnings](/docs/cloud/studio-ide/autofix-deprecations).
 
 :::info Manual fixes required?
 

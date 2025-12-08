@@ -16,6 +16,13 @@ pagination_prev: null
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## December 2025
+
+- **New and enhancements:** The dbt [Studio IDE user interface](/docs/cloud/studio-ide/ide-user-interface) has been enhanced to bring more powerful development features to your fingertips:
+  -  A newly designed toolbar that groups all of your action and project insight tabs for easy access.
+  - A dedicated inline **Commands** tab for history and logs.
+  - When you upgrade your development environment to the <Constant name="fusion_engine" />, the environment includes a new **Problems** tab that gives you live error detection on issues that could block your project from running successfully. 
+ 
 ## November 2025
 
 - **Behavior change**: [dbt Copilot](/docs/cloud/dbt-copilot) now requires all input files to use UTF-8 encoding. Files that use other encodings will return an error. If you're working with legacy files that use a different encoding, convert them to UTF-8 before using Copilot.
