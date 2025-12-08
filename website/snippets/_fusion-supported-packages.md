@@ -1,35 +1,4 @@
-The following packages are verified and supported on the <Constant name="fusion_engine" />:
-
-- [AxelThevenot/dbt_assertions](https://github.com/AxelThevenot/dbt-assertions)
-- [Datavault-UK/automate_dv](https://github.com/Datavault-UK/dbtvault.git)
-- [dbt-labs/audit_helper](https://github.com/dbt-labs/dbt-audit-helper.git)
-- [dbt-labs/codegen](https://github.com/dbt-labs/dbt-codegen.git)
-- [dbt-labs/dbt_project_evaluator](https://github.com/dbt-labs/dbt-project-evaluator.git) (versions 1.1.1 and above)
-- [dbt-labs/dbt_utils](https://github.com/dbt-labs/dbt-utils.git)
-- [elementary-data/elementary](https://github.com/elementary-data/dbt-data-reliability.git)
-- [entechlog/dbt_snow_mask](https://github.com/entechlog/dbt-snow-mask.git)
-- [fivetran/ad_reporting](https://github.com/fivetran/dbt_ad_reporting.git)
-- [fivetran/facebook_ads](https://github.com/fivetran/dbt_facebook_ads.git)
-- [fivetran/fivetran_log](https://github.com/fivetran/dbt_fivetran_log.git)
-- [fivetran/fivetran_utils](https://github.com/fivetran/dbt_fivetran_utils.git)
-- [fivetran/google_ads](https://github.com/fivetran/dbt_google_ads.git)
-- [fivetran/hubspot](https://github.com/fivetran/dbt_hubspot.git)
-- [fivetran/jira](https://github.com/fivetran/dbt_jira.git)
-- [fivetran/linkedin](https://github.com/dbt-labs/dbt-project-evaluator.git)
-- [fivetran/microsoft_ads](https://github.com/fivetran/dbt_microsoft_ads.git)
-- [fivetran/pendo](https://github.com/fivetran/dbt_pendo.git)
-- [fivetran/qualtrics](https://github.com/fivetran/dbt_qualtrics.git)
-- [fivetran/salesforce](https://github.com/fivetran/dbt_salesforce.git)
-- [fivetran/salesforce_formula_utils](https://github.com/fivetran/dbt_salesforce_formula_utils.git)
-- [fivetran/social_media_reporting](https://github.com/fivetran/dbt_social_media_reporting.git)
-- [fivetran/zendesk](https://github.com/fivetran/dbt_zendesk.git)
-- [GJMcClintock/dbt_tld](https://github.com/GJMcClintock/dbt_tld.git)
-- [godatadriven/dbt_date](https://github.com/godatadriven/dbt-date.git)
-- [kristeligt-dagblad/dbt_ml](https://github.com/kristeligt-dagblad/dbt_ml.git)
-- [LewisDavies/upstream_prod](https://github.com/LewisDavies/upstream-prod.git) (versions 0.9.6 and above)
-- [metaplane/dbt_expectations](https://github.com/metaplane/dbt-expectations.git)
-- [Montreal-Analytics/snowflake_utils](https://github.com/Montreal-Analytics/dbt-snowflake-utils.git)
-- [Snowflake-Labs/dbt_semantic_view](https://github.com/Snowflake-Labs/dbt_semantic_view)
+To determine if a package is compatible with the <Constant name="fusion_engine" />, visit the [dbt package hub](https://hub.getdbt.com/) and review the package's `require-dbt-version` configuration. Packages with a `require-dbt-version` that equals or contains `2.0` are compatible with <Constant name="fusion"/>.
 
 Additionally, the Fivetran `source` and `transformation` packages have been combined into a single package. If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
 
