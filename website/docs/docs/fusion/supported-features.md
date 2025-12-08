@@ -100,12 +100,13 @@ import FusionFeatures from '/snippets/_fusion-missing-features.md';
 
 <FusionFeatures />
 
-import AboutFusion from '/snippets/_about-fusion.md';
-
-<AboutFusion />
-
-### Package support
+## Package support
 
 import FusionPackages from '/snippets/_fusion-supported-packages.md';
 
 <FusionPackages />
+
+import AboutFusion from '/snippets/_about-fusion.md';
+
+<AboutFusion />
+
