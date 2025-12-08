@@ -249,9 +249,9 @@ packages:
 
 ### Step 2: Check compatibility and find the latest package versions
 
-Review the [supported packages list](/docs/fusion/supported-features#package-support) to see verified <Constant name="fusion" />-compatible packages.
+Review [the dbt package hub](https://hub.getdbt.com) to see verified <Constant name="fusion" />-compatible packages by checking that the `require-dbt-version` configuration includes `2.0.0` or higher. Refer to [package support](/docs/fusion/supported-features#package-support) for more information.
 
-For packages not on this list:
+For packages that aren't <Constant name="fusion" />-compatible:
    - Visit the package's GitHub repository.
    - Check the README or recent releases for <Constant name="fusion" /> compatibility information.
    - Look for issues or discussions about <Constant name="fusion" /> support.
@@ -267,7 +267,7 @@ For Hub packages, you can use version ranges to stay up-to-date:
 ```yaml
 packages:
   - package: dbt-labs/dbt_utils
-    version: [">=1.0.0", "<2.0.0"]  # Gets latest 1.x version
+    version: [">=1.0.0", "<3.0.0"]  # Gets latest 1.x or 2.x version
 ```
 
 ### Step 3: Update your package versions
