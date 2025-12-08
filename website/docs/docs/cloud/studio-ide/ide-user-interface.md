@@ -109,7 +109,7 @@ Starting from dbt v1.6 or higher, when you save changes to a model, you can comp
 
 4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/studio-ide/lint-format) on the active file in the file editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
 
-5. **dbt Copilot** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence engine that can generate documentation, tests, and semantic models for you. <Lifecycle status="self_service,managed,managed_plus" />
+5. **dbt Copilot** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence engine that generates documentation, data-tests, metrics, and semantic models for you. <Lifecycle status="self_service,managed,managed_plus" />
 
 6. **Commands tab** &mdash; View the most recently run [dbt commands](/reference/dbt-commands) from your current IDE session, their results, and relevant system logs.
 
@@ -119,7 +119,7 @@ Starting from dbt v1.6 or higher, when you save changes to a model, you can comp
 8. **Results tab** &mdash; The Results console tab displays the most recent Preview results in tabular format. 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/results-console-tab.png" width="90%" title="Preview results show up in the Results console tab"/>
 
-9. **Code quality tab** &mdash; The Code Quality tab displays the results of the linter on the active file in the File Editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
+9. **Code quality tab** &mdash; The Code quality tab displays the results of the linter on the active file in the File editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
 
 10. **Compiled code tab &mdash;** The Compile generates the compiled code when the Compile button is executed. The Compiled code tab displays the compiled SQL code for the active file in the file editor.
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/compiled-code-console-tab.png" width="90%" title="Compile results show up in the Compiled Code tab"/>
