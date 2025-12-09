@@ -221,11 +221,7 @@ dbt packages extend your project's functionality, but they must be compatible wi
 
 import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
 
-:::info Different messages from deprecation warnings and `dbt-autofix`
-
 <FusionPackageCompatibility />
-
-::: 
 
 :::tip What if a package isn't compatible?
 
