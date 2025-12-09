@@ -112,7 +112,7 @@
 
 <Card
     title="SingleStore"
-    body="<li><a href='/docs/core/connect-data-platform/singlestore-setup'>Install with dbt Core  </a><br /><br /> <a href=https://badge.fury.io/py/dbt-singlestore><img src=https://badge.fury.io/py/dbt-singlestore.svg/></a>"
+    body="<ul><li><a href='/docs/core/connect-data-platform/singlestore-setup'>Install with dbt Core  </a><br /><br /> <a href=https://badge.fury.io/py/dbt-singlestore><img src=https://badge.fury.io/py/dbt-singlestore.svg/></a></li></ul>"
     pills='["dbt Core"]'
     icon="singlestore"/>
 
