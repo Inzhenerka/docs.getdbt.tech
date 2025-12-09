@@ -95,6 +95,12 @@ Even if you resolved deprecations in Part 1, run a final check to ensure nothing
    - **No warnings found**: Skip to Step 4 to continue upgrading.
    - **Warnings found**: Continue to Step 3 to resolve them.
 
+:::info Conflicting compatibility messages
+
+You may see deprecation warnings about packages not being compatible with Fusion, while **dbt autofix** indicates they are compatible. **dbt autofix is the source of truth**—it has additional context that deprecation warnings don't yet have. This conflict is temporary and will be resolved within a couple of weeks.
+
+:::
+
 ### Step 3: Resolve remaining deprecations
 
 If you find deprecation warnings, use the autofix tool to resolve them:

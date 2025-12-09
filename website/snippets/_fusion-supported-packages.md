@@ -4,3 +4,11 @@ Even if a package doesn't reflect compatibility in the package hub, it may still
 - Packages with a `require-dbt-version` that equals or contains `2.0.0` are compatible with <Constant name="fusion"/>. For example, `require-dbt-version: ">=1.10.0,<3.0.0"`
 - The Fivetran `source` and `transformation` packages have been combined into a single package. If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
 - Package maintainers who would like to make their package compatible with <Constant name="fusion"/> can refer to the [Fusion package upgrade guide](/guides/fusion-package-compat) for instructions.
+
+import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
+
+:::info Different messages from deprecation warnings and `dbt-autofix`
+
+<FusionPackageCompatibility />
+
+::: 
