@@ -20,10 +20,12 @@ This compatible release includes functionality from the following versions of db
 
 ```
 dbt-core==1.10.15
+
 # shared interfaces
 dbt-adapters==1.16.7
 dbt-common==1.33.0
 dbt-semantic-interfaces==0.9.0
+
 # adapters
 dbt-athena==1.9.5
 dbt-bigquery==1.10.3
