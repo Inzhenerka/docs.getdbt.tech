@@ -28,6 +28,10 @@ We built <Constant name="cloud" />'s state-aware orchestration on these four cor
 - **State-aware and state agnostic support:** You can build jobs dynamically (state-aware) or explicitly (state-agnostic). Both approaches update shared state so everything is kept in sync.
 - **Sensible defaults:** State-aware orchestration works out-of-the-box (natively), with an optional configuration setting for more advanced controls. For more information, refer to [state-aware advanced configurations](/docs/deploy/state-aware-setup#advanced-configurations).
 
+:::note
+State-aware orchestration does not depend on [static analysis](/docs/fusion/new-concepts#principles-of-static-analysis) and works even when static analysis is disabled.
+:::
+
 ## Optimizing builds with state-aware orchestration
 
 State-aware orchestration uses shared state tracking to determine which models need to be built by detecting changes in code or data every time a job runs. It also supports custom refresh intervals and custom source freshness configurations, so <Constant name="cloud" /> only rebuilds models when they're actually needed.
