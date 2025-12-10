@@ -218,7 +218,11 @@ Once all deprecations are resolved:
 
 ## Validate and upgrade your dbt packages
 
-dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/fusion/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions. Check for packages that support version 2.0.0, or ask the maintainer if you're unsure. 
+dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/fusion/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions. Check for packages that support version 2.0.0, or ask the maintainer if you're unsure.
+
+import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
+
+<FusionPackageCompatibility />
 
 :::tip What if a package isn't compatible?
 
