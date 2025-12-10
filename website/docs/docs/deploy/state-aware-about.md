@@ -85,16 +85,30 @@ In the following query, you’re joining an `orders` and a `customers` table:
 
 ```sql
 with
-  orders as (select * from ref('orders')),
-  customers as (select * from ref('customers')),
-  joined as (
+
+orders as (
+
+    select * from {{ ref('orders') }}
+
+),
+
+customers as (
+
+    select * from {{ ref('customers') }}
+
+),
+
+joined as (
+
     select
-      customers.customer_id as customer_id,
-      orders.order_id as order_id
+        customers.customer_id as customer_id,
+        orders.order_id as order_id
     from customers
     left join orders
-      on orders.customer_id = customers.customer_id
-  )
+        on orders.customer_id = customers.customer_id
+
+)
+
 select * from joined
 ```
 
