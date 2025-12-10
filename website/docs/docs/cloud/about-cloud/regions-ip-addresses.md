@@ -10,7 +10,8 @@ description: "Available regions and ip addresses"
 - [<Constant name="cloud" /> Enterprise-tier](https://www.getdbt.com/pricing/) plans can choose to have their account hosted in any of the regions listed in the following table. 
 - Organizations **must** choose a single region per <Constant name="cloud" /> account. To run <Constant name="cloud" /> in multiple regions, we recommend using multiple <Constant name="cloud" /> accounts. 
 
-| Region | Location | Access URL | IP addresses | Available plans | <div style={{width:'130px'}}>Status page link</div> |
+<FilterableTable>
+| Region | Location | Access URL | IP addresses | Available plans | <div style={{width:'150px'}}>Status page link</div> |
 |--------|----------|------------|--------------|-------| --------- |
 | North America  | AWS us-east-1 (N. Virginia) | **Multi-tenant:**<br />[cloud.getdbt.com](https://cloud.getdbt.com) <br /><br /> **Cell based:** ACCOUNT_PREFIX.us1.dbt.com | 52.45.144.63 <br /> 54.81.134.249 <br />52.22.161.231 <br />52.3.77.232 <br />3.214.191.130 <br />34.233.79.135 | [All dbt platform plans](https://www.getdbt.com/pricing/) | **Multi-tenant:** <br /> [US AWS](https://status.getdbt.com/us-aws)<br /><br /> **Cell based:** <br />[US Cell 1 AWS](https://status.getdbt.com/us-cell-1-aws) <br /> [US Cell 2 AWS](https://status.getdbt.com/us-cell-2-aws) <br /> [US Cell 3 AWS](https://status.getdbt.com/us-cell-3-aws) |
 | North America  | Azure <br /> East US 2 (Virginia) | **Cell based:** ACCOUNT_PREFIX.us2.dbt.com | 20.10.67.192/26 | All Enterprise plans | [US Cell 1 AZURE](https://status.getdbt.com/us-cell-1-azure) |
@@ -22,6 +23,7 @@ description: "Available regions and ip addresses"
 | Japan | AWS ap-northeast-1 (Tokyo) | [jp1.dbt.com](https://jp1.dbt.com) | 35.76.76.152 <br />  54.238.211.79 <br /> 13.115.236.233 <br /> | All Enterprise plans | [JP Cell 1 AWS](https://status.getdbt.com/jp-cell-1-aws) | 
 | Virtual Private dbt or Single tenant | Customized |  Customized | Ask [Support](/community/resources/getting-help#dbt-cloud-support) for your IPs | All Enterprise plans | Customized |
 
+</FilterableTable>
 
 ## Accessing your account
 
