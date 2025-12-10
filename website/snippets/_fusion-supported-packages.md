@@ -8,7 +8,8 @@ To determine if a package is compatible with the <Constant name="fusion_engine"
 
 Fivetran package considerations:
 
-- The Fivetran `source` and `transformation` packages have been combined into a single package. If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
+- The Fivetran `source` and `transformation` packages have been combined into a single package.
+- If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
 
 import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
 
