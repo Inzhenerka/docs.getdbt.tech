@@ -43,10 +43,9 @@ Note that we have removed some deprecated features and introduced more rigorous 
 - To learn about the <Term id="lsp"/> features supported across the <Constant name="dbt_platform"/>, refer to [About dbt LSP](/docs/about-dbt-lsp).
 - To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
-If you're not sure what features are available, check out the following table. 
+Some features need you to configure [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) in order to work. If you're not sure what features are available, check out the following table.  
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available.
-> Some features need you to configure [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) in order to work.
 
 | **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
 |:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
