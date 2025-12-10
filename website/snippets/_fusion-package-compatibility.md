@@ -6,11 +6,11 @@
 Fusion warnings and `dbt-autofix` logs may show different messages about package compatibility.
 :::
 
-If you use `dbt-autofix` while upgrading to <Constant name="fusion" /> in the <Constant name="cloud_ide" /> or dbt VS Code extension, you may see different messages about package compatibility between [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) and <Constant name="fusion" /> warnings. <Constant name="fusion" /> warnings are emitted based on a package's `require-dbt-version` and whether `require-dbt-version` contains `2.0.0`. 
-
-There are certain packages, however, that are already <Constant name="fusion" />-compatible, but package maintainers have not yet updated `require-dbt-version`. `dbt-autofix` knows about these compatible packages and will not try to upgrade a package that it knows is already compatible. This means you don’t need to change that package, even if <Constant name="fusion" /> still shows a warning.
-
-This message discrepancy is temporary while we implement and roll-out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
+If you use [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) while upgrading to <Constant name="fusion" /> in the <Constant name="cloud_ide" /> or dbt VS Code extension, you may see different messages about package compatibility between `dbt-autofix` and <Constant name="fusion" /> warnings. 
+- <Constant name="fusion" /> warnings are emitted based on a package's `require-dbt-version` and whether `require-dbt-version` contains `2.0.0`.
+- There are certain packages, however, that are already <Constant name="fusion" />-compatible, but package maintainers haven't yet updated `require-dbt-version`.
+- `dbt-autofix` knows about these compatible packages and will not try to upgrade a package that it knows is already compatible. This means you don’t need to change that package, even if <Constant name="fusion" /> still shows a warning.
+- This message discrepancy is temporary while we implement and roll-out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
 
 Here's an example of a <Constant name="fusion" /> warning in the <Constant name="cloud_ide" /> that says a package isn't compatible with <Constant name="fusion" /> but `dbt-autofix` indicates it is compatible:
 ```text
