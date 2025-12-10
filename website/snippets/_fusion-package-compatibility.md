@@ -2,7 +2,7 @@
 
 #### Package compatibility messages
 
-:::info Inconsistencies between Fusion package warnings and `dbt-autofix` logs
+:::info Inconsistent Fusion warnings and `dbt-autofix` logs
 Fusion warnings and `dbt-autofix` logs may show different messages about package compatibility.
 :::
 
