@@ -51,7 +51,6 @@ If you're not sure what features are available, check out the following table.
 | **Category / Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
 |:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
-| SQL transformation | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL rendering | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL parsing and compilation (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ | ❌ |
