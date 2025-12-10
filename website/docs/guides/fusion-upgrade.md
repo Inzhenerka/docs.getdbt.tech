@@ -7,7 +7,7 @@ icon: 'zap'
 hide_table_of_contents: true
 tags: ['dbt Fusion engine', 'dbt platform','Upgrade']
 recently_updated: true
-intro_text: This guide helps you execute an in-place upgrade from the latest version of dbt Core to the dbt Fusion engine in the dbt platform.
+intro_text: This guide helps you implement an in-place upgrade from the latest version of dbt Core to the dbt Fusion engine in the dbt platform.
 ---
 
 import FusionAdapters from '/snippets/_fusion-dwh.md';
