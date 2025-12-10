@@ -15,7 +15,7 @@ Here's why:
 
 This means that even if you see a <Constant name="fusion"/> warning for a package that `dbt-autofix` identifies as compatible, you don't need to change the package. 
 
-This message discrepancy is temporary while we implement and roll-out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
+The message discrepancy is temporary while we implement and roll-out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
 
 Here's an example of a <Constant name="fusion" /> warning in the <Constant name="cloud_ide" /> that says a package isn't compatible with <Constant name="fusion" /> but `dbt-autofix` indicates it is compatible:
 ```text
