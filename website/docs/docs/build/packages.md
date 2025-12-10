@@ -383,7 +383,7 @@ There are a few specific use cases where we recommend using a "local" package:
 3. **Nested project** &mdash; When you have a nested project that defines fixtures and tests for a project of utility macros, like [the integration tests within the `dbt-utils` package](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests).
 
 ## What packages are available?
-To see the library of published dbt packages, check out [dbt package hub](https://hub.getdbt.com)!
+To see the library of published dbt packages, check out the [dbt package hub](https://hub.getdbt.com)!
 
 ## Fusion package compatibility
 

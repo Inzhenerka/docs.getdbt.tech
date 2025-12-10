@@ -3,7 +3,7 @@
 #### Package compatibility messages
 
 :::info Inconsistent Fusion warnings and `dbt-autofix` logs
-Fusion warnings and `dbt-autofix` logs may show different messages about package compatibility.
+<Constant name="fusion" /> warnings and `dbt-autofix` logs may show different messages about package compatibility.
 :::
 
 If you use [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) while upgrading to <Constant name="fusion" /> in the <Constant name="cloud_ide" /> or dbt VS Code extension, you may see different messages about package compatibility between `dbt-autofix` and <Constant name="fusion" /> warnings. 
@@ -15,7 +15,7 @@ Here's why:
 
 This means that even if you see a <Constant name="fusion"/> warning for a package that `dbt-autofix` identifies as compatible, you don't need to change the package. 
 
-The message discrepancy is temporary while we implement and roll-out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
+The message discrepancy is temporary while we implement and roll out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
 
 Here's an example of a <Constant name="fusion" /> warning in the <Constant name="cloud_ide" /> that says a package isn't compatible with <Constant name="fusion" /> but `dbt-autofix` indicates it is compatible:
 ```text

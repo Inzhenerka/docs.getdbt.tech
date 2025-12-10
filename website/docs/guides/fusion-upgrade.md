@@ -97,7 +97,7 @@ Even if you resolved deprecations in Part 1, run a final check to ensure nothing
 
 :::info Inconsistent Fusion warnings and `dbt-autofix` logs
 
-You may see <Constant name="fusion" /> deprecation warnings about packages not being compatible with <Constant name="fusion" />, while `dbt autofix` indicates they are compatible. Use `dbt autofix` as the source of truth because it has additional context that <Constant name="fusion" /> warnings don't yet have. This conflict is temporary and will be resolved as soon as we implement and roll-out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
+You may see <Constant name="fusion" /> deprecation warnings about packages not being compatible with <Constant name="fusion" />, while `dbt autofix` indicates they are compatible. Use `dbt autofix` as the source of truth because it has additional context that <Constant name="fusion" /> warnings don't have yet. This conflict is temporary and will be resolved as soon as we implement and roll out `dbt-autofix`'s enhanced compatibility detection to <Constant name="fusion" /> warnings. 
 
 :::
 
