@@ -45,7 +45,7 @@ Note that we have removed some deprecated features and introduced more rigorous 
 
 If you're not sure what features are available, check out the following table. 
 
-> ✅ = Available | 🟡 = Partial / at compile-time only | ❌ = Not available | Coming soon = Not yet available.
+> ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available.
 > Some features need you to configure [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) in order to work.
 
 | **Category / Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
@@ -53,13 +53,13 @@ If you're not sure what features are available, check out the following table.
 | **Engine performance** |  |  |  |  |  |
 | SQL transformation | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL rendering | ✅ | ✅ | ✅ | ✅ | ❌ |
-| SQL parsing and compilation  (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
+| SQL parsing and compilation (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ | ❌ |
 | Up to 30x faster parse / compile | ❌ | ✅ | ✅ | ✅ | ❌ |
 | **Editor and development experience** |  |  |  |  |  |
-| IntelliSense / autocomplete / hover info | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Inline errors (on save / in editor) | ❌ | 🟡 | ✅ | ✅ | ✅ |
-| Live CTE previews / compiled SQL view | ❌ | ❌ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
+| IntelliSense/autocomplete / hover info | ❌ | ❌ | ✅ | ✅ | ✅ |
+| Inline errors (on save/in editor) | ❌ | 🟡 | ✅ | ✅ | ✅ |
+| Live CTE previews/compiled SQL view | ❌ | ❌ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
 | Refactoring tools (rename model / column) | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column refactoring only)</small> |
 | Go-to definition/references/macro | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
 | Column-level lineage (in editor) | ❌ | ❌ | ✅ | Coming soon | ✅ |
@@ -69,7 +69,7 @@ If you're not sure what features are available, check out the following table.
 | dbt Mesh | ❌ | ❌  | ✅ | ✅ | ❌ |
 | Efficient testing | ❌ | ❌ | ❌ | ✅ | ✅ |
 | State-aware orchestration (SAO) | ❌ | ❌ | ❌ | ✅ | ❌ |
-| Governance (PII / PHI tracking) | ❌ | ❌ | ❌ | Coming soon | ✅ |
+| Governance (PII/PHI tracking) | ❌ | ❌ | ❌ | Coming soon | ✅ |
 | CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | ❌ | Coming soon | ✅ |
 
 *Support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.
