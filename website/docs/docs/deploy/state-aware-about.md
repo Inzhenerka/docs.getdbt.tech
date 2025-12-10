@@ -29,7 +29,7 @@ We built <Constant name="cloud" />'s state-aware orchestration on these four cor
 - **Sensible defaults:** State-aware orchestration works out-of-the-box (natively), with an optional configuration setting for more advanced controls. For more information, refer to [state-aware advanced configurations](/docs/deploy/state-aware-setup#advanced-configurations).
 
 :::note
-State-aware orchestration does not depend on [`static_analysis`](/docs/fusion/new-concepts#principles-of-static-analysis) and works even when `static_analysis` is disabled.
+State-aware orchestration does not depend on [static analysis](/docs/fusion/new-concepts#principles-of-static-analysis) and works even when `static_analysis` is disabled.
 :::
 
 ## Optimizing builds with state-aware orchestration
