@@ -48,18 +48,18 @@ If you're not sure what features are available, check out the following table.
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available.
 > Some features need you to configure [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) in order to work.
 
-| **Category / Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
+| **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
 |:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
 | SQL rendering | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL parsing and compilation (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ | ❌ |
-| Up to 30x faster parse / compile | ❌ | ✅ | ✅ | ✅ | ❌ |
+| Up to 30x faster parse/compile | ❌ | ✅ | ✅ | ✅ | ❌ |
 | **Editor and development experience** |  |  |  |  |  |
-| IntelliSense/autocomplete / hover info | ❌ | ❌ | ✅ | ✅ | ✅ |
+| IntelliSense/autocomplete/hover info | ❌ | ❌ | ✅ | ✅ | ✅ |
 | Inline errors (on save/in editor) | ❌ | 🟡 | ✅ | ✅ | ✅ |
 | Live CTE previews/compiled SQL view | ❌ | ❌ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
-| Refactoring tools (rename model / column) | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column refactoring only)</small> |
+| Refactoring tools (rename model/column) | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column refactoring only)</small> |
 | Go-to definition/references/macro | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
 | Column-level lineage (in editor) | ❌ | ❌ | ✅ | Coming soon | ✅ |
 | Developer compare changes | ❌ | ❌  | Coming soon | Coming soon | ❌ |
