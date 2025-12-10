@@ -61,7 +61,7 @@ If you're not sure what features are available, check out the following table.
 | Inline errors (on save / in editor) | ❌ | 🟡 | ✅ | ✅ | ✅ |
 | Live CTE previews / compiled SQL view | ❌ | ❌ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
 | Refactoring tools (rename model / column) | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column refactoring only)</small> |
-| Go-to definition / references | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
+| Go-to definition/references/macro | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
 | Column-level lineage (in editor) | ❌ | ❌ | ✅ | Coming soon | ✅ |
 | Developer compare changes | ❌ | ❌  | Coming soon | Coming soon | ❌ |
 | **Platform and governance** |  |  |  |  |  |
