@@ -13,13 +13,11 @@ intro_text: This guide helps you prepare for an in-place upgrade from dbt Core t
 
 import FusionAdapters from '/snippets/_fusion-dwh.md';
 
-## Introduction <Lifecycle status="private_preview" />
+## Introduction
 
-:::info private preview
+import FusionPreview from '/snippets/_fusion-private-preview.md';
 
-The <Constant name="fusion_engine" /> is available as a private preview for all tiers of <Constant name="dbt_platform" /> accounts. dbt Labs is enabling <Constant name="fusion" /> only on accounts that have eligible projects. Following the steps outlined in this guide doesn't guarantee <Constant name="fusion" /> eligibility.
-
-:::
+<FusionPreview />
 
 The <Constant name="fusion_engine" /> represents the next evolution of data transformation. dbt has been rebuilt from the ground up but at its most basic, <Constant name="fusion" /> is a new version, and like any new version you should take steps to prepare to upgrade. This guide will take you through those preparations. 
 
