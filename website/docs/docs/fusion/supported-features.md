@@ -50,7 +50,7 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
 |:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
-| SQL rendering | ✅ | ✅ | ✅ | ✅ | ❌ |
+| <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL parsing and compilation (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ | ❌ |
 | Up to 30x faster parse/compile | ❌ | ✅ | ✅ | ✅ | ❌ |
