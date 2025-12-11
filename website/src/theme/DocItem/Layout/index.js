@@ -48,6 +48,8 @@ function useDocTOC() {
   const [currentToc, setCurrentToc] = useState(toc)
   const [tocReady, setTocReady] = useState(true)
 
+  console.log('currentToc', currentToc);
+
   async function fetchElements() {
     // get html elements
     const headings = await getElements(
