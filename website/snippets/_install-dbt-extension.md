@@ -139,7 +139,7 @@ If you're unsure whether you have a `US1` account from the past, try signing in 
 Your dbt VS Code extension registration path depends on your situation. Select the one that applies to you:
 
 - **New to dbt and never created a dbt account?** → Use [First-time registration](#first-time-registration)
-- **Have an existing dbt account and can sign in?** → Use [Existing dbt account](#existing-dbt-account) (recommended)
+- **Have an existing dbt account and can sign in?** → Use [Existing dbt account](#existing-dbt-account)
 - **Email already exists / can’t sign in?** (locked, forgot password) → Use [Recover your login](#recover-your-login)
 - **Can't sign in OR your organization uses a non-default region** (`eu1`, `us2`) → Use [Register with `dbt_cloud.yml`](#register-with-dbt_cloudyml)
 
@@ -161,7 +161,7 @@ Use this if you've _never_ created a dbt account before. What you'll do: Open th
 
 ---
 
-### Existing account sign-in (recommended) {#existing-dbt-account}
+### Existing account sign-in {#existing-dbt-account}
 
 Use this if you have an existing dbt account &mdash; including older or inactive accounts.
 
