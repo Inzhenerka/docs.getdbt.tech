@@ -83,7 +83,7 @@ Example usage:
 
 <VersionBlock lastVersion="1.9">
 
-This functionality is new in dbt Core v1.10 and the <Constant name="fusion_engine" />.
+This functionality is new in <Constant name="core" /> v1.10 and the <Constant name="fusion_engine" />.
 
 </VersionBlock>
 
@@ -120,7 +120,7 @@ models:
 
 <VersionBlock lastVersion="1.9">
 
-This functionality is new in dbt Core v1.10 and the <Constant name="fusion_engine" />.
+This functionality is new in <Constant name="core" /> v1.10 and the <Constant name="fusion_engine" />.
 
 </VersionBlock>
 
