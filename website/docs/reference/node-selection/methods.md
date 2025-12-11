@@ -376,6 +376,8 @@ Certain factors can affect how references are used or resolved later on, includi
 - Modifying `latest_version`: if there's no tie to a specific version, the reference or model will point to the latest version.
   -  If a newer version is released, the reference will automatically resolve to the new version, potentially changing the behavior or output of the system that relies on it.
 
+With regards to dbt seeds, seed files less than 1MB will only be included in the `state:modified` selector when the contents change, however seed files 1MB or more will be included in the `state:modified` selector only if the seed file path changes.
+
 #### Overwrites the `manifest.json`
 
 import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
