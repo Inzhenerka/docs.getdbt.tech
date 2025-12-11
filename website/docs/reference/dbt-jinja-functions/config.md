@@ -40,9 +40,9 @@ There are 3 cases:
 1. The configuration variable does not exist
 
 :::warning Deprecation warning for meta fallback
-Starting in <Constant name="core" /> v1.10, `config.get()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
+Starting in <Constant name="core" /> v1.11, `config.get()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
 
-To access custom configurations stored under `meta`, use [`config.meta_get()`](#configmeta_get) instead.
+To access custom configurations stored under `meta`, use [`config.meta_get()`](#configmeta_get) instead. For more information, check out [deprecations](/reference/deprecations#configmetafallbackdeprecation).
 :::
 
 Example usage:
@@ -56,6 +56,9 @@ Example usage:
 
   -- Example w/ default value. Default to 'id' if the 'unique_key' config does not exist
   {%- set unique_key = config.get('unique_key', default='id') -%}
+
+  -- Example of a custom config nested under `meta` as required in v1.10 and higher.
+  {% set my_custom_config = config.get('meta').custom_config_key %}
   ...
 ```
 
@@ -67,9 +70,9 @@ __Args__:
 The `config.require` function is used to get configurations for a model from the end-user. Configs defined using this function are required, and failure to provide them will result in a compilation error.
 
 :::warning Deprecation warning for meta fallback
-Starting in <Constant name="core" /> v1.10, `config.require()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
+Starting in <Constant name="core" /> v1.11, `config.require()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
 
-To access custom configurations stored under `meta`, use [`config.meta_require()`](#configmeta_require) instead.
+To access custom configurations stored under `meta`, use [`config.meta_require()`](#configmeta_require) instead. For more information, check out [deprecations](/reference/deprecations#configmetafallbackdeprecation).
 :::
 
 Example usage:
