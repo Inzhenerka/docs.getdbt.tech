@@ -86,7 +86,7 @@ Example usage:
 
 <VersionBlock lastVersion="1.9">
 
-This functionality is new in <Constant name="core" /> v1.10 and the <Constant name="fusion_engine" />.
+This functionality is new in <Constant name="core" /> v1.11 and the <Constant name="fusion_engine" />.
 
 </VersionBlock>
 
@@ -97,7 +97,9 @@ __Args__:
 
 The `config.meta_get` function retrieves custom configurations stored under the `meta` dictionary. Unlike `config.get()`, this function exclusively checks `config.meta` and won't result in a deprecation warning.
 
-Use this function when accessing custom configurations that you've defined under `meta` in your model or resource configuration.
+Use this function when accessing custom configurations that you've defined under `meta` in your model or resource configuration - it's equivalent to writing `config.get('meta').get()`.
+
+
 
 Example usage:
 ```sql
@@ -123,7 +125,7 @@ models:
 
 <VersionBlock lastVersion="1.9">
 
-This functionality is new in <Constant name="core" /> v1.10 and the <Constant name="fusion_engine" />.
+This functionality is new in <Constant name="core" /> v1.11 and the <Constant name="fusion_engine" />.
 
 </VersionBlock>
 
