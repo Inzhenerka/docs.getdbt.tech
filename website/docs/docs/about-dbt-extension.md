@@ -53,7 +53,7 @@ The dbt extension caches important schema information from your data warehouse t
 
 1. Click the **dbt logo** on the sidebar to open the menu.
 2. Expand the **Extension info** section and location the **Actions** subsection.
-3. Click **Refresh source schemas** to update.
+3. Click **Clear cache** to update.
 
 ### Productivity features
 
