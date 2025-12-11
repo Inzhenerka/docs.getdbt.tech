@@ -122,6 +122,11 @@ Usage:
 
 See lineage at the column or table level as you develop — no context switching or breaking flow.
 
+:::tip Using the lineage tab in Cursor
+
+If you're using the dbt VS Code extension in Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
+:::
+
 View table lineage:
 - Open the **Lineage** tab in your editor. It will reflect table lineage focused on the currently-open file.
 - Double-click nodes to open the files in your editor.
