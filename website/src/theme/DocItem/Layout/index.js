@@ -93,15 +93,8 @@ function useDocTOC() {
           // Trailing slashes come from the LifeCycle pill use on headers
           const updatedHeading = removeTrailingDashes(heading)
 
-          // Clone the heading to avoid modifying the original DOM
-          const headingClone = updatedHeading.cloneNode(true);
-          
-          // Remove Lifecycle elements from the TOC display
-          const lifecycleElements = headingClone.querySelectorAll('.lifecycle');
-          lifecycleElements.forEach(el => el.remove());
-
           return {
-            value: headingClone.innerHTML.trim(),
+            value: updatedHeading.innerHTML,
             id: updatedHeading.id,
             level: level && level,
           };
