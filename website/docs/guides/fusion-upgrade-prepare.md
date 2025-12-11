@@ -239,9 +239,9 @@ dbt packages extend your project's functionality, but they must be compatible wi
 What if a package isn't compatible?
 
 If a critical package isn't yet compatible with <Constant name="fusion" />:
-- Check with the package maintainer about their roadmap
-- Open an issue requesting <Constant name="fusion" /> support
-- Consider contributing the compatibility updates yourself
+- Check with the package maintainer about their roadmap.
+- Open an issue requesting <Constant name="fusion" /> support.
+- Consider contributing the compatibility updates yourself.
 - Try it out anyway! The incompatible portion of the package might not impact your project. 
 
 import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
