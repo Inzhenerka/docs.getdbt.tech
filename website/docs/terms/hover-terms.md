@@ -129,7 +129,7 @@ sql-expression:
 
 sql-rendering:
   displayText: SQL rendering  
-  hoverSnippet: The dbt Core engine takes SQL with Jinja, and renders out all the macros present in the model to produce SQL ready to execute against the database. For SQL compilation and parsing capabilities, use the Fusion engine instead to better understand your SQL structure.
+  hoverSnippet: The dbt Core engine takes SQL with Jinja, and renders all the macros present in the model to produce SQL that is ready to run against the database. For SQL parsing and compilation capabilities, use the Fusion engine instead to better understand your SQL structure.
 
 subquery:
   displayText: subquery
