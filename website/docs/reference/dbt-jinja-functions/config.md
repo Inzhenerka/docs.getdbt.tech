@@ -40,7 +40,7 @@ There are 3 cases:
 1. The configuration variable does not exist
 
 :::warning Deprecation warning for meta fallback
-Starting in dbt Core v1.10, `config.get()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
+Starting in <Constant name="core" /> v1.10, `config.get()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
 
 To access custom configurations stored under `meta`, use [`config.meta_get()`](#configmeta_get) instead.
 :::
@@ -67,7 +67,7 @@ __Args__:
 The `config.require` function is used to get configurations for a model from the end-user. Configs defined using this function are required, and failure to provide them will result in a compilation error.
 
 :::warning Deprecation warning for meta fallback
-Starting in dbt Core v1.10 and the <Constant name="fusion_engine" />, `config.require()` throw a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
+Starting in <Constant name=core" /> v1.10, `config.require()` throw a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
 
 To access custom configurations stored under `meta`, use [`config.meta_require()`](#configmeta_require) instead.
 :::
