@@ -2,7 +2,7 @@
 import FusionManualInstall from '/snippets/_fusion-manual-install.md';
 
 
-The dbt extension &mdash; available or [VS Code, Cursor](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview), and [Windsurf](https://open-vsx.org/extension/dbtLabsInc/dbt) &mdash; uses the <Constant name="fusion_engine" /> to make dbt development smoother and more efficient. 
+The dbt extension &mdash; available for [VS Code, Cursor](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt&ssr=false#overview), and [Windsurf](https://open-vsx.org/extension/dbtLabsInc/dbt) &mdash; uses the <Constant name="fusion_engine" /> to make dbt development smoother and more efficient. 
 
 :::note
 
@@ -41,7 +41,7 @@ To install the dbt VS Code extension, follow these steps in your editor of choic
 6. (Optional) If you're new to the extension or VS Code/Cursor, you [can set your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment and [set any environment variables](/docs/configure-dbt-extension#configure-environment-variables) locally to use the VS Code extension features.
 
 You're all set up with the dbt extension! The next steps are:
-- Follow the [getting started](#getting-started) section to begin the terminal onboarding workflow and configure your set up. If you encounter any parsing errors, you can also run the[`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to resolve them.
+- Follow the [getting started](#getting-started) section to begin the terminal onboarding workflow and configure your set up. If you encounter any parsing errors, you can also run the [`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to resolve them.
 - <Expandable alt_header="Install the dbt Fusion engine from the command line, if you haven't already.">
 
     <FusionManualInstall />
@@ -70,7 +70,7 @@ The following steps explain how to get started using the **Get started** button 
     <Lightbox src="/img/docs/extension/welcome-screen.png" width="80%" title="dbt VS Code extension welcome screen."/>
 3. Click through the items to get started with the extension:
     - **Open your dbt project:** Launches file explorer so you can select the dbt project you want to open with Fusion.
-    - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date. If you encounter any parsing errors, you can also run the[`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to resolve them.
+    - **Check Fusion compatibility:** Runs the [Fusion upgrade](#upgrade-to-fusion) workflows to bring your project up-to-date. If you encounter any parsing errors, you can also run the [`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to resolve them.
     - **Explore features:** Opens the [documentation](/docs/about-dbt-extension) so you can learn more about all the extension has to offer.
     - [**Register:**](#register-the-extension) Launches the registration workflow so you can continue to use the extension beyond the trial period.
 
@@ -128,7 +128,7 @@ Most users can sign in from the extension's browser registration page for the de
 Use a credential file (`dbt_cloud.yml`) instead of sign-in when:
 
 - You can't sign in,
-- Your organization uses a non-default region (`eu1`,`us2, and so on), or
+- Your organization uses a non-default region (`eu1`, `us2`, and so on), or
 - You prefer file-based credentials.
 
 If you're unsure whether you have a `US1` account from the past, try signing in or using **Forgot password** at [us1.dbt.com](http://us1.dbt.com). If nothing comes up, continue with [Register with `dbt_cloud.yml`](#register-with-dbt_cloudyml).
@@ -208,7 +208,7 @@ What you'll do: Reset your password → sign in through the OAuth flow → retur
 
 ### Register with `dbt_cloud.yml` {#register-with-dbt_cloudyml}
 
-Use this if you can't sign in to your dbt account, you're org uses a non-default region (`eu1`, `us2`), or your workflow requires a credential file.
+Use this if you can't sign in to your dbt account, your org uses a non-default region (`eu1`, `us2`), or your workflow requires a credential file.
 
 What you'll do: Download the `dbt_cloud.yml` file, place it in your `.dbt` directory, and run the registration command.
 
@@ -226,7 +226,7 @@ What you'll do: Download the `dbt_cloud.yml` file, place it in your `.dbt` direc
 
 **Behavior details:**
 - If the `dbt_cloud.yml` file exists, it takes precedence over any login flow and the extension uses it automatically.
-- If the file missing, you'll be prompted to sign in or add the file.
+- If the file is missing, you'll be prompted to sign in or add the file.
 
 ## Configure environment variables locally {#configure-environment-variables}
 
