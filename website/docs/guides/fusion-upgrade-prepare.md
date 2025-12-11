@@ -9,6 +9,8 @@ recently_updated: true
 intro_text: This guide helps you prepare for an in-place upgrade from dbt Core to the dbt Fusion engine in the dbt platform.
 ---
 
+<div style={{maxWidth: '900px'}}>
+
 import FusionAdapters from '/snippets/_fusion-dwh.md';
 
 ## Introduction <Lifecycle status="private_preview" />
@@ -234,11 +236,7 @@ The autofix tool finds packages incompatible with <Constant name="fusion" /> and
 
 dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/fusion/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions. Check for packages that support version 2.0.0, or ask the maintainer if you're unsure.
 
-import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
-
-<FusionPackageCompatibility />
-
-:::tip What if a package isn't compatible?
+What if a package isn't compatible?
 
 If a critical package isn't yet compatible with <Constant name="fusion" />:
 - Check with the package maintainer about their roadmap
@@ -246,7 +244,9 @@ If a critical package isn't yet compatible with <Constant name="fusion" />:
 - Consider contributing the compatibility updates yourself
 - Try it out anyway! The incompatible portion of the package might not impact your project. 
 
-:::
+import FusionPackageCompatibility from '/snippets/_fusion-package-compatibility.md';
+
+<FusionPackageCompatibility />
 
 ### Step 1: Review your current packages
 
@@ -482,3 +482,5 @@ Stay up-to-date with feature availability:
 With limitations identified and addressed, you've completed all the preparation steps. Your project is now ready to upgrade to <Constant name="fusion" />!
 
 Check out [Part 2: Making the move](/guides/upgrade-to-fusion)
+
+</div>
