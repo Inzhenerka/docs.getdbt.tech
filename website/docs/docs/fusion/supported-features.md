@@ -50,7 +50,7 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code <br />+ Fusion** | **<Constant name="dbt_platform" />*** | **Requires <br />`static_analysis`** |
 |:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
-| SQL rendering | ✅ | ✅ | ✅ | ✅ | ❌ |
+| <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL parsing and compilation (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Uses the <Constant name="fusion_engine"/> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ | ❌ |
 | Up to 30x faster parse/compile | ❌ | ✅ | ✅ | ✅ | ❌ |
@@ -91,6 +91,7 @@ If your project is using any of the features listed in the following table, you 
 - Models that leverage specific materialization features may be unable to run or may be missing some desirable configurations.
 - Tooling that expects dbt Core's exact log output. Fusion's logging system is currently unstable and incomplete.
 - Workflows built around complementary features of the dbt platform (like model-level notifications, Advanced CI, and Semantic Layer) that Fusion does not yet support.
+- When using the dbt VS Code extension in Cursor, lineage visualization works best in Editor mode and doesn't render in Agent mode. If you're working in Agent mode and need to view lineage, switch to Editor mode to access the full lineage tab functionality.
 
 :::note
 We have been moving quickly to implement many of these features ahead of General Availability. Read more about [the path to GA](/blog/dbt-fusion-engine-path-to-ga), and track our progress in the [`dbt-fusion` milestones](https://github.com/dbt-labs/dbt-fusion/milestones).

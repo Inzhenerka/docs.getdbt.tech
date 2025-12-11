@@ -91,6 +91,8 @@ The following are currently known limitations of the dbt extension:
 
 - **Renaming models:** When a model file is renamed, the dbt extension will apply edits to update all `ref()` calls that reference the renamed model. Due to limitations of VS Code's Language Server Client, we are not able to auto-save these edit files. As a result, you may see that renaming a model file results in compiler errors in your project. To fix these errors, you must either manually save each file that was edited by the dbt extension, or click **File** --> **Save All** to save all edited files.
 
+- **Using Cursor's Agent mode:** When using the dbt extension in Cursor, lineage visualization works best in Editor mode and doesn't render in Agent mode. If you're working in Agent mode and need to view lineage, switch to Editor mode to access the full lineage tab functionality.
+
 
 ## Support
 
