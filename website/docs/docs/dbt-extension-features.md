@@ -21,6 +21,7 @@ The following extension features help you get more done, fast:
 - **[Hover insights](#hover-insights):** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
 - **[Live CTE previews](#live-preview-for-models-and-ctes):** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
 - **[Rich lineage in context](#rich-lineage-in-context):** See lineage at the column or table level as you develop with no context switching or breaking the flow.
+  - If you use Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
 - **[View compiled code](#view-compiled-code):** Get a live view of the SQL code your models will build alongside your dbt code.
 - **[Build flexibly](#build-flexibly):** Use the command palette to build models with complex selectors.
  
