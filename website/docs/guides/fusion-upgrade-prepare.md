@@ -130,6 +130,12 @@ The autofix tool can resolve many deprecations automatically, including:
 
 Check out the [autofix readme](https://github.com/dbt-labs/dbt-autofix/) for a complete list of the deprecations it addresses.
 
+:::note Fusion package compatibility
+
+In addition to deprecations, the autofix tool attempts to upgrade packages to the lowest supported <Constant name="fusion" />-compatible version. Check out [package support](/docs/fusion/supported-features#package-support) for more information about <Constant name="fusion" /> compatibility.
+
+:::
+
 ### Step 1: Create a new branch
 
 Before running the autofix tool, create a new branch to isolate your changes:
@@ -217,6 +223,14 @@ Once all deprecations are resolved:
 4. Ensure these changes are deployed to your environments before proceeding with the <Constant name="fusion" /> upgrade.
 
 ## Validate and upgrade your dbt packages
+
+:::tip Run autofix first
+
+This section contains instructions for manual package upgrades. We recommend running the autofix tool before taking these steps.
+
+The autofix tool finds packages incompatible with <Constant name="fusion" /> and upgrades them to the lowest compatible version. For more information, check out [package support](/docs/fusion/supported-features#package-support).
+
+:::
 
 dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/fusion/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions. Check for packages that support version 2.0.0, or ask the maintainer if you're unsure.
 
