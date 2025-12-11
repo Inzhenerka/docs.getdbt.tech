@@ -59,6 +59,7 @@ const MDXComponents = {
   Details: MDXDetails,
   ul: MDXUl,
   img: MDXImg,
+  table: FilterableTable, // All tables automatically get filtering functionality
   h1: (props) => <MDXHeading as="h1" {...props} />,
   h2: (props) => <MDXHeading as="h2" {...props} />,
   h3: (props) => <MDXHeading as="h3" {...props} />,

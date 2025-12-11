@@ -207,6 +207,37 @@
   line-height: 1;
 }
 
+.sortResetButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: var(--ifm-color-content-secondary);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.6;
+  width: 14px;
+  height: 14px;
+}
+
+.sortResetButton:hover {
+  opacity: 1;
+  color: var(--ifm-color-primary);
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 2px;
+}
+
+.sortResetButton:focus {
+  outline: 1px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
 .filterControl {
   position: absolute;
   top: 100%;

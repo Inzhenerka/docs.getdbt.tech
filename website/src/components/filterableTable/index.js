@@ -106,11 +106,8 @@ const FilterableTable = ({ children }) => {
   // Parse table after component mounts and DOM is available
   useEffect(() => {
     if (tableRef.current) {
-      const table = tableRef.current.querySelector('table');
-      if (table) {
-        const parsed = parseTableFromDOM(table);
-        setTableData(parsed);
-      }
+      const parsed = parseTableFromDOM(tableRef.current);
+      setTableData(parsed);
     }
   }, [children]);
 
@@ -149,7 +146,9 @@ const FilterableTable = ({ children }) => {
     const handleClickOutside = (event) => {
       if (openFilterIndex !== null) {
         const filterElement = filterRefs.current[openFilterIndex];
-        if (filterElement && !filterElement.contains(event.target)) {
+        // Check if click is outside the dropdown AND not on a filter button
+        const isFilterButton = event.target.closest(`.${styles.filterButton}`);
+        if (filterElement && !filterElement.contains(event.target) && !isFilterButton) {
           setOpenFilterIndex(null);
         }
       }
@@ -268,8 +267,13 @@ const FilterableTable = ({ children }) => {
   const handleSort = (colIndex) => {
     setSortConfig(prev => {
       if (prev.key === colIndex) {
-        // Toggle direction if same column
-        return { key: colIndex, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
+        // Cycle through: asc → desc → null (reset to original)
+        if (prev.direction === 'asc') {
+          return { key: colIndex, direction: 'desc' };
+        } else {
+          // Reset to original order
+          return { key: null, direction: 'asc' };
+        }
       }
       // New column, default to ascending
       return { key: colIndex, direction: 'asc' };
@@ -327,9 +331,9 @@ const FilterableTable = ({ children }) => {
   return (
     <div className={styles.filterableTableContainer}>
       {/* Hidden table for data extraction */}
-      <div ref={tableRef} style={{ display: 'none' }}>
+      <table ref={tableRef} style={{ display: 'none' }}>
         {children}
-      </div>
+      </table>
 
       <div className={styles.tableWrapper}>
         {/* Search bar positioned at top right - always visible */}
@@ -401,9 +405,22 @@ const FilterableTable = ({ children }) => {
                             )}
                             <span className={styles.sortIndicator}>
                               {sortConfig.key === index && (
-                                <span className={styles.sortArrow}>
-                                  {sortConfig.direction === 'asc' ? '↑' : '↓'}
-                                </span>
+                                <>
+                                  <span className={styles.sortArrow}>
+                                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                                  </span>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setSortConfig({ key: null, direction: 'asc' });
+                                    }}
+                                    className={styles.sortResetButton}
+                                    aria-label="Reset sort"
+                                    title="Reset sort to original order"
+                                  >
+                                    ×
+                                  </button>
+                                </>
                               )}
                             </span>
                           </div>
