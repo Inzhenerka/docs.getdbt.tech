@@ -89,8 +89,8 @@ This functionality is new in dbt Core v1.10 and the <Constant name="fusion_engin
 
 __Args__:
 
- * `name`: The name of the configuration variable to retrieve from `meta` (required)
- * `default`: The default value to use if this configuration is not provided (optional)
+ - `name`: The name of the configuration variable to retrieve from `meta` (required)
+ - `default`: The default value to use if this configuration is not provided (optional)
 
 The `config.meta_get` function retrieves custom configurations stored under the `meta` dictionary. Unlike `config.get()`, this function exclusively checks `config.meta` and does not emit deprecation warnings.
 
@@ -126,7 +126,7 @@ This functionality is new in dbt Core v1.10 and the <Constant name="fusion_engin
 
 __Args__:
 
- * `name`: The name of the configuration variable to retrieve from `meta` (required)
+ - `name`: The name of the configuration variable to retrieve from `meta` (required)
 
 The `config.meta_require` function retrieves custom configurations stored under the `meta` dictionary. Unlike `config.require()`, this function exclusively checks `config.meta` and does not emit deprecation warnings. If the configuration is not found, dbt raises a compilation error.
 
