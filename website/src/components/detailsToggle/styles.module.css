@@ -1,5 +1,5 @@
 :local(.link) :local(.headerText) {
-    color: rgba(18, 12, 12, 0.862);
+    color: var(--color-white);
     text-decoration: none;
     font-weight: 600;
     transition: text-decoration 0.3s; /* Smooth transition */
@@ -12,7 +12,7 @@
 }
 
 :local(html[data-theme='dark'] .link) :local(.headerText) {
-    color: rgba(255, 255, 255, 0.801);
+    color: var(--color-neutral-primary);
 }
 
 :local(.disclaimer) {
