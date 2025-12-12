@@ -161,7 +161,6 @@ Use this if you've _never_ created a dbt account before. What you'll do: Open th
 
 Use this if you have an existing dbt account &mdash; including older or inactive accounts.
 
-What you'll do: Start registration → sign in through the OAuth flow → return to VS Code.
 
 1. Click the registration prompt or open the command palette and type: **dbt: Register dbt extension.**
 2. In the browser registration form, select **Sign in** at the bottom of the form.
