@@ -166,7 +166,7 @@ To force dbt to rebuild the entire incremental model from scratch, use the `--fu
 $ dbt run --full-refresh --select my_incremental_model+
 ```
 
-The trailing `+` in the command above will also run all downstream models that depend on `my_incremental_model`. **Important:** If any of those downstream dependencies are also incremental models, they will be fully refreshed as well. This ensures consistency across your incremental model lineage when the logic changes.
+The trailing `+` in the command above will also run all downstream models that depend on `my_incremental_model`. If any of those downstream dependencies are also incremental models, they will be fully refreshed as well. 
 
 You can optionally use the [`full_refresh config`](/reference/resource-configs/full_refresh) to set a resource to always or never full-refresh at the project or resource level. If specified as true or false, the `full_refresh` config will take precedence over the presence or absence of the `--full-refresh` flag.
 
