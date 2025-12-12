@@ -167,7 +167,7 @@ Use this if you have an existing dbt account &mdash; including older or inactive
 3. Enter your email address associated with your dbt account and click **Continue**. If you don't remember your password, see [Recover your login](#recover-your-login) for help.
 4. You'll then have the option to select your existing dbt account.
 5. Select the account you want to use and click **Continue**.
-5. You should see a page confirming your successful registrataion. Close the tab and go back to your editor to continue the registration.
+5. You should see a page confirming your successful registration. Close the tab and go back to your editor to continue the registration.
 
 **When you might still need a `dbt_cloud.yml`:**
 - You want a file-based credential for automations.
