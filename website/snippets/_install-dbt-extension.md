@@ -60,7 +60,7 @@ Once the <Constant name="fusion_engine"/> and dbt VS Code extension have been in
 
 You can get started with the extension a couple of ways: 
 - Running `dbtf init` to use the terminal onboarding,
-- Opening **Run dbt: Register dbt extension** in the command palette,
+- Opening **dbt: Register dbt extension** in the command palette,
 - Using the **Get started** button in the extension menu.
 
 The following steps explain how to get started using the **Get started** button in the extension menu:
@@ -143,13 +143,11 @@ Your dbt VS Code extension registration path depends on your situation. Select t
 - **Email already exists or can’t sign in?** (locked, forgot password) → Use [Recover your login](#recover-your-login).
 - **Can't sign in or your organization uses a non-default region** (`eu1`, `us2`) → Use [Register with `dbt_cloud.yml`](#register-with-dbt_cloudyml).
 
----
-
 ### First-time registration
 
 Use this if you've _never_ created a dbt account before. What you'll do: Open the command, enter your name and email, verify the email, and you're done 🎉!
 
-1. Click the registration prompt or open the command palette (Ctrl + Shift + P (Windows/Linux) or Cmd + Shift + P (macOS)) and run: **dbt: Register dbt extension**.
+1. Click the registration prompt or open the command palette (Ctrl + Shift + P (Windows/Linux) or Cmd + Shift + P (macOS)) and type: **dbt: Register dbt extension**.
    <Lightbox src="/img/docs/extension/registration-prompt.png" width="70%" title="The extension registration prompt in VS Code."/>
 2. In the browser registration form, enter your name and email, then click **Continue**.
 3. Check your inbox for a verification email and click the verification link.
@@ -158,8 +156,6 @@ Use this if you've _never_ created a dbt account before. What you'll do: Open th
 6. Continue with the [Get started](#getting-started) onboarding workflow and get your dbt project up and running.
 
 **Note:** You do not need a <Constant name="dbt_platform" /> project to register; this only creates your dbt account.
-
----
 
 ### Existing account sign-in {#existing-dbt-account}
 
@@ -184,8 +180,6 @@ What you'll do: Start registration → sign in through the OAuth flow → return
 - You're on the free Developer plan and your workflow needs a local credential file for defer.
 - Your region requires it (for example, regions like `eu1` or `us2`).
 
----
-
 #### Recover your login 
 
 Choose this path if the registration form tells you your email already exists but you don't remember your password or your account is locked.
@@ -204,8 +198,6 @@ To reset your password and sign in through the OAuth flow:
 - Your account may be locked. Contact [dbt Support](mailto:support@getdbt.com) to unlock.
 - After unlocking, continue with the registration flow as described in [Sign in with your existing dbt account](#existing-dbt-account).
 
----
-
 ### Register with `dbt_cloud.yml` {#register-with-dbt_cloudyml}
 
 Use this if you can't sign in to your dbt account, your org uses a non-default region (`eu1`, `us2`), or your workflow requires a credential file.
@@ -221,7 +213,7 @@ What you'll do: Download the `dbt_cloud.yml` file, place it in your `.dbt` direc
 
     For help creating/moving the `.dbt` directory, see [this FAQ](#how-to-create-a-dbt-directory-in-root-and-move-dbt_cloudyml-file).
 
-4. Return to the VS Code editor, open the command palette and run: **dbt: Register dbt extension**.
+4. Return to the VS Code editor, open the command palette and type: **dbt: Register dbt extension**.
 5. The extension will detect the credential file and you can continue with the registration flow.
 
 **Behavior details:**
