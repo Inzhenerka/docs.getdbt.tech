@@ -61,7 +61,8 @@ Deprecation warnings from JSON schema validation are now enabled by default when
 
 These warnings help you proactively identify and update deprecated configurations (such as misspelled config keys, deprecated properties, or incorrect data types).
 
-You'll see the following deprecation warnings by default: 
+You'll see the following deprecation warnings by default:
+* [ConfigMetaFallbackDeprecation](/reference/deprecations#configmetafallbackdeprecation) 
 * [CustomKeyInConfigDeprecation](/reference/deprecations#customkeyinconfigdeprecation)
 * [CustomKeyInObjectDeprecation](/reference/deprecations#customkeyinobjectdeprecation)
 * [CustomTopLevelKeyDeprecation](/reference/deprecations#customtoplevelkeydeprecation)
