@@ -118,7 +118,7 @@ models:
   - name: my_model
     config:
       meta:
-        custom_setting: "custom_setting"
+        custom_setting: "my_value"
 ```
 
 ## config.meta_require
@@ -143,4 +143,13 @@ Example usage:
   -- Require a custom config from meta, throws error if not found
   {%- set required_setting = config.meta_require('required_setting') -%}
   ...
+```
+
+Example model configuration:
+```yaml
+models:
+  - name: my_model
+    config:
+      meta:
+        required_setting: "my_value"
 ```
