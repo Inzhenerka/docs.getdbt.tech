@@ -1,4 +1,4 @@
-To determine if a package is compatible with the <Constant name="fusion_engine" />, visit the [dbt package hub](https://hub.getdbt.com/) and review the package's [`require-dbt-version` configuration](/reference/project-configs/require-dbt-version#pin-to-a-range).
+To determine if a package is compatible with the <Constant name="fusion_engine" />, visit the [dbt package hub](https://hub.getdbt.com/) and look for the <Constant name="fusion" />-compatible badge, or review the package's [`require-dbt-version` configuration](/reference/project-configs/require-dbt-version#pin-to-a-range).
 
 - Packages with a `require-dbt-version` that equals or contains `2.0.0` are compatible with <Constant name="fusion" />. For example, `require-dbt-version: ">=1.10.0,<3.0.0"`.
 
