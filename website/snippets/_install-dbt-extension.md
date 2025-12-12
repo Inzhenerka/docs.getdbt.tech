@@ -186,7 +186,7 @@ To reset your password and sign in through the OAuth flow:
 4. Return to the sign in screen in the browser and complete the sign-in process.
 5. If you've signed in, you will then have the option to select your existing dbt account.
 6. Select the account you want to use and click **Continue**.
-7. You should see a page confirming your successful registrataion. Close the tab and go back to your editor to continue the registration.
+7. You should see a page confirming your successful registration. Close the tab and go back to your editor to continue the registration.
 
 **If you still can't sign in:**
 - Your account may be locked. Contact [dbt Support](mailto:support@getdbt.com) to unlock.
