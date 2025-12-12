@@ -45,9 +45,9 @@ You're all set up with the dbt extension! The next steps are:
 - <Expandable alt_header="Install the dbt Fusion engine from the command line, if you haven't already.">
 
     <FusionManualInstall />
-  3. Follow the [getting started](/docs/install-dbt-extension#getting-started) guide to get started with the extension. You can get started by either:
-      - Running `dbtf init` to use terminal onboarding,
-      - Running **Run dbt: Register dbt extension** in the command palette,
+  3. Follow the [getting started](/docs/install-dbt-extension#getting-started) guide to get started with the extension. You can get started using one of these methods:
+      - Running `dbtf init` to use terminal onboarding.
+      - Running **Run dbt: Register dbt extension** in the command palette.
       - Using the **Get started** button in the extension menu.
   </Expandable>
 - [Register the extension](#register-the-extension) with your email address or <Constant name="dbt_platform" /> account to continue using it beyond the trial period.
@@ -123,12 +123,12 @@ After downloading the extension and installing the <Constant name="fusion_engine
 
 <Expandable alt_header="Understanding regions">
 
-Most users can sign in from the extension's browser registration page for the default `US1` region. If that works, you have an account in the default region and don't need to know other [regions](/docs/cloud/about-cloud/access-regions-ip-addresses).
+Most users can sign in from the extension's browser registration page for the default `US1` region. If that works, you have an account in the default region and don't need to consider other [regions](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
 Use a credential file (`dbt_cloud.yml`) instead of sign-in when:
 
-- You can't sign in,
-- Your organization uses a non-default region (`eu1`, `us2`, and so on), or
+- You can't sign in.
+- Your organization uses a non-default region (`eu1`, `us2`, and so on).
 - You prefer file-based credentials.
 
 If you're unsure whether you have a `US1` account from the past, try signing in or using **Forgot password** at [us1.dbt.com](http://us1.dbt.com). If nothing comes up, continue with [Register with `dbt_cloud.yml`](#register-with-dbt_cloudyml).
@@ -138,10 +138,10 @@ If you're unsure whether you have a `US1` account from the past, try signing in 
 
 Your dbt VS Code extension registration path depends on your situation. Select the one that applies to you:
 
-- **New to dbt and never created a dbt account?** → Use [First-time registration](#first-time-registration)
-- **Have an existing dbt account and can sign in?** → Use [Existing dbt account](#existing-dbt-account)
-- **Email already exists / can’t sign in?** (locked, forgot password) → Use [Recover your login](#recover-your-login)
-- **Can't sign in OR your organization uses a non-default region** (`eu1`, `us2`) → Use [Register with `dbt_cloud.yml`](#register-with-dbt_cloudyml)
+- **New to dbt and never created a dbt account?** → Use [First-time registration](#first-time-registration).
+- **Have an existing dbt account and can sign in?** → Use [Existing dbt account](#existing-dbt-account).
+- **Email already exists or can’t sign in?** (locked, forgot password) → Use [Recover your login](#recover-your-login).
+- **Can't sign in or your organization uses a non-default region** (`eu1`, `us2`) → Use [Register with `dbt_cloud.yml`](#register-with-dbt_cloudyml).
 
 ---
 
@@ -167,7 +167,7 @@ Use this if you have an existing dbt account &mdash; including older or inactive
 
 What you'll do: Start registration → sign in through the OAuth flow → return to VS Code.
 
-1. Click the registration prompt or open the command palette and run: dbt: Register dbt extension.
+1. Click the registration prompt or open the command palette and type: **dbt: Register dbt extension.**
 2. In the browser registration form, select **Sign in** at the bottom of the form.
 3. Enter your email address associated with your dbt account and click **Continue**. If you don't remember your password, see [Recover your login](#recover-your-login) for help.
 4. You'll then have the option to select your existing dbt account.
@@ -190,7 +190,7 @@ What you'll do: Start registration → sign in through the OAuth flow → return
 
 Choose this path if the registration form tells you your email already exists but you don't remember your password or your account is locked.
 
-What you'll do: Reset your password → sign in through the OAuth flow → return to VS Code.
+To reset your password and sign in through the OAuth flow:
 
 1. On the sign-in screen, click **Forgot password**.
 2. Enter the email associated with your dbt account.
