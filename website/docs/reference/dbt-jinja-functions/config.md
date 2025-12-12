@@ -40,7 +40,7 @@ There are 3 cases:
 1. The configuration variable does not exist
 
 :::warning Deprecation warning for meta fallback
-Starting in <Constant name="core" /> v1.11, `config.get()` throws a deprecation warning when it finds a value in `config.meta` instead of at the top level. This fallback behavior will be removed in a future version.
+Starting in <Constant name="core" /> v1.11, `config.get()` throws a deprecation warning when it finds a value in `config.meta`. This fallback was temporarily introduced when dbt reserved the top-level configs for official framework configuration. This fallback behavior will be removed in a future version.
 
 To access custom configurations stored under `meta`, use [`config.meta_get()`](#configmeta_get) instead. For more information, check out [deprecations](/reference/deprecations#configmetafallbackdeprecation).
 :::
