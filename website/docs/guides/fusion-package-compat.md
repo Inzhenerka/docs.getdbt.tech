@@ -157,7 +157,7 @@ The following are some frequently asked questions about upgrading your package t
 
 <Constant name="fusion"/> and <Constant name="core"/> v1.10+ use the same new authoring layer. Ensuring your package supports `2.0.0` in your `require-dbt-version` config ensures your package is compatible with both.
 
-Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. Also display a <Constant name="fusion"/>-compatible badge in dbt package hub.
+Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. <Constant name="fusion"/>-compatible packages display a badge in the dbt package hub.
 
 If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching dbt <Constant name="core"/> behavior. 
 
