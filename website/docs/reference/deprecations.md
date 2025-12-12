@@ -275,7 +275,7 @@ After configs are nested:
 
 ### ConfigMetaFallbackDeprecation
 
-When dbt required users to move custom configurations into the `meta` dictionary, some projects began erroring because dbt no longer found configs at the top level. To unblock these projects, dbt added a temporary fallback where `config.get()` and `config.require()` also check `config.meta` when a key isn't found.
+When dbt required users to move custom configurations into the `meta` dictionary, some projects began erroring because dbt reserved top-level configs for official framework configuration. To unblock these projects, dbt added a temporary fallback where `config.get()` and `config.require()` also check `config.meta` when a key wasn't found.
 
 dbt has deprecated this fallback behavior. To prevent collisions between your custom configurations and configs that dbt intends to introduce in the future, migrate to the new `config.meta_get()` and `config.meta_require()` methods.
 
