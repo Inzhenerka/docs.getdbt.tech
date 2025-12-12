@@ -87,7 +87,7 @@ You can set the `full_refresh` config in the `dbt_project.yml` file or in a reso
 
 ## Recommendation
 - Set `full_refresh: false` for models of especially large datasets, which you would _never_ want dbt to fully drop and recreate.
-- For existing `full_refresh` configs, you can't override their behavior. To change their behavior in certain situations, remove the config or update the config logic using variables.
+- You cannot override an existing `full_refresh` config. To change its behavior in certain circumstances, remove the config logic or update it using variables so the behavior can be overridden when needed.
 
 ## Reference docs
 * [on_configuration_change](/reference/resource-configs/on_configuration_change)
