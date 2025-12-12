@@ -174,6 +174,6 @@ You want to do this to ensure any changes to your package remain compatible with
 
 Users can identify your package as <Constant name="fusion"/>-compatible by checking for 2.0.0 or higher in the `require-dbt-version` range config.
 
-<Constant name="fusion"/>-compatible packages also display a badge on dbt packages hub. This is automatically determined based on your package’s metadata and version requirements.
+<Constant name="fusion"/>-compatible packages also display a badge in the dbt package hub. This is automatically determined based on your package’s metadata and version requirements.
 
 </Expandable>
