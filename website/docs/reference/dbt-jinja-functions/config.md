@@ -118,7 +118,7 @@ models:
   - name: my_model
     config:
       meta:
-        custom_setting: "my_value"
+        custom_setting: "custom_setting"
 ```
 
 ## config.meta_require
