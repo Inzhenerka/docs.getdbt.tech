@@ -159,7 +159,7 @@ Use this if you've _never_ created a dbt account before. What you'll do: Open th
 
 ### Existing account sign-in {#existing-dbt-account}
 
-Use this if you have an existing dbt account &mdash; including older or inactive accounts.
+Use this if you have an existing dbt account &mdash; including older or inactive accounts. dbt automatically detects your account and `dbt_cloud.yml` file if it exists (no file download needed). Use to easily work across machines.
 
 
 1. Click the registration prompt or open the command palette and type: **dbt: Register dbt extension.**
@@ -168,11 +168,6 @@ Use this if you have an existing dbt account &mdash; including older or inactive
 4. You'll then have the option to select your existing dbt account.
 5. Select the account you want to use and click **Continue**.
 5. You should automatically be redirected to the editor and see **`Registered`**. If you're not redirected, click on the redirect link in the browser to complete the registration.
-
-**What this does:**
-- Creates a secure session with dbt.
-- Automatically detects your account and `dbt_cloud.yml` file if it exists (no file download needed).
-- Easiest to keep working across machines.
 
 **When you might still need a `dbt_cloud.yml`:**
 - You want a file-based credential for automations.
