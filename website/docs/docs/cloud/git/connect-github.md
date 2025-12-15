@@ -38,8 +38,8 @@ To connect your <Constant name="cloud" /> account to your GitHub account:
 
    <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-app-install.png" width="50%" title="Installing the dbt application into a GitHub organization"/>
 
-   :::important Case-sensitive repository names in Terraform
-   If you're using the [Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest) to connect, the GitHub repository name in your Terraform files must exactly match the case of the repository name on GitHub to avoid cloning errors or job failures.
+   :::important Case-sensitive repository names
+   When specifying a GitHub repository name in the <Constant name="dbt_platform" /> via the UI, API, or Terraform provider, the repository name must exactly match the case of the repository name on GitHub to avoid cloning errors or job failures.
    :::
 
 6. Assign the <Constant name="cloud" /> GitHub App the following permissions:
