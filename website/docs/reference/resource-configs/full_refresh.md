@@ -89,7 +89,7 @@ You can set the `full_refresh` config in the `dbt_project.yml` file or in a reso
 - Set `full_refresh: false` for models of especially large datasets, which you would _never_ want dbt to fully drop and recreate.
 - You cannot override an existing `full_refresh` config. To change its behavior in 
 certain circumstances, remove the config logic or update it using variables so the 
-behavior can be overridden when needed. For example if you have an incremental model with the following config:
+behavior can be overridden when needed. For example, if you have an incremental model with the following config:
   ```sql
   {{ config(
       materialized = 'incremental',
