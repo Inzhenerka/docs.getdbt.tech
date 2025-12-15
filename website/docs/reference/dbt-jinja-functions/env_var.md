@@ -12,7 +12,7 @@ import Envvarsecrets from '/snippets/_env-var-secrets.md';
 If the `DBT_USER` and `DBT_ENV_SECRET_PASSWORD` environment variables are present when dbt is invoked, then these variables will be pulled into the profile as expected. If any environment variables are not set, then dbt will raise a compilation error.
 
 :::info Environment variables for integers and booleans
-Environment variables are always strings. If a config expects an integer or boolean, you must convert it.
+When using environment variables for properties that expect an integer or boolean (`true`/`false`), add a filter to the Jinja expression. For example:
 
 **Integers**  
 Convert the string to a number to avoid errors like `'1' is not of type 'integer'`:  
@@ -23,13 +23,7 @@ Convert the string to a boolean explicitly:
 `{{ env_var('SECURE').lower() == 'true' }}`
 :::
 
-:::info Boolean Environment Variables
-If passing an environment variable for a property that uses a boolean type (for example, `True`, `false`), be sure to add a filter to the Jinja expression, as shown here.
-`"{{ (env_var('SECURE').lower() == 'true') }}"` 
-
-:::
-
-:::caution Quoting, Curly Brackets, & You
+:::caution Quoting, curly brackets, & you
 
 Be sure to quote the entire Jinja string (as shown above), or else the YAML parser will be confused by the Jinja curly brackets.
 
