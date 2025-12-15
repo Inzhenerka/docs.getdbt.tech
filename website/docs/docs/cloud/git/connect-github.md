@@ -30,13 +30,17 @@ To connect your <Constant name="cloud" /> account to your GitHub account:
 
 3. Scroll down to **Linked accounts**.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-connect-1.png" title="Navigated to Linked Accounts under your profile"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-connect-1.png" width= "80%" title="Navigated to Linked Accounts under your profile"/>
 
 4. In the **Linked accounts** section, set up your GitHub account connection to <Constant name="cloud" /> by clicking **Link** to the right of GitHub. This redirects you to your account on GitHub where you will be asked to install and configure the <Constant name="cloud" /> application. 
 
 5. Select the GitHub organization and repositories <Constant name="cloud" /> should access.
 
-   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-app-install.png" title="Installing the dbt application into a GitHub organization"/>
+   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-app-install.png" width="50%" title="Installing the dbt application into a GitHub organization"/>
+
+   :::important Case-sensitive repository names in Terraform
+   If you're using the [Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest) to connect, the GitHub repository name in your Terraform files must exactly match the case of the repository name on GitHub to avoid cloning errors or job failures.
+   :::
 
 6. Assign the <Constant name="cloud" /> GitHub App the following permissions:
    - Read access to metadata
