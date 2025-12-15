@@ -15,7 +15,7 @@ If the `DBT_USER` and `DBT_ENV_SECRET_PASSWORD` environment variables are presen
 Environment variables are always strings. If a config expects an integer or boolean, you must convert it.
 
 **Integers**  
-Use a cast to avoid errors like `'1' is not of type 'integer'`:  
+Convert the string to a number to avoid errors like `'1' is not of type 'integer'`:  
 `{{ env_var('DBT_THREADS') | int }}` or `{{ env_var('DB_PORT') | as_number }}`
 
 **Booleans**  
