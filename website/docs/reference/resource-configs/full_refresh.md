@@ -87,7 +87,17 @@ You can set the `full_refresh` config in the `dbt_project.yml` file or in a reso
 
 ## Recommendation
 - Set `full_refresh: false` for models of especially large datasets, which you would _never_ want dbt to fully drop and recreate.
-- You cannot override an existing `full_refresh` config. To change its behavior in certain circumstances, remove the config logic or update it using variables so the behavior can be overridden when needed.
+- You cannot override an existing `full_refresh` config. To change its behavior in 
+certain circumstances, remove the config logic or update it using variables so the 
+behavior can be overridden when needed. For example if you have a an incremental model with the following config:
+  ```sql
+  {{ config(
+      materialized = 'incremental',
+      full_refresh = var("force_full_refresh", false)
+  ) }}
+  ```
+
+Then override with the [`--vars` flag](/docs/build/project-variables#defining-variables-on-the-command-line): `dbt run --vars '{"force_full_refresh": true}'`. This then overrides the `full_refresh` config to `true`.
 
 ## Reference docs
 * [on_configuration_change](/reference/resource-configs/on_configuration_change)
