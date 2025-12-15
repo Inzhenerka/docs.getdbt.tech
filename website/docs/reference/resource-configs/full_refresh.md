@@ -97,7 +97,8 @@ behavior can be overridden when needed. For example if you have a an incremental
   ) }}
   ```
 
-Then override with the [`--vars` flag](/docs/build/project-variables#defining-variables-on-the-command-line): `dbt run --vars '{"force_full_refresh": true}'`. This then overrides the `full_refresh` config to `true`.
+  Then override with the [`--vars` flag](/docs/build/project-variables#defining-variables-on-the-command-line): `dbt run --vars '{"force_full_refresh": true}'`. This then overrides the `full_refresh`
+  config to `true`.
 
 ## Reference docs
 * [on_configuration_change](/reference/resource-configs/on_configuration_change)
