@@ -76,7 +76,7 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | Governance (PII/PHI tracking) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
 | CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
 
-*Support for other <Constant name="dbt_platform" /> and <Term id="lsp"/> features, like <Constant name="semantic_layer" /> or Column-level lineage, is coming soon. See [About LSP](/docs/about-dbt-lsp) for a more detailed comparison of dbt development environments.<br />
+*Support for other <Constant name="dbt_platform" /> and <Term id="lsp"/> features, like <Constant name="visual_editor"/>, <Constant name="semantic_layer" /> or Column-level lineage, is coming soon. See [About LSP](/docs/about-dbt-lsp) for a more detailed comparison of dbt development environments.<br />
 *The [dbt VS Code extension](/docs/about-dbt-extension) is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors.
 
 
