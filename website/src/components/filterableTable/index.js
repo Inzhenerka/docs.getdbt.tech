@@ -31,8 +31,12 @@ const extractTextFromHTML = (html) => {
     const text = div.textContent || div.innerText || '';
     return text.trim();
   }
-  // Fallback: strip HTML tags using regex, preserving all text
-  return html.replace(/<[^>]*>/g, '').trim();
+  // Fallback: strip HTML tags and incomplete tags using regex
+  // Handles both complete tags (<div>) and incomplete tags (<script)
+  return html
+    .replace(/<[^>]*>?/g, '')  // Remove complete and incomplete tags
+    .replace(/&[a-z]+;/gi, '')  // Remove HTML entities
+    .trim();
 };
 
 // Get unique values from a column - preserves exact text including underscores
