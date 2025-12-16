@@ -46,35 +46,37 @@ Note that we have removed some deprecated features and introduced more rigorous 
 Some features need you to configure [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) in order to work. If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; check out the following table.  
 
 :::tip 
-<Constant name="dbt_platform" /> customers using <Constant name="fusion" /> can [develop across multiple development surfaces](/docs/fusion/fusion-availability), including  <Constant name="cloud_ide"/> and VS Code with the dbt extension. All <Constant name="dbt_platform" /> features (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
+<Constant name="dbt_platform" /> customers using <Constant name="fusion" /> can [develop across multiple development surfaces](/docs/fusion/fusion-availability), including  <Constant name="cloud_ide"/> and VS Code with the dbt extension. 
+
+<Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
 :::
+
+**Note:** <Constant name="core" /> (built on Python) supports <Term id="sql-rendering" /> but lacks SQL parsing and modern editor features powered by <Constant name="fusion_engine" /> and the <Term id="lsp"/>. The following table focuses on <Constant name="fusion" />-powered options.
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
-| **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **dbt VS Code ex+ Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" />***<br/><small>(<Constant name="cloud_ide" /> or VS Code and other dev surfaces)</small> | **Requires <br />`static_analysis`** |
-|:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
+| **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />static<br />analysis** |
+|:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
-| <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
-| SQL parsing and compilation (SQL understanding) | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Uses the <Constant name="fusion_engine"/><br /><small>(Up to 30x faster parse/compile)</small> | ❌ <br /><small>(Built on Python)</small> | ✅ | ✅ | ✅ | ❌ |
-| **Editor and development experience** |  |  |  |  |  |
-| IntelliSense/autocomplete/hover info | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Inline errors (on save/in editor) | ❌ | 🟡 | ✅ | ✅ | ✅ |
-| Live CTE previews/compiled SQL view | ❌ | ❌ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
-| Refactoring tools (rename model/column) | ❌ | ❌ | ✅ | VS Code extension: ✅ <br /> Studio IDE: Coming soon | 🟡 <br /><small>(Column refactor only)</small> |
-| Go-to definition/references/macro | ❌ | ❌ | ✅ | VS Code extension: ✅ <br /> Studio IDE: Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
-| Column-level lineage (in editor) | ❌ | ❌ | ✅ | VS Code extension: ✅ <br /> Studio IDE: Coming soon  | ✅ |
+| SQL parsing and compilation <small>(SQL understanding)</small> | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Editor and dev experience** |  |  |  |  |  |
+| IntelliSense/autocomplete/hover info | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Inline errors (on save/in editor) | 🟡 | ✅ | ✅ | ✅ | ✅ |
+| Live CTE previews/compiled SQL view | ❌ | ✅ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
+| Refactoring tools (rename model/column) | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(Column refactor only)</small> |
+| Go-to definition/references/macro | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(Column go-to definition only)</small> |
+| Column-level lineage (in editor) | ❌ | ✅ | ✅ | <small>Coming soon</small>  | ✅ |
 | **Platform and governance** |  |  |  |  |  |
-| Advanced CI compare changes | ❌ | ❌ | ❌ | ✅ | ❌ |
-| Developer compare changes | ❌ | ❌ | ❌ | Coming soon | ❌ |
-| dbt <Constant name="mesh" /> | ❌ | ❌  | ❌ | ✅ | ❌ |
-| Efficient testing | ❌ | ❌ | ❌ | ✅ | ✅ |
-| State-aware orchestration (SAO) | ❌ | ❌ | ❌ | ✅ | ❌ |
-| Governance (PII/PHI tracking) | ❌ | ❌ | ❌ | Coming soon | ✅ |
-| CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | ❌ | Coming soon | ✅ |
+| Advanced CI compare changes | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Developer compare changes | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ❌ |
+| dbt <Constant name="mesh" /> | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Efficient testing | ❌ | ❌ | ✅ | ✅ | ✅ |
+| State-aware orchestration (SAO) | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Governance (PII/PHI tracking) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
+| CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
 
-*Support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.  [About LSP](/docs/about-dbt-lsp)
-*“VS Code extension” refers to the [dbt VS Code extension](/docs/about-dbt-extension), whch is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors. For a detailed comparison of dbt development environments, see the [About LSP](/docs/about-dbt-lsp) doc.
+*Support for other <Constant name="dbt_platform" /> and <Term id="lsp"/> features, like <Constant name="semantic_layer" /> or Column-level lineage, is coming soon. See [About LSP](/docs/about-dbt-lsp) for a more detailed comparison of dbt development environments.<br />
+*The [dbt VS Code extension](/docs/about-dbt-extension) is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors.
 
 
 #### Additional considerations
