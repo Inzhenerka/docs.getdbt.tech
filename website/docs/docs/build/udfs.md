@@ -48,7 +48,6 @@ You can define SQL and Python UDFs in dbt. Python UDFs are currently supported i
 :::tip
 Keep the following considerations in mind when developing UDFs:
 
-- Python UDFs are supported only on Snowflake and BigQuery when using <Constant name="core" />.
 - Python UDFs aren't yet supported in <Constant name="fusion" />.
 - Additional languages (for example, Java, JavaScript, Scala) aren't currently supported.
 
