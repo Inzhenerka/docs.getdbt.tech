@@ -43,19 +43,17 @@ Note that we have removed some deprecated features and introduced more rigorous 
 - To learn about the <Term id="lsp"/> features supported across the <Constant name="dbt_platform"/>, refer to [About dbt LSP](/docs/about-dbt-lsp).
 - To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
-Some features need you to configure [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis) in order to work. If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; check out the following table.  
-
 :::tip 
 <Constant name="dbt_platform" /> customers using <Constant name="fusion" /> can [develop across multiple development surfaces](/docs/fusion/fusion-availability), including  <Constant name="cloud_ide"/> and VS Code with the dbt extension. 
 
 <Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
 :::
 
-**Note:** <Constant name="core" /> (built on Python) supports <Term id="sql-rendering" /> but lacks SQL parsing and modern editor features powered by <Constant name="fusion_engine" /> and the <Term id="lsp"/>. The following table focuses on <Constant name="fusion" />-powered options.
+**Note:** <Constant name="core" /> (built on Python) supports <Term id="sql-rendering" /> but lacks SQL parsing and modern editor features powered by <Constant name="fusion_engine" /> and the <Term id="lsp"/>. If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options.
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
-| **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />static<br />analysis** |
+| **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />[static analysis](/docs/fusion/new-concepts#principles-of-static-analysis)** |
 |:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
 | <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
