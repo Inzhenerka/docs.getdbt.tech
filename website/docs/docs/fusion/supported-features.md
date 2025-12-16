@@ -51,9 +51,10 @@ Note that we have removed some deprecated features and introduced more rigorous 
 <Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
 :::
 
-If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options. Self-hosted means it's open-source and runs on your own infrastructure; <Constant name="dbt_platform" /> is hosted by dbt Labs and includes platform-level features.
+If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options. 
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
+> In this table, self-hosted means it's open-source and runs on your own infrastructure; <Constant name="dbt_platform" /> is hosted by dbt Labs and includes platform-level features.
 
 | **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />[static analysis](/docs/fusion/new-concepts#principles-of-static-analysis)** |
 |:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
