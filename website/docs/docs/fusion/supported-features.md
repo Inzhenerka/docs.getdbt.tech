@@ -57,7 +57,7 @@ In this table, self-hosted means it's open-source and runs on your own infrastru
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
-| **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />[static analysis](/docs/fusion/new-concepts#principles-of-static-analysis)** |
+| **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **dbt platform + VS Code extension*** | **dbt platform + Studio IDE + other dev surfaces*** | **Requires <br />[static analysis](/docs/fusion/new-concepts#principles-of-static-analysis)** |
 |:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
 | <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
