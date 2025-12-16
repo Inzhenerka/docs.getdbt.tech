@@ -43,13 +43,15 @@ Note that we have removed some deprecated features and introduced more rigorous 
 - To learn about the <Term id="lsp"/> features supported across the <Constant name="dbt_platform"/>, refer to [About dbt LSP](/docs/about-dbt-lsp).
 - To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
+<Constant name="core" /> (built on Python) supports <Term id="sql-rendering" /> but lacks SQL parsing and modern editor features powered by <Constant name="fusion_engine" /> and the <Term id="lsp"/>. 
+
 :::tip 
 <Constant name="dbt_platform" /> customers using <Constant name="fusion" /> can [develop across multiple development surfaces](/docs/fusion/fusion-availability), including  <Constant name="cloud_ide"/> and VS Code with the dbt extension. 
 
 <Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
 :::
 
-**Note:** <Constant name="core" /> (built on Python) supports <Term id="sql-rendering" /> but lacks SQL parsing and modern editor features powered by <Constant name="fusion_engine" /> and the <Term id="lsp"/>. If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options.
+If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options. Self-hosted means it's open-source and runs on your own infrastructure; <Constant name="dbt_platform" /> is hosted by dbt Labs and includes platform-level features.
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
