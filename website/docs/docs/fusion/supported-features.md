@@ -58,6 +58,7 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />static<br />analysis** |
 |:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
+| <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
 | SQL parsing and compilation <small>(SQL understanding)</small> | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Editor and dev experience** |  |  |  |  |  |
 | IntelliSense/autocomplete/hover info | ❌ | ✅ | ✅ | ✅ | ✅ |
