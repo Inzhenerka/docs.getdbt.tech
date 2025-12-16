@@ -67,9 +67,9 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | Refactoring tools (rename model/column) | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(Column refactor only)</small> |
 | Go-to definition/references/macro | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(Column go-to definition only)</small> |
 | Column-level lineage (in editor) | ❌ | ✅ | ✅ | <small>Coming soon</small>  | ✅ |
+| Developer compare changes | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ❌ |
 | **Platform and governance** |  |  |  |  |  |
 | Advanced CI compare changes | ❌ | ❌ | ✅ | ✅ | ❌ |
-| Developer compare changes | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ❌ |
 | dbt <Constant name="mesh" /> | ❌ | ❌ | ✅ | ✅ | ❌ |
 | Efficient testing | ❌ | ❌ | ✅ | ✅ | ✅ |
 | State-aware orchestration (SAO) | ❌ | ❌ | ✅ | ✅ | ❌ |
