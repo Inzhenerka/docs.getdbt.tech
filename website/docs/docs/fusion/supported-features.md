@@ -51,7 +51,7 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
-| **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code + Fusion**<br/><small>(self-hosted, max 15 users)</small> | **<Constant name="dbt_platform" />***<br/><small>(<Constant name="cloud_ide" /> or VS Code)</small> | **Requires <br />`static_analysis`** |
+| **Category/Capability** | **dbt Core**<br /><small>(self-hosted)</small> | **Fusion CLI**<br/><small>(self-hosted)</small> | **dbt VS Code ex+ Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" />***<br/><small>(<Constant name="cloud_ide" /> or VS Code and other dev surfaces)</small> | **Requires <br />`static_analysis`** |
 |:--------------|:--------------:|:---------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
 | <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
@@ -61,9 +61,9 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | IntelliSense/autocomplete/hover info | ❌ | ❌ | ✅ | ✅ | ✅ |
 | Inline errors (on save/in editor) | ❌ | 🟡 | ✅ | ✅ | ✅ |
 | Live CTE previews/compiled SQL view | ❌ | ❌ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
-| Refactoring tools (rename model/column) | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column refactor only)</small> |
-| Go-to definition/references/macro | ❌ | ❌ | ✅ | Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
-| Column-level lineage (in editor) | ❌ | ❌ | ✅ | Coming soon | ✅ |
+| Refactoring tools (rename model/column) | ❌ | ❌ | ✅ | VS Code extension: ✅ <br /> Studio IDE: Coming soon | 🟡 <br /><small>(Column refactor only)</small> |
+| Go-to definition/references/macro | ❌ | ❌ | ✅ | VS Code extension: ✅ <br /> Studio IDE: Coming soon | 🟡 <br /><small>(Column go-to definition only)</small> |
+| Column-level lineage (in editor) | ❌ | ❌ | ✅ | VS Code extension: ✅ <br /> Studio IDE: Coming soon  | ✅ |
 | **Platform and governance** |  |  |  |  |  |
 | Advanced CI compare changes | ❌ | ❌ | ❌ | ✅ | ❌ |
 | Developer compare changes | ❌ | ❌ | ❌ | Coming soon | ❌ |
@@ -73,7 +73,9 @@ Some features need you to configure [`static_analysis`](/docs/fusion/new-concept
 | Governance (PII/PHI tracking) | ❌ | ❌ | ❌ | Coming soon | ✅ |
 | CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | ❌ | Coming soon | ✅ |
 
-*Support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.
+*Support for other <Constant name="dbt_platform" /> tools, like <Constant name="semantic_layer" /> and <Constant name="explorer" />, is coming soon.  [About LSP](/docs/about-dbt-lsp)
+*“VS Code extension” refers to the [dbt VS Code extension](/docs/about-dbt-extension), whch is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors. For a detailed comparison of dbt development environments, see the [About LSP](/docs/about-dbt-lsp) doc.
+
 
 #### Additional considerations
 Here are some additional considerations if using the Fusion CLI without the VS Code extension or the VS Code extension without the Fusion CLI:
