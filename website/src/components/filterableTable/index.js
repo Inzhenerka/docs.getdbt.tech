@@ -3,6 +3,9 @@ import Markdown from 'markdown-to-jsx';
 import getSvgIcon from '../../utils/get-svg-icon';
 import styles from './styles.module.css';
 
+// Category keywords used to identify category/header rows in tables
+const CATEGORY_ROW_KEYWORDS = ['performance', 'experience', 'governance'];
+
 const stripMarkdown = (text) => {
   if (!text) return '';
   let strippedText = String(text).replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
@@ -78,10 +81,9 @@ const parseTableFromDOM = (tableElement) => {
       });
       if (cells.length > 0) {
         const firstCellText = stripMarkdown(extractTextFromElement(tr.querySelector('td, th')));
+        const firstCellLower = firstCellText.toLowerCase();
         const isCategoryRow = firstCellText.includes('**') || 
-                             firstCellText.toLowerCase().includes('performance') ||
-                             firstCellText.toLowerCase().includes('experience') ||
-                             firstCellText.toLowerCase().includes('governance');
+                             CATEGORY_ROW_KEYWORDS.some(keyword => firstCellLower.includes(keyword));
         data.push({
           cells,
           isCategoryRow,
