@@ -51,11 +51,13 @@ Note that we have removed some deprecated features and introduced more rigorous 
 <Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
 :::
 
-If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options. In this table, self-hosted means it's open-source and runs on your own infrastructure; <Constant name="dbt_platform" /> is hosted by dbt Labs and includes platform-level features.
+If you're not sure what features are available in <Constant name="fusion" />, dbt VS Code extension, <Constant name="fusion"/>-CLI or more &mdash; the following table focuses on <Constant name="fusion" />-powered options. 
+
+In this table, self-hosted means it's open-source and runs on your own infrastructure; <Constant name="dbt_platform" /> is hosted by dbt Labs and includes platform-level features.
 
 > ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
 
-| **Category/Capability** | **Fusion CLI**<br/><small>(self-hosted)</small> | **VS Code extension + Fusion**<br/><small>(self-hosted)</small> | **<Constant name="dbt_platform" /> + VS Code extension*** | **<Constant name="dbt_platform" /> + <Constant name="cloud_ide" /> + other dev surfaces*** | **Requires <br />[static analysis](/docs/fusion/new-concepts#principles-of-static-analysis)** |
+| **Category/Capability** |<span style={{whiteSpace: 'nowrap'}}>**Fusion CLI**</span><br/><span style={{whiteSpace: 'nowrap'}}><small>(self-hosted)</small></span> | **Fusion + VS Code extension**<br/><span style={{whiteSpace: 'nowrap'}}><small>(self-hosted)</small></span> | <span style={{whiteSpace: 'nowrap'}}>**dbt platform**</span> <br/>** + VS Code extension**<sup>1</sup> | **dbt platform** <span style={{whiteSpace: 'nowrap'}}> ** + Studio IDE** </span><br/><span style={{whiteSpace: 'nowrap'}}> ** + Other dev surfaces**<sup>2</sup> </span> | **Requires <br />[<span style={{whiteSpace: 'nowrap'}}>static analysis</span>](/docs/fusion/new-concepts#principles-of-static-analysis)** |
 |:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
 | **Engine performance** |  |  |  |  |  |
 | <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
@@ -76,8 +78,8 @@ If you're not sure what features are available in <Constant name="fusion" />, db
 | Governance (PII/PHI tracking) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
 | CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
 
-*Support for other <Constant name="dbt_platform" /> and <Term id="lsp"/> features, like <Constant name="visual_editor"/>, <Constant name="semantic_layer" /> or Column-level lineage, is coming soon. See [About LSP](/docs/about-dbt-lsp) for a more detailed comparison of dbt development environments.<br />
-*The [dbt VS Code extension](/docs/about-dbt-extension) is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors.
+<sup>1</sup> Support for other <Constant name="dbt_platform" /> and <Term id="lsp"/> features, like <Constant name="visual_editor"/>, <Constant name="semantic_layer" /> or Column-level lineage, is coming soon. See [About LSP](/docs/about-dbt-lsp) for a more detailed comparison of dbt development environments.<br />
+<sup>2</sup> The [dbt VS Code extension](/docs/about-dbt-extension) is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors.
 
 
 #### Additional considerations
