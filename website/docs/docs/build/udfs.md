@@ -45,7 +45,7 @@ Refer to [Function properties](/reference/function-properties) or [Function conf
 
 You can define SQL and Python UDFs in dbt. Python UDFs are currently supported in Snowflake and BigQuery when using <Constant name="core" />. 
 
-:::tip
+:::important UDF support
 When developing UDFs, it's important to understand the following support limitations:
 
 - Python UDFs aren't yet supported in <Constant name="fusion" />.
