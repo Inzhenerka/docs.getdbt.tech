@@ -41,10 +41,6 @@ Refer to [Function properties](/reference/function-properties) or [Function conf
 	</TabItem>
 	</Tabs>
 
-## Defining UDFs in dbt
-
-You can define SQL and Python UDFs in dbt. Python UDFs are currently supported in Snowflake and BigQuery when using <Constant name="core" />. 
-
 :::important UDF support
 When developing UDFs, it's important to understand the following support limitations:
 
@@ -53,6 +49,10 @@ When developing UDFs, it's important to understand the following support limitat
 
 See the [Limitations](#limitations) section below for the full list of currently supported UDF capabilities.
 :::
+
+## Defining UDFs in dbt
+
+You can define SQL and Python UDFs in dbt. Python UDFs are currently supported in Snowflake and BigQuery when using <Constant name="core" />. 
 
 Follow these steps to define UDFs in dbt:
 
