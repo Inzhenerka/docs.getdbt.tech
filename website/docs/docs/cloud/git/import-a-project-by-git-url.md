@@ -19,7 +19,7 @@ git@github.com:organization/repo-name.git
 user@custom-host.example.com:organization/repo-name.git
 ```
 
-Convert it to the standard SSH URL with `ssh://` and forward slashes:
+Convert it to the standard SSH URL (uses `ssh://` and `/`):
 ```
 ssh://git@github.com/organization/repo-name.git
 ssh://user@custom-host.example.com/organization/repo-name.git
