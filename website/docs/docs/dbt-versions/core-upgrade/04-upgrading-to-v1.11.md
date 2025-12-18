@@ -122,6 +122,13 @@ dbt parse --warn-error-options '{"silence": ["Deprecations"]}'
 
 - To improve performance, dbt can issue a single batch query when calculating source freshness through metadata, instead of executing one query per source. To enable this feature, set [bigquery_use_batch_source_freshness](/reference/global-configs/bigquery-changes#the-bigquery_use_batch_source_freshness-flag) to `True`.
 
+### Spark
+
+- New profile configurations have been added to enhance [retry handling for PyHive connections](/reference/resource-configs/spark-configs#retry-handling-for-pyhive-connections):
+  - `poll_interval`: Controls how frequently the adapter polls the Thrift server to check if an async query has completed.
+  - `query_timeout`: Adds an overall timeout (in seconds) for query execution. If a query exceeds the set duration during polling, it raises a `DbtRuntimeError`. This helps prevent indefinitely hanging queries.
+  - `query_retries`: Handles connection loss during query polling by automatically retrying.
+
 ## Quick hits
 
 You will find these quick hits in dbt Core v1.11:
