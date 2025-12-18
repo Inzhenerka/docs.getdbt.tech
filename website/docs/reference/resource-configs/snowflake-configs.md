@@ -300,10 +300,10 @@ In this example, you can set up a query tag to be applied to every query with th
 The [`incremental_strategy` config](/docs/build/incremental-strategy) controls how dbt builds incremental models. By default, dbt will use a [merge statement](https://docs.snowflake.net/manuals/sql-reference/sql/merge.html) on Snowflake to refresh incremental tables.
 
 Snowflake supports the following incremental strategies:
-- Merge (default)
-- Append
-- Delete+insert
-- Insert_overwrite
+- [`merge`](/docs/build/incremental-strategy#merge) (default)
+- [`append`](/docs/build/incremental-strategy#append)
+- [`delete+insert`](/docs/build/incremental-strategy#deleteinsert)
+- [`insert_overwrite`](/docs/build/incremental-strategy#insert_overwrite)
   - Note: This is not a standard dbt incremental strategy. `insert_overwrite` behaves like `truncate` + re-`insert` commands on Snowflake. It doesn't support partition-based overwrites, which means it'll overwrite the entire table intentionally. It's implemented as an incremental strategy because it aligns with dbt’s workflow of not dropping existing tables.
 - [`microbatch`](/docs/build/incremental-microbatch)
 
@@ -373,7 +373,7 @@ create or replace table my_database.my_schema.my_table as (
 
 ### Dynamic table clustering
 
-Starting in <Constant name="core"/> v1.10, dynamic tables support the `cluster_by` configuration. When set, dbt includes the clustering specification in the `CREATE DYNAMIC TABLE` statement.
+Starting in <Constant name="core"/> v1.11, dynamic tables support the `cluster_by` configuration. When set, dbt includes the clustering specification in the `CREATE DYNAMIC TABLE` statement.
 
 For example:
 
