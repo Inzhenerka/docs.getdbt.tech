@@ -590,3 +590,42 @@ semantic-models:
 </TabItem>
 </Tabs>
 </VersionBlock>
+
+### Access meta values in Python models
+
+To access custom `meta` values in [Python models](/docs/build/python-models), first retrieve the `meta` object using `dbt.config.get("meta")`, then access your custom values from it.
+
+<File name='models/schema.yml'>
+
+```yml
+models:
+  - name: my_python_model
+    config:
+      meta:
+        batch_size: 1000
+        processing_mode: "incremental"
+```
+
+</File>
+
+<File name='models/my_python_model.py'>
+
+```python
+def model(dbt, session):
+    # First, get the meta object
+    meta = dbt.config.get("meta")
+    
+    # Then access your custom values from meta
+    batch_size = meta.get("batch_size")
+    processing_mode = meta.get("processing_mode")
+    
+    # Use the meta values in your model logic
+    df = dbt.ref("upstream_model")
+    
+    if processing_mode == "incremental":
+        df = df.limit(batch_size)
+    
+    return df
+```
+
+</File>
