@@ -606,7 +606,9 @@ semantic-models:
 
 ### Access meta values in Python models
 
-To access custom `meta` values in [Python models](/docs/build/python-models), first retrieve the `meta` object using `dbt.config.get("meta")`, then access your custom values from it.
+To access custom `meta` values in [Python models](/docs/build/python-models), first retrieve the `meta` object using the `dbt.config.get()` method, then access your custom values from it.
+
+For example, if you have a model named `my_python_model` and you want to store custom values, you can do the following:
 
 <File name='models/schema.yml'>
 
