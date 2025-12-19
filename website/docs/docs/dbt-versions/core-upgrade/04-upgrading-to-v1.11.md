@@ -64,7 +64,6 @@ Deprecation warnings from JSON schema validation are now enabled by default when
 These warnings help you proactively identify and update deprecated configurations (such as misspelled config keys, deprecated properties, or incorrect data types).
 
 You'll see the following deprecation warnings by default:
-* [ConfigMetaFallbackDeprecation](/reference/deprecations#configmetafallbackdeprecation) 
 * [CustomKeyInConfigDeprecation](/reference/deprecations#customkeyinconfigdeprecation)
 * [CustomKeyInObjectDeprecation](/reference/deprecations#customkeyinobjectdeprecation)
 * [CustomTopLevelKeyDeprecation](/reference/deprecations#customtoplevelkeydeprecation)
@@ -135,4 +134,6 @@ You will find these quick hits in dbt Core v1.11:
 - The `dbt ls` command can now write out nested keys. This makes it easier to debug and troubleshoot your project. Example: `dbt ls --output json --output-keys config.materialized`
 - Manifest metadata now includes `run_started_at`, providing better tracking of when dbt runs were initiated.
 - When a model is disabled, unit tests for that model are automatically disabled as well.
+- You can use the new [`config.meta_get()`](/reference/dbt-jinja-functions/config#configmeta_get) and [`config.meta_require()`](/reference/dbt-jinja-functions/config#configmeta_require) functions to access custom configurations stored under `meta`.
+
 
