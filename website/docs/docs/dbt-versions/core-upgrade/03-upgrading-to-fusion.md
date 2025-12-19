@@ -365,8 +365,8 @@ Behavior when a key exists only in meta:
 
 | Method | Behavior |
 |--------|----------|
-| `config.get('my_key')` | Returns the default value and emits a warning |
-| `config.require('my_key')` | Raises an error and emits a warning |
+| `config.get('my_key')` | Returns the default value and emits a warning. |
+| `config.require('my_key')` | Raises an error and emits a warning. |
 
 To access custom configurations stored under meta, use the explicit methods:
 
