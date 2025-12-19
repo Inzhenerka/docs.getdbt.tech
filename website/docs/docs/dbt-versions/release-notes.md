@@ -16,12 +16,35 @@ pagination_prev: null
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## December 2025
+- **Enhancement**: For users in the default region (`US1`) that previously created a dbt account in the past, the dbt VS Code extension now supports registering with OAuth . This makes it easier to register the extension for users who may have forgotten their password or are locked out of their account. For more information, see [Register the extension](/docs/install-dbt-extension#register-the-extension).
+- **New and enhancements:** The dbt [Studio IDE user interface](/docs/cloud/studio-ide/ide-user-interface) has been enhanced to bring more powerful development features to your fingertips:
+  -  A newly designed toolbar that groups all of your action and project insight tabs for easy access.
+  - A dedicated inline **Commands** tab for history and logs.
+  - When you upgrade your development environment to the <Constant name="fusion_engine" />, the environment includes a new **Problems** tab that gives you live error detection on issues that could block your project from running successfully. 
+ 
+## November 2025
+
+- **Behavior change**: [dbt Copilot](/docs/cloud/dbt-copilot) now requires all input files to use UTF-8 encoding. Files that use other encodings will return an error. If you're working with legacy files that use a different encoding, convert them to UTF-8 before using Copilot.
+- **Enhancement**: dbt Copilot now has improved reliability when working with OpenAI. This includes longer timeouts, better retry behavior, and improved handling of reasoning messages for long code generations, resulting in fewer failures and more successful completions.
+- **New**: The Snowflake adapter now supports basic table materialization on Iceberg tables registered in a Glue catalog through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). For more information, see [Glue Data Catalog](/docs/mesh/iceberg/snowflake-iceberg-support#external-catalogs).
+- **New**: You can use the `platform_detection_timeout_seconds` parameter to control how long the Snowflake connector waits when detecting the cloud platform where the connection is being made. For more information, see [Snowflake setup](/docs/core/connect-data-platform/snowflake-setup#platform_detection_timeout_seconds).
+- **New**: The `cluster_by` configuration is supported in dynamic tables. For more information, see [Dynamic table clustering](/reference/resource-configs/snowflake-configs#dynamic-table-clustering).
+- **New**: When jobs exceed their configured timeout, the BigQuery adapter sends a cancellation request to the BigQuery job. For more information, see [Connect BigQuery](/docs/cloud/connect-data-platform/connect-bigquery#job-creation-timeout-seconds).
+
 ## October 2025
+
+- **New**: The [docs.getdbt.com](http://docs.getdbt.com/) documentation site has introduced an LLM Context menu on all product documentation and guide pages. This menu provides users with quick options to interact with the current page using LLMs. You can can now:
+  - Copy the page as raw Markdown &mdash; This makes it easier to reference or reuse documentation content.
+  - Open the page directly in ChatGPT or Claude &mdash; This redirects you to a chat with the LLM and automatically loads a message asking it to read the page, helping you start a conversation with context from the page.
+  <Lightbox src="/img/llm-menu.png" width="50%" title="LLM Context menu on documentation pages" />
+- **Enhancement**:  The CodeGenCodeLen feature has been re-introduced to the <Constant name="cloud_ide" />. This feature was [temporarily](#pre-coalesce) removed in the previous release due to compatibility issues.
 
 ### Coalesce 2025 announcements
 
 The following features are new or enhanced as part of [dbt's Coalesce analytics engineering conference](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) from October 13-16, 2025:
 
+- **New**: The [dbt MCP server](/docs/dbt-ai/about-mcp) is now generally available (GA). For more information on the dbt MCP server and dbt Agents, refer to the [Announcing dbt Agents and the remote dbt MCP Server: Trusted AI for analytics](https://www.getdbt.com/blog/dbt-agents-remote-dbt-mcp-server-trusted-ai-for-analytics) blog post.
 - **Private preview**: The [dbt platform (powered by Fusion)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) is now in private preview. If you have any questions, please reach out to your account manager.
   - [About data platform connections](/docs/cloud/connect-data-platform/about-connections) lists all available <Constant name="dbt_platform" /> connections on Fusion and the supported authentication methods per connection. 
 - **New**: Fusion‑specific configuration is now available for BigQuery, Databricks, Redshift, and Snowflake. For more information, see [Connect Fusion to your data platform](/docs/fusion/connect-data-platform-fusion/profiles.yml).
@@ -36,9 +59,9 @@ The following features are new or enhanced as part of [dbt's Coalesce analytics 
     - **Reused** tag in **Latest status** lineage lens to see reused models in your DAG
     - **Clear cache** button on the **Environments** page to reset cached state when needed
 - **New**: [dbt <Constant name="query_page" />](/docs/explore/dbt-insights) is now generally available (GA)!
-  - **Private beta**: The [<Constant name="copilot" /> agent](/docs/explore/navigate-dbt-insights#dbt-copilot) is now available in dbt <Constant name="query_page" />. The <Constant name="copilot" /> agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. For more information, see [Analyze data with the Copilot agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-copilot-agent).
+  - **Private beta**: The [Analyst agent](/docs/explore/navigate-dbt-insights#dbt-copilot) is now available in dbt <Constant name="query_page" />. The Analyst agent is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. For more information, see [Analyze data with the Analyst agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-analyst-agent).
   - **Beta**: dbt <Constant name="query_page" /> now has a [Query Builder](/docs/explore/navigate-dbt-insights#query-builder), where you can build SQL queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities.
-  - **Enhancement**: In [dbt <Constant name="query_page" />](/docs/explore/dbt-insights), projects upgraded to the [<Constant name="fusion_engine" />](/docs/fusion/about-fusion) get [Language Server Protocol (LSP) features](/docs/explore/navigate-dbt-insights#lsp-features) and their compilation running on <Constant name="fusion" />.
+  - **Enhancement**: In [dbt <Constant name="query_page" />](/docs/explore/dbt-insights), projects upgraded to the [<Constant name="fusion_engine" />](/docs/fusion) get [Language Server Protocol (LSP) features](/docs/explore/navigate-dbt-insights#lsp-features) and their compilation running on <Constant name="fusion" />.
 - **New**: [MetricFlow](/docs/build/about-metricflow) is now developed and maintained as part of the [Open Semantic Interchange (OSI)](https://www.snowflake.com/en/blog/open-semantic-interchange-ai-standard/) initiative, and is distributed under the [Apache 2.0 license](https://github.com/dbt-labs/metricflow/blob/main/LICENSE). For more information, see the blog post about [Open sourcing MetricFlow](https://www.getdbt.com/blog/open-source-metricflow-governed-metrics).
 
 ### Pre-Coalesce 
@@ -96,7 +119,7 @@ Snowflake connections that use External OAuth for user credentials can now emit 
 The following features are new or enhanced as part of our [dbt Launch Showcase](https://www.getdbt.com/resources/webinars/2025-dbt-cloud-launch-showcase) on May 28th, 2025:
 
 - **New**: The dbt Fusion engine is the brand new dbt engine re-written from the ground up to provide incredible speed, cost-savings tools, and comprehensive SQL language tools. The dbt Fusion engine is now available in beta for Snowflake users.
-  - Read more [about Fusion](/docs/fusion/about-fusion).
+  - Read more [about Fusion](/docs/fusion).
   - Understand what actions you need to take to get your projects Fusion-ready with the [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
   - Begin testing today with the [quickstart guide](/guides/fusion).
   - Know [where we're headed with the dbt Fusion engine](https://getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine). 
@@ -114,7 +137,7 @@ The following features are new or enhanced as part of our [dbt Launch Showcase](
 - **New**: You can use Copilot to create a `dbt-styleguide.md` for dbt projects. The generated style guide template includes SQL style guidelines, model organization and naming conventions, model configurations and testing practices, and recommendations to enforce style rules. For more information, see [Copilot style guide](/docs/cloud/copilot-styleguide).
 - **New**: Copilot chat is an interactive interface within the Studio IDE where you can generate SQL code from natural language prompts and ask analytics-related questions. It integrates contextual understanding of your dbt project and assists in streamlining SQL development. For more information, see [Copilot chat](/docs/cloud/copilot-chat-in-studio).
 - **New**: Leverage dbt Copilot to generate SQL queries in [Insights](/docs/explore/dbt-insights) from natural language prompts, enabling efficient data exploration within a context-aware interface.
-- **New**: The dbt platform Cost management dashboard is now available as a preview for Snowflake users on Enterprise and Enteprise Plus plans. Gain valuable insights into your warehouse spend with the comprehensive and interactive dashboard. Read more [about it](/docs/cloud/cost-management) to get started with your cost savings analysis today!
+- **New**: The dbt platform Cost management dashboard was available as a preview for Snowflake users on Enterprise and Enterprise Plus plans. On November 25, 2025, we retired the cost management dashboard to focus on building a more scalable and integrated cost-insights experience, expected in early 2026.
 - **New**: Apache Iceberg catalog integration support is now available on Snowflake and BigQuery! This is essential to making your dbt Mesh interoperable across platforms, built on Iceberg. Read more about [Iceberg](/docs/mesh/iceberg/apache-iceberg-support) to begin creating Iceberg tables. 
 - **Update**: Product renaming and other changes. For more information, refer to [Updated names for dbt platform and features](https://getdbt.com/blog/updated-names-for-dbt-platform-and-features).
   <Expandable alt_header="Product names key">
@@ -163,7 +186,7 @@ The following features are new or enhanced as part of our [dbt Developer day](ht
 
 ## February 2025
 
-- **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) added a new timeout parameter to Semantic Layer client and to underlying GraphQL clients to specify timeouts. Set a timeout number or use the `total_timeout` parameter in the global `TimeoutOptions` to control connect, execute and close timeouts granularly. `ExponentialBackoff.timeout_ms` is now deprecated.
+- **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) added a new timeout parameter to Semantic Layer client and to underlying GraphQL clients to specify timeouts. Set a timeout number or use the `total_timeout` parameter in the global `TimeoutOptions` to control connect, execute, and close timeouts granularly. `ExponentialBackoff.timeout_ms` is now deprecated.
 - **New**: The [Azure DevOps](/docs/cloud/git/connect-azure-devops) integration for <Constant name="git" /> now supports [Entra service principal apps](/docs/cloud/git/setup-service-principal) on <Constant name="cloud" /> Enterprise accounts. Microsoft is enforcing MFA across user accounts, including service users, which will impact existing app integrations. This is a phased rollout, and dbt Labs recommends [migrating to a service principal](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) on existing integrations once the option becomes available in your account.
 - **New**: Added the `dbt invocation` command to the [dbt CLI](/docs/cloud/cloud-cli-installation). This command allows you to view and manage active invocations, which are long-running sessions in the dbt CLI. For more information, see [dbt invocation](/reference/commands/invocation).
 - **New**: Users can now switch themes directly from the user menu, available [in Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). We have added support for **Light mode** (default), **Dark mode**, and automatic theme switching based on system preferences. The selected theme is stored in the user profile and will follow users across all devices.

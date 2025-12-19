@@ -57,7 +57,7 @@ This release adds a few new pieces of connective tissue, notably OAuth for BigQu
 
 - Update IP allowlist
 - User can OAuth for BigQuery in profile credentials
-- Adding SparkAdapter backend models, mappers and services
+- Adding SparkAdapter backend models, mappers, and services
 - Added BigQuery OAuth integration
 - Adding db index for owner_thread_id
 
@@ -224,7 +224,7 @@ This release includes security enhancements and improvements across the entire
 <Constant name="cloud" /> application.
 
 #### Enhancements
-- Support for viewing development docs inside of the <Constant name="cloud_ide" /> ([docs](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)
+- Support for viewing development docs inside of the <Constant name="cloud_ide" /> ([docs](/docs/cloud/studio-ide/develop-in-studio)
 - Change CI temporary schema names to be prefixed with `dbt_cloud` instead of `sinter`
 - Change coloring and iconography to improve accessibility and UX across the application
 - [Enterprise] Support the specification of multiple authorized domains in SSO configuration
@@ -339,7 +339,7 @@ This release includes dbt 0.17.0 and a number of IDE quality of life improvement
 
 - Added dbt 0.17.0
 - Added the ability to create a new folder in the IDE
-- Added gitignore status to file system and display dbt artifacts, including directories dbt_modules, logs and target
+- Added gitignore status to file system and display dbt artifacts, including directories dbt_modules, logs, and target
 - (Cloud only) Added rollbar and update some various error handling clean up
 - (On-premises only) Admin site: allow Repository's Pull Request Template field to be blank
 - (On-premises only) Added AWS KMS support

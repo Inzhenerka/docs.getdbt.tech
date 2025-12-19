@@ -38,7 +38,6 @@ models:
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: model_name
@@ -76,7 +75,6 @@ sources:
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 [sources](/reference/source-properties):
   - name: model_name
@@ -113,7 +111,6 @@ seeds:
 <File name='seeds/schema.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: seed_name
@@ -147,7 +144,6 @@ snapshots:
 <File name='snapshots/schema.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -224,7 +220,6 @@ macros:
 <File name='macros/schema.yml'>
 
 ```yml
-version: 2
 
 [macros](/reference/macro-properties):
   - name: macro_name
@@ -254,7 +249,6 @@ exposures:
 <File name='models/exposures.yml'>
 
 ```yml
-version: 2
 
 exposures:
   - name: exposure_name
@@ -416,13 +410,25 @@ Depending on the resource you're configuring, `meta` may be available within the
 
 
 ## Examples
+To demonstrate how to use the `meta` config, here are some examples:
+
+<!-- no toc -->
+  - [Designate a model owner](#designate-a-model-owner)
+  - [Designate a source column as containing PII](#designate-a-source-column-as-containing-pii)
+  - [Configure one meta attribute for all seeds](#configure-one-meta-attribute-for-all-seeds)
+  - [Override one meta attribute for a single model](#override-one-meta-attribute-for-a-single-model)
+  - [Assign owner and favorite\_color in the dbt\_project.yml as a config property](#assign-owner-and-favorite_color-in-the-dbt_projectyml-as-a-config-property)
+  - [Assign meta to semantic model](#assign-meta-to-semantic-model)
+  - [Assign meta to dimensions, measures, entities](#assign-meta-to-dimensions-measures-entities)
+  - [Access meta values in Python models](#access-meta-values-in-python-models)
+
+
 ### Designate a model owner
 Additionally, indicate the maturity of a model using a `model_maturity:` key.
 
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: users
@@ -441,7 +447,6 @@ models:
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: salesforce
@@ -598,3 +603,44 @@ semantic-models:
 </TabItem>
 </Tabs>
 </VersionBlock>
+
+### Access meta values in Python models
+
+To access custom `meta` values in [Python models](/docs/build/python-models), first retrieve the `meta` object using the `dbt.config.get()` method, then access your custom values from it.
+
+For example, if you have a model named `my_python_model` and you want to store custom values, you can do the following:
+
+<File name='models/schema.yml'>
+
+```yml
+models:
+  - name: my_python_model
+    config:
+      meta:
+        batch_size: 1000
+        processing_mode: "incremental"
+```
+
+</File>
+
+<File name='models/my_python_model.py'>
+
+```python
+def model(dbt, session):
+    # First, get the meta object
+    meta = dbt.config.get("meta")
+    
+    # Then access your custom values from meta
+    batch_size = meta.get("batch_size")
+    processing_mode = meta.get("processing_mode")
+    
+    # Use the meta values in your model logic
+    df = dbt.ref("upstream_model")
+    
+    if processing_mode == "incremental":
+        df = df.limit(batch_size)
+    
+    return df
+```
+
+</File>

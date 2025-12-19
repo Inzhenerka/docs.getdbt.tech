@@ -8,7 +8,7 @@ pagination_next: "docs/cloud/about-cloud/architecture"
 pagination_prev: null
 ---
 
-<Constant name="cloud" /> is the fastest and most reliable way to deploy dbt. Develop, test, schedule, document, and investigate data models all in one browser-based UI.
+<Constant name="dbt_platform" /> (formerly dbt Cloud) is the fastest and most reliable way to deploy dbt. Develop, test, schedule, document, and investigate data models all in one browser-based UI.
 
 In addition to providing a hosted architecture for running dbt across your organization, <Constant name="cloud" /> comes equipped with turnkey support for scheduling jobs, CI/CD, hosting documentation, monitoring and alerting, an integrated development environment (<Constant name="cloud_ide" />), and allows you to develop and run dbt commands from your local command line interface (CLI) or code editor.
 
@@ -25,7 +25,7 @@ In addition to providing a hosted architecture for running dbt across your organ
 <Card
     title="dbt Studio IDE"
     body="The IDE is the easiest and most efficient way to develop dbt models, allowing you to build, test, run, and version control your dbt projects directly from your browser."
-    link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud"
+    link="/docs/cloud/studio-ide/develop-in-studio"
     icon="dbt-bit"/>
 
 <Card
@@ -126,4 +126,4 @@ In addition to providing a hosted architecture for running dbt across your organ
 
 - [<Constant name="cloud" /> plans and pricing](https://www.getdbt.com/pricing/)
 - [Quickstart guides](/docs/get-started-dbt)
-- [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)
+- [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio)

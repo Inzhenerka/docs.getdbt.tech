@@ -46,7 +46,7 @@ Configure your project to use a different dbt version than what's configured in 
 
 ## dbt Fusion engine <Lifecycle status="private_preview" />
 
-dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion/about-fusion), a ground-up rebuild of dbt. This is currently in private preview on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
+dbt Labs has introduced the new [<Constant name="fusion_engine" />](/docs/fusion), a ground-up rebuild of dbt. This is currently in private preview on the dbt platform. Eligible customers can update environments to Fusion using the same workflows as v1.x, but remember:
 - If you don't see the `Latest Fusion` release track as an option, you should check with your dbt Labs account team about eligibility.
 - To increase the compatibility of your project, update all jobs and environments to the `Latest` release track and read more about the changes in our [upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 - Make sure you're using a supported adapter and authentication method:
@@ -97,7 +97,7 @@ To begin the process of upgrading to <Constant name="fusion" /> with the assista
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/start-upgrade.png" width="60%" title="Start the Fusion upgrade."/>
 2. At the top of the <Constant name="cloud_ide" /> click **Check deprecation warnings**. 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Begin the process of parsing for deprecation warnings."/>
-3. dbt parses your project for the deprecations and presents a list of all deprecation warnings along with the option to **Autofix warnings**. Autofixing attempts to correct all syntax errors automatically. See [Fix deprecation warnings](/docs/cloud/dbt-cloud-ide/autofix-deprecations) for more information. 
+3. dbt parses your project for the deprecations and presents a list of all deprecation warnings along with the option to **Autofix warnings**. Autofixing attempts to correct all syntax errors automatically. See [Fix deprecation warnings](/docs/cloud/studio-ide/autofix-deprecations) for more information. 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/check-deprecations.png" width="60%" title="Begin the process of parsing for deprecation warnings."/>
 4. Once the deprecation warnings have been resolved, click the **Enable Fusion** button. This upgrades your development environment to Fusion!
 

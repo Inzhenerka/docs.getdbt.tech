@@ -5,7 +5,7 @@ id: "bigquery"
 level: 'Beginner'
 icon: 'bigquery'
 hide_table_of_contents: true
-tags: ['BigQuery', 'platform','Quickstart']
+tags: ['BigQuery', 'Platform', 'Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -308,7 +308,6 @@ Sources make it possible to name and describe the data loaded into your warehous
     <File name='models/sources.yml'>
 
     ```yml
-    version: 2
 
     sources:
         - name: jaffle_shop

@@ -1,9 +1,8 @@
 ---
-title: "About the dbt Fusion engine"
+title: "About Fusion"
+sidebar_label: "About Fusion"
 id: "about-fusion"
 description: "Fusion is the next-generation engine for dbt."
-pagination_next: null
-pagination_prev: null
 ---
 
 # About the dbt Fusion engine
@@ -42,7 +41,7 @@ As a developer, Fusion can:
 
 All of that and more is available in the [dbt extension for VSCode](/docs/about-dbt-extension), with Fusion at the foundation.
 
-Fusion also enables more-efficient deployments of large DAGs. By tracking which columns are used where, and which source tables have fresh data, Fusion can ensure that models are rebuilt only when they need to process new data. This ["state-aware orchestration"](/docs/deploy/state-aware-about) is a feature of the dbt platform.
+Fusion also enables more-efficient deployments of large DAGs. By tracking which columns are used where, and which source tables have fresh data, Fusion can ensure that models are rebuilt only when they need to process new data. This ["state-aware orchestration"](/docs/deploy/state-aware-about) is a feature of the dbt platform (formerly dbt Cloud).
 
 ### Thread management
 
@@ -57,7 +56,7 @@ For more information, refer to [Using threads](/docs/running-a-dbt-project/using
 You can:
 - Select Fusion from the [dropdown/toggle in the dbt platform](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) <Lifecycle status="private_preview" />
 - [Install the dbt extension for VSCode](/docs/install-dbt-extension) <Lifecycle status="preview" />
-- [Install the Fusion CLI](/docs/fusion/install-fusion) <Lifecycle status="preview" />
+- [Install the Fusion CLI](/docs/fusion/install-fusion-cli) <Lifecycle status="preview" />
 
 
 Go straight to the [Quickstart](/guides/fusion) to _feel the Fusion_ as fast as possible.

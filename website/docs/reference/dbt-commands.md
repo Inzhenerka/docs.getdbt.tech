@@ -4,7 +4,7 @@ title: "dbt Command reference"
 
 You can run dbt using the following tools:
 
-- In your browser with the [<Constant name="cloud_ide" />](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) 
+- In your browser with the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) 
 - On the command line interface using the [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) or open-source [<Constant name="core" />](/docs/core/installation-overview).
   
 A key distinction with the tools mentioned, is that <Constant name="cloud_cli" /> and <Constant name="cloud_ide" /> are designed to support safe parallel execution of dbt commands, leveraging <Constant name="cloud" />'s infrastructure and its comprehensive [features](/docs/cloud/about-cloud/dbt-cloud-features). In contrast, <Constant name="core" /> _doesn't support_ safe parallel execution for multiple invocations in the same process. Learn more in the [parallel execution](#parallel-execution) section.
@@ -39,7 +39,7 @@ Some commands are not yet supported in the <Constant name="fusion_engine" /> or 
 
 | Command | Description | Parallel execution |  <div style={{width:'250px'}}>Caveats</div> |
 |---------|-------------| :-----------------:| ------------------------------------------ |
-| [build](/reference/commands/build) | Builds and tests all selected resources (models, seeds, snapshots, tests) |  ❌ | All tools <br /> All [supported versions](/docs/dbt-versions/core) | 
+| [build](/reference/commands/build) | Builds and tests all selected resources (models, seeds, tests, and more) |  ❌ | All tools <br /> All [supported versions](/docs/dbt-versions/core) | 
 | cancel | Cancels the most recent invocation. | N/A | <Constant name="cloud_cli" /> <br /> Requires [dbt v1.6 or higher](/docs/dbt-versions/core) |
 | [clean](/reference/commands/clean) | Deletes artifacts present in the dbt project |  ✅ | All tools <br /> All [supported versions](/docs/dbt-versions/core) |
 | [clone](/reference/commands/clone) | Clones selected models from the specified state |  ❌ | All tools <br /> Requires [dbt v1.6 or higher](/docs/dbt-versions/core) |

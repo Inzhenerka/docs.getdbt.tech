@@ -2,12 +2,12 @@
 title: About the dbt VS Code extension
 id: about-dbt-extension
 description: "Bring all the speed and power of the dbt Fusion engine to your local development workflow."
-sidebar_label: "About the dbt VS Code extension"
+sidebar_label: "dbt VS Code extension"
 image: /img/docs/extension/extension-marketplace.png
 pagination_next: "docs/dbt-extension-features"
 ---
 
-# About the dbt VS Code Extension <Lifecycle status="preview" />
+# About the dbt VS Code extension <Lifecycle status="preview" />
 
 The dbt VS Code extension brings a hyper-fast, intelligent, and cost-efficient dbt development experience to VS Code.
 This is the only way to enjoy all the power of the <Constant name="fusion_engine" /> while developing locally.
@@ -53,7 +53,7 @@ The dbt extension caches important schema information from your data warehouse t
 
 1. Click the **dbt logo** on the sidebar to open the menu.
 2. Expand the **Extension info** section and location the **Actions** subsection.
-3. Click **Refresh source schemas** to update.
+3. Click **Clear Cache** to update.
 
 ### Productivity features
 
@@ -65,7 +65,7 @@ We've moved productivity features to their own page! Check out their [new locati
 
 ## Using the extension
 
-Your dbt environment must be using the dbt Fusion engine in order to use this extension. See [the Fusion documentation](/docs/fusion/about-fusion) for more on eligibility and upgrading.
+Your dbt environment must be using the dbt Fusion engine in order to use this extension. See [the Fusion documentation](/docs/fusion) for more on eligibility and upgrading.
 
 Once installed, the dbt extension automatically activates when you open any `.sql` or `.yml` file inside of a dbt project directory. 
 
@@ -76,8 +76,7 @@ After installation, you may want to configure the extension to better fit your d
 1. Open the VS Code settings by pressing `Ctrl+,` (Windows/Linux) or `Cmd+,` (Mac).
 2. Search for `dbt`. On this page, you can adjust the extension’s configuration options to fit your needs.
 
-<Lightbox src="/img/docs/extension/dbt-extension-settings.png" width="30%" title="dbt extension settings within the VS Code settings."/>
-
+<Lightbox src="/img/docs/extension/dbt-extension-settings.png" width="70%" title="dbt extension settings within the VS Code settings."/>
 
 ## Known limitations
 
@@ -91,6 +90,8 @@ The following are currently known limitations of the dbt extension:
   - Future releases of the dbt extension will address these limitations
 
 - **Renaming models:** When a model file is renamed, the dbt extension will apply edits to update all `ref()` calls that reference the renamed model. Due to limitations of VS Code's Language Server Client, we are not able to auto-save these edit files. As a result, you may see that renaming a model file results in compiler errors in your project. To fix these errors, you must either manually save each file that was edited by the dbt extension, or click **File** --> **Save All** to save all edited files.
+
+- **Using Cursor's Agent mode:** When using the dbt extension in Cursor, lineage visualization works best in Editor mode and doesn't render in Agent mode. If you're working in Agent mode and need to view lineage, switch to Editor mode to access the full lineage tab functionality.
 
 
 ## Support
