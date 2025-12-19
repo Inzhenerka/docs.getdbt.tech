@@ -410,6 +410,19 @@ Depending on the resource you're configuring, `meta` may be available within the
 
 
 ## Examples
+To demonstrate how to use the `meta` config, here are some examples:
+
+<!-- no toc -->
+  - [Designate a model owner](#designate-a-model-owner)
+  - [Designate a source column as containing PII](#designate-a-source-column-as-containing-pii)
+  - [Configure one meta attribute for all seeds](#configure-one-meta-attribute-for-all-seeds)
+  - [Override one meta attribute for a single model](#override-one-meta-attribute-for-a-single-model)
+  - [Assign owner and favorite\_color in the dbt\_project.yml as a config property](#assign-owner-and-favorite_color-in-the-dbt_projectyml-as-a-config-property)
+  - [Assign meta to semantic model](#assign-meta-to-semantic-model)
+  - [Assign meta to dimensions, measures, entities](#assign-meta-to-dimensions-measures-entities)
+  - [Access meta values in Python models](#access-meta-values-in-python-models)
+
+
 ### Designate a model owner
 Additionally, indicate the maturity of a model using a `model_maturity:` key.
 
