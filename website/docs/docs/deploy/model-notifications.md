@@ -72,7 +72,7 @@ The `owner` field supports `name` and `email`, which are required values.
 
 Additional arbitrary fields (such as `favorite_food`) are deprecated and will no longer be allowed in a future release.
 
-To store additional metadata (like Slack channels, team info, or custom attributes), use `config: meta:` instead.
+To store additional metadata (like Slack channels, team info, or custom attributes), use `config.meta` instead.
 :::
 
 ## Attach groups to models
