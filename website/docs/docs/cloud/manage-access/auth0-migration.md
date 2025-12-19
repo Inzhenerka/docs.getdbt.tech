@@ -27,7 +27,7 @@ There are two fields in the SSO settings that you need for the migration:
 - **Single sign-on URL:** This will be in the format of your login URL `https://<YOUR_AUTH0_URI>/login/callback?connection=<SLUG>`
 - **Audience URI (SP Entity ID):** This will be in the format `urn:auth0:<YOUR_AUTH0_ENTITYID>:<SLUG>`
 
-Replace `<SLUG>` with your accounts login URL slug. 
+Replace `<SLUG>` with your account's login URL slug. 
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/sso-uris.png" title="The SSO information in account settings." />
 
@@ -46,7 +46,7 @@ The Okta fields that will be updated are:
 
 Below are sample steps to update. You must complete all of them to ensure uninterrupted access to <Constant name="cloud" /> and you should coordinate with your identity provider admin when making these changes.
 
-1. Replace `<SLUG>` with your organization’s login URL slug.
+1. Replace `<SLUG>` with your account’s login URL slug.
 
 Here is an example of an updated SAML 2.0 setup in Okta.
 
