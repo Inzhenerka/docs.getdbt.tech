@@ -3,6 +3,8 @@ title: "Set up SSO with SAML 2.0"
 id: "set-up-sso-saml-2.0"
 ---
 
+import LoginSlug from '/snippets/_login-slug.md';
+
 # Set up SSO with SAML 2.0 <Lifecycle status="managed, managed_plus" />
 
 <Constant name="cloud" /> Enterprise-tier plans support single-sign on (SSO) for any SAML 2.0-compliant identity provider (IdP).
@@ -38,8 +40,6 @@ You'll need administrator access to your SAML 2.0 compliant identity provider to
 #### Configuring the application
 
 <Snippet path="access_url" />
-
-import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -140,8 +140,6 @@ You can use the instructions in this section to configure Okta as your identity 
 ### Configure the Okta application
 
 <Snippet path="access_url" />
-
-import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -246,8 +244,6 @@ Use this section if you are configuring Google as your identity provider.
 
 <Snippet path="access_url" />
 
-import LoginSlug from '/snippets/_login-slug.md';
-
 <LoginSlug />
 
 1. Sign into your **Google Admin Console** via an account with super administrator privileges.
@@ -312,8 +308,6 @@ If you're using Microsoft Entra ID (formerly Azure AD), the instructions below w
 ### Create a Microsoft Entra ID Enterprise application
 
 <Snippet path="access_url" />
-
-import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -391,8 +385,6 @@ To configure OneLogin, you will need **Administrator** access.
 ### Configure the OneLogin application
 
 <Snippet path="access_url" />
-
-import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
