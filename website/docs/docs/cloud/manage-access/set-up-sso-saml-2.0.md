@@ -39,9 +39,9 @@ You'll need administrator access to your SAML 2.0 compliant identity provider to
 
 <Snippet path="access_url" />
 
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be altered. It should contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would be `dbt-labs`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts.
+Import LoginSlug from 'from '/snippets/_login-slug.md';
+
+<LoginSlug />
 
 When prompted for the SAML 2.0 application configurations, supply the following values:
 
@@ -141,9 +141,9 @@ You can use the instructions in this section to configure Okta as your identity 
 
 <Snippet path="access_url" />
 
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be changed. It should contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would be `dbt-labs`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts.
+Import LoginSlug from 'from '/snippets/_login-slug.md';
+
+<LoginSlug />
 
 1. On the **General Settings** page, enter the following details:
 
@@ -246,9 +246,9 @@ Use this section if you are configuring Google as your identity provider.
 
 <Snippet path="access_url" />
 
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be changed. It should contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would be `dbt-labs`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts.
+Import LoginSlug from 'from '/snippets/_login-slug.md';
+
+<LoginSlug />
 
 1. Sign into your **Google Admin Console** via an account with super administrator privileges.
 2. From the Admin console Home page, go to **Apps** and then click **Web and mobile apps**.
@@ -313,9 +313,9 @@ If you're using Microsoft Entra ID (formerly Azure AD), the instructions below w
 
 <Snippet path="access_url" />
 
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be changed. It should contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would be `dbt-labs`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts.
+Import LoginSlug from 'from '/snippets/_login-slug.md';
+
+<LoginSlug />
 
 Follow these steps to set up single sign-on (SSO) with <Constant name="cloud" />:
 
@@ -392,9 +392,9 @@ To configure OneLogin, you will need **Administrator** access.
 
 <Snippet path="access_url" />
 
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be changed. It should contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would be `dbt-labs`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts.
+Import LoginSlug from 'from '/snippets/_login-slug.md';
+
+<LoginSlug />
 
 1. Log into OneLogin, and add a new SAML 2.0 Application.
 2. Configure the application with the following details:

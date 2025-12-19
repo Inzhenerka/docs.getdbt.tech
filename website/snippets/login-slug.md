@@ -1,0 +1,3 @@
+To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be altered. It should contain only letters, numbers, and dashes.
+For example, the login URL slug for dbt Labs would be `dbt-labs`.
+Login URL slugs are unique across all <Constant name="cloud" /> accounts.

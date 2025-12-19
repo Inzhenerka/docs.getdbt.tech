@@ -59,9 +59,9 @@ Click **Next** to continue.
 
 The SAML Settings page configures how Okta and <Constant name="cloud" /> communicate. You will want to use an [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan.
 
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. Login URL slugs are automatically set by dbt and can't be changed. It should contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would be `dbt-labs`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts. 
+Import LoginSlug from 'from '/snippets/_login-slug.md';
+
+<LoginSlug />
 
 <Snippet path="access_url" />
 
