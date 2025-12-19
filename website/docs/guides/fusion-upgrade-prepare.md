@@ -3,7 +3,7 @@ title: "Upgrade to Fusion part 1: Preparing to upgrade"
 id: "prepare-fusion-upgrade"
 level: 'Intermediate'
 icon: 'zap'
-hide_table_of_contents: true
+hide_table_of_contents: false
 tags: ['dbt Fusion engine', 'dbt platform', 'Upgrade']
 recently_updated: true
 intro_text: This guide helps you prepare for an in-place upgrade from dbt Core to the dbt Fusion engine in the dbt platform.
