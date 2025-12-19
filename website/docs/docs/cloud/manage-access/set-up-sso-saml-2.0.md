@@ -39,7 +39,7 @@ You'll need administrator access to your SAML 2.0 compliant identity provider to
 
 <Snippet path="access_url" />
 
-import LoginSlug from from '/snippets/_login-slug.md';
+import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
