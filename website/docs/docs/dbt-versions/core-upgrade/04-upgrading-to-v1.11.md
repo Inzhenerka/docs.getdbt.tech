@@ -55,6 +55,8 @@ You can read more about each of these behavior changes in the following links:
 
 - (Introduced, disabled by default) [`require_unique_project_resource_names`](/reference/global-configs/behavior-changes#unique-project-resource-names). This flag is set to `False` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateNameDistinctNodeTypesDeprecation`](/reference/deprecations#duplicatenamedistinctnodetypesdeprecation) warning. When set to `True`, dbt raises a `DuplicateResourceNameError` error.
 
+- (Introduced, disabled by default) [`require_ref_searches_node_package_before_root`](/reference/global-configs/behavior-changes#package-ref-search-order). This flag is set to `False` by default. With this setting, when dbt resolves a `ref()` in a package model, it searches for the referenced model in the root project _first_, then in the package where the model is defined. When set to `True`, dbt searches the package where the model is defined _before_ searching the root project.
+
 ### Deprecation warnings enabled by default
 
 Deprecation warnings from JSON schema validation are now enabled by default when validating your YAML configuration files (such as `schema.yml` and `dbt_project.yml`) for projects running using the Snowflake, Databricks, BigQuery, and Redshift adapters.
