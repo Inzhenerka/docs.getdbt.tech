@@ -48,7 +48,7 @@ function useDocTOC() {
   // html markdown headings for current version. 
   const { version: dbtVersion } = useContext(VersionContext)
   const [currentToc, setCurrentToc] = useState(toc)
-  const [tocReady, setTocReady] = useState(true)
+  const [tocReady, setTocReady] = useState(false)
 
   async function fetchElements() {
     // For guides pages, determine the active step and only show TOC items for that step
@@ -56,6 +56,10 @@ function useDocTOC() {
     let headingsSelector = ".markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6";
     
     if (isGuidesPage) {
+      // Hide TOC initially until the active step is determined
+      // This prevents the old step TOC from staying in place until the new step TOC is loaded
+      setTocReady(false)
+
       // Get active step from URL params or localStorage
       const queryParams = queryString.parse(window.location.search);
       const locationPath = window.location.pathname;
