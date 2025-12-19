@@ -39,7 +39,7 @@ You'll need administrator access to your SAML 2.0 compliant identity provider to
 
 <Snippet path="access_url" />
 
-import LoginSlug from 'from '/snippets/_login-slug.md';
+import LoginSlug from from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -141,7 +141,7 @@ You can use the instructions in this section to configure Okta as your identity 
 
 <Snippet path="access_url" />
 
-import LoginSlug from 'from '/snippets/_login-slug.md';
+import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -246,7 +246,7 @@ Use this section if you are configuring Google as your identity provider.
 
 <Snippet path="access_url" />
 
-import LoginSlug from 'from '/snippets/_login-slug.md';
+import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -313,7 +313,7 @@ If you're using Microsoft Entra ID (formerly Azure AD), the instructions below w
 
 <Snippet path="access_url" />
 
-import LoginSlug from 'from '/snippets/_login-slug.md';
+import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
@@ -392,7 +392,7 @@ To configure OneLogin, you will need **Administrator** access.
 
 <Snippet path="access_url" />
 
-import LoginSlug from 'from '/snippets/_login-slug.md';
+import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 

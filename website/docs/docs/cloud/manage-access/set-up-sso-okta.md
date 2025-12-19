@@ -59,7 +59,7 @@ Click **Next** to continue.
 
 The SAML Settings page configures how Okta and <Constant name="cloud" /> communicate. You will want to use an [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan.
 
-import LoginSlug from 'from '/snippets/_login-slug.md';
+import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
