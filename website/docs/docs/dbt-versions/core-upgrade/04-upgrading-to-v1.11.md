@@ -1,19 +1,15 @@
 ---
-title: "Upgrading to v1.11 (beta)"
+title: "Upgrading to v1.11"
 id: upgrading-to-v1.11
 description: New features and changes in dbt Core v1.11
 displayed_sidebar: "docs"
 ---
 
-# Upgrading to v1.11 <Lifecycle status="beta" />
-
-:::note Installing Beta v1.11 on the command line 
-When using Core v1.11 on the command line (not in <Constant name="dbt_platform" />), you need to install a beta version of dbt-core. For example, `install --upgrade --pre dbt-core`.
-:::
+# Upgrading to v1.11
 
 ## Resources
 
-- <Constant name="core" /> [v1.11 Beta changelog](https://github.com/dbt-labs/dbt-core/blob/v1.11.0b3/CHANGELOG.md)
+- [<Constant name="core" /> v1.11 changelog](https://github.com/dbt-labs/dbt-core/blob/1.11.latest/CHANGELOG.md)
 - [<Constant name="core" /> CLI Installation guide](/docs/core/installation-overview)
 - [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
 
@@ -33,7 +29,7 @@ python3 -m pip install dbt-core dbt-snowflake
 
 New features and functionality available in <Constant name="core" /> v1.11
 
-### User-defined functions (UDFs) <Lifecycle status="beta" />
+### User-defined functions (UDFs)
 
 dbt Core v1.11 introduces support for user-defined functions (UDFs), which enable you to define and register custom functions in your warehouse. Like macros, UDFs promote code reuse, but they are objects in the warehouse so you can reuse the same logic in tools outside dbt.
 
