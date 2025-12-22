@@ -68,7 +68,7 @@ select * from {{ source('jaffle_shop', 'orders') }}
 </File>
 
 ### General configuration
-Use general configurations for broader operational settings applicable across multiple resource types. Like resource-specific configurations, these can also be set in the project file, property files, or within resource-specific files using a SQL file config.
+Use general configurations for broader operational settings applicable across multiple resource types. Like resource-specific configurations, these can also be set in the project YAML file, properties YAML files, or within resource-specific files using a config block.
 
 <File name='snapshots/snapshot.sql'>
 
@@ -319,7 +319,7 @@ This section outlines some examples of how to apply configurations to snapshots 
 
 <Expandable alt_header="Apply configurations to one snapshot only">
 
-Use SQL file configs if you need to apply a configuration to one snapshot only.
+Use config blocks if you need to apply a configuration to one snapshot only.
 
 <File name='snapshots/postgres_app/orders_snapshot.sql'>
 
@@ -444,7 +444,7 @@ The `unique_key` is a column name or expression that is unique for the inputs of
   ```
   </File>
 
-  You can also write this in YAML. This might be a good idea if multiple snapshots share the same `unique_key` (though we prefer to apply this configuration in a SQL file config, as above).
+  You can also write this in YAML. This might be a good idea if multiple snapshots share the same `unique_key` (though we prefer to apply this configuration in a config block, as above).
 
 - #### Using a combination of two columns as a unique key
 

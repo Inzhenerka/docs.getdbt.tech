@@ -8,7 +8,7 @@ id: "freshness"
 <VersionCallout version="1.10" />
 
 <Tabs>
-<TabItem value="project" label="Project file">
+<TabItem value="project" label="Project YAML file">
 
 <File name="dbt_project.yml">
   
@@ -25,7 +25,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Property file">
+<TabItem value="property" label="Properties YAML file">
 
 <File name="models/<filename>.yml">
   

@@ -190,7 +190,7 @@ Below, you’ll find two solutions that are more effective than snapshotting a f
 
 ## Solution #1: Downstream Incremental Model
 
-Instead of using snapshots, Joanne could create an [incremental model](https://docs.getdbt.com/docs/build/incremental-models) downstream of `fct_income` to "grab" every point-in-time version of `fct_income` – let's call this incremental model `int_income_history` and assume it has the following SQL file config:
+Instead of using snapshots, Joanne could create an [incremental model](https://docs.getdbt.com/docs/build/incremental-models) downstream of `fct_income` to "grab" every point-in-time version of `fct_income` – let's call this incremental model `int_income_history` and assume it has the following config block:
 
 ```sql
 {{
@@ -223,7 +223,7 @@ There are a few additional configs that Joanne might find helpful:
 - she can specify a time-grain `unique_key` if she wants to reduce the amount of versions being captured
     - for example, if she only wants to capture the final version of each day she could set `unique_key = date_trunc('day', run_timestamp)`. This is excluded from the example below, as we are making the assumption that Joanne does indeed want to capture every version of `fct_income`
 
-The final SQL file config for `int_income_history` might look something like this:
+The final config block for `int_income_history` might look something like this:
 
 ```sql
 {{

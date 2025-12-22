@@ -15,7 +15,7 @@ and configured using the following syntax:
 groupId="config-view"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
+{ label: 'Project YAML file', value: 'project-yaml', },
 { label: 'SQL file config', value: 'config', },
 ]
 }>
@@ -52,7 +52,7 @@ configured using the following syntax:
 groupId="config-table"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
+{ label: 'Project YAML file', value: 'project-yaml', },
 { label: 'SQL file config', value: 'config', },
 ]
 }>

@@ -109,7 +109,7 @@ As a result, this makes it more useful for [Snowflake session parameters](https:
 ## Examples
 
 ### Set Snowflake session parameters for a particular model
-This uses the SQL file config syntax:
+This uses the config block syntax:
 <File name='models/my_model.sql'>
 
 ```sql

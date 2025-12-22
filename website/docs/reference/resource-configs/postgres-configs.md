@@ -107,8 +107,8 @@ with the following configuration parameters:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
+    { label: 'Project YAML file', value: 'project-yaml', },
+    { label: 'Properties YAML file', value: 'property-yaml', },
     { label: 'SQL file config', value: 'config', },
   ]
 }>

@@ -27,7 +27,7 @@ To do this, specify a custom schema. dbt generates the schema name for a model b
 
 To specify a custom schema for a model, use the `schema` configuration key. As with any configuration, you can do one of the following:
 
-* apply this configuration to a specific model by using a SQL file config within a model
+* apply this configuration to a specific model by using a config block within a model
 * apply it to a subdirectory of models by specifying it in your `dbt_project.yml` file
 
 <File name='orders.sql'>

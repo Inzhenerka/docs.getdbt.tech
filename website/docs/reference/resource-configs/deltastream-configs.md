@@ -44,7 +44,7 @@ DeltaStream supports several unique materialization types that align with its st
 
 Creates a traditional batch table for aggregated data:
 
-**Project file configuration:**
+**Project YAML file configuration:**
 ```yaml
 models:
   <resource-path>:
@@ -66,7 +66,7 @@ GROUP BY date
 
 Creates a continuous streaming transformation:
 
-**Project file configuration:**
+**Project YAML file configuration:**
 ```yaml
 models:
   <resource-path>:
@@ -115,7 +115,7 @@ WHERE action = 'purchase'
 
 Captures changes in the data stream:
 
-**Project file configuration:**
+**Project YAML file configuration:**
 ```yaml
 models:
   <resource-path>:

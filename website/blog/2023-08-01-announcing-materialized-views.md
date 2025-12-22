@@ -199,7 +199,7 @@ In order to promote materialized views into production, the process will look ve
 
 When you feel satisfied with your development and testing, for data platforms that offer scheduling via our dbt configurations, you have two options: hardcode the refresh cadence or write in conditional logic based on the environment for the refresh cadence. I recommend using the latter.
 
-The code for having a conditional in your SQL file config looks like this if you want to include in a macro for either the lag or other fields (snowflake_warehouse, auto_refresh,etc):
+The code for having a conditional in your config block looks like this if you want to include in a macro for either the lag or other fields (snowflake_warehouse, auto_refresh,etc):
 
 ```sql
 {% macro target_lag_environment() %}

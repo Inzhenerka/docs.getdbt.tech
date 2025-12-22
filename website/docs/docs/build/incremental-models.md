@@ -14,7 +14,7 @@ Using an incremental model limits the amount of data that needs to be transforme
 
 ## Configure incremental materializations
 
-Like the other <Term id="materialization">materializations</Term> built into dbt, incremental models are defined with `select` statements, with the materialization defined in a SQL file config.
+Like the other <Term id="materialization">materializations</Term> built into dbt, incremental models are defined with `select` statements, with the materialization defined in a config block.
 ```sql
 {{
     config(

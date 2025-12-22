@@ -15,9 +15,9 @@ Some configurations may contain characters (e.g. dashes) that cannot be parsed a
 select ...
 ```
 
-While dbt provides an alias for any core configurations (for example, you should use `pre_hook` instead of `pre-hook` in a SQL file config), your dbt project may contain custom configurations without aliases.
+While dbt provides an alias for any core configurations (for example, you should use `pre_hook` instead of `pre-hook` in a config block), your dbt project may contain custom configurations without aliases.
 
-If you want to specify these configurations inside of a model, use the alternative SQL file config syntax:
+If you want to specify these configurations inside of a model, use the alternative config block syntax:
 
 
 <File name='models/events/base/base_events.sql'>
