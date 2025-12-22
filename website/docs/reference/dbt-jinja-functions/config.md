@@ -115,7 +115,7 @@ models:
         custom_setting: "my_value"
 ```
 
-Note that `config.meta_get()` is not yet supported in Python models. In the meantime, Python models should continue using `dbt.config.get("meta").get("<key>")` to access custom meta configurations. `dbt.config.get_meta("<key>")` is an alias for `dbt.config.get("meta").get("<key>")`.
+Note that `config.meta_get` is not yet supported in Python models. In the meantime, Python models should continue using `dbt.config.get("meta").get("<key>")` to access custom meta configurations. `dbt.config.get_meta("<key>")` is an alias for `dbt.config.get("meta").get("<key>")`.
 
 ## config.meta_require
 
