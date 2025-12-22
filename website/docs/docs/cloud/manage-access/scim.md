@@ -27,9 +27,9 @@ The currently available supported features for SCIM are:
 - Importing groups and users
 
 When SCIM is enabled, the following functionality will change: 
-- Users will not be added to default groups automatically
+- Users are not automatically added to default groups
 - Manual actions such as inviting users, updating user information and updating group memberships will be disabled by default
-- SSO group mappings will be disabled in favor of SCIM group management
+- SSO group mappings are disabled in favor of SCIM group management
 To overwrite these updates to functionality with SCIM enabled, enable manual updates as part of the SCIM configuration (not recommended). 
 
 When users are provisioned, the following attributes are supported
