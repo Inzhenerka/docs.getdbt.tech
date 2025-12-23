@@ -93,10 +93,6 @@ Release notes are grouped by date for single-tenant environments.
   - **Legacy Cost Management UI retired**: All costManagement pages and hooks were removed, and platform metadata credentials now only expose catalog ingestion and Cost Insights toggles, eliminating dead-end controls.  
   <!-- PR: link needed (not provided in diff bundle) -->
 
-- **dbt cloud CLI server**
-  - **Canvas sessions default to Fusion**: Visual Editor launches automatically override non-Fusion runtimes to `latest-fusion` for tenants in the `ve-1886-enable-canvas-in-fusion` flag and surface a warning so teams understand the runtime change.  
-  <!-- PR: link needed (not provided in diff bundle) -->
-
 
 ## December 17, 2025
 
