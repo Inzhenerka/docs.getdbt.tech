@@ -94,7 +94,7 @@ dbt docs serve --port 8001
 You may specify a different host using the `--host` flag.
 
 :::info Note
-The `--host` flag is only available in [<Constant name="core" />](/docs/core/installation-overview). It is not supported in the [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation).
+The `--host` flag is only available in [<Constant name="core" />](/docs/core/installation-overview). It's not supported in the [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation).
 :::
 
 **Example**:
