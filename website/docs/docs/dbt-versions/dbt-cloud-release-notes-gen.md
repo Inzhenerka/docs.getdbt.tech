@@ -34,10 +34,6 @@ Release notes are grouped by date for single-tenant environments.
   - **Databricks cost tracking for Model Cost Over Time**: A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.  
   <!-- PR: https://github.com/dbt-labs/codex/compare/06888fddb250a8eb6650349d70e0ef4f22fbd189...1e103cbdcd951421cd0c93f3090bfc415333885c -->
 
-- **MetricFlow**
-  - **Public cancelQuery mutation**: Tenants can stop queued, compiling, or running MetricFlow jobs through the public GraphQL API, receiving clear errors if the job already completed or belongs to another environment.  
-  <!-- PR: https://github.com/dbt-labs/metricflow-server/compare/45b411d96c1540a3c3624ddef1c5147fb3f6f658...a1695f6a71ea650c71c9a560328b42dbb4cb6c70 -->
-
 - **Visual Editor**
   - **Canvas-in-Fusion previews & CSV upload GA**: Canvas previews, seed uploads, and docs updates honor the `VE-1886-canvas-in-fusion` flag end-to-end (inline invocations, shared artifacts) and the CSV upload endpoint is now generally available with better validation, so Fusion tenants see faster previews and reliable source onboarding.  
   <!-- PR: https://github.com/dbt-labs/visual-editor/compare/d52fdf77d5f90463e1b0d21617d3f2df31f4ae71...c854a51a529265fd7c1da7be7734d922cec039be -->
