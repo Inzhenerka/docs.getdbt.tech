@@ -29,8 +29,6 @@ Release notes are grouped by date for single-tenant environments.
 - **dbt platform**
   - **Slack Copilot feedback loops**: Copilot replies now carry inline "Did that answer your question?" buttons, backed by a dedicated `/integrations/slack/interactive/` endpoint and AI telemetry so tenants can rate answers without leaving Slack.  
   <!-- PR: link needed (not provided in diff bundle) -->
-  - **Cost Insights role presets**: New Cost Insights Admin/Viewer permission sets package the exact account + project scopes required to manage or consume telemetry, making it easier to grant least-privilege access.  
-  <!-- PR: link needed (not provided in diff bundle) -->
 
 - **Codex Workflows**
   - **Databricks cost tracking for Model Cost Over Time**: A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.  
