@@ -95,6 +95,8 @@ The `config.meta_get` function retrieves custom configurations stored under the 
 
 Use this function when accessing custom configurations that you've defined under `meta` in your model or resource configuration - it's equivalent to writing `config.get('meta').get()`.
 
+Note that `config.meta_get` is not yet supported in Python models. In the meantime, Python models should continue using `dbt.config.get("meta").get("<key>")` to access custom meta configurations. `dbt.config.get_meta("<key>")` is an alias for `dbt.config.get("meta").get("<key>")`.
+
 Example usage:
 ```sql
 {% materialization custom_materialization, default -%}
@@ -115,8 +117,6 @@ models:
         custom_setting: "my_value"
 ```
 
-Note that `config.meta_get` is not yet supported in Python models. In the meantime, Python models should continue using `dbt.config.get("meta").get("<key>")` to access custom meta configurations. `dbt.config.get_meta("<key>")` is an alias for `dbt.config.get("meta").get("<key>")`.
-
 ## config.meta_require
 
 <VersionBlock lastVersion="1.10">
@@ -132,6 +132,8 @@ __Args__:
 The `config.meta_require` function retrieves custom configurations stored under the `meta` dictionary. Unlike `config.require()`, this function exclusively checks `config.meta` and won't result in deprecation warnings. If the configuration is not found, dbt raises a compilation error.
 
 Use this function when you need to ensure a custom configuration exists under `meta`.
+
+Note that `config.meta_require` is not yet supported in Python models.
 
 Example usage:
 ```sql
@@ -149,5 +151,3 @@ models:
       meta:
         required_setting: "my_value"
 ```
-
-Note that `config.meta_require` is not yet supported in Python models.
