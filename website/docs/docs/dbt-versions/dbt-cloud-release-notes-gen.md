@@ -40,10 +40,6 @@ Release notes are grouped by date for single-tenant environments.
 
 ### Enhancements
 
-- **AI Codegen**
-  - **Semantic Layer-first workflows**: Internal Semantic Layer tools are promoted back into LangGraph with prompts that require `execute_sl_query` and dialect selection, reducing off-model SQL drift for Semantic Layer-heavy teams.  
-  <!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
-
 - **Cloud Artifacts**
   - **Better similar-model suggestions**: Cosine-distance thresholds now apply after deduplicating embeddings, so attachment workflows only recommend meaningfully related models.  
   <!-- PR: https://github.com/dbt-labs/cloud-artifacts-internal-api/compare/65544c20206d2055212b4d6066f25aea6c3700b7...a98859c99ca0b03efa465dc26024279322ac12a3 -->
@@ -57,10 +53,6 @@ Release notes are grouped by date for single-tenant environments.
   <!-- PR: link needed (not provided in diff bundle) -->
   - **Twice the per-environment custom variables**: The v3 API/UI now allow up to 20 scoped environment variables before enforcing limits, giving larger projects more room for secrets.  
   <!-- PR: link needed (not provided in diff bundle) -->
-
-- **Insights UI**
-  - **Filter dropdowns keep prior selections**: Builder filters continue showing the selected value while dimension values load, preventing accidental clearing when editing saved queries.  
-  <!-- PR: https://github.com/dbt-labs/insights-ui/compare/2864fa2fdc6cd56f7eaedd64e54a473fc9d3a081...e7693d6136f4995444c34255891f3286249f7564 -->
 
 - **Visual Editor**
   - **Dialect-aware projection SQL**: SELECT * RENAME/EXCEPT support now respects each warehouse's syntax using schema metadata, so SQL previews and column metadata stay accurate across Snowflake, Databricks, BigQuery, and Redshift.  
@@ -76,10 +68,6 @@ Release notes are grouped by date for single-tenant environments.
   - **Exposure parents mirror the manifest**: `parentsModels` and `parentsSources` now derive from the manifest's `parents` list, so exposures with mixed upstreams display complete lineage in both the GraphQL API and UI.  
   <!-- PR: https://github.com/dbt-labs/codex-api/compare/c4b816ccd4e7736a494ec9b2d25ab25d52037c1a...d24b0f0e9b9c8f2f1505a057731dfb171177ebf3 -->
   <!-- PR: https://github.com/dbt-labs/codex-api-gateway/compare/c4b816ccd4e7736a494ec9b2d25ab25d52037c1a...d24b0f0e9b9c8f2f1505a057731dfb171177ebf3 -->
-
-- **Insights UI**
-  - **Multi-filter queries honor AND/OR**: Builder now preserves the AND/OR operator selected for each additional condition, keeping dashboard results aligned with the preview.  
-  <!-- PR: https://github.com/dbt-labs/insights-ui/compare/2864fa2fdc6cd56f7eaedd64e54a473fc9d3a081...e7693d6136f4995444c34255891f3286249f7564 -->
 
 ### Behavior changes
 
