@@ -21,97 +21,81 @@ Release notes are grouped by date for single-tenant environments.
 ## December 24, 2025
 
 ### New
-- **AI Codegen – File-aware LangGraph agents.** Analysts can now drop `@path` references in the bundled CLI to stream local files into `/private/v1/agents/run`, which are auto-rendered as text inside the run so copilots have the exact config or SQL snippet you referenced.  
-<!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
 
-- **Codex Workflows – Databricks cost tracking for Model Cost Over Time.** A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.  
-<!-- PR: https://github.com/dbt-labs/codex/compare/06888fddb250a8eb6650349d70e0ef4f22fbd189...1e103cbdcd951421cd0c93f3090bfc415333885c -->
+- **AI Codegen**
+  - **File-aware LangGraph agents**: Analysts can now drop `@path` references in the bundled CLI to stream local files into `/private/v1/agents/run`, which are auto-rendered as text inside the run so copilots have the exact config or SQL snippet you referenced.  
+  <!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
 
-- **dbt cloud app – Slack Copilot feedback loops.** Copilot replies now carry inline “Did that answer your question?” buttons, backed by a dedicated `/integrations/slack/interactive/` endpoint and AI telemetry so tenants can rate answers without leaving Slack.  
-<!-- PR: link needed (not provided in diff bundle) -->
+- **dbt platform**
+  - **Slack Copilot feedback loops**: Copilot replies now carry inline "Did that answer your question?" buttons, backed by a dedicated `/integrations/slack/interactive/` endpoint and AI telemetry so tenants can rate answers without leaving Slack.  
+  <!-- PR: link needed (not provided in diff bundle) -->
+  - **Cost Insights role presets**: New Cost Insights Admin/Viewer permission sets package the exact account + project scopes required to manage or consume telemetry, making it easier to grant least-privilege access.  
+  <!-- PR: link needed (not provided in diff bundle) -->
 
-- **dbt cloud app – Cost Insights role presets.** New Cost Insights Admin/Viewer permission sets package the exact account + project scopes required to manage or consume telemetry, making it easier to grant least-privilege access.  
-<!-- PR: link needed (not provided in diff bundle) -->
+- **Codex Workflows**
+  - **Databricks cost tracking for Model Cost Over Time**: A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.  
+  <!-- PR: https://github.com/dbt-labs/codex/compare/06888fddb250a8eb6650349d70e0ef4f22fbd189...1e103cbdcd951421cd0c93f3090bfc415333885c -->
 
-- **MetricFlow – Public cancelQuery mutation.** Tenants can stop queued, compiling, or running MetricFlow jobs through the public GraphQL API, receiving clear errors if the job already completed or belongs to another environment.  
-<!-- PR: https://github.com/dbt-labs/metricflow-server/compare/45b411d96c1540a3c3624ddef1c5147fb3f6f658...a1695f6a71ea650c71c9a560328b42dbb4cb6c70 -->
+- **MetricFlow**
+  - **Public cancelQuery mutation**: Tenants can stop queued, compiling, or running MetricFlow jobs through the public GraphQL API, receiving clear errors if the job already completed or belongs to another environment.  
+  <!-- PR: https://github.com/dbt-labs/metricflow-server/compare/45b411d96c1540a3c3624ddef1c5147fb3f6f658...a1695f6a71ea650c71c9a560328b42dbb4cb6c70 -->
 
-- **Visual Editor – Canvas-in-Fusion previews & CSV upload GA.** Canvas previews, seed uploads, and docs updates honor the `VE-1886-canvas-in-fusion` flag end-to-end (inline invocations, shared artifacts) and the CSV upload endpoint is now generally available with better validation, so Fusion tenants see faster previews and reliable source onboarding.  
-<!-- PR: https://github.com/dbt-labs/visual-editor/compare/d52fdf77d5f90463e1b0d21617d3f2df31f4ae71...c854a51a529265fd7c1da7be7734d922cec039be -->
+- **Visual Editor**
+  - **Canvas-in-Fusion previews & CSV upload GA**: Canvas previews, seed uploads, and docs updates honor the `VE-1886-canvas-in-fusion` flag end-to-end (inline invocations, shared artifacts) and the CSV upload endpoint is now generally available with better validation, so Fusion tenants see faster previews and reliable source onboarding.  
+  <!-- PR: https://github.com/dbt-labs/visual-editor/compare/d52fdf77d5f90463e1b0d21617d3f2df31f4ae71...c854a51a529265fd7c1da7be7734d922cec039be -->
 
 ### Enhancements
-- **AI Codegen – Fusion LSP tool availability.** LSP compile/diagnostics tools only register when a non-production environment actually has an active LSP session, preventing broken tool invocations on locked-down tenants.  
-<!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
 
-- **AI Codegen – Semantic Layer-first workflows.** Internal Semantic Layer tools are promoted back into LangGraph with prompts that require `execute_sl_query` and dialect selection, reducing off-model SQL drift for Semantic Layer-heavy teams.  
-<!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
+- **AI Codegen**
+  - **Semantic Layer-first workflows**: Internal Semantic Layer tools are promoted back into LangGraph with prompts that require `execute_sl_query` and dialect selection, reducing off-model SQL drift for Semantic Layer-heavy teams.  
+  <!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
 
-- **AI Codegen – Remote dbt MCP hardening.** DNS-rebinding protection, host/origin allowlists, and an `X-Dbt-Partner-Source` header make it safer to expose remote dbt MCP endpoints from single-tenant clusters without extra ingress work.  
-<!-- PR: https://github.com/dbt-labs/ai-codegen-api/compare/f776c620d16de68bb3b5f61fd0c15e81a23b3730...fa7756165da9d3039ca4013b12e7fb264fe565ba -->
+- **Cloud Artifacts**
+  - **Better similar-model suggestions**: Cosine-distance thresholds now apply after deduplicating embeddings, so attachment workflows only recommend meaningfully related models.  
+  <!-- PR: https://github.com/dbt-labs/cloud-artifacts-internal-api/compare/65544c20206d2055212b4d6066f25aea6c3700b7...a98859c99ca0b03efa465dc26024279322ac12a3 -->
 
-- **Cloud Artifacts – Better similar-model suggestions.** Cosine-distance thresholds now apply after deduplicating embeddings, so attachment workflows only recommend meaningfully related models.  
-<!-- PR: https://github.com/dbt-labs/cloud-artifacts-internal-api/compare/65544c20206d2055212b4d6066f25aea6c3700b7...a98859c99ca0b03efa465dc26024279322ac12a3 -->
+- **dbt platform**
+  - **Unified SSO & SCIM admin**: Settings consolidate SSO + SCIM, add an empty state for auto-generated slugs, and render read-only login URLs so admins can start configuration without touching slug fields.  
+  <!-- PR: link needed (not provided in diff bundle) -->
+  - **SCIM token management polish**: Token tables gain fixed pagination, inline search, consistent iconography, and clearer deletion warnings to avoid accidental cuts to live integrations.  
+  <!-- PR: link needed (not provided in diff bundle) -->
+  - **Fusion model-build insights only when entitled**: Account Home now hides the "All model builds" chart unless both flags are on and the tenant truly has Fusion migration access, preventing empty widgets.  
+  <!-- PR: link needed (not provided in diff bundle) -->
+  - **Twice the per-environment custom variables**: The v3 API/UI now allow up to 20 scoped environment variables before enforcing limits, giving larger projects more room for secrets.  
+  <!-- PR: link needed (not provided in diff bundle) -->
 
-- **dbt platform – Unified SSO & SCIM admin.** Settings consolidate SSO + SCIM, add an empty state for auto-generated slugs, and render read-only login URLs so admins can start configuration without touching slug fields.  
-<!-- PR: link needed (not provided in diff bundle) -->
+- **Insights UI**
+  - **Filter dropdowns keep prior selections**: Builder filters continue showing the selected value while dimension values load, preventing accidental clearing when editing saved queries.  
+  <!-- PR: https://github.com/dbt-labs/insights-ui/compare/2864fa2fdc6cd56f7eaedd64e54a473fc9d3a081...e7693d6136f4995444c34255891f3286249f7564 -->
 
-- **dbt platform – SCIM token management polish.** Token tables gain fixed pagination, inline search, consistent iconography, and clearer deletion warnings to avoid accidental cuts to live integrations.  
-<!-- PR: link needed (not provided in diff bundle) -->
-
-- **dbt platform – Fusion model-build insights only when entitled.** Account Home now hides the “All model builds” chart unless both flags are on and the tenant truly has Fusion migration access, preventing empty widgets.  
-<!-- PR: link needed (not provided in diff bundle) -->
-
-- **dbt cloud app – Twice the per-environment custom variables.** The v3 API/UI now allow up to 20 scoped environment variables before enforcing limits, giving larger projects more room for secrets.  
-<!-- PR: link needed (not provided in diff bundle) -->
-
-- **Codex Workflows – Snowflake cost accuracy guardrails.** Queries missing attribution beyond eight hours or running under 100 ms no longer inflate Model Cost metrics, keeping Snowflake reporting trustworthy.  
-<!-- PR: https://github.com/dbt-labs/codex/compare/06888fddb250a8eb6650349d70e0ef4f22fbd189...1e103cbdcd951421cd0c93f3090bfc415333885c -->
-
-- **Codex Workflows – Faster search index refreshes.** Environment-specific deletes now use two targeted index scans instead of an expensive OR query, so merged search assets stay fresh even on large tenants.  
-<!-- PR: https://github.com/dbt-labs/codex/compare/06888fddb250a8eb6650349d70e0ef4f22fbd189...1e103cbdcd951421cd0c93f3090bfc415333885c -->
-
-- **Insights UI – Filter dropdowns keep prior selections.** Builder filters continue showing the selected value while dimension values load, preventing accidental clearing when editing saved queries.  
-<!-- PR: https://github.com/dbt-labs/insights-ui/compare/2864fa2fdc6cd56f7eaedd64e54a473fc9d3a081...e7693d6136f4995444c34255891f3286249f7564 -->
-
-- **Visual Editor – Dialect-aware projection SQL.** SELECT * RENAME/EXCEPT support now respects each warehouse’s syntax using schema metadata, so SQL previews and column metadata stay accurate across Snowflake, Databricks, BigQuery, and Redshift.  
-<!-- PR: https://github.com/dbt-labs/visual-editor/compare/d52fdf77d5f90463e1b0d21617d3f2df31f4ae71...c854a51a529265fd7c1da7be7734d922cec039be -->
-
-- **ORC platform – Structured-log manager + diagnostics.** Dispatch decides whether to persist structured logs based on the new flag + dbt track, plumbs `persist_structured_logs` through the dbt client, and improves autofix logging (version tags, ANSI-free artifacts, automatic `dbt deps` on upgrades).  
-<!-- PR: https://github.com/dbt-labs/dbt-orc/compare/dc05d7e6bbfedc100e3afbf6aa66c356e56674ec...b396ee3ed6bacdf7830eb068876ae41e238dac53 -->
-<!-- PR: https://github.com/dbt-labs/dbt-orc/compare/88f28b9ec43311c47897cf60f80919b1c3f95936...c8ad242c7a7dc5a2667aa6e95926b667652c5f35 -->
-
-- **ORC platform – Build-conformance artifacts.** Feature-flagged runs can execute a second pass with `--static-analysis off`, skip redundant uploads, and always bundle `target/dbt_cloud_publications`, giving support richer evidence when troubleshooting.  
-<!-- PR: https://github.com/dbt-labs/dbt-orc/compare/dc05d7e6bbfedc100e3afbf6aa66c356e56674ec...b396ee3ed6bacdf7830eb068876ae41e238dac53 -->
-<!-- PR: https://github.com/dbt-labs/dbt-orc/compare/88f28b9ec43311c47897cf60f80919b1c3f95936...c8ad242c7a7dc5a2667aa6e95926b667652c5f35 -->
+- **Visual Editor**
+  - **Dialect-aware projection SQL**: SELECT * RENAME/EXCEPT support now respects each warehouse's syntax using schema metadata, so SQL previews and column metadata stay accurate across Snowflake, Databricks, BigQuery, and Redshift.  
+  <!-- PR: https://github.com/dbt-labs/visual-editor/compare/d52fdf77d5f90463e1b0d21617d3f2df31f4ae71...c854a51a529265fd7c1da7be7734d922cec039be -->
 
 ### Fixes
-- **dbt platform – Webhook editor keeps job selections.** Default values are cached after the first render and stop resetting once the user edits the form, eliminating accidental job-list clearing while tabbing through fields.  
-<!-- PR: link needed (not provided in diff bundle) -->
 
-- **Codex GraphQL – Exposure parents mirror the manifest.** `parentsModels` and `parentsSources` now derive from the manifest’s `parents` list, so exposures with mixed upstreams display complete lineage in both the GraphQL API and UI.  
-<!-- PR: https://github.com/dbt-labs/codex-api/compare/c4b816ccd4e7736a494ec9b2d25ab25d52037c1a...d24b0f0e9b9c8f2f1505a057731dfb171177ebf3 -->
-<!-- PR: https://github.com/dbt-labs/codex-api-gateway/compare/c4b816ccd4e7736a494ec9b2d25ab25d52037c1a...d24b0f0e9b9c8f2f1505a057731dfb171177ebf3 -->
+- **dbt platform**
+  - **Webhook editor keeps job selections**: Default values are cached after the first render and stop resetting once the user edits the form, eliminating accidental job-list clearing while tabbing through fields.  
+  <!-- PR: link needed (not provided in diff bundle) -->
 
-- **Insights UI – Multi-filter queries honor AND/OR.** Builder now preserves the AND/OR operator selected for each additional condition, keeping dashboard results aligned with the preview.  
-<!-- PR: https://github.com/dbt-labs/insights-ui/compare/2864fa2fdc6cd56f7eaedd64e54a473fc9d3a081...e7693d6136f4995444c34255891f3286249f7564 -->
+- **Codex GraphQL**
+  - **Exposure parents mirror the manifest**: `parentsModels` and `parentsSources` now derive from the manifest's `parents` list, so exposures with mixed upstreams display complete lineage in both the GraphQL API and UI.  
+  <!-- PR: https://github.com/dbt-labs/codex-api/compare/c4b816ccd4e7736a494ec9b2d25ab25d52037c1a...d24b0f0e9b9c8f2f1505a057731dfb171177ebf3 -->
+  <!-- PR: https://github.com/dbt-labs/codex-api-gateway/compare/c4b816ccd4e7736a494ec9b2d25ab25d52037c1a...d24b0f0e9b9c8f2f1505a057731dfb171177ebf3 -->
 
-- **Scribe – Log uploader reliability.** Parallel log uploads are serialized, Redis digests are cleaned as soon as streams finish, and tests cover multi-file directories so runs no longer stall with “in progress” logs.  
-<!-- PR: link needed (not provided in diff bundle) -->
+- **Insights UI**
+  - **Multi-filter queries honor AND/OR**: Builder now preserves the AND/OR operator selected for each additional condition, keeping dashboard results aligned with the preview.  
+  <!-- PR: https://github.com/dbt-labs/insights-ui/compare/2864fa2fdc6cd56f7eaedd64e54a473fc9d3a081...e7693d6136f4995444c34255891f3286249f7564 -->
 
-### Behavior Changes (Deprecations / Removals)
-- **dbt platform – Legacy Cost Management UI retired.** All costManagement pages and hooks were removed, and platform metadata credentials now only expose catalog ingestion and Cost Insights toggles, eliminating dead-end controls.  
-<!-- PR: link needed (not provided in diff bundle) -->
+### Behavior changes
 
-- **dbt cloud CLI server – Canvas sessions default to Fusion.** Visual Editor launches automatically override non-Fusion runtimes to `latest-fusion` for tenants in the `ve-1886-enable-canvas-in-fusion` flag and surface a warning so teams understand the runtime change.  
-<!-- PR: link needed (not provided in diff bundle) -->
+- **dbt platform**
+  - **Legacy Cost Management UI retired**: All costManagement pages and hooks were removed, and platform metadata credentials now only expose catalog ingestion and Cost Insights toggles, eliminating dead-end controls.  
+  <!-- PR: link needed (not provided in diff bundle) -->
 
-- **ORC platform – Base images updated to Fusion v2.0.0-preview.89.** Cold dispatcher, run-ingest, and dispatch images now ship the latest Fusion runtime/security updates out of the box.  
-<!-- PR: https://github.com/dbt-labs/dbt-orc/compare/dc05d7e6bbfedc100e3afbf6aa66c356e56674ec...b396ee3ed6bacdf7830eb068876ae41e238dac53 -->
-<!-- PR: https://github.com/dbt-labs/dbt-orc/compare/88f28b9ec43311c47897cf60f80919b1c3f95936...c8ad242c7a7dc5a2667aa6e95926b667652c5f35 -->
-
----
-
-I relied on the release compare links bundled with the diffs where individual PR URLs weren’t provided. Please swap in the exact PR links for the dbt platform, dbt cloud app, Scribe, and other flagged items once you have them so the doc meets your publishing standard.
+- **dbt cloud CLI server**
+  - **Canvas sessions default to Fusion**: Visual Editor launches automatically override non-Fusion runtimes to `latest-fusion` for tenants in the `ve-1886-enable-canvas-in-fusion` flag and surface a warning so teams understand the runtime change.  
+  <!-- PR: link needed (not provided in diff bundle) -->
 
 
 ## December 17, 2025
