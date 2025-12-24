@@ -28,15 +28,15 @@ Release notes are grouped by date for single-tenant environments.
 - **dbt platform**
   - **Slack Copilot feedback loops**: Copilot replies now carry inline "Did that answer your question?" buttons, so you can rate answers without leaving Slack.  
 
-- **Codex Workflows**
+- **Codex workflows**
   - **Databricks cost tracking for Model Cost Over Time**: A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.  
 
-- **Visual Editor**
+- **Canvas**
   - **CSV upload GA**: The CSV upload endpoint is now generally available.
 
 ### Enhancements
 
-- **Cloud Artifacts**
+- **Cloud artifacts**
   - **Better similar-model suggestions**: Attachment workflows now only recommend meaningfully related models.  
 
 - **dbt platform**
@@ -44,7 +44,7 @@ Release notes are grouped by date for single-tenant environments.
   - **SCIM token management polish**: Token tables gain fixed pagination, inline search, consistent iconography, and clearer deletion warnings to avoid accidental cuts to live integrations.  
   - **Twice the per-environment custom variables**: The v3 API/UI now allow up to 20 scoped environment variables before enforcing limits, giving larger projects more room for secrets.  
 
-- **Visual Editor**
+- **Canvas**
   - **Dialect-aware projection SQL**: SELECT * RENAME/EXCEPT support now respects each warehouse's syntax using schema metadata, so SQL previews and column metadata stay accurate across Snowflake, Databricks, BigQuery, and Redshift.  
 
 ### Fixes
