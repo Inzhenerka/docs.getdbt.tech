@@ -90,7 +90,7 @@ function Home() {
               <div>
                 <h1 className="heading-1 heading-1--tight">Документация dbt на русском языке</h1>
                 <p className="hero-subcopy">
-                Найдите всё необходимое, чтобы создавать, документировать и работать с dbt в команде &mdash; быстрее и на русском.
+                Всё необходимое, чтобы выстраивать аналитику, документировать данные и работать с dbt в команде.
                 </p>
 
                 {/* quickstarts moved up with tightened spacing */}
@@ -98,8 +98,8 @@ function Home() {
                   <Link
                     id="hero-vs-code-cta"
                     className="hero-border-beam-cta"
-                    to="/docs/install-dbt-extension">
-                      <span>Install dbt VS Code extension + Fusion</span>
+                    to="/docs/get-started-dbt">
+                      <span>Начать работу с dbt</span>
                       </Link>
                 </div>
               </div>
@@ -131,22 +131,22 @@ function Home() {
               <div className="home-card-grid">
                 <Card
                   title="dbt Fusion engine"
-                  tag="Article"
-                  body="Learn about the dbt Fusion engine and see how it enables dbt to operate at speed and scale like never before."
+                  tag="Статья"
+                  body="Узнайте о движке dbt Fusion и о том, как он позволяет dbt работать быстрее и масштабироваться как никогда раньше."
                   link="/docs/fusion"
                   icon="zap"
                 />
                 <Card
                   title="Get started with dbt"
-                  tag="Guide"
-                  body="Build fast with our quickstart guides."
+                  tag="Гайд"
+                  body="Быстро начните работу с нашими quickstart-руководствами."
                   link="/docs/get-started-dbt"
                   icon="settings"
                 />
                 <Card
                   title="Move to the dbt platform"
-                  tag="Guide"
-                  body="Migrate from dbt Core to the powerful, lightning fast dbt platform today!"
+                  tag="Гайд"
+                  body="Перейдите с dbt Core на мощную и очень быструю платформу dbt уже сегодня!"
                   link="/guides/core-to-cloud-1?step=1"
                   icon="tool"
                 />
@@ -157,62 +157,62 @@ function Home() {
           <section className="baton-1 section--compact">
             <div className="container">
               <div>
-                <span className="eyebrow">Documentation by product</span>
-                <h2 className="heading-2">Explore the docs by product</h2>
+                <span className="eyebrow">Документация по продуктам</span>
+                <h2 className="heading-2">Изучайте документацию по продуктам</h2>
               </div>
               <div className="home-card-grid">
                 <Card
                   title="dbt Copilot"
-                  body="AI-powered assistant that automates code, tests, and documentation in your workflow."
+                  body="AI-ассистент, который автоматизирует код, тесты и документацию в вашем рабочем процессе."
                   link="/docs/cloud/dbt-copilot"
                   icon="dbt-copilot"
                 />
                 <Card
                   title="VS Code Extension"
-                  body="This free tool brings the full power of the dbt Fusion engine into your local environment with features like live error detection, lightning-fast parse times, insights and rich lineage all in VS Code or Cursor."
+                  body="Бесплатный инструмент, который приносит всю мощь движка dbt Fusion в локальную среду: обнаружение ошибок в реальном времени, молниеносный парсинг, инсайты и подробный lineage — прямо в VS Code или Cursor."
                   link="/docs/about-dbt-extension"
                   icon="vsce"
                   showBorderBeam
                 />
                 <Card
                   title="dbt Orchestrator"
-                  body="Every time a job runs, state-aware orchestration automatically determines which models to build by detecting changes in code or data."
+                  body="При каждом запуске job оркестрация с учетом state автоматически определяет, какие модели собирать, обнаруживая изменения в коде или данных."
                   link="/docs/deploy/state-aware-about"
                   icon="deploy"
                 />
                 <Card
                   title="dbt Insights"
-                  body="dbt Insights in dbt empowers users to seamlessly explore and query data with an intuitive, context-rich interface."
+                  body="dbt Insights помогает пользователям удобно исследовать и запрашивать данные в интуитивном, контекстном интерфейсе."
                   link="/docs/explore/dbt-insights"
                   icon="insights"
                 />
                 <Card
                   title="dbt Canvas"
-                  body="dbt Canvas helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation."
+                  body="dbt Canvas помогает быстро получать доступ к данным и трансформировать их с помощью визуального drag-and-drop интерфейса и встроенного AI для генерации пользовательского кода."
                   link="/docs/cloud/canvas"
                   icon="canvas"
                 />
                 <Card
                   title="dbt Semantic Layer"
-                  body="The dbt Semantic Layer eliminates duplicate coding by allowing data teams to define metrics on top of existing models and automatically handling data joins."
+                  body="dbt Semantic Layer устраняет дублирование кода: команды данных могут определять метрики поверх существующих моделей, а соединения данных (joins) обрабатываются автоматически."
                   link="/docs/use-dbt-semantic-layer/dbt-sl"
                   icon="semantic"
                 />
                 <Card
                   title="dbt Catalog"
-                  body="Use dbt Catalog to navigate and manage your projects within dbt to help you and other data developers, analysts, and consumers discover and leverage your dbt resources."
+                  body="Используйте dbt Catalog, чтобы просматривать и управлять проектами в dbt, помогая себе и другим разработчикам данных, аналитикам и потребителям находить и использовать ресурсы dbt."
                   link="/docs/explore/explore-projects"
                   icon="compass"
                 />
                 <Card
                   title="Studio IDE"
-                  body="The dbt integrated development environment (Studio IDE) is a single web-based interface for building, testing, running, and version-controlling dbt projects."
+                  body="Интегрированная среда разработки dbt (Studio IDE) — единый веб‑интерфейс для создания, тестирования, запуска и ведения версий dbt‑проектов."
                   link="/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide"
                   icon="dashboard"
                 />
                 <Card
                   title="dbt Mesh"
-                  body="dbt Mesh is a framework that helps organizations scale their teams and data assets effectively."
+                  body="dbt Mesh — фреймворк, который помогает организациям эффективно масштабировать команды и data assets."
                   link="/docs/mesh/about-mesh"
                   icon="lineage"
                 />
@@ -223,36 +223,36 @@ function Home() {
           <section className="section--compact">
             <div className="container">
               <div>
-                <span className="eyebrow">Docs highlights</span>
-                <h2 className="heading-2">Dive deeper into dbt</h2>
-                <p>Learn best practices, explore detailed configuration references, or review our APIs.</p>
+                <span className="eyebrow">Подборка материалов</span>
+                <h2 className="heading-2">Погрузитесь глубже в dbt</h2>
+                <p>Изучайте best practices, подробные справочники по конфигурации или документацию по нашим API.</p>
               </div>
               <div className="home-link-grid">
                 <div className="home-link-grid-item">
-                  <h4 className="heading-4">Documentation</h4>
-                  <Link to="/docs/dbt-cloud-apis/overview">API Docs</Link>
-                  <Link to="/docs/introduction">Product Docs</Link>
-                  <Link to="/best-practices">Best Practices</Link>
+                  <h4 className="heading-4">Документация</h4>
+                  <Link to="/docs/dbt-cloud-apis/overview">Документация API</Link>
+                  <Link to="/docs/introduction">Документация по продукту</Link>
+                  <Link to="/best-practices">Лучшие практики</Link>
                   <Link to="/docs/cloud/dbt-copilot">Copilot</Link>
                 </div>
                 <div className="home-link-grid-item">
-                  <h4 className="heading-4">Guides</h4>
-                  <Link to="/guides/snowflake?step=1">Quickstart for dbt and Snowflake</Link>
-                  <Link to="/guides/databricks?step=1">Quickstart for dbt and Databricks</Link>
-                  <Link to="/guides/airflow-and-dbt-cloud?step=1">Airflow and dbt</Link>
-                  <Link to="/guides/debug-errors?step=1">Debugging errors</Link>
+                  <h4 className="heading-4">Гайды</h4>
+                  <Link to="/guides/snowflake?step=1">Quickstart для dbt и Snowflake</Link>
+                  <Link to="/guides/databricks?step=1">Quickstart для dbt и Databricks</Link>
+                  <Link to="/guides/airflow-and-dbt-cloud?step=1">Airflow и dbt</Link>
+                  <Link to="/guides/debug-errors?step=1">Отладка ошибок</Link>
                 </div>
                 <div className="home-link-grid-item">
-                  <h4 className="heading-4">Reference Guides</h4>
-                  <Link to="/reference/dbt-commands">Command Reference</Link>
-                  <Link to="/category/project-configs">Project Configurations</Link>
-                  <Link to="/reference/artifacts/dbt-artifacts">dbt Artifacts</Link>
+                  <h4 className="heading-4">Справочники</h4>
+                  <Link to="/reference/dbt-commands">Справочник команд</Link>
+                  <Link to="/category/project-configs">Конфигурации проекта</Link>
+                  <Link to="/reference/artifacts/dbt-artifacts">Артефакты dbt</Link>
                 </div>
                 <div className="home-link-grid-item">
-                  <h4 className="heading-4">Other Resources</h4>
-                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release Notes</Link>
-                  <Link to="/blog">Developer Blog</Link>
-                  <Link to="/community/join">Join the Community</Link>
+                  <h4 className="heading-4">Другое</h4>
+                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Release notes</Link>
+                  <Link to="/blog">Блог для разработчиков</Link>
+                  <Link to="/community/join">Присоединиться к сообществу</Link>
                 </div>
               </div>
             </div>
@@ -261,47 +261,47 @@ function Home() {
           <section className="baton-2 section--compact">
             <div className="container">
               <div>
-                <span className="eyebrow">Get help from others</span>
-                <h2 className="heading-2">Join the dbt Community</h2>
-                <p>Connect with thousands of developers solving real data problems every day.</p>
+                <span className="eyebrow">Получите помощь от сообщества</span>
+                <h2 className="heading-2">Присоединяйтесь к dbt Community</h2>
+                <p>Общайтесь с тысячами разработчиков, которые каждый день решают реальные задачи с данными.</p>
               </div>
               <div className="home-card-grid">
                 <Card
-                  title="Join Slack"
-                  body="Ask questions, get answers, and meet people who speak your data language."
+                  title="Присоединиться к Slack"
+                  body="Задавайте вопросы, получайте ответы и знакомьтесь с людьми, которые говорят на вашем «языке данных»."
                   link="https://www.getdbt.com/community/join-the-community/"
                   icon="annotation"
                   target="_blank"
                 />
                 <Card
                   title="GitHub Discussions"
-                  body="Join technical threads or open issues."
+                  body="Участвуйте в технических обсуждениях или открывайте issues."
                   link="https://github.com/dbt-labs/docs.getdbt.com"
                   icon="github-new"
                   target="_blank"
                 />
                 <Card
-                  title="Subscribe to the newsletter"
-                  body="Get fresh community ideas, job posts, and tools delivered weekly."
+                  title="Подписаться на рассылку"
+                  body="Свежие идеи сообщества, вакансии и инструменты — каждую неделю."
                   link="https://www.getdbt.com/learn/newsletter"
                   icon="inbox"
                   target="_blank"
                 />
                 <Card
-                  title="Answer a question on Discourse"
-                  body="Help someone solve a real problem—and build your reputation doing it."
+                  title="Ответить на вопрос на Discourse"
+                  body="Помогите кому-то решить реальную задачу — и укрепляйте свою репутацию."
                   link="/community/forum"
                   icon="message"
                 />
                 <Card
-                  title="Events and Meetups"
-                  body="Join local and global dbt meetups."
+                  title="События и митапы"
+                  body="Присоединяйтесь к локальным и глобальным митапам dbt."
                   link="/community/events"
                   icon="globe"
                 />
                 <Card
-                  title="Courses & Tutorials"
-                  body="Learn dbt with hands-on guidance."
+                  title="Курсы и туториалы"
+                  body="Изучайте dbt с практическими инструкциями."
                   link="https://learn.getdbt.com/catalog"
                   icon="forward"
                   target="_blank"
@@ -367,9 +367,9 @@ function Home() {
           <section className="static-bg section--compact">
             <div className="container">
               <div>
-                <span className="eyebrow">From the team</span>
-                <h2 className="heading-2">Read the developer blog</h2>
-                <p>Deep dives, changelogs, best practices, and new feature highlights from dbt Labs.</p>
+                <span className="eyebrow">От команды</span>
+                <h2 className="heading-2">Читайте блог для разработчиков</h2>
+                <p>Подробные разборы, changelog’и, best practices и новости о новых возможностях от dbt Labs.</p>
               </div>
               <div className="home-card-grid">
                 {recentBlogData.map((item) => (

@@ -212,18 +212,19 @@ var siteSettings = {
           ],
         },
         {
-          label: "Account",
+          label: "Аккаунт",
           position: "right",
           className: "navbar__account hide-label",
           items: [
             {
-              label: "Log in to dbt",
-              to: "https://cloud.getdbt.com/",
+              label: "Мои курсы от Инженерка.Тех",
+              to: "https://inzhenerka.tech/members/",
               target: "_blank",
             },
             {
-              label: "Create a free account",
-              to: "https://www.getdbt.com/signup",
+              label: "Платформа dbt Cloud",
+              to: "https://cloud.getdbt.com/",
+              target: "_blank",
             },
           ],
         },
@@ -312,10 +313,7 @@ var siteSettings = {
               <span>&copy; ${new Date().getFullYear()} ООО "ИНЖЕНЕРКАТЕХ"<br>Основано на материалах компании dbt Labs, Inc. All Rights Reserved.</span>
             </div>
             <div class="footer-sub-items-links">
-              <a href='https://www.getdbt.com/terms-of-use/'>Terms of Service</a>
-              <a href='https://www.getdbt.com/cloud/privacy-policy/'>Privacy Policy</a>
-              <a href='https://www.getdbt.com/security/'>Security</a>
-              <button id="ot-sdk-btn" onclick="openPreferenceCenter()">Cookie Settings</button>
+
             </div>
           </div>
           </div>

@@ -1464,9 +1464,9 @@ html[data-theme="dark"] .main-wrapper nav a:active {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: center;
+  align-items: center; 
   gap: 24px;
-  justify-content: space-between;
   margin-top: 24px;
   padding-top: 24px;
   border-top: 1px solid var(--color-terminal-black-800);

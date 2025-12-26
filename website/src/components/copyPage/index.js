@@ -39,7 +39,7 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
         aria-haspopup="true"
       >
         {getSvgIcon("copy", { className: styles.copyIcon })}
-        Copy page
+        Копировать страницу
         {getSvgIcon("chevron-down", { className: styles.dropdownIcon })}
       </button>
 
@@ -57,9 +57,9 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
         >
           {getSvgIcon("copy", {})}
           <div className={styles.dropdownItemContent}>
-            <div className={styles.dropdownItemTitle}>Copy page</div>
+            <div className={styles.dropdownItemTitle}>Копировать страницу</div>
             <div className={styles.dropdownItemSubtitle}>
-              Copy page as Markdown for LLMs
+              Скопировать Markdown для LLM
             </div>
           </div>
         </button>
@@ -77,7 +77,7 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
             {getSvgIcon("external-link", {})}
             <div className={styles.dropdownItemContent}>
               <div className={styles.dropdownItemTitle}>
-                Open in {service.name}
+                Открыть в {service.name}
               </div>
               <div className={styles.dropdownItemSubtitle}>
                 {service.subtitle}
