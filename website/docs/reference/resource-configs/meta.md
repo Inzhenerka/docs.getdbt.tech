@@ -55,9 +55,10 @@ models:
 
 </File>
 
-Конфигурация `meta` также может быть определена:
-- в блоке конфигурации `models` в `dbt_project.yml`
-- в макросе `config()` Jinja внутри SQL файла модели
+Конфигурацию `meta` можно определить следующими способами:
+- В разделе `models` конфигурации в файле проекта (как показано в предыдущем примере `models/schema.yml`)
+- В разделе `models` конфигурации в файле проекта (`dbt_project.yml`)
+- В Jinja‑макросе `config()` внутри SQL‑файла модели
 
 Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
 
@@ -128,7 +129,10 @@ seeds:
 
 </File>
 
-Конфигурация `meta` также может быть определена в блоке конфигурации `seeds` в `dbt_project.yml`. Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
+Конфигурация `meta` может быть задана:
+
+- В разделе `seeds` в файле свойств (показано в предыдущем примере `seeds/schema.yml`)
+- В разделе `seeds` в файле проекта (`dbt_project.yml`). Подробнее см. [configs and properties](/reference/configs-and-properties).
 
 </TabItem>
 
@@ -161,9 +165,11 @@ snapshots:
 
 </File>
 
-Конфигурация `meta` также может быть определена:
-- в блоке конфигурации `snapshots` в `dbt_project.yml`
-- в макросе `config()` Jinja внутри SQL блока снимка
+Конфигурация `meta` может быть определена:
+
+- в разделе `snapshots` файла свойств (как показано в предыдущем примере `snapshots/schema.yml`)
+- в разделе `snapshots` файла проекта (`dbt_project.yml`)
+- внутри Jinja‑макроса `config()` в SQL‑блоке snapshot’а
 
 Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
 
@@ -265,7 +271,7 @@ exposures:
 
 <TabItem value="semantic models">
 
-Configure `meta` in the your [semantic models](/docs/build/semantic-models) YAML file or under the `semantic-models` config block in the `dbt_project.yml` file. 
+Configure `meta` in the your [semantic models](/docs/build/semantic-models) property file or under the `semantic-models` config in the project file (`dbt_project.yml`). 
 
 <VersionBlock lastVersion="1.9">
 
@@ -346,7 +352,10 @@ semantic_models:
 
 </VersionBlock>
 
-Конфигурацию `meta` также можно определить внутри блока конфигурации `semantic-models` в файле `dbt_project.yml`. Подробнее см. в разделе [configs and properties](/reference/configs-and-properties).
+Конфигурацию `meta` можно определить:
+
+- В разделе `semantic-models` файла свойств (как показано в предыдущем примере `models/semantic_models.yml`)
+- В разделе `semantic-models` файла проекта (`dbt_project.yml`). Подробнее см. в разделе [configs and properties](/reference/configs-and-properties).
 
 </TabItem>
 

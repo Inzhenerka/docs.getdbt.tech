@@ -12,7 +12,7 @@ datatype: int
 
 Настройте окно `lookback`, чтобы повторно обрабатывать дополнительные батчи во время запусков [microbatch incremental model](/docs/build/incremental-microbatch). Модель обрабатывает X батчей вплоть до последней закладки (последней успешно обработанной точки данных), чтобы захватить записи, поступившие с задержкой.
 
-Задайте `lookback` как целое число, большее или равное нулю. Значение по умолчанию — `1`. Вы можете настроить `lookback` для [microbatch incremental model](/docs/build/incremental-microbatch) в файле `dbt_project.yml`, в property YAML‑файле или в блоке `config`.
+Установите параметр `lookback` в целое число, большее или равное нулю. Значение по умолчанию — `1`. Вы можете настроить `lookback` для [microbatch incremental model](/docs/build/incremental-microbatch) в YAML-файле проекта (`dbt_project.yml`), YAML-файле свойств (`models/properties.yml`) или в конфигурации SQL-файла.
 
 ## Примеры
 
@@ -30,7 +30,7 @@ models:
 ```
 </File>
 
-Пример в YAML-файле свойств:
+Пример в файле свойств:
 
 <File name='models/properties.yml'>
 
@@ -43,7 +43,7 @@ models:
 
 </File>
 
-Пример в блоке конфигурации SQL‑модели:
+Пример в SQL-блоке `config`:
 
 <File name="models/user_sessions.sql">
 

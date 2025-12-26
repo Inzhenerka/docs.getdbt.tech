@@ -118,7 +118,7 @@ sources:
 
 ## Определение
 
-dbt использует `event_time`, чтобы понимать, **когда именно произошло событие**. Его можно настроить в файле `dbt_project.yml`, в YAML-файле свойств или в блоке `config` для [models](/docs/build/models), [seeds](/docs/build/seeds) или [sources](/docs/build/sources).
+dbt использует `event_time`, чтобы понимать, когда произошло событие. Его можно настроить в YAML-файле проекта (`dbt_project.yml`), YAML-файле свойств (`models/properties.yml`) или в конфигурации SQL-файла для [models](/docs/build/models), [seeds](/docs/build/seeds) или [sources](/docs/build/sources).
 
 <EventTimeRequired/>
 
@@ -162,7 +162,7 @@ models:
 ```
 </File>
 
-Пример в файле свойств YAML:
+Пример в property-файле:
 
 <File name='models/properties.yml'>
 
@@ -175,7 +175,7 @@ models:
 
 </File>
 
-Пример в блоке конфигурации SQL‑модели:
+Пример в блоке `config` для модели:
 
 <File name="models/user_sessions.sql">
 
@@ -254,7 +254,7 @@ snapshots:
 
 <TabItem value="sources" label="Источники">
 
-Вот пример файла свойств источника YAML:
+Вот пример файла свойств источника:
 
 <File name='models/properties.yml'>
 

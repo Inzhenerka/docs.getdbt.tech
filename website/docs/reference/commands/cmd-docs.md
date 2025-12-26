@@ -97,6 +97,10 @@ dbt docs serve --port 8001
 
 Вы можете указать другой хост, используя флаг `--host`.
 
+:::info Note
+Флаг `--host` доступен только в [<Constant name="core"/>](/docs/core/installation-overview). Он не поддерживается в [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation).
+:::
+
 **Пример**:
 
 ```shell

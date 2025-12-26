@@ -117,9 +117,11 @@ models:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Файл проекта', value: 'project-yaml', },
-    { label: 'Файл свойств', value: 'property-yaml', },
-    { label: 'Блок конфигурации', value: 'config', },
+```js
+{ label: 'YAML-файл проекта', value: 'project-yaml', },
+{ label: 'YAML-файл свойств', value: 'property-yaml', },
+{ label: 'Конфигурация SQL-файла', value: 'config', },
+```
   ]
 }>
 

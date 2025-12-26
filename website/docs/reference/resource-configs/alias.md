@@ -8,7 +8,7 @@ intro_text: Specify a custom alias for a model, data test, snapshot, or seed and
 <Tabs>
 <TabItem value="model" label="Модели">
 
-Укажите пользовательский псевдоним для модели в вашем файле `dbt_project.yml`, `models/properties.yml` или блоке конфигурации в SQL файле.
+Укажите пользовательский алиас для модели в YAML‑файле проекта (`dbt_project.yml`), в YAML‑файле с описанием свойств (например, `models/properties.yml`) через `config`, либо в блоке `config` внутри SQL‑файла.
 
 Например, если у вас есть модель, которая вычисляет `sales_total`, и вы хотите дать ей более удобный для пользователя псевдоним, вы можете сделать это, как показано в следующих примерах.
 
@@ -54,7 +54,7 @@ models:
 
 <TabItem value="seeds" label="Сиды">
 
-Настройте псевдоним для сида в вашем файле `dbt_project.yml` или `properties.yml`. Следующие примеры демонстрируют, как задать псевдоним для сида с именем `product_categories` как `categories_data`.
+Настройте `alias` для seed в файле проекта (`dbt_project.yml`) или в конфигурационном файле свойств (например, `seeds/properties.yml`). Следующие примеры показывают, как задать `alias` для seed с именем `product_categories`, чтобы он использовался под именем `categories_data`.
 
 В файле `dbt_project.yml` на уровне проекта:
 
@@ -99,7 +99,7 @@ seeds:
 
 <TabItem value="snapshot" label="Снапшоты">
 
-Настройте псевдоним для снапшота в вашем файле `dbt_project.yml`, файле `snapshots/snapshot_name.yml` или блоке конфигурации.
+Настройте alias для snapshot в YAML-файле проекта (`dbt_project.yml`), YAML-файле свойств (например, `snapshots/snapshot_name.yml`) или в блоке конфигурации SQL-файла модели.
 
 Следующие примеры демонстрируют, как задать псевдоним для снапшота с именем `your_snapshot` как `the_best_snapshot`.
 
@@ -144,7 +144,7 @@ snapshots:
 
 <TabItem value="test" label="Тесты">
 
-Настройте псевдоним для теста данных в вашем файле `dbt_project.yml`, `properties.yml` или блоке конфигурации в файле модели.
+Настройте alias для data test в YAML-файле проекта (`dbt_project.yml`), в YAML-файле свойств (например, `models/properties.yml`) или в блоке `config` внутри SQL-файла модели.
 
 Следующие примеры демонстрируют, как задать псевдоним для уникального теста данных с именем `order_id` как `unique_order_id_test` для идентификации конкретного теста данных.
 

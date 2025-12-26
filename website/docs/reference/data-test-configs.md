@@ -17,7 +17,7 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 2. Блок `config()` в SQL-определении теста
 3. В `dbt_project.yml`
 
-Конфигурации тестов данных применяются иерархически, в порядке специфичности, указанном выше. В случае отдельного теста блок `config()` в SQL-определении имеет приоритет над конфигурациями в файле проекта. В случае конкретного экземпляра общего теста свойства `.yml` теста будут иметь приоритет над любыми значениями, установленными в `config()` его общего SQL-определения, которые, в свою очередь, будут иметь приоритет над значениями, установленными в `dbt_project.yml`.
+Конфигурации тестов данных применяются иерархически, в порядке возрастания специфичности, описанном выше. В случае **singular‑теста** блок `config()` внутри SQL‑определения имеет приоритет над конфигурациями, заданными в YAML‑файле проекта. В случае конкретного экземпляра **generic‑теста** свойства теста, указанные в его `.yml`‑файле, имеют приоритет над любыми значениями, заданными в `config()` его обобщённого SQL‑определения, которые, в свою очередь, имеют приоритет над значениями, указанными в YAML‑файле проекта (`dbt_project.yml`).
 
 ## Доступные конфигурации
 
@@ -31,9 +31,11 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Файл проекта', value: 'project-yaml', },
-    { label: 'Блок конфигурации', value: 'config', },
-    { label: 'Файл свойств', value: 'property-yaml', },
+```js
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Конфигурация SQL-файла', value: 'config', },
+{ label: 'Файл свойств', value: 'property-yaml', },
+```
   ]
 }>
 <TabItem value="project-yaml">
@@ -132,9 +134,11 @@ data_tests:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Файл проекта', value: 'project-yaml', },
-    { label: 'Блок конфигурации', value: 'config', },
-    { label: 'Файл свойств', value: 'property-yaml', },
+```js
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Конфигурация SQL-файла', value: 'config', },
+{ label: 'Файл свойств', value: 'property-yaml', },
+```
   ]
 }>
 <TabItem value="project-yaml">

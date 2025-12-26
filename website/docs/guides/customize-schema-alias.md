@@ -490,11 +490,27 @@ dbt автоматически попытается создать схему, �
  {% macro generate_schema_name(custom_schema_name, node) -%}
 
     {%- set default_schema = target.schema -%}
-    {%- if custom_schema_name is none and node.resource_type == 'model' -%}
+    {%- set node_custom_schema = node.config.get('schema') -%}
+    
+    {%- if custom_schema_name is none and node_custom_schema is none and node.resource_type == 'model' -%}
         
         {{ exceptions.raise_compiler_error("Ошибка: не определена пользовательская схема для модели " ~ node.name ) }}
     
+    {%- elif custom_schema_name is none -%}
+
+        {{ default_schema }}
+
+    {%- elif env_var('DBT_ENV_TYPE','DEV') == 'PROD' -%}
+        
+        {{ custom_schema_name | trim }}
+
+    {%- else -%}
+
+        {{ default_schema }}_{{ custom_schema_name | trim }}
+
     {%- endif -%}
+
+{%- endmacro %}
 
 ```
 </File>

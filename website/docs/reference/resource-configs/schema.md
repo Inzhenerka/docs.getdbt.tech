@@ -8,9 +8,9 @@ datatype: string
 <Tabs>
 <TabItem value="model" label="Модель">
 
-Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для группы моделей в вашем файле `dbt_project.yml` или в [блоке конфигурации](/reference/resource-configs/schema#models).
+Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для группы моделей в YAML-файле вашего проекта (`dbt_project.yml`) или в [настройках конфигурации SQL-файла](/reference/resource-configs/schema#models).
 
-Например, если у вас есть группа моделей, связанных с маркетингом, и вы хотите разместить их в отдельной схеме под названием `marketing`, вы можете настроить это следующим образом:
+Например, если у вас есть группа моделей, связанных с маркетингом, и вы хотите разместить их в отдельной схеме с именем `marketing`, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -50,7 +50,7 @@ seeds:
 
 <VersionBlock firstVersion="1.9">
 
-Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas)) для снапшота в вашем файле `dbt_project.yml` или файле конфигурации.
+Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для snapshot в вашем файле `dbt_project.yml` или в property‑файле.
 
 Например, если у вас есть снапшот, который вы хотите загрузить в схему, отличную от целевой схемы, вы можете настроить это следующим образом:
 
@@ -88,7 +88,7 @@ snapshots:
 
 <TabItem value="saved-queries" label="Сохраненные запросы">
 
-Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a [saved query](/docs/build/saved-queries#parameters) in your `dbt_project.yml` or YAML file.
+Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a [saved query](/docs/build/saved-queries#parameters) in your `dbt_project.yml` or property file.
 
 <File name='dbt_project.yml'>
 ```yml

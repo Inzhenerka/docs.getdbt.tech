@@ -79,7 +79,7 @@ __Аргументы__:
 ```
 ## config.meta_get
 
-<VersionBlock lastVersion="1.9">
+<VersionBlock lastVersion="1.10">
 
 Эта функциональность появилась в <Constant name="core" /> v1.11 и <Constant name="fusion_engine" />.
 
@@ -94,7 +94,7 @@ __Args__:
 
 Используйте эту функцию, когда обращаетесь к пользовательским конфигурациям, которые вы определили в `meta` в конфигурации модели или ресурса — по сути, это эквивалент вызова `config.get('meta').get()`.
 
-
+Note that `config.meta_get` is not yet supported in Python models. In the meantime, Python models should continue using `dbt.config.get("meta").get("<key>")` to access custom meta configurations. `dbt.config.get_meta("<key>")` is an alias for `dbt.config.get("meta").get("<key>")`.
 
 Пример использования:
 ```sql
@@ -118,7 +118,7 @@ models:
 
 ## config.meta_require
 
-<VersionBlock lastVersion="1.9">
+<VersionBlock lastVersion="1.10">
 
 Эта функциональность появилась в <Constant name="core" /> v1.11 и <Constant name="fusion_engine" />.
 
@@ -131,6 +131,8 @@ __Args__:
 Функция `config.meta_require` извлекает пользовательские конфигурации, сохранённые в словаре `meta`. В отличие от `config.require()`, эта функция проверяет **только** `config.meta` и не приводит к предупреждениям о депрекейте. Если конфигурация не найдена, dbt выбрасывает ошибку компиляции.
 
 Используйте эту функцию, когда необходимо гарантировать наличие пользовательской конфигурации в `meta`.
+
+Обратите внимание, что `config.meta_require` пока не поддерживается в Python-моделях.
 
 Пример использования:
 ```sql

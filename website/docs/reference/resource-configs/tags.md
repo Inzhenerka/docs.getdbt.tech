@@ -8,9 +8,11 @@ datatype: string | [string]
 <Tabs
   defaultValue="project-yaml"
   values={[
-    { label: 'Файл проекта', value: 'project-yaml', },
-    { label: 'Свойство конфигурации', value: 'other-yaml', },
-    { label: 'Блок конфигурации', value: 'config', },
+```js
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Файл свойств', value: 'other-yaml', },
+{ label: 'Конфигурация SQL-файла', value: 'config', },
+```
   ]
 }>
 <TabItem value="project-yaml">
@@ -179,7 +181,7 @@ models:
 
 </File>
 
-Чтобы применить теги к модели в YAML‑файле в директории `models/`, необходимо добавить их с помощью свойства `config`, как показано ниже:
+Чтобы применить теги к модели в YAML-файле свойств, расположенном в каталоге `models/`, нужно добавить следующее, используя свойство `config`:
 
 <File name='models/stg_customers.yml'>
 

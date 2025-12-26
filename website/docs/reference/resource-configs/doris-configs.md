@@ -20,8 +20,10 @@ id: "doris-configs"
 groupId="config-view"
 defaultValue="project-yaml"
 values={[
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Блок конфигурации', value: 'config', },
+```js
+{ label: 'YAML‑файл проекта', value: 'project-yaml', },
+{ label: 'Конфигурация в SQL‑файле', value: 'config', },
+```
 ]
 }>
 
@@ -56,8 +58,10 @@ models:
 groupId="config-table"
 defaultValue="project-yaml"
 values={[
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Блок конфигурации', value: 'config', },
+```js
+{ label: 'Файл проекта YAML', value: 'project-yaml', },
+{ label: 'Конфигурация в SQL‑файле', value: 'config', },
+```
 ]
 }>
 
@@ -123,8 +127,10 @@ models:
 groupId="config-incremental"
 defaultValue="project-yaml"
 values={[
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Блок конфигурации', value: 'config', },
+```js
+{ label: 'YAML-файл проекта', value: 'project-yaml', },
+{ label: 'Конфигурация в SQL-файле', value: 'config', },
+```
 ]}
 >
 
