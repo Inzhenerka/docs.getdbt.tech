@@ -1,9 +1,7 @@
 ---
-```yaml
 title: Можно ли добавлять тесты и описания в SQL config-блоке?
 description: "Типы свойств, определяемых в SQL config-блоках"
 sidebar_label: 'Типы свойств, определяемых в config-блоках'
-```
 id: properties-not-in-config
 
 ---
