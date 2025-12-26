@@ -1,19 +1,19 @@
 |                              | VS Code extension | Studio IDE | Insights |
 |------------------------------|:--------------------------:|:----------:|:--------:|
-| Autocomplete function names  | ✅                          | ✅          | ❌        |
-| Autocomplete ref/source args | ✅                          | ✅          | ✅        |
-| CTE Preview                  | ✅                          | ✅          | ✅        |
-| Column-level lineage         | ✅                          | ❌          | ❌        |
-| Command palette              | ✅                          | N/A        | ❌        |
-| Error detection              | ✅                          | ✅          | ✅        |
-| Go-to definition             | ✅                          | ❌          | ❌        |
-| Go-to reference              | ✅                          | ❌          | ❌        |
-| Incremental compilation      | ✅                          | ✅          | ❌        |
-| Preview query results        | ✅                          | N/A        | ❌        |
-| Problems tab                 | ✅                          | ❌          | ❌        |
-| Propagate column renames     | ✅                          | ❌          | ❌        |
-| Propagate model renames      | ✅                          | ❌          | ❌        |
-| Show column type on hover    | ✅                          | ✅          | ✅        |
-| Show compiled SQL            | ✅                          | ✅          | ❌        |
-| View table lineage           | ✅                          | N/A        | ❌        |
-| Warning detection            | ✅                          | ✅          | ❌        |
+| Автодополнение имён функций  | ✅                          | ✅          | ❌        |
+| Автодополнение аргументов ref/source | ✅                  | ✅          | ✅        |
+| Предпросмотр CTE             | ✅                          | ✅          | ✅        |
+| Линейность на уровне колонок | ✅                          | ❌          | ❌        |
+| Палитра команд               | ✅                          | N/A        | ❌        |
+| Обнаружение ошибок           | ✅                          | ✅          | ✅        |
+| Переход к определению        | ✅                          | ❌          | ❌        |
+| Переход к использованию      | ✅                          | ❌          | ❌        |
+| Инкрементальная компиляция   | ✅                          | ✅          | ❌        |
+| Предпросмотр результатов запроса | ✅                  | N/A        | ❌        |
+| Вкладка Problems             | ✅                          | ❌          | ❌        |
+| Распространение переименований колонок | ✅           | ❌          | ❌        |
+| Распространение переименований моделей | ✅           | ❌          | ❌        |
+| Отображение типа колонки при наведении | ✅          | ✅          | ✅        |
+| Показ скомпилированного SQL  | ✅                          | ✅          | ❌        |
+| Просмотр линейности таблиц   | ✅                          | N/A        | ❌        |
+| Обнаружение предупреждений   | ✅                          | ✅          | ❌        |

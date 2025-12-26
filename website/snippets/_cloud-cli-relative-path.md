@@ -1,6 +1,6 @@
-The <Constant name="cloud_cli" /> doesn't currently support relative paths in the [`packages.yml` file](/docs/build/packages). Instead, use the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), which supports relative paths in this scenario.
+<Constant name="cloud_cli" /> в настоящее время не поддерживает относительные пути в файле [`packages.yml`](/docs/build/packages). Вместо этого используйте [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), который поддерживает относительные пути в этом сценарии.
 
-Here's an example of a [local package](/docs/build/packages#local-packages) configuration in the `packages.yml` that won't work with the <Constant name="cloud_cli" />:
+Ниже приведён пример конфигурации [локального пакета](/docs/build/packages#local-packages) в `packages.yml`, которая **не будет работать** с <Constant name="cloud_cli" />:
 
 ```yaml
 # repository_root/my_dbt_project_in_a_subdirectory/packages.yml
@@ -9,8 +9,8 @@ packages:
   - local: ../shared_macros
 ```
 
-In this example, `../shared_macros` is a relative path that tells dbt to look for:
-- `..` &mdash; Go one directory up (to `repository_root`).
-- `/shared_macros` &mdash; Find the `shared_macros` folder in the root directory.
+В этом примере `../shared_macros` — это относительный путь, который указывает dbt:
+- `..` &mdash; перейти на один уровень вверх (в `repository_root`);
+- `/shared_macros` &mdash; найти папку `shared_macros` в корневом каталоге.
 
-To work around this limitation, use the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), which fully supports relative paths in `packages.yml`.
+Чтобы обойти это ограничение, используйте [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), который полностью поддерживает относительные пути в `packages.yml`.

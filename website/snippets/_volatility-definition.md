@@ -1,5 +1,5 @@
-You can optionally use the [`volatility` config](/reference/resource-configs/volatility) for SQL or Python UDFs to describe how predictable the function output is by using `deterministic`, `stable`, or `non-deterministic`. Warehouses use this information to decide if results can be cached, reordered, or inlined. Setting the appropriate volatility helps prevent incorrect results when a function isn’t safe to cache or reorder. 
+Вы можете опционально использовать [настройку `volatility`](/reference/resource-configs/volatility) для SQL‑ или Python‑UDF, чтобы описать, насколько предсказуемым является результат работы функции, используя значения `deterministic`, `stable` или `non-deterministic`. Хранилища данных используют эту информацию, чтобы определить, можно ли кэшировать результаты, менять порядок выполнения или встраивать вызовы функций. Указание корректного значения volatility помогает предотвратить некорректные результаты в случаях, когда функцию небезопасно кэшировать или переупорядочивать.
 
-For example:
-- A function that returns a random number (`random()`) should be set as `non-deterministic` because its output changes every time it’s called.
-- A function that returns today’s date (`current_date()`) is `stable`; its value remains consistent within a single query execution but may change between queries. If it were configured as `deterministic`, a warehouse might incorrectly cache the value and reuse it on subsequent days.
+Например:
+- Функция, которая возвращает случайное число (`random()`), должна быть настроена как `non-deterministic`, поскольку её результат меняется при каждом вызове.
+- Функция, которая возвращает текущую дату (`current_date()`), является `stable`: её значение остаётся неизменным в рамках одного выполнения запроса, но может изменяться между запросами. Если бы она была настроена как `deterministic`, хранилище данных могло бы ошибочно закэшировать значение и повторно использовать его в последующие дни.

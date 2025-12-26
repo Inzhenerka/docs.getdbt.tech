@@ -1,5 +1,6 @@
-dbt demarcates between a folder name and a configuration by using a `+` prefix before the configuration name. The `+` prefix is used for configs _only_ and applies to `dbt_project.yml` under the corresponding resource key. It doesn't apply to:
-- `config()` Jinja macro within a resource file
-- config property in a `.yml` file.
+dbt различает имя папки и конфигурацию, используя префикс `+` перед именем конфигурации. Префикс `+` используется **только** для конфигураций и применяется в файле `dbt_project.yml` в рамках соответствующего ключа ресурса. Он **не** применяется к:
 
-For more info, see the [Using the `+` prefix](/reference/resource-configs/plus-prefix).
+- Jinja-макросу `config()` внутри файла ресурса
+- свойству `config` в файле `.yml`
+
+Подробнее см. в разделе [Using the `+` prefix](/reference/resource-configs/plus-prefix).

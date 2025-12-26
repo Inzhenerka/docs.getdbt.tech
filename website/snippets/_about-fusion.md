@@ -1,15 +1,14 @@
+## Дополнительная информация о Fusion
 
-## More information about Fusion
+Fusion — это значительное обновление dbt. Хотя многие рабочие процессы, к которым вы привыкли, остаются без изменений, появляется множество новых идей, а также происходит отказ от ряда старых подходов. Ниже приведён список, охватывающий полный объём текущего релиза движка Fusion, включая вопросы реализации, установки, устаревших возможностей и ограничений:
 
-Fusion marks a significant update to dbt. While many of the workflows you've grown accustomed to remain unchanged, there are a lot of new ideas, and a lot of old ones going away. The following is a list of the full scope of our current release of the Fusion engine, including implementation, installation, deprecations, and limitations:
-
-- [About the dbt Fusion engine](/docs/fusion/about-fusion)
-- [About the dbt extension](/docs/about-dbt-extension)
-- [New concepts in Fusion](/docs/fusion/new-concepts)
-- [Supported features matrix](/docs/fusion/supported-features)
-- [Installing Fusion CLI](/docs/fusion/install-fusion-cli)
-- [Installing VS Code extension](/docs/install-dbt-extension)
-- [Fusion release track](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine)
-- [Quickstart for Fusion](/guides/fusion?step=1)
-- [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion)
-- [Fusion licensing](http://www.getdbt.com/licenses-faq)
+- [О движке dbt Fusion](/docs/fusion/about-fusion)
+- [О расширении dbt](/docs/about-dbt-extension)
+- [Новые концепции в Fusion](/docs/fusion/new-concepts)
+- [Матрица поддерживаемых возможностей](/docs/fusion/supported-features)
+- [Установка Fusion CLI](/docs/fusion/install-fusion-cli)
+- [Установка расширения VS Code](/docs/install-dbt-extension)
+- [Трек релизов Fusion](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine)
+- [Быстрый старт для Fusion](/guides/fusion?step=1)
+- [Руководство по обновлению](/docs/dbt-versions/core-upgrade/upgrading-to-fusion)
+- [Лицензирование Fusion](http://www.getdbt.com/licenses-faq)

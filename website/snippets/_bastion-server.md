@@ -1,6 +1,6 @@
-To connect to a {props.redshift}{props.postgresalloydb} instance via an SSH tunnel, select the **Use SSH Tunnel** option when creating your connection. When configuring the tunnel, you must supply the hostname, username, and port for the [bastion server](#about-the-bastion-server-in-aws).
+Чтобы подключиться к экземпляру {props.redshift}{props.postgresalloydb} через SSH‑туннель, при создании подключения выберите опцию **Use SSH Tunnel**. При настройке туннеля необходимо указать hostname, имя пользователя и порт для [bastion‑сервера](#about-the-bastion-server-in-aws).
 
-Once the connection is saved, a public key will be generated and displayed for the Connection. You can copy this public key to the bastion server to authorize <Constant name="cloud" /> to connect to your database via the bastion server.
+После сохранения подключения для него будет сгенерирован и отображён публичный ключ. Вы можете скопировать этот публичный ключ на bastion‑сервер, чтобы авторизовать <Constant name="cloud" /> для подключения к вашей базе данных через bastion‑сервер.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="A public key is generated after saving"/>
 
@@ -10,13 +10,13 @@ Once the connection is saved, a public key will be generated and displayed for t
   <summary>What is a bastion server?</summary>
   <div>
     <div>
-      A bastion server in <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> is a host that allows <Constant name="cloud" /> to open an SSH connection. 
+      Bastion‑сервер в <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> — это хост, который позволяет <Constant name="cloud" /> устанавливать SSH‑соединение.
       
       <br></br>
     
-      <Constant name="cloud" /> only sends queries and doesn't transmit large data volumes. This means the bastion server can run on an AWS instance of any size, like a t2.small instance or t2.micro.<br></br><br></br>
+      <Constant name="cloud" /> отправляет только запросы и не передаёт большие объёмы данных. Это означает, что bastion‑сервер может работать на AWS‑инстансе практически любого размера, например t2.small или t2.micro.<br></br><br></br>
     
-      Make sure the location of the instance is the same Virtual Private Cloud (VPC) as the {props.redshift}{props.postgres} instance, and configure the security group for the bastion server to ensure that it's able to connect to the warehouse port.
+      Убедитесь, что инстанс расположен в той же Virtual Private Cloud (VPC), что и экземпляр {props.redshift}{props.postgres}, и что для группы безопасности bastion‑сервера настроены правила, позволяющие подключаться к порту хранилища данных.
     </div>
   </div>
 </details>
@@ -24,10 +24,10 @@ Once the connection is saved, a public key will be generated and displayed for t
 
 #### Configuring the Bastion Server in AWS
 
-To configure the SSH tunnel in <Constant name="cloud" />, you'll need to provide the hostname/IP of your bastion server, username, and port, of your choosing, that <Constant name="cloud" /> will connect to. Review the following steps:
+Чтобы настроить SSH‑туннель в <Constant name="cloud" />, вам нужно указать hostname/IP вашего bastion‑сервера, имя пользователя и порт (на ваш выбор), к которому будет подключаться <Constant name="cloud" />. Выполните следующие шаги:
 
-1. Verify the bastion server has its network security rules set up to accept connections from the [<Constant name="cloud" /> IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) on whatever port you configured.
-2. Set up the user account by using the bastion servers instance's CLI, The following example uses the username `dbtcloud`:
+1. Убедитесь, что сетевые правила безопасности bastion‑сервера настроены так, чтобы принимать подключения с [IP‑адресов <Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses) на тот порт, который вы настроили.
+2. Создайте пользовательскую учётную запись с помощью CLI инстанса bastion‑сервера. В следующем примере используется имя пользователя `dbtcloud`:
     
     ```shell
     sudo groupadd dbtcloud
@@ -39,6 +39,6 @@ To configure the SSH tunnel in <Constant name="cloud" />, you'll need to provide
     chmod 600 ~/.ssh/authorized_keys
     ```  
 
-3. Copy and paste the <Constant name="cloud" /> generated public key, into the authorized_keys file.
+3. Скопируйте и вставьте сгенерированный <Constant name="cloud" /> публичный ключ в файл `authorized_keys`.
 
-The bastion server should now be ready for <Constant name="cloud" /> to use as a tunnel into the {props.redshift}{props.postgres} environment.
+После этого bastion‑сервер будет готов к использованию <Constant name="cloud" /> в качестве туннеля для подключения к окружению {props.redshift}{props.postgres}.

@@ -1,4 +1,4 @@
-If you run into any issues, check out the troubleshooting section below.
+Если у вас возникли какие‑либо проблемы, ознакомьтесь с разделом устранения неполадок ниже.
 
 <Expandable alt_header="How to create a .dbt directory in root and move dbt_cloud.yml file">
 
@@ -10,63 +10,63 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
 <Expandable alt_header="I can't see the lineage tab in Cursor">
 
-If you're using the dbt VS Code extension in Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
+Если вы используете расширение dbt для VS Code в Cursor, вкладка lineage лучше всего работает в режиме **Editor** и не отображается в режиме **Agent**. Если вы находитесь в режиме Agent и вкладка lineage не рендерится, просто переключитесь в режим Editor, чтобы просмотреть lineage таблиц и колонок вашего проекта.
 </Expandable>
 
 <Expandable  alt_header="dbt platform configurations">
 
-If you're a cloud-based dbt platform user who has the `dbt-cloud:` config in the `dbt_project.yml` file and are also using dbt Mesh, you must have the project ID configured:
-    ```yaml
-    dbt-cloud:
-    project-id: 12345 # Required
-    ```
-If you don’t configure this correctly, cross-platform references will not resolve properly, and you will encounter errors executing dbt commands.
+Если вы используете облачную платформу dbt, у вас есть конфигурация `dbt-cloud:` в файле `dbt_project.yml`, и при этом вы также используете dbt Mesh, необходимо указать ID проекта:
+```yaml
+dbt-cloud:
+  project-id: 12345 # Required
+```
+Если эта настройка указана некорректно, кросс‑платформенные ссылки не будут разрешаться, и при выполнении команд dbt будут возникать ошибки.
 
 </Expandable>
 
 <Expandable alt_header="dbt extension not activating">
 
-If the dbt extension has activated successfully, you will see the **dbt Extension** label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.
+Если расширение dbt успешно активировалось, вы увидите метку **dbt Extension** в строке состояния в левом нижнем углу редактора. Диагностическую информацию о расширении dbt можно посмотреть, нажав на кнопку **dbt Extension**.
 
-If the **dbt Extension** label is not present, then it is likely that the dbt extension was not installed successfully. If this happens, try uninstalling the extension, restarting your editor, and then reinstalling the extension.
+Если метка **dbt Extension** отсутствует, скорее всего, расширение dbt не было установлено корректно. В этом случае попробуйте удалить расширение, перезапустить редактор и затем установить расширение заново.
 
-**Note:** It is possible to "hide" status bar items in VS Code. Double-check if the dbt Extension status bar label is hidden by right-clicking on the status bar in your editor. If you see dbt Extension in the right-click menu, then the extension has installed successfully.
+**Примечание:** В VS Code можно «скрывать» элементы строки состояния. Проверьте, не скрыта ли метка dbt Extension: щёлкните правой кнопкой мыши по строке состояния в редакторе. Если в контекстном меню присутствует dbt Extension, значит расширение было установлено успешно.
 </Expandable>
 
 <Expandable alt_header="Missing dbt LSP features">
 
-If you receive a `no active LSP for this workspace` error message or aren't seeing dbt Language Server (LSP) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general troubleshooting steps mentioned earlier.
+Если вы получаете сообщение об ошибке `no active LSP for this workspace` или не видите возможности dbt Language Server (LSP) в редакторе (например, автодополнение, переход к определению или всплывающие подсказки), сначала выполните общие шаги по устранению неполадок, описанные ранее.
 
-If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
+Если вы убедились, что расширение dbt установлено корректно, но функции LSP по‑прежнему отсутствуют, попробуйте следующее:
 
-1. Check extension version — Ensure that you're using the latest available version of the dbt extension by:
-   - Opening the **Extensions** page in your editor, or
-   - Going to the **Output** tab and looking for the version number, or
-   - Running `dbtf --version` in the terminal.
-2. Reinstall the LSP — If the version is correct, reinstall the LSP:
-   1. Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux).
-   2. Paste `dbt: Reinstall dbt LSP` and enter.
+1. Проверьте версию расширения — убедитесь, что вы используете последнюю доступную версию расширения dbt:
+   - откройте страницу **Extensions** в редакторе, или
+   - перейдите на вкладку **Output** и посмотрите номер версии, или
+   - выполните команду `dbtf --version` в терминале.
+2. Переустановите LSP — если версия корректна, переустановите LSP:
+   1. Откройте Command Palette: Command + Shift + P (macOS) или Ctrl + Shift + P (Windows/Linux).
+   2. Введите `dbt: Reinstall dbt LSP` и нажмите Enter.
 
-This command downloads the LSP and re-activates the extension to resolve the error.
+Эта команда загрузит LSP и повторно активирует расширение, что должно устранить ошибку.
 
 </Expandable>
 
 <Expandable alt_header="Unsupported dbt version">
 
-If you see an error message indicating that your version of dbt is unsupported, then there is likely a problem with your environment.
+Если вы видите сообщение об ошибке о том, что используемая версия dbt не поддерживается, скорее всего, проблема связана с вашим окружением.
 
-Check the dbt Path setting in your VS Code settings. If this path is set, ensure that it is pointing to a valid dbt Fusion Engine executable.
-If necessary, you can also install the dbt Fusion Engine directly using these instructions: [Install the Fusion CLI](/docs/fusion/install-fusion-cli)
+Проверьте настройку dbt Path в настройках VS Code. Если этот путь задан, убедитесь, что он указывает на корректный исполняемый файл dbt Fusion Engine.  
+При необходимости вы также можете установить dbt Fusion Engine напрямую, следуя этим инструкциям: [Install the Fusion CLI](/docs/fusion/install-fusion-cli)
 </Expandable>
 
 <Expandable alt_header="Addressing the 'dbt language server is not running in this workspace' error">
 
-To resolve the `dbt language server is not running in this workspace` error, you need to add your dbt project folder to a workspace: 
+Чтобы устранить ошибку `dbt language server is not running in this workspace`, необходимо добавить папку с проектом dbt в workspace:
 
-1. In VS Code, click **File** in the toolbar then select **Add Folder to Workspace**.
-2. Select the dbt project file you want to add to a workspace.
-3. To save your workspace, click **File** then select **Save Workspace As**.  
-4. Navigate to the location you want to save your workspace.
+1. В VS Code нажмите **File** в панели инструментов и выберите **Add Folder to Workspace**.
+2. Выберите папку проекта dbt, которую хотите добавить в workspace.
+3. Чтобы сохранить workspace, нажмите **File**, затем выберите **Save Workspace As**.  
+4. Укажите расположение, в котором вы хотите сохранить workspace.
 
-This should resolve the error and open your dbt project by opening the workspace it belongs to. For more information on workspaces, refer to [What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces).
+После этого ошибка должна исчезнуть, а ваш проект dbt будет открыт через соответствующий workspace. Дополнительную информацию о workspace см. в разделе [What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces).
 </Expandable>

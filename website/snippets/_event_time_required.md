@@ -1,5 +1,5 @@
 :::caution Required
-  For incremental microbatch models, if your upstream models don't have `event_time` configured, dbt _cannot_ automatically filter them during batch processing and will perform full table scans on every batch run. 
-  
-  To avoid this, configure `event_time` on every upstream model that should be filtered. Learn how to exclude a model from auto-filtering by [opting out of auto-filtering](/docs/build/incremental-microbatch#opting-out-of-auto-filtering).
+  Для инкрементальных microbatch-моделей, если в ваших upstream-моделях не настроен параметр `event_time`, dbt _не сможет_ автоматически фильтровать их во время пакетной обработки и будет выполнять полное сканирование таблиц при каждом запуске batch.
+
+  Чтобы избежать этого, настройте `event_time` для каждой upstream-модели, которая должна фильтроваться. О том, как исключить модель из автоматической фильтрации, см. раздел [opting out of auto-filtering](/docs/build/incremental-microbatch#opting-out-of-auto-filtering).
 :::

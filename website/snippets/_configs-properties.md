@@ -1,6 +1,5 @@
-
-## Example
-Here's an example that defines both `sources` and `models` for a project:
+## Пример
+Ниже приведён пример, в котором для проекта определены и `sources`, и `models`:
 
 <File name='models/jaffle_shop.yml'>
 
@@ -61,23 +60,21 @@ models:
               values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
               config:
                 severity: warn
-
-
 ```
 
 </File>
 
-## Related documentation
-You can find an exhaustive list of each supported property and config, broken down by resource type:
-* Model [properties](/reference/model-properties) and [configs](/reference/model-configs)
-* Source [properties](/reference/source-properties) and [configs](source-configs)
-* Seed [properties](/reference/seed-properties) and [configs](/reference/seed-configs)
-* Snapshot [properties](snapshot-properties)
-* Analysis [properties](analysis-properties)
-* Macro [properties](/reference/macro-properties)
-* Exposure [properties](/reference/exposure-properties)
+## Связанная документация
+Полный список всех поддерживаемых свойств и конфигураций, разбитый по типам ресурсов, можно найти здесь:
+* Модели: [properties](/reference/model-properties) и [configs](/reference/model-configs)
+* Источники: [properties](/reference/source-properties) и [configs](source-configs)
+* Seed-данные: [properties](/reference/seed-properties) и [configs](/reference/seed-configs)
+* Снимки (snapshots): [properties](snapshot-properties)
+* Анализы: [properties](analysis-properties)
+* Макросы: [properties](/reference/macro-properties)
+* Экспозиции (exposures): [properties](/reference/exposure-properties)
 
-## FAQs
+## Часто задаваемые вопросы (FAQ)
 <FAQ path="Project/schema-yml-name" />
 <FAQ path="Project/resource-yml-name" />
 <FAQ path="Project/multiple-resource-yml-files" />
@@ -85,24 +82,23 @@ You can find an exhaustive list of each supported property and config, broken do
 <FAQ path="Project/why-version-2" />
 <FAQ path="Project/yaml-file-extension" />
 
-
-## Troubleshooting common errors
+## Устранение распространённых ошибок
 
 <Expandable alt_header="Invalid test config given in [model name]">
 
-This error occurs when your `.yml` file does not conform to the structure expected by dbt. A full error message might look like:
+Эта ошибка возникает, когда ваш файл `.yml` не соответствует структуре, ожидаемой dbt. Полное сообщение об ошибке может выглядеть так:
 ```
 * Invalid test config given in models/schema.yml near {'namee': 'event', ...}
   Invalid arguments passed to "UnparsedNodeUpdate" instance: 'name' is a required property, Additional properties are not allowed ('namee' was unexpected)
 ```
 
-While verbose, an error like this should help you track down the issue. Here, the `name` field was provided as `namee` by accident. To fix this error, ensure that your `.yml` conforms to the expected structure described in this guide.
+Хотя сообщение достаточно подробное, оно должно помочь определить источник проблемы. В данном случае поле `name` было по ошибке указано как `namee`. Чтобы исправить эту ошибку, убедитесь, что ваш `.yml` файл соответствует ожидаемой структуре, описанной в этом руководстве.
 
 </Expandable>
 
 <Expandable alt_header="Invalid syntax in your schema.yml file" >
 
-If your `.yml` file is not valid yaml, then dbt will show you an error like this:
+Если ваш файл `.yml` не является корректным YAML, dbt покажет ошибку вида:
 
 ```text
 Runtime Error
@@ -118,9 +114,8 @@ Runtime Error
     in "<unicode string>", line 6, column 5:
           description; "A table containing clickstream events from the marketing website"
           ^
-
 ```
 
-This error occurred because a semicolon (`;`) was accidentally used instead of a colon (`:`) after the `description` field. To resolve issues like this, find the `.yml` file referenced in the error message and fix any syntax errors present in the file. There are online YAML validators that can be helpful here, but please be mindful of submitting sensitive information to third-party applications!
+Эта ошибка произошла из-за того, что после поля `description` по ошибке была использована точка с запятой (`;`) вместо двоеточия (`:`). Чтобы устранить подобные проблемы, найдите файл `.yml`, указанный в сообщении об ошибке, и исправьте все синтаксические ошибки в этом файле. В этом могут помочь онлайн-валидаторы YAML, однако будьте осторожны и не отправляйте конфиденциальную информацию в сторонние сервисы!
 
 </Expandable>

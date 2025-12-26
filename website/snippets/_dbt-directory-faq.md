@@ -1,15 +1,14 @@
-If you've never had a `.dbt` directory, you should perform the following recommended steps to create one. If you already have a `.dbt` directory, move the `dbt_cloud.yml` file into it. Some information about the `.dbt` directory:
+Если у вас ещё нет директории `.dbt`, рекомендуется выполнить следующие шаги, чтобы создать её. Если директория `.dbt` у вас уже есть, переместите файл `dbt_cloud.yml` внутрь неё. Ниже приведена справочная информация о директории `.dbt`:
 
-- A `.dbt` directory is a hidden folder in the root of your filesystem. It's used to store your dbt configuration files. The `.` prefix is used to create a hidden folder, which means it's not visible in Finder or File Explorer by default. 
-- To view hidden files and folders, press Command + Shift + G on macOS or Ctrl + Shift + G on Windows. This opens the "Go to Folder" dialog where you can search for the `.dbt` directory.
-
+- Директория `.dbt` — это скрытая папка в корне вашей файловой системы. Она используется для хранения конфигурационных файлов dbt. Префикс `.` делает папку скрытой, поэтому по умолчанию она не отображается в Finder или File Explorer.
+- Чтобы увидеть скрытые файлы и папки, нажмите Command + Shift + G на macOS или Ctrl + Shift + G на Windows. Это откроет диалог «Go to Folder», в котором можно перейти к директории `.dbt`.
 
 <Tabs>
 <TabItem value="Create a .dbt directory">
 
-  1. Clone your dbt project repository locally.
-  2. Use the `mkdir` command followed by the name of the folder you want to create. 
-    - If using macOS, add the `~` prefix to create a `.dbt` folder in the root of your filesystem:
+  1. Клонируйте репозиторий вашего dbt‑проекта локально.
+  2. Используйте команду `mkdir`, указав имя папки, которую нужно создать.
+     - Если вы используете macOS, добавьте префикс `~`, чтобы создать папку `.dbt` в корне вашей файловой системы:
 
      ```bash
      mkdir ~/.dbt # macOS
@@ -19,20 +18,19 @@ If you've never had a `.dbt` directory, you should perform the following recomme
 
 <TabItem value="Move the dbt_cloud.yml file">
 
-You can move the `dbt_cloud.yml` file into the `.dbt` directory using the `mv` command or by dragging and dropping the file into the `.dbt` directory by opening the Downloads folder using the "Go to Folder" dialog and then using drag-and-drop in the UI.
+Вы можете переместить файл `dbt_cloud.yml` в директорию `.dbt`, используя команду `mv`, либо просто перетащить файл мышью в папку `.dbt`, открыв папку Downloads через диалог «Go to Folder» и воспользовавшись drag-and-drop в интерфейсе.
 
-To move the file using the terminal, use the `mv/move` command. This command moves the `dbt_cloud.yml` from the `Downloads` folder to the `.dbt` folder. If your `dbt_cloud.yml` file is located elsewhere, adjust the path accordingly.
+Чтобы переместить файл с помощью терминала, используйте команду `mv` (или `move` в Windows). Эта команда перемещает `dbt_cloud.yml` из папки `Downloads` в папку `.dbt`. Если файл `dbt_cloud.yml` находится в другом месте, скорректируйте путь соответствующим образом.
 
-
-#### Mac or Linux
-In your command line, use the `mv` command to move your `dbt_cloud.yml` file into the `.dbt` directory. If you've just downloaded the `dbt_cloud.yml` file and it's in your Downloads folder, the command might look something like this:
+#### Mac или Linux
+В командной строке используйте команду `mv`, чтобы переместить файл `dbt_cloud.yml` в директорию `.dbt`. Если вы только что скачали файл `dbt_cloud.yml` и он находится в папке Downloads, команда может выглядеть так:
 
 ```bash
 mv ~/Downloads/dbt_cloud.yml ~/.dbt/dbt_cloud.yml
 ```
 
 #### Windows
-In your command line, use the move command. Assuming your file is in the Downloads folder, the command might look like this:
+В командной строке используйте команду `move`. Если предположить, что файл находится в папке Downloads, команда может выглядеть следующим образом:
 
 ```bash
 move %USERPROFILE%\Downloads\dbt_cloud.yml %USERPROFILE%\.dbt\dbt_cloud.yml
@@ -40,4 +38,3 @@ move %USERPROFILE%\Downloads\dbt_cloud.yml %USERPROFILE%\.dbt\dbt_cloud.yml
 
 </TabItem>
 </Tabs>
-

@@ -1,3 +1,3 @@
 :::tip
-You can combine multiple selector methods in one `--select` command by separating them with commas (`,`) without whitespace (for example, `dbt run --select "marts.finance,tag:nightly"`). This only selects resources that satisfy _all_ arguments. In this example, the command runs models that are in the `marts/finance` subdirectory and tagged `nightly`. For more information, see [Set operators](/reference/node-selection/set-operators).
+Вы можете комбинировать несколько методов селекторов в одной команде `--select`, разделяя их запятыми (`,`) без пробелов (например, `dbt run --select "marts.finance,tag:nightly"`). При этом будут выбраны только те ресурсы, которые удовлетворяют _всем_ аргументам. В приведённом примере команда запускает модели, которые находятся в подкаталоге `marts/finance` и имеют тег `nightly`. Подробнее см. в разделе [Set operators](/reference/node-selection/set-operators).
 :::

@@ -1,3 +1,3 @@
 :::note
-While you can customize paths with `base_location_root` and `base_location_subpath`, we don't recommend relying on them for environment isolation (such as separating development and production environments). Anyone with repository access can easily modify these configuration values. For true environment isolation, use separate `external_volume` values with infrastructure-level access controls.
+Хотя вы можете настраивать пути с помощью `base_location_root` и `base_location_subpath`, мы не рекомендуем полагаться на них для изоляции окружений (например, для разделения окружений разработки и продакшена). Любой пользователь с доступом к репозиторию может легко изменить эти значения конфигурации. Для настоящей изоляции окружений используйте разные значения `external_volume` с контролем доступа на уровне инфраструктуры.
 :::

@@ -1,19 +1,19 @@
-Configuring automatic downstream exposures with Tableau have the following considerations:
+При настройке автоматических downstream exposures с Tableau необходимо учитывать следующее:
 
-- You can only connect to a single Tableau site on the same server.
-- If you're using Tableau Server, you need to [allowlist <Constant name="cloud" />'s IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your <Constant name="cloud" /> region.
-- Tableau dashboards built using custom SQL queries aren't supported.
-- Downstream exposures sync automatically _once per day_ or when a user updates the selected collections.
-- <Expandable alt_header="The database fully qualified names (FQNs) in Tableau must match those in the dbt build.">
-  Tableau's database FQNs (fully qualified names) must match those in the dbt build. To view all expected dependencies in your exposure, the FQNs must match but aren't case-sensitive. For example:
-    | Tableau FQN | dbt FQN | <div style={{width:'250px'}}>Result</div> |
+- Вы можете подключиться только к одному сайту Tableau на одном и том же сервере.
+- Если вы используете Tableau Server, необходимо [добавить IP-адреса <Constant name="cloud" /> в allowlist](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона <Constant name="cloud" />.
+- Дашборды Tableau, построенные с использованием пользовательских SQL-запросов (custom SQL), не поддерживаются.
+- Downstream exposures синхронизируются автоматически _один раз в день_ или при обновлении пользователем выбранных коллекций.
+- <Expandable alt_header="Полностью квалифицированные имена баз данных (FQN) в Tableau должны совпадать с именами в dbt build.">
+  Полностью квалифицированные имена (FQN — fully qualified names) баз данных в Tableau должны совпадать с теми, что используются в dbt build. Чтобы в exposure отображались все ожидаемые зависимости, FQN должны совпадать, при этом регистр символов не имеет значения. Например:
+    | Tableau FQN | dbt FQN | <div style={{width:'250px'}}>Результат</div> |
     | --- | --- | --- |
-    | `analytics.dbt_data_team.my_model` | `analytics.dbt_data_team.my_model` | ✅  Matches and dependencies will display as expected.|
-    | `analytics.dbt_data_team.my_model` | `prod_analytics.dbt_data_team.my_model` | ❌ Doesn't match and not all expected dependencies will display. |
+    | `analytics.dbt_data_team.my_model` | `analytics.dbt_data_team.my_model` | ✅  Совпадает, зависимости будут отображаться корректно.|
+    | `analytics.dbt_data_team.my_model` | `prod_analytics.dbt_data_team.my_model` | ❌ Не совпадает, не все ожидаемые зависимости будут отображаться. |
 
-  To troubleshoot this:
-  1. In <Constant name="cloud" />, download the `manifest.json` from the most recent production run that includes the missing dependencies by clicking on the **Artifacts** tab and scrolling to `manifest.json`.
-  2. Run the following [GraphiQl](https://help.tableau.com/current/api/metadata_api/en-us/docs/meta_api_start.html#explore-the-metadata-api-schema-using-graphiql) query. Make sure to run the query at `your_tableau_server/metadata/graphiql`, where `your_tableau_server` is the value you provided for the Server URL when [setting up your Tableau integration](/docs/cloud-integrations/downstream-exposures-tableau#set-up-in-tableau):
+  Для устранения проблем выполните следующие шаги:
+  1. В <Constant name="cloud" /> скачайте файл `manifest.json` из последнего production-запуска, который включает отсутствующие зависимости. Для этого перейдите на вкладку **Artifacts** и прокрутите до `manifest.json`.
+  2. Выполните следующий запрос в [GraphiQl](https://help.tableau.com/current/api/metadata_api/en-us/docs/meta_api_start.html#explore-the-metadata-api-schema-using-graphiql). Убедитесь, что вы запускаете запрос по адресу `your_tableau_server/metadata/graphiql`, где `your_tableau_server` — это значение, которое вы указали в поле Server URL при [настройке интеграции с Tableau](/docs/cloud-integrations/downstream-exposures-tableau#set-up-in-tableau):
 
             ```jsx
                 query {
@@ -37,10 +37,10 @@ Configuring automatic downstream exposures with Tableau have the following consi
               }
             ```
 
-  3. Compare database FQNs between `manifest.json` and the GraphiQL response. Make sure that `{database}.{schema}.{name}` matches in both. 
-    The following images are examples of FQNs that _match_ in both `manifest.json` and the GraphiQL response and aren't case-sensitive: 
-    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/manifest-json-example.png" width="80%" title="manifest.json example with lowercase FQNs."/>
-    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/graphiql-example.png" width="80%" title="GraphiQl response example with uppercase FQNs."/>
-  4. If the FQNs don't match, update your Tableau FQNs to match the dbt FQNs.
-  5. If you're still experiencing issues, please contact [dbt Support](mailto:support@getdbt.com) and share the results with them.
+  3. Сравните FQN баз данных между `manifest.json` и ответом GraphiQl. Убедитесь, что `{database}.{schema}.{name}` совпадает в обоих источниках.  
+    Ниже приведены примеры FQN, которые _совпадают_ как в `manifest.json`, так и в ответе GraphiQl, при этом регистр символов не учитывается:
+    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/manifest-json-example.png" width="80%" title="Пример manifest.json с FQN в нижнем регистре."/>
+    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/graphiql-example.png" width="80%" title="Пример ответа GraphiQl с FQN в верхнем регистре."/>
+  4. Если FQN не совпадают, обновите FQN в Tableau так, чтобы они соответствовали FQN в dbt.
+  5. Если проблемы сохраняются, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com) и поделитесь с ними полученными результатами.
   </Expandable>

@@ -1,5 +1,6 @@
-This deprecation warning is only raised for the following adapters: 
-- Snowflake
-- Databricks
-- BigQuery
+Это предупреждение об устаревании (deprecation warning) выводится **только** для следующих адаптеров:
+
+- Snowflake  
+- Databricks  
+- BigQuery  
 - Redshift

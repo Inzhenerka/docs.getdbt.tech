@@ -1,11 +1,11 @@
-dbt user accounts need the following permissions to read from and create tables and <Term id="view">views</Term> in a BigQuery project:
+Учетным записям пользователей dbt требуются следующие разрешения для чтения данных, а также для создания таблиц и <Term id="view">views</Term> в проекте BigQuery:
 - BigQuery Data Editor
 - BigQuery User
 
-For BigQuery with <Constant name="fusion_engine" />, users also need:
-- BigQuery Read Session User (for Storage Read API access)
+Для BigQuery с <Constant name="fusion_engine" /> пользователям также требуется:
+- BigQuery Read Session User (для доступа к Storage Read API)
 
-For BigQuery DataFrames, users need these additional permissions:
+Для работы с BigQuery DataFrames пользователям необходимы дополнительные разрешения:
 - BigQuery Job User
 - BigQuery Read Session User
 - Notebook Runtime User

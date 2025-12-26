@@ -1,8 +1,8 @@
 #### Considerations
 
-There are some considerations to keep in mind when using model governance features:
+Есть несколько моментов, которые стоит учитывать при использовании возможностей управления моделями:
 
-- Model governance features like model access, contracts, and versions strengthen trust and stability in your dbt project. Because they add structure, they can make rollbacks harder (for example, removing model access) and increase maintenance if adopted too early.
-  Before adding governance features, consider whether your dbt project is ready to benefit from them.  Introducing governance while models are still changing can complicate future changes.
+- Такие функции управления моделями, как доступ к моделям (model access), контракты (contracts) и версии (versions), повышают уровень доверия и стабильности в вашем проекте dbt. Однако из‑за добавления дополнительной структуры они могут усложнить откат изменений (например, при необходимости убрать ограничения доступа к модели) и увеличить затраты на сопровождение, если внедрить их слишком рано.  
+  Перед тем как добавлять функции управления, стоит оценить, готов ли ваш проект dbt извлечь из них пользу. Внедрение управления на этапе, когда модели все еще активно меняются, может усложнить будущие изменения.
 
-- Governance features are model-specific. They don't apply to other resource types, including snapshots, seeds, or sources. This is because these objects can change structure over time (for example, snapshots capture evolving historical data) and aren't suited to guarantees like contracts, access, or versioning.
+- Функции управления применяются только к моделям. Они не распространяются на другие типы ресурсов, включая snapshots, seeds или sources. Это связано с тем, что такие объекты могут со временем менять свою структуру (например, snapshots фиксируют изменяющиеся исторические данные) и плохо подходят для предоставления гарантий вроде контрактов, управления доступом или версионирования.

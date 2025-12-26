@@ -1,5 +1,5 @@
 :::info
-Remote dbt MCP tools are dependent on available dbt <Constant name="copilot" /> credits. Note that the SQL and remote Fusion tools are in this category, even when they are used and proxied through the local dbt MCP server. Most MCP tools don't consume dbt <Constant name="copilot" /> credits. However, [`text_to_sql`](#sql) usage does count toward your dbt <Constant name="copilot" /> consumption.
+Удалённые инструменты dbt MCP зависят от доступных кредитов dbt <Constant name="copilot" />. Обратите внимание, что SQL‑инструменты и удалённые инструменты Fusion относятся к этой категории даже в тех случаях, когда они используются и проксируются через локальный сервер dbt MCP. Большинство MCP‑инструментов не расходуют кредиты dbt <Constant name="copilot" />. Однако использование [`text_to_sql`](#sql) учитывается в вашем потреблении dbt <Constant name="copilot" />.
 
-If you reach your dbt <Constant name="copilot" /> usage limit, all tools will be blocked until your <Constant name="copilot" /> credits reset. If you need help, please reach out to your account manager.
+Если вы достигнете лимита использования dbt <Constant name="copilot" />, все инструменты будут заблокированы до тех пор, пока ваши кредиты <Constant name="copilot" /> не будут сброшены. Если вам нужна помощь, пожалуйста, свяжитесь с вашим аккаунт-менеджером.
 :::

@@ -1,18 +1,18 @@
-## Private connectivity feature matrix
+## Матрица возможностей приватного подключения
 
-The following feature chart outlines the availability of private connectivity features across <constant name="dbt_platform" /> [multi-tenant (MT) and single-tenant (ST)](/docs/cloud/about-cloud/tenancy) instances <br /> <br />
-✅ = Available | ❌ = Not currently supported | \- = Not applicable <br/>
+В следующей таблице показана доступность возможностей приватного подключения для экземпляров <constant name="dbt_platform" /> с [мультиарендной (MT) и одноарендной (ST)](/docs/cloud/about-cloud/tenancy) архитектурой. <br /> <br />
+✅ = Доступно | ❌ = В настоящее время не поддерживается | \- = Не применимо <br/>
 
-| Connectivity type                                 | AWS MT | AWS ST | Azure MT | Azure ST | GCP MT |
+| Тип подключения                                   | AWS MT | AWS ST | Azure MT | Azure ST | GCP MT |
 |:--------------------------------------------------|:------:|:------:|:--------:|:--------:|:--------:|
-| <b>INGRESS (to <Constant name="cloud" />)</b>                     |        |        |          |          |          |
-| Private <Constant name="cloud" /> Ingress                         |   ❌   |   ✅   |    ❌    |    ✅    |    ❌    |
-| Dual <Constant name="cloud" /> Ingress                            |   ❌   |   ✅   |    ❌    |    ❌    |    ❌    |
-| <b>EGRESS - DW (from <Constant name="cloud" />)</b>               |        |        |          |          |          |
+| <b>INGRESS (в <Constant name="cloud" />)</b>                     |        |        |          |          |          |
+| Private <Constant name="cloud" /> Ingress         |   ❌   |   ✅   |    ❌    |    ✅    |    ❌    |
+| Dual <Constant name="cloud" /> Ingress            |   ❌   |   ✅   |    ❌    |    ❌    |    ❌    |
+| <b>EGRESS – DW (из <Constant name="cloud" />)</b>               |        |        |          |          |          |
 | Snowflake                                         |   ✅   |   ✅   |    ✅    |    ✅    |    ✅    |
 | - Snowflake Internal Stage                        |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
 | Databricks                                        |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
-| Postgres (via load balancer)                      |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
+| Postgres (через load balancer)                    |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
 | Azure Database for PostgreSQL Flexible Server     |   -    |   -    |    ✅    |    ✅    |    -     |
 | Redshift (Interface)                              |   ✅   |   ✅   |    -     |    -     |    -     |
 | Redshift (Managed)                                |   ✅   |   ✅   |    -     |    -     |    -     |
@@ -23,7 +23,7 @@ The following feature chart outlines the availability of private connectivity fe
 | Azure Fabric (cross-tenant not supported by Azure)|   -    |   -    |    ❌    |    ❌    |    -     |
 | Google BigQuery                                   |   -    |   -    |    -     |    -     |    ✅    |
 | Teradata - Database Server                        |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
-| <b>EGRESS - VCS (from <Constant name="cloud" />)</b>              |        |        |          |          |          |
+| <b>EGRESS – VCS (из <Constant name="cloud" />)</b>              |        |        |          |          |          |
 | GitHub Enteprise Server                           |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
 | GitLab Enterprise                                 |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |
 | BitBucket                                         |   ✅   |   ✅   |    ✅    |    ✅    |    ❌    |

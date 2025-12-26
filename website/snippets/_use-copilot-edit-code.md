@@ -1,42 +1,42 @@
-<Constant name="copilot" /> also allows you to generate SQL code directly within the SQL file in the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), using natural language prompts. This means you can rewrite or add specific portions of the SQL file without needing to edit the entire file. 
+<Constant name="copilot" /> также позволяет генерировать SQL‑код прямо внутри SQL‑файла в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), используя запросы на естественном языке. Это означает, что вы можете переписать или добавить отдельные части SQL‑файла, не редактируя его целиком.  
 
-This intelligent AI tool streamlines SQL development by reducing errors, scaling effortlessly with complexity, and saving valuable time. <Constant name="copilot" />'s [prompt window](#use-the-prompt-window), accessible by keyboard shortcut, handles repetitive or complex SQL generation effortlessly so you can focus on high-level tasks. 
+Этот интеллектуальный AI‑инструмент упрощает разработку SQL за счёт сокращения количества ошибок, лёгкого масштабирования при росте сложности и экономии ценного времени. [Окно запросов](#use-the-prompt-window) <Constant name="copilot" />, доступное по сочетанию клавиш, берёт на себя рутинную или сложную генерацию SQL, позволяя вам сосредоточиться на задачах более высокого уровня.  
 
-Use Copilot's prompt window for use cases like:
+Используйте окно запросов Copilot для таких сценариев, как:
 
-- Writing advanced transformations
-- Performing bulk edits efficiently
-- Crafting complex patterns like regex
+- написание продвинутых трансформаций  
+- эффективное выполнение массовых правок  
+- создание сложных паттернов, например regex  
 
 ### Use the prompt window 
 
-Access <Constant name="copilot" />'s AI prompt window using the keyboard shortcut Cmd+B (Mac) or Ctrl+B (Windows) to:
+Откройте AI‑окно запросов <Constant name="copilot" /> с помощью сочетания клавиш Cmd+B (Mac) или Ctrl+B (Windows), чтобы:
 
 #### 1. Generate SQL from scratch
-- Use the keyboard shortcuts Cmd+B (Mac) or Ctrl+B (Windows) to generate SQL from scratch.
-- Enter your instructions to generate SQL code tailored to your needs using natural language.
-- Ask <Constant name="copilot" /> to fix the code or add a specific portion of the SQL file.
+- Использовать сочетания клавиш Cmd+B (Mac) или Ctrl+B (Windows) для генерации SQL с нуля.  
+- Ввести инструкции на естественном языке для генерации SQL‑кода, соответствующего вашим требованиям.  
+- Попросить <Constant name="copilot" /> исправить код или добавить определённую часть SQL‑файла.  
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/copilot-sql-generation-prompt.png" width="90%" title="dbt Copilot's prompt window accessible by keyboard shortcut Cmd+B (Mac) or Ctrl+B (Windows)" />
 
 #### 2. Edit existing SQL code
-- Highlight a section of SQL code and press Cmd+B (Mac) or Ctrl+B (Windows) to open the prompt window for editing.
-- Use this to refine or modify specific code snippets based on your needs.
-- Ask <Constant name="copilot" /> to fix the code or add a specific portion of the SQL file.
+- Выделите участок SQL‑кода и нажмите Cmd+B (Mac) или Ctrl+B (Windows), чтобы открыть окно запросов для редактирования.  
+- Используйте это для доработки или изменения конкретных фрагментов кода в соответствии с вашими потребностями.  
+- Попросите <Constant name="copilot" /> исправить код или добавить определённую часть SQL‑файла.  
 
 #### 3. Review changes with the diff view to quickly assess the impact of the changes before making changes
-- When a suggestion is generated, <Constant name="copilot" /> displays a visual "diff" view to help you compare the proposed changes with your existing code:
-  - **Green**: Means new code that will be added if you accept the suggestion.
-  - **Red**: Highlights existing code that will be removed or replaced by the suggested changes.
+- Когда предложение сгенерировано, <Constant name="copilot" /> отображает визуальный режим «diff», который помогает сравнить предлагаемые изменения с текущим кодом:  
+  - **Green**: новый код, который будет добавлен при принятии предложения.  
+  - **Red**: существующий код, который будет удалён или заменён предложенными изменениями.  
 
 #### 4. Accept or reject suggestions
-- **Accept**: If the generated SQL meets your requirements, click the **Accept** button to apply the changes directly to your `.sql` file directly in the IDE.
-- **Reject**: If the suggestion don’t align with your request/prompt, click **Reject** to discard the generated SQL without making changes and start again.
+- **Accept**: если сгенерированный SQL соответствует вашим требованиям, нажмите кнопку **Accept**, чтобы применить изменения напрямую к вашему `.sql`‑файлу в IDE.  
+- **Reject**: если предложение не соответствует вашему запросу/промпту, нажмите **Reject**, чтобы отклонить сгенерированный SQL без внесения изменений и начать заново.  
 
 #### 5. Regenerate code
-- To regenerate, press the **Escape** button on your keyboard (or click the Reject button in the popup). This will remove the generated code and puts your cursor back into the prompt text area. 
-- Update your prompt and press **Enter** to try another generation. Press **Escape** again to close the popover entirely.
+- Чтобы сгенерировать код заново, нажмите клавишу **Escape** на клавиатуре (или кнопку Reject во всплывающем окне). Это удалит сгенерированный код и вернёт курсор в поле ввода запроса.  
+- Обновите запрос и нажмите **Enter**, чтобы попробовать другую генерацию. Нажмите **Escape** ещё раз, чтобы полностью закрыть всплывающее окно.  
 
-Once you've accepted a suggestion, you can continue to use the prompt window to generate additional SQL code and commit your changes to the branch.
+После принятия предложения вы можете продолжать использовать окно запросов для генерации дополнительного SQL‑кода и коммитить изменения в ветку.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/copilot-sql-generation.gif" width="100%" title="Edit existing SQL code using dbt Copilot's prompt window accessible by keyboard shortcut Cmd+B (Mac) or Ctrl+B (Windows)" />

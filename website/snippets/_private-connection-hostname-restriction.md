@@ -1,5 +1,5 @@
-:::caution Environment variables
+:::caution Переменные окружения
 
-Using [Environment variables](/docs/build/environment-variables) when configuring private connection endpoints isn't supported in <Constant name="cloud" />. Instead, use [Extended Attributes](/docs/deploy/deploy-environments#extended-attributes) to dynamically change these values in your <Constant name="cloud" /> environment.
+Использование [Environment variables](/docs/build/environment-variables) при настройке private connection endpoints не поддерживается в <Constant name="cloud" />. Вместо этого используйте [Extended Attributes](/docs/deploy/deploy-environments#extended-attributes), чтобы динамически изменять эти значения в вашей среде <Constant name="cloud" />.
 
 :::

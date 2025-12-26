@@ -1,5 +1,5 @@
-:::tip Learn by video!
+:::tip Учитесь с помощью видео!
 
-<span>For video tutorials on {props.resource}, go to dbt Learn and check out the <a href={props.url}>{props.course} course</a>.</span>
+<span>Чтобы посмотреть видеоуроки по теме {props.resource}, перейдите в dbt Learn и ознакомьтесь с курсом <a href={props.url}>{props.course}</a>.</span>
 
 :::

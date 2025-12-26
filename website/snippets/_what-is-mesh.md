@@ -1,26 +1,24 @@
+Организации любого масштаба используют dbt для управления трансформациями данных — от небольших стартапов до крупных корпораций. По мере роста может становиться сложно координировать все организационные и технические требования заинтересованных сторон в рамках одного dbt‑проекта.
 
-Organizations of all sizes rely upon dbt to manage their data transformations, from small startups to large enterprises. At scale, it can be challenging to coordinate all the organizational and technical requirements demanded by your stakeholders within the scope of a single dbt project.
+До недавнего времени также не существовало полноценного, «первоклассного» способа эффективно управлять зависимостями, управлением (governance) и рабочими процессами между несколькими dbt‑проектами.
 
-To date, there also hasn't been a first-class way to effectively manage the dependencies, governance, and workflows between multiple dbt projects. 
+Именно здесь появляется **<Constant name="mesh" />** — он дает возможность командам по работе с данными работать *независимо и совместно*; делиться данными, кодом и лучшими практиками, не жертвуя безопасностью или автономностью.
 
-That's where **<Constant name="mesh" />** comes in - empowering data teams to work *independently and collaboratively*; sharing data, code, and best practices without sacrificing security or autonomy. 
+<Constant name="mesh" /> — это не отдельный продукт, а паттерн, который становится возможным благодаря сочетанию нескольких возможностей dbt:
 
- <Constant name="mesh" /> is not a single product - it is a pattern enabled by a convergence of several features in dbt:
+- **[Cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref)** — базовая функциональность, которая делает возможными мультипроектные развертывания. Теперь `{{ ref() }}` работает между проектами <Constant name="cloud" /> на тарифах Enterprise и Enterprise+.
+- **[<Constant name="explorer" />](/docs/explore/explore-projects)** — платформа документации <Constant name="cloud" />, основанная на метаданных, с полной межпроектной lineage.
+- **Governance** — возможности управления в dbt позволяют контролировать доступ к моделям dbt как внутри проекта, так и между проектами.
+  - **[Groups](/docs/mesh/govern/model-access#groups)** — с помощью групп можно объединять узлы в вашем dbt DAG, которые имеют логическую связь (например, по функциональной области), и назначать владельца для всей группы.
+  - **[Access](/docs/mesh/govern/model-access#access-modifiers)** — конфигурации доступа позволяют управлять тем, кто может ссылаться на модели.
+  - **[Model Versions](/docs/mesh/govern/model-versions)** — при координации между проектами и командами мы рекомендуем рассматривать модели данных как стабильные API. Версионирование моделей — это механизм, который позволяет аккуратно внедрять изменения и выводить модели из эксплуатации по мере их развития.
+  - **[Model Contracts](/docs/mesh/govern/model-contracts)** — контракты данных задают явные ожидания к форме данных, чтобы изменения данных до dbt или в логике проекта не ломали данные у downstream‑потребителей.
 
-- **[Cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref)** - this is the foundational feature that enables the multi-project deployments. `{{ ref() }}`s now work across <Constant name="cloud" /> projects on Enterprise and Enterprise+ plans.
-- **[<Constant name="explorer" />](/docs/explore/explore-projects)** - <Constant name="cloud" />'s metadata-powered documentation platform, complete with full, cross-project lineage.
-- **Governance** - dbt's governance features allow you to manage access to your dbt models both within and across projects.
-  - **[Groups](/docs/mesh/govern/model-access#groups)** - With groups, you can organize nodes in your dbt DAG that share a logical connection (for example, by functional area) and assign an owner to the entire group.
-  - **[Access](/docs/mesh/govern/model-access#access-modifiers)** - access configs allow you to control who can reference models.
-  - **[Model Versions](/docs/mesh/govern/model-versions)** - when coordinating across projects and teams, we recommend treating your data models as stable APIs. Model versioning is the mechanism to allow graceful adoption and deprecation of models as they evolve.
-  - **[Model Contracts](/docs/mesh/govern/model-contracts)** - data contracts set explicit expectations on the shape of the data to ensure data changes upstream of dbt or within a project's logic don't break downstream consumers' data products.
+## Когда стоит использовать dbt Mesh?
 
-## When is the right time to use dbt Mesh?
+Мультипроектная архитектура помогает организациям со зрелыми и сложными процессами трансформации в dbt повысить гибкость и производительность своих dbt‑проектов. Если вы уже используете dbt и ваш проект начал сталкиваться с одним или несколькими из следующих признаков, вероятно, вы готовы начать изучение этого подхода:
 
-The multi-project architecture helps organizations with mature, complex transformation workflows in dbt increase the flexibility and performance of their dbt projects. If you're already using dbt and your project has started to experience any of the following, you're likely ready to start exploring this paradigm:
-
-- The **number of models** in your project is degrading performance and slowing down development.
-- Teams have developed **separate workflows** and need to decouple development from each other.
-- Teams are experiencing **communication challenges**, and the reliability of some of your data products has started to deteriorate.
-- **Security and governance** requirements are increasing and would benefit from increased isolation.
-
+- **Количество моделей** в проекте начинает ухудшать производительность и замедлять разработку.
+- Команды разработали **отдельные рабочие процессы** и нуждаются в разделении (decoupling) разработки между собой.
+- Команды сталкиваются с **проблемами коммуникации**, и надежность некоторых ваших дата‑продуктов начинает снижаться.
+- Требования к **безопасности и управлению** растут и выиграли бы от более строгой изоляции.

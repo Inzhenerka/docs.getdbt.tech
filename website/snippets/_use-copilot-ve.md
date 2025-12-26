@@ -1,18 +1,18 @@
-To begin building models with natural language prompts in the <Constant name="visual_editor" />:
+Чтобы начать создавать модели с помощью подсказок на естественном языке в <Constant name="visual_editor" />:
 
-1. Click on the **dbt Copilot** icon in <Constant name="visual_editor" /> menu.
-2. In the dbt Copilot prompt box, enter your prompt in natural language for <Constant name="copilot" /> to build the model(s) you want. You can also reference existing models using the `@` symbol. For example, to build a model that calculates the total price of orders, you can enter `@orders` in the prompt and it'll pull in and reference the `orders` model.
-3. Click **Generate** and dbt Copilot generates a summary of the model(s) you want to build. 
-   - To start over, click on the **+** icon. To close the prompt box, click **X**.
+1. Нажмите на иконку **dbt Copilot** в меню <Constant name="visual_editor" />.
+2. В поле ввода dbt Copilot введите подсказку на естественном языке, чтобы <Constant name="copilot" /> создал нужную вам модель (или модели). Вы также можете ссылаться на существующие модели с помощью символа `@`. Например, чтобы создать модель, которая рассчитывает общую стоимость заказов, вы можете указать `@orders` в подсказке — тогда будет подтянута и использована модель `orders`.
+3. Нажмите **Generate**, и dbt Copilot сформирует описание моделей, которые вы хотите создать.  
+   - Чтобы начать заново, нажмите на иконку **+**. Чтобы закрыть окно подсказки, нажмите **X**.
    <Lightbox src="/img/docs/dbt-cloud/copilot-generate.jpg" width="40%" title="Enter a prompt in the dbt Copilot prompt box to build models using natural language" />
-4. Click **Apply** to generate the model(s) in the <Constant name="visual_editor" />.
-5. dbt Copilot displays a visual "diff" view to help you compare the proposed changes with your existing code. Review the diff view in the canvas to see the generated operators built by<Constant name="copilot" />:
-   - White: Located in the top of the canvas and means existing set up or blank canvas that will be removed or replaced by the suggested changes.
-   - Green: Located in the bottom of the canvas and means new code that will be added if you accept the suggestion. <br / >
+4. Нажмите **Apply**, чтобы сгенерировать модель(и) в <Constant name="visual_editor" />.
+5. dbt Copilot отобразит визуальный режим «diff», который помогает сравнить предлагаемые изменения с существующим кодом. Просмотрите diff на холсте, чтобы увидеть сгенерированные операторы, созданные <Constant name="copilot" />:
+   - **Белый**: располагается в верхней части холста и обозначает существующую конфигурацию или пустой холст, которые будут удалены или заменены предложенными изменениями.
+   - **Зелёный**: располагается в нижней части холста и обозначает новый код, который будет добавлен, если вы примете предложение. <br / >
    <Lightbox src="/img/docs/dbt-cloud/copilot-diff.jpg" width="100%" title="Visual diff view of proposed changes" />
-6. Reject or accept the suggestions
-7. In the **generated** operator box, click the play icon to preview the data
-8. Confirm the results or continue building your model.
+6. Отклоните или примите предложения.
+7. В блоке **generated** оператора нажмите на иконку воспроизведения, чтобы предварительно просмотреть данные.
+8. Подтвердите результаты или продолжите дорабатывать модель.
    <Lightbox src="/img/docs/dbt-cloud/copilot-output.jpg" width="100%" title="Use the generated operator with play icon to preview the data" />
-9.  To edit the generated model, open **<Constant name="copilot" />** prompt box and type your edits. 
-10. Click **Submit** and <Constant name="copilot" /> will generate the revised model. Repeat steps 5-8 until you're happy with the model.
+9. Чтобы отредактировать сгенерированную модель, откройте окно подсказки **<Constant name="copilot" />** и введите изменения.
+10. Нажмите **Submit**, и <Constant name="copilot" /> сгенерирует обновлённую версию модели. Повторяйте шаги 5–8, пока результат вас полностью не устроит.

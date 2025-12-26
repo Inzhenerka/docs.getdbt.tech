@@ -1,4 +1,4 @@
-Run the following command, replacing `<client-id>`, `<client-secret>`, `<application-ID-URI>`, and `<tenant-id>` with your actual values:
+Выполните следующую команду, заменив `<client-id>`, `<client-secret>`, `<application-ID-URI>` и `<tenant-id>` на ваши реальные значения:
 
 ```bash
 curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
@@ -9,5 +9,4 @@ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
   'https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/token'
 ```
 
-The response will include an `access_token`. You can decode this token using [jwt.io](https://jwt.io) to view the `sub` claim value.
-
+В ответе будет содержаться `access_token`. Вы можете декодировать этот токен с помощью сервиса [jwt.io](https://jwt.io), чтобы посмотреть значение claim `sub`.

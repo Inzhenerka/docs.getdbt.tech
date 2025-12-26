@@ -1,15 +1,15 @@
-To delete a job or multiple jobs in <Constant name="cloud" />:
+Чтобы удалить одно задание или несколько заданий в <Constant name="cloud" />:
 
-1. Click **Deploy** on the navigation header.
-2. Click **Jobs** and select the job you want to delete. 
-3. Click **Settings** on the top right of the page and then click **Edit**.
-4. Scroll to the bottom of the page and click **Delete job** to delete the job. <br />
+1. Нажмите **Deploy** в навигационной панели.
+2. Нажмите **Jobs** и выберите задание, которое вы хотите удалить.
+3. Нажмите **Settings** в правом верхнем углу страницы, затем нажмите **Edit**.
+4. Прокрутите страницу вниз и нажмите **Delete job**, чтобы удалить задание. <br />
 
 <figure>
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/delete-job.png" width="100%" title="Delete a job"/>
 </figure>
 
-5. Confirm your action in the pop-up by clicking **Confirm delete** in the bottom right to delete the job immediately. This action cannot be undone. However, you can create a new job with the same information if the deletion was made in error. 
-6. Refresh the page, and the deleted job should now be gone. If you want to delete multiple jobs, you'll need to perform these steps for each job.
+5. Подтвердите действие во всплывающем окне, нажав **Confirm delete** в правом нижнем углу, чтобы немедленно удалить задание. Это действие нельзя отменить. Однако вы можете создать новое задание с теми же параметрами, если удаление было выполнено по ошибке.
+6. Обновите страницу — удалённое задание должно исчезнуть. Если вы хотите удалить несколько заданий, необходимо выполнить эти шаги для каждого задания.
 
-If you're having any issues, feel free to [contact us](mailto:support@getdbt.com) for additional help.
+Если у вас возникли какие‑либо проблемы, вы всегда можете [связаться с нами](mailto:support@getdbt.com) для получения дополнительной помощи.

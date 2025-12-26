@@ -1,7 +1,7 @@
 :::important License types override group permissions
 
-**User license types always override their assigned group permission sets.** For example, a user with a Read-Only license cannot perform administrative actions, even if they belong to an Account Admin group.
+**Типы пользовательских лицензий всегда имеют приоритет над наборами разрешений, назначенными через группы.** Например, пользователь с лицензией Read-Only не может выполнять административные действия, даже если он состоит в группе Account Admin.
 
-This ensures that license restrictions are always enforced, regardless of group membership.
+Это гарантирует, что ограничения, связанные с лицензией, всегда применяются независимо от членства в группах.
 
-::: 
+:::

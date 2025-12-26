@@ -1,8 +1,8 @@
-| Aspect | In development | In deployment (Advanced CI) |
+| Аспект | В процессе разработки | При деплое (Advanced CI) |
 |---|---|---|
-| Affects | Development for one modified model at a time | Deployment for all modified models in a project |
-| Trigger | On-demand in editor | PR open/update and CI job |
-| Scope | Your working copy and local target | Branch head versus prod state in CI |
-| Output location | Compare panel in VS Code/Cursor. Does not create a PR comment in Git provider | Deployment job compare tab and PR summary comment in Git provider |
-| Data caching | Editor-side | dbt platform [caches](/docs/deploy/advanced-ci#about-the-cached-data) limited samples |
-| Governance | Local development credentials | Production credentials |
+| На что влияет | Разработка для одной изменённой модели за раз | Деплой для всех изменённых моделей в проекте |
+| Триггер | По запросу в редакторе | Открытие/обновление PR и CI‑задача |
+| Область | Ваша рабочая копия и локальный target | Голова ветки по сравнению с прод‑состоянием в CI |
+| Расположение вывода | Панель сравнения в VS Code/Cursor. Не создаёт комментарий в PR у Git‑провайдера | Вкладка сравнения в задаче деплоя и сводный комментарий в PR у Git‑провайдера |
+| Кэширование данных | На стороне редактора | Ограниченные сэмплы, закэшированные платформой dbt ([caches](/docs/deploy/advanced-ci#about-the-cached-data)) |
+| Управление доступом | Учётные данные для локальной разработки | Продакшен‑учётные данные |

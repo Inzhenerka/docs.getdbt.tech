@@ -1,13 +1,13 @@
-Generate documentation, tests, metrics, and semantic models [resources](/docs/build/projects) with the click-of-a-button in the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) using dbt Copilot, saving you time. To access and use this AI feature:
+Создавайте документацию, тесты, метрики и семантические модели [resources](/docs/build/projects) одним нажатием кнопки в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) с помощью dbt Copilot, экономя время. Чтобы получить доступ к этой AI‑функции и начать её использовать:
 
-1. Navigate to the <Constant name="cloud_ide" /> and select a SQL model file under the **File Explorer**.
-2. In the **Console** section (under the **File Editor**), click **dbt Copilot** to view the available AI options.
-3. Select the available options to generate the YAML config: **Generate Documentation**, **Generate Tests**, **Generate Semantic Model**, or **Generate Metrics**. To generate multiple YAML configs for the same model, click each option separately. dbt Copilot intelligently saves the YAML config in the same file.
-   - To generate metrics, you need to first have semantic models defined. 
-   - Once defined, click **dbt Copilot** and select **Generate Metrics**.
-   - Write a prompt describing the metrics you want to generate and press enter.
-   - **Accept** or **Reject** the generated code.
-4. Verify the AI-generated code. You can update or fix the code as needed.
-5. Click **Save As**. You should see the file changes under the **Version control** section.
+1. Перейдите в <Constant name="cloud_ide" /> и выберите SQL‑модель в разделе **File Explorer**.
+2. В секции **Console** (под **File Editor**) нажмите **dbt Copilot**, чтобы увидеть доступные AI‑опции.
+3. Выберите нужные опции для генерации YAML‑конфигурации: **Generate Documentation**, **Generate Tests**, **Generate Semantic Model** или **Generate Metrics**. Чтобы сгенерировать несколько YAML‑конфигураций для одной и той же модели, нажимайте каждую опцию отдельно. dbt Copilot автоматически сохраняет YAML‑конфигурацию в том же файле.
+   - Для генерации метрик сначала должны быть определены семантические модели.
+   - После этого нажмите **dbt Copilot** и выберите **Generate Metrics**.
+   - Напишите запрос с описанием метрик, которые вы хотите сгенерировать, и нажмите Enter.
+   - **Accept** или **Reject** сгенерированный код.
+4. Проверьте код, сгенерированный AI. При необходимости вы можете обновить или исправить его.
+5. Нажмите **Save As**. Изменения в файле будут отображаться в разделе **Version control**.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Пример использования dbt Copilot для генерации документации в IDE" />

@@ -1,3 +1,5 @@
-To complete this section, you will need your login URL slug. This slug controls the URL where users on your account can log into your application. dbt automatically generates login URL slugs, which can't be altered. It will contain only letters, numbers, and dashes.
-For example, the login URL slug for dbt Labs would look something like `dbt-labs-afk123`.
-Login URL slugs are unique across all <Constant name="cloud" /> accounts.
+Чтобы завершить этот раздел, вам понадобится **login URL slug**. Этот slug управляет URL-адресом, по которому пользователи вашей учетной записи могут входить в приложение. dbt автоматически генерирует login URL slug, и его нельзя изменить. Он содержит только буквы, цифры и дефисы.
+
+Например, login URL slug для dbt Labs может выглядеть примерно так: `dbt-labs-afk123`.
+
+Login URL slug являются уникальными среди всех учетных записей <Constant name="cloud" />.

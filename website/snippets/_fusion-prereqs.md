@@ -1,16 +1,16 @@
 import FusionDWH from '/snippets/_fusion-dwh.md';
 
-Learn more about installing <Constant name="fusion" /> locally, along with important prerequisites, step-by-step installation instructions, troubleshooting common issues, and configuration guidance.
+Узнайте больше о локальной установке <Constant name="fusion" />, включая важные предварительные требования, пошаговые инструкции по установке, устранение распространённых проблем и рекомендации по настройке.
 
 ## Prerequisites
 
-Before installing <Constant name="fusion" />, ensure that you:
+Перед установкой <Constant name="fusion" /> убедитесь, что вы:
 
-- Have administrative privileges to install software on your local machine.
-- Are comfortable using a command-line interface (Terminal on macOS/Linux, PowerShell on Windows).
-- Use a supported data warehouse and authentication method and configure permissions as needed:
+- Имеете административные права для установки программного обеспечения на локальном компьютере.
+- Уверенно работаете с интерфейсом командной строки (Terminal на macOS/Linux, PowerShell на Windows).
+- Используете поддерживаемое хранилище данных и метод аутентификации, а также при необходимости настроили соответствующие права доступа:
     <FusionDWH /> 
-- Use a supported operating system:
-  - **macOS:** Supported on both Intel (x86-64) and Apple Silicon (ARM)
-  - **Linux:** Supported on both x86-64 and ARM
-  - **Windows:** Supported on x86-64; ARM support coming soon
+- Используете поддерживаемую операционную систему:
+  - **macOS:** поддерживается как на Intel (x86-64), так и на Apple Silicon (ARM)
+  - **Linux:** поддерживается как на x86-64, так и на ARM
+  - **Windows:** поддерживается на x86-64; поддержка ARM ожидается в ближайшее время

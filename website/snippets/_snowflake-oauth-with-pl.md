@@ -1,7 +1,7 @@
-:::note Snowflake OAuth with PrivateLink
-Users connecting to Snowflake using [Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth) over an AWS PrivateLink connection from <Constant name="cloud" /> will also require access to a PrivateLink endpoint from their local workstation. Where possible, use [Snowflake External OAuth](/docs/cloud/manage-access/snowflake-external-oauth) instead to bypass this limitation.
+:::note Snowflake OAuth с использованием PrivateLink
+Пользователям, которые подключаются к Snowflake с помощью [Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth) через соединение AWS PrivateLink из <Constant name="cloud" />, также потребуется доступ к PrivateLink endpoint с их локальной рабочей станции. По возможности используйте [Snowflake External OAuth](/docs/cloud/manage-access/snowflake-external-oauth), чтобы обойти это ограничение.
 
-From the [Snowflake](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview#label-sso-private-connectivity) docs:
->Currently, for any given Snowflake account, SSO works with only one account URL at a time: either the public account URL or the URL associated with the private connectivity service
+Из документации [Snowflake](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview#label-sso-private-connectivity):
+>В настоящее время для каждой учетной записи Snowflake SSO может работать только с одним URL учетной записи одновременно: либо с публичным URL учетной записи, либо с URL, связанным с сервисом приватной сетевой связности.
 
 :::

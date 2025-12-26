@@ -1,9 +1,9 @@
 :::tip
-From dbt Core v1.10, you can opt into validating the arguments you define in macro documentation using the `validate_macro_args` behavior change flag. When enabled, dbt will:
+Начиная с dbt Core v1.10, вы можете включить проверку аргументов, которые вы определяете в документации макросов, с помощью флага изменения поведения `validate_macro_args`. Когда этот флаг включён, dbt будет:
 
-- Infer arguments from the macro and includes them in the [manifest.json](/reference/artifacts/manifest-json) file if no arguments are documented.
-- Raise a warning if documented argument names don't match the macro definition.
-- Raise a warning if `type` fields don't follow [supported formats](/reference/resource-properties/arguments#supported-types).
+- Определять аргументы на основе определения макроса и включать их в файл [manifest.json](/reference/artifacts/manifest-json), если аргументы не задокументированы.
+- Выдавать предупреждение, если имена аргументов в документации не совпадают с определением макроса.
+- Выдавать предупреждение, если поля `type` не соответствуют [поддерживаемым форматам](/reference/resource-properties/arguments#supported-types).
 
-Learn more about [macro argument validation](/reference/global-configs/behavior-changes#macro-argument-validation).
+Подробнее см. в разделе о [валидации аргументов макросов](/reference/global-configs/behavior-changes#macro-argument-validation).
 :::

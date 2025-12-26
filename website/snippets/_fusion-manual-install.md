@@ -1,52 +1,51 @@
-If you already have the <Constant name="fusion_engine" /> installed, you can skip this step. If you don't have it installed, you can follow these steps to install it:
+Если у вас уже установлен <Constant name="fusion_engine" />, вы можете пропустить этот шаг. Если он у вас не установлен, выполните следующие действия для установки:
 
-1. Open a new command-line window and run the following command to install the <Constant name="fusion_engine" />:
+1. Откройте новое окно командной строки и выполните следующую команду, чтобы установить <Constant name="fusion_engine" />:
 
     <Tabs queryString="installation">
     <TabItem value="mac-linux" label="macOS & Linux">
 
-    Run the following command in the terminal:
+    Выполните следующую команду в терминале:
 
     ```shell
     curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --update
     ```
 
-    To use `dbtf` immediately after installation, reload your shell so that the new `$PATH` is recognized:
+    Чтобы начать использовать `dbtf` сразу после установки, перезагрузите вашу оболочку, чтобы новая переменная `$PATH` была распознана:
 
     ```shell
     exec $SHELL
     ```
 
-    Or, close and reopen your Terminal window. This will load the updated environment settings into the new session.
+    Либо закройте и снова откройте окно терминала. Это загрузит обновлённые настройки окружения в новую сессию.
 
     </TabItem>
     <TabItem value="windows" label="Windows (PowerShell)">
 
-    Run the following command in PowerShell:
+    Выполните следующую команду в PowerShell:
 
     ```powershell
     irm https://public.cdn.getdbt.com/fs/install/install.ps1 | iex
     ```
 
-    To use `dbtf` immediately after installation, reload your shell so that the new `Path` is recognized:
+    Чтобы начать использовать `dbtf` сразу после установки, перезагрузите вашу оболочку, чтобы новый `Path` был распознан:
 
     ```powershell
     Start-Process powershell
     ```
 
-    Or, close and reopen PowerShell. This will load the updated environment settings into the new session.
+    Либо закройте и снова откройте PowerShell. Это загрузит обновлённые настройки окружения в новую сессию.
 
     </TabItem>
     </Tabs>
 
-2. Run the following command to verify you've installed <Constant name="fusion" />:
+2. Выполните следующую команду, чтобы убедиться, что вы установили <Constant name="fusion" />:
     ```bash
     dbtf --version
     ```
-    You can use `dbt` or its <Constant name="fusion" /> alias `dbtf` (handy if you already have another dbt CLI installed). Default install path:
+    Вы можете использовать `dbt` или его алиас <Constant name="fusion" /> — `dbtf` (это удобно, если у вас уже установлен другой CLI dbt). Путь установки по умолчанию:
 
        - macOS/Linux: `$HOME/.local/bin/dbt`
        - Windows: `C:\Users\<username>\.local\bin\dbt.exe`
 
-    The installer adds this path automatically, but you may need to reload your shell for the `dbtf` command to work.
-
+    Установщик добавляет этот путь автоматически, но вам может потребоваться перезагрузить оболочку, чтобы команда `dbtf` стала доступной.

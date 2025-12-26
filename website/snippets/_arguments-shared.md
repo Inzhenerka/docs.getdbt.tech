@@ -1,2 +1,1 @@
-The `arguments` property is used to define the parameters that a resource can accept. Each argument can have a `name`, a type field, and optional properties such as `description` and `default_value`.
-
+Свойство `arguments` используется для определения параметров, которые может принимать ресурс. Каждый аргумент может иметь поле `name`, поле с типом, а также необязательные свойства, такие как `description` и `default_value`.

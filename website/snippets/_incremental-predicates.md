@@ -1,8 +1,8 @@
-### About incremental_predicates
+### Об incremental_predicates
 
-`incremental_predicates` is an advanced use of incremental models, where data volume is large enough to justify additional investments in performance. This config accepts a list of any valid SQL expression(s). dbt does not check the syntax of the SQL statements. 
+`incremental_predicates` — это продвинутое использование инкрементальных моделей, применяемое в случаях, когда объём данных достаточно велик, чтобы оправдать дополнительные инвестиции в производительность. Этот параметр конфигурации принимает список любых допустимых SQL-выражений. dbt **не проверяет синтаксис** SQL-выражений, указанных здесь.
 
-This an example of a model configuration in a `yml` file you might expect to see on Snowflake:
+Ниже приведён пример конфигурации модели в `yml`-файле, который можно встретить при работе со Snowflake:
 
 ```yml
 
@@ -20,7 +20,7 @@ models:
       # `DBT_INTERNAL_DEST` and `DBT_INTERNAL_SOURCE` are the standard aliases for the target table and temporary table, respectively, during an incremental run using the merge strategy. 
 ```
 
-Alternatively, here are the same configurations configured within a model file:
+В качестве альтернативы, те же самые параметры могут быть заданы непосредственно в файле модели:
 
 ```sql
 -- in models/my_incremental_model.sql
@@ -41,7 +41,8 @@ Alternatively, here are the same configurations configured within a model file:
 
 ```
 
-This will template (in the `dbt.log` file) a `merge` statement like:
+В результате dbt сгенерирует (в файле `dbt.log`) SQL-выражение `merge`, выглядящее примерно так:
+
 ```sql
 merge into <existing_table> DBT_INTERNAL_DEST
     from <temp_table_with_new_records> DBT_INTERNAL_SOURCE
@@ -55,7 +56,7 @@ merge into <existing_table> DBT_INTERNAL_DEST
     when not matched then insert ...
 ```
 
-Limit the data scan of _upstream_ tables within the body of their incremental model SQL, which will limit the amount of "new" data processed/transformed.
+Чтобы ограничить сканирование данных в _вышестоящих_ (upstream) таблицах, используйте условия непосредственно в SQL-коде инкрементальной модели. Это позволит сократить объём «новых» данных, которые необходимо обрабатывать и трансформировать.
 
 ```sql
 with large_source_table as (

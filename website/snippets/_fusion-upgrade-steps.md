@@ -1,12 +1,12 @@
-#### Upgrade considerations
+#### Соображения при обновлении
 
-Keep in mind the following considerations during the upgrade process:
+Учитывайте следующие моменты в процессе обновления:
 
-- **Manifest incompatibility** &mdash; <Constant name="fusion" /> is backwards-compatible and can read <Constant name="core" /> [manifests](/reference/artifacts/manifest-json). However, <Constant name="core" /> isn't forward-compatible and can't read Fusion manifests. <Constant name="fusion" /> produces a `v20` manifest, while the latest version of <Constant name="core" /> still produces a `v12` manifest.
+- **Несовместимость манифестов** — <Constant name="fusion" /> обратно совместим и может читать [манифесты](/reference/artifacts/manifest-json) <Constant name="core" />. Однако <Constant name="core" /> не обладает прямой совместимостью и не может читать манифесты Fusion. <Constant name="fusion" /> создаёт манифест версии `v20`, в то время как последняя версия <Constant name="core" /> по‑прежнему создаёт манифест `v12`.
 
-  As a result, mixing <Constant name="core" /> and <Constant name="fusion" /> manifests across environments breaks cross-environment features. To avoid this, use `state:modified`, `--defer`, and cross-environment `dbt docs generate` only after _all_ environments are running the latest Fusion version. Using these features before all environments are on <Constant name="fusion" /> may cause errors and failures.
+  В результате смешивание манифестов <Constant name="core" /> и <Constant name="fusion" /> между разными окружениями нарушает работу кросс‑окруженческих возможностей. Чтобы этого избежать, используйте `state:modified`, `--defer` и кросс‑окруженческий `dbt docs generate` только после того, как _все_ окружения будут работать на последней версии Fusion. Использование этих возможностей до перевода всех окружений на <Constant name="fusion" /> может приводить к ошибкам и сбоям.
 
-- **State-aware orchestration** &mdash; If using [state-aware orchestration](/docs/deploy/state-aware-about), dbt doesn’t detect a change if a table or view is dropped outside of dbt, as the cache is unique to each <Constant name="dbt_platform" /> environment. This means state-aware orchestration will not rebuild that model until either there is new data or a change in the code that the model uses.
-  - **Workarounds:**
-    - Use the **Clear cache** button on the target Environment page to force a full rebuild (acts like a reset), or
-    - Temporarily disable State-aware orchestration for the job and rerun it.
+- **Оркестрация с учётом состояния (state-aware orchestration)** — При использовании [state-aware orchestration](/docs/deploy/state-aware-about) dbt не обнаруживает изменения, если таблица или представление были удалены вне dbt, поскольку кэш является уникальным для каждого окружения <Constant name="dbt_platform" />. Это означает, что state-aware orchestration не будет пересобирать соответствующую модель до тех пор, пока не появятся новые данные или не произойдёт изменение кода, который использует эта модель.
+  - **Обходные решения:**
+    - Использовать кнопку **Clear cache** на странице целевого окружения Environment, чтобы принудительно выполнить полную пересборку (аналогично сбросу), или
+    - Временно отключить state-aware orchestration для задания и запустить его повторно.

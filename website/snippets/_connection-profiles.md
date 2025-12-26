@@ -1,4 +1,4 @@
-When you invoke dbt from the command line, dbt parses your `dbt_project.yml` and obtains the `profile` name, which dbt needs to connect to your <Term id="data-warehouse" />.
+Когда вы запускаете dbt из командной строки, dbt парсит файл `dbt_project.yml` и получает имя `profile`, которое необходимо dbt для подключения к вашему <Term id="data-warehouse" />.
 
 <File name='dbt_project.yml'>
 
@@ -11,11 +11,11 @@ profile: 'jaffle_shop'
 
 </File>
 
-dbt then checks your `profiles.yml` file for a profile with the same name. A profile contains all the details required to connect to your data warehouse.
+Затем dbt проверяет файл `profiles.yml` на наличие профиля с таким же именем. Профиль содержит все детали, необходимые для подключения к вашему хранилищу данных.
 
-dbt will search the current working directory for the `profiles.yml` file and will default to the `~/.dbt/` directory if not found.
+dbt будет искать файл `profiles.yml` в текущем рабочем каталоге и, если не найдет его там, по умолчанию использует каталог `~/.dbt/`.
 
-This file generally lives outside of your dbt project to avoid sensitive credentials being checked in to version control, but `profiles.yml` can be safely checked in when [using environment variables](#advanced-using-environment-variables) to load sensitive credentials.
+Обычно этот файл располагается вне dbt‑проекта, чтобы чувствительные учетные данные не попадали в систему контроля версий. Однако `profiles.yml` можно безопасно хранить в репозитории, если [использовать переменные окружения](#advanced-using-environment-variables) для загрузки чувствительных данных.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -47,119 +47,120 @@ jaffle_shop:
 
 </File>
 
-To add an additional target (like `prod`) to your existing `profiles.yml`, you can add another entry under the `outputs` key. 
+Чтобы добавить дополнительный target (например, `prod`) в существующий `profiles.yml`, достаточно добавить еще одну запись под ключом `outputs`.
 
-## The `env_var` function
+## Функция `env_var`
 
 import Envvarsecrets from '/snippets/_env-var-secrets.md'; 
 
 <Envvarsecrets />
 
-## About the `profiles.yml` file
+## О файле `profiles.yml`
 
-In your `profiles.yml` file, you can store as many profiles as you need. Typically, you would have one profile for each warehouse you use. Most organizations only have one profile.
+В файле `profiles.yml` вы можете хранить столько профилей, сколько необходимо. Как правило, используется один профиль для каждого хранилища данных. В большинстве организаций используется только один профиль.
 
-## About profiles
+## О профилях
 
-A profile consists of _targets_, and a specified _default target_.
+Профиль состоит из _targets_ и указанного _default target_ (целевого окружения по умолчанию).
 
-Each _target_ specifies the type of warehouse you are connecting to, the credentials to connect to the warehouse, and some dbt-specific configurations.
+Каждый _target_ задает тип хранилища данных, к которому вы подключаетесь, учетные данные для подключения и некоторые конфигурации, специфичные для dbt.
 
-The credentials you need to provide in your target varies across warehouses &mdash; sample profiles for each supported warehouse are available in the [Supported Data Platforms](/docs/supported-data-platforms) section.
+Набор учетных данных, которые необходимо указать в target, различается в зависимости от хранилища данных — примеры профилей для каждого поддерживаемого хранилища доступны в разделе [Supported Data Platforms](/docs/supported-data-platforms).
 
-**Pro Tip:** You may need to surround your password in quotes if it contains special characters. More details [here](https://stackoverflow.com/a/37015689/10415173).
+**Pro Tip:** Возможно, вам потребуется заключить пароль в кавычки, если он содержит специальные символы. Подробнее см. [здесь](https://stackoverflow.com/a/37015689/10415173).
 
-## Setting up your profile
+## Настройка профиля
 
-To set up your profile, copy the correct sample profile for your warehouse into your `profiles.yml` file and update the details as follows:
+Чтобы настроить профиль, скопируйте соответствующий пример профиля для вашего хранилища данных в файл `profiles.yml` и обновите параметры следующим образом:
 
-* Profile name: Replace the name of the profile with a sensible name – it’s often a good idea to use the name of your organization. Make sure that this is the same name as the `profile` indicated in your `dbt_project.yml` file.
-* `target`: This is the default target your dbt project will use. It must be one of the targets you define in your profile. Commonly it is set to `dev`.
-* Populating your target:
-  * `type`: The type of data warehouse you are connecting to
-  * Warehouse credentials: Get these from your database administrator if you don’t already have them. Remember that user credentials are very sensitive information that should not be shared.
-  * `schema`: The default schema that dbt will build objects in.
-  * `threads`: The number of threads the dbt project will run on.
+* Имя профиля: замените имя профиля на осмысленное — часто удобно использовать название вашей организации. Убедитесь, что это имя совпадает со значением `profile`, указанным в файле `dbt_project.yml`.
+* `target`: target по умолчанию, который будет использовать ваш dbt‑проект. Он должен совпадать с одним из targets, определенных в профиле. Чаще всего используется `dev`.
+* Заполнение target:
+  * `type`: тип хранилища данных, к которому вы подключаетесь
+  * Учетные данные хранилища: получите их у администратора базы данных, если у вас их еще нет. Помните, что учетные данные пользователя — это чувствительная информация, которой не следует делиться.
+  * `schema`: схема по умолчанию, в которой dbt будет создавать объекты.
+  * `threads`: количество потоков, в которых будет выполняться dbt‑проект.
 
-You can find more information on which values to use in your targets below.
+Ниже вы можете найти дополнительную информацию о том, какие значения использовать в targets.
 
-Use the [debug](/reference/dbt-jinja-functions/debug-method) command to validate your warehouse connection. Run `dbt debug` from within a dbt project to test your connection.
+Используйте команду [debug](/reference/dbt-jinja-functions/debug-method) для проверки подключения к хранилищу данных. Запустите `dbt debug` из каталога dbt‑проекта, чтобы протестировать соединение.
 
-## Understanding targets in profiles
+## Понимание targets в профилях
 
-dbt supports multiple targets within one profile to encourage the use of separate development and production environments as discussed in [dbt environments](/docs/core/dbt-core-environments).
+dbt поддерживает несколько targets в одном профиле, чтобы стимулировать использование отдельных окружений разработки и продакшена, как описано в разделе [dbt environments](/docs/core/dbt-core-environments).
 
-A typical profile for an analyst using dbt locally will have a target named `dev`, and have this set as the default.
+Типичный профиль аналитика, использующего dbt локально, содержит target с именем `dev`, который задан как target по умолчанию.
 
-You may also have a `prod` target within your profile, which creates the objects in your production schema. However, since it's often desirable to perform production runs on a schedule, we recommend deploying your dbt project to a separate machine other than your local machine. Most dbt users only have a `dev` target in their profile on their local machine.
+Также в профиле может быть target `prod`, который создает объекты в продакшен‑схеме. Однако, поскольку продакшен‑запуски часто выполняются по расписанию, мы рекомендуем разворачивать dbt‑проект на отдельной машине, а не на локальном компьютере. Поэтому у большинства пользователей dbt в локальном профиле присутствует только target `dev`.
 
-If you do have multiple targets in your profile, and want to use a target other than the default, you can do this using the `--target` option when issuing a dbt command.
+Если в профиле определено несколько targets и вы хотите использовать target, отличный от заданного по умолчанию, это можно сделать с помощью опции `--target` при выполнении команды dbt.
 
-### Overriding profiles and targets
+### Переопределение профилей и targets
 
-When running dbt commands, you can specify which profile and target to use from the CLI using the `--profile` and `--target` [flags](/reference/global-configs/about-global-configs#available-flags). These flags override what’s defined in your `dbt_project.yml` as long as the specified profile and target are already defined in your `profiles.yml` file.
+При запуске команд dbt вы можете указать, какой профиль и target использовать, напрямую из CLI с помощью флагов `--profile` и `--target` [flags](/reference/global-configs/about-global-configs#available-flags). Эти флаги переопределяют значения, заданные в `dbt_project.yml`, при условии, что указанные профиль и target уже определены в файле `profiles.yml`.
 
-To run your dbt project with a different profile or target than the default, you can do so using the followingCLI flags:
-- `--profile` flag &mdash; Overrides the profile set in `dbt_project.yml` by pointing to another profile defined in `profiles.yml`.
-- `--target` flag &mdash; Specifies the target within that profile to use (as defined in `profiles.yml`).
+Чтобы запустить dbt‑проект с профилем или target, отличными от значений по умолчанию, используйте следующие CLI‑флаги:
+- `--profile` — переопределяет профиль, заданный в `dbt_project.yml`, указывая на другой профиль из `profiles.yml`.
+- `--target` — указывает, какой target внутри этого профиля использовать (как определено в `profiles.yml`).
 
-These flags help when you're working with multiple profiles and targets and want to override defaults without changing your files.
+Эти флаги полезны при работе с несколькими профилями и targets, когда требуется временно переопределить значения по умолчанию без изменения файлов.
 
 ```bash
 dbt run --profile my-profile-name --target dev
 ```
-In this example, the `dbt run` command will use the `my-profile-name` profile and the `dev` target.
 
-## Understanding warehouse credentials
+В этом примере команда `dbt run` будет использовать профиль `my-profile-name` и target `dev`.
 
-We recommend that each dbt user has their own set of database credentials, including a separate user for production runs of dbt – this helps debug rogue queries, simplifies ownerships of schemas, and improves security.
+## Понимание учетных данных хранилища данных
 
-To ensure the user credentials you use in your target allow dbt to run, you will need to ensure the user has appropriate privileges. While the exact privileges needed varies between data warehouses, at a minimum your user must be able to:
+Мы рекомендуем, чтобы у каждого пользователя dbt был собственный набор учетных данных базы данных, включая отдельного пользователя для продакшен‑запусков dbt. Это упрощает отладку проблемных запросов, управление владением схемами и повышает безопасность.
 
-* read source data
-* create schemas¹
-* read system <Term id="table">tables</Term>
+Чтобы учетные данные, используемые в target, позволяли dbt корректно работать, необходимо убедиться, что пользователь имеет соответствующие привилегии. Хотя точный набор привилегий зависит от конкретного хранилища данных, как минимум пользователь должен иметь возможность:
 
-:::info Running dbt without create schema privileges
+* читать исходные данные
+* создавать схемы¹
+* читать системные <Term id="table">tables</Term>
 
-If your user is unable to be granted the privilege to create schemas, your dbt runs should instead target an existing schema that your user has permission to create relations within.
+:::info Запуск dbt без привилегий на создание схем
 
-:::
-
-## Understanding target schemas
-
-The target schema represents the default schema that dbt will build objects into, and is often used as the differentiator between separate environments within a warehouse.
-
-:::info Schemas in BigQuery
-
-dbt uses the term "schema" in a target across all supported warehouses for consistency. Note that in the case of BigQuery, a schema is actually a dataset.
+Если пользователю нельзя выдать привилегию на создание схем, dbt‑запуски должны быть направлены на существующую схему, в которой у пользователя есть права на создание объектов.
 
 :::
 
-The schema used for production should be named in a way that makes it clear that it is ready for end-users to use for analysis – we often name this  `analytics`.
+## Понимание target schemas
 
-In development, a pattern we’ve found to work well is to name the schema in your `dev` target `dbt_<username>`. Suffixing your name to the schema enables multiple users to develop in dbt, since each user will have their own separate schema for development, so that users will not build over the top of each other, and ensuring that object ownership and permissions are consistent across an entire schema.
+Target schema представляет собой схему по умолчанию, в которой dbt будет создавать объекты, и часто используется как ключевое различие между разными окружениями внутри одного хранилища данных.
 
-Note that there’s no need to create your target schema beforehand – dbt will check if the schema already exists when it runs, and create it if it doesn’t.
+:::info Схемы в BigQuery
 
-While the target schema represents the default schema that dbt will use, it may make sense to split your models into separate schemas, which can be done by using [custom schemas](/docs/build/custom-schemas).
+dbt использует термин «schema» в target для всех поддерживаемых хранилищ данных для единообразия. Обратите внимание, что в случае BigQuery schema фактически является dataset.
 
-## Understanding threads
+:::
 
-When dbt runs, it creates a directed acyclic graph (DAG) of links between models. The number of threads represents the maximum number of paths through the graph dbt may work on at once – increasing the number of threads can minimize the run time of your project.  The default value for threads in user profiles is 4 threads.
+Схема, используемая в продакшене, должна быть названа так, чтобы было очевидно, что она предназначена для конечных пользователей и аналитики — часто для этого используется имя `analytics`.
 
-For more information, check out [using threads](/docs/running-a-dbt-project/using-threads).
+Для разработки хорошо зарекомендовала себя практика называть схему в target `dev` как `dbt_<username>`. Добавление имени пользователя в название схемы позволяет нескольким пользователям параллельно разрабатывать в dbt, поскольку у каждого будет собственная схема, и пользователи не будут перезаписывать объекты друг друга. Это также помогает поддерживать единообразие владения объектами и прав доступа в пределах схемы.
 
-## Advanced: Customizing a profile directory
+Обратите внимание, что заранее создавать target schema не требуется — при запуске dbt проверит, существует ли схема, и создаст ее при необходимости.
 
-The parent directory for `profiles.yml` is determined using the following precedence:
+Хотя target schema задает схему по умолчанию, имеет смысл разделять модели по разным схемам, что можно реализовать с помощью [custom schemas](/docs/build/custom-schemas).
 
-1. `--profiles-dir` option
-2. `DBT_PROFILES_DIR` environment variable
-3. current working directory
-4. `~/.dbt/` directory
+## Понимание threads
 
-To check the expected location of your `profiles.yml` file for your installation of dbt, you can run the following:
+При запуске dbt строится ориентированный ациклический граф (DAG) связей между моделями. Параметр `threads` задает максимальное количество путей в этом графе, над которыми dbt может работать одновременно. Увеличение числа потоков позволяет сократить время выполнения проекта. Значение по умолчанию для `threads` в пользовательских профилях — 4.
+
+Дополнительную информацию см. в разделе [using threads](/docs/running-a-dbt-project/using-threads).
+
+## Advanced: Настройка каталога профилей
+
+Родительский каталог для `profiles.yml` определяется в следующем порядке приоритета:
+
+1. опция `--profiles-dir`
+2. переменная окружения `DBT_PROFILES_DIR`
+3. текущий рабочий каталог
+4. каталог `~/.dbt/`
+
+Чтобы проверить ожидаемое расположение файла `profiles.yml` для вашей установки dbt, выполните:
 
 ```bash
 $ dbt debug --config-dir
@@ -168,28 +169,30 @@ To view your profiles.yml file, run:
 open /Users/alice/.dbt
 ```
 
-You may want to have your `profiles.yml` file stored in a different directory than `~/.dbt/` – for example, if you are [using environment variables](#advanced-using-environment-variables) to load your credentials, you might choose to include this file in the root directory of your dbt project.
+Вам может понадобиться хранить файл `profiles.yml` в каталоге, отличном от `~/.dbt/`. Например, если вы [используете переменные окружения](#advanced-using-environment-variables) для загрузки учетных данных, вы можете разместить этот файл в корневом каталоге dbt‑проекта.
 
-Note that the file always needs to be called `profiles.yml`, regardless of which directory it is in.
+Обратите внимание, что файл всегда должен называться `profiles.yml`, независимо от того, в каком каталоге он находится.
 
-There are multiple ways to direct dbt to a different location for your `profiles.yml` file:
+Существует несколько способов указать dbt альтернативное расположение файла `profiles.yml`:
 
-### 1. Use the `--profiles-dir` option when executing a dbt command
-This option can be used as follows:
+### 1. Использовать опцию `--profiles-dir` при выполнении команды dbt
 
- ```
+Пример использования:
+
+```
 $ dbt run --profiles-dir path/to/directory
- ```
+```
 
-If using this method, the `--profiles-dir` option needs to be provided every time you run a dbt command.
+При использовании этого метода опцию `--profiles-dir` необходимо указывать при каждом запуске команды dbt.
 
-### 2. Use the `DBT_PROFILES_DIR` environment variable to change the default location
-Specifying this environment variable overrides the directory that dbt looks for your `profiles.yml` file in. You can specify this by running:
+### 2. Использовать переменную окружения `DBT_PROFILES_DIR` для изменения расположения по умолчанию
+
+Задание этой переменной окружения переопределяет каталог, в котором dbt ищет файл `profiles.yml`. Установить ее можно так:
+
 ```
 $ export DBT_PROFILES_DIR=path/to/directory
 ```
 
-## Advanced: Using environment variables
+## Advanced: Использование переменных окружения
 
-Credentials can be placed directly into the `profiles.yml` file or loaded from environment variables. Using environment variables is especially useful for production deployments of dbt. You can find more information about environment variables [here](/reference/dbt-jinja-functions/env_var).
-
+Учетные данные могут быть указаны напрямую в файле `profiles.yml` или загружаться из переменных окружения. Использование переменных окружения особенно полезно для продакшен‑развертываний dbt. Подробнее о переменных окружения можно узнать [здесь](/reference/dbt-jinja-functions/env_var).

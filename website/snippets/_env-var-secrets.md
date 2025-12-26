@@ -1,6 +1,6 @@
-The `env_var` function can be used to incorporate environment variables from the system into your dbt project. You can use the `env_var` function in your `profiles.yml` file, the `dbt_project.yml` file, the `sources.yml` file, your `schema.yml` files, and in model `.sql` files. Essentially, `env_var` is available anywhere dbt processes Jinja code.
+Функция `env_var` может использоваться для подключения переменных окружения из системы к вашему проекту dbt. Вы можете использовать функцию `env_var` в файле `profiles.yml`, в файле `dbt_project.yml`, в файле `sources.yml`, в файлах `schema.yml`, а также в `.sql`‑файлах моделей. По сути, `env_var` доступна везде, где dbt обрабатывает Jinja‑код.
 
-When used in a `profiles.yml` file (to avoid putting credentials on a server), it can be used like this:
+При использовании в файле `profiles.yml` (чтобы избежать хранения учетных данных на сервере) это может выглядеть следующим образом:
 
 <File name='profiles.yml'>
 

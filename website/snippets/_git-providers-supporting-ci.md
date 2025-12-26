@@ -1,15 +1,14 @@
-## Availability of features by Git provider
+## Доступность функций в зависимости от Git‑провайдера
 
-- If your git provider has a [native <Constant name="cloud" /> integration](/docs/cloud/git/git-configuration-in-dbt-cloud), you can seamlessly set up [continuous integration (CI)](/docs/deploy/ci-jobs) jobs directly within <Constant name="cloud" />. 
+- Если ваш git‑провайдер имеет [нативную интеграцию с <Constant name="cloud" />](/docs/cloud/git/git-configuration-in-dbt-cloud), вы можете без лишних усилий настраивать задания [continuous integration (CI)](/docs/deploy/ci-jobs) прямо в <Constant name="cloud" />. 
 
-- For providers without native integration, you can still use the [Git clone method](/docs/cloud/git/import-a-project-by-git-url) to import your git URL and leverage the [<Constant name="cloud" /> Administrative API](/docs/dbt-cloud-apis/admin-cloud-api) to trigger a CI job to run.
+- Для провайдеров без нативной интеграции вы всё равно можете использовать [метод Git clone](/docs/cloud/git/import-a-project-by-git-url), чтобы импортировать git URL, и задействовать [Administrative API <Constant name="cloud" />](/docs/dbt-cloud-apis/admin-cloud-api) для запуска CI‑заданий.
 
-The following table outlines the available integration options and their corresponding capabilities.
+В следующей таблице приведены доступные варианты интеграции и соответствующие им возможности.
 
-| **Git provider** | **Native <Constant name="cloud" /> integration** | **Automated CI job**|**Git clone**| **Information**| **Supported plans**|
-| -----------------| ---------------------------------| --------------------|-------------|----------------| --------|
-|[Azure DevOps](/docs/cloud/git/connect-azure-devops)<br /> |  ✅|  ✅ |  ✅  | Organizations on the Starter and Developer plans can connect to Azure DevOps using a deploy key. Note, you won’t be able to configure automated CI jobs but you can still develop.| Enterprise, Enterprise+ |
-|[GitHub](/docs/cloud/git/connect-github)<br />  | ✅ | ✅ |  |  | All <Constant name="cloud" /> plans |
-|[GitLab](/docs/cloud/git/connect-gitlab)<br /> | ✅ | ✅ |  ✅  | | All <Constant name="cloud" /> plans |
-|All other git providers using [Git clone](/docs/cloud/git/import-a-project-by-git-url) ([BitBucket](/docs/cloud/git/import-a-project-by-git-url#bitbucket), [AWS CodeCommit](/docs/cloud/git/import-a-project-by-git-url#aws-codecommit), and others)| ❌    | ❌    | ✅   | Refer to the [Customizing CI/CD with custom pipelines](/guides/custom-cicd-pipelines?step=1) guide to set up continuous integration and continuous deployment (CI/CD).|
-
+| **Git‑провайдер** | **Нативная интеграция с <Constant name="cloud" />** | **Автоматизированное CI‑задание** | **Git clone** | **Информация** | **Поддерживаемые планы** |
+| ------------------ | --------------------------------- | -------------------- | ------------- | -------------- | -------- |
+|[Azure DevOps](/docs/cloud/git/connect-azure-devops)<br /> | ✅ | ✅ | ✅ | Организации на планах Starter и Developer могут подключаться к Azure DevOps с использованием deploy key. Обратите внимание: вы не сможете настраивать автоматизированные CI‑задания, но при этом сможете вести разработку. | Enterprise, Enterprise+ |
+|[GitHub](/docs/cloud/git/connect-github)<br /> | ✅ | ✅ |  |  | Все планы <Constant name="cloud" /> |
+|[GitLab](/docs/cloud/git/connect-gitlab)<br /> | ✅ | ✅ | ✅ |  | Все планы <Constant name="cloud" /> |
+|Все остальные git‑провайдеры при использовании [Git clone](/docs/cloud/git/import-a-project-by-git-url) ([BitBucket](/docs/cloud/git/import-a-project-by-git-url#bitbucket), [AWS CodeCommit](/docs/cloud/git/import-a-project-by-git-url#aws-codecommit) и другие) | ❌ | ❌ | ✅ | См. руководство [Customizing CI/CD with custom pipelines](/guides/custom-cicd-pipelines?step=1) для настройки continuous integration и continuous deployment (CI/CD). |

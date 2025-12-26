@@ -1,7 +1,8 @@
-To prevent the `manifest.json` from being overwritten before dbt reads it for change detection, update your workflow using one of these methods:
+Чтобы предотвратить перезапись `manifest.json` до того, как dbt прочитает его для определения изменений, обновите ваш workflow, используя один из следующих методов:
 
-- Move the `manifest.json` to a dedicated folder (for example `state/`) after dbt generates it in the `target/ folder`. This makes sure dbt references the correct saved state instead of comparing the current state with the just-overwritten version. It also avoids issues caused by setting `--state` and `--target-path` to the same location, which can lead to non-idempotent behavior.
+- Переместите `manifest.json` в отдельную папку (например, `state/`) после того, как dbt сгенерирует его в папке `target/`. Это гарантирует, что dbt будет ссылаться на корректно сохранённое состояние, а не сравнивать текущее состояние с только что перезаписанной версией. Также это позволяет избежать проблем, возникающих при установке `--state` и `--target-path` в одно и то же место, что может приводить к неидемпотентному поведению.
 
+- Записывайте manifest в другой `--target-path` на этапе сборки (где dbt обычно генерирует `target/manifest.json`) либо сохраните его до того, как он будет перезаписан в ходе выполнения задания, чтобы избежать проблем с определением изменений. Это позволяет dbt корректно обнаруживать изменения вместо сравнения текущего состояния с только что перезаписанной версией.
 
-- Write the manifest to a different `--target-path` in the build stage (where dbt would generate the `target/manifest.json`) or before it gets overwritten during job execution to avoid issues with change detection. This allows dbt to detect changes instead of comparing the current state with the just-overwritten version.
-- Pass the `--no-write-json` flag: `dbt ls --no-write-json --select state:modified --state target`: during the reproduction stage.
+- Передайте флаг `--no-write-json` на этапе воспроизведения:  
+  `dbt ls --no-write-json --select state:modified --state target`.

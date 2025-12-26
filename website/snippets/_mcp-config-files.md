@@ -2,9 +2,9 @@
 
 <TabItem value="dbt platform only">
 
-This option is for users who only want dbt platform features (Discovery API, Semantic Layer, job management) without local CLI commands.
+Этот вариант предназначен для пользователей, которым нужны только возможности dbt platform (Discovery API, Semantic Layer, управление заданиями) без использования локальных CLI‑команд.
 
-When you use only the dbt platform, the CLI tools are automatically disabled. You can find the `DBT_HOST` field value in your dbt platform account information under **Access URLs**.
+Если вы используете только dbt platform, инструменты CLI автоматически отключаются. Значение поля `DBT_HOST` можно найти в информации о вашей учетной записи dbt platform в разделе **Access URLs**.
 
 ```json
 {
@@ -20,15 +20,15 @@ When you use only the dbt platform, the CLI tools are automatically disabled. Yo
 }
 ```
 
-**Note:** Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `abc123.us1.dbt.com`). This enables OAuth authentication without requiring local dbt installation.
+**Примечание:** Замените `<your-dbt-host-with-custom-subdomain>` на ваш реальный хост (например, `abc123.us1.dbt.com`). Это включает аутентификацию OAuth без необходимости локальной установки dbt.
 
 </TabItem>
 
 <TabItem value="dbt platform + CLI">
 
-This option is for users who want both dbt CLI commands and dbt platform features (Discovery API, Semantic Layer, job management).
+Этот вариант предназначен для пользователей, которым нужны как команды dbt CLI, так и возможности dbt platform (Discovery API, Semantic Layer, управление заданиями).
 
-The `DBT_PROJECT_DIR` and `DBT_PATH` fields are required for CLI access. You can find the `DBT_HOST` field value in your dbt platform account information under **Access URLs**.
+Для доступа к CLI обязательны поля `DBT_PROJECT_DIR` и `DBT_PATH`. Значение поля `DBT_HOST` можно найти в информации о вашей учетной записи dbt platform в разделе **Access URLs**.
 
 ```json
 {
@@ -46,7 +46,7 @@ The `DBT_PROJECT_DIR` and `DBT_PATH` fields are required for CLI access. You can
 }
 ```
 
-**Note:** Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `https://abc123.us1.dbt.com`). This enables OAuth authentication.
+**Примечание:** Замените `<your-dbt-host-with-custom-subdomain>` на ваш реальный хост (например, `https://abc123.us1.dbt.com`). Это включает аутентификацию OAuth.
 
 </TabItem>
 

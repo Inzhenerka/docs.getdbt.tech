@@ -1,7 +1,7 @@
 :::note 
 
-This feature is currently only available for Okta and Entra ID identity providers.
+Эта функция в настоящее время доступна только для провайдеров удостоверений Okta и Entra ID.
 
 :::
 
-<Constant name="cloud" /> Enterprise and Enterprise+ plans support OAuth authentication with external providers. When **External OAuth** is enabled, users can authorize their Development credentials using single sign-on (SSO) via the identity provider (IdP). External OAuth authorizes users to access multiple applications, including <Constant name="cloud" />, without sharing their static credentials with the service. This makes the process of authenticating for development environments easier for the user and provides an additional layer of security to your <Constant name="cloud" /> account. 
+Тарифные планы <Constant name="cloud" /> Enterprise и Enterprise+ поддерживают аутентификацию OAuth с внешними провайдерами. Когда включена опция **External OAuth**, пользователи могут авторизовывать свои учетные данные для разработки с помощью единого входа (SSO) через провайдер удостоверений (IdP). External OAuth позволяет пользователям получать доступ к нескольким приложениям, включая <Constant name="cloud" />, не передавая сервису свои статические учетные данные. Это упрощает процесс аутентификации для сред разработки и обеспечивает дополнительный уровень безопасности для вашей учетной записи <Constant name="cloud" />.

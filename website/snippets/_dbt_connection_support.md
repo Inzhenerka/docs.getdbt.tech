@@ -1,15 +1,14 @@
+| Интеграция | Пользовательские учетные данные | Учетные данные сервисного аккаунта | Warehouse OAuth для пользователей | External OAuth для пользователей | Service-to-service OAuth | SSH | Поддержка приватного подключения** |
+| ---------- |:------------------------------:|:----------------------------------:|:---------------------------------:|:--------------------------------:|:------------------------:|:---:|:----------------------------------:|
+| Snowflake  | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| BigQuery   | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| Databricks | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| Redshift   | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ | ✅ |
+| Fabric     | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Synapse    | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Trino      | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Teradata   | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| AWS Athena | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Postgres   | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
 
-| Integration  | User credentials | Service account credentials | Warehouse OAuth for users | External OAuth for users | Service-to-service OAuth | SSH | Private connectivity support** |
-| ------------ |:----------------:|:---------------------------:|:-------------------------:|:------------------------:|:------------------------:|:---:|:------------------------------:|
-| Snowflake    | ✅              | ✅                          | ✅                         | ✅                       | ❌                        | ❌  | ✅              |
-| BigQuery      | ✅              | ✅                          | ✅                         | ❌                       | ✅                        | ❌  | ✅              |
-| Databricks    | ✅              | ✅                          | ✅                         | ❌                       | ❌                        | ❌  | ✅              |    
-| Redshift      | ✅              | ❌                          | ❌                         | ✅                       | ❌                        | ✅  | ✅              |
-| Fabric        | ✅              | ✅                          | ❌                         | ❌                       | ❌                        | ❌  | ❌              |
-| Synapse       | ✅              | ✅                          | ❌                         | ❌                       | ❌                        | ❌  | ✅              |
-| Trino         | ✅              | ❌                          | ❌                         | ❌                       | ❌                        | ❌  | ❌              |
-| Teradata      | ✅              | ❌                          | ❌                         | ❌                       | ❌                        | ❌  | ✅              |
-| AWS Athena    | ✅              | ✅                          | ❌                         | ❌                       | ❌                        | ❌  | ✅              |
-| Postgres      | ✅              | ❌                          | ❌                         | ❌                       | ❌                        | ✅  | ✅              |
-
-** Private connectivity is only supported for certain cloud providers and deployment types. See [Private connectivity documentation](/docs/cloud/secure/about-private-connectivity) for details.
+** Приватное подключение поддерживается только для определённых облачных провайдеров и типов развертывания. Подробности см. в [документации по приватному подключению](/docs/cloud/secure/about-private-connectivity).

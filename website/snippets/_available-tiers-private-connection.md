@@ -1,10 +1,9 @@
+:::info Доступно для определённых Enterprise-тарифов
 
-:::info Available to certain Enterprise tiers
-
-The private connection feature is available on the following <Constant name="cloud" /> Enterprise tiers:
+Функция приватного подключения доступна для следующих Enterprise-тарифов <Constant name="cloud" />:
  * Business Critical 
  * Virtual Private
 
-To learn more about these tiers, contact us at [sales@getdbt.com](mailto:sales@getdbt.com).
+Чтобы узнать больше об этих тарифах, свяжитесь с нами по адресу [sales@getdbt.com](mailto:sales@getdbt.com).
 
 :::

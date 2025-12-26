@@ -1,14 +1,14 @@
-There are four license types in <Constant name="cloud" />:
+В <Constant name="cloud" /> существует четыре типа лицензий:
 
-- **Analyst** &mdash;  Available on [Enterprise and Enterprise+ plans only](https://www.getdbt.com/pricing). Requires developer seat license purchase.
-  - User can be granted _any_ permission sets.
-- **Developer** &mdash; User can be granted _any_ permission sets.
-- **IT** &mdash; Available on [Starter, Enterprise, and Enterprise+ plans only](https://www.getdbt.com/pricing). User has Security Admin and Billing Admin [permissions](/docs/cloud/manage-access/enterprise-permissions#permission-sets) applied. 
-  - Can manage users, groups, connections, and licenses, among other permissions. 
-  - _IT licensed users do not inherit rights from any permission sets_. 
-  - Every IT licensed user has the same access across the account, regardless of the group permissions assigned.
-- **Read-Only** &mdash; Available on [Starter, Enterprise, and Enterprise+ plans only](https://www.getdbt.com/pricing).
-  - User has read-only permissions applied to all <Constant name="cloud" /> resources. 
-  - Intended to view the [artifacts](/docs/deploy/artifacts) and the [deploy](/docs/deploy/deployments) section (jobs, runs, schedules) in a <Constant name="cloud" /> account, but can’t make changes. 
-  - _Read-only licensed users do not inherit rights from any permission sets_. 
-  - Every read-only licensed user has the same access across the account, regardless of the group permissions assigned.
+- **Analyst** &mdash; доступна только на тарифах [Enterprise и Enterprise+](https://www.getdbt.com/pricing). Требует приобретения лицензии developer seat.
+  - Пользователю могут быть назначены _любые_ permission sets.
+- **Developer** &mdash; пользователю могут быть назначены _любые_ permission sets.
+- **IT** &mdash; доступна только на тарифах [Starter, Enterprise и Enterprise+](https://www.getdbt.com/pricing). Пользователь получает permission sets Security Admin и Billing Admin. См. [permissions](/docs/cloud/manage-access/enterprise-permissions#permission-sets).
+  - Может управлять пользователями, группами, подключениями и лицензиями, а также выполнять другие действия.
+  - _Пользователи с лицензией IT не наследуют права из каких-либо permission sets_.
+  - Каждый пользователь с лицензией IT имеет одинаковый уровень доступа ко всему аккаунту, независимо от назначенных group permissions.
+- **Read-Only** &mdash; доступна только на тарифах [Starter, Enterprise и Enterprise+](https://www.getdbt.com/pricing).
+  - Пользователь получает права только на чтение для всех ресурсов <Constant name="cloud" />.
+  - Предназначена для просмотра [artifacts](/docs/deploy/artifacts) и раздела [deploy](/docs/deploy/deployments) (jobs, runs, schedules) в аккаунте <Constant name="cloud" />, без возможности вносить изменения.
+  - _Пользователи с лицензией Read-only не наследуют права из каких-либо permission sets_.
+  - Каждый пользователь с лицензией Read-only имеет одинаковый уровень доступа ко всему аккаунту, независимо от назначенных group permissions.
