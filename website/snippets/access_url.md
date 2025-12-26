@@ -1,1 +1,1 @@
-Следующие шаги используют `YOUR_AUTH0_URI` и `YOUR_AUTH0_ENTITYID`, которые необходимо заменить на [соответствующий Auth0 SSO URI и Auth0 Entity ID](#auth0-uris) для вашего региона.
+В следующих шагах используются `YOUR_AUTH0_URI` и `YOUR_AUTH0_ENTITYID`, которые необходимо заменить на [соответствующие Auth0 SSO URI и Auth0 Entity ID](/docs/cloud/manage-access/sso-overview#auth0-uris) для вашего региона.

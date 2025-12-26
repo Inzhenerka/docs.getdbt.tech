@@ -13,7 +13,7 @@ id: 3-how-we-style-our-python
   - Линтер [ruff](https://pypi.org/project/ruff/)
 
   :::info
-  ☁️ dbt Cloud поставляется с [встроенным форматтером black](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format) для автоматического линтинга и форматирования их SQL. Вам не нужно ничего скачивать или настраивать, просто нажмите `Format` в Python модели, и все готово!
+☁️ <Constant name="cloud" /> поставляется со встроенным [форматтером black](/docs/cloud/studio-ide/lint-format), который автоматически выполняет линтинг и форматирование Python-кода. Вам не нужно ничего скачивать или настраивать — просто нажмите `Format` в Python-модели, и всё готово!
   :::
 
 ## Пример Python

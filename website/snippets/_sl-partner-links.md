@@ -4,6 +4,12 @@
 
 <div className="grid--3-col">
 
+<Card
+    title="Power BI"
+    link="/docs/cloud-integrations/semantic-layer/power-bi"
+    body="Use reports to query the dbt Semantic Layer with Power BI and produce dashboards with trusted data."
+    icon="pbi"/>
+
  <Card
     title="Tableau"
     link="/docs/cloud-integrations/semantic-layer/tableau"
@@ -57,20 +63,6 @@
     icon="klipfolio"
     link="https://support.klipfolio.com/hc/en-us/articles/18164546900759-PowerMetrics-Adding-dbt-Semantic-Layer-metrics"/>
     <a href="https://support.klipfolio.com/hc/en-us/articles/18164546900759-PowerMetrics-Adding-dbt-Semantic-Layer-metrics"
-    className="external-link"
-      target="_blank"
-      rel="noopener noreferrer">
-      <Icon name='fa-external-link' />
-    </a>
-</div>
-
-<div className="card-container">
-  <Card
-    title="Lightdash"
-    body="Узнайте, как подключиться, выполнять запросы и использовать надежные метрики dbt в реальном времени."
-    link="https://docs.lightdash.com/references/dbt-semantic-layer"
-    icon="lightdash"/>
-    <a href="https://docs.lightdash.com/references/dbt-semantic-layer"
     className="external-link"
       target="_blank"
       rel="noopener noreferrer">

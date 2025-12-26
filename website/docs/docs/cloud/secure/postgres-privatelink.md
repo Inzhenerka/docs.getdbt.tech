@@ -2,14 +2,17 @@
 title: "Настройка AWS PrivateLink для Postgres"
 id: postgres-privatelink
 description: "Настройка PrivateLink для Postgres"
-sidebar_label: "PrivateLink для Postgres"
+sidebar_label: "AWS PrivateLink для Postgres"
 ---
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
+
+# Configure AWS PrivateLink for Postgres <Lifecycle status="managed_plus" />
+
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 База данных Postgres, размещенная либо в AWS, либо в правильно подключенном локальном центре обработки данных, может быть доступна через частное сетевое соединение с использованием AWS Interface-type PrivateLink. Тип группы целей, подключенной к сетевому балансировщику нагрузки (NLB), может варьироваться в зависимости от местоположения и типа подключаемого экземпляра Postgres, как объясняется в следующих шагах.
 
@@ -44,14 +47,14 @@ import CloudProviders from '/snippets/_privatelink-across-providers.md';
 
     - Протокол группы целей: **TCP** 
 
-- **Сетевой балансировщик нагрузки (NLB)** &mdash; Требуется создание слушателя, который прикрепляется к вновь созданной группе целей для порта `5432`
-    - **Схема:** Внутренняя
-    - **Тип IP-адреса:** IPv4
-    - **Сетевое отображение:** Выберите VPC, в котором развертываются служба конечной точки VPC и NLB, и выберите подсети как минимум из двух зон доступности.
-    - **Группы безопасности:** Сетевой балансировщик нагрузки (NLB), связанный с службой конечной точки VPC, должен либо не иметь связанной группы безопасности, либо группа безопасности должна иметь правило, позволяющее запросы от соответствующих **частных CIDR** dbt Cloud. Обратите внимание, что _это отличается_ от статических публичных IP-адресов, указанных на странице [Доступ, регионы и IP-адреса](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses) dbt Cloud. Поддержка dbt может предоставить правильные частные CIDR по запросу. Если необходимо, до того как вы сможете уточнить правило до меньшего CIDR, предоставленного dbt, разрешите подключение, временно добавив правило разрешения `10.0.0.0/8`.
-    - **Слушатели:** Создайте одного слушателя на каждую группу целей, который сопоставляет соответствующий входящий порт с соответствующей группой целей ([подробности](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)).
-- **Служба конечной точки VPC** &mdash; Подключите к вновь созданному NLB.
-    - Требуется принятие (опционально) &mdash; Требует [принять наш запрос на подключение](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#accept-reject-connection-requests) после того, как dbt создаст конечную точку.
+- **Network Load Balancer (NLB)** &mdash; Требуется создать Listener, который будет привязан к только что созданной Target Group для порта `5432`
+    - **Scheme:** Internal
+    - **IP address type:** IPv4
+    - **Network mapping:** Выберите VPC, в котором разворачиваются VPC Endpoint Service и NLB, и укажите подсети как минимум из двух Availability Zones.
+    - **Security Groups:** Network Load Balancer (NLB), связанный с VPC endpoint service, либо не должен иметь привязанной security group, либо security group должна содержать правило, разрешающее запросы из соответствующих **private CIDR(s)** <Constant name="cloud" />. Обратите внимание, что _это отличается_ от статических публичных IP-адресов, перечисленных на странице <Constant name="cloud" /> [Access, Regions, & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses). Поддержка dbt может предоставить корректные private CIDR(s) по запросу. При необходимости, до тех пор пока вы не сможете сузить правило до меньшего CIDR, предоставленного dbt, можно временно разрешить подключение, добавив allow‑правило `10.0.0.0/8`.
+    - **Listeners:** Создайте по одному listener’у на каждую target group, который сопоставляет соответствующий входящий порт с нужной target group ([подробности](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)).
+- **VPC Endpoint Service** &mdash; Подключите его к только что созданному NLB.
+    - Acceptance required (optional) &mdash; Требует, чтобы вы [приняли наш запрос на подключение](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#accept-reject-connection-requests) после того, как dbt создаст endpoint.
 
 <PrivateLinkCrossZone features={'/snippets/_privatelink-cross-zone-load-balancing.md'}/>
 
@@ -65,32 +68,32 @@ import CloudProviders from '/snippets/_privatelink-across-providers.md';
 
 ### 3. Получение имени службы конечной точки VPC
 
-После того как служба конечной точки VPC будет подготовлена, вы можете найти имя службы в консоли AWS, перейдя в **VPC** → **Службы конечных точек** и выбрав соответствующую службу конечной точки. Вы можете скопировать значение поля имени службы и включить его в ваше сообщение в поддержку dbt Cloud.
+После того как сервис VPC Endpoint Service будет создан, вы можете найти его имя в консоли AWS, перейдя в раздел **VPC** → **Endpoint Services** и выбрав соответствующий endpoint‑сервис. Вы можете скопировать значение поля service name и включить его в обращение в службу поддержки <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/privatelink-endpoint-service-name.png" width="70%" title="Получите значение поля имени службы"/>
 
-### 4. Добавьте необходимую информацию в шаблон ниже и отправьте ваш запрос в [поддержку dbt](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support):
+### 4. Добавьте необходимую информацию в шаблон ниже и отправьте ваш запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support):
 ```
-Тема: Новый запрос на Multi-Tenant PrivateLink
-- Тип: Интерфейсный тип Postgres
-- Имя службы конечной точки VPC:
-- Регион AWS сервера Postgres (например, us-east-1, eu-west-2):
-- Мультиарендная среда dbt Cloud (США, EMEA, AU):
+Subject: New Multi-Tenant PrivateLink Request
+- Type: Postgres Interface-type
+- VPC Endpoint Service Name:
+- Postgres server AWS Region (for example, us-east-1, eu-west-2):
+- dbt AWS multi-tenant environment (US, EMEA, AU):
 ```
 
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
 ### 5. Принятие запроса на подключение
 
-Когда вы получите уведомление о том, что ресурсы подготовлены в среде dbt Cloud, вы должны принять подключение к конечной точке (если служба конечной точки VPC не настроена на автоматическое принятие запросов на подключение). Запросы могут быть приняты через консоль AWS, как показано ниже, или через AWS CLI.
+Когда вы получите уведомление о том, что ресурсы развернуты в среде <Constant name="cloud" />, вам необходимо принять подключение к endpoint (если только сервис VPC Endpoint Service не настроен на автоматическое принятие запросов на подключение). Запросы можно принять через консоль AWS, как показано ниже, либо с помощью AWS CLI.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/accept-request.png" width="80%" title="Принять запрос на подключение" />
 
-## Создание подключения в dbt Cloud
+## Создание подключения в dbt
 
-После того как поддержка dbt Cloud завершит настройку, вы можете начать создавать новые подключения, используя PrivateLink.
+После того как поддержка <Constant name="cloud" /> завершит настройку, вы сможете начать создавать новые подключения с использованием PrivateLink.
 
 1. Перейдите в **настройки** → **Создать новый проект** → выберите **PostgreSQL**
 2. Вы увидите две радиокнопки: **Публичный** и **Частный.** Выберите **Частный**. 

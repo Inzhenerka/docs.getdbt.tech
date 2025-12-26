@@ -24,10 +24,8 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Цели Layer Bigquery должны быть настроены с использованием следующих секций в вашем файле `profiles.yml`.
 
-#### Аутентификация Layer
-Добавьте ваш `layer_api_key` в `profiles.yaml` для аутентификации с Layer. Чтобы получить ваш Layer API Key:
-- Сначала [создайте бесплатный аккаунт Layer](https://app.layer.ai/login?returnTo=%2Fgetting-started).
-- Перейдите на [app.layer.ai](https://app.layer.ai) > **Settings** (значок шестеренки рядом с вашей фотографией профиля) > **Developer** > **Create API key**, чтобы получить ваш Layer API Key.
+#### Bigquery Authentication
+Вы можете использовать любой [метод аутентификации](/docs/core/connect-data-platform/bigquery-setup), поддерживаемый официальным адаптером dbt для BigQuery, поскольку Layer использует адаптер `dbt-bigquery` для подключения к вашему экземпляру BigQuery.
 
 #### Аутентификация Bigquery
 Вы можете использовать любой [метод аутентификации](https://docs.getdbt.com/reference/warehouse-profiles/bigquery-setup), поддерживаемый в официальном адаптере dbt Bigquery, так как Layer использует адаптер `dbt-bigquery` для подключения к вашей инстанции Bigquery.

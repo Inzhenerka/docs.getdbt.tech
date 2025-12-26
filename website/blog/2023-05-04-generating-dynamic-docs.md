@@ -237,7 +237,7 @@ models/core/activity_based_interest
 $ cat models/core/activity_based_interest/_activity_based_interest_docs.md
 {% docs activity_based_interest__id %}  
 
-Первичный ключ таблицы. См. sql для определения ключа.
+Первичный ключ таблицы. См. SQL для определения ключа.
 
 {% enddocs %}
 

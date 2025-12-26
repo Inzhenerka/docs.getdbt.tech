@@ -6,7 +6,7 @@ id: uniqueness-two-columns
 
 ---
 
-Да, есть несколько различных вариантов.
+Да, существует несколько разных вариантов.
 
 Рассмотрим таблицу заказов, которая содержит записи из нескольких стран, и комбинация ID и кода страны уникальна:
 
@@ -44,7 +44,7 @@ models:
   - name: orders
     columns:
       - name: surrogate_key
-        tests:
+        data_tests:
           - unique
 
 ```
@@ -60,9 +60,10 @@ version: 2
 
 models:
   - name: orders
-    tests:
+    data_tests:
       - unique:
-          column_name: "(country_code || '-' || order_id)"
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            column_name: "(country_code || '-' || order_id)"
 ```
 
 </File>
@@ -78,11 +79,12 @@ version: 2
 
 models:
   - name: orders
-    tests:
+    data_tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - country_code
-            - order_id
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            combination_of_columns:
+              - country_code
+              - order_id
 ```
 
 </File>

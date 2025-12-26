@@ -4,12 +4,6 @@ id: "resource-type"
 sidebar: "resource type"
 ---
 
-<VersionBlock lastVersion="1.8">
-
-Флаги `--resource-type` и `--exclude-resource-type` включают или исключают типы ресурсов из команд `dbt build`, `dbt clone` и `dbt list`. Начиная с версии dbt 1.9, эти флаги также поддерживаются в команде `dbt test`.
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 Флаги `--resource-type` и `--exclude-resource-type` включают или исключают типы ресурсов из команд `dbt build`, `dbt test`, `dbt clone` и `dbt list`.
@@ -24,22 +18,7 @@ sidebar: "resource type"
 
 Доступные типы ресурсов:
 
-<VersionBlock lastVersion="1.7">
-
-- [`analysis`](/docs/build/analyses)
-- [`exposure`](/docs/build/exposures)
-- [`metric`](/docs/build/build-metrics-intro)
-- [`model`](/docs/build/models)
-- [`saved_query`](/docs/build/saved-queries)
-- [`seed`](/docs/build/seeds)
-- [`semantic_model`](/docs/build/semantic-models)
-- [`snapshot`](/docs/build/snapshots)
-- [`source`](/docs/build/sources)
-- [`test`](/docs/build/data-tests)
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.8">
+<VersionBlock lastVersion="1.10">
 
 - [`analysis`](/docs/build/analyses)
 - [`exposure`](/docs/build/exposures)
@@ -52,77 +31,151 @@ sidebar: "resource type"
 - [`source`](/docs/build/sources)
 - [`test`](/docs/build/data-tests)
 - [`unit_test`](/docs/build/unit-tests)
-
 </VersionBlock>
 
-## Пример
+<VersionBlock firstVersion="1.11">
 
-Вместо того чтобы нацеливаться на конкретные ресурсы, используйте флаги `--resource-flag` или `--exclude-resource-type`, чтобы нацелиться на все ресурсы определенного типа: `dbt build --resource-type RESOURCE_TYPE`, заменив `RESOURCE_TYPE` на тип ресурса, который вы хотите включить.
-
-- Например, используйте следующую команду, чтобы включить _все_ снимки в процессе сборки dbt:
-
-    <File name='Usage'>
-
-    ```text
-    dbt build --resource-type snapshot
-    ```
-
-    </File>
-
-- В этом примере выполните следующую команду, чтобы включить _все_ сохраненные запросы с помощью флага `--resource-type`:
-
-    <File name='Usage'>
-
-    ```text
-    dbt build --resource-type saved_query
-    ```
-
-    </File>
-
-<VersionBlock firstVersion="1.8">
-
-- В этом примере используйте следующую команду, чтобы исключить _все_ модульные тесты из процесса сборки dbt. Обратите внимание, что флаг `--exclude-resource-type` доступен только в версии dbt 1.8 и выше:
-
-    <File name='Usage'>
-
-    ```text
-    dbt build --exclude-resource-type unit_test
-    ```
-
-    </File>
-
-- В этом примере используйте следующую команду, чтобы включить все тесты данных в процессе сборки:
-
-    <File name='Usage'>
-
-    ```text
-    dbt build --resource-type test
-    ```
-
-    </File>
-
+- [`analysis`](/docs/build/analyses)
+- [`exposure`](/docs/build/exposures)
+- [`function`](/docs/build/udfs)
+- [`metric`](/docs/build/build-metrics-intro)
+- [`model`](/docs/build/models)
+- [`saved_query`](/docs/build/saved-queries)
+- [`seed`](/docs/build/seeds)
+- [`semantic_model`](/docs/build/semantic-models)
+- [`snapshot`](/docs/build/snapshots)
+- [`source`](/docs/build/sources)
+- [`test`](/docs/build/data-tests)
+- [`unit_test`](/docs/build/unit-tests)
 </VersionBlock>
+
+
+## Positive vs negative filters
+
+- `--resource-type` is a positive filter &mdash; dbt only runs the resource types selected in the command, implicitly skipping every other type.
+- `--exclude-resource-type` is a negative filter &mdash; dbt starts with the full catalog of resource types and then omits the types selected in the command. dbt runs everything _except_ those resource types. 
+
+You can use both flags in a command; dbt first applies the positive filter (`--resource-type`) and then removes the types listed in the negative filter (`--exclude-resource-type`). For example:
+
+```text
+dbt build --resource-type model test snapshot --exclude-resource-type snapshot
+```
+
+Note that the list of dbt resource types is mutually exclusive and collectively exhaustive (MECE). This means that any `--resource-type` selection can also be achieved by excluding the other resource types using `--exclude-resource-type`, and vice versa.
+
+## Examples
+
+Instead of targeting specific resources, use the `--resource-type` or `--exclude-resource-type` flags to target all resources of a certain type: `dbt build --resource-type RESOURCE_TYPE`, replacing `RESOURCE_TYPE` with the resource type you want to include.
+
+See the following sample commands for including or excluding resource types. Note that the `--exclude-resource-type` flag is only available in dbt version 1.8 and higher.
+
+<Expandable alt_header="Include resource types">
+
+### Include multiple resource types
+
+Use the following command to include multiple resource types such as data tests and models in your build process:
+
+<File name='Usage'>
+
+```text
+dbt build --resource-type test model
+```
+
+</File>
+
+### Include all snapshots
+
+Use the following command to only include snapshots in your dbt build process:
+
+<File name='Usage'>
+
+```text
+dbt build --resource-type snapshot
+```
+
+</File>
+
+
+### Include all saved queries
+
+Use the following command to only include saved queries with the `--resource-type` flag:
+
+<File name='Usage'>
+
+```text
+dbt build --resource-type saved_query
+```
+
+</File>
+
+### Include all data tests
+
+Use the following command to only include data tests in your build process:
+
+<File name='Usage'>
+
+```text
+dbt build --resource-type test
+```
+
+</File>
 
 <VersionBlock firstVersion="1.9">
 
-- В этом примере используйте следующую команду, чтобы исключить _все_ модульные тесты при выполнении тестов:
+### Включать все data-тесты при выполнении тестирования
 
-    <File name='Usage'>
+Use the following command to only include data tests when running tests:
 
-    ```text
-    dbt test --exclude-resource-type unit_test
-    ```
+<File name='Usage'>
 
-    </File>
+```text
+dbt test --resource-type test
+```
 
-- В этом примере используйте следующую команду, чтобы включить все тесты данных при выполнении тестов:
-
-    <File name='Usage'>
-
-    ```text
-    dbt test --resource-type test
-    ```
-
-    </File>
+</File>
 
 </VersionBlock>
+
+</Expandable>
+<Expandable alt_header="Exclude resource types">
+
+### Исключение нескольких типов ресурсов
+
+Используйте следующую команду, чтобы исключить несколько типов ресурсов, таких как data tests и models, из процесса сборки:
+
+<File name='Usage'>
+
+```text
+dbt build --exclude-resource-type test model
+```
+
+</File>
+
+### Исключение всех unit-тестов
+
+Используйте следующую команду, чтобы исключить unit-тесты из процесса сборки dbt.
+
+<File name='Usage'>
+
+```text
+dbt build --exclude-resource-type unit_test
+```
+
+</File>
+
+<VersionBlock firstVersion="1.9">
+
+### Исключение всех unit-тестов при запуске тестов
+
+Используйте следующую команду, чтобы исключить unit-тесты при выполнении тестов:
+
+<File name='Usage'>
+
+```text
+dbt test --exclude-resource-type unit_test
+```
+
+</File>
+
+</VersionBlock>
+</Expandable>

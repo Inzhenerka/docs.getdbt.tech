@@ -2,8 +2,8 @@
 
 Узлы метрик будут отражать зависимости от семантических моделей на основе их _мер_. Однако зависимости, основанные на фильтрах, не должны отражаться в:
 
-- [синтаксисе выбора dbt](/reference/node-selection/syntax)
-- Визуализации <Term id="dag">DAG</Term> в dbt-docs и [интегрированной среде разработки](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (IDE).
+- [Синтаксис выбора объектов в dbt](/reference/node-selection/syntax)
+- Визуализация <Term id="dag">DAG</Term> в dbt-docs и в [интегрированной среде разработки](/docs/cloud/studio-ide/develop-in-studio) (IDE).
 
 Это связано с тем, что метрики должны получать узлы для своего атрибута `depends_on` из нескольких различных источников:
 

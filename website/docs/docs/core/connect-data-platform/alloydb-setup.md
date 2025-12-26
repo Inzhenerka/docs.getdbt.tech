@@ -2,9 +2,9 @@
 ---
 title: "Настройка AlloyDB"
 meta:
-  maintained_by: Community?
-  authors: 'dbt-labs'
-  github_repo: 'dbt-labs/dbt-core'
+  maintained_by: dbt Labs
+  authors: dbt Labs
+  github_repo: 'dbt-labs/dbt-adapters'
   pypi_package: 'dbt-postgres'
   min_core_version: 'v1.0.0'
   cloud_support: Не поддерживается

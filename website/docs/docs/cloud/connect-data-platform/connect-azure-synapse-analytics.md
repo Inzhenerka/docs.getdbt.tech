@@ -53,4 +53,6 @@ sidebar_label: "Подключение Azure Synapse Analytics"
 
 ## Конфигурация
 
-Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурациям Microsoft Azure Synapse DWH](/reference/resource-configs/azuresynapse-configs).
+## Configuration 
+
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, см. раздел [Microsoft Azure Synapse DWH configurations](/reference/resource-configs/azuresynapse-configs).

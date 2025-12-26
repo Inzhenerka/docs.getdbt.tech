@@ -1,4 +1,8 @@
-```yaml
+---
+aggregate:
+  displayText: aggregate
+  hoverSnippet: Тип UDF, который возвращает одно значение для каждой группы, агрегируя несколько строк.
+
 cte: 
   displayText: CTE
   hoverSnippet: Общая табличная выражение (CTE) — это временный набор результатов, который можно использовать в SQL-запросе. Вы можете использовать CTE, чтобы разбить сложные запросы на более простые блоки кода, которые могут соединяться и строиться друг на друге.
@@ -79,6 +83,10 @@ json:
   displayText: JSON
   hoverSnippet: JSON (JavaScript Object Notation) — это минимальный формат для полуструктурированных данных, используемый для фиксации отношений между полями и значениями.
 
+lsp:
+  displayText: LSP
+  hoverSnippet: Language Server Protocol (LSP) enables developer features like live CTE previews, hover info, error highlighting, and more.
+
 materialization:
   displayText: materialization 
   hoverSnippet: Точный язык определения данных (DDL), который dbt будет использовать при создании эквивалента модели в хранилище данных.
@@ -106,6 +114,22 @@ relational-database:
 reverse-etl:
   displayText: reverse ETL
   hoverSnippet: Обратный ETL — это процесс передачи ваших преобразованных данных, хранящихся в вашем хранилище данных, в конечные бизнес-платформы, такие как CRM для продаж и рекламные платформы.
+
+scalar:
+  displayText: scalar
+  hoverSnippet: A UDF type that returns a single value per row.
+
+scalar-value:
+  displayText: scalar value
+  hoverSnippet: A single piece of data (for example, a number or string) rather than a collection or set of values.
+
+sql-expression:
+  displayText: SQL expression
+  hoverSnippet: A SQL expression is a combination of columns, values, operators, and functions that evaluates to a single value.
+
+sql-rendering:
+  displayText: SQL rendering  
+  hoverSnippet: The dbt Core engine takes SQL with Jinja, and renders all the macros present in the model to produce SQL that is ready to run against the database. For SQL parsing and compilation capabilities, use the Fusion engine instead to better understand your SQL structure.
 
 subquery:
   displayText: subquery

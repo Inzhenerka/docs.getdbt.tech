@@ -1,6 +1,6 @@
 ---
-title: "Конфигурации Apache Impala"
-description: "Конфигурации Impala - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
+title: "Конфигурации Cloudera Impala"
+description: "Конфигурации Impala — прочитайте это подробное руководство, чтобы узнать о настройках в dbt."
 id: "impala-configs"
 ---
 
@@ -10,18 +10,19 @@ id: "impala-configs"
 
 | Опция  | Описание                                        | Обязательно?               | Пример                  |
 |---------|----------------------------------------------------|-------------------------|--------------------------|
-| partition_by | разделение по столбцу, обычно создается отдельный каталог для каждого раздела | Нет | partition_by=['name'] |
-| sort_by | сортировка по столбцу  | Нет | sort_by=['age'] |
-| row_format | формат, используемый при хранении отдельных строк | Нет | row_format='delimited' |
-| stored_as | формат хранения таблицы | Нет | stored_as='PARQUET' |
-| location | место хранения, обычно путь hdfs | Нет | LOCATION='/user/etl/destination' |
-| comment | комментарий для таблицы | Нет | comment='this is the cleanest model' |
-| serde_properties | свойства SerDes ([де-]сериализации) таблицы | Нет | serde_properties="('quoteChar'='\'', 'escapeChar'='\\')" |
-| tbl_properties | любые метаданные могут храниться в виде пары ключ/значение с таблицей | Нет | tbl_properties="('dbt_test'='1')" |
-| is_cached | true или false - кэшируется ли эта таблица | Нет | is_cached=false (по умолчанию) |
-| cache_pool | имя пула кэша, если is_cached установлено в true | Нет |  |
-| replication_factor | фактор репликации кэша, если is_cached установлено в true  | Нет | |  
-| external | является ли это внешней таблицей - true / false | Нет | external=true |
+| partition_by | разбиение по столбцу; как правило, для каждого партициона создаётся отдельный каталог | No | partition_by=['name'] |
+| sort_by | сортировка по столбцу | No | sort_by=['age'] |
+| row_format | формат, который будет использоваться при хранении отдельных строк | No | row_format='delimited' |
+| stored_as | базовый формат хранения таблицы | No | stored_as='PARQUET' |
+| location | место хранения, как правило путь в HDFS | No | LOCATION='/user/etl/destination' |
+| comment | комментарий к таблице | No | comment='this is the cleanest model' |
+| serde_properties | свойства SerDe (сериализации/десериализации) таблицы | No | serde_properties="('quoteChar'='\'', 'escapeChar'='\\')" |
+| tbl_properties | произвольные метаданные, которые могут быть сохранены с таблицей в виде пар ключ/значение | No | tbl_properties="('dbt_test'='1')" |
+| is_cached | true или false — указывает, кэшируется ли таблица | No | is_cached=false (default) |
+| cache_pool | имя пула кэша, используемого если is_cached установлено в true | No |  |
+| replication_factor | коэффициент репликации кэша, используемый если is_cached установлено в true | No | |  
+| external | является ли таблица внешней — true / false | No | external=true |
+| table_type | указывает тип таблицы — iceberg / kudu | No | table_type="iceberg" |
 
 Для специфичных для Cloudera опций вышеуказанных параметров смотрите документацию CREATE TABLE (https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_create_table.html)
 

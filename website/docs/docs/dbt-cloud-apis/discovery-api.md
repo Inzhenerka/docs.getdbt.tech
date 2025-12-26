@@ -3,18 +3,20 @@ title: "О Discovery API"
 pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 ---
 
-Каждый раз, когда dbt Cloud выполняет проект, он генерирует и сохраняет информацию о проекте. Метаданные включают детали о моделях вашего проекта, источниках и других узлах вместе с результатами их выполнения. С помощью Discovery API dbt Cloud вы можете запрашивать эту обширную информацию, чтобы лучше понять ваш <Term id="dag">DAG</Term> и данные, которые он производит.
+# О Discovery API <Lifecycle status="self_service,managed,managed_plus" />
 
-Используя метаданные в dbt Cloud, вы можете создавать системы для мониторинга данных и оповещений, исследования происхождения данных и автоматизированной отчетности. Это может помочь вам улучшить обнаружение данных, их качество и работу конвейеров в вашей организации.
+Каждый раз, когда <Constant name="cloud" /> запускает проект, он генерирует и сохраняет информацию о проекте. Эти метаданные включают сведения о моделях, источниках и других узлах проекта, а также результаты их выполнения. С помощью Discovery API в <Constant name="cloud" /> вы можете запрашивать эту обширную информацию, чтобы лучше понимать ваш <Term id="dag">DAG</Term> и данные, которые он производит.
 
-Вы можете получить доступ к Discovery API через [разовые запросы](/docs/dbt-cloud-apis/discovery-querying), пользовательские приложения, широкий спектр [интеграций с партнерами](https://www.getdbt.com/product/integrations/) (таких как BI/аналитика, каталогизация и управление, а также качество и наблюдаемость), а также используя функции dbt Cloud, такие как [время выполнения моделей](/docs/deploy/run-visibility#model-timing) и [плитки здоровья данных](/docs/collaborate/data-tile).
+Используя метаданные в <Constant name="cloud" />, вы можете создавать системы мониторинга данных и оповещений, инструменты для изучения lineage, а также автоматизированную отчетность. Это помогает улучшить обнаружение данных, качество данных и операционные процессы пайплайнов внутри вашей организации.
+
+Вы можете получить доступ к Discovery API через [ad hoc queries](/docs/dbt-cloud-apis/discovery-querying), пользовательские приложения, широкий спектр [интеграций партнерской экосистемы](https://www.getdbt.com/product/integrations/) (например, BI/аналитику, каталоги и управление данными, а также инструменты качества и наблюдаемости), а также с помощью функций <Constant name="cloud" />, таких как [model timing](/docs/deploy/run-visibility#model-timing) и [data health tiles](/docs/explore/data-tile).
 
 <Lightbox src="/img/docs/dbt-cloud/discovery-api/discovery-api-figure.png" width="80%" title="Богатая экосистема для интеграции"/>
 
-Вы можете запрашивать метаданные dbt Cloud:
+Вы можете запрашивать метаданные <Constant name="cloud" />:
 
-- На уровне [окружения](/docs/environments-in-dbt) как для последнего состояния (используйте конечную точку `environment`), так и для результатов исторических запусков (используйте `modelByEnvironment`) проекта dbt Cloud в производстве.
-- На уровне задания для получения результатов по конкретному запуску задания dbt Cloud для данного типа ресурса, например, `models` или `test`.
+- На уровне [environment](/docs/environments-in-dbt) — как для актуального состояния (используйте endpoint `environment`), так и для исторических результатов запусков (используйте `modelHistoricalRuns`) проекта <Constant name="cloud" /> в production.
+- На уровне job — для получения результатов конкретного запуска job <Constant name="cloud" /> для заданного типа ресурса, например `models` или `test`.
 
 <Snippet path="metadata-api-prerequisites" />
 
@@ -32,7 +34,7 @@ pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 
 Вы можете использовать, например, вкладку [время выполнения моделей](/docs/deploy/run-visibility#model-timing), чтобы помочь выявить и оптимизировать узкие места в сборке моделей:
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/model-timing.png" width="200%" title="Визуализация времени выполнения модели в dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/model-timing.png" width="200%" title="Визуализация времени выполнения модели в dbt"/>
 
 </TabItem>
 
@@ -72,7 +74,7 @@ pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 
 ## Типы состояния проекта
 
-Существует два типа [состояния проекта](/docs/dbt-cloud-apis/project-state) на уровне окружения, результаты которых вы можете запрашивать:
+Вы можете выполнять запросы к этим двум типам [состояния проекта](/docs/dbt-cloud-apis/project-state) на уровне окружения:
 
 - **Определение** &mdash; Логическое состояние [ресурсов](/docs/build/projects) проекта dbt, которое обновляется при изменении проекта.
 - **Примененное** &mdash; Результат успешного выполнения DAG dbt, который создает или описывает состояние базы данных (например: `dbt run`, `dbt test`, свежесть источников и так далее).

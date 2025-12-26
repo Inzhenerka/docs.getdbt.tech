@@ -8,7 +8,6 @@ datatype: schema_name
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 [sources](/reference/source-properties):
   - name: <source_name>
@@ -43,7 +42,6 @@ version: 2
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: jaffle_shop

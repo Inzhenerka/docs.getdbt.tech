@@ -210,20 +210,13 @@ group by 1
 
 ### Исправление SQL кода
 
-```diff
-17c17
-<     count(
----
->     sum(
-23c23
-<     count(
----
->     sum(
-```
+You can see that we changed `count` to `sum` in the SQL code:
+
+<Lightbox src="/img/blog/2024-05-07-unit-testing/changed_code.png" title="SQL changes in code" />
 
 ### Предостережения и советы
 
-Смотрите документацию для [полезной информации перед началом](https://docs.getdbt.com/docs/build/unit-tests#before-you-begin), включая модульное тестирование [инкрементальных моделей](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-incremental-models), [моделей, зависящих от эфемерных моделей](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-a-model-that-depend-on-ephemeral-models), и платформенно-специфические соображения, такие как `STRUCT` в BigQuery. Во многих случаях, [`sql` формат](https://docs.getdbt.com/reference/resource-properties/data-formats#sql) может помочь решить сложные крайние случаи, которые возникают.
+См. документацию с [полезной информацией перед началом работы](https://docs.getdbt.com/docs/build/unit-tests#before-you-begin), включая unit-тестирование [инкрементальных моделей](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-incremental-models), [моделей, которые зависят от ephemeral-моделей](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-a-model-that-depends-on-ephemeral-models), а также платформенно-специфические особенности, такие как `STRUCT` в BigQuery. Во многих случаях формат [`sql`](https://docs.getdbt.com/reference/resource-properties/data-formats#sql) может помочь решить сложные пограничные ситуации, которые возникают на практике.
 
 Еще одна продвинутая тема — преодоление проблем, когда задействованы недетерминированные факторы, такие как текущая временная метка. Чтобы гарантировать, что выходные данные остаются неизменными независимо от времени выполнения теста, вы можете установить фиксированное, заранее определенное значение, используя конфигурацию [`overrides`](https://docs.getdbt.com/reference/resource-properties/unit-test-overrides).
 
@@ -231,7 +224,7 @@ group by 1
 
 ## Модульные тесты vs. контракты моделей vs. тесты данных
 
-dbt имеет несколько дополнительных функций, поддерживающих качество данных, включая [модульные тесты](https://docs.getdbt.com/docs/build/unit-tests), [контракты моделей](https://docs.getdbt.com/docs/collaborate/govern/model-contracts) и [тесты данных](https://docs.getdbt.com/docs/build/data-tests). Вот таблица, как они сравниваются и когда вы можете использовать каждую из них:
+dbt предоставляет несколько взаимодополняющих возможностей для обеспечения качества данных, включая [unit tests](https://docs.getdbt.com/docs/build/unit-tests), [model contracts](https://docs.getdbt.com/docs/mesh/govern/model-contracts) и [data tests](https://docs.getdbt.com/docs/build/data-tests). Ниже приведена таблица с их сравнением и пояснением, в каких случаях стоит использовать каждый из подходов:
 
 | Модульные тесты | Контракты моделей | Тесты данных |
 | --- | --- | --- |

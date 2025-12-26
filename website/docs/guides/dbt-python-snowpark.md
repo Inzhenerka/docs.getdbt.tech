@@ -1,27 +1,27 @@
 ---
-title: "Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake"
+title: "Используйте dbt для создания аналитических и готовых к ML пайплайнов с помощью SQL и Python в Snowflake"
 id: "dbt-python-snowpark"
-description: "Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake"
-hoverSnippet: Узнайте, как использовать dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake.
+description: "Используйте dbt для создания аналитических и готовых к ML пайплайнов с помощью SQL и Python в Snowflake"
+hoverSnippet: Узнайте, как использовать dbt для создания аналитических и готовых к ML пайплайнов с помощью SQL и Python в Snowflake.
+# time_to_complete: '30 minutes' commenting out until we test
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Snowflake']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-Цель этого воркшопа — продемонстрировать, как можно использовать *SQL и Python вместе* в одном рабочем процессе для запуска *аналитических и моделей машинного обучения* в dbt Cloud.
+Основной фокус этого воркшопа — показать, как мы можем использовать *SQL и Python вместе* в рамках одного рабочего процесса, чтобы запускать *как аналитические, так и машинно‑обучающие модели* на <Constant name="cloud" />.
 
 Весь код сегодняшнего воркшопа можно найти на [GitHub](https://github.com/dbt-labs/python-snowpark-formula1/tree/python-formula1).
 
 ### Что вы будете использовать во время лабораторной работы
 
-- Аккаунт [Snowflake](https://trial.snowflake.com/) с доступом ACCOUNTADMIN
-- Аккаунт [dbt Cloud](https://www.getdbt.com/signup/)
+- Аккаунт [Snowflake](https://trial.snowflake.com/) с правами ACCOUNTADMIN  
+- Аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/)
 
 ### Чему вы научитесь
 
@@ -52,7 +52,7 @@ recently_updated: true
 1. Войдите в свой пробный аккаунт Snowflake. Вы можете [зарегистрироваться для пробного аккаунта Snowflake, используя эту форму](https://signup.snowflake.com/), если у вас его нет.
 2. Убедитесь, что ваш аккаунт настроен с использованием **AWS** в **US East (N. Virginia)**. Мы будем копировать данные из публичного AWS S3-бакета, размещенного dbt Labs в регионе us-east-1. Убедившись, что наша настройка среды Snowflake соответствует региону нашего бакета, мы избегаем любых задержек при копировании и извлечении данных между регионами.
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/1-snowflake-trial-AWS-setup.png" title="Пробная версия Snowflake"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/1-snowflake-trial-AWS-setup.png" width="60%" title="Пробная версия Snowflake"/>
 
 3. После создания вашего аккаунта и его подтверждения из письма для регистрации, Snowflake перенаправит вас обратно в интерфейс, называемый Snowsight.
 
@@ -62,9 +62,9 @@ recently_updated: true
 
 5. Перейдите в **Admin > Billing & Terms**. Нажмите **Enable > Acknowledge & Continue**, чтобы включить пакеты Anaconda Python для работы в Snowflake.
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/3-accept-anaconda-terms.jpeg" title="Условия Anaconda"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/3-accept-anaconda-terms.jpeg" width="60%" title="Anaconda terms"/>
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/4-enable-anaconda.jpeg" title="Включить Anaconda"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/4-enable-anaconda.png" title="Enable Anaconda"/>
 
 6. Наконец, создайте новый лист, выбрав **+ Worksheet** в правом верхнем углу.
 
@@ -92,16 +92,16 @@ recently_updated: true
     create or replace schema raw; 
     use schema raw; 
 
-    -- define our file format for reading in the csvs 
-    create or replace file format csvformat
-    type = csv
+    -- define our file format for reading in the CSVs 
+    create or replace file format CSVformat
+    type = CSV
     field_delimiter =','
     field_optionally_enclosed_by = '"', 
     skip_header=1; 
 
     --
     create or replace stage formula1_stage
-    file_format = csvformat 
+    file_format = CSVformat 
     url = 's3://formula1-dbt-cloud-python-demo/formula1-kaggle-data/';
 
     -- load in the 8 tables we need for our demo 
@@ -236,52 +236,52 @@ recently_updated: true
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/2-load-data-from-s3.png" title="Загрузка данных из S3-бакета"/>
 
-6. Давайте разберем этот довольно длинный запрос на составные части. Мы выполнили этот запрос, чтобы загрузить наши 8 таблиц Формулы 1 из публичного S3-бакета. Для этого мы:
-    - Создали новую базу данных с именем `formula1` и схему с именем `raw`, чтобы разместить наши необработанные (непреобразованные) данные.
-    - Определили формат файла для наших CSV-файлов. Важно, что здесь мы используем параметр `field_optionally_enclosed_by =`, так как строковые столбцы в наших CSV-файлах Формулы 1 используют кавычки. Кавычки используются вокруг строковых значений, чтобы избежать проблем с разбором, когда запятые `,` и новые строки `/n` в значениях данных могут вызвать ошибки загрузки данных.
-    - Создали stage для размещения наших данных, которые мы собираемся загрузить. Snowflake Stages — это места, где хранятся файлы данных. Stages используются как для загрузки, так и для выгрузки данных в и из местоположений Snowflake. Здесь мы используем внешний stage, ссылаясь на S3-бакет.
-    - Создали наши таблицы для копирования данных. Это пустые таблицы с именем столбца и типом данных. Подумайте об этом как о создании пустого контейнера, который затем будет заполнен данными.
-    - Использовали оператор `copy into` для каждой из наших таблиц. Мы ссылаемся на наше staged местоположение, которое мы создали, и при ошибках загрузки продолжаем загружать остальные данные. У вас не должно быть ошибок загрузки данных, но если они возникнут, эти строки будут пропущены, и Snowflake сообщит вам, какие строки вызвали ошибки.
+6. Давайте разберём довольно длинный запрос, с которым мы столкнулись, на составные части. Мы выполнили этот запрос, чтобы загрузить наши 8 таблиц Formula 1 из публичного S3‑бакета. Для этого мы:
+   - Создали новую базу данных с именем `formula1` и схему `raw`, в которую поместили наши «сырые» (непреобразованные) данные.
+   - Определили формат файлов для наших CSV‑файлов. Важно, что здесь мы используем параметр `field_optionally_enclosed_by =`, так как строковые столбцы в наших CSV‑файлах Formula 1 используют кавычки. Кавычки применяются вокруг строковых значений, чтобы избежать проблем с парсингом, когда запятые `,` и переводы строки `/n` внутри значений данных могут вызывать ошибки при загрузке.
+   - Создали stage для указания расположения данных, которые мы собираемся загрузить. Snowflake Stages — это места, где хранятся файлы данных. Stages используются как для загрузки, так и для выгрузки данных в Snowflake и из него. В данном случае мы используем внешний stage, ссылаясь на S3‑бакет.
+   - Создали таблицы, в которые будут скопированы данные. Это пустые таблицы с заданными именами столбцов и типами данных. Можно представить это как создание пустого контейнера, который затем будет заполнен данными.
+   - Использовали оператор `copy into` для каждой из наших таблиц. Мы ссылаемся на созданное staged‑расположение и при возникновении ошибок загрузки продолжаем загружать оставшиеся данные. Ошибок загрузки быть не должно, но если они всё же возникнут, соответствующие строки будут пропущены, а Snowflake сообщит, какие строки вызвали ошибки.
 
-7. Теперь давайте посмотрим на некоторые из наших крутых данных Формулы 1, которые мы только что загрузили!
-    1. Создайте новый лист, выбрав **+** затем **New Worksheet**.
-        <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/3-create-new-worksheet-to-query-data.png" title="Создать новый лист для запроса данных"/>
-    2. Перейдите в **Database > Formula1 > RAW > Tables**.
-    3. Запросите данные, используя следующий код. В таблице circuits всего 76 строк, поэтому нам не нужно беспокоиться об ограничении количества запрашиваемых данных.
+7. Теперь давайте посмотрим на наши классные данные Formula 1, которые мы только что загрузили!
+   1. Создайте новый worksheet, выбрав **+**, затем **New Worksheet**.
+      <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/3-create-new-worksheet-to-query-data.png" width="60%" title="Create new worksheet to query data"/>
+   2. Перейдите в **Database > Formula1 > RAW > Tables**.
+   3. Выполните запрос к данным, используя следующий код. В таблице circuits всего 76 строк, поэтому нам не нужно беспокоиться об ограничении объёма запрашиваемых данных.
 
         ```sql
         select * from formula1.raw.circuits
         ```
 
-    4. Выполните запрос. С этого момента мы будем использовать сочетания клавиш Command-Enter или Control-Enter для выполнения запросов и не будем явно указывать этот шаг.
-    5. Просмотрите результаты запроса, вы должны увидеть информацию о трассах Формулы 1, начиная с Альберт-Парка в Австралии!
-    6. Наконец, убедитесь, что у вас есть все 8 таблиц, начиная с `CIRCUITS` и заканчивая `STATUS`. Теперь мы готовы подключиться к dbt Cloud!
+4. Выполните запрос. Начиная с этого момента мы будем использовать сочетания клавиш Command-Enter или Control-Enter для запуска запросов и не будем отдельно упоминать этот шаг.
+5. Просмотрите результаты запроса: вы должны увидеть информацию о трассах Формулы‑1, начиная с Albert Park в Австралии!
+6. Наконец, убедитесь, что у вас есть все 8 таблиц — начиная с `CIRCUITS` и заканчивая `STATUS`. Теперь мы готовы подключиться к <Constant name="cloud" />!
 
         <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/4-query-circuits-data.png" title="Запрос данных о трассах"/>
 
-## Настройка dbt Cloud
+## Настройка dbt
 
-1. Мы будем использовать [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) для настройки аккаунта dbt Cloud. Использование этого метода позволит вам развернуть полноценный аккаунт dbt с вашим [подключением Snowflake](/docs/cloud/connect-data-platform/connect-snowflake), [управляемым репозиторием](/docs/collaborate/git/managed-repository), средами и учетными данными, уже установленными.
-2. Выйдите из своего листа, выбрав **home**.
+1. Мы будем использовать [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) для настройки аккаунта <Constant name="cloud" />. Этот способ позволяет быстро развернуть полностью готовый аккаунт dbt с уже настроенным [подключением к Snowflake](/docs/cloud/connect-data-platform/connect-snowflake), [управляемым репозиторием](/docs/cloud/git/managed-repository), окружениями и учетными данными.
+2. Вернитесь из worksheet, выбрав **home**.
 3. В Snowsight убедитесь, что вы используете роль **ACCOUNTADMIN**.
-4. Перейдите в **Data Products** **> Partner Connect**. Найдите **dbt**, используя строку поиска или перейдя в **Data Integration**. Выберите плитку **dbt**.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/1-open-partner-connect.png" title="Открыть Partner Connect"/>
-5. Теперь вы должны увидеть новое окно с надписью **Connect to dbt**. Выберите **Optional Grant** и добавьте базу данных `FORMULA1`. Это предоставит доступ вашей новой роли пользователя dbt к базе данных FORMULA1.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/2-partner-connect-optional-grant.png" title="Optional Grant в Partner Connect"/>
+4. Перейдите в **Data Products** **> Partner Connect**. Найдите **dbt**, используя строку поиска или перейдя в раздел **Data Integration**. Выберите плитку **dbt**.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/1-open-partner-connect.png" width="60%" title="Open Partner Connect"/>
+5. Теперь должно открыться новое окно с заголовком **Connect to dbt**. Выберите **Optional Grant** и добавьте базу данных `FORMULA1`. Это предоставит новой роли пользователя dbt доступ к базе данных FORMULA1.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/2-partner-connect-optional-grant.png" width="60%" title="Partner Connect Optional Grant"/>
 
-6. Убедитесь, что `FORMULA1` присутствует в вашем optional grant перед нажатием **Connect**. Это создаст выделенного пользователя dbt, базу данных, склад и роль для вашей пробной версии dbt Cloud.
+6. Перед нажатием **Connect** убедитесь, что `FORMULA1` присутствует в списке optional grant. Это действие создаст выделенного пользователя dbt, базу данных, warehouse и роль для вашего пробного аккаунта <Constant name="cloud" />.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/3-connect-to-dbt.png" title="Подключение к dbt"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/3-connect-to-dbt.png" width="60%" title="Connect to dbt"/>
 
 7. Когда вы увидите окно **Your partner account has been created**, нажмите **Activate**.
 
-8. Вы должны быть перенаправлены на страницу регистрации dbt Cloud. Заполните форму. Обязательно сохраните пароль где-нибудь для входа в будущем.
+8. Вы будете перенаправлены на страницу регистрации <Constant name="cloud" />. Заполните форму. Обязательно сохраните пароль в надежном месте, чтобы в дальнейшем использовать его для входа.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/4-dbt-cloud-sign-up.png" title="Регистрация в dbt Cloud"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/4-dbt-cloud-sign-up.png" title="dbt sign up"/>
 
-9. Выберите **Complete Registration**. Теперь вы должны быть перенаправлены на ваш аккаунт dbt Cloud, с подключением к вашему аккаунту Snowflake, развертыванием и средой разработки, а также примером задания.
+9. Нажмите **Complete Registration**. После этого вы будете перенаправлены в свой аккаунт <Constant name="cloud" />, в котором уже будет настроено подключение к вашему аккаунту Snowflake, создан деплоймент и среда разработки, а также добавлена примерная (sample) job.
 
-10. Чтобы помочь вам с управлением версиями вашего проекта dbt, мы подключили его к [управляемому репозиторию](/docs/collaborate/git/managed-repository), что означает, что dbt Labs будет размещать ваш репозиторий для вас. Это даст вам доступ к рабочему процессу Git без необходимости создавать и размещать репозиторий самостоятельно. Вам не нужно будет знать Git для этого воркшопа; dbt Cloud поможет вам пройти через рабочий процесс. В будущем, когда вы будете разрабатывать свой собственный проект, [не стесняйтесь использовать свой собственный репозиторий](/docs/cloud/git/connect-github). Это позволит вам узнать больше о таких функциях, как [Slim CI](/docs/deploy/continuous-integration) сборки после этого воркшопа.
+10. Чтобы помочь вам с версионированием dbt‑проекта, мы подключили его к [managed repository](/docs/cloud/git/managed-repository). Это означает, что dbt Labs будет хостить ваш репозиторий за вас. Вы получите доступ к рабочему процессу <Constant name="git" /> без необходимости самостоятельно создавать и поддерживать репозиторий. Для этого воркшопа вам не нужно знать <Constant name="git" />; <Constant name="cloud" /> поможет и проведет вас через весь workflow. В будущем, когда вы будете разрабатывать собственный проект, [вы можете использовать свой репозиторий](/docs/cloud/git/connect-github). Это позволит вам подробнее познакомиться с такими возможностями, как сборки [Slim CI](/docs/deploy/continuous-integration), уже после этого воркшопа.
 
 ## Изменение имени схемы разработки и навигация по IDE
 
@@ -293,24 +293,24 @@ recently_updated: true
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/2-credentials-edit-schema-name.png" title="Редактирование имени схемы учетных данных"/>
 
-3. Нажмите **Edit** и измените имя вашей схемы с `dbt_` на `dbt_YOUR_NAME`, заменив `YOUR_NAME` вашими инициалами и именем (`hwatson` используется в скриншотах лаборатории). Обязательно нажмите **Save** для сохранения изменений!
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" title="Сохранить новое имя схемы"/>
+3. Нажмите **Edit** и измените имя вашей схемы с `dbt_` на `dbt_YOUR_NAME`, заменив `YOUR_NAME` на ваши инициалы и имя. Не забудьте нажать **Save**, чтобы сохранить изменения!
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" width="60%" title="Save new schema name"/>
 
-4. Теперь у нас есть наша личная схема разработки, удивительно! Когда мы запустим наши первые модели dbt, они будут построены в этой схеме.
-5. Давайте откроем интегрированную среду разработки (IDE) dbt Cloud и ознакомимся с ней. Выберите **Develop** в верхней части интерфейса.
+4. Теперь у нас есть собственная персональная схема для разработки — отлично! Когда мы будем запускать наши первые модели dbt, они будут создаваться именно в этой схеме.
+5. Давайте откроем интегрированную среду разработки <Constant name="cloud" /> (<Constant name="cloud_ide" />) и немного с ней познакомимся. В верхней части интерфейса выберите **Develop**.
 
-6. Когда IDE загрузится, нажмите **Initialize dbt project**. Процесс инициализации создает набор файлов и папок, необходимых для запуска вашего проекта dbt.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/4-initialize-dbt-project.png" title="Инициализация проекта dbt"/>
+6. Когда <Constant name="cloud_ide" /> завершит загрузку, нажмите **Initialize dbt project**. Процесс инициализации создаёт набор файлов и папок, необходимых для запуска вашего dbt‑проекта.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/4-initialize-dbt-project.png" width="60%" title="Initialize dbt project"/>
 
-7. После завершения инициализации вы можете просмотреть файлы и папки в меню дерева файлов. По мере продвижения по воркшопу мы обязательно коснемся нескольких ключевых файлов и папок, с которыми мы будем работать для создания нашего проекта.
-8. Далее нажмите **Commit and push**, чтобы зафиксировать новые файлы и папки из шага инициализации. Мы всегда хотим, чтобы наши сообщения о фиксации были актуальны для работы, которую мы фиксируем, поэтому обязательно предоставьте сообщение, например, `initialize project`, и выберите **Commit Changes**.
+7. После завершения инициализации вы сможете увидеть файлы и папки в дереве файлов. По мере прохождения воркшопа мы обязательно остановимся на нескольких ключевых файлах и папках, с которыми будем работать при построении проекта.
+8. Затем нажмите **Commit and sync**, чтобы закоммитить новые файлы и папки, созданные на шаге инициализации. Сообщения коммитов всегда должны отражать суть вносимых изменений, поэтому укажите, например, сообщение `initialize project` и выберите **Commit Changes**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" title="Первая фиксация и отправка"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" width="40%" title="First commit and push"/>
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/6-initalize-project.png" title="Инициализация проекта"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/6-initalize-project.png" width="60%" title="Commit Changes button"/>
 
-9. [Фиксация](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) вашей работы здесь сохранит ее в управляемом git-репозитории, который был создан во время регистрации Partner Connect. Эта начальная фиксация будет единственной фиксацией, которая будет сделана непосредственно в нашей ветке `main`, и с этого момента мы будем выполнять всю нашу работу в ветке разработки. Это позволяет нам держать нашу разработку отдельно от нашего производственного кода.
-10. Есть несколько ключевых функций, на которые стоит обратить внимание в IDE, прежде чем мы начнем работать. Это текстовый редактор, SQL и Python-исполнитель, а также CLI с управлением версиями Git, все в одном пакете! Это позволяет вам сосредоточиться на редактировании ваших SQL и Python файлов, предварительном просмотре результатов с помощью SQL-исполнителя (он даже выполняет Jinja!) и построении моделей в командной строке без необходимости переключаться между различными приложениями. Рабочий процесс Git в dbt Cloud позволяет как новичкам, так и экспертам Git легко управлять версиями всей своей работы с помощью нескольких кликов.
+9. [Коммит](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) вашей работы на этом этапе сохранит её в управляемом git‑репозитории, который был создан во время подключения через Partner Connect. Этот начальный коммит — единственный, который будет сделан напрямую в ветку `main`; *начиная с этого момента вся дальнейшая работа будет вестись в ветке разработки*. Это позволяет держать изменения для разработки отдельно от продакшен‑кода.
+10. Прежде чем приступить к работе, стоит отметить несколько ключевых возможностей <Constant name="cloud_ide" />. Это текстовый редактор, среда выполнения SQL и Python, а также CLI с поддержкой контроля версий <Constant name="git" /> — всё в одном инструменте! Это позволяет сосредоточиться на редактировании SQL‑ и Python‑файлов, предварительном просмотре результатов с помощью SQL‑раннера (он даже выполняет Jinja!) и сборке моделей из командной строки без необходимости переключаться между разными приложениями. Git‑workflow в <Constant name="cloud" /> подходит как новичкам, так и опытным пользователям <Constant name="git" />, позволяя легко управлять версиями всей работы всего в пару кликов.
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/7-IDE-overview.png" title="Обзор IDE"/>
 
@@ -322,8 +322,9 @@ recently_updated: true
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/9-second-model-details.png" title="Детали о второй модели"/>
 
-13. Теперь давайте переключимся на Snowflake, чтобы подтвердить, что объекты действительно были созданы. Нажмите на три точки **…** над вашими объектами базы данных, а затем **Refresh**. Разверните базу данных **PC_DBT_DB**, и вы должны увидеть вашу схему разработки. Выберите схему, затем **Tables** и **Views**. Теперь вы должны увидеть `MY_FIRST_DBT_MODEL` как таблицу и `MY_SECOND_DBT_MODEL` как представление.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/10-confirm-example-models-built-in-snowflake.png" title="Подтвердите, что примерные модели построены в Snowflake"/>
+13. Теперь давайте переключимся в Snowflake, чтобы убедиться, что объекты действительно были созданы. Нажмите на три точки **…** над объектами вашей базы данных, а затем выберите **Refresh**. Разверните базу данных **PC_DBT_DB**, и вы должны увидеть свою схему разработки. Выберите эту схему, затем **Tables** и **Views**. Теперь вы должны увидеть `MY_FIRST_DBT_MODEL` как таблицу и `MY_SECOND_DBT_MODEL` как представление.
+
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/10-confirm-example-models-built-in-snowflake.png" width="40%" title="Confirm example models are built in Snowflake"/>
 
 ## Создание ветки и настройка конфигураций проекта
 
@@ -415,15 +416,15 @@ dbt Labs разработала [руководство по структуре 
 
 1. В вашем дереве файлов используйте курсор и наведите на подкаталог `models`, нажмите на три точки **…**, которые появятся справа от имени папки, затем выберите **Create Folder**. Мы добавим две новые папки в путь к файлу, `staging` и `formula1` (в этом порядке), введя `staging/formula1` в путь к файлу.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/1-create-folder.png" title="Создать папку"/>
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/2-file-path.png" title="Установить путь к файлу"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/1-create-folder.png" width="60%" title="Создайте папку"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/2-file-path.png" width="60%" title="Укажите путь к файлу"/>
 
     - Если вы откроете свой каталог `models` сейчас, вы должны увидеть новую папку `staging`, вложенную в `models`, и папку `formula1`, вложенную в `staging`.
 2. Создайте две дополнительные папки так же, как и на предыдущем шаге. В подкаталоге `models` создайте новые каталоги `marts/core`.
 
 3. Нам нужно будет создать еще несколько папок и подпапок с помощью интерфейса. После того, как вы создадите все необходимые папки, ваше дерево папок должно выглядеть так, когда все будет готово:
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/3-tree-of-new-folders.png" title="Дерево новых папок"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/3-tree-of-new-folders.png" width="40%" title="Дерево файлов новых папок"/>
 
 Помните, что вы всегда можете обратиться к полному проекту на [GitHub](https://github.com/dbt-labs/python-snowpark-formula1/tree/python-formula1), чтобы просмотреть полную структуру папок и файлов.
 
@@ -457,21 +458,21 @@ sources:
         description: Одна запись на трассу, которая является конкретной гоночной трассой. 
         columns:
           - name: circuitid
-            tests:
+            data_tests:
             - unique
             - not_null
       - name: constructors 
         description: Одна запись на конструктора. Конструкторы — это команды, которые строят свои автомобили Формулы 1. 
         columns:
           - name: constructorid
-            tests:
+            data_tests:
             - unique
             - not_null
       - name: drivers
         description: Одна запись на водителя. Эта таблица содержит информацию о водителе. 
         columns:
           - name: driverid
-            tests:
+            data_tests:
             - unique
             - not_null
       - name: lap_times
@@ -480,21 +481,22 @@ sources:
         description: Одна строка на пит-стоп. Пит-стопы не имеют собственного столбца id, комбинация race_id и driver_id идентифицирует пит-стоп.
         columns:
           - name: stop
-            tests:
+            data_tests:
               - accepted_values:
-                  values: [1,2,3,4,5,6,7,8]
-                  quote: false            
+                    arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                        values: [1,2,3,4,5,6,7,8]
+                        quote: false            
       - name: races 
         description: Одна гонка на строку. Важно, что эта таблица содержит год гонки для понимания тенденций. 
         columns:
           - name: raceid
-            tests:
+            data_tests:
             - unique
             - not_null        
       - name: results
         columns:
           - name: resultid
-            tests:
+            data_tests:
             - unique
             - not_null   
         description: Одна строка на результат. Основная таблица, которую мы соединяем для переменных сетки и позиции.
@@ -502,7 +504,7 @@ sources:
         description: Один статус на строку. Статус контекстуализирует, была ли гонка завершена или какие проблемы возникли, например, столкновения, двигатель и т.д. 
         columns:
           - name: statusid
-            tests:
+            data_tests:
             - unique
             - not_null
 ```
@@ -743,11 +745,11 @@ sources:
 
     После завершения создания источника и всех моделей подготовки для каждой из 8 таблиц ваша папка подготовки должна выглядеть так:
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/1-staging-folder.png" title="Папка подготовки"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/1-staging-folder.png" width="40%" title="Staging folder"/>
 
-1. Сейчас хорошее время, чтобы удалить нашу папку с примерами, так как эти две модели являются лишними для нашего конвейера formula1, и `my_first_model` не проходит тест `not_null`, который мы не будем исследовать. dbt Cloud предупредит нас, что эта папка будет удалена навсегда, и мы согласны с этим, поэтому выберите **Delete**.
+1. Сейчас подходящий момент удалить примерную папку, так как эти две модели являются лишними для нашего пайплайна `formula1`, а `my_first_model` не проходит тест `not_null`, разбираться с которым мы не будем. <Constant name="cloud" /> предупредит нас, что эта папка будет удалена безвозвратно — нас это устраивает, поэтому выбираем **Delete**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/2-delete-example.png" title="Удалить папку с примерами"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/2-delete-example.png" width="40%" title="Delete example folder"/>
 
 1. Теперь, когда модели подготовки созданы и сохранены, пришло время создать модели в нашей схеме разработки в Snowflake. Для этого мы введем в командной строке `dbt build`, чтобы запустить все модели в нашем проекте, включая 8 новых моделей подготовки и существующие модели примеров.
 
@@ -757,7 +759,7 @@ sources:
 
     Давайте быстро взглянем на Snowflake, обновим объекты базы данных, откроем нашу схему разработки и подтвердим, что новые модели там. Если вы можете их увидеть, значит, все в порядке!
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/4-confirm-models.png" title="Подтвердите модели"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/4-confirm-models.png" width="40%" title="Подтверждение моделей"/>
 
     Прежде чем перейти к следующему разделу, обязательно зафиксируйте ваши новые модели в вашей ветке Git. Нажмите **Commit and push** и дайте вашему коммиту сообщение, например, `profile, sources, and staging setup`, прежде чем продолжить.
 
@@ -912,7 +914,7 @@ sources:
     select * from int_results
     ```
 
-1. Создайте *Markdown* файл `intermediate.md`, который мы подробно рассмотрим в разделах Тестирование и Документация руководства [Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake](/guides/dbt-python-snowpark).
+1. Создайте *Markdown*-файл `intermediate.md`, который мы подробно разберём в разделах **Test** и **Documentation** руководства [Leverage <Constant name="cloud" /> to generate analytics and ML-ready pipelines with SQL and Python with Snowflake](/guides/dbt-python-snowpark).
 
     ```markdown
     # цель этого .md — позволить многострочные длинные объяснения для наших промежуточных преобразований
@@ -927,7 +929,7 @@ sources:
     {% docs int_lap_times_years %} Время круга выполняется на круг. Нам нужно присоединить их к году гонки, чтобы понять тенденции времени круга за годы. {% enddocs %}
     ```
 
-1. Создайте *YAML* файл `intermediate.yml`, который мы подробно рассмотрим в разделах Тестирование и Документация руководства [Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake](/guides/dbt-python-snowpark).
+1. Создайте *YAML*-файл `intermediate.yml`, который мы подробно разберём в разделах **Test** и **Document** руководства [Leverage <Constant name="cloud" /> to generate analytics and ML-ready pipelines with SQL and Python with Snowflake](/guides/dbt-python-snowpark).
 
     ```yaml
     version: 2
@@ -1198,15 +1200,18 @@ sources:
 
 Давайте сделаем шаг назад перед началом машинного обучения, чтобы как пересмотреть, так и углубиться в методы, которые делают возможным запуск dbt python моделей. Если вы хотите узнать больше за пределами объяснений этой лаборатории, прочитайте документацию [здесь](/docs/build/python-models?version=1.3).
 
-- dbt model(dbt, session). Для начала, каждая Python модель находится в .py файле в вашей папке models/. Она определяет функцию с именем `model()`, которая принимает два параметра:
-  - dbt &mdash; Класс, скомпилированный dbt Core, уникальный для каждой модели, позволяет вам запускать ваш Python код в контексте вашего dbt проекта и DAG.
-  - session &mdash; Класс, представляющий соединение вашей платформы данных с Python бэкендом. Сессия необходима для чтения таблиц как DataFrame и записи DataFrame обратно в таблицы. В PySpark, по соглашению, SparkSession называется spark и доступен глобально. Для согласованности между платформами мы всегда передаем его в функцию модели как явный аргумент, называемый session.
-- Функция `model()` должна возвращать один DataFrame. На Snowpark (Snowflake) это может быть Snowpark или pandas DataFrame.
-- Функции `.source()` и `.ref()`. Python модели полностью участвуют в направленном ациклическом графе (DAG) преобразований dbt. Если вы хотите читать напрямую из исходной таблицы, используйте `dbt.source()`. Мы видели это в нашей предыдущей секции, используя SQL с функцией source. Эти функции имеют одинаковое выполнение, но с разным синтаксисом. Используйте метод `dbt.ref()` в Python модели, чтобы читать данные из других моделей (SQL или Python). Эти методы возвращают DataFrame, указывающие на исходный источник, модель, seed или snapshot.
-- `.config()`. Как и SQL модели, есть три способа настройки Python моделей:
-  - В отдельном `.yml` файле, в директории `models/`
-  - Внутри `.py` файла модели, используя метод `dbt.config()`
-  - Вызов метода `dbt.config()` установит конфигурации для вашей модели в вашем `.py` файле, аналогично макросу `{{ config() }}` в `.sql` файлах моделей:
+- **Модель dbt (dbt, session).** Для начала: каждая Python‑модель находится в отдельном файле `.py` в папке `models/`. В этом файле определяется функция с именем `model()`, которая принимает два параметра:
+  - `dbt` — класс, скомпилированный <Constant name="core" />, уникальный для каждой модели. Он позволяет выполнять Python‑код в контексте вашего dbt‑проекта и DAG.
+  - `session` — класс, представляющий подключение вашей платформы данных к Python‑бэкенду. `session` необходим для чтения таблиц в виде DataFrame и записи DataFrame обратно в таблицы. В PySpark по соглашению `SparkSession` называется `spark` и доступна глобально. Для единообразия между платформами мы всегда передаём её в функцию модели как явный аргумент с именем `session`.
+
+- Функция `model()` должна возвращать **один** DataFrame. В Snowpark (Snowflake) это может быть Snowpark‑ или pandas‑DataFrame.
+
+- **Функции `.source()` и `.ref()`.** Python‑модели полностью участвуют в ориентированном ациклическом графе (DAG) преобразований dbt. Если вам нужно читать данные напрямую из сырой исходной таблицы, используйте `dbt.source()`. Мы уже видели это в предыдущем разделе при использовании SQL с функцией `source`. Эти функции выполняются одинаково, но имеют разный синтаксис. Используйте метод `dbt.ref()` внутри Python‑модели, чтобы читать данные из других моделей (SQL или Python). Эти методы возвращают DataFrame, указывающие на вышестоящий источник, модель, seed или snapshot.
+
+- **`.config()`.** Как и в SQL‑моделях, существует три способа конфигурации Python‑моделей:
+  - В отдельном файле `.yml` внутри каталога `models/`
+  - В файле модели `.py` с использованием метода `dbt.config()`
+  - Вызов метода `dbt.config()` задаёт конфигурации для вашей модели прямо в `.py`‑файле — аналогично макросу `{{ config() }}` в файлах моделей `.sql`:
 
     ```python
         def model(dbt, session):
@@ -1731,39 +1736,40 @@ sources:
 
 ### Общие тесты
 
-1. Чтобы реализовать общие тесты из коробки, которые предоставляет dbt, мы можем использовать YAML файлы для указания информации о наших моделях. Чтобы добавить общие тесты к нашей модели агрегатов, создайте файл под названием `aggregates.yml`, скопируйте блок кода ниже в файл и сохраните.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" title="Файл aggregates.yml в нашем дереве файлов"/>
+1. Чтобы использовать встроенные универсальные тесты dbt (out-of-the-box), мы можем применять YAML-файлы для описания информации о наших моделях. Чтобы добавить универсальные тесты к нашей модели агрегатов, создайте файл с именем `aggregates.yml`, скопируйте приведённый ниже блок кода в этот файл и сохраните его.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" width="60%" title="The aggregates.yml file in our file tree"/>
 
     ```yaml
-    version: 2
 
     models:
         - name: fastest_pit_stops_by_constructor
           description: Используйте метод python .describe(), чтобы получить таблицу сводной статистики о пит-стопах по конструктору. Сортируйте по среднему времени остановки по возрастанию, чтобы первая строка возвращала самого быстрого конструктора.
           columns:
             - name: constructor_name
-              description: команда, которая делает машину
-              tests:
+                description: команда, которая производит автомобиль
+                data_tests:
                 - unique
 
         - name: lap_times_moving_avg
           description: Используйте метод python .rolling(), чтобы вычислить 5-летнее скользящее среднее времени пит-стопов вместе со средним для каждого года. 
           columns:
             - name: race_year
-              description: год гонки
-              tests:
+                description: год гонки
+                data_tests:
                 - relationships:
-                  to: ref('int_lap_times_years')
-                  field: race_year
+                    arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                        to: ref('int_lap_times_years')
+                        field: race_year
     ```
 
-2. Давайте разберем код, который у нас здесь. У нас есть обе наши модели агрегатов с именем модели, чтобы знать объект, на который мы ссылаемся, и описание модели, которое мы будем заполнять в нашей документации. На уровне колонки (уровень ниже нашей модели) мы предоставляем имя колонки, за которым следуют наши тесты. Мы хотим убедиться, что наш `constructor_name` уникален, так как мы использовали pandas `groupby` на `constructor_name` в модели `fastest_pit_stops_by_constructor`. Далее мы хотим убедиться, что наш `race_year` имеет ссылочную целостность из модели, которую мы выбрали из `int_lap_times_years`, в нашу последующую модель `lap_times_moving_avg`.
-3. Наконец, если мы хотим увидеть, как тесты были развернуты на источниках и SQL моделях, мы можем посмотреть на другие файлы в нашем проекте, такие как `f1_sources.yml`, который мы создали в нашем разделе Источники и стадирование.
+1. Давайте разберем код, который у нас здесь. У нас есть обе наши модели агрегатов с именем модели, чтобы знать объект, на который мы ссылаемся, и описание модели, которое мы будем заполнять в нашей документации. На уровне колонки (уровень ниже нашей модели) мы предоставляем имя колонки, за которым следуют наши тесты. Мы хотим убедиться, что наш `constructor_name` уникален, так как мы использовали pandas `groupby` на `constructor_name` в модели `fastest_pit_stops_by_constructor`. Далее мы хотим убедиться, что наш `race_year` имеет ссылочную целостность из модели, которую мы выбрали из `int_lap_times_years`, в нашу последующую модель `lap_times_moving_avg`.
+2. Наконец, если мы хотим увидеть, как тесты были развернуты на источниках и SQL моделях, мы можем посмотреть на другие файлы в нашем проекте, такие как `f1_sources.yml`, который мы создали в нашем разделе Источники и стадирование.
 
 ### Использование макросов для тестирования
 
-1. В вашей папке `macros` создайте новый файл и назовите его `test_all_values_gte_zero.sql`. Скопируйте блок кода ниже и сохраните файл. Для ясности, "gte" это сокращение от greater than or equal to (больше или равно).
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/2-macro-testing.png" title="макрос файл для повторно используемого кода тестирования"/>
+1. В папке `macros` создайте новый файл и назовите его `test_all_values_gte_zero.sql`. Скопируйте приведённый ниже блок кода и сохраните файл. Для ясности: «gte» — это сокращение от *greater than or equal to* («больше или равно»).
+
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/2-macro-testing.png" width="60%" title="macro file for reusable testing code"/>
 
     ```sql
     {% macro test_all_values_gte_zero(table, column) %}
@@ -1773,11 +1779,11 @@ sources:
     {% endmacro %}
     ```
 
-2. Макросы в Jinja это куски кода, которые могут быть использованы многократно в наших SQL моделях &mdash; они аналогичны "функциям" в других языках программирования и чрезвычайно полезны, если вы обнаружите, что повторяете код в нескольких моделях.
-3. Мы используем `{% macro %}` для указания начала макроса и `{% endmacro %}` для конца. Текст после начала блока макроса это имя, которое мы даем макросу, чтобы позже вызвать его. В данном случае наш макрос называется `test_all_values_gte_zero`. Макросы принимают *аргументы* для передачи, в данном случае `table` и `column`. В теле макроса мы видим SQL оператор, который использует функцию `ref` для динамического выбора таблицы, а затем колонки. Вы всегда можете просмотреть макросы без необходимости их выполнения, используя `dbt run-operation`. Вы можете узнать больше [здесь](https://docs.getdbt.com/reference/commands/run-operation).
-4. Отлично, теперь мы хотим сослаться на этот макрос как на тест! Давайте создадим новый тестовый файл под названием `macro_pit_stops_mean_is_positive.sql` в нашей папке `tests`.
+2. Макросы в Jinja — это фрагменты кода, которые можно переиспользовать многократно в наших SQL‑моделях. Они аналогичны «функциям» в других языках программирования и чрезвычайно полезны, если вы замечаете, что повторяете один и тот же код в нескольких моделях.
+3. Мы используем `{% macro %}` для обозначения начала макроса и `{% endmacro %}` — для его завершения. Текст после начала блока макроса — это имя, которое мы задаём макросу, чтобы затем вызывать его. В данном случае наш макрос называется `test_all_values_gte_zero`. Макросы принимают *аргументы*, которые передаются внутрь, — в нашем случае это `table` и `column`. В теле макроса мы видим SQL‑выражение, которое использует функцию `ref` для динамического выбора таблицы, а затем столбца. Вы всегда можете просмотреть макросы, не запуская их, с помощью команды `dbt run-operation`. Подробнее об этом можно узнать [здесь](/reference/commands/run-operation).
+4. Отлично, теперь мы хотим использовать этот макрос в качестве теста! Давайте создадим новый файл теста с именем `macro_pit_stops_mean_is_positive.sql` в папке `tests`.
 
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/3-gte-macro-applied-to-pit-stops.png" title="создание теста на нашей модели пит-стопов с ссылкой на макрос"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/3-gte-macro-applied-to-pit-stops.png" width="60%" title="создание теста для нашей модели pit_stops с использованием макроса"/>
 
 5. Скопируйте следующий код в файл и сохраните:
 
@@ -1806,7 +1812,7 @@ sources:
 Давайте добавим пользовательский тест, который утверждает, что скользящее среднее времени круга за последние 5 лет больше нуля (невозможно иметь время меньше 0!). Легко предположить, что если это не так, данные были повреждены.
 
 1. Создайте файл `lap_times_moving_avg_assert_positive_or_null.sql` в папке `tests`.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/4-custom-singular-test.png" title="пользовательский единичный тест для проверки, что времена кругов положительные значения"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/4-custom-singular-test.png" width="60%" title="custom singular test for testing lap times are positive values"/>
 
 2. Скопируйте следующий код и сохраните файл:
 
@@ -1871,8 +1877,8 @@ sources:
 2. Перейдите в нашу область проекта и просмотрите `int_results`. Просмотрите описание, которое мы создали в нашем doc блоке.
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/2-view-docblock-description.png" title="Описание docblock в рамках сайта документации"/>
 
-3. Просмотрите мини-родословную, которая смотрит на модель, на которой мы в данный момент выбраны (`int_results` в данном случае).
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/3-mini-lineage-docs.png" title="Мини-родословная на сайте документации"/>
+3. Просмотрите мини-линейдж, который показывает модель, выбранную в данный момент (`int_results` в этом случае).
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/3-mini-lineage-docs.png" width="40%" title="Mini lineage view on docs site"/>
 
 4. В нашем `dbt_project.yml` мы настроили `node_colors` в зависимости от каталога файлов. Цветовое кодирование вашего проекта может помочь вам сгруппировать похожие модели или шаги и легче устранять неполадки при просмотре родословной в вашей документации.
 
@@ -1880,7 +1886,11 @@ sources:
 
 ## Развертывание вашего кода
 
-Прежде чем мы перейдем к развертыванию нашего кода, давайте кратко рассмотрим среды. До этого момента вся работа, которую мы проделали в dbt Cloud IDE, была в нашей среде разработки, с кодом, зафиксированным в ветке функции, и моделями, которые мы построили, созданными в нашей схеме разработки в Snowflake, как определено в нашем подключении среды разработки. Выполнение этой работы в ветке функции позволяет нам отделить наш код от того, что строят другие коллеги, и кода, который уже считается готовым к производству. Создание моделей в схеме разработки в Snowflake позволяет нам отделить объекты базы данных, которые мы все еще можем модифицировать и тестировать, от объектов базы данных, которые запускают производственные панели или другие зависимости вниз по потоку. Вместе комбинация ветки Git и объектов базы данных Snowflake формирует нашу среду.
+Прежде чем перейти к деплою нашего кода, давайте кратко разберёмся с понятием окружений. До этого момента вся работа, которую мы выполняли в <Constant name="cloud_ide" />, происходила в нашем окружении разработки: код был закоммичен в feature‑ветку, а созданные нами модели — развернуты в development‑схеме в Snowflake, как это определено в настройках подключения для Development environment.  
+
+Работа в feature‑ветке позволяет изолировать наш код от того, над чем работают другие коллеги, а также от кода, который уже считается готовым к использованию в продакшене. Создание моделей в development‑схеме Snowflake позволяет отделить объекты базы данных, которые мы всё ещё можем изменять и тестировать, от объектов базы данных, используемых в продакшн‑дашбордах или других downstream‑зависимостях.  
+
+В совокупности ветка <Constant name="git" /> и объекты базы данных в Snowflake образуют наше окружение.
 
 Теперь, когда мы завершили тестирование и документирование нашей работы, мы готовы развернуть наш код из нашей среды разработки в нашу производственную среду, и это включает два шага:
 
@@ -1889,22 +1899,21 @@ sources:
 - Развертывание кода в нашей производственной среде.
   - Как только наш код будет слит в основную ветку, нам нужно будет запустить dbt в нашей производственной среде, чтобы построить все наши модели и запустить все наши тесты. Это позволит нам построить готовые к производству объекты в нашей производственной среде в Snowflake. К счастью для нас, поток Partner Connect уже создал нашу среду развертывания и задание для облегчения этого шага.
 
-1. Прежде чем начать, давайте убедимся, что мы зафиксировали всю нашу работу в нашей ветке функции. Если у вас все еще есть работа для фиксации, вы сможете выбрать **Commit and push**, предоставить сообщение и затем выбрать **Commit** снова.
-2. Как только вся ваша работа зафиксирована, кнопка git workflow теперь будет отображаться как **Merge to main**. Выберите **Merge to main**, и процесс слияния автоматически запустится в фоновом режиме.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" title="Слияние в основную ветку"/>
+1. Прежде чем начать, давайте убедимся, что вся наша работа закоммичена в feature-ветку. Если у вас ещё есть изменения для коммита, вы сможете выбрать **Commit and push**, указать сообщение, а затем снова нажать **Commit**.
+2. После того как вся работа будет закоммичена, кнопка git‑workflow изменится на **Merge this branch to main**. Нажмите **Merge this branch to main**, и процесс слияния автоматически выполнится в фоновом режиме.
+   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" width="60%" title="Merge this branch to main"/>
 
-3. Когда это завершится, вы должны увидеть, что кнопка git теперь отображается как **Create branch**, и ветка, которую вы в данный момент просматриваете, станет **main**.
-4. Теперь, когда вся наша работа по разработке была слита в основную ветку, мы можем построить наше задание развертывания. Учитывая, что наша производственная среда и производственное задание были автоматически созданы для нас через Partner Connect, все, что нам нужно сделать здесь, это обновить некоторые настройки по умолчанию, чтобы они соответствовали нашим потребностям.
-5. В меню выберите **Deploy** **> Environments**
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/2-ui-select-environments.png" title="Перейдите в среды в интерфейсе"/>
+3. После завершения процесса вы увидите, что кнопка git отображает **Create branch**, а ветка, которую вы сейчас просматриваете, станет **main**.
+4. Теперь, когда вся наша разработка слита в ветку main, мы можем настроить job для деплоя. Поскольку production‑окружение и production‑job были автоматически созданы для нас через Partner Connect, здесь нам нужно лишь обновить некоторые конфигурации по умолчанию под наши требования.
+5. В левом меню перейдите в **Orchestration** > **Environments**.
+6. Вы увидите два окружения в списке. Выберите окружение **Deployment**, а затем **Settings**, чтобы изменить его.
+7. Прежде чем вносить изменения, давайте разберёмся, что определено в этом окружении. Подключение к Snowflake показывает учётные данные, которые <Constant name="cloud" /> использует для этого окружения, и в нашем случае они совпадают с теми, что были созданы через Partner Connect. Наш deployment‑job будет собираться в базе данных `PC_DBT_DB` и использовать роль и warehouse Partner Connect по умолчанию. Раздел deployment credentials также использует информацию, созданную в Partner Connect job, для формирования credential‑подключения. Однако при этом используется та же схема по умолчанию, которую мы применяли в окружении разработки.
+8. Давайте обновим схему и создадим новую схему специально для production‑окружения. Нажмите **Edit**, чтобы получить возможность изменить существующие значения полей. Перейдите в **Deployment Credentials >** **schema**.
+9. Обновите имя схемы на **production**. Не забудьте нажать **Save** после внесения изменений.
+   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Update the deployment credentials schema to production"/>
 
-6. Вы должны увидеть две перечисленные среды, и вам нужно будет выбрать **Deployment** среду, затем **Settings**, чтобы изменить ее.
-7. Прежде чем вносить какие-либо изменения, давайте коснемся того, что определено в этой среде. Соединение Snowflake показывает учетные данные, которые dbt Cloud использует для этой среды, и в нашем случае они такие же, как те, которые были созданы для нас через Partner Connect. Наше задание развертывания будет строиться в нашей базе данных `PC_DBT_DB` и использовать роль и склад по умолчанию Partner Connect для этого. Раздел учетных данных развертывания также использует информацию, созданную в нашем задании Partner Connect, для создания соединения учетных данных. Однако он использует ту же схему по умолчанию, которую мы использовали в качестве схемы для нашей среды разработки.
-8. Давайте обновим схему, чтобы создать новую схему специально для нашей производственной среды. Нажмите **Edit**, чтобы позволить вам изменить существующие значения полей. Перейдите к **Deployment Credentials >** **schema.**
-9. Обновите имя схемы на **production**. Не забудьте выбрать **Save** после того, как вы внесли изменение.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Обновите схему учетных данных развертывания на production"/>
-10. Обновив схему для нашей производственной среды на **production**, это гарантирует, что наше задание развертывания для этой среды будет строить наши dbt модели в **production** схеме в базе данных `PC_DBT_DB`, как определено в разделе соединения Snowflake.
-11. Теперь давайте переключимся на наше производственное задание. Нажмите на вкладку deploy снова, а затем выберите **Jobs**. Вы должны увидеть существующее и предварительно настроенное **Partner Connect Trial Job**. Аналогично среде, нажмите на задание, затем выберите **Settings**, чтобы изменить его. Давайте посмотрим на задание, чтобы понять его, прежде чем вносить изменения.
+10. Обновив схему production‑окружения на **production**, мы гарантируем, что deployment‑job для этого окружения будет собирать наши dbt‑модели в схеме **production** внутри базы данных `PC_DBT_DB`, как указано в разделе Snowflake Connection.
+11. Теперь перейдём к нашему production‑job. Снова нажмите на вкладку deploy и выберите **Jobs**. Вы увидите существующий и предварительно настроенный **Partner Connect Trial Job**. Аналогично окружению, кликните по job, затем выберите **Settings**, чтобы изменить его. Давайте сначала рассмотрим этот job, чтобы понять его устройство, прежде чем вносить изменения.
 
     - Раздел Environment это то, что соединяет это задание с средой, в которой мы хотим его запустить. Это задание уже по умолчанию использует среду Deployment, которую мы только что обновили, и остальные настройки мы можем оставить как есть.
     - Раздел Execution settings дает нам возможность генерировать документацию, запускать свежесть источников и откладывать на предыдущее состояние выполнения. Для целей нашей лаборатории мы оставим эти настройки как есть и будем генерировать только документацию.
@@ -1916,12 +1925,13 @@ sources:
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/4-run-production-job.png" title="Запуск производственного задания"/>
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/5-job-details.png" title="Просмотр деталей производственного задания"/>
 
-13. Давайте перейдем в Snowflake, чтобы подтвердить, что все построено, как ожидалось, в нашей производственной схеме. Обновите объекты базы данных в вашей учетной записи Snowflake, и вы должны увидеть производственную схему теперь в нашей базе данных по умолчанию Partner Connect. Если вы нажмете на схему и все прошло успешно, вы должны увидеть все модели, которые мы разработали.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/6-all-models-generated.png" title="Проверьте, что все наши модели в нашем pipeline находятся в Snowflake"/>
+13. Теперь перейдём в Snowflake, чтобы убедиться, что всё было собрано корректно в нашей production-схеме. Обновите объекты базы данных в своём аккаунте Snowflake — вы должны увидеть production-схему внутри нашей базы данных Partner Connect по умолчанию. Если вы перейдёте в эту схему и всё выполнилось успешно, вы сможете увидеть все модели, которые мы разработали.
+
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/6-all-models-generated.png" width="40%" title="Check all our models in our pipeline are in Snowflake"/>
 
 ### Заключение
 
-Фантастика! Вы завершили воркшоп! Мы надеемся, что вы чувствуете себя уверенно, используя как SQL, так и Python в ваших рабочих процессах dbt Cloud с Snowflake. Наличие надежного pipeline для отображения как аналитики, так и машинного обучения имеет решающее значение для создания ощутимой бизнес-ценности из ваших данных.
+Отлично! Вы завершили воркшоп! Мы надеемся, что теперь вы чувствуете себя уверенно, используя и SQL, и Python в ваших рабочих процессах <Constant name="cloud" /> с Snowflake. Наличие надёжного пайплайна, который позволяет получать как аналитические результаты, так и решения для машинного обучения, является ключевым фактором для создания ощутимой бизнес-ценности на основе ваших данных.
 
 Для получения дополнительной помощи и информации присоединяйтесь к нашему [сообществу dbt в Slack](https://www.getdbt.com/community/), которое сегодня насчитывает более 50 000 специалистов по данным. У нас есть специальный канал в Slack #db-snowflake для контента, связанного с Snowflake. Удачи в dbt!
 

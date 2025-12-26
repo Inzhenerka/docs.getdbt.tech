@@ -9,12 +9,12 @@ displayed_sidebar: "docs"
 
 - [Discourse](https://discourse.getdbt.com/t/3180)
 - [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.0.latest/CHANGELOG.md)
-- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
-- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Руководство по установке CLI <Constant name="core" />](/docs/core/installation-overview)
+- [Руководство по обновлению Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
 ## Что нужно знать перед обновлением
 
-Основная версия dbt Core 1.0 включает ряд изменений, нарушающих обратную совместимость! Где это возможно, мы предложили обратную совместимость для старого поведения и (где необходимо) упростили миграцию.
+Мажорная версия <Constant name="core" /> 1.0 включает ряд ломающих изменений! Там, где это было возможно, мы сохранили обратную совместимость со старым поведением, а там, где это было необходимо, упростили процесс миграции.
 
 ### Переименованные поля в `dbt_project.yml`
 
@@ -30,7 +30,7 @@ displayed_sidebar: "docs"
 
 ### Тесты
 
-Два **типа тестов** теперь называются "singular" и "generic" (вместо "data" и "schema" соответственно). Метод выбора `test_type:` принимает `test_type:singular` и `test_type:generic`. (Он также примет `test_type:schema` и `test_type:data` для обратной совместимости.) **Не совместимо с предыдущими версиями:** Флаги `--data` и `--schema` для dbt test больше не поддерживаются, и тесты больше не имеют автоматически применяемых тегов `'data'` и `'schema'`. Обновленная документация: [тесты](/docs/build/data-tests), [выбор тестов](/reference/node-selection/test-selection-examples), [методы выбора](/reference/node-selection/methods).
+Два **типа тестов** теперь называются «singular» и «generic» (вместо «data» и «schema» соответственно). Метод выбора `test_type:` принимает значения `test_type:singular` и `test_type:generic`. (Также по соображениям обратной совместимости он принимает `test_type:schema` и `test_type:data`.) **Не обратно совместимо:** флаги `--data` и `--schema` для команды `dbt test` больше не поддерживаются, а тестам больше не назначаются теги `'data'` и `'schema'` автоматически. Обновлённая документация: [data tests](/docs/build/data-tests), [test selection](/reference/node-selection/test-selection-examples), [selection methods](/reference/node-selection/methods).
 
 Флаг/свойство `greedy` было переименовано в **`indirect_selection`**, который теперь по умолчанию является eager. **Примечание:** Это возвращает выбор тестов к поведению до версии v0.20 по умолчанию. `dbt test -s my_model` _будет_ выбирать тесты с несколькими родителями, такие как `relationships`, которые зависят от невыбранных ресурсов. Чтобы достичь изменения поведения в v0.20 + v0.21, установите `--indirect-selection=cautious` в CLI или `indirect_selection: cautious` в YAML селекторах. Обновленная документация: [примеры выбора тестов](/reference/node-selection/test-selection-examples), [yaml селекторы](/reference/node-selection/yaml-selectors).
 

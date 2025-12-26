@@ -3,11 +3,13 @@ title: "Python SDK"
 id: sl-python
 description: "Узнайте, как использовать библиотеку Python SDK для взаимодействия с dbt Semantic Layer."
 tags: [Semantic Layer, APIs]
-keywords: [dbt Cloud, API, dbt Semantic Layer, python, sdk]
+keywords: [dbt, API, dbt Semantic Layer, python, sdk]
 sidebar_label: "Python SDK"
 ---
 
-[Python SDK для разработки программного обеспечения `dbt-sl-sdk`](https://github.com/dbt-labs/semantic-layer-sdk-python) (SDK) — это библиотека на Python, которая предоставляет вам легкий доступ к dbt Semantic Layer с помощью Python. Она позволяет разработчикам взаимодействовать с API dbt Semantic Layer и запрашивать метрики и измерения в последующих инструментах.
+# Python SDK <Lifecycle status="self_service,managed,managed_plus" />
+
+[`dbt-sl-sdk` Python software development kit](https://github.com/dbt-labs/semantic-layer-sdk-python) (SDK) — это Python‑библиотека, которая предоставляет удобный доступ к dbt Semantic Layer из Python. Она позволяет разработчикам взаимодействовать с API dbt Semantic Layer и запрашивать метрики и измерения (dimensions) в downstream‑инструментах.
 
 ## Установка
 
@@ -46,8 +48,8 @@ pip install "dbt-sl-sdk[sync]"
 </TabItem>
 </Tabs>
 
-## Использование
-Чтобы выполнять операции с API Semantic Layer, создайте экземпляр `SemanticLayerClient` с вашими [параметрами подключения к API](/docs/dbt-cloud-apis/sl-api-overview):
+## Usage
+Чтобы выполнять операции с API <Constant name="semantic_layer" />, необходимо создать (инициализировать) экземпляр `SemanticLayerClient`, указав ваши конкретные [параметры подключения к API](/docs/dbt-cloud-apis/sl-api-overview):
 
 ```python
 from dbtsl import SemanticLayerClient
@@ -101,7 +103,79 @@ asyncio.run(main())
 
 ```
 
-## Интеграция с библиотеками для работы с данными
+### Ленивaя загрузка для больших полей
+
+По умолчанию Python SDK жадно загружает вложенные списки объектов, такие как `dimensions`, `entities` и `measures`, для каждого объекта `Metric` &mdash; даже если они вам не нужны. В большинстве случаев это удобно, но в крупных проектах может приводить к более медленным ответам из‑за большого объёма возвращаемых данных.
+
+Чтобы повысить производительность, вы можете включить ленивую загрузку, передав `lazy=True` при создании клиента. При включённой ленивой загрузке SDK пропускает получение крупных вложенных полей до тех пор, пока вы явно не запросите их для конкретной модели.
+
+В настоящее время ленивая загрузка поддерживается только для полей `dimensions`, `entities` и `measures` у объектов `Metric`.
+
+Например, следующий код получает все доступные метрики из Metadata API и выводит только измерения (`dimensions`) для некоторых метрик:
+
+<File name="list_metrics_lazy_sync.py">
+
+```python
+"""Fetch all available metrics from the metadata API and display only the dimensions of certain metrics."""
+
+from argparse import ArgumentParser
+
+from dbtsl import SemanticLayerClient
+
+
+def get_arg_parser() -> ArgumentParser:
+    p = ArgumentParser()
+
+    p.add_argument("--env-id", required=True, help="The dbt environment ID", type=int)
+    p.add_argument("--token", required=True, help="The API auth token")
+    p.add_argument("--host", required=True, help="The API host")
+
+    return p
+
+
+def main() -> None:
+    arg_parser = get_arg_parser()
+    args = arg_parser.parse_args()
+
+    client = SemanticLayerClient(
+        environment_id=args.env_id,
+        auth_token=args.token,
+        host=args.host,
+        lazy=True,
+    )
+
+    with client.session():
+        metrics = client.metrics()
+        for i, m in enumerate(metrics):
+            print(f"📈 {m.name}")
+            print(f"     type={m.type}")
+            print(f"     description={m.description}")
+
+            assert len(m.dimensions) == 0
+
+            # skip if index is odd
+            if i & 1:
+                print("     dimensions=skipped")
+                continue
+
+            # load dimensions only if index is even
+            m.load_dimensions()
+
+            print("     dimensions=[")
+            for dim in m.dimensions:
+                print(f"        {dim.name},")
+            print("     ]")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+</File>
+
+Подробнее см. в [примере с ленивой загрузкой](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/list_metrics_lazy_sync.py).
+
+## Интеграция с библиотеками для работы с датафреймами
 
 Python SDK возвращает все данные запросов в виде таблиц [pyarrow](https://arrow.apache.org/docs/python/index.html).
 

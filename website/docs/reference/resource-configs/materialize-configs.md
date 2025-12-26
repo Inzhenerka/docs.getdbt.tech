@@ -73,14 +73,12 @@ select ...
 
 </File>
 
-### Тесты
-
-Если вы установите необязательный флаг `--store-failures` или [`store_failures` config](/reference/resource-configs/store_failures), dbt создаст материализованное представление для каждого настроенного теста, которое может отслеживать сбои с течением времени. По умолчанию, тестовые представления создаются в схеме с суффиксом `dbt_test__audit`. Чтобы указать пользовательский суффикс, используйте конфигурацию `schema`.
+### Тесты данных
 
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
+data_tests:
   project_name:
     +store_failures: true
     +schema: test

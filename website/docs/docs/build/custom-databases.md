@@ -96,4 +96,10 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 ### BigQuery
 
-Когда dbt открывает соединение с BigQuery, оно будет использовать `project_id`, определенный в вашей активной цели `profiles.yml`. Этот `project_id` будет выставлен на оплату за запросы, выполненные в ходе выполнения dbt, даже если некоторые модели настроены для построения в других проектах.
+Когда dbt открывает соединение с BigQuery, он делает это, используя `project_id`, указанный в активном таргете в файле `profiles.yml`. Именно на этот `project_id` будут выставляться счета за запросы, выполняемые в рамках запуска dbt, даже если некоторые модели настроены так, чтобы создаваться в других проектах.
+
+## Related docs
+
+- [Customize dbt models database, schema, and alias](/guides/customize-schema-alias?step=1) — о том, как настраивать database, schema и alias для моделей dbt  
+- [Custom schema](/docs/build/custom-schemas) — о том, как настраивать schema для моделей dbt  
+- [Custom aliases](/docs/build/custom-aliases) — о том, как настраивать alias (имя) моделей dbt

@@ -4,13 +4,6 @@ description: "Стратегия - Прочтите это подробное р
 datatype: timestamp | check
 ---
 
-<VersionBlock lastVersion="1.8">
-
-import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
-
-<SnapshotYaml/>
-</VersionBlock>
-
 <Tabs
   defaultValue="timestamp"
   values={[
@@ -35,26 +28,6 @@ import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{% snapshot [snapshot_name](snapshot_name) %}
-
-{{ config(
-  strategy="timestamp",
-  updated_at="column_name"
-) }}
-
-select ...
-
-{% endsnapshot %}
-
-```
-
-</File>
-</VersionBlock>
 
 <File name='dbt_project.yml'>
 
@@ -84,24 +57,6 @@ snapshots:
       strategy: check
       check_cols: [column_name] | "all"
   ```
-</File>
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{% snapshot [snapshot_name](snapshot_name) %}
-
-{{ config(
-  strategy="check",
-  check_cols=[column_name] | "all"
-) }}
-
-{% endsnapshot %}
-
-```
-
 </File>
 </VersionBlock>
 
@@ -148,29 +103,6 @@ snapshots:
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-<File name='snapshots/timestamp_example.sql'>
-
-```sql
-{% snapshot orders_snapshot_timestamp %}
-
-    {{
-        config(
-          target_schema='snapshots',
-          strategy='timestamp',
-          unique_key='id',
-          updated_at='updated_at',
-        )
-    }}
-
-    select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-
-</File>
-</VersionBlock>
-
 
 ### Использование стратегии check
 
@@ -193,30 +125,12 @@ snapshots:
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
+### Продвинуто: определение и использование собственной стратегии snapshot
 
-```sql
-{% snapshot orders_snapshot_check %}
+Под капотом стратегии snapshot реализованы в виде макросов с именами вида `snapshot_<strategy>_strategy`.
 
-    {{
-        config(
-          target_schema='snapshots',
-          strategy='check',
-          unique_key='id',
-          check_cols=['status', 'is_cancelled'],
-        )
-    }}
-
-    select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-</VersionBlock>
-
-### Продвинутое: определение и использование пользовательской стратегии снимка
-Внутренне стратегии снимков реализованы как макросы, названные `snapshot_<strategy>_strategy`
-* [Исходный код](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L52) для стратегии timestamp
-* [Исходный код](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L136) для стратегии check
+* [Исходный код](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L52) стратегии `timestamp`
+* [Исходный код](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L136) стратегии `check`
 
 Возможно реализовать собственную стратегию снимка, добавив макрос с тем же шаблоном именования в ваш проект. Например, вы можете создать стратегию, которая фиксирует жесткие удаления, названную `timestamp_with_deletes`.
 
@@ -238,21 +152,3 @@ snapshots:
 </File>
 </VersionBlock>
 
-
-<VersionBlock lastVersion="1.8">
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{% snapshot [snapshot_name](snapshot_name) %}
-
-{{ config(
-  strategy="timestamp_with_deletes",
-  updated_at="column_name"
-) }}
-
-{% endsnapshot %}
-
-```
-
-</File>
-</VersionBlock>

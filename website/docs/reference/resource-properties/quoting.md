@@ -7,7 +7,6 @@ default: true
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: jaffle_shop
@@ -53,7 +52,6 @@ sources:
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 sources:
   - name: jaffle_shop

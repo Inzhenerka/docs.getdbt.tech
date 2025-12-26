@@ -10,15 +10,18 @@ hide_table_of_contents: true
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Модели', value: 'models', },
-    { label: 'Семена', value: 'seeds', },
-    { label: 'Снимки', value: 'snapshots', },
-    { label: 'Тесты', value: 'tests', },
-    { label: 'Источники', value: 'sources', },
-    { label: 'Метрики', value: 'metrics', },
-    { label: 'Экспозиции', value: 'exposures', },
-    { label: 'Семантические модели', value: 'semantic models', },
-    { label: 'Сохраненные запросы', value: 'saved queries', },
+```js
+{ label: 'Модели', value: 'models', },
+{ label: 'Сиды', value: 'seeds', },
+{ label: 'Снимки', value: 'snapshots', },
+{ label: 'Тесты', value: 'tests', },
+{ label: 'Модульные тесты', value: 'unit tests', },
+{ label: 'Источники', value: 'sources', },
+{ label: 'Метрики', value: 'metrics', },
+{ label: 'Экспозиции', value: 'exposures', },
+{ label: 'Семантические модели', value: 'semantic models', },
+{ label: 'Сохранённые запросы', value: 'saved queries', },
+```
   ]
 }>
 
@@ -27,7 +30,6 @@ hide_table_of_contents: true
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: <model_name>
@@ -45,7 +47,6 @@ models:
 <File name='seeds/<filename>.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: <seed_name>
@@ -63,7 +64,6 @@ seeds:
 <File name='snapshots/<filename>.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: <snapshot_name>
@@ -82,27 +82,47 @@ snapshots:
 <File name='<resource_path>/<filename>.yml'>
 
 ```yml
-version: 2
 
 <resource_type>:
   - name: <resource_name>
-    tests:
+    data_tests:
       - [<test_name>](#test_name):
-          <argument_name>: <argument_value>
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            <argument_name>: <argument_value>
           config:
             <test_config>: <config-value>
             ...
 
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
-        tests:
+        data_tests:
           - [<test_name>](#test_name)
           - [<test_name>](#test_name):
-              <argument_name>: <argument_value>
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                <argument_name>: <argument_value>
               config:
                 [<test_config>](/reference/data-test-configs): <config-value>
                 ...
 
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="unit tests">
+
+<VersionCallout version="1.8" />
+
+<File name='models/<filename>.yml'>
+
+```yml
+[unit_tests](/reference/resource-properties/unit-tests):
+  - name: <test-name>
+    config:
+      [enabled](/reference/resource-configs/enabled): true | false
+      [meta](/reference/resource-configs/meta): {dictionary}
+      [tags](/reference/resource-configs/tags): <string>
 ```
 
 </File>
@@ -115,7 +135,6 @@ version: 2
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: <source_name>
@@ -136,7 +155,6 @@ sources:
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 metrics:
   - name: <metric_name>
@@ -155,7 +173,6 @@ metrics:
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 exposures:
   - name: <exposure_name>
@@ -173,7 +190,6 @@ exposures:
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 semantic_models:
   - name: <semantic_model_name>
@@ -192,18 +208,22 @@ semantic_models:
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 saved-queries:
-  - name: <saved-query-name>
+  - name: <saved_query_name>
     config:
       [cache](/docs/build/saved-queries#parameters): 
         enabled: true | false
       [enabled](/reference/resource-configs/enabled): true | false
-      [export_as](/docs/build/saved-queries#parameters): view | table 
       [group](/reference/resource-configs/group): <string>
       [meta](/reference/resource-configs/meta): {dictionary}
       [schema](/reference/resource-configs/schema): <string>
+    [exports](/docs/build/saved-queries#parameters):
+      - name: <export_name>
+        config:
+          [export_as](/docs/build/saved-queries#parameters): view | table 
+          [alias](/reference/resource-configs/alias): <string>
+          [schema](/reference/resource-configs/schema): <string>
 ```
 
 </File>

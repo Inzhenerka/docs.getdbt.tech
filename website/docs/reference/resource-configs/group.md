@@ -34,11 +34,11 @@ models:
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: MODEL_NAME
-    group: GROUP
+    config:
+      group: GROUP # changed to config in v1.10
 
 ```
 
@@ -77,7 +77,8 @@ models:
 ```yml
 seeds:
   - name: [SEED_NAME]
-    group: GROUP_NAME
+    config:
+      group: GROUP_NAME # changed to config in v1.10
 ```
 
 </File>
@@ -100,7 +101,6 @@ snapshots:
 <File name='snapshots/properties.yml'>
 
 ```yaml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -134,7 +134,7 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   [<resource-path>](resource-path):
     +group: GROUP_NAME
 ```
@@ -144,11 +144,10 @@ tests:
 <File name='tests/properties.yml'>
 
 ```yml
-version: 2
 
 <resource_type>:
   - name: <resource_name>
-    tests:
+    data_tests:
       - <test_name>:
           config:
             group: GROUP_NAME
@@ -190,11 +189,11 @@ select ...
 <File name='analyses/<filename>.yml'>
 
 ```yml
-version: 2
 
 analyses:
   - name: ANALYSIS_NAME
-    group: GROUP_NAME
+    config:
+      group: GROUP_NAME # changed to config in v1.10
 ```
 
 </File>
@@ -217,7 +216,6 @@ metrics:
 <File name='models/metrics.yml'>
 
 ```yaml
-version: 2
 
 metrics:
   - name: [METRIC_NAME]
@@ -283,10 +281,12 @@ saved_queries:
 
 </Tabs>
 
-## Определение
-Необязательная конфигурация для назначения группы ресурсу. Когда ресурс сгруппирован, dbt позволит ему ссылаться на приватные модели в той же группе.
+Обратите внимание, что для обратной совместимости `group` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
 
-Для получения дополнительной информации о доступе к ссылкам между ресурсами в группах, ознакомьтесь с [доступом к моделям](/docs/collaborate/govern/model-access#groups).
+## Definition
+Необязательная конфигурация для назначения ресурсу группы. Когда ресурс входит в группу, dbt позволяет ему ссылаться на приватные модели внутри той же группы.
+
+Подробнее о доступе к ссылкам между ресурсами в группах см. раздел [model access](/docs/mesh/govern/model-access#groups).
 
 ## Примеры
 ### Запретить модели группы 'маркетинг' ссылаться на приватную модель группы 'финансы'
@@ -297,10 +297,12 @@ saved_queries:
 ```yml
 models:
   - name: finance_model
-    access: private
-    group: finance
+    config:
+      group: finance # changed to config in v1.10
+      access: private # changed to config in v1.10
   - name: marketing_model
-    group: marketing
+    config:
+      group: marketing # changed to config in v1.10
 ```
 </File>
 
@@ -321,5 +323,5 @@ dbt.exceptions.DbtReferenceError: Ошибка разбора
 
 ## Связанные документы
 
-* [Доступ к моделям](/docs/collaborate/govern/model-access#groups)
+* [Доступ к моделям](/docs/mesh/govern/model-access#groups)
 * [Определение групп](/docs/build/groups)

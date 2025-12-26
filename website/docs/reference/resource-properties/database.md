@@ -8,7 +8,6 @@ datatype: database_name
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: <source_name>
@@ -39,7 +38,6 @@ sources:
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: jaffle_shop

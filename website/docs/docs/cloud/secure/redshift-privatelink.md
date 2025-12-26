@@ -2,56 +2,69 @@
 title: "Настройка AWS PrivateLink для Redshift"
 id: redshift-privatelink
 description: "Настройка PrivateLink для Redshift"
-sidebar_label: "PrivateLink для Redshift"
+sidebar_label: "AWS PrivateLink для Redshift"
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
+# Configure AWS PrivateLink for Redshift <Lifecycle status="managed_plus" />
+
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
 import PrivateLinkCrossZone from '/snippets/_privatelink-cross-zone-load-balancing.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
 AWS предоставляет два различных способа создания VPC-эндпоинта PrivateLink для кластера Redshift, работающего в другой VPC:
 - [Управляемые Redshift PrivateLink Endpoints](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html)
 - [Интерфейсные PrivateLink Endpoints для Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/security-private-link.html)
 
-dbt Cloud поддерживает оба типа эндпоинтов, но при выборе типа эндпоинта необходимо учитывать ряд [факторов](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html#managing-cluster-cross-vpc-considerations). Управляемые Redshift обеспечивают гораздо более простую настройку без дополнительных затрат, что может сделать их предпочтительным вариантом для многих, но они могут быть недоступны во всех средах. Основываясь на этих критериях, вам нужно определить, какой тип подходит для вашей системы. Следуйте инструкциям из раздела ниже, который соответствует выбранному вами типу эндпоинта.
+<Constant name="cloud" /> поддерживает оба типа эндпоинтов, однако при выборе подходящего варианта необходимо учитывать ряд [факторов](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html#managing-cluster-cross-vpc-considerations). Redshift-managed обеспечивает значительно более простую настройку и не требует дополнительных затрат, поэтому для многих пользователей он может быть предпочтительным вариантом, но он доступен не во всех средах. Исходя из этих критериев, вам нужно определить, какой тип эндпоинта подходит именно для вашей системы. Далее следуйте инструкциям из раздела ниже, который соответствует выбранному типу эндпоинта.
 
 <CloudProviders type='Redshift' />
 
-:::note Redshift Serverless
-Хотя Redshift Serverless поддерживает управляемые Redshift VPC-эндпоинты, эта функциональность в настоящее время недоступна между учетными записями AWS. Из-за этого ограничения для подключения PrivateLink кластера Redshift Serverless из dbt Cloud необходимо использовать интерфейсный VPC-эндпоинт.
-:::
+## Настройка Redshift-managed PrivateLink
 
-## Настройка управляемого Redshift PrivateLink
-
-1. На работающем кластере Redshift выберите вкладку **Properties**.
-
-<Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink1.png" title="Вкладка свойств Redshift"/>
+1. Найдите раздел **Granted accounts** в настройках Redshift
+   - **Standard Redshift**
+        - В запущенном кластере Redshift выберите вкладку **Properties**.
+        <Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink1.png" title="Redshift Properties tab"/>
+     
+   - **Redshift Serverless**
+       - На странице **Workgroup configuration** для Redshift Serverless.
 
 2. В разделе **Granted accounts** нажмите **Grant access**.
 
 <Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink2.png" title="Предоставленные учетные записи Redshift"/>
 
-3. Введите ID учетной записи AWS: `346425330055` - _ПРИМЕЧАНИЕ: Этот ID учетной записи применяется только к средам dbt Cloud Multi-Tenant. Для ID учетных записей Virtual Private/Single-Tenant, пожалуйста, свяжитесь с [поддержкой](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support)._
+3. Введите AWS account ID: `346425330055` — _ПРИМЕЧАНИЕ: этот account ID применяется только для Multi-Tenant‑окружений <Constant name="cloud" />. Для Virtual Private / Single‑Tenant account ID, пожалуйста, свяжитесь с [Support](/community/resources/getting-help#dbt-cloud-support)._
 
-4. Выберите **Grant access to all VPCs** &mdash;или&mdash; (опционально) свяжитесь с [поддержкой](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support) для получения соответствующего регионального ID VPC, чтобы указать его в поле **Grant access to specific VPCs**.
+4. Выберите **Grant access to all VPCs** &mdash;или&mdash; (необязательно) обратитесь в [Support](/community/resources/getting-help#dbt-cloud-support), чтобы получить соответствующий региональный VPC ID и указать его в поле **Grant access to specific VPCs**.
 
 <Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink3.png" title="Предоставление доступа Redshift"/>
 
-5. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос в [поддержку dbt](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support):
+5. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support):
 
-```
-Тема: Новый запрос на Multi-Tenant PrivateLink
-- Тип: Управляемый Redshift
-- Имя кластера Redshift:
-- ID учетной записи AWS кластера Redshift:
-- Регион AWS кластера Redshift (например, us-east-1, eu-west-2):
-- Среда dbt Cloud multi-tenant (US, EMEA, AU):
-```
+   - **Standard Redshift**
+       ```
+       Subject: New Multi-Tenant PrivateLink Request
+       - Type: Redshift-managed
+       - Redshift cluster name:
+       - Redshift cluster AWS account ID:
+       - Redshift cluster AWS Region (for example, us-east-1, eu-west-2):
+       - <Constant name="cloud" /> multi-tenant environment (US, EMEA, AU):
+       ```
 
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
+   - **Redshift Serverless**
+       ```
+       Subject: New Multi-Tenant PrivateLink Request
+       - Type: Redshift-managed - Serverless
+       - Redshift workgroup name:
+       - Redshift workgroup AWS account ID:
+       - Redshift workgroup AWS Region (for example, us-east-1, eu-west-2):
+       - <Constant name="cloud" /> multi-tenant environment (US, EMEA, AU):
+       ```
+
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
@@ -82,14 +95,14 @@ import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 
     - Протокол Target Group: **TCP** 
 
-- **Network Load Balancer (NLB)** &mdash; Требуется создание Listener, который прикрепляется к вновь созданной Target Group для порта `5439`
-    - **Схема:** Внутренняя
-    - **Тип IP-адреса:** IPv4
-    - **Сетевое отображение:** Выберите VPC, в которой развертываются VPC Endpoint Service и NLB, и выберите подсети как минимум из двух зон доступности.
-    - **Security Groups:** Network Load Balancer (NLB), связанный с VPC Endpoint Service, должен либо не иметь связанной группы безопасности, либо группа безопасности должна иметь правило, позволяющее запросы от соответствующих **частных CIDR** dbt Cloud. Обратите внимание, что _это отличается_ от статических публичных IP, указанных на странице dbt Cloud [Доступ, регионы и IP-адреса](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses). Поддержка dbt может предоставить правильные частные CIDR по запросу. Если необходимо, до того как вы сможете уточнить правило до меньшего CIDR, предоставленного dbt, разрешите подключение, временно добавив правило разрешения `10.0.0.0/8`.
-    - **Listeners:** Создайте один listener на каждую целевую группу, который сопоставляет соответствующий входящий порт с соответствующей целевой группой ([подробности](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)).
-- **VPC Endpoint Service** &mdash; Прикрепите к вновь созданному NLB.
-    - Требуется принятие (опционально) &mdash; Требует [принять наш запрос на подключение](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#accept-reject-connection-requests) после того, как dbt создаст эндпоинт.
+- **Network Load Balancer (NLB)** &mdash; Требуется создать Listener, который будет привязан к только что созданной Target Group (порт `5439` используется по умолчанию)
+    - **Scheme:** Internal
+    - **IP address type:** IPv4
+    - **Network mapping:** Выберите VPC, в которой разворачиваются VPC Endpoint Service и NLB, а также выберите сабнеты как минимум из двух Availability Zones.
+    - **Security Groups:** Network Load Balancer (NLB), связанный с VPC endpoint service, либо не должен иметь привязанной security group, либо security group должна содержать правило, разрешающее запросы из соответствующих **private CIDR(s)** <Constant name="cloud" />. Обратите внимание, что _это отличается_ от статических публичных IP-адресов, перечисленных на странице <Constant name="cloud" /> [Access, Regions, & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses). Команда поддержки dbt может предоставить корректные private CIDR(s) по запросу. При необходимости, до тех пор пока вы не сможете уточнить правило до меньшего диапазона CIDR, предоставленного dbt, разрешите подключение, временно добавив allow‑правило `10.0.0.0/8`.
+    - **Listeners:** Создайте по одному listener’у на каждую target group, который сопоставляет соответствующий входящий порт с нужной target group ([details](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)).
+- **VPC Endpoint Service** &mdash; Подключите к только что созданному NLB.
+    - Acceptance required (optional) &mdash; Требуется [принять наш запрос на подключение](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#accept-reject-connection-requests) после того, как dbt создаст endpoint.
 
 <PrivateLinkCrossZone features={'/snippets/_privatelink-cross-zone-load-balancing.md'}/>
 
@@ -103,24 +116,26 @@ import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 
 ### 3. Получение имени VPC Endpoint Service
 
-После того как VPC Endpoint Service будет подготовлен, вы можете найти имя сервиса в консоли AWS, перейдя в **VPC** → **Endpoint Services** и выбрав соответствующий сервис эндпоинта. Вы можете скопировать значение поля имени сервиса и включить его в ваше сообщение в поддержку dbt Cloud.
+После того как VPC Endpoint Service будет создан, вы можете найти имя сервиса в консоли AWS, перейдя в раздел **VPC** → **Endpoint Services** и выбрав соответствующий endpoint service. Вы можете скопировать значение поля *service name* и включить его в ваше обращение в службу поддержки <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/privatelink-endpoint-service-name.png" title="Получить значение поля имени сервиса"/>
 
-### 4. Добавьте необходимую информацию в шаблон ниже и отправьте ваш запрос в [поддержку dbt](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support):
+### 4. Добавьте необходимую информацию в шаблон ниже и отправьте запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support):
+
 ```
-Тема: Новый запрос на Multi-Tenant PrivateLink
-- Тип: Интерфейсный Redshift
-- Имя VPC Endpoint Service:
-- Регион AWS кластера Redshift (например, us-east-1, eu-west-2):
-- Среда dbt Cloud multi-tenant (US, EMEA, AU):
+Subject: New Multi-Tenant PrivateLink Request
+- Type: Redshift Interface-type
+- VPC Endpoint Service Name:
+- Redshift cluster AWS Region (for example, us-east-1, eu-west-2):
+- dbt AWS multi-tenant environment (US, EMEA, AU):
+```
 ```
 
 <PrivateLinkSLA />
 
-## Создание подключения в dbt Cloud
+## Создание подключения в dbt
 
-После того как поддержка dbt Cloud завершит настройку, вы можете начать создавать новые подключения, используя PrivateLink.
+После того как поддержка <Constant name="cloud" /> завершит настройку, вы сможете начать создавать новые подключения с использованием PrivateLink.
 
 1. Перейдите в **настройки** → **Создать новый проект** → выберите **Redshift**
 2. Вы увидите две радиокнопки: **Public** и **Private.** Выберите **Private**. 

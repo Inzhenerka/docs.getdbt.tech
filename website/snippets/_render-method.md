@@ -11,6 +11,9 @@
     pre_hook = [
         "alter external table {{ source('sys', 'customers').render() }} refresh"
     ]
+) }}
+
+select ...
 ```
 
 </File>

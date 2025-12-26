@@ -13,24 +13,26 @@ import PropsCallout from '/snippets/_config-prop-callout.md';
 
 Экспозиции определяются в файлах `properties.yml`, вложенных под ключом `exposures:`. Вы можете определять `exposures` в YAML-файлах, которые также определяют `sources` или `models`. <PropsCallout title={frontMatter.title}/>  <br />
 
-Вы можете назвать эти файлы как угодно, например, `whatever_you_want.yml`, и вложить их на любую глубину в подкаталоги внутри директории `models/`.
+Обратите внимание, что хотя большинство свойств exposure необходимо настраивать непосредственно в этих YAML-файлах, вы можете задать конфигурацию [`enabled`](/reference/resource-configs/enabled) на [уровне проекта](#project-level-configs) в файле `dbt_project.yml`.
 
 Имена экспозиций должны содержать только буквы, цифры и подчеркивания (без пробелов или специальных символов). Для короткого, удобного для чтения имени с заглавными буквами, пробелами и специальными символами используйте свойство `label`.
 
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 exposures:
   - name: <string_with_underscores>
     [description](/reference/resource-properties/description): <markdown_string>
     type: {dashboard, notebook, analysis, ml, application}
     url: <string>
-    maturity: {high, medium, low}  # Указывает уровень уверенности или стабильности в экспозиции
-    [tags](/reference/resource-configs/tags): [<string>]
-    [meta](/reference/resource-configs/meta): {<dictionary>}
-    owner:
+    maturity: {high, medium, low}  # Указывает уровень уверенности или стабильности exposure
+    [enabled](/reference/resource-configs/enabled): true | false
+    [config](/reference/resource-properties/config): # 'tags' и 'meta' были перенесены в config в версии v1.10
+      [tags](/reference/resource-configs/tags): [<string>] 
+      [meta](/reference/resource-configs/meta): {<dictionary>}
+      enabled: true | false
+    owner: # поддерживаются только поля 'name' и 'email'
       name: <string>
       email: <string>
     
@@ -40,9 +42,7 @@ exposures:
       - source('name', 'table')
       - metric('metric_name')
       
-    label: "Человеко-дружественное имя для этой экспозиции!"
-    [config](/reference/resource-properties/config):
-      enabled: true | false
+    label: "Понятное человеку имя для этого exposure!"
 
   - name: ... # объявление свойств дополнительных экспозиций
 ```
@@ -53,7 +53,6 @@ exposures:
 <File name='models/jaffle/exposures.yml'>
 
 ```yaml
-version: 2
 
 exposures:
 
@@ -97,6 +96,23 @@ exposures:
     description: Сообщите пользователям об их любимых jaffles за год
     depends_on: [ ref('fct_orders') ]
     owner: { email: summer-intern@jaffleshop.com }
+```
+
+</File>
+
+#### Конфигурации на уровне проекта
+
+Вы можете задать конфигурации на уровне проекта для exposures в файле `dbt_project.yml` в секции `exposures:` с использованием префикса `+`. В настоящее время поддерживается только [конфигурация `enabled`](/reference/resource-configs/enabled):
+
+<File name="dbt_project.yml">
+
+```yml
+name: 'project_name'
+
+# rest of dbt_project.yml
+
+exposures:
+  +enabled: true
 ```
 
 </File>

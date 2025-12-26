@@ -19,24 +19,6 @@ snapshots:
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
-
-<SnapshotYaml/>
-
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{{ config(
-  strategy="timestamp",
-  updated_at="column_name"
-) }}
-
-```
-
-</File>
-</VersionBlock>
 
 <File name='dbt_project.yml'>
 
@@ -63,7 +45,7 @@ snapshots:
 ## Описание
 Столбец в результатах вашего снимка, который представляет, когда строка записи была обновлена в последний раз.
 
-Этот параметр **обязателен, если используется стратегия `timestamp` [strategy](/reference/resource-configs/strategy)**.
+Этот параметр **обязателен при использовании [strategy](/reference/resource-configs/strategy) `timestamp`**. Поле `updated_at` может поддерживать строки дат в формате ISO и целые числа unix epoch — в зависимости от используемой вами платформы данных.
 
 ## По умолчанию
 Значение по умолчанию не предоставляется.
@@ -89,30 +71,6 @@ snapshots:
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-<File name='snapshots/orders.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-{{
-    config(
-      target_schema='snapshots',
-      unique_key='id',
-
-      strategy='timestamp',
-      updated_at='updated_at'
-    )
-}}
-
-select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-
-```
-
-</File>
-</VersionBlock>
 
 ### Объединение двух столбцов для создания надежного столбца `updated_at`
 Рассмотрим источник данных, в котором столбец `updated_at` заполняется только при обновлении записи (поэтому значение `null` указывает на то, что запись не была обновлена после создания).
@@ -157,32 +115,3 @@ select * from {{ source('jaffle_shop', 'orders') }}
 
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-<File name='snapshots/orders.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-{{
-    config(
-      target_schema='snapshots',
-      unique_key='id',
-
-      strategy='timestamp',
-      updated_at='updated_at_for_snapshot'
-    )
-}}
-
-select
-    *,
-    coalesce(updated_at, created_at) as updated_at_for_snapshot
-
-from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-
-```
-
-</File>
-</VersionBlock>

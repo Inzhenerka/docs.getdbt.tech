@@ -57,7 +57,7 @@ materialize:
 
 `cluster`: По умолчанию используется [кластер](https://materialize.com/docs/overview/key-concepts/#clusters) для поддержания материализованных представлений или индексов. [`default` кластер](https://materialize.com/docs/sql/show-clusters/#default-cluster) предустановлен в каждой среде, но мы рекомендуем создавать выделенные кластеры для изоляции рабочих нагрузок в вашем проекте dbt (например, `staging` и `data_mart`).
 
-`keepalives_idle`: Количество секунд до отправки пинга для поддержания активного соединения с Materialize. Если вы сталкиваетесь с ошибкой `SSL SYSCALL error: EOF detected`, возможно, вам стоит уменьшить значение [keepalives_idle](https://docs.getdbt.com/reference/warehouse-setups/postgres-setup#keepalives_idle), чтобы предотвратить закрытие соединения с базой данных.
+`keepalives_idle`: Количество секунд перед отправкой ping‑сообщения, чтобы поддерживать активное соединение с Materialize. Если вы сталкиваетесь с ошибкой `SSL SYSCALL error: EOF detected`, возможно, стоит уменьшить значение [keepalives_idle](/docs/core/connect-data-platform/postgres-setup#keepalives_idle), чтобы предотвратить закрытие соединения со стороны базы данных.
 
 Чтобы протестировать соединение с Materialize, выполните:
 

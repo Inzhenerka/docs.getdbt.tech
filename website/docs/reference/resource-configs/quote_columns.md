@@ -33,12 +33,11 @@ seeds:
 
 </File>
 
-Или (начиная с версии v0.21):
+**Or:** → **Или:**
 
 <File name='seeds/properties.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: mappings

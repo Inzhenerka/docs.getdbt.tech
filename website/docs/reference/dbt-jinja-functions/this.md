@@ -13,8 +13,8 @@ meta:
 - Определяется оператор `where` в [инкрементальных моделях](/docs/build/incremental-models)
 - Используются [pre или post хуки](/reference/resource-configs/pre-hook-post-hook)
 
-`this` является [Relation](/reference/dbt-classes#relation), и, как таковой, свойства, такие как `{{ this.database }}` и `{{ this.schema }}`, компилируются как ожидается.
-  - Примечание &mdash; До версии dbt v1.6, dbt Cloud IDE возвращает `request` как результат `{{ ref.identifier }}`.
+`this` — это объект [Relation](/reference/dbt-classes#relation), и поэтому такие свойства, как `{{ this.database }}` и `{{ this.schema }}`, компилируются ожидаемым образом.  
+  - Примечание &mdash; До версии dbt v1.6 <Constant name="clou_ided" /> возвращает `request` в качестве результата для `{{ ref.identifier }}`.
 
 `this` можно рассматривать как эквивалент `ref('<the_current_model>')`, и это удобный способ избежать циклических зависимостей.
 

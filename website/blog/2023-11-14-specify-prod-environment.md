@@ -14,8 +14,9 @@ is_featured: false
 
 ---
 
-:::note Теперь вы можете использовать среду Staging!
-Этот блог был написан до появления сред Staging. Теперь вы можете использовать dbt Cloud для поддержки обсуждаемых здесь шаблонов. Подробнее о [средах Staging](/docs/deploy/deploy-environments#staging-environment).
+:::note Теперь вы можете также указать окружение Staging!
+Этот пост в блоге был написан до того, как в dbt Cloud появилась полноценная поддержка окружений Staging. Теперь, когда они существуют, вам следует пометить ваше CI-окружение как Staging. Подробнее читайте в разделе [Staging environments](/docs/deploy/deploy-environments#staging-environment).
+:::
 :::
 
 :::tip Основная идея:

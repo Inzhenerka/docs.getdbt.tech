@@ -3,15 +3,16 @@ title: "lookback"
 id: "lookback"
 sidebar_label: "lookback"
 resource_types: [models]
-description: "dbt использует `lookback`, чтобы определить, сколько 'пакетов' размера `batch_size` необходимо перепроцессировать, когда микропакетная инкрементальная модель выполняется инкрементально."
+description: "Настройте `lookback`, чтобы определить, сколько «батчей» размером `batch_size` нужно повторно обработать при инкрементальном запуске dbt microbatch модели"
 datatype: int
 ---
 
-Доступно в [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
+<VersionCallout version="1.9" />
+## Definition
 
-## Определение
+Настройте окно `lookback`, чтобы повторно обрабатывать дополнительные батчи во время запусков [microbatch incremental model](/docs/build/incremental-microbatch). Модель обрабатывает X батчей вплоть до последней закладки (последней успешно обработанной точки данных), чтобы захватить записи, поступившие с задержкой.
 
-Установите `lookback` в целое число, большее или равное нулю. Значение по умолчанию — `1`. Вы можете настроить `lookback` для [модели](/docs/build/models) в вашем файле `dbt_project.yml`, YAML-файле свойств или блоке конфигурации.
+Задайте `lookback` как целое число, большее или равное нулю. Значение по умолчанию — `1`. Вы можете настроить `lookback` для [microbatch incremental model](/docs/build/incremental-microbatch) в файле `dbt_project.yml`, в property YAML‑файле или в блоке `config`.
 
 ## Примеры
 
@@ -42,7 +43,7 @@ models:
 
 </File>
 
-Пример в блоке конфигурации SQL-модели:
+Пример в блоке конфигурации SQL‑модели:
 
 <File name="models/user_sessions.sql">
 

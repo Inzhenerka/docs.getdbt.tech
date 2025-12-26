@@ -47,11 +47,6 @@ seeds:
 
 <TabItem value="snapshots" label="Снапшоты">
 
-<VersionBlock lastVersion="1.8">
-
-Доступно для dbt Cloud release tracks или dbt Core v1.9+. Выберите версию 1.9 или новее из выпадающего списка версий, чтобы просмотреть конфигурации.
-
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
@@ -74,7 +69,6 @@ Or in a `snapshot_name.yml` file:
 <File name='snapshots/snapshot_name.yml'>
 
 ```yaml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -98,7 +92,7 @@ snapshots:
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   +store_failures: true
   +database: test_results
 ```
@@ -112,7 +106,7 @@ tests:
 
 При необходимости укажите пользовательскую базу данных для [модели](/docs/build/sql-models), [сида](/docs/build/seeds) или [теста данных](/docs/build/data-tests). (Чтобы указать базу данных для [снапшота](/docs/build/snapshots), используйте [`target_database` config](/reference/resource-configs/target_database)).
 
-Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например, `analytics.finance.payments`.
+Необязательно можно указать пользовательскую базу данных для [model](/docs/build/sql-models), [seed](/docs/build/seeds), [snapshot](/docs/build/snapshots) или [data test](/docs/build/data-tests).
 
 Стандартное поведение dbt:
 * Если пользовательская база данных _не_ указана, база данных отношения — это целевая база данных (`{{ target.database }}`).

@@ -1,6 +1,6 @@
 ---
-title: "Настройка Apache Impala"
-description: "Прочтите это руководство, чтобы узнать о настройке хранилища Apache Impala в dbt."
+title: "Настройка Cloudera Impala"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Cloudera Impala в dbt."
 id: "impala-setup"
 meta:
   maintained_by: Cloudera
@@ -73,24 +73,23 @@ your_profile_name:
   target: dev
   outputs:
     dev:
-     type: impala
-     host: [host name]
-     http_path: [optional, http path to Impala]
-     port: [port] # значение по умолчанию: 21050
-     auth_type: ldap
-     use_http_transport: [true / false] # значение по умолчанию: true
-     use_ssl: [true / false] # TLS всегда должен использоваться с LDAP для обеспечения безопасной передачи учетных данных, значение по умолчанию: true
-     username: [username]
-     password: [password]
-     dbname: [db name]  # это должно совпадать с именем схемы, указанным ниже, начиная с версии 1.1.2 этот параметр является необязательным
-     schema: [schema name]
-     retries: [retries] # количество попыток повторного подключения impyla к хранилищу, значение по умолчанию: 3
-  
+      type: impala
+      host: [host name]
+      http_path: [optional, http path to Impala]
+      port: [port] # значение по умолчанию: 21050
+      auth_type: ldap
+      use_http_transport: [true / false] # значение по умолчанию: true
+      use_ssl: [true / false] # при работе с LDAP всегда следует использовать TLS для обеспечения безопасной передачи учетных данных, значение по умолчанию: true
+      user: [username]
+      password: [password]
+      dbname: [db name]  # это должно совпадать с именем схемы, указанным ниже, начиная с версии 1.1.2 этот параметр является необязательным
+      schema: [schema name]
+      retries: [retries] # количество попыток, которые Impala делает для повторного подключения к хранилищу; значение по умолчанию: 3
 ```
 
 </File>
 
-Примечание: При создании пользователя для рабочей нагрузки в CDP убедитесь, что у пользователя есть разрешения CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если пользователю необходимо выполнять операторы GRANT, см. например (https://docs.getdbt.com/reference/resource-configs/grants) или (https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end), соответствующие разрешения GRANT должны быть настроены. При использовании Apache Ranger разрешения для разрешения GRANT обычно устанавливаются с помощью опции "Delegate Admin".
+Примечание: при создании пользователя workload в CDP убедитесь, что у этого пользователя есть права CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если пользователю требуется выполнять операторы GRANT, см., например, (/reference/resource-configs/grants) или (/reference/project-configs/on-run-start-on-run-end) — там описано, как настроить соответствующие права GRANT. При использовании Apache Ranger разрешения на выполнение GRANT обычно настраиваются с помощью опции **“Delegate Admin”**.
 
 ### Kerberos
 
@@ -112,7 +111,7 @@ your_profile_name:
       use_ssl: true # TLS всегда должен использоваться с LDAP для обеспечения безопасной передачи учетных данных, значение по умолчанию: true
       dbname: [db name]  # это должно совпадать с именем схемы, указанным ниже, начиная с версии 1.1.2 этот параметр является необязательным
       schema: [schema name]
-      retries: [retries] # количество попыток повторного подключения impyla к хранилищу, значение по умолчанию: 3
+      retries: [retries] # количество попыток, которые Impala предпринимает для повторного подключения к хранилищу; значение по умолчанию: 3
   
 ```
 
@@ -129,7 +128,7 @@ your_profile_name:
 
 По умолчанию адаптер будет отправлять события инструментирования в Cloudera, чтобы помочь улучшить функциональность и понять ошибки. Если вы хотите специально отключить это, например, в производственной среде, вы можете явно установить флаг `usage_tracking: false` в вашем файле `profiles.yml`.
 
-Если вы хотите отключить анонимное отслеживание использования dbt Lab, см. [YAML Configurations: Send anonymous usage stats](https://docs.getdbt.com/reference/global-configs#send-anonymous-usage-stats) для получения дополнительной информации.
+В связи с этим, если вы хотите отключить анонимный сбор статистики использования в dbt Labs, см. раздел [YAML Configurations: Send anonymous usage stats](/reference/global-configs/about-global-configs#send-anonymous-usage-stats) для получения дополнительной информации.
 
 ### Поддерживаемая функциональность
 

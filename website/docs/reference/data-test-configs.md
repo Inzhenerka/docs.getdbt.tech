@@ -41,7 +41,7 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
+data_tests:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[fail_calc](/reference/resource-configs/fail_calc): <string>
     [+](/reference/resource-configs/plus-prefix)[limit](/reference/resource-configs/limit): <integer>
@@ -80,14 +80,15 @@ tests:
 <TabItem value="property-yaml">
 
 ```yaml
-version: 2
 
 <resource_type>:
   - name: <resource_name>
-    tests:
-      - <test_name>: # # Фактическое имя теста. Например, dbt_utils.equality
-          name: # Человеко-понятное имя теста. Например, equality_fct_test_coverage
-          <argument_name>: <argument_value>
+    data_tests:
+      - <test_name>: # Фактическое имя теста. Например, dbt_utils.equality
+          name: # Человекочитаемое имя теста. Например, equality_fct_test_coverage
+          [description](/reference/resource-properties/description): "markdown formatting"
+          arguments: # Доступно в версии v1.10.5 и выше. В более старых версиях <argument_name> можно указывать как свойство верхнего уровня.
+            <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [fail_calc](/reference/resource-configs/fail_calc): <string>
             [limit](/reference/resource-configs/limit): <integer>
@@ -99,10 +100,12 @@ version: 2
 
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
-        tests:
+        data_tests:
           - <test_name>:
               name: 
-              <argument_name>: <argument_value>
+              [description](/reference/resource-properties/description): "markdown formatting"
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [fail_calc](/reference/resource-configs/fail_calc): <string>
                 [limit](/reference/resource-configs/limit): <integer>
@@ -140,7 +143,7 @@ version: 2
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
+data_tests:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
     [+](/reference/resource-configs/plus-prefix)[tags](/reference/resource-configs/tags): <string> | [<string>]
@@ -175,14 +178,15 @@ tests:
 <TabItem value="property-yaml">
 
 ```yaml
-version: 2
 
 <resource_type>:
   - name: <resource_name>
-    tests:
+    data_tests:
       - <test_name>: # Фактическое имя теста. Например, dbt_utils.equality
-          name: # Человеко-понятное имя теста. Например, equality_fct_test_coverage
-          <argument_name>: <argument_value>
+          name: # Человекочитаемое имя теста. Например, equality_fct_test_coverage
+          [description](/reference/resource-properties/description): "markdown formatting"
+          arguments: # доступно в версии v1.10.5 и выше. В более старых версиях <argument_name> можно задавать как свойство верхнего уровня.
+            <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [enabled](/reference/resource-configs/enabled): true | false
             [tags](/reference/resource-configs/tags): <string> | [<string>]
@@ -194,10 +198,12 @@ version: 2
 
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
-        tests:
+        data_tests:
           - <test_name>:
               name: 
-              <argument_name>: <argument_value>
+              [description](/reference/resource-properties/description): "markdown formatting"
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [enabled](/reference/resource-configs/enabled): true | false
                 [tags](/reference/resource-configs/tags): <string> | [<string>]
@@ -229,9 +235,10 @@ models:
   - name: my_model
     columns:
       - name: id
-        tests:
+        data_tests:
           - unique:
-              tags: ['my_tag']
+              config:
+                tags: ['my_tag'] # changed to config in v1.10
 ```
 
 </File>
@@ -269,7 +276,7 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   package_name:
     +enabled: false
 ```
@@ -286,13 +293,52 @@ models:
   - name: my_model
     columns:
       - name: color
-        tests:
+        data_tests:
           - accepted_values:
-              values: ['blue', 'red']
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ['blue', 'red']
               config:
                 severity: warn
                 snowflake_warehouse: my_warehouse
 
 ```
 
-С учетом конфигурации, тест данных выполняется на другом виртуальном складе Snowflake, чем тот, который используется в вашем подключении по умолчанию, чтобы обеспечить лучшее соотношение цены и производительности с другим размером склада или более детальной аллокацией и видимостью затрат.
+При такой конфигурации data test выполняется на другом виртуальном складе Snowflake, а не на том, который указан в вашем подключении по умолчанию. Это позволяет добиться лучшего соотношения цены и производительности за счёт использования склада другого размера или более детального распределения и прозрачности затрат.
+
+#### Добавление описания к generic и singular тестам
+
+Начиная с dbt v1.9 (также доступно в <Constant name="cloud" /> [release tracks](/docs/dbt-versions/cloud-release-tracks)), вы можете добавлять [описания](/reference/resource-properties/data-tests#description) как к generic, так и к singular тестам.
+
+Для generic теста описание добавляется непосредственно в существующий YAML:
+
+<File name='models/staging/<filename>.yml'>
+
+```yml
+models:
+  - name: my_model
+    columns:
+      - name: delivery_status
+        data_tests:
+          - accepted_values:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ['delivered', 'pending', 'failed']
+              description: "This test checks whether there are unexpected delivery statuses. If it fails, check with logistics team"
+```
+
+</File>
+
+Также можно добавлять описания непосредственно в Jinja‑макрос, который реализует основную логику generic data test. Подробнее см. в разделе [Add description to generic data test logic](/best-practices/writing-custom-generic-tests#add-description-to-generic-data-test-logic).
+
+Для singular теста описание задаётся в файле в директории тестов:
+
+<File name='tests/my_custom_test.yml'>
+
+```yml
+data_tests: 
+  - name: my_custom_test
+    description: "This test checks whether the rolling average of returns is inside of expected bounds. If it isn't, flag to customer success team"
+```
+
+</File>
+
+Дополнительную информацию см. в разделе [Add a description to a data test](/reference/resource-properties/description#add-a-description-to-a-data-test).

@@ -7,7 +7,7 @@ id: "run-operation"
 
 ### Обзор
 
-Команда `dbt run-operation` используется для вызова макроса. Для получения информации о использовании, обратитесь к документации по [операциям](/docs/build/hooks-operations#operations).
+Команда `dbt run-operation` используется для вызова макроса. Информацию об использовании см. в документации по [operations](/docs/build/hooks-operations#about-operations).
 
 ### Использование
 ```

@@ -1,17 +1,18 @@
 ---
-title: "Настройка OAuth для Databricks"
-description: "Узнайте, как администраторы dbt Cloud могут использовать OAuth для Databricks для управления доступом в аккаунте dbt Cloud."
+title: "Настройка Databricks OAuth"
+description: "Узнайте, как администраторы dbt могут использовать Databricks OAuth для управления доступом в аккаунте dbt."
 id: "set-up-databricks-oauth"
 ---
 
-# Настройка OAuth для Databricks <Lifecycle status="enterprise" />
+# Настройка Databricks OAuth <Lifecycle status="managed, managed_plus" />
 
-dbt Cloud поддерживает OAuth для разработчиков ([OAuth для партнерских решений](https://docs.databricks.com/en/integrations/manage-oauth.html)) с Databricks, предоставляя дополнительный уровень безопасности для пользователей dbt enterprise. Когда вы включаете OAuth для Databricks в проекте dbt Cloud, все разработчики dbt Cloud должны аутентифицироваться с помощью Databricks, чтобы использовать IDE dbt Cloud. Среды развертывания проекта по-прежнему будут использовать метод аутентификации Databricks, установленный на уровне среды.
+<Constant name="cloud" /> поддерживает developer OAuth ([OAuth for partner solutions](https://docs.databricks.com/en/integrations/manage-oauth.html)) с Databricks, предоставляя дополнительный уровень безопасности для пользователей dbt Enterprise. Когда вы включаете Databricks OAuth для проекта <Constant name="cloud" />, все разработчики <Constant name="cloud" /> должны проходить аутентификацию через Databricks, чтобы использовать <Constant name="cloud_ide" />. При этом среды развертывания проекта продолжат использовать метод аутентификации Databricks, заданный на уровне окружения.
 
 Текущее ограничение:
 - В текущей версии требуется перезапуск IDE каждый час (токены доступа истекают через 1 час - [обходной путь](https://docs.databricks.com/en/integrations/manage-oauth.html#override-the-default-token-lifetime-policy-for-dbt-core-power-bi-or-tableau-desktop))
 
-### Настройка OAuth для Databricks (администратор Databricks)
+Текущее ограничение:
+- Текущий пользовательский опыт требует перезапуска <Constant name="cloud_ide" /> каждый час (токены доступа истекают через 1 час — [обходное решение](https://docs.databricks.com/en/integrations/manage-oauth.html#override-the-default-token-lifetime-policy-for-dbt-core-power-bi-or-tableau-desktop))
 
 Для начала вам нужно [добавить dbt как OAuth-приложение](https://docs.databricks.com/en/integrations/configure-oauth-dbt.html) в Databricks. Существует два способа настройки этого приложения (CLI или интерфейс Databricks). Вот как это можно сделать в интерфейсе Databricks:
 
@@ -31,7 +32,9 @@ dbt Cloud поддерживает OAuth для разработчиков ([OAu
 
 Вы можете использовать следующую таблицу для настройки URL-адресов перенаправления для вашего приложения с dbt Cloud:
 
-| Регион | URL-адреса перенаправления |
+Вы можете использовать следующую таблицу, чтобы настроить redirect URL для вашего приложения с <Constant name="cloud" />:
+
+| Регион | Redirect URL |
 | ------ | ----- |
 | **US multi-tenant** | https://cloud.getdbt.com/callback <br /> https://cloud.getdbt.com/complete/databricks |
 | **US cell 1** | https://us1.dbt.com/callback <br /> https://us1.dbt.com/complete/databricks |
@@ -41,26 +44,29 @@ dbt Cloud поддерживает OAuth для разработчиков ([OAu
 
 ### Настройка подключения в dbt Cloud (администратор проекта dbt Cloud)
 
-Теперь, когда у вас настроено OAuth-приложение в Databricks, вам нужно добавить идентификатор клиента и секрет в dbt Cloud. Для этого:
- - В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Account settings**
- - Выберите **Projects** из меню
- - Выберите ваш проект из списка
- - Выберите **Connection**, чтобы отредактировать детали подключения
- - Добавьте `OAuth Client ID` и `OAuth Client Secret` из OAuth-приложения Databricks в разделе **Optional Settings**
+### Настройка подключения в dbt (администратор проекта dbt)
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth.png" title="Добавление идентификатора клиента и секрета OAuth-приложения Databricks в dbt Cloud" />
+После того как вы настроили OAuth‑приложение в Databricks, необходимо добавить client ID и client secret в <Constant name="cloud" />. Для этого выполните следующие шаги:
 
-### Аутентификация в Databricks (разработчик IDE dbt Cloud)
+1. В <Constant name="cloud" /> нажмите на имя своей учетной записи в левом боковом меню и выберите **Account settings**.
+2. В меню выберите **Projects**.
+3. Выберите нужный проект из списка.
+4. Нажмите **Connections** и выберите подключение Databricks.
+5. Нажмите **Edit**.
+6. В разделе **Optional settings** добавьте значения `OAuth Client ID` и `OAuth Client Secret` из OAuth‑приложения Databricks.
 
-После того как подключение к Databricks через OAuth настроено для проекта dbt Cloud, каждому пользователю dbt Cloud необходимо будет аутентифицироваться с помощью Databricks, чтобы использовать IDE. Для этого:
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth.png" title="Adding Databricks OAuth application client ID and secret to dbt" />
 
-- В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Account settings**
-- Выберите **Profile settings**.
-- Выберите **Credentials**.
-- Выберите ваш проект из списка
-- Выберите `OAuth` в качестве метода аутентификации и нажмите **Save**
-- Завершите, нажав кнопку **Connect Databricks Account**
+### Аутентификация в Databricks (разработчик в Studio IDE)
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth-user.png" title="Подключение к Databricks из профиля пользователя IDE" />
+После того как подключение к Databricks через OAuth настроено для проекта <Constant name="cloud" />, каждому пользователю <Constant name="cloud" /> необходимо пройти аутентификацию в Databricks, чтобы использовать <Constant name="cloud_ide" />. Для этого:
 
-Затем вы будете перенаправлены в Databricks и вам будет предложено одобрить подключение. Это перенаправит вас обратно в dbt Cloud. Теперь вы должны быть аутентифицированным пользователем Databricks, готовым к использованию IDE dbt Cloud.
+1. В <Constant name="cloud" /> нажмите на имя своей учетной записи в левом боковом меню и выберите **Account settings**.
+2. В разделе **Your profile** выберите **Credentials**.
+3. Выберите свой проект из списка и нажмите **Edit**.
+4. Выберите `OAuth` в качестве метода аутентификации и нажмите **Save**.
+5. Завершите процесс, нажав кнопку **Connect Databricks Account**.
+
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth-user.png" title="Connecting to Databricks from an IDE user profile" />
+
+После этого вы будете перенаправлены в Databricks, где потребуется подтвердить подключение. Затем произойдет возврат обратно в <Constant name="cloud" />. После этого вы будете аутентифицированным пользователем Databricks и сможете работать в <Constant name="cloud_ide" />.

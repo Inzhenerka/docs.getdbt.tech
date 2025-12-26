@@ -11,16 +11,23 @@ pagination_next: null
 
 dbt создает файл [артефакта](/reference/artifacts/dbt-artifacts) под названием _Semantic Manifest_ (`semantic_manifest.json`), который необходим MetricFlow для правильного построения и выполнения запросов метрик для dbt Semantic Layer. Этот артефакт содержит полную информацию о вашем dbt Semantic Layer. Это внутренний файл, который служит точкой интеграции с MetricFlow.
 
-Используя семантический манифест, созданный dbt Core, MetricFlow создаст план потока данных и сгенерирует SQL из запросов к Semantic Layer. Это ценный справочник, который вы можете использовать для понимания структуры и деталей ваших моделей данных.
+Используя семантический манифест, сформированный <Constant name="core" />, MetricFlow создаёт план потока данных и генерирует SQL на основе запросов к <Constant name="semantic_layer" />. Это ценный справочный материал, который можно использовать для понимания структуры и деталей ваших моделей данных.
 
 Подобно файлу [`manifest.json`](/reference/artifacts/manifest-json), файл `semantic_manifest.json` также находится в [целевой директории](/reference/global-configs/json-artifacts) вашего dbt проекта, где dbt хранит различные артефакты (такие как скомпилированные модели и тесты), созданные во время выполнения вашего проекта.
 
-## Ключи верхнего уровня
+Есть две причины, по которым файл `semantic_manifest.json` существует наряду с `manifest.json`:
 
-Ключи верхнего уровня для семантического манифеста:
-- `semantic_models` &mdash; Начальные точки данных с сущностями, измерениями и мерами, соответствующие моделям в вашем dbt проекте.
-- `metrics` &mdash; Функции, объединяющие меры, ограничения и т.д., для определения количественных показателей.
-- `project_configuration` &mdash; Содержит информацию о конфигурациях вашего проекта.
+- **Deserialization**: `dbt-core` и MetricFlow используют разные библиотеки для работы с сериализацией данных.
+- **Efficiency and performance**: MetricFlow и семантический слой dbt нуждаются в конкретных семантических деталях из манифеста. За счёт сокращения объёма информации, выводимой в `semantic_manifest.json`, процесс становится более эффективным и обеспечивает более быструю передачу и обработку данных между `dbt-core` и MetricFlow.
+
+## Top-level keys
+
+Ключи верхнего уровня в semantic manifest:
+
+- `semantic_models` &mdash; Начальные точки данных с сущностями, измерениями и мерами; соответствуют моделям в вашем dbt‑проекте.
+- `metrics` &mdash; Функции, объединяющие меры, ограничения и другие элементы для определения количественных показателей.
+- `project_configuration` &mdash; Содержит информацию о конфигурации вашего проекта.
+- `saved_queries` &mdash; Сохраняет часто используемые запросы в MetricFlow.
 
 ### Пример
 
@@ -42,6 +49,8 @@ dbt создает файл [артефакта](/reference/artifacts/dbt-artifa
             "entities": ["entities in the semantic model"],
             "measures": ["measures in the semantic model"],
             "dimensions": ["dimensions in the semantic model" ],
+        }
+    ],
     "metrics": [
         {
             "name": "name of the metric",
@@ -106,13 +115,11 @@ dbt создает файл [артефакта](/reference/artifacts/dbt-artifa
         }
     ]
 }
-    ]
-}
 ```
 
 </File>
 
 ## Связанные документы
 
-- [API dbt Semantic Layer](/docs/dbt-cloud-apis/sl-api-overview)
-- [О dbt артефактах](/reference/artifacts/dbt-artifacts)
+- [<Constant name="semantic_layer" /> API](/docs/dbt-cloud-apis/sl-api-overview)
+- [Об артефактах dbt](/reference/artifacts/dbt-artifacts)

@@ -6,10 +6,11 @@
 Если у вас его еще нет, перейдите на [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) и создайте новое подключение. Запомните сгенерированный секретный UUID для дальнейшего использования.
 
 #### b. Добавьте временный шаг с кодом
-Выберите **Run Python** в качестве события. Запустите следующий код:
-```python
-store = StoreClient('abc123') #замените на ваш секретный UUID
-store.set('DBT_WEBHOOK_KEY', 'abc123') #замените на секрет вебхука
-store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123') #замените на ваш токен API dbt Cloud
+Выберите **Run Python** в качестве Event. Выполните следующий код:
+```python 
+store = StoreClient('abc123') #replace with your UUID secret
+store.set('DBT_WEBHOOK_KEY', 'abc123') #replace with webhook secret
+store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123') #replace with your dbt API token
+```
 ```
 Протестируйте шаг. Вы можете удалить это действие, когда тест пройдет успешно. Ключ будет оставаться сохраненным, если к нему обращаются хотя бы раз в три месяца.

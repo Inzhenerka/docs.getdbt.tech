@@ -14,6 +14,7 @@ import Mermaid from '@theme/Mermaid';
  * Imports the following components below for export
  */
 import SortableTable from '@site/src/components/sortableTable';
+import FilterableTable from '@site/src/components/filterableTable';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem'
 import Changelog from '@site/src/components/changelog';
@@ -45,6 +46,9 @@ import Lifecycle from '@site/src/components/lifeCycle';
 import DetailsToggle from '@site/src/components/detailsToggle';
 import Expandable from '@site/src/components/expandable';
 import ConfettiTrigger from '@site/src/components/confetti/';
+import VersionCallout from '@site/src/components/versionCallout';
+import IntroText from '@site/src/components/IntroText';
+import Constant from '@site/src/components/constant';
 
 const MDXComponents = {
   Head,
@@ -55,6 +59,7 @@ const MDXComponents = {
   Details: MDXDetails,
   ul: MDXUl,
   img: MDXImg,
+  table: FilterableTable, // All tables automatically get filtering functionality
   h1: (props) => <MDXHeading as="h1" {...props} />,
   h2: (props) => <MDXHeading as="h2" {...props} />,
   h3: (props) => <MDXHeading as="h3" {...props} />,
@@ -97,5 +102,9 @@ const MDXComponents = {
   Expandable: Expandable,
   ConfettiTrigger: ConfettiTrigger,
   SortableTable: SortableTable,
+  FilterableTable: FilterableTable,
+  VersionCallout: VersionCallout,
+  IntroText: IntroText,
+  Constant: Constant,
 };
 export default MDXComponents;

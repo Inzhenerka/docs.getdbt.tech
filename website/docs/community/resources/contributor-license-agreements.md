@@ -13,13 +13,16 @@ id: "contributor-license-agreements"
 
 Для всех вкладов в код dbt мы просим участников заполнить и подписать Соглашение о лицензировании для участников. У нас есть два разных соглашения, в зависимости от того, вносите ли вы вклад в dbt в личном или профессиональном качестве:
 
-- [Индивидуальное соглашение о лицензировании для участников v1.0](https://docs.google.com/forms/d/e/1FAIpQLScfOV7K4enYRHozrDRP6BBIXjOij-JDGca6WBTHyP_ANXSqlg/viewform?usp=sf_link)
-- [Программное предоставление и корпоративное соглашение о лицензировании для участников v1.0](https://docs.google.com/forms/d/e/1FAIpQLScDSTwGIlVyGWCMMvmszaXSE5IhIIRyeLQkgWf1-CSC2RnLww/viewform?usp=sf_link)
+- [Лицензионное соглашение индивидуального контрибьютора v1.0](https://docs.google.com/forms/d/e/1FAIpQLScfOV7K4enYRHozrDRP6BBIXjOij-JDGca6WBTHyP_ANXSqlg/viewform?usp=sf_link)
+- [Соглашение о предоставлении программного обеспечения и корпоративное лицензионное соглашение контрибьютора v1.0](https://docs.google.com/forms/d/e/1FAIpQLScDSTwGIlVyGWCMMvmszaXSE5IhIIRyeLQkgWf1-CSC2RnLww/viewform?usp=sf_link)
+- [FAQ по лицензиям](http://www.getdbt.com/licenses-faq)
 
 ## Для юристов
 
-Наши индивидуальные и корпоративные соглашения основаны на Соглашениях о лицензировании для участников, опубликованных [Фондом программного обеспечения Apache](http://www.apache.org/), с изменениями:
-- [Индивидуальное соглашение о лицензировании для участников ("Соглашение") V2.0](http://www.apache.org/licenses/icla.txt)
-- [Программное предоставление и корпоративное соглашение о лицензировании для участников ("Соглашение") v r190612](http://www.apache.org/licenses/cla-corporate.txt)
+Наши индивидуальные и корпоративные соглашения о лицензировании вкладов (CLA) основаны на соглашениях Contributor License Agreements, опубликованных [Apache Software Foundation](http://www.apache.org/), с некоторыми изменениями:
 
-Если у вас есть вопросы по этим соглашениям, пожалуйста, свяжитесь с нами по адресу support@getdbt.com.
+- [Individual Contributor License Agreement («Соглашение») V2.0](http://www.apache.org/licenses/icla.txt)
+- [Software Grant and Corporate Contributor License Agreement («Соглашение») v r190612](http://www.apache.org/licenses/cla-corporate.txt)
+- [Licenses FAQ](http://www.getdbt.com/licenses-faq)
+
+Если у вас есть вопросы по этим CLA, пожалуйста, свяжитесь с нами по адресу support@getdbt.com.

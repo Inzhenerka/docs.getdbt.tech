@@ -11,8 +11,19 @@
   margin-bottom: 0;
 }
 
+.lightBackground {
+  background-color: white;
+  color: #030711 !important;
+}
+
+
 [data-theme='light'] .Hero {
   color: #fff;
+}
+
+[data-theme='dark'] .lightBackground {
+  background: #030711;
+  color: #fff !important;
 }
 
 @media (min-width: 996px) {

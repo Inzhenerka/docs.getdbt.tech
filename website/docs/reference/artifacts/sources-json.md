@@ -7,7 +7,7 @@ sidebar_label: "Источники"
 
 **Создано с помощью:** [`source freshness`](/reference/commands/source)
 
-Этот файл содержит информацию об [источниках с проверками актуальности](/docs/build/sources#checking-source-freshness). В настоящее время dbt Cloud использует этот файл для обеспечения [визуализации актуальности источников](/docs/build/sources#source-data-freshness).
+Этот файл содержит информацию об [источниках с проверками свежести](/docs/build/sources#checking-source-freshness). В настоящее время <Constant name="cloud" /> использует этот файл для работы своей [визуализации свежести источников данных](/docs/build/sources#source-data-freshness).
 
 ### Ключи верхнего уровня
 

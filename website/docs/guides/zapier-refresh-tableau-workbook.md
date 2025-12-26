@@ -1,20 +1,20 @@
 ---
 title: "Обновление рабочей книги Tableau с извлечениями после завершения задания"
 id: zapier-refresh-tableau-workbook
-description: Используйте Zapier для запуска обновления рабочей книги Tableau после успешного завершения задания в dbt Cloud.
-hoverSnippet: Узнайте, как использовать Zapier для запуска обновления рабочей книги Tableau после успешного завершения задания в dbt Cloud.
+description: Используйте Zapier, чтобы запускать обновление рабочей книги Tableau после успешного завершения задания dbt.
+hoverSnippet: Узнайте, как с помощью Zapier запускать обновление рабочей книги Tableau после успешного завершения задания dbt.
+# time_to_complete: '30 minutes' commenting out until we test
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-Это руководство научит вас, как обновить рабочую книгу Tableau, использующую [извлечения](https://help.tableau.com/current/pro/desktop/en-us/extracting_data.htm), когда задание в dbt Cloud успешно завершено и доступны свежие данные. Интеграция будет:
+Это руководство покажет вам, как обновлять рабочую книгу Tableau, использующую [extracts](https://help.tableau.com/current/pro/desktop/en-us/extracting_data.htm), после того как задание <Constant name="cloud" /> успешно завершилось и появились свежие данные. Интеграция будет:
 
  - Получать уведомление вебхука в Zapier
  - Запускать обновление рабочей книги Tableau
@@ -23,7 +23,7 @@ recently_updated: true
 
 Для настройки интеграции вам необходимо быть знакомым с:
 
-- [Вебхуками dbt Cloud](/docs/deploy/webhooks)
+- [<Constant name="cloud" /> Вебхуки](/docs/deploy/webhooks)
 - Zapier
 - [API Tableau](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm)
 - [Версией](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm#rest_api_versioning) REST API Tableau, совместимой с вашим сервером
@@ -41,11 +41,13 @@ recently_updated: true
 ## Настройка нового вебхука в dbt Cloud
 Чтобы настроить подписку на вебхук для dbt Cloud, следуйте инструкциям в [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription). Для события выберите **Run completed** и измените список **Jobs**, чтобы включить только те задания, которые должны запускать обновление отчета.
 
-Не забудьте сохранить секретный ключ вебхука для последующего использования. Вставьте URL вебхука, полученный из Zapier на шаге 2, в поле **Endpoint** и протестируйте конечную точку.
+## Настройка нового вебхука в dbt
+
+Чтобы настроить подписку на вебхук для <Constant name="cloud" />, следуйте инструкциям в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed** и измените список **Jobs**, включив в него только те задания, которые должны запускать обновление отчёта.
 
 После того как вы протестировали конечную точку в dbt Cloud, вернитесь в Zapier и нажмите **Test Trigger**, что создаст пример тела вебхука на основе тестового события, отправленного dbt Cloud.
 
-Значения в примере тела жестко закодированы и не отражают ваш проект, но они дают Zapier правильно сформированный объект во время разработки.
+После того как вы протестировали эндпоинт в <Constant name="cloud" />, вернитесь в Zapier и нажмите **Test Trigger** — это создаст пример тела вебхука на основе тестового события, отправленного из <Constant name="cloud" />.
 
 ## Хранение секретов
 На следующем шаге вам понадобятся секретный ключ вебхука из предыдущего шага и ваши учетные данные для аутентификации Tableau. В частности, вам понадобятся URL вашего сервера/сайта Tableau, имя сервера/сайта, имя PAT и секрет PAT.
@@ -64,13 +66,16 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 Выберите **Run Python** в качестве События и введите следующий код:
 
-```python
-store = StoreClient('abc123') #замените на ваш секрет UUID
-store.set('DBT_WEBHOOK_KEY', 'abc123') #замените на ваш ключ вебхука dbt Cloud
-store.set('TABLEAU_SITE_URL', 'abc123') #замените на ваш URL сайта Tableau, включая https:// и .com
-store.set('TABLEAU_SITE_NAME', 'abc123') #замените на имя вашего сайта/сервера Tableau
-store.set('TABLEAU_API_TOKEN_NAME', 'abc123') #замените на имя вашего токена API Tableau
-store.set('TABLEAU_API_TOKEN_SECRET', 'abc123') #замените на ваш секрет API Tableau
+Выберите **Run Python** в качестве события и вставьте следующий код:
+
+```python 
+store = StoreClient('abc123') #replace with your UUID secret
+store.set('DBT_WEBHOOK_KEY', 'abc123') #replace with your <Constant name="cloud" /> Webhook key
+store.set('TABLEAU_SITE_URL', 'abc123') #replace with your Tableau Site URL, inclusive of https:// and .com
+store.set('TABLEAU_SITE_NAME', 'abc123') #replace with your Tableau Site/Server Name
+store.set('TABLEAU_API_TOKEN_NAME', 'abc123') #replace with your Tableau API Token Name
+store.set('TABLEAU_API_TOKEN_SECRET', 'abc123') #replace with your Tableau API Secret
+```
 ```
 
 Протестируйте шаг, чтобы выполнить код. Вы можете удалить это действие, когда тест пройдет успешно. Ключи останутся сохраненными, если к ним будет доступ хотя бы раз в три месяца.
@@ -104,14 +109,16 @@ pat_secret = secret_store.get('TABLEAU_API_TOKEN_SECRET')
 workbook_name = "YOUR_WORKBOOK_NAME"
 api_version = "ENTER_COMPATIBLE_VERSION"
 
-# Проверка подлинности вебхука, поступающего из dbt Cloud
+# Проверка подлинности вебхука, поступающего из <Constant name="cloud" />
 auth_header = input_data['auth_header']
 raw_body = input_data['raw_body']
 
 signature = hmac.new(hook_secret.encode('utf-8'), raw_body.encode('utf-8'), hashlib.sha256).hexdigest()
 
 if signature != auth_header:
-    raise Exception("Calculated signature doesn't match contents of the Authorization header. This webhook may not have been sent from dbt Cloud.")
+```python
+raise Exception("Вычисленная подпись не совпадает с содержимым заголовка Authorization. Возможно, этот вебхук был отправлен не из <Constant name=\"cloud\" />.")
+```
 
 full_body = json.loads(raw_body)
 hook_data = full_body['data'] 

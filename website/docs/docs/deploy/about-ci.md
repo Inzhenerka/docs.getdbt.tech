@@ -1,12 +1,12 @@
 ---
-title: "О непрерывной интеграции (CI) в dbt Cloud"
+title: "О непрерывной интеграции (CI) в dbt"
 sidebar_label: "О непрерывной интеграции"
 pagination_prev: null
 pagination_next: "docs/deploy/continuous-integration"
 hide_table_of_contents: true
 ---
 
-Используйте [CI задачи](/docs/deploy/ci-jobs) в dbt Cloud для настройки автоматизации тестирования изменений кода перед слиянием в продакшн. Кроме того, [включите расширенные функции CI](/docs/cloud/account-settings#account-access-to-advanced-ci-features) для этих задач, чтобы оценить, приводят ли изменения в коде к желаемым изменениям данных, просматривая различия, предоставляемые dbt.
+Используйте [CI jobs](/docs/deploy/ci-jobs) в <Constant name="cloud" />, чтобы настроить автоматизацию для тестирования изменений кода перед их слиянием в production. Кроме того, [включите Advanced CI features](/docs/cloud/account-settings#account-access-to-advanced-ci-features) для этих jobs, чтобы оценивать, приводят ли изменения кода к ожидаемым изменениям данных, просматривая различия сравнения, которые предоставляет dbt.
 
 Обратитесь к руководству [Начало работы с тестами непрерывной интеграции](/guides/set-up-ci?step=1) для получения дополнительной информации.
 
@@ -24,4 +24,6 @@ hide_table_of_contents: true
     link="/docs/deploy/advanced-ci"
     icon="dbt-bit"/>
 
+```html
 </div><br />
+```

@@ -24,4 +24,10 @@ pagination_prev: null
     link="reference/global-configs/redshift-changes"
     icon="redshift"/>
 
+<Card
+    title="Snowflake"
+    body="Изменения в поведении адаптера Snowflake."
+    link="reference/global-configs/snowflake-changes"
+    icon="snowflake"/>
+    
 </div>

@@ -17,7 +17,7 @@ sidebar: "Вывод печати"
 Укажите флаг `--no-print` для команды `dbt run`, чтобы подавить отображение сообщений `print()` в stdout.
 
 ```text
-dbt --no-print run
+dbt run --no-print
 ```
 
 ### Ширина печати
@@ -47,8 +47,8 @@ config:
 </File>
 
 ```text
-dbt --use-colors run
-dbt --no-use-colors run
+dbt run --use-colors
+dbt run --no-use-colors
 ```
 
 Вы можете установить предпочтения цвета только для файловых логов в `profiles.yml` или используя флаги `--use-colors-file / --no-use-colors-file`.
@@ -63,6 +63,7 @@ config:
 </File>
 
 ```text
-dbt --use-colors-file run
-dbt --no-use-colors-file run
+```bash
+dbt run --use-colors-file
+dbt run --no-use-colors-file
 ```

@@ -5,14 +5,14 @@ sidebar_label: 'Получение неизвестной ошибки в IDE'
 
 ---
 
-Если вы видите следующую ошибку при запуске dbt Cloud IDE, это может быть связано с несколькими сценариями, но чаще всего это указывает на отсутствие репозитория:
+Если при запуске <Constant name="cloud_ide" /> вы видите следующую ошибку, это может быть связано с несколькими сценариями, но чаще всего она указывает на отсутствие репозитория:
 
 ```shell
 
-Your IDE session experienced an unknown error and was terminated. Please contact support.
+Your <Constant name="cloud_ide" /> session experienced an unknown error and was terminated. Please contact support.
 
 ```
 
-Вы можете попытаться решить эту проблему, добавив репозиторий, например, [управляемый репозиторий](/docs/collaborate/git/managed-repository) или ваш предпочитаемый Git-аккаунт. Чтобы добавить ваш Git-аккаунт, перейдите в **Project** > **Repository** и выберите ваш репозиторий.
+Вы можете попробовать решить эту проблему, добавив репозиторий, например [managed repository](/docs/cloud/git/managed-repository), или подключив предпочитаемый аккаунт <Constant name="git" />. Чтобы добавить свой аккаунт <Constant name="git" />, перейдите в **Project** > **Repository** и выберите нужный репозиторий.
 
 Если ошибка продолжает возникать, пожалуйста, свяжитесь с командой поддержки по адресу support@getdbt.com для получения помощи.

@@ -3,14 +3,17 @@ resource_types: sources
 datatype: string
 ---
 
+:::warning Deprecation
+The `overrides` property is deprecated in v1.10.
+:::
+
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: <source_name>
-    overrides: <package name>
+    overrides: <package name> # deprecated in v1.10
 
     database: ...
     schema: ...
@@ -41,11 +44,10 @@ sources:
 <File name='models/src_github.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: github
-    overrides: github_source
+    overrides: github_source # deprecated in v1.10
 
     database: RAW
     schema: github_data
@@ -61,29 +63,29 @@ sources:
 <File name='models/src_github.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: github
-    overrides: github_source
-
-    freshness:
-      warn_after:
-        count: 1
-        period: day
-      error_after:
-        count: 2
-        period: day
+    overrides: github_source # deprecated in v1.10
+    config:
+      freshness: # changed to config in v1.9
+        warn_after:
+          count: 1
+          period: day
+        error_after:
+          count: 2
+          period: day
 
     tables:
       - name: issue_assignee
-        freshness:
-          warn_after:
-            count: 2
-            period: day
-          error_after:
-            count: 4
-            period: day
+        config:
+          freshness:
+            warn_after:
+              count: 2
+              period: day
+            error_after:
+              count: 4
+              period: day
 
 ```
 

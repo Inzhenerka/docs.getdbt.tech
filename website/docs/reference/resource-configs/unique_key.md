@@ -2,6 +2,7 @@
 resource_types: [snapshots, models]
 description: "Узнайте больше о конфигурациях unique_key в dbt."
 datatype: column_name_or_expression
+intro_text: "unique_key identifies records for incremental models or snapshots, ensuring changes are captured or updated correctly."
 ---
 
 <Tabs>
@@ -73,24 +74,6 @@ snapshots:
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-Настройте `unique_key` в блоке `config` вашего SQL файла снимка или в вашем файле `dbt_project.yml`.
-
-import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
-
-<SnapshotYaml/>
-
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{{ config(
-  unique_key="column_name"
-) }}
-
-```
-</File>
-</VersionBlock>
 
 <File name='dbt_project.yml'>
 
@@ -106,10 +89,12 @@ snapshots:
 </TabItem>
 </Tabs>
 
-## Описание
-Имя столбца или выражение, которое является уникальным для входных данных снимка или инкрементальной модели. dbt использует это для сопоставления записей между набором результатов и существующим снимком или инкрементальной моделью, чтобы изменения могли быть правильно зафиксированы.
+## Description
+Имя столбца или выражение, которое однозначно идентифицирует каждую запись во входных данных snapshot или инкрементальной модели. dbt использует этот ключ для сопоставления входящих записей с существующими записями в целевой таблице (будь то snapshot или инкрементальная модель), чтобы изменения могли быть корректно зафиксированы или обновлены:
+* В инкрементальной модели dbt заменяет старую строку (аналогично merge key или upsert).
+* В snapshot dbt сохраняет историю, храня несколько строк для одного и того же `unique_key` по мере его изменения во времени.
 
-В dbt Cloud "Latest" и начиная с dbt v1.9, [снимки](/docs/build/snapshots) определяются и настраиваются в YAML файлах в вашем каталоге `snapshots/`. Вы можете указать одно или несколько значений `unique_key` в ключе `config` вашего YAML файла снимка.
+В треке релизов <Constant name="cloud" /> «Latest» и начиная с dbt v1.9, [snapshots](/docs/build/snapshots) определяются и настраиваются в YAML-файлах внутри вашего каталога `snapshots/`. Вы можете указать одно или несколько значений `unique_key` в ключе `config` YAML-файла snapshot.
 
 :::caution 
 
@@ -117,8 +102,15 @@ snapshots:
 
 :::
 
-## По умолчанию
-Это **обязательный параметр**. Значение по умолчанию не предоставляется.
+## Значение по умолчанию
+
+Этот параметр является необязательным. Если вы не укажете `unique_key`, адаптер по умолчанию будет использовать `incremental_strategy: append`.
+
+Если параметр `unique_key` не задан и используются такие стратегии, как `merge`, `insert_overwrite`, `delete+insert` или `microbatch`, адаптер выполнит откат к использованию `incremental_strategy: append`.
+
+Для BigQuery поведение отличается:
+- Для `incremental_strategy = merge` необходимо указать `unique_key`; его отсутствие приводит к неоднозначному или ошибочному поведению.
+- Для `insert_overwrite` или `microbatch` параметр `unique_key` не требуется, так как эти стратегии работают за счёт замены партиций, а не обновлений на уровне строк.
 
 ## Примеры
 ### Использование столбца `id` в качестве уникального ключа
@@ -167,24 +159,7 @@ snapshots:
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{{
-    config(
-      unique_key="id"
-    )
-}}
-
-```
-
-</File>
-
-Вы также можете записать это в yaml. Это может быть хорошей идеей, если несколько снимков используют один и тот же `unique_key` (хотя мы предпочитаем применять эту конфигурацию в блоке config, как показано выше).
-</VersionBlock>
-
-Вы также можете указать конфигурации в вашем файле `dbt_project.yml`, если несколько снимков используют один и тот же `unique_key`:
+Вы также можете задать конфигурации в файле `dbt_project.yml`, если несколько snapshot используют один и тот же `unique_key`:
 <File name='dbt_project.yml'>
 
 ```yml
@@ -251,98 +226,3 @@ snapshots:
 </Tabs>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-### Использование комбинации двух столбцов в качестве уникального ключа
-
-<Tabs>
-<TabItem value="models" label="Модели">
-
-<File name='models/my_incremental_model.sql'>
-
-```sql
-{{ config(
-    materialized='incremental',
-    unique_key=['order_id', 'location_id']
-) }}
-
-with...
-
-```
-
-</File>
-
-</TabItem>
-
-<TabItem value="snapshots" label="Снимки">
-
-Эта конфигурация принимает допустимое выражение столбца. Таким образом, вы можете объединить два столбца вместе в качестве уникального ключа, если это необходимо. Хорошей идеей будет использование разделителя (например, `'-'`), чтобы обеспечить уникальность.
-
-<File name='snapshots/transaction_items_snapshot.sql'>
-
-```jinja2
-{% snapshot transaction_items_snapshot %}
-
-    {{
-        config(
-          unique_key="transaction_id||'-'||line_item_id",
-          ...
-        )
-    }}
-
-select
-    transaction_id||'-'||line_item_id as id,
-    *
-from {{ source('erp', 'transactions') }}
-
-{% endsnapshot %}
-
-```
-
-</File>
-
-Хотя, вероятно, лучше создать этот столбец в вашем запросе и использовать его в качестве `unique_key`:
-
-<File name='models/transaction_items_ephemeral.sql'>
-
-```sql
-{{ config(materialized='ephemeral') }}
-
-select
-  transaction_id || '-' || line_item_id as id,
-  *
-from {{ source('erp', 'transactions') }}
-
-```
-
-</File>
-
-В этом примере мы создаем эфемерную модель `transaction_items_ephemeral`, которая создает столбец `id`, который может быть использован как `unique_key` в нашей конфигурации снимка.
-
-<File name='snapshots/transaction_items_snapshot.sql'>
-
-```jinja2
-
-{% snapshot transaction_items_snapshot %}
-
-    {{
-        config(
-          unique_key="id",
-          ...
-        )
-    }}
-
-select
-    transaction_id || '-' || line_item_id as id,
-    *
-from {{ source('erp', 'transactions') }}
-
-{% endsnapshot %}
-
-
-```
-
-</File>
-</TabItem>
-</Tabs>
-</VersionBlock>

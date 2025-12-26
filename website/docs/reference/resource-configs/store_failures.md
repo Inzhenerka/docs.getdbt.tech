@@ -5,13 +5,16 @@ datatype: boolean
 
 Настроенные тесты будут сохранять свои ошибки при вызове `dbt test --store-failures`. Если вы установите эту конфигурацию как `false`, но [`store_failures_as`](/reference/resource-configs/store_failures_as) настроен, она будет переопределена.
 
-## Описание
-Вы можете опционально настроить тест так, чтобы он всегда или никогда не сохранял свои ошибки в базе данных.
-- Если указано как `true` или `false`, конфигурация `store_failures` будет иметь приоритет над наличием или отсутствием флага `--store-failures`.
-- Если конфигурация `store_failures` не указана или отсутствует, ресурс будет использовать значение флага `--store-failures`.
-- Если установлено в `true`, `store_failures` сохраняет все записи (до [лимита](/reference/resource-configs/limit)), которые не прошли тест. Ошибки сохраняются в новой таблице с именем теста. По умолчанию, `store_failures` использует схему `{{ profile.schema }}_dbt_test__audit`, но вы можете [настроить](/reference/resource-configs/schema#tests) суффикс схемы на другое значение.
-- Результаты теста всегда **заменяют** предыдущие ошибки для того же теста, даже если тест не привел к ошибкам.
-- По умолчанию, `store_failures` использует схему с именем `dbt_test__audit`, но вы можете [настроить](/reference/resource-configs/schema#tests) схему на другое значение. Убедитесь, что у вас есть разрешение на создание или доступ к схемам для вашей работы. Для получения более подробной информации обратитесь к [FAQ](#faqs).
+## Description
+Позволяет опционально задать, должен ли тест **всегда** или **никогда** сохранять свои ошибки (failures) в базе данных.
+
+- Если указано значение `true` или `false`, конфигурация `store_failures` имеет приоритет над наличием или отсутствием флага `--store-failures`.
+- Если конфигурация `store_failures` имеет значение `none` или не указана, ресурс будет использовать значение флага `--store-failures`.
+- При значении `true` параметр `store_failures` сохраняет все записи (в пределах [limit](/reference/resource-configs/limit)), которые не прошли тест. Ошибки сохраняются в новой таблице с именем теста.
+- Результаты теста всегда **заменяют** предыдущие ошибки для этого же теста, даже если текущий запуск теста не выявил ни одной ошибки.
+- По умолчанию `store_failures` использует схему с именем `{{ profile.schema }}_dbt_test__audit`, однако вы можете [настроить](/reference/resource-configs/schema#tests) схему на другое значение. Убедитесь, что у вас есть права на создание или доступ к схемам, необходимым для вашей работы. Подробнее см. в разделе [FAQ](#faqs).
+
+Эта логика реализована в макросе [`should_store_failures()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql#L15).
 
 Эта логика закодирована в макросе [`should_store_failures()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql#L15).
 
@@ -32,13 +35,12 @@ datatype: boolean
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: my_model
     columns:
       - name: my_column
-        tests:
+        data_tests:
           - unique:
               config:
                 store_failures: true  # всегда сохранять ошибки
@@ -94,8 +96,8 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
-  +store_failures: true  # все тесты
+data_tests:
+  +store_failures: true  # all tests
   
   <package_name>:
     +store_failures: false # тесты в <package_name>

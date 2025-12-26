@@ -1,7 +1,9 @@
 ---
-title: "О стратегии инкрементального обновления"
-description: "Узнайте о различных способах (стратегиях) реализации инкрементальных материализаций."
+title: "Об инкрементальной стратегии"
+sidebar_label: "Инкрементальная стратегия"
+description: "Инкрементальные стратегии для материализаций оптимизируют производительность, определяя, как обрабатывать новые и изменённые данные."
 id: "incremental-strategy"
+intro_text: "Incremental strategies for materializations optimize performance by defining how to handle new and changed data."
 ---
 
 Существует несколько стратегий для реализации концепции инкрементальных материализаций. Ценность каждой стратегии зависит от:
@@ -12,7 +14,7 @@ id: "incremental-strategy"
 
 Некоторые адаптеры предоставляют необязательную конфигурацию `incremental_strategy`, которая управляет кодом, используемым dbt для построения инкрементальных моделей.
 
-:::info Microbatch <Lifecycle status="beta" />
+:::info Microbatch
 
 [`microbatch` стратегия инкрементального обновления](/docs/build/incremental-microbatch) предназначена для больших наборов данных временных рядов. dbt будет обрабатывать инкрементальную модель в нескольких запросах (или "пакетах") на основе настроенного столбца `event_time`. В зависимости от объема и характера ваших данных, это может быть более эффективным и устойчивым, чем использование одного запроса для добавления новых данных.
 
@@ -20,21 +22,24 @@ id: "incremental-strategy"
 
 ### Поддерживаемые стратегии инкрементального обновления по адаптерам
 
-Эта таблица представляет доступность каждой стратегии инкрементального обновления на основе последней версии dbt Core и каждого адаптера.
+Эта таблица показывает поддержку каждой инкрементальной стратегии для адаптеров, доступных в <Constant name="cloud" /> на [треке последних релизов](/docs/dbt-versions/cloud-release-tracks). Некоторые стратегии могут быть недоступны, если вы используете не трек **Latest**, и соответствующая функциональность ещё не была выпущена на трек **Compatible**.  
 
-Нажмите на название адаптера в таблице ниже для получения дополнительной информации о поддерживаемых стратегиях инкрементального обновления.
+Если вас интересует адаптер, доступный только в <Constant name="core" />, ознакомьтесь с [индивидуальной страницей конфигурации адаптера](/reference/resource-configs/resource-configs) для получения более подробной информации.
 
-| Адаптер платформы данных | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch` <Lifecycle status="beta"/> |
-|--------------------------|:--------:|:-------:|:---------------:|:------------------:|:-------------------:|
-| [dbt-postgres](/reference/resource-configs/postgres-configs#incremental-materialization-strategies) |     ✅    |    ✅   |        ✅        |                    |      ✅            |
-| [dbt-redshift](/reference/resource-configs/redshift-configs#incremental-materialization-strategies) |     ✅    |    ✅   |        ✅        |                    |      ✅        |
-| [dbt-bigquery](/reference/resource-configs/bigquery-configs#merge-behavior-incremental-models)      |           |    ✅   |                 |          ✅         |      ✅            |
-| [dbt-spark](/reference/resource-configs/spark-configs#incremental-models)                           |     ✅    |    ✅   |                 |          ✅         |      ✅            |
-| [dbt-databricks](/reference/resource-configs/databricks-configs#incremental-models)                 |     ✅    |    ✅   |                 |          ✅         |          ✅         |
-| [dbt-snowflake](/reference/resource-configs/snowflake-configs#merge-behavior-incremental-models)    |     ✅    |    ✅   |        ✅        |                    |      ✅            |
-| [dbt-trino](/reference/resource-configs/trino-configs#incremental)                                  |     ✅    |    ✅   |        ✅        |                    |                    |
-| [dbt-fabric](/reference/resource-configs/fabric-configs#incremental)                                |     ✅    |         |        ✅          |                    |                    |
-| [dbt-athena](/reference/resource-configs/athena-configs#incremental-models)                         |     ✅    |    ✅   |                 |          ✅         |                    |
+Нажмите на название адаптера в таблице ниже, чтобы узнать больше о поддерживаемых инкрементальных стратегиях:
+
+| Data platform adapter | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch`        |
+|-----------------------|:--------:|:-------:|:---------------:|:------------------:|:-------------------:|
+| [dbt-postgres](/reference/resource-configs/postgres-configs#incremental-materialization-strategies) |     ✅    |    ✅   |  ✅ |   |   ✅   |
+| [dbt-redshift](/reference/resource-configs/redshift-configs#incremental-materialization-strategies) |     ✅    |    ✅   |  ✅ |   |   ✅   |
+| [dbt-bigquery](/reference/resource-configs/bigquery-configs#merge-behavior-incremental-models)      |           |    ✅   |    | ✅ |  ✅    |
+| [dbt-spark](/reference/resource-configs/spark-configs#incremental-models)                           |     ✅    |    ✅   |    |    ✅   | ✅ |
+| [dbt-databricks](/reference/resource-configs/databricks-configs#incremental-models)                 |     ✅    |    ✅   |    |          ✅         |          ✅         |
+| [dbt-snowflake](/reference/resource-configs/snowflake-configs#merge-behavior-incremental-models)    |     ✅    |    ✅   | ✅  | ✅ | ✅  |
+| [dbt-trino](/reference/resource-configs/trino-configs#incremental)                                  |     ✅    |    ✅   | ✅  |    |  ✅  |
+| [dbt-fabric](/reference/resource-configs/fabric-configs#incremental)                                |     ✅    |    ✅   | ✅  |    |    |
+| [dbt-athena](/reference/resource-configs/athena-configs#incremental-models)                         |     ✅    |    ✅   |     | ✅ | ✅  |
+| [dbt-teradata](/reference/resource-configs/teradata-configs#valid_history-incremental-materialization-strategy)  | ✅    |  ✅   |   ✅   |    |         ✅    |
 
 ### Настройка стратегии инкрементального обновления
 
@@ -72,7 +77,7 @@ select ...
 
 Если вы используете стратегию `merge` и указываете `unique_key`, по умолчанию dbt полностью перезапишет совпадающие строки новыми значениями.
 
-На адаптерах, которые поддерживают стратегию `merge` (включая Snowflake, BigQuery, Apache Spark и Databricks), вы можете дополнительно передать список имен столбцов в конфигурацию `merge_update_columns`. В этом случае dbt обновит _только_ столбцы, указанные в конфигурации, и сохранит предыдущие значения других столбцов.
+На адаптерах, которые поддерживают стратегию `merge`, вы можете дополнительно передать список имён колонок в конфигурацию `merge_update_columns`. В этом случае dbt будет обновлять **только** те колонки, которые указаны в конфигурации, а значения остальных колонок будут сохранены без изменений.
 
 <File name='models/my_model.sql'>
 
@@ -110,77 +115,9 @@ select ...
 
 </File>
 
-### О `incremental_predicates`
+import Incrementalpredicates from '/snippets/_incremental-predicates.md';
 
-`incremental_predicates` — это продвинутое использование инкрементальных моделей, когда объем данных достаточно велик, чтобы оправдать дополнительные инвестиции в производительность. Эта конфигурация принимает список любых допустимых SQL-выражений. dbt не проверяет синтаксис SQL-выражений.
-
-Пример конфигурации модели в файле `yml`, который вы можете ожидать увидеть в Snowflake:
-
-```yml
-
-models:
-  - name: my_incremental_model
-    config:
-      materialized: incremental
-      unique_key: id
-      # это повлияет на то, как данные хранятся на диске и индексируются для ограничения сканирования
-      cluster_by: ['session_start']  
-      incremental_strategy: merge
-      # это ограничивает сканирование существующей таблицы последними 7 днями данных
-      incremental_predicates: ["DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"]
-      # `incremental_predicates` принимает список SQL-выражений. 
-      # `DBT_INTERNAL_DEST` и `DBT_INTERNAL_SOURCE` — это стандартные псевдонимы для целевой таблицы и временной таблицы соответственно во время инкрементального запуска с использованием стратегии merge. 
-```
-
-В качестве альтернативы, вот те же конфигурации, настроенные в файле модели:
-
-```sql
--- в models/my_incremental_model.sql
-
-{{
-  config(
-    materialized = 'incremental',
-    unique_key = 'id',
-    cluster_by = ['session_start'],  
-    incremental_strategy = 'merge',
-    incremental_predicates = [
-      "DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"
-    ]
-  )
-}}
-
-...
-
-```
-
-Это создаст (в файле `dbt.log`) оператор `merge` вида:
-```sql
-merge into <existing_table> DBT_INTERNAL_DEST
-    from <temp_table_with_new_records> DBT_INTERNAL_SOURCE
-    on
-        -- уникальный ключ
-        DBT_INTERNAL_DEST.id = DBT_INTERNAL_SOURCE.id
-        and
-        -- пользовательский предикат: ограничивает сканирование данных в "старых" данных / существующей таблице
-        DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)
-    when matched then update ...
-    when not matched then insert ...
-```
-
-Ограничьте сканирование данных _входящих_ таблиц в теле их инкрементальной модели SQL, что ограничит количество "новых" данных, обрабатываемых/трансформируемых.
-
-```sql
-with large_source_table as (
-
-    select * from {{ ref('large_source_table') }}
-    {% if is_incremental() %}
-        where session_start >= dateadd(day, -3, current_date)
-    {% endif %}
-
-),
-
-...
-```
+<Incrementalpredicates />
 
 :::info
 Синтаксис зависит от того, как вы настраиваете свою `incremental_strategy`:
@@ -192,13 +129,13 @@ with large_source_table as (
 
 Прежде чем углубляться в [пользовательские стратегии](#custom-strategies), важно понять встроенные стратегии инкрементального обновления в dbt и их соответствующие макросы:
 
-| `incremental_strategy` | Соответствующий макрос                 |
-|------------------------|----------------------------------------|
-| `append`               | `get_incremental_append_sql`           |
-| `delete+insert`        | `get_incremental_delete_insert_sql`    |
-| `merge`                | `get_incremental_merge_sql`            |
-| `insert_overwrite`     | `get_incremental_insert_overwrite_sql` |
-| `microbatch`  <Lifecycle status="beta"/>         | `get_incremental_microbatch_sql`       |
+| `incremental_strategy` | Соответствующий макрос                                               |
+|------------------------|---------------------------------------------------------------------|
+|[`append`](/docs/build/incremental-strategy#append)|`get_incremental_append_sql`|
+|[`delete+insert`](/docs/build/incremental-strategy#deleteinsert)| `get_incremental_delete_insert_sql`|
+|[`merge` ](/docs/build/incremental-strategy#merge)|`get_incremental_merge_sql`|
+|[`insert_overwrite`](/docs/build/incremental-strategy#insert_overwrite)|`get_incremental_insert_overwrite_sql`|
+|[`microbatch`](/docs/build/incremental-strategy#microbatch) | `get_incremental_microbatch_sql`       |
 
 
 Например, встроенная стратегия для `append` может быть определена и использована с помощью следующих файлов:
@@ -237,6 +174,48 @@ with large_source_table as (
 
 select * from {{ ref("some_model") }}
 ```
+
+#### О встроенных инкрементальных стратегиях
+
+##### `append`
+
+Стратегия `append` проста в реализации и имеет низкие вычислительные затраты. Она вставляет выбранные записи в целевую таблицу, не обновляя и не удаляя уже существующие данные. Эта стратегия напрямую не соответствует [медленно изменяющимся измерениям](https://www.thoughtspot.com/data-trends/data-modeling/slowly-changing-dimensions-in-data-warehouse) (Slowly Changing Dimensions, SCD) типа 1 или 2. Она отличается от SCD1, где существующие записи перезаписываются, и лишь отдалённо напоминает SCD2. Хотя она добавляет новые строки (как SCD2), в ней отсутствует управление версиями и явное отслеживание исторических изменений.
+
+Важно отметить, что `append` не проверяет наличие дубликатов и не определяет, существует ли запись уже в целевой таблице. Если одна и та же запись появляется в источнике несколько раз, она будет вставлена повторно, что потенциально приведёт к появлению дублирующихся строк. В зависимости от сценария использования и требований к качеству данных это может быть допустимо.
+
+##### `delete+insert`
+
+Стратегия `delete+insert` удаляет данные с указанным `unique_key` из целевой таблицы, а затем вставляет данные с тем же `unique_key`. Для больших наборов данных это может быть менее эффективно. Такой подход гарантирует, что обновлённые записи полностью заменяются, без частичных обновлений, и может быть полезен, если `unique_key` на самом деле не является уникальным или если `merge` не поддерживается.
+
+`delete+insert` не соответствует напрямую логике SCD (ни типу 1, ни типу 2), так как данные перезаписываются, а история изменений не отслеживается.
+
+Для реализации SCD2 используйте [dbt snapshots](/docs/build/snapshots#what-are-snapshots), а не `delete+insert`.
+
+##### `merge`
+
+Стратегия `merge` вставляет записи с `unique_key`, которых ещё нет в целевой таблице, и обновляет записи с ключами, которые уже существуют &mdash; тем самым повторяя логику SCD1, где изменения перезаписываются, а не сохраняются как история.
+
+Эту стратегию не следует путать с `delete+insert`, которая сначала удаляет совпадающие записи, а затем вставляет новые.
+
+При указании `unique_key` (который может состоять из одного или нескольких столбцов) `merge` также помогает устранять дубликаты. Если `unique_key` уже существует в целевой таблице, `merge` обновит запись, и дубликаты не появятся. Если записи не существуют, `merge` вставит их.
+
+Обратите внимание: если использовать `merge` без указания `unique_key`, он будет вести себя так же, как стратегия `append`.
+
+Хотя стратегия `merge` удобна для поддержания таблиц в актуальном состоянии, она лучше всего подходит для небольших таблиц или инкрементальных наборов данных. Для больших таблиц она может быть дорогостоящей, так как требуется сканирование всей целевой таблицы, чтобы определить, какие записи нужно обновить или вставить.
+
+##### `insert_overwrite`
+
+Стратегия [`insert_overwrite`](https://downloads.apache.org/spark/docs/3.1.1/sql-ref-syntax-dml-insert-overwrite-table.html) используется для эффективного обновления партиционированных таблиц путём замены целых партиций новыми данными, а не слияния или обновления отдельных строк. Она перезаписывает только затронутые партиции, а не всю таблицу целиком.
+
+Поскольку эта стратегия предназначена для партиционированных данных и полностью заменяет целые партиции, она не соответствует типичной логике SCD, где отслеживаются изменения или история на уровне строк.
+
+Она идеально подходит для таблиц, партиционированных по дате или другому ключу, и полезна для обновления недавних или скорректированных данных без полной пересборки таблицы.
+
+##### `microbatch`
+
+[`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) — это инкрементальная стратегия, предназначенная для обработки больших временных рядов путём разбиения данных на временные батчи (например, по дням или по часам). Она поддерживает [параллельное выполнение батчей](/docs/build/parallel-batch-execution#how-parallel-batch-execution-works), что позволяет ускорить выполнение.
+
+Подробную информацию о том, какие инкрементальные стратегии поддерживаются каждым адаптером, см. в разделе [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
 
 ### Пользовательские стратегии
 

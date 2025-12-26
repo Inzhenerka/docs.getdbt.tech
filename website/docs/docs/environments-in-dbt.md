@@ -13,13 +13,15 @@ pagination_next: null
 
 В традиционной программной инженерии разные среды часто используют полностью отдельную архитектуру. Например, версии сайта для dev и prod могут использовать разные серверы и базы данных. <Term id="data-warehouse">Хранилища данных</Term> также могут быть спроектированы для наличия отдельных сред &mdash; _производственная_ среда относится к отношениям (например, схемам, таблицам и <Term id="view">представлениям</Term>), которые ваши конечные пользователи запрашивают (часто через BI-инструмент).
 
-Настройте среды, чтобы указать dbt Cloud или dbt Core, как строить и выполнять ваш проект в разработке и производстве:
+Настройте окружения, чтобы указать <Constant name="cloud" /> или <Constant name="core" />, как собирать и выполнять ваш проект в среде разработки и в production:
 
 <div className="grid--2-col">
 
 <Card
-    title="Среды в dbt Cloud"
-    body="Бесшовно настраивайте среды разработки и развертывания в dbt Cloud, чтобы контролировать, как ваш проект выполняется как в dbt Cloud IDE, так и в dbt Cloud CLI, и в dbt заданиях."
+```text
+title="Окружения в dbt"
+body="Гибко настраивайте окружения разработки и развертывания в dbt, чтобы управлять тем, как ваш проект выполняется в Studio IDE, dbt CLI и dbt jobs."
+```
     link="/docs/dbt-cloud-environments"
     icon="dbt-bit"/>
 
@@ -33,8 +35,8 @@ pagination_next: null
 
 ## Связанные документы
 
-- [Лучшие практики для среды dbt Cloud](/guides/set-up-ci)
+- [Лучшие практики работы со средами в <Constant name="cloud" />](/guides/set-up-ci)
 - [Среды развертывания](/docs/deploy/deploy-environments)
-- [О версиях dbt Core](/docs/dbt-versions/core)
-- [Установка переменных среды в dbt Cloud](/docs/build/environment-variables#special-environment-variables)
+- [О версиях <Constant name="core" />](/docs/dbt-versions/core)
+- [Настройка переменных среды в <Constant name="cloud" />](/docs/build/environment-variables#special-environment-variables)
 - [Использование переменных среды в jinja](/reference/dbt-jinja-functions/env_var)

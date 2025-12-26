@@ -9,7 +9,20 @@ id: 6-how-we-style-conclusion
 
 ## Pre-commit hooks
 
-Наконец, чтобы гарантировать, что автоматические правила вашего руководства по стилю соблюдаются без дополнительной умственной нагрузки для вашей команды, вы можете использовать [pre-commit hooks](https://pre-commit.com/), чтобы автоматически проверять ваш код на нарушения стиля (и часто исправлять их автоматически) перед его фиксацией. Это отличный способ убедиться, что все участники следуют вашему руководству по стилю. Мы рекомендуем внедрить это после того, как вы утвердите и опубликуете ваше руководство по стилю, и ваш код будет ему соответствовать. Это обеспечит соблюдение руководства по стилю во всех будущих коммитах. Вы можете найти отличный набор pre-commit hooks с открытым исходным кодом для dbt от сообщества [здесь в проекте dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint).
+Вы можете использовать [pre-commit hooks](https://pre-commit.com/), чтобы автоматически проверять ваш код на нарушения стилевых правил (и часто исправлять их автоматически) перед коммитом. Это отличный способ убедиться, что все участники проекта придерживаются вашего style guide. Мы рекомендуем внедрять это после того, как вы утвердили и опубликовали свой style guide и привели кодовую базу в соответствие с ним. Это обеспечит соблюдение style guide во всех будущих коммитах. Отличный набор open source pre-commit hooks для dbt, созданный сообществом, вы можете найти [здесь, в проекте dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint).
+
+## dbt Project Evaluator
+
+[`dbt_project_evaluator`](https://github.com/dbt-labs/dbt-project-evaluator) — это пакет, который проверяет соответствие проекта [style guide и best practices dbt](/best-practices/how-we-structure/1-guide-overview). Пакет `dbt_project_evaluator` подсвечивает области dbt‑проекта, которые не соответствуют best practices dbt, и предоставляет рекомендации по улучшению проекта. Это позволяет аналитическим инженерам точно определить, в каких местах их проекты отклоняются от best practices dbt, и самостоятельно внести необходимые улучшения. Пакет `dbt_project_evaluator` охватывает следующие категории:
+
+- Modeling  
+- Testing  
+- Documentation  
+- Structure  
+- Performance  
+- Governance  
+
+Подробнее см. [Introducing the dbt_project_evaluator: Automatically evaluate your dbt project for alignment with best practices](/blog/align-with-dbt-project-evaluator).
 
 ## Шаблон руководства по стилю
 
@@ -35,15 +48,15 @@ id: 6-how-we-style-conclusion
 
 ## Слои моделей
 
-- Только модели в `staging` должны выбирать из [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources).
-- Модели, не находящиеся в папке `staging`, должны выбирать из [refs](https://docs.getdbt.com/reference/dbt-jinja-functions/ref).
+- Только модели в папке `staging` должны делать выборку из [sources](/docs/build/sources).
+- Модели, не находящиеся в папке `staging`, должны делать выборку из [refs](/reference/dbt-jinja-functions/ref).
 
 ## Именование файлов моделей и кодирование
 
 - Все объекты должны быть во множественном числе.  
   Пример: `stg_stripe__invoices.sql` vs. `stg_stripe__invoice.sql`
 
-- Все модели должны использовать соглашение об именовании `<type/dag_stage>_<source/topic>__<additional_context>`. Подробнее см. в [этой статье](https://docs.getdbt.com/blog/stakeholder-friendly-model-names).
+- Все модели должны использовать соглашение об именовании `<type/dag_stage>_<source/topic>__<additional_context>`. Подробнее см. [эту статью](/blog/stakeholder-friendly-model-names).
 
   - Модели в папке **staging** должны использовать имя источника в качестве `<source/topic>` и имя сущности в качестве `additional_context`.
 
@@ -86,11 +99,11 @@ id: 6-how-we-style-conclusion
 
 ## Конфигурации моделей
 
-- Конфигурации моделей на [уровне папки](https://docs.getdbt.com/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml) должны быть рассмотрены (и, если применимо, применены) в первую очередь.
-- Более специфичные конфигурации должны применяться на уровне модели [с использованием одного из этих методов](https://docs.getdbt.com/reference/model-configs#apply-configurations-to-one-model-only).
-- Модели в папке `marts` должны быть материализованы как `table` или `incremental`.
-  - По умолчанию, `marts` должны быть материализованы как `table` в `dbt_project.yml`.
-  - Если переключение на `incremental`, это должно быть указано в конфигурации модели.
+- Конфигурации моделей на [уровне папки](/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml) должны рассматриваться (и при необходимости применяться) в первую очередь.
+- Более специфичные конфигурации следует применять на уровне конкретной модели [одним из этих способов](/reference/model-configs#apply-configurations-to-one-model-only).
+- Модели внутри папки `marts` должны материализоваться как `table` или `incremental`.
+  - По умолчанию `marts` должны материализоваться как `table` в `dbt_project.yml`.
+  - При переходе на `incremental` это следует явно указать в конфигурации модели.
 
 ## Тестирование
 

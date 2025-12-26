@@ -1,0 +1,127 @@
+---
+title: "История запросов модели"
+sidebar_label: "История запросов модели"
+description: "Импортируйте и автоматически создавайте экспозиции из дашбордов и понимайте, как модели используются в инструментах нижнего уровня для более богатой родословной."
+image: /img/docs/collaborate/dbt-explorer/model-query-queried-models.jpg
+---
+
+# История запросов моделей <Lifecycle status="managed,managed_plus" />
+
+<IntroText>
+История запросов моделей помогает командам по работе с данными отслеживать использование моделей за счёт анализа журналов запросов.
+</IntroText>
+
+История запросов модели позволяет:
+
+- Просматривать количество запросов на потребление для модели на основе логов запросов в хранилище данных.
+- Предоставлять командам аналитиков информацию, чтобы они могли сосредоточить свое время и затраты на инфраструктуру на действительно используемых продуктах данных.
+- Позволять аналитикам находить самые популярные модели, используемые другими людьми.
+
+История запросов модели основана на единственном запросе потребления таблицы логов запросов в вашем хранилище данных, агрегированном на ежедневной основе.
+
+<Expandable alt_header="Что такое запрос на потребление?">
+
+Запрос на потребление — это метрика запросов в вашем проекте dbt, которые использовали модель в заданное время. Он фильтруется только по `select`-запросам, чтобы оценить потребление модели, и исключает выполнения сборки и тестирования моделей dbt.
+
+Например, если `model_super_santi` был запрошен 10 раз за последнюю неделю, это будет считаться как 10 запросов на потребление за этот период времени.
+</Expandable>
+
+:::info Support for Snowflake (Enterprise tier or higher) and BigQuery
+
+История запросов моделей для пользователей Snowflake **доступна только для Enterprise tier или выше**. Эта функция также поддерживает BigQuery. Поддержка дополнительных платформ появится в ближайшее время.
+:::
+
+## Предварительные условия
+
+Чтобы получить доступ к функциям, вы должны соответствовать следующим требованиям:
+
+1. У вас есть аккаунт <Constant name="cloud" /> на тарифе уровня [Enterprise](https://www.getdbt.com/pricing/). Для аккаунтов с одиночным (single-tenant) размещением необходимо связаться с вашим аккаунт-менеджером для настройки.
+2. Для каждого проекта, который вы хотите анализировать, у вас настроено окружение развертывания [production](/docs/deploy/deploy-environments#set-as-production-environment), и в нем выполнен как минимум один успешный запуск job.
+3. У вас есть [права администратора](/docs/cloud/manage-access/enterprise-permissions) в <Constant name="cloud" />, позволяющие редактировать настройки проекта или production-окружения.
+4. Вы используете Snowflake или BigQuery в качестве хранилища данных и можете включить [доступ к истории запросов](#snowflake-model-query-history) либо работать с администратором, чтобы это сделать. Поддержка дополнительных платформ данных появится в ближайшее время.
+   - Для пользователей Snowflake: у вас **обязательно** должна быть подписка Snowflake уровня Enterprise или выше.
+
+## Включение истории запросов в dbt
+
+Чтобы включить историю запросов моделей в <Constant name="cloud" />, выполните следующие шаги:
+
+1. Перейдите в раздел **Orchestration**, затем выберите **Environments**.
+2. Выберите окружение, помеченное как **PROD**, и нажмите **Settings**.
+3. Нажмите **Edit** и прокрутите страницу до раздела **Query History**.
+4. Нажмите кнопку **Test Permissions**, чтобы проверить, что права учетных данных для деплоя достаточны для поддержки истории запросов.
+5. Установите флажок **Enable query history**, чтобы включить функциональность.
+6. Нажмите **Save**, чтобы сохранить настройки.
+
+<Constant name="cloud" /> automatically enables query history for brand new environments. If query history fails to retrieve data, <Constant name="cloud" /> automatically disables it to prevent unintended warehouse costs.
+   - If the failure is temporary (like a network timeout), <Constant name="cloud" /> may retry.
+   - If the problem keeps happening (for example, missing permissions), <Constant name="cloud" /> turns off query history so customers don’t waste warehouse compute.
+   
+   To turn it back on, click **Test Permissions** in **Environment settings**. If the test succeeds, <Constant name="cloud" /> re-enables the environment.
+
+
+<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.png" width="95%" title="Enable query history in your environment settings." />
+
+
+
+## Разрешения учетных данных
+
+В этом разделе описаны разрешения и шаги, которые необходимы для включения и просмотра истории запросов моделей в <Constant name="explorer" />.
+
+Функция истории запросов моделей использует учетные данные вашей production-среды для сбора метаданных из журналов запросов вашего хранилища данных. Это означает, что вам могут потребоваться расширенные права доступа в хранилище. Прежде чем вносить какие-либо изменения в разрешения вашей платформы данных, проверьте настроенные разрешения в <Constant name="cloud" />:
+
+1. Перейдите в **Deploy**, затем **Environments**.
+2. Выберите среду, помеченную как **PROD**, и нажмите **Settings**.
+3. Посмотрите информацию под **Deployment credentials**.
+   - Примечание: Запрос истории запросов влечет за собой затраты на хранилище / использование кредитов.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/model-query-credentials.jpg" width="50%" title="Подтвердите свои учетные данные развертывания на странице настроек вашей среды." />
+
+4. Скопируйте или сопоставьте эти разрешения учетных данных с разрешениями хранилища и предоставьте вашему пользователю правильные разрешения.
+
+#### История запросов моделей в Snowflake
+      История запросов моделей использует метаданные из системных таблиц, доступных для аккаунтов [Snowflake уровня Enterprise](https://docs.snowflake.com/en/user-guide/intro-editions#enterprise-edition) и выше — `QUERY_HISTORY` и `ACCESS_HISTORY`. Пользователь Snowflake в production-окружении должен иметь разрешение `GOVERNANCE_VIEWER`, чтобы иметь доступ к этим данным.
+      Перед включением истории запросов моделей ваш `ACCOUNTADMIN` должен выполнить следующий `GRANT` в Snowflake, чтобы обеспечить доступ:
+      ```sql
+      GRANT DATABASE ROLE SNOWFLAKE.GOVERNANCE_VIEWER TO ROLE <YOUR_DBT_CLOUD_DEPLOYMENT_ROLE>;
+      ```
+      Без этого разрешения история запросов моделей не будет отображать никакие данные. Подробнее см. документацию Snowflake [здесь](https://docs.snowflake.com/en/sql-reference/account-usage#enabling-other-roles-to-use-schemas-in-the-snowflake-database).
+
+#### История запросов моделей в BigQuery
+История запросов моделей использует метаданные из представления [`INFORMATION_SCHEMA.JOBS`](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs) в BigQuery. Чтобы получить доступ к этим метаданным, пользователь production-окружения должен иметь соответствующую [IAM-роль](https://docs.cloud.google.com/bigquery/docs/access-control#bigquery.resourceViewer) или разрешения для доступа к этим данным:
+
+- Если вы используете стандартную роль BigQuery, рекомендуется `roles/bigquery.resourceViewer`.
+- Если вы используете кастомную роль, убедитесь, что она включает разрешение `bigquery.jobs.listAll`.
+
+## Просмотр истории запросов в Explorer
+
+Чтобы упростить анализ и исследование, вы можете просматривать историю запросов моделей в разных разделах <Constant name="explorer" />:
+- [Просмотр из графиков производительности](#view-from-performance-charts)
+- [Просмотр из lineage проекта](#view-from-project-lineage)
+- [Просмотр из списка моделей](#view-from-model-list)
+
+### Просмотр из графиков производительности
+
+1. Перейдите в <Constant name="explorer" />, нажав на ссылку **Explore** в навигации.
+2. На основной странице **Overview** нажмите **Performance** в разделе **Project details**. Прокрутите страницу вниз, чтобы увидеть **Most consumed models**.
+3. Используйте выпадающее меню справа, чтобы выбрать нужный период времени — доступны варианты вплоть до последних 3 месяцев.
+
+<Lightbox src="/img/docs/collaborate/dbt-explorer/most-consumed-models.jpg" width="85%" title="Просмотр наиболее часто используемых моделей на странице 'Performance' в dbt Catalog." />
+
+4. Нажмите на модель для получения более подробной информации и перейдите на вкладку **Performance**.
+5. На вкладке **Performance** прокрутите вниз до раздела **Model performance**.
+6. Выберите вкладку **Consumption queries**, чтобы просмотреть запросы на потребление за заданное время для этой модели.
+<Lightbox src="/img/docs/collaborate/model-consumption-queries.jpg" width="90%" title="Просмотр запросов на потребление с течением времени для данной модели." />
+
+### Просмотр из родословной проекта
+
+1. Чтобы просмотреть вашу модель в родословной вашего проекта, перейдите на главную **Overview page** и нажмите на **Project lineage.**
+2. В нижнем левом углу вашей родословной нажмите на **Lenses** и выберите **Consumption queries**.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/model-consumption-lenses.jpg" width="85%" title="Просмотр запросов на потребление модели в вашей родословной с использованием функции 'Lenses'." />
+
+3. Ваша родословная должна отображать маленький красный квадрат над каждой моделью, указывающий количество запросов на потребление. Число для каждой модели представляет потребление модели за последние 30 дней.
+
+### Просмотр из списка моделей
+
+1. Чтобы просмотреть список моделей, перейдите на главную **Overview page**.
+2. В левой навигации перейдите на вкладку **Resources** и нажмите на **Models**, чтобы просмотреть список моделей.
+3. Вы можете просмотреть количество запросов на потребление для моделей и отсортировать по наиболее или наименее потребляемым. Число запросов на потребление для каждой модели представляет потребление за последние 30 дней.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/model-consumption-list.jpg" width="85%" title="Просмотр потребления моделей на странице списка 'Models' в колонке 'Consumption'." />

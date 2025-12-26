@@ -10,5 +10,5 @@ id: custom-test-thresholds
 
 Вы также можете попробовать следующие решения:
 
-* Установить [severity](/reference/resource-properties/data-tests#severity) на `warn`, или:
-* Написать [пользовательский универсальный тест](/best-practices/writing-custom-generic-tests), который принимает аргумент порога ([пример](https://discourse.getdbt.com/t/creating-an-error-threshold-for-schema-tests/966))
+* Установка параметра [severity](/reference/resource-configs/severity) в значение `warn` или `error`
+* Написание [пользовательского обобщённого теста](/best-practices/writing-custom-generic-tests), который принимает аргумент порога (threshold) ([пример](https://discourse.getdbt.com/t/creating-an-error-threshold-for-schema-tests/966))

@@ -18,32 +18,31 @@ import PropsCallout from '/snippets/_config-prop-callout.md';
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
-
 sources:
   - name: <string> # обязательно
     [description](/reference/resource-properties/description): <markdown_string>
     [database](/reference/resource-properties/database): <database_name>
     [schema](/reference/resource-properties/schema): <schema_name>
     [loader](/reference/resource-properties/loader): <string>
-    [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
-    [meta](/reference/resource-configs/meta): {<dictionary>}
-    [tags](/reference/resource-configs/tags): [<string>]
-    
-    # требуется версия v1.1+
+
+    # требуется v1.1+
     [config](/reference/resource-properties/config):
       [<source_config>](source-configs): <config_value>
+      [freshness](/reference/resource-properties/freshness):
+      # перенесено в config в v1.10
+      [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
+        warn_after:
+          [count](/reference/resource-properties/freshness#count): <positive_integer>
+          [period](/reference/resource-properties/freshness#period): minute | hour | day
+        error_after:
+          [count](/reference/resource-properties/freshness#count): <positive_integer>
+          [period](/reference/resource-properties/freshness#period): minute | hour | day
+        [filter](/reference/resource-properties/freshness#filter): <where-condition>
+      [meta](/reference/resource-configs/meta): {<dictionary>} # перенесено в config в v1.10
+      [tags](/reference/resource-configs/tags): [<string>] # перенесено в config в v1.10
 
+    # объявлено устаревшим в v1.10
     [overrides](/reference/resource-properties/overrides): <string>
-
-    [freshness](/reference/resource-properties/freshness):
-      warn_after:
-        [count](/reference/resource-properties/freshness#count): <positive_integer>
-        [period](/reference/resource-properties/freshness#period): minute | hour | day
-      error_after:
-        [count](/reference/resource-properties/freshness#count): <positive_integer>
-        [period](/reference/resource-properties/freshness#period): minute | hour | day
-      [filter](/reference/resource-properties/freshness#filter): <where-condition>
 
     [quoting](/reference/resource-properties/quoting):
       database: true | false
@@ -51,23 +50,24 @@ sources:
       identifier: true | false
 
     tables:
-      - name: <string> #обязательно
+      - name: <string> # обязательно
         [description](/reference/resource-properties/description): <markdown_string>
-        [meta](/reference/resource-configs/meta): {<dictionary>}
         [identifier](/reference/resource-properties/identifier): <table_name>
-        [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
-        [tests](/reference/resource-properties/data-tests):
+        [data_tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # объявление дополнительных тестов
-        [tags](/reference/resource-configs/tags): [<string>]
-        [freshness](/reference/resource-properties/freshness):
-          warn_after:
-            [count](/reference/resource-properties/freshness#count): <positive_integer>
-            [period](/reference/resource-properties/freshness#period): minute | hour | day
-          error_after:
-            [count](/reference/resource-properties/freshness#count): <positive_integer>
-            [period](/reference/resource-properties/freshness#period): minute | hour | day
-          [filter](/reference/resource-properties/freshness#filter): <where-condition>
+          - ... # объявите дополнительные тесты
+        [config](/reference/resource-properties/config):
+          [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
+          [meta](/reference/resource-configs/meta): {<dictionary>}
+          [tags](/reference/resource-configs/tags): [<string>]
+          [freshness](/reference/resource-properties/freshness):
+            warn_after:
+              [count](/reference/resource-properties/freshness#count): <positive_integer>
+              [period](/reference/resource-properties/freshness#period): minute | hour | day
+            error_after:
+              [count](/reference/resource-properties/freshness#count): <positive_integer>
+              [period](/reference/resource-properties/freshness#period): minute | hour | day
+            [filter](/reference/resource-properties/freshness#filter): <where-condition>
 
         [quoting](/reference/resource-properties/quoting):
           database: true | false
@@ -77,17 +77,18 @@ sources:
         columns:
           - name: <column_name> # обязательно
             [description](/reference/resource-properties/description): <markdown_string>
-            [meta](/reference/resource-configs/meta): {<dictionary>}
-            [quote](/reference/resource-properties/quote): true | false
-            [tests](/reference/resource-properties/data-tests):
+            [quote](/reference/resource-properties/columns#quote): true | false
+            [data_tests](/reference/resource-properties/data-tests):
               - <test>
-              - ... # объявление дополнительных тестов
-            [tags](/reference/resource-configs/tags): [<string>]
-          - name: ... # объявление свойств дополнительных колонок
+              - ... # объявите дополнительные тесты
+            [config](/reference/resource-properties/config):
+              [meta](/reference/resource-configs/meta): {<dictionary>}
+              [tags](/reference/resource-configs/tags): [<string>]
+          - name: ... # объявите свойства дополнительных колонок
 
-      - name: ... # объявление свойств дополнительных таблиц источников
+      - name: ... # объявите свойства дополнительных таблиц источников
 
-  - name: ... # объявление свойств дополнительных источников
+  - name: ... # объявите свойства дополнительных источников
 
 ```
 
@@ -98,24 +99,25 @@ sources:
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 sources:
   - name: jaffle_shop
     database: raw
     schema: public
-    loader: emr # только информационно (свободный текст)
-    loaded_at_field: _loaded_at # настройка для всех источников
+    loader: emr # только для информации (произвольный текст)
 
-    # поля meta отображаются в автоматически сгенерированной документации
-    meta:
-      contains_pii: true
-      owner: "@alice"
+    config:
+      # перенесено в config в v1.10
+      loaded_at_field: _loaded_at # настраивается для всех источников
+      # поля meta отображаются в автоматически сгенерированной документации
+      meta: # перенесено в config в v1.10
+        contains_pii: true
+        owner: "@alice"
 
-    # Добавьте теги к этому источнику
-    tags:
-      - ecom
-      - pii
+      # Добавьте теги для этого источника
+      tags: # перенесено в config в v1.10
+        - ecom
+        - pii
 
     quoting:
       database: false
@@ -125,22 +127,25 @@ sources:
     tables:
       - name: orders
         identifier: Orders_
-        loaded_at_field: updated_at # переопределение значений по умолчанию для источника
+        config:
+          # перенесено в config в v1.10
+          loaded_at_field: updated_at # переопределяет настройки источника по умолчанию
         columns:
           - name: id
-            tests:
+            data_tests:
               - unique
 
           - name: price_in_usd
-            tests:
+            data_tests:
               - not_null
 
       - name: customers
         quoting:
-          identifier: true # переопределение значений по умолчанию для источника
+          identifier: true # переопределяет настройки источника по умолчанию
         columns:
-            tests:
+            data_tests:
               - unique
+
 ```
 
 </File>

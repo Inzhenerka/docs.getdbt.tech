@@ -1,8 +1,10 @@
 ---
 resource_types: [models, seeds]
-description: "Установка конфигурации full_refresh в значение false предотвращает перестроение модели или seed, даже если флаг `--full-refresh` включен в вызове."
+description: "Установить конфигурацию full_refresh для моделей и других ресурсов в dbt."
 datatype: boolean
 ---
+
+The `full_refresh` config allows you to control whether a resource will always or never perform a full-refresh. This config overrides the `--full-refresh` command-line flag.
 
 <Tabs
   defaultValue="models"
@@ -19,8 +21,7 @@ datatype: boolean
 ```yml
 models:
   [<resource-path>](/reference/resource-configs/resource-path):
-    +full_refresh: false
-
+    +full_refresh: false | true 
 ```
 
 </File>
@@ -30,16 +31,13 @@ models:
 ```sql
 
 {{ config(
-    full_refresh = false
+    full_refresh = false | true
 ) }}
 
 select ...
-
 ```
 
 </File>
-
-Настроенные модели не будут полностью обновляться при вызове `dbt run --full-refresh`.
 
 </TabItem>
 
@@ -50,26 +48,31 @@ select ...
 ```yml
 seeds:
   [<resource-path>](/reference/resource-configs/resource-path):
-    +full_refresh: false
+    +full_refresh: false | true
 
 ```
 
 </File>
-
-Настроенные seeds не будут полностью обновляться при вызове `dbt seed --full-refresh`.
 
 </TabItem>
 
 </Tabs>
 
 ## Описание
-Опционально установите ресурс для всегда или никогда полного обновления.
-- Если указано как `true` или `false`, конфигурация `full_refresh` будет иметь приоритет над наличием или отсутствием флага `--full-refresh`.
-- Если конфигурация `full_refresh` равна `none` или опущена, ресурс будет использовать значение флага `--full-refresh`.
 
-**Примечание:** Флаг `--full-refresh` также поддерживает короткое имя, `-f`.
+Конфигурация `full_refresh` позволяет опционально задать, будет ли ресурс **всегда** или **никогда** выполнять полный пересчёт (full refresh). Эта конфигурация является переопределением флага командной строки `--full-refresh`, который используется при запуске команд dbt.
 
-Эта логика закодирована в макросе [`should_full_refresh()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql).
+Вы можете задать конфигурацию `full_refresh` в файле `dbt_project.yml` или в конфигурации конкретного ресурса.
+
+| Значение `full_refresh` | Поведение |
+| ---------------------------- | -------- |
+| Если установлено в `true` | Ресурс **всегда** выполняет полный пересчёт, независимо от того, передаёте ли вы флаг `--full-refresh` в команде dbt. |
+| Если установлено в `false` | Ресурс **никогда** не выполняет полный пересчёт, независимо от того, передаёте ли вы флаг `--full-refresh` в команде dbt. |
+| Если установлено в `none` или не указано | Ресурс следует поведению флага `--full-refresh`. Если флаг используется, ресурс выполнит полный пересчёт; в противном случае — нет. |
+
+#### Примечание
+- Флаг `--full-refresh` также поддерживает короткую форму `-f`.
+- В макросе [`should_full_refresh()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql) реализована соответствующая логика.
 
 ## Использование
 
@@ -83,7 +86,17 @@ seeds:
 <FAQ path="Seeds/full-refresh-seed" />
 
 ## Рекомендация
-Установите `full_refresh: false` для моделей особенно больших наборов данных, которые вы _никогда_ не захотите, чтобы dbt полностью удалял и воссоздавал.
+- Устанавливайте `full_refresh: false` для моделей с особенно большими наборами данных, которые вы _никогда_ не хотели бы, чтобы dbt полностью удалял и пересоздавал.
+- Вы не можете переопределить уже заданный параметр `full_refresh`. Чтобы изменить его поведение в определённых случаях, необходимо удалить логику конфигурации или обновить её с использованием переменных, чтобы при необходимости поведение можно было переопределять. Например, если у вас есть инкрементальная модель со следующей конфигурацией:
+  ```sql
+  {{ config(
+      materialized = 'incremental',
+      full_refresh = var("force_full_refresh", false)
+  ) }}
+  ```
+
+  Тогда вы можете переопределить параметр `full_refresh`, установив его в `true`, с помощью флага [`--vars`](/docs/build/project-variables#defining-variables-on-the-command-line):  
+  `dbt run --vars '{"force_full_refresh": true}'`.
 
 ## Справочная документация
 * [on_configuration_change](/reference/resource-configs/on_configuration_change)

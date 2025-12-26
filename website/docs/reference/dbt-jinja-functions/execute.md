@@ -63,4 +63,67 @@ order by 1
 {% endif %}
 ```
 
-</File>
+## Парсинг и выполнение
+
+Парсинг (parsing) в Jinja — это этап, на котором dbt:
+
+- Читает файлы вашего проекта.
+- Находит вызовы [`ref`](/reference/dbt-jinja-functions/ref) и [`source`](/reference/dbt-jinja-functions/source).
+- Находит определения макросов.
+- Строит граф зависимостей (DAG).
+
+На этом этапе dbt **не выполняет никакой SQL** — `execute == False`.
+
+Выполнение (execution) — это этап, когда dbt действительно выполняет SQL и строит модели — `execute == True`.
+
+Во время выполнения dbt:
+
+- Рендерит полные Jinja-шаблоны в SQL.
+- Разрешает все вызовы `ref()` и `source()` в соответствующие имена таблиц или представлений.
+- Выполняет SQL из ваших моделей при выполнении таких команд, как [`dbt run`](/reference/commands/run), [`dbt test`](/reference/commands/test), [`dbt seed`](/reference/commands/seed) или [`dbt snapshot`](/reference/commands/snapshot).
+- Создаёт или обновляет таблицы/представления в хранилище данных.
+- Применяет материализации (incremental, table, view, ephemeral).
+
+Флаг `execute` влияет на значения, возвращаемые `ref()` и `source()`, и не будет работать так, как ожидается, внутри [`sql_header`](/reference/resource-configs/sql_header#usage).
+
+Причина в том, что при первоначальном парсинге проекта dbt находит все использования `ref()` и `source()` для построения DAG, но **не разрешает их в реальные идентификаторы базы данных**. Вместо этого dbt подставляет временные значения-заглушки, чтобы SQL корректно компилировался на этапе парсинга.
+
+## Примеры
+
+Макросы вроде [`log()`](/reference/dbt-jinja-functions/log) и [`exceptions.warn()`](/reference/dbt-jinja-functions/exceptions#warn) всё равно вычисляются на этапе парсинга, во время «первого прохода» рендера Jinja, который dbt использует для извлечения `ref`, `source` и `config`. В результате dbt также выполняет любой логгинг или вывод предупреждений уже на этом этапе.
+
+Несмотря на то, что фактическое выполнение ещё не происходит, dbt всё равно выводит эти лог-сообщения во время парсинга. Это может сбивать с толку — выглядит так, будто dbt что-то реально делает, хотя на самом деле он лишь парсит проект.
+
+```
+$ dbt run
+15:42:01  Running with dbt=1.10.2
+15:42:01  I'm running a query now.  <------ это вводит в заблуждение!!!! на самом деле запрос не выполняется
+15:42:01  Found 1 model, 0 tests, 0 snapshots, 0 macros, 0 operations, 0 seed files, 0 sources, 0 exposures, 0 metrics
+15:42:01
+15:42:01  Concurrency: 8 threads (target='dev')
+15:42:01
+15:42:01  1 of 1 START table model analytics.my_model .................................. [RUN]
+15:42:01  I'm running a query now
+15:42:02  1 of 1 OK created table model analytics.my_model ............................. [OK in 0.36s]
+```
+
+### Логирование полностью квалифицированных имён отношений
+
+Предположим, у вас есть отношение `relation`, полученное, например, так: `{% set relation = ref('my_model') %}` или `{% set relation = source('source_name', 'table_name') %}`. Это может привести к неожиданному или запутывающему поведению на этапе парсинга:
+
+```jinja
+{%- if load_relation(relation) is none -%}
+    {{ log("Relation is missing: " ~ relation, True) }}
+{% endif %}
+```
+
+Чтобы избежать этого, добавьте проверку флага `execute`, чтобы код выполнялся **только тогда, когда dbt действительно выполняет модели**, а не просто подготавливает их.
+
+Используйте команду `do exceptions.warn`, чтобы вывести предупреждение во время выполнения модели, не прерывая запуск.
+
+```jinja
+{%- if execute and load_relation(relation) is none -%}
+    {% [do exceptions.warn](/reference/dbt-jinja-functions/exceptions#warn)("Relation is missing: " ~ relation) %}
+    {{ log("Relation is missing: " ~ relation, info=True) }}
+{%- endif -%}
+```

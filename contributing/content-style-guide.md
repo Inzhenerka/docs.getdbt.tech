@@ -6,7 +6,7 @@ This guide includes standards we want to emphasize, likely because we've made de
 
 ### Table of Contents
 * [Folder Structure and TOC](#folder-structure-and-toc)
-* [Filenaming](#filenaming)
+* [Naming conventions and branding ](#naming-conventions-and-branding)
 * [Using Markdown](#using-markdown)
 * [Callouts](#callouts)
 * [Text formatting](#Text-formatting)
@@ -33,7 +33,58 @@ Don't worry if you're not sure where in the leftbar a new topic belongs. Do your
 
 The right sidebar (rightbar), also known as the page TOC, is created automatically for all the H2 and H3 headings on a page. For details, see [Headings and Table of contents](https://docusaurus.io/docs/markdown-features/toc) in Docusaurus. 
 
-## Filenaming
+
+## Naming conventions and branding
+
+There are many features in dbt. There are even a few different iterations of dbt itself. Figuring out what's a feature, what's a "product," and what's lingo can be a challenge. Addressing them in files and publishing to the docs site also has a set of rules to follow. This section will help clear up some of the language around calling out dbt products, features, and file names.
+
+### dbt products
+
+The following are the "branding" guidelines for the various dbt products (all case sensitive)
+- **dbt Labs** &mdash; The company that owns and operates dbt. When the docs say "we," this is who "we" is!
+- **dbt** &mdash; Always lower case, all the time. If something applies to all of our offerings, this is acceptable to use. For example, "You can write dbt models in SQL or Python." Otherwise, you should refer to the specific product type.
+- **dbt Core** &mdash; A version of dbt <= v1.X. Always lowercase `dbt` and capital `C`.
+- **dbt Fusion engine** &mdash; A version of dbt >= v2.X. You will frequently see this used interchangeably with just `Fusion` in our docs. If you're writing about us externally, using "dbt Fusion engine" would be very much appreciated!
+- dbt &mdash; Wait... didn't we already mention this? Yes and no. What was previously called `dbt Cloud` is now just `dbt`. However, this can get a little confusing in the docs, so we call it the `dbt platform` or the `cloud-based dbt platform` (all lowercase, all the time) to disambiguate. You can also refer to it by the plan tiers that are offered: `Developer`, `Starter`, `Enterprise`, and `Enterprise+` if writing about something feature-specific.
+
+### dbt features
+
+Some features in the cloud-based dbt platform are treated as proper nouns:
+- Studio IDE
+- Canvas
+- Insights
+- Catalog
+- Mesh
+- Orchestrator
+- Semantic Layer
+- Copilot
+
+All of our other features, such as models, environments, configs, and settings, are treated as common nouns.
+
+### 3rd party brands
+
+We have many official and unofficial partners in the world of dbt. We (and by extension, our docs) must respect their branding. Use proper nouns where appropriate, and even if a product has been known by a particular name for years, if the name changes, we should use the new branding. 
+- Microsoft Azure Active Directory  ❌
+- Microsoft Entra ID ✅ 
+
+Avoid shorthand unless they use it as well. For example:
+
+- Visual Studio Code &mdash; VScode ❌
+- Visual Studio Code &mdash; VS Code ✅ 
+
+### Acronyms and initialisms
+
+When using acronyms and initialisms, use all caps, unless there is another established standard:
+
+- yaml ❌ --> YAML ✅ 
+- sql ❌ --> SQL ✅ 
+- json ❌ --> JSON ✅ 
+- dbt ✅ --> DBT ❌
+- scuba ✅ --> S.C.U.B.A. ❌
+
+The exception in cases like YAML and SQL is if you are using the file extension. For example, "Save the model in a file with the .sql extension."
+
+### Filenaming
 
 If you're adding a new file in the [docs.getdbt.com](https://github.com/dbt-labs/docs.getdbt.com) repository, review the following file name guidance and examples: 
 
@@ -44,7 +95,6 @@ If you're adding a new file in the [docs.getdbt.com](https://github.com/dbt-labs
 | ✅ Use | ❌ Avoid|
 |:-------:|:-------:|
 |`/docs/cloud/about-cloud/architecture` | `/docs/deploy/how-we-think-about-architecture`|
-
 
 ## Using Markdown
 
@@ -228,7 +278,7 @@ When referring to different sections of the IDE, use the name of the section and
 
 ## Capitalization
 
-We should only capitalize products (dbt Explorer, dbt Cloud), but not features like column-level lineage. We also capitalize acronyms and proper nouns. Refer to [MS Style guide on capitalization](https://learn.microsoft.com/en-us/style-guide/capitalization) for more information.
+We should only capitalize products (Catalog, Canvas, Insights), but not features like column-level lineage. We also capitalize acronyms and proper nouns. Refer to [MS Style guide on capitalization](https://learn.microsoft.com/en-us/style-guide/capitalization) for more information.
 
 ## Titles
 
@@ -365,7 +415,7 @@ Otherwise, the text will appear squished and provide users with a bad experience
 - `<div className="grid--5-col">`: creates 5 columns cards (use sparingly)
 - You can't create cards with 6 or more columns as that would provide users a poor experience.
 
-Refer to [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-features) and [Quickstarts](/docs/guides) as examples. 
+Refer to [dbt platform features](/docs/cloud/about-cloud/dbt-cloud-features) and [Quickstarts](/docs/guides) as examples. 
 
 ### Create cards
 
@@ -380,9 +430,9 @@ Refer to the following prop list for detailed explanations and examples:
 
 | Prop | Type | Info | Example |
 | ---- | ---- | ---- | ------- |
-| `title` | required | The title should be clear and explain an action the user should take or a product/feature. | `title: dbt Cloud IDE`
+| `title` | required | The title should be clear and explain an action the user should take or a product/feature. | `title: Studio IDE`
 | `body` | required | The body contains the actionable or informative text for the user. You can include `<a href="` link within the body of the text. However, if you do this, you must not include the `link` prop set as that'll override any `<a href's` within the body text.  | `body="The IDE is the easiest and most efficient way to develop dbt models`
-| `link` | optional | Add a link to the entire card component so when users click on the card, it'll trigger the link. Adding a link prop means it'll override any links within the body and if users click on the card, they'll be directed to the link set by the link prop. | `link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud`
+| `link` | optional | Add a link to the entire card component so when users click on the card, it'll trigger the link. Adding a link prop means it'll override any links within the body and if users click on the card, they'll be directed to the link set by the link prop. | `link="//docs/cloud/studio-ide/develop-in-studio`
 | `icon` | optional but recommended | You can add an icon to the card component by using any icons found in the [icons](https://github.com/dbt-labs/docs.getdbt.com/tree/current/website/static/img/icons) directory. <br /> * Icons are added in .svg format and you must add icons in two locations: website/static/img/icons and website/static/img/icons/white. This is so users can view the icons in dark or light mode on the docs.getdbt.com site. | ` icon="pencil-paper"/>` |
 
 The following is an example of a 4-card column:
@@ -391,9 +441,9 @@ The following is an example of a 4-card column:
 <div className="grid--4-col">
 
 <Card
-    title="dbt Cloud IDE" 
+    title="Studio IDE" 
     body="The IDE is the easiest and most efficient way to develop dbt models." 
-    link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud" 
+    link="//docs/cloud/studio-ide/develop-in-studio" 
     icon="pencil-paper"/> 
     
 <Card  ## this card component has an <a href link within the body. Notice how there's no link prop set as it'll override any a href's within the body. 
@@ -404,13 +454,13 @@ The following is an example of a 4-card column:
 <Card
     title="New title"
     body="more text text"
-    link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud" 
+    link="//docs/cloud/studio-ide/develop-in-studio" 
     icon="pencil-paper"/>
 
 <Card
     title="New title"
     body="more text text"
-    link="/docs/cloud/dbt-cloud-ide/develop-in-the-cloud" 
+    link="//docs/cloud/studio-ide/develop-in-studio" 
     icon="pencil-paper"/>
 
 </div>
@@ -439,12 +489,12 @@ Active voice provides the following advantages:
 - Some passive voice sentences omit an actor altogether, which forces the reader to guess the actor's identity.
 
 
-Sometimes, using passive voice is appropriate. Make sure it’s an intentional choice that communicates the idea clearer than active voice would. For example, when the system is the actor, rather than a person.
+Sometimes, using passive voice is appropriate. Make sure it’s an intentional choice that communicates the idea more clearly than active voice would. For example, when the system is the actor, rather than a person.
 
 
 ✅ Use |	❌ Avoid
 --- | ---|
-(Active voice) Ask someone with access to dbt Cloud to transform the data. | This data transformation can be done by someone with access to dbt Cloud. |
+(Active voice) Ask someone with access to dbt to transform the data. | This data transformation can be done by someone with access to the dbt platform. |
 (Passive voice &mdash; exceptions) The open-sourced rpc plugin is used by the Cloud IDE to recompile changes made in your project. |  We are using the open-sourced rpc plugin for the Cloud IDE to recompile changes made in your project. |
 
 ### Spelling
@@ -462,7 +512,7 @@ Avoid regional idiomatic phrases as well.  For example, a common saying amongst 
 
 ### Abbreviations
 
-According to The American Heritage Dictionary, an abbreviation is "[a] shortened form of a word or phrase used chiefly in writing to represent the complete form" but, unlike the acronym, it's letters aren't pronounced together as one full word.
+According to The American Heritage Dictionary, an abbreviation is "[a] shortened form of a word or phrase used chiefly in writing to represent the complete form" but, unlike the acronym, its letters aren't pronounced together as one full word.
 
 ### Acronyms
 
@@ -471,7 +521,7 @@ Spell out acronyms the first time they’re used in an article, except in titles
 _Do_ provide the full word or phrase being abbreviated before the abbreviation itself and encapsulate within parentheses. <br />
  * *Example: Integrated Development Environment (IDE)*
 
-**DO NOT** use an acronym if its only used once. Please use the full word or phrase for its one-time use.
+**DO NOT** use an acronym if it's only used once. Please use the full word or phrase for its one-time use.
 
 ### Latin abbreviations
 
@@ -496,20 +546,20 @@ Avoid ending a sentence with a preposition unless the rewritten sentence would s
 
 Product names, trademarks, services, and tools should be written as proper nouns, unless otherwise specified by the company or trademark owner.
 
-As of October 2023, avoid using "dbt CLI" or "CLI" terminology when referring to the dbt Cloud CLI or dbt Core.  However, if referring to the command line as a tool, CLI is acceptable.
+As of October 2023, avoid using "dbt CLI" or "CLI" terminology when referring to the dbt CLI or dbt Core.  However, if referring to the command line as a tool, CLI is acceptable.
 
 dbt officially provides two command line tools for running dbt commands:
 
-- [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) &mdash; This tool allows you to develop locally and execute dbt commands against your dbt Cloud development environment from your local command line.
+- [dbt CLI](/docs/cloud/cloud-cli-installation) &mdash; This tool allows you to develop locally and execute dbt commands against your dbt development environment from your local command line.
 - [dbt Core](https://github.com/dbt-labs/dbt-core) &mdash; This open-source tool is designed for local installation, enabling you to use dbt Core on the command line and communicate with databases through adapters.
 
 Here are some examples of what to use and what to avoid: <br />
 
-✅ Set up in the dbt Cloud CLI or dbt Core<br />
-✅ Set up in the dbt Cloud CLI or dbt Core CLI<br />
+✅ Set up in the dbt CLI or dbt Core<br />
+✅ Set up in the dbt CLI or dbt Core CLI<br />
 
 ❌ Set up via dbt CLI<br />
-❌ Set up in dbt Cloud, **or** via the CLI<br />
+❌ Set up in dbt **or** via the CLI<br />
 
 ### Terms to use or avoid
 
@@ -531,13 +581,13 @@ sign in | log in, login
 sign up | signup
 terminal | shell
 username | login
-dbt Cloud CLI | CLI, dbt CLI
+dbt CLI | CLI, dbt CLI
 dbt Core | CLI, dbt CLI
 </b>
 
 Note, let's make sure we're talking to our readers and keep them close to the content and documentation (second person). 
 
-For example, to explain that a feature is available on a particular dbt Cloud plan, you can use:
+For example, to explain that a feature is available on a particular dbt plan, you can use:
 - “XYZ is available on Enterprise plans”
 - “If you're on an Enterprise plan, you can access XYZ..” 
 - "Enterprise plans can access XYZ..." to keep users closer to the documentation. 
@@ -649,18 +699,49 @@ It is important to remember that all of dbt Labs documentation is currently in E
 
 Both macOS and Windows include tools that allow you to capture and manipulate screenshots. You can use alternatives based on your preferences, but avoid programs that place a watermark over the content.
 
-* [How to take screenshots in MacOS](https://support.apple.com/en-us/HT201361#:~:text=How%20to%20take%20a%20screenshot,to%20save%20to%20your%20desktop.)
+* [How to take screenshots in macOS](https://support.apple.com/en-us/HT201361#:~:text=How%20to%20take%20a%20screenshot,to%20save%20to%20your%20desktop.)
 * [How to take screenshots with the Snipping Tool in Windows](https://support.microsoft.com/en-us/windows/use-snipping-tool-to-capture-screenshots-00246869-1843-655f-f220-97299b865f6b#:~:text=Press%20Ctrl%20%2B%20PrtScn%20keys.,that%20you%20want%20to%20capture.)
 
 #### Screenshot guidelines
 
-Once you have determined that a screenshot will add value to the document where words alone can't, use the [Lightbox component](/contributing/lightbox) and the following guidelines to capture the information:
+Note that it is not always recommended to use screenshots in technical documentation. Using screenshots even when not necessary might be difficult to maintain because the UI changes often. Make sure to write clear text instructions and to use screenshots when they add value to the document, and not just for decoration. 
 
+Once you have determined that a screenshot will add value where words alone can't, use the [Lightbox component](/contributing/lightbox) and the following guidelines to capture the information:
+
+##### Content
 * Use screenshots to highlight navigation, on-screen elements, and other noteworthy product visuals.
 * Avoid using screenshots to demonstrate inputs and outputs. All code snippets and sample results should be in the documents as text fields.
-* Add images are under the `static` -> `img` folder.
+* Use the Markup toolbar in Preview for macOS to add callouts to your images when necessary. For more information, refer to [Annotate an image in Preview on Mac](https://support.apple.com/en-ph/guide/preview/prvw1501/mac).
+    When adding callouts, refer to the following guidelines:
+    * Place callouts near the UI element but do not cover important details.
+    * To highlight a part of the UI, use a transparent box with red borders. Select the fifth line thickness (medium) in the Markup tool for consistency. For example: 
+
+        ![Sample callout when highlighting a UI element](images/sample-callouts.png)
+
+        ![Line thickness for callout box](images/callout-thickness.png)
+
+    * To highlight multiple UI elements, use numbered callouts with a matching legend. Each number should correspond to a brief description listed below the screenshot, explaining the function of each UI element.
+    
+      When using numbered callouts, refer to the following guidelines:
+
+      - Font style: Helvetica
+      - Font size: 30 pt
+      - Font color: Red
+      - Format: Bold
+
+      For example:
+
+      ![Sample callouts using numbers](images/sample-numbered-callouts.png)
+    
+      **Note:** When highlighting multiple UI elements, use arrows sparingly because too many arrows can clutter the screenshot.
+* Redact all sensitive information such as names, email addresses, phone numbers, or anything that could be considered personally identifiable information (PII) should be obfuscated. If the dbt account name is shown in the screenshot, make sure to edit the name to a generic name (for example, John Doe or Jane Doe) when taking the screenshot.
+* Avoid URL and bookmark bars in the screenshot and limit the scope to the product and page being documented.
+
+##### Format
+
+* Add images under the `static` -> `img` folder.
 * Use concise filenames that are relevant to the content contained within. Enumerate them if they are part of a sequence.
-* Use JPEG format, which renders a better quality and lossless compression. JPEG format has a white background and is accessible in light and dark mode. 
+* Use JPEG or PNG format, which renders a better quality and lossless compression. JPEG format has a white background and is accessible in light and dark mode. 
 * Add *title=""* for all images to write a concise title of the image. For accessibility, it's important to use succinct text that is clear and complete. 
 
 For more information about image-formatting, review the [Lightbox guidance](/contributing/lightbox), and the following examples:
@@ -668,9 +749,6 @@ For more information about image-formatting, review the [Lightbox guidance](/con
   :x: screenshot-august0822.jpg
 
   :white_check_mark: viewing-admins-01.jpg
-
-* Redact all sensitive information from the screenshot &mdash; names, email addresses, phone numbers, or anything that could be considered personally identifiable information (PII) should be obfuscated.
-* Avoid URL and bookmark bars in the screenshot and limit the scope to the product and page being documented.
 
 ## Talk to us
 Your feedback helps drive us forward. At dbt Labs, we want you to get involved if you see areas in the documentation that need improvement. That might include becoming a docs contributor or simply filing a GitHub issue so we know where to look. We have an incredible community of contributors, and our documents reflect that.

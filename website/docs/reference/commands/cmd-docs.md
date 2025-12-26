@@ -1,5 +1,6 @@
 ---
 title: "О командах dbt docs"
+description: "Генерация и запуск документации для вашего dbt‑проекта."
 sidebar_label: "docs"
 id: "cmd-docs"
 ---
@@ -28,7 +29,7 @@ dbt docs generate
 dbt docs generate --select +orders
 ```
 
-Используйте аргумент `--no-compile`, чтобы пропустить повторную компиляцию. Когда этот флаг указан, `dbt docs generate` пропустит шаг (2), описанный выше.
+Используйте аргумент `--no-compile`, чтобы пропустить повторную компиляцию. Если этот флаг указан, команда `dbt docs generate` пропустит шаг (2), описанный выше. Обратите внимание, что dbt всё равно выполняет некоторые специальные макросы (например, `generate_schema_name`) [во время парсинга](/reference/global-configs/parsing), даже если компиляция пропущена.
 
 **Пример**:
 
@@ -38,7 +39,11 @@ dbt docs generate --no-compile
 
 Используйте аргумент `--empty-catalog`, чтобы пропустить выполнение запросов к базе данных для заполнения `catalog.json`. Когда этот флаг указан, `dbt docs generate` пропустит шаг (3), описанный выше.
 
-Это не рекомендуется для производственных сред, так как это означает, что в вашей документации будет отсутствовать информация, полученная из метаданных базы данных (полный набор столбцов в каждой таблице и статистика по этим таблицам). Это может ускорить `docs generate` в процессе разработки, когда вы просто хотите визуализировать родословную и другую информацию, определенную в вашем проекте. Чтобы узнать, как создать вашу документацию в dbt Cloud, обратитесь к [созданию документации в dbt Cloud](/docs/collaborate/build-and-view-your-docs).
+Это **не рекомендуется для продакшен-окружений**, поскольку в таком случае в документации будет отсутствовать информация, получаемая из метаданных базы данных (полный набор колонок в каждой таблице, а также статистика по этим таблицам).  
+
+Зато это может ускорить выполнение команды `docs generate` в процессе разработки, когда вам нужно лишь визуализировать lineage и другую информацию, определённую внутри вашего проекта.  
+
+Чтобы узнать, как собирать документацию в <Constant name="cloud" />, см. раздел [build your docs in <Constant name="cloud" />](/docs/explore/build-and-view-your-docs).
 
 **Пример**:
 
@@ -46,11 +51,19 @@ dbt docs generate --no-compile
 dbt docs generate --empty-catalog
 ```
 
+**Example**:
+
+Use the `--static` flag to generate the docs as a static page for hosting on a cloud storage provider. The `catalog.json` and `manifest.json` files will be inserted into the `index.html` file, creating a single page easily shared via email or file-sharing apps. 
+
+```
+dbt docs generate --static
+```
+
 ### dbt docs serve
 
 Эта команда запускает веб-сервер на порту 8080 для локальной подачи вашей документации и открывает сайт документации в вашем браузере по умолчанию. Веб-сервер коренится в вашей директории `target/`. Убедитесь, что вы запустили `dbt docs generate` перед `dbt docs serve`, потому что команда `generate` создает [артефакт метаданных каталога](/reference/artifacts/catalog-json), от которого зависит команда `serve`. Вы увидите сообщение об ошибке, если каталог отсутствует.
 
-Используйте команду `dbt docs serve`, если вы разрабатываете локально с [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или [dbt Core](/docs/core/installation-overview). [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) не поддерживает эту команду.
+Используйте команду `dbt docs serve`, если вы разрабатываете локально с помощью [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) или [<Constant name="core" />](/docs/core/installation-overview). [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) не поддерживает эту команду.
 
 **Использование:**
 

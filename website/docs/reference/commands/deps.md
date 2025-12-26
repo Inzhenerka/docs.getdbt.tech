@@ -21,9 +21,9 @@ packages:
     version: 0.4.0
   - package: calogica/dbt_expectations
     version: 0.4.1
-  - git: https://github.com/dbt-labs/dbt-audit-helper.git
+  - git: https://github.com/dbt-labs/dbt_audit_helper.git
     revision: 0.4.0
-  - git: "https://github.com/dbt-labs/dbt-labs-experimental-features" # URL git
+  - git: "https://github.com/dbt-labs/dbt_labs-experimental-features" # URL репозитория git
     subdirectory: "materialized-views" # имя подкаталога, содержащего `dbt_project.yml`
     revision: 0.0.1
   - package: dbt-labs/snowplow
@@ -42,9 +42,9 @@ Installing dbt-labs/codegen@0.4.0
 Installing calogica/dbt_expectations@0.4.1
   Installed from version 0.4.1
   Up to date!
-Installing https://github.com/dbt-labs/dbt-audit-helper.git@0.4.0
+Installing https://github.com/dbt-labs/dbt_audit_helper.git@0.4.0
   Installed from revision 0.4.0
-Installing https://github.com/dbt-labs/dbt-labs-experimental-features@0.0.1
+Installing https://github.com/dbt-labs/dbt_labs-experimental-features@0.0.1
   Installed from revision 0.0.1
    and subdirectory materialized-views
 Installing dbt-labs/snowplow@0.13.0
@@ -60,9 +60,13 @@ Update your versions in packages.yml, then run dbt deps
 
 ## Предсказуемая установка пакетов
 
-Начиная с dbt v1.7, dbt генерирует файл `package-lock.yml` в корне вашего проекта. Этот файл обеспечивает согласованную и предсказуемую установку пакетов, сохраняя точные версии (включая SHA коммитов) всех разрешенных пакетов, указанных в вашем `packages.yml` или `dependencies.yml`. Эта согласованность важна для поддержания стабильности в средах разработки и производства, предотвращая неожиданные проблемы из-за новых релизов с потенциальными ошибками.
+dbt генерирует файл `package-lock.yml` в корне вашего проекта. Этот файл фиксирует точные разрешённые версии (включая commit SHA) всех пакетов, определённых в файле `packages.yml` или `dependencies.yml`. Файл `package-lock.yml` обеспечивает согласованные и воспроизводимые установки во всех средах.
 
-Когда вы запускаете `dbt deps`, dbt устанавливает пакеты на основе зафиксированных версий в `package-lock.yml`. Чтобы обновить эти зафиксированные версии, вы должны явно запустить `dbt deps --upgrade` и зафиксировать обновленный файл `package-lock.yml`. Хранение этого файла в системе контроля версий гарантирует согласованность во всех средах и для всех разработчиков.
+Когда вы запускаете `dbt deps`, dbt устанавливает пакеты на основе версий, зафиксированных в `package-lock.yml`. Это означает, что пока файл с описанием пакетов не изменялся, будут устанавливаться одни и те же версии зависимостей, даже если уже вышли более новые версии этих пакетов. Такая согласованность важна для поддержания стабильности в средах разработки и продакшена, а также для предотвращения неожиданных проблем, связанных с новыми релизами и возможными ошибками.
+
+Если файл `packages.yml` был изменён (например, добавлен новый пакет или обновлён диапазон версий), то `dbt deps` автоматически разрешает новый набор зависимостей и соответствующим образом обновляет lock-файл. Вы также можете вручную инициировать обновление, выполнив команду `dbt deps --upgrade`.
+
+Для поддержания согласованности добавляйте файл `package-lock.yml` в систему контроля версий. Это гарантирует одинаковое поведение во всех средах и для всех разработчиков.
 
 ### Управление `package-lock.yml`
 
@@ -80,7 +84,7 @@ dbt deps --lock
 
 ### Принудительное обновление пакетов
 
-Чтобы обновить все пакеты, даже если `packages.yml` не изменился, используйте флаг `--upgrade`:
+Чтобы обновить все пакеты, даже если файл `packages.yml` не изменялся, используйте флаг `--upgrade`:
 
 ```shell
 dbt deps --upgrade

@@ -1,7 +1,7 @@
 ---
 datatype: "string | {comment: string, append: true | false }"
 default: >
-  /* {"app": "dbt", "dbt_version": "0.15.0rc2", "profile_name": "debug", "target_name": "dev", "node_id": "model.dbt2.my_model"} */
+  /* {"app": "dbt", "dbt_version": "1.5.0rc2", "profile_name": "debug", "target_name": "dev", "node_id": "model.dbt2.my_model"} */
 ---
 
 <File name='dbt_project.yml'>
@@ -29,31 +29,28 @@ query-comment:
 
 </File>
 
-## Определение
-Строка, которая вставляется в качестве комментария в каждый запрос, который dbt выполняет в вашей базе данных. Этот комментарий может связывать SQL-выражения с конкретными ресурсами dbt, такими как модели и тесты.
+## Definition
+
+Строка, которая будет добавляться в виде комментария к каждому запросу, который dbt выполняет к вашей базе данных. Этот комментарий позволяет связывать SQL‑выражения с конкретными ресурсами dbt, такими как модели и тесты.
 
 Конфигурация `query-comment` также может вызывать макрос, который возвращает строку.
 
 ## По умолчанию
-По умолчанию dbt вставляет комментарий в формате <Term id="json" /> в начало вашего запроса, содержащий информацию, включая версию dbt, имена профиля и цели, а также идентификаторы узлов для ресурсов, которые он выполняет. Например:
 
-```sql
-/* {"app": "dbt", "dbt_version": "0.15.0rc2", "profile_name": "debug",
-    "target_name": "dev", "node_id": "model.dbt2.my_model"} */
+By default, dbt automatically inserts a <Term id="json" /> comment in each query it runs. This comment includes metadata such as the dbt version, profile and target names, and node ID for the resource generating the query.
 
-create view analytics.analytics.orders as (
-    select ...
-  );
-```
+- For Snowflake, the comment appears at the *end* of the query. This prevents the comment from being stripped during processing.
 
-## Использование синтаксиса словаря
-Синтаксис словаря включает два ключа:
-  * `comment` (необязательно, для получения дополнительной информации см. раздел [по умолчанию](#default)): Строка, которая будет вставлена в запрос в качестве комментария.
-  * `append` (необязательно, по умолчанию=`false`): Должен ли комментарий быть добавлен в конец запроса (добавлен внизу) или нет (т.е. добавлен в начало запроса). По умолчанию комментарии добавляются в начало запросов (т.е. `append: false`).
+- Для других адаптеров комментарий добавляется в *начале* запроса. Например:
 
-Этот синтаксис полезен для баз данных, таких как Snowflake, которые [удаляют начальные SQL-комментарии](https://docs.snowflake.com/en/release-notes/2017-04.html#queries-leading-comments-removed-during-execution).
+  ```sql
+  /* {"app": "dbt", "dbt_version": "1.10.0rc2", "profile_name": "debug",
+      "target_name": "dev", "node_id": "model.dbt2.my_model"} */
 
-## Примеры
+  create view analytics.analytics.orders as (
+      select ...
+    );
+  ```
 
 ### Добавление статического комментария в начало
 Следующий пример вставляет комментарий `/* executed by dbt */` в заголовок SQL-запросов, которые выполняет dbt.
@@ -136,7 +133,7 @@ query-comment:
 
 ```sql
 select ...
-/* {"app": "dbt", "dbt_version": "0.16.`0rc2`", "profile_name": "debug", "target_name": "dev", "node_id": "model.dbt2.my_model"} */
+/* {"app": "dbt", "dbt_version": "1.6.0rc2", "profile_name": "debug", "target_name": "dev", "node_id": "model.dbt2.my_model"} */
 ;
 ```
 
@@ -176,9 +173,9 @@ select ...
 ;
 ```
 
-### Промежуточный уровень: Использование макроса для генерации комментария
+### Intermediate: Использование макроса для генерации комментария
 
-Конфигурация `query-comment` может ссылаться на макросы в вашем проекте dbt. Просто создайте макрос с любым именем (например, `query_comment`) в вашем каталоге `macros`, как показано ниже:
+Конфигурация `query-comment` может ссылаться на макросы в вашем dbt‑проекте. Для этого достаточно создать макрос с любым именем (хорошим вариантом будет `query_comment`) в директории `macros`, например так:
 
 <File name='macros/query_comment.sql'>
 
@@ -271,4 +268,4 @@ query-comment: "{{ query_comment(node) }}"
 | connection_name      | Строка, представляющая внутреннее имя для соединения. Эта строка генерируется dbt. |
 | node                 | Представление узла в виде словаря. Используйте `node.unique_id`, `node.database`, `node.schema` и так далее. |
 
-Примечание: Функция `var()` в макросах `query-comment` имеет доступ только к переменным, переданным через аргумент `--vars` в CLI. Переменные, определенные в блоке vars вашего `dbt_project.yml`, недоступны при генерации комментариев к запросам.
+Примечание: функция `var()` в макросах `query-comment` имеет доступ только к переменным, переданным через аргумент `--vars` в CLI. Переменные, определённые в блоке `vars` вашего файла `dbt_project.yml`, недоступны при генерации комментариев к запросам.

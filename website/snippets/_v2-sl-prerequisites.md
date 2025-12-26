@@ -1,8 +1,7 @@
-- Иметь командный или корпоративный аккаунт dbt Cloud.
-   - Доступно на всех [конфигурациях арендаторов](/docs/cloud/about-cloud/tenancy). Владельцам одноарендаторных аккаунтов следует связаться с представителем своего аккаунта для настройки.
-- Убедитесь, что ваши производственные и разработческие среды используют [поддерживаемую версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
-- Используйте Snowflake, BigQuery, Databricks или Redshift.
-- Создайте успешный запуск в среде, где вы настраиваете Семантический слой.
-   - **Примечание:** Семантический слой поддерживает запросы в средах развертывания; поддержка запросов в средах разработки появится в ближайшее время.
-- Понимать ключевые концепции [MetricFlow](/docs/build/about-metricflow), которые лежат в основе Семантического слоя dbt.
-- Обратите внимание, что Семантический слой dbt не поддерживает SSH-туннелирование для подключений [Postgres или Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb). Также он не поддерживает использование [единого входа (SSO)](/docs/cloud/manage-access/sso-overview) для [производственных учетных данных](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens), хотя SSO поддерживается для учетных записей пользователей разработки.
+- У вас должен быть аккаунт <Constant name="cloud" /> уровня Starter, Enterprise или Enterprise+. Доступно для всех [конфигураций тенанта](/docs/cloud/about-cloud/tenancy).
+- Убедитесь, что ваши production- и development-окружения используют [поддерживаемую версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Используйте Snowflake, BigQuery, Databricks, Redshift, Postgres или Trino.
+- Создайте успешный run в окружении, где вы настраиваете <Constant name="semantic_layer" />.
+  - **Примечание:** <Constant name="semantic_layer" /> поддерживает выполнение запросов в Deployment-окружениях; возможность выполнять запросы в development-окружениях появится в ближайшее время.
+- Разберитесь с ключевыми концепциями [MetricFlow](/docs/build/about-metricflow), которые лежат в основе <Constant name="semantic_layer" />.
+- Обратите внимание, что <Constant name="semantic_layer" /> не поддерживает использование [Single sign-on (SSO)](/docs/cloud/manage-access/sso-overview) для [production credentials](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens), хотя SSO поддерживается для пользовательских аккаунтов в development-окружениях.

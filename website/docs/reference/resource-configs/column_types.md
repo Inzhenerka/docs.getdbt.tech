@@ -24,7 +24,6 @@ seeds:
 <File name='seeds/properties.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: country_codes
@@ -56,8 +55,7 @@ seeds:
 
 ## Примеры
 
-### Используйте тип столбца varchar, чтобы сохранить ведущие нули в почтовом индексе
-(Примечание: сохранение ведущих нулей работает с версии v0.16.0 и выше)
+### Используйте тип столбца varchar, чтобы сохранить ведущие нули в zipcode
 <File name='dbt_project.yml'>
 
 ```yml

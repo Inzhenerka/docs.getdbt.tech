@@ -8,7 +8,6 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt Core']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -29,11 +28,13 @@ recently_updated: true
 - макросы, которые решают конкретную задачу аналитической инженерии — например, [аудит результатов запроса](https://hub.getdbt.com/dbt-labs/audit_helper/latest/), [генерация кода](https://hub.getdbt.com/dbt-labs/codegen/latest/) или [добавление дополнительных тестов схемы в проект dbt](https://hub.getdbt.com/calogica/dbt_expectations/latest/).
 - модели для общего набора данных — например, набор данных для программных продуктов, таких как [MailChimp](https://hub.getdbt.com/fivetran/mailchimp/latest/) или [Snowplow](https://hub.getdbt.com/dbt-labs/snowplow/latest/), или даже модели для метаданных о вашем стеке данных, таких как [расходы на запросы Snowflake](https://hub.getdbt.com/gitlabhq/snowflake_spend/latest/) и [артефакты, созданные `dbt run`](https://hub.getdbt.com/tailsdotcom/dbt_artifacts/latest/). В общем, должен быть общий набор отраслевых стандартных метрик, которые вы можете моделировать (например, уровень открытия электронной почты).
 
-Пакеты _не_ подходят для обмена моделями, содержащими бизнес-специфичную логику, например, написание кода для атрибуции маркетинга или ежемесячного повторяющегося дохода. Вместо этого рассмотрите возможность публикации блога и ссылки на пример репозитория, а не упаковки этого кода в виде пакета (вот наш блог о [атрибуции маркетинга](https://blog.getdbt.com/modeling-marketing-attribution/) в качестве примера).
+Мы также рекомендуем убедиться, что ваш пакет совместим с [<Constant name="fusion"/>](/docs/fusion) и [<Constant name="core"/>](/docs/about-dbt-install). Чтобы обеспечить совместимость с <Constant name="fusion"/>, вы можете следовать шагам из [руководства по обновлению пакетов для Fusion](/guides/fusion-package-compat).
 
-## Создайте ваш новый проект
-:::note Использование командной строки для разработки пакетов
-Мы склонны использовать интерфейс командной строки для разработки пакетов. Рабочий процесс разработки часто включает установку локальной копии вашего пакета в другой проект dbt — в настоящее время dbt Cloud не предназначен для этого рабочего процесса.
+Пакеты _не_ подходят для распространения моделей, содержащих бизнес-специфичную логику, например кода для маркетинговой атрибуции или расчёта ежемесячной повторяющейся выручки (MRR). Вместо этого лучше опубликовать статью в блоге и дать ссылку на пример репозитория, а не упаковывать такой код в виде пакета (вот наш пост в блоге про [маркетинговую атрибуцию](https://blog.getdbt.com/modeling-marketing-attribution/) в качестве примера).
+
+## Create your new project
+:::note Using the command line for package development
+Мы обычно используем интерфейс командной строки для разработки пакетов. Процесс разработки часто включает установку локальной копии вашего пакета в другой проект dbt — в настоящее время <Constant name="cloud" /> не предназначен для такого рабочего процесса.
 :::
 
 1. Используйте команду [dbt init](/reference/commands/init) для создания нового проекта dbt, который станет вашим пакетом:
@@ -51,10 +52,15 @@ $ dbt init [package_name]
 
 При работе над вашим пакетом мы часто находим полезным установить локальную копию пакета в другой проект dbt — этот рабочий процесс описан [здесь](https://discourse.getdbt.com/t/contributing-to-an-external-dbt-package/657).
 
+### Обеспечьте совместимость с Fusion
+Если вы разрабатываете пакет, мы рекомендуем убедиться, что он совместим с [<Constant name="fusion"/>](/docs/fusion) и [<Constant name="core"/>](/docs/about-dbt-install). Чтобы обеспечить совместимость с <Constant name="fusion"/>, вы можете следовать шагам из [руководства по обновлению пакетов для Fusion](/guides/fusion-package-compat).
+
+Это обеспечит совместимость вашего пакета с <Constant name="fusion_engine"/> (и <Constant name="core"/>), а также приведёт к тому, что в dbt package hub он будет отображаться с бейджем совместимости с <Constant name="fusion"/>.
+
 ### Следуйте лучшим практикам
 _Только для пакетов моделирования_
 
-Используйте наши [конвенции кодирования dbt](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md), нашу статью о [структурировании наших проектов dbt](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) и наши [лучшие практики](/best-practices) для всех наших советов о том, как построить ваш проект dbt.
+Используйте наши [dbt coding conventions](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md), статью о том, [как мы структурируем наши dbt‑проекты](/best-practices/how-we-structure/1-guide-overview), а также раздел [best practices](/best-practices) — там собраны все наши рекомендации по построению dbt‑проекта.
 
 Здесь особенно полезно иметь опыт работы над собственным проектом dbt.
 

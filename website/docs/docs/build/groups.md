@@ -13,21 +13,21 @@ keywords:
 
 ### Объявление группы
 
-Группы определяются в файлах `.yml`, вложенных под ключом `groups:`.
+import DefineGroups from '/snippets/_define-groups.md';
 
-<File name='models/marts/finance/finance.yml'>
+<DefineGroups />
 
-```yaml
-groups:
-  - name: finance
-    owner:
-      # 'name' или 'email' обязательны; дополнительные свойства разрешены
-      email: finance@jaffleshop.com
-      slack: finance-data
-      github: finance-data-team
-```
+#### Централизованное определение группы
 
-</File>
+Чтобы централизованно определить группу в вашем проекте, есть два варианта:
+
+- Создать один файл `_groups.yml` в корне директории `models`.
+- Создать один файл `_groups.yml` в корне директории `groups`. Для этого варианта также необходимо настроить параметр [`model-paths`](/reference/project-configs/model-paths) в файле `dbt_project.yml`:
+
+  ```yml 
+  model-paths: ["models", "groups"]
+  ```
+
 
 ### Добавление модели в группу
 
@@ -89,8 +89,8 @@ select ...
 ```yml
 models:
   - name: finance_private_model
-    access: private
     config:
+      access: private # changed to config in v1.10
       group: finance
 
   # в другой группе!
@@ -117,6 +117,6 @@ dbt.exceptions.DbtReferenceError: Parsing Error
 
 ## Связанные документы
 
-* [Доступ к моделям](/docs/collaborate/govern/model-access#groups)
-* [Конфигурация группы](/reference/resource-configs/group)
-* [Выбор группы](/reference/node-selection/methods#group)
+* [Доступ к моделям](/docs/mesh/govern/model-access#groups)
+* [Конфигурация групп](/reference/resource-configs/group)
+* [Выбор групп](/reference/node-selection/methods#group)

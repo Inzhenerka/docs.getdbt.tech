@@ -25,11 +25,17 @@ datatype: "{dictionary}"
 
 <VersionBlock firstVersion="1.9">
 
-Ограничения внешнего ключа принимают два дополнительных входных параметра:
-- `to`: Входное отношение, вероятно, `ref()`, указывающее на ссылочную таблицу.
+Ограничения внешнего ключа принимают два дополнительных параметра:
+
+- `to`: Входной параметр типа relation, как правило [`ref()`](/reference/dbt-jinja-functions/ref) и [`source()`](/reference/dbt-jinja-functions/source), указывающий на таблицу, на которую ссылается внешний ключ.
 - `to_columns`: Список столбцов в этой таблице, содержащих соответствующий первичный или уникальный ключ.
 
-Этот синтаксис для определения внешних ключей использует `ref`, что означает, что он будет фиксировать зависимости и работать в разных средах. Он доступен в [dbt Cloud "Latest""](/docs/dbt-versions/cloud-release-tracks) и [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+Этот синтаксис определения внешних ключей использует `ref`, что означает автоматический учет зависимостей и корректную работу в разных окружениях. Он доступен в [<Constant name="cloud" /> "Latest"](/docs/dbt-versions/cloud-release-tracks) и [<Constant name="core" /> v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+
+Поскольку поддержка и применение ограничений [различаются в зависимости от платформы](/reference/resource-properties/constraints#platform-specific-support), dbt предоставляет два необязательных поля, которые можно указать для любого ограничения:
+
+- `warn_unenforced`: Установите в `False`, чтобы отключить предупреждения для ограничений, которые поддерживаются вашей платформой, но фактически не применяются (например, `primary_key` в Snowflake).
+- `warn_unsupported`: Установите в `False`, чтобы отключить предупреждения для ограничений, которые вообще не поддерживаются вашей платформой (например, `check` в Redshift).
 
 <File name='models/schema.yml'>
 
@@ -45,9 +51,10 @@ models:
     constraints:
       - type: primary_key
         columns: [first_column, second_column, ...]
+        warn_unsupported: True # show a warning if unsupported
       - type: foreign_key # multi_column
         columns: [first_column, second_column, ...]
-        to: ref('other_model_name')
+        to: ref('my_model_to') | source('source', 'source_table')
         to_columns: [other_model_first_column, other_model_second_columns, ...]
       - type: check
         columns: [first_column, second_column, ...]
@@ -64,55 +71,17 @@ models:
           - type: not_null
           - type: unique
           - type: foreign_key
-            to: ref('other_model_name')
+            to: ref('my_model_to') | source('source', 'source_table')
             to_columns: [other_model_column]
+            warn_unenforced: False # skips warning if supported but not enforced
           - type: ...
 ```
 
 </File>
-</VersionBlock>
 
-<VersionBlock lastVersion="1.8">
+Supported dbt-adapters use these fields when populated, to render out the foreign key constraint instead of `expression`.
 
-В более старых версиях dbt Core, при определении ограничения `foreign_key`, вам нужно вручную указать ссылочную таблицу в поле `expression`. Вы можете использовать переменные `{{ target }}`, чтобы сделать это выражение зависящим от среды, но зависимость между этой моделью и ссылочной таблицей не фиксируется. Начиная с dbt Core v1.9, вы можете указывать ссылочную таблицу, используя функцию `ref()`.
-
-<File name='models/schema.yml'>
-
-```yml
-models:
-  - name: <model_name>
-    
-    # обязательно
-    config:
-      contract: {enforced: true}
-    
-    # ограничения на уровне модели
-    constraints:
-      - type: primary_key
-        columns: [first_column, second_column, ...]
-      - type: foreign_key # multi_column
-        columns: [first_column, second_column, ...]
-        expression: "{{ target.schema }}.other_model_name (other_model_first_column, other_model_second_column, ...)"
-      - type: check
-        columns: [first_column, second_column, ...]
-        expression: "first_column != second_column"
-        name: human_friendly_name
-      - type: ...
-    
-    columns:
-      - name: first_column
-        data_type: string
-        
-        # ограничения на уровне столбца
-        constraints:
-          - type: not_null
-          - type: unique
-          - type: foreign_key
-            expression: "{{ target.schema }}.other_model_name (other_model_column)"
-          - type: ...
-```
-
-</File>
+Для получения дополнительной информации об адаптерах, которые поддерживают ограничения внешних ключей, ознакомьтесь с нашим руководством по [поддержке ограничений платформами](/docs/mesh/govern/model-contracts#platform-constraint-support).
 
 </VersionBlock>
 
@@ -239,7 +208,7 @@ models:
           - type: primary_key # не применяется  -- будет предупреждение и включение
           - type: check       # не поддерживается -- будет предупреждение и пропуск
             expression: "id > 0"
-        tests:
+        data_tests:
           - unique            # ограничение primary_key не применяется
       - name: customer_name
         data_type: varchar
@@ -326,8 +295,8 @@ models:
           - type: primary_key # не применяется  -- будет предупреждение и включение
           - type: check       # не поддерживается -- будет предупреждение и пропуск
             expression: "id > 0"
-        tests:
-          - unique            # нужен этот тест, потому что ограничение primary_key не применяется
+        data_tests:
+          - unique            # этот тест нужен, потому что ограничение primary_key не применяется
       - name: customer_name
         data_type: text
       - name: first_transaction_date
@@ -361,7 +330,7 @@ select
 
 <div warehouse="BigQuery">
 
-BigQuery позволяет определять и применять ограничения `not null`, а также определять (но _не_ применять) ограничения `primary key` и `foreign key` (которые могут использоваться для оптимизации запросов). BigQuery не поддерживает определение или применение других ограничений. Для получения дополнительной информации обратитесь к [Поддержка ограничений платформы](/docs/collaborate/govern/model-contracts#platform-constraint-support)
+BigQuery позволяет определять и обеспечивать соблюдение ограничений `not null`, а также определять (но _не обеспечивать соблюдение_) ограничения `primary key` и `foreign key` (которые могут использоваться для оптимизации запросов). BigQuery не поддерживает определение или обеспечение соблюдения других ограничений. Подробнее см. в разделе [Platform constraint support](/docs/mesh/govern/model-contracts#platform-constraint-support).
 
 Документация: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
 
@@ -400,8 +369,8 @@ models:
           - type: primary_key # не применяется  -- будет предупреждение и включение
           - type: check       # не поддерживается -- будет предупреждение и пропуск
             expression: "id > 0"
-        tests:
-          - unique            # ограничение primary_key не применяется
+        data_tests:
+          - unique            # ограничение primary_key не обеспечивается (не проверяется)
       - name: customer_name
         data_type: string
       - name: first_transaction_date
@@ -435,7 +404,6 @@ select
 <File name='models/nested_fields.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: nested_column_constraints_example
@@ -537,7 +505,7 @@ models:
           - type: primary_key # не применяется  -- будет предупреждение и включение
           - type: check       # не поддерживается -- будет предупреждение и пропуск
             expression: "id > 0"
-        tests:
+        data_tests:
           - unique            # ограничение primary_key не применяется
       - name: customer_name
         data_type: text
@@ -575,7 +543,7 @@ alter table schema_name.my_model add constraint 472394792387497234 check (id > 0
 
 ## Пользовательские ограничения
 
-В dbt Cloud и dbt Core вы можете использовать пользовательские ограничения на моделях для расширенной конфигурации таблиц. Разные хранилища данных поддерживают разные синтаксисы и возможности.
+В <Constant name="cloud" /> и <Constant name="core" /> вы можете использовать пользовательские ограничения (custom constraints) для расширенной настройки таблиц в моделях. Разные хранилища данных поддерживают различный синтаксис и разные возможности.
 
 Пользовательские ограничения позволяют добавлять конфигурацию к конкретным столбцам. Например:
 

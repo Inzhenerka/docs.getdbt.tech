@@ -1,27 +1,25 @@
 ---
-title: "Настройка SSO с Google Workspace"
-description: "Узнайте, как администраторы dbt Cloud могут использовать одноразовую аутентификацию (SSO) через Google GSuite для управления доступом в аккаунте dbt Cloud."
+title: "Настройка SSO с Google Workspace"  
+description: "Узнайте, как администраторы dbt могут использовать Single Sign-On (SSO) через Google GSuite для управления доступом к аккаунту dbt."
 id: "set-up-sso-google-workspace"
 ---
 
-import SetUpPages from '/snippets/_sso-docs-mt-available.md';
+# Set up SSO with Google Workspace <Lifecycle status="managed, managed_plus" />
 
-<SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
+<Constant name="cloud" /> Enterprise-tier plans support Single-Sign On (SSO) via Google GSuite. You will need permissions to create and manage a new Google OAuth2 application, as well as access to enable the Google Admin SDK. Gsuite is a component within Google Cloud Platform (GCP), so you will also need access to a login with permissions to manage the GSuite application within a GCP account.
 
-dbt Cloud Enterprise поддерживает одноразовую аутентификацию (SSO) через Google GSuite. Вам понадобятся права для создания и управления новым приложением Google OAuth2, а также доступ для включения Google Admin SDK. Gsuite является компонентом в рамках Google Cloud Platform (GCP), поэтому вам также потребуется доступ к учетной записи с правами на управление приложением GSuite в аккаунте GCP.
-
-Некоторые клиенты предпочитают использовать разных облачных провайдеров для настройки прав пользователей и групп, чем для размещения инфраструктуры. Например, вполне возможно использовать GSuite для управления информацией для входа и настройки многофакторной аутентификации (MFA), при этом размещая рабочие нагрузки данных на AWS.
+Некоторые клиенты предпочитают использовать разных облачных провайдеров для настройки прав пользователей и групп и для размещения инфраструктуры. Например, вполне возможно использовать GSuite для управления учетными данными для входа и настройками многофакторной аутентификации (MFA), одновременно размещая рабочие нагрузки с данными в AWS.
 
 В настоящее время поддерживаются следующие функции:
 
 * SSO, инициированное поставщиком услуг
 * Создание учетных записей в режиме реального времени
 
-Это руководство описывает процесс настройки аутентификации в dbt Cloud с использованием Google GSuite.
+Это руководство описывает процесс настройки аутентификации в <Constant name="cloud" /> с использованием Google GSuite.
 
 ## Конфигурация организации GSuite в GCP
 
-dbt Cloud использует идентификатор клиента (Client ID) и секрет клиента (Client Secret) для аутентификации пользователей организации GSuite. Ниже приведены шаги по созданию идентификатора клиента и секрета клиента для использования в dbt Cloud.
+<Constant name="cloud" /> использует Client ID и Client Secret для аутентификации пользователей организации GSuite. Ниже описаны шаги по созданию Client ID и Client Secret для использования в <Constant name="cloud" />.
 
 ### Создание учетных данных
 
@@ -31,25 +29,25 @@ dbt Cloud использует идентификатор клиента (Client
 4. Google требует, чтобы вы настроили экран согласия OAuth для учетных данных OAuth. Нажмите кнопку **Настроить экран согласия**, чтобы создать новый экран согласия, если будет предложено.
 5. На странице экрана согласия OAuth настройте следующие параметры ([документация Google](https://support.google.com/cloud/answer/6158849?hl=en#userconsent)):
 
-| Конфигурация          | Значение     | примечания |
-| --------------------- | ------------ | ---------- |
-| **Тип приложения**    | внутренний   | обязательно |
-| **Имя приложения**    | dbt Cloud    | обязательно |
-| **Логотип приложения**| Скачайте логотип <a href="https://www.getdbt.com/ui/img/dbt-icon.png" target="_blank" rel="noopener noreferrer">здесь</a> | необязательно |
-| **Авторизованные домены** | `getdbt.com` (многоарендный в США) `getdbt.com` и `dbt.com` (США, ячейка 1) `dbt.com` (EMEA или AU) | Если развертывание происходит в VPC, используйте домен для вашего развертывания |
-| **Области** | `email, profile, openid` | Достаточно стандартных областей |
+| Конфигурация            | Значение      | Примечания |
+| ----------------------- | ------------- | ---------- |
+| **Тип приложения**     | internal      | обязательно |
+| **Имя приложения**     | <Constant name="cloud" />    | обязательно |
+| **Логотип приложения** | Скачать логотип можно <a href="https://www.getdbt.com/ui/img/dbt-icon.png" target="_blank" rel="noopener noreferrer">здесь</a> | опционально |
+| **Разрешённые домены** | `getdbt.com` (US multi-tenant) `getdbt.com` и `dbt.com` (US Cell 1) `dbt.com` (EMEA или AU) | При развёртывании в VPC используйте домен, соответствующий вашему развёртыванию |
+| **Scopes** | `email, profile, openid` | Значений scopes по умолчанию достаточно |
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/gsuite/gsuite-sso-consent-top.png" title="Конфигурация экрана согласия GSuite"/>
 
-6. Сохраните настройки **Экрана согласия**, чтобы вернуться на страницу **Создание идентификатора клиента OAuth**.
-7. Используйте следующие значения конфигурации при создании ваших учетных данных, заменив `YOUR_ACCESS_URL` и `YOUR_AUTH0_URI`, которые необходимо заменить на [соответствующий URL доступа и URI Auth0](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) для вашего региона и плана.
+6. Сохраните настройки **Consent screen**, чтобы вернуться на страницу **Create OAuth client id**.
+7. Используйте следующие значения конфигурации при создании Credentials, заменив `YOUR_ACCESS_URL` и `YOUR_AUTH0_URI` на соответствующие Access URL и Auth0 URI из ваших [настроек аккаунта](/docs/cloud/manage-access/sso-overview#auth0-uris).
 
-| Конфигурация | Значение |
-| ------------ | -------- |
-| **Тип приложения** | Веб-приложение |
-| **Имя** | dbt Cloud |
-| **Авторизованные источники JavaScript** | `https://YOUR_ACCESS_URL` |
-| **Авторизованные URI перенаправления** | `https://YOUR_AUTH0_URI/login/callback` |
+| Config | Value |
+| ------ | ----- |
+| **Application type** | Web application |
+| **Name** | <Constant name="cloud" /> |
+| **Authorized Javascript origins** | `https://YOUR_ACCESS_URL` |
+| **Authorized Redirect URIs** | `https://YOUR_AUTH0_URI/login/callback` |
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/gsuite/gsuite-sso-credentials.png" title="Конфигурация учетных данных GSuite"/>
 
@@ -57,26 +55,37 @@ dbt Cloud использует идентификатор клиента (Client
 
 ### Включение Admin SDK
 
-dbt Cloud требует, чтобы Admin SDK был включен в этом приложении для запроса информации о членстве в группах из API GSuite. Чтобы включить Admin SDK для этого проекта, перейдите на [страницу настроек Admin SDK](https://console.developers.google.com/apis/api/admin.googleapis.com/overview) и убедитесь, что API включен.
+Для использования <Constant name="cloud" /> в этом приложении требуется, чтобы был включён Admin SDK, так как он необходим для запроса информации о членстве в группах через GSuite API.  
+Чтобы включить Admin SDK для этого проекта, перейдите на страницу [Admin SDK Settings](https://console.developers.google.com/apis/api/admin.googleapis.com/overview) и убедитесь, что данный API включён.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/7f36f50-Screen_Shot_2019-12-03_at_10.15.01_AM.png" title="Страница 'Admin SDK'"/>
 
-## Конфигурация в dbt Cloud
+## Configuration in dbt
 
-Чтобы завершить настройку, выполните следующие шаги в приложении dbt Cloud.
+Чтобы завершить настройку, выполните следующие шаги в приложении <Constant name="cloud" />.
 
 ### Укажите ваш OAuth Client ID и Client Secret
 
-1. Перейдите на страницу **Enterprise &gt; Single Sign On** в разделе настроек аккаунта.
-2. Нажмите кнопку **Редактировать** и укажите следующие данные SSO:
-    - **Вход с помощью**: GSuite
-    - **Client ID**: Вставьте идентификатор клиента, сгенерированный на предыдущих шагах
-    - **Client Secret**: Вставьте секрет клиента, сгенерированный на предыдущих шагах
-    - **Домен в GSuite**: Введите имя домена для вашего аккаунта GSuite (например, `dbtlabs.com`). Только пользователи с адресом электронной почты из этого домена смогут войти в ваш аккаунт dbt Cloud, используя аутентификацию GSuite. При желании вы можете указать CSV с доменами, которые _все_ авторизованы для доступа к вашему аккаунту dbt Cloud (например, `dbtlabs.com, fishtowndata.com`)
-    - **Slug**: Введите желаемый slug для входа. Пользователи смогут войти в dbt Cloud, перейдя по адресу `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, заменив `YOUR_ACCESS_URL` на [соответствующий URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана. `LOGIN-SLUG` должен быть уникальным для всех аккаунтов dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию.
-    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/gsuite/gsuite-sso-cloud-config.png" title="Конфигурация SSO GSuite"/>
-3. Нажмите **Сохранить и авторизовать**, чтобы авторизовать ваши учетные данные. Вы должны быть перенаправлены в поток OAuth GSuite и вам будет предложено войти в dbt Cloud с вашим рабочим адресом электронной почты. Если аутентификация прошла успешно, вы будете перенаправлены обратно в приложение dbt Cloud.
-4. На странице **Учетные данные** убедитесь, что присутствует запись `groups`, и что она отражает группы, членом которых вы являетесь в GSuite. Если вы не видите запись `groups` в списке атрибутов IdP, обратитесь к следующим шагам по устранению неполадок.
+1. Перейдите на страницу **Enterprise &gt; Single Sign On** в разделе **Account settings**.
+2. Нажмите кнопку **Edit** и укажите следующие параметры SSO:
+    - **Log in with**: GSuite
+    - **Client ID**: Вставьте Client ID, сгенерированный на предыдущих шагах
+    - **Client Secret**: Вставьте Client Secret, сгенерированный на предыдущих шагах
+    - **Domain in GSuite**: Укажите доменное имя вашего аккаунта GSuite (например, `dbtlabs.com`).
+      Только пользователи с адресом электронной почты из этого домена смогут входить
+      в ваш аккаунт <Constant name="cloud" /> с использованием аутентификации GSuite.
+      При необходимости вы можете указать CSV-список доменов, которым **всем**
+      разрешён доступ к вашему аккаунту <Constant name="cloud" /> (например, `dbtlabs.com, fishtowndata.com`)
+      
+    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/gsuite/gsuite-sso-cloud-config.png" title="GSuite SSO Configuration"/>
+3. Нажмите **Save &amp; Authorize**, чтобы авторизовать ваши учётные данные. После этого вы будете
+   перенаправлены в OAuth-процесс GSuite и увидите приглашение войти в <Constant name="cloud" />
+   с использованием вашей рабочей электронной почты. Если аутентификация пройдёт успешно,
+   вы будете перенаправлены обратно в приложение <Constant name="cloud" />.
+4. На странице **Credentials** убедитесь, что присутствует запись `groups` и что она
+   отражает группы, участником которых вы являетесь в GSuite. Если вы не видите
+   запись `groups` в списке атрибутов IdP, обратитесь к следующим шагам по устранению
+   неполадок.
 
     <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/gsuite/gsuite-sso-cloud-verify.png" title="Проверка групп GSuite"/>
 
@@ -97,8 +106,16 @@ dbt Cloud требует, чтобы Admin SDK был включен в этом
 
 ### Ошибки OAuth
 
-Если проверка OAuth не завершилась успешно, дважды проверьте, что:
- - Admin SDK включен в вашем проекте GCP
- - Указанные идентификатор клиента и секрет клиента соответствуют значениям, сгенерированным на странице учетных данных GCP
- - Авторизованный домен был указан в конфигурации экрана согласия OAuth
-Если аутентификация с API GSuite проходит успешно, но вы не видите запись `groups` на странице **Учетные данные**, возможно, у вас нет прав на доступ к группам в вашем аккаунте GSuite. Либо запросите, чтобы вашему пользователю GSuite были предоставлены права на запрос групп у администратора, либо попросите администратора войти в dbt Cloud и авторизовать интеграцию GSuite.
+### Ошибки OAuth
+
+Если проверка OAuth не завершается успешно, дважды проверьте, что:
+
+- Admin SDK включён в вашем проекте GCP  
+- Client ID и Client Secret соответствуют значениям, сгенерированным на странице GCP Credentials  
+- В настройках OAuth Consent Screen был указан Authorized Domain  
+
+Если аутентификация с помощью GSuite API проходит успешно, но на странице **Credentials** вы не видите записи `groups`, то, возможно, у вас нет прав на доступ к Groups в вашем аккаунте GSuite. В этом случае либо запросите у администратора, чтобы вашему пользователю GSuite были предоставлены права на запрос групп, либо попросите администратора войти в <Constant name="cloud" /> и авторизовать интеграцию с GSuite.
+
+## Узнать больше
+
+<WistiaVideo id="xzksdgiamq" paddingTweak="62.25%" />

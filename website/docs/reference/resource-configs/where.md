@@ -39,21 +39,22 @@ where my_column is null
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: large_table
     columns:
       - name: my_column
-        tests:
+        data_tests:
           - accepted_values:
-              values: ["a", "b", "c"]
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ["a", "b", "c"]
               config:
                 where: "date_column = current_date"
       - name: other_column
-        tests:
+        data_tests:
           - not_null:
-              where: "date_column < current_date"
+              config: 
+                where: "date_column < current_date"
 ```
 
 </File>
@@ -62,17 +63,7 @@ models:
 
 <TabItem value="one_off">
 
-Настройте одноразовый (данные) тест:
-
-<File name='tests/<filename>.sql'>
-
-```sql
-{{ config(where = "date_column = current_date") }}
-
-select ...
-```
-
-</File>
+Эта конфигурация игнорируется для одноразовых тестов.
 
 </TabItem>
 
@@ -103,7 +94,7 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
+data_tests:
   +where: "date_column = current_date"
   
   <package_name>:
@@ -122,7 +113,7 @@ tests:
 
 Контекст рендеринга для конфигурации `where` такой же, как и для всех конфигураций, определенных в файлах `.yml`. У вас есть доступ к `{{ var() }}` и `{{ env_var() }}`, но у вас **нет** доступа к пользовательским макросам для установки этой конфигурации. Если вы хотите использовать пользовательские макросы для шаблонизации фильтра `where` для определенных тестов, существует обходной путь.
 
-Начиная с версии v0.21, dbt определяет [`get_where_subquery` макрос](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt/include/global_project/macros/materializations/tests/where_subquery.sql).
+dbt определяет макрос `get_where_subquery`.
 
 dbt заменяет `{{ model }}` в определениях общих тестов на `{{ get_where_subquery(relation) }}`, где `relation` — это `ref()` или `source()` для тестируемого ресурса. Стандартная реализация этого макроса возвращает:
 - `{{ relation }}`, когда конфигурация `where` не определена (`ref()` или `source()`)
@@ -132,22 +123,23 @@ dbt заменяет `{{ model }}` в определениях общих тес
 - Определив пользовательский `get_where_subquery` в вашем корневом проекте
 - Определив пользовательский `<adapter>__get_where_subquery` [кандидат на диспетчеризацию](/reference/dbt-jinja-functions/dispatch) в вашем пакете или адаптере
 
-Внутри этого определения макроса вы можете ссылаться на любые пользовательские макросы, основываясь на статических входных данных из конфигурации. В самом простом виде это позволяет вам избежать дублирования кода, который вам в противном случае пришлось бы повторять в различных файлах `.yml`. Поскольку макрос `get_where_subquery` разрешается во время выполнения, ваши пользовательские макросы также могут включать [получение результатов интроспективных запросов к базе данных](https://docs.getdbt.com/reference/dbt-jinja-functions/run_query).
+Внутри определения этого макроса вы можете ссылаться на любые пользовательские макросы, которые вам нужны, опираясь на статические входные данные из конфигурации. В самом простом случае это позволяет вам соблюдать принцип DRY и не дублировать код, который иначе пришлось бы повторять во множестве разных `.yml`‑файлов. Поскольку макрос `get_where_subquery` вычисляется во время выполнения, ваши пользовательские макросы также могут включать [получение результатов интроспективных запросов к базе данных](/reference/dbt-jinja-functions/run_query).
 
-**Пример:** Отфильтруйте ваш тест по данным за последние три дня, используя кроссплатформенный макрос [`dateadd()`](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#dateadd) от dbt.
+#### Пример
+
+Отфильтруйте тест так, чтобы он учитывал только данные за последние N дней, используя кросс‑платформенный макрос dbt [`dateadd()`](/reference/dbt-jinja-functions/cross-database-macros#dateadd). Количество дней можно задать в строке‑шаблоне.
 
 <File name='models/config.yml'>
 
 ```yml
-version: 2
 models:
   - name: my_model
     columns:
       - name: id
-        tests:
+        data_tests:
           - unique:
               config:
-                where: "date_column > __three_days_ago__"  # строка-заполнитель для статической конфигурации
+                where: "date_column > __3_days_ago__"  # строка-заглушка для статической конфигурации
 ```
 
 </File>
@@ -158,10 +150,11 @@ models:
 {% macro get_where_subquery(relation) -%}
     {% set where = config.get('where') %}
     {% if where %}
-        {% if "__three_days_ago__" in where %}
-            {# замените строку-заполнитель на результат пользовательского макроса #}
-            {% set three_days_ago = dbt.dateadd('day', -3, current_timestamp()) %}
-            {% set where = where | replace("__three_days_ago__", three_days_ago) %}
+```jinja
+{% if "_days_ago__" in where %}
+    {# заменить строку-заглушку результатом пользовательского макроса #}
+    {% set where = replace_days_ago(where) %}
+```
         {% endif %}
         {%- set filtered -%}
             (select * from {{ relation }} where {{ where }}) dbt_subquery
@@ -171,6 +164,21 @@ models:
         {% do return(relation) %}
     {%- endif -%}
 {%- endmacro %}
+
+{% macro replace_days_ago(where_string) %}
+    {# Use regex to search the pattern for the number days #}
+    {# Default to 3 days when no number found #}
+    {% set re = modules.re %}
+    {% set days = 3 %}
+    {% set pattern = '__(\d+)_days_ago__' %}
+    {% set match = re.search(pattern, where_string) %}
+    {% if match %}
+        {% set days = match.group(1) | int %}        
+    {% endif %}
+    {% set n_days_ago = dbt.dateadd('day', -days, current_timestamp()) %}
+    {% set result = re.sub(pattern, n_days_ago, where_string) %}
+    {{ return(result) }}
+{% endmacro %}
 ```
 
 </File>

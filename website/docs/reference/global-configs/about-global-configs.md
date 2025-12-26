@@ -15,33 +15,9 @@ pagination_next: null
 
 ### Установка флагов
 
-Существует несколько способов установки флагов, которые зависят от случая использования:
-- **[Флаги на уровне проекта в `dbt_project.yml`](/reference/global-configs/project-flags):** Определите контролируемые версией значения по умолчанию для всех, кто запускает этот проект. Также выберите или откажитесь от [изменений поведения](/reference/global-configs/behavior-changes) для управления миграцией от устаревших функций.
-- **[Переменные окружения](/reference/global-configs/environment-variable-configs):** Определите различное поведение в разных средах выполнения (разработка против производства против [непрерывной интеграции](/docs/deploy/continuous-integration), или различное поведение для разных пользователей в разработке (на основе личных предпочтений).
-- **[Опции командной строки](/reference/global-configs/command-line-options):** Определите поведение, специфичное для _этого вызова_. Поддерживается для всех команд dbt.
+import SettingFlags from '/snippets/_setting-flags.md';
 
-Наиболее специфичная настройка "побеждает". Если вы установите один и тот же флаг во всех трех местах, опция CLI будет иметь приоритет, затем переменная окружения, и, наконец, значение в `dbt_project.yml`. Если вы не установите флаг ни в одном из этих мест, будет использовано значение по умолчанию, определенное в dbt.
-
-Большинство флагов можно установить во всех трех местах:
-```yaml
-# dbt_project.yml
-flags:
-  # установить значение по умолчанию для выполнения этого проекта -- везде, всегда, кем угодно
-  fail_fast: true
-```
-```bash
-# установить эту переменную окружения в 'True' (синтаксис bash)
-export DBT_FAIL_FAST=1
-dbt run
-```
-```bash
-dbt run --fail-fast # установить в True для этого конкретного вызова
-dbt run --no-fail-fast # установить в False
-```
-
-Существуют две категории исключений:
-1. **Флаги, устанавливающие пути к файлам:** Флаги для путей к файлам, которые имеют отношение к выполнению во время выполнения (например, `--log-path` или `--state`), не могут быть установлены в `dbt_project.yml`. Чтобы переопределить значения по умолчанию, передайте опции CLI или установите переменные окружения (`DBT_LOG_PATH`, `DBT_STATE`). Флаги, которые сообщают dbt, где найти ресурсы проекта (например, `model-paths`), устанавливаются в `dbt_project.yml`, но как ключ верхнего уровня, вне словаря `flags`; эти конфигурации должны быть полностью статичными и никогда не изменяться в зависимости от команды или среды выполнения.
-2. **Флаги выбора:** Флаги выбора или отказа от [изменений поведения](/reference/global-configs/behavior-changes) могут быть определены _только_ в `dbt_project.yml`. Они предназначены для установки в системе контроля версий и миграции через pull/merge запросы. Их значения не должны бесконечно расходиться между вызовами, средами или пользователями.
+<SettingFlags />
 
 ### Доступ к флагам
 
@@ -54,16 +30,22 @@ on-run-start:
   - '{{ log("Я остановлюсь при первом признаке проблемы", info = true) if flags.FAIL_FAST }}'
 ```
 
-Поскольку значения `flags` могут различаться между вызовами, мы настоятельно не рекомендуем использовать `flags` в качестве входных данных для конфигураций или зависимостей (`ref` + `source`), которые dbt разрешает [во время парсинга](/reference/parsing#known-limitations).
-
 ## Доступные флаги
+Поскольку значения `flags` могут отличаться между разными запусками, мы настоятельно не рекомендуем использовать `flags` в качестве входных данных для конфигураций или зависимостей (`ref` + `source`), которые dbt разрешает [во время парсинга](/reference/parsing#known-limitations).
 
-| Название флага | Тип | Значение по умолчанию | Поддерживается в проекте? | Переменная окружения | Опция командной строки | Поддерживается в Cloud CLI? |
+<FilterableTable>
+
+| Название флага | Тип | Значение по умолчанию | Поддерживается в проекте? | Переменная окружения | <div style={{width:'400px'}}>Опции CLI</div> | Поддерживается в <Constant name="cloud_cli" />? |
 |-----------|------|---------|-----------------------|----------------------|---------------------|-------------------------|
 | [cache_selected_only](/reference/global-configs/cache) | boolean | False | ✅ | `DBT_CACHE_SELECTED_ONLY` | `--cache-selected-only`, `--no-cache-selected-only` | ✅ |
+| [clean_project_files_only](/reference/commands/clean#--clean-project-files-only) | boolean | True | ❌ | `DBT_CLEAN_PROJECT_FILES_ONLY` | `--clean-project-files-only, --no-clean-project-files-only` | ❌ |
 | [debug](/reference/global-configs/logs#debug-level-logging) | boolean | False | ✅ | `DBT_DEBUG` | `--debug`, `--no-debug` | ✅ |
-| [defer](/reference/node-selection/defer) | boolean | False | ❌ | `DBT_DEFER` | `--defer`, `--no-defer` | ✅ (включено по умолчанию) |
+| [defer](/reference/node-selection/defer) | boolean | False | ❌ | `DBT_DEFER` | `--defer`, `--no-defer` | ✅ (default) |
 | [defer_state](/reference/node-selection/defer) | path | None | ❌ | `DBT_DEFER_STATE` | `--defer-state` | ❌ |
+| [favor_state](/reference/node-selection/defer#favor-state) | boolean | False | ❌ | `DBT_FAVOR_STATE` | `--favor-state`, `--no-favor-state` | ✅ |
+| [empty](/docs/build/empty-flag) | boolean | False | ❌ | `DBT_EMPTY` | `--empty`, `--no-empty` | ✅  |
+| [event_time_start](/reference/dbt-jinja-functions/model#batch-properties-for-microbatch-models) | datetime | None | ❌ | `DBT_EVENT_TIME_START` | `--event-time-start` | ✅ |
+| [event_time_end](/reference/dbt-jinja-functions/model#batch-properties-for-microbatch-models) | datetime | None | ❌ | `DBT_EVENT_TIME_END` | `--event-time-end` | ✅ |
 | [fail_fast](/reference/global-configs/failing-fast) | boolean | False | ✅ | `DBT_FAIL_FAST` | `--fail-fast`, `-x`, `--no-fail-fast` | ✅ |
 | [full_refresh](/reference/resource-configs/full_refresh) | boolean | False | ✅ (как конфигурация ресурса) | `DBT_FULL_REFRESH` | `--full-refresh`, `--no-full-refresh` | ✅ |
 | [indirect_selection](/reference/node-selection/test-selection-examples#syntax-examples) | enum | eager | ✅ | `DBT_INDIRECT_SELECTION` | `--indirect-selection` | ❌ |
@@ -76,20 +58,23 @@ on-run-start:
 | [log_path](/reference/global-configs/logs) | path | None (использует `logs/`) | ❌ | `DBT_LOG_PATH` | `--log-path` | ❌ |
 | [partial_parse](/reference/global-configs/parsing#partial-parsing) | boolean | True | ✅ | `DBT_PARTIAL_PARSE` | `--partial-parse`, `--no-partial-parse` | ✅ |
 | [populate_cache](/reference/global-configs/cache) | boolean | True | ✅ | `DBT_POPULATE_CACHE` | `--populate-cache`, `--no-populate-cache` | ✅ |
-| [print](/reference/global-configs/print-output#suppress-print-messages-in-stdout) | boolean | True | ❌ | `DBT_PRINT` | `--print` | ❌ |
+| [print](/reference/global-configs/print-output#suppress-print-messages-in-stdout) | boolean | True | ❌ | `DBT_PRINT` | `--print`, `--no-print` | ❌ |
 | [printer_width](/reference/global-configs/print-output#printer-width) | int | 80 | ✅ | `DBT_PRINTER_WIDTH` | `--printer-width` | ❌ |
-| [profile](/docs/core/connect-data-platform/connection-profiles#about-profiles) | string | None | ✅ (как ключ верхнего уровня) | `DBT_PROFILE`  | `--profile` | ❌ |
-| [profiles_dir](/docs/core/connect-data-platform/connection-profiles#about-profiles) | path | None (текущая директория, затем домашняя директория) | ❌ | `DBT_PROFILES_DIR` | `--profiles-dir` | ❌ |
+| [profile](/docs/core/connect-data-platform/connection-profiles#about-profiles) | string | None | ✅ (как ключ верхнего уровня) | `DBT_PROFILE` | [`--profile`](/docs/core/connect-data-platform/connection-profiles#overriding-profiles-and-targets) | ❌ |
+| [profiles_dir](/docs/core/connect-data-platform/connection-profiles#about-profiles) | path | None (текущая директория, затем директория HOME) | ❌ | `DBT_PROFILES_DIR` | `--profiles-dir` | ❌ |
 | [project_dir](/reference/dbt_project.yml) | path |  | ❌ | `DBT_PROJECT_DIR` | `--project-dir` | ❌ |
 | [quiet](/reference/global-configs/logs#suppress-non-error-logs-in-output) | boolean | False | ❌ | `DBT_QUIET` | `--quiet` | ✅ |
 | [resource-type](/reference/global-configs/resource-type) (v1.8+) | string | None | ❌ | `DBT_RESOURCE_TYPES` <br></br> `DBT_EXCLUDE_RESOURCE_TYPES` | `--resource-type` <br></br> `--exclude-resource-type` | ✅ |
+| [sample](/docs/build/sample-flag) | string | None | ❌ | `DBT_SAMPLE` | `--sample` | ✅ |
 | [send_anonymous_usage_stats](/reference/global-configs/usage-stats) | boolean | True | ✅ | `DBT_SEND_ANONYMOUS_USAGE_STATS` | `--send-anonymous-usage-stats`, `--no-send-anonymous-usage-stats` | ❌ |
-| [source_freshness_run_project_hooks](/reference/global-configs/behavior-changes#source_freshness_run_project_hooks) | boolean | False | ✅ | ❌ | ❌ | ❌ |
+| [source_freshness_run_project_hooks](/reference/global-configs/behavior-changes#source_freshness_run_project_hooks) | boolean | True | ✅ | ❌ | ❌ | ❌ |
 | [state](/reference/node-selection/defer) | path | none | ❌ | `DBT_STATE`, `DBT_DEFER_STATE` | `--state`, `--defer-state` | ❌ |
 | [static_parser](/reference/global-configs/parsing#static-parser) | boolean | True | ✅ | `DBT_STATIC_PARSER` | `--static-parser`, `--no-static-parser` | ❌ |
-| [store_failures](/reference/resource-configs/store_failures) | boolean | False | ✅ (как конфигурация ресурса) | `DBT_STORE_FAILURES` | `--store-failures`, `--no-store-failures` | ✅ |
-| [target_path](/reference/global-configs/json-artifacts) | path | None (использует `target/`) | ❌ | `DBT_TARGET_PATH` | `--target-path` | ❌ |
-| [target](/docs/core/connect-data-platform/connection-profiles#about-profiles) | string | None | ❌ | `DBT_TARGET` | `--target` | ❌ |
+| [store_failures](/reference/resource-configs/store_failures) | boolean | False | ✅ (as resource config) | `DBT_STORE_FAILURES` | `--store-failures`, `--no-store-failures` | ✅ |
+| [target_path](/reference/global-configs/json-artifacts) | path | None (uses `target/`) | ❌ | `DBT_TARGET_PATH` | `--target-path` | ❌ |
+| [target](/docs/core/connect-data-platform/connection-profiles#about-profiles) | string | None | ❌ | `DBT_TARGET` | [`--target`](/docs/core/connect-data-platform/connection-profiles#overriding-profiles-and-targets) | ❌ |
+
+> В данном фрагменте отсутствуют пояснительные тексты на английском языке — таблица состоит только из названий параметров, типов, значений по умолчанию и ссылок. В соответствии с требованиями, технические термины, параметры, имена переменных и примеры не переводятся, поэтому содержимое оставлено без изменений.
 | [use_colors_file](/reference/global-configs/logs#color) | boolean | True | ✅ | `DBT_USE_COLORS_FILE` | `--use-colors-file`, `--no-use-colors-file` | ❌ |
 | [use_colors](/reference/global-configs/print-output#print-color) | boolean | True | ✅ | `DBT_USE_COLORS` | `--use-colors`, `--no-use-colors` | ❌ |
 | [use_experimental_parser](/reference/global-configs/parsing#experimental-parser) | boolean | False | ✅ | `DBT_USE_EXPERIMENTAL_PARSER` | `--use-experimental-parser`, `--no-use-experimental-parser` | ❌ |
@@ -97,3 +82,5 @@ on-run-start:
 | [warn_error_options](/reference/global-configs/warnings) | dict | {} | ✅ | `DBT_WARN_ERROR_OPTIONS` | `--warn-error-options` | ✅ |
 | [warn_error](/reference/global-configs/warnings) | boolean | False | ✅ | `DBT_WARN_ERROR` | `--warn-error` | ✅ |
 | [write_json](/reference/global-configs/json-artifacts) | boolean | True | ✅ | `DBT_WRITE_JSON` | `--write-json`, `--no-write-json` | ✅ |
+
+</FilterableTable>

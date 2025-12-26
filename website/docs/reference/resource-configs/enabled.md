@@ -12,6 +12,7 @@ default_value: true
     { label: 'Seeds', value: 'seeds', },
     { label: 'Snapshots', value: 'snapshots', },
     { label: 'Tests', value: 'tests', },
+    { label: 'Unit tests', value: 'unit tests', },
     { label: 'Sources', value: 'sources', },
     { label: 'Metrics', value: 'metrics', },
     { label: 'Exposures', value: 'exposures', },
@@ -83,7 +84,6 @@ snapshots:
 <File name='snapshots/snapshot_name.yml'>
 
 ```yaml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -120,7 +120,7 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   [<resource-path>](/reference/resource-configs/resource-path):
     +enabled: true | false
 
@@ -157,6 +157,35 @@ select ...
 
 </TabItem>
 
+<TabItem value="unit tests">
+
+<VersionCallout version="1.8" />
+
+<File name='dbt_project.yml'>
+
+```yml
+[unit_tests](/reference/resource-properties/unit-tests):
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +enabled: true | false
+
+```
+
+</File>
+
+<File name='models/<filename>.yml'>
+
+```yaml
+unit_tests:
+  - name: [<test-name>]
+    [config](/reference/resource-properties/config):
+      enabled: true | false
+
+```
+
+</File>
+
+</TabItem>
+
 <TabItem value="sources">
 
 <File name='dbt_project.yml'>
@@ -174,7 +203,6 @@ sources:
 <File name='models/properties.yml'>
 
 ```yaml
-version: 2
 
 sources:
   - name: [<source-name>]
@@ -207,7 +235,6 @@ metrics:
 <File name='models/metrics.yml'>
 
 ```yaml
-version: 2
 
 metrics:
   - name: [<metric-name>]
@@ -234,7 +261,6 @@ exposures:
 <File name='models/exposures.yml'>
 
 ```yaml
-version: 2
 
 exposures:
   - name: [<exposure-name>]

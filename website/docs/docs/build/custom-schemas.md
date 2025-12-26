@@ -1,10 +1,11 @@
 ---
 title: "Пользовательские схемы"
+description: "Настройка пользовательских схем для таблиц и представлений ваших dbt‑моделей в базе данных."
 id: "custom-schemas"
 pagination_next: "docs/build/custom-databases"
 ---
 
-По умолчанию все модели dbt создаются в схеме, указанной в вашей [среде](/docs/dbt-cloud-environments) (dbt Cloud) или [целевом профиле](/docs/core/dbt-core-environments) (dbt Core). Эта схема по умолчанию называется _целевой схемой_.
+По умолчанию все модели dbt собираются в схеме, указанной в вашем [окружении](/docs/dbt-cloud-environments) (<Constant name="cloud" />) или в [target профиля](/docs/core/dbt-core-environments) (<Constant name="core" />). Эта схема по умолчанию называется _target schema_.
 
 Для проектов dbt с большим количеством моделей часто создают модели в нескольких схемах и группируют похожие модели вместе. Например, вы можете захотеть:
 
@@ -159,7 +160,7 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 ## Встроенный альтернативный шаблон для генерации имен схем
 
-Распространенной настройкой является игнорирование целевой схемы в производственных средах и игнорирование пользовательских конфигураций схем в других средах (таких как разработка и CI).
+Распространённый вариант кастомизации — использовать пользовательскую схему в production, если она указана, а целевую схему применять только как запасной вариант, когда пользовательская схема не задана. В других окружениях, таких как development и CI, конфигурации пользовательских схем игнорируются, и вместо них всегда используется целевая схема.
 
 Производственная среда (`target.name == 'prod'`)
 
@@ -181,10 +182,12 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 dbt поставляется с макросом для этого случая &mdash; под названием `generate_schema_name_for_env` &mdash; который по умолчанию отключен. Чтобы его включить, добавьте пользовательский макрос `generate_schema_name` в ваш проект, содержащий следующий код:
 
-<File name='macros/get_custom_schema.sql'>
+<File name='macros/generate_schema_name.sql'>
 
 ```sql
--- поместите это в macros/get_custom_schema.sql
+```sql
+-- поместите это в macros/generate_schema_name.sql
+```
 
 {% macro generate_schema_name(custom_schema_name, node) -%}
     {{ generate_schema_name_for_env(custom_schema_name, node) }}
@@ -199,10 +202,16 @@ dbt поставляется с макросом для этого случая 
 
 В примерах макроса `generate_schema_name`, показанных в разделе [встроенный альтернативный шаблон](#a-built-in-alternative-pattern-for-generating-schema-names), переменная контекста `target.name` используется для изменения имени схемы, которое dbt генерирует для моделей. Если макрос `generate_schema_name` в вашем проекте использует переменную контекста `target.name`, вы должны убедиться, что ваши различные среды dbt настроены соответствующим образом. Хотя вы можете использовать любую схему именования, которую пожелаете, мы обычно рекомендуем:
 
-* **dev** &mdash; Ваша локальная среда разработки; настроена в файле `profiles.yml` на вашем компьютере.
-* **ci** &mdash; Среда [непрерывной интеграции](/docs/cloud/git/connect-github), работающая на pull-запросах в GitHub, GitLab и т.д.
-* **prod** &mdash; Производственное развертывание вашего проекта dbt, например, в dbt Cloud, Airflow или [аналогичных](/docs/deploy/deployments).
+* **dev** &mdash; Ваше локальное окружение для разработки; настраивается в файле `profiles.yml` на вашем компьютере.
+* **ci** &mdash; Окружение [непрерывной интеграции](/docs/cloud/git/connect-github), которое запускается для pull request’ов в GitHub, GitLab и т. п.
+* **prod** &mdash; Продакшен‑развертывание вашего dbt‑проекта, например в <Constant name="cloud" />, Airflow или [аналогичных системах](/docs/deploy/deployments).
 
 Если ваши имена схем генерируются неправильно, дважды проверьте имя цели в соответствующей среде.
 
-Для получения дополнительной информации обратитесь к руководству [управление средами в dbt Core](/docs/core/dbt-core-environments).
+Для получения дополнительной информации см. руководство [managing environments in <Constant name="core" />](/docs/core/dbt-core-environments).
+
+## Связанные материалы
+
+- [Customize dbt models database, schema, and alias](/guides/customize-schema-alias?step=1) — о том, как настраивать базу данных, схему и alias для моделей dbt  
+- [Custom database](/docs/build/custom-databases) — о том, как настраивать базу данных для моделей dbt  
+- [Custom aliases](/docs/build/custom-aliases) — о том, как настраивать имя alias для моделей dbt

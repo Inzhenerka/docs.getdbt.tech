@@ -87,7 +87,6 @@ snapshots:
 <File name='snapshots/snapshot_name.yml'>
 
 ```yaml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -143,13 +142,52 @@ select ...
 
 <div warehouse="Databricks">
 
-- Комментарии на уровне столбцов требуют `file_format: delta` (или другого "v2 формата файла")
+- Комментарии на уровне колонок требуют `file_format: delta` (или другого «v2 file format»).
 
 </div>
 
 <div warehouse="Snowflake">
 
-- Известных проблем нет
+- Если имя колонки в SQL-модели задано в смешанном регистре (например, `ca_net_ht_N`), документация для этой колонки **не будет сохранена**. Чтобы документация сохранялась, есть два варианта:
+
+  - Определить имя колонки в соответствующем YML-файле, используя **только строчные или только заглавные буквы**.
+  - Использовать конфигурацию [`quote`](../resource-properties/columns.md#quoter) в соответствующем YML-файле.
+
+  Ниже приведён пример пошаговых действий, показывающий, как использовать поле `quote` для колонок со смешанным регистром.
+
+1. Создайте следующие SQL- и YML-файлы:
+
+    <File name='<modelname>.sql'>
+
+    ```sql
+    {{ config(materialized='table') }}
+
+    select 1 as "ca_net_ht_N" # обратите внимание на использование двойных кавычек для имени колонки
+    ```
+    </File>
+
+    <File name='<modelname>.yml'>
+
+    ```yml
+    models:
+      - name: <modelname>
+        description: This is the table description
+
+    columns:
+      - name: "ca_net_ht_N"
+        description: This should be the description of the column
+        quote: true
+    ```
+    </File>
+
+2. Выполните команду `dbt build -s models/<modelname>.sql --full-refresh`.
+
+3. Откройте логи в файле `logs/dbt.log` и проверьте описание колонки:
+
+    ```log
+    alter table analytics.<schema>.<modelname> alter
+        "ca_net_ht_N" COMMENT $$This should be the description of the column$$;
+    ```
 
 </div>
 
@@ -164,7 +202,6 @@ select ...
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: dim_customers

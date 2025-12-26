@@ -6,14 +6,12 @@ sidebar_label: "Создание метрик"
 tags: [Metrics, Semantic Layer]
 pagination_next: "docs/build/cumulative"
 ---
+После создания [семантических моделей](/docs/build/semantic-models) можно переходить к добавлению метрик. На этой странице объясняются различные поддерживаемые типы метрик, которые вы можете добавить в свой проект dbt.
 
-После того как вы создали свои семантические модели, пора начать добавлять метрики. Метрики могут быть определены в тех же YAML-файлах, что и ваши семантические модели, или разделены на отдельные YAML-файлы в любых других подкаталогах (при условии, что эти подкаталоги также находятся в пределах одного репозитория проекта dbt).
+Метрики должны быть определены в YAML‑файле — либо в том же файле, что и ваши семантические модели, либо в отдельном YAML‑файле в подкаталоге вашего проекта dbt. Их не следует определять в блоке `config` модели.
 
-Эта статья объясняет различные поддерживаемые типы метрик, которые вы можете добавить в свой проект dbt. Ключи для определения метрик:
+Ключи для определения метрик:
 
-<!-- для v1.8 и выше -->
-
-<VersionBlock firstVersion="1.8">
 
 | Параметр | Описание | Обязательный | Тип |
 | --------- | ----------- | ---- | ---- |
@@ -46,58 +44,12 @@ metrics:
 ```
 
 </File>
-</VersionBlock>
-
-<!-- для v1.7 и ниже -->
-
-<VersionBlock lastVersion="1.7">
-
-| Параметр | Описание | Обязательный | Тип  |
-| --------- | ----------- | ---- | ---- |
-| `name` | Укажите ссылочное имя для метрики. Это имя должно быть уникальным среди всех метрик.   | Обязательный | Строка |
-| `description` | Опишите вашу метрику.   | Необязательный | Строка |
-| `type` | Определите тип метрики, который может быть `simple`, `ratio`, `cumulative` или `derived`.  | Обязательный | Строка |
-| `type_params` | Дополнительные параметры, используемые для настройки метрик. `type_params` различаются для каждого типа метрики. | Обязательный | Словарь |
-| `config` | Укажите конкретные конфигурации для вашей метрики.   | Необязательный | Словарь |
-| `meta` | Используйте конфигурацию [`meta`](/reference/resource-configs/meta) для установки метаданных для ресурса.  | Необязательный | Строка |
-| `label` | Обязательная строка, определяющая отображаемое значение в инструментах нижнего уровня. Принимает обычный текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`).   | Обязательный | Строка |
-| `filter` | Вы можете дополнительно добавить строку фильтра к любому типу метрики, применяя фильтры к измерениям, сущностям или временным измерениям во время вычисления метрики. Рассматривайте это как ваш WHERE-клауз.   | Необязательный | Строка |
-
-Вот полный пример конфигурации спецификации метрик:
-
-<File name="models/metrics/file_name.yml" >
-
-```yaml
-metrics:
-  - name: metric name                     ## Обязательный
-    description: same as always           ## Необязательный
-    type: the type of the metric          ## Обязательный
-    type_params:                          ## Обязательный
-      - specific properties for the metric type
-    config: here for `enabled`            ## Необязательный
-    meta:
-        my_meta_direct: 'direct'           ## Необязательный
-    label: The display name for your metric. This value will be shown in downstream tools. ## Обязательный
-    filter: |                             ## Необязательный            
-      {{  Dimension('entity__name') }} > 0 and {{ Dimension(' entity__another_name') }} is not
-      null and {{ Metric('metric_name', group_by=['entity_name']) }} > 5
-```
-</File>
-
-</VersionBlock>
 
 import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
 ## Гранулярность по умолчанию для метрик
-
-<VersionBlock lastVersion="1.8">
-Гранулярность времени по умолчанию для метрик полезна, если ваше временное измерение имеет очень мелкую гранулярность, например, секунду или час, но вы обычно запрашиваете метрики, свернутые на более грубой гранулярности.
-
-Гранулярность времени по умолчанию для метрик доступна сейчас в [последней версии в dbt Cloud](/docs/dbt-versions/cloud-release-tracks), и она будет доступна в [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
-
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
@@ -106,7 +58,10 @@ import SLCourses from '/snippets/_sl-course.md';
 Гранулярность может быть установлена с помощью параметра `time_granularity` для метрики и по умолчанию равна `day`. Если день недоступен, потому что измерение определено на более грубой гранулярности, оно будет по умолчанию использовать определенную гранулярность для измерения.
 
 ### Пример
-У вас есть семантическая модель под названием `orders` с временным измерением под названием `order_time`. Вы хотите, чтобы метрика `orders` по умолчанию сворачивалась до `monthly`, однако вы хотите иметь возможность просматривать эти метрики по часам. Вы можете установить параметр `time_granularity` для измерения `order_time` на `hour`, а затем установить параметр `time_granularity` в метрике на `month`.
+- У вас есть семантическая модель с именем `orders` и временным измерением `order_time`.
+- Вы хотите, чтобы метрика `orders` по умолчанию агрегировалась до уровня `monthly`, но при этом иметь возможность анализировать эти метрики с почасовой детализацией.
+- Вы можете задать параметр `time_granularity` для измерения `order_time` равным `hour`, а затем задать параметр `time_granularity` в метрике равным `month`.
+
 ```yaml
 semantic_models:
   ...
@@ -119,15 +74,19 @@ semantic_models:
     - name: orders
       expr: 1
       agg: sum
-  metrics:
-    - name: orders
-      type: simple
-      label: Count of Orders
-      type_params:
-        measure:
-          name: orders
-      time_granularity: month -- Необязательный, по умолчанию day
+
+metrics:
+  - name: orders
+    type: simple
+    label: Count of Orders
+    type_params:
+      measure:
+        name: orders
+    time_granularity: month -- Необязательно, по умолчанию используется day
 ```
+
+Remember that metrics can be defined in the same YAML files as your semantic models but must be defined as a separate top-level section and not nested within the `semantic_models` key. Or you can define metrics in their dedicated separate YAML files located in any subdirectories within the same dbt project repository.
+
 </VersionBlock>
 
 ## Метрики конверсии
@@ -178,6 +137,7 @@ metrics:
         name: active_users
         fill_nulls_with: 0
         join_to_timespine: true
+      cumulative_type_params:
         window: 7 days
 ```
 </File>
@@ -236,7 +196,7 @@ metrics:
 
 [Простые метрики](/docs/build/simple) указывают непосредственно на измерение. Вы можете рассматривать это как функцию, которая принимает только одно измерение в качестве входных данных.
 
-- `name` &mdash; Используйте этот параметр для определения ссылочного имени метрики. Имя должно быть уникальным среди метрик и может включать строчные буквы, цифры и подчеркивания. Вы можете использовать это имя для вызова метрики из API семантического слоя dbt.
+- `name` &mdash; Используйте этот параметр для определения ссылочного имени метрики. Имя должно быть уникальным среди всех метрик и может содержать строчные буквы, цифры и символы подчёркивания. Это имя можно использовать для обращения к метрике через API <Constant name="semantic_layer" />.
 
 **Примечание:** Если вы уже определили измерение с использованием параметра `create_metric: True`, вам не нужно создавать простые метрики. Однако, если вы хотите включить ограничение поверх измерения, вам нужно будет создать метрику простого типа.
 
@@ -264,8 +224,6 @@ metrics:
 
 Обратитесь к [Метрики как измерения](/docs/build/ref-metrics-in-filters) для получения подробной информации о том, как использовать метрики как измерения с фильтрами метрик:
 
-<VersionBlock firstVersion="1.8">
-
 <File name="models/metrics/file_name.yml" >
 
 ```yaml
@@ -283,26 +241,6 @@ filter: |
 
 ```
 </File>
-</VersionBlock>
-
-<VersionBlock lastVersion="1.7">
-
-
-<File name="models/metrics/file_name.yml" >
-
-```yaml
-filter: | 
-  {{ Entity('entity_name') }}
-
-filter: |  
-  {{ Dimension('primary_entity__dimension_name') }}
-
-filter: |  
-  {{ TimeDimension('time_dimension', 'granularity') }}
-
-```
-</File>
-</VersionBlock>
 
 Например, если вы хотите отфильтровать по дате заказа, сгруппированной по месяцам, используйте следующий синтаксис:
 

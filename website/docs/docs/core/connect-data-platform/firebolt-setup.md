@@ -25,7 +25,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Подключение к Firebolt
 
-Чтобы подключиться к Firebolt из dbt, вам нужно добавить [профиль](https://docs.getdbt.com/docs/core/connection-profiles) в ваш файл `profiles.yml`. Профиль Firebolt соответствует следующему синтаксису:
+Для получения дополнительной информации, включая поддержку возможностей Firebolt, см. [README в GitHub](https://github.com/firebolt-db/dbt-firebolt/blob/main/README.md) и [changelog](https://github.com/firebolt-db/dbt-firebolt/blob/main/CHANGELOG.md).
+
+## Подключение к Firebolt
+
+Чтобы подключиться к Firebolt из dbt, необходимо добавить [профиль](/docs/core/connect-data-platform/connection-profiles) в файл `profiles.yml`. Профиль Firebolt соответствует следующему синтаксису:
 
 <File name='profiles.yml'>
 
@@ -54,15 +58,15 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 | Поле                    | Описание |
 |--------------------------|--------------------------------------------------------------------------------------------------------|
-| `type`                   | Это поле должно быть включено либо в `profiles.yml`, либо в файл `dbt_project.yml`. Должно быть установлено значение `firebolt`. |
-| `client_id`                   | Обязательно. Ваш [идентификатор учетной записи службы](https://docs.firebolt.io/godocs/Guides/managing-your-organization/service-accounts.html). |
-| `client_secret`               | Обязательно. Секрет, связанный с указанным `client_id`. |
+| `type`                   | Должен быть указан либо в файле `profiles.yml`, либо в файле `dbt_project.yml`. Должен быть установлен в значение `firebolt`. |
+| `client_id`              | Обязательно. Идентификатор вашего [service account](https://docs.firebolt.io/godocs/Guides/managing-your-organization/service-accounts.html). |
+| `client_secret`          | Обязательно. Секрет, связанный с указанным `client_id`. |
 | `database`               | Обязательно. Имя базы данных Firebolt, к которой нужно подключиться. |
-| `engine_name`            | Обязательно в версии 0.21.10 и позже. Опционально в более ранних версиях. Имя (не URL) движка Firebolt, который будет использоваться в указанной `database`. Это должен быть универсальный движок для чтения и записи, и он должен быть запущен. Если не указано в более ранних версиях, используется движок по умолчанию для указанной `database`. |
-| `account_name`           | Обязательно. Указывает имя учетной записи, под которой существует указанная `database`. |
-| `schema`                 | Рекомендуется. Строка, добавляемая в качестве префикса к именам сгенерированных таблиц при использовании [обходного пути для пользовательских схем](https://docs.getdbt.com/reference/warehouse-profiles/firebolt-profile#supporting-concurrent-development). |
+| `engine_name`            | Обязательно. Имя (не URL) движка Firebolt, который будет использоваться в указанной `database`. Это должен быть универсальный read-write движок, и он должен быть запущен. В более ранних версиях, если параметр был опущен, использовался движок по умолчанию для указанной `database`. |
+| `account_name`           | Обязательно. Указывает имя аккаунта, в рамках которого существует указанная `database`. |
+| `schema`                 | Рекомендуется. Строка, которая добавляется как префикс к именам генерируемых таблиц при использовании [обходного решения для пользовательских схем](/docs/core/connect-data-platform/firebolt-setup#supporting-concurrent-development). |
 | `threads`                | Обязательно. Установите большее значение для повышения производительности. |
-| `host`                   | Опционально. Имя хоста подключения. Для всех клиентов это `api.app.firebolt.io`, которое будет использоваться, если не указано. |
+| `host`                   | Необязательно. Имя хоста для подключения. Для всех клиентов это `api.app.firebolt.io`, и оно будет использовано, если параметр не указан. |
 
 #### Устранение неполадок подключения
 

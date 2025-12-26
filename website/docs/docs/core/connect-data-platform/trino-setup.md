@@ -63,7 +63,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Параметры аутентификации
 
-Методы аутентификации, поддерживаемые dbt Core:
+Методы аутентификации, которые поддерживает <Constant name="core" />:
 
 - `ldap` &mdash; LDAP (имя пользователя и пароль)  
 - `kerberos` &mdash; Kerberos

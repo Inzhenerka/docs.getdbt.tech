@@ -1,34 +1,34 @@
 ---
-title: "Быстрый старт для dbt Cloud и Redshift"
+title: "Быстрый старт для dbt и Redshift"
 id: redshift
 level: 'Beginner'
 icon: 'redshift'
 hide_table_of_contents: true
-tags: ['Redshift', 'dbt Cloud','Quickstart']
+tags: ['Redshift', 'dbt platform','Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с Redshift. Оно покажет вам, как:
+В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с Redshift. В нём показано, как:
 
 - Настроить кластер Redshift.
 - Загрузить пример данных в ваш аккаунт Redshift.
-- Подключить dbt Cloud к Redshift.
-- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Подключить <Constant name="cloud" /> к Redshift.
+- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор `select`.
 - Добавить тесты к вашим моделям.
-- Документировать ваши модели.
+- Задокументировать ваши модели.
 - Запланировать выполнение задания.
 
-:::tips Видео для вас
-Если вас интересует обучение с видео, ознакомьтесь с [Основами dbt](https://learn.getdbt.com/courses/dbt-fundamentals) бесплатно.
+:::tip Видео для вас
+Если вам интересен формат обучения с видео, посмотрите бесплатный курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 :::
 
 ### Предварительные требования
 
-- У вас есть [аккаунт dbt Cloud](https://www.getdbt.com/signup/).
-- У вас есть аккаунт AWS с правами на выполнение шаблона CloudFormation для создания соответствующих ролей и кластера Redshift.
+- У вас есть [<Constant name="cloud" /> account](https://www.getdbt.com/signup/).
+- У вас есть учетная запись AWS с правами на выполнение шаблона CloudFormation для создания необходимых ролей и кластера Redshift.
 
 ### Связанные материалы
 
@@ -43,7 +43,7 @@ tags: ['Redshift', 'dbt Cloud','Quickstart']
 2. Используйте шаблон CloudFormation для быстрого создания кластера Redshift. Шаблон CloudFormation — это файл конфигурации, который автоматически создает необходимые ресурсы в AWS. [Запустите стек CloudFormation](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=dbt-workshop&templateURL=https://tpch-sample-data.s3.amazonaws.com/create-dbtworkshop-infr) и вы можете обратиться к [JSON файлу create-dbtworkshop-infr](https://github.com/aws-samples/aws-modernization-with-dbtlabs/blob/main/resources/cloudformation/create-dbtworkshop-infr) для получения более подробной информации о шаблоне.
 
 :::tip
-Чтобы избежать проблем с подключением к dbt Cloud, убедитесь, что вы разрешили входящий трафик на порт 5439 с [IP-адресов dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses) в настройках групп безопасности Redshift и списках контроля доступа к сети (NACLs).
+Чтобы избежать проблем с подключением к <Constant name="cloud" />, убедитесь, что во входящих правилах разрешён трафик на порт 5439 с [IP-адресов <Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses) в настройках security groups и Network Access Control Lists (NACLs) вашего Redshift.
 :::
 
 3. Нажимайте **Next** на каждой странице, пока не дойдете до флажка **Select acknowledgement**. Выберите **I acknowledge that AWS CloudFormation might create IAM resources with custom names** и нажмите **Create Stack**. Вы должны попасть на страницу стека со статусом CREATE_IN_PROGRESS.
@@ -62,11 +62,11 @@ tags: ['Redshift', 'dbt Cloud','Quickstart']
 
 7. Возможно, вам будет предложено настроить аккаунт. Для этой песочницы мы рекомендуем выбрать "Configure account".
 
-8. Выберите ваш кластер из списка. В всплывающем окне **Connect to** заполните учетные данные из вывода стека:
-    - **Authentication** — Используйте по умолчанию, что является **Database user name and password** (ПРИМЕЧАНИЕ: аутентификация IAM не поддерживается в dbt Cloud).
-    - **Database** — `dbtworkshop`
-    - **User name** — `dbtadmin`
-    - **Password** — Используйте автоматически сгенерированный `RSadminpassword` из вывода стека и сохраните его для дальнейшего использования.
+8. Выберите свой кластер из списка. Во всплывающем окне **Connect to** заполните учетные данные, используя значения из вывода стека:
+    - **Authentication** &mdash; Используйте значение по умолчанию **Database user name and password**.
+    - **Database** &mdash; `dbtworkshop`
+    - **User name** &mdash; `dbtadmin`
+    - **Password** &mdash; Используйте автоматически сгенерированный `RSadminpassword` из вывода стека и сохраните его для дальнейшего использования.
 
 <Lightbox src="/img/redshift_tutorial/images/redshift_query_editor.png" title="Редактор запросов Redshift v2" />
 
@@ -166,42 +166,52 @@ tags: ['Redshift', 'dbt Cloud','Quickstart']
     select * from stripe.payment;
     ```
 
-## Подключение dbt Cloud к Redshift 
-1. Создайте новый проект в [dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses). Перейдите в **Account settings** (нажав на имя вашего аккаунта в левом боковом меню) и нажмите **+ New Project**.
+## Подключение dbt к Redshift
+
+1. Создайте новый проект в [<Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses). Перейдите в **Account settings** (нажав на имя вашей учетной записи в левом боковом меню) и нажмите **+ New Project**.
 2. Введите имя проекта и нажмите **Continue**.
-3. Для хранилища данных нажмите **Redshift**, затем **Next**, чтобы настроить ваше подключение.
-4. Введите настройки Redshift. Обратитесь к вашим учетным данным, которые вы сохранили из шаблона CloudFormation.
-    - **Hostname** — Ваш полный хостнейм.
-    - **Port** — `5439`
-    - **Database** — `dbtworkshop`.
+3. В разделе **Configure your development environment** откройте выпадающее меню **Connection** и выберите **Add new connection**. Вы будете перенаправлены на страницу настроек подключения.
+4. В разделе **Type** выберите **Redshift**.
+5. Введите параметры подключения к Redshift. Используйте учетные данные, сохраненные вами из шаблона CloudFormation.
+    - **Hostname** &mdash; Полное имя хоста.
+    - **Port** &mdash; `5439`
+    - **Database** (в разделе **Optional settings**) &mdash; `dbtworkshop`
 
-    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_account_settings.png" width="90%" title="dbt Cloud - Настройки кластера Redshift" />
+    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_account_settings.png" width="90%" title="dbt - Redshift Cluster Settings" />
 
-    :::tip
-    Чтобы избежать проблем с подключением к dbt Cloud, убедитесь, что вы разрешили входящий трафик на порт 5439 с [IP-адресов dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses) в настройках групп безопасности Redshift и списках контроля доступа к сети (NACLs).
+    :::tip Избегайте проблем с подключением
+    Чтобы избежать проблем с подключением к <Constant name="cloud" />, убедитесь, что вы выполнили минимальные, но необходимые шаги по настройке сети в AWS, так как сетевой доступ к Redshift не настраивается автоматически:
+        - Разрешите входящий трафик на порт `5439` с [IP-адресов <Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses) в настройках групп безопасности Redshift и списков управления сетевым доступом (Network Access Control Lists).
+        - Настройте Virtual Private Cloud, добавив необходимые таблицы маршрутизации, IP-шлюзы (например, интернет‑шлюз или NAT‑шлюз) и правила входящего трафика.
+
+    Дополнительную информацию см. в [документации AWS по настройке взаимодействия групп безопасности Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/rs-security-group-public-private.html).
     :::
 
-5. Установите ваши учетные данные для разработки. Эти учетные данные будут использоваться dbt Cloud для подключения к Redshift. Эти учетные данные (как указано в вашем выводе CloudFormation) будут:
-    - **Username** — `dbtadmin`
-    - **Password** — Это автоматически сгенерированный пароль, который вы использовали ранее в руководстве
-    - **Schema** — dbt Cloud автоматически генерирует имя схемы для вас. По соглашению, это `dbt_<первая буква имени><фамилия>`. Это схема, подключенная непосредственно к вашей среде разработки, и это место, где ваши модели будут строиться при запуске dbt в облачной IDE.
+6. Нажмите **Save**.
+7. Настройте свои персональные учетные данные для разработки, перейдя в **Your profile** > **Credentials**.
+8. Выберите проект, который использует подключение к Redshift.
+9. Нажмите ссылку **configure your development environment and add a connection**. Вы перейдете на страницу, где можно ввести персональные учетные данные для разработки.
+10. Укажите учетные данные для разработки. Эти данные будут использоваться <Constant name="cloud" /> для подключения к Redshift. Учетные данные (как указано в выводе CloudFormation) будут следующими:
+    - **Username** &mdash; `dbtadmin`
+    - **Password** &mdash; автоматически сгенерированный пароль, который вы использовали ранее в руководстве
+    - **Schema** &mdash; <Constant name="cloud" /> автоматически генерирует имя схемы. По соглашению это `dbt_<first-initial><last-name>`. Эта схема напрямую связана с вашей средой разработки, и именно в ней будут создаваться модели при запуске dbt в <Constant name="cloud_ide" />.
 
-    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_development_credentials.png" title="dbt Cloud - Учетные данные для разработки Redshift" />
+    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_development_credentials.png" title="dbt - Redshift Development Credentials" />
 
-6. Нажмите **Test Connection**. Это проверяет, что dbt Cloud может получить доступ к вашему кластеру Redshift.
-7. Нажмите **Next**, если тест прошел успешно. Если он не прошел, возможно, вам нужно проверить настройки и учетные данные Redshift.
+11. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему кластеру Redshift.
+12. Если тест прошел успешно, нажмите **Save**, чтобы завершить настройку. Если тест не удался, проверьте настройки Redshift и учетные данные.
 
-## Настройка управляемого репозитория dbt Cloud 
+## Настройка репозитория под управлением dbt
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация вашего проекта dbt и начало разработки
-Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
+## Инициализация проекта dbt и начало разработки
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
-1. Нажмите **Start developing in the IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как он устанавливает ваше git-подключение, клонирует ваш репозиторий и тестирует подключение к хранилищу данных.
-2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок с примерами моделей.
-3. Сделайте ваш начальный коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, где вы можете добавить новый код dbt.
-4. Теперь вы можете напрямую выполнять запросы к данным из вашего хранилища и выполнять `dbt run`. Вы можете попробовать это сейчас:
-    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить новый файл: 
+1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске может потребоваться несколько минут, пока проект подготавливается: устанавливается соединение с git, клонируется репозиторий и проверяется подключение к хранилищу данных.
+2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру каталогов с примерами моделей.
+3. Сделайте первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в управляемом репозитории и позволит открыть ветку, в которой вы сможете добавлять новый код dbt.
+4. Теперь вы можете напрямую выполнять запросы к хранилищу данных и запускать `dbt run`. Вы можете попробовать это прямо сейчас:
+    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить файл:
         ```sql
         select * from jaffle_shop.customers
         ```
@@ -209,10 +219,10 @@ tags: ['Redshift', 'dbt Cloud','Quickstart']
 
 ## Создание вашей первой модели
 
-У вас есть два варианта работы с файлами в IDE dbt Cloud:
+У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
-- Создать новую ветку (рекомендуется) — Создайте новую ветку, чтобы редактировать и фиксировать ваши изменения. Перейдите в **Version Control** на левой боковой панели и нажмите **Create branch**.
-- Редактировать в защищенной основной ветке — Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git. IDE dbt Cloud предотвращает коммиты в защищенную ветку, поэтому вам будет предложено зафиксировать ваши изменения в новой ветке.
+- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку, чтобы вносить изменения и коммитить их. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
+- Редактировать в защищённой основной ветке &mdash; Если вы предпочитаете редактировать, форматировать или проверять файлы линтерами, а также выполнять команды dbt напрямую в основной git-ветке. <Constant name="cloud_ide" /> не позволяет создавать коммиты в защищённой ветке, поэтому вам будет предложено закоммитить изменения в новую ветку.
 
 Назовите новую ветку `add-customers-model`.
 

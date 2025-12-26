@@ -5,6 +5,9 @@ sidebar_label: "Переопределения"
 
 При настройке вашего модульного теста вы можете переопределить вывод [макросов](/docs/build/jinja-macros#macros), [переменных проекта](/docs/build/project-variables) или [переменных окружения](/docs/build/environment-variables) для данного модульного теста.
 
+
+<File name='models/schema.yml'>
+
 ```yml
 
  - name: test_my_model_overrides
@@ -31,12 +34,16 @@ sidebar_label: "Переопределения"
 
 ```
 
+</File>
+
 ## Макросы
 
 Вы можете переопределить вывод любого макроса в определении вашего модульного теста.
 
 Если модель, которую вы тестируете, использует эти макросы, вы должны их переопределить:
   - [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro): Если вы тестируете инкрементальную модель, вы должны явно установить `is_incremental` в `true` или `false`. Подробнее о тестировании инкрементальных моделей можно прочитать [здесь](/docs/build/unit-tests#unit-testing-incremental-models).
+
+<File name='models/schema.yml'>
 
   ```yml
 
@@ -50,8 +57,11 @@ sidebar_label: "Переопределения"
       ...
 
   ```
+</File>
 
   - [`dbt_utils.star`](/blog/star-sql-love-letter): Если вы тестируете модель, которая использует макрос `star`, вы должны явно установить `star` в список столбцов. Это необходимо, потому что `star` принимает только [relation](/reference/dbt-classes#relation) для аргумента `from`; тестовые данные вводятся непосредственно в SQL модели, заменяя функцию `ref('')` или `source('')`, что приводит к сбою макроса `star`, если он не переопределен.
+
+<File name='models/schema.yml'>
 
   ```yml
 
@@ -64,4 +74,6 @@ sidebar_label: "Переопределения"
           dbt_utils.star: col_a,col_b,col_c 
       ...
 
-  ``` 
+```
+</File>
+```

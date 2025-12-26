@@ -18,16 +18,37 @@ import MeasuresParameters from '/snippets/_sl-measures-parameters.md';
 
 Пример полной спецификации YAML для мер приведен ниже. Фактическая конфигурация ваших мер будет зависеть от используемой агрегации.
 
+<VersionBlock firstVersion="1.9">
+
 ```yaml
-measures:
-  - name: Имя меры
-    description: 'как всегда' ## Необязательно
-    agg: тип агрегации.
-    expr: поле
-    agg_params: 'специфические свойства агрегации, такие как процентиль'  ## Необязательно
-    agg_time_dimension: Временное поле. По умолчанию используется временное измерение агрегации для семантической модели. ##  Необязательно
-    non_additive_dimension: 'Используйте эти настройки, когда вам нужны неаддитивные измерения.' ## Необязательно
+semantic_models:
+  - name: semantic_model_name
+   ..rest of the semantic model config
+    measures:
+      - name: The name of the measure
+        description: 'same as always' ## Опционально
+        agg: the aggregation type.
+        expr: the field
+        agg_params: 'specific aggregation properties such as a percentile'  ## Опционально
+        agg_time_dimension: The time field. Defaults to the default agg time dimension for the semantic model. ##  Опционально
+        non_additive_dimension: 'Use these configs when you need non-additive dimensions.' ## Опционально
+        [config](/reference/resource-properties/config): Use the config property to specify configurations for your measure.  ## Опционально
+          [meta](/reference/resource-configs/meta):  {<dictionary>} Задает метаданные для ресурса и помогает организовывать ресурсы. Принимает обычный текст, пробелы и кавычки. ## Опционально
 ```
+
+Пояснения:
+
+- `measures` — список мер, определенных в семантической модели.
+- `name` — имя меры.
+- `description` — описание меры.
+- `agg` — тип агрегации, используемый для вычисления меры.
+- `expr` — поле (выражение), к которому применяется агрегация.
+- `agg_params` — дополнительные параметры агрегации, например указание процентиля.
+- `agg_time_dimension` — временное поле, используемое для агрегации. По умолчанию используется временное измерение агрегации, заданное для всей семантической модели.
+- `non_additive_dimension` — используется в случаях, когда измерения являются неаддитивными.
+- `config` — позволяет задать дополнительные конфигурации для меры.
+- `meta` — используется для хранения произвольных метаданных ресурса и их логической организации.
+</VersionBlock>
 
 ### Имя
 
@@ -95,10 +116,12 @@ agg_params:
 
 ### Модель с различными агрегациями
 
+<VersionBlock firstVersion="1.9">
+
 ```yaml
 semantic_models:
   - name: transactions
-    description: Запись каждой транзакции, которая происходит. Корзины считаются несколькими транзакциями для каждого SKU.
+    description: Запись каждой транзакции, которая происходит. Корзины считаются несколькими транзакциями — по одной для каждого SKU.
     model: ref('schema.transactions')
     defaults:
       agg_time_dimension: transaction_date
@@ -117,19 +140,22 @@ semantic_models:
 # --- measures ---
     measures:
       - name: transaction_amount_usd
-        description: Общая стоимость транзакций в долларах США
+        description: Общая стоимость транзакций в USD
         expr: transaction_amount_usd
         agg: sum
+        config:
+          meta:
+            used_in_reporting: true
       - name: transaction_amount_usd_avg
-        description: Средняя стоимость транзакций в долларах США
+        description: Среднее значение транзакций в долларах США
         expr: transaction_amount_usd
         agg: average
       - name: transaction_amount_usd_max
-        description: Максимальная стоимость транзакций в долларах США
+        description: Максимальное значение транзакций в долларах США
         expr: transaction_amount_usd
         agg: max
       - name: transaction_amount_usd_min
-        description: Минимальная стоимость транзакций в долларах США
+        description: Минимальное значение транзакций в долларах США
         expr: transaction_amount_usd
         agg: min
       - name: quick_buy_transactions 
@@ -143,10 +169,10 @@ semantic_models:
       - name: transaction_amount_avg 
         description: Средняя стоимость транзакций 
         expr: transaction_amount_usd
-        agg: average 
-      - name: transactions_amount_usd_valid # Обратите внимание, как мы используем expr для вычисления агрегации на основе условия
-        description: Общая стоимость в долларах США только для действительных транзакций
-        expr: CASE WHEN is_valid = True then transaction_amount_usd else 0 end 
+        agg: average
+      - name: transactions_amount_usd_valid # Обратите внимание, как здесь используется expr для вычисления агрегации на основе условия
+        description: Общая сумма в долларах США только по валидным транзакциям
+        expr: case when is_valid = True then transaction_amount_usd else 0 end
         agg: sum
       - name: transactions
         description: Средняя стоимость транзакций.
@@ -176,6 +202,8 @@ semantic_models:
         expr: case when quantity > 10 then true else false end
 
 ```
+</VersionBlock>
+
 
 ### Неаддитивные измерения
 
@@ -250,14 +278,14 @@ metrics:
 
 Мы можем запросить полуаддитивные метрики, используя следующий синтаксис:
 
-Для dbt Cloud:
+Для <Constant name="cloud" />:
 
 ```bash
 dbt sl query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__month --order subscription__subscription_date__month 
 dbt sl query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__week --order subscription__subscription_date__week 
 ```
 
-Для dbt Core:
+Для <Constant name="core" />:
 
 ```bash
 mf query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__month --order subscription__subscription_date__month 

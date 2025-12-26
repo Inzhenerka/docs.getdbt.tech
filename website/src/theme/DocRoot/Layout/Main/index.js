@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import clsx from "clsx";
-import {
-  useDocsSidebar,
-  useLocalPathname,
-} from "@docusaurus/theme-common/internal";
+import { useDocsSidebar } from "@docusaurus/plugin-content-docs/client";
+import { useLocalPathname } from "@docusaurus/theme-common/internal";
 import styles from "./styles.module.css";
 
 /* dbt Customizations:
@@ -72,10 +70,19 @@ export default function DocRootLayoutMain({
         isPrereleaseBannerText: "",
       });
     } else {
-      setPreData({
-        showisPrereleaseBanner: true,
-        isPrereleaseBannerText: `You are viewing the docs for a prerelease version of dbt Core. There may be features described that are still in development, incomplete, or unstable. For the latest generally available features, install the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>`,
-      });
+      // Check if this is Fusion (version 2.0) or another prerelease
+      if (dbtVersion === "2.0") {
+        setPreData({
+          showisPrereleaseBanner: true,
+          isPrereleaseBannerText: `You're viewing the preview docs for the <a href="https://docs.getdbt.com/docs/fusion">dbt Fusion engine</a>.`,
+        });
+      } else {
+        // For other prerelease versions (like 1.11 beta)
+        setPreData({
+          showisPrereleaseBanner: true,
+          isPrereleaseBannerText: `You're viewing the docs for the beta version of dbt Core. Features may change before final release. Read more in the <a href="/docs/dbt-versions/core-upgrade/upgrading-to-v1.11">Upgrade guide</a>.`,
+        });
+      }
     }
     // If EOLDate not set for version, do not show banner
     if (!EOLDate) {
@@ -89,7 +96,7 @@ export default function DocRootLayoutMain({
       if (new Date() > new Date(EOLDate)) {
         setEOLData({
           showEOLBanner: true,
-          EOLBannerText: `This version of dbt Core is <a href="/docs/dbt-versions/core">no longer supported</a>. There will be no more patches or security fixes. For improved performance, security, and features, upgrade to the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>. Some dbt Cloud customers might have an extended <a href="/docs/dbt-versions/core">critical support window</a>. `,
+          EOLBannerText: `This version of dbt Core is <a href="/docs/dbt-versions/core">no longer supported</a>. There will be no more patches or security fixes. For improved performance, security, and features, upgrade to the <a href="https://github.com/dbt-labs/dbt-core/releases/latest"> latest stable version</a>. Some dbt customers might have an extended <a href="/docs/dbt-versions/core">critical support window</a>. `,
         });
       } else if (new Date() > threeMonths) {
         setEOLData({
@@ -121,7 +128,7 @@ export default function DocRootLayoutMain({
       >
         {PreData.showisPrereleaseBanner && (
           <div className={styles.versionBanner}>
-            <Admonition type="caution" title="Warning">
+            <Admonition type="info" title="Important">
               <div
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHtml(PreData.isPrereleaseBannerText),

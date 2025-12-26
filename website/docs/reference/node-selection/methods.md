@@ -5,7 +5,15 @@ sidebar: "Методы выбора узлов"
 
 Методы выбора возвращают все ресурсы, которые имеют общие свойства, используя синтаксис `method:value`. Хотя рекомендуется явно указывать метод, вы можете его опустить (значение по умолчанию будет одним из `path`, `file` или `fqn`).
 
-Многие из методов ниже поддерживают подстановочные знаки в стиле Unix:
+<Expandable alt_header="Различия между --select и --selector">
+
+Аргументы `--select` и `--selector` звучат похоже, но это разные вещи. Чтобы понять разницу, см. [Differences between `--select` and `--selector`](/reference/node-selection/yaml-selectors#difference-between---select-and---selector).
+
+</Expandable>
+
+import UsingCommas from '/snippets/_using-commas.md';
+
+<UsingCommas />
 
 | Подстановочный знак | Описание                                               |
 | ------------------- | ------------------------------------------------------ |
@@ -14,8 +22,15 @@ sidebar: "Методы выбора узлов"
 | [abc]               | соответствует одному символу из указанных в скобках    |
 | [a-z]               | соответствует одному символу из диапазона, указанного в скобках |
 
+| Wildcard | Описание                                                  |
+| -------- | --------------------------------------------------------- |
+| \*       | соответствует любому количеству любых символов (включая отсутствие символов) |
+| ?        | соответствует любому одному символу                       |
+| [abc]    | соответствует одному символу, указанному в скобках        |
+| [a-z]    | соответствует одному символу из диапазона, указанного в скобках |
+
 Например:
-```
+```bash
 dbt list --select "*.folder_name.*"
 dbt list --select "package:*_source"
 ```
@@ -77,7 +92,9 @@ dbt ls --select "+exposure:*" --resource-type source    # перечислить
 
 ### file
 
-Метод `file` может быть использован для выбора модели по имени файла, включая расширение файла (`.sql`).
+<VersionBlock lastVersion="1.10">
+
+Метод `file` можно использовать для выбора модели по имени её файла, включая расширение файла (`.sql`).
 
 ```bash
 # Эти команды эквивалентны
@@ -85,6 +102,27 @@ dbt run --select "file:some_model.sql"
 dbt run --select "some_model.sql"
 dbt run --select "some_model"
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.11">
+
+The `file` method can be used to select a model or a function by its filename, including the file extension (`.sql`).
+
+```bash
+# These are equivalent
+dbt run --select "file:some_model.sql"
+dbt run --select "some_model.sql"
+dbt run --select "some_model"
+
+# These are equivalent
+dbt build --select "file:my_function.sql"
+dbt build --select "my_function.sql"
+dbt build --select "my_function"
+
+# To build all models that use the function
+dbt build --select "my_function+"
+```
+</VersionBlock>
 
 ### fqn
 
@@ -126,7 +164,15 @@ dbt run --select "snowplow"
 dbt run --select "snowplow.*"
 ```
 
+Use the `this` package to select nodes from the current project. From the example, running `dbt run --select "package:this"` from the `snowplow` project runs the exact same set of models as the other three selectors.
+
+Since `this` always refers to the current project, using `package:this` ensures that you're only selecting models from the project you're working in.
+
 ### path
+<VersionBlock lastVersion="1.10">
+Метод `path` используется для выбора моделей и источников, определённых в указанном каталоге или во вложенных в него каталогах.
+Определения моделей находятся в SQL/Python-файлах (не в YAML), а определения источников — в YAML-файлах.
+Хотя префикс `path` не является строго обязательным, его можно использовать, чтобы сделать селекторы однозначными.
 
 Метод `path` используется для выбора моделей/источников, определенных в указанном пути или под ним. Определения моделей находятся в файлах SQL/Python (не YAML), а определения источников — в файлах YAML. Хотя префикс `path` не является обязательным, он может быть использован для устранения неоднозначности селекторов.
 
@@ -140,26 +186,88 @@ dbt run --select "path:models/staging/github/stg_issues.sql"
 dbt run --select "models/staging/github/stg_issues.sql"
 ```
 
-### resource_type
+</VersionBlock>
 
-Используйте метод `resource_type` для выбора узлов определенного типа (`model`, `test`, `exposure` и так далее). Это похоже на флаг `--resource-type`, используемый командой [`dbt ls`](/reference/commands/list).
+<VersionBlock firstVersion="1.11">
+
+Метод `path` используется для выбора моделей, источников или функций, определённых в указанном пути или внутри него.  
+Определения моделей находятся в SQL/Python-файлах (не в YAML), определения источников — в YAML-файлах. Функции определяются в SQL-файлах. Хотя префикс `path` не является строго обязательным, его можно использовать, чтобы сделать селекторы однозначными.
 
 ```bash
-dbt build --select "resource_type:exposure"    # построить все ресурсы, находящиеся выше exposures
-dbt list --select "resource_type:test"         # перечислить все тесты в вашем проекте
-dbt list --select "resource_type:source"       # перечислить все источники в вашем проекте
+# Эти два селектора эквивалентны
+dbt run --select "path:models/staging/github"
+dbt run --select "models/staging/github"
+
+# Эти два селектора эквивалентны
+dbt run --select "path:models/staging/github/stg_issues.sql"
+dbt run --select "models/staging/github/stg_issues.sql"
+
+# Эти два селектора эквивалентны
+dbt build --select "path:functions/my_function.sql"
+dbt build --select "functions/my_function.sql"
 ```
+
+</VersionBlock>
+
+### resource_type
+
+<VersionBlock lastVersion="1.10">
+
+Используйте метод `resource_type` для выбора узлов определённого типа (`model`, `test`, `exposure` и т.д.). Это похоже на использование флага `--resource-type` в команде [`dbt ls`](/reference/commands/list).
+
+```bash
+dbt build --select "resource_type:exposure"    # собрать все ресурсы, находящиеся выше по зависимостям от exposures
+dbt list --select "resource_type:test"         # вывести список всех тестов в вашем проекте
+dbt list --select "resource_type:source"       # вывести список всех источников в вашем проекте
+```
+```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.11">
+
+Используйте метод `resource_type`, чтобы выбрать узлы определённого типа (`model`, `test`, `exposure`, `function` и т.д.). Это похоже на флаг `--resource-type`, который используется в команде [`dbt ls`](/reference/commands/list).
+
+```bash
+dbt build --select "resource_type:exposure"    # build all resources upstream of exposures
+dbt build --select "resource_type:function"    # build all functions in your project
+dbt list --select "resource_type:test"         # list all tests in your project
+dbt list --select "resource_type:source"       # list all sources in your project
+```
+```
+
+</VersionBlock>
 
 ### result
 
-Метод `result` связан с методом `state`, описанным выше, и может быть использован для выбора ресурсов на основе их статуса результата из предыдущего запуска. Обратите внимание, что одна из команд dbt [`run`, `test`, `build`, `seed`] должна быть выполнена для создания результата, на котором работает селектор результата. Вы можете использовать селекторы `result` в сочетании с оператором `+`.
+The `result` method is related to the [`state` method](/reference/node-selection/methods#state) and can be used to select resources based on their result status from a prior run. Note that one of the dbt commands [`run`, `test`, `build`, `seed`] must have been performed in order to create the result on which a result selector operates. 
+
+You can use `result` selectors in conjunction with the `+` operator. 
 
 ```bash
-dbt run --select "result:error" --state path/to/artifacts # запустить все модели, которые вызвали ошибки при предыдущем вызове dbt run
-dbt test --select "result:fail" --state path/to/artifacts # запустить все тесты, которые не прошли при предыдущем вызове dbt test
-dbt build --select "1+result:fail" --state path/to/artifacts # запустить все модели, связанные с неудачными тестами из предыдущего вызова dbt build
-dbt seed --select "result:error" --state path/to/artifacts # запустить все seeds, которые вызвали ошибки при предыдущем вызове dbt seed.
+# run all models that generated errors on the prior invocation of dbt run
+dbt run --select "result:error" --state path/to/artifacts 
+
+# run all tests that failed on the prior invocation of dbt test
+dbt test --select "result:fail" --state path/to/artifacts 
+
+# run all the models associated with failed tests from the prior invocation of dbt build
+dbt build --select "1+result:fail" --state path/to/artifacts
+
+# run all seeds that generated errors on the prior invocation of dbt seed
+dbt seed --select "result:error" --state path/to/artifacts 
 ```
+
+- Only use `result:fail` when you want to re-run tests that failed during the last invocation. This selector is specific to test nodes. Tests don't have downstream nodes in the DAG, so using the `result:fail+` selector will only return the failed test itself and not the model or anything built on top of it.
+- On the other hand, `result:error` selects any resource (models, tests, snapshots, and more) that returned an error.
+- As an example, to re-run upstream and downstream resources associated with failed tests, you can use one of the following selectors:
+  ```bash
+  # reruns all the models associated with failed tests from the prior invocation of dbt build
+  dbt build --select "1+result:fail" --state path/to/artifacts
+
+  # reruns the models associated with failed tests and all downstream dependencies - especially useful in deferred state workflows
+  dbt build --select "1+result:fail+" --state path/to/artifacts
+  ```
 
 ### saved_query
 
@@ -204,7 +312,7 @@ dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 
 ### state
 
-**Примечание.** Выбор на основе состояния — это мощная, сложная функция. Прочтите о [известных ограничениях и недостатках](/reference/node-selection/state-comparison-caveats) сравнения состояний.
+**N.B.** [State-based selection](/reference/node-selection/state-selection) — это мощная и сложная возможность. Обязательно ознакомьтесь с [known caveats and limitations](/reference/node-selection/state-comparison-caveats), связанными с сравнением состояний.
 
 Метод `state` используется для выбора узлов путем сравнения их с предыдущей версией того же проекта, которая представлена [манифестом](/reference/artifacts/manifest-json). Путь к файлу манифеста для сравнения _должен_ быть указан через флаг `--state` или переменную окружения `DBT_STATE`.
 
@@ -234,6 +342,49 @@ dbt ls --select "state:modified" --state path/to/artifacts   # перечисл�
 
 Эти селекторы могут помочь вам сократить время выполнения, исключив неизмененные узлы. В настоящее время подселекторы недоступны, но это может измениться по мере развития сценариев использования.
 
+#### `state:modified` node and reference impacts
+
+`state:modified` identifies any new nodes added, changes to existing nodes, and any changes made to:
+
+- [access](/reference/resource-configs/access) permissions
+- [`deprecation_date` ](/reference/resource-properties/deprecation_date)
+- [`latest_version` ](/reference/resource-properties/latest_version)
+
+If a node changes its group, downstream references may break, potentially causing build failures.
+
+As `group` is a config, and configs are generally included in `state:modified` detection, modifying the group name everywhere it's referenced will flag those nodes as "modified".
+
+Depending on whether partial parsing is enabled, you will catch the breakage as part of CI workflows.
+
+- If you change a group name everywhere it's referenced, and partial parsing is enabled, dbt may only re-parse the changed model.
+- If you update a group name in all its references without partial parsing enabled, dbt will re-parse all models and identify any invalid downstream references.
+
+An error along the lines of "there's nothing to do" can occur when you change the group name *and* something is picked up to be run via `dbt build --select state:modified`. This error will be caught at runtime so long as the CI job is selecting `state:modified+` (including downstreams).
+
+Certain factors can affect how references are used or resolved later on, including:
+
+- Modifying access: if permissions or access rules change, some references might stop working.
+- Modifying `deprecation_date`: if a reference or model version is marked  deprecated, new warnings might appear that affect how references are  processed.
+- Modifying `latest_version`: if there's no tie to a specific version, the reference or model will point to the latest version.
+  -  If a newer version is released, the reference will automatically resolve to the new version, potentially changing the behavior or output of the system that relies on it.
+
+dbt handles state comparison for seed files differently depending on their size:
+
+- **Seed files smaller than 1 MiB** &mdash; Included in the `state:modified` selector only when the contents change.
+- **Seed files 1 MiB or larger** &mdash; Included in the `state:modified` selector only when the seed file path changes.
+
+#### Overwrites the `manifest.json`
+
+import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
+
+<Overwritesthemanifest />
+
+#### Recommendation
+
+import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overwriting-manifest.md'; 
+
+<Recommendationoverwritesthemanifest />
+
 ### tag
 
 Метод `tag:` используется для выбора моделей, которые соответствуют указанному [тегу](/reference/resource-configs/tags).
@@ -244,7 +395,7 @@ dbt run --select "tag:nightly"    # запустить все модели с т
 
 ### test_name
 
-Метод `test_name` используется для выбора тестов на основе имени общего теста, который их определяет. Для получения дополнительной информации о том, как определяются общие тесты, прочтите о [тестах](/docs/build/data-tests).
+Метод `test_name` используется для выбора тестов на основе имени обобщённого теста, который их определяет. Подробнее о том, как определяются обобщённые тесты, читайте в разделе [data tests](/docs/build/data-tests).
 
 ```bash
 dbt test --select "test_name:unique"            # запустить все экземпляры теста `unique`
@@ -254,20 +405,12 @@ dbt test --select "test_name:range_min_max"     # запустить все эк
 
 ### test_type
 
-<VersionBlock lastVersion="1.7">
+Метод `test_type` используется для выбора тестов в зависимости от их типа:
 
-Метод `test_type` используется для выбора тестов на основе их типа, `singular` или `generic`:
-
-```bash
-dbt test --select "test_type:generic"        # запустить все общие тесты
-dbt test --select "test_type:singular"       # запустить все одиночные тесты
-```
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.8">
-
-Метод `test_type` используется для выбора тестов на основе их типа:
+- [Модульные тесты](/docs/build/unit-tests)
+- [Тесты данных](/docs/build/data-tests):
+  - [Сингулярные](/docs/build/data-tests#singular-data-tests)
+  - [Обобщённые](/docs/build/data-tests#generic-data-tests)
 
 - [Юнит-тесты](/docs/build/unit-tests)
 - [Тесты данных](/docs/build/data-tests):
@@ -281,14 +424,7 @@ dbt test --select "test_type:generic"        # запустить все общ�
 dbt test --select "test_type:singular"       # запустить все одиночные тесты данных
 ```
 
-</VersionBlock>
-
 ### unit_test
-
-<VersionBlock lastVersion="1.7">
-Поддерживается в версии v1.8 или новее.
-</VersionBlock>
-<VersionBlock firstVersion="1.8">
 
 Метод `unit_test` выбирает [юнит-тесты](/docs/build/unit-tests).
 
@@ -297,11 +433,9 @@ dbt list --select "unit_test:*"                        # перечислить 
 dbt list --select "+unit_test:orders_with_zero_items"  # перечислить ваш юнит-тест с именем "orders_with_zero_items" и все вышестоящие ресурсы
 ```
 
-</VersionBlock>
-
 ### version
 
-Метод `version` выбирает [версионированные модели](/docs/collaborate/govern/model-versions) на основе их [идентификатора версии](/reference/resource-properties/versions) и [последней версии](/reference/resource-properties/latest_version).
+Метод `version` выбирает [versioned models](/docs/mesh/govern/model-versions) на основе их [version identifier](/reference/resource-properties/versions) и [latest version](/reference/resource-properties/latest_version).
 
 ```bash
 dbt list --select "version:latest"      # только 'последние' версии

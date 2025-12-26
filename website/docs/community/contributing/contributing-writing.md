@@ -7,7 +7,7 @@ id: "contributing-writing"
 
 #### Обзор
 
-[Документация продукта dbt](https://docs.getdbt.com/docs/introduction) является основным источником информации о том, как люди учатся использовать и взаимодействовать с dbt. От объяснения dbt новичкам до предоставления справочной информации о расширенной функциональности и API, документация продукта является частым ресурсом для _каждого_ разработчика dbt.
+[Документация по продукту dbt](/docs/introduction) находится в самом центре того, как люди учатся работать с dbt и взаимодействовать с ним. От объяснения dbt для новичков до предоставления справочной информации по продвинутой функциональности и API — продуктовая документация является частым источником информации для _каждого_ разработчика dbt.
 
 #### Возможности для вклада
 
@@ -18,7 +18,7 @@ id: "contributing-writing"
 
 #### Примеры вкладов
 
-Мы ценим эти вклады, потому что они содержат контекст в оригинальном посте (OP), который помогает нам понять их актуальность. Они также добавляют ценность документации, даже в небольших аспектах!
+Мы ценим такие вклады, потому что они содержат контекст из исходного поста (OP), который помогает нам понять их значимость. Кроме того, они добавляют ценность документации, пусть даже в небольших деталях!
 
 - Большой вклад: https://github.com/dbt-labs/docs.getdbt.com/pull/1898
 - Маленький вклад: https://github.com/dbt-labs/docs.getdbt.com/pull/1114
@@ -26,15 +26,15 @@ id: "contributing-writing"
 #### Начало работы
 
 - Вы можете внести вклад в [docs.getdbt.com](http://docs.getdbt.com), ознакомившись с [README](https://github.com/dbt-labs/docs.getdbt.com#readme) нашего репозитория или нажав **Edit this page** внизу большинства страниц на docs.getdbt.com.
-- Прочитайте [Ожидания от OSS](/community/resources/oss-expectations).
-- Найдите задачу с меткой “[good first issue](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+).”
-- Нужна помощь: посетите #community-writers в Community Slack или упомяните `@dbt-labs/product-docs` в комментарии к pull request или задаче.
+- Прочитайте [Contributor Expectations](/community/resources/contributor-expectations).
+- Найдите issue с меткой “[good first issue](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+)”.
+- Нужна помощь: зайдите в канал #community-writers в Community Slack или упомяните `@dbt-labs/product-docs` в pull request или комментарии к issue.
 
 ### Написание поста в блоге разработчиков
 
 #### Обзор
 
-[Блог разработчиков dbt](https://docs.getdbt.com/blog) — это место, где аналитики могут рассказать о _том, каково это — работать с данными прямо сейчас._ Это место для обмена советами и хитростями, труднодобытым знанием и историями из практики с сообществом dbt.
+[Блог разработчиков dbt](/blog) — это место, где специалисты по аналитике говорят о том, _каково это — заниматься работой с данными прямо сейчас_. Здесь можно делиться советами и приёмами, знаниями, добытыми тяжёлым трудом, и историями «с полей» с сообществом dbt.
 
 #### Возможности для вклада
 
@@ -42,8 +42,8 @@ id: "contributing-writing"
 
 #### Примеры вкладов
 
-- [Создание команды аналитической инженерии с нуля](https://docs.getdbt.com/blog/founding-an-analytics-engineering-team-smartsheet#our-own-take-on-data-mesh)
-- [Решение сложности объединения снимков](https://docs.getdbt.com/blog/joining-snapshot-complexity)
+- [Создание команды аналитических инженеров с нуля](/blog/founding-an-analytics-engineering-team-smartsheet#our-own-take-on-data-mesh)
+- [Работа со сложностью объединения snapshots](/blog/joining-snapshot-complexity)
 
 #### Начало работы
 

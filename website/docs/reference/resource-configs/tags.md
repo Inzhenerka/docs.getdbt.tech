@@ -1,4 +1,5 @@
 ---
+description: "Настройка тегов для маркировки и организации моделей и других ресурсов dbt."
 sidebar_label: "теги"
 resource_types: all
 datatype: string | [string]
@@ -16,77 +17,126 @@ datatype: string | [string]
 
 <File name='dbt_project.yml'>
 
+<VersionBlock firstVersion="1.9">
+
 ```yml
 
-models:
+[models](/reference/model-configs):
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>] # Supports single strings or list of strings
+
+[snapshots](/reference/snapshot-configs):
   [<resource-path>](/reference/resource-configs/resource-path):
     +tags: <string> | [<string>]
 
-snapshots:
+[seeds](/reference/seed-configs):
   [<resource-path>](/reference/resource-configs/resource-path):
     +tags: <string> | [<string>]
 
-seeds:
+[saved-queries:](/docs/build/saved-queries)
   [<resource-path>](/reference/resource-configs/resource-path):
     +tags: <string> | [<string>]
 
 ```
+</VersionBlock>
+
 
 </File>
 </TabItem>
 
 <TabItem value="other-yaml">
 
-<File name='models/resources.yml'>
+<VersionBlock firstVersion="1.9">
 
-```yml
-version: 2
+The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `exposures`, `models`, `snapshots`, `seeds`, or `saved_queries` as appropriate.
+</VersionBlock>
 
-models:
-  - name: model_name
+<File name='resource_type/properties.yml'>
+
+```yaml
+resource_type:
+  - name: resource_name
     config:
-      tags: <string> | [<string>]
-
+      tags: <string> | [<string>] # Supports single strings or list of strings
+    # Optional: Add the following specific properties for models
     columns:
       - name: column_name
-        tags: [<string>]
-        tests:
-          <test-name>:
+        config:
+          tags: <string> | [<string>] # changed to config in v1.10 and backported to 1.9
+        data_tests:
+          test-name:
             config:
-              tags: <string> | [<string>]
+              tags: "single-string" # Supports single string 
+              tags: ["string-1", "string-2"] # Supports list of strings
 ```
 
 </File>
-</TabItem>
 
+To apply tags to a model in your `models/` directory, add the `config` property similar to the following example:
+
+<File name='models/model.yml'>
+
+```yaml
+models:
+  - name: my_model
+    description: A model description
+    config:
+      tags: ['example_tag']
+```
+
+</File>
+
+</TabItem>
 
 <TabItem value="config">
 
-```jinja
-
+<File name='models/model.sql'>
+```sql
 {{ config(
     tags="<string>" | ["<string>"]
 ) }}
-
 ```
+</File>
 
 </TabItem>
-
 </Tabs>
+Note that for backwards compatibility, `tags` is supported as a top-level key, but without the capabilities of config inheritance.
 
 ## Определение
 Примените тег (или список тегов) к ресурсу.
 
-Эти теги могут использоваться как часть [синтаксиса выбора ресурсов](/reference/node-selection/syntax) при выполнении следующих команд:
-- `dbt run --select tag:my_tag`
-- `dbt seed --select tag:my_tag`
-- `dbt snapshot --select tag:my_tag`
-- `dbt test --select tag:my_tag` (косвенно запускает все тесты, связанные с моделями, которые имеют теги)
+Эти теги можно использовать как часть [синтаксиса выбора ресурсов](/reference/node-selection/syntax) при выполнении следующих команд:
+- `dbt run --select tag:my_tag` &mdash; Запускает все модели, помеченные указанным тегом.
+- `dbt build --select tag:my_tag` &mdash; Собирает все ресурсы, помеченные указанным тегом.
+- `dbt seed --select tag:my_tag` &mdash; Загружает (seed) все ресурсы, помеченные указанным тегом.
+- `dbt snapshot --select tag:my_tag` &mdash; Создаёт snapshot для всех ресурсов, помеченных указанным тегом.
+- `dbt test --select tag:my_tag` &mdash; Косвенно запускает все тесты, связанные с моделями, которые помечены этим тегом.
+
+#### Использование тегов с оператором `+`
+Вы можете использовать [оператор `+`](/reference/node-selection/graph-operators#the-plus-operator), чтобы включать восходящие или нисходящие зависимости при выборе по `tag`:
+- `dbt run --select tag:my_tag+` &mdash; Запускает модели, помеченные `my_tag`, и все их нисходящие зависимости.
+- `dbt run --select +tag:my_tag` &mdash; Запускает модели, помеченные `my_tag`, и все их восходящие зависимости.
+- `dbt run --select +tag:my_tag+` &mdash; Запускает модели, помеченные `my_tag`, а также их восходящие и нисходящие зависимости.
+- `dbt run --select tag:my_tag+ --exclude tag:exclude_tag` &mdash; Запускает модели, помеченные `my_tag`, и их нисходящие зависимости, и исключает модели, помеченные `exclude_tag`, независимо от их зависимостей.
+
+:::tip Примечания по использованию тегов
+
+При работе с тегами учитывайте следующее:
+
+- Каждый отдельный тег должен быть строкой.
+- Теги являются аддитивными по иерархии проекта.
+- Для некоторых типов ресурсов (например, sources, exposures) теги необходимо задавать на верхнем уровне.
+
+Подробнее см. в разделе [примечания по использованию](#usage-notes).
+:::
 
 ## Примеры
-### Используйте теги для запуска частей вашего проекта
 
-Примените теги в вашем `dbt_project.yml` как одно значение или строку:
+Следующие примеры показывают, как применять теги к ресурсам в вашем проекте. Вы можете настраивать теги в файлах `dbt_project.yml`, `schema.yml` или в SQL-файлах.
+
+### Использование тегов для запуска частей проекта
+
+Применяйте теги в `dbt_project.yml` как одиночное значение или как строку. В следующем примере одна из моделей — модель `jaffle_shop` — помечена тегом `contains_pii`.
 
 <File name='dbt_project.yml'>
 
@@ -110,16 +160,52 @@ models:
         - "published"
 
 ```
+</File>
+
+
+### Apply tags to models
+
+This section demonstrates applying tags to models in the `dbt_project.yml`, `schema.yml`, and SQL files. 
+
+To apply tags to a model in your `dbt_project.yml` file, you would add the following:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  jaffle_shop:
+    +tags: finance # jaffle_shop model is tagged with 'finance'.
+```
 
 </File>
 
-Вы также можете применить теги к отдельным ресурсам, используя блок конфигурации:
+Чтобы применить теги к модели в YAML‑файле в директории `models/`, необходимо добавить их с помощью свойства `config`, как показано ниже:
+
+<File name='models/stg_customers.yml'>
+
+```yaml
+models:
+  - name: stg_customers
+    description: Customer data with basic cleaning and transformation applied, one row per customer.
+    config:
+      tags: ['santi'] # stg_customers.yml model is tagged with 'santi'.
+    columns:
+      - name: customer_id
+        description: The unique key for each customer.
+        data_tests:
+          - not_null
+          - unique
+```
+
+</File>
+
+Чтобы применить теги к модели в SQL‑файле, необходимо добавить следующее:
 
 <File name='models/staging/stg_payments.sql'>
 
 ```sql
 {{ config(
-    tags=["finance"]
+    tags=["finance"] # stg_payments.sql model is tagged with 'finance'.
 ) }}
 
 select ...
@@ -128,14 +214,15 @@ select ...
 
 </File>
 
-Затем выполните часть вашего проекта следующим образом:
+Запускать ресурсы с определёнными тегами (или, наоборот, исключать ресурсы с определёнными тегами) можно с помощью следующих команд:
 
+```shell
+# Run all models tagged "daily"
+  dbt run --select tag:daily
+
+# Run all models tagged "daily", except those that are tagged hourly
+  dbt run --select tag:daily --exclude tag:hourly
 ```
-# Запустите все модели с тегом "daily"
-$ dbt run --select tag:daily
-
-# Запустите все модели с тегом "daily", кроме тех, которые имеют тег hourly
-$ dbt run --select tag:daily --exclude tag:hourly
 ```
 
 ### Примените теги к семенам
@@ -164,10 +251,83 @@ seeds:
 
 </File>
 
+### Применение тегов к сохранённым запросам
+
+В следующем примере показано, как применить тег к сохранённому запросу в файле `dbt_project.yml`. В результате сохранённый запрос будет помечен тегом `order_metrics`.
+
+<File name='dbt_project.yml'>
+
+```yml
+[saved-queries](/docs/build/saved-queries):
+  jaffle_shop:
+    customer_order_metrics:
+      +tags: order_metrics
+```
+
+</File>
+
+Затем запустите ресурсы с определённым тегом, используя следующую команду:
+
+```shell
+# Запустить все ресурсы с тегом "order_metrics"
+  dbt run --select tag:order_metrics
+```
+
+Во втором примере показано, как применить несколько тегов к сохранённому запросу в файле `semantic_model.yml`. В этом случае сохранённый запрос помечается тегами `order_metrics` и `hourly`.
+
+<File name='semantic_model.yml'>
+
+```yaml
+saved_queries:
+  - name: test_saved_query
+    description: "{{ doc('saved_query_description') }}"
+    label: Test saved query
+    config:
+      tags: 
+        - order_metrics
+        - hourly
+```
+</File>
+
+Запуск ресурсов с несколькими тегами выполняется следующей командой:
+
+```shell
+# Запустить все ресурсы с тегами "order_metrics" и "hourly"
+  dbt build --select tag:order_metrics tag:hourly
+```
+
 ## Примечания по использованию
 
+### Теги должны быть строками
+
+Каждый отдельный тег должен быть строковым значением (например, `marketing` или `daily`).
+
+В следующем примере `my_tag: "my_value"` является недопустимым, поскольку это пара ключ–значение.
+
+```yml
+sources:
+  - name: ecom
+    schema: raw
+    description: E-commerce data for the Jaffle Shop
+    config:
+      tags:
+        my_tag: "my_value". # invalid
+    tables:
+      - name: raw_customers
+        config:
+          tags:
+            my_tag: "my_value". # invalid
+```
+
+Предупреждение возникает в том случае, если значение `tags` не является строкой. Например:
+
+```
+Field config.tags: {'my_tag': 'my_value'} is not valid for source (ecom)
+```
+
 ### Теги являются аддитивными
-Теги накапливаются иерархически. Приведенный выше пример приведет к следующему:
+
+Теги накапливаются и применяются иерархически. [Пример выше](/reference/resource-configs/tags#use-tags-to-run-parts-of-your-project) приведёт к следующему результату:
 
 | Модель                            | Теги                                  |
 | -------------------------------- | ------------------------------------- |
@@ -178,42 +338,45 @@ seeds:
 
 ### Другие типы ресурсов
 
-Теги также могут применяться к источникам, экспозициям и даже _конкретным столбцам_ в ресурсе.
-Эти ресурсы пока не поддерживают свойство `config`, поэтому вам нужно будет указать
-теги как ключ верхнего уровня.
+Теги также можно применять к [sources](/docs/build/sources), [exposures](/docs/build/exposures) и даже к _отдельным столбцам_ ресурса.  
+Эти ресурсы пока не поддерживают свойство `config`, поэтому теги нужно указывать как ключ верхнего уровня.
 
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 exposures:
   - name: my_exposure
-    tags: ['exposure_tag']
+    config:
+      tags: ['exposure_tag'] # changed to config in v1.10
     ...
 
 sources:
   - name: source_name
-    tags: ['top_level']
+    config:
+      tags: ['top_level'] # changed to config in v1.10
 
     tables:
       - name: table_name
-        tags: ['table_level']
+        config:
+          tags: ['table_level'] # changed to config in v1.10
 
         columns:
           - name: column_name
-            tags: ['column_level']
-            tests:
+            config:
+              tags: ['column_level'] # changed to config in v1.10 and backported to 1.9
+            data_tests:
               - unique:
-                  tags: ['test_level']
+                config:
+                  tags: ['test_level'] # changed to config in v1.10
 ```
 
 </File>
 
-В приведенном выше примере тест `unique` будет выбран любым из этих четырех тегов:
+В приведённом выше примере тест `unique` будет выбран при использовании любого из этих четырёх тегов:
 ```bash
-$ dbt test --select tag:top_level
-$ dbt test --select tag:table_level
-$ dbt test --select tag:column_level
-$ dbt test --select tag:test_level
+dbt test --select tag:top_level
+dbt test --select tag:table_level
+dbt test --select tag:column_level
+dbt test --select tag:test_level
 ```

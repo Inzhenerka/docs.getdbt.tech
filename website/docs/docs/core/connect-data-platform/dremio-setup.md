@@ -22,7 +22,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 Следуйте по ссылке репозитория для получения информации о зависимостях ОС.
 
 :::note 
-[Контракты моделей](/docs/collaborate/govern/model-contracts) не поддерживаются.
+[Model contracts](/docs/mesh/govern/model-contracts) не поддерживаются.
 :::
 
 ## Предварительные условия для Dremio Cloud
@@ -37,8 +37,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 * Убедитесь, что вы используете версию 22.0 или более позднюю.
 * Убедитесь, что на системе, на которой вы запускаете dbt, установлена версия Python 3.9.x или более поздняя.
 
-  См. <a target="_blank" rel="noopener noreferrer" href="https://docs.dremio.com/software/advanced-administration/support-settings/#support-keys">Ключи поддержки</a> в документации Dremio для получения инструкций.
-* Если вы хотите использовать TLS для защиты соединения между dbt и Dremio Software, настройте полное шифрование канала в вашем кластере Dremio. Для инструкций см. <a target="_blank" rel="noopener noreferrer" href="https://docs.dremio.com/software/deployment/wire-encryption-config/">Настройка шифрования канала</a>.
+* Если вы хотите использовать TLS для защиты соединения между dbt и Dremio Software, настройте полное шифрование сетевого трафика (full wire encryption) в вашем кластере Dremio. Инструкции см. в разделе <a target="_blank" rel="noopener noreferrer" href="https://docs.dremio.com/software/deployment/wire-encryption-config/">Configuring Wire Encryption</a>.
 
 
 ## Инициализация проекта
@@ -165,9 +164,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 ### Конфигурации в профилях для Dremio Software
 | Конфигурация | Обязательна? | Значение по умолчанию | Описание | 
 | ---  | ---  | ---  | ---  | 
-| `software_host` | Да | Нет | Имя хоста или IP-адрес координаторного узла кластера Dremio. | 
-| `port` | Да | `9047` | Порт для конечных точек API кластера Dremio Software. | 
-| `user` | Да | Нет | Имя пользователя учетной записи, используемой для входа в кластер Dremio. | 
-| `password` | Да, если вы не используете конфигурацию pat. | Нет | Пароль учетной записи, используемой для входа в кластер Dremio. | 
-| `pat` | Да, если вы не используете конфигурации user и password. | Нет | Персональный токен доступа для аутентификации в Dremio. См. [Персональные токены доступа](https://docs.dremio.com/software/security/personal-access-tokens/) для получения инструкций о получении токена. Использование персонального токена доступа имеет приоритет, если указаны значения для трех конфигураций user, password и pat. | 
-| `use_ssl` | Да | `true` | Допустимые значения: `true` и `false`. Если значение установлено в true, убедитесь, что в вашем кластере Dremio настроено полное шифрование канала. См. [Предварительные условия для Dremio Software](#prerequisites-for-dremio-software). | 
+| `software_host` | Yes | None | Имя хоста или IP-адрес координаторного узла кластера Dremio. | 
+| `port` | Yes | `9047` | Порт для API‑эндпоинтов кластера Dremio Software. | 
+| `user` | Yes | None | Имя пользователя учетной записи, которая используется для входа в кластер Dremio. | 
+| `password` | Yes, if you are not using the pat configuration. | None | Пароль учетной записи, которая используется для входа в кластер Dremio. | 
+| `pat` | Yes, if you are not using the user and password configurations. | None | Персональный токен доступа, используемый для аутентификации в Dremio. Инструкции по получению токена см. в разделе [Personal Access Tokens](https://docs.dremio.com/software/security/personal-access-tokens/). Использование персонального токена доступа имеет приоритет, если указаны значения для трех параметров `user`, `password` и `pat`. | 
+| `use_ssl` | Yes | `true` | Допустимые значения — `true` и `false`. Если значение установлено в `true`, убедитесь, что в вашем кластере Dremio настроено полное шифрование соединения. См. раздел [Prerequisites for Dremio Software](#prerequisites-for-dremio-software). |

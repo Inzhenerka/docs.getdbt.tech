@@ -18,7 +18,7 @@ id: full-refresh-seed
 
 ```shell
 $ dbt seed
-Running with dbt=0.16.0-rc2
+Running with dbt=1.6.0-rc2
 Found 0 models, 0 tests, 0 snapshots, 0 analyses, 130 macros, 0 operations, 1 seed file, 0 sources
 
 12:12:27 | Concurrency: 8 threads (target='dev_snowflake')
@@ -43,7 +43,7 @@ Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
 
 ```shell
 $ dbt seed
-Running with dbt=0.16.0-rc2
+Running with dbt=1.6.0-rc2
 Found 0 models, 0 tests, 0 snapshots, 0 analyses, 149 macros, 0 operations, 1 seed file, 0 sources
 
 12:14:46 | Concurrency: 1 threads (target='dev_redshift')
@@ -67,7 +67,7 @@ Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
 
 В этом случае вам следует повторно выполнить команду с флагом `--full-refresh`, как показано ниже:
 
-```shell
+```
 dbt seed --full-refresh
 ```
 

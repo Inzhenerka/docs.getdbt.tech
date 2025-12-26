@@ -1,7 +1,7 @@
 ---
 title: "Подключение Apache Spark"
 id: connect-apache-spark
-description: "Инструкции по настройке подключения Apache Spark к dbt Cloud"
+description: "Инструкции по настройке подключения Apache Spark к dbt"
 sidebar_label: "Подключение Apache Spark"
 pagination_next: null
 ---
@@ -12,9 +12,15 @@ pagination_next: null
 См. [Подключение Databricks](#connect-databricks) для версии этой страницы для Databricks.
 :::
 
-dbt Cloud поддерживает подключение к кластеру Apache Spark с использованием метода HTTP или метода Thrift. Примечание: хотя метод HTTP может использоваться для подключения к универсальному кластеру Databricks, для всех подключений к Databricks рекомендуется использовать метод ODBC. Для получения дополнительной информации о настройке этих параметров подключения, пожалуйста, ознакомьтесь с [документацией dbt-spark](https://github.com/dbt-labs/dbt-spark#configuring-your-profile).
+<Constant name="cloud" /> поддерживает подключение к кластеру Apache Spark с использованием HTTP-метода
+или метода Thrift. Примечание: хотя HTTP-метод можно использовать для подключения
+к all-purpose кластеру Databricks, для всех подключений к Databricks рекомендуется
+использовать ODBC-метод. Подробнее о настройке этих параметров подключения см. в
+[документации dbt-spark](https://github.com/dbt-labs/dbt-spark#configuring-your-profile).
 
-Чтобы узнать, как оптимизировать производительность с помощью специфичных для платформы данных конфигураций в dbt Cloud, обратитесь к [конфигурации, специфичной для Apache Spark](/reference/resource-configs/spark-configs).
+Чтобы узнать, как оптимизировать производительность с помощью платформенно-специфичных
+настроек данных в <Constant name="cloud" />, см.
+[конфигурации, специфичные для Apache Spark](/reference/resource-configs/spark-configs).
 
 Следующие поля доступны при создании подключения Apache Spark с использованием методов подключения HTTP и Thrift:
 

@@ -1,6 +1,6 @@
 ---
-title: "Настройка Microsoft Fabric Synapse Data Warehouse"
-description: "Прочтите это руководство, чтобы узнать о настройке Microsoft Fabric Synapse Data Warehouse в dbt."
+title: "Настройка Microsoft Fabric Data Warehouse"
+description: "Прочитайте это руководство, чтобы узнать о настройке Microsoft Fabric Data Warehouse в dbt."
 id: fabric-setup
 meta:
   maintained_by: Microsoft
@@ -13,13 +13,14 @@ meta:
   config_page: '/reference/resource-configs/fabric-configs'
 ---
 
-:::info
+<Snippet path="warehouse-setups-cloud-callout" />
 
-Ниже представлено руководство по использованию [Synapse Data Warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing#synapse-data-warehouse), нового продукта в составе Microsoft Fabric. Адаптер в настоящее время поддерживает только подключение к хранилищу данных, но не к конечной точке lakehouse. Вы можете получить доступ к данным в вашем lakehouse через хранилище, если вы находитесь в одном рабочем пространстве.
+Ниже приведено руководство по работе с [Fabric Data Warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing#synapse-data-warehouse) — новым продуктом в составе Microsoft Fabric. В настоящее время адаптер поддерживает подключение к хранилищу данных (warehouse).
 
-Чтобы узнать, как настроить dbt с Azure Synapse Dedicated Pools, обратитесь к [настройке Microsoft Azure Synapse DWH](/docs/core/connect-data-platform/azuresynapse-setup).
+Чтобы узнать, как настроить dbt для работы с Fabric Lakehouse, см. раздел [Microsoft Fabric Lakehouse](/docs/core/connect-data-platform/fabricspark-setup).
 
-:::
+Чтобы узнать, как настроить dbt для работы с выделенными SQL-пулами Analytics, см. раздел [Microsoft Azure Synapse Analytics setup](/docs/core/connect-data-platform/azuresynapse-setup).
+
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
@@ -38,9 +39,9 @@ sudo apt install unixodbc-dev
 
 #### Поддерживаемые конфигурации
 
-* Адаптер тестируется с Microsoft Fabric Synapse Data Warehouses (также называемыми Warehouses).
+* Адаптер протестирован с Microsoft Fabric Data Warehouse (также называемыми warehouses).
 * Мы тестируем все комбинации с Microsoft ODBC Driver 17 и Microsoft ODBC Driver 18.
-* Колляции, на которых мы проводим тесты, это `Latin1_General_100_BIN2_UTF8`.
+* Сортировки (collations), на которых мы запускаем наши тесты — `Latin1_General_100_BIN2_UTF8`.
 
 Поддержка адаптера не ограничивается матрицей вышеуказанных конфигураций. Если вы заметите проблему с любой другой конфигурацией, дайте нам знать, открыв проблему на [GitHub](https://github.com/microsoft/dbt-fabric).
 
@@ -49,7 +50,18 @@ sudo apt install unixodbc-dev
 
 ## Методы аутентификации и конфигурация профиля
 
-### Общая конфигурация
+:::info Supported authentication methods
+
+Microsoft Fabric поддерживает два типа аутентификации:
+
+- Microsoft Entra service principal
+- Microsoft Entra password
+
+Чтобы лучше разобраться в механизмах аутентификации, ознакомьтесь с нашей страницей [Connect Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric).
+
+:::
+
+### Common configuration
 
 Для всех методов аутентификации обратитесь к следующим параметрам конфигурации, которые можно задать в вашем файле `profiles.yml`.
 Полная справка по всем параметрам доступна [в конце этой страницы](#reference-of-all-connection-options).
@@ -81,11 +93,11 @@ Microsoft внесла несколько изменений в выпуске O
 
 ### Стандартная аутентификация SQL Server
 
-Аутентификация SQL Server и Windows не поддерживается Microsoft Fabric Synapse Data Warehouse.
+SQL Server и аутентификация Windows не поддерживаются в Microsoft Fabric Data Warehouse.
 
 ### Аутентификация Microsoft Entra ID
 
-Аутентификация Microsoft Entra ID (ранее Azure AD) является механизмом аутентификации по умолчанию в Microsoft Fabric Synapse Data Warehouse.
+Аутентификация Microsoft Entra ID (ранее Azure AD) является механизмом аутентификации по умолчанию в Microsoft Fabric Data Warehouse.
 
 Следующие дополнительные методы доступны для аутентификации в продуктах Azure SQL:
 
@@ -319,7 +331,7 @@ your_profile_name:
 
 ### Автоматическое предоставление Microsoft Entra ID для грантов
 
-Обратите внимание, что автоматическое предоставление Microsoft Entra ID в настоящее время не поддерживается Microsoft Fabric Synapse Data Warehouse. Хотя в dbt 1.2 или новее вы можете использовать блок конфигурации [grants](https://docs.getdbt.com/reference/resource-configs/grants) для автоматического предоставления/отзыва разрешений на ваши модели пользователям или группам, хранилище данных в настоящее время не поддерживает эту функцию.
+Обратите внимание, что автоматическое назначение принципалов Microsoft Entra ID в настоящее время не поддерживается Microsoft Fabric Data Warehouse. Несмотря на то что в dbt можно использовать блок конфигурации [`grants`](/reference/resource-configs/grants) для автоматической выдачи и отзыва прав доступа на ваши модели для пользователей или групп, хранилище данных на данный момент не поддерживает эту возможность.
 
 Вам нужно добавить сервисный принципал или идентичность Microsoft Entra в рабочее пространство Fabric в качестве администратора.
 

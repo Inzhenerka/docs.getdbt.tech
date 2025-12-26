@@ -20,11 +20,11 @@ seeds:
     description: Сопоставление двухбуквенных кодов стран с названиями стран
     columns:
       - name: country_code
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: country_name
-        tests:
+        data_tests:
           - unique
           - not_null
 ```

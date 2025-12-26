@@ -169,6 +169,9 @@ dbt test --select "payments,test_type:singular" # косвенный выбор,
 dbt test --select "payments,test_type:data" # косвенный выбор, v0.18.0
 dbt test --select "payments" --data  # косвенный выбор, более ранние версии
 
+```bash
+dbt test --select "assert_total_payment_amount_is_positive" # directly select the test by name
+dbt test --select "payments,test_type:singular" # indirect selection, v1.2
 ```
 
 Пока вы можете выбрать общее свойство группы ресурсов, косвенный выбор позволяет вам выполнять все тесты на этих ресурсах. В приведённом выше примере мы увидели, что возможно тестировать все модели с материализацией таблицы. Этот принцип может быть расширен и на другие типы ресурсов:
@@ -194,14 +197,14 @@ dbt test --select "config.materialized:snapshot"
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: order_id
-        tags: [my_column_tag]
-        tests:
+        config:
+          tags: [my_column_tag] # changed to config in v1.10 and backported to 1.9
+        data_tests:
           - unique
 
 ```
@@ -222,15 +225,15 @@ dbt test --select "tag:my_column_tag"
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique:
-              tags: [my_test_tag]
+            config:
+              tags: [my_test_tag] # changed to config in v1.10
 
 ```
 

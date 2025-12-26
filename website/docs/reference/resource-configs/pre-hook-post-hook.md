@@ -1,6 +1,6 @@
 ---
 title: pre-hook & post-hook
-description: "Pre-hook и Post-hook - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
+description: "Настройте хуки для выполнения SQL до (pre) и после (post) выполнения модели в dbt."
 resource_types: [models, seeds, snapshots]
 datatype: sql-statement | [sql-statement]
 ---
@@ -108,26 +108,6 @@ snapshots:
 ```
 
 </File>
-
-<VersionBlock lastVersion="1.8">
-
-<File name='snapshots/<filename>.sql'>
-
-```sql
-{% snapshot snapshot_name %}
-{{ config(
-    pre_hook="SQL-statement" | ["SQL-statement"],
-    post_hook="SQL-statement" | ["SQL-statement"],
-) }}
-
-select ...
-
-{% end_snapshot %}
-
-```
-
-</File>
-</VersionBlock>
 
 <File name='snapshots/snapshot.yml'>
 

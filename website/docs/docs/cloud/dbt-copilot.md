@@ -1,27 +1,45 @@
 ---
 title: "О dbt Copilot"
 sidebar_label: "О dbt Copilot"
-description: "dbt Copilot — это мощный AI-движок, разработанный для ускорения ваших аналитических рабочих процессов на протяжении всего ADLC."
+description: "dbt Copilot — это мощный ассистент на базе ИИ, предназначенный для ускорения аналитических рабочих процессов на протяжении всего ADLC."
+---
 pagination_next: "docs/cloud/enable-dbt-copilot"
-pagination_prev: null
+keywords: ["dbt Copilot", "dbt", "AI", "AI-powered", "dbt"]
 ---
 
-# О dbt Copilot <Lifecycle status='beta'/>
+# О dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
 
-dbt Copilot — это мощный искусственный интеллект (AI), полностью интегрированный в ваш опыт работы с dbt Cloud и разработанный для ускорения ваших аналитических рабочих процессов. dbt Copilot внедряет помощь, основанную на AI, на каждом этапе жизненного цикла разработки аналитики (ADLC), позволяя специалистам по данным быстрее предоставлять продукты данных, улучшать качество данных и повышать доступность данных.
+<IntroText>
+<Constant name="copilot" /> — это мощный AI‑ассистент, полностью интегрированный в работу с <Constant name="cloud" /> и предназначенный для ускорения ваших аналитических процессов.
 
-С помощью автоматической генерации кода, позвольте dbt Copilot [генерировать код](/docs/cloud/use-dbt-copilot#generate-and-edit-code) с использованием естественного языка, а также [генерировать документацию](/docs/build/documentation), [тесты](/docs/build/data-tests) и [семантические модели](/docs/build/semantic-models) для вас одним нажатием кнопки.
+</IntroText>
 
-:::tip Бета-функция
-dbt Copilot разработан, чтобы _помогать_ разработчикам генерировать документацию, тесты и семантические модели, а также [код](/docs/cloud/use-dbt-copilot#generate-and-edit-code) с использованием естественного языка в dbt Cloud. Он доступен в бета-версии, только в IDE dbt Cloud.
+<Constant name="copilot" /> встраивает AI‑поддержку на каждом этапе [жизненного цикла разработки аналитики (Analytics Development Life Cycle, ADLC)](https://www.getdbt.com/resources/guides/the-analytics-development-lifecycle) и использует богатые метаданные — фиксируя связи, lineage и контекст &mdash; чтобы вы могли быстро создавать качественные и надёжные data‑продукты.
 
-Чтобы использовать dbt Copilot, у вас должна быть активная [учетная запись dbt Cloud Enterprise](https://www.getdbt.com/pricing), и вы должны либо согласиться использовать ключ OpenAI от dbt Labs, либо предоставить свой собственный ключ API Open AI. [Зарегистрируйтесь здесь](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) или свяжитесь с командой по работе с клиентами, если вы заинтересованы в участии в закрытой бета-версии.
+Благодаря автоматической генерации кода и использованию запросов на естественном языке, <Constant name="copilot" /> может [генерировать код](/docs/cloud/use-dbt-copilot), [документацию](/docs/build/documentation), [data tests](/docs/build/data-tests), [метрики](/docs/build/metrics-overview) и [семантические модели](/docs/build/semantic-models) — буквально по нажатию кнопки — в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-copilot), [<Constant name="visual_editor" />](/docs/cloud/build-canvas-copilot) и на странице [<Constant name="query_page" />](/docs/explore/dbt-insights).
+
+:::tip
+<Constant name="copilot" /> доступен в тарифах Starter, Enterprise и Enterprise+. [Запишитесь на демо](https://www.getdbt.com/contact), чтобы увидеть, как разработка с использованием AI может упростить и ускорить ваш рабочий процесс.
 :::
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Пример использования dbt Copilot для генерации документации в IDE" />
 
-## Обратная связь
+## Как работает dbt Copilot
 
-Пожалуйста, обратите внимание: всегда проверяйте код и контент, сгенерированные AI, так как они могут содержать ошибки. Функции и/или функциональность dbt Copilot могут быть добавлены или удалены в рамках бета-тестирования.
+<Constant name="copilot" /> повышает эффективность за счёт автоматизации повторяющихся задач, одновременно обеспечивая конфиденциальность и безопасность данных. Он работает следующим образом:
 
-Чтобы оставить отзыв, пожалуйста, свяжитесь с вашей командой по работе с клиентами dbt Labs. Мы ценим ваши отзывы и предложения, которые помогут нам улучшить dbt Copilot.
+- Доступ к <Constant name="copilot" /> осуществляется через:
+  - [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-copilot) — для генерации документации, тестов и семантических моделей.
+  - [<Constant name="visual_editor" /> ](/docs/cloud/build-canvas-copilot) — для генерации SQL-кода с использованием запросов на естественном языке. <Lifecycle status="managed,managed_plus" /> 
+  - [<Constant name="query_page" />](/docs/explore/dbt-insights) — для генерации SQL-запросов для аналитики с использованием запросов на естественном языке. <Lifecycle status="managed,managed_plus" /> 
+- <Constant name="copilot" /> собирает метаданные (например, имена колонок, SQL моделей, документацию), но никогда не получает доступ к данным хранилища на уровне строк.
+- Метаданные и пользовательские запросы отправляются провайдеру ИИ (в данном случае OpenAI) через API-вызовы для обработки.
+- Сгенерированный ИИ контент возвращается в <Constant name="cloud" />, где вы можете просмотреть его, отредактировать и сохранить в файлах проекта.
+- <Constant name="copilot" /> не использует данные хранилища для обучения ИИ-моделей.
+- На системах dbt Labs не сохраняются чувствительные данные, за исключением данных об использовании.
+- Клиентские данные, включая любые персональные или чувствительные данные, добавленные пользователем в запрос, удаляются OpenAI в течение 30 дней.
+- <Constant name="copilot" /> использует руководство по лучшим практикам оформления, чтобы обеспечить единообразие между командами.
+
+:::tip
+<Constant name="copilot" /> ускоряет работу, но не заменяет аналитического инженера. Он помогает быстрее создавать более качественные дата-продукты, однако всегда проверяйте контент, сгенерированный ИИ, так как он может содержать ошибки.
+:::

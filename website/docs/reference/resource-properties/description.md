@@ -14,6 +14,7 @@ description: "Это руководство объясняет, как испо�
     { label: 'Analyses', value: 'analyses', },
     { label: 'Macros', value: 'macros', },
     { label: 'Data tests', value: 'data_tests', },
+    { label: 'Unit tests', value: 'unit_tests', },
   ]
 }>
 <TabItem value="models">
@@ -21,7 +22,6 @@ description: "Это руководство объясняет, как испо�
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: model_name
@@ -42,7 +42,6 @@ models:
 <File name='models/schema.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: source_name
@@ -67,7 +66,6 @@ sources:
 <File name='seeds/schema.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: seed_name
@@ -88,7 +86,6 @@ seeds:
 <File name='snapshots/schema.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -109,7 +106,6 @@ snapshots:
 <File name='analysis/schema.yml'>
 
 ```yml
-version: 2
 
 analyses:
   - name: analysis_name
@@ -130,7 +126,6 @@ analyses:
 <File name='macros/schema.yml'>
 
 ```yml
-version: 2
 
 macros:
   - name: macro_name
@@ -150,43 +145,90 @@ macros:
 
 <VersionBlock firstVersion="1.9">
 
+You can add a description to a [singular data test](/docs/build/data-tests#singular-data-tests) or a [generic data test](/docs/build/data-tests#generic-data-tests).
+
 <File name='tests/schema.yml'>
 
 ```yml
+# Singular data test example
+
 version: 2
 
 data_tests:
   - name: data_test_name
     description: markdown_string
-
 ```
+</File>
 
+<File name='tests/schema.yml'>
+
+```yml
+# Generic data test example
+
+version: 2
+
+models:
+  - name: model_name
+    columns:
+      - name: column_name
+        data_tests:
+          - unique:
+              description: markdown_string
+```
 </File>
 
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
+</TabItem>
 
-Свойство `description` доступно для общих и одиночных тестов данных, начиная с dbt v1.9.
+<TabItem value="unit_tests">
 
-</VersionBlock>
+Здесь нет текста для перевода, поэтому фрагмент нужно оставить **без изменений**.
+
+<File name='models/schema.yml'>
+
+```yml
+unit_tests:
+  - name: unit_test_name
+    description: "markdown_string"
+    model: model_name 
+    given: ts
+      - input: ref_or_source_call
+        rows:
+         - {column_name: column_value}
+         - {column_name: column_value}
+         - {column_name: column_value}
+         - {column_name: column_value}
+      - input: ref_or_source_call
+        format: csv
+        rows: dictionary | string
+    expect: 
+      format: dict | csv | sql
+      fixture: fixture_name
+```
+
+</File>
 
 </TabItem>
 
 </Tabs>
 
 ## Определение
-Пользовательское описание. Может использоваться для документирования:
-- модели и столбцов модели
+
+Пользовательское описание, используемое для документирования:
+
+- моделей и столбцов моделей
 - источников, таблиц источников и столбцов источников
-- семян и столбцов семян
-- снимков и столбцов снимков
-- анализов и столбцов анализов
-- макросов и аргументов макросов
+- seed-файлов и столбцов seed-файлов
+- snapshots и столбцов snapshots
+- analyses и столбцов analyses
+- macros и аргументов macros
+- data tests и столбцов data tests
+- unit tests для моделей
 
-Эти описания используются на сайте документации, создаваемом dbt (см. [руководство по документации](/docs/build/documentation) или [dbt Explorer](/docs/collaborate/explore-projects)).
+Эти описания используются на сайте документации, который рендерится dbt (см. [руководство по документации](/docs/build/documentation) или [<Constant name="explorer" />](/docs/explore/explore-projects)).
 
-Описания могут включать markdown, а также функцию [`doc` jinja](/reference/dbt-jinja-functions/doc).
+Описания могут включать markdown, а также [Jinja-функцию `doc`](/reference/dbt-jinja-functions/doc).
 
 :::caution Возможно, вам потребуется заключить ваше YAML в кавычки
 
@@ -196,7 +238,19 @@ data_tests:
 
 ## Примеры
 
-### Добавление простого описания к модели и столбцу
+В этом разделе приведены примеры того, как добавлять описания к различным ресурсам:
+
+- [Добавление простого описания для модели и колонки](#add-a-simple-description-to-a-model-and-column) <br />
+- [Добавление многострочного описания для модели](#add-a-multiline-description-to-a-model) <br />
+- [Использование Markdown в описании](#use-some-markdown-in-a-description) <br />
+- [Использование docs-блока в описании](#use-a-docs-block-in-a-description) <br />
+- [Ссылка на другую модель в описании](#link-to-another-model-in-a-description)
+- [Добавление изображения из вашего репозитория в описание](#include-an-image-from-your-repo-in-your-descriptions) <br />
+- [Добавление изображения из интернета в описание](#include-an-image-from-the-web-in-your-descriptions) <br />
+- [Добавление описания к data test](#add-a-description-to-a-data-test) <br />
+- [Добавление описания к unit test](#add-a-description-to-a-unit-test) <br />
+
+### Добавление простого описания для модели и колонки
 
 <File name='models/schema.yml'>
 
@@ -333,9 +387,9 @@ models:
 
 ### Включение изображения из вашего репозитория в ваши описания
 
-Этот раздел применим только к пользователям dbt Core. Включение изображения из вашего репозитория гарантирует, что ваши изображения находятся под версионным контролем.
+Этот раздел относится только к пользователям <Constant name="core" />. Добавление изображений непосредственно из вашего репозитория гарантирует, что они будут находиться под версионным контролем.
 
-Как пользователи dbt Cloud, так и dbt Core могут [включать изображение из интернета](#include-an-image-from-the-web-in-your-descriptions), что предлагает динамическое содержание, уменьшенный размер репозитория, доступность и легкость сотрудничества.
+Пользователи как <Constant name="cloud" />, так и <Constant name="core" /> могут [добавлять изображения из интернета](#include-an-image-from-the-web-in-your-descriptions), что обеспечивает динамический контент, уменьшение размера репозитория, улучшенную доступность и удобство совместной работы.
 
 Чтобы включить изображение в поле `description` вашей модели:
 
@@ -377,7 +431,7 @@ models:
 
 ### Включение изображения из интернета в ваши описания
 
-Этот раздел применим к пользователям dbt Cloud и dbt Core. Включение изображения из интернета предлагает динамическое содержание, уменьшенный размер репозитория, доступность и легкость сотрудничества.
+Этот раздел относится к пользователям <Constant name="cloud" /> и <Constant name="core" />. Использование изображений из интернета обеспечивает динамический контент, уменьшает размер репозитория, повышает доступность и упрощает совместную работу.
 
 Чтобы включить изображения из интернета, укажите URL изображения в поле `description` вашей модели:
 
@@ -398,4 +452,71 @@ models:
 
 </File>
 
-Если вы смешиваете изображения и текст, также рассмотрите возможность использования блока docs.
+Если вы комбинируете изображения и текст, также рассмотрите возможность использования блока docs.
+
+### Добавление описания к data test
+
+Вы можете добавить свойство `description` к generic или singular data test.
+
+#### Generic data test
+
+В этом примере показан generic data test, который проверяет уникальность значений в колонке для модели `orders`.
+
+<File name='models/<filename>.yml'>
+
+```yaml
+version: 2
+
+models:
+  - name: orders
+    columns:
+      - name: order_id
+        data_tests:
+          - unique:
+              description: "The order_id is unique for every row in the orders model"
+```
+</File>
+
+Вы также можете добавлять описания к Jinja-макросу, который содержит основную логику generic data test. Подробнее см. в разделе [Add description to generic data test logic](/best-practices/writing-custom-generic-tests#add-description-to-generic-data-test-logic).
+
+#### Singular data test
+
+В этом примере показан singular data test, который проверяет, что все значения в модели `payments` не являются отрицательными (≥ 0).
+
+<File name='tests/<filename>.yml'>
+
+```yaml
+data_tests:
+  - name: assert_total_payment_amount_is_positive
+    description: >
+      Refunds have a negative amount, so the total amount should always be >= 0.
+      Therefore return records where total amount < 0 to make the test fail.
+
+```
+</File>
+
+Обратите внимание, что для запуска теста SQL‑файл `tests/assert_total_payment_amount_is_positive.sql` должен существовать в директории `tests`.
+
+### Добавление описания к unit test
+
+В этом примере показан unit test, который проверяет, что временная метка `opened_at` корректно усекается до даты для модели `stg_locations`.
+
+<File name='models/<filename>.yml'>
+
+```yaml
+unit_tests:
+  - name: test_does_location_opened_at_trunc_to_date
+    description: "Check that opened_at timestamp is properly truncated to a date."
+    model: stg_locations
+    given:
+      - input: source('ecom', 'raw_stores')
+        rows:
+          - {id: 1, name: "Rego Park", tax_rate: 0.2, opened_at: "2016-09-01T00:00:00"}
+          - {id: 2, name: "Jamaica", tax_rate: 0.1, opened_at: "2079-10-27T23:59:59.9999"}
+    expect:
+      rows:
+        - {location_id: 1, location_name: "Rego Park", tax_rate: 0.2, opened_date: "2016-09-01"}
+        - {location_id: 2, location_name: "Jamaica", tax_rate: 0.1, opened_date: "2079-10-27"}
+```
+
+</File>

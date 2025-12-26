@@ -4,7 +4,7 @@ required: True
 keyword: project version, project versioning, dbt project versioning
 ---
 
-import VersionsCallout from '/snippets/_version-callout.md';
+import VersionsCallout from '/snippets/_model-version-callout.md';
 
 <VersionsCallout />
 
@@ -16,7 +16,9 @@ import VersionsCallout from '/snippets/_version-callout.md';
 
 Начиная с версии dbt 1.5, `version` в `dbt_project.yml` является *необязательным параметром*. Если он используется, версия должна быть в формате [семантического версионирования](https://semver.org/), например, `1.0.0`. Значение по умолчанию — `None`, если не указано. Для пользователей на версии dbt 1.4 или ниже этот тег обязателен, хотя в настоящее время он не используется dbt значимо.
 
-Для получения дополнительной информации о версиях Core, см. [О версиях dbt Core](/docs/dbt-versions/core).
+Начиная с версии dbt 1.5, параметр `version` в файле `dbt_project.yml` является *необязательным*. Если он используется, значение версии должно быть указано в формате [семантического версионирования](https://semver.org/), например `1.0.0`. Если параметр не задан, по умолчанию используется значение `None`. Для пользователей dbt версии 1.4 и ниже этот параметр является обязательным, хотя в настоящее время dbt не использует его каким-либо значимым образом.
+
+Подробнее о версиях Core см. в разделе [About <Constant name="core" /> versions](/docs/dbt-versions/core).
 
 <File name='dbt_project.yml'>
 
@@ -32,7 +34,7 @@ version: version
 
 Начиная с версии 1.5, dbt больше не будет требовать этой конфигурации в ваших ресурсных файлах `.yml`. Если вы хотите узнать больше о том, почему этот тег ранее был необходим, вы можете обратиться к [Часто задаваемым вопросам](#faqs). Для пользователей на версии dbt 1.4 или ниже этот тег обязателен.
 
-Для получения дополнительной информации о файлах свойств, см. их общую [документацию](/reference/configs-and-properties#where-can-i-define-properties) на той же странице.
+Подробнее о файлах свойств см. их общую [документацию](/reference/define-properties) на этой же странице.
 
 <Tabs
   groupId="resource-version-configs"

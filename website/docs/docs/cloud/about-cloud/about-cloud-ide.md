@@ -1,13 +1,13 @@
 ---
-title: "О dbt Cloud IDE"
+title: "About Studio IDE"
 id: about-cloud-ide
-description: "о dbt Cloud Integrated Development Environment"
-sidebar_label: О dbt Cloud IDE
+description: "about dbt Studio Integrated Development Environment"
+sidebar_label: About dbt Studio IDE
 ---
 
-Интегрированная среда разработки (IDE) dbt Cloud — это единый интерфейс для создания, тестирования, выполнения и контроля версий проектов dbt прямо из вашего браузера. С помощью Cloud IDE вы можете компилировать код dbt в SQL и выполнять его непосредственно в вашей базе данных.
+Интегрированная среда разработки <Constant name="cloud" /> (<Constant name="cloud_ide" />) — это единый интерфейс для создания, тестирования, запуска и управления версиями dbt‑проектов прямо из браузера. С помощью Cloud <Constant name="cloud_ide" /> вы можете компилировать dbt‑код в SQL и выполнять его непосредственно в вашей базе данных.
 
-С помощью Cloud IDE вы можете:
+С помощью Cloud <Constant name="cloud_ide" /> вы можете:
 
 - Писать модульные SQL-модели с использованием операторов select и функции ref(),
 - Компилировать код dbt в SQL и выполнять его непосредственно в вашей базе данных,
@@ -20,11 +20,11 @@ sidebar_label: О dbt Cloud IDE
     * В настоящее время вы не можете предварительно просматривать модели на Python
 - Визуализировать ориентированный ациклический граф (DAG) и многое другое.
 
-<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="dbt Cloud IDE в темном режиме"/>
+<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.png" width="85%" title="The Studio IDE in dark mode"/>
 
-Для получения дополнительной информации прочитайте полный [руководство по Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+Для получения дополнительной информации прочитайте полное [руководство по Cloud <Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
 
 ## Связанные документы
 
-- [Пользовательский интерфейс IDE](/docs/cloud/dbt-cloud-ide/ide-user-interface)
-- [Горячие клавиши](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts)
+- [<Constant name="cloud_ide" /> пользовательский интерфейс](/docs/cloud/studio-ide/ide-user-interface)
+- [Сочетания клавиш](/docs/cloud/studio-ide/keyboard-shortcuts)

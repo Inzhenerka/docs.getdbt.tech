@@ -8,8 +8,8 @@ displayed_sidebar: "docs"
 ## Ресурсы
 
 - [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.8.latest/CHANGELOG.md)
-- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
-- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [<Constant name="core" /> Руководство по установке CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
 ## Что нужно знать перед обновлением
 
@@ -17,7 +17,7 @@ dbt Labs стремится обеспечивать обратную совме
 
 ## Треки релизов
 
-Начиная с 2024 года, dbt Cloud предоставляет функциональность новых версий dbt Core через [треки релизов](/docs/dbt-versions/cloud-release-tracks) с автоматическими обновлениями. Выберите трек релиза в ваших средах разработки, тестирования и производства, чтобы получить доступ ко всему в dbt Core v1.8+ и более. Чтобы обновить среду в [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) или [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), установите `dbt_version` на строку `latest`.
+Начиная с 2024 года, <Constant name="cloud" /> предоставляет функциональность из новых версий dbt Core через [release tracks](/docs/dbt-versions/cloud-release-tracks) с автоматическими обновлениями. Выберите release track в ваших [средах](/docs/deploy/deploy-environments) разработки, staging и production, чтобы получить доступ ко всем возможностям dbt Core v1.8+ и не только. Чтобы обновить среду через [<Constant name="cloud" /> Admin API](/docs/dbt-cloud-apis/admin-cloud-api) или [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), установите параметр `dbt_version` в строковое значение `latest`.
 
 ## Новые и измененные функции и функциональность
 

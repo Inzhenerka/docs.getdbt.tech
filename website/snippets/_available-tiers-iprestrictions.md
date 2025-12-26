@@ -1,6 +1,6 @@
-:::info Доступно только для определённых уровней Enterprise
+:::info Доступно для определённых Enterprise‑тарифов
 
-Организации могут настроить ограничения по IP, используя следующие уровни dbt Cloud Enterprise:
+Организации могут настраивать IP‑ограничения, используя следующие Enterprise‑тарифы <Constant name="cloud" />:
  * Business Critical
  * Virtual Private
 

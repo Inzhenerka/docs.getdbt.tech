@@ -1,7 +1,10 @@
 ---
-title: Свойства снимков
-description: "Прочтите это руководство, чтобы узнать о использовании свойств источников в dbt."
+title: Свойства snapshot  
+description: "Прочитайте это руководство, чтобы узнать, как использовать свойства источников в dbt."  
+intro_text: "Определяйте свойства snapshot в YAML, чтобы документировать snapshot, настраивать параметры, добавлять тесты и описывать столбцы."
 ---
+
+import CourseCallout from '/snippets/_materialization-video-callout.md';
 
 <VersionBlock firstVersion="1.9">
 
@@ -9,86 +12,46 @@ description: "Прочтите это руководство, чтобы узн�
 
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
+Мы рекомендуем размещать их в директории `snapshots/`. Вы можете называть эти файлы как угодно, например `whatever_you_want.yml`, и произвольно вкладывать их в подкаталоги любой глубины внутри директорий `snapshots/` или `models/`.
 
-Свойства снимков могут быть объявлены в `.yml` файлах в:
-- вашем каталоге `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)).
-- вашем каталоге `models/` (как определено в конфигурации [`model-paths`](/reference/project-configs/model-paths))
-
-Обратите внимание, что в dbt версии 1.9 и позже снимки определяются в обновленном синтаксисе с использованием YAML-файла в вашем каталоге `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Для более быстрого и эффективного управления рассмотрите обновленный синтаксис YAML для снимков, который уже доступен в [последней версии dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и вскоре будет доступен в [dbt Core v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
-
-</VersionBlock>
-
-Мы рекомендуем размещать их в каталоге `snapshots/`. Вы можете назвать эти файлы как угодно, например, `whatever_you_want.yml`, и вложить их на любую глубину в подкаталоги внутри каталога `snapshots/` или `models/`.
+<CourseCallout resource="Snapshots" 
+url="https://learn.getdbt.com/courses/snapshots"
+course="Snapshots"
+/>
 
 <VersionBlock firstVersion="1.9">
 
 <File name='snapshots/<filename>.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: <snapshot name>
     [description](/reference/resource-properties/description): <markdown_string>
-    [meta](/reference/resource-configs/meta): {<dictionary>}
-    [docs](/reference/resource-configs/docs):
-      show: true | false
-      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     [config](/reference/resource-properties/config):
       [<snapshot_config>](/reference/snapshot-configs): <config_value>
-    [tests](/reference/resource-properties/data-tests):
+      [meta](/reference/resource-configs/meta): {<dictionary>}
+      [docs](/reference/resource-configs/docs):
+        show: true | false
+        node_color: <color_id> # Используйте название (например, node_color: purple) или hex-код в кавычках (например, node_color: "#cd7f32")
+    [data_tests](/reference/resource-properties/data-tests):
       - <test>
       - ...
     columns:
       - name: <column name>
         [description](/reference/resource-properties/description): <markdown_string>
-        [meta](/reference/resource-configs/meta): {<dictionary>}
-        [quote](/reference/resource-properties/quote): true | false
-        [tags](/reference/resource-configs/tags): [<string>]
-        [tests](/reference/resource-properties/data-tests):
+        [quote](/reference/resource-properties/columns#quote): true | false
+        [data_tests](/reference/resource-properties/data-tests):
           - <test>
           - ... # объявите дополнительные тесты
-      - ... # объявите свойства дополнительных столбцов
+        [config](/reference/resource-properties/config):
+          [meta](/reference/resource-configs/meta): {<dictionary>}
+          [tags](/reference/resource-configs/tags): [<string>]
+      - ... # объявите свойства дополнительных колонок
 
-    - name: ... # объявите свойства дополнительных снимков
+    - name: ... # объявите свойства дополнительных snapshot-ов
 
 ```
 </File>
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-<File name='snapshots/<filename>.yml'>
-
-```yml
-version: 2
-
-snapshots:
-  - name: <snapshot name>
-    [description](/reference/resource-properties/description): <markdown_string>
-    [meta](/reference/resource-configs/meta): {<dictionary>}
-    [docs](/reference/resource-configs/docs):
-      show: true | false
-      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
-    [config](/reference/resource-properties/config):
-      [<snapshot_config>](/reference/snapshot-configs): <config_value>
-    [tests](/reference/resource-properties/data-tests):
-      - <test>
-      - ...
-    columns:
-      - name: <column name>
-        [description](/reference/resource-properties/description): <markdown_string>
-        [meta](/reference/resource-configs/meta): {<dictionary>}
-        [quote](/reference/resource-properties/quote): true | false
-        [tags](/reference/resource-configs/tags): [<string>]
-        [tests](/reference/resource-properties/data-tests):
-          - <test>
-          - ... # объявите дополнительные тесты
-      - ... # объявите свойства дополнительных столбцов
-
-    - name: ... # объявите свойства дополнительных снимков
-
-```
-</File>
-</VersionBlock>

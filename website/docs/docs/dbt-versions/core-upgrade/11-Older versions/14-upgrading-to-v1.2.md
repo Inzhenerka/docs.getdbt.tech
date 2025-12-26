@@ -7,9 +7,9 @@ displayed_sidebar: "docs"
 
 ### Ресурсы
 
-- [Список изменений](https://github.com/dbt-labs/dbt-core/blob/1.2.latest/CHANGELOG.md)
-- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
-- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.2.latest/CHANGELOG.md)
+- [Руководство по установке <Constant name="core" /> CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
 ## Что нужно знать перед обновлением
 

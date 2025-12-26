@@ -1,12 +1,13 @@
-Каждый [проект dbt](/docs/build/projects) нуждается в файле `dbt_project.yml` — именно так dbt определяет, что директория является проектом dbt. Этот файл также содержит важную информацию, которая указывает dbt, как управлять вашим проектом.
+---
+description: "Справочное руководство по настройке файла dbt_project.yml."
+intro_text: "Файл dbt_project.yml является обязательным для всех проектов dbt. Он содержит важную информацию, которая сообщает dbt, как работать с вашим проектом."
+---
 
-- dbt использует [YAML](https://yaml.org/) в нескольких местах. Если вы новичок в YAML, стоит изучить, как представлены массивы, словари и строки.
+Каждому [проекту dbt](/docs/build/projects) необходим файл `dbt_project.yml` — именно по нему dbt определяет, что каталог является проектом dbt. Кроме того, в этом файле содержится важная информация, которая сообщает dbt, как именно работать с вашим проектом. Принцип работы следующий:
 
-- По умолчанию dbt ищет `dbt_project.yml` в вашей текущей рабочей директории и её родительских директориях, но вы можете указать другую директорию, используя флаг `--project-dir` или переменную окружения `DBT_PROJECT_DIR`.
-
-- Укажите ID вашего проекта в dbt Cloud в файле `dbt_project.yml`, используя `project-id` в конфигурации `dbt-cloud`. Найдите ID вашего проекта в URL вашего проекта в dbt Cloud: например, в `https://YOUR_ACCESS_URL/11/projects/123456`, ID проекта — `123456`.
-
-- Обратите внимание, что вы не можете настроить "свойство" в файле `dbt_project.yml`, если это не конфигурация (например, [макросы](/reference/macro-properties)). Это относится ко всем типам ресурсов. Обратитесь к [Конфигурации и свойства](/reference/configs-and-properties) для получения более подробной информации.
+- dbt использует [YAML](https://yaml.org/) в нескольких местах. Если вы ранее не работали с YAML, полезно изучить, как в нём представлены массивы, словари и строки.
+- По умолчанию dbt ищет файл `dbt_project.yml` в текущем рабочем каталоге и его родительских каталогах, однако вы можете указать другой каталог с помощью флага `--project-dir` или переменной окружения `DBT_PROJECT_DIR`.
+- Укажите идентификатор вашего проекта <Constant name="cloud" /> в файле `dbt_project.yml`, используя параметр `project-id` в конфигурации `dbt-cloud`. Идентификатор проекта можно найти в URL вашего проекта <Constant name="cloud" />. Например, в `https://YOUR_ACCESS_URL/11/projects/123456` идентификатор проекта — `123456`.
 
 ## Пример
 
@@ -30,6 +31,7 @@
 [snapshot-paths](/reference/project-configs/snapshot-paths): [directorypath]
 [docs-paths](/reference/project-configs/docs-paths): [directorypath]
 [asset-paths](/reference/project-configs/asset-paths): [directorypath]
+[function-paths](/reference/project-configs/function-paths): [directorypath]
 
 [packages-install-path](/reference/project-configs/packages-install-path): directorypath
 
@@ -43,14 +45,19 @@
   [<global-configs>](/reference/global-configs/project-flags)
 
 [dbt-cloud](/docs/cloud/cloud-cli-installation):
-  [project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli): project_id # Обязательно
-  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli): environment_id # Необязательно
+[project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cli): project_id # Обязательный параметр  
+  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cli): environment_id # Необязательный параметр  
+  [account-host](/docs/cloud/about-cloud/access-regions-ip-addresses): account-host # По умолчанию используется `cloud.getdbt.com`; обязателен, если используется другой Access URL  
+
+[exposures](/docs/build/exposures):  
+  +[enabled](/reference/resource-configs/enabled): true | false
 
 [quoting](/reference/project-configs/quoting):
   database: true | false
   schema: true | false
   identifier: true | false
-
+  snowflake_ignore_case: true | false  # Fusion-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
+                                       # Ignored by dbt Core and other adapters.
 metrics:
   [<metric-configs>](/docs/build/metrics-overview)
 
@@ -72,7 +79,7 @@ snapshots:
 sources:
   [<source-configs>](source-configs)
   
-tests:
+data_tests:
   [<test-configs>](/reference/data-test-configs)
 
 vars:
@@ -85,13 +92,22 @@ vars:
   - macro_namespace: packagename
     search_order: [packagename]
 
-[restrict-access](/docs/collaborate/govern/model-access): true | false
+[restrict-access](/docs/mesh/govern/model-access): true | false
+
+functions:
+  [<function-configs>](/reference/function-configs)
 
 ```
 
 </File>
 
-## Конвенция именования
+## Префикс `+`
+
+import PlusPrefix from '/snippets/_plus-prefix.md';
+
+<PlusPrefix />
+
+## Соглашение об именовании
 
 Важно следовать правильным конвенциям именования YAML для конфигураций в вашем файле `dbt_project.yml`, чтобы dbt мог правильно их обработать. Это особенно важно для типов ресурсов с более чем одним словом.
 

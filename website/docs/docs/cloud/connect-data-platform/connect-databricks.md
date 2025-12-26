@@ -1,7 +1,7 @@
 ---
 title: "Подключение Databricks"
 id: connect-databricks
-description: "Инструкции по настройке подключения Databricks к dbt Cloud"
+description: "Инструкции по настройке подключения Databricks к dbt"
 sidebar_label: "Подключение Databricks"
 ---
 
@@ -9,13 +9,13 @@ sidebar_label: "Подключение Databricks"
 
 ## О адаптере dbt-databricks
 
-dbt-databricks совместим с следующими версиями dbt Core в dbt Cloud с различной степенью функциональности.
+dbt-databricks совместим со следующими версиями <Constant name="core" /> в <Constant name="cloud" /> с различной степенью функциональности.
 
 | Функция | Версии dbt |
 | ----- | ----------- | 
-| dbt-databricks | Доступно начиная с dbt 1.0 в dbt Cloud |
-| Unity Catalog | Доступно начиная с dbt 1.1 | 
-| Модели на Python | Доступно начиная с dbt 1.3 |
+| dbt-databricks | Доступно, начиная с dbt 1.0 в <Constant name="cloud" /> |
+| Unity Catalog | Доступно, начиная с dbt 1.1 | 
+| Python models | Доступны, начиная с dbt 1.3 |
 
 Адаптер dbt-databricks предлагает:
 - **Более простая настройка**
@@ -24,7 +24,7 @@ dbt-databricks совместим с следующими версиями dbt C
 - **Поддержка Unity Catalog:**
 Unity Catalog позволяет пользователям Databricks централизованно управлять всеми данными, упрощая управление доступом и улучшая производительность поиска и запросов. Пользователи Databricks теперь могут получить трехуровневую иерархию данных – каталог, схема, имя модели – что решает давнюю проблему в организации и управлении данными.
 
-Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурации, специфичной для Databricks](/reference/resource-configs/databricks-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, обратитесь к разделу [Databricks-specific configuration](/reference/resource-configs/databricks-configs).
 
 Чтобы предоставить пользователям или ролям разрешения на базу данных (права доступа и привилегии), обратитесь к странице [примеров разрешений](/reference/database-permissions/databricks-permissions).
 

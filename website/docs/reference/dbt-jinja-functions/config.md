@@ -39,6 +39,10 @@ __Аргументы__:
 2. Конфигурационная переменная существует, она `None`
 3. Конфигурационная переменная не существует
 
+:::info Доступ к пользовательским конфигурациям в `meta`
+`config.get()` не возвращает значения из `config.meta`. Если ключ существует только в `meta`, `config.get()` вернёт значение по умолчанию и выдаст предупреждение. Чтобы получить доступ к пользовательским конфигурациям, сохранённым в `meta`, используйте [`config.meta_get()`](#configmeta_get).
+:::
+
 Пример использования:
 ```sql
 {% materialization incremental, default -%}
@@ -50,6 +54,9 @@ __Аргументы__:
 
   -- Пример со значением по умолчанию. По умолчанию 'id', если конфигурация 'unique_key' не существует
   {%- set unique_key = config.get('unique_key', default='id') -%}
+
+  -- For custom configs under `meta`, use config.meta_get()
+  {% set my_custom_config = config.meta_get('custom_config_key') %}
   ...
 ```
 
@@ -60,9 +67,84 @@ __Аргументы__:
 
 Функция `config.require` используется для получения конфигураций для модели от конечного пользователя. Конфигурации, определенные с использованием этой функции, являются обязательными, и их отсутствие приведет к ошибке компиляции.
 
+:::info Доступ к пользовательским конфигурациям в `meta`
+`config.require()` не возвращает значения из `config.meta`. Если ключ существует только в `meta`, `config.require()` вызывает ошибку и выводит предупреждение. Чтобы получить обязательные пользовательские конфигурации, сохранённые в `meta`, используйте [`config.meta_require()`](#configmeta_require).
+:::
+
 Пример использования:
 ```sql
 {% materialization incremental, default -%}
   {%- set unique_key = config.require('unique_key') -%}
   ...
+```
+## config.meta_get
+
+<VersionBlock lastVersion="1.9">
+
+Эта функциональность появилась в <Constant name="core" /> v1.11 и <Constant name="fusion_engine" />.
+
+</VersionBlock>
+
+__Args__:
+
+ - `name`: имя переменной конфигурации, которую нужно получить из `meta` (обязательно)
+ - `default`: значение по умолчанию, которое будет использовано, если эта конфигурация не задана (опционально)
+
+Функция `config.meta_get` извлекает пользовательские конфигурации, сохранённые в словаре `meta`. В отличие от `config.get()`, эта функция проверяет **только** `config.meta` и не приводит к появлению предупреждений о депрекейте.
+
+Используйте эту функцию, когда обращаетесь к пользовательским конфигурациям, которые вы определили в `meta` в конфигурации модели или ресурса — по сути, это эквивалент вызова `config.get('meta').get()`.
+
+
+
+Пример использования:
+```sql
+{% materialization custom_materialization, default -%}
+  -- Retrieve a custom config from meta, returns None if not found
+  {%- set custom_setting = config.meta_get('custom_setting') -%}
+
+  -- Retrieve with a default value
+  {%- set custom_setting = config.meta_get('custom_setting', default='default_value') -%}
+  ...
+```
+
+Пример конфигурации модели:
+```yaml
+models:
+  - name: my_model
+    config:
+      meta:
+        custom_setting: "my_value"
+```
+
+## config.meta_require
+
+<VersionBlock lastVersion="1.9">
+
+Эта функциональность появилась в <Constant name="core" /> v1.11 и <Constant name="fusion_engine" />.
+
+</VersionBlock>
+
+__Args__:
+
+ - `name`: имя переменной конфигурации, которую нужно получить из `meta` (обязательно)
+
+Функция `config.meta_require` извлекает пользовательские конфигурации, сохранённые в словаре `meta`. В отличие от `config.require()`, эта функция проверяет **только** `config.meta` и не приводит к предупреждениям о депрекейте. Если конфигурация не найдена, dbt выбрасывает ошибку компиляции.
+
+Используйте эту функцию, когда необходимо гарантировать наличие пользовательской конфигурации в `meta`.
+
+Пример использования:
+```sql
+{% materialization custom_materialization, default -%}
+  -- Require a custom config from meta, throws error if not found
+  {%- set required_setting = config.meta_require('required_setting') -%}
+  ...
+```
+
+Пример конфигурации модели:
+```yaml
+models:
+  - name: my_model
+    config:
+      meta:
+        required_setting: "my_value"
 ```

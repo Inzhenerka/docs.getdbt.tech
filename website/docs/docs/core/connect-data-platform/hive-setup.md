@@ -1,6 +1,6 @@
 ---
-title: "Настройка Apache Hive"
-description: "Прочтите это руководство, чтобы узнать о настройке хранилища Apache Hive в dbt."
+title: "Настройка Cloudera Hive"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Cloudera Hive в dbt."
 id: "hive-setup"
 meta:
   maintained_by: Cloudera
@@ -74,16 +74,18 @@ your_profile_name:
      http_path: YOUR/HTTP/PATH # необязательно, http путь к Hive, значение по умолчанию: None
      port: PORT # значение по умолчанию: 10000
      auth_type: ldap
-     use_http_transport: BOOLEAN # значение по умолчанию: true
-     use_ssl: BOOLEAN # TLS всегда должен использоваться с LDAP для обеспечения безопасной передачи учетных данных, значение по умолчанию: true
-     username: USERNAME
+```yaml
+use_http_transport: BOOLEAN # значение по умолчанию: true
+use_ssl: BOOLEAN # TLS всегда следует использовать с LDAP, чтобы обеспечить безопасную передачу учетных данных; значение по умолчанию: true
+user: USERNAME
+```
      password: PASSWORD
      schema: SCHEMA_NAME
 ```
 
 </File>
 
-Примечание: При создании пользователя для выполнения рабочих нагрузок в CDP убедитесь, что у пользователя есть разрешения CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если вам нужно, чтобы пользователь выполнял операторы GRANT, вы также должны настроить для него соответствующие разрешения GRANT. При использовании Apache Ranger разрешения для разрешения GRANT обычно устанавливаются с помощью опции "Delegate Admin". Для получения дополнительной информации смотрите [`grants`](/reference/resource-configs/grants) и [on-run-start & on-run-end](/reference/project-configs/on-run-start-on-run-end).
+Примечание: При создании workload-пользователя в CDP убедитесь, что у пользователя есть права CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если пользователю требуется выполнять операторы GRANT, необходимо дополнительно настроить соответствующие права на GRANT. При использовании Apache Ranger разрешения, позволяющие выполнять GRANT, обычно настраиваются с помощью опции «Delegate Admin». Подробнее см. в разделе [`grants`](/reference/resource-configs/grants) и [on-run-start & on-run-end](/reference/project-configs/on-run-start-on-run-end).
 
 ### Kerberos
 
@@ -122,7 +124,8 @@ your_profile_name:
 
 ## Установка и распространение
 
-Адаптер dbt для Apache Hive управляется в собственном репозитории, [dbt-hive](https://github.com/cloudera/dbt-hive). Чтобы использовать его, необходимо установить плагин `dbt-hive`.
+Адаптер dbt для Cloudera Hive поддерживается в отдельном репозитории — [dbt-hive](https://github.com/cloudera/dbt-hive).  
+Чтобы использовать его, необходимо установить плагин `dbt-hive`.
 
 ### Использование pip
 Следующие команды установят последнюю версию `dbt-hive`, а также необходимую версию `dbt-core` и драйвер `impyla`, используемый для подключений.

@@ -1,29 +1,29 @@
 ---
-title: Установка dbt Cloud CLI
+title: Установка dbt CLI  
 sidebar_label: "Установка"
 id: cloud-cli-installation
-description: "Инструкции по установке и настройке dbt Cloud CLI"
+description: "Инструкции по установке и настройке dbt CLI"
 pagination_next: "docs/cloud/configure-cloud-cli"
 ---
 
-dbt Cloud поддерживает разработку с использованием командной строки (CLI), что позволяет членам команды вносить вклад с большей гибкостью и сотрудничеством. dbt Cloud CLI позволяет вам выполнять команды dbt в вашей среде разработки dbt Cloud с локальной командной строки.
+<Constant name="cloud" /> нативно поддерживает разработку с использованием командной строки (CLI), предоставляя участникам команды больше гибкости и улучшая совместную работу. CLI для <Constant name="cloud" /> позволяет запускать команды dbt из локальной командной строки, обращаясь к вашей среде разработки в <Constant name="cloud" />.
 
-Команды dbt выполняются на инфраструктуре dbt Cloud и имеют следующие преимущества:
+Команды dbt выполняются на инфраструктуре <Constant name="cloud" /> и используют следующие преимущества:
 
-* Безопасное хранение учетных данных на платформе dbt Cloud
-* [Автоматическая отсрочка](/docs/cloud/about-cloud-develop-defer) артефактов сборки в производственную среду вашего Cloud проекта
-* Более быстрые и экономичные сборки
-* Поддержка dbt Mesh ([межпроектные `ref`](/docs/collaborate/govern/project-dependencies))
-* Значительные улучшения платформы, которые будут выпущены в ближайшие месяцы
+* Безопасное хранение учетных данных на платформе <Constant name="cloud" />
+* [Автоматическое отложенное использование (deferral)](/docs/cloud/about-cloud-develop-defer) артефактов сборки из продакшн‑среды вашего Cloud‑проекта  
+* Более быстрые и менее затратные сборки
+* Поддержка dbt Mesh ([межпроектный `ref`](/docs/mesh/govern/project-dependencies))
+* Существенные улучшения платформы, которые будут выпускаться в ближайшие месяцы
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-cli-overview.jpg" title="Диаграмма, показывающая, как dbt Cloud CLI работает с инфраструктурой dbt Cloud для выполнения команд dbt с вашей локальной командной строки." />
+<Lightbox src="/img/docs/dbt-cloud/cloud-cli-overview.jpg" title="Диаграмма, показывающая, как dbt CLI работает с инфраструктурой dbt для запуска команд dbt из локальной командной строки." />
 
-## Предварительные требования
-dbt Cloud CLI доступен во всех [регионах развертывания](/docs/cloud/about-cloud/access-regions-ip-addresses) и для учетных записей с несколькими арендаторами и одним арендатором.
+## Предварительные требования 
+CLI для <Constant name="cloud" /> доступен во всех [регионах развертывания](/docs/cloud/about-cloud/access-regions-ip-addresses) и поддерживается как для мультиарендных, так и для одноарендных аккаунтов.
 
-## Установка dbt Cloud CLI
+## Установка dbt CLI
 
-Вы можете установить dbt Cloud CLI в командной строке, используя один из следующих методов.
+Вы можете установить CLI для <Constant name="cloud" /> из командной строки, используя один из следующих способов.
 
 <details>
 <summary>Посмотреть видеоурок с пошаговым руководством по установке.</summary>
@@ -56,12 +56,12 @@ pip uninstall dbt
 
 :::
 
-2. Установите dbt Cloud CLI с помощью Homebrew:
+2. Установите <Constant name="cloud_cli" /> с помощью Homebrew:
 
    - Сначала удалите `dbt-labs` tap, отдельный репозиторий для пакетов, из Homebrew. Это предотвратит установку пакетов из этого репозитория:
       ```bash
       brew untap dbt-labs/dbt
-   -  Затем добавьте и установите dbt Cloud CLI как пакет:
+- Затем добавьте и установите пакет <Constant name="cloud_cli" />:
       ```bash
       brew tap dbt-labs/dbt-cli
       brew install dbt
@@ -70,7 +70,7 @@ pip uninstall dbt
 
 3. Проверьте установку, выполнив `dbt --help` в командной строке. Если вы видите следующий вывод, ваша установка выполнена правильно:
       ```bash
-      The dbt Cloud CLI - an ELT tool for running SQL transformations and data models in dbt Cloud...
+      The dbt CLI - an ELT tool for running SQL transformations and data models in dbt...
       ```
 
      Если вы не видите этот вывод, убедитесь, что вы деактивировали pyenv или venv и у вас не установлена глобальная версия dbt.
@@ -79,7 +79,7 @@ pip uninstall dbt
 
 4. Клонируйте ваш репозиторий на ваш локальный компьютер, используя `git clone`. Например, чтобы клонировать репозиторий GitHub в формате HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) dbt Cloud CLI для вашего проекта dbt Cloud. Это позволит вам выполнять команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment) для просмотра вашей конфигурации dbt Cloud или `dbt compile` для компиляции вашего проекта и проверки моделей и тестов. Вы также можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
+5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) <Constant name="cloud_cli" /> для вашего проекта <Constant name="cloud" />. Это позволит вам запускать команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment) для просмотра конфигурации <Constant name="cloud" /> или `dbt compile` — для компиляции проекта и проверки моделей и тестов. Также вы сможете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
 
 </TabItem>
 
@@ -93,7 +93,7 @@ pip uninstall dbt
 
 :::info
 
-Продвинутые пользователи могут настроить несколько проектов для использования одного и того же dbt Cloud CLI, выполнив следующие действия:
+Продвинутые пользователи могут настроить несколько проектов так, чтобы они использовали один и тот же CLI <Constant name="cloud" />, следующим образом:
 
  1. Поместите исполняемый файл (`.exe`) в папку "Program Files"
  2. [Добавьте его в переменную среды PATH Windows](https://medium.com/@kevinmarkvi/how-to-add-executables-to-your-path-in-windows-5ffa4ce61a53)
@@ -102,18 +102,18 @@ pip uninstall dbt
 Обратите внимание, что если вы используете VS Code, вам нужно перезапустить его, чтобы применить измененные переменные среды.
 :::
 
-3. Проверьте установку, выполнив `./dbt --help` в командной строке. Если вы видите следующий вывод, ваша установка выполнена правильно:
+4. Проверьте установку, выполнив команду `./dbt --help` в командной строке. Если вы видите следующий вывод, значит установка выполнена корректно:
       ```bash
-      The dbt Cloud CLI - an ELT tool for running SQL transformations and data models in dbt Cloud...
+      The dbt CLI - an ELT tool for running SQL transformations and data models in dbt...
       ```
 
      Если вы не видите этот вывод, убедитесь, что вы деактивировали pyenv или venv и у вас не установлена глобальная версия dbt.
 
    * Обратите внимание, что вам больше не нужно выполнять команду `dbt deps` при запуске вашей среды. Этот шаг ранее требовался во время инициализации. Однако вы все равно должны выполнять `dbt deps`, если вносите изменения в ваш файл `packages.yml`.
 
-4. Клонируйте ваш репозиторий на ваш локальный компьютер, используя `git clone`. Например, чтобы клонировать репозиторий GitHub в формате HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
+5. Клонируйте ваш репозиторий на локальный компьютер с помощью `git clone`. Например, чтобы клонировать репозиторий GitHub с использованием формата HTTPS, выполните команду `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) dbt Cloud CLI для вашего проекта dbt Cloud. Это позволит вам выполнять команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment) для просмотра вашей конфигурации dbt Cloud или `dbt compile` для компиляции вашего проекта и проверки моделей и тестов. Вы также можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
+6. После клонирования репозитория [настройте](/docs/cloud/configure-cloud-cli) <Constant name="cloud_cli" /> для вашего проекта <Constant name="cloud" />. Это позволит запускать команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment), чтобы просматривать конфигурацию <Constant name="cloud" />, или `dbt compile`, чтобы скомпилировать проект и проверить модели и тесты. Вы также сможете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
 
 </TabItem>
 
@@ -132,13 +132,13 @@ pip uninstall dbt
 
 :::info
 
-Продвинутые пользователи могут настроить несколько проектов для использования одного и того же исполняемого файла Cloud CLI, добавив его в переменную среды PATH в профиле своей оболочки.
+Опытные пользователи могут настроить несколько проектов на использование одного и того же исполняемого файла dbt CLI, добавив его в переменную окружения PATH в своём shell profile.
 
 :::
 
 3. Проверьте установку, выполнив `./dbt --help` в командной строке. Если вы видите следующий вывод, ваша установка выполнена правильно:
       ```bash
-      The dbt Cloud CLI - an ELT tool for running SQL transformations and data models in dbt Cloud...
+      The dbt CLI - an ELT tool for running SQL transformations and data models in dbt...
       ```
 
      Если вы не видите этот вывод, убедитесь, что вы деактивировали pyenv или venv и у вас не установлена глобальная версия dbt.
@@ -147,20 +147,20 @@ pip uninstall dbt
 
 4. Клонируйте ваш репозиторий на ваш локальный компьютер, используя `git clone`. Например, чтобы клонировать репозиторий GitHub в формате HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) dbt Cloud CLI для вашего проекта dbt Cloud. Это позволит вам выполнять команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment) для просмотра вашей конфигурации dbt Cloud или `dbt compile` для компиляции вашего проекта и проверки моделей и тестов. Вы также можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
+5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) <Constant name="cloud_cli" /> для вашего проекта <Constant name="cloud" />. Это позволит вам выполнять команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment), чтобы просматривать конфигурацию <Constant name="cloud" />, или `dbt compile`, чтобы скомпилировать проект и проверить модели и тесты. Вы также сможете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
 
 </TabItem>
 
 <TabItem value="pip" label="Существующие пользователи dbt Core (pip)">
 
-Если у вас уже установлен dbt Core, dbt Cloud CLI может вызвать конфликт. Вот некоторые соображения:
+Если у вас уже установлен dbt Core, <Constant name="cloud_cli" /> может конфликтовать с ним. Ниже приведены некоторые рекомендации:
 
-- **Предотвращение конфликтов** <br /> Используйте как dbt Cloud CLI, так и dbt Core с `pip` и создайте новую виртуальную среду.<br /><br />
-- **Использование dbt Cloud CLI и dbt Core с brew или нативными установками** <br /> Если вы используете Homebrew, рассмотрите возможность создания псевдонима для dbt Cloud CLI как "dbt-cloud", чтобы избежать конфликта. Для получения более подробной информации обратитесь к [Часто задаваемым вопросам](#faqs), если ваша операционная система сталкивается с конфликтами путей.<br /><br />
-- **Возврат к dbt Core из dbt Cloud CLI** <br />
-  Если вы уже установили dbt Cloud CLI и вам нужно вернуться к dbt Core:<br />
-  - Удалите dbt Cloud CLI с помощью команды: `pip uninstall dbt`
-  - Переустановите dbt Core, используя следующую команду, заменив "adapter_name" на соответствующее имя адаптера:
+- **Предотвращение конфликтов** <br /> Используйте и <Constant name="cloud_cli" />, и <Constant name="core" /> через `pip`, создав новое виртуальное окружение.<br /><br />
+- **Использование <Constant name="cloud_cli" /> и <Constant name="core" /> с Homebrew или нативной установкой** <br /> Если вы используете Homebrew, рассмотрите возможность задать алиас для <Constant name="cloud_cli" /> как `dbt-cloud`, чтобы избежать конфликтов. Подробнее см. в разделе [FAQs](#faqs), если в вашей операционной системе возникают конфликты путей.<br /><br />
+- **Возврат к dbt Core с <Constant name="cloud_cli" />** <br />
+  Если вы уже установили <Constant name="cloud_cli" /> и вам нужно вернуться к dbt Core:<br />
+  - Удалите <Constant name="cloud_cli" /> с помощью команды: `pip uninstall dbt`
+  - Переустановите <Constant name="core" /> с помощью следующей команды, заменив `adapter_name` на соответствующее имя адаптера:
     ```shell
     python -m pip install dbt-adapter_name --force-reinstall
     ```
@@ -168,7 +168,7 @@ pip uninstall dbt
 
 --------
 
-Перед установкой dbt Cloud CLI убедитесь, что у вас установлен Python и ваша виртуальная среда venv или pyenv. Если у вас уже настроена среда Python, вы можете перейти к [шагу установки pip](#install-dbt-cloud-cli-in-pip).
+Перед установкой <Constant name="cloud_cli" /> убедитесь, что у вас установлен Python, а также настроено виртуальное окружение venv или pyenv. Если у вас уже есть сконфигурированное Python‑окружение, вы можете сразу перейти к шагу [установки через pip](#install-dbt-cloud-cli-in-pip).
 
 ### Установка виртуальной среды
 
@@ -189,15 +189,15 @@ pip uninstall dbt
    alias env_dbt='source <PATH_TO_VIRTUAL_ENV_CONFIG>/bin/activate'
    ```
 
-### Установка dbt Cloud CLI в pip
+### Установка dbt CLI через pip
 
-1. (Необязательно) Если у вас уже установлен dbt Core, эта установка перезапишет этот пакет. Проверьте вашу версию dbt Core на случай, если вам нужно будет переустановить его позже, выполнив следующую команду:
+1. (Необязательно) Если у вас уже установлен <Constant name="core" />, эта установка перезапишет данный пакет. Проверьте версию <Constant name="core" /> на случай, если вам потребуется переустановить его позже, выполнив следующую команду:
 
   ```bash
-  dbt --version
+ dbt --version
   ```
 
-2. Убедитесь, что вы находитесь в вашей виртуальной среде, и выполните следующую команду для установки dbt Cloud CLI:
+2. Убедитесь, что вы находитесь в своём виртуальном окружении, и выполните следующую команду, чтобы установить CLI <Constant name="cloud" />:
 
   ```bash
   pip install dbt --no-cache-dir
@@ -208,7 +208,7 @@ pip uninstall dbt
    pip install dbt --no-cache-dir --force-reinstall
    ``` 
 
-3. (Необязательно) Чтобы вернуться к dbt Core, сначала удалите как dbt Cloud CLI, так и dbt Core. Затем переустановите dbt Core.
+3. (Необязательно) Чтобы вернуться к <Constant name="core" />, сначала удалите и <Constant name="cloud" /> CLI, и <Constant name="core" />. Затем переустановите <Constant name="core" />.
 
   ```bash
   pip uninstall dbt-core dbt
@@ -217,13 +217,15 @@ pip uninstall dbt
 
 4. Клонируйте ваш репозиторий на ваш локальный компьютер, используя `git clone`. Например, чтобы клонировать репозиторий GitHub в формате HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) dbt Cloud CLI для вашего проекта dbt Cloud. Это позволит вам выполнять команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment) для просмотра вашей конфигурации dbt Cloud или `dbt compile` для компиляции вашего проекта и проверки моделей и тестов. Вы также можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
+5. После клонирования вашего репозитория [настройте](/docs/cloud/configure-cloud-cli) <Constant name="cloud_cli" /> для вашего проекта <Constant name="cloud" />. Это позволит вам запускать команды dbt, такие как [`dbt environment show`](/reference/commands/dbt-environment), чтобы просматривать конфигурацию <Constant name="cloud" />, или `dbt compile`, чтобы скомпилировать проект и проверить модели и тесты. Вы также можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
 
 </TabItem>
 
 </Tabs>
 
-## Обновление dbt Cloud CLI
+## Обновление dbt CLI
+
+Следующие инструкции объясняют, как обновить <Constant name="cloud_cli" /> до последней версии в зависимости от вашей операционной системы.
 
 Следующие инструкции объясняют, как обновить dbt Cloud CLI до последней версии в зависимости от вашей операционной системы.
 
@@ -231,7 +233,7 @@ pip uninstall dbt
 
 <TabItem value="mac" label="macOS (brew)">
 
-Чтобы обновить dbt Cloud CLI, выполните `brew update`, а затем `brew upgrade dbt`.
+Чтобы обновить <Constant name="cloud_cli" />, выполните команду `brew update`, а затем `brew upgrade dbt`.
 
 </TabItem>
 
@@ -256,68 +258,67 @@ pip uninstall dbt
 </TabItem>
 
 </Tabs>
+  
+  
+## К рассмотрению
 
-## Расширение для VS Code <Lifecycle status="beta"/>
+import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
-Расширения для Visual Studio (VS) Code улучшают инструменты командной строки, добавляя дополнительные функции. [Power user для dbt Core и dbt Cloud](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) — это распространенное расширение, используемое для улучшения вашей разработки dbt с помощью VS Code.
-
-Вы можете использовать dbt Cloud CLI с Power User для dbt Core и dbt Cloud, следуя инструкциям [здесь](https://docs.myaltimate.com/setup/reqdConfigCloud/).
-
-Расширение Power User будет управлять установкой Cloud CLI от вашего имени.
+<CloudCliRelativePath />
 
 ## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="В чем разница между dbt Cloud CLI и dbt Core?">
+<DetailsToggle alt_header="В чем разница между dbt CLI и dbt Core?">
 
-dbt Cloud CLI и <a href="https://github.com/dbt-labs/dbt-core">dbt Core</a>, проект с открытым исходным кодом, оба являются инструментами командной строки, которые позволяют вам выполнять команды dbt.
+<Constant name="cloud_cli" /> и <a href="https://github.com/dbt-labs/dbt-core">dbt Core</a>, проект с открытым исходным кодом, — это оба инструмента командной строки, которые позволяют выполнять команды dbt.
 
-Ключевое отличие заключается в том, что dbt Cloud CLI адаптирован для инфраструктуры dbt Cloud и интегрируется со всеми его <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features">функциями</a>.
+Ключевое отличие заключается в том, что <Constant name="cloud_cli" /> адаптирован под инфраструктуру <Constant name="cloud" /> и интегрирован со всеми его <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features">возможностями</a>.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Как я могу использовать dbt Cloud CLI и dbt Core одновременно?">
+<DetailsToggle alt_header="Как использовать одновременно dbt CLI и dbt Core?">
 
-Для совместимости как dbt Cloud CLI, так и dbt Core вызываются с помощью команды `dbt`. Это может создать конфликты путей, если ваша операционная система выбирает один из них на основе переменной среды $PATH (настройки).
+Для совместимости и <Constant name="cloud_cli" />, и <Constant name="core" /> запускаются с помощью команды `dbt`. Это может приводить к конфликтам путей, если операционная система выбирает один из них на основе переменной окружения $PATH (настроек).
 
-Если у вас локально установлен dbt Core, выполните одно из следующих действий:
+Если у вас локально установлен <Constant name="core" />, вы можете сделать одно из следующих действий:
 
-1. Установите с помощью команды <code>pip3 install dbt</code> [pip](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli).
-2. Установите нативно, убедившись, что вы либо деактивировали виртуальную среду, содержащую dbt Core, либо создали псевдоним для dbt Cloud CLI.
-3. (Для продвинутых пользователей) Установите нативно, но измените переменную среды $PATH, чтобы правильно указывать на бинарный файл dbt Cloud CLI, чтобы использовать dbt Cloud CLI и dbt Core вместе.
+1. Установить с помощью команды <code>pip3 install dbt</code> [pip](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli).
+2. Установить нативно, убедившись, что вы либо деактивировали виртуальное окружение, содержащее <Constant name="core" />, либо создали алиас для <Constant name="cloud_cli" />.
+3. (Для опытных пользователей) Установить нативно, но изменить переменную окружения $PATH так, чтобы она корректно указывала на бинарный файл <Constant name="cloud_cli" />, и тем самым использовать <Constant name="cloud_cli" /> и <Constant name="core" /> одновременно.
 
-Вы всегда можете удалить dbt Cloud CLI, чтобы вернуться к использованию dbt Core.
+Вы всегда можете удалить <Constant name="cloud_cli" />, чтобы вернуться к использованию <Constant name="core" />.
 
 </DetailsToggle>
 
 <DetailsToggle alt_header="Как создать псевдоним?">
 
-Чтобы создать псевдоним для dbt Cloud CLI: <br />
+Чтобы создать псевдоним для <Constant name="cloud_cli" />: <br />
 
 1. Откройте файл конфигурации профиля вашей оболочки. В зависимости от вашей оболочки и системы это может быть `~/.bashrc`, `~/.bash_profile`, `~/.zshrc` или другой файл.<br />
 
-2. Добавьте псевдоним, который указывает на бинарный файл dbt Cloud CLI. Например:<code>alias dbt-cloud="path_to_dbt_cloud_cli_binary</code>
-   
-   Замените <code>path_to_dbt_cloud_cli_binary</code> на фактический путь к бинарному файлу dbt Cloud CLI, который находится по адресу <code>/opt/homebrew/bin/dbt</code>. С этим псевдонимом вы можете использовать команду <code>dbt-cloud</code> для вызова dbt Cloud CLI.<br />
+2. Добавьте алиас, который указывает на бинарный файл <Constant name="cloud_cli" />. Например:  
+   <code>alias dbt-cloud="path_to_dbt_cloud_cli_binary</code>
+
+   Замените <code>path_to_dbt_cloud_cli_binary</code> на фактический путь к бинарному файлу <Constant name="cloud_cli" />, который равен <code>/opt/homebrew/bin/dbt</code>.  
+   С этим алиасом вы сможете использовать команду <code>dbt-cloud</code> для вызова <Constant name="cloud_cli" />.<br />
 
 3. Сохраните файл, а затем либо перезапустите вашу оболочку, либо выполните <code>source</code> на файле профиля, чтобы применить изменения.
 Как пример, в bash вы бы выполнили: <code>source ~/.bashrc</code><br />
 
-1. Проверьте и используйте псевдоним для выполнения команд:<br />
-   - Чтобы выполнить dbt Cloud CLI, используйте команду <code>dbt-cloud</code>: <code>dbt-cloud command_name</code>. Замените 'command_name' на конкретную команду dbt, которую вы хотите выполнить.<br />
-   - Чтобы выполнить dbt Core, используйте команду <code>dbt</code>: <code>dbt command_name</code>. Замените 'command_name' на конкретную команду dbt, которую вы хотите выполнить.<br />
+4. Проверьте и используйте алиас для запуска команд:<br />
+   - Чтобы запустить <Constant name="cloud_cli" />, используйте команду <code>dbt-cloud</code>: <code>dbt-cloud command_name</code>. Замените `command_name` на конкретную команду dbt, которую вы хотите выполнить.<br />
+   - Чтобы запустить dbt Core, используйте команду <code>dbt</code>: <code>dbt command_name</code>. Замените `command_name` на конкретную команду dbt, которую вы хотите выполнить.<br />
 
-Этот псевдоним позволит вам использовать команду <code>dbt-cloud</code> для вызова dbt Cloud CLI, имея при этом dbt Core, установленный нативно.
 
-</DetailsToggle>
-
-<DetailsToggle alt_header="Почему я получаю ошибку `Session occupied`?">
-
-Если вы выполнили команду dbt и получили ошибку <code>Session occupied</code>, вы можете повторно подключиться к вашей существующей сессии с помощью <code>dbt reattach</code>, а затем нажать <code>Control-C</code> и выбрать отмену вызова.
+Этот алиас позволит вам использовать команду <code>dbt-cloud</code> для вызова <Constant name="cloud_cli" />, при этом dbt Core будет установлен нативно.
 
 </DetailsToggle>
 
 <DetailsToggle alt_header="Почему я получаю ошибку `Stuck session`, пытаясь выполнить новую команду?">
 
-Cloud CLI позволяет выполнять только одну команду, записывающую в хранилище данных, за раз. Если вы попытаетесь выполнить несколько команд записи одновременно (например, `dbt run` и `dbt build`), вы столкнетесь с ошибкой `stuck session`. Чтобы решить эту проблему, отмените конкретный вызов, передав его ID в команду отмены. Для получения дополнительной информации обратитесь к [параллельному выполнению](/reference/dbt-commands#parallel-execution).
+<Constant name="cloud_cli" /> позволяет выполнять только одну команду, которая записывает данные в хранилище данных, в каждый момент времени. Если вы попытаетесь запустить несколько команд записи одновременно (например, `dbt run` и `dbt build`), вы столкнётесь с ошибкой `stuck session`. Чтобы решить эту проблему, отмените конкретный запуск, передав его ID в команду отмены. Подробнее см. в разделе [parallel execution](/reference/dbt-commands#parallel-execution).
 
 </DetailsToggle>
+
+<FAQ path="Troubleshooting/long-sessions-cloud-cli" />
+  

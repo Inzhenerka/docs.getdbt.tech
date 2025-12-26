@@ -9,31 +9,31 @@ title: Свойства seed
 <File name='seeds/<filename>.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: <string>
     [description](/reference/resource-properties/description): <markdown_string>
-    [docs](/reference/resource-configs/docs):
-      show: true | false
-      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     [config](/reference/resource-properties/config):
       [<seed_config>](/reference/seed-configs): <config_value>
-    [tests](/reference/resource-properties/data-tests):
+      [docs](/reference/resource-configs/docs):
+        show: true | false
+        node_color: <color_id> # Используйте название (например, node_color: purple) или hex-код в кавычках (например, node_color: "#cd7f32")
+    [data_tests](/reference/resource-properties/data-tests):
       - <test>
       - ... # объявите дополнительные тесты
     columns:
       - name: <column name>
         [description](/reference/resource-properties/description): <markdown_string>
-        [meta](/reference/resource-configs/meta): {<dictionary>}
-        [quote](/reference/resource-properties/quote): true | false
-        [tags](/reference/resource-configs/tags): [<string>]
-        [tests](/reference/resource-properties/data-tests):
+        [quote](/reference/resource-properties/columns#quote): true | false
+        [data_tests](/reference/resource-properties/data-tests):
           - <test>
           - ... # объявите дополнительные тесты
+        [config](/reference/resource-properties/config):
+          [meta](/reference/resource-configs/meta): {<dictionary>}
+          [tags](/reference/resource-configs/tags): [<string>]
 
       - name: ... # объявите свойства дополнительных колонок
 
-  - name: ... # объявите свойства дополнительных seeds
+  - name: ... # объявите свойства дополнительных seed-файлов
 ```
 </File>

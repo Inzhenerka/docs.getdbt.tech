@@ -7,9 +7,9 @@ displayed_sidebar: "docs"
 
 ### Ресурсы
 
-- [Список изменений](https://github.com/dbt-labs/dbt-core/blob/1.1.latest/CHANGELOG.md)
-- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
-- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.1.latest/CHANGELOG.md)
+- [Руководство по установке CLI <Constant name="core" />](/docs/core/installation-overview)
+- [Руководство по обновлению Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
 ## Что нужно знать перед обновлением
 
@@ -45,7 +45,7 @@ displayed_sidebar: "docs"
 
 ### Продвинутая и экспериментальная функциональность
 
-**Свежие перестройки.** Появился новый _экспериментальный_ метод выбора: [`source_status:fresher`](/reference/node-selection/methods#source_status). Подобно методам `state:` и `result`, цель состоит в том, чтобы использовать метаданные dbt для более эффективного выполнения вашего DAG. Если dbt имеет доступ к предыдущим и текущим результатам `dbt source freshness` (артефакт `sources.json`), dbt может сравнить их, чтобы определить, какие источники загрузили новые данные, и выбрать только ресурсы, находящиеся ниже по потоку от "свежих" источников. Подробнее читайте в [Понимание состояния](/reference/node-selection/syntax#about-node-selection) и [CI/CD в dbt Cloud](/docs/deploy/continuous-integration).
+**Fresh Rebuilds.** В городе появился новый _экспериментальный_ метод выбора: [`source_status:fresher`](/reference/node-selection/methods#source_status). Подобно методам `state:` и `result`, его цель — использовать метаданные dbt, чтобы запускать ваш DAG более эффективно. Если у dbt есть доступ к предыдущим и текущим результатам `dbt source freshness` (артефакт `sources.json`), dbt может сравнить их, чтобы определить, какие источники загрузили новые данные, и выбрать только ресурсы, находящиеся ниже по DAG от «более свежих» источников. Подробнее читайте в разделах [Understanding State](/reference/node-selection/syntax#about-node-selection) и [CI/CD in <Constant name="cloud" />](/docs/deploy/continuous-integration).
 
 [**Функции dbt-Jinja**](/reference/dbt-jinja-functions) получили новую стартовую страницу и двух новых участников:
 - [`print`](/reference/dbt-jinja-functions/print) предоставляет функцию Python `print()`. Она может использоваться как альтернатива `log()`, и вместе с конфигурацией `QUIET`, для продвинутых рабочих процессов, управляемых макросами.
@@ -62,6 +62,8 @@ displayed_sidebar: "docs"
 
 **dbt-spark** добавил поддержку метода подключения [`session`](/docs/core/connect-data-platform/spark-setup#session), для использования с сессией pySpark, чтобы поддерживать быструю итерацию при разработке продвинутой или экспериментальной функциональности. Этот метод подключения не рекомендуется для новых пользователей и не поддерживается в dbt Cloud.
 
+**dbt-spark** получил поддержку [метода подключения `session`](/docs/core/connect-data-platform/spark-setup#session), предназначенного для использования с сессией pySpark. Это позволяет ускорить итерации при разработке продвинутой или экспериментальной функциональности. Данный метод подключения не рекомендуется для новых пользователей и не поддерживается в <Constant name="cloud" />.
+
 ### Зависимости
 
-[Совместимость с Python](/faqs/Core/install-python-compatibility): dbt Core официально поддерживает Python 3.10
+[Совместимость с Python](/faqs/Core/install-python-compatibility): <Constant name="core" /> официально поддерживает Python 3.10

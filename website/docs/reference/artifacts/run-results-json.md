@@ -3,14 +3,17 @@ title: "JSON файл результатов выполнения"
 sidebar_label: "Результаты выполнения"
 ---
 
-**Текущая схема**: [`v5`](https://schemas.getdbt.com/dbt/run-results/v5/index.html)
+**Текущая схема**: [`v6`](https://schemas.getdbt.com/dbt/run-results/v6/index.html)
 
-**Создается при выполнении:**
+**Формируется командами:**
 [`build`](/reference/commands/build)
+[`clone`](/reference/commands/clone)
 [`compile`](/reference/commands/compile)
 [`docs generate`](/reference/commands/cmd-docs)
+[`retry`](/reference/commands/retry)
 [`run`](/reference/commands/run)
 [`seed`](/reference/commands/seed)
+[`show`](/reference/commands/show)
 [`snapshot`](/reference/commands/snapshot)
 [`test`](/reference/commands/test)
 [`run-operation`](/reference/commands/run-operation)
@@ -113,7 +116,7 @@ models:
   - name: my_model
     columns:
       - name: created_at
-        tests:
+        data_tests:
           - not_null:
               config:
                 store_failures_as: view

@@ -10,7 +10,7 @@ id: why-so-many-macros
 
 ```shell
 $ dbt run
-Running with dbt=0.17.0
+Running with dbt=1.7.0
 Found 1 model, 0 tests, 0 snapshots, 0 analyses, 138 macros, 0 operations, 0 seed files, 0 sources
 ```
 

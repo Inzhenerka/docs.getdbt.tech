@@ -4,19 +4,22 @@ sidebar_label: "version"
 id: "version"
 ---
 
-Флаг командной строки `--version` возвращает информацию о текущей установленной версии dbt Core или dbt Cloud CLI. Этот флаг не поддерживается при вызове dbt в других средах выполнения dbt Cloud (например, в IDE или запланированных запусках).
+Флаг командной строки `--version` возвращает информацию о текущей установленной версии <Constant name="core" /> или <Constant name="cloud_cli" />. Этот флаг не поддерживается при запуске dbt в других средах выполнения <Constant name="cloud" /> (например, в IDE или при запланированных запусках).
 
-- **dbt Core** &mdash; Возвращает установленную версию dbt-core и версии всех установленных адаптеров.
-- **dbt Cloud CLI** &mdash; Возвращает установленную версию [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) и, для других значений `dbt_version`, _последнюю_ версию среды выполнения dbt в dbt Cloud.
+- **<Constant name="core" />** &mdash; Возвращает установленную версию <Constant name="core" /> и версии всех установленных адаптеров.
+- **<Constant name="cloud_cli" />** &mdash; Возвращает установленную версию [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) и, для других значений `dbt_version`, — _последнюю_ версию среды выполнения dbt в <Constant name="cloud" />.
 
 ## Версионирование
 Чтобы узнать больше о версионировании релизов для dbt Core, обратитесь к [Как dbt Core использует семантическое версионирование](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning).
 
-Если используется [релизный трек dbt Cloud](/docs/dbt-versions/cloud-release-tracks), который предоставляет постоянные обновления для dbt, то `dbt_version` представляет собой версию релиза dbt в dbt Cloud. Это также следует принципам семантического версионирования, используя формат `YYYY.MM.DD+<суффикс>`. Год, месяц и день представляют дату, когда версия была собрана (например, `2024.10.28+996c6a8`). Суффикс предоставляет дополнительную уникальную идентификацию для каждой сборки.
+## Versioning
+Чтобы узнать больше о версионировании релизов <Constant name="core" />, см. [How <Constant name="core" /> uses semantic versioning](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning).
 
-## Примеры использования
+Если вы используете [release track <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), который предоставляет непрерывные обновления dbt, то `dbt_version` представляет версию релиза dbt в <Constant name="cloud" />. Она также следует правилам семантического версионирования и использует формат `YYYY.M.D+<suffix>`. Год, месяц и день обозначают дату сборки версии (например, `2024.10.8+996c6a8`). Суффикс предоставляет дополнительный уникальный идентификатор для каждой сборки.
 
-Пример для dbt Core:
+## Example usages
+
+Пример для <Constant name="core" />:
 <File name='dbt Core'>
 
 ```text
@@ -30,13 +33,13 @@ Plugins:
 
 </File>
 
-Пример для dbt Cloud CLI:
+Пример CLI для <Constant name="cloud" />:
 
-<File name='dbt Cloud CLI'>
+<File name='dbt CLI'>
 
 ```text
 $ dbt --version
-dbt Cloud CLI - 0.35.7 (fae78a6f5f6f2d7dff3cab3305fe7f99bd2a36f3 2024-01-18T22:34:52Z)
+Cloud CLI - 0.35.7 (fae78a6f5f6f2d7dff3cab3305fe7f99bd2a36f3 2024-01-18T22:34:52Z)
 ```
 
 </File>

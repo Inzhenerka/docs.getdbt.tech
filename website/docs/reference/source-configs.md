@@ -8,12 +8,6 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 ## Доступные конфигурации
 
-<VersionBlock lastVersion="1.8">
-
-Источники поддерживают [`enabled`](/reference/resource-configs/enabled) и [`meta`](/reference/resource-configs/meta).
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 Конфигурации источников поддерживают [`enabled`](/reference/resource-configs/enabled), [`event_time`](/reference/resource-configs/event-time) и [`meta`](/reference/resource-configs/meta).
@@ -44,20 +38,13 @@ sources:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
     [+](/reference/resource-configs/plus-prefix)[event_time](/reference/resource-configs/event-time): my_time_field
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+      warn_after:  
+        count: <positive_integer>
+        period: minute | hour | day
     [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta):
       key: value
 
-```
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-```yaml
-sources:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
-    [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta):
-      key: value
 ```
 </VersionBlock>
 
@@ -73,39 +60,25 @@ sources:
 <VersionBlock firstVersion="1.9">
 
 ```yaml
-version: 2
 
 sources:
   - name: [<source-name>]
+    [database](/reference/resource-properties/database): <database-name>
+    [schema](/reference/resource-properties/schema): <schema-name>
     [config](/reference/resource-properties/config):
       [enabled](/reference/resource-configs/enabled): true | false
       [event_time](/reference/resource-configs/event-time): my_time_field
       [meta](/reference/resource-configs/meta): {<dictionary>}
+      [freshness](/reference/resource-properties/freshness):
+        warn_after:  
+          count: <positive_integer>
+          period: minute | hour | day
 
     tables:
       - name: [<source-table-name>]
         [config](/reference/resource-properties/config):
           [enabled](/reference/resource-configs/enabled): true | false
           [event_time](/reference/resource-configs/event-time): my_time_field
-          [meta](/reference/resource-configs/meta): {<dictionary>}
-
-```
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-```yaml
-version: 2
-
-sources:
-  - name: [<source-name>]
-    [config](/reference/resource-properties/config):
-      [enabled](/reference/resource-configs/enabled): true | false
-      [meta](/reference/resource-configs/meta): {<dictionary>}
-    tables:
-      - name: [<source-table-name>]
-        [config](/reference/resource-properties/config):
-          [enabled](/reference/resource-configs/enabled): true | false
           [meta](/reference/resource-configs/meta): {<dictionary>}
 
 ```
@@ -141,17 +114,6 @@ sources:
   ```
 
   </VersionBlock>
-
-  <VersionBlock lastVersion="1.8">
-    ```yaml
-  sources:
-    your_project_name:
-      subdirectory_name:
-        source_name:
-          source_table_name:
-            +enabled: false
-  ```
-  </VersionBlock>
   </File>
 
 ### Примеры
@@ -164,7 +126,17 @@ sources:
 &mdash; [Настроить источник с `event_time`](#configure-a-source-with-an-event_time) <br />
 &mdash; [Настроить метаданные для источника](#configure-meta-to-a-source) <br />
 
-#### Отключить все источники, импортированные из пакета
+&mdash; [Отключить все источники, импортированные из пакета](#disable-all-sources-imported-from-a-package) <br />
+&mdash; [Условно включить один источник](#conditionally-enable-a-single-source) <br />
+&mdash; [Отключить один источник из пакета](#disable-a-single-source-from-a-package) <br />
+&mdash; [Настроить источник с `event_time`](#configure-a-source-with-an-event_time) <br />
+&mdash; [Настроить `meta` для источника](#configure-meta-to-a-source) <br />
+&mdash; [Настроить свежесть источника](#configure-source-freshness) <br />
+
+#### Disable all sources imported from a package
+Чтобы применить конфигурацию ко всем источникам, включённым из [пакета](/docs/build/packages),
+укажите эту конфигурацию под [именем проекта](/reference/project-configs/name.md) в разделе
+настроек `sources:` как часть пути к ресурсу.
 
 Чтобы применить конфигурацию ко всем источникам, включенным из [пакета](/docs/build/packages), укажите вашу конфигурацию под [именем проекта](/reference/project-configs/name.md) в конфигурации `sources:` как часть пути к ресурсу.
 
@@ -180,15 +152,18 @@ sources:
 
 #### Условно включить один источник
 
-При определении источника вы можете отключить весь источник или конкретные таблицы источников, используя встроенное свойство `config`:
+#### Условное включение одного источника
+
+При определении источника вы можете отключить весь источник целиком или отдельные таблицы источника, используя встроенное свойство `config`. Также вы можете указать `database` и `schema`, чтобы переопределить целевую базу данных и схему:
 
 <File name='models/sources.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: my_source
+    database: raw
+    schema: my_schema
     config:
       enabled: true
     tables:
@@ -205,7 +180,6 @@ sources:
 <File name='models/sources.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: my_source
@@ -248,12 +222,6 @@ sources:
 
 #### Настроить источник с `event_time`
 
-<VersionBlock lastVersion="1.8">
-
-Настройка [`event_time`](/reference/resource-configs/event-time) для источника доступна только в [треке "Latest" релизов dbt Cloud](/docs/dbt-versions/cloud-release-tracks) или в версиях dbt Core 1.9 и выше.
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 Чтобы настроить источник с `event_time`, укажите поле `event_time` в конфигурации источника. Это поле используется для представления фактического времени события, а не, например, даты загрузки.
@@ -293,7 +261,34 @@ sources:
 ```
 </File>
 
+#### Настройка свежести источников
+
+Используйте блок `freshness`, чтобы задать ожидания относительно того, как часто таблица обновляется новыми данными, а также чтобы поднимать предупреждения и ошибки, когда эти ожидания не выполняются.
+
+dbt сравнивает самый последний timestamp обновления, вычисленный на основе колонки, метаданных хранилища данных или пользовательского запроса, с текущим timestamp в момент выполнения проверки свежести.
+
+Вы можете указать один или оба параметра `warn_after` и `error_after`. Если не указан ни один из них, dbt не будет вычислять снапшоты свежести для таблиц в этом источнике. Подробнее см. в разделе [freshness](/reference/resource-properties/freshness).
+
+Ниже приведён пример файла `dbt_project.yml`, использующего конфигурацию `freshness`:
+
+<File name="dbt_project.yml">
+  
+```yml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+      warn_after:  
+        count: 4
+        period: hour
+```
+
+</File>
+
 ## Пример конфигурации источника
+
+Ниже приведена корректная конфигурация источника для проекта со следующими характеристиками:
+* `name: jaffle_shop`
+* Пакет с именем `events`, содержащий несколько таблиц-источников
 
 Следующая конфигурация источника является допустимой для проекта с:
 * `name: jaffle_shop`

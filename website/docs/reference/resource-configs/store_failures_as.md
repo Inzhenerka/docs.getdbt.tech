@@ -17,7 +17,7 @@ id: "store_failures_as"
 
 #### Одиночный тест
 
-[Одиночный тест](https://docs.getdbt.com/docs/build/data-tests#singular-data-tests) в файле `tests/singular/check_something.sql`
+[Singular test](/docs/build/data-tests#singular-data-tests) в файле `tests/singular/check_something.sql`
 
 ```sql
 {{ config(store_failures_as="table") }}
@@ -29,14 +29,14 @@ where 1=0
 
 #### Общий тест
 
-[Общие тесты](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) в файле `models/_models.yml`
+[Generic tests](/docs/build/data-tests#generic-data-tests) в файле `models/_models.yml`
 
 ```yaml
 models:
   - name: my_model
     columns:
       - name: id
-        tests:
+        data_tests:
           - not_null:
               config:
                 store_failures_as: view
@@ -55,7 +55,7 @@ version: "1.0.0"
 config-version: 2
 profile: "sandcastle"
 
-tests:
+data_tests:
   my_project:
     +store_failures_as: table
     my_subfolder_1:
@@ -73,4 +73,4 @@ tests:
 - [Конфигурации тестов данных](/reference/data-test-configs#related-documentation)
 - [Конфигурации, специфичные для тестов данных](/reference/data-test-configs#test-data-specific-configurations)
 - [Настройка директорий моделей в dbt_project.yml](/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml)
-- [Наследование конфигураций](/reference/configs-and-properties#config-inheritance)
+- [Наследование конфигураций](/reference/define-configs#config-inheritance)

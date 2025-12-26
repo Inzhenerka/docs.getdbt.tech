@@ -3,18 +3,26 @@ title: Конфигурации снимков
 description: "Прочтите это руководство, чтобы узнать о конфигурациях снимков в dbt."
 meta:
   resource_type: Snapshots
+intro_text: "Learn about using snapshot configurations in dbt, including snapshot-specific configurations and general configurations."
 ---
 
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
+import CourseCallout from '/snippets/_materialization-video-callout.md';
+
 
 ## Связанная документация
 * [Снимки](/docs/build/snapshots)
 * Команда `dbt snapshot` [command](/reference/commands/snapshot)
 
 
+<CourseCallout resource="Snapshots" 
+url="https://learn.getdbt.com/courses/snapshots"
+course="Snapshots"
+/>
+
 ## Доступные конфигурации
-### Конфигурации, специфичные для снимков
+### Конфигурации, специфичные для snapshot’ов
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -30,25 +38,6 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 <TabItem value="project-yaml">
 
-<VersionBlock lastVersion="1.8">
-
-<File name='dbt_project.yml'>
-
-```yaml
-snapshots:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[target_schema](/reference/resource-configs/target_schema): <string>
-    [+](/reference/resource-configs/plus-prefix)[target_database](/reference/resource-configs/target_database): <string>
-    [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
-    [+](/reference/resource-configs/plus-prefix)[strategy](/reference/resource-configs/strategy): timestamp | check
-    [+](/reference/resource-configs/plus-prefix)[updated_at](/reference/resource-configs/updated_at): <column_name>
-    [+](/reference/resource-configs/plus-prefix)[check_cols](/reference/resource-configs/check_cols): [<column_name>] | all
-    [+](/reference/resource-configs/plus-prefix)[invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
-```
-
-</File>
-
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
@@ -77,12 +66,6 @@ snapshots:
 
 <TabItem value="property-yaml">
 
-<VersionBlock lastVersion="1.8">
-
-**Примечание:** Обязательные свойства снимков _не будут_ работать, если они определены только в YAML блоках `config`. Мы рекомендуем определять их в `dbt_project.yml` или в блоке `config()` внутри файла снимка `.sql` или обновиться до версии v1.9.
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
   
 Обратитесь к [настройке снимков](/docs/build/snapshots#configuring-snapshots) для доступных конфигураций.
@@ -92,6 +75,7 @@ snapshots:
 ```yml
 snapshots:
   - name: <string>
+    relation: ref() | source()
     config:
       [database](/reference/resource-configs/database): <string>
       [schema](/reference/resource-configs/schema): <string>
@@ -115,36 +99,59 @@ import LegacySnapshotConfig from '/snippets/_legacy-snapshot-config.md';
 
 <LegacySnapshotConfig />
 
-<VersionBlock lastVersion="1.8">
-
-```jinja
-
-{{ config(
-    [target_schema](/reference/resource-configs/target_schema)="<string>",
-    [target_database](/reference/resource-configs/target_database)="<string>",
-    [unique_key](/reference/resource-configs/unique_key)="<column_name_or_expression>",
-    [strategy](/reference/resource-configs/strategy)="timestamp" | "check",
-    [updated_at](/reference/resource-configs/updated_at)="<column_name>",
-    [check_cols](/reference/resource-configs/check_cols)=["<column_name>"] | "all"
-    [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
-) }}
-
-```
-</VersionBlock>
-
 </TabItem>
 
 </Tabs>
 
 ### Миграция конфигурации снимков
 
-Последние конфигурации снимков, введенные в dbt Core v1.9 (такие как [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) и `hard_deletes`), лучше всего подходят для новых снимков. Для существующих снимков мы рекомендуем следующее, чтобы избежать любых несоответствий в ваших снимках:
+Последние конфигурации снапшотов, представленные в dbt Core v1.9 (такие как [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) и `hard_deletes`), лучше всего подходят для новых снапшотов. Однако вы также можете внедрить их в уже существующие снапшоты, аккуратно выполнив миграцию схемы таблицы и конфигураций, чтобы избежать несогласованностей в данных снапшота.
 
-#### Для существующих снимков
-- Миграция таблиц &mdash; Перенесите предыдущий снимок в новую схему таблицы и значения:
-  - Создайте резервную копию ваших снимков.
-  - Используйте операторы `alter` по мере необходимости (или скрипт для применения операторов `alter`), чтобы обеспечить согласованность таблицы.
-- Новые конфигурации &mdash; Преобразуйте конфигурации по одной, тестируя по мере продвижения.
+Ниже описан рекомендуемый порядок действий:
+
+1. В вашей платформе данных создайте резервную копию таблицы снапшота. Например, вы можете скопировать её в новую таблицу:
+
+    ```sql
+    create table my_snapshot_table_backup as
+    select * from my_snapshot_table;
+    ```
+
+    Это позволит восстановить снапшот, если во время миграции что-то пойдёт не так.
+
+2. Если вы планируете использовать новые конфигурации, добавьте необходимые колонки в существующую таблицу снапшота с помощью `alter`‑запросов. Ниже приведён пример того, какие колонки нужно добавить при использовании `dbt_valid_to_current` и `snapshot_meta_column_names`:
+
+    ```sql
+    alter table my_snapshot_table
+    add column dbt_valid_from timestamp,
+    add column dbt_valid_to timestamp;
+    ```
+
+3. Затем обновите конфигурацию снапшота:
+
+    ```yaml
+    snapshots:
+      - name: orders_snapshot
+        relation: source('something','orders')
+        config:
+          strategy: timestamp
+          updated_at: updated_at
+          unique_key: id
+          dbt_valid_to_current: "to_date('9999-12-31')"
+          snapshot_meta_column_names:
+            dbt_valid_from: start_date
+            dbt_valid_to: end_date
+    ```
+
+4. Перед тем как внедрять сразу несколько новых конфигураций, тестируйте каждое изменение отдельно, запуская `dbt snapshot` в среде разработки или staging.
+5. Убедитесь, что выполнение снапшота завершается без ошибок, новые колонки создаются, а логика хранения истории работает так, как вы ожидаете. В результате таблица должна выглядеть примерно так:
+
+    | `id` | `start_date` | `end_date` | `updated_at` |
+    | --- | --- | --- | --- | 
+    | 1 | 2024-10-01 09:00:00 | 2024-10-03 08:00:00 | 2024-10-01 09:00:00 |
+    | 2 | 2024-10-03 08:00:00 | 9999-12-31 00:00:00 | 2024-10-03 08:00:00 |
+    | 3 | 2024-10-02 11:15:00 | 9999-12-31 00:00:00 | 2024-10-02 11:15:00 |
+
+   Примечание: колонка `end_date` (заданная через `snapshot_meta_column_names`) использует значение, указанное в `dbt_valid_to_current` (9999-12-31), для новых вставляемых записей вместо значения по умолчанию `NULL`. Для существующих записей значение `end_date` останется `NULL`.
 
 :::warning
 Если вы используете одну из последних конфигураций, таких как `dbt_valid_to_current`, без миграции ваших данных, у вас могут быть смешанные старые и новые данные, что приведет к некорректному результату.
@@ -185,54 +192,17 @@ snapshots:
 ```
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-```yaml
-snapshots:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
-    [+](/reference/resource-configs/plus-prefix)[tags](/reference/resource-configs/tags): <string> | [<string>]
-    [+](/reference/resource-configs/plus-prefix)[alias](/reference/resource-configs/alias): <string>
-    [+](/reference/resource-configs/plus-prefix)[pre-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-    [+](/reference/resource-configs/plus-prefix)[post-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-    [+](/reference/resource-configs/plus-prefix)[persist_docs](/reference/resource-configs/persist_docs): {<dict>}
-    [+](/reference/resource-configs/plus-prefix)[grants](/reference/resource-configs/grants): {<dict>}
-```
-</VersionBlock>
 </File>
 
 </TabItem>
 
 <TabItem value="property-yaml">
 
-<VersionBlock lastVersion="1.8">
-
-<File name='snapshots/properties.yml'>
-
-```yaml
-version: 2
-
-snapshots:
-  - name: [<snapshot-name>]
-    config:
-      [enabled](/reference/resource-configs/enabled): true | false
-      [tags](/reference/resource-configs/tags): <string> | [<string>]
-      [alias](/reference/resource-configs/alias): <string>
-      [pre_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-      [post_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-      [persist_docs](/reference/resource-configs/persist_docs): {<dict>}
-      [grants](/reference/resource-configs/grants): {<dictionary>}
-```
-
-</File>
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 <File name='snapshots/properties.yml'>
 
 ```yaml
-version: 2
 
 snapshots:
   - name: [<snapshot-name>]
@@ -257,24 +227,6 @@ snapshots:
 
 <LegacySnapshotConfig />
 
-<VersionBlock lastVersion="1.8">
-
-```jinja
-
-{{ config(
-    [enabled](/reference/resource-configs/enabled)=true | false,
-    [tags](/reference/resource-configs/tags)="<string>" | ["<string>"],
-    [alias](/reference/resource-configs/alias)="<string>", 
-    [pre_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"],
-    [post_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"]
-    [persist_docs](/reference/resource-configs/persist_docs)={<dict>}
-    [grants](/reference/resource-configs/grants)={<dict>}
-) }}
-
-```
-
-</VersionBlock>
-
 </TabItem>
 
 </Tabs>
@@ -284,19 +236,12 @@ snapshots:
 
 <VersionBlock firstVersion="1.9">
 
-1. Определены в YAML файлах с использованием свойства `config` [ресурса](/reference/model-properties), обычно в вашем [каталоге снимков](/reference/project-configs/snapshot-paths) (доступно в [релизном треке dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt v1.9 и выше).
-2. Из файла `dbt_project.yml`, под ключом `snapshots:`. Чтобы применить конфигурацию к снимку или каталогу снимков, определите путь к ресурсу как вложенные ключи словаря.
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-1. Определены в YAML файле с использованием свойства `config` [ресурса](/reference/model-properties), обычно в вашем [каталоге снимков](/reference/project-configs/snapshot-paths) (доступно в [релизном треке dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) и dbt v1.9 и выше). Последний синтаксис YAML для снимков обеспечивает более быстрое и эффективное управление.
-2. Использование блока `config` внутри снимка, определенного в Jinja SQL.
-3. Из файла `dbt_project.yml`, под ключом `snapshots:`. Чтобы применить конфигурацию к снимку или каталогу снимков, определите путь к ресурсу как вложенные ключи словаря.
+1. Определяются в YAML-файлах с использованием свойства ресурса `config` ([resource property](/reference/model-properties)), как правило, в вашем [каталоге snapshots](/reference/project-configs/snapshot-paths) или в любой другой папке, которую вы предпочитаете. Доступно в [релизном треке <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), начиная с dbt v1.9 и выше.
+2. Из файла `dbt_project.yml`, в разделе `snapshots:`. Чтобы применить конфигурацию к снапшоту или каталогу со снапшотами, укажите путь к ресурсу в виде вложенных ключей словаря.
 
 </VersionBlock>
 
-Конфигурации снимков применяются иерархически в порядке, указанном выше, с приоритетом более высоких.
+Конфигурации снапшотов применяются иерархически в указанном выше порядке, при этом более высокие уровни имеют приоритет. Вы также можете применять [data tests](/reference/snapshot-properties) к снапшотам с помощью свойства [`tests`](/reference/resource-properties/data-tests).
 
 ### Примеры
 
@@ -304,9 +249,6 @@ snapshots:
 Следующие примеры демонстрируют, как настроить снимки с использованием файла `dbt_project.yml` и файла `.yml`.
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-Следующие примеры демонстрируют, как настроить снимки с использованием файла `dbt_project.yml`, блока `config` внутри снимка (устаревший метод) и файла `.yml`.
-</VersionBlock>
 
 - #### Применение конфигураций ко всем снимкам
   Чтобы применить конфигурацию ко всем снимкам, включая те, что в установленных [пакетах](/docs/build/packages), вложите конфигурацию непосредственно под ключ `snapshots`:
@@ -337,30 +279,7 @@ snapshots:
 
   Аналогично, вы можете использовать имя установленного пакета для настройки снимков в этом пакете.
 
-- #### Применение конфигураций только к одному снимку
-  
-  <VersionBlock lastVersion="1.8">
-  Используйте блоки `config`, если вам нужно применить конфигурацию только к одному снимку. 
-
-    <File name='snapshots/postgres_app/orders_snapshot.sql'>
-
-    ```sql
-    {% snapshot orders_snapshot %}
-        {{
-            config(
-              unique_key='id',
-              target_schema='snapshots',
-              strategy='timestamp',
-              updated_at='updated_at'
-            )
-        }}
-        -- Pro-Tip: Используйте источники в снимках!
-        select * from {{ source('jaffle_shop', 'orders') }}
-    {% endsnapshot %}
-    ```
-
-    </File>
-    </VersionBlock>
+- #### Применение конфигураций только к одному snapshot
 
     <VersionBlock firstVersion="1.9">
      <File name='snapshots/postgres_app/order_snapshot.yml'>
@@ -404,7 +323,6 @@ snapshots:
     <File name='dbt_project.yml'>
 
     ```yml
-    version: 2
 
     snapshots:
       - name: orders_snapshot

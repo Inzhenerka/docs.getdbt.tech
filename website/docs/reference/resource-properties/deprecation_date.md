@@ -17,7 +17,6 @@ models:
 <File name='models/<schema>.yml'>
 
 ```yml
-version: 2
 models:
   - name: my_model
     description: устаревание в будущем
@@ -41,7 +40,7 @@ models:
 
 Объявление `deprecation_date` для модели dbt предоставляет механизм для передачи планов и сроков долгосрочной поддержки и обслуживания, а также для упрощения управления изменениями.
 
-Установка `deprecation_date` хорошо работает в сочетании с другими функциями [управления моделями](/docs/collaborate/govern/about-model-governance), такими как [версии моделей](/docs/collaborate/govern/model-versions), но также может использоваться независимо от них.
+Указание `deprecation_date` хорошо работает в сочетании с другими возможностями [model governance](/docs/mesh/govern/about-model-governance), такими как [model versions](/docs/mesh/govern/model-versions), но также может использоваться и независимо от них.
 
 ### Предупреждающие сообщения
 
@@ -67,7 +66,7 @@ $ dbt parse
 
 ### Синтаксис выбора
 
-Не существует специфического [синтаксиса выбора узлов](/reference/node-selection/syntax) для `deprecation_date`. [Программные вызовы](/reference/programmatic-invocations) — это один из способов идентификации устаревших моделей (возможно, в сочетании с [dbt list](/reference/commands/list)). Например, `dbt -q ls  --output json --output-keys database schema alias deprecation_date`.
+Для `deprecation_date` не существует отдельного [синтаксиса выбора нод](/reference/node-selection/syntax). Один из способов определить устаревшие модели — использовать [программные вызовы](/reference/programmatic-invocations) (возможно, в сочетании с командой [dbt list](/reference/commands/list)). Например: `dbt ls -q --output json --output-keys database schema alias deprecation_date`.
 
 ### Процесс устаревания
 

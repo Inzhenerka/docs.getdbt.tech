@@ -26,12 +26,10 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-Начиная с выпуска dbt-core 1.0.0, версии dbt-sqlite синхронизированы с той же основной+минорной [версией](https://semver.org/) dbt-core.
-- версии 1.1.x этого адаптера работают с dbt-core 1.1.x
-- версии 1.0.x этого адаптера работают с dbt-core 1.0.x
-- версии 0.2.x этого адаптера работают с dbt 0.20.x и 0.21.x
-- версии 0.1.x этого адаптера работают с dbt 0.19.x
-- версии 0.0.x этого адаптера работают с dbt 0.18.x
+Начиная с релиза <Constant name="core" /> 1.0.0, версии dbt-sqlite выровнены по тем же значениям major+minor [версии](https://semver.org/), что и <Constant name="core" />.
+
+- версии 1.1.x этого адаптера работают с <Constant name="core" /> 1.1.x  
+- версии 1.0.x этого адаптера работают с <Constant name="core" /> 1.0.x
 
 ## Подключение к SQLite с помощью dbt-sqlite
 

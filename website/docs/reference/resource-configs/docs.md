@@ -38,13 +38,13 @@ models:
 <File name='models/schema.yml'>
 
   ```yml
-version: 2
 
 models:
   - name: model_name
-    docs:
-      show: true | false
-      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
+    config:
+      docs: # изменено на config в версии v1.10
+        show: true | false
+        node_color: color_id # Используйте имя цвета (например, node_color: purple) или hex-код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -75,13 +75,13 @@ seeds:
 <File name='seeds/schema.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: seed_name
-    docs:
-      show: true | false
-      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
+    config:
+      docs: # изменено на config в v1.10
+        show: true | false
+        node_color: color_id # Используйте имя (например, node_color: purple) или HEX-код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -107,13 +107,13 @@ snapshots:
 <File name='snapshots/schema.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: snapshot_name
-    docs:
-      show: true | false
-      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
+    config:
+      docs: # в v1.10 переименовано в config
+        show: true | false
+        node_color: color_id # Используйте имя цвета (например, node_color: purple) или hex‑код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -126,13 +126,13 @@ snapshots:
 <File name='analysis/schema.yml'>
 
 ```yml
-version: 2
 
 analyses:
   - name: analysis_name
-    docs:
-      show: true | false
-      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
+    config:
+      docs: # в v1.10 изменено на config
+        show: true | false
+        node_color: color_id # Используйте имя (например, node_color: purple) или hex-код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -145,12 +145,12 @@ analyses:
 <File name='macros/schema.yml'>
 
 ```yml
-version: 2
 
 macros:
   - name: macro_name
-    docs:
-      show: true | false
+    config:
+      docs: # changed to config in v1.10
+        show: true | false
 ```
 </File>
 
@@ -158,8 +158,10 @@ macros:
 
 </Tabs>
 
-## Определение
-Свойство `docs` может быть использовано для предоставления конфигурации, специфичной для документации, для моделей. Оно поддерживает атрибут `show`, который контролирует, отображаются ли узлы на автоматически сгенерированном сайте документации. Также поддерживается `node_color` для моделей, семян, снимков и анализов. Другие типы узлов не поддерживаются.
+Обратите внимание, что для обратной совместимости `docs` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
+
+## Definition
+Свойство `docs` можно использовать для задания конфигурации, относящейся к документации, для моделей. Оно поддерживает атрибут `show`, который управляет тем, отображаются ли узлы на автоматически сгенерированном сайте документации. Также поддерживается `node_color` для моделей, seeds, snapshots и analyses. Другие типы узлов не поддерживаются.
 
 **Примечание:** Скрытые модели все равно будут отображаться в визуализации DAG dbt, но будут обозначены как "скрытые".
 
@@ -201,13 +203,18 @@ models:
 
 ## Пользовательские цвета узлов
 
-Атрибут `docs` теперь поддерживает `node_color` для настройки цвета отображения некоторых типов узлов в DAG в рамках dbt docs. Вы можете определить цвета узлов в следующих файлах и применять переопределения, где это необходимо. Обратите внимание, что вам нужно запустить или перезапустить команду `dbt docs generate`.
+Атрибут `docs` поддерживает параметр `node_color`, который позволяет настраивать цвет отображения некоторых типов узлов в DAG в [dbt Docs](/docs/build/view-documentation). Вы можете задавать цвета узлов в следующих файлах и при необходимости переопределять их.
 
-Иерархия `node_color`:
+- Иерархия `node_color`:
+  - `<example-sql-file.sql>` переопределяет `schema.yml`, который переопределяет `dbt_project.yml`
 
-`<example-sql-file.sql>` переопределяет `schema.yml`, который переопределяет `dbt_project.yml`
+Обратите внимание: чтобы применить и увидеть настроенные цвета, необходимо выполнить или повторно выполнить команду `dbt docs generate`.
 
-## Примеры
+:::info Пользовательские цвета узлов не применяются в <Constant name="explorer" />
+
+Пользовательский атрибут `node_color` не применяется в <Constant name="explorer" />. Вместо этого Explorer предоставляет [lenses](/docs/explore/explore-projects#lenses) — это слои карты для вашего <Term id="dag"/>. Lenses помогают лучше понимать контекстные метаданные проекта в масштабе и различать отдельные модели или их подмножества.
+
+:::
 
 Добавьте пользовательские `node_colors` к моделям, которые поддерживают это в подкаталогах, используя шестнадцатеричные коды или простое имя цвета.
 

@@ -19,7 +19,7 @@ dbt позволяет определять конфигурации узлов 
 - [`tests`](/reference/resource-properties/data-tests)
 - [`docs`](/reference/resource-configs/docs)
 - `columns`
-- [`quote`](/reference/resource-properties/quote)
-- [`source` свойства](/reference/source-properties) (например, `loaded_at_field`, `freshness`)
-- [`exposure` свойства](/reference/exposure-properties) (например, `type`, `maturity`)
-- [`macro` свойства](/reference/macro-properties) (например, `arguments`)
+- [`quote`](/reference/resource-properties/columns#quote)
+- свойства [`source`](/reference/source-properties) (например, `loaded_at_field`, `freshness`)
+- свойства [`exposure`](/reference/exposure-properties) (например, `type`, `maturity`)
+- свойства [`macro`](/reference/resource-properties/arguments) (например, `arguments`)

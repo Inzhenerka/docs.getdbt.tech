@@ -1,11 +1,11 @@
 ---
-title: Могу ли я хранить свои тесты в каталоге, отличном от каталога `tests` в моем проекте?
-description: "Где хранить тесты в каталоге"
-sidebar_label: 'Как назвать каталог с тестами'
+title: Могу ли я хранить data tests в директории, отличной от `tests` в моём проекте?
+description: "Где хранить data tests в директории проекта"
+sidebar_label: 'Как назвать директорию для data tests'
 id: configurable-data-test-path
 
 ---
-По умолчанию dbt ожидает, что ваши файлы с одиночными тестами будут находиться в подкаталоге `tests` вашего проекта, а определения общих тестов будут находиться в `tests/generic` или `macros`.
+По умолчанию dbt ожидает, что файлы *singular data tests* будут находиться в поддиректории `tests` вашего проекта, а определения *generic data tests* — в `tests/generic` или в `macros`.
 
 Чтобы изменить это, обновите конфигурацию [test-paths](reference/project-configs/test-paths.md) в вашем файле `dbt_project.yml`, следующим образом:
 
@@ -17,4 +17,4 @@ test-paths: ["my_cool_tests"]
 
 </File>
 
-Затем вы можете определять общие тесты в `my_cool_tests/generic/`, а одиночные тесты в любом другом месте в `my_cool_tests/`.
+Затем вы можете определять обобщённые (generic) тесты данных в `my_cool_tests/generic/`, а одиночные (singular) тесты данных — во всех остальных местах внутри `my_cool_tests/`.

@@ -59,26 +59,54 @@ from validation_errors
 
 Если этот `select` запрос возвращает ноль записей, то каждая запись в переданном аргументе `model` четная! Если вместо этого возвращается ненулевое количество записей, то по крайней мере одна запись в `model` нечетная, и тест не прошел.
 
-Чтобы использовать этот универсальный тест, укажите его по имени в свойстве `tests` модели, источника, snapshot или seed:
+Чтобы использовать этот обобщённый тест, укажите его по имени в свойстве `data_tests` модели, источника (source), снапшота (snapshot) или сида (seed):
 
+<VersionBlock firstVersion="1.9">
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
-
 models:
   - name: users
     columns:
       - name: favorite_number
-        tests:
-      	  - is_even
+        data_tests:
+      	  - is_even:
+            [description](/reference/resource-properties/description): "This is a test"
 ```
 
 </File>
 
-С одной строкой кода вы только что создали тест! В этом примере `users` будет передан в тест `is_even` как аргумент `model`, а `favorite_number` будет передан как аргумент `column_name`. Вы можете добавить ту же строку для других столбцов, других моделей — каждая добавит новый тест в ваш проект, _используя то же самое определение универсального теста_.
+</VersionBlock>
 
-### Универсальные тесты с дополнительными аргументами
+Всего одной строкой кода вы только что создали тест! В этом примере `users` будет передан в тест `is_even` в качестве аргумента `model`, а `favorite_number` — в качестве аргумента `column_name`. Вы можете добавить такую же строку для других колонок или других моделей — каждая из них добавит новый тест в ваш проект, _используя одно и то же обобщённое определение теста_.
+
+### Добавление описания к логике обобщённого data-теста
+
+Вы можете добавить описание к Jinja-макросу, который содержит основную логику data-теста, указав ключ `description` в разделе `macros:`. Описания можно добавлять прямо к макросу, включая описания его аргументов.
+
+Вот пример:
+
+<File name="macros/generic/schema.yml">
+    
+```yaml
+macros:
+  - name: test_not_empty_string
+    description: Complementary test to default `not_null` test as it checks that there is not an empty string. It only accepts columns of type string.
+    arguments:
+      - name: model 
+        type: string
+        description: Model Name
+      - name: column_name
+        type: string
+        description: Column name that should not be an empty string
+```
+</File>
+
+В этом примере:
+
+- При документировании пользовательских тестовых макросов в файле `schema.yml` добавляйте префикс `test_` к имени макроса. Например, если имя тестового блока — `not_empty_string`, то имя макроса должно быть `test_not_empty_string`.
+- Мы указали описание на уровне макроса, объясняющее, что делает тест и какие есть важные особенности.
+- Каждый аргумент (например, `model`, `column_name`) также содержит описание, которое поясняет его назначение.
 
 Тест `is_even` работает без необходимости указывать какие-либо дополнительные аргументы. Другие тесты, такие как `relationships`, требуют больше, чем просто `model` и `column_name`. Если ваш пользовательский тест требует больше, чем стандартные аргументы, включите эти аргументы в сигнатуру теста, как `field` и `to` включены ниже:
 
@@ -117,24 +145,30 @@ where id is not null
 
 При вызове этого теста из `.yml` файла, передайте аргументы тесту в виде словаря. Обратите внимание, что стандартные аргументы (`model` и `column_name`) предоставляются контекстом, поэтому вам не нужно определять их снова.
 
+<VersionBlock firstVersion="1.9">
+
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
+
 
 models:
   - name: people
     columns:
       - name: account_id
-        tests:
+        data_tests:
           - relationships:
-              to: ref('accounts')
-              field: id
+            [description](/reference/resource-properties/description): "This is a test"
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('accounts')
+                field: id
 ```
 
 </File>
 
-### Универсальные тесты с значениями конфигурации по умолчанию
+</VersionBlock>
+
+### Обобщённые тесты с параметрами конфигурации по умолчанию
 
 Возможно включить блок `config()` в определение универсального теста. Значения, установленные там, будут установлены по умолчанию для всех конкретных экземпляров этого универсального теста, если они не будут переопределены в свойствах конкретного экземпляра `.yml`.
 
@@ -156,24 +190,33 @@ models:
 
 </File>
 
+<VersionBlock firstVersion="1.9">
+
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
-
 models:
   - name: users
     columns:
       - name: favorite_number
-        tests:
+```yaml
+        description: "Тест favorite_number"
+        data_tests:
       	  - warn_if_odd         # по умолчанию 'warn'
+```
       - name: other_number
-        tests:
+        description: "Test other_number"
+        data_tests:
           - warn_if_odd:
-              severity: error   # переопределение
+```yaml
+arguments: # доступно в версии v1.10.5 и выше. В более старых версиях <argument_name> можно задавать как свойство верхнего уровня.
+  severity: error   # переопределяет
+```
 ```
 
 </File>
+
+</VersionBlock>
 
 ### Настройка встроенных тестов dbt
 

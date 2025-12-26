@@ -12,7 +12,7 @@ id: join
 <Card
     title="Присоединяйтесь к нам в Slack"
     body="Следите за пульсом сообщества dbt! Общайтесь с другими специалистами в вашем городе, стране или по всему миру о работе с данными, технологических стэках или просто делитесь классными мемами."
-link="https://www.getdbt.com/community/join-the-community/"
+    link="https://www.getdbt.com/community/join-the-community/"
     icon="slack"
 />
 
@@ -25,7 +25,7 @@ link="https://www.getdbt.com/community/join-the-community/"
 
 <Card
     title="Как внести вклад"
-    body="Хотите принять участие? Это ваше место! Узнайте, как внести вклад в наши open source репозитории, написать для блога, выступить на встрече и многое другое."
+    body="Хотите поучаствовать? Вы по адресу! Узнайте, как вносить вклад в наши публичные репозитории, писать для блога, выступать на митапах и многое другое."
     link="community/contribute" icon="pencil-paper"
 />
 

@@ -1,7 +1,7 @@
 ---
-title: "Я получаю ошибку компиляции \"Partial parsing enabled: 1 files deleted, 0 files added, 2 files changed\" в dbt Cloud?"
+title: "Я получаю ошибку компиляции «Partial parsing enabled: 1 files deleted, 0 files added, 2 files changed» в dbt?"
 description: "Удалите файл partial_parse"
-sidebar_label: 'Ошибка partial_parse в IDE'
+sidebar_label: "Ошибка partial_parse в IDE"
 id: partial-parsing-error
 
 ---

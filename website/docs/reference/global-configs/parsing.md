@@ -6,13 +6,13 @@ sidebar: "Parsing"
 
 ### Частичный разбор
 
-Конфигурация `PARTIAL_PARSE` может включать или отключать частичный разбор в вашем проекте. Подробнее см. в [документации по разбору](/reference/parsing#partial-parsing).
+Флаг `PARTIAL_PARSE` позволяет включать или отключать частичный парсинг в вашем проекте. Подробнее см. [документацию по парсингу](/reference/parsing#partial-parsing).
 
-<File name='profiles.yml'>
+<File name='dbt_project.yml'>
 
 ```yaml
 
-config:
+flags:
   partial_parse: true
 
 ```
@@ -22,7 +22,7 @@ config:
 <File name='Usage'>
 
 ```text
-dbt --no-partial-parse run
+dbt run --no-partial-parse
 ```
 
 </File>

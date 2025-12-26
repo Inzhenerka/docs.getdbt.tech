@@ -2,6 +2,7 @@
 resource_types: [models, seeds, snapshots, tests]
 description: "Псевдонимизация ресурса позволяет задать ему пользовательское имя в базе данных вместо использования имени файла."
 datatype: string
+intro_text: Specify a custom alias for a model, data test, snapshot, or seed and give it a more user-friendly name in the database.
 ---
 
 <Tabs>
@@ -28,7 +29,6 @@ models:
 <File name='models/properties.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: sales_total
@@ -73,7 +73,6 @@ seeds:
 <File name='seeds/properties.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: product_categories
@@ -121,7 +120,6 @@ snapshots:
 <File name='snapshots/snapshot_name.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: your_snapshot_name
@@ -155,7 +153,7 @@ snapshots:
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   your_project:
     +alias: unique_order_id_test
 ```
@@ -170,9 +168,10 @@ models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique:
-              alias: unique_order_id_test
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                alias: unique_order_id_test
 ```
 </File>
 

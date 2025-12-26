@@ -138,7 +138,6 @@ models:
 <File name='models/properties.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: [<model-name>]

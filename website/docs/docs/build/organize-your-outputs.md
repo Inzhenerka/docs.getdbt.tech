@@ -30,8 +30,8 @@ pagination_prev: null
     icon="dbt-bit"/>
 
 <Card
-    title="Пользовательские имена целей"
-    body="Узнайте, как определить пользовательское имя цели для задания в dbt Cloud."
+    title="Пользовательские имена target"
+    body="Узнайте, как определить пользовательское имя target для задания dbt."
     link="/docs/build/custom-target-names"
     icon="dbt-bit"/>
 

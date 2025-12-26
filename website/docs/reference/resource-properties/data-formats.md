@@ -15,6 +15,8 @@ sidebar_label: "Форматы данных"
 
 `dict` требует встроенный словарь для `rows`:
 
+<File name='models/schema.yml'>
+
 ```yml
 
 unit_tests:
@@ -29,9 +31,13 @@ unit_tests:
 
 ```
 
-## csv
+</File>
+
+## CSV
 
 При использовании формата `csv` вы можете использовать либо встроенную строку CSV для `rows`:
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -47,8 +53,12 @@ unit_tests:
           2,michelle
 
 ```
+</File>
+
 
 Или вы можете указать имя CSV-файла в каталоге `tests/fixtures` (или в настроенном местоположении `test-paths`) вашего проекта для `fixture`:
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -61,6 +71,7 @@ unit_tests:
         fixture: my_model_a_fixture
 
 ```
+</File>
 
 ## sql
 
@@ -71,6 +82,8 @@ unit_tests:
 Однако при использовании `format: sql` вы должны предоставить фиктивные данные для _всех строк_.
 
 При использовании формата `sql` вы можете использовать либо встроенный SQL-запрос для `rows`:
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -86,7 +99,9 @@ unit_tests:
 
 ```
 
-Или вы можете указать имя SQL-файла в каталоге `tests/fixtures` (или в настроенном местоположении `test-paths`) вашего проекта для `fixture`:
+Или же вы можете указать имя SQL-файла, расположенного в каталоге `tests/fixtures` (или в директории, заданной параметром `test-paths`) вашего проекта, в качестве значения для `fixture`:
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -99,5 +114,6 @@ unit_tests:
         fixture: my_model_a_fixture
 
 ```
+</File>
 
 **Примечание:** Jinja не поддерживается в SQL-фикстурах для модульных тестов.

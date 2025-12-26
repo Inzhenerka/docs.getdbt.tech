@@ -5,14 +5,13 @@ required: no
 keyword: governance, model version, model versioning, dbt model versioning
 ---
 
-import VersionsCallout from '/snippets/_version-callout.md';
+import VersionsCallout from '/snippets/_model-version-callout.md';
 
 <VersionsCallout />
 
 <File name='models/<schema>.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: model_name
@@ -20,9 +19,9 @@ models:
       - v: <version_identifier> # обязательно
         defined_in: <file_name> # необязательно -- по умолчанию <model_name>_v<v>
         columns:
-          # укажите все столбцы или включите/исключите столбцы из определения модели верхнего уровня в YAML
-          - [include](/reference/resource-properties/include-exclude): <include_value>
-            [exclude](/reference/resource-properties/include-exclude): <exclude_list>
+          # укажите все столбцы либо включите/исключите столбцы из YAML‑определения модели верхнего уровня
+          - [include](/reference/resource-properties/versions#include): <include_value>
+            [exclude](/reference/resource-properties/versions#include): <exclude_list>
           # укажите дополнительные столбцы
           - name: <column_name> # обязательно
       - v: ...
@@ -41,7 +40,9 @@ models:
 
 Значение идентификатора версии используется для упорядочивания версий модели относительно друг друга. Если версия модели _не_ явно настраивает [`latest_version`](/reference/resource-properties/latest_version), то в качестве последней версии используется наибольший номер версии для разрешения вызовов `ref` к модели без аргумента `version`.
 
-В общем, мы рекомендуем использовать простую схему "основного версионирования" для ваших моделей: `1`, `2`, `3` и так далее, где каждая версия отражает значительное изменение по сравнению с предыдущими версиями. Вы можете использовать и другие схемы версионирования. dbt будет сортировать ваши идентификаторы версий в алфавитном порядке, если значения не все числовые. Вы **не** должны включать букву `v` в идентификатор версии, так как dbt сделает это за вас.
+В целом мы рекомендуем использовать простую схему «мажорного версионирования» для моделей: `1`, `2`, `3` и так далее, где каждая версия отражает несовместимое (breaking) изменение по сравнению с предыдущими версиями. При этом вы можете использовать и другие схемы версионирования. Если значения идентификаторов версий не являются полностью числовыми, dbt будет сортировать их в алфавитном порядке. **Не следует** включать букву `v` в идентификатор версии — dbt добавит её автоматически.
+
+Чтобы запустить модель с несколькими версиями, можно использовать [флаг `--select`](/reference/node-selection/syntax). Подробнее о возможностях и синтаксисе см. в разделе [Model versions](/docs/mesh/govern/model-versions#run-a-model-with-multiple-versions).
 
 Чтобы запустить модель с несколькими версиями, вы можете использовать [`--select` флаг](/reference/node-selection/syntax). Обратитесь к [Версии моделей](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) для получения дополнительной информации и синтаксиса.
 
@@ -59,14 +60,114 @@ models:
 - Настройка пользовательского `alias` в yaml версии или в определении версии модели
 - Переопределение макроса `generate_alias_name` dbt, чтобы использовать другое поведение на основе `node.version`
 
-См. ["Пользовательские псевдонимы"](https://docs.getdbt.com/docs/build/custom-aliases) для получения более подробной информации.
+См. раздел ["Custom aliases"](/docs/build/custom-aliases) для получения более подробной информации.
 
 Обратите внимание, что значение `defined_in` и конфигурация `alias` модели не координируются, кроме как по соглашению. Они объявляются и определяются независимо.
 
+### `include`
+
+Спецификация того, какие колонки, определённые в верхнеуровневом свойстве `columns` модели, нужно включить или исключить в версионированной реализации этой модели.
+
+- `include` может быть:
+  - списком конкретных имён колонок, которые нужно включить
+  - `'*'` или `'all'`, что означает включение **всех** колонок из верхнеуровневого свойства `columns` в версионированную модель
+- `exclude` — это список имён колонок, которые нужно исключить. Он может быть объявлен только если `include` задан как `'*'` или `'all'`.
+
+:::tip
+Не путайте с синтаксисом `--select/--exclude` [syntax](/reference/node-selection/exclude), который используется для выбора моделей.
+:::
+
+Список `columns` у версионированной модели может содержать _не более одного_ элемента `include/exclude`. Однако, если ни одна из версий вашей модели не задаёт колонки, вам вообще не нужно определять `columns`, и вы можете опустить ключи `columns/include`/`exclude` в описании версионированной модели. В этом случае dbt автоматически использует все верхнеуровневые колонки для всех версий.
+
+Вы также можете объявлять дополнительные колонки внутри списка `columns` конкретной версии. Если `name` колонки, определённой на уровне версии, совпадает с колонкой, включённой с верхнего уровня, то версия переопределит эту колонку для данной версии модели.
+
+<File name='models/<schema>.yml'>
+
+```yml
+models:
+  
+  # top-level model properties
+  - name: <model_name>
+    [columns](/reference/resource-properties/columns):
+      - name: <column_name> # required
+    
+    # versions of this model
+    [versions](/reference/resource-properties/versions):
+      - v: <version_identifier> # required
+        columns:
+          - include: '*' | 'all' | [<column_name>, ...]
+            exclude:
+              - <column_name>
+              - ... # declare additional column names to exclude
+          
+          # declare more columns -- can be overrides from top-level, or in addition
+          - name: <column_name>
+            ...
+```
+
+</File>
+
+По умолчанию `include` имеет значение `"all"`, а `exclude` — пустой список. Это приводит к тому, что в версионированную модель включаются все колонки из базовой модели.
+
+#### Пример
+
+<File name='models/customers.yml'>
+
+```yml
+models:
+  - name: customers
+    columns:
+      - name: customer_id
+        description: Unique identifier for this table
+        data_type: text
+        constraints:
+          - type: not_null
+        data_tests:
+          - unique
+      - name: customer_country
+        data_type: text
+        description: "Country where the customer currently lives"
+      - name: first_purchase_date
+        data_type: date
+    
+    versions:
+      - v: 4
+      
+      - v: 3
+        columns:
+          - include: "*"
+          - name: customer_country
+            data_type: text
+            description: "Country where the customer first lived at time of first purchase"
+      
+      - v: 2
+        columns:
+          - include: "*"
+            exclude:
+              - customer_country
+      
+      - v: 1
+        columns:
+          - include: []
+          - name: id
+            data_type: int
+```
+
+</File>
+
+Так как версия `v4` не задала никаких `columns`, она будет включать все колонки, определённые на верхнем уровне.
+
+Каждая из остальных версий объявляет изменения относительно верхнеуровневого описания:
+- `v3` включает все колонки, но переопределяет колонку `customer_country`, задавая для неё другое `description`.
+- `v2` включает все колонки, *кроме* `customer_country`.
+- `v1` не включает *ни одной* верхнеуровневой колонки. Вместо этого она объявляет только одну целочисленную колонку с именем `id`.
+
+---
+
 ### Наши рекомендации
-- Следуйте согласованному соглашению об именовании версий моделей и псевдонимов.
-- Используйте `defined_in` и `alias` только если у вас есть веские причины.
-- Создайте представление, которое всегда указывает на последнюю версию вашей модели. Вы можете автоматизировать это для всех версионных моделей в вашем проекте с помощью хука `on-run-end`. Для получения более подробной информации прочитайте полную документацию по ["Версии моделей"](/docs/collaborate/govern/model-versions#configuring-database-location-with-alias).
+- Придерживайтесь единого соглашения об именовании версий моделей и их алиасов.
+- Используйте `defined_in` и `alias` только при наличии веской причины.
+- Создайте представление (view), которое всегда указывает на последнюю версию вашей модели. Вы можете автоматизировать это для всех версионированных моделей в проекте с помощью хука `on-run-end`. Подробнее см. в полной документации по ["Model versions"](/docs/mesh/govern/model-versions#configuring-database-location-with-alias).
 
 ### Обнаружение значительных изменений
 
@@ -114,8 +215,8 @@ value2="dbt также предупреждает, если у модели ес
   Столбцы с изменениями типа данных:
    - order_id (number -> int)
 
-  Рассмотрите возможность внесения добавочного (незначительного) изменения, если это возможно.
-  В противном случае создайте новую версию модели: https://docs.getdbt.com/docs/collaborate/govern/model-versions
+По возможности рассмотрите внесение аддитивного (не нарушающего обратную совместимость) изменения.  
+В противном случае создайте новую версию модели: https://docs.getdbt.com/docs/mesh/govern/model-versions
 ```
 
 </TabItem>

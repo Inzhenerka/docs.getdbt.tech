@@ -1,24 +1,23 @@
 ---
-title: "Быстрый старт для dbt Cloud и Azure Synapse Analytics"
+title: "Быстрый старт для dbt и Azure Synapse Analytics"
 id: "azure-synapse-analytics"
 level: 'Beginner'
-icon: 'azure-synapse-analytics'
+icon: 'azure-synapse-analytics-2'
 hide_table_of_contents: true
-tags: ['dbt Cloud','Quickstart']
-recently_updated: true
+tags: ['dbt platform','Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с [Azure Synapse Analytics](https://azure.microsoft.com/en-us/products/synapse-analytics/). Оно покажет вам, как:
+В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с [Azure Synapse Analytics](https://azure.microsoft.com/en-us/products/synapse-analytics/). Руководство покажет, как:
 
-- Загрузить пример данных Jaffle Shop (предоставленных dbt Labs) в ваш склад данных Azure Synapse Analytics.
-- Подключить dbt Cloud к Azure Synapse Analytics.
-- Превратить пример запроса в модель в вашем проекте dbt. Модель в dbt — это оператор SELECT.
+- Загрузить пример данных Jaffle Shop (предоставленный dbt Labs) в ваш хранилище данных Azure Synapse Analytics.
+- Подключить <Constant name="cloud" /> к Azure Synapse Analytics.
+- Превратить пример запроса в модель в вашем dbt‑проекте. Модель в dbt — это SQL‑запрос `SELECT`.
 - Добавить тесты к вашим моделям.
-- Документировать ваши модели.
+- Задокументировать ваши модели.
 - Запланировать выполнение задания.
 
 ### Предварительные требования
@@ -26,12 +25,10 @@ recently_updated: true
 - У вас есть аккаунт Azure Synapse Analytics. Для бесплатной пробной версии обратитесь к [Synapse Analytics](https://azure.microsoft.com/en-us/free/synapse-analytics/) в документации Microsoft.
 - Как администратор Microsoft, вы включили аутентификацию с использованием служебного принципала. Вы должны добавить служебный принципал в рабочее пространство Synapse с правами Участника (рекомендуется) или Администратора. Для получения подробной информации обратитесь к [Создание служебного принципала с использованием портала Azure](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) в документации Microsoft. dbt Cloud нужны эти учетные данные для подключения к Azure Synapse Analytics.
 
-### Связанные материалы
-- [Курсы dbt Learn](https://learn.getdbt.com)
-- [О заданиях непрерывной интеграции](/docs/deploy/continuous-integration)
-- [Развертывание заданий](/docs/deploy/deploy-jobs)
-- [Уведомления о заданиях](/docs/deploy/job-notifications)
-- [Актуальность источников](/docs/deploy/source-freshness)
+### Предварительные требования
+- У вас есть учетная запись [<Constant name="cloud" />](https://www.getdbt.com/signup/).
+- У вас есть учетная запись Azure Synapse Analytics. Для получения бесплатной пробной версии см. [Synapse Analytics](https://azure.microsoft.com/en-us/free/synapse-analytics/) в документации Microsoft.
+- Как администратор Microsoft, вы включили аутентификацию с использованием service principal. Необходимо добавить service principal в рабочую область Synapse с набором разрешений Member (рекомендуется) или Admin. Подробнее см. в разделе [Create a service principal using the Azure portal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) в документации Microsoft. <Constant name="cloud" /> использует эти учетные данные аутентификации для подключения к Azure Synapse Analytics.
 
 ## Загрузка данных в Azure Synapse Analytics
 
@@ -88,33 +85,33 @@ recently_updated: true
 
     <Lightbox src="/img/quickstarts/dbt-cloud/example-load-data-azure-syn-analytics.png" width="80%" title="Пример загрузки данных" />
 
-## Подключение dbt Cloud к Azure Synapse Analytics
+## Подключение dbt к Azure Synapse Analytics
 
-1. Создайте новый проект в dbt Cloud. Нажмите на имя вашего аккаунта в левом меню, выберите **Account settings** и нажмите **+ New Project**.
+1. Создайте новый проект в <Constant name="cloud" />. В левом боковом меню нажмите на имя своей учетной записи, выберите **Account settings** и нажмите **+ New Project**.
 2. Введите имя проекта и нажмите **Continue**.
-3. Выберите **Synapse** в качестве вашего подключения и нажмите **Next**.
-4. В разделе **Configure your environment** введите **Settings** для вашего нового проекта:
-    - **Server** &mdash; Используйте значение **Synapse host name** служебного принципала (без завершающей строки `, 1433`) для тестовой конечной точки Synapse.
-    - **Port** &mdash; 1433 (по умолчанию).
-    - **Database** &mdash; Используйте значение **database** служебного принципала для тестовой конечной точки Synapse.
-5. Введите **Development credentials** для вашего нового проекта:
-    - **Authentication** &mdash; Выберите **Service Principal** из выпадающего списка.
-    - **Tenant ID** &mdash; Используйте **Directory (tenant) id** служебного принципала в качестве значения.
-    - **Client ID** &mdash; Используйте **application (client) ID id** служебного принципала в качестве значения.
-    - **Client secret** &mdash; Используйте **client secret** служебного принципала (не **client secret id**) в качестве значения.
-6. Нажмите **Test connection**. Это проверит, что dbt Cloud может получить доступ к вашему аккаунту Azure Synapse Analytics.
-7. Нажмите **Next**, когда тест пройдет успешно. Если он не прошел, возможно, вам нужно проверить ваш служебный принципал Microsoft.
+3. Выберите **Synapse** в качестве типа подключения и нажмите **Next**.
+4. В разделе **Configure your environment** введите **Settings** для нового проекта:
+    - **Server** &mdash; используйте значение **Synapse host name** сервисного принципала (без завершающей строки `, 1433`) для тестового эндпоинта Synapse.  
+    - **Port** &mdash; 1433 (значение по умолчанию).
+    - **Database** &mdash; используйте значение **database** сервисного принципала для тестового эндпоинта Synapse.
+5. Введите **Development credentials** для нового проекта:
+    - **Authentication** &mdash; выберите **Service Principal** в выпадающем списке.
+    - **Tenant ID** &mdash; используйте значение **Directory (tenant) id** сервисного принципала.
+    - **Client ID** &mdash; используйте значение **application (client) ID** сервисного принципала.
+    - **Client secret** &mdash; используйте **client secret** сервисного принципала (не **client secret id**).
+6. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему аккаунту Azure Synapse Analytics.
+7. После успешного теста нажмите **Next**. Если тест не прошел, возможно, потребуется проверить настройки Microsoft service principal.
 
-## Настройка управляемого репозитория dbt Cloud 
+## Настройка управляемого репозитория dbt
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация вашего проекта dbt и начало разработки
-Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
+## Инициализация проекта dbt и начало разработки
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
-1. Нажмите **Start developing in the IDE**. Это может занять несколько минут, так как ваш проект впервые запускается, устанавливая соединение с git, клонируя ваш репозиторий и проверяя соединение с хранилищем.
+1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске это может занять несколько минут, так как устанавливается соединение с git, клонируется репозиторий и проверяется подключение к хранилищу данных.
 2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок с примерами моделей.
-3. Сделайте ваш первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit Changes**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, где вы можете добавлять новый код dbt.
-4. Теперь вы можете напрямую запрашивать данные из вашего хранилища и выполнять `dbt run`. Вы можете попробовать это сейчас:
+3. Выполните первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit Changes**. Это создаст первый коммит в управляемом репозитории и позволит открыть ветку для добавления нового dbt-кода.
+4. Теперь вы можете напрямую выполнять запросы к вашему хранилищу данных и запускать `dbt run`. Можете попробовать прямо сейчас:
     - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
 ## Создание вашей первой модели

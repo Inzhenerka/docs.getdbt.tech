@@ -1,9 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 import { ThemeClassNames } from "@docusaurus/theme-common";
-import { useDoc } from "@docusaurus/theme-common/internal";
+import { useDoc } from "@docusaurus/plugin-content-docs/client";
 import Heading from "@theme/Heading";
 import MDXContent from "@theme/MDXContent";
+import IntroText from "@site/src/components/IntroText";
 /**
  Title can be declared inside md content or declared through
  front matter and added manually. To make both cases consistent,
@@ -25,6 +26,7 @@ import CommunitySpotlightCard from "@site/src/components/communitySpotlightCard"
 import QuickstartTOC from "@site/src/components/quickstartTOC";
 import {QuickstartGuideTitle} from "../../../components/quickstartGuideCard";
 import styles from "./styles.module.css";
+import { Feedback } from "../../../components/feedback";
 
 
 function useSyntheticTitle() {
@@ -58,6 +60,11 @@ export default function DocItemContent({ children }) {
         </header>
       )}
 
+      {/* Render IntroText if frontMatter.intro_text exists */}
+      {frontMatter.intro_text && (
+        <IntroText>{frontMatter.intro_text}</IntroText>
+      )}
+
       {/* Wrap with small container if spotlight member page */}
       {isSpotlightMember ? (
         <div className={styles.spotlightMemberContain}>
@@ -69,19 +76,19 @@ export default function DocItemContent({ children }) {
         </div>
       ) : isQuickstartGuide ? (
         <>
-        <QuickstartGuideTitle frontMatter={frontMatter} />
-        <div className={clsx("quickstart-container")}>
-          
-          <QuickstartTOC />
-          <div className={clsx("step-container")}>
-            <MDXContent>{children}</MDXContent>
+          <QuickstartGuideTitle frontMatter={frontMatter} />
+          <div className={clsx("quickstart-container")}>
+            <QuickstartTOC />
+            <div className={clsx("step-container")}>
+              <MDXContent>{children}</MDXContent>
+            </div>
           </div>
-        </div>
         </>
-
       ) : (
         <MDXContent>{children}</MDXContent>
       )}
+
+      {!isSpotlightMember ? <Feedback /> : null}
     </div>
   );
 }

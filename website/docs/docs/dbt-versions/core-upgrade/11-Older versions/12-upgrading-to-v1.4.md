@@ -7,9 +7,9 @@ displayed_sidebar: "docs"
 
 ### Ресурсы
 
-- [Список изменений](https://github.com/dbt-labs/dbt-core/blob/1.4.latest/CHANGELOG.md)
-- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
-- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.4.latest/CHANGELOG.md)
+- [Руководство по установке CLI <Constant name="core" />](/docs/core/installation-overview)
+- [Руководство по обновлению Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
 **Финальный релиз:** 25 января 2023
 
@@ -21,7 +21,7 @@ dbt Labs стремится обеспечить обратную совмест
 
 ### Для пользователей артефактов dbt (метаданные)
 
-Версия схемы манифеста обновлена до `v8`. Эти изменения актуальны для тех, кто анализирует или обрабатывает содержимое файла `manifest.json`, или у кого есть собственный код, обращающийся к переменным [`model`](https://docs.getdbt.com/reference/dbt-jinja-functions/model) или [`graph`](https://docs.getdbt.com/reference/dbt-jinja-functions/graph), например, `{{ model.root_path }}`.
+Версия схемы manifest обновилась до `v8`. Эти изменения важны для пользователей, которые парсят или анализируют содержимое файла `manifest.json`, а также для тех, у кого есть пользовательский код, обращающийся к переменным [`model`](/reference/dbt-jinja-functions/model) или [`graph`](/reference/dbt-jinja-functions/graph), например `{{ model.root_path }}`.
 
 Актуальные изменения:
 - Атрибут `root_path` был удален для узлов, не являющихся семенами, чтобы уменьшить дублирующую информацию.
@@ -38,7 +38,7 @@ dbt Labs стремится обеспечить обратную совмест
 - Добавлена поддержка инкрементальных предикатов (если применимо)
 - Использование новых тестов в зоне адаптера
 
-Для более подробной информации и вопросов, пожалуйста, посетите [dbt-core/discussions/6624](https://github.com/dbt-labs/dbt-core/discussions/6624).
+Для получения более подробной информации и чтобы задать любые вопросы, пожалуйста, посетите [<Constant name="core" />/discussions/6624](https://github.com/dbt-labs/dbt-core/discussions/6624).
 
 ## Новая и измененная документация
 

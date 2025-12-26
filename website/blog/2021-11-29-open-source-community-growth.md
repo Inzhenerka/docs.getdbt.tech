@@ -114,8 +114,8 @@ sources:
 
 Явное определение внешних источников данных в dbt было важно для меня по двум причинам:
 
-1. Это позволяет нам использовать функции jinja `source()` и `ref()` для ссылки на эти таблицы в наших моделях, вместо жесткого кодирования имен таблиц.
-2. Это гарантирует, что схемы включены в `catalog.json`, когда выполняется `dbt docs generate`, что критично для сбора и отслеживания происхождения данных. Мне нужна эта информация, чтобы она могла быть передана в OpenLineage во время цикла выполнения.
+1. Это позволяет нам использовать Jinja‑функции `source()` и `ref()` для обращения к этим таблицам внутри наших моделей, вместо того чтобы жёстко прописывать имена таблиц.
+2. Это гарантирует, что схемы будут включены в `catalog.json` при выполнении `dbt docs generate`, что критически важно для сбора и отслеживания lineage данных. Эта информация нужна мне для того, чтобы её можно было передать в OpenLineage в ходе выполнения пайплайна.
 
 ### GitHub
 
@@ -380,7 +380,7 @@ Marquez — это совместимый с OpenLineage сервер метад
 
 ```
 % dbt docs generate
-Running with dbt=0.21.0
+Running with dbt=1.9.0
 Found 7 models, 0 tests, 0 snapshots, 0 analyses, 184 macros, 0 operations, 2 seed files, 4 sources, 0 exposures
 
 18:41:20 | Concurrency: 1 threads (target='dev')
@@ -401,7 +401,7 @@ Found 7 models, 0 tests, 0 snapshots, 0 analyses, 184 macros, 0 operations, 2 se
 
 ```
 % dbt seed
-Running with dbt=0.21.0
+Running with dbt=1.9.0
 Found 7 models, 0 tests, 0 snapshots, 0 analyses, 184 macros, 0 operations, 2 seed files, 4 sources, 0 exposures
 
 18:40:45 | Concurrency: 1 threads (target='dev')
@@ -425,7 +425,7 @@ Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 % dbt-ol run
 Running OpenLineage dbt wrapper version 0.3.1
 This wrapper will send OpenLineage events at the end of dbt execution.
-Running with dbt=0.21.0
+Running with dbt=1.0.0
 Found 7 models, 0 tests, 0 snapshots, 0 analyses, 184 macros, 0 operations, 2 seed files, 4 sources, 0 exposures
 
 18:44:15 | Concurrency: 1 threads (target='dev')

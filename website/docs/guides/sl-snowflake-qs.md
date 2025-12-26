@@ -1,212 +1,225 @@
 ---
-title: "Быстрый старт с семантическим слоем dbt Cloud и Snowflake"
+title: "Быстрый старт для dbt Semantic Layer и Snowflake"
 id: sl-snowflake-qs
-description: "Используйте это руководство для создания и определения метрик, настройки семантического слоя dbt Cloud и их запроса с помощью Google Sheets."
-sidebar_label: "Быстрый старт с семантическим слоем dbt и Snowflake"
+description: "Используйте это руководство, чтобы создавать и определять метрики, настраивать dbt Semantic Layer и выполнять запросы к ним с помощью Google Sheets."
+sidebar_label: "Быстрый старт с dbt Semantic Layer и Snowflake"
 meta:
   api_name: dbt Semantic Layer APIs
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Semantic Layer', 'Snowflake', 'dbt Cloud','Quickstart']
-keywords: ['dbt Semantic Layer','Metrics','dbt Cloud', 'Snowflake', 'Google Sheets']
+tags: ['Semantic Layer', 'Snowflake', 'dbt platform', 'Quickstart']
+keywords: ['dbt Semantic Layer','Metrics','dbt platform', 'Snowflake', 'Google Sheets']
 level: 'Intermediate'
-recently_updated: true
 ---
 
 ## Введение
 
 [Семантический слой dbt](/docs/use-dbt-semantic-layer/dbt-sl), работающий на базе [MetricFlow](/docs/build/about-metricflow), упрощает настройку ключевых бизнес-метрик. Он централизует определения, избегает дублирования кода и обеспечивает легкий доступ к метрикам в последующих инструментах. MetricFlow помогает легче управлять метриками компании, позволяя вам определять метрики в вашем проекте dbt и запрашивать их в dbt Cloud с помощью [команд MetricFlow](/docs/build/metricflow-commands).
 
-Этот гид по быстрому старту предназначен для пользователей dbt Cloud, использующих Snowflake в качестве своей платформы данных. Он сосредоточен на создании и определении метрик, настройке семантического слоя dbt в проекте dbt Cloud и запросе метрик в Google Sheets.
-
-**Для пользователей на других платформах данных**
+[<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl), работающий на базе [MetricFlow](/docs/build/about-metricflow), упрощает настройку ключевых бизнес-метрик. Он централизует определения, устраняет дублирование кода и обеспечивает удобный доступ к метрикам в downstream-инструментах. MetricFlow упрощает управление метриками компании, позволяя определять метрики в вашем проекте dbt и выполнять к ним запросы в <Constant name="cloud" /> с помощью [команд MetricFlow](/docs/build/metricflow-commands).
 
 Если вы используете платформу данных, отличную от Snowflake, это руководство также применимо к вам. Вы можете адаптировать настройку для вашей конкретной платформы, следуя инструкциям по настройке учетной записи и загрузке данных, изложенным в следующих вкладках для каждой соответствующей платформы.
 
 Остальная часть этого руководства применима ко всем поддерживаемым платформам, обеспечивая полное использование семантического слоя dbt.
 
-## Предварительные требования
+Это краткое руководство предназначено для пользователей <Constant name="cloud" />, которые используют Snowflake в качестве своей платформы данных. Оно сосредоточено на создании и определении метрик, настройке <Constant name="semantic_layer" /> в проекте <Constant name="cloud" />, а также на выполнении запросов к метрикам в Google Sheets.
 
-- Вам нужен аккаунт [dbt Cloud](https://www.getdbt.com/signup/) Trial, Team или Enterprise для всех развертываний. Свяжитесь с вашим представителем для настройки Single-tenant; в противном случае создайте аккаунт, используя это руководство.
-- Иметь правильную [лицензию dbt Cloud](/docs/cloud/manage-access/seats-and-users) и [разрешения](/docs/cloud/manage-access/enterprise-permissions) в зависимости от вашего плана:
-  <DetailsToggle alt_header="Подробнее о лицензии и разрешениях">  
+Если вы используете другую платформу данных, вы также можете следовать этому руководству — потребуется лишь изменить шаги настройки под конкретную платформу. Подробнее см. раздел [users on different platforms](#for-users-on-different-data-platforms).
+
+### Prerequisites
+
+- Вам потребуется учетная запись [<Constant name="cloud" />](https://www.getdbt.com/signup/) уровня Trial, Starter или Enterprise для всех развертываний.  
+- У вас должна быть корректная [лицензия <Constant name="cloud" />](/docs/cloud/manage-access/seats-and-users) и соответствующие [права доступа](/docs/cloud/manage-access/enterprise-permissions) в зависимости от вашего плана:
+  <DetailsToggle alt_header="More info on license and permissions">  
   
-  - Enterprise &mdash; Лицензия разработчика с разрешениями администратора аккаунта. Или "Владелец" с лицензией разработчика, назначенный создателем проекта, администратором базы данных или администратором.
-  - Team &mdash; Доступ "Владелец" с лицензией разработчика.
-  - Trial &mdash; Автоматический доступ "Владелец" в рамках пробной версии плана Team.
+  - Enterprise-tier &mdash; лицензия Developer с правами Account Admin. Либо роль «Owner» с лицензией Developer и назначенными правами Project Creator, Database Admin или Admin.
+  - Starter &mdash; доступ «Owner» с лицензией Developer.
+  - Trial &mdash; автоматический доступ «Owner» в рамках пробного плана Starter.
   
   </DetailsToggle>
 
-- Создайте [пробный аккаунт Snowflake](https://signup.snowflake.com/):
-  - Выберите издание Enterprise Snowflake с доступом ACCOUNTADMIN. Учитывайте организационные вопросы при выборе облачного провайдера, обратитесь к [Введению в облачные платформы](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms) Snowflake.
-  - Выберите облачного провайдера и регион. Все облачные провайдеры и регионы будут работать, поэтому выберите тот, который вам больше нравится.
-- Базовое понимание SQL и dbt. Например, вы уже использовали dbt или прошли курс [Основы dbt](https://learn.getdbt.com/courses/dbt-fundamentals).
+- Создайте [пробную учетную запись Snowflake](https://signup.snowflake.com/):
+  - Выберите редакцию Snowflake Enterprise с доступом ACCOUNTADMIN. При выборе облачного провайдера учитывайте требования вашей организации и при необходимости ознакомьтесь с документацией Snowflake [Introduction to Cloud Platforms](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms).
+  - Выберите облачного провайдера и регион. Подойдут любые провайдеры и регионы, поэтому выбирайте тот, который вам удобен.
+- Пройдите руководство [Quickstart for <Constant name="cloud" /> and Snowflake](snowflake-qs.md).  
+- Базовое понимание SQL и dbt. Например, вы уже использовали dbt ранее или прошли курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 
-### Чему вы научитесь
+### For users on different data platforms
 
-Это руководство охватывает следующие темы:
+Если вы используете платформу данных, отличную от Snowflake, это руководство также применимо. Вы можете адаптировать настройку под свою платформу, следуя инструкциям по созданию учетной записи и загрузке данных, приведенным во вкладках ниже для каждой конкретной платформы.
 
-- [Создание нового рабочего листа Snowflake и настройка вашей среды](/guides/sl-snowflake-qs?step=3)
-- [Загрузка образцов данных в ваш аккаунт Snowflake](/guides/sl-snowflake-qs?step=4)
-- [Подключение dbt Cloud к Snowflake](/guides/sl-snowflake-qs?step=5)
-- [Настройка управляемого репозитория dbt Cloud](/guides/sl-snowflake-qs?step=6)
-- [Инициализация проекта dbt Cloud и начало разработки](/guides/sl-snowflake-qs?step=7)
-- [Создание вашего проекта dbt Cloud](/guides/sl-snowflake-qs?step=8)
-- [Создание семантической модели в dbt Cloud](/guides/sl-snowflake-qs?step=9)
-- [Определение метрик в dbt Cloud](/guides/sl-snowflake-qs?step=10)
-- [Добавление второй семантической модели](/guides/sl-snowflake-qs?step=11)
-- [Тестирование и запрос метрик в dbt Cloud](/guides/sl-snowflake-qs?step=12)
-- [Запуск производственного задания в dbt Cloud](/guides/sl-snowflake-qs?step=13)
-- [Настройка семантического слоя dbt в dbt Cloud](/guides/sl-snowflake-qs?step=14)
-- [Подключение и запрос метрик с помощью Google Sheets](/guides/sl-snowflake-qs?step=15)
+Остальная часть руководства универсальна для всех поддерживаемых платформ и позволяет в полной мере использовать <Constant name="semantic_layer" />.
 
-## Создание нового рабочего листа Snowflake и настройка среды
+<Tabs>
+
+<TabItem value="bq" label="BigQuery">
+
+Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
+
+- [Step 2: Create a new GCP project](/guides/bigquery?step=2)
+- [Step 3: Create BigQuery dataset](/guides/bigquery?step=3)
+- [Step 4: Generate BigQuery credentials](/guides/bigquery?step=4)
+- [Step 5: Connect <Constant name="cloud" /> to BigQuery](/guides/bigquery?step=5)
+
+</TabItem>
+
+<TabItem value="databricks" label="Databricks">
+
+Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
+
+- [Step 2: Create a Databricks workspace](/guides/databricks?step=2)
+- [Step 3: Load data](/guides/databricks?step=3)
+- [Step 4: Connect <Constant name="cloud" /> to Databricks](/guides/databricks?step=4)
+
+</TabItem>
+
+<TabItem value="msfabric" label="Microsoft Fabric">
+
+Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
+
+- [Step 2: Load data into your Microsoft Fabric warehouse](/guides/microsoft-fabric?step=2)
+- [Step 3: Connect <Constant name="cloud" /> to Microsoft Fabric](/guides/microsoft-fabric?step=3)
+
+</TabItem>
+
+<TabItem value="redshift" label="Redshift">
+
+Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
+
+- [Step 2: Create a Redshift cluster](/guides/redshift?step=2)
+- [Step 3: Load data](/guides/redshift?step=3)
+- [Step 4: Connect <Constant name="cloud" /> to Redshift](/guides/redshift?step=3)
+
+</TabItem>
+
+<TabItem value="starburst" label="Starburst Galaxy">
+
+Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
+
+- [Step 2: Load data to an Amazon S3 bucket](/guides/starburst-galaxy?step=2)
+- [Step 3: Connect Starburst Galaxy to Amazon S3 bucket data](/guides/starburst-galaxy?step=3)
+- [Step 4: Create tables with Starburst Galaxy](/guides/starburst-galaxy?step=4)
+- [Step 5: Connect <Constant name="cloud" /> to Starburst Galaxy](/guides/starburst-galaxy?step=5)
+
+</TabItem>
+
+</Tabs>
+
+## Create new Snowflake worksheet and set up environment
 
 1. Войдите в свой [пробный аккаунт Snowflake](https://signup.snowflake.com).
 2. В пользовательском интерфейсе Snowflake (UI) нажмите **+ Worksheet** в правом верхнем углу.
 3. Выберите **SQL Worksheet**, чтобы создать новый рабочий лист.
 
-### Настройка среды Snowflake
+### Настройка и загрузка данных в Snowflake
 
-Данные, используемые здесь, хранятся в виде CSV-файлов в общедоступном S3-бакете, и следующие шаги помогут вам подготовить ваш аккаунт Snowflake для этих данных и загрузить их.
+import LoadData from '/snippets/_load-data.md';
 
-Создайте новый виртуальный склад, две новые базы данных (одну для необработанных данных, другую для будущей разработки dbt) и две новые схемы (одну для данных `jaffle_shop`, другую для данных `stripe`).
-
-1. Выполните следующие SQL-команды одну за другой, вводя их в редакторе вашего нового рабочего листа SQL Snowflake, чтобы настроить вашу среду.
-
-2. Нажмите **Run** в правом верхнем углу пользовательского интерфейса для каждой из них:
-
-```sql
--- Создайте виртуальный склад с именем 'transforming'
-create warehouse transforming;
-
--- Создайте две базы данных: одну для необработанных данных и другую для аналитики
-create database raw;
-create database analytics;
-
--- В базе данных 'raw' создайте две схемы: 'jaffle_shop' и 'stripe'
-create schema raw.jaffle_shop;
-create schema raw.stripe;
-```
-
-## Загрузка данных в Snowflake
-
-Теперь, когда ваша среда настроена, вы можете начать загрузку данных в нее. Вы будете работать в базе данных raw, используя схемы `jaffle_shop` и `stripe` для организации ваших таблиц.
-
-1. Создайте таблицу клиентов. Сначала удалите все содержимое (очистите) в редакторе рабочего листа Snowflake. Затем выполните эту SQL-команду, чтобы создать таблицу клиентов в схеме `jaffle_shop`:
-
-  ```sql
-  create table raw.jaffle_shop.customers
-  ( id integer,
-    first_name varchar,
-    last_name varchar
-  );
-  ```
-
-  Вы должны увидеть сообщение «Таблица `CUSTOMERS` успешно создана».
-
-2. Загрузите данные. После создания таблицы удалите все содержимое в редакторе. Выполните эту команду, чтобы загрузить данные из S3-бакета в таблицу клиентов:
-
-  ```sql
-  copy into raw.jaffle_shop.customers (id, first_name, last_name)
-  from 's3://dbt-tutorial-public/jaffle_shop_customers.csv'
-  file_format = (
-      type = 'CSV'
-      field_delimiter = ','
-      skip_header = 1
-      );
-  ```
-
-  Вы должны увидеть подтверждающее сообщение после выполнения команды.
-
-3. Создайте таблицу `orders`. Удалите все содержимое в редакторе. Выполните следующую команду, чтобы создать...
-
-  ```sql
-  create table raw.jaffle_shop.orders
-  ( id integer,
-    user_id integer,
-    order_date date,
-    status varchar,
-    _etl_loaded_at timestamp default current_timestamp
-  );
-  ```
-
-  Вы должны увидеть подтверждающее сообщение после выполнения команды.
-
-4. Загрузите данные. Удалите все содержимое в редакторе, затем выполните эту команду, чтобы загрузить данные в таблицу заказов:
-
-  ```sql
-  copy into raw.jaffle_shop.orders (id, user_id, order_date, status)
-  from 's3://dbt-tutorial-public/jaffle_shop_orders.csv'
-  file_format = (
-      type = 'CSV'
-      field_delimiter = ','
-      skip_header = 1
-      );
-  ```
-
-  Вы должны увидеть подтверждающее сообщение после выполнения команды.
-
-5. Создайте таблицу `payment`. Удалите все содержимое в редакторе. Выполните следующую команду, чтобы создать таблицу платежей:
-
-  ```sql
-  create table raw.stripe.payment
-  ( id integer,
-    orderid integer,
-    paymentmethod varchar,
-    status varchar,
-    amount integer,
-    created date,
-    _batched_at timestamp default current_timestamp
-  );
-  ```
-
-  Вы должны увидеть подтверждающее сообщение после выполнения команды.
-
-6. Загрузите данные. Удалите все содержимое в редакторе. Выполните следующую команду, чтобы загрузить данные в таблицу платежей:
-
-  ```sql
-  copy into raw.stripe.payment (id, orderid, paymentmethod, status, amount, created)
-  from 's3://dbt-tutorial-public/stripe_payments.csv'
-  file_format = (
-      type = 'CSV'
-      field_delimiter = ','
-      skip_header = 1
-      );
-  ```
-
-  Вы должны увидеть подтверждающее сообщение после выполнения команды.
-
-7. Проверьте данные. Убедитесь, что данные загружены, выполнив эти SQL-запросы. Подтвердите, что вы видите вывод для каждого из них, как на следующем изображении подтверждения.
-
-  ```sql
-  select * from raw.jaffle_shop.customers;
-  select * from raw.jaffle_shop.orders;
-  select * from raw.stripe.payment;
-  ```
+<LoadData/>
 
   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-snowflake-confirm.jpg" width="90%" title="Изображение показывает вывод подтверждения Snowflake, когда данные загружены правильно в редакторе." />
 
-## Подключение dbt Cloud к Snowflake
+## Подключение dbt к Snowflake
 
-Существует два способа подключения dbt Cloud к Snowflake. Первый вариант — Partner Connect, который предоставляет упрощенную настройку для создания вашего аккаунта dbt Cloud из вашего нового пробного аккаунта Snowflake. Второй вариант — создать ваш аккаунт dbt Cloud отдельно и самостоятельно настроить подключение к Snowflake (подключение вручную). Если вы хотите быстро начать, dbt Labs рекомендует использовать Partner Connect. Если вы хотите настроить все с самого начала и ознакомиться с процессом настройки dbt Cloud, dbt Labs рекомендует подключение вручную.
+Существует два способа подключить <Constant name="cloud" /> к Snowflake. Первый вариант — Partner Connect, который предоставляет упрощённый процесс настройки и позволяет создать ваш аккаунт <Constant name="cloud" /> прямо из нового пробного аккаунта Snowflake. Второй вариант — создать аккаунт <Constant name="cloud" /> отдельно и самостоятельно настроить подключение к Snowflake (ручное подключение). Если вы хотите начать работу как можно быстрее, dbt Labs рекомендует использовать Partner Connect. Если же вы хотите с самого начала кастомизировать конфигурацию и лучше разобраться в процессе настройки <Constant name="cloud" />, dbt Labs рекомендует выполнять подключение вручную.
 
 ## Настройка управляемого репозитория dbt Cloud
 
-Если вы использовали Partner Connect, вы можете перейти к [инициализации вашего проекта dbt](#initialize-your-dbt-project-and-start-developing), так как Partner Connect предоставляет вам [управляемый репозиторий](/docs/collaborate/git/managed-repository). В противном случае вам нужно будет создать ваше подключение к репозиторию.
+Использование Partner Connect позволяет создать полноценный аккаунт dbt с вашим [подключением к Snowflake](/docs/cloud/connect-data-platform/connect-snowflake), [управляемым репозиторием](/docs/cloud/git/managed-repository), [окружениями](/docs/build/custom-schemas#managing-environments) и учетными данными.
 
 ## Инициализация вашего проекта dbt и начало разработки
 
-Это руководство предполагает, что вы используете [IDE dbt Cloud](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) для разработки вашего проекта dbt, определения метрик и запроса и предварительного просмотра метрик с помощью [команд MetricFlow](/docs/build/metricflow-commands).
+<Lightbox src="/img/snowflake_tutorial/snowflake_partner_connect_box.png" width="60%" title="Окно Snowflake Partner Connect" />
 
 Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud, используя IDE:
 
-1. Нажмите **Начать разработку в IDE dbt Cloud**. Это может занять несколько минут, так как ваш проект впервые запускается, устанавливая соединение с git, клонируя ваш репозиторий и тестируя соединение с хранилищем.
-2. Над деревом файлов слева нажмите **Инициализировать ваш проект**. Это создаст структуру папок с примерами моделей.
-3. Сделайте ваш первый коммит, нажав **Коммит и синхронизация**. Используйте сообщение коммита `initial commit`. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, где вы можете добавить новый код dbt.
-4. Теперь вы можете напрямую запрашивать данные из вашего хранилища и выполнять `dbt run`. Вы можете попробовать это сейчас:
-    - Удалите папку models/examples в **Проводнике файлов**.
-    - Нажмите **+ Создать новый файл**, добавьте этот запрос в новый файл и нажмите **Сохранить как**, чтобы сохранить новый файл:
+<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_partner_connect.png" title="Snowflake Classic UI - Partner Connect" />
+
+2. В всплывающем окне **Connect to dbt** найдите параметр **Optional Grant** и выберите базы данных **RAW** и **ANALYTICS**. Это предоставит новой роли пользователя dbt доступ к каждой из выбранных баз данных. Затем нажмите **Connect**.
+
+<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_connection_box.png" title="Snowflake Classic UI - Connection Box" />
+
+<Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_connection_box.png" title="Snowflake New UI - Connection Box" />
+
+3. Когда появится всплывающее окно, нажмите **Activate**:
+
+<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_activation_window.png" title="Snowflake Classic UI - Actviation Window" />
+
+<Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_activation_window.png" title="Snowflake New UI - Activation Window" />
+
+4. После загрузки новой вкладки вы увидите форму. Если вы уже создали аккаунт <Constant name="cloud" />, вам будет предложено указать имя аккаунта. Если аккаунт еще не создан, вам нужно будет указать имя аккаунта и пароль.
+
+5. После заполнения формы и нажатия **Complete Registration** вы будете автоматически авторизованы в <Constant name="cloud" />.
+
+6. Нажмите на имя вашего аккаунта в левом боковом меню и выберите **Account settings**, затем выберите проект **Partner Connect Trial** и в обзорной таблице выберите **snowflake**. Нажмите **Edit** и обновите поле **Database** на `analytics`, а поле **Warehouse** на `transforming`.
+
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt - Snowflake Project Overview" />
+
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt - Update Database and Warehouse" />
+
+</TabItem>
+<TabItem value="manual-connect" label="Connect manually">
+
+1. Создайте новый проект в <Constant name="cloud" />. Перейдите в **Account settings** (нажав на имя вашего аккаунта в левом боковом меню) и нажмите **+ New Project**.
+2. Введите имя проекта и нажмите **Continue**.
+3. В разделе **Configure your development environment** нажмите на выпадающее меню **Connection** и выберите **Add new connection**. Вы будете перенаправлены на страницу настройки подключения.
+4. В разделе **Type** выберите **Snowflake**.
+
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_setup_snowflake_connection_start.png" title="dbt - Choose Snowflake Connection" />
+
+5. Введите **Settings** для Snowflake:
+
+   * **Account** — Найдите имя вашего аккаунта, используя URL trial-аккаунта Snowflake, и удалив из него `snowflakecomputing.com`. Порядок информации об аккаунте может отличаться в зависимости от версии Snowflake. Например, URL классической консоли Snowflake может выглядеть так: `oq65696.west-us-2.azure.snowflakecomputing.com`. URL AppUI или Snowsight может выглядеть так: `snowflakecomputing.com/west-us-2.azure/oq65696`. В обоих примерах именем аккаунта будет: `oq65696.west-us-2.azure`. Дополнительную информацию см. в документации Snowflake: [Account Identifiers](https://docs.snowflake.com/en/user-guide/admin-account-identifier.html).
+
+     <Snippet path="snowflake-acct-name" />
+
+   * **Role** — Пока оставьте пустым. Позже вы сможете указать роль Snowflake по умолчанию.
+   * **Database** — `analytics`. Это указывает dbt создавать новые модели в базе данных analytics.
+   * **Warehouse** — `transforming`. Это указывает dbt использовать warehouse transforming, созданный ранее.
+
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_account_settings.png" title="dbt - Snowflake Account Settings" />
+
+6. Нажмите **Save**.
+7. Настройте персональные учетные данные для разработки, перейдя в **Your profile** > **Credentials**.
+8. Выберите проект, который использует подключение Snowflake.
+9. Нажмите ссылку **configure your development environment and add a connection**. Вы будете перенаправлены на страницу ввода персональных учетных данных для разработки.
+10. Введите **Development credentials** для Snowflake:
+
+   * **Username** — Имя пользователя, которое вы создали в Snowflake. Это не адрес электронной почты; обычно это имя и фамилия, объединенные в одно слово.
+   * **Password** — Пароль, который вы задали при создании аккаунта Snowflake.
+   * **Schema** — Вы увидите, что имя схемы было создано автоматически. По соглашению это `dbt_<first-initial><last-name>`. Эта схема напрямую связана с вашей средой разработки, и именно в ней будут создаваться модели при запуске dbt в <Constant name="cloud_ide" />.
+   * **Target name** — Оставьте значение по умолчанию.
+   * **Threads** — Оставьте значение 4. Это количество одновременных подключений, которые <Constant name="cloud" /> будет использовать для параллельной сборки моделей.
+
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt - Snowflake Development Credentials" />
+
+11. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему аккаунту Snowflake.
+12. Если проверка прошла успешно, нажмите **Save**, чтобы завершить настройку. Если проверка не удалась, возможно, потребуется проверить настройки Snowflake и учетные данные.
+
+</TabItem>
+</Tabs>
+
+## Настройка dbt‑проекта
+
+В этом разделе вы настроите управляемый репозиторий <Constant name="cloud" /> и инициализируете dbt‑проект, чтобы начать разработку.
+
+### Настройка управляемого репозитория dbt
+Если вы использовали Partner Connect, можете перейти сразу к разделу [инициализация dbt‑проекта](#initialize-your-dbt-project-and-start-developing), так как Partner Connect автоматически предоставляет вам [managed repository](/docs/cloud/git/managed-repository). В противном случае вам потребуется создать подключение к репозиторию самостоятельно.
+
+<Snippet path="tutorial-managed-repo" />
+
+### Инициализация dbt‑проекта
+В этом руководстве предполагается, что для разработки dbt‑проекта, определения метрик, а также выполнения запросов и предварительного просмотра метрик с помощью команд [MetricFlow](/docs/build/metricflow-commands) вы используете [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
+
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" /> с помощью <Constant name="cloud_ide" />:
+
+1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске подготовка проекта может занять несколько минут — в это время настраивается подключение к git, клонируется репозиторий и проверяется соединение с warehouse.
+2. В верхней части дерева файлов слева нажмите **Initialize your project**. Это создаст структуру папок с примерами моделей.
+3. Сделайте первоначальный коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit`. Это создаст первый коммит в управляемом репозитории и позволит открыть ветку для добавления нового dbt‑кода.
+4. Теперь вы можете напрямую выполнять запросы к данным в вашем warehouse и запускать `dbt run`. Вы можете попробовать это прямо сейчас:
+   - Удалите папку models/examples в **File <Constant name="explorer" />**.
+   - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить файл:
+```
       ```sql
       select * from raw.jaffle_shop.customers
       ```
@@ -218,9 +231,10 @@ create schema raw.stripe;
 
 ### Добавление источников
 
-[Источники](/docs/build/sources) в dbt — это необработанные таблицы данных, которые вы будете преобразовывать. Организуя определения источников, вы документируете происхождение ваших данных. Это также делает ваш проект и трансформацию более надежными, структурированными и понятными.
+У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
-У вас есть два варианта работы с файлами в IDE dbt Cloud:
+- **Создать новую ветку (рекомендуется)** &mdash; Создайте новую ветку для редактирования и коммита изменений. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
+- **Редактировать в защищённой основной ветке** &mdash; Если вы предпочитаете редактировать, форматировать или линтить файлы, а также выполнять команды dbt напрямую в основной git-ветке, используйте этот вариант. <Constant name="cloud_ide" /> не позволяет делать коммиты в защищённую ветку, поэтому вам будет предложено закоммитить изменения в новую ветку.
 
 - **Создать новую ветку (рекомендуется)** &mdash; Создайте новую ветку, чтобы редактировать и коммитить ваши изменения. Перейдите в **Управление версиями** на левой боковой панели и нажмите **Создать ветку**.
 - **Редактировать в защищенной основной ветке** &mdash; Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git, используйте этот вариант. IDE dbt Cloud предотвращает коммиты в защищенную ветку, поэтому вам будет предложено коммитить ваши изменения в новую ветку.
@@ -231,7 +245,10 @@ create schema raw.stripe;
 2. Назовите файл `staging/jaffle_shop/src_jaffle_shop.yml`, затем нажмите **Создать**.
 3. Скопируйте следующий текст в файл и нажмите **Сохранить**.
 
-### Добавление моделей стадий
+Похоже, вы начали вставлять содержимое файла, но он не был передан целиком.
+
+Пожалуйста, пришлите **полный текст markdown‑файла**, который нужно перевести (целиком, вместе с frontmatter и всеми секциями).  
+Я переведу только описательный текст, сохраню форматирование Docusaurus, ссылки, примеры кода и все технические элементы без изменений.
 
 [Модели стадий](/best-practices/how-we-structure/2-staging) — это первый шаг преобразования в dbt. Они очищают и подготавливают ваши необработанные данные, делая их готовыми для более сложных преобразований и анализов. Следуйте этим шагам, чтобы добавить ваши модели стадий в ваш проект.
 
@@ -243,7 +260,9 @@ create schema raw.stripe;
 
 ## Создание семантических моделей
 
-[Семантические модели](/docs/build/semantic-models) содержат множество типов объектов (таких как сущности, меры и измерения), которые позволяют MetricFlow строить запросы для определения метрик.
+Похоже, вы начали сообщение с кодового блока, но не прислали само содержимое файла.
+
+Пожалуйста, отправьте полный markdown‑файл (или фрагмент документации dbt), который нужно перевести, и я выполню перевод с учётом всех указанных требований.
 
 - Каждая семантическая модель будет 1:1 с моделью dbt SQL/Python.
 - Каждая семантическая модель будет содержать (в лучшем случае) 1 основную или естественную сущность.
@@ -252,7 +271,8 @@ create schema raw.stripe;
 
 В следующих шагах семантические модели позволяют вам определить, как интерпретировать данные, связанные с заказами. Они включают сущности (например, столбцы ID, служащие ключами для соединения данных), измерения (для группировки или фильтрации данных) и меры (для агрегации данных).
 
-### Сущности
+1. В подкаталоге `jaffle_shop` создайте файл `stg_customers.sql`. Либо вы можете воспользоваться кнопкой **Generate model**, чтобы создать новый файл модели для каждого источника.  
+2. Скопируйте следующий запрос в файл и нажмите **Save**.
 
 [Сущности](/docs/build/semantic-models#entities) — это концепция реального мира в бизнесе, служащая основой вашей семантической модели. Это будут столбцы ID (например, `order_id`) в наших семантических моделях. Они будут служить ключами соединения с другими семантическими моделями.
 
@@ -318,7 +338,241 @@ create schema raw.stripe;
 
 Вот некоторые дополнительные ресурсы, которые помогут вам продолжить ваше путешествие:
 
-- [Часто задаваемые вопросы о семантическом слое dbt](/docs/use-dbt-semantic-layer/sl-faqs)
-- [Доступные интеграции](/docs/cloud-integrations/avail-sl-integrations)
-- Демонстрация [как определять и запрашивать метрики с MetricFlow](https://www.loom.com/share/60a76f6034b0441788d73638808e92ac?sid=861a94ac-25eb-4fd8-a310-58e159950f5a)
-- [Присоединяйтесь к нашим живым демонстрациям](https://www.getdbt.com/resources/webinars/dbt-cloud-demos-with-experts)
+```sql
+select
+    orders.order_id,
+    orders.customer_id,
+    orders.order_date,
+    coalesce(order_payments.amount, 0) as amount
+
+
+from orders
+left join order_payments using (order_id)
+)
+
+select * from final
+```
+
+</File>
+
+3. В директории `models/marts` создайте файл `dim_customers.sql`.
+4. Скопируйте следующий запрос в файл и нажмите **Save**.
+
+<File name='models/marts/dim_customers.sql'>
+
+```sql
+with customers as (
+   select * from {{ ref('stg_customers')}}
+),
+orders as (
+   select * from {{ ref('fct_orders')}}
+),
+customer_orders as (
+   select
+       customer_id,
+       min(order_date) as first_order_date,
+       max(order_date) as most_recent_order_date,
+       count(order_id) as number_of_orders,
+       sum(amount) as lifetime_value
+   from orders
+   group by 1
+),
+final as (
+   select
+       customers.customer_id,
+       customers.first_name,
+       customers.last_name,
+       customer_orders.first_order_date,
+       customer_orders.most_recent_order_date,
+       coalesce(customer_orders.number_of_orders, 0) as number_of_orders,
+       customer_orders.lifetime_value
+   from customers
+   left join customer_orders using (customer_id)
+)
+select * from final
+```
+
+</File>
+
+5. Создайте модель временной оси (time spine) для MetricFlow, следуя [руководству по MetricFlow time spine](/guides/mf-time-spine?step=1). В этом руководстве подробно описано, как создать как SQL‑модель, так и YAML‑конфигурацию, необходимые для расчётов метрик во времени.
+
+6. Введите `dbt run` в командной строке внизу экрана. Вы должны увидеть сообщение об успешном выполнении, а также в деталях запуска — что dbt успешно собрал ваши модели.
+
+## Создание семантических моделей
+
+В этом разделе вы познакомитесь с [семантическими моделями](/guides/sl-snowflake-qs?step=6#about-semantic-models), [их компонентами](/guides/sl-snowflake-qs?step=6#semantic-model-components) и [настройкой временной оси](/guides/sl-snowflake-qs?step=6#configure-a-time-spine).
+
+### О семантических моделях
+
+[Семантические модели](/docs/build/semantic-models) содержат множество типов объектов (таких как сущности, меры и измерения), которые позволяют MetricFlow конструировать запросы для определений метрик.
+
+- Каждая семантическая модель соответствует одному dbt SQL/Python‑моделю (соотношение 1:1).
+- Каждая семантическая модель содержит (максимум) одну первичную или естественную сущность.
+- Каждая семантическая модель может содержать ноль, одну или несколько внешних либо уникальных сущностей, используемых для соединения с другими сущностями.
+- Семантическая модель также может включать измерения, меры и метрики. Именно эти элементы используются и запрашиваются downstream‑BI‑инструментами.
+
+В следующих шагах семантические модели позволяют определить, как интерпретировать данные, связанные с заказами. Это включает сущности (например, ID‑колонки, используемые как ключи для соединений), измерения (для группировки или фильтрации данных) и меры (для агрегаций).
+
+1. В поддиректории `metrics` создайте новый файл `fct_orders.yml`.
+
+:::tip
+Убедитесь, что все семантические модели и метрики сохранены в директории, указанной в [`model-paths`](/reference/project-configs/model-paths) (или в её поддиректории, например `models/semantic_models/`). Если сохранить их вне этого пути, файл `semantic_manifest.json` будет пустым, и ваши семантические модели или метрики не будут распознаны.
+:::
+
+2. Добавьте следующий код в только что созданный файл:
+
+<File name='models/metrics/fct_orders.yml'>
+
+```yaml
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: order_date
+    description: |
+      Order fact table. This table’s grain is one row per order.
+    model: ref('fct_orders')
+```
+
+</File>
+
+### Компоненты семантической модели
+
+Следующие разделы подробнее объясняют [измерения](/docs/build/dimensions), [сущности](/docs/build/entities) и [меры](/docs/build/measures), показывая, какую роль каждая из них играет в семантических моделях.
+
+- [Сущности](#entities) выступают в роли уникальных идентификаторов (например, ID‑колонки), которые связывают данные из разных таблиц.
+- [Измерения](#dimensions) используются для категоризации и фильтрации данных, упрощая их анализ.
+- [Меры](#measures) выполняют вычисления и агрегирования, предоставляя полезные аналитические показатели.
+
+### Сущности
+
+[Сущности](/docs/build/semantic-models#entities) представляют реальные бизнес‑понятия и служат основой семантической модели. Обычно это ID‑колонки (например, `order_id`) в семантических моделях. Они используются как ключи для соединения с другими семантическими моделями.
+
+Добавьте сущности в файл семантической модели `fct_orders.yml`:
+
+<File name='models/metrics/fct_orders.yml'>
+
+```yaml
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: order_date
+    description: |
+      Order fact table. This table’s grain is one row per order.
+    model: ref('fct_orders')
+    # Newly added
+    entities: 
+      - name: order_id
+        type: primary
+      - name: customer
+        expr: customer_id
+        type: foreign
+```
+
+</File>
+
+### Измерения
+
+[Измерения](/docs/build/semantic-models#entities) — это способ группировать или фильтровать информацию по категориям или по времени.
+
+Добавьте измерения в файл семантической модели `fct_orders.yml`:
+
+<File name='models/metrics/fct_orders.yml'>
+
+```yaml
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: order_date
+    description: |
+      Order fact table. This table’s grain is one row per order.
+    model: ref('fct_orders')
+    entities:
+      - name: order_id
+        type: primary
+      - name: customer
+        expr: customer_id
+        type: foreign
+    # Newly added
+    dimensions:   
+      - name: order_date
+        type: time
+        type_params:
+          time_granularity: day
+```
+
+</File>
+
+### Меры
+
+[Меры](/docs/build/semantic-models#measures) — это агрегирования, выполняемые над колонками модели. Часто они используются напрямую как итоговые метрики, но также могут служить строительными блоками для более сложных метрик.
+
+Добавьте меры в файл семантической модели `fct_orders.yml`:
+
+<File name='models/metrics/fct_orders.yml'>
+
+```yaml
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: order_date
+    description: |
+      Order fact table. This table’s grain is one row per order.
+    model: ref('fct_orders')
+    entities:
+      - name: order_id
+        type: primary
+      - name: customer
+        expr: customer_id
+        type: foreign
+    dimensions:
+      - name: order_date
+        type: time
+        type_params:
+          time_granularity: day
+    # Newly added      
+    measures:   
+      - name: order_total
+        description: The total amount for each order including taxes.
+        agg: sum
+        expr: amount
+      - name: order_count
+        expr: 1
+        agg: sum
+      - name: customers_with_orders
+        description: Distinct count of customers placing orders
+        agg: count_distinct
+        expr: customer_id
+      - name: order_value_p99 ## The 99th percentile order value
+        expr: amount
+        agg: percentile
+        agg_params:
+          percentile: 0.99
+          use_discrete_percentile: True
+          use_approximate_percentile: False
+```
+
+</File>
+
+### Настройка временной оси
+
+Чтобы обеспечить корректные агрегирования по времени, необходимо настроить [time spine](/docs/build/metricflow-time-spine). Временная ось позволяет точно рассчитывать метрики для разных временных гранулярностей.
+
+Следуйте [руководству по MetricFlow time spine](/guides/mf-time-spine?step=1), где приведены актуальные пошаговые инструкции по созданию и настройке модели временной оси. В нём используются текущие лучшие практики и избегаются устаревшие конфигурации.
+
+## Определение метрик и добавление второй семантической модели
+
+В этом разделе вы [определите метрики](#define-metrics) и [добавите вторую семантическую модель](#add-second-semantic-model-to-your-project) в ваш проект.
+
+### Определение метрик
+
+[Метрики](/docs/build/metrics-overview) — это язык, на котором говорят бизнес‑пользователи и с помощью которого они измеряют эффективность бизнеса. Метрика представляет собой агрегирование над колонкой в хранилище данных, дополненное измерениями.
+
+Существует несколько типов метрик, которые можно настроить:
+
+- [Conversion metrics](/docs/build/conversion) — отслеживают базовое событие и последующее событие‑конверсию для сущности в заданный период времени.
+- [Cumulative metrics](/docs/build/cumulative) — агрегируют меру в рамках заданного окна. Если окно не указано, агрегирование выполняется по всему доступному периоду. Обратите внимание: перед добавлением кумулятивных метрик необходимо создать модель временной оси.
+- [Derived metrics](/docs/build/metrics-overview#derived-metrics) — позволяют выполнять вычисления поверх других метрик.
+- [Simple metrics](/docs/build/metrics-overview#simple-metrics) — напрямую ссылаются на одну меру без использования дополнительных мер.
+- [Ratio metrics](/docs/build/metrics-overview#ratio-metrics) — включают метрику‑числитель и метрику‑знаменатель. Ограничения могут применяться как к обеим метрикам, так и отдельно к числителю или знаменателю.
+
+После создания семантических моделей можно начать использовать созданные меры для определения метрик:

@@ -6,7 +6,7 @@ Defer — это мощная функция, которая позволяет 
 
 <Lightbox src src="/img/docs/reference/defer-diagram.png" width="50%" title="Используйте 'defer', чтобы модифицировать модели в конце конвейера, указывая на производственные модели, вместо того чтобы запускать все вышестоящие." />
 
-Defer требует, чтобы манифест из предыдущего вызова dbt был передан в флаг `--state` или переменную окружения. Вместе с методом выбора `state:`, эти функции позволяют реализовать "Slim CI". Подробнее о [state](/reference/node-selection/syntax#about-node-selection).
+Для использования defer требуется передать манифест из предыдущего запуска dbt в параметр `--state` или через переменную окружения. Вместе с методом выбора `state:` эти возможности позволяют реализовать подход «Slim CI». Подробнее читайте в разделе [state](/reference/node-selection/state-selection).
 
 Альтернативной командой, которая выполняет аналогичную функциональность для других случаев использования, является `dbt clone` — см. документацию по [clone](/reference/commands/clone#when-to-use-dbt-clone-instead-of-deferral) для получения дополнительной информации.
 
@@ -19,16 +19,7 @@ dbt run --select [...] --defer --state path/to/artifacts
 dbt test --select [...] --defer --state path/to/artifacts
 ```
 
-<VersionBlock lastVersion="0.20">
-
-```shell
-dbt run --models [...] --defer --state path/to/artifacts
-dbt test --models [...] --defer --state path/to/artifacts
-```
-
-</VersionBlock>
-
-По умолчанию dbt использует пространство имен [`target`](/reference/dbt-jinja-functions/target) для разрешения вызовов `ref`.
+По умолчанию dbt использует пространство имён [`target`](/reference/dbt-jinja-functions/target) для разрешения вызовов `ref`.
 
 Когда `--defer` включен, dbt разрешает вызовы ref, используя манифест состояния, но только если:
 
@@ -41,7 +32,7 @@ dbt test --models [...] --defer --state path/to/artifacts
 - если вы применяете ограничения, специфичные для среды, в разработке, но не в производстве, так как вы можете выбрать больше данных, чем ожидали
 - при выполнении тестов, которые зависят от нескольких родителей (например, `relationships`), так как вы тестируете "между" средами
 
-Откладывание требует установки как `--defer`, так и `--state`, либо путем явной передачи флагов, либо путем установки переменных окружения (`DBT_DEFER` и `DBT_STATE`). Если вы используете dbt Cloud, прочитайте о [настройке CI задач](/docs/deploy/continuous-integration).
+Для использования deferral необходимо задать **оба** параметра: `--defer` и `--state`. Это можно сделать либо явно, передав флаги в командной строке, либо через переменные окружения (`DBT_DEFER` и `DBT_STATE`). Если вы используете <Constant name="cloud" />, ознакомьтесь с разделом о том, [как настроить CI‑задачи](/docs/deploy/continuous-integration).
 
 #### Предпочтение состояния
 
@@ -143,16 +134,16 @@ create or replace view dev_me.model_b as (
 <File name='models/resources.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: model_b
     columns:
       - name: id
-        tests:
+        data_tests:
           - relationships:
-              to: ref('model_a')
-              field: id
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('model_a')
+                field: id
 ```
 
 (Немного глупо, так как все данные в `model_b` должны были поступить из `model_a`, но давайте предположим это.)
@@ -219,7 +210,10 @@ dbt проверит, существует ли `dev_alice.model_a`. Если о
 </TabItem>
 </Tabs>
 
-## Связанные документы
+## Связанная документация
+
+- [Использование defer в <Constant name="cloud" />](/docs/cloud/about-cloud-develop-defer)
+- [on_configuration_change](/reference/resource-configs/on_configuration_change)
 
 - [Использование defer в dbt Cloud](/docs/cloud/about-cloud-develop-defer)
 - [on_configuration_change](/reference/resource-configs/on_configuration_change)

@@ -14,17 +14,13 @@ sidebar: "Cache"
 
 Например, чтобы быстро скомпилировать модель, которая не требует метаданных базы данных или интроспективных запросов:
 ```text
-
-dbt --no-populate-cache compile --select my_model_name
-
+dbt compile --no-populate-cache --select my_model_name
 ```
 
 Или, чтобы улучшить скорость и производительность при разработке моделей Salesforce, которые материализуются в своей собственной выделенной схеме, вы можете выбрать эти модели и передать флаг `cache-selected-only`:
 
 ```text
-
-dbt --cache-selected-only run --select salesforce
-
+dbt run --cache-selected-only --select salesforce
 ```
 
 ### Логирование событий реляционного кэша

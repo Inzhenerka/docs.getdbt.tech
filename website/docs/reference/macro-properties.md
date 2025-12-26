@@ -12,17 +12,17 @@ import PropsCallout from '/snippets/_config-prop-callout.md';
 <File name='macros/<filename>.yml'>
 
 ```yml
-version: 2
 
 macros:
   - name: <macro name>
     [description](/reference/resource-properties/description): <markdown_string>
-    [docs](/reference/resource-configs/docs):
-      show: true | false
-    [meta](/reference/resource-configs/meta): {<dictionary>}
-    arguments:
+    config:
+      [docs](/reference/resource-configs/docs):
+        show: true | false
+      [meta](/reference/resource-configs/meta): {<dictionary>}
+    [arguments](/reference/resource-properties/arguments):
       - name: <arg name>
-        [type](/reference/resource-properties/argument-type): <string>
+        [type](/reference/resource-properties/arguments#type): <string>
         [description](/reference/resource-properties/description): <markdown_string>
       - ... # объявление свойств дополнительных аргументов
 

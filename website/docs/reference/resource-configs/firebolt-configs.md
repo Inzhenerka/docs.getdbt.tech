@@ -3,13 +3,14 @@ title: "Конфигурации Firebolt"
 id: "firebolt-configs"
 ---
 
-## Установка `quote_columns`
 
-Чтобы избежать предупреждения, убедитесь, что вы явно задали значение для `quote_columns` в вашем `dbt_project.yml`. Подробнее см. в [документации о quote_columns](https://docs.getdbt.com/reference/resource-configs/quote_columns).
+## Настройка `quote_columns`
+
+Чтобы избежать предупреждения, обязательно явно укажите значение для `quote_columns` в файле `dbt_project.yml`. Подробнее см. в [документации по quote_columns](/reference/resource-configs/quote_columns).
 
 ```yaml
 seeds:
-  +quote_columns: false  #или `true`, если у вас есть заголовки столбцов csv с пробелами
+  +quote_columns: false  #or `true` if you have CSV column headers with spaces
 ```
 
 ## Конфигурация модели для таблиц фактов
@@ -198,7 +199,7 @@ models:
 
 `dbt-firebolt` поддерживает [функцию внешних таблиц](https://docs.getdbt.com/reference/resource-properties/external) dbt, которая позволяет dbt управлять процессом загрузки таблиц из S3 в Firebolt. Это необязательная функция, но она может быть очень удобной в зависимости от вашего случая использования.
 
-Более подробную информацию о использовании внешних таблиц, включая правильную настройку IAM, можно найти в [документации Firebolt](https://docs.firebolt.io/godocs/Guides/loading-data/working-with-external-tables.html).
+`dbt-firebolt` поддерживает функцию dbt [external tables feature](/reference/resource-properties/external), которая позволяет dbt управлять процессом загрузки данных из S3 в Firebolt. Эта функция является необязательной, но в зависимости от вашего сценария использования может быть весьма удобной.
 
 #### Установка пакета внешних таблиц
 

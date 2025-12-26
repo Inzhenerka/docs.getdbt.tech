@@ -6,7 +6,7 @@ sidebar_label: "Сущности"
 tags: [Metrics, Semantic Layer]
 ---
 
-Сущности — это концепции реального мира в бизнесе, такие как клиенты, транзакции и рекламные кампании. Мы часто фокусируем наши анализы вокруг конкретных сущностей, таких как отток клиентов или моделирование ежегодного повторяющегося дохода. Мы представляем сущности в наших семантических моделях, используя столбцы id, которые служат ключами для соединения с другими семантическими моделями в вашем семантическом графе.
+Сущности — это концепции реального мира в бизнесе, такие как клиенты, транзакции и рекламные кампании. Мы часто фокусируем наши аналитические задачи на конкретных сущностях, например на оттоке клиентов или моделировании годовой регулярной выручки. В моделях Semantic Layer эти сущности служат ключами для соединения (join key) между семантическими моделями.
 
 В семантическом графе обязательными параметрами для сущности являются `name` и `type`. `name` относится либо к названию ключевого столбца из исходной таблицы данных, либо может служить псевдонимом с именем столбца, указанным в параметре `expr`. `name` вашей сущности должно быть уникальным для семантической модели и не может совпадать с существующими `measure` или `dimension` в этой же модели.
 
@@ -95,17 +95,27 @@ customer_id (foreign key)
 
 Ниже приведена полная спецификация для сущностей:
 
+<VersionBlock firstVersion="1.9">
+
 ```yaml
-entities:
-  - name: transaction     ## Обязательно
-    type: Primary or natural or foreign or unique ## Обязательно
-    description: Описание поля или роли, которую сущность выполняет в этой таблице ## Необязательно
-    expr: Поле, обозначающее эту сущность (transaction_id).  ## Необязательно
-          По умолчанию совпадает с name, если не указано.
+semantic_models:
+  - name: semantic_model_name
+   ..rest of the semantic model config
+    entities:
+      - name: entity_name  ## Обязательно
+        type: Primary, natural, foreign, or unique ## Обязательно
+        description: Описание поля или роли, которую сущность выполняет в этой таблице  ## Необязательно
+        expr: Поле, которое обозначает эту сущность (transaction_id).  ## Необязательно
+              По умолчанию используется значение name, если не указано.  
+        [config](/reference/resource-properties/config): Укажите конфигурации для сущности.  ## Необязательно
+          [meta](/reference/resource-configs/meta): {<dictionary>} Задайте метаданные для ресурса и организуйте ресурсы. Принимает обычный текст, пробелы и кавычки.  ## Необязательно
 ```
+</VersionBlock>
 
 Вот пример того, как определить сущности в семантической модели:
-  
+
+<VersionBlock firstVersion="1.9">
+
 ```yaml
 entities:
   - name: transaction
@@ -117,16 +127,123 @@ entities:
   - name: user
     type: foreign
     expr: substring(id_order from 2)
+    entities:
+  - name: transaction
+    type: 
+    description: A description of the field or role the entity takes in this table ## Optional
+    expr: The field that denotes that entity (transaction_id).  
+          Defaults to name if unspecified.
+    [config](/reference/resource-properties/config):
+      [meta](/reference/resource-configs/meta):
+        data_owner: "Finance team"
 ```
+</VersionBlock>
 
 ## Комбинирование столбцов с ключом
 
-Если в таблице нет ключа (например, первичного ключа), используйте _суррогатное сочетание_, чтобы сформировать ключ, который поможет вам идентифицировать запись, комбинируя два столбца. Это применимо к любому [типу сущности](/docs/build/entities#entity-types). Например, вы можете объединить `date_key` и `brand_code` из таблицы `raw_brand_target_weekly`, чтобы сформировать _суррогатный ключ_. В следующем примере создается суррогатный ключ путем объединения `date_key` и `brand_code` с использованием вертикальной черты (`|`) в качестве разделителя.
+Если у таблицы нет какого-либо ключа (например, первичного ключа), используйте **_суррогатную комбинацию_**, чтобы сформировать ключ, который позволит идентифицировать запись путём объединения двух колонок. Это применимо к любому [типу сущности](/docs/build/entities#entity-types).
+
+Например, вы можете объединить `date_key` и `brand_code` из таблицы `raw_brand_target_weekly`, чтобы сформировать _суррогатный ключ_. В следующем примере суррогатный ключ создаётся путём объединения `date_key` и `brand_code` с использованием вертикальной черты (`|`) в качестве разделителя.
 
 ```yaml
 
 entities:
-  - name: brand_target_key # Имя или идентификатор сущности.
-    type: foreign # Это может быть любой тип ключа сущности. 
-    expr: date_key || '|' || brand_code # Определяет выражение для связывания полей для формирования суррогатного ключа.
+  - name: brand_target_key # Entity name or identified.
+    type: foreign # This can be any entity type key. 
+    expr: date_key || '|' || brand_code # Defines the expression for linking fields to form the surrogate key.
 ```
+
+## Примеры
+
+Как уже упоминалось, сущности (entities) используются как ключи для соединений, опираясь на уникальное имя сущности. Благодаря этому мы можем соединять один `unique`‑ключ с несколькими `foreign`‑ключами.
+
+Рассмотрим таблицу `date_categories` со следующими колонками:
+
+```sql
+date_id (primary key)
+date_day (unique key)
+fiscal_year_name
+```
+
+И таблицу `orders` со следующими колонками:
+
+```sql
+order_id (primary key)
+ordered_at
+delivered_at
+order_total
+```
+
+Как можно определить YAML для Semantic Layer так, чтобы иметь возможность запрашивать `order_total` по `ordered_at` `fiscal_year_name` и по `delivered_at` `fiscal_year_name`?
+
+Сначала необходимо определить две сущности типа `unique` в модели `date_categories`, указав выражение `date_day`:
+
+```yaml
+semantic_models:
+- name: date_categories
+  description: A date dimension table providing fiscal time attributes for analysis.
+  model: ref('date_categories')
+  entities:
+  - name: date_id
+    type: primary
+
+  - name: ordered_at_entity
+    type: unique
+    expr: date_day
+
+  - name: delivered_at_entity
+    type: unique
+    expr: date_day
+
+  dimensions:
+  - name: date_day
+    type: time
+    type_params:
+      time_granularity: day
+
+  - name: fiscal_year_name
+    description: Formatted fiscal year string (for example, 'FY2025')
+    type: categorical
+```
+
+Затем нужно добавить эти же сущности в модель `orders` как ключи типа `foreign`, указав выражения `ordered_at` и `delivered_at` соответственно:
+
+```yaml
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: ordered_at
+    description: |
+      Order fact table. This table is at the order grain with one row per order.
+    model: ref('orders')
+    entities:
+      - name: order_id
+        type: primary
+
+      - name: ordered_at_entity
+        type: foreign
+        expr: ordered_at
+
+      - name: delivered_at_entity
+        type: foreign
+        expr: delivered_at
+
+    dimensions:
+      - name: ordered_at
+        expr: ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+
+    measures:
+      - name: order_total
+        description: Total amount for each order including taxes.
+        agg: sum
+        create_metric: True
+```
+
+При такой конфигурации семантические модели смогут выполнять соединение по условию `ordered_at = date_day` через сущность `ordered_at_entity`, а также по условию `delivered_at = date_day` через сущность `delivered_at_entity`.  
+Чтобы проверить результат, можно выполнить одну из следующих команд:
+
+- `dbt sl query --metrics order_total --group-by ordered_at_entity__fiscal_year_name`
+- `dbt sl query --metrics order_total --group-by delivered_at_entity__fiscal_year_name`

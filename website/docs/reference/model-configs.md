@@ -30,6 +30,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 <File name='dbt_project.yml'>
 
+<VersionBlock lastVersion="1.9">
+
 ```yaml
 models:
   [<resource-path>](/reference/resource-configs/resource-path):
@@ -40,16 +42,26 @@ models:
 
 ```
 
+```yaml
+models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
+    [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
+    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+    [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness): <dict>
+```
 </File>
 
 </TabItem>
 
 <TabItem value="property-yaml">
 
+<VersionBlock lastVersion="1.9">
+
 <File name='models/properties.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: [<model-name>]
@@ -60,14 +72,38 @@ models:
       [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
 
 ```
+</File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.10">
+
+Note, most model configurations are defined under `config`, while `build_after` is set under `freshness`.
+
+<File name='models/properties.yml'>
+
+```yaml
+
+models:
+  - name: [<model-name>]
+    config:
+      [materialized](/reference/resource-configs/materialized): <materialization_name>
+      [sql_header](/reference/resource-configs/sql_header): <string>
+      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+      [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+      [freshness](/reference/resource-configs/freshness):
+        # build_after is nested under freshness. Available on dbt platform Enterprise tiers only.
+        build_after: <dict>
+```
 
 </File>
-
+</VersionBlock>
 </TabItem>
 
 <TabItem value="config">
 
 <File name='models/<model_name>.sql'>
+
+<VersionBlock lastVersion="1.9">
 
 ```sql
 
@@ -79,6 +115,23 @@ models:
 ) }}
 
 ```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.10">
+
+```sql
+
+{{ config(
+    [materialized](/reference/resource-configs/materialized)="<materialization_name>",
+    [sql_header](/reference/resource-configs/sql_header)="<string>"
+    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views for supported adapters
+    [unique_key](/reference/resource-configs/unique_key)='column_name_or_expression'
+    [freshness](/reference/resource-configs/freshness)=<dict>
+) }}
+```
+
+</VersionBlock>
 
 </File>
 
@@ -103,27 +156,6 @@ models:
 <TabItem value="project-yaml">
 
 <File name='dbt_project.yml'>
-
-<VersionBlock lastVersion="1.8">
-
-```yaml
-models:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
-    [+](/reference/resource-configs/plus-prefix)[tags](/reference/resource-configs/tags): <string> | [<string>]
-    [+](/reference/resource-configs/plus-prefix)[pre-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-    [+](/reference/resource-configs/plus-prefix)[post-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-    [+](/reference/resource-configs/plus-prefix)[database](/reference/resource-configs/database): <string>
-    [+](/reference/resource-configs/plus-prefix)[schema](/reference/resource-properties/schema): <string>
-    [+](/reference/resource-configs/plus-prefix)[alias](/reference/resource-configs/alias): <string>
-    [+](/reference/resource-configs/plus-prefix)[persist_docs](/reference/resource-configs/persist_docs): <dict>
-    [+](/reference/resource-configs/plus-prefix)[full_refresh](/reference/resource-configs/full_refresh): <boolean>
-    [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta): {<dictionary>}
-    [+](/reference/resource-configs/plus-prefix)[grants](/reference/resource-configs/grants): {<dictionary>}
-    [+](/reference/resource-configs/plus-prefix)[contract](/reference/resource-configs/contract): {<dictionary>}
-
-```
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
@@ -154,33 +186,9 @@ models:
 
 <File name='models/properties.yml'>
 
-<VersionBlock lastVersion="1.8">
-
-```yaml
-version: 2
-
-models:
-  - name: [<model-name>]
-    config:
-      [enabled](/reference/resource-configs/enabled): true | false
-      [tags](/reference/resource-configs/tags): <string> | [<string>]
-      [pre_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-      [post_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-      [database](/reference/resource-configs/database): <string>
-      [schema](/reference/resource-properties/schema): <string>
-      [alias](/reference/resource-configs/alias): <string>
-      [persist_docs](/reference/resource-configs/persist_docs): <dict>
-      [full_refresh](/reference/resource-configs/full_refresh): <boolean>
-      [meta](/reference/resource-configs/meta): {<dictionary>}
-      [grants](/reference/resource-configs/grants): {<dictionary>}
-      [contract](/reference/resource-configs/contract): {<dictionary>}
-```
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 ```yaml
-version: 2
 
 models:
   - name: [<model-name>]
@@ -209,26 +217,6 @@ models:
 
 <File name='models/<model_name>.sql'>
 
-<VersionBlock lastVersion="1.8">
-
-```sql
-
-{{ config(
-    [enabled](/reference/resource-configs/enabled)=true | false,
-    [tags](/reference/resource-configs/tags)="<string>" | ["<string>"],
-    [pre_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"],
-    [post_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"],
-    [database](/reference/resource-configs/database)="<string>",
-    [schema](/reference/resource-properties/schema)="<string>",
-    [alias](/reference/resource-configs/alias)="<string>",
-    [persist_docs](/reference/resource-configs/persist_docs)={<dict>},
-    [meta](/reference/resource-configs/meta)={<dict>},
-    [grants](/reference/resource-configs/grants)={<dict>},
-    [contract](/reference/resource-configs/contract)={<dictionary>}
-) }}
-
-```
-</VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
@@ -320,12 +308,12 @@ models:
 {{
   config(
     materialized = "table",
-    sort = 'event_time',
-    dist = 'event_id'
+    tags = ["core", "events"]
   )
 }}
 
-select * from ...
+```sql
+select * from {{ ref('raw_events') }}
 ```
 
 </File>
@@ -333,14 +321,45 @@ select * from ...
 <File name='models/events/base/properties.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: base_events
-    config:
-      materialized: table
-      sort: event_time
-      dist: event_id
+    description: "Standardized event data from raw sources"
+    columns:
+      - name: user_id
+        description: "Unique identifier for a user"
+        data_tests:
+          - not_null
+          - unique
+      - name: event_type
+        description: "Type of event recorded (click, purchase, etc.)"
 ```
 
 </File>
+
+<VersionBlock firstVersion="1.10">
+
+### Настройка свежести источников
+
+Конфигурация `freshness` на уровне модели позволяет перестраивать модели только тогда, когда доступны новые данные в источниках или в апстрим‑моделях. Это полезно для моделей, которые зависят от других моделей, но не требуют обновления при каждом запуске. Подробнее см. в разделе [freshness](/reference/resource-configs/freshness).
+
+Обратите внимание: для каждой конфигурации `freshness` необходимо либо задать значения **и для `count`, и для `period`**, либо указать `freshness: null`. Это требование распространяется на все типы `freshness`: `freshness.warn_after`, `freshness.error_after` и `freshness.build_after`.
+
+Ниже приведён пример файла `my_model.yml`, в котором используется конфигурация `freshness`:
+
+<File name="models/my_model.yml">
+  
+```yml
+models:
+  - name: stg_orders
+    config:
+      freshness:
+        build_after:  # перестраивать эту модель не чаще, чем раз в X единиц времени, при условии наличия новых данных. Доступно только на Enterprise-тарифах dbt Platform.
+          count: <positive_integer>
+          period: minute | hour | day
+          updates_on: any | all # необязательная настройка
+```
+  
+</File>
+
+</VersionBlock>

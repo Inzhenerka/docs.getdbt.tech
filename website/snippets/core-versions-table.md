@@ -1,21 +1,23 @@
 ### Последние выпуски
 
-|                      dbt Core                                 | Первоначальный выпуск |      Уровень поддержки и дата окончания      |
-|:-------------------------------------------------------------:|:---------------------:|:--------------------------------------------:|
-| [**v1.9**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) | 9 дек, 2024  | <b> Активная поддержка &mdash; 8 дек, 2025</b>|
-| [**v1.8**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8) | 9 мая, 2024   | <b>Активная поддержка &mdash; 8 мая, 2025</b>|
-| [**v1.7**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7) | 2 ноя, 2023   | <div align="left">**Клиенты dbt Core и dbt Cloud Developer & Team:** Конец поддержки <br /> **Клиенты dbt Cloud Enterprise:** Критическая поддержка до дальнейшего уведомления <sup>1</sup></div> | 
-| [**v1.6**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.6) | 31 июл, 2023  | Конец поддержки ⚠️ |  
-| [**v1.5**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.5) | 27 апр, 2023  | Конец поддержки ⚠️ |
-| [**v1.4**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.4) | 25 янв, 2023  | Конец поддержки ⚠️ | 
-| [**v1.3**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3) | 12 окт, 2022  | Конец поддержки ⚠️ |
-| [**v1.2**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.2) | 26 июл, 2022  | Конец поддержки ⚠️ | 
-| [**v1.1**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.1) | 28 апр, 2022  | Конец поддержки ⚠️ |
-| [**v1.0**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) | 3 дек, 2021   | Конец поддержки ⚠️ | 
-|  **v0.X** ⛔️                                               | (Разные даты) | Устарело ⛔️  | Устарело ⛔️     | 
+|                      dbt Core                                 | Первый релиз |      Уровень поддержки и дата окончания      |
+|:-------------------------------------------------------------:|:------------:|:--------------------------------------------:|
+| [**v1.11**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.11)| 19 декабря 2025 | <b> Активная поддержка &mdash; до 18 декабря 2026</b> |
+| [**v1.10**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.10)| 16 июня 2025   | <b> Активная поддержка &mdash; до 15 июня 2026</b> |
+| [**v1.9**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) | 9 декабря 2024  | Устаревшая версия ⛔️ |
+| [**v1.8**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8) | 9 мая 2024   | Устаревшая версия ⛔️  |
+| [**v1.7**](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7) | 2 ноября 2023   | Конец жизненного цикла ⚠️ | 
+| [**v1.6**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.6) | 31 июля 2023  | Конец жизненного цикла ⚠️ |  
+| [**v1.5**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5) | 27 апреля 2023  | Конец жизненного цикла ⚠️ |
+| [**v1.4**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.4) | 25 января 2023  | Конец жизненного цикла ⚠️ | 
+| [**v1.3**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3) | 12 октября 2022  | Конец жизненного цикла ⚠️ |
+| [**v1.2**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.2) | 26 июля 2022  | Устаревшая версия ⛔️  | 
+| [**v1.1**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.1) | 28 апреля 2022  | Устаревшая версия ⛔️  |
+| [**v1.0**](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) | 3 декабря 2021   | Устаревшая версия ⛔️ | 
+|  **v0.X** ⛔️                                               | (Разные даты) | Устаревшая версия ⛔️  | Устаревшая версия ⛔️     | 
 
-Вся функциональность dbt Core, начиная с выпуска v1.7, доступна в [выпускных треках dbt Cloud](/docs/dbt-versions/cloud-release-tracks), которые обеспечивают автоматические обновления с частотой, подходящей для вашей команды.
+Вся функциональность dbt Core, начиная с релиза v1.7, доступна в [release tracks](/docs/dbt-versions/cloud-release-tracks) для [<Constant name="cloud" />], которые обеспечивают автоматические обновления с периодичностью, подходящей для вашей команды.
 
-<sup>1</sup> Выпускные треки обязательны для планов Developer и Teams в dbt Cloud. Аккаунты, использующие более старые версии dbt, будут переведены на трек "Latest".
+<sup>1</sup> Release tracks являются обязательными для тарифных планов Developer и Starter в <Constant name="cloud" />. Аккаунты, использующие более старые версии dbt, будут автоматически переведены на release track «Latest».
 
-Для клиентов dbt Cloud Enterprise, dbt v1.7 будет продолжать быть доступным в качестве опции до тех пор, пока dbt Labs не объявит, что треки "Compatible" и "Extended" стали общедоступными, что планируется на март 2025 года. (В настоящее время они доступны всем подходящим аккаунтам в режиме Preview.) В это время dbt Labs настоятельно рекомендует мигрировать любые среды, которые все еще работают на более старых неподдерживаемых версиях, на выпускные треки или dbt v1.7.
+Для клиентов <Constant name="cloud" />: dbt Labs настоятельно рекомендует перенести окружения, использующие старые и неподдерживаемые версии, на [release tracks](/docs/dbt-versions/cloud-release-tracks) или на поддерживаемую версию. В 2025 году dbt Labs удалит самые старые версии dbt Core из доступных в <Constant name="dbt_platform" />, начиная с версий v1.0–v1.2.

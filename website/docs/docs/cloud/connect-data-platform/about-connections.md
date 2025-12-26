@@ -1,49 +1,62 @@
 ---
 title: "О подключениях к платформам данных"
 id: about-connections
-description: "Информация о подключениях к платформам данных"
-sidebar_label: "О подключениях к платформам данных"
-pagination_next: "docs/cloud/connect-data-platform/connect-microsoft-fabric"
+description: "Information about data platform connections"
+sidebar_label: "About data platform connections"
+pagination_next: "docs/cloud/connect-data-platform/connect-apache-spark"
 pagination_prev: null
 ---
-dbt Cloud может подключаться к различным поставщикам платформ данных, включая:
-- [AlloyDB](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb)
-- [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena)
-- [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb)
-- [Apache Spark](/docs/cloud/connect-data-platform/connect-apache-spark)
-- [Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics)
-- [Databricks](/docs/cloud/connect-data-platform/connect-databricks)
-- [Google BigQuery](/docs/cloud/connect-data-platform/connect-bigquery)
-- [Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric)
-- [PostgreSQL](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb)
-- [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake)
-- [Starburst или Trino](/docs/cloud/connect-data-platform/connect-starburst-trino)
-- [Teradata](/docs/cloud/connect-data-platform/connect-teradata) <Lifecycle status="Preview" />
+<Constant name="dbt_platform" /> может подключаться к различным провайдерам платформ данных. Разверните разделы ниже, чтобы узнать, какие платформы данных поддерживаются в <Constant name="core" /> и <Constant name="fusion_engine" />:
 
-Чтобы подключиться к вашей базе данных в dbt Cloud:
+| Connection | Available on Latest   | Available on Fusion<Lifecycle status='private_preview' />|
+|------------|:---------------------:|:---------------------:|
+| [AlloyDB](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) | ✅ | ❌ |
+| [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) | ✅ | ❌ |
+| [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift) | ✅ | ✅ |
+| [Apache Spark](/docs/cloud/connect-data-platform/connect-apache-spark) | ✅ | ❌ |
+| [Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics) | ✅ | ❌ |
+| [Databricks](/docs/cloud/connect-data-platform/connect-databricks) | ✅ | ✅ |
+| [Google BigQuery](/docs/cloud/connect-data-platform/connect-bigquery) | ✅ | ✅ |
+| [Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) | ✅ | ❌ |
+| [PostgreSQL](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) | ✅ | ❌ |
+| [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake) | ✅ | ✅ |
+| [Starburst or Trino](/docs/cloud/connect-data-platform/connect-starburst-trino) | ✅ | ❌ |
+| [Teradata](/docs/cloud/connect-data-platform/connect-teradata) <Lifecycle status="preview" /> | ✅ | ❌ |
 
-1. Нажмите на имя вашей учетной записи внизу левого меню и выберите **Настройки учетной записи**
-2. Выберите **Проекты** в верхнем левом углу, а затем нажмите **Новый проект**
+Чтобы подключиться к вашей базе данных в <Constant name="cloud" />:
+
+1. Нажмите на имя вашей учетной записи внизу левого меню и выберите **Account settings**.
+2. Выберите **Connections** в верхней левой части экрана, затем нажмите **New connection**.
 
 <Lightbox src="/img/docs/connect-data-platform/choose-a-connection.png" title="Выберите подключение"/>
 
-Эти инструкции по подключению предоставляют основные поля, необходимые для настройки подключения к платформе данных в dbt Cloud. Для более подробных руководств, включая данные демонстрационного проекта, ознакомьтесь с нашими [Руководствами по быстрому старту](https://docs.getdbt.com/guides).
+Эти инструкции по подключению описывают базовые поля, необходимые для настройки соединения с платформой данных в <Constant name="cloud" />. Более подробные руководства, включающие демонстрационные данные проекта, см. в наших [Quickstart guides](/guides).
+
+### Поддерживаемые методы аутентификации
+
+В следующих таблицах показано, какие типы аутентификации поддерживаются для каждого подключения, доступного в <Constant name="dbt_platform" />:
+
+<Tabs>
+
+<TabItem value="dbt Core">
+
+import AuthTypes from '/snippets/_dbt_connection_support.md';
+
+<AuthTypes />
+</TabItem>
+
+<TabItem value="dbt Fusion">
+import AuthTypesFusion from '/snippets/_dbt_connection_support_fusion.md';
+
+<AuthTypesFusion />
+
+</TabItem>
+
+</Tabs>
 
 ## Управление подключениями
 
-:::info Управление подключениями теперь на уровне учетной записи
-
-Начиная с июля 2024 года, управление подключениями перемещено с уровня проекта на уровень учетной записи для всех пользователей dbt Cloud. Ранее каждый проект dbt Cloud мог иметь только одно подключение, которое использовалось во всех его средах. Расширенные атрибуты использовались для переключения экземпляров хранилищ в зависимости от среды для данного проекта.
-
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connections-legacy-model.png" width="55%" title="Предыдущая модель подключения"/>
-
-Подключения, созданные с помощью API до этого изменения, не могут быть доступны с помощью [последних API](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/List%20Account%20Connections). dbt Labs рекомендует [воссоздать подключения](https://docs.getdbt.com/dbt-cloud/api-v3#/operations/Create%20Account%20Connection) с использованием последних API.
-
-:::
-
-Подключения к хранилищам данных являются ресурсом на уровне учетной записи. Таким образом, вы можете найти их в **Настройки учетной записи** > **Подключения**:
-
-<Lightbox src="/img/docs/connect-data-platform/connection-list.png" width="100%" title="Список подключений"/>
+Подключения к хранилищам данных — это ресурс уровня аккаунта. Вы можете найти их в разделе **Account settings** > **Connections**.
 
 Подключения к хранилищам данных могут повторно использоваться в разных проектах. Если несколько проектов подключаются к одному и тому же хранилищу, вы должны повторно использовать одно и то же подключение, чтобы упростить управление. Подключения назначаются проекту через [среду](/docs/dbt-cloud-environments).
 
@@ -51,9 +64,9 @@ dbt Cloud может подключаться к различным постав
 
 Как показано на изображении, проект с 2 средами может использовать от 1 до 2 различных подключений. Если вы хотите отделить вашу производственную среду от непроизводственной, назначьте несколько подключений одному проекту.
 
-### Переход от подключений на уровне проекта к подключениям на уровне учетной записи
+### Миграция с подключений уровня проекта на подключения уровня аккаунта
 
-Внедрение подключений на уровне учетной записи не потребует прерывания обслуживания в вашем текущем использовании (IDE, CLI, задания и т.д.).
+Внедрение подключений уровня аккаунта не потребует никаких перерывов в работе ваших текущих сценариев использования (<Constant name="cloud_ide" />, CLI, jobs и так далее).
 
 :::info Почему меня просят настроить среду разработки?
 Если в вашем проекте ранее не было среды разработки, вы можете быть перенаправлены на страницу настройки проекта. Ваш проект все еще в целости. Выберите подключение для вашей новой среды разработки, и вы сможете снова просмотреть все ваши среды.
@@ -87,16 +100,16 @@ dbt Cloud может подключаться к различным постав
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connections-post-rollout-4.png" width="60%" title="Подключения дедуплицированы"/>
 
 - Нормализация
-  - Поймите, как должны создаваться новые подключения, чтобы избежать локальных переопределений. Если вы в настоящее время используете расширенные атрибуты для переопределения экземпляра хранилища в вашей производственной среде, вы должны вместо этого создать новое подключение для этого экземпляра и подключить вашу производственную среду к нему, устранив необходимость в локальных переопределениях
-  - Создайте новые подключения, обновите соответствующие среды, чтобы они нацеливались на эти подключения, устранив теперь ненужные локальные переопределения (которые могут быть не все!)
-  - Протестируйте новое подключение, запустив задания или начав сеансы IDE
+  - Разберитесь, как следует создавать новые подключения, чтобы избежать локальных переопределений. Если в настоящее время вы используете extended attributes для переопределения экземпляра хранилища данных в production‑окружении, вместо этого следует создать новое подключение для этого экземпляра и привязать к нему production‑окружение, устранив необходимость в локальных переопределениях.
+  - Создайте новые подключения, обновите соответствующие окружения так, чтобы они указывали на эти подключения, и удалите ставшие ненужными локальные переопределения (возможно, не все из них).
+  - Протестируйте новую связку, запустив jobs или начав сессии в <Constant name="cloud_ide" />
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connections-post-rollout-5.png" width="60%" title="Подключения нормализованы"/>
 
 ## Ограничения по IP
 
-dbt Cloud всегда будет подключаться к вашей платформе данных с IP-адресов, указанных на странице [Регионы и IP-адреса](/docs/cloud/about-cloud/access-regions-ip-addresses).
+<Constant name="cloud" /> всегда будет подключаться к вашей платформе данных с IP-адресов, указанных на странице [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
 Убедитесь, что вы разрешили трафик с этих IP-адресов в вашем файрволе и включили их в любые предоставления базы данных.
 
-Разрешение этих IP-адресов только позволяет подключение к вашему <Term id="data-warehouse" />. Однако, вы можете захотеть отправлять API-запросы из вашей ограниченной сети к API dbt Cloud. Использование API dbt Cloud требует разрешения поддомена `cloud.getdbt.com`. Для получения дополнительной информации о архитектуре dbt Cloud, см. [Архитектура развертывания](/docs/cloud/about-cloud/architecture).
+Разрешение только этих IP-адресов обеспечивает подключение к вашему <Term id="data-warehouse" />. Однако вам может понадобиться отправлять API‑запросы из вашей ограниченной сети в API <Constant name="cloud" />. Использование API <Constant name="cloud" /> требует разрешения поддомена `cloud.getdbt.com`. Подробнее об архитектуре <Constant name="cloud" /> см. в разделе [Deployment architecture](/docs/cloud/about-cloud/architecture).

@@ -1,6 +1,6 @@
 ---
-title: "Анализы"
-description: "Прочтите это руководство, чтобы узнать, как использовать пользовательские анализы при работе с dbt."
+title: "Analyses"
+description: "Настройка SQL-файлов в dbt для создания скомпилированного кода, используемого для аналитических задач."
 id: "analyses"
 pagination_next: null
 ---
@@ -48,4 +48,4 @@ order by account_id, id
 dbt compile
 ```
 
-Затем найдите скомпилированный SQL-файл в `target/compiled/{project name}/analyses/running_total_by_account.sql`. Этот SQL можно затем вставить, например, в инструмент визуализации данных. Обратите внимание, что никакое отношение `running_total_by_account` не будет материализовано в базе данных, так как это `analysis`, а не `model`.
+Затем найдите скомпилированный SQL‑файл в `target/compiled/{project name}/analyses/running_total_by_account.sql`. Этот SQL, например, можно вставить в инструмент визуализации данных. Обратите внимание, что в базе данных не будет материализовано никакое отношение `running_total_by_account`, поскольку это `analysis`, а не `model`.

@@ -1,18 +1,18 @@
-Следующая таблица описывает, какие функции dbt Cloud поддерживаются в различных доступных сегодня вариантах SaaS. Для получения дополнительной информации о доступности функций, пожалуйста, [свяжитесь с нами](https://www.getdbt.com/contact/).
+В следующей таблице показано, какие возможности <Constant name="cloud" /> поддерживаются в различных SaaS‑вариантах, доступных на сегодняшний день. Подробнее о доступности функций вы можете узнать, [связавшись с нами](https://www.getdbt.com/contact/).
 
-| Функция                       | AWS Multi-tenant | AWS single tenant     | Azure multi-tenant ([Предварительный просмотр](/docs/dbt-versions/product-lifecycles#dbt-cloud)) | Azure single tenant | 
-|-------------------------------|------------------|-----------------------|---------------------|---------------------|
-| Журналы аудита                | ✅               | ✅                     | ✅                  | ✅                  |  
-| Задания непрерывной интеграции| ✅               | ✅                     | ✅                  | ✅                  |
-| dbt Cloud CLI                 | ✅               | ✅                     | ✅                  | ✅                  |
-| dbt Cloud IDE                 | ✅               | ✅                     | ✅                  | ✅                  |
-| dbt Copilot                   | ✅               | ✅                     | ✅                  | ✅                  |
-| dbt Explorer                  | ✅               | ✅                     | ✅                  | ✅                  |
-| dbt Mesh                      | ✅               | ✅                     | ✅                  | ✅                  |
-| Семантический слой dbt        | ✅               | ✅ (По запросу)        | ✅                  | ✅                  |
-| API обнаружения               | ✅               | ✅                     | ✅                  | ✅                  |  
-| Ограничения по IP             | ✅               | ✅                     | ✅                  | ✅                  |
-| Планировщик заданий           | ✅               | ✅                     | ✅                  | ✅                  |
-| PrivateLink egress            | ✅ (Только AWS)  | ✅                     | ✅                  | ✅                  |
-| PrivateLink ingress           | ❌               | ✅                     | ❌                  | ✅                  |
-| Вебхуки (Исходящие)           | ✅               | ✅                     | ✅                  | ❌                  |
+| Функция                       | AWS Multi-tenant | AWS single tenant     | Azure multi-tenant  | Azure single tenant | GCP multi-tenant |
+|-------------------------------|------------------|-----------------------|---------------------|---------------------|------------------|
+| Журналы аудита                | ✅               | ✅                    | ✅                  | ✅                  | ✅               | 
+| Задания непрерывной интеграции| ✅               | ✅                    | ✅                  | ✅                  | ✅               | 
+| <Constant name="cloud_cli" /> | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| <Constant name="cloud_ide" /> | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| <Constant name="copilot" />   | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| <Constant name="explorer" />  | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| <Constant name="mesh" />      | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| <Constant name="semantic_layer" /> | ✅          | ✅                    | ✅                  | ✅                  | ✅               |
+| Discovery API                 | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| Ограничения по IP             | ✅               | ✅                    | ✅                  | ✅                  | ✅               |
+| <Constant name="orchestrator" /> | ✅          | ✅                    | ✅                  | ✅                  | ✅               |
+| PrivateLink egress            | ✅ (только AWS)  | ✅                    | ✅                  | ✅                  | ✅               |
+| PrivateLink ingress           | ❌               | ✅                    | ❌                  | ✅                  | ✅               |
+| Webhooks (исходящие)          | ✅               | ✅                    | ✅                  | ❌                  | ❌               |

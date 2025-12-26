@@ -8,14 +8,19 @@ id: "exposures"
 - запускать, тестировать и перечислять ресурсы, которые питают вашу экспозицию
 - заполнять специальную страницу на автоматически сгенерированном [сайте документации](/docs/build/documentation) с контекстом, актуальным для потребителей данных
 
-### Объявление экспозиции
+Exposures можно определить двумя способами:
+- **Вручную** — объявляются [явно](/docs/build/exposures#declaring-an-exposure) в YAML-файлах вашего проекта.
+- **Автоматически** — <Constant name="cloud" /> автоматически [создаёт и визуализирует downstream exposures](/docs/cloud-integrations/downstream-exposures) для поддерживаемых интеграций, устраняя необходимость в ручном описании YAML. Эти downstream exposures хранятся в системе метаданных dbt, отображаются в [<Constant name="explorer" />](/docs/explore/explore-projects) и ведут себя так же, как и вручную объявленные exposures. Однако они не существуют в виде YAML-файлов.
+
+### Declaring an exposure
 
 Экспозиции определяются в файлах `.yml`, вложенных под ключом `exposures:`.
+
+The following example shows an exposure definition in a `models/<filename>.yml` file:
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 exposures:
 
@@ -56,9 +61,11 @@ _Необязательные:_
 - **maturity**: указывает уровень уверенности или стабильности экспозиции. Одно из `high`, `medium` или `low`. Например, вы можете использовать `high` для хорошо зарекомендовавшего себя дашборда, широко используемого и доверенного в вашей организации. Используйте `low` для нового или экспериментального анализа.
 
 _Общие свойства (необязательные)_
-- **description**
-- **tags**
-- **meta**
+
+- [**description**](/reference/resource-properties/description)
+- [**tags**](/reference/resource-configs/tags)
+- [**meta**](/reference/resource-configs/meta)
+- [**enabled**](/reference/resource-configs/enabled) &mdash; Это свойство можно задать на уровне exposure или на уровне проекта в файле [`dbt_project.yml`](/reference/dbt_project.yml).
 
 ### Ссылки на экспозиции
 
@@ -69,13 +76,13 @@ dbt test -s +exposure:weekly_jaffle_report
 
 ```
 
-Когда мы генерируем [сайт dbt Explorer](/docs/collaborate/explore-projects), вы увидите, что экспозиция появляется:
+Когда мы генерируем [сайт <Constant name="explorer" />](/docs/explore/explore-projects), вы увидите, что exposure отображается следующим образом:
 
-<Lightbox src="/img/docs/building-a-dbt-project/dbt-explorer-exposures.jpg" title="Экспозиции имеют отдельный раздел под вкладкой 'Resources' в dbt Explorer, где перечислены все экспозиции в вашем проекте."/>
-<Lightbox src="/img/docs/building-a-dbt-project/dag-exposures.png" title="Экспозиции отображаются как узлы в DAG dbt Explorer. Внутри узла отображается оранжевый индикатор 'EXP'."/>
+<Lightbox src="/img/docs/building-a-dbt-project/dbt-explorer-exposures.jpg" title="Exposures имеют отдельный раздел во вкладке 'Resources' в dbt Catalog, где перечислены все exposure в вашем проекте."/>
+<Lightbox src="/img/docs/building-a-dbt-project/dag-exposures.png" title="Exposures отображаются как узлы в DAG dbt Catalog. Внутри узла показывается оранжевый индикатор 'EXP'."/>
 
 ## Связанные документы
 
-* [Свойства экспозиции](/reference/exposure-properties)
-* [Метод выбора `exposure:`](/reference/node-selection/methods#exposure)
-* [Плитки здоровья данных](/docs/collaborate/data-tile)
+- [Свойства Exposure](/reference/exposure-properties)
+- [Метод выбора `exposure:`](/reference/node-selection/methods#exposure)
+- [Плитки состояния данных](/docs/explore/data-tile)

@@ -1,14 +1,14 @@
 ---
-title: Как изменить тип лицензии пользователя на только для чтения в dbt Cloud?
-description: "Изменение типа лицензии пользователя на только для чтения в dbt Cloud"
-sidebar_label: 'Как изменить тип лицензии пользователя на только для чтения'
+title: How do I change a user license type to read-only in dbt?
+description: "Изменение типа лицензии пользователя на read-only в dbt"
+sidebar_label: 'Как изменить тип лицензии пользователя на read-only'
 id: change-user-license
 
 ---
 
-Чтобы изменить тип лицензии пользователя с `developer` на `read-only` или `IT` в dbt Cloud, вы должны быть владельцем аккаунта или иметь административные привилегии. Вы можете внести это изменение, чтобы освободить оплачиваемое место, но сохранить доступ пользователя к просмотру информации в аккаунте dbt Cloud.
+Чтобы изменить тип лицензии пользователя с `developer` на `read-only` или `IT` в <Constant name="cloud" />, вы должны быть владельцем аккаунта или иметь права администратора. Обычно это делают, чтобы освободить платное место, сохранив при этом пользователю доступ к просмотру информации в аккаунте <Constant name="cloud" />.
 
-1. В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Account settings**.
+1. В <Constant name="cloud" /> нажмите на имя вашего аккаунта в левом боковом меню и выберите **Account settings**.
 
 <Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" title="Перейдите в настройки аккаунта" />
 
@@ -17,3 +17,7 @@ id: change-user-license
 4. Для опции **License** выберите **Read-only** или **IT** (вместо **Developer**) и нажмите **Save**.
 
 <Lightbox src="/img/docs/dbt-cloud/change_user_to_read_only_20221023.gif" title="Изменение типа лицензии пользователя" />
+
+import LicenseOverrideNote from '/snippets/_license-override-note.md';
+
+<LicenseOverrideNote />

@@ -5,11 +5,7 @@ resource_types: [models]
 datatype: test
 ---
 
-:::note 
-
-Эта функциональность доступна в dbt Core версии 1.8+ и [выпусках dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
-
-:::
+<VersionCallout version="1.8" />
 
 Модульные тесты проверяют вашу SQL-логику моделирования на небольшом наборе статических входных данных перед тем, как вы материализуете вашу полную модель в производственной среде. Они поддерживают подход разработки, основанный на тестировании, улучшая как эффективность разработчиков, так и надежность кода.
 
@@ -24,7 +20,7 @@ datatype: test
 - Модульные тесты должны быть определены в YML-файле в вашем каталоге `models/`.
 - Если вы хотите протестировать модель, которая зависит от эфемерной модели, вы должны использовать `format: sql` для этого входного параметра.
 
-<file name='dbt_project.yml'>
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -37,23 +33,24 @@ unit_tests:
     config: 
       meta: {dictionary}
       tags: <string> | [<string>]
+      enabled: {boolean} # optional. v1.9 or higher. If not configured, defaults to `true`
     given:
       - input: <ref_or_source_call> # опционально для seeds
         format: dict | csv | sql
         # либо определите строки в коде, либо имя фикстуры
         rows: {dictionary} | <string>
-        fixture: <fixture-name> # sql или csv 
-      - input: ... # объявите дополнительные входные данные
+        fixture: <fixture-name> # SQL или CSV
+      - input: ... # объявить дополнительные входные данные
     expect:
       format: dict | csv | sql
       # либо определите строки в коде, либо имя фикстуры
       rows: {dictionary} | <string>
-      fixture: <fixture-name> # sql или csv 
-    overrides: # опционально: конфигурация для среды выполнения dbt
+      fixture: <fixture-name> # SQL или CSV
+    overrides: # необязательно: конфигурация окружения выполнения dbt
       macros:
         is_incremental: true | false
         dbt_utils.current_timestamp: <string>
-        # ... любая другая функция jinja из https://docs.getdbt.com/reference/dbt-jinja-functions
+        # ... любая другая Jinja‑функция из https://docs.getdbt.com/reference/dbt-jinja-functions
         # ... любое другое свойство контекста
       vars: {dictionary}
       env_vars: {dictionary}
@@ -61,9 +58,11 @@ unit_tests:
 
   ```
 
-</file>
+</File>
 
 ## Примеры
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -89,6 +88,9 @@ unit_tests:
         - {email: missingdot@gmailcom, is_valid_email_address: false}
 
 ```
+</File>
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -113,6 +115,9 @@ unit_tests:
       fixture: valid_email_address_fixture_output
 
 ```
+</File>
+
+<File name='models/schema.yml'>
 
 ```yml
 
@@ -136,3 +141,4 @@ unit_tests:
       fixture: valid_email_address_fixture_output
 
 ```
+</File>

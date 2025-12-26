@@ -1,5 +1,5 @@
 ## Предварительные требования
 
-- Аккаунт dbt Cloud [мультиарендный](/docs/cloud/about-cloud/tenancy#multi-tenant) или [одноарендный](/docs/cloud/about-cloud/tenancy#single-tenant)
-- Вы должны использовать [план Team или Enterprise](https://www.getdbt.com/pricing/)
-- Ваши проекты должны быть на версии dbt 1.0 или выше. Обратитесь к [Обновление версии dbt в Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud) для обновления.
+- У вас должна быть учетная запись <Constant name="cloud" /> с [мультиарендной](/docs/cloud/about-cloud/tenancy#multi-tenant) или [выделенной (single tenant)](/docs/cloud/about-cloud/tenancy#single-tenant) архитектурой
+- Вы должны использовать тариф [Enterprise или Enterprise+](https://www.getdbt.com/pricing/)
+- Ваши проекты должны использовать [release tracks](/docs/dbt-versions/cloud-release-tracks) <Constant name="cloud" /> или версию dbt 1.0 и выше. Инструкции по обновлению см. в разделе [Upgrade dbt version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).

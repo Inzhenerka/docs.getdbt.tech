@@ -8,7 +8,7 @@ datatype: string
 
 Начиная с dbt Core версии 1.9+, эта функциональность больше не используется. Используйте конфигурацию [database](/reference/resource-configs/database) в качестве альтернативы для определения пользовательской базы данных, при этом соблюдая макрос `generate_database_name`.
 
-Попробуйте это сейчас в [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+Попробуйте это прямо сейчас в [треке релизов <Constant name="cloud" /> «Latest»](/docs/dbt-versions/cloud-release-tracks).
 
 :::
 

@@ -1,7 +1,7 @@
 ---
 title: "Подключение Amazon Athena"
 id: connect-amazon-athena
-description: "Настройка подключения к платформе данных Amazon Athena в dbt Cloud."
+description: "Настройка подключения к платформе данных Amazon Athena в dbt."
 sidebar_label: "Подключение Amazon Athena"
 ---
 
@@ -9,22 +9,22 @@ sidebar_label: "Подключение Amazon Athena"
 
 Ваши окружения должны находиться на поддерживаемой [версии](/docs/dbt-versions/cloud-release-tracks), чтобы использовать подключение Amazon Athena.
 
-Подключите dbt Cloud к интерактивному сервису запросов Amazon Athena для создания вашего проекта dbt. Ниже приведены обязательные и необязательные поля для настройки подключения Athena:
+Подключите <Constant name="cloud" /> к интерактивному сервису запросов Amazon Athena, чтобы создать свой dbt‑проект. Ниже перечислены обязательные и необязательные поля для настройки подключения к Athena:
 
-| Поле                         | Опция            | Описание                                                                         | Тип    | Обязательно? | Пример |
-| ---------------------------- | ---------------- | -------------------------------------------------------------------------------- | ------ | ------------ | ------- |
-| Имя региона AWS              | region_name      | Регион AWS вашего экземпляра Athena                                              | Строка | Обязательно  | eu-west-1 |
-| База данных (каталог)        | database         | Укажите базу данных (каталог данных) для создания моделей (только строчные буквы) | Строка | Обязательно  | awsdatacatalog |
-| Каталог S3 для промежуточных данных | s3_staging_dir   | Местоположение S3 для хранения результатов запросов Athena и метаданных          | Строка | Обязательно  | s3://bucket/dbt/ |
-| Рабочая группа Athena        | work_group       | Идентификатор рабочей группы Athena                                              | Строка | Необязательно | my-custom-workgroup |
-| Рабочая группа Athena Spark  | spark_work_group | Идентификатор рабочей группы Athena Spark для выполнения моделей на Python       | Строка | Необязательно | my-spark-workgroup |
-| Каталог данных AWS S3        | s3_data_dir      | Префикс для хранения таблиц, если отличается от s3_staging_dir подключения       | Строка | Необязательно | s3://bucket2/dbt/ |
-| Конвенция именования данных AWS S3 | s3_data_naming   | Как генерировать пути таблиц в s3_data_dir                                       | Строка | Необязательно | schema_table_unique |
-| Префикс временных таблиц AWS S3 | s3_tmp_table_dir | Префикс для хранения временных таблиц, если отличается от s3_data_dir подключения | Строка | Необязательно | s3://bucket3/dbt/ |
-| Интервал опроса              | poll_interval    | Интервал в секундах для опроса статуса результатов запросов в Athena             | Целое число | Необязательно | 5 |
-| Повторы запросов             | num_retries      | Количество попыток повторного выполнения неудачного запроса                      | Целое число | Необязательно | 3 |
-| Повторы Boto3                | num_boto3_retries| Количество попыток повторного выполнения запросов boto3 (например, удаление файлов S3 для материализованных таблиц) | Целое число | Необязательно | 5 |
-| Повторы Iceberg              | num_iceberg_retries| Количество попыток повторного выполнения запросов фиксации iceberg для исправления ICEBERG_COMMIT_ERROR | Целое число | Необязательно | 0 |
+| Field                         | Option           | Description                                                                                                   | Type    | Required? | Example |
+| ----------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------- | ------- | --------- | ------- |
+| AWS region name               | region_name      | Регион AWS, в котором развернут ваш экземпляр Athena                                                           | String  | Required  | eu-west-1 |
+| Database (catalog)            | database         | Укажите базу данных (Data Catalog), в которую будут собираться модели (только в нижнем регистре)             | String  | Required  | awsdatacatalog |
+| AWS S3 staging directory      | s3_staging_dir   | S3‑расположение для хранения результатов запросов Athena и метаданных                                          | String  | Required  | s3://bucket/dbt/ |
+| Athena workgroup              | work_group       | Идентификатор workgroup в Athena                                                                               | String  | Optional  | my-custom-workgroup |
+| Athena Spark workgroup        | spark_work_group | Идентификатор Athena Spark workgroup для запуска Python‑моделей                                                 | String  | Optional  | my-spark-workgroup |
+| AWS S3 data directory         | s3_data_dir      | Префикс для хранения таблиц, если он отличается от s3_staging_dir подключения                                  | String  | Optional  | s3://bucket2/dbt/ |
+| AWS S3 data naming convention | s3_data_naming   | Способ генерации путей к таблицам в s3_data_dir                                                                | String  | Optional  | schema_table_unique |
+| AWS S3 temp tables prefix     | s3_tmp_table_dir | Префикс для хранения временных таблиц, если он отличается от s3_data_dir подключения                           | String  | Optional  | s3://bucket3/dbt/ |
+| Poll interval                 | poll_interval    | Интервал в секундах для опроса статуса выполнения запросов в Athena                                            | Integer | Optional  | 5 |
+| Query retries                 | num_retries      | Количество попыток повторного выполнения запроса в случае ошибки                                               | Integer | Optional  | 3 |
+| Boto3 retries                 | num_boto3_retries| Количество повторных попыток для запросов boto3 (например, при удалении файлов S3 для материализованных таблиц)| Integer | Optional  | 5 |
+| Iceberg retries               | num_iceberg_retries| Количество повторных попыток выполнения iceberg commit‑запросов для исправления ICEBERG_COMMIT_ERROR        | Integer | Optional  | 0 |
 
 ### Учетные данные для разработки
 

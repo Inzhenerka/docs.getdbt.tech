@@ -24,5 +24,4 @@ description: "Прочтите это руководство, чтобы пон�
 
 ```
 $ dbt run-operation get_version
-The installed version of dbt is 0.16.0
-```
+Установленная версия dbt — 1.6.0

@@ -23,12 +23,6 @@ docs-paths: [directorypath]
 
 </VersionBlock>
 
-<VersionBlock lastVersion="1.8">
-
-По умолчанию dbt будет искать блоки документации во всех путях ресурсов (т.е. в объединенном списке [model-paths](/reference/project-configs/model-paths), [seed-paths](/reference/project-configs/seed-paths), [analysis-paths](/reference/project-configs/analysis-paths), [macro-paths](/reference/project-configs/macro-paths) и [snapshot-paths](/reference/project-configs/snapshot-paths)). Если эта опция настроена, dbt будет искать блоки документации _только_ в указанной директории.
-
-</VersionBlock>
-
 import RelativePath from '/snippets/_relative-path.md';
 
 <RelativePath 

@@ -64,6 +64,7 @@ select
     campaign_id,
     NULLIF(COUNTIF(action = 'impression'), 0) impressions_count
 from {{ source('logs', 'tracking_events') }}
+group by day, campaign_id
 ```
 
 Нам нужно только добавить поле, чтобы перейти к разделению по времени загрузки: `"time_ingestion_partitioning": true`
@@ -84,6 +85,7 @@ select
     campaign_id,
     NULLIF(COUNTIF(action = 'impression'), 0) impressions_count
 from {{ source('logs', 'tracking_events') }}
+group by day, campaign_id
 ```
 
 Результирующая схема таблицы будет:
@@ -158,6 +160,7 @@ select
     campaign_id,
     NULLIF(COUNTIF(action = 'impression'), 0) impressions_count
 from {{ source('logs', 'tracking_events') }}
+group by day, campaign_id
 ```
 
 Снова нам нужно только добавить поле, чтобы перейти к копированию разделов: `"copy_partitions": true`
@@ -178,6 +181,7 @@ select
     campaign_id,
     NULLIF(COUNTIF(action = 'impression'), 0) impressions_count
 from {{ source('logs', 'tracking_events') }}
+group by day, campaign_id
 ```
 
 Конфигурация будет прочитана во время выполнения и будет использовать интеграцию драйвера BQ для записи данных с использованием копирования разделов. Интеграция должна быть бесшовной.

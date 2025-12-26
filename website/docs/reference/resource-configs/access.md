@@ -6,16 +6,18 @@ datatype: access
 <File name='models/<schema>.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: model_name
-    access: private | protected | public
+    config:
+      access: private | protected | public # changed to config in v1.10
 ```
 
 </File>
 
-Вы можете применять модификаторы доступа в конфигурационных файлах, включая `dbt_project.yml`, или к моделям по отдельности в `properties.yml`. Применение конфигураций доступа к подпапке изменяет значение по умолчанию для всех моделей в этой подпапке, поэтому убедитесь, что вы хотите такого поведения. При установке индивидуального доступа к модели, группа или подпапка может содержать различные уровни доступа, поэтому, когда вы назначаете модели `access: public`, убедитесь, что вы хотите такого поведения.
+Вы можете применять модификаторы `access` в конфигурационных файлах, включая `dbt_project.yml`, либо задавать их для моделей по отдельности в `properties.yml`. Применение конфигурации `access` к подпапке изменяет значение по умолчанию для всех моделей в этой подпапке, поэтому убедитесь, что вы действительно подразумеваете такое поведение. При задании уровня доступа для отдельных моделей группа или подпапка может содержать разные уровни доступа, поэтому, назначая модели `access: public`, убедитесь, что это сделано осознанно.
+
+Обратите внимание, что для обратной совместимости `access` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
 
 Существует несколько подходов к настройке доступа:
 
@@ -24,11 +26,12 @@ models:
   <File name='models/properties_my_public_model.yml'>
   
   ```yml
-  version: 2
   
   models:
     - name: my_public_model
-      access: public # Старый метод, все еще поддерживается
+      config:
+        access: public # Старый способ, по‑прежнему поддерживается
+          # изменён на config в версии v1.10
       
   ```
   </File>
@@ -38,12 +41,11 @@ models:
   <File name='models/properties_my_public_model.yml'>
   
   ```yml
-  version: 2
   
   models:
     - name: my_public_model
       config:
-        access: public # поддерживается с версии 1.7
+        access: public
       
   ```
   </File>
@@ -103,5 +105,5 @@ dbt.exceptions.DbtReferenceError: Parsing Error
 
 ## Связанные документы
 
-* [Доступ к модели](/docs/collaborate/govern/model-access#groups)
-* [Конфигурация группы](/reference/resource-configs/group)
+* [Доступ к моделям](/docs/mesh/govern/model-access#groups)
+* [Конфигурация групп](/reference/resource-configs/group)

@@ -48,12 +48,6 @@ seeds:
 
 <TabItem value="snapshots" label="Снапшоты">
 
-<VersionBlock lastVersion="1.8">
-
-Доступно в dbt Core v1.9+. Выберите v1.9 или новее из выпадающего списка версий, чтобы просмотреть конфигурации. Попробуйте это сейчас в [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
-
-</VersionBlock>
-
 <VersionBlock firstVersion="1.9">
 
 Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas)) для снапшота в вашем файле `dbt_project.yml` или файле конфигурации.
@@ -77,7 +71,6 @@ In a `snapshots/snapshot_name.yml` file:
 <File name='snapshots/snapshot_name.yml'>
 
 ```yaml
-version: 2
 
 snapshots:
   - name: snapshot_name
@@ -116,7 +109,7 @@ This would result in the saved query being stored in the `metrics` schema.
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   +store_failures: true
   +schema: test_results
 ```
@@ -131,7 +124,7 @@ tests:
 ## Определение
 При необходимости укажите пользовательскую схему для [модели](/docs/build/sql-models), [сида](/docs/build/seeds), [снапшота](/docs/build/snapshots), [сохраненного запроса](/docs/build/saved-queries) или [теста](/docs/build/data-tests).
 
-Для пользователей dbt Cloud v1.8 или более ранних версий используйте [`target_schema` config](/reference/resource-configs/target_schema) для указания пользовательской схемы для снапшота.
+Для пользователей <Constant name="cloud" /> версии 1.8 или ниже используйте конфигурацию [`target_schema`](/reference/resource-configs/target_schema), чтобы указать пользовательскую схему для snapshot.
 
 Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например, `analytics.finance.payments`.
 
@@ -180,7 +173,7 @@ seeds:
 
 </File>
 
-### Тесты
+### Тесты данных
 
 Настройте имя схемы, в которой тесты [настроенные для хранения сбоев](/reference/resource-configs/store_failures) будут сохранять свои результаты.
 Полученная схема — это `{{ profile.schema }}_{{ tests.schema }}`, с суффиксом по умолчанию `dbt_test__audit`.
@@ -189,14 +182,14 @@ seeds:
 <File name='dbt_project.yml'>
 
 ```yml
-tests:
+data_tests:
   +store_failures: true
   +schema: _sad_test_failures  # Запишет таблицы в my_database.my_schema__sad_test_failures
 ```
 
 </File>
 
-Убедитесь, что у вас есть разрешение на создание или доступ к схемам для вашей работы. Чтобы гарантировать, что необходимые схемы имеют правильные разрешения, выполните SQL-запрос в соответствующей среде вашей платформы данных. Например, выполните следующую команду, если вы используете Redshift (точный запрос на авторизацию может отличаться в зависимости от платформы данных):
+Убедитесь, что у вас есть права на создание или доступ к схемам, необходимым для вашей работы. Чтобы проверить, что требуемые схемы имеют корректные разрешения, выполните SQL‑запрос в соответствующей среде вашей платформы данных. Например, при использовании Redshift выполните следующую команду (конкретный запрос для проверки прав может отличаться в зависимости от платформы данных):
 
 ```sql
 create schema if not exists dev_username_dbt_test__audit authorization username;

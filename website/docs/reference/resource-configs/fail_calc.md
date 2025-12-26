@@ -51,13 +51,12 @@ fail_calc: "case when count(*) > 0 then sum(n_records) else 0 end"
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: my_model
     columns:
       - name: my_columns
-        tests:
+        data_tests:
           - unique:
               config:
                 fail_calc: "case when count(*) > 0 then sum(n_records) else 0 end"
@@ -110,9 +109,9 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yaml
-tests:
-  +fail_calc: count(*)  # все тесты
-  
+data_tests:
+  +fail_calc: count(*)  # all tests
+
   <package_name>:
     +fail_calc: count(distinct id) # тесты в <package_name>
 ```

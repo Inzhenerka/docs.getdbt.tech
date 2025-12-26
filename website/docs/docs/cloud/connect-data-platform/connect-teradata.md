@@ -1,7 +1,7 @@
 ---
 title: "Подключение Teradata"
 id: connect-teradata
-description: "Настройка подключения к платформе Teradata в dbt Cloud."
+description: "Настройка подключения к платформе Teradata в dbt."
 sidebar_label: "Подключение Teradata"
 ---
 

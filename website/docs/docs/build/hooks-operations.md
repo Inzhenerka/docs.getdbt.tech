@@ -1,6 +1,6 @@
 ---
-title: "Хуки и операции"
-description: "Прочтите это руководство, чтобы узнать, как использовать хуки и операции при разработке в dbt."
+title: "Хуки и операции"  
+description: "Настройка рабочих процессов dbt с использованием хуков и операций."
 id: "hooks-operations"
 ---
 
@@ -136,7 +136,7 @@ models:
 
 ```
 $ dbt run-operation grant_select --args '{role: reporter}'
-Running with dbt=0.16.1
+Running with dbt=1.6.0
 Privileges granted
 
 ```
@@ -147,11 +147,13 @@ Privileges granted
 
 Эти примеры из сообщества подчеркивают некоторые случаи использования хуков и операций!
 
-* [Подробное обсуждение предоставления привилегий с использованием хуков и операций для версий dbt Core до 1.2](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
-* [Стадирование внешних таблиц](https://github.com/dbt-labs/dbt-external-tables)
-* [Выполнение клонирования без копирования в Snowflake для сброса среды разработки](https://discourse.getdbt.com/t/creating-a-dev-environment-quickly-on-snowflake/1151/2)
-* [Выполнение `vacuum` и `analyze` на складе Redshift](https://github.com/dbt-labs/redshift/tree/0.2.3/#redshift_maintenance_operation-source)
-* [Создание общего доступа в Snowflake](https://discourse.getdbt.com/t/how-drizly-is-improving-collaboration-with-external-partners-using-dbt-snowflake-shares/1110)
+Эти примеры от сообщества демонстрируют некоторые сценарии использования хуков и операций:
+
+* [Подробное обсуждение выдачи привилегий с использованием хуков и операций для версий <Constant name="core" /> ниже 1.2](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
+* [Подготовка (staging) внешних таблиц](https://github.com/dbt-labs/dbt-external-tables)
+* [Выполнение zero copy clone в Snowflake для сброса dev-окружения](https://discourse.getdbt.com/t/creating-a-dev-environment-quickly-on-snowflake/1151/2)
+* [Запуск `vacuum` и `analyze` в хранилище Redshift](https://github.com/dbt-labs/redshift/tree/0.2.3/#redshift_maintenance_operation-source)
+* [Создание Snowflake share](https://discourse.getdbt.com/t/how-drizly-is-improving-collaboration-with-external-partners-using-dbt-snowflake-shares/1110)
 * [Выгрузка файлов в S3 на Redshift](https://github.com/dbt-labs/redshift/tree/0.2.3/#unload_table-source)
-* [Создание событий аудита для времени выполнения модели](https://github.com/dbt-labs/dbt-event-logging)
+* [Создание audit-событий для измерения времени выполнения моделей](https://github.com/dbt-labs/dbt-event-logging)
 * [Создание UDF](https://discourse.getdbt.com/t/using-dbt-to-manage-user-defined-functions/18)

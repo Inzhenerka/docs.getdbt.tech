@@ -109,7 +109,9 @@ is_featured: true
 
 Давайте проверим рост [нашего проекта](https://github.com/dbt-labs/dbt-project-maturity/tree/main/2-toddlerhood). Мы разбили часть нашей логики на собственную модель — наш оригинальный скрипт имел повторяющуюся логику в <Term id="subquery">подзапросах</Term>, теперь он следует ключевому принципу аналитической инженерии: <Term id="dry">Не повторяй себя (DRY)</Term>. Для получения дополнительной информации о том, как рефакторить ваши SQL-запросы для модульности, ознакомьтесь с нашим [бесплатным курсом по запросу](https://learn.getdbt.com/courses/refactoring-sql-for-modularity).
 
-Мы также добавили наши первые [YML файлы](https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/). Здесь у нас есть один yml файл для [настройки наших источников](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/source.yml) и один yml файл для [описания наших моделей](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/schema.yml). Мы только начинаем с базовых деклараций наших источников, <Term id="primary-key" /> тестирования с использованием встроенных тестов dbt и описания на уровне модели — это первые шаги проекта, только начинающего ходить!
+Мы также добавили наши первые [YML‑файлы](https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/). Здесь у нас есть один YAML‑файл для [настройки источников](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/source.yml) и один YAML‑файл для [описания моделей](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/schema.yml). 
+
+Пока мы ограничиваемся базовыми декларациями источников, тестированием <Term id="primary-key" /> с использованием встроенных тестов dbt и описанием на уровне модели — это самые первые шаги проекта, который только учится ходить!
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_4.png)
 

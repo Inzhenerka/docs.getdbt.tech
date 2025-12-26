@@ -1,16 +1,24 @@
 ---
-title: invalidate_hard_deletes (устаревшее)
+title: invalidate_hard_deletes
 resource_types: [snapshots]
 description: "Invalidate_hard_deletes - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: column_name
-sidebar_label: invalidate_hard_deletes (устаревшее)
+sidebar_label: invalidate_hard_deletes
 ---
 
-:::warning Это устаревшая конфигурация &mdash; Используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes) вместо неё.
+# invalidate_hard_deletes <Lifecycle status="legacy" />
 
-В версиях Versionless и dbt Core 1.9 и выше конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет конфигурацию `invalidate_hard_deletes` для лучшего контроля над обработкой удалённых строк из источника.
+<IntroText>
 
-Для новых снимков установите конфигурацию `hard_deletes='invalidate'` вместо `invalidate_hard_deletes=true`. Для существующих снимков [организуйте обновление](/reference/snapshot-configs#snapshot-configuration-migration) предварительно существующих таблиц перед включением этой настройки. Обратитесь к
+Устаревшая опциональная конфигурация, позволяющая помечать жёстко удалённые записи как невалидные при выполнении snapshot‑запроса.
+
+</IntroText>
+
+:::warning This is a legacy config &mdash; Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) config instead.
+
+В релизных ветках <Constant name="cloud" />, а также в dbt Core версии 1.9 и выше, конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет `invalidate_hard_deletes`, обеспечивая более гибкий контроль над тем, как обрабатывать строки, удалённые из источника.
+
+Для новых snapshot’ов используйте настройку `hard_deletes='invalidate'` вместо `invalidate_hard_deletes=true`. Для уже существующих snapshot’ов сначала [выполните обновление](/reference/snapshot-configs#snapshot-configuration-migration) ранее созданных таблиц, а затем включайте эту настройку.
 :::
 
 <VersionBlock firstVersion="1.9">
@@ -28,27 +36,6 @@ snapshots:
 
 </File>
 
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
-
-<SnapshotYaml/>
-
-<File name='snapshots/<filename>.sql'>
-
-```jinja2
-{{
-  config(
-    strategy="timestamp",
-    invalidate_hard_deletes=True
-  )
-}}
-
-```
-
-</File>
 </VersionBlock>
 
 <File name='dbt_project.yml'>
@@ -88,28 +75,4 @@ snapshots:
   ```
 </File>
 
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-<File name='snapshots/orders.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-    {{
-        config(
-          target_schema='snapshots',
-          strategy='timestamp',
-          unique_key='id',
-          updated_at='updated_at',
-          invalidate_hard_deletes=True,
-        )
-    }}
-
-    select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-
-</File>
 </VersionBlock>

@@ -1,29 +1,30 @@
 ---
-title: "Создание событий Datadog из результатов dbt Cloud"
+title: "Создание событий Datadog из результатов dbt"
 id: serverless-datadog
-description: Настройка серверного приложения для добавления событий dbt Cloud в логи Datadog.
-hoverSnippet: Узнайте, как настроить серверное приложение для добавления событий dbt Cloud в логи Datadog.
+description: Настройте serverless‑приложение для добавления событий dbt в логи Datadog.
+hoverSnippet: Узнайте, как настроить serverless‑приложение для добавления событий dbt в логи Datadog.
+# time_to_complete: '30 minutes' commenting out until we test
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-Это руководство научит вас создавать и размещать простое приложение на Python, которое будет добавлять события заданий dbt Cloud в Datadog. Для этого, когда задание dbt Cloud завершится, будет создана запись в логе для каждого узла, который был выполнен, содержащая всю информацию об узле, предоставленную [Discovery API](/docs/dbt-cloud-apis/discovery-schema-job-models).
+Это руководство научит вас, как создать и разместить базовое Python‑приложение, которое будет отправлять события выполнения заданий <Constant name="cloud" /> в Datadog. Для этого, когда задание <Constant name="cloud" /> завершается, приложение будет создавать запись лога для каждого узла, который был выполнен, включая всю информацию об узле, предоставляемую [Discovery API](/docs/dbt-cloud-apis/discovery-schema-job-models).
 
-В этом примере мы будем использовать [fly.io](https://fly.io) для размещения/запуска сервиса. fly.io — это платформа для запуска полнофункциональных приложений без необходимости в настройке серверов и т.д. Этот уровень использования должен комфортно вписываться в бесплатный тариф. Вы также можете использовать альтернативные инструменты, такие как [AWS Lambda](https://adem.sh/blog/tutorial-fastapi-aws-lambda-serverless) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
+В этом примере мы будем использовать [fly.io](https://fly.io) для хостинга и запуска сервиса. fly.io — это платформа для запуска полнофункциональных приложений без необходимости настраивать серверы и сопутствующую инфраструктуру. Такой уровень использования без проблем укладывается в рамки бесплатного тарифа. Вы также можете использовать альтернативные инструменты, такие как [AWS Lambda](https://ademoverflow.com/en/posts/tutorial-fastapi-aws-lambda-serverless/) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
 
 ### Предварительные требования
 
-Это руководство предполагает, что вы знакомы с:
-- [Вебхуками dbt Cloud](/docs/deploy/webhooks)
-- CLI приложениями
-- Развертыванием кода на серверных платформах, таких как fly.io или AWS Lambda
+В этом руководстве предполагается, что вы уже знакомы со следующим:
+
+- [<Constant name="cloud" /> Webhooks](/docs/deploy/webhooks)
+- CLI-приложения
+- Развёртывание кода в serverless-исполнителях, таких как fly.io или AWS Lambda
 
 ## Клонирование репозитория `dbt-cloud-webhooks-datadog`
 
@@ -95,7 +96,7 @@ Wrote config file fly.toml<br/>
 ### 4. Создание API-ключа Datadog
 [Создайте API-ключ для вашего аккаунта Datadog](https://docs.datadoghq.com/account_management/api-app-keys/) и запомните его и ваш сайт Datadog (например, `datadoghq.com`) для дальнейшего использования.
 
-## Настройка нового вебхука в dbt Cloud
+## Настройка нового вебхука в dbt
 
 1. См. [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения полных инструкций. Ваше событие должно быть **Run completed**.
 2. Установите URL вебхука на имя хоста, которое вы создали ранее (`APP_NAME.fly.dev`).
@@ -105,11 +106,11 @@ Wrote config file fly.toml<br/>
 
 ## Хранение секретов
 
-Приложение требует установки четырех секретов с использованием следующих имен:
-- `DBT_CLOUD_SERVICE_TOKEN`: личный токен доступа dbt Cloud [personal access token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) или токен учетной записи сервиса [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens) с как минимум разрешением `Metdata Only`.
-- `DBT_CLOUD_AUTH_TOKEN`: секретный ключ для вебхука dbt Cloud, который вы создали ранее.
+Приложению требуется задать четыре секрета, используя следующие имена:
+- `DBT_CLOUD_SERVICE_TOKEN`: [персональный токен доступа](/docs/dbt-cloud-apis/user-tokens) или [токен сервисного аккаунта](/docs/dbt-cloud-apis/service-tokens) для <Constant name="cloud" /> с как минимум разрешением `Metdata Only`.
+- `DBT_CLOUD_AUTH_TOKEN`: секретный ключ (Secret Key) для вебхука <Constant name="cloud" />, который вы создали ранее.
 - `DD_API_KEY`: API-ключ, который вы создали ранее.
-- `DD_SITE`: Сайт Datadog для вашей организации, например, `datadoghq.com`.
+- `DD_SITE`: сайт Datadog для вашей организации, например `datadoghq.com`.
 
 Установите эти секреты следующим образом, заменив `abc123` и т.д. на фактические значения:
     ```shell
@@ -118,6 +119,6 @@ Wrote config file fly.toml<br/>
 
 ## Развертывание вашего приложения
 
-После установки секретов, fly.io повторно развернет ваше приложение. Когда это будет успешно завершено, вернитесь к настройкам вебхука dbt Cloud и нажмите **Test Endpoint**.
+После того как вы зададите свои секреты, fly.io выполнит повторное развертывание вашего приложения. Когда оно успешно завершится, вернитесь в настройки вебхука <Constant name="cloud" /> и нажмите **Test Endpoint**.
 
 </div>

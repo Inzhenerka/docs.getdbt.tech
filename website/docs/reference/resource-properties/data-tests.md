@@ -1,6 +1,7 @@
 ---
-title: "О свойстве тестов данных"
-sidebar_label: "Тесты данных"
+title: "О свойстве data tests"
+description: "Справочное руководство по свойствам ресурсов, доступным для data tests в dbt."
+sidebar_label: "Data tests"
 resource_types: all
 datatype: data-test
 keywords: [test, tests, custom tests, custom test name, test name]
@@ -22,22 +23,23 @@ keywords: [test, tests, custom tests, custom test name, test name]
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 models:
   - name: <model_name>
-    tests:
-      - [<test_name>](#test_name):
-          <argument_name>: <argument_value>
+    data_tests:
+      - [<test_name>](#custom-data-test-name):
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
 
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
-        tests:
-          - [<test_name>](#test_name)
-          - [<test_name>](#test_name):
-              <argument_name>: <argument_value>
+        data_tests:
+          - [<test_name>](#custom-data-test-name)
+          - [<test_name>](#custom-data-test-name):
+              arguments:
+                <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [<test_config>](/reference/data-test-configs): <config-value>
 ```
@@ -51,25 +53,26 @@ models:
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
 
 sources:
   - name: <source_name>
     tables:
     - name: <table_name>
-      tests:
-        - [<test_name>](#test_name)
-        - [<test_name>](#test_name):
-            <argument_name>: <argument_value>
+      data_tests:
+        - [<test_name>](#custom-data-test-name)
+        - [<test_name>](#custom-data-test-name):
+            arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+              <argument_name>: <argument_value>
             [config](/reference/resource-properties/config):
               [<test_config>](/reference/data-test-configs): <config-value>
 
       columns:
         - name: <column_name>
-          tests:
-            - [<test_name>](#test_name)
-            - [<test_name>](#test_name):
-                <argument_name>: <argument_value>
+          data_tests:
+            - [<test_name>](#custom-data-test-name)
+            - [<test_name>](#custom-data-test-name):
+                arguments:
+                  <argument_name>: <argument_value>
                 [config](/reference/resource-properties/config):
                   [<test_config>](/reference/data-test-configs): <config-value>
 
@@ -84,23 +87,24 @@ sources:
 <File name='seeds/<filename>.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: <seed_name>
-    tests:
-      - [<test_name>](#test_name)
-      - [<test_name>](#test_name):
-          <argument_name>: <argument_value>
+    data_tests:
+      - [<test_name>](#custom-data-test-name)
+      - [<test_name>](#custom-data-test-name):
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
 
     columns:
       - name: <column_name>
-        tests:
-          - [<test_name>](#test_name)
-          - [<test_name>](#test_name):
-              <argument_name>: <argument_value>
+        data_tests:
+          - [<test_name>](#custom-data-test-name)
+          - [<test_name>](#custom-data-test-name):
+              arguments:
+                <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [<test_config>](/reference/data-test-configs): <config-value>
 
@@ -115,23 +119,24 @@ seeds:
 <File name='snapshots/<filename>.yml'>
 
 ```yml
-version: 2
 
 snapshots:
   - name: <snapshot_name>
-    tests:
-      - [<test_name>](#test_name)
-      - [<test_name>](#test_name):
-          <argument_name>: <argument_value>
+    data_tests:
+      - [<test_name>](#custom-data-test-name)
+      - [<test_name>](#custom-data-test-name):
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [<test_config>](/reference/data-test-configs): <config-value>
 
     columns:
       - name: <column_name>
-        tests:
-          - [<test_name>](#test_name)
-          - [<test_name>](#test_name):
-              <argument_name>: <argument_value>
+        data_tests:
+          - [<test_name>](#custom-data-test-name)
+          - [<test_name>](#custom-data-test-name):
+              arguments:
+                <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [<test_config>](/reference/data-test-configs): <config-value>
 
@@ -156,9 +161,9 @@ snapshots:
 
 ## Описание
 
-Свойство `tests` данных определяет утверждения о столбце, <Term id="table" />, или <Term id="view" />. Это свойство содержит список [общих тестов](/docs/build/data-tests#generic-data-tests), указанных по имени, которые могут включать четыре встроенных общих теста, доступных в dbt. Например, вы можете добавить тесты, которые гарантируют, что в столбце нет дубликатов и нулевых значений. Любые аргументы или [конфигурации](/reference/data-test-configs), переданные этим тестам, должны быть вложены под именем теста.
+Свойство `data_tests` определяет проверки (assertions) для столбца, <Term id="table" /> или <Term id="view" />. Это свойство содержит список [обобщённых тестов данных](/docs/build/data-tests#generic-data-tests), на которые ссылаются по имени; в него могут входить четыре встроенных обобщённых теста, доступных в dbt. Например, вы можете добавить тесты данных, которые гарантируют, что столбец не содержит дубликатов и нулевых значений. Любые аргументы или [конфигурации](/reference/data-test-configs), передаваемые в эти тесты данных, должны быть вложены в свойство `arguments`.
 
-После того как эти тесты определены, вы можете проверить их корректность, запустив `dbt test`.
+После определения этих тестов данных вы можете проверить их корректность, выполнив команду `dbt test`.
 
 ## Готовые тесты данных
 
@@ -166,18 +171,17 @@ snapshots:
 
 ### `not_null`
 
-Этот тест проверяет, что в столбце нет значений `null`.
+Этот тест данных проверяет, что в столбце отсутствуют значения `null`.
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - not_null
 ```
 
@@ -185,20 +189,19 @@ models:
 
 ### `unique`
 
-Этот тест проверяет, что в поле нет дублирующихся значений.
+Этот data test проверяет, что в поле отсутствуют дублирующиеся значения.
 
-Конфигурация и условие where являются необязательными.
+Параметр `config` и выражение `where` являются необязательными.
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique:
               config:
                 where: "order_id > 21"
@@ -208,51 +211,52 @@ models:
 
 ### `accepted_values`
 
-Этот тест проверяет, что все значения в столбце присутствуют в предоставленном списке `values`. Если присутствуют какие-либо значения, отличные от указанных в списке, тест не пройдет.
+Этот тест данных проверяет, что все **не-`null`** значения в колонке присутствуют в предоставленном списке `values`. Если в колонке обнаруживаются какие-либо значения, отсутствующие в этом списке, тест данных завершится с ошибкой.
 
 Тест `accepted_values` поддерживает необязательный параметр `quote`, который по умолчанию будет заключать в одинарные кавычки список допустимых значений в запросе теста. Чтобы протестировать нестроковые значения (например, целые числа или логические значения), явно установите конфигурацию `quote` в `false`.
 
 <File name='schema.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
-              values: ['placed', 'shipped', 'completed', 'returned']
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ['placed', 'shipped', 'completed', 'returned']
 
       - name: status_id
-        tests:
+        data_tests:
           - accepted_values:
-              values: [1, 2, 3, 4]
-              quote: false
+              arguments:
+                values: [1, 2, 3, 4]
+                quote: false
 ```
 
 </File>
 
 ### `relationships`
 
-Этот тест проверяет, что все записи в дочерней <Term id="table" /> имеют соответствующую запись в родительской таблице. Это свойство называется "ссылочная целостность".
+Этот тест данных проверяет, что у всех записей в дочерней таблице `<Term id="table" />` есть соответствующая запись в родительской таблице. Это свойство называется «референциальной целостностью» (referential integrity). Тест автоматически исключает значения `NULL` из проверки — так же, как это делают ограничения внешних ключей в базах данных. Если значения `NULL` должны приводить к ошибкам, используйте тест `not_null` отдельно.
 
 Следующий пример проверяет, что каждый `customer_id` заказа соответствует действительному `customer`.
 
 <File name='schema.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: customer_id
-        tests:
+        data_tests:
           - relationships:
-              to: ref('customers')
-              field: id
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('customers')
+                field: id
 ```
 
 </File>
@@ -266,67 +270,73 @@ models:
 
 <File name='models/orders.yml'>
 
-```yml
-version: 2
+```yaml
 
 models:
   - name: orders
-    tests:
-      - unique:
-          column_name: "country_code || '-' || order_id"
+    description: 
+        Order overview data mart, offering key details for each order including if it's a customer's first order and a food vs. drink item breakdown. One row per order.
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+            expression: "order_items_subtotal = subtotal"
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "order_total = subtotal + tax_paid"
 ```
-
 </File>
 
-### Использование пользовательского общего теста
+В этом примере основное внимание уделяется тестированию выражений, чтобы убедиться, что `order_items_subtotal` равен `subtotal`, а `order_total` корректно суммирует `subtotal` и `tax_paid`.
 
-Если вы определили свой собственный пользовательский общий тест, вы можете использовать его в качестве `test_name`:
+### Использование пользовательского обобщённого (generic) теста данных
+
+Если вы определили собственный пользовательский обобщённый тест данных, вы можете использовать его в качестве `test_name`:
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: order_id
-        tests:
-          - primary_key  # имя моего пользовательского общего теста
+        data_tests:
+          - primary_key  # name of my custom generic test
 
 ```
 
 </File>
 
-Ознакомьтесь с руководством по написанию [пользовательского общего теста](/best-practices/writing-custom-generic-tests) для получения дополнительной информации.
+Ознакомьтесь с руководством по написанию [пользовательского обобщённого теста данных](/best-practices/writing-custom-generic-tests), чтобы получить больше информации.
 
 ### Пользовательское имя теста данных
 
-По умолчанию dbt синтезирует имя для вашего общего теста, объединяя:
+По умолчанию dbt синтезирует имя для обобщённого data test, объединяя:
+
 - имя теста (`not_null`, `unique` и т.д.)
 - имя модели (или source/seed/snapshot)
-- имя столбца (если применимо)
-- аргументы (если применимо, например, `values` для `accepted_values`)
+- имя колонки (если применимо)
+- аргументы (если применимо, например `values` для `accepted_values`)
 
-Оно не включает в себя никакие конфигурации для теста. Если объединенное имя слишком длинное, dbt использует усеченную и хешированную версию вместо него. Цель состоит в том, чтобы сохранить уникальные идентификаторы для всех ресурсов в вашем проекте, включая тесты.
+При этом в имя не включаются никакие конфигурации data test. Если получившееся объединённое имя слишком длинное, dbt вместо него использует усечённую и захэшированную версию. Цель этого механизма — сохранить уникальные идентификаторы для всех ресурсов в проекте, включая тесты.
 
-Вы также можете определить свое собственное имя для конкретного теста через свойство `name`.
+Вы также можете задать собственное имя для конкретного data test с помощью свойства `name`.
 
-**Когда это может понадобиться?** Подход dbt по умолчанию может привести к появлению странных (и некрасивых) имен тестов. Определив пользовательское имя, вы получаете полный контроль над тем, как тест будет отображаться в сообщениях журнала и метаданных. Вы также сможете выбрать тест по этому имени.
+**Когда это может понадобиться?** Подход dbt по умолчанию иногда приводит к довольно странным (и не очень красивым) именам data test. Определив пользовательское имя, вы получаете полный контроль над тем, как тест будет выглядеть в логах и метаданных. Кроме того, вы сможете выбирать этот data test по заданному имени.
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               name: unexpected_order_status_today
-              values: ['placed', 'shipped', 'completed', 'returned']
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
 ```
@@ -350,26 +360,27 @@ $ dbt test --select unexpected_order_status_today
 12:43:41  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-Имя теста должно быть уникальным для всех тестов, определенных для данной комбинации модель-столбец. Если вы дадите одинаковое имя тестам, определенным для нескольких разных столбцов или в нескольких разных моделях, то `dbt test --select <repeated_custom_name>` выберет их все.
+Имя data‑теста должно быть уникальным для всех тестов, определённых для конкретной комбинации модели и колонки. Если вы зададите одно и то же имя data‑тестам, определённым для нескольких разных колонок или для нескольких разных моделей, то команда `dbt test --select <repeated_custom_name>` выберет их все.
 
-**Когда это может понадобиться?** В случаях, когда вы определили один и тот же тест дважды, с единственным различием в конфигурации, dbt будет считать эти тесты дубликатами:
+**Когда это может понадобиться?** В ситуациях, когда вы определили один и тот же data‑тест дважды, но с различиями только в конфигурации, dbt будет считать такие data‑тесты дубликатами:
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
-              values: ['placed', 'shipped', 'completed', 'returned']
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
           - accepted_values:
-              values: ['placed', 'shipped', 'completed', 'returned']
+              arguments:
+                values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 # единственное различие в конфигурации 'where'
                 where: "order_date = (current_date - interval '1 day')" # синтаксис PostgreSQL
@@ -389,26 +400,27 @@ Compilation Error
   - test.testy.accepted_values_orders_status__placed__shipped__completed__returned.69dce9e5d5 (models/one_file.yml)
 ```
 
-Предоставив пользовательское имя, вы помогаете dbt различать тесты:
+Предоставляя пользовательское имя, вы помогаете dbt различать тесты данных:
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - accepted_values:
               name: unexpected_order_status_today
-              values: ['placed', 'shipped', 'completed', 'returned']
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
           - accepted_values:
               name: unexpected_order_status_yesterday
-              values: ['placed', 'shipped', 'completed', 'returned']
+              arguments:
+                values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = (current_date - interval '1 day')" # PostgreSQL
 ```
@@ -434,31 +446,31 @@ $ dbt test
 12:48:04  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 ```
 
-**Если используется [`store_failures`](/reference/resource-configs/store_failures):** dbt использует имя каждого теста данных в качестве имени таблицы, в которой будут храниться любые неудачные записи. Если вы определили пользовательское имя для одного теста, это пользовательское имя также будет использоваться для его таблицы с неудачами. Вы можете дополнительно настроить [`alias`](/reference/resource-configs/alias) для теста, чтобы отдельно управлять как именем теста (для метаданных), так и именем его таблицы в базе данных (для хранения неудач).
+**Если используется [`store_failures`](/reference/resource-configs/store_failures):** dbt использует имя каждого data test в качестве имени таблицы, в которой будут храниться записи, не прошедшие проверку. Если для конкретного data test задано пользовательское имя, именно оно будет использовано и для таблицы с ошибками. При необходимости вы можете дополнительно настроить [`alias`](/reference/resource-configs/alias) для data test, чтобы раздельно управлять именем самого data test (для метаданных) и именем таблицы в базе данных (для хранения неуспешных записей).
 
 ### Альтернативный формат для определения тестов
 
-При определении общего теста данных с несколькими аргументами и конфигурациями YAML может выглядеть и ощущаться громоздким. Если вам так удобнее, вы можете определить те же свойства теста в виде ключей верхнего уровня одного словаря, указав имя теста как `test_name`. Это полностью на ваше усмотрение.
+При определении универсального теста данных с несколькими аргументами и конфигурациями YAML может выглядеть громоздко и быть неудобным для чтения. Если так проще, вы можете задать те же свойства теста данных как верхнеуровневые ключи одного словаря, указав имя теста данных в ключе `test_name`. Это полностью на ваше усмотрение.
 
 Этот пример идентичен предыдущему:
 
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 models:
   - name: orders
     columns:
       - name: status
-        tests:
+        data_tests:
           - name: unexpected_order_status_today
-            test_name: accepted_values  # имя общего теста для применения
-            values:
-              - placed
-              - shipped
-              - completed
-              - returned
+            test_name: accepted_values  # имя применяемого обобщённого теста
+            arguments: # доступно в v1.10.5 и выше. В более старых версиях можно задавать <argument_name> как свойство верхнего уровня.
+              values:
+                - placed
+                - shipped
+                - completed
+                - returned
             config:
               where: "order_date = current_date"
 ```

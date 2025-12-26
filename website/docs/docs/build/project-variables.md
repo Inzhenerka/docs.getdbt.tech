@@ -1,5 +1,6 @@
 ---
 title: "Переменные проекта"
+description: "Используйте переменные проекта dbt для настройки условной или повторно используемой логики в моделях и других ресурсах."
 id: "project-variables"
 pagination_next: "docs/build/environment-variables"
 ---
@@ -12,6 +13,10 @@ dbt предоставляет механизм, [переменные](/referen
 
 1. В файле `dbt_project.yml`
 2. В командной строке
+
+Обратите внимание: см. раздел [YAML tips](/docs/build/dbt-tips#yaml-tips), чтобы узнать больше о работе с YAML.
+
+### Определение переменных в `dbt_project.yml`
 
 ### Определение переменных в `dbt_project.yml`
 

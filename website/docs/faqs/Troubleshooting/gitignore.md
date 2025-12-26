@@ -5,13 +5,13 @@ sidebar_label: 'Как исправить ваш файл .gitignore'
 id: gitignore
 ---
 
-Файл gitignore указывает, какие файлы Git должен намеренно игнорировать. Вы можете определить эти файлы в вашем проекте по их курсивному форматированию.
+Файл gitignore определяет, какие файлы <Constant name="git" /> должен намеренно игнорировать. В вашем проекте такие файлы можно распознать по их курсивному оформлению.
 
 Если вы не можете отменить изменения, переключиться на ветку или нажать на commit &mdash; это обычно происходит из-за отсутствия файла [.gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) в вашем проекте ИЛИ ваш файл gitignore не содержит необходимого содержимого внутри папки.
 
 Чтобы исправить это, выполните следующие шаги:
 
-1. В dbt Cloud IDE добавьте следующее [содержимое .gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) в файл `.gitignore` вашего dbt проекта:
+1. В <Constant name="cloud_ide" /> добавьте следующее содержимое [.gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) в файл `.gitignore` вашего dbt‑проекта:
 ```bash
 target/
 dbt_packages/
@@ -19,20 +19,20 @@ logs/
 # legacy -- переименовано в dbt_packages в dbt v1
 dbt_modules/
 ```
-2. Сохраните изменения, но _не коммитьте их_
-3. Перезапустите IDE, нажав на три точки рядом с кнопкой **IDE Status** в нижнем правом углу IDE.
+2. Сохраните изменения, но _не делайте commit_.
+3. Перезапустите <Constant name="cloud_ide" />, нажав на три точки рядом с **кнопкой статуса <Constant name="cloud_ide" />** в правом нижнем углу <Constant name="cloud_ide" />.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.jpg" width="50%" title="Перезапустите IDE, нажав на три точки в нижнем правом углу или кликнув на строку состояния" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.png" width="50%" title="Перезапуск IDE с помощью кнопки с тремя точками в правом нижнем углу или через строку статуса" />
 
-4. Выберите **Restart IDE**.
-5. Вернитесь в ваш dbt проект и удалите следующие файлы или папки, если они у вас есть:
+4. Выберите **Restart <Constant name="cloud_ide" />**.
+5. Вернитесь в **File explorer** в IDE и удалите следующие файлы или папки, если они у вас есть:
     * `target`, `dbt_modules`, `dbt_packages`, `logs`
-6. **Сохраните**, затем **Commit и sync** ваши изменения.
-7. Снова перезапустите IDE.
-8. Создайте pull request (PR) в меню **Version Control**, чтобы интегрировать ваши новые изменения.
-9. Слейте PR на странице вашего git-провайдера.
-10. Переключитесь на вашу основную ветку и нажмите **Pull from remote**, чтобы подтянуть все изменения, которые вы внесли в основную ветку. Вы можете проверить изменения, убедившись, что файлы/папки в файле .gitignore выделены курсивом.
+6. **Сохраните** изменения, затем выполните **Commit and sync**.
+7. Снова перезапустите <Constant name="cloud_ide" />.
+8. В меню **Version Control** создайте pull request (PR), чтобы интегрировать новые изменения.
+9. Выполните merge PR на странице вашего git‑провайдера.
+10. Переключитесь на основную ветку и нажмите **Pull from remote**, чтобы подтянуть все изменения в основную ветку. Вы можете проверить, что всё применилось корректно, убедившись, что файлы и папки, указанные в `.gitignore`, отображаются курсивом.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/gitignore-italics.jpg" width="50%" title="Проект dbt на основной ветке с правильно настроенными папками gitignore (выделены курсивом)."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/gitignore-italics.png" width="50%" title="Проект dbt в основной ветке с корректно настроенными папками из gitignore (выделены курсивом)." />
 
 Для получения дополнительной информации, обратитесь к этому [подробному видео](https://www.loom.com/share/9b3b8e2b617f41a8bad76ec7e42dd014) для дополнительной помощи.

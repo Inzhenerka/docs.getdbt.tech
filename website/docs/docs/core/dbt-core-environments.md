@@ -1,5 +1,5 @@
 ---
-title: "Среды dbt Core"
+title: "Окружения dbt"
 id: "dbt-core-environments"
 pagination_next: "docs/running-a-dbt-project/run-your-dbt-projects"
 ---

@@ -1,14 +1,14 @@
 ---
 title: "О справочнике"
 id: "references-overview"
-sidebar_label: "О справочнике"
-description: "Подключите dbt к любой платформе данных в dbt Cloud или dbt Core, используя специальный адаптер-плагин"
+sidebar_label: "О ссылках"
+description: "Подключите dbt к любой платформе данных в dbt platform или dbt Core, используя специализированный плагин адаптера"
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 ---
 
-Раздел "Справочник" содержит справочные материалы для разработки с использованием dbt, включая dbt Cloud и dbt Core.
+Раздел References содержит справочные материалы для разработки с использованием dbt, включая <Constant name="cloud" /> и <Constant name="core" />.
 
 Узнайте, как добавить больше конфигураций в ваш проект dbt или адаптер, используйте свойства для расширения возможностей, обратитесь к командам dbt, используйте мощные функции Jinja для оптимизации вашего проекта dbt и поймите, как использовать артефакты dbt.  <br />
 
@@ -22,8 +22,8 @@ pagination_prev: null
 
 <Card
     title="Конфигурации, специфичные для платформы"
-    body="Узнайте, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных, в dbt Cloud и dbt Core."
-    link="/reference/resource-configs/postgres-configs"
+    body="Узнайте, как оптимизировать производительность с помощью конфигураций, специфичных для платформ данных, в dbt и dbt Core."
+    link="/reference/resource-configs/resource-configs"
     icon="computer"/>
 
 <Card

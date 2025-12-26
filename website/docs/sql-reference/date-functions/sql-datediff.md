@@ -56,9 +56,9 @@ datediff(<date part>, <start date/time>, <end date/time>)
 
 Возможно, вы сможете запомнить синтаксис функции DATEDIFF для основного хранилища данных, которое вы используете. Что произойдет, когда вы перейдете на другое для новой работы или нового стека данных? Запоминание, есть ли подчеркивание в имени функции или в каком аргументе передается `<date part>`, не доставляет удовольствия и приводит к неизбежным, бесчисленным поискам в Google «datediff в bigquery».
 
-К счастью, [dbt-core](https://github.com/dbt-labs/dbt-core) вас поддерживает! dbt Core — это продукт с открытым исходным кодом, который помогает специалистам по данным писать свои [трансформации данных](https://www.getdbt.com/analytics-engineering/transformation/), следуя лучшим практикам программной инженерии.
+К счастью, [<Constant name="core" />](https://github.com/dbt-labs/dbt-core) прикроет вам спину! <Constant name="core" /> — это open source‑продукт dbt, который помогает специалистам по данным писать свои [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) в соответствии с лучшими практиками программной инженерии.
 
-[Адаптеры](https://docs.getdbt.com/docs/supported-data-platforms) поддерживают [кросс-базовые макросы](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros), чтобы помочь вам писать определенные функции, такие как DATE_TRUNC и DATEDIFF, без необходимости запоминать сложный синтаксис функций.
+[Adapters](/docs/supported-data-platforms) поддерживают [cross-database macros](/reference/dbt-jinja-functions/cross-database-macros), которые помогают писать некоторые функции, такие как DATE_TRUNC и DATEDIFF, без необходимости запоминать специфичный синтаксис функций для каждой базы данных.
 
 Используя макрос DATEDIFF, вы можете вычислить разницу между двумя датами, не беспокоясь о сложном синтаксисе. Это означает, что вы можете успешно запускать один и тот же код в нескольких базах данных, не беспокоясь о сложных различиях в синтаксисе.
 

@@ -5,7 +5,7 @@ id: "spark-setup"
 meta:
   maintained_by: dbt Labs
   authors: 'core dbt maintainers'
-  github_repo: 'dbt-labs/dbt-spark'
+  github_repo: 'dbt-labs/dbt-adapters'
   pypi_package: 'dbt-spark'
   min_core_version: 'v0.15.0'
   cloud_support: Supported
@@ -52,13 +52,15 @@ $ python -m pip install "dbt-spark[session]"
 
 dbt-spark может подключаться к кластерам Spark четырьмя различными методами:
 
-- [`odbc`](#odbc) является предпочтительным методом при подключении к Databricks. Он поддерживает подключение к SQL Endpoint или универсальному интерактивному кластеру.
-- [`thrift`](#thrift) подключается напрямую к ведущему узлу кластера, либо локально размещенному, либо в облаке (например, Amazon EMR).
-- [`http`](#http) является более общим методом для подключения к управляемому сервису, предоставляющему HTTP endpoint. В настоящее время это включает подключения к интерактивному кластеру Databricks.
-- [`session`](#session) подключается к pySpark сессии, работающей локально или на удаленной машине.
+- [`odbc`](#odbc) — предпочтительный метод при подключении к Databricks. Он поддерживает подключение к SQL Endpoint или к универсальному интерактивному кластеру.
+- [`thrift`](#thrift) — подключается напрямую к ведущему (lead) узлу кластера, развернутого локально / on‑premise или в облаке (например, Amazon EMR).
+- [`http`](#http) — более универсальный метод подключения к управляемому сервису, который предоставляет HTTP‑endpoint. В настоящее время это включает подключения к интерактивному кластеру Databricks.
 
-:::info Расширенная функциональность
-Метод подключения `session` предназначен для опытных пользователей и экспериментальной разработки dbt. Этот метод подключения не поддерживается в dbt Cloud.
+- [`session`](#session) — подключается к pySpark‑сессии, запущенной локально или на удалённой машине.
+
+:::info Advanced functionality
+Метод подключения `session` предназначен для опытных пользователей и экспериментальной разработки в dbt. Этот метод подключения не поддерживается в <Constant name="cloud" />.
+:::
 :::
 
 ### ODBC
@@ -95,7 +97,7 @@ your_profile_name:
 
 ### Thrift
 
-Используйте метод подключения `thrift`, если вы подключаетесь к Thrift-серверу, расположенному перед кластером Spark, например, кластеру, работающему локально или на Amazon EMR.
+Используйте метод подключения `thrift`, если вы подключаетесь к Thrift‑серверу, который находится перед кластером Spark, например к кластеру, запущенному локально или в Amazon EMR.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -112,9 +114,9 @@ your_profile_name:
       # опционально
       port: [port]              # по умолчанию 10001
       user: [user]
-      auth: [e.g. KERBEROS]
-      kerberos_service_name: [e.g. hive]
-      use_ssl: [true|false]   # значение hive.server2.use.SSL, по умолчанию false
+      auth: [например, KERBEROS]
+      kerberos_service_name: [например, hive]
+      use_ssl: [true|false]   # значение параметра hive.server2.use.SSL, по умолчанию false
       server_side_parameters:
         "spark.driver.memory": "4g" 
 ```
@@ -123,7 +125,7 @@ your_profile_name:
 
 ### HTTP
 
-Используйте метод `http`, если ваш провайдер Spark поддерживает общие подключения через HTTP (например, интерактивный кластер Databricks).
+Используйте метод `http`, если ваш Spark‑провайдер поддерживает универсальные подключения по HTTP (например, интерактивный кластер Databricks).
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -205,7 +207,7 @@ Spark может быть настроен с использованием [Св
 
 ### Поддерживаемая функциональность
 
-Большинство функциональности dbt Core поддерживается, но некоторые функции доступны только на Delta Lake (Databricks).
+Большая часть функциональности <Constant name="core" /> поддерживается, однако некоторые возможности доступны только в Delta Lake (Databricks).
 
 Функции, доступные только в Delta:
 1. Инкрементальные обновления моделей по `unique_key` вместо `partition_by` (см. [стратегию `merge`](/reference/resource-configs/spark-configs#the-merge-strategy))

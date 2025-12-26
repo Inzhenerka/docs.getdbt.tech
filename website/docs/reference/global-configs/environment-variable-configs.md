@@ -17,4 +17,10 @@ dbt run
 
 </File>
 
-Для получения более подробной информации, прочитайте нашу [страницу о переменных окружения](/docs/build/environment-variables).
+Для получения более подробной информации ознакомьтесь с нашей страницей [environment variables page](/docs/build/environment-variables).
+
+## Приоритет конфигурации
+
+import SettingFlags from '/snippets/_setting-flags.md';
+
+<SettingFlags />

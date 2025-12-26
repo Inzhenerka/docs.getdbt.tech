@@ -25,4 +25,4 @@ sidebar_label: "Подключение Starburst или Trino"
 
 ## Конфигурация
 
-Чтобы узнать, как оптимизировать производительность с помощью специфичных для платформы данных конфигураций в dbt Cloud, обратитесь к [конфигурации, специфичной для Starburst/Trino](/reference/resource-configs/trino-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных, в <Constant name="cloud" />, см. [конфигурацию, специфичную для Starburst/Trino](/reference/resource-configs/trino-configs).

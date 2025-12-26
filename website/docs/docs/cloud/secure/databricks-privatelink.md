@@ -1,18 +1,20 @@
 ---
-title: "Настройка Databricks PrivateLink"
+title: "Настройка Databricks и AWS PrivateLink"
 id: databricks-privatelink
-description: "Настройка PrivateLink для Databricks"
-sidebar_label: "PrivateLink для Databricks"
+description: "Настройка AWS PrivateLink для Databricks"
+sidebar_label: "AWS PrivateLink для Databricks"
 pagination_next: null
 ---
 
-import SetUpPages from '/snippets/_available-tiers-privatelink.md';
-import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
-import CloudProviders from '/snippets/_privatelink-across-providers.md';
+# Configuring Databricks PrivateLink <Lifecycle status="managed_plus" />
 
-<SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
+import SetUpPages from '/snippets/_available-tiers-private-connection.md';
+import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
+import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-Следующие шаги помогут вам настроить конечную точку Databricks AWS PrivateLink или Azure Private Link в многопользовательской среде dbt Cloud.
+<SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
+
+Следующие шаги проведут вас через настройку конечной точки Databricks AWS PrivateLink в многопользовательской среде <Constant name="cloud" />.
 
 <CloudProviders type='Databricks'/>
 
@@ -21,20 +23,20 @@ import CloudProviders from '/snippets/_privatelink-across-providers.md';
 1. Найдите ваше [имя экземпляра Databricks](https://docs.databricks.com/en/workspace/workspace-details.html#workspace-instance-names-urls-and-ids)
     - Пример: `cust-success.cloud.databricks.com`
 
-1. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос на AWS PrivateLink в [поддержку dbt](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support): 
+1. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос на AWS PrivateLink в [dbt Support](/docs/dbt-support#dbt-cloud-support):  
     ```
-    Тема: Новый запрос на AWS Multi-Tenant PrivateLink
-    - Тип: Databricks
-    - Имя экземпляра Databricks:
-    - Регион кластера Databricks AWS (например, us-east-1, eu-west-2):
-    - Многопользовательская среда dbt Cloud (US, EMEA, AU):
+    Subject: New AWS Multi-Tenant PrivateLink Request
+    - Type: Databricks
+    - Databricks instance name:
+    - Databricks cluster AWS Region (for example, us-east-1, eu-west-2):
+    - dbt AWS multi-tenant environment (US, EMEA, AU):
     ```
     <PrivateLinkSLA />
 
-1. Как только поддержка dbt Cloud уведомит вас о завершении настройки, [зарегистрируйте конечную точку VPC в Databricks](https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html#step-3-register-privatelink-objects-and-attach-them-to-a-workspace) и прикрепите её к рабочей области:
-    - [Зарегистрируйте вашу конечную точку VPC](https://docs.databricks.com/en/security/network/classic/vpc-endpoints.html) &mdash; Зарегистрируйте конечную точку VPC, используя предоставленный поддержкой dbt идентификатор конечной точки VPC.
-    - [Создайте объект настроек частного доступа](https://docs.databricks.com/en/security/network/classic/private-access-settings.html) &mdash; Создайте объект настроек частного доступа (PAS) с желаемыми настройками публичного доступа, установив уровень частного доступа на **Endpoint**. Выберите зарегистрированную конечную точку, созданную на предыдущем шаге.
-    - [Создайте или обновите вашу рабочую область](https://docs.databricks.com/en/security/network/classic/privatelink.html#step-3d-create-or-update-the-workspace-front-end-back-end-or-both) &mdash; Создайте рабочую область или обновите существующую. В разделе **Расширенные настройки → Private Link** выберите объект настроек частного доступа, созданный на предыдущем шаге.
+1. После того как служба поддержки <Constant name="cloud" /> уведомит вас о завершении настройки, [зарегистрируйте VPC endpoint в Databricks](https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html#step-3-register-privatelink-objects-and-attach-them-to-a-workspace) и подключите его к workspace:
+    - [Register your VPC endpoint](https://docs.databricks.com/en/security/network/classic/vpc-endpoints.html) &mdash; Зарегистрируйте VPC endpoint, используя VPC endpoint ID, предоставленный службой поддержки dbt.
+    - [Create a Private Access Settings object](https://docs.databricks.com/en/security/network/classic/private-access-settings.html) &mdash; Создайте объект Private Access Settings (PAS) с нужными вам настройками публичного доступа и установите Private Access Level в значение **Endpoint**. Выберите зарегистрированный endpoint, созданный на предыдущем шаге.
+    - [Create or update your workspace](https://docs.databricks.com/en/security/network/classic/privatelink.html#step-3d-create-or-update-the-workspace-front-end-back-end-or-both) &mdash; Создайте workspace или обновите существующий. В разделе **Advanced configurations → Private Link** выберите объект Private Access Settings, созданный на предыдущем шаге.
 
     :::warning
     Если вы используете существующую рабочую область Databricks, все рабочие нагрузки в этой области должны быть остановлены для включения Private Link. Рабочие нагрузки также не могут быть запущены в течение 20 минут после внесения изменений. Из [документации Databricks](https://docs.databricks.com/en/security/network/classic/privatelink.html#step-3d-create-or-update-the-workspace-front-end-back-end-or-both):
@@ -43,29 +45,12 @@ import CloudProviders from '/snippets/_privatelink-across-providers.md';
 
     :::
 
-## Настройка Azure Private Link
+## Создание подключения в dbt
 
-1. Перейдите в вашу рабочую область Azure Databricks. 
-    Формат пути: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Databricks/workspaces/<workspace_name>`.
-2. На странице обзора рабочей области нажмите **JSON view**. 
-3. Скопируйте значение в поле `resource_id`.  
-4. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос на Azure Private Link в [поддержку dbt](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support): 
-    ```
-      Тема: Новый запрос на Azure Multi-Tenant Private Link
-    - Тип: Databricks
-    - Имя экземпляра Databricks:
-    - Идентификатор ресурса Azure Databricks:
-    - Многопользовательская среда dbt Cloud: EMEA
-    ```
-5. Как только наша команда поддержки подтвердит, что ресурсы доступны в портале Azure, перейдите в рабочую область Azure Databricks и перейдите в **Networking** > **Private Endpoint Connections**. Затем выделите опцию с именем `dbt` и выберите **Approve**.
+После того как вы завершили настройку в окружении Databricks, вы сможете сконфигурировать приватный endpoint в <Constant name="cloud" />:
 
-
-## Создание подключения в dbt Cloud
-
-После завершения настройки в среде Databricks вы сможете настроить частную конечную точку в dbt Cloud:
-
-1. Перейдите в **Settings** → **Create new project** → выберите **Databricks**. 
-2. Вы увидите две радиокнопки: **Public** и **Private.** Выберите **Private**. 
-3. Выберите частную конечную точку из выпадающего списка (это автоматически заполнит поле hostname/account).
-4. Настройте оставшиеся детали платформы данных.
-5. Проверьте ваше подключение и сохраните его.
+1. Перейдите в **Settings** → **Create new project** → выберите **Databricks**.  
+2. Вы увидите два переключателя: **Public** и **Private**. Выберите **Private**.  
+3. Выберите приватный endpoint из выпадающего списка (поле hostname/account будет заполнено автоматически).  
+4. Настройте остальные параметры платформы данных.  
+5. Проверьте подключение и сохраните его.

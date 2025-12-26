@@ -4,7 +4,7 @@ datatype: <string>
 default_value: ","
 ---
 
-Поддерживается в версии 1.7 и выше.
+<VersionCallout version="1.7" />
 
 ## Определение
 
@@ -34,7 +34,6 @@ seeds:
 <File name='seeds/properties.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: <seed_name>
@@ -95,7 +94,6 @@ doug,2
 <File name='seeds/properties.yml'>
 
 ```yml
-version: 2
 
 seeds:
   - name: country_codes

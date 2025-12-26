@@ -9,7 +9,7 @@ sidebar: "Быстрое завершение при ошибке"
 Например, вы можете выбрать для выполнения четыре модели, но если в первой модели произойдет ошибка, это предотвратит выполнение других моделей:
 
 ```text
-dbt -x run --threads 1
+$ dbt run -x --threads 1
 Running with dbt=1.0.0
 Found 4 models, 1 test, 1 snapshot, 2 analyses, 143 macros, 0 operations, 1 seed file, 0 sources
 

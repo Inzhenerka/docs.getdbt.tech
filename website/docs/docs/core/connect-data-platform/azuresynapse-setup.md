@@ -1,6 +1,6 @@
 ---
-title: "Настройка Microsoft Azure Synapse DWH"
-description: "Прочтите это руководство, чтобы узнать о настройке хранилища данных Microsoft Azure Synapse в dbt."
+title: "Настройка Microsoft Azure Synapse Analytics"
+description: "Прочитайте это руководство, чтобы узнать о настройке выделенного пула SQL Microsoft Azure Synapse Analytics в dbt."
 meta:
   maintained_by: Microsoft
   authors: 'Microsoft (https://github.com/Microsoft)'
@@ -17,7 +17,9 @@ meta:
 
 :::info
 
-Следующее руководство посвящено использованию выделенных SQL-пулов Azure Synapse Analytics, ранее известных как SQL DW. Для получения дополнительной информации обратитесь к [Что такое выделенный SQL-пул (ранее SQL DW) в Azure Synapse Analytics?](https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is).
+Ниже приведено руководство по использованию **выделенных SQL-пулов Azure Synapse Analytics** (ранее — SQL DW). Для получения дополнительной информации см. статью [What is dedicated SQL pool (formerly SQL DW) in Azure Synapse Analytics?](https://learn.microsoft.com/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is).
+
+Инструкции по настройке dbt для Microsoft Fabric см. в разделе [Microsoft Fabric Data Warehouse](/docs/core/connect-data-platform/fabric-setup).
 
 Обратитесь к [Microsoft Fabric Synapse Data Warehouse](/docs/core/connect-data-platform/fabric-setup), чтобы настроить его с dbt.
 
@@ -31,8 +33,8 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 :::info Только выделенные SQL
 
-Azure Synapse предлагает как выделенные SQL-пулы, так и серверные SQL-пулы.
-**Только выделенные SQL-пулы поддерживаются этим адаптером. 
+Azure Synapse Analytics предлагает как **dedicated SQL pools**, так и **serverless SQL pools**.  
+**Этим адаптером поддерживаются только Dedicated SQL Pools.**
 
 :::
 
@@ -44,8 +46,8 @@ Azure Synapse предлагает как выделенные SQL-пулы, т�
 sudo apt install unixodbc-dev
 ```
 
-Скачайте и установите [Microsoft ODBC Driver 18 для SQL Server](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15).
-Если у вас уже установлен ODBC Driver 17, то он также будет работать.
+Скачайте и установите [Microsoft ODBC Driver 18 for SQL Server](https://docs.microsoft.com/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15).
+Если у вас уже установлен ODBC Driver 17, его также можно использовать.
 
 :::tip Изменение настроек по умолчанию в dbt-synapse v1.2 / ODBC Driver 18
 Microsoft внесла несколько изменений, связанных с шифрованием соединений. Подробнее об изменениях читайте [здесь](/docs/core/connect-data-platform/mssql-setup).

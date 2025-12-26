@@ -1,7 +1,7 @@
 ---
 title: "Семантические модели"
 id: "semantic-models"
-description: "Семантические модели — это абстракции в формате yml поверх модели dbt, соединенные через ключи соединения как ребра"
+description: "Семантические модели — это YAML-абстракции поверх модели dbt, связанные между собой с помощью ключей соединения в качестве рёбер"
 keywords:
   - слой метрик dbt
 sidebar_label: Семантические модели
@@ -13,7 +13,7 @@ import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
 
 <CopilotBeta resource='semantic models' />
 
-Семантические модели являются основой для определения данных в MetricFlow, который поддерживает семантический слой dbt:
+Семантические модели являются основой для описания данных в MetricFlow, который лежит в основе <Constant name="semantic_layer" />:
 
 - Представьте семантические модели как узлы, соединенные сущностями в семантическом графе.
 - MetricFlow использует YAML-файлы конфигурации для создания этого графа для запросов метрик.
@@ -259,7 +259,7 @@ import SetUpPages from '/snippets/\_metrics-dependencies.md';
 ## Связанные документы
 
 - [О MetricFlow](/docs/build/about-metricflow)
-- [Измерения](/docs/build/dimensions)
-- [Сущности](/docs/build/entities)
-- [Меры](/docs/build/measures)
-- [Руководство по лучшим практикам семантического слоя](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)
+- [Измерения (Dimensions)](/docs/build/dimensions)
+- [Сущности (Entities)](/docs/build/entities)
+- [Меры (Measures)](/docs/build/measures)
+- [Руководство по лучшим практикам <Constant name="semantic_layer" />](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)

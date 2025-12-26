@@ -30,7 +30,6 @@ select * from {{ source("source_name", "table_name") }}
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
 
 sources:
   - name: jaffle_shop # это source_name

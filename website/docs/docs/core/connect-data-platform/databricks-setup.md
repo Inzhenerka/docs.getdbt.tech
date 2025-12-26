@@ -38,7 +38,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ### Примеры {#examples}
 
-Вы можете использовать аутентификацию на основе токенов или аутентификацию на основе OAuth-клиента для подключения к Databricks. Обратитесь к следующим примерам для получения дополнительной информации о том, как настроить ваш профиль для каждого типа аутентификации.
+### Examples {#examples}
+
+Вы можете использовать аутентификацию на основе токена или аутентификацию на основе OAuth‑клиента для подключения к Databricks. Обратитесь к следующим примерам, чтобы узнать больше о том, как настроить профиль для каждого типа аутентификации.
+
+Приложение OAuth по умолчанию для dbt-databricks автоматически включено в каждой учетной записи с ожидаемыми настройками. Вы можете найти приложение адаптера в [Account Console](https://accounts.cloud.databricks.com) > [Settings](https://accounts.cloud.databricks.com/settings) > [App Connections](https://accounts.cloud.databricks.com/settings/app-integrations) > dbt adapter for Databricks. Если вы не можете найти приложение адаптера, возможно, dbt отключен в вашей учетной записи. В этом случае обратитесь к данному [руководству](https://docs.databricks.com/en/integrations/enable-disable-oauth.html), чтобы повторно включить dbt-databricks как OAuth‑приложение.
 
 <Tabs queryString="tokenoauth">
 
@@ -64,7 +68,8 @@ your_profile_name:
 
 </TabItem>
 
-<TabItem value="oauth" label="Аутентификация на основе OAuth-клиента">
+<TabItem value="oauth-m2m" label="Аутентификация OAuth на основе клиента (M2M)">
+
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -74,14 +79,37 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-      catalog: CATALOG_NAME #опциональное имя каталога, если вы используете Unity Catalog
-      schema: SCHEMA_NAME # Обязательно
-      host: YOUR_ORG.databrickshost.com # Обязательно
-      http_path: /SQL/YOUR/HTTP/PATH # Обязательно
-      auth_type: oauth # Обязательно, если используется аутентификация на основе OAuth
-      client_id: OAUTH_CLIENT_ID # ID вашего OAuth-приложения. Обязательно, если используется аутентификация на основе OAuth
-      client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXXX # Секрет OAuth-клиента. Обязательно, если используется аутентификация на основе OAuth
-      threads: 1_OR_MORE  # Опционально, по умолчанию 1
+      catalog: CATALOG_NAME # необязательное имя каталога, если вы используете Unity Catalog
+      schema: SCHEMA_NAME # обязательно
+      host: YOUR_ORG.databrickshost.com # обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # обязательно
+      auth_type: oauth # обязательно при использовании аутентификации на основе OAuth
+      client_id: OAUTH_CLIENT_ID # идентификатор вашего OAuth‑приложения. Обязательно при использовании OAuth. Для Azure Databricks ключ должен называться azure_client_id.
+      client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXXX # секрет OAuth‑клиента. Обязателен при использовании OAuth. Для Azure Databricks ключ должен называться azure_client_secret.
+      threads: 1_OR_MORE  # необязательно, значение по умолчанию — 1
+```
+</File>
+
+</TabItem>
+
+<TabItem value="oauth-u2m" label="Аутентификация OAuth на основе клиента (U2M)">
+
+<File name='~/.dbt/profiles.yml'>
+
+```yaml
+your_profile_name:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+```yaml
+catalog: CATALOG_NAME # необязательное имя каталога, если вы используете Unity Catalog
+schema: SCHEMA_NAME # обязательно
+host: YOUR_ORG.databrickshost.com # обязательно
+http_path: /SQL/YOUR/HTTP/PATH # обязательно
+auth_type: oauth # обязательно при использовании аутентификации на основе OAuth
+threads: 1_OR_MORE  # необязательно, по умолчанию 1
+```
 ```
 </File>
 
@@ -107,10 +135,12 @@ your_profile_name:
 
 | Поле     | Тип аутентификации | Описание | Пример | 
 | --------- | ------- | ----------- | ---- | 
-|  `token`  |  На основе токенов  | Личный токен доступа (PAT) для подключения к Databricks.  | `dapiXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
-|  `client_id`  | На основе OAuth |  ID клиента для вашего OAuth-приложения Databricks.<br />  | `OAUTH_CLIENT_ID`  | 
-|  `client_secret`  | На основе OAuth |  Секрет клиента для вашего OAuth-приложения Databricks. <br />  | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |  
-|  `auth_type`  |  На основе OAuth |  Тип авторизации, необходимый для подключения к Databricks. <br /> | `oauth`  |
+|  `token`  |  Token-based  | Персональный токен доступа (Personal Access Token, PAT) для подключения к Databricks.  | `dapiXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
+|  `client_id`  | OAuth-based (AWS/GCP) | Идентификатор клиента для вашего OAuth‑приложения Databricks.  | `OAUTH_CLIENT_ID`  | 
+|  `client_secret`  | OAuth-based (AWS/GCP) | Клиентский секрет для вашего OAuth‑приложения Databricks. | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |  
+|  `azure_client_id`  | OAuth-based (Azure) | Идентификатор клиента для вашего OAuth‑приложения Azure Databricks. | `AZURE_CLIENT_ID`  | 
+|  `azure_client_secret`  | OAuth-based (Azure) | Клиентский секрет для вашего OAuth‑приложения Azure Databricks. | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
+|  `auth_type`  |  OAuth-based | Тип авторизации, необходимый для подключения к Databricks. <br /> | `oauth`  |
 
 ## Дополнительные параметры
 
@@ -127,7 +157,11 @@ your_profile_name:
 
 ### Delta Lake
 
-Большинство функциональности dbt Core поддерживается, но некоторые функции доступны только в Delta Lake.
+Поддерживается большая часть функциональности <Constant name="core" />, однако некоторые возможности доступны только при использовании Delta Lake.
+
+Возможности, доступные только для Delta:
+1. Инкрементальные обновления моделей по `unique_key` вместо `partition_by` (см. [стратегию `merge`](/reference/resource-configs/databricks-configs#the-merge-strategy))
+2. [Снимки (Snapshots)](/docs/build/snapshots)
 
 Функции, доступные только в Delta:
 1. Инкрементальные обновления моделей по `unique_key` вместо `partition_by` (см. [стратегия `merge`](/reference/resource-configs/databricks-configs#the-merge-strategy))

@@ -2,131 +2,145 @@
 title: "Предупреждения"
 id: "warnings"
 sidebar: "Warnings"
+toc_max_heading_level: 2
+intro_text: "Use the --warn-error flag to promote all warnings to errors or --warn-error-options for granular control through options."
 ---
 
-Включение конфигурации `WARN_ERROR` преобразует предупреждения dbt в ошибки. В любой момент, когда dbt обычно выдает предупреждение, оно вместо этого вызовет ошибку. Примеры включают критерии `--select`, которые не выбирают ресурсы, устаревшие функции, конфигурации без связанных моделей, недопустимые конфигурации тестов или тесты и проверки свежести, настроенные на возврат предупреждений.
+## Используйте `--warn-error`, чтобы повысить все предупреждения до ошибок
+
+Включение конфигурации `WARN_ERROR` или установка флага `--warn-error` приведёт к тому, что _все_ предупреждения dbt будут преобразованы в ошибки. Каждый раз, когда dbt обычно выдаёт предупреждение, вместо этого будет выброшена ошибка. Примеры таких ситуаций включают: критерии `--select`, которые не выбирают ни одного ресурса, устаревшие (deprecated) элементы, конфигурации без связанных моделей, некорректные конфигурации тестов, а также тесты и проверки свежести данных, которые настроены на возврат предупреждений.
 
 <File name='Usage'>
 
-```text
-dbt --warn-error run
-...
-```
+  ```text
+  dbt run --warn-error
+  ```
 
 </File>
 
-Преобразование любых предупреждений в ошибки может идеально соответствовать вашим потребностям, но могут быть некоторые предупреждения, которые вас не волнуют, и некоторые, которые вас очень волнуют. Конфигурация `WARN_ERROR_OPTIONS` дает вам более детальный контроль над _точно теми типами предупреждений_, которые рассматриваются как ошибки.
+:::caution Осторожно при использовании в продакшене
+Использование флага `--warn-error` или `--warn-error-options '{"error": "all"}'` приведёт к тому, что _все_ текущие и будущие предупреждения будут трактоваться как ошибки.
 
-<VersionBlock lastVersion="1.7">
-
-Предупреждения, которые должны рассматриваться как ошибки, могут быть указаны через параметры `include` и/или `exclude`. Названия предупреждений можно найти в [файле types.py dbt-core](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py), где каждое имя класса, наследуемое от `WarnLevel`, соответствует названию предупреждения (например, `AdapterDeprecationWarning`, `NoNodesForSelectionCriteria`).
-
-Параметр `include` может быть установлен в `"all"` или `"*"`, чтобы рассматривать все предупреждения как исключения, или в список конкретных названий предупреждений, чтобы рассматривать их как исключения. Когда `include` установлен в `"all"` или `"*"`, необязательный параметр `exclude` может быть установлен для исключения конкретных предупреждений из рассмотрения их как исключений.
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.8">
-
-- Предупреждения, которые должны рассматриваться как ошибки, могут быть указаны через параметры `error` и/или `warn`. Названия предупреждений можно найти в [файле types.py dbt-core](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py), где каждое имя класса, наследуемое от `WarnLevel`, соответствует названию предупреждения (например, `AdapterDeprecationWarning`, `NoNodesForSelectionCriteria`).
-
-- Параметр `error` может быть установлен в `"all"` или `"*"`, чтобы рассматривать все предупреждения как исключения, или в список конкретных названий предупреждений, чтобы рассматривать их как исключения. Когда `error` установлен в `"all"` или `"*"`, необязательный параметр `warn` может быть установлен для исключения конкретных предупреждений из рассмотрения их как исключений.
-
-- Используйте параметр `silence`, чтобы игнорировать предупреждения через флаги проекта, без необходимости повторного указания списка игнорирования каждый раз. Например, чтобы игнорировать устаревшие предупреждения или определенные предупреждения, которые вы хотите игнорировать в вашем проекте, вы можете указать их в параметре `silence`. Это полезно в больших проектах, где определенные предупреждения не являются критичными и могут быть проигнорированы, чтобы уменьшить шум и очистить логи.
-
-<File name='dbt_project.yml'>
-
-```yaml
-name: "my_dbt_project"
-tests:
-  +enabled: True
-flags:
-  warn_error_options:
-    error: # Ранее назывался "include"
-    warn: # Ранее назывался "exclude"
-    silence: # Чтобы игнорировать или пропускать предупреждения
-      - NoNodesForSelectionCriteria
-```
-
-</File>
-
-</VersionBlock>
-
-:::info `WARN_ERROR` и `WARN_ERROR_OPTIONS` взаимоисключающие
-`WARN_ERROR` и `WARN_ERROR_OPTIONS` взаимоисключающие. Вы можете указать только один, даже если вы указываете конфигурацию в нескольких местах (например, переменная окружения + флаг CLI), в противном случае вы увидите ошибку использования.
+Это означает, что если в будущей версии <Constant name="core" /> появится новое предупреждение, ваш продакшен‑джоб может начать неожиданно падать. Мы рекомендуем с осторожностью использовать этот подход в продакшен‑средах и явно перечислять только те предупреждения, которые вы хотите считать ошибками в продакшене.
+:::
 :::
 
-<VersionBlock lastVersion="1.7">
 
-```text
-dbt --warn-error-options '{"include": "all"}' run
+## Use `--warn-error-options` for targeted warnings
+
+In some cases, you may want to convert _all_ warnings to errors. However, when you want _some_ warnings to stay as warnings and only promote or silence specific warnings you can instead use `--warn-error-options`. The `WARN_ERROR_OPTIONS` config or `--warn-error-options` flag gives you more granular control over _exactly which types of warnings_ are treated as errors. 
+
+:::info `WARN_ERROR` and `WARN_ERROR_OPTIONS` are mutually exclusive
+`WARN_ERROR` and `WARN_ERROR_OPTIONS` are mutually exclusive. You can only specify one, even when you're specifying the config in multiple places (like env var or a flag), otherwise, you'll see a usage error.
+:::
+
+Warnings that should be treated as errors can be specified through `error` parameter. Warning names can be found in:
+  - [dbt-core's types.py file](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py), where each class name that inherits from `WarnLevel` corresponds to a warning name (e.g. `AdapterDeprecationWarning`, `NoNodesForSelectionCriteria`).
+  - Using the `--log-format json` flag.
+
+The `error` parameter can be set to `"all"` or `"*"` to treat all warnings as errors (this behavior is the same as using the `--warn-error` flag), or to a list of specific warning names to treat as exceptions.
+- When `error` is set to `"all"` or `"*"`, the optional `warn` parameter can be set to exclude specific warnings from being treated as exceptions.
+- Use the `silence` parameter to ignore warnings. To silence certain warnings you want to ignore, you can specify them in the `silence` parameter. This is useful in large projects where certain warnings aren't critical and can be ignored to keep the noise low and logs clean.
+
+Here's how you can use the [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings) flag to promote _specific_ warnings to errors:
+- [Test warnings](/reference/resource-configs/severity) with the `--warn-error-options '{"error": ["LogTestResult"]}'` flag.
+- Jinja [exception warnings](/reference/dbt-jinja-functions/exceptions#warn) with `--warn-error-options '{"error": ["JinjaLogWarning"]}'`.
+- No nodes selected with `--warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'`.
+- Deprecation warnings with `--warn-error-options '{"error": ["Deprecations"]}'` (new in v1.10).
+
+### Configuration
+
+You can configure warnings as errors or which warnings to silence, by warn error options through command flag, environment variable, or `dbt_project.yml`.
+
+You can choose to:
+
+- Promote all warnings to errors using `{"error": "all"}` or `--warn-error` flag.
+- Promote specific warnings to errors using `error` and optionally exclude others from being treated as errors with `--warn-error-options` flag. `warn` tells dbt to continue treating the warnings as warnings.
+- Ignore warnings using `silence` with `--warn-error-options` flag.
+
+In the following example, we're silencing the [`NoNodesForSelectionCriteria` warning](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py#L1227) in the `dbt_project.yml` file by adding it to the `silence` parameter:
+
+  <File name='dbt_project.yml'>
+
+  ```yaml
 ...
+  flags:
+    warn_error_options:
+      error: # Previously called "include"
+      warn: # Previously called "exclude"
+      silence: # To silence or ignore warnings
+        - NoNodesForSelectionCriteria
+  ```
+
+  </File>
+
+### Examples
+Here are some examples that show you how to configure `warn_error_options` using flags or file-based configuration.
+
+#### Target specific warnings
+Some of the examples use `NoNodesForSelectionCriteria`, which is a specific warning that occurs when your `--select` flag doesn't match any nodes/resources in your dbt project:
+
+
+- This command promotes all warnings to errors, except for `NoNodesForSelectionCriteria`:
+  ```text
+  dbt run --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}'
+  ```
+
+- This command promotes all warnings to errors, except for deprecation warnings:
+  ```text
+  dbt run --warn-error-options '{"error": "all", "warn": ["Deprecations"]}'
+  ```
+
+- This command promotes only `NoNodesForSelectionCriteria` as an error:
+  ```text
+  dbt run --warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'
+  ```
+
+- This promotes only `NoNodesForSelectionCriteria` as an error, using an environment variable:
+  ```text
+  DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}' dbt run
+  ```
+
+Values for `error`, `warn`, and/or `silence` should be passed on as arrays. For example, `dbt run --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}'` not `dbt run --warn-error-options '{"error": "all", "warn": "NoNodesForSelectionCriteria"}'`.
+
+The following example shows how to promote all warnings to errors, except for the `NoNodesForSelectionCriteria` warning using the `silence` and `warn` parameters in the `dbt_project.yml` file:
+  <File name='dbt_project.yml'>
+
+  ```yaml
+  ...
+  flags:
+    warn_error_options:
+      error: all # Previously called "include"
+      warn:      # Previously called "exclude"
+        - NoNodesForSelectionCriteria
+      silence:   # To silence or ignore warnings
+        - NoNodesForSelectionCriteria
+  ```
+
+  </File>
+
+#### Promote all warnings to errors
+Some examples of how to promote all warnings to errors:
+
+##### using dbt command flags
+
+```bash 
+dbt run --warn-error
+dbt run --warn-error-options '{"error": "all"}'
+dbt run --warn-error-options '{"error": "*"}'
 ```
 
-```text
-dbt --warn-error-options '{"include": "all", "exclude": ["NoNodesForSelectionCriteria"]}' run
-...
+##### using environment variables
+
+
+```bash 
+WARN_ERROR=true dbt run 
+DBT_WARN_ERROR_OPTIONS='{"error": "all"}' dbt run 
+DBT_WARN_ERROR_OPTIONS='{"error": "*"}' dbt run 
 ```
 
-```text
-dbt --warn-error-options '{"include": ["NoNodesForSelectionCriteria"]}' run
-...
-```
+:::caution
+Обратите внимание: использование `warn_error_options: error: "all"` приведёт к тому, что все текущие и будущие предупреждения будут обрабатываться как ошибки.
 
-```text
-DBT_WARN_ERROR_OPTIONS='{"include": ["NoNodesForSelectionCriteria"]}' dbt run
-...
-```
-
-Значения для `error`, `warn` и/или `silence` должны передаваться как массивы. Например, `dbt --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}' run`, а не `dbt --warn-error-options '{"error": "all", "warn": "NoNodesForSelectionCriteria"}' run`.
-
-<File name='profiles.yml'>
-
-```yaml
-config:
-  warn_error_options:
-    include: all
-    exclude: 
-      - NoNodesForSelectionCriteria
-```
-
-</File>
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.8">
-
-```text
-dbt --warn-error-options '{"error": "all"}' run
-...
-```
-
-```text
-dbt --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}' run
-...
-```
-
-```text
-dbt --warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}' run
-...
-```
-
-```text
-DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}' dbt run
-...
-```
-
-<File name='profiles.yml'>
-
-```yaml
-config:
-  warn_error_options:
-    error: # Ранее назывался "include"
-    warn: # Ранее назывался "exclude"
-      - NoNodesForSelectionCriteria
-    silence: # Игнорировать или пропускать предупреждения
-      - NoNodesForSelectionCriteria
-```
-
-</File>
-
-</VersionBlock>
+Это означает, что если в будущей версии <Constant name="core" /> появится новое предупреждение, ваш production‑запуск может неожиданно начать завершаться с ошибкой. Мы рекомендуем использовать этот подход в production‑окружениях с осторожностью и явно перечислять только те предупреждения, которые вы хотите считать ошибками в production.
+:::

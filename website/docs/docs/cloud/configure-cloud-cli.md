@@ -1,34 +1,37 @@
 ---
-title: Настройка и использование dbt Cloud CLI
+title: Configure and use the dbt CLI
 id: configure-cloud-cli
-description: "Инструкции по настройке dbt Cloud CLI"
-sidebar_label: "Настройка и использование"
+description: "Instructions on how to configure the dbt CLI"
+sidebar_label: "Configuration and usage"
 pagination_next: null
 ---
 
-Узнайте, как настроить dbt Cloud CLI для вашего проекта в dbt Cloud, чтобы выполнять команды dbt, такие как `dbt environment show` для просмотра конфигурации dbt Cloud или `dbt compile` для компиляции вашего проекта и проверки моделей и тестов. Вы также получите следующие преимущества:
+Узнайте, как настроить <Constant name="cloud_cli" /> для вашего проекта <Constant name="cloud" />, чтобы запускать команды dbt, такие как `dbt environment show` для просмотра конфигурации <Constant name="cloud" /> или `dbt compile` для компиляции проекта и проверки моделей и тестов. Вы также получите следующие преимущества:
 
-- Безопасное хранение учетных данных на платформе dbt Cloud.
-- [Автоматическая отсрочка](/docs/cloud/about-cloud-develop-defer) артефактов сборки в производственную среду вашего Cloud проекта.
-- Более быстрые и менее затратные сборки.
-- Поддержка dbt Mesh ([межпроектные ссылки](/docs/collaborate/govern/project-dependencies)) и многое другое.
+- Безопасное хранение учетных данных на платформе <Constant name="cloud" />.
+- [Автоматическое использование defer](/docs/cloud/about-cloud-develop-defer) для артефактов сборки из production-окружения вашего Cloud‑проекта.
+- Более быстрые и экономичные сборки.
+- Поддержка <Constant name="mesh" /> ([cross-project ref](/docs/mesh/govern/project-dependencies)) и многое другое.
 
 ## Предварительные условия
 
-- Вы должны настроить проект в dbt Cloud.
-  - **Примечание** &mdash; Если вы используете dbt Cloud CLI, вы можете подключиться к вашей [платформе данных](/docs/cloud/connect-data-platform/about-connections) напрямую в интерфейсе dbt Cloud и вам не нужен файл [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml).
-- Вы должны иметь [учетные данные для личной разработки](/docs/dbt-cloud-environments#set-developer-credentials) для этого проекта. dbt Cloud CLI будет использовать эти учетные данные, хранящиеся безопасно в dbt Cloud, для связи с вашей платформой данных.
-- Вы должны использовать dbt версии 1.5 или выше. Обратитесь к [версиям dbt Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud) для обновления.
+- Вам необходимо настроить проект в <Constant name="cloud" />.
+  - **Примечание** &mdash; Если вы используете <Constant name="cloud_cli" />, вы можете подключиться к вашей [платформе данных](/docs/cloud/connect-data-platform/about-connections) напрямую в интерфейсе <Constant name="cloud" /> и вам не потребуется файл [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml).
+- Для этого проекта у вас должны быть настроены ваши [учётные данные для персональной разработки](/docs/dbt-cloud-environments#set-developer-credentials). CLI <Constant name="cloud" /> будет использовать эти учётные данные, безопасно хранящиеся в <Constant name="cloud" />, для взаимодействия с вашей платформой данных.
+- Вы должны использовать dbt версии 1.5 или выше. Инструкции по обновлению см. в разделе [версии <Constant name="cloud" />](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
 
-## Настройка dbt Cloud CLI
+## Настройка dbt CLI
 
-После установки dbt Cloud CLI вам нужно настроить его для подключения к проекту в dbt Cloud.
+После установки <Constant name="cloud_cli" /> необходимо настроить его для подключения к проекту в <Constant name="cloud" />.
 
-1. В dbt Cloud перейдите в раздел **Develop** и нажмите **Configure dbt Cloud CLI**, чтобы скачать файл учетных данных `dbt_cloud.yml`.
+1. В <Constant name="cloud" /> выберите проект, для которого вы хотите настроить <Constant name="cloud_cli" />. В проекте уже должна быть настроена [среда разработки](/docs/dbt-cloud-environments#create-a-development-environment).
+2. В главном меню перейдите в раздел **CLI**.
+3. В разделе **Configure Cloud authentication** нажмите **Download CLI configuration file**, чтобы скачать файл учётных данных `dbt_cloud.yml`.
 
     <details>
-    <summary>URL-адреса регионов для загрузки учетных данных</summary>
-    Вы также можете скачать учетные данные по ссылкам, предоставленным в зависимости от вашего региона:
+    <summary>URL-адреса регионов для загрузки учётных данных</summary>
+
+    Вы также можете скачать учётные данные по ссылкам, соответствующим вашему региону:
 
     - Северная Америка: <a href="https://cloud.getdbt.com/cloud-cli">https://cloud.getdbt.com/cloud-cli</a>
     - EMEA: <a herf="https://emea.dbt.com/cloud-cli">https://emea.dbt.com/cloud-cli</a>
@@ -38,45 +41,46 @@ pagination_next: null
 
     </details>
 
-2. Сохраните файл `dbt_cloud.yml` в директории `.dbt`, которая хранит вашу конфигурацию dbt Cloud CLI. Храните его в безопасном месте, так как он содержит API-ключи. Ознакомьтесь с [Часто задаваемыми вопросами](#faqs), чтобы узнать, как создать директорию `.dbt` и переместить файл `dbt_cloud.yml`.
+4. Сохраните файл `dbt_cloud.yml` в директории `.dbt`, в которой хранится конфигурация <Constant name="cloud_cli" />.
 
-3. Следуйте инструкциям в баннере и скачайте файл конфигурации в:
-   - Mac или Linux:  `~/.dbt/dbt_cloud.yml`
-   - Windows:  `C:\Users\yourusername\.dbt\dbt_cloud.yml`  
+    - Mac или Linux: `~/.dbt/dbt_cloud.yml`
+    - Windows: `C:\Users\yourusername\.dbt\dbt_cloud.yml`  
 
-  Файл конфигурации выглядит следующим образом:
-
-  ```yaml
-  version: "1"
-  context:
-    active-project: "<project id from the list below>"
-    active-host: "<active host from the list>"
-    defer-env-id: "<optional defer environment id>"
-  projects:
-    - project-name: "<project-name>"
-      project-id: "<project-id>"
-      account-name: "<account-name>"
-      account-id: "<account-id>"
-      account-host: "<account-host>" # например, "cloud.getdbt.com"
-      token-name: "<pat-or-service-token-name>"
-      token-value: "<pat-or-service-token-value>"
+    Файл конфигурации выглядит следующим образом:
   
-    - project-name: "<project-name>"
-      project-id: "<project-id>"
-      account-name: "<account-name>"
-      account-id: "<account-id>"
-      account-host: "<account-host>" # например, "cloud.getdbt.com"
-      token-name: "<pat-or-service-token-name>"
-      token-value: "<pat-or-service-token-value>"  
-  ```
+    ```yaml
+    version: "1"
+    context:
+      active-project: "<project id from the list below>"
+      active-host: "<active host from the list>"
+      defer-env-id: "<optional defer environment id>"
+    projects:
+      - project-name: "<project-name>"
+        project-id: "<project-id>"
+        account-name: "<account-name>"
+        account-id: "<account-id>"
+        account-host: "<account-host>" # for example, "cloud.getdbt.com"
+        token-name: "<pat-name>"
+        token-value: "<pat-value>"
+    
+      - project-name: "<project-name>"
+        project-id: "<project-id>"
+        account-name: "<account-name>"
+        account-id: "<account-id>"
+        account-host: "<account-host>" # for example, "cloud.getdbt.com"
+        token-name: "<pat-name>"
+        token-value: "<pat-value>"  
+    ```
 
-3. После загрузки файла конфигурации и создания директории перейдите к проекту dbt в вашем терминале:
+    Храните файл конфигурации в безопасном месте, так как он содержит API‑ключи. Ознакомьтесь с разделом [FAQs](#faqs), чтобы узнать, как создать директорию `.dbt` и переместить файл `dbt_cloud.yml`. Если у вас есть несколько копий файла и его имя содержит числовое дополнение (например, `dbt_cloud(2).yml`), удалите лишний текст из имени файла. 
+
+5. После загрузки файла конфигурации и создания директории перейдите к проекту в терминале:
 
     ```bash
     cd ~/dbt-projects/jaffle_shop
     ```
 
-4. В вашем файле `dbt_project.yml` убедитесь, что у вас есть или добавьте секцию `dbt-cloud` с полем `project-id`. Поле `project-id` содержит ID проекта dbt Cloud, который вы хотите использовать.
+6. В файле `dbt_project.yml` убедитесь, что у вас есть (или добавлен) раздел `dbt-cloud` с полем `project-id`. Поле `project-id` содержит идентификатор проекта <Constant name="cloud" />, который вы хотите использовать.
 
     ```yaml
     # dbt_project.yml
@@ -88,29 +92,29 @@ pagination_next: null
         project-id: PROJECT_ID
     ```
 
-   - Чтобы найти ID вашего проекта, выберите **Develop** в навигационном меню dbt Cloud. Вы можете использовать URL-адрес, чтобы найти ID проекта. Например, в `https://YOUR_ACCESS_URL/develop/26228/projects/123456` ID проекта — `123456`.
+- Чтобы найти идентификатор проекта, выберите **Develop** в навигационном меню <Constant name="cloud" />. Вы можете использовать URL, чтобы определить идентификатор проекта. Например, в `https://YOUR_ACCESS_URL/develop/26228/projects/123456` идентификатор проекта — `123456`.
 
-5. Теперь вы должны быть в состоянии [использовать dbt Cloud CLI](#use-the-dbt-cloud-cli) и выполнять [команды dbt](/reference/dbt-commands), такие как [`dbt environment show`](/reference/commands/dbt-environment) для просмотра деталей конфигурации dbt Cloud или `dbt compile` для компиляции моделей в вашем проекте dbt.
+7. Теперь вы должны иметь возможность [использовать <Constant name="cloud_cli" />](#use-the-dbt-cloud-cli) и запускать [команды dbt](/reference/dbt-commands), такие как [`dbt environment show`](/reference/commands/dbt-environment), чтобы просмотреть сведения о конфигурации вашего <Constant name="cloud" />, или `dbt compile`, чтобы скомпилировать модели в вашем dbt‑проекте.
 
 С вашим репозиторием, клонированным заново, вы можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
 
 ## Установка переменных окружения
 
-Чтобы установить переменные окружения в dbt Cloud CLI для вашего проекта dbt:
+Чтобы задать переменные окружения в CLI <Constant name="cloud" /> для вашего dbt‑проекта:
 
-1. В dbt Cloud нажмите на имя вашего аккаунта в левом боковом меню и выберите **Account settings**.
+1. В <Constant name="cloud" /> нажмите на имя своей учетной записи в меню слева и выберите **Account settings**.
 2. В разделе **Your profile** выберите **Credentials**.
-3. Нажмите на ваш проект и прокрутите до раздела **Environment variables**.
-4. Нажмите **Edit** в правом нижнем углу и затем установите переменные окружения на уровне пользователя.  
+3. Нажмите на свой проект и прокрутите страницу до раздела **Environment variables**.
+4. Нажмите **Edit** в правом нижнем углу и задайте пользовательские переменные окружения.
 
-## Использование dbt Cloud CLI
+## Использование dbt CLI
 
-dbt Cloud CLI использует тот же набор [команд dbt](/reference/dbt-commands) и [команд MetricFlow](/docs/build/metricflow-commands), что и dbt Core, для выполнения предоставленных вами команд. Например, используйте команду [`dbt environment`](/reference/commands/dbt-environment) для просмотра деталей конфигурации dbt Cloud. С помощью dbt Cloud CLI вы можете:
+<Constant name="cloud_cli" /> использует тот же набор [dbt commands](/reference/dbt-commands) и [MetricFlow commands](/docs/build/metricflow-commands), что и dbt Core, для выполнения переданных вами команд. Например, вы можете использовать команду [`dbt environment`](/reference/commands/dbt-environment), чтобы просмотреть детали конфигурации вашего <Constant name="cloud" />. С помощью <Constant name="cloud_cli" /> вы можете:
 
-- Выполнять [несколько вызовов параллельно](/reference/dbt-commands) и обеспечивать [безопасный параллелизм](/reference/dbt-commands#parallel-execution), который в настоящее время не гарантируется `dbt-core`.
-- Автоматически откладывать артефакты сборки в производственную среду вашего Cloud проекта.
-- Поддерживать [зависимости проектов](/docs/collaborate/govern/project-dependencies), что позволяет вам зависеть от другого проекта, используя сервис метаданных в dbt Cloud. 
-  - Зависимости проектов мгновенно подключаются и ссылаются (или `ref`) на публичные модели, определенные в других проектах. Вам не нужно выполнять или анализировать эти модели самостоятельно. Вместо этого вы рассматриваете их как API, который возвращает набор данных.
+- Запускать [несколько вызовов параллельно](/reference/dbt-commands) и обеспечивать [безопасный параллелизм](/reference/dbt-commands#parallel-execution), который в настоящее время не гарантируется в `dbt-core`.
+- Автоматически откладывать (defer) артефакты сборки в production‑окружение вашего Cloud‑проекта.
+- Использовать [project dependencies](/docs/mesh/govern/project-dependencies), которые позволяют зависеть от другого проекта через сервис метаданных в <Constant name="cloud" />.  
+  - Зависимости между проектами мгновенно подключаются и ссылаются (через `ref`) на публичные модели, определенные в других проектах. Вам не нужно самостоятельно выполнять или анализировать эти upstream‑модели — вместо этого вы используете их как API, возвращающее набор данных.
  
 :::tip Используйте флаг <code>--help</code>
 Как совет, большинство инструментов командной строки имеют флаг `--help`, чтобы показать доступные команды и аргументы. Используйте флаг `--help` с dbt двумя способами:
@@ -118,9 +122,9 @@ dbt Cloud CLI использует тот же набор [команд dbt](/re
 - `dbt run --help`: Показывает доступные флаги для команды `run`
 :::
  
-### Линтинг SQL файлов 
+## Проверка SQL-файлов (linting)
 
-С помощью dbt Cloud CLI вы можете вызвать [SQLFluff](https://sqlfluff.com/), который является модульным и настраиваемым линтером SQL, предупреждающим вас о сложных функциях, синтаксисе, форматировании и ошибках компиляции. Многие из тех же флагов, которые вы можете передать SQLFluff, доступны из dbt Cloud CLI.
+Из CLI <Constant name="cloud" /> вы можете вызвать [SQLFluff](https://sqlfluff.com/) — модульный и настраиваемый SQL-линтер, который предупреждает о сложных функциях, проблемах с синтаксисом, форматированием и ошибках компиляции. Многие из тех же флагов, которые можно передать в SQLFluff напрямую, также доступны при использовании CLI <Constant name="cloud" />.
 
 Доступные команды SQLFluff:
 
@@ -130,7 +134,7 @@ dbt Cloud CLI использует тот же набор [команд dbt](/re
 
 Чтобы выполнить линтинг SQL файлов, выполните команду следующим образом:  
 
-```shell
+```
 dbt sqlfluff lint [PATHS]... [flags]
 ```
 
@@ -140,58 +144,32 @@ dbt sqlfluff lint [PATHS]... [flags]
 
 #### Соображения
 
-При выполнении `dbt sqlfluff` из dbt Cloud CLI важно учитывать следующие моменты:
+При запуске `dbt sqlfluff` из <Constant name="cloud_cli" /> важно учитывать следующие особенности поведения:
 
 - dbt читает файл `.sqlfluff`, если он существует, для любых пользовательских конфигураций, которые у вас могут быть.
 - Для рабочих процессов непрерывной интеграции/непрерывной разработки (CI/CD) ваш проект должен иметь файл `dbt_cloud.yml`, и вы успешно выполнили команды из этого проекта dbt.
 - Команда SQLFluff вернет код выхода 0, если она выполнена с любыми нарушениями в файлах. Это поведение dbt отличается от поведения SQLFluff, где нарушение линтинга возвращает ненулевой код выхода. dbt Labs планирует решить эту проблему в следующем выпуске.
 
-## Часто задаваемые вопросы
-<Expandable alt_header="Как создать директорию .dbt и переместить ваш файл">
+## Важные моменты
 
-Если у вас никогда не было директории `.dbt`, выполните следующие рекомендуемые шаги для ее создания. Если у вас уже есть директория `.dbt`, переместите в нее файл `dbt_cloud.yml`.
+import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
-<Tabs>
-<TabItem value="Создание директории .dbt">
+<CloudCliRelativePath />
 
-  1. Клонируйте ваш репозиторий проекта dbt локально.
-  2. Используйте команду `mkdir`, за которой следует имя папки, которую вы хотите создать. Добавьте префикс `~`, чтобы создать папку `.dbt` в корне вашей файловой системы:
+## Часто задаваемые вопросы (FAQ)
 
-     ```bash
-     mkdir ~/.dbt
-     ```
+import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
-Это создаст папку `.dbt` в корневой директории.
+<DetailsToggle alt_header="Как создать директорию .dbt и переместить ваш файл">
 
-Для пользователей Mac, так как это скрытая папка (из-за префикса точки), она не будет видна в Finder по умолчанию. Чтобы просмотреть скрытые файлы и папки, нажмите Command + Shift + G.
+<DbtDirectoryFaq />
 
-</TabItem>
+</DetailsToggle>
 
-<TabItem value="Перемещение файла dbt_cloud.yml">
+<DetailsToggle alt_header="Как пропустить загрузку артефактов">
 
-### Mac или Linux
-В командной строке используйте команду `mv`, чтобы переместить ваш файл `dbt_cloud.yml` в директорию `.dbt`. Если вы только что скачали файл `dbt_cloud.yml` и он находится в вашей папке Загрузки, команда может выглядеть следующим образом:
+По умолчанию [все артефакты](/reference/artifacts/dbt-artifacts) загружаются при выполнении команд dbt из <Constant name="cloud_cli" />. Чтобы пропустить загрузку этих файлов, добавьте `--download-artifacts=false` к команде, которую вы запускаете. Это может помочь улучшить производительность выполнения, но может нарушить рабочие процессы, которые зависят от таких артефактов, как [manifest](/reference/artifacts/manifest-json).
 
-```bash
-mv ~/Downloads/dbt_cloud.yml ~/.dbt/dbt_cloud.yml
-```
+</DetailsToggle>
 
-### Windows
-В командной строке используйте команду move. Предполагая, что ваш файл находится в папке Загрузки, команда может выглядеть следующим образом:
-
-```bash
-move %USERPROFILE%\Downloads\dbt_cloud.yml %USERPROFILE%\.dbt\dbt_cloud.yml
-```
-
-</TabItem>
-</Tabs>
-
-Эта команда перемещает `dbt_cloud.yml` из папки `Downloads` в папку `.dbt`. Если ваш файл `dbt_cloud.yml` находится в другом месте, скорректируйте путь соответственно.
-
-</Expandable>
-
-<Expandable alt_header="Как пропустить загрузку артефактов">
-
-По умолчанию [все артефакты](/reference/artifacts/dbt-artifacts) загружаются при выполнении команд dbt из dbt Cloud CLI. Чтобы пропустить загрузку этих файлов, добавьте `--download-artifacts=false` к команде, которую вы хотите выполнить. Это может помочь улучшить производительность выполнения, но может нарушить рабочие процессы, которые зависят от таких активов, как [manifest](/reference/artifacts/manifest-json). 
-
-</Expandable>
+<FAQ path="Troubleshooting/long-sessions-cloud-cli" />

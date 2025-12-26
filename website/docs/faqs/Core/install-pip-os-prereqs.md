@@ -6,11 +6,11 @@ id: install-pip-os-prereqs.md
 
 ---
 
-Ваша операционная система может требовать предварительной настройки перед установкой dbt Core с помощью pip. После загрузки и установки любых зависимостей, специфичных для вашей среды разработки, вы можете продолжить с [установкой dbt Core через pip](/docs/core/pip-install).
+Ваша операционная система может потребовать предварительной настройки перед установкой <Constant name="core" /> с помощью pip. После загрузки и установки всех зависимостей, специфичных для вашей среды разработки, вы можете перейти к [установке <Constant name="core" /> через pip](/docs/core/pip-install).
 
 ### CentOS
 
-Для успешной установки и работы dbt Core на CentOS требуются Python и некоторые другие зависимости.
+Для успешной установки и запуска <Constant name="core" /> в CentOS требуется Python и некоторые другие зависимости.
 
 Чтобы установить Python и другие зависимости:
 
@@ -23,7 +23,7 @@ sudo yum install redhat-rpm-config gcc libffi-devel \
 
 ### MacOS
 
-Для успешной установки и работы dbt Core на MacOS требуется Python версии 3.8 или выше.
+Для macOS требуется Python версии 3.8 или выше, чтобы успешно установить и запустить <Constant name="core" />.
 
 Чтобы проверить версию Python:
 
@@ -39,7 +39,7 @@ python --version
 
 ### Ubuntu/Debian
 
-Для успешной установки и работы dbt Core на Ubuntu требуются Python и другие зависимости.
+Для успешной установки и запуска <Constant name="core" /> в Ubuntu требуются Python и другие зависимости.
 
 Чтобы установить Python и другие зависимости:
 
@@ -54,8 +54,8 @@ pip install cryptography~=3.4
 
 ### Windows
 
-Для успешной установки и работы dbt Core на Windows требуются Python и git.
+Для успешной установки и работы <Constant name="core" /> в Windows требуются Python и git.
 
-Установите [Git для Windows](https://git-scm.com/downloads) и [Python версии 3.9 или выше для Windows](https://www.python.org/downloads/windows/).
+Установите [<Constant name="git" /> для Windows](https://git-scm.com/downloads) и [Python версии 3.9 или выше для Windows](https://www.python.org/downloads/windows/).
 
 Если у вас есть дополнительные вопросы, пожалуйста, ознакомьтесь с [FAQ по совместимости с Python](/faqs/Core/install-python-compatibility)

@@ -8,7 +8,7 @@ id: "hard-deletes"
 sidebar_label: "hard_deletes"
 ---
 
-Доступно с версии dbt v1.9 или с [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+<VersionCallout version="1.9" />
 
 <File name='snapshots/schema.yml'>
 
@@ -47,7 +47,11 @@ snapshots:
 
 ## Описание
 
-Конфигурация `hard_deletes` дает вам больше контроля над тем, как обрабатывать удаленные строки из источника. Поддерживаемые опции: `ignore` (по умолчанию), `invalidate` (заменяет устаревшую `invalidate_hard_deletes=true`) и `new_record`. Обратите внимание, что `new_record` создаст новый столбец метаданных в таблице снимков.
+## Description
+
+Конфигурация `hard_deletes` дает вам больше контроля над тем, как обрабатывать строки, удалённые из источника. Поддерживаются следующие варианты: `ignore` (по умолчанию), `invalidate` (заменяет устаревший параметр `invalidate_hard_deletes=true`) и `new_record`. Обратите внимание, что `new_record` создаст новый служебный столбец с метаданными в таблице snapshot.
+
+Параметр `hard_deletes` можно использовать с адаптерами dbt-postgres, dbt-bigquery, dbt-snowflake и dbt-redshift.
 
 import HardDeletes from '/snippets/_hard-deletes.md';
 

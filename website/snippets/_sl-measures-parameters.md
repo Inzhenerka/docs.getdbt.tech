@@ -1,11 +1,12 @@
-| Параметр | Описание | Обязательный | Тип | 
+| Parameter | Description | Required | Type | 
 | --- | --- | --- | --- | 
-| [`name`](/docs/build/measures#name) | Укажите имя для меры, которое должно быть уникальным и не может повторяться во всех семантических моделях вашего проекта dbt. | Обязательный | String | 
-| [`description`](/docs/build/measures#description) | Описывает вычисляемую меру. | Необязательный | String | 
-| [`agg`](/docs/build/measures#aggregation) | dbt поддерживает следующие агрегации: `sum`, `max`, `min`, `average`, `median`, `count_distinct`, `percentile` и `sum_boolean`. | Обязательный | String |
-| [`expr`](/docs/build/measures#expr) | Либо ссылайтесь на существующий столбец в таблице, либо используйте SQL-выражение для создания или вывода нового. | Необязательный | String | 
-| [`non_additive_dimension`](/docs/build/measures#non-additive-dimensions) | Неаддитивные измерения могут быть указаны для мер, которые не могут быть агрегированы по определенным измерениям, таким как остатки на банковских счетах, чтобы избежать получения некорректных результатов. | Необязательный | String |
-| `agg_params` | Специфические свойства агрегации, такие как процентиль. | Необязательный | Dict |
-| `agg_time_dimension` | Поле времени. По умолчанию используется стандартное временное измерение агрегации для семантической модели. | Необязательный | String |
-| `label` | Строка, определяющая отображаемое значение в инструментах нижнего уровня. Принимает обычный текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). Доступно в версии dbt 1.7 или выше. | Необязательный | String |
-| `create_metric` | Создайте `simple` метрику из меры, установив `create_metric: True`. Атрибуты `label` и `description` будут автоматически перенесены в созданную метрику. Доступно в версии dbt 1.7 или выше. | Необязательный | Boolean |
+| [`name`](/docs/build/measures#name) | Укажите имя меры. Оно должно быть уникальным и не может повторяться среди всех семантических моделей в вашем dbt‑проекте. | Required | String | 
+| [`description`](/docs/build/measures#description) | Описание вычисляемой меры. | Optional | String | 
+| [`agg`](/docs/build/measures#aggregation) | dbt поддерживает следующие агрегатные функции: `sum`, `max`, `min`, `average`, `median`, `count_distinct`, `percentile` и `sum_boolean`. | Required | String |
+| [`expr`](/docs/build/measures#expr) | Ссылка на существующий столбец в таблице либо SQL‑выражение для создания или вычисления нового значения. | Optional | String | 
+| [`non_additive_dimension`](/docs/build/measures#non-additive-dimensions) | Неаддитивные измерения могут быть заданы для мер, которые нельзя агрегировать по определённым измерениям (например, остатки на банковских счетах), чтобы избежать получения некорректных результатов. | Optional | String |
+| `agg_params` | Параметры конкретной агрегации, например значение перцентиля. | Optional | Dict |
+| `agg_time_dimension` | Поле времени. По умолчанию используется временное измерение агрегации, заданное по умолчанию для семантической модели. | Optional | String |
+| `label` | Строка, определяющая отображаемое имя в downstream‑инструментах. Поддерживает обычный текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). Доступно в dbt версии 1.7 и выше. | Optional | String |
+| `create_metric` | Создаёт метрику типа `simple` на основе меры при установке `create_metric: True`. Атрибуты `label` и `description` автоматически наследуются созданной метрикой. Доступно в dbt версии 1.7 и выше. | Optional | Boolean |
+| `config`  | Используйте свойство [`config`](/reference/resource-properties/config) для задания конфигураций метрики. Поддерживается свойство [`meta`](/reference/resource-configs/meta), вложенное в `config`. | Optional |

@@ -5,7 +5,9 @@ sidebar_label: 'Документирование макросов'
 id: documenting-macros
 ---
 
-Чтобы документировать макросы, используйте [файл схемы](/reference/macro-properties) и вложите конфигурации под ключом `macros:`
+import MacroArgsNote from '/snippets/_validate-macro-args.md';
+
+Чтобы задокументировать макросы, используйте [schema file](/reference/macro-properties) и вложите конфигурации под ключом `macros:`
 
 ## Пример
 
@@ -19,7 +21,7 @@ macros:
     description: Макрос для преобразования центов в доллары
     arguments:
       - name: column_name
-        type: string
+        type: column
         description: Имя столбца, который вы хотите преобразовать
       - name: precision
         type: integer
@@ -28,9 +30,11 @@ macros:
 
 </File>
 
+<MacroArgsNote />
+
 ## Документирование пользовательской материализации
 
-Когда вы создаете [пользовательскую материализацию](/guides/create-new-materializations), dbt создает связанный макрос с следующим форматом:
+Когда вы создаёте [пользовательскую материализацию](/guides/create-new-materializations), dbt создаёт связанную с ней макрос с форматом, показанным ниже:
 ```
 materialization_{materialization_name}_{adapter}
 ```

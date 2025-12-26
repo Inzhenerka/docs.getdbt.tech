@@ -8,7 +8,6 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt Core','Troubleshooting']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
@@ -91,7 +90,7 @@ recently_updated: true
 
 Вы должны обнаружить, что схема, которую dbt создает для вашей модели, соответствует выходным данным вашего макроса `generate_schema_name`.
 
-Будьте осторожны. Снимки не следуют этому поведению, если установлен target_schema. Чтобы иметь снимки, зависящие от окружения, в версии v1.9+ или dbt Cloud, удалите [конфигурацию target_schema](/reference/resource-configs/target_schema) из ваших снимков. Если вы все еще хотите пользовательскую схему для ваших снимков, используйте вместо этого [конфигурацию `schema`](/reference/resource-configs/schema).
+Будьте внимательны. Снэпшоты **не** следуют этому поведению, если задан параметр `target_schema`. Чтобы снэпшоты учитывали окружение в версии v1.9+ или <Constant name="cloud" />, удалите конфигурацию [`target_schema`](/reference/resource-configs/target_schema) из ваших снэпшотов. Если вам всё же нужна собственная схема для снэпшотов, используйте вместо этого параметр [`schema`](/reference/resource-configs/schema).
 
 ## Настройте по мере необходимости
 

@@ -25,7 +25,7 @@ models:
 
 Это значение может быть строковым или числовым (целым или дробным) значением. Оно должно быть одним из [идентификаторов версий](/reference/resource-properties/versions#v), указанных в списке `versions` этой модели.
 
-Чтобы запустить последнюю версию модели, вы можете использовать флаг [`--select`](/reference/node-selection/syntax). Смотрите [Версии моделей](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) для получения дополнительной информации и синтаксиса.
+Чтобы запустить последнюю версию модели, вы можете использовать [флаг `--select`](/reference/node-selection/syntax). Подробнее о синтаксисе и возможностях см. в разделе [Версии моделей](/docs/mesh/govern/model-versions#run-a-model-with-multiple-versions).
 
 ## По умолчанию
 

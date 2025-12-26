@@ -13,7 +13,7 @@ dbt выводит логи в два разных места: консоль CL
 <File name='Usage'>
 
 ```text
-dbt --log-format json run
+dbt run --log-format json
 ```
 
 </File>
@@ -40,12 +40,12 @@ dbt --log-format json run
 {"data": {"adapter_name": "postgres", "adapter_version": "=1.8.0"}, "info": {"category": "", "code": "E034", "extra": {}, "invocation_id": "82131fa0-d2b4-4a77-9436-019834e22746", "level": "info", "msg": "Registered adapter: postgres=1.8.0", "name": "AdapterRegistered", "pid": 7875, "thread": "MainThread", "ts": "2024-05-29T23:32:56.437986Z"}}
 ```
 
-Когда `LOG_FORMAT` установлен явно, он будет применяться как в консоли, так и в файлах логов, тогда как `LOG_FORMAT_FILE` влияет только на файл логов.
+Когда `LOG_FORMAT` задан явно, он применяется как к выводу в консоль, так и к лог-файлам, тогда как `LOG_FORMAT_FILE` влияет только на лог-файл.
 
 <File name='Usage'>
 
 ```text
-dbt --log-format-file json run
+dbt run --log-format-file json
 ```
 
 </File>
@@ -55,7 +55,7 @@ dbt --log-format-file json run
 Используйте значение форматирования `json` вместе с конфигурацией `DEBUG`, чтобы получить богатую информацию о логах, которую можно передать в инструменты мониторинга для анализа:
 
 ```text
-dbt --debug --log-format json run
+dbt run --debug --log-format json
 ```
 
 Смотрите [структурированное логирование](/reference/events-logging#structured-logging) для более подробной информации.
@@ -69,24 +69,24 @@ dbt --debug --log-format json run
 - Установка `--log-level` настроит логи в консоли и файлах.
 
   ```text
-  dbt --log-level debug run
+  dbt run --log-level debug
   ```
 
 - Установка `LOG_LEVEL` в `none` отключит отправку информации как в консоль, так и в файлы логов.
 
   ```text
-  dbt --log-level none
+  dbt run --log-level none
   ```
 
 - Чтобы установить уровень логирования для файла отличным от консоли, используйте флаг `--log-level-file`.
 
   ```text
-  dbt --log-level-file error run
+  dbt run --log-level-file error
   ```
 
 - Чтобы отключить запись в файл логов, но сохранить логи в консоли, установите конфигурацию `LOG_LEVEL_FILE` в none.
   ```text
-  dbt --log-level-file none
+  dbt run --log-level-file none
   ```
 
 ### Логирование на уровне отладки
@@ -98,9 +98,7 @@ dbt --debug --log-format json run
 <File name='Usage'>
 
 ```text
-dbt --debug run
-...
-
+dbt run --debug
 ```
 
 </File>  
@@ -113,7 +111,9 @@ dbt --debug run
 
 ### Подавление логов без ошибок в выводе
 
-По умолчанию, dbt показывает все логи в стандартном выводе (stdout). Вы можете использовать конфигурацию `QUIET`, чтобы показывать только логи ошибок в stdout. Логи все равно будут включать вывод всего, что передано в макрос [`print()`](/reference/dbt-jinja-functions/print). Например, вы можете подавить все, кроме логов ошибок, чтобы легче находить и исправлять ошибки jinja.
+### Подавление неошибочных логов в выводе
+
+По умолчанию dbt выводит все логи в стандартный поток вывода (stdout). Вы можете использовать конфигурацию `QUIET`, чтобы в stdout отображались только логи с ошибками. При этом логи по‑прежнему будут включать вывод всего, что передаётся в макрос [`print()`](/reference/dbt-jinja-functions/print). Например, вы можете подавить все логи, кроме ошибок, чтобы проще находить и отлаживать ошибку в Jinja.
 
 <File name='profiles.yml'>
 
@@ -127,20 +127,23 @@ config:
 Передайте флаг `-q` или `--quiet` в `dbt run`, чтобы показывать только логи ошибок и подавлять логи без ошибок.
 
 ```text
-dbt --quiet run
-...
+dbt run --quiet
 ```
 
 ### Логирование списка dbt
 
-В [версии dbt 1.5](/docs/dbt-versions/core-upgrade/upgrading-to-v1.5#behavior-changes) мы обновили поведение логирования команды [dbt list](/reference/commands/list), чтобы по умолчанию включать логи уровня `INFO`.
+В [dbt версии 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5#behavior-changes) мы обновили поведение логирования команды [dbt list](/reference/commands/list), добавив вывод логов уровня `INFO` по умолчанию.
 
 Вы можете использовать любой из этих параметров, чтобы обеспечить чистый вывод, совместимый с последующими процессами, такими как передача результатов в [`jq`](https://jqlang.github.io/jq/manual/), файл или другой процесс:
 
 - `dbt --log-level warn list` (рекомендуется; эквивалентно предыдущему значению по умолчанию)
 - `dbt --quiet list` (подавляет все логи ниже уровня `ERROR`, кроме "напечатанных" сообщений и вывода списка)
 
-### Логирование событий кэширования реляционных данных
+- `dbt list --log-level warn` (рекомендуется; эквивалентно предыдущему значению по умолчанию)
+- `dbt list --quiet` (подавляет все сообщения логирования с уровнем ниже `ERROR`, за исключением «печатных» сообщений и вывода команды `list`)
+
+
+### Логирование событий реляционного кэша
 
 import LogLevel from '/snippets/_log-relational-cache.md';
 
@@ -162,6 +165,7 @@ config:
 </File>
 
 ```text
-dbt --use-colors-file run
-dbt --no-use-colors-file run
+```bash
+dbt run --use-colors-file
+dbt run --no-use-colors-file
 ```

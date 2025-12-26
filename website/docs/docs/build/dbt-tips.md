@@ -12,9 +12,18 @@ pagination_next: null
 - [Советы по пакетам](#package-tips) для оптимизации вашего рабочего процесса.
 - [Продвинутые советы и техники](#advanced-tips-and-techniques) для максимального использования возможностей dbt.
 
-Если вы разрабатываете с использованием dbt Cloud IDE, вы можете обратиться к странице [горячих клавиш](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts), чтобы сделать разработку более продуктивной и простой для всех.
+Если вы разрабатываете с использованием <Constant name="cloud_ide" />, вы можете обратиться к странице [keyboard shortcuts](/docs/cloud/studio-ide/keyboard-shortcuts), чтобы сделать разработку более продуктивной и удобной для всех.
 
-## Советы по пакетам
+## YAML tips
+
+В этом разделе поясняется, где именно вы можете использовать [Jinja](/docs/build/jinja-macros), а также вкладывать [vars](/reference/dbt-jinja-functions/var) и [`env_var`](/reference/dbt-jinja-functions/env_var) в ваших YAML-файлах.
+
+- Вы можете использовать Jinja почти в любом YAML-файле в dbt, _кроме_ файла [`dependencies.yml`](/docs/build/packages#use-cases). Это связано с тем, что файл `dependencies.yml` не поддерживает Jinja.
+- Используйте `vars` в любом YAML-файле, который поддерживает Jinja (например, `schema.yml`, `snapshots.yml`). Однако обратите внимание:
+  - В файлах `dbt_project.yml`, `packages.yml` и `profiles.yml` вы должны передавать `vars` через CLI с помощью параметра `--vars`, а не определять их внутри блока `vars:` в самом YAML-файле. Это связано с тем, что эти файлы обрабатываются до рендеринга Jinja.
+- Вы можете использовать `env_var()` во всех YAML-файлах, которые поддерживают Jinja. При этом только `profiles.yml` и `packages.yml` поддерживают использование переменных окружения для защищённых значений (с префиксом `DBT_ENV_SECRET_`). Такие значения маскируются в логах и предназначены для хранения учётных данных или секретов.
+
+Для получения дополнительной информации см. документацию по контексту [<Constant name="core" />](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/context/README.md).
 
 Используйте эти пакеты dbt для оптимизации вашего рабочего процесса:
 
@@ -28,7 +37,15 @@ pagination_next: null
 | [`dbt_artifacts`](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest) | Пакет сохраняет информацию о ваших запусках dbt непосредственно на вашей платформе данных, чтобы вы могли отслеживать производительность моделей с течением времени. |
 | [`dbt_meta_testing`](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest) | Этот пакет проверяет, что ваш проект dbt достаточно протестирован и задокументирован. |
 
-## Продвинутые советы и техники
+| Package | Description |
+|---------|-------------|
+| [`dbt_codegen`](https://hub.getdbt.com/dbt-labs/codegen/latest/) | Используйте пакет, чтобы упростить генерацию YML‑файлов для моделей и источников, а также SQL‑файлов для staging‑моделей. |
+| [`dbt_utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) | Пакет содержит макросы, полезные для повседневной разработки. Например, `date_spine` генерирует таблицу со всеми датами между значениями, переданными в параметрах. |
+| [`dbt_project_evaluator`](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest) | Пакет сравнивает ваш dbt‑проект со списком лучших практик и предоставляет рекомендации и гайдлайны по обновлению моделей. |
+| [`dbt_expectations`](https://hub.getdbt.com/metaplane/dbt_expectations/latest/) | Пакет содержит множество тестов, выходящих за рамки встроенных в dbt. |
+| [`dbt_audit_helper`](https://hub.getdbt.com/#:~:text=adwords-,audit_helper,-codegen) | Пакет позволяет сравнивать результаты выполнения двух запросов. Используйте его при рефакторинге существующей логики, чтобы убедиться, что новые результаты полностью совпадают со старыми. |
+| [`dbt_artifacts`](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest) | Пакет сохраняет информацию о выполнениях dbt напрямую в вашей платформе данных, чтобы вы могли отслеживать производительность моделей со временем. |
+| [`dbt_meta_testing`](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest) | Пакет проверяет, что ваш dbt‑проект достаточно покрыт тестами и документацией. |
 
 - Используйте структуру папок в качестве основного метода выбора. `dbt build --select marts.marketing` проще и более устойчив, чем полагаться на маркировку каждой модели.
 - Рассматривайте задания с точки зрения частоты сборки и SLA. Запускайте модели с почасовой, ежедневной или еженедельной частотой сборки вместе.
@@ -50,6 +67,8 @@ pagination_next: null
 
 ## Связанные документы
 
-- [Руководство по быстрому старту](/guides)
-- [О dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features)
+## Связанная документация
+
+- [Руководство по быстрому началу](/guides)
+- [О <Constant name="cloud" />](/docs/cloud/about-cloud/dbt-cloud-features)
 - [Разработка в облаке](/docs/cloud/about-develop-dbt)

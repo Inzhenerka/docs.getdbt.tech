@@ -1,30 +1,29 @@
 ---
-title: "Быстрый старт для dbt Cloud и Microsoft Fabric"
+title: "Быстрый старт для dbt и Microsoft Fabric"
 id: "microsoft-fabric"
 level: 'Beginner'
 icon: 'fabric'
 hide_table_of_contents: true
-tags: ['dbt Cloud','Quickstart']
-recently_updated: true
+tags: ['Platform', 'Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric). Оно покажет вам, как:
+В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric). В нём показано, как:
 
-- Загрузить пример данных Jaffle Shop (предоставленный dbt Labs) в ваш склад Microsoft Fabric.
-- Подключить dbt Cloud к Microsoft Fabric.
-- Превратить пример запроса в модель в вашем проекте dbt. Модель в dbt — это оператор SELECT.
-- Добавить тесты к вашим моделям.
-- Документировать ваши модели.
-- Запланировать выполнение задания.
+- Загрузить пример данных Jaffle Shop (предоставляется dbt Labs) в хранилище Microsoft Fabric.  
+- Подключить <Constant name="cloud" /> к Microsoft Fabric.  
+- Превратить пример запроса в модель в вашем dbt‑проекте. Модель в dbt — это SQL‑выражение `SELECT`.  
+- Добавить тесты к вашим моделям.  
+- Задокументировать ваши модели.  
+- Запланировать выполнение задания (job).
 
-### Предварительные требования
-- У вас есть аккаунт [dbt Cloud](https://www.getdbt.com/signup/).
-- Вы начали пробную версию Microsoft Fabric (Preview). Для получения подробной информации обратитесь к [Microsoft Fabric (Preview) trial](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial) в документации Microsoft.
-- Как администратор Microsoft, вы включили аутентификацию с использованием служебного принципала. Вы должны добавить служебный принципал в рабочее пространство Microsoft Fabric с правами Участника (рекомендуется) или Администратора. Для получения подробной информации обратитесь к [Enable service principal authentication](https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-enable-read-only-apis) в документации Microsoft. dbt Cloud нужны эти учетные данные для подключения к Microsoft Fabric.
+### Prerequisites
+- У вас есть аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/).  
+- Вы запустили пробный период Microsoft Fabric (Preview). Подробнее см. [Microsoft Fabric (Preview) trial](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial) в документации Microsoft.  
+- Как администратор Microsoft, вы включили аутентификацию с использованием service principal. Необходимо добавить service principal в рабочее пространство Microsoft Fabric с правами Member (рекомендуется) или Admin. Также service principal должен иметь привилегии `CONNECT` к базе данных в хранилище. Подробнее см. [Enable service principal authentication](https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-enable-read-only-apis) в документации Microsoft. <Constant name="cloud" /> использует эти учётные данные аутентификации для подключения к Microsoft Fabric.
 
 ### Связанные материалы
 - [Курсы dbt Learn](https://learn.getdbt.com)
@@ -99,49 +98,49 @@ recently_updated: true
 
     <Lightbox src="/img/quickstarts/dbt-cloud/example-load-data-ms-fabric.png" width="80%" title="Пример загрузки данных" />
 
-## Подключение dbt Cloud к Microsoft Fabric
+## Подключение dbt к Microsoft Fabric
 
-1. Создайте новый проект в dbt Cloud. Перейдите в **Account settings** (нажав на имя вашего аккаунта в левом меню) и нажмите **+ New Project**.
+1. Создайте новый проект в <Constant name="cloud" />. Перейдите в **Account settings** (кликнув по имени вашего аккаунта в меню слева) и нажмите **+ New Project**.
 2. Введите имя проекта и нажмите **Continue**.
-3. Выберите **Fabric** в качестве вашего подключения и нажмите **Next**.
-4. В разделе **Configure your environment** введите **Settings** для вашего нового проекта:
-    - **Server** &mdash; Используйте значение **host** служебного принципала для тестовой конечной точки Fabric.
-    - **Port** &mdash; 1433 (по умолчанию).
-    - **Database** &mdash; Используйте значение **database** служебного принципала для тестовой конечной точки Fabric.
-5. Введите **Development credentials** для вашего нового проекта:
-    - **Authentication** &mdash; Выберите **Service Principal** из выпадающего списка.
-    - **Tenant ID** &mdash; Используйте **Directory (tenant) id** служебного принципала в качестве значения.
-    - **Client ID** &mdash; Используйте **application (client) ID id** служебного принципала в качестве значения.
-    - **Client secret** &mdash; Используйте **client secret** служебного принципала (не **client secret id**) в качестве значения.
-6. Нажмите **Test connection**. Это проверит, что dbt Cloud может получить доступ к вашему аккаунту Microsoft Fabric.
-7. Нажмите **Next**, когда тест пройдет успешно. Если он не прошел, возможно, вам нужно проверить ваш служебный принципал Microsoft.
+3. Выберите **Fabric** в качестве типа подключения и нажмите **Next**.
+4. В разделе **Configure your environment** укажите **Settings** для нового проекта:
+    - **Server** — используйте значение **host** сервисного принципала для тестового endpoint Microsoft Fabric.
+    - **Port** — 1433 (значение по умолчанию).
+    - **Database** — используйте значение **database** сервисного принципала для тестового endpoint Microsoft Fabric.
+5. Укажите **Development credentials** для нового проекта:
+    - **Authentication** — выберите **Service Principal** из выпадающего списка.
+    - **Tenant ID** — используйте значение **Directory (tenant) id** сервисного принципала.
+    - **Client ID** — используйте значение **application (client) ID id** сервисного принципала.
+    - **Client secret** — используйте **client secret** сервисного принципала (не **client secret id**).
+6. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему аккаунту Microsoft Fabric.
+7. Когда тест завершится успешно, нажмите **Next**. Если тест не прошёл, проверьте настройки сервисного принципала. Убедитесь, что у принципала есть привилегии `CONNECT` к базе данных в warehouse.
 
-## Настройка управляемого репозитория dbt Cloud 
+## Настройка управляемого репозитория dbt
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация вашего проекта dbt и начало разработки
-Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
+## Инициализация проекта dbt и начало разработки
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
-1. Нажмите **Start developing in the IDE**. Это может занять несколько минут, так как ваш проект впервые запускается, устанавливая соединение с git, клонируя ваш репозиторий и проверяя соединение с хранилищем.
-2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок с примерными моделями.
-3. Сделайте ваш первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, где вы можете добавлять новый код dbt.
-4. Теперь вы можете напрямую запрашивать данные из вашего хранилища и выполнять `dbt run`. Вы можете попробовать это сейчас:
+1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске это может занять несколько минут: в это время устанавливается подключение к git, клонируется репозиторий и проверяется соединение с warehouse.
+2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру каталогов с примерами моделей.
+3. Сделайте первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в управляемом репозитории и позволит открыть ветку, в которой вы сможете добавлять новый dbt‑код.
+4. Теперь вы можете напрямую выполнять запросы к данным в вашем warehouse и запускать `dbt run`. Можете попробовать это прямо сейчас:
     - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
 ## Создание вашей первой модели
 
-У вас есть два варианта работы с файлами в IDE dbt Cloud:
+У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
-- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку для редактирования и фиксации ваших изменений. Перейдите в **Version Control** на левой боковой панели и нажмите **Create branch**.
-- Редактировать в защищенной основной ветке &mdash; Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git. IDE dbt Cloud предотвращает коммиты в защищенную ветку, поэтому вам будет предложено зафиксировать ваши изменения в новой ветке.
+- **Create a new branch (recommended)** &mdash; Создайте новую ветку, чтобы редактировать файлы и коммитить изменения. Перейдите в **Version Control** на левой боковой панели и нажмите **Create branch**.
+- **Edit in the protected primary branch** &mdash; Если вы предпочитаете редактировать, форматировать или линтить файлы, а также выполнять команды dbt напрямую в основной git-ветке. <Constant name="cloud_ide" /> не позволяет делать коммиты в защищённую ветку, поэтому вам будет предложено закоммитить изменения в новую ветку.
 
 Назовите новую ветку `add-customers-model`.
 
-1. Нажмите **...** рядом с директорией `models`, затем выберите **Create file**.  
-2. Назовите файл `customers.sql`, затем нажмите **Create**.
+1. Нажмите **...** рядом с каталогом `models`, затем выберите **Create file**.  
+2. Назовите файл `dim_customers.sql`, затем нажмите **Create**.  
 3. Скопируйте следующий запрос в файл и нажмите **Save**.
 
-    <File name='customers.sql'>
+    <File name='dim_customers.sql'>
 
     ```sql
     with customers as (

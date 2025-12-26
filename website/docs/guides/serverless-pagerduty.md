@@ -1,5 +1,5 @@
 ---
-title: "Настройка тревог PagerDuty при сбоях в dbt Cloud"
+title: "Запуск оповещений PagerDuty при сбоях заданий dbt"
 id: serverless-pagerduty 
 description: Используйте вебхуки для настройки серверного приложения, чтобы вызывать тревоги PagerDuty.
 hoverSnippet: Узнайте, как настроить серверное приложение, использующее вебхуки для вызова тревог PagerDuty.
@@ -8,27 +8,30 @@ icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']
 level: 'Advanced'
-recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение
 
-Это руководство научит вас создавать и размещать базовое приложение на Python, которое будет отслеживать задания dbt Cloud и создавать тревоги PagerDuty в случае сбоя. Для этого, когда задание dbt Cloud завершится, оно будет:
- - Проверять наличие любых неудачных узлов (например, не пройденных тестов или моделей с ошибками), и
- - создавать тревогу PagerDuty на основе этих узлов, вызывая API событий PagerDuty. События дублируются по ID запуска.
+Это руководство научит вас, как создать и разместить простой Python‑приложение, которое будет отслеживать задания <Constant name="cloud" /> и создавать оповещения PagerDuty при сбоях. Для этого, когда задание <Constant name="cloud" /> завершается, приложение будет:
+
+- проверять наличие неуспешных узлов (например, тестов, не прошедших проверку, или моделей с ошибками), и  
+- создавать оповещение PagerDuty на основе этих узлов, вызывая PagerDuty Events API. События дедуплицируются для каждого ID запуска.
 
 ![Скриншот интерфейса PagerDuty, показывающий тревогу, созданную из-за некорректного SQL в модели dbt](/img/guides/orchestration/webhooks/serverless-pagerduty/pagerduty-example-alarm.png)
 
-В этом примере мы будем использовать fly.io для размещения/запуска сервиса. fly.io — это платформа для запуска полнофункциональных приложений без необходимости настройки серверов и т.д. Этот уровень использования должен комфортно вписываться в бесплатный тариф. Вы также можете использовать альтернативные инструменты, такие как [AWS Lambda](https://adem.sh/blog/tutorial-fastapi-aws-lambda-serverless) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
+В этом примере мы будем использовать fly.io для хостинга и запуска сервиса. fly.io — это платформа для запуска full stack‑приложений без необходимости настраивать серверы и управлять ими. Такой уровень использования должен без проблем укладываться в рамки бесплатного тарифа (Free tier).  
+
+Вы также можете использовать альтернативные инструменты, например [AWS Lambda](https://ademoverflow.com/en/posts/tutorial-fastapi-aws-lambda-serverless/) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
 
 ### Предварительные требования
 
-Это руководство предполагает, что вы знакомы с:
-- [Вебхуками dbt Cloud](/docs/deploy/webhooks)
-- CLI приложениями
-- Размещением кода на серверных платформах, таких как fly.io или AWS Lambda
+Это руководство предполагает, что вы уже знакомы со следующим:
+
+- [<Constant name="cloud" /> Webhooks](/docs/deploy/webhooks)
+- CLI‑приложения
+- Развёртывание кода в serverless‑среде выполнения, такой как fly.io или AWS Lambda
 
 
 ## Клонирование репозитория `dbt-cloud-webhooks-pagerduty`
@@ -102,8 +105,8 @@ Wrote config file fly.toml<br/>
 
 Запомните ключ интеграции для дальнейшего использования.
 
-## Настройка нового вебхука в dbt Cloud
-См. [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения полных инструкций. Ваше событие должно быть **Run completed**.
+## Настройка нового вебхука в dbt
+См. [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription) для получения подробных инструкций. В качестве события укажите **Run completed**.
 
 Установите URL вебхука на имя хоста, которое вы создали ранее (`APP_NAME.fly.dev`).
 
@@ -112,9 +115,9 @@ Wrote config file fly.toml<br/>
 *Не тестируйте конечную точку*; это не сработает, пока вы не сохраните ключи аутентификации (следующий шаг).
 
 ## Хранение секретов
-Приложение требует установки трех секретов с использованием следующих имен:
-- `DBT_CLOUD_SERVICE_TOKEN`: [персональный токен доступа](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) или [токен учетной записи сервиса](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens) dbt Cloud с как минимум разрешением `Metdata Only`.
-- `DBT_CLOUD_AUTH_TOKEN`: секретный ключ для вебхука dbt Cloud, который вы создали ранее.
+Приложению необходимо задать три секрета со следующими именами:
+- `DBT_CLOUD_SERVICE_TOKEN`: [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens) для <Constant name="cloud" />, с как минимум разрешением `Metdata Only`.
+- `DBT_CLOUD_AUTH_TOKEN`: Secret Key для вебхука <Constant name="cloud" />, который вы создали ранее.
 - `PD_ROUTING_KEY`: ключ интеграции для интеграции PagerDuty, которую вы создали ранее.
 
 Установите эти секреты следующим образом, заменив `abc123` и т.д. на фактические значения:
@@ -124,6 +127,6 @@ flyctl secrets set DBT_CLOUD_SERVICE_TOKEN=abc123 DBT_CLOUD_AUTH_TOKEN=def456 PD
 
 ## Развертывание вашего приложения
 
-После установки секретов, fly.io повторно развернет ваше приложение. Когда это будет успешно завершено, вернитесь к настройкам вебхука dbt Cloud и нажмите **Test Endpoint**.
+После того как вы зададите свои секреты, fly.io выполнит повторное развертывание вашего приложения. Когда оно успешно завершится, вернитесь в настройки вебхука <Constant name="cloud" /> и нажмите **Test Endpoint**.
 
 </div>
