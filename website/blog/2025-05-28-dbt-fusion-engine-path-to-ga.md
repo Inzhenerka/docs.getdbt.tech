@@ -1,6 +1,6 @@
 ---
-title: "Path to GA: How the dbt Fusion engine rolls out from beta to production"
-description: "We're moving quickly to enable as many teams as possible to start using the new dbt Fusion engine. Check out our roadmap and learn how to follow our progress."
+title: "Путь к GA: как движок dbt Fusion проходит путь от беты к продакшену"
+description: "Мы быстро движемся к тому, чтобы как можно больше команд смогли начать использовать новый движок dbt Fusion. Ознакомьтесь с нашей дорожной картой и узнайте, как следить за нашим прогрессом."
 slug: dbt-fusion-engine-path-to-ga
 image: /img/blog/2025-05-28-dbt-fusion-engine-path-to-ga/indicative-timeline.png
 authors: [jeremy_cohen, joel_labes]
@@ -10,171 +10,171 @@ date: 2025-05-28
 is_featured: true
 ---
 
-Today, we announced that the dbt Fusion engine is [available in beta](https://getdbt.com/blog/get-to-know-the-new-dbt-fusion-engine-and-vs-code-extension).
-- If Fusion works with your project today, great! You're in for a treat 😄
-- If it's your first day using dbt, welcome! You should start on Fusion — you're in for a treat too.
+Сегодня мы объявили, что движок dbt Fusion [доступен в бета-версии](https://getdbt.com/blog/get-to-know-the-new-dbt-fusion-engine-and-vs-code-extension).
+- Если Fusion уже работает с вашим проектом — отлично! Вас ждёт много приятного 😄
+- Если это ваш первый день с dbt — добро пожаловать! Начинайте сразу с Fusion — вас тоже ждёт приятный опыт.
 
-Today is Launch Day — the first day of a new era: the Age of Fusion. We expect many teams with existing projects will encounter at least one issue that will prevent them from adopting the dbt Fusion engine in production environments. That's ok!
+Сегодня — Launch Day, первый день новой эры: Эпохи Fusion. Мы ожидаем, что многие команды с существующими проектами столкнутся как минимум с одной проблемой, которая помешает использовать движок dbt Fusion в продакшене. И это нормально!
 
-We're moving quickly to unblock more teams, and we are committing that by the time Fusion reaches General Availability:
+Мы активно работаем над тем, чтобы разблокировать всё больше команд, и берём на себя обязательство, что к моменту достижения Fusion статуса General Availability:
 
-- We will support Snowflake, Databricks, BigQuery, Redshift — and likely also Athena, Postgres, Spark, and Trino — with the new [Fusion Adapter pattern](/blog/dbt-fusion-engine-components#dbt-fusion-engine-adapters).
-- We will have coverage for (basically) all dbt Core functionality. Some things are impractical to replicate outside of Python, or so seldom-used that we'll be more reactive than proactive. On the other hand, many existing dbt Core behaviours will be improved by the unique capabilities of the dbt Fusion engine, such as speed and SQL comprehension. You'll see us talk about this in relevant GitHub issues, many of which we've linked below.
-- The source-available `dbt-fusion` repository will contain more total functionality than what is available in dbt Core today. ([Read more about this here](/blog/dbt-fusion-engine-components#ways-to-access).)
-- The developer experience will be even speedier and more intuitive.
+- Мы будем поддерживать Snowflake, Databricks, BigQuery, Redshift — а также, вероятно, Athena, Postgres, Spark и Trino — с новым [паттерном адаптеров Fusion](/blog/dbt-fusion-engine-components#dbt-fusion-engine-adapters).
+- Мы покроем (практически) весь функционал dbt Core. Некоторые вещи сложно или нецелесообразно воспроизводить вне Python, а некоторые используются настолько редко, что мы будем реагировать на них по мере необходимости. При этом многие существующие поведения dbt Core будут улучшены за счёт уникальных возможностей движка dbt Fusion — таких как скорость и глубокое понимание SQL. Вы увидите обсуждения этого в соответствующих GitHub issues, на многие из которых мы ссылаемся ниже.
+- Репозиторий с открытым исходным кодом `dbt-fusion` будет содержать больше функциональности, чем доступно в dbt Core сегодня. ([Подробнее об этом здесь](/blog/dbt-fusion-engine-components#ways-to-access).)
+- Опыт разработчика станет ещё быстрее и интуитивнее.
 
-These statements aren't true yet — but you can see where we're headed. That's what betas are for, that's the journey we're going on together, and that's why we want to have you all involved.
+Пока что всё это ещё не реализовано — но вы можете видеть, куда мы движемся. Для этого и существуют беты, это путь, по которому мы идём вместе, и именно поэтому мы хотим вовлечь вас всех.
 
 <!-- truncate -->
 
-**We will be adding functionality rapidly over the coming weeks.** In particular, keep an eye out for Databricks, BigQuery and Redshift support (in that order) in the coming weeks. 
+**В ближайшие недели мы будем очень быстро добавлять функциональность.** В частности, следите за поддержкой Databricks, BigQuery и Redshift (именно в таком порядке) в ближайшее время.
 
-The most popular dbt Labs packages (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) are already compatible with Fusion. Some external packages may not work out of the box, but we plan to work with package maintainers to get them ready & working on Fusion. 
+Самые популярные пакеты dbt Labs (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) уже совместимы с Fusion. Некоторые сторонние пакеты могут не работать «из коробки», но мы планируем сотрудничать с их мейнтейнерами, чтобы подготовить и адаптировать их под Fusion.
 
-So when is Fusion going to be GA? We're targeting later this year for full feature parity, but we're also hoping to approach it asymptotically — meaning that many existing dbt users ca start adopting Fusion much sooner.
+Так когда же Fusion станет GA? Мы нацелены на достижение полного функционального паритета позже в этом году, но также надеемся подойти к этому асимптотически — то есть многие существующие пользователи dbt смогут начать переход на Fusion значительно раньше.
 
-During the beta period, you may run into unanticipated (and anticipated) issues when trying to run your project on Fusion. Please share any issues in the [dbt-fusion](https://github.com/dbt-labs/dbt-fusion) repository or on Slack in [#dbt-fusion-engine](https://getdbt.slack.com/archives/C088YCAB6GH), and we'll do our best to to unblock you.
+В течение бета-периода вы можете столкнуться с неожиданными (и ожидаемыми) проблемами при попытке запустить ваш проект на Fusion. Пожалуйста, сообщайте о любых проблемах в репозитории [dbt-fusion](https://github.com/dbt-labs/dbt-fusion) или в Slack в канале [#dbt-fusion-engine](https://getdbt.slack.com/archives/C088YCAB6GH), и мы постараемся как можно быстрее вас разблокировать.
 
-## Can I use Fusion for my dbt project today?
+## Могу ли я использовать Fusion для своего dbt-проекта уже сегодня?
 
-Maybe! The biggest first question: "Is your adapter supported yet?" (If not, sit tight, we're working fast!) If so, then it depends on the exact matrix of features you currently use in your dbt project.
+Возможно! Первый и самый важный вопрос: «Поддерживается ли ваш адаптер?» (Если нет — немного терпения, мы работаем очень быстро.) Если да, то всё зависит от конкретного набора возможностей, которые вы используете в своём dbt-проекте.
 
-You may be able to start using Fusion immediately, may need to make (mostly automatic) modifications to your project to resolve deprecations, or your project may not *yet* be parsable at all:
+Вы можете начать использовать Fusion сразу, может потребоваться внести (в основном автоматические) изменения в проект для устранения депрекейтов, либо ваш проект пока вообще не сможет быть распарсен:
 
-| State | Description | Workaround | Resolvable by |
+| Состояние | Описание | Обходное решение | Кем устраняется |
 | --- | --- | --- | --- |
-| Unblocked | You can adopt the dbt Fusion engine with no changes to your project |  |  |
-| Soft blocked | Your project parses successfully but relies on not-yet-implemented functionality | Don't invoke unsupported functions or build unsupported models | dbt Labs |
-| Hard blocked by deprecations | Your project contains [functionality deprecated in dbt Core v1.10](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine) | Resolve deprecations with the [dbt-autofix script](https://github.com/dbt-labs/dbt-autofix) or workflow in dbt Studio | You |
-| Hard blocked by known parse issues | Your project contains Python models or uses a not-yet-supported adapter | Temporarily remove Python models  | dbt Labs |
-| Hard blocked by unknown parse issues | Your project is probably doing something surprising with Jinja | Create an issue, consider modifying impacted code | You & dbt Labs |
+| Unblocked | Вы можете перейти на движок dbt Fusion без изменений в проекте |  |  |
+| Soft blocked | Проект успешно парсится, но использует ещё не реализованный функционал | Не вызывать неподдерживаемые функции или не собирать неподдерживаемые модели | dbt Labs |
+| Hard blocked by deprecations | Проект содержит [функциональность, объявленную устаревшей в dbt Core v1.10](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine) | Устранить депрекейты с помощью [скрипта dbt-autofix](https://github.com/dbt-labs/dbt-autofix) или workflow в dbt Studio | Вы |
+| Hard blocked by known parse issues | Проект содержит Python-модели или использует пока не поддерживаемый адаптер | Временно удалить Python-модели | dbt Labs |
+| Hard blocked by unknown parse issues | Вероятно, проект делает что-то нетривиальное с Jinja | Создать issue, при необходимости изменить затронутый код | Вы и dbt Labs |
 
-We're continuously removing blockers to Fusion adoption on a rolling basis during this beta period and in the leadup to a broader release. The rest of this post will go deeper into the four thematic criteria we set out above:
+Мы постоянно убираем блокирующие факторы для перехода на Fusion на протяжении всего бета-периода и в преддверии более широкого релиза. Далее в этом посте мы подробнее разберём четыре ключевых критерия, обозначенных выше:
 
-- Adapter coverage
-- Feature coverage
-- Source-available code publishing
-- Developer experience improvements
+- Покрытие адаптеров  
+- Покрытие функциональности  
+- Публикация кода с открытым доступом к исходникам  
+- Улучшения developer experience  
 
-## Requirement for GA: Adapter Coverage
+## Требование для GA: покрытие адаптеров
 
-### Databricks, BigQuery and Redshift
+### Databricks, BigQuery и Redshift
 
-dbt Fusion's adapters are now based on the [ADBC standard](https://arrow.apache.org/adbc/current/driver/status.html), a modern, high-performance Apache project optimised for columnar analytical databases.
+Адаптеры dbt Fusion теперь основаны на [стандарте ADBC](https://arrow.apache.org/adbc/current/driver/status.html) — современном высокопроизводительном Apache‑проекте, оптимизированном для колоночных аналитических баз данных.
 
-dbt Labs has developed new ADBC-compatible drivers (and a [supporting framework, XDBC](/blog/dbt-fusion-engine-components#dbt-fusion-engine-adapters)) to complement the existing, stable Snowflake driver.
+dbt Labs разработала новые ADBC‑совместимые драйверы (а также [вспомогательный фреймворк XDBC](/blog/dbt-fusion-engine-components#dbt-fusion-engine-adapters)), дополняющие уже существующий и стабильный драйвер Snowflake.
 
-**Target release dates:** We expect to add support for [Databricks](https://github.com/dbt-labs/dbt-fusion/issues/4), [BigQuery](https://github.com/dbt-labs/dbt-fusion/issues/5), and [Redshift](https://github.com/dbt-labs/dbt-fusion/issues/6) (in that order) in the coming weeks.
+**Целевые сроки релиза:** мы ожидаем добавить поддержку [Databricks](https://github.com/dbt-labs/dbt-fusion/issues/4), [BigQuery](https://github.com/dbt-labs/dbt-fusion/issues/5) и [Redshift](https://github.com/dbt-labs/dbt-fusion/issues/6) (именно в таком порядке) в ближайшие недели.
 
-Where possible, Fusion adapters will support the same authentication methods and connection/credential configurations as dbt Core adapters. We've also heard loud & clear feedback from dbt platform customers who have beta-tested the Fusion CLI — we want to figure out a way for Fusion CLI to use connection setup (config/creds) from the platform for local runs ([tracking issue](https://github.com/dbt-labs/dbt-fusion/issues/23)).
+Там, где это возможно, адаптеры Fusion будут поддерживать те же методы аутентификации и конфигурации подключений/учётных данных, что и адаптеры dbt Core. Мы также получили чёткую обратную связь от клиентов платформы dbt, тестировавших Fusion CLI в бете: мы хотим, чтобы Fusion CLI мог использовать настройки подключений (config/creds) из платформы для локальных запусков ([tracking issue](https://github.com/dbt-labs/dbt-fusion/issues/23)).
 
-### Athena, Postgres, Spark and Trino
+### Athena, Postgres, Spark и Trino
 
-We're aiming to support these adapters later in the year, prior to GA. Check each adapter's tracking issue ([Trino](https://github.com/dbt-labs/dbt-fusion/issues/39), [Athena](https://github.com/dbt-labs/dbt-fusion/issues/39), [Spark](https://github.com/dbt-labs/dbt-fusion/issues/38), and [Postgres](https://github.com/dbt-labs/dbt-fusion/issues/31)) for specific timelines.
+Мы планируем поддержать эти адаптеры позже в этом году, до достижения GA. Актуальные сроки смотрите в tracking issues для каждого адаптера: [Trino](https://github.com/dbt-labs/dbt-fusion/issues/39), [Athena](https://github.com/dbt-labs/dbt-fusion/issues/39), [Spark](https://github.com/dbt-labs/dbt-fusion/issues/38) и [Postgres](https://github.com/dbt-labs/dbt-fusion/issues/31).
 
-### Custom adapters
+### Кастомные адаптеры
 
-The short answer: Fusion's new adapter format could be extended to support community development of third-party adapters, but it's not on the near-term roadmap before GA ([tracking issue](https://github.com/dbt-labs/dbt-fusion/issues/46)).
+Короткий ответ: новый формат адаптеров Fusion потенциально можно расширить для поддержки сторонней разработки адаптеров сообществом, но это не входит в ближайшую дорожную карту до GA ([tracking issue](https://github.com/dbt-labs/dbt-fusion/issues/46)).
 
-The longer answer: Fusion now downloads necessary drivers (part of the adapter stack) on-demand. This dynamic linking requires the drivers to be signed by dbt Labs, meaning that we need to have a system in place to review contributions of new drivers and ensure their security.
+Длинный ответ: Fusion теперь загружает необходимые драйверы (часть стека адаптера) по требованию. Такая динамическая линковка требует, чтобы драйверы были подписаны dbt Labs, а значит, нам нужно выстроить систему проверки вкладов в виде новых драйверов и обеспечения их безопасности.
 
-In the meantime, if you want to migrate a supported project to the dbt Fusion engine but have a dependency on another project using a custom adapter, you can use a [Hybrid project](/docs/deploy/hybrid-setup) to have <Constant name="core" /> execute the unsupported part of the pipeline and then publish artifacts for downstream projects to consume.
+В качестве временного решения: если вы хотите мигрировать поддерживаемый проект на движок dbt Fusion, но у вас есть зависимость от другого проекта с кастомным адаптером, вы можете использовать [Hybrid project](/docs/deploy/hybrid-setup), чтобы <Constant name="core" /> выполнял неподдерживаемую часть пайплайна и публиковал артефакты для downstream‑проектов.
 
-## Requirement for GA: Feature coverage
+## Требование для GA: покрытие функциональности
 
-Feature coverage includes ensuring documented features work as expected, as well as (where possible) supporting undocumented "accidental" features.
+Покрытие функциональности включает как обеспечение корректной работы задокументированных возможностей, так и (по возможности) поддержку недокументированных «случайных» фич.
 
-Most of the time, even if your project uses an unimplemented feature, you can still take Fusion for a spin. This is because as long as your project parses, you can just skip unsupported models.
+В большинстве случаев, даже если ваш проект использует ещё не реализованную возможность, вы всё равно можете попробовать Fusion. Пока проект успешно парсится, вы просто можете пропустить неподдерживаемые модели.
 
-### Known unimplemented features
+### Известные нереализованные возможности
 
-#### Python models
+#### Python‑модели
 
-Python models are the one exception to that "just skip them" advice. The dbt Fusion engine does not currently support parsing Python models, which means it can not extract refs or configs inside the files. Instead of potentially building models out of DAG order, **we've chosen to not support Python models at all for now**. They're coming back though - [check out the issue](https://github.com/dbt-labs/dbt-fusion/issues/3) for details.
+Python‑модели — единственное исключение из совета «просто пропустите их». В настоящее время движок dbt Fusion не поддерживает парсинг Python‑моделей, а значит, не может извлекать `ref` или `config` из таких файлов. Чтобы избежать потенциальной сборки моделей вне порядка DAG, **мы решили пока полностью не поддерживать Python‑модели**. Они вернутся — подробности в [issue](https://github.com/dbt-labs/dbt-fusion/issues/3).
 
-#### Breadth of Materialization Support
+#### Широта поддержки материализаций
 
-As of today we support the most common materializations: `table`, `view`, `incremental`, `ephemeral` for models — plus the materializations underlying snapshots, seeds, and tests. Other native strategies (like [microbatch incremental models](https://github.com/dbt-labs/dbt-fusion/issues/12), [iceberg tables](https://github.com/dbt-labs/dbt-fusion/issues/28), [materialized views/dynamic tables](https://github.com/dbt-labs/dbt-fusion/issues/27), or [stored test failures](https://github.com/dbt-labs/dbt-fusion/issues/15)) as well as [custom materializations](https://github.com/dbt-labs/dbt-fusion/issues/17) are on the roadmap — check their respective issues to see when.
+На сегодняшний день мы поддерживаем самые распространённые материализации: `table`, `view`, `incremental`, `ephemeral` для моделей, а также материализации, лежащие в основе snapshots, seeds и tests. Другие нативные стратегии (такие как [microbatch incremental models](https://github.com/dbt-labs/dbt-fusion/issues/12), [iceberg tables](https://github.com/dbt-labs/dbt-fusion/issues/28), [materialized views/dynamic tables](https://github.com/dbt-labs/dbt-fusion/issues/27) или [stored test failures](https://github.com/dbt-labs/dbt-fusion/issues/15)), а также [кастомные материализации](https://github.com/dbt-labs/dbt-fusion/issues/17) находятся в дорожной карте — сроки смотрите в соответствующих issues.
 
-It's worth reiterating here: Even if you have models that rely on not-yet-supported materialization strategies, you can still try the dbt Fusion engine in the rest of your project. The rest of your DAG will build as normal, but unsupported strategies will raise an error if they are included in scope of `dbt build` or `dbt run`.
+Важно повторить: даже если у вас есть модели, зависящие от пока неподдерживаемых стратегий материализации, вы всё равно можете попробовать движок dbt Fusion для остальной части проекта. Остальной DAG будет собираться как обычно, но неподдерживаемые стратегии приведут к ошибке, если они попадают в область выполнения `dbt build` или `dbt run`.
 
-To exclude those nodes, use a command like
+Чтобы исключить такие узлы, используйте команды вроде:
 
 - `dbt build --exclude config.materialized:my_custom_mat`
 - `dbt build --exclude config.incremental_strategy:microbatch`
 
-#### Other common features
+#### Другие распространённые возможности
 
-Did you know that there are over 400 documented features of dbt? [Doug](https://github.com/dbeatty10) does, because he had to put them all into a Notion database.
+Знали ли вы, что у dbt задокументировано более 400 возможностей? [Doug](https://github.com/dbeatty10) знает — ему пришлось занести их все в базу Notion.
 
-Fusion already supports two-thirds of them, and we have a plan for the rest. You can follow along at [the `dbt-fusion` repo](https://github.com/dbt-labs/dbt-fusion/issues), where there are issues to track the outstanding behaviours. There's also a rough set of milestones attached, but those are subject to reordering as more teams start using Fusion and giving feedback.
+Fusion уже поддерживает около двух третей из них, и у нас есть план для остальных. Следить за прогрессом можно в репозитории [`dbt-fusion`](https://github.com/dbt-labs/dbt-fusion/issues), где заведены issues для отслеживания оставшихся поведений. Там же есть примерный набор майлстоунов, но их порядок может меняться по мере того, как всё больше команд начинают использовать Fusion и делиться обратной связью.
 
-Some of the most relevant ones include:
+Среди наиболее релевантных:
 
-- [Exposures](https://github.com/dbt-labs/dbt-fusion/issues/13)
-- A new [stable logging system](https://github.com/dbt-labs/dbt-fusion/issues/7)
-- A new [local documentation experience](https://github.com/dbt-labs/dbt-fusion/issues/9) that replaces dbt-docs (!)
-- [Programmatic invocations](https://github.com/dbt-labs/dbt-fusion/issues/10)
-- [Model governance](https://github.com/dbt-labs/dbt-fusion/issues/25) (contracts, constraints, access, deprecation_date)
-- A grab bag of CLI commands like [`dbt clone`](https://github.com/dbt-labs/dbt-fusion/issues/22), [`state:modified.subselector`](https://github.com/dbt-labs/dbt-fusion/issues/33), [`--empty`](https://github.com/dbt-labs/dbt-fusion/issues/34), ...
+- [Exposures](https://github.com/dbt-labs/dbt-fusion/issues/13)  
+- Новая [стабильная система логирования](https://github.com/dbt-labs/dbt-fusion/issues/7)  
+- Новый [локальный опыт работы с документацией](https://github.com/dbt-labs/dbt-fusion/issues/9), который заменит dbt-docs (!)  
+- [Programmatic invocations](https://github.com/dbt-labs/dbt-fusion/issues/10)  
+- [Model governance](https://github.com/dbt-labs/dbt-fusion/issues/25) (contracts, constraints, access, deprecation_date)  
+- Набор CLI‑команд вроде [`dbt clone`](https://github.com/dbt-labs/dbt-fusion/issues/22), [`state:modified.subselector`](https://github.com/dbt-labs/dbt-fusion/issues/33), [`--empty`](https://github.com/dbt-labs/dbt-fusion/issues/34), …
 
-It's worth noting that *resolution* doesn't necessarily mean identical behaviours. As a couple of examples:
+Важно отметить, что *решение* не обязательно означает идентичное поведение. Например:
 
-- Many of these behaviours have not been implemented yet because the Fusion engine introduces new capabilities, above all SQL comprehension, that we will leverage to provide a superior experience. A direct port-over of the feature would miss the point.
-- Others (like the events and logging system) are tightly coupled to dbt Core's Python roots — they're worth a rethink, and not worth shooting for exact 100% conformance
+- Многие из этих возможностей пока не реализованы, потому что движок Fusion открывает новые возможности — прежде всего глубокое понимание SQL, — которые мы хотим использовать для более качественного опыта. Прямой перенос старой реализации не имел бы смысла.
+- Другие (например, события и система логирования) тесно связаны с Python‑основой dbt Core — их стоит переосмыслить, а не стремиться к 100% точному соответствию.
 
-Here's a point-in-time snapshot of how we expect to tackle the known remaining work. Please refer to the [repository's issues page](https://github.com/dbt-labs/dbt-fusion/issues) as the source of truth:
+Ниже приведён срез на текущий момент того, как мы планируем закрывать оставшийся объём работ. В качестве источника истины используйте [страницу issues репозитория](https://github.com/dbt-labs/dbt-fusion/issues):
 
-<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine-path-to-ga/indicative-timeline.png" title="An indication of the dbt Fusion engine's path to GA" width="100%" />
+<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine-path-to-ga/indicative-timeline.png" title="Примерный путь движка dbt Fusion к GA" width="100%" />
 
-### Surprise unimplemented features
+### Неожиданные нереализованные возможности
 
-Did you know that there are also over a bajillion *undocumented* features of dbt? Since March, we've been validating the new engine's parser against projects orchestrated by the dbt platform, which has flagged hundreds of divergent behaviours and common parse bugs.
+Знали ли вы, что у dbt есть ещё и огромное количество *недокументированных* возможностей? С марта мы валидируем парсер нового движка на проектах, оркестрируемых платформой dbt, что уже выявило сотни расхождений в поведении и распространённых багов парсинга.
 
-But we also know there is a long tail of behaviours that will only arise in the wild, and that the easiest way to get to the bottom of them will be to work with users.
+Но мы также понимаем, что существует длинный «хвост» поведений, которые проявятся только в реальных проектах, и самый эффективный способ разобраться с ними — работать напрямую с пользователями.
 
-This work will be ongoing, alongside feature support. When you start using the Fusion engine, please [open an issue](https://github.com/dbt-labs/dbt-fusion/issues) if you hit an unexpected error — and please include a basic project that reproduces the error, so we can fix it!
+Эта работа будет идти параллельно с расширением поддержки функциональности. Когда вы начнёте использовать движок Fusion, пожалуйста, [открывайте issue](https://github.com/dbt-labs/dbt-fusion/issues), если столкнётесь с неожиданной ошибкой, и по возможности прикладывайте минимальный проект для воспроизведения — это поможет нам быстрее всё исправить.
 
-## Requirement for GA: The Source-available `dbt-fusion` codebase is better than `dbt-core` for most use cases
+## Требование для GA: исходно доступный код `dbt-fusion` лучше, чем `dbt-core`, для большинства сценариев
 
-By GA, the [`dbt-fusion` repository](https://github.com/dbt-labs/dbt-fusion) will have the necessary (and fully source-available) components to compile a functional engine for the vast majority of dbt Core projects — and a faster one at that. That means that you will always have the ability to compile, use, and modify this code itself, without requiring access to the dbt Labs provided binary (although we think you'll probably just want to use the binary, for reasons detailed in the [Components of the dbt Fusion engine](/blog/dbt-fusion-engine-components) post).
+К моменту GA репозиторий [`dbt-fusion`](https://github.com/dbt-labs/dbt-fusion) будет содержать необходимые (и полностью доступные в исходниках) компоненты для сборки рабочего движка для подавляющего большинства проектов dbt Core — и при этом более быстрого. Это означает, что у вас всегда будет возможность скомпилировать, использовать и модифицировать сам код без необходимости доступа к бинарнику, предоставляемому dbt Labs (хотя мы считаем, что в большинстве случаев вы предпочтёте именно бинарник — по причинам, описанным в посте [Components of the dbt Fusion engine](/blog/dbt-fusion-engine-components)).
 
-So far, we've released the code necessary to self-compile a dbt binary that can run `dbt deps` and `dbt parse`. Throughout the beta period we will continue to prepare more code for use by those who want to view, contribute to, or modify the code for their own purposes, including what's necessary for the rest of the commands to work.
+На данный момент мы уже выложили код, необходимый для самостоятельной сборки dbt‑бинарника, который умеет выполнять `dbt deps` и `dbt parse`. В течение бета‑периода мы продолжим готовить и публиковать код для остальных команд — для тех, кто хочет просматривать, дорабатывать или использовать его в собственных целях.
 
-Beyond just the code necessary to produce a complete dbt binary, we've also committed to open-sourcing several of the underlying library components (such as dbt-jinja, dbt-serde-yaml, and the grammars necessary to produce a high-performance SQL parser). Again, check out the [Components of the dbt Fusion engine](/blog/dbt-fusion-engine-components) post for the details.
+Помимо кода, необходимого для полноценного dbt‑бинарника, мы также обязались открыть исходники нескольких базовых библиотечных компонентов (таких как dbt-jinja, dbt-serde-yaml и грамматики, необходимые для высокопроизводительного SQL‑парсера). Подробности — в посте [Components of the dbt Fusion engine](/blog/dbt-fusion-engine-components).
 
-Some behaviours that worked in dbt Core won't have an equivalent in this new codebase. The most obvious examples are those which depended on the vagaries of Python: arbitrary callbacks on the EventManager (there's no longer an EventManager on which to register a callback!), the experimental [plugins system](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/plugins/manager.py) (dynamic loading of binaries works completely differently in Rust and would require signing), or the dbt templater in SQLFluff (which hooked into dbt Core beyond the exposed interfaces - although we plan to build a [fast linter ourselves](https://github.com/dbt-labs/dbt-fusion/issues/11)).
+Некоторые поведения, работавшие в dbt Core, не будут иметь прямого аналога в новой кодовой базе. Самые очевидные примеры — те, что зависели от особенностей Python: произвольные колбэки на EventManager (его больше нет), экспериментальная [система плагинов](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/plugins/manager.py) (динамическая загрузка бинарников в Rust устроена совершенно иначе и требует подписания), или dbt‑templater в SQLFluff (который использовал внутренние механизмы dbt Core, выходящие за рамки публичных интерфейсов — хотя мы планируем сделать [собственный быстрый линтер](https://github.com/dbt-labs/dbt-fusion/issues/11)).
 
-## Requirement for GA: The DX rocks
+## Требование для GA: DX на высоте
 
-### More speed
+### Больше скорости
 
-Invocations powered by the dbt Fusion engine are already significantly faster than the same invocation in dbt Core, but there's more to do here! We know that there is still a lot of low-hanging fruit, and by GA we expect to see tasks like full project compilation complete at least twice as fast for many projects.
+Запуски на базе движка dbt Fusion уже заметно быстрее, чем те же самые команды в dbt Core, но нам есть куда расти. Мы знаем, что остаётся много «низко висящих фруктов», и к моменту GA ожидаем, что такие задачи, как полная компиляция проекта, будут выполняться как минимум вдвое быстрее для многих проектов.
 
-If you do some benchmarking, we're particularly interested in any situations where Fusion "pauses" on a single file for a couple of seconds. Some other things to keep in mind:
+Если вы занимаетесь бенчмаркингом, нас особенно интересуют ситуации, когда Fusion «зависает» на одном файле на пару секунд. Также имейте в виду:
 
-- Writing very large manifests is pretty slow, no matter what. Try including `--no-write-json`. We're wondering whether it makes sense to have a trimmed-down manifest by default. What do you think?
-- The `dbt compile` command involves more work in Fusion than in dbt Core, because it's doing full SQL validation. To compare *just* the SQL rendering step (the equivalent of dbt Core's `compile` command), you can try [turning off static analysis](/docs/fusion/new-concepts) with the CLI flag `--static-analysis off`.
+- Запись очень больших manifest‑файлов медленная при любом подходе. Попробуйте использовать `--no-write-json`. Мы обсуждаем, имеет ли смысл делать урезанный manifest по умолчанию. Что вы думаете?
+- Команда `dbt compile` в Fusion выполняет больше работы, чем в dbt Core, поскольку включает полную SQL‑валидацию. Чтобы сравнить *только* этап рендеринга SQL (аналог `compile` в dbt Core), можно попробовать [отключить статический анализ](/docs/fusion/new-concepts) с помощью флага `--static-analysis off`.
 
-As a sign of what's possible, take note of the incremental recompilation used to provide real-time feedback in the VS Code extension.
+В качестве примера возможного уровня оптимизации обратите внимание на инкрементальную перекомпиляцию, используемую для предоставления обратной связи в реальном времени в расширении VS Code.
 
-### A more info-dense console output
+### Более информативный вывод в консоли
 
-While we were preparing for the beta release, we kept the Fusion CLI output intentionally verbose — it displays *everything* that's happening, which means errors and warnings can be pushed out of view by other status updates. We're already in the process of [clearing this up a bit](https://github.com/dbt-labs/dbt-fusion/issues/52), and we've got some funny ideas about the possibility of progress bars. However we do it, the goal should be that you see the log lines about things that need attention, and not much more.
+При подготовке бета‑релиза мы намеренно сделали вывод Fusion CLI максимально подробным — он показывает *всё*, что происходит, из‑за чего ошибки и предупреждения могут теряться среди статусных сообщений. Мы уже начали [наводить порядок](https://github.com/dbt-labs/dbt-fusion/issues/52) и даже подумываем о прогресс‑барах. В любом случае цель одна: вы должны видеть строки логов, требующие внимания, и не намного больше.
 
-### Your idea here
+### Ваши идеи
 
-What feels *off* when you're using dbt Fusion? Tell us all about it — if you've got a clear idea for what's wrong and what it should be instead, feel free to jump straight to a GitHub issue. Bonus points if you've got a minimal repro project.
+Что кажется *неудобным* при работе с dbt Fusion? Расскажите нам! Если у вас есть чёткое понимание, что именно не так и как должно быть, смело создавайте GitHub issue. Дополнительный плюс — минимальный проект для воспроизведения.
 
-If you need to kick an idea around before opening an issue, we'll also be actively checking in on #dbt-fusion-engine (for high-level discussions) and #dbt-fusion-engine-migration (to get into the weeds of a specific bug) on Slack.
+Если же вам нужно сначала обсудить идею, мы активно следим за каналами #dbt-fusion-engine (для общих обсуждений) и #dbt-fusion-engine-migration (для детального разбора конкретных багов) в Slack.
 
-From now until Fusion is GA, we will be prioritizing parity with existing framework features, *not adding new ones.* Once we hit GA, we'll think about whether to transfer existing feature requests from the `dbt-core` repo to `dbt-fusion` — or maybe a third place? — stay tuned.
+До тех пор, пока Fusion не станет GA, мы будем приоритизировать достижение паритета с существующими возможностями фреймворка, *а не добавление новых*. После GA мы подумаем, стоит ли переносить существующие feature requests из репозитория `dbt-core` в `dbt-fusion` — или в какое‑то третье место. Следите за новостями.
 
-## Following along
+## Как следить за прогрессом
 
-The path to GA for Fusion is a Community-wide effort. We want to hear from you, work with you, get your ideas and feedback. Whether it is sharing a bug report, an idea for a feature or more high level thoughts and feedback, we're looking to engage with you.
+Путь Fusion к GA — это усилие всего сообщества. Мы хотим слышать вас, работать с вами, получать идеи и обратную связь. Будь то баг‑репорт, идея для новой возможности или более общие мысли — мы открыты к диалогу.
 
-- In Slack, we're on [#dbt-fusion-engine](https://getdbt.slack.com/archives/C088YCAB6GH) and #dbt-fusion-engine-migration
-- The GitHub repo is [https://github.com/dbt-labs/dbt-fusion](https://github.com/dbt-labs/dbt-fusion)
-- There are a couple of dozen *dbt World Circuit* meetups happening globally during June: [https://www.meetup.com/pro/dbt/](https://www.meetup.com/pro/dbt/). (Jeremy will be speaking in Paris, Marseille, and Boston — come hang out!)
-- We'll be having regular office hours with a revolving cast of characters from the Developer Experience, Engineering, and Product teams. Dates will be circulated in the #dbt-fusion-engine channel.
+- В Slack мы доступны в каналах [#dbt-fusion-engine](https://getdbt.slack.com/archives/C088YCAB6GH) и #dbt-fusion-engine-migration  
+- GitHub‑репозиторий: [https://github.com/dbt-labs/dbt-fusion](https://github.com/dbt-labs/dbt-fusion)  
+- В июне по всему миру проходит несколько десятков митапов *dbt World Circuit*: [https://www.meetup.com/pro/dbt/](https://www.meetup.com/pro/dbt/). (Jeremy будет выступать в Париже, Марселе и Бостоне — приходите пообщаться!)  
+- Мы будем регулярно проводить office hours с участием представителей команд Developer Experience, Engineering и Product. Даты будут анонсироваться в канале #dbt-fusion-engine.

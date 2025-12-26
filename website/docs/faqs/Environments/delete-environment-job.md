@@ -1,9 +1,7 @@
 ---
-```yaml
 title: Как удалить задание или окружение в dbt?
 description: "Как удалить задание или окружение"
 sidebar_label: 'Удалить задание или окружение'
-```
 id: delete-environment-job
 ---
 

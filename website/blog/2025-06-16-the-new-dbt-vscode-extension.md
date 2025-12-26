@@ -1,6 +1,6 @@
 ---
-title: "The new dbt VS Code extension: The experience we've all been waiting for"
-description: "How the new dbt VS Code extension finally delivers the dev experience we've always wanted."
+title: "Новый плагин dbt для VS Code: опыт, которого мы все ждали"
+description: "Как новый плагин dbt для VS Code наконец обеспечивает тот самый опыт разработки, которого мы всегда хотели."
 slug: vscode-extension-experience
 authors: [bruno_lima]
 
@@ -11,102 +11,102 @@ date: 2025-06-25
 is_featured: true
 ---
 
-Hello, community!
+Привет, сообщество!
 
-My name is Bruno, and you might have seen me posting dbt content on LinkedIn. If you haven't, let me introduce myself. I started working with dbt more than 3 years ago. At that time, I was very new to the tool, and to understand it a bit better, I started creating some resources to help me with dbt learning. One of them, a dbt cheatsheet, was the starting point for my community journey.
+Меня зовут Бруно, и, возможно, вы видели мои посты про dbt в LinkedIn. Если нет — давайте познакомимся. Я начал работать с dbt более 3 лет назад. В то время я только осваивал этот инструмент и, чтобы лучше в нём разобраться, начал создавать материалы, которые помогали мне учиться. Один из них — шпаргалка по dbt — и стал отправной точкой моего пути в сообществе.
 
-I went from this cheatsheet to creating all different kinds of content, contributing and engaging with the community, until I got the dbt community award two times, and I am very thankful and proud about that.
+От этой шпаргалки я перешёл к созданию самых разных материалов, участию и активному взаимодействию с сообществом, и в итоге дважды получил награду dbt community award. Я очень благодарен за это и по-настоящему горжусь.
 
-Since the acquisition of SDF Labs by dbt Labs, I have been waiting for the day that we would see what the result of the fusion of these two companies would be. Spoiler alert: It’s the dbt Fusion engine and it's better than I could have expected.
+С момента приобретения SDF Labs компанией dbt Labs я ждал дня, когда мы увидим результат слияния этих двух компаний. Спойлер: это dbt Fusion engine — и он оказался даже лучше, чем я ожидал.
 
 <!--truncate-->
 
-## The dbt developer experience in the pre-fusion-era
+## Developer experience в dbt до эпохи Fusion
 
-If you've ever started a dbt project, chances are your journey began like mine did: cloning `jaffle_shop`, opening it in VS Code, and running [`dbt run`](/reference/commands/run) for the first time (actually the second time, because I know you forgot to run [`dbt deps`](/reference/commands/deps) in the first one). This is the dbt initiation process, our ‘hello-world’.
+Если вы когда‑нибудь начинали dbt‑проект, велика вероятность, что ваш путь был похож на мой: клонирование `jaffle_shop`, открытие проекта в VS Code и первый запуск [`dbt run`](/reference/commands/run) (на самом деле второй, потому что я знаю, что в первый раз вы забыли запустить [`dbt deps`](/reference/commands/deps)). Это и есть обряд инициации в dbt, наше «hello world».
 
-You played around with [staging models](/best-practices/how-we-structure/2-staging#staging-models), the orders table, customers table. But let's be honest, the developer experience in that setup was always a bit... clunky.
+Вы поигрались с [staging models](/best-practices/how-we-structure/2-staging#staging-models), таблицами orders и customers. Но давайте честно: developer experience в таком сетапе всегда был немного… неуклюжим.
 
-You wanted to check the lineage of your project, one of the coolest features of dbt, and you had to run [`dbt docs generate`](/reference/commands/cmd-docs#dbt-docs-generate), [`serve`](/reference/commands/cmd-docs#dbt-docs-serve), and open the docs in a browser. Made some updates? Do all the steps again.
+Вы хотели посмотреть lineage проекта — одну из самых крутых фич dbt — и для этого нужно было запускать [`dbt docs generate`](/reference/commands/cmd-docs#dbt-docs-generate), затем [`serve`](/reference/commands/cmd-docs#dbt-docs-serve) и открывать документацию в браузере. Внесли изменения? Повторяйте всё заново.
 
-Did you want to check your project's metadata? You had to rely on [`dbt docs`](/reference/commands/cmd-docs) (that whole process again), or build some custom solution with the [`manifest.json`](/reference/artifacts/manifest-json).
+Хотели посмотреть метаданные проекта? Нужно было либо снова полагаться на [`dbt docs`](/reference/commands/cmd-docs) (и весь этот процесс), либо собирать какое‑то кастомное решение на основе [`manifest.json`](/reference/artifacts/manifest-json).
 
-Moving to dbt Cloud (now called just <Constant name="cloud" />) made things smoother. It has a built-in <Constant name="cloud_ide" /> with git integration, easier to compile and preview models. An auto-updating lineage tab below the model, a much better documentation with dbt Explorer, now renamed to Catalog. And a lot of other powerful features for orchestration, observability, CI/CD, and more.
+Переход на dbt Cloud (теперь он называется просто <Constant name="cloud" />) сделал жизнь проще. Там есть встроенный <Constant name="cloud_ide" /> с интеграцией git, более удобная компиляция и предпросмотр моделей, автоматически обновляемая вкладка lineage под моделью, значительно улучшенная документация с dbt Explorer (теперь — Catalog), а также множество мощных возможностей для оркестрации, наблюдаемости, CI/CD и многого другого.
 
-The cloud-based <Constant name="cloud" /> was a big step up, but even so, many of us still preferred to use our own dev environments. We like using our themes, our VS Code extensions, our terminals, but this would mean losing all the nice cloud features while developing. A sad trade-off.
+Облачный <Constant name="cloud" /> стал большим шагом вперёд, но даже так многие из нас всё равно предпочитали собственные dev‑окружения. Нам нравится использовать свои темы, расширения VS Code, терминалы — но за это приходилось платить потерей всех удобных cloud‑фич во время разработки. Грустный компромисс.
 
-We've already been to <Constant name="cloud" /> platform and back to the terminal, and some problems remain. Consider this all too common scenario when modifying a dbt model: forgetting a comma[1]. You don't learn your mistake until after dbt tries to run this model on your warehouse, but dbt can't do this until your cluster is turned on. So it's not until a full minute later that you get the feedback about your missing punctuation mark.
+Мы уже не раз ходили от <Constant name="cloud" /> обратно в терминал, и некоторые проблемы так и оставались. Взять, к примеру, очень распространённую ситуацию при изменении dbt‑модели: забыли запятую[1]. Вы узнаёте об ошибке только после того, как dbt попытается запустить модель в хранилище, а до этого ему ещё нужно дождаться, пока поднимется кластер. В итоге вы получаете фидбек о пропущенной запятой лишь через минуту.
 
-[1]: because you are using trailing commas instead of leading commas, and they're harder to see, and I'm talking too much about the comma fight.
+[1]: потому что вы используете trailing commas вместо leading commas — их сложнее заметить, и вообще я слишком много говорю про войну запятых.
 
-All this back-and-forth communication of dbt and the platform was slowing down your project.
+Всё это постоянное «пинг‑понг» взаимодействие между dbt и платформой замедляло работу над проектом.
 
-That’s why this new release is such a big deal. It solves all the problems above and introduces other things I didn't know I needed until I saw it.
+Именно поэтому этот новый релиз — настолько важное событие. Он решает все перечисленные проблемы и добавляет вещи, о необходимости которых я даже не догадывался, пока не увидел их вживую.
 
-## The new era of dbt development
+## Новая эра разработки с dbt
 
-With the acquisition of SDF Labs and a renewed focus on developer experience, dbt Labs announced its new engine, [Fusion](/docs/fusion/about-fusion). This engine was built from zero with Rust, and its intelligence will power up dbt, no matter where you run it. There are different ways you can use the Fusion engine, and the best one is with the also announced VS Code extension.
+После приобретения SDF Labs и обновлённого фокуса на developer experience, dbt Labs анонсировали свой новый движок — [Fusion](/docs/fusion/about-fusion). Он был написан с нуля на Rust, и его «интеллект» будет усиливать dbt независимо от того, где вы его запускаете. Существует несколько способов использовать Fusion engine, но лучший из них — вместе с анонсированным расширением для VS Code.
 
-The Fusion engine with the VS Code extension is how folks will want to develop with dbt moving forward. I can say this feels like the experience we’ve all been waiting for.
+Fusion engine в сочетании с расширением для VS Code — это то, как, по моему мнению, люди будут работать с dbt в будущем. И могу сказать честно: это ощущается как тот самый опыт, которого мы все так долго ждали.
 
-After using it, it’s hard to imagine going back. Working with dbt in VS Code without this extension just doesn’t make sense anymore.
+После того как попробуешь, сложно представить возвращение назад. Работать с dbt в VS Code без этого расширения теперь просто не имеет смысла.
 
-It comes with a lot of features to streamline your work and make you more efficient by developing faster and spending less. But let me tell you about my favorites:
+В нём есть множество возможностей, которые упрощают работу, повышают эффективность, позволяют разрабатывать быстрее и тратить меньше ресурсов. Но давайте расскажу о моих любимых.
 
-### Catch SQL Errors in Real Time
+### Отлов SQL‑ошибок в реальном времени
 
-There was no question what I was picking first. No more waiting for your platform to debug your code for you. If you misspell a column name or goof up a function's order of parameters, you catch those errors before you run anything.
+Здесь выбор был очевиден. Больше не нужно ждать, пока платформа отладит ваш код за вас. Если вы ошиблись в названии колонки или перепутали порядок параметров функции, вы увидите ошибку ещё до запуска.
 
-This is because Fusion doesn't treat SQL code as just a string anymore; it really understands it. It also shows you some helpful information about the error.
+Это возможно потому, что Fusion больше не воспринимает SQL просто как строку — он действительно его понимает. Плюс, он показывает полезную информацию о самой ошибке.
 
 <Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_function_error.png" title="Showing function errors." />
 
 <Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_column_error.png" title="Showing column name errors." />
 
-This is the greatest improvement of this engine, IMHO.
+На мой взгляд, это самое большое улучшение во всём этом движке.
 
-### Model and Column Lineage
+### Lineage моделей и колонок
 
-My next favorite feature is the lineage view. If you were a <Constant name="cloud" /> platform user, you would feel at home. And if you were using dbt Core, finally, no more generating `dbt docs` to visualize lineage.
+Следующая любимая фича — визуализация lineage. Если вы пользовались <Constant name="cloud" />, вы почувствуете себя как дома. А если вы работали с dbt Core — наконец‑то больше не нужно генерировать `dbt docs`, чтобы посмотреть lineage.
 
-Now there's a tab lineage tab that shows your project’s lineage directly in VS Code. It’s interactive and live. You can use the lenses feature, that's pretty cool to have a good visualization of your project by different attributes like resource_type, or materialization.
+Теперь прямо в VS Code есть вкладка lineage, которая показывает lineage проекта в интерактивном и «живом» виде. Можно использовать lenses — это удобный способ визуализировать проект по разным атрибутам, например `resource_type` или `materialization`.
 
 <Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_project_lineage.png" title="Project Lineage." />
 
-And something I was not expecting to be here, but thankfully it is, column-level lineage! Not just where columns come from, but also how they change: renamed, transformed, or passed through.
+И ещё одна вещь, которую я не ожидал здесь увидеть, но очень рад, что она есть, — column‑level lineage. Не просто откуда берутся колонки, но и как они меняются: переименовываются, трансформируются или прокидываются дальше без изменений.
 
-This is incredibly helpful for debugging transformations or understanding how that key metric is shaped across models.
+Это невероятно полезно для отладки трансформаций или для понимания того, как формируется ключевая метрика на протяжении всей цепочки моделей.
 
 <Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_cll.png" title="Column-level Lineage." />
 
-### Instant refactoring
+### Мгновенный рефакторинг
 
-Ok, let me show you just one more thing! Have you ever faced a situation where you'd like to rename a model or a column, but it's used many places downstream that you give up because you don't want to refactor everything or you are afraid you will break something?
+Ладно, покажу ещё одну вещь! Бывало ли у вас так, что вы хотели переименовать модель или колонку, но она используется во множестве downstream‑объектов, и вы отказывались от идеи, потому что не хотелось всё рефакторить или было страшно что‑нибудь сломать?
 
-Now, thanks to the deep dbt Fusion SQL understanding, you can rename your model or column, and the extension will refactor all downstream dependencies for you. But don't worry, before doing it, the extension allows you to see a preview of the changes, so you can be sure it is doing what you want.
+Теперь, благодаря глубокому пониманию SQL в dbt Fusion, вы можете переименовать модель или колонку, а расширение автоматически отрефакторит все downstream‑зависимости. И не переживайте: перед применением изменений расширение покажет их превью, чтобы вы были уверены, что всё делается именно так, как нужно.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_refactoring.webm" type="video/webm" />
 </video>
 
-There are a lot more other features this extension is bringing, like navigating through models instantly, autocompleting everything, renaming models or columns and being warned how it will impact your project, previewing models & CTEs, and other features that are already covered in other blogs. By the way, it just launched, so I believe we can expect more and more enhancements to come.
+У этого расширения есть и множество других возможностей: мгновенная навигация по моделям, автодополнение буквально всего, переименование моделей и колонок с предупреждением о влиянии на проект, предпросмотр моделей и CTE и многое другое — часть этого уже подробно описана в других блогах. К тому же расширение только что вышло, так что, уверен, нас ждёт ещё много улучшений.
 
-## Conclusion: A New Default
+## Заключение: новый стандарт
 
-This extension changes what using dbt feels like. It brings together performance, context, and interactivity in a way that finally makes dbt feel at home inside a modern developer environment. And the best part? It’s just getting started.
+Это расширение меняет само ощущение от работы с dbt. Оно объединяет производительность, контекст и интерактивность таким образом, что dbt наконец‑то чувствует себя «родным» внутри современного developer‑окружения. И самое приятное — это только начало.
 
-The Fusion engine is already powering a faster, smarter dbt under the hood. And it opens the door to a more fluid, confident, and intuitive development experience. Fewer context switches. Fewer gotchas. More time spent thinking about your data, not your tooling.
+Fusion engine уже делает dbt быстрее и умнее «под капотом». И он открывает дорогу к более плавному, уверенному и интуитивному процессу разработки. Меньше переключений контекста. Меньше подводных камней. Больше времени на размышления о данных, а не об инструментах.
 
-If you’ve ever built models in a text editor and wished dbt “just knew more,” this is for you.
+Если вы когда‑нибудь писали модели в текстовом редакторе и думали, что dbt «просто должен понимать больше», — это для вас.
 
-If you’ve relied on the CLI but missed having true autocomplete, this is for you.
+Если вы полагались на CLI, но вам не хватало полноценного автокомплита, — это для вас.
 
-And if you’ve wanted the best of both worlds, the flexibility of Core with the power of Cloud, this might just become your new default. Even if you use dbt Cloud, it powers up dbt-core to another level.
+И если вы хотели лучшее из двух миров — гибкость Core и мощь Cloud, — возможно, это станет вашим новым стандартом. Даже если вы используете dbt Cloud, это выводит dbt-core на совершенно новый уровень.
 
-We’re incredibly excited to see how the community builds with this. Try it out. Push it. Share what’s working, and what’s missing.
+Мы с огромным интересом ждём, как сообщество будет использовать всё это. Попробуйте. Потестируйте. Делитесь тем, что работает, и тем, чего не хватает.
 
-This new extension will be constantly updated, so stay tuned for more improvements.
+Это расширение будет постоянно обновляться, так что следите за новостями.
 
-**This is the experience we’ve all been waiting for.**
+**Это тот самый опыт, которого мы все ждали.**
 
-*Bruno is a lead Data Engineer at [phData](https://www.phdata.io), and recently built a dbt learning platform called [DataGym.io](https://www.datagym.io).*
+*Бруно — ведущий Data Engineer в [phData](https://www.phdata.io) и недавно создал платформу для обучения dbt под названием [DataGym.io](https://www.datagym.io).*

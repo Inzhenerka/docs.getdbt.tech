@@ -1,5 +1,4 @@
 ---
-```yaml
 title: "О файле profiles.yml"
 description: "Файл dbt profiles.yml содержит сведения о подключении к вашему хранилищу данных."
 ```

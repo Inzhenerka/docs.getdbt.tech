@@ -1,6 +1,6 @@
 ---
-title: "The key technologies behind SQL Comprehension"
-description: "The technologies that power the three levels of SQL comprehension. "
+title: "Ключевые технологии, лежащие в основе понимания SQL"
+description: "Технологии, которые лежат в основе трёх уровней понимания SQL."
 slug: sql-comprehension-technologies
 
 authors: [dave_connors]
@@ -12,83 +12,82 @@ date: 2025-01-24
 is_featured: true
 ---
 
-You ever wonder what’s *really* going on in your database when you fire off a (perfect, efficient, full-of-insight) SQL query to your database?
+Вы когда‑нибудь задумывались, что *на самом деле* происходит в базе данных, когда вы отправляете туда (идеальный, эффективный, полный инсайтов) SQL‑запрос?
 
-OK, probably not 😅. Your personal tastes aside, we’ve been talking a *lot* about SQL Comprehension tools at dbt Labs in the wake of our acquisition of SDF Labs, and think that the community would benefit if we included them in the conversation too! We recently published a [blog that talked about the different levels of SQL Comprehension tools](https://docs.getdbt.com/blog/the-levels-of-sql-comprehension). If you read that, you may have encountered a few new terms you weren’t super familiar with.
+Ладно, скорее всего — нет 😅. Как бы то ни было, в dbt Labs мы *очень много* говорим об инструментах SQL Comprehension после приобретения SDF Labs и считаем, что сообществу тоже будет полезно участвовать в этом разговоре. Недавно мы опубликовали [пост в блоге о разных уровнях инструментов SQL Comprehension](https://docs.getdbt.com/blog/the-levels-of-sql-comprehension). Если вы его читали, то могли столкнуться с несколькими новыми терминами, с которыми раньше были не очень знакомы.
 
-In this post, we’ll talk about the technologies that underpin SQL Comprehension tools in more detail. Hopefully, you come away with a deeper understanding of and appreciation for the hard work that your computer does to turn your SQL queries into actionable business insights!
+В этом посте мы подробнее разберём технологии, лежащие в основе инструментов SQL Comprehension. Надеемся, что в итоге у вас появится более глубокое понимание — и уважение — к той непростой работе, которую выполняет компьютер, превращая ваши SQL‑запросы в прикладные бизнес‑инсайты!
 
 <!-- truncate -->
 
-Here’s a quick refresher on the levels of SQL comprehension:
+Для начала — краткое напоминание об уровнях SQL Comprehension:
 
-<Lightbox src="/img/blog/2025-01-23-levels-of-sql-comprehension/validation_all_levels.png" title="The three levels of SQL Comprehension, with example SQL."width="85%" />
+<Lightbox src="/img/blog/2025-01-23-levels-of-sql-comprehension/validation_all_levels.png" title="The three levels of SQL Comprehension, with example SQL." width="85%" />
 
-Each of these levels is powered by a distinct set of technologies. It’s useful to explore these technologies in the context of the SQL Comprehension tool you are probably most familiar with: a database! A database, as you might have guessed, has the deepest possible SQL comprehension abilities as well as SQL *execution* abilities — it contains all necessary technology to translate a SQL query text into rows and columns.
+Каждый из этих уровней опирается на свой собственный набор технологий. Удобнее всего рассматривать их в контексте инструмента SQL Comprehension, с которым вы наверняка знакомы лучше всего: базы данных. База данных, как вы могли догадаться, обладает максимально глубокой SQL‑осознанностью, а также возможностями *исполнения* SQL — в ней есть все необходимые технологии, чтобы превратить текст SQL‑запроса в строки и столбцы данных.
 
-Here’s a simplified diagram to show your query’s fantastic voyage of translation into tabular data:
+Вот упрощённая схема «путешествия» вашего запроса — от текста до табличных данных:
 
-<Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/full_translation_flow.png" title="A flow chart showing a SQL query's journey to raw data."width="85%" />
+<Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/full_translation_flow.png" title="A flow chart showing a SQL query's journey to raw data." width="85%" />
 
-First, databases use a **parser** to translate SQL code into a **syntax tree.** This enables syntax validation + error handling.
+Во‑первых, базы данных используют **parser**, который переводит SQL‑код в **syntax tree**. Это позволяет выполнять проверку синтаксиса и обработку ошибок.
 
-Second, database **compilers** **bind** metadata to the syntax tree to create a fully validated **logical plan.** This enables a complete understanding of the operations required to generate your dataset, including information about the datatypes that are input and output during SQL execution.
+Во‑вторых, **compilers** в базе данных **связывают (bind)** метаданные с синтаксическим деревом, создавая полностью проверенный **logical plan**. Это даёт полное понимание операций, необходимых для генерации датасета, включая информацию о типах данных на входе и выходе во время исполнения SQL.
 
-Third, the database **optimizes** and **plans** the operations defined by a logical plan, generating a **physical plan** that maps the logical steps to physical hardware, then executes the steps with data to finally return your dataset!
+В‑третьих, база данных **оптимизирует** и **планирует** операции, описанные в logical plan, формируя **physical plan**, который сопоставляет логические шаги с физическим оборудованием, а затем выполняет эти шаги над данными, чтобы в итоге вернуть результат!
 
-Let’s explore each of these levels in more depth!
+Давайте разберём каждый из этих уровней подробнее.
 
 ## Level 1: Parsing
 
+На уровне 1 инструменты SQL Comprehension используют **parser**, чтобы перевести SQL‑код в **syntax tree**. Это обеспечивает проверку синтаксиса и обработку ошибок.  
+*Ключевые понятия: Intermediate Representations, Parsers, Syntax Trees*
 
-At Level 1, SQL comprehension tools use a **parser** to translate SQL code into a **syntax tree.** This enables syntax validation + error handling. *Key Concepts: Intermediate Representations, Parsers, Syntax Trees*
-
-<Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/parser.png" title="Parsers can model the grammar and structure of code."width="85%" />
+<Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/parser.png" title="Parsers can model the grammar and structure of code." width="85%" />
 
 ### Intermediate representations
 
 :::tip
-**Intermediate representations** are data objects created during the process of *compiling* code.
+**Intermediate representations** — это объекты данных, создаваемые в процессе *компиляции* кода.
 :::
 
-Before we dive into the specific technologies, we should define a key concept in computer science that’s very relevant to understanding how this entire process works under the hood: an [**Intermediate Representation (IR)**](https://en.wikipedia.org/wiki/Intermediate_representation). When code is executed on a computer, it has to be translated from the human-readable code we write to the machine-readable code that actually does the work that the higher-level code specifies, in a process called *compiling*. As a part of this process, your code will be translated into a number of different objects as the program runs; each of these is called an *intermediate representation.*
+Прежде чем углубляться в конкретные технологии, важно определить одно ключевое понятие из информатики, которое критически важно для понимания того, как весь этот процесс работает «под капотом»: [**Intermediate Representation (IR)**](https://en.wikipedia.org/wiki/Intermediate_representation). Когда код исполняется на компьютере, он должен быть переведён из человекочитаемого вида в машиночитаемый — в процессе, называемом *компиляцией*. В ходе этого процесса код поэтапно преобразуется в несколько различных объектов; каждый из них и называется *intermediate representation*.
 
-To provide an example / analogy that will be familiar to dbt users, think about what your intermediate models are in the context of your dbt DAG — a translated form of your source data created in the process of synthesizing your final data marts. These models are effectively an intermediate representation. We’re going to talk about a few different types of IRs in this post, so it’s useful to know about them now before we get too deep!
+В качестве аналогии, знакомой пользователям dbt, можно вспомнить intermediate‑модели в вашем dbt DAG — это преобразованная форма исходных данных, создаваемая в процессе построения финальных витрин данных. Эти модели по сути являются промежуточным представлением. В этом посте мы будем говорить о нескольких разных типах IR, поэтому полезно разобраться с этим понятием заранее.
 
 ### Parsers
 
 :::tip
-**Parsers** are programs that translate raw code into *syntax trees*.
+**Parsers** — это программы, которые переводят исходный код в *syntax trees*.
 :::
 
-All programming languages require a parser, which is often the first step in the translation process from human-readable to machine-readable code. Parsers are programs that can map the syntax, or grammar, of your code into a syntax tree, and understand whether the code you wrote follows the basic rules of the language.  
+Любому языку программирования нужен parser — обычно это первый шаг на пути от человекочитаемого к машиночитаемому коду. Parsers — это программы, которые могут сопоставить синтаксис (грамматику) кода с синтаксическим деревом и определить, соответствует ли написанный код базовым правилам языка.
 
-In computing, parsers have a few underlying pieces of technology that build the syntax tree that understands the relationships between your variables, functions, and classes, etc. The components of a parser include:
+В вычислительных системах parser состоит из нескольких технологических компонентов, которые вместе строят syntax tree и понимают связи между переменными, функциями, классами и т. д. Компоненты parser включают:
 
-- **a lexer**, which takes raw code strings, and return lists of tokens recognized in the code (in SQL, `SELECT` , `FROM` , and `sum` would be examples of tokens recognized by a lexer)
-- **a parser**, which takes the lists of tokens generated by a lexer, and builds the syntax tree based on grammatical rules of the language (i.e. a `SELECT` must be followed by one or more column expressions, a `FROM` must reference a table, or CTE, or subquery, etc).
+- **lexer** — принимает строку с кодом и возвращает список токенов, распознанных в коде (в SQL такими токенами будут, например, `SELECT`, `FROM`, `sum`);
+- **parser** — принимает список токенов от lexer и строит syntax tree на основе грамматических правил языка (например, `SELECT` должен сопровождаться одним или несколькими выражениями столбцов, `FROM` должен ссылаться на таблицу, CTE или подзапрос и т. д.).
 
-In other words, the lexer first detects the tokens that are present in a SQL query (is there a filter? which functions are called?) and the parser is responsible for mapping the dependencies between them.
+Иными словами, lexer сначала определяет, какие токены присутствуют в SQL‑запросе (есть ли фильтр? какие функции вызываются?), а parser отвечает за отображение зависимостей между ними.
 
-A quick vocab note: while technically, the parser is only the component that translates tokens into a syntax tree, the word “parser” has come to be shorthand for the whole process of lexing and parsing.
+Небольшая ремарка по терминологии: строго говоря, parser — это только компонент, который переводит токены в syntax tree, но на практике словом «parser» часто называют весь процесс лексического и синтаксического анализа целиком.
 
 ### Syntax trees
 
 :::tip
-**Syntax trees** are a representation of a unit of language according to a set of grammatical rules.
-
+**Syntax trees** — это представление языковой конструкции в соответствии с набором грамматических правил.
 :::
 
-Your first introduction to understanding syntactical rules probably came when you learned how to diagram sentences in your grade school grammar classes! Diagramming the parts of speech in a sentence and mapping the dependencies between each of its components is precisely what a parser does — the resulting representation of the sentence is a syntax tree. Here’s a silly example:
+Первое знакомство с синтаксическими правилами у многих было ещё в школе, на уроках грамматики, когда мы учились разбирать предложения по членам. Схематичное отображение частей речи и зависимостей между ними — это ровно то, что делает parser. Результат такого разбора и есть syntax tree. Вот простой (и немного глупый) пример:
 
 > `My cat jumped over my lazy dog`
 >
 
-By parsing this sentence according to the rules of the English language, we can get this syntax tree:
+Разобрав это предложение по правилам английского языка, мы получим такое syntax tree:
 
 <Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/sentence_syntax_tree.png" title='Apologies to my mother, an english teacher, who likely takes umbrage with this simplified example' width="85%" />
 
-Let’s do the same thing with simple SQL query:
+Сделаем то же самое для простого SQL‑запроса:
 
 ```sql
 select 
@@ -100,88 +99,88 @@ where
 group by 1
 ```
 
-By parsing this query according to the rules of the SQL language, we get something that looks like this:
+Разобрав этот запрос по правилам языка SQL, мы получим примерно следующее:
 
 <Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/sql_syntax_tree.png" title="This is a simplified syntax tree — This was made by hand, and may not be exactly what the output of a real SQL parser looks like!" width="85%" />
 
-The syntax trees produced by parsers are a very valuable type of intermediate representation; with a syntax tree, you can power features like syntax validation, code linting, and code formatting, since those tools only need knowledge of the *syntax* of the code you’ve written to work.
+Syntax trees, создаваемые parser’ами, — это очень ценный тип intermediate representation. С их помощью можно реализовать такие функции, как проверка синтаксиса, линтинг кода и форматирование, поскольку этим инструментам достаточно знать *только синтаксис* написанного кода.
 
-However, parsers also dutifully parse *syntactically correct code* that *means nothing at all*. To illustrate this, consider the [famous sentence](https://en.wikipedia.org/wiki/Colorless_green_ideas_sleep_furiously) developed by linguistics + philosophy professor Noam Chomsky:
+Однако parser также без проблем разбирает *синтаксически корректный код*, который при этом *не имеет никакого смысла*. Классический пример — [знаменитое предложение](https://en.wikipedia.org/wiki/Colorless_green_ideas_sleep_furiously), придуманное профессором лингвистики и философии Ноамом Хомским:
 
 > `Colorless green ideas sleep furiously`
 >
 
-That’s a perfectly valid, diagrammable, parsable sentence according to the rules of the English language. But that means *absolutely nothing*. In SQL engines, you need a way to imbue a syntax tree with additional metadata to understand whether or not it represents executable code. As described in our first post, Level 1 SQL Comprehension tools are not designed to provide this context. They can only provide pure syntax validation. Level 2 SQL Comprehension tools augment these syntax trees with *meaning* by fully **compiling **the SQL.
+Это предложение полностью корректно с точки зрения грамматики английского языка. Но при этом оно *абсолютно бессмысленно*. В SQL‑движках нужен способ дополнить syntax tree дополнительными метаданными, чтобы понять, представляет ли он исполняемый код. Как мы описывали в предыдущем посте, инструменты SQL Comprehension уровня 1 не предназначены для этого — они обеспечивают только проверку синтаксиса. Инструменты уровня 2 добавляют к syntax tree *смысл*, полностью **компилируя** SQL.
 
 ## Level 2: Compiling
 
-At Level 2, SQL comprehension tools use a **compiler** to **bind** metadata to the syntax tree to create a fully validated **logical plan.**  *Key concepts: Binders, Logical Plans, Compilers*
+На уровне 2 инструменты SQL Comprehension используют **compiler**, который **связывает (bind)** метаданные с syntax tree, создавая полностью проверенный **logical plan**.  
+*Ключевые понятия: Binders, Logical Plans, Compilers*
 
 <Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/compiler.png" width="85%" />
 
 ### Binders
 
 :::tip
-In SQL *compilers*, **binders** are programs that enhance + resolve *syntax trees* into *logical plans.*
+В SQL‑*compilers* **binders** — это программы, которые обогащают и разрешают *syntax trees*, превращая их в *logical plans*.
 :::
 
-In compilers, *binders* (also called *analyzers* or *resolvers*) combine additional metadata with a syntax tree representation and produce a richer, validated, *executable* intermediate representation. In the above English language example, in our heads, we’re *binding* our knowledge of the definitions of each of the words to the structure of the sentence, after which, we can derive *meaning*.
+В компиляторах *binders* (их также называют *analyzers* или *resolvers*) объединяют syntax tree с дополнительными метаданными и создают более богатое, проверенное и *исполняемое* intermediate representation. Возвращаясь к примеру с английским языком: в голове мы «связываем» структуру предложения со значениями слов — и только после этого извлекаем *смысл*.
 
-Binders are responsible for this process of resolution. They must bind additional information about the components of the written code (their types, their scopes, their memory implications) to the code you wrote to produce a valid, executable unit of computation.
+Binders отвечают именно за этот процесс разрешения. Они связывают дополнительную информацию о компонентах кода (их типы, области видимости, особенности использования памяти) с исходным кодом, чтобы получить корректную и исполняемую единицу вычислений.
 
-In the case of SQL binders, a major part of its job is to add *warehouse schema information,* like column *datatypes*, with the *type signatures* of warehouse operators described by the syntax tree to bring full *type awareness* to the syntax tree. It’s one thing to recognize a `substring` function in a query; it’s another to *understand* that a `substring` *must* operate on string data, and *always* produces string data, and will fail if you pass it an integer.
+В случае SQL binders значительная часть работы заключается в добавлении *информации о схеме хранилища*, такой как *типы данных столбцов*, и сопоставлении её с *сигнатурами операторов* хранилища, описанными в syntax tree. Это даёт полную *осведомлённость о типах*. Одно дело — распознать функцию `substring` в запросе; совсем другое — *понимать*, что `substring` *обязательно* работает со строками, *всегда* возвращает строку и завершится ошибкой, если передать ей целое число.
 
 <Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/binder.png" width="85%" />
 
-In this example, while the syntax tree knows that the `x` column is aliased as `u`, the binder has the knowledge that `x` is indeed a column of type `int` and therefore, the resulting column `u` must also be of type `int`. Similarly, it knows that the filter condition specified will produce a `bool` value, and therefore must have compatible datatypes as its two arguments. Luckily, the binder can also see that `x` and `0` are both of type int, so we're confident this is a fully valid expression. This layer of validation, powered by metadata, is referred to as *type awareness.*
+В этом примере syntax tree знает, что столбец `x` имеет алиас `u`, но binder знает, что `x` — это столбец типа `int`, а значит и результирующий столбец `u` тоже будет типа `int`. Аналогично, он знает, что условие фильтра возвращает значение типа `bool` и, следовательно, его аргументы должны иметь совместимые типы данных. К счастью, binder видит, что `x` и `0` оба имеют тип `int`, поэтому выражение полностью валидно. Этот уровень валидации, основанный на метаданных, называется *осведомлённостью о типах* (type awareness).
 
-In addition to being able to trace the way datatypes will flow and change through a set of SQL operations, the function signatures allow the binder to fully validate that you’ve provided valid arguments to a function, inclusive of the acceptable types of columns provided to the function (e.g. `split_part` can’t work on an `int` field) as well as valid function configurations (e.g. the acceptable date parts for `datediff` includes `'nanosecond'` but not `'dog_years'`).
+Помимо отслеживания того, как типы данных «текут» и изменяются в цепочке SQL‑операций, сигнатуры функций позволяют binder’у полностью проверить корректность аргументов функций — включая допустимые типы столбцов (например, `split_part` не может работать с `int`), а также допустимые конфигурации функций (например, для `datediff` допустим `'nanosecond'`, но не `'dog_years'`).
 
 ### Logical plan
 
 :::tip
-In SQL *compilers*, **logical plans** define the validated, resolved set of data processing operations defined by a SQL query.
+В SQL‑*compilers* **logical plans** определяют проверенный и разрешённый набор операций обработки данных, описанных SQL‑запросом.
 :::
 
-The intermediate representation output by a binder is a richer intermediate representation that can be executed in a low level language; in the case of database engines, this IR is known as a *Logical Plan*.
+Intermediate representation, создаваемое binder’ом, является более богатым представлением, которое может быть исполнено на низком уровне; в контексте движков баз данных это представление называется *logical plan*.
 
-Critically, as a result of the binder’s work of mapping data types to the syntax tree, logical plans have *full data type awareness* — logical plans can tell you precisely how data flows through an analysis, and can pinpoint when datatypes may change as a result of, say, an aggregation operation.
+Ключевой момент: благодаря тому, что binder сопоставляет типы данных с syntax tree, logical plans обладают *полной осведомлённостью о типах данных*. Они могут точно описать, как данные проходят через анализ, и указать, где и как типы данных меняются — например, в результате агрегации.
 
 <Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/logical_plan.png" width="85%" />
 
-You can see we’ve gotten a more specific description of how to generate the dataset. Rather than simply mapping the SQL keywords and their dependencies, we have a resolved set of operations, in this case scanning a table, filtering the result, and projecting the values in the `x` column with an alias of `u`.
+Здесь мы видим более точное описание того, как сформировать датасет. Вместо простого сопоставления SQL‑ключевых слов и их зависимостей мы имеем разрешённый набор операций: сканирование таблицы, фильтрацию результата и проекцию значений столбца `x` с алиасом `u`.
 
-The logical plan contains precise logical description of the computing process your query defined, and validates that it can be executed. Logical plans describe the operations as [*relational algebra*](https://en.wikipedia.org/wiki/Relational_algebra), which is what enable these plans to be fully optimized — the steps in a logical plan can be rearranged and reduced with mathematical equivalency to ensure the steps are as efficient as possible. 
+Logical plan содержит точное логическое описание вычислительного процесса, определённого вашим запросом, и подтверждает, что он может быть исполнен. Logical plans описывают операции в терминах [*реляционной алгебры*](https://en.wikipedia.org/wiki/Relational_algebra), что и позволяет выполнять полноценную оптимизацию — шаги logical plan можно переупорядочивать и сокращать, сохраняя математическую эквивалентность и добиваясь максимальной эффективности.
 
-This plan can be very helpful for you as a developer, especially if it’s available before you execute the query. If you’ve ever executed an `explain` function in your database, you’ve viewed a logical plan! You can know exactly what operations will be executed, and critically, you can know that they are valid! This validity check pre-compute is what is referred to as *static analysis*.
+Такой план особенно полезен разработчику, если он доступен до выполнения запроса. Если вы когда‑нибудь выполняли `explain` в базе данных, вы уже видели logical plan! Вы можете точно знать, какие операции будут выполнены, и — что особенно важно — что они валидны. Эта предварительная проверка называется *static analysis*.
 
 ### Compilers
 
 :::tip
-**Compilers** are programs that translate high-level language to low-level language. *Parsers* and *binders* together constitute compilers.
+**Compilers** — это программы, которые переводят высокоуровневый язык в низкоуровневый. *Parsers* и *binders* вместе образуют компилятор.
 :::
 
-Taken together, a parser plus a binder constitute a *compiler,* a program that takes in high-level code (one that is optimized for human readability, like SQL) and outputs low-level code (one that is optimized for machine readability + execution).  In SQL compilers, this output is the logical plan.
+Parser и binder вместе образуют *compiler* — программу, которая принимает высокоуровневый код (оптимизированный для читаемости человеком, например SQL) и преобразует его в низкоуровневый код (оптимизированный для машинного исполнения). В SQL‑компиляторах таким результатом является logical plan.
 
+По определению, compiler даёт гораздо более глубокое понимание поведения запроса, чем один лишь parser. Теперь мы можем проследить потоки данных и операции, которые абстрактно описывали в SQL. Compiler поэтапно обогащает своё понимание исходной SQL‑строки и в итоге формирует logical plan, обеспечивающий статический анализ и валидацию SQL‑логики.
 
-A compiler definitionally gives you a deeper understanding of the behavior of the query than a parser alone. We’re now able to trace the data flows and operations that we were abstractly expressing when we initially wrote our SQL query. The compiler incrementally enriches its understanding of the original SQL string and results in a logical plan, which provides static analysis and validation of your SQL logic.
-
-We are however, not all the way down the rabbit hole —  a compiler-produced logical plan contains the full instructions for how to execute a piece of code, but doesn’t have any sense of how to actually execute these steps! There’s one more translation required for the rubber to fully meet the motherboard.
+Но это ещё не конец пути — logical plan содержит полные инструкции *что* нужно сделать, но не понимает, *как именно* выполнять эти шаги на реальном оборудовании. Нужен ещё один этап перевода, прежде чем «резина соприкоснётся с материнской платой».
 
 ## Level 3: Executing
 
-*At Level 3, the database’s **execution engine** translates the logical plan into a **physical plan**, which can finally be executed to return a dataset.* *Key concepts: Optimization and Planning, Engines, Physical plans*
+*На уровне 3 **execution engine** базы данных переводит logical plan в **physical plan**, который уже может быть выполнен для получения датасета.*  
+*Ключевые понятия: Optimization and Planning, Engines, Physical plans*
 
 ### Optimization and planning
 
 :::tip
-A logical plan goes through a process of **optimization and planning** that maps its operations to the physical hardware that is going to execute each step.
-
+Logical plan проходит этап **optimization and planning**, в ходе которого его операции сопоставляются с физическим оборудованием, которое будет выполнять каждый шаг.
 :::
 
-Once the database has a resolved logical plan, it goes through a process of optimization and planning. As mentioned, because logical plans are expressed as relational algebraic expressions, it can choose to execute equivalent steps in whichever order it chooses.
+После получения разрешённого logical plan база данных переходит к этапу оптимизации и планирования. Как уже упоминалось, поскольку logical plans выражены в терминах реляционной алгебры, система может выполнять эквивалентные операции в любом порядке.
 
-Let’s think of a simple example SQL statement:
+Рассмотрим простой SQL‑пример:
 
 ```sql
 select 
@@ -191,50 +190,50 @@ join b on a.id = b.a_id
 join c on b.id = c.b_id
 ```
 
-The logical plan will contain steps to join the tables together as defined in SQL — great! Let’s suppose, however, that table `a` is several orders of magnitude larger than each of the other two. In that case, the order of joining makes a huge difference in the performance of the query! If we join `a` and `b` first, then the result `ab` with `c`, we end up scanning the entirety of the extremely large table `a` twice. If instead we join `b` and `c` first, and join the much smaller result `bc` with table `a` , we get the same result of `abc` at a fraction of the cost!
+Logical plan будет содержать шаги объединения таблиц в порядке, заданном в SQL. Отлично! Но предположим, что таблица `a` на несколько порядков больше двух других. В этом случае порядок join’ов радикально влияет на производительность. Если сначала объединить `a` и `b`, а затем результат `ab` с `c`, мы просканируем огромную таблицу `a` дважды. Если же сначала объединить `b` и `c`, а затем соединить относительно небольшой результат `bc` с таблицей `a`, мы получим тот же итог `abc` при значительно меньших затратах!
 
-Layering in the knowledge of the physical characteristics of the objects referenced in a query to ensure efficient execution is the job of the optimization and planning stage.
+Добавление знаний о физических характеристиках объектов запроса для обеспечения эффективного исполнения — это и есть задача этапа optimization and planning.
 
 ### Physical plan
 
 :::tip
-A **physical plan** is the intermediate representations that contains all necessary information to execute the query.
+**Physical plan** — это intermediate representation, содержащий всю информацию, необходимую для выполнения запроса.
 :::
 
-Once we do the work to decide on the optimal plan with details about the physical characteristics of the data, we get one final intermediate representation: the physical plan. Think about the operations defined by a logical plan — we may know that we have a `TableScan` operation of a table called `some_table`. A physical plan is able to map that operation to *specific data partitions* in *specific data storage locations*. The physical plan also contains information relevant to memory allocation so the engine can plan accordingly — as in the previous example, it knows the second join will be a lot more resource intensive!
+После выбора оптимального плана с учётом физических характеристик данных мы получаем последнее intermediate representation — physical plan. Если logical plan знает, что есть операция `TableScan` для таблицы `some_table`, то physical plan может сопоставить эту операцию с *конкретными партициями данных* в *конкретных местах хранения*. Physical plan также содержит информацию, связанную с выделением памяти, чтобы движок мог заранее спланировать ресурсы — как в предыдущем примере, он знает, что второй join будет значительно более ресурсоёмким.
 
-Think about what your data platform of choice has to do when you submit a validated SQL query: the last mile step is deciding which partitions of data on which of its servers should be scanned, how they should be joined and aggregated to ultimately generate the dataset you need. Physical plans are among the last intermediate representations created along the way to actually returning data back from a database.
+Подумайте, что должна сделать ваша платформа данных, когда вы отправляете валидированный SQL‑запрос: на последнем этапе она решает, какие партиции данных на каких серверах нужно просканировать, как их объединить и агрегировать, чтобы получить нужный результат. Physical plans — одни из последних intermediate representation на пути к возврату данных из базы.
 
 ### Execution
 
 :::tip
-A query engine can **execute** a *physical plan* and return tabular data
+Query engine может **execute** *physical plan* и вернуть табличные данные.
 :::
 
-Once a physical plan is generated, all that’s left to do is run it! The database engine executes the physical plan, and fetches, combines, and aggregates your data into the format described by your SQL code. The way that the engine accomplishes this can vary significantly depending on the architecture of your database! Some databases are “single node” in that there is a single computer doing all the work; others are “distributed” and can federate the work across many working compute nodes.
+После генерации physical plan остаётся только запустить его! Движок базы данных исполняет physical plan, извлекая, объединяя и агрегируя данные в формате, описанном SQL‑кодом. Способ исполнения сильно зависит от архитектуры базы данных. Некоторые базы являются «одиночными узлами» (single node), где вся работа выполняется на одном компьютере; другие — «распределёнными» и распределяют вычисления между множеством узлов.
 
-In general, the engine must:
+В общем случае движок должен:
 
-1. **Allocate resources** &mdash; In order to run your query, a computer must be online and available to do so! This step allocates CPU to each of the operation in the physical plan, whether it be one single node or many nodes executing the full query task
+1. **Allocate resources** — чтобы выполнить запрос, вычислительные ресурсы должны быть доступны. На этом шаге выделяется CPU для каждой операции physical plan — будь то один узел или множество узлов.
 
-2. **Read Data Into Memory** &mdash; The tables referenced are then scanned as efficiently as possible, and the rows are processed. This may happen in partial stages depending on whether the tasks are distributed or happening within one single node
+2. **Read Data Into Memory** — таблицы, упомянутые в запросе, сканируются максимально эффективно, и строки загружаются в память. Это может происходить поэтапно, в зависимости от распределённости вычислений.
 
-3. **Execute Operations** &mdash; Once the required data is read into memory, it flows through a pipeline of the nodes in your physical plan. There is more than 50 years of work in building optimizations for these steps as applied to different data structures and in-memory representations; everything from row-oriented databases, to columnar, to time series to geo-spatial to graph. But fundamentally, there are 5 common operations:
+3. **Execute Operations** — после загрузки данных в память они проходят через конвейер операторов physical plan. За более чем 50 лет было разработано огромное количество оптимизаций для этих шагов — от строковых и колоночных баз данных до временных рядов, геопространственных и графовых структур. Но в основе лежат пять базовых операций:
 
-    1. **Projection** &mdash; Extract only the columns or expressions that the user requested needed (e.g. `order_id`).
+    1. **Projection** — извлечение только тех столбцов или выражений, которые запросил пользователь (например, `order_id`).
 
-    2. **Filtering** &mdash; Rows that don’t meet your `WHERE` condition are dropped.
+    2. **Filtering** — строки, не удовлетворяющие условию `WHERE`, отбрасываются.
 
-    3. **Joining** &mdash; If your query involves multiple tables, the engine merges or joins them—this could be a hash join, sort-merge join, or even a nested loop join depending on data statistics.
+    3. **Joining** — если запрос использует несколько таблиц, движок объединяет их (hash join, sort-merge join или nested loop join — в зависимости от статистики данных).
 
-    4. **Aggregation** &mdash; If you have an aggregation like `SUM(amount)` or `COUNT(*)`, the engine groups rows by the specified columns and calculates the aggregated values.
+    4. **Aggregation** — при использовании агрегаций вроде `SUM(amount)` или `COUNT(*)` строки группируются, и вычисляются агрегированные значения.
 
-    5. **Sorting / Window Functions** &mdash; If the query uses `ORDER BY`, `RANK()`, or other window functions, the data flows into those operators next.
+    5. **Sorting / Window Functions** — если запрос содержит `ORDER BY`, `RANK()` или другие оконные функции, данные передаются соответствующим операторам.
 
-4. **Merge and return results** &mdash; The last mile step is generating the tabular dataset. In the case of distributed systems, this may require combining the results from several nodes into a single result.
+4. **Merge and return results** — финальный шаг заключается в формировании табличного результата. В распределённых системах это может потребовать объединения результатов с нескольких узлов.
 
-Finally! Actionable business insights, right in the palm of your hand!
+И вот он — готовый бизнес‑инсайт, буквально у вас на ладони!
 
 ## Looking ahead
 
-That’s probably more about databases that you bargained for! I know this is a lot to absorb - but the best data practitioners have a deep understanding of their tools and this is all extremely relevant for understanding the next evolution of data tooling and data work. Next time you run a query, don't forget to thank your database for all the hard work it's doing for you.
+Возможно, это больше подробностей о базах данных, чем вы ожидали! Информации много, но лучшие специалисты по данным глубоко понимают свои инструменты — и всё это напрямую связано с будущей эволюцией data‑инструментов и data‑работы. В следующий раз, запуская запрос, не забудьте мысленно поблагодарить свою базу данных за всю ту работу, которую она делает для вас.

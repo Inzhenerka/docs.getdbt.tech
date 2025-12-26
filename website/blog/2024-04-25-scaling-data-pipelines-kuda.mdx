@@ -1,6 +1,6 @@
 ---
-title: "Scaling Data Pipelines for a Growth-Stage Fintech with Incremental Models"
-description: "How Kuda leveraged dbt incremental models to reduce costs, speed up pipelines, and scale confidently."
+title: "Масштабирование дата-пайплайнов для финтех-компании на этапе роста с помощью инкрементальных моделей"
+description: "Как компания Kuda использовала инкрементальные модели dbt, чтобы снизить затраты, ускорить пайплайны и уверенно масштабироваться."
 slug: scaling-data-pipelines-fintech
 authors: [adedamola_onabanjo]
 tags: [analytics, dbt Cloud, fintech, BigQuery]
@@ -9,35 +9,35 @@ date: 2025-05-01
 is_featured: true
 ---
 
-## Introduction
+## Введение
 
-Building scalable data pipelines in a fast-growing fintech can feel like fixing a bike while riding it. You must keep insights flowing even as data volumes explode. At Kuda (a Nigerian neo-bank), we faced this problem as our user base surged. Traditional batch ETL (rebuilding entire tables each run) started to buckle; pipelines took hours, and costs ballooned. We needed to keep data fresh without reprocessing everything. Our solution was to leverage dbt’s [incremental models](/docs/build/incremental-models), which process only new or changed records. This dramatically cut run times and curbed our BigQuery costs, letting us scale efficiently.
+Построение масштабируемых дата-пайплайнов в быстрорастущем финтехе часто похоже на починку велосипеда на ходу. Нужно постоянно поставлять инсайты, даже когда объёмы данных взрывообразно растут. В Kuda (нигерийском необанке) мы столкнулись с этой проблемой по мере стремительного роста пользовательской базы. Классический пакетный ETL (полная пересборка таблиц при каждом запуске) начал давать сбои: пайплайны выполнялись часами, а расходы резко выросли. Нам нужно было поддерживать актуальность данных, не перерабатывая всё целиком. Решением стало использование [incremental models](/docs/build/incremental-models) в dbt, которые обрабатывают только новые или изменённые записи. Это радикально сократило время выполнения и снизило затраты в BigQuery, позволив нам эффективно масштабироваться.
 
 <!-- truncate -->
 
-## Challenges in Scaling
+## Проблемы масштабирования
 
-Rapid growth brought some serious scaling challenges, and the most important were:
+Быстрый рост принёс с собой серьёзные проблемы масштабирования, и ключевыми из них были:
 
-- **Performance**: Our nightly full-refresh models that once took minutes began taking hours as data grew. For example, our core transactions table became too slow to rebuild from scratch for each update. Analytics dashboards lagged, and stakeholders lost timely insights. In real-time fintech, such latency is unacceptable.
+- **Производительность**: наши ночные модели с full-refresh, которые раньше выполнялись за минуты, по мере роста данных начали занимать часы. Например, основная таблица транзакций стала слишком медленной для полной пересборки при каждом обновлении. Аналитические дашборды начали отставать, а стейкхолдеры — терять своевременные инсайты. В финтехе, близком к реальному времени, такая задержка недопустима.
 
-- **Cost**: More data and longer processing also drove up our BigQuery bills. Scanning a 2TB table every hour to grab a few MB of new data was wasteful. Under BigQuery’s on-demand pricing model, this could rack up thousands of dollars per month. We needed to increase throughput without scaling cost linearly, which meant rethinking our processing to avoid full table scans.
+- **Стоимость**: рост объёма данных и времени обработки напрямую увеличивал счета BigQuery. Сканировать таблицу на 2 ТБ каждый час ради нескольких мегабайт новых данных — расточительно. При on-demand модели ценообразования BigQuery это легко может вылиться в тысячи долларов в месяц. Нам нужно было увеличивать пропускную способность, не масштабируя стоимость линейно, а значит — переосмыслить обработку и уйти от полного сканирования таблиц.
 
-- **Data** Integrity: As pipelines and dependencies multiplied, so did the risk of inconsistencies or failures. Any new approach had to maintain accuracy and consistency even as we sped things up.
+- **Целостность данных**: по мере роста числа пайплайнов и зависимостей увеличивались риски несогласованностей и сбоев. Любой новый подход должен был сохранять точность и консистентность данных, даже при ускорении процессов.
 
-## Approach: Incremental Models & Key Strategies
+## Подход: Incremental models и ключевые стратегии
 
-We tackled these issues by embracing dbt’s incremental models, which process only new or updated records since the last run. Instead of monolithic daily rebuilds, our models continuously ingested changes in small bites. Below, we outline our key [incremental strategies](/docs/build/incremental-strategy) —`append`, `insert_overwrite`, and `merge` — and how we tuned performance and cost.
+Мы решили эти задачи, сделав ставку на incremental models в dbt, которые обрабатывают только новые или обновлённые записи с момента последнего запуска. Вместо монолитных ежедневных пересборок наши модели стали постоянно подхватывать изменения небольшими порциями. Ниже мы описываем наши ключевые [incremental strategies](/docs/build/incremental-strategy) — `append`, `insert_overwrite` и `merge` — а также то, как мы настраивали производительность и стоимость.
 
-### Append Strategy
+### Стратегия Append
 
-This is the simplest incremental approach: Each run adds new rows to the existing table and never touches old rows. It's ideal for append-only data (e.g. logs or transactions that never change after insertion).
+Это самый простой инкрементальный подход: при каждом запуске новые строки добавляются в существующую таблицу, а старые никогда не трогаются. Он идеально подходит для append-only данных (например, логов или транзакций, которые не меняются после вставки).
 
-In dbt, using append is straightforward. We configure the model as incremental and specify `incremental_strategy='append'` (supported in some adapters like Snowflake).
+В dbt использование append выглядит просто. Мы настраиваем модель как incremental и указываем `incremental_strategy='append'` (поддерживается некоторыми адаптерами, например Snowflake).
 
-> **Note:** `append` is not currently supported in BigQuery. Always confirm [adapter support](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter) before choosing an incremental strategy.
+> **Note:** `append` в настоящее время не поддерживается в BigQuery. Перед выбором стратегии всегда проверяйте [поддержку адаптера](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
 
-In the SQL, we filter the source to only new records since the last load. For example, to incrementally load new transactions:
+В SQL мы фильтруем источник так, чтобы выбирать только новые записи с момента последней загрузки. Например, для инкрементальной загрузки новых транзакций:
 
 #### Code: Append Incremental Strategy
 
@@ -63,7 +63,7 @@ WHERE transaction_date > (
 {% endif %}
 ```
 
-This query appends only transactions that have a transaction date later than the maximum transaction date in the target table.
+Этот запрос добавляет только те транзакции, у которых `transaction_date` больше максимальной даты транзакции в целевой таблице.
 
 #### Append Incremental Model – Before Incremental Run
 
@@ -71,7 +71,6 @@ This query appends only transactions that have a transaction date later than the
 | --- | --- | --- | --- | --- |
 | 10001 | C001 | 2023-09-28 | ₦12,000 | completed |
 | 10002 | C002 | 2023-09-28 | ₦5,000 | completed |
-
 
 #### Append Incremental Model – After Incremental Run
 
@@ -83,17 +82,17 @@ This query appends only transactions that have a transaction date later than the
 | **10004** | **C004** | **2023-09-30** | **₦7,250** | **completed** |
 | **10005** | **C005** | **2023-09-30** | **₦3,100** | **pending** |
 
-**_Illustration: The "Before" table shows data before an incremental run; the "After" table shows new transactions (in bold) added. No historical data is touched. Append is great for immutable data streams (like transaction logs or event streams that only ever grow)._**
+**_Иллюстрация: таблица «Before» показывает данные до инкрементального запуска; таблица «After» — новые транзакции (выделены жирным), которые были добавлены. Исторические данные не затрагиваются. Append отлично подходит для неизменяемых потоков данных (например, журналов транзакций или событий, которые только растут)._**
 
-Append served us well for ingestion pipelines that just accumulate history without reprocessing old data. However, we had to guard against duplicates (if the source might resend records, we applied deduplication or unique constraints). Also, pure append doesn’t handle updates or deletions to existing records. If data can change after insertion (e.g. a transaction status moves from "pending" to "completed"), a different strategy is needed.
+Append хорошо подошёл нам для ingestion-пайплайнов, которые просто накапливают историю без переработки старых данных. Однако нужно было защищаться от дубликатов (если источник может повторно присылать записи, мы применяли дедупликацию или уникальные ограничения). Кроме того, чистый append не справляется с обновлениями или удалениями существующих записей. Если данные могут изменяться после вставки (например, статус транзакции меняется с `"pending"` на `"completed"`), нужна другая стратегия.
 
-### Insert Overwrite Strategy
+### Стратегия Insert Overwrite
 
-For data partitioned by date (or another key) that may need partial replacements, `insert_overwrite` is ideal. Instead of merging rows, this strategy overwrites entire partitions of the target table each run. The table must be partitioned (daily, hourly, etc.), and the model will drop and rebuild only the partitions that have new or updated data.
+Для данных, разбитых на партиции по дате (или другому ключу) и требующих частичной перезаписи, идеально подходит `insert_overwrite`. Вместо построчного merge эта стратегия полностью перезаписывает целые партиции целевой таблицы при каждом запуске. Таблица должна быть партиционирована (по дням, часам и т.д.), и модель будет пересобирать только те партиции, в которых есть новые или обновлённые данные.
 
-We used `insert_overwrite` for partitioned data like daily aggregates, where changes are isolated by date. For example, if a table is partitioned by `transaction_date`, an `insert_overwrite` model can refresh just the partition for _"2023-10-01"_ without affecting other days.
+Мы использовали `insert_overwrite` для партиционированных данных, таких как дневные агрегаты, где изменения локализованы по дате. Например, если таблица партиционирована по `transaction_date`, модель с `insert_overwrite` может обновить только партицию за _«2023-10-01»_, не затрагивая остальные дни.
 
-Here’s how we configured a model to use `insert_overwrite` on BigQuery:
+Вот как мы настраивали модель с `insert_overwrite` в BigQuery:
 
 #### Code: Insert Overwrite Strategy
 
@@ -115,7 +114,7 @@ FROM {{ source('core', 'transactions') }}
 WHERE transaction_date >= {{ this.last_partition }}
 ```
 
-Here, `partition_by` defines the table partition. The `WHERE` clause uses `{{ this.last_partition }}` (_the latest partition already present in the target_) to pull only data for new or updated partitions. On each run, BigQuery will replace any existing partition that meets the filter (e.g. the partition for the latest date) with the query results. Older partitions stay untouched.
+Здесь `partition_by` задаёт партиционирование таблицы. В `WHERE` используется `{{ this.last_partition }}` (_последняя партиция, уже присутствующая в целевой таблице_), чтобы выбирать данные только для новых или обновлённых партиций. При каждом запуске BigQuery заменяет существующие партиции, попадающие под фильтр (например, партицию за последнюю дату), результатами запроса. Старые партиции остаются нетронутыми.
 
 #### Insert Overwrite Strategy – Before Incremental Run
 
@@ -126,7 +125,7 @@ Here, `partition_by` defines the table partition. The `WHERE` clause uses `{{ th
 | **2023-10-01** | **12001** | **C021** | **₦8,000** | **pending** |
 | **2023-10-01** | **12002** | **C022** | **₦4,200** | **completed** |
 
-_(Partition to be overwritten highlighted in bold.)_
+_(Партиция, которая будет перезаписана, выделена жирным.)_
 
 #### Insert Overwrite Strategy – After Incremental Run
 
@@ -138,19 +137,19 @@ _(Partition to be overwritten highlighted in bold.)_
 | **2023-10-01** | **12004** | **C024** | **₦3,900** | **completed** |
 | **2023-10-01** | **12005** | **C025** | **₦5,500** | **completed** |
 
-_(New partition data is shown in bold, replacing the old partition.)_
+_(Новые данные партиции показаны жирным — они полностью заменили старую партицию.)_
 
-***_Illustration: "Before" shows a partitioned table with the October 1, 2023 partition highlighted; "After" shows that partition replaced with fresh rows. This approach lets us refresh a specific day’s data (e.g. to capture late-arriving transactions or corrections) without rebuilding the whole table._***
+***_Иллюстрация: «Before» показывает партиционированную таблицу с выделенной партицией за 1 октября 2023 года; «After» — эту же партицию, заменённую свежими строками. Такой подход позволяет обновлять данные за конкретный день (например, чтобы учесть поздно пришедшие транзакции или исправления), не пересобирая всю таблицу._***
 
-At Kuda, `insert_overwrite` was invaluable for derived tables and rollups. For instance, our daily customer spend aggregates are updated incrementally by replacing just the latest day's data, keeping those tables accurate with minimal cost. By replacing whole partitions, we avoided complex row-by-row merges while still catching any corrections within that day (for example, a back-dated transaction on that day would be picked up when the partition is reprocessed).
+В Kuda `insert_overwrite` оказался особенно полезен для производных таблиц и агрегатов. Например, наши дневные агрегаты трат клиентов обновлялись инкрементально путём замены только данных за последний день, что обеспечивало точность при минимальной стоимости. Перезаписывая целые партиции, мы избегали сложных построчных merge, но при этом учитывали любые корректировки внутри дня (например, транзакции с задней датой).
 
-One note on static vs dynamic partitions: We mostly used static daily partitions (overwriting entire days). Some warehouses (and newer dbt features) allow dynamic partition updates (updating only changed rows within a partition), but we stuck to whole-day replacements for simplicity. It's easier to say "_each run rebuilds yesterday’s partition from scratch,_" ensuring we capture any late modifications for that day. This dramatically improved performance for large tables (no full table scans) while still correcting recent data when needed. We just had to align the partition_by field and filter logic to avoid wiping the wrong partition.
+Отдельно стоит отметить статические и динамические партиции. Мы в основном использовали статические дневные партиции (перезаписывая целые дни). Некоторые хранилища (и более новые возможности dbt) поддерживают динамическое обновление партиций (обновление только изменённых строк внутри партиции), но мы выбрали замену целого дня ради простоты. Проще сказать: «_каждый запуск пересобирает партицию за вчера_», гарантируя, что все поздние изменения за этот день будут учтены. Это резко улучшило производительность для больших таблиц (никаких full table scan), при этом сохранив корректность данных. Главное — правильно согласовать поле `partition_by` и логику фильтра, чтобы не перезаписать не ту партицию.
 
-### Merge Strategy
+### Стратегия Merge
 
-For tables where new records arrive and existing ones can change, we used the merge strategy. It performs an upsert based on a unique key: new rows are inserted, and if a key already exists, specified fields are updated. This is perfect for data like customer profiles or account balances that evolve.
+Для таблиц, где поступают новые записи и при этом могут изменяться существующие, мы использовали стратегию merge. Она выполняет upsert по уникальному ключу: новые строки вставляются, а если ключ уже существует, указанные поля обновляются. Это идеально подходит для таких данных, как профили клиентов или балансы счетов, которые со временем меняются.
 
-In dbt, using `incremental_strategy='merge'` requires a unique_key (on BigQuery or Snowflake, dbt compiles it into a merge statement). We can also limit which columns get updated using merge_update_columns or exclude certain fields with `merge_exclude_columns`. For example:
+В dbt использование `incremental_strategy='merge'` требует указания `unique_key` (в BigQuery или Snowflake dbt компилирует это в оператор MERGE). Также можно ограничить список обновляемых колонок с помощью `merge_update_columns` или исключить поля через `merge_exclude_columns`. Например:
 
 #### Code: Merge Strategy
 
@@ -176,35 +175,35 @@ WHERE last_updated > (
 {% endif %}
 ```
 
-This model selects only new or updated records (those with a `last_updated` more recent than the max in the target) and merges them into the accounts table on `account_id`. We chose to update only the `balance` and `last_updated` fields for existing accounts (to avoid overwriting other data). If an incoming `account_id` doesn’t exist in the target yet, a new row is inserted.
+Эта модель выбирает только новые или обновлённые записи (с `last_updated` позже максимального значения в целевой таблице) и merge-ит их в таблицу аккаунтов по `account_id`. Мы обновляем только поля `balance` и `last_updated` для существующих аккаунтов, чтобы не затирать остальные данные. Если входящий `account_id` ещё не существует в целевой таблице, вставляется новая строка.
 
-Merge was our go-to for upserts. For example, we maintained a daily updated accounts table of customer statuses and balances using merge. Each day, new accounts were added, and any changes (balance updates, status changes) were merged into existing records. This prevented duplicates (which a naive append would create) and ensured one row per account with the latest info.
+Merge был нашей основной стратегией для upsert-сценариев. Например, мы поддерживали ежедневно обновляемую таблицу аккаунтов со статусами и балансами клиентов именно через merge. Каждый день добавлялись новые аккаунты, а изменения (обновления баланса, смена статуса) применялись к существующим записям. Это предотвращало дубликаты (которые возникли бы при простом append) и обеспечивало одну строку на аккаунт с актуальной информацией.
 
-We learned to define unique keys and update columns carefully. In one case, we omitted a merge_exclude_columns and accidentally overwrote a timestamp we meant to preserve—a quick lesson in being explicit. Also, merge comes with a performance cost: each run joins the new data with the existing table. With proper clustering on the key and only a day’s worth of new data, this was fine for us, but at a very large scale, it needs monitoring.
+Мы быстро поняли, что к выбору уникальных ключей и обновляемых колонок нужно относиться очень внимательно. В одном случае мы забыли указать `merge_exclude_columns` и случайно перезаписали timestamp, который хотели сохранить — хороший урок на тему явных настроек. Также merge имеет свою цену по производительности: каждый запуск джойнит новые данные с существующей таблицей. При правильном кластеринге по ключу и небольшом объёме новых данных (например, за день) это было нормально, но на очень больших масштабах требует мониторинга.
 
-## Optimizing Performance and Cost
+## Оптимизация производительности и стоимости
 
-Choosing the right incremental strategy was half the battle; we also employed several performance tuning and cost optimization techniques to make our pipelines truly scale:
+Выбор правильной инкрементальной стратегии — это лишь половина дела. Мы также применили ряд техник оптимизации производительности и затрат, чтобы пайплайны действительно масштабировались:
 
-- **Partitioning**: On large tables, we partitioned by date (or another key) so incremental runs only scan the new slice. For example, partitioning the transactions table by transaction_date meant a daily incremental load only touched that day's partition. BigQuery’s partition pruning reduced scans from entire multi-terabyte tables to just a few GB per run (e.g. 2TB down to 0.01TB), yielding huge savings. Partitioning also sped up downstream queries that filter by date.
+- **Партиционирование**: для больших таблиц мы использовали партиционирование по дате (или другому ключу), чтобы инкрементальные запуски сканировали только новый срез данных. Например, партиционирование таблицы транзакций по `transaction_date` означало, что ежедневная загрузка затрагивает только партицию за этот день. Благодаря pruning партиций в BigQuery объём сканируемых данных сокращался с нескольких терабайт до считанных гигабайт (например, с 2 ТБ до 0.01 ТБ), что давало огромную экономию. Партиционирование также ускоряло downstream-запросы с фильтрацией по дате.
 
-- **Clustering**: We added clustering on columns frequently used in filters or joins (e.g. clustering transactions by `customer_id`). In BigQuery, clustering sorts the data by those columns, so queries filtering on them scan less data within each partition. The improvements were subtle but meaningful; some queries that once scanned tens of GBs now scan only a fraction when the table is well-clustered.
+- **Кластеризация**: мы добавляли кластеризацию по колонкам, которые часто используются в фильтрах или джойнах (например, кластеризовали транзакции по `customer_id`). В BigQuery кластеризация упорядочивает данные по этим колонкам, поэтому запросы сканируют меньше данных внутри каждой партиции. Улучшения были не всегда драматичными, но ощутимыми: некоторые запросы, которые раньше сканировали десятки гигабайт, начали читать лишь малую часть.
 
-- **Smart Scheduling**: We tuned model run frequencies to balance freshness vs. cost. Not every model needs to run constantly. Our customer-facing tables (transactions, balances) ran hourly for near-real-time updates, whereas internal analytics models ran daily or a few times per day. Adjusting schedules avoided wasteful runs and saved on compute cost. We also used dependency-based scheduling (via dbt Cloud), so heavy models ran only after upstream data was updated, preventing runs when no new source data arrived.
+- **Грамотное расписание**: мы настраивали частоту запуска моделей, балансируя свежесть данных и стоимость. Не каждой модели нужно выполняться постоянно. Клиентские таблицы (транзакции, балансы) обновлялись каждый час для почти real-time данных, тогда как внутренние аналитические модели — раз в день или несколько раз в сутки. Корректировка расписаний позволила избежать лишних запусков и сэкономить вычислительные ресурсы. Мы также использовали запуск по зависимостям (через dbt Cloud), чтобы тяжёлые модели стартовали только после обновления upstream-данных, предотвращая бессмысленные прогоны, когда новых данных нет.
 
-- **Warehouse Tuning**: We optimized our warehouse compute as well. Since incremental models drastically cut per-run processing, we could use smaller clusters/slots and run more often without overspending, a big win as data volumes grew.
+- **Настройка вычислительных ресурсов**: мы оптимизировали и сам warehouse. Поскольку инкрементальные модели резко сократили объём обработки на запуск, мы смогли использовать меньшие кластеры/слоты и запускать модели чаще, не перерасходуя бюджет — большой плюс на фоне роста данных.
 
-- **Monitoring & Alerting**: We tracked metrics like run durations and rows processed to catch anomalies. For example, if a daily incremental model that usually adds hundreds of rows suddenly adds zero, that's a red flag (upstream failure or missing source data). Similarly, if a job that normally takes 5 minutes jumps to 50, it likely did an unintended full scan. We also watched data freshness, if an hourly model hasn’t loaded new data in 3 hours, we investigate. These checks helped us catch issues early (like a stale source or a broken filter) and kept data flowing reliably.
+- **Мониторинг и алерты**: мы отслеживали метрики вроде времени выполнения и количества обработанных строк, чтобы быстро замечать аномалии. Например, если ежедневная инкрементальная модель обычно добавляет сотни строк, а вдруг добавляет ноль — это тревожный сигнал (сбой upstream или отсутствие данных в источнике). Аналогично, если джоб, который обычно выполняется 5 минут, вдруг занимает 50, скорее всего произошёл непреднамеренный full scan. Мы также следили за свежестью данных: если hourly-модель не загружала новые данные 3 часа, мы разбирались. Эти проверки помогали рано выявлять проблемы (например, устаревший источник или сломанный фильтр) и обеспечивали стабильный поток данных.
 
-With these optimizations in place, we vastly improved our pipeline speed and cost-efficiency. Instead of fearing the next data surge, we were confident our system could handle growth by design.
+Благодаря этим оптимизациям мы значительно улучшили скорость и экономичность пайплайнов. Вместо страха перед очередным скачком данных у нас появилась уверенность, что система спроектирована с запасом на рост.
 
-### Real-World Implementation: Kuda Case Study
+### Реальное внедрение: кейс Kuda
 
-How did these approaches work out in practice at Kuda during hyper-growth?
+Как все эти подходы сработали на практике в Kuda в период гиперроста?
 
-One critical dataset was our customer transactions feed. Initially, a full daily rebuild of the transactions table took over an hour and scanned the entire history. We refactored it into an incremental model (append strategy with partition pruning). The first run built the historical backlog, and subsequent runs pulled only new transactions. The difference was night and day: the incremental job ran in minutes, and data scanned per run dropped by over 90%. Analysts saw new transactions within the hour, and our monthly BigQuery cost for that table plummeted even as data continued to grow.
+Один из критичных датасетов — поток клиентских транзакций. Изначально полный ежедневный rebuild таблицы транзакций занимал больше часа и сканировал всю историю. Мы переработали его в incremental model (стратегия append с использованием pruning партиций). Первый запуск построил исторический бэклог, а последующие подтягивали только новые транзакции. Разница была колоссальной: инкрементальный джоб стал выполняться за минуты, а объём сканируемых данных на запуск снизился более чем на 90%. Аналитики видели новые транзакции уже в течение часа, а ежемесячные расходы BigQuery по этой таблице резко упали, несмотря на продолжающийся рост данных.
 
-To illustrate, here’s a simplified daily transactions summary. Initially, it contained data up to _Sept 30, 2023_:
+Для наглядности — упрощённая сводка дневных транзакций. Изначально она содержала данные до _30 сентября 2023 года_:
 
 #### Daily Transactions Summary – Before
 
@@ -214,7 +213,7 @@ To illustrate, here’s a simplified daily transactions summary. Initially, it c
 | 2023-09-29 | 980                | 22,340,000   |
 | 2023-09-30 | 1,102              | 27,500,000   |
 
-After the next incremental load (bringing in transactions from _October 1, 2023_), the table automatically includes the new day's metrics without recomputing prior days:
+После следующей инкрементальной загрузки (с транзакциями за _1 октября 2023 года_) таблица автоматически пополнилась метриками за новый день без пересчёта предыдущих:
 
 #### Daily Transactions Summary – After
 
@@ -225,34 +224,34 @@ After the next incremental load (bringing in transactions from _October 1, 2023_
 | 2023-09-30 | 1,102              | 27,500,000   |
 | 2023-10-01 | 1,210              | 30,230,000   |
 
-***_Table: Example of a daily transactions summary. After an incremental load for 2023-10-01, the new day’s data appears without reprocessing previous days._***
+***_Таблица: пример дневной сводки транзакций. После инкрементальной загрузки за 2023-10-01 данные за новый день появились без переработки предыдущих._***
 
-This approach kept our teams and customers up-to-date. Customer support could view nearly real-time transactions to investigate issues, and customers could generate current account statements on the fly.
+Такой подход позволил нашим командам и клиентам всегда иметь актуальные данные. Служба поддержки могла просматривать почти реальные транзакции для расследования инцидентов, а клиенты — формировать актуальные выписки по счетам.
 
-We also used incremental models for regulatory and finance reporting. For example, our Finance team needed a daily reconciliation of balances and an end-of-day accounts table. They were fine with data being a day old, but it had to be accurate and deduplicated. We built this with a nightly incremental merge on the accounts table, merging changes from the core accounts data into a fresh daily view of account states. It provided a reliable daily snapshot of accounts. (Our Finance team didn’t realize any fancy incremental process was involved, they just got their report each morning!)
+Мы также использовали incremental models для регуляторной и финансовой отчётности. Например, финансовой команде требовалась ежедневная сверка балансов и таблица аккаунтов на конец дня. Им было достаточно, чтобы данные были на день «старше», но при этом — точными и без дубликатов. Мы реализовали это через ночной incremental merge по таблице аккаунтов, подтягивая изменения из core-данных в ежедневный срез состояний счетов. В результате получался надёжный ежедневный snapshot. (Финансовая команда даже не подозревала о какой-то сложной инкрементальной логике — они просто получали отчёт каждое утро.)
 
-During the launch of a new card product, we needed to monitor transaction declines and errors in near real-time. Our existing daily-refreshed dashboard wasn’t enough. We set up an incremental model that ingested card transaction events every 15 minutes. To ensure that no historical fixes were missed, we also scheduled a nightly full refresh of this model during the launch period. This hybrid approach gave us timely visibility and a daily catch-up for any late-arriving corrections. It proved crucial: we spotted issues (like a spike in declines from an API glitch) early and fixed them, minimizing customer impact. After the launch, we reverted to purely incremental runs once things stabilized.
+Во время запуска нового карточного продукта нам понадобился почти real-time мониторинг отказов и ошибок транзакций. Наш дашборд с дневным обновлением уже не справлялся. Мы настроили инкрементальную модель, которая загружала события карточных транзакций каждые 15 минут. Чтобы не пропустить исторические исправления, мы дополнительно запланировали ночной full refresh этой модели на период запуска. Такой гибридный подход дал нам оперативную видимость и ежедневный «догоняющий» пересчёт для поздних корректировок. Это оказалось критически важно: мы рано заметили проблемы (например, всплеск отказов из-за сбоя API) и быстро их исправили, минимизировав влияние на клиентов. После стабилизации мы вернулись к чисто инкрементальным запускам.
 
-The overall impact at Kuda was huge. Some heavy transformations that were close to failing became reliable again. Stakeholders noticed fresher data in their reports, our customer satisfaction scores improved as no one saw stale data. By controlling costs and keeping pipelines efficient, we kept management and regulators happy.
+Общий эффект для Kuda был огромным. Некоторые тяжёлые трансформации, которые были близки к падению, снова стали надёжными. Стейкхолдеры заметили, что данные в отчётах стали свежее, а удовлетворённость клиентов выросла, поскольку никто больше не видел устаревшую информацию. Контролируя затраты и поддерживая эффективность пайплайнов, мы сохранили доверие менеджмента и регуляторов.
 
-## Lessons Learned & Best Practices
+## Выводы и лучшие практики
 
-Throughout this scaling journey, we learned a ton about what worked and what didn’t. Here are some of the key lessons and best practices we’d recommend to any growth-stage fintech looking to implement incremental models:
+За время масштабирования мы вынесли множество уроков о том, что работает, а что — нет. Вот ключевые выводы и best practices, которые мы бы рекомендовали любому финтеху на стадии роста, планирующему внедрение incremental models:
 
-- **Choose the Right Strategy**: Not all tables should use the same incremental approach. Generally, use append for insert-only data, `insert_overwrite` for data partitioned by date (or ID) where you can replace whole chunks, and merge for true upsert scenarios. If source deletes are an issue, consider `delete+insert` or handle soft deletes.
+- **Выбирайте правильную стратегию**: не всем таблицам подходит один и тот же инкрементальный подход. В общем случае используйте append для insert-only данных, `insert_overwrite` — для данных, партиционированных по дате (или ID), где можно заменять целые блоки, и merge — для настоящих upsert-сценариев. Если важны удаления в источнике, рассмотрите `delete+insert` или обработку soft delete.
 
-- **Partition Wisely**: Partitioning is critical, but pick an appropriate granularity. The right grain (hour, day, month) depends on data volume and query patterns. For us, daily partitions were often the sweet spot, small enough to reduce scanned data, not so small as to create thousands of partitions. Always align your incremental filter with the partition field to enable pruning.
+- **Грамотно партиционируйте**: партиционирование критически важно, но нужно выбрать правильную гранулярность. Подходящее зерно (час, день, месяц) зависит от объёма данных и паттернов запросов. Для нас дневные партиции часто были оптимальны: достаточно мелкие, чтобы уменьшать сканирование, но не настолько, чтобы создавать тысячи партиций. Всегда согласовывайте инкрементальный фильтр с полем партиционирования, чтобы включить pruning.
 
-- **Monitor Your Models**: Implement tests or alerts on incremental models. For example, check that each run’s row count is within expected bounds, if a daily incremental that usually adds hundreds of rows suddenly adds zero, that’s a red flag. Catching these issues early prevents bigger problems down the line.
+- **Мониторьте модели**: внедряйте тесты или алерты для инкрементальных моделей. Например, проверяйте, что количество строк, добавленных за запуск, находится в ожидаемых пределах. Если ежедневная модель, которая обычно добавляет сотни строк, внезапно добавляет ноль — это тревожный сигнал. Раннее обнаружение проблем предотвращает более серьёзные сбои.
 
-- **Periodic Full Refreshes**: Over time, even a well-built incremental model can drift due to small errors or schema changes. We scheduled occasional full refreshes for critical models to realign them with source data, essentially giving a clean slate that catches any discrepancies or missed data. Similarly, after major logic changes, we’d do a one-time full refresh to apply the new logic across all historical data and then switch back to incremental.
+- **Периодические full refresh**: со временем даже хорошо построенная инкрементальная модель может «уплыть» из-за мелких ошибок или изменений схемы. Мы планировали периодические full refresh для критичных моделей, чтобы синхронизировать их с источниками и поймать любые расхождения. Аналогично, после крупных изменений логики мы делали разовый full refresh, а затем снова возвращались к incremental.
 
-- **Test and Document**: We treated incremental models like mission-critical code. We wrote tests to ensure the logic is sound (for instance, after an incremental run, the target’s record count for a period equals the source’s count for that period, if not, the filter might be wrong). We also documented each model’s assumptions (e.g. “_this model runs incrementally, do not disable the is_incremental filter in development_”). Good documentation helped new team members avoid breaking incremental logic.
+- **Тестируйте и документируйте**: мы относились к инкрементальным моделям как к критически важному коду. Писали тесты, чтобы убедиться в корректности логики (например, что после инкрементального запуска количество записей за период совпадает с источником; если нет — фильтр, вероятно, неверен). Также мы документировали предположения каждой модели (например: «_эта модель работает инкрементально, не отключайте фильтр is_incremental в разработке_»). Хорошая документация помогала новым членам команды не ломать инкрементальную логику.
 
-- **Design for Scale Early**: Our biggest lesson was to plan for scale from the start. Now, when designing a new model or pipeline, we ask, “_What if the data grows 10x?_”. If a full refresh won't be feasible at that size, we build it incrementally from day one. It's much easier than refactoring under pressure later. This mindset, combined with dbt’s flexible incremental features, has future-proofed our pipelines. As our data continues to grow, the incremental approach should keep holding up.
+- **Проектируйте с расчётом на рост**: главный урок — планировать масштаб заранее. Теперь, проектируя новую модель или пайплайн, мы спрашиваем себя: «_что будет, если данных станет в 10 раз больше?_». Если full refresh в таком масштабе невозможен, мы сразу строим модель инкрементально. Это намного проще, чем рефакторинг под давлением позже. Такой подход в сочетании с гибкими возможностями incremental в dbt сделал наши пайплайны устойчивыми к будущему росту. По мере увеличения объёма данных инкрементальный подход продолжит нас выручать.
 
-## Conclusion
+## Заключение
 
-Scaling a fintech data platform doesn’t have to mean scaling cost and runtime at the same pace. By using dbt’s incremental models—paired with optimizations like partitioning, clustering, and careful scheduling—Kuda transformed its pipelines to handle rapid growth. We kept data fresh and accurate for users without breaking the bank. Incremental processing let us handle ever-increasing volumes in bite-sized chunks, maintaining agility as the company grew.
+Масштабирование финтех-платформы данных не обязательно означает пропорциональный рост затрат и времени выполнения. Используя incremental models в dbt — в сочетании с партиционированием, кластеризацией и продуманным расписанием — Kuda смогла трансформировать свои пайплайны под условия быстрого роста. Мы сохранили свежесть и точность данных для пользователей, не выходя за рамки бюджета. Инкрементальная обработка позволила справляться с постоянно растущими объёмами небольшими порциями, сохраняя гибкость по мере развития компании.
 
-If you’re at a growing company struggling with slow or expensive data jobs, give dbt’s incremental models a try. As we saw at Kuda, the payoff can be huge: faster insights, happier stakeholders, and a data platform ready for whatever the future brings. The future of data processing (in fintech and beyond) is incremental. With tools like dbt, you can ride the wave of growth instead of drowning in it.
+Если вы работаете в растущей компании и сталкиваетесь с медленными или дорогими джобами, попробуйте incremental models в dbt. Как показал наш опыт в Kuda, отдача может быть колоссальной: более быстрые инсайты, довольные стейкхолдеры и платформа данных, готовая к любым вызовам будущего. Будущее обработки данных (в финтехе и не только) — инкрементальное. С такими инструментами, как dbt, вы можете оседлать волну роста, а не утонуть в ней.

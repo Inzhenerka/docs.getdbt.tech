@@ -1,6 +1,6 @@
 ---
-title: "Meet the dbt Fusion Engine: the new Rust-based, industrial-grade engine for dbt"
-description: "The dbt Fusion engine delivers a next-gen developer experience by combining high-speed execution with deep understanding of your code."
+title: "Знакомьтесь с dbt Fusion Engine: новый индустриальный движок для dbt на Rust"
+description: "Движок dbt Fusion обеспечивает новое поколение developer experience, объединяя высокую скорость выполнения с глубоким пониманием вашего кода."
 slug: dbt-fusion-engine
 image: /img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png
 authors: [jason_ganz]
@@ -12,148 +12,147 @@ date: 2025-05-28
 is_featured: true
 ---
 
-## TL;DR: What You Need to Know
+## TL;DR: что нужно знать
 
-- dbt’s familiar authoring layer remains unchanged, but the execution engine beneath it is completely new.
-- The new engine is called the dbt Fusion engine — rewritten from the ground up in Rust based on technology [from SDF](https://www.getdbt.com/blog/dbt-labs-acquires-sdf-labs).  The dbt Fusion engine is substantially faster than dbt Core and has built in [SQL comprehension technology](/blog/the-levels-of-sql-comprehension) to power the next generation of analytics engineering workflows.
-- The dbt Fusion engine is currently in beta. You can try it today if you use Snowflake — with additional adapters coming starting in early June. Review our [path to general availability](/blog/dbt-fusion-engine-path-to-ga) (GA) and [try the quickstart](/guides/fusion).
-- **You do not need to be a dbt Labs customer to use Fusion - dbt Core users can adopt the dbt Fusion engine today for free in your local environment.**
-- You can use Fusion with the [new dbt VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt), [directly via the CLI](/docs/fusion/install-fusion-cli), or [via dbt Studio](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine).
-- This is the beginning of a new era for analytics engineering. For a glimpse into what the Fusion engine is going to enable over the next 1 to 2 years, [read this post](https://getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine).
+- Привычный слой авторинга dbt остаётся без изменений, но движок исполнения под ним полностью новый.
+- Новый движок называется dbt Fusion engine — он переписан с нуля на Rust на основе технологий [из SDF](https://www.getdbt.com/blog/dbt-labs-acquires-sdf-labs). dbt Fusion engine существенно быстрее dbt Core и содержит встроенную [технологию понимания SQL](/blog/the-levels-of-sql-comprehension), которая станет основой следующего поколения рабочих процессов аналитической инженерии.
+- dbt Fusion engine сейчас находится в бете. Вы уже можете попробовать его сегодня, если используете Snowflake — другие адаптеры начнут появляться с начала июня. Ознакомьтесь с нашим [планом выхода в general availability](/blog/dbt-fusion-engine-path-to-ga) (GA) и [попробуйте quickstart](/guides/fusion).
+- **Чтобы использовать Fusion, не обязательно быть клиентом dbt Labs — пользователи dbt Core могут бесплатно использовать dbt Fusion engine уже сегодня в локальной среде.**
+- Fusion можно использовать с [новым расширением dbt для VS Code](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt), [напрямую через CLI](/docs/fusion/install-fusion-cli) или [через dbt Studio](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine).
+- Это начало новой эпохи аналитической инженерии. Чтобы увидеть, что Fusion engine позволит реализовать в течение ближайших 1–2 лет, [прочитайте этот пост](https://getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine).
 
 <!--truncate-->
 
-Since its introduction in 2016, dbt has paved the way for the analytics engineering revolution. Teams worldwide have moved from ad hoc processes running customized SQL scripts into a mature analytics workflow based on the [dbt viewpoint](https://docs.getdbt.com/community/resources/viewpoint). dbt enables data practitioners to *work like software engineers*, building their analytics code as an asset to ship trusted data products faster.
+С момента своего появления в 2016 году dbt проложил путь революции аналитической инженерии. Команды по всему миру перешли от разрозненных процессов с кастомными SQL‑скриптами к зрелым аналитическим workflows, основанным на [подходе dbt](https://docs.getdbt.com/community/resources/viewpoint). dbt позволяет специалистам по данным *работать как инженеры-программисты*, создавая аналитический код как актив и быстрее поставляя надёжные data‑продукты.
 
-dbt came to represent many things:
+dbt стал олицетворять сразу несколько вещей:
 
-- A **viewpoint** on how analytics should be done
-- A **workflow** where data practitioners could put that viewpoint into action
-- A **framework** — dbt Core — that powered this workflow comprised of:
-  - An authoring layer: The schema, spec, and definitions for a dbt project written in SQL, YML, and Jinja
-  - An engine: The tooling via which the authoring layer was built and executed against a data platform, resolving templated code into executable SQL, building your dependency graph, and more.
+- **Подход** к тому, как должна выполняться аналитика
+- **Workflow**, в рамках которого специалисты по данным могли применять этот подход на практике
+- **Фреймворк** — dbt Core — который обеспечивал этот workflow и включал:
+  - Слой авторинга: схемы, спецификации и определения dbt‑проекта, написанные на SQL, YML и Jinja
+  - Движок: инструменты, с помощью которых слой авторинга собирался и выполнялся на платформе данных, включая рендеринг шаблонного кода в исполняемый SQL, построение графа зависимостей и многое другое
 
-<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/engine-and-authoring-layer.png" title="dbt is made up of two different things: authoring layer and engine." />
+<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/engine-and-authoring-layer.png" title="dbt состоит из двух частей: слоя авторинга и движка." />
 
-While the authoring layer has continued to evolve nicely, giving dbt developers ever-more functionality to work with, the engine itself, dbt Core, is still built on the same technology and uses the same primary design principles that it started with in 2016. This causes two primary problems that cannot be iteratively solved:
+Хотя слой авторинга продолжал успешно развиваться и предоставлять разработчикам dbt всё больше возможностей, сам движок — dbt Core — по‑прежнему построен на тех же технологиях и использует те же ключевые архитектурные принципы, что и в 2016 году. Это приводит к двум фундаментальным проблемам, которые невозможно решить итеративно:
 
-1. dbt Core can be *slow*.  It’s built in Python and for larger dbt projects it can become unworkable. Even for smaller projects, to power a great developer experience, users would need a step change in performance.
-2. The dbt engine renders SQL, but it doesn’t *comprehend SQL.* That means that any functionality relying on specifics of SQL code was impossible to build into dbt.
+1. dbt Core может быть *медленным*. Он написан на Python, и для крупных dbt‑проектов это становится непрактичным. Даже для небольших проектов, чтобы обеспечить действительно хороший developer experience, требовался скачок производительности.
+2. Движок dbt рендерит SQL, но не *понимает SQL*. Это означает, что любая функциональность, зависящая от семантики SQL‑кода, была невозможна для реализации внутри dbt.
 
-And so it became clear that for us to power the analytics workloads of tomorrow, we weren't going to get there with incremental improvements — we needed to **rebuild the dbt engine from scratch**. We needed:
+Поэтому стало очевидно: чтобы поддерживать аналитические нагрузки будущего, постепенные улучшения не подойдут — нам нужно было **пересобрать движок dbt с нуля**. Нам был нужен:
 
-- An engine built for speed.
-- An engine that *knows about your code.*
-- An engine that powers the next generation of developer experience.
+- Движок, ориентированный на скорость
+- Движок, который *понимает ваш код*
+- Движок, который станет основой следующего поколения developer experience
 
-And that engine is Fusion.
+И этим движком стал Fusion.
 
-## What exactly is Fusion?
+## Что такое Fusion?
 
-Fusion is the new engine for dbt.
+Fusion — это новый движок для dbt.
 
-If the authoring layer is "what" your dbt project is supposed to do, then the engine is the "how." That includes:
+Если слой авторинга — это «что» должен делать ваш dbt‑проект, то движок — это «как». В частности, он отвечает за:
 
-- Rendering Jinja
-- Building dependency graphs
-- Creating artifact files
-- Communicating with databases
+- Рендеринг Jinja
+- Построение графов зависимостей
+- Создание artifact‑файлов
+- Взаимодействие с базами данных
 
-At first glance, Fusion looks a lot like dbt Core. Your projects are built using the familiar dbt authoring layer. You still write SQL and Jinja. You still type `dbt run`. (To make it easier to try Fusion, we're also shipping with an optional `dbtf` alias, as many users have the `dbt` namespace already specified).
+На первый взгляд Fusion очень похож на dbt Core. Ваши проекты по‑прежнему создаются с использованием привычного слоя авторинга dbt. Вы всё так же пишете SQL и Jinja. Вы всё так же вводите `dbt run`. (Чтобы упростить знакомство с Fusion, мы также добавили опциональный алиас `dbtf`, поскольку у многих пользователей уже занят namespace `dbt`.)
 
-But underneath that is a layer of technical depth and rigor that is entirely new to dbt, happening at the engine layer.
+Но под капотом появился уровень технической глубины и строгости, которого в dbt раньше не было — и всё это происходит на уровне движка.
 
 Fusion:
 
-- Is fully rewritten in Rust, enabling a [dramatically faster dbt experience](/blog/faster-project-parsing-with-rust). Fusion does not depend on Python at all. In fact, besides the adapter macros, not a single line of code is shared between dbt Core and the dbt Fusion engine. (For long-time dbt spelunkers, we've described the new structure in a [separate post](/blog/dbt-fusion-engine-components).)
-- [Understands your SQL code.](/blog/the-levels-of-sql-comprehension) It’s a true SQL *compiler* and gives dbt a full view on what the code in your dbt project means and how it will propagate across your entire data lineage.
+- Полностью переписан на Rust, что обеспечивает [драматически более быстрый опыт работы с dbt](/blog/faster-project-parsing-with-rust). Fusion вообще не зависит от Python. Более того, за исключением макросов адаптеров, между dbt Core и dbt Fusion engine не разделяется ни одной строки кода. (Для тех, кто глубоко изучает внутренности dbt, мы описали новую структуру в [отдельном посте](/blog/dbt-fusion-engine-components).)
+- [Понимает ваш SQL‑код](/blog/the-levels-of-sql-comprehension). Это полноценный SQL‑*компилятор*, который даёт dbt полное представление о том, что означает код вашего проекта и как он распространяется по всей цепочке lineage данных.
 
-Based on the technology from [SDF](https://www.getdbt.com/blog/dbt-labs-acquires-sdf-labs), Fusion represents a step change increase in the technical capabilities of dbt.
+Основанный на технологиях из [SDF](https://www.getdbt.com/blog/dbt-labs-acquires-sdf-labs), Fusion представляет собой качественный скачок в технических возможностях dbt.
 
-<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/familiar-authoring-powerful-new-engine.png" title="Familiar Authoring Layer, Powerful New Engine." />
+<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/familiar-authoring-powerful-new-engine.png" title="Привычный слой авторинга, мощный новый движок." />
 
-As a result of these capabilities, Fusion can deliver new experiences. Some of these we’re releasing today, like real-time error detection in VS Code and significant cost savings in project execution.  dbt now knows about your code!
+Благодаря этим возможностям Fusion может предоставлять совершенно новые сценарии работы. Некоторые из них мы выпускаем уже сегодня — например, обнаружение ошибок в реальном времени в VS Code и существенное снижение затрат при выполнении проектов. dbt теперь действительно знает ваш код!
 
-**You probably now know enough now to head on over to the quickstart and get going**, but if you want to know little more about what Fusion delivers today, keep reading.
+**Скорее всего, вы уже знаете достаточно, чтобы перейти к quickstart и начать работу**, но если вам интересно подробнее узнать о том, что Fusion даёт уже сегодня, читайте дальше.
 
 ---
 
-## Near-term benefits of adopting Fusion
+## Ближайшие преимущества использования Fusion
 
-You can think of Fusion as the same dbt you know and love, but better and faster, and you're going to see it show up in a lot of places!
+Fusion можно воспринимать как тот же dbt, который вы знаете и любите, но быстрее и лучше — и вы увидите это во многих аспектах работы.
 
-<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png" title="Functionality powered by the dbt Fusion Engine and its components" />
+<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png" title="Функциональность, реализованная движком dbt Fusion и его компонентами" />
 
-So how and why should you adopt Fusion for your dbt project?
+Итак, зачем и как стоит использовать Fusion в вашем dbt‑проекте?
 
-### Just the new Fusion-powered dbt CLI
+### Только новый dbt CLI на базе Fusion
 
-- **Significant performance improvements:** Up to 30x faster parsing and 2x quicker full-project compilation, with near-instant recompilation of single files in the VS Code Extension. We expect continued performance gains as part of the path to GA.
+- **Существенный прирост производительности:** до 30× более быстрый парсинг и в 2 раза более быстрая компиляция всего проекта, а также почти мгновенная перекомпиляция отдельных файлов в расширении VS Code. Мы ожидаем дальнейших улучшений производительности по мере движения к GA.
 
-### The new Fusion-powered dbt Fusion CLI + VS Code extension
+### Новый dbt Fusion CLI + расширение VS Code
 
-But the real benefit of Fusion is not just going to be in the CLI itself — it’s in the ability to build net new product experiences that leverage Fusion’s capabilities. The first of these, unveiled today, is the VS Code extension, powered by [dbt Fusion’s SQL Comprehension](/blog/the-levels-of-sql-comprehension). This extension could *only* be built on Fusion:
+Но настоящая ценность Fusion заключается не только в самом CLI — она в возможности создавать принципиально новые продуктовые сценарии, использующие возможности Fusion. Первый из них, представленный сегодня, — это расширение для VS Code, работающее на базе [SQL Comprehension в dbt Fusion](/blog/the-levels-of-sql-comprehension). Это расширение *могло быть создано только на Fusion*:
 
-- It’s fast — the VS Code extension recompiles your entire dbt project in the background every time you save *any* file, as well as identifying errors instantly for the active file. For that to be workable, it needs to happen fast.
-- It understand SQL and functions as a compiler — it knows what columns exist in your project, what functions you are using and the type signature and output of those functions.
+- Оно быстрое — расширение VS Code перекомпилирует весь dbt‑проект в фоне каждый раз, когда вы сохраняете *любой* файл, и мгновенно показывает ошибки в активном файле. Чтобы это было практично, всё должно работать очень быстро.
+- Оно понимает SQL и работает как компилятор — знает, какие колонки существуют в проекте, какие функции используются, а также их сигнатуры и типы возвращаемых значений.
 
-There’s a whole host of features in the VS Code extension. Some early favorites:
+В расширении VS Code реализовано множество возможностей. Среди самых популярных:
 
-- **Write code with confidence — live error detection and function autocomplete.**
-  - How many time have you hit `dbt run` only to realize that you typed `select * frmo`, misspelled a column name or tried to sum the unsummable? No more! With the LSP-powered VS Code extension, you can immediately see when pesky errors sneak into your code.
+- **Пишите код уверенно — обнаружение ошибок в реальном времени и автодополнение функций.**
+  - Сколько раз вы запускали `dbt run`, чтобы обнаружить, что написали `select * frmo`, опечатались в названии колонки или попытались сложить то, что нельзя суммировать? Теперь с этим покончено! С LSP‑расширением для VS Code вы сразу видите ошибки, как только они появляются в коде.
 
-    <Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/you-wouldnt-sum-a-datetime.png" title="You wouldn't sum a datetime." />
+    <Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine/you-wouldnt-sum-a-datetime.png" title="Вы же не будете суммировать datetime." />
 
-  - Similarly — is it `dateadd` or `date_add`? And which way around do the arguments go again? Just start typing and you'll see contextual prompts and autocomplete.
-- **See how the code you’ve written iteratively progresses to your transformed data:** *Preview CTEs and viewing compiled code*
-  - Because the VS Code extension compiles your code every time you save, you can view the compiled code from your project in real time as you’re making edits. This is a real lifesaver when working on complex macros.
-  - Writing your code with CTEs allows you to modularly split up the logic in your model. The days when you swap out the `final` CTE at the end for the name of the CTE you're debugging are no more, now you can just click.
+  - Аналогично — это `dateadd` или `date_add`? И в каком порядке идут аргументы? Просто начните печатать, и вы увидите контекстные подсказки и автодополнение.
+- **Отслеживайте, как написанный вами код пошагово превращается в итоговые данные:** *предпросмотр CTE и просмотр скомпилированного кода*
+  - Поскольку расширение VS Code компилирует код при каждом сохранении, вы можете в реальном времени видеть скомпилированный код проекта по мере внесения изменений. Это особенно полезно при работе со сложными макросами.
+  - Использование CTE позволяет модульно разбивать логику модели. Больше не нужно подменять `final` CTE на имя CTE, который вы отлаживаете — теперь достаточно одного клика.
 
-- **Traverse your project:** Go-to-reference and built in lineage
-  - Need to find out how an upstream model was defined? Or where all the inputs from the model you’re working on came from? With both the ability to jump to the model and column references *and* view model and column level lineage, it’s honestly a night and day difference.
+- **Навигация по проекту:** переход к определениям и встроенный lineage
+  - Нужно понять, как определена upstream‑модель? Или откуда приходят все входные данные для текущей модели? Возможность перехода к моделям и колонкам *и* просмотра lineage на уровне моделей и колонок — это действительно разница «день и ночь».
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/go-to-definition.webm" type="video/webm" />
 </video>
 
+Я мог бы продолжать ещё очень долго — здесь действительно много всего.
 
-I could go on and on and on — there’s so much here.
+По отдельности это либо улучшения качества жизни, либо серьёзные изменения.
 
-Taken separately, these range from quality of life improvements to significant changes.
+Но вместе они кардинально меняют сам опыт написания dbt‑кода. Раньше было *слишком много вещей*, которые приходилось постоянно держать в голове — теперь это берёт на себя расширение. Совокупный эффект от этих изменений… выдающийся. Я уже не представляю, как можно работать без этого.
 
-But taken together, it actually fundamentally changes the experience of writing your dbt code. There were just *so many things* that you had to constantly be juggling in the back of your head that are now offloaded to the extension. The sum change to the experience of writing dbt code... is exceptional. I already can’t imagine working without this.
+Конечно, есть ещё одна технология, меняющая опыт написания dbt‑кода (и любого кода) — это AI. Возможности, которые даёт Fusion, идеально сочетаются с AI‑ассистированным программированием, поскольку позволяют проще проверять, валидировать и понимать код, сгенерированный AI. В будущем ожидайте ещё более тесной интеграции Fusion и AI‑помощников — скорость и строгость Fusion помогут получать более качественный AI‑сгенерированный код.
 
-Of course — there’s another technology changing the experience of writing dbt (and all) code — AI. The functionality that Fusion enables dovetails perfectly with AI-assisted coding by allowing you to vet, validate, and comprehend AI-generated code more easily. Moving forward, expect even tighter coupling between Fusion and AI-based coding assistants as the speed and rigor of Fusion will help produce higher quality AI-generated code.
-
-The VS Code extension is one of our first product experiences exclusively powered by the dbt Fusion engine. The extension depends on the Language Server, and the Language Server depends on Fusion's SQL comprehension capabilities. We made the decision not to support dbt Core for the VS Code Extension because existing community-built extensions have already built as much as is possible on top of dbt Core's foundation.  To get to this next level of experience, we needed Fusion.
-
----
-
-### How to get started with Fusion
-
-The dbt Fusion engine is currently in beta. We've written [a separate post](/blog/dbt-fusion-engine-path-to-ga) describing the path to Fusion's final release, and how you can see if your project is compatible today.
-
-Whether or not you can move your existing project to Fusion today, you can jump into the VS Code extension [using our quickstart](/guides/fusion) to try get a feeling for what's ahead.
-
-- **dbt customers:** Over the coming weeks, in projects eligible to start using Fusion, you’ll see a toggle in your account or receive a message from your account team. From there, [you can activate Fusion for your environments](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine).
-- **To use the VS Code extension:** [Install the "dbt" extension](/docs/install-dbt-extension) directly from the marketplace for automated setup and head to the quickstart. This will also automatically install the Fusion-powered CLI for you.
-- **To use the dbt CLI powered by Fusion:** Simply [install Fusion](/docs/fusion/install-fusion-cli)
-
-*If you are looking to migrate an existing project to Fusion, see the [migration guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) — as well as the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper, which automatically addresses many of the changes needed to migrate to Fusion.*
+Расширение VS Code — один из первых продуктовых сценариев, полностью основанных на движке dbt Fusion. Расширение зависит от Language Server, а Language Server — от возможностей SQL Comprehension в Fusion. Мы приняли решение не поддерживать dbt Core в расширении VS Code, поскольку существующие community‑расширения уже реализовали всё, что возможно на базе dbt Core. Чтобы выйти на следующий уровень, нам понадобился Fusion.
 
 ---
 
-## What's Next?
+### Как начать работать с Fusion
 
-Today’s launch is the start. There is much left to do over the short term and long term.
+dbt Fusion engine сейчас находится в бете. Мы написали [отдельный пост](/blog/dbt-fusion-engine-path-to-ga), в котором описан путь к финальному релизу Fusion и способы проверить, совместим ли ваш проект уже сегодня.
 
-Moving forward we’re building many net new products and evolutions of our current products that simply wouldn’t have been possible in a pre-Fusion world. This will be particularly impactful for powering AI workflows, both to assist in the creation of high quality dbt projects and serving as the trusted interface to structured data for AI agents.
+Даже если вы пока не можете перевести существующий проект на Fusion, вы можете попробовать расширение VS Code [через quickstart](/guides/fusion), чтобы почувствовать, что нас ждёт впереди.
 
-We’re excited to work with the Community on the evolution of Fusion. If you’ve heard talk about the early days of the dbt Community and wished you could have been around for it, you now have the opportunity to make the deep, foundational impact that is often only possible at the start of a new technical innovation cycle.
+- **Клиенты dbt:** в ближайшие недели в проектах, подходящих для использования Fusion, вы увидите переключатель в аккаунте или получите сообщение от вашей account‑команды. После этого вы сможете [активировать Fusion для своих окружений](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine).
+- **Чтобы использовать расширение VS Code:** [установите расширение «dbt»](/docs/install-dbt-extension) напрямую из marketplace для автоматической настройки и переходите к quickstart. Это также автоматически установит CLI на базе Fusion.
+- **Чтобы использовать dbt CLI на базе Fusion:** просто [установите Fusion](/docs/fusion/install-fusion-cli)
 
-So get involved!
+*Если вы планируете миграцию существующего проекта на Fusion, ознакомьтесь с [руководством по миграции](/docs/dbt-versions/core-upgrade/upgrading-to-fusion), а также с утилитой [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix), которая автоматически вносит многие изменения, необходимые для перехода на Fusion.*
 
-- Try out [the Fusion quickstart](/guides/fusion)
-- [Open up a GitHub issue in `dbt-fusion`](https://github.com/dbt-labs/dbt-fusion/issues) to report a bug or participate in the path to GA
-- Join us [on Slack](https://www.getdbt.com/community/join-the-community) in #dbt-fusion-engine and share your thoughts or questions
-- Head to an [in-person dbt Meetup](https://www.meetup.com/pro/dbt/) — we’re hosting the dbt World Circuit 🏎️ around the world where you can and come talk to one of us about Fusion!
+---
+
+## Что дальше?
+
+Сегодняшний релиз — это только начало. В краткосрочной и долгосрочной перспективе нам предстоит сделать ещё очень многое.
+
+Двигаясь вперёд, мы создаём новые продукты и развиваем существующие таким образом, который был бы невозможен в мире до Fusion. Это будет особенно важно для AI‑workflow — как для помощи в создании высококачественных dbt‑проектов, так и для предоставления AI‑агентам надёжного интерфейса к структурированным данным.
+
+Мы рады развивать Fusion вместе с сообществом. Если вы слышали рассказы о ранних днях dbt Community и хотели бы быть частью этого, сейчас у вас есть возможность внести глубокий, фундаментальный вклад — такой, который обычно возможен только в начале нового цикла технологических инноваций.
+
+Так что присоединяйтесь!
+
+- Попробуйте [Fusion quickstart](/guides/fusion)
+- [Откройте issue в GitHub‑репозитории `dbt-fusion`](https://github.com/dbt-labs/dbt-fusion/issues), чтобы сообщить об ошибке или поучаствовать в пути к GA
+- Присоединяйтесь к нам [в Slack](https://www.getdbt.com/community/join-the-community) в канале #dbt-fusion-engine и делитесь своими мыслями и вопросами
+- Приходите на [офлайн‑митапы dbt](https://www.meetup.com/pro/dbt/) — мы проводим мировой тур dbt World Circuit 🏎️ по всему миру, где вы сможете пообщаться с нами и обсудить Fusion!

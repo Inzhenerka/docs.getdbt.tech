@@ -1,6 +1,6 @@
 ---
-title: "The Components of the dbt Fusion engine and how they fit together"
-description: "The new engine makes it possible to decouple source code from functionality, introducing new ways to distribute functionality to the Community."
+title: "Компоненты движка dbt Fusion и то, как они сочетаются друг с другом"
+description: "Новый движок позволяет отделить исходный код от функциональности, открывая новые способы распространения функциональности для сообщества."
 slug: dbt-fusion-engine-components
 image: /img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png
 authors: [jason_ganz, joel_labes]
@@ -10,185 +10,186 @@ date: 2025-05-28
 is_featured: true
 ---
 
-Today, we announced the [dbt Fusion engine](/blog/dbt-fusion-engine).
+Сегодня мы анонсировали [движок dbt Fusion](/blog/dbt-fusion-engine).
 
-Fusion isn't just one thing — it's a set of interconnected components working together to power the next generation of analytics engineering.
+Fusion — это не какая‑то одна вещь. Это набор взаимосвязанных компонентов, которые вместе обеспечивают работу следующего поколения аналитической инженерии.
 
-This post maps out each piece of the Fusion architecture, explains how they fit together, and clarifies what's available to you whether you're compiling from source, using our pre-built binaries, or developing within a dbt Fusion powered product experience.
+В этом посте мы разберём каждый элемент архитектуры Fusion, объясним, как они сочетаются друг с другом, и проясним, что именно доступно вам в зависимости от того, компилируете ли вы Fusion из исходного кода, используете наши готовые бинарные сборки или разрабатываете внутри продукта, построенного на dbt Fusion.
 
-From the Rust engine to the VS Code extension, through to new Arrow-based adapters and Apache-licensed foundational technologies, we'll break down exactly what each component does, how each component is licensed (for why, see [Tristan's accompanying post](https://www.getdbt.com/blog/new-code-new-license-understanding-the-new-license-for-the-dbt-fusion-engine)), and how you can start using it and get involved today.
+От движка на Rust до расширения VS Code, от новых адаптеров на базе Arrow до базовых технологий под лицензией Apache — мы подробно разберём, что делает каждый компонент, под какой лицензией он распространяется (о причинах см. [сопутствующий пост Тристана](https://www.getdbt.com/blog/new-code-new-license-understanding-the-new-license-for-the-dbt-fusion-engine)), а также как вы можете начать использовать Fusion и принять участие уже сегодня.
 
 <!--truncate-->
 
-*This post describes the state of the world as it will be when Fusion reaches General Availability. For a look at the path to GA, read [this post](/blog/dbt-fusion-engine-path-to-ga).*
+*Этот пост описывает состояние системы на момент, когда Fusion достигнет General Availability. О пути к GA читайте [в этом посте](/blog/dbt-fusion-engine-path-to-ga).*
 
-## There are a number of different ways to access the dbt Fusion engine {#ways-to-access}
+## Существует несколько способов получить доступ к движку dbt Fusion {#ways-to-access}
 
-A big change between the dbt Fusion engine and the dbt Core engine is their language. Core is Python; Fusion is Rust. This is meaningful not just because of the performance benefits, but because it creates a new way for us to distribute functionality to the community.
+Одно из ключевых отличий между движком dbt Fusion и dbt Core — язык реализации. Core написан на Python, Fusion — на Rust. Это важно не только из‑за прироста производительности, но и потому, что это создаёт для нас новый способ распространения функциональности в сообществе.
 
-To distribute a Python program, you also have to distribute its underlying source code. But Rust is a compiled language, meaning we can share either the source code or just the compiled binaries derived from that source code.
+Чтобы распространять Python‑программу, необходимо распространять и её исходный код. Rust же — компилируемый язык, а значит мы можем делиться либо исходным кодом, либо только скомпилированными бинарными файлами, полученными из этого кода.
 
-This means that features which would have otherwise had to stay completely proprietary for IP reasons can instead be broadly distributed in binary form. There's also a completely source-available version of dbt Fusion which will exceed dbt Core's capabilities by the time we reach GA.
+Это означает, что функции, которые по соображениям защиты интеллектуальной собственности раньше должны были оставаться полностью проприетарными, теперь могут широко распространяться в виде бинарных файлов. При этом существует и полностью source-available версия dbt Fusion, которая к моменту GA превзойдёт возможности dbt Core.
 
-## What variants of the dbt Fusion engine exist?
+## Какие варианты движка dbt Fusion существуют?
 
-### Source-available dbt Fusion engine
+### Source-available версия движка dbt Fusion
 
-Artifact type: Code
+Тип артефакта: код
 
-Available at: [https://github.com/dbt-labs/dbt-fusion](https://github.com/dbt-labs/dbt-fusion) (Note: this repo currently only contains the code necessary for a `dbt parse` and `dbt deps` - more will follow!)
+Где доступно: [https://github.com/dbt-labs/dbt-fusion](https://github.com/dbt-labs/dbt-fusion)  
+(Примечание: на данный момент репозиторий содержит только код, необходимый для `dbt parse` и `dbt deps` — продолжение следует!)
 
-License: ELv2
+Лицензия: ELv2
 
-This will be the foundation of the Fusion engine - the code that lets you:
+Это фундамент движка Fusion — код, который позволяет:
 
-- Execute your `dbt seed/run/test/build`
-- Render your Jinja and create your DAG
-- Connect to the adapters that render your dbt project into the DDL and DML that hits your warehouse
-- Produce the artifacts in your dbt project
+- выполнять `dbt seed/run/test/build`
+- рендерить Jinja и строить DAG
+- подключаться к адаптерам, которые превращают ваш dbt‑проект в DDL и DML для хранилища данных
+- формировать артефакты вашего dbt‑проекта
 
-To be clear, the self-compiled binary that's available today doesn't do much yet. By the time the new engine enters general availability, its source-available components will [exceed the net capabilities of dbt Core](/blog/dbt-fusion-engine-path-to-ga). **If you are a data team running dbt Core, simply running the self-compiled version of dbt Fusion will be a pure upgrade.**
+Важно отметить: доступный сегодня бинарник, собранный самостоятельно, пока что умеет немного. К моменту выхода нового движка в General Availability его source-available компоненты [превзойдут совокупные возможности dbt Core](/blog/dbt-fusion-engine-path-to-ga). **Если вы — команда данных, использующая dbt Core, то простой запуск самостоятельно собранной версии dbt Fusion станет для вас чистым апгрейдом.**
 
-This repository will also include the code necessary for [Level 1 SQL Comprehension](/blog/the-levels-of-sql-comprehension#level-1-parsing) (the ability to parse SQL into a syntax tree).
+Этот репозиторий также будет включать код, необходимый для [SQL Comprehension уровня 1](/blog/the-levels-of-sql-comprehension#level-1-parsing) (возможность разбирать SQL в синтаксическое дерево).
 
-As long as you comply with the [three restrictions in ELv2](http://www.getdbt.com/licenses-faq):
+При соблюдении [трёх ограничений ELv2](http://www.getdbt.com/licenses-faq):
 
-- ✅ You can adopt the binary into your data workflows without dbt Labs' involvement
-- ✅ You can see and modify the code
+- ✅ вы можете использовать бинарный файл в своих дата‑процессах без участия dbt Labs  
+- ✅ вы можете просматривать и модифицировать код  
 
-### Precompiled dbt Fusion engine binary
+### Предсобранный бинарник движка dbt Fusion
 
-Artifact type: Precompiled binary
+Тип артефакта: предсобранный бинарный файл
 
-How to access: download following the instructions [here](/docs/fusion/install-fusion-cli)
+Как получить доступ: скачать, следуя инструкциям [здесь](/docs/fusion/install-fusion-cli)
 
-License: ELv2
+Лицензия: ELv2
 
-When you download the precompiled binary created by dbt Labs, it contains:
+Когда вы скачиваете предсобранный бинарник, созданный dbt Labs, он включает:
 
-- **All of the functionality in the Source Available Fusion**
+- **всю функциональность Source-available версии Fusion**
+- дополнительные возможности, основанные на проприетарном коде (например, [SQL Comprehension уровня 2](/blog/the-levels-of-sql-comprehension#level-2-compiling), необходимый для компиляции и типовой проверки SQL)
 
-- Additional capabilities which are derived from proprietary code (such as the [Level 2 SQL Comprehension](/blog/the-levels-of-sql-comprehension#level-2-compiling) required to compile and type-check your SQL).
+При соблюдении трёх ограничений ELv2:
 
-As long as you comply with the three restrictions in ELv2,
+- ✅ вы можете использовать бинарник в своих дата‑процессах без участия dbt Labs  
+- ❌ но вы не можете просматривать или изменять сам код  
 
-- ✅ You can adopt the binary into your data workflows without dbt Labs' involvement
-- ❌ But you cannot see or modify the code itself
+**Подавляющему большинству существующих пользователей dbt Core, которые переходят на свободно распространяемые компоненты Fusion, стоит использовать именно бинарник, а не собирать его из исходного кода.** У бинарника те же разрешения, но больше возможностей (и он избавляет вас от необходимости компиляции). Вы можете бесплатно использовать его внутри своей компании, даже если вы не являетесь клиентом dbt Labs.
 
-**The vast majority of existing dbt Core users that adopt the freely distributed components of Fusion should use the binary to do so, rather than compiling it from source code.** The binary has the same permissions but more capabilities (and it saves you from having to compile it yourself). You can use it internally at your company for free, even if you are not a dbt Labs customer.
+### Использование движка dbt Fusion по коммерческому соглашению
 
-### Using the dbt Fusion engine with a commercial agreement
+Тип артефакта: предсобранный бинарник и управляемый сервис
 
-Artifact type: Precompiled binary and managed service
+Где доступно: [скачать бинарник](/docs/fusion/install-fusion-cli) и [зарегистрироваться в сервисе](http://getdbt.com/signup)
 
-Available at: [Download binary](/docs/fusion/install-fusion-cli) and [sign up for the service](http://getdbt.com/signup)
+Лицензия: ELv2 (бинарник) и проприетарная (сервис)
 
-License: ELv2 (binary) and Proprietary (service)
+Организации, *имеющие* коммерческое соглашение, получают доступ к ещё большему набору возможностей, при этом используя тот же самый публично распространяемый бинарник, о котором говорилось выше. Если вы хотите начать использовать платформенные функции, [например dbt Mesh](https://docs.getdbt.com/docs/mesh/govern/project-dependencies), всё, что нужно — это [скачать конфигурационный файл](https://docs.getdbt.com/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli). *(Комментарий Джоэла: как человек, который последние пару лет совмещал dbt Cloud CLI и dbt Core, я не могу передать, насколько я этому рад.)*
 
-Organizations who *do* have a commercial agreement will unlock even more capabilities, but they'll use the exact same publicly-released binary discussed above. If you want to start using platform features, [such as dbt Mesh](https://docs.getdbt.com/docs/mesh/govern/project-dependencies), all you need to do is [download a configuration file](https://docs.getdbt.com/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli). *(Joel commentary - As someone who has been juggling the dbt Cloud CLI alongside dbt Core for the last couple of years, I cannot overstate how thrilled I am by this.)*
+Разумеется, для предоставления платформенных возможностей, таких как State-Aware Orchestration, необходимы дополнительные облачные сервисы. Этот код является проприетарным и регулируется вашим соглашением с dbt Labs.
 
-Obviously there's additional cloud-backed services necessary to deliver platform-specific features, such as State-Aware Orchestration. That code is proprietary and governed by your agreement with dbt Labs.
+## Другие элементы мозаики
 
-## Other pieces of the puzzle
+Движок dbt Fusion — это главный герой, но лежащие в его основе технологии можно комбинировать самыми разными способами.
 
-The dbt Fusion engine is the headline act, but its underlying technologies can be mixed and matched in a variety of ways.
+### Расширение dbt для VS Code и Language Server
 
-### The dbt VS Code Extension and Language Server
+Тип артефакта: предсобранные бинарники
 
-Artifact type: Precompiled binaries
+Как получить доступ: [установить из VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt)
 
-How to access: [Install on the VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt)
+Лицензия: проприетарная
 
-License: Proprietary
+Расширение dbt для VS Code — один из первых продуктовых интерфейсов, построенных поверх Fusion. Оно не является *частью* Fusion, но *работает на базе* Fusion и входит в более широкое предложение платформы dbt (с щедрым бесплатным тарифом). В частности, расширение VS Code взаимодействует с ещё одним совершенно новым бинарником — dbt [Language Server](https://microsoft.github.io/language-server-protocol/).
 
-The dbt VS Code extension is one of the first product experiences built on top of Fusion. It is not *part* of Fusion, it is *powered* by Fusion and is part of the wider dbt platform's offerings (with a generous free tier). Specifically, the VS Code extension interacts with another brand-new binary, the dbt [Language Server](https://microsoft.github.io/language-server-protocol/).
+Language Server построен на подмножестве технологий, лежащих в основе расширенного движка Fusion. Например, он может быстро компилировать SQL и взаимодействовать с базами данных, но когда приходит время реально запускать модель, он передаёт управление dbt‑бинарнику.
 
-The Language Server is built on top of a subset of the technology powering the extended Fusion engine: as an example, it can quickly compile SQL and interact with databases, but it defers to the dbt binary when it's time to actually run a model.
+<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine-components/vscode-ext-binary-roles.png" title="Расширение VS Code взаимодействует с Language Server для понимания SQL и с бинарником Fusion для выполнения SQL." />
 
-<Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine-components/vscode-ext-binary-roles.png" title="The VS Code extension interacts with the Language Server to understand your SQL, and the Fusion binary to execute your SQL." />
+### Authoring Layer dbt
 
-### The dbt Authoring Layer
+Тип артефакта: определения JSON Schema
 
-Artifact type: JSON Schema definitions
+Где доступно: Git‑репозитории для [входных файлов](https://github.com/dbt-labs/dbt-jsonschema) и [выходных артефактов](https://github.com/dbt-labs/schemas.getdbt.com)
 
-Available at: Git repos for [input files](https://github.com/dbt-labs/dbt-jsonschema) and [output artifacts](https://github.com/dbt-labs/schemas.getdbt.com)
+Лицензия: Apache 2.0
 
-License: Apache 2.0
+Когда вы думаете о dbt, вы, скорее всего, представляете комбинацию движка (описанного выше) и Authoring Layer.
 
-When you think of dbt, you're probably thinking of a combination of the Engine (described above) and the Authoring Layer.
+Authoring Layer включает всё необходимое для описания *что именно* представляет собой dbt‑проект: **YAML‑спецификации, спецификации артефактов, команды и флаги CLI**, а также **сигнатуры макросов**. Как пользовательский интерфейс dbt, authoring layer является общим как для Core, так и для Fusion, хотя движок Fusion не поддерживает ряд поведений и функций, объявленных устаревшими в более ранних версиях dbt Core.
 
-The Authoring Layer is made up of everything necessary to define the *what* of a dbt project: things like the **YAML specs, Artifact specs, CLI commands and flags**, and **macro signatures**. As the user interface to dbt, the authoring layer is standard between Core and Fusion, although the Fusion engine does not include support for various behaviours and functions deprecated in earlier releases of dbt Core.
+Впервые мы публикуем серию канонических JSON‑схем, _подкреплённых кодом dbt Core и Fusion_, которые описывают допустимое содержимое различных YAML‑файлов dbt. Эти схемы распространяются под лицензией Apache 2.0 и будут особенно полезны для других инструментов, интегрирующихся с dbt‑проектами.
 
-For the first time, we're releasing a series of definitive JSON schemas, _backed by the code in dbt Core and Fusion_, that encapsulate the acceptable content of dbt's various YAML files. These are Apache 2.0-licensed and will be particularly helpful for other tools integrating with dbt projects.
+Это дополняет уже существующие JSON‑схемы, описывающие формат выходных артефактов dbt (например, `manifest.json`). По мере стабилизации метаданных Fusion (логирования и артефактов) на пути к GA мы будем обновлять опубликованные схемы.
 
-This joins the existing JSON schemas defining the shape of dbt's output artifacts (e.g. `manifest.json`). As we stabilize Fusion's metadata output (logging and artifacts) on the path to GA, we will update the published schemas.
+### Адаптеры движка dbt Fusion
 
-### dbt Fusion engine adapters
+Тип артефакта: исходный код
 
-Artifact type: Source code
+Где доступно: начальный код в репозитории [`dbt-fusion`](https://github.com/dbt-labs/dbt-fusion), дальнейшие дополнения — позже
 
-Available at: Initial code in [`dbt-fusion` repo](https://github.com/dbt-labs/dbt-fusion), with more to come
+Лицензия: Apache 2.0 (позже в этом году)
 
-License: Apache 2.0 (later this year)
+Адаптеры отвечают за две ключевые задачи:
 
-Adapters are responsible for two key tasks:
+- знание того, как создавать корректные SQL‑команды (через макросы и материализации) для конкретной платформы данных  
+- подключение к целевой платформе данных и отправку ей SQL‑команд  
 
-- Knowing how to create the appropriate SQL commands (via macros and materializations) for a data platform
-- Connecting to that target data platform and sending it SQL commands
+Так же как Fusion является движком следующего поколения для dbt, нам потребовались и адаптеры следующего поколения. Эти адаптеры написаны на Rust и построены на стандарте Apache Arrow.
 
-Much like Fusion is the next generation engine for dbt, we also needed next-generation *adapters* for dbt. These adapters are written in Rust and built on the Apache Arrow standard.
+Шаблонизация SQL‑команд в значительной степени наследует подход с макросами из адаптеров dbt Core. А вот подключение к базам данных — совсем другая история: движок dbt Fusion не может использовать Python‑классы, присутствующие в каждом адаптере, по практическим причинам и соображениям производительности.
 
-The templating of SQL commands largely carries over from macros in the dbt Core adapters. Database connectivity is another story, the dbt Fusion engine cannot use the Python classes present in each adapter, for reasons both practical and performance-related.
+Здесь на сцену выходит экосистема Apache Arrow в целом и новый [ADBC API](https://arrow.apache.org/adbc/current/index.html) в частности. ADBC — это ориентированная на будущее платформа для подключения к базам данных, и мы активно используем её в адаптерах Fusion.
 
-Enter the Apache Arrow ecosystem at large, and the new [ADBC API](https://arrow.apache.org/adbc/current/index.html) in particular. ADBC is a future-looking platform for database connectivity, and we are leaning into it heavily with these Fusion adapters.
+Поскольку стандарт ADBC очень новый, не все базы данных пока с ним совместимы, а использование ADBC из Rust‑клиента — непростая задача. Чтобы решить обе проблемы, мы создали Rust‑библиотеку `XDBC`, которая:
 
-Because the ADBC standard is extremely new, not all databases are compatible with ADBC yet, and using ADBC in a Rust client isn't easy. To solve both problems, we have created a Rust client library, `XDBC` that:
+- поддерживает ODBC‑подключения к базам данных, где Arrow пока не доступен в качестве формата вывода  
+- предоставляет обобщённые методы для создания и управления подключениями к базам данных  
+- полезна всем, кто хочет создавать инструменты для работы с данными на Rust — как внутри, так и за пределами экосистемы dbt  
 
-- Supports ODBC connections to databases where Arrow is not yet provided as an output
-- Provides generic methods for creating and managing connections to databases
-- Is useful for anyone who wants to build data tooling in Rust, inside or outside of the dbt ecosystem
+Всё это будет выложено в open source под лицензией Apache 2.0 позже в этом году, а именно:
 
-All of this will be open-sourced under the Apache 2.0 license later this year, namely:
+- адаптеры Fusion, созданные нами  
+- библиотека XDBC  
+- а также дальнейшие улучшения, которые мы будем отправлять upstream в проект Apache Arrow ADBC  
 
-- Fusion adapters we have created
-- The XDBC library
-- We'll also continue upstreaming improvements to Apache Arrow's ADBC project
+### Грамматики ANTLR
 
-### ANTLR Grammars
+Тип артефакта: файлы g4
 
-Artifact type: g4 files
+Где доступно: (репозиторий появится позже; пока что обсуждение доступно в канале #dbt-fusion-engine в Slack‑сообществе dbt)
 
-Available at: (repo to come, in the meantime you can discuss this in #dbt-fusion-engine in the dbt Slack)
+Лицензия: Apache 2.0 (позже в этом году)
 
-License: Apache 2.0 (later this year)
+Грамматики [ANTLR](https://www.antlr.org/) — это формальные спецификации языков, которые позволяют Fusion [разбирать](/blog/sql-comprehension-technologies) SQL‑запросы во множестве диалектов. ANTLR принимает эти декларативные грамматики высокого уровня и на их основе генерирует парсер. Такие грамматики полезны везде, где требуется разбор SQL, — не только в Fusion, — поэтому мы публикуем их под лицензией Apache 2.0, чтобы сообщество и другие участники экосистемы данных могли использовать их в своих проектах.
 
-[ANTLR](https://www.antlr.org/) grammars are the formal language specifications that let Fusion [parse](/blog/sql-comprehension-technologies) every SQL statement across multiple dialects. Specifically, ANTLR takes in these declarative, high level grammars and uses them to generate a parser. The grammars have wide utility anywhere it's necessary to parse SQL – not just in Fusion – and we're releasing them as Apache 2 to enable the Community and others in the data ecosystem to build on top of them.
-
-Most ANTLR grammars are only applicable to a single dialect, but the SDF team created a system which makes it possible to define a shared base grammar and generate each warehouse's g4 file from there. This halves the amount of work required to support a new dialect at the level of precision and robustness required.
+Большинство грамматик ANTLR применимы только к одному диалекту, но команда SDF создала систему, позволяющую определить общую базовую грамматику и затем генерировать из неё g4‑файлы для каждого хранилища. Это сокращает объём работы по поддержке нового диалекта вдвое при сохранении необходимого уровня точности и надёжности.
 
 ### dbt-jinja
 
-Artifact type: Source code
+Тип артефакта: исходный код
 
-Available at: [A subdirectory of the dbt-fusion repo](https://github.com/dbt-labs/dbt-fusion/tree/main/dbt-jinja) (but there's still work to do before it's easy to use outside of the Fusion repository)
+Где доступно: [подкаталог репозитория dbt-fusion](https://github.com/dbt-labs/dbt-fusion/tree/main/dbt-jinja)  
+(хотя ещё требуется работа, прежде чем его будет удобно использовать вне репозитория Fusion)
 
-License: Apache 2.0
+Лицензия: Apache 2.0
 
-Since Fusion is completely Rust-based, while Jinja is a Python project, we needed a completely new way to render all the Jinja spread through users' projects. We started by switching to [minijinja](https://github.com/mitsuhiko/minijinja): a Rust port of a subset of the original Jinja project, written by Jinja's original maintainer.
+Поскольку Fusion полностью написан на Rust, а Jinja — это Python‑проект, нам понадобился совершенно новый способ рендеринга Jinja, используемой в пользовательских проектах. Мы начали с перехода на [minijinja](https://github.com/mitsuhiko/minijinja) — Rust‑порт подмножества оригинального проекта Jinja, написанный его первоначальным автором.
 
-This subset of coverage wasn't enough to support existing dbt projects, so we created Rust-native implementations of the majority of these missing features. This achieved the best of both worlds: significant performance improvements while maintaining compatibility with users' existing codebases.
+Этого подмножества оказалось недостаточно для поддержки существующих dbt‑проектов, поэтому мы реализовали на Rust большую часть недостающих возможностей. В результате мы получили лучшее из двух миров: значительный прирост производительности при сохранении совместимости с существующими кодовыми базами пользователей.
 
-dbt-jinja is the most feature-complete implementation of Jinja in Rust, and is available with an Apache 2.0 license today, with a more formal release (documentation etc) later this year. It's useful whether you're building tooling to operate on top of dbt projects, or working on something completely different which just needs to render Jinja quickly.
+dbt-jinja — самая функционально полная реализация Jinja на Rust. Она уже доступна под лицензией Apache 2.0, а более формальный релиз (документация и т. д.) запланирован на конец этого года. Она полезна как для создания инструментов поверх dbt‑проектов, так и для совершенно других задач, где просто требуется быстрый рендеринг Jinja.
 
-## How do I engage with these components?
+## Как можно взаимодействовать с этими компонентами?
 
-Our [Contributors' Principles](/community/resources/contributor-expectations) remain: Building dbt is a team sport!
+Наши [принципы для контрибьюторов](/community/resources/contributor-expectations) остаются прежними: разработка dbt — это командный спорт.
 
-- If you want to open a PR against publicly-viewable code, you can.
-- If you want to open issues describing bugs during the Fusion engine's beta period, you can. (This is probably one of the highest-leverage things you can do!)
-- If you want to open a discussion and pitch a new way to use dbt more effectively in our new SQL-aware world, you can.
-- If you want to move upstream, and contribute to the standards underlying the dbt Fusion engine like Arrow, ADBC, Iceberg, or DataFusion, you can. You might see some familiar faces while you're there!
-- If you just want to let dbt get better and better in the background, you can do that too.
-- Want to get involved in the team building this? If the components here are uniquely interesting to you, email careers.fusion@dbtlabs.com.
+- Если вы хотите открыть PR к публично доступному коду — вы можете это сделать.  
+- Если вы хотите заводить issues с описанием багов в период беты движка Fusion — вы можете это сделать. (Это, пожалуй, один из самых ценных способов помочь!)  
+- Если вы хотите открыть обсуждение и предложить новый способ более эффективного использования dbt в нашем новом SQL‑осознанном мире — вы можете это сделать.  
+- Если вы хотите двигаться «вверх по стеку» и вносить вклад в стандарты, лежащие в основе движка dbt Fusion, такие как Arrow, ADBC, Iceberg или DataFusion — вы можете это сделать. Там вы можете встретить знакомые лица!  
+- Если вы просто хотите, чтобы dbt становился всё лучше в фоновом режиме — это тоже нормально.  
+- Хотите присоединиться к команде, которая всё это создаёт? Если описанные здесь компоненты вам особенно интересны, напишите на careers.fusion@dbtlabs.com.
 
-If you need a hand wrapping your head around any of these new components, drop by #dbt-fusion-engine in the Community Slack - we'd love to chat.
+Если вам нужна помощь, чтобы разобраться во всех этих новых компонентах, заглядывайте в канал #dbt-fusion-engine в Slack‑сообществе — будем рады пообщаться.

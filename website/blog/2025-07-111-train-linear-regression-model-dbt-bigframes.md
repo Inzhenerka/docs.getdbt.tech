@@ -1,6 +1,6 @@
 ---
-title: "How to train a linear regression model with dbt and BigFrames"
-description: "How to build a scalable linear regression model by combining dbt's modular orchestration with BigFrames' in-database Python execution in BigQuery."
+title: "Как обучить модель линейной регрессии с помощью dbt и BigFrames"
+description: "Как построить масштабируемую модель линейной регрессии, объединив модульную оркестрацию dbt с выполнением Python «внутри базы» через BigFrames в BigQuery."
 slug: train-linear-dbt-bigframes
 authors: [jialuo_chen]
 
@@ -11,63 +11,63 @@ date: 2025-07-11
 is_featured: true
 ---
 
-## Introduction to dbt and BigFrames
+## Введение в dbt и BigFrames
 
-**dbt**: A framework for transforming data in modern data warehouses using modular SQL or Python. dbt enables data teams to develop analytics code collaboratively and efficiently by applying software engineering best practices such as version control, modularity, portability, CI/CD, testing, and documentation. For more information, refer to [What is dbt?](/docs/introduction#dbt)
+**dbt**: Фреймворк для трансформации данных в современных аналитических хранилищах с использованием модульного SQL или Python. dbt позволяет аналитическим командам совместно и эффективно разрабатывать аналитический код, применяя лучшие практики программной инженерии — такие как контроль версий, модульность, переносимость, CI/CD, тестирование и документация. Подробнее см. [What is dbt?](/docs/introduction#dbt)
 
-**BigQuery DataFrames (BigFrames)**: An open-source Python library offered by Google. BigFrames scales Python data processing by transpiling common Python data science APIs (pandas and scikit-learn) to BigQuery SQL.  
+**BigQuery DataFrames (BigFrames)**: Open-source Python-библиотека от Google. BigFrames масштабирует обработку данных на Python, транслируя распространённые API из мира data science (pandas и scikit-learn) в SQL-запросы BigQuery.  
 
-You can read more in the [official BigFrames guide](https://cloud.google.com/bigquery/docs/bigquery-dataframes-introduction) and view the [public BigFrames GitHub repository](https://github.com/googleapis/python-bigquery-dataframes).
+Подробнее можно узнать в [официальном руководстве BigFrames](https://cloud.google.com/bigquery/docs/bigquery-dataframes-introduction) и в [публичном репозитории BigFrames на GitHub](https://github.com/googleapis/python-bigquery-dataframes).
 
-By combining dbt with BigFrames via the `dbt-bigquery` adapter (referred to as _"dbt-BigFrames"_), you gain:
+Комбинируя dbt и BigFrames через адаптер `dbt-bigquery` (далее — _«dbt-BigFrames»_), вы получаете:
 
-- dbt’s modular SQL and Python modeling, dependency management with dbt.ref(), environment configurations, and data testing. With the cloud-based dbt platform, you also get job scheduling and monitoring.
-- BigFrames’ ability to execute complex Python transformations (including machine learning) directly in BigQuery.
+- Модульное моделирование на SQL и Python в dbt, управление зависимостями с помощью `dbt.ref()`, конфигурацию окружений и тестирование данных. При использовании облачной платформы dbt также доступны планирование и мониторинг джобов.
+- Возможность BigFrames выполнять сложные Python-трансформации (включая машинное обучение) непосредственно в BigQuery.
 
-`dbt-BigFrames` utilizes the **Colab Enterprise notebook executor service** in a GCP project to run Python models. These notebooks execute BigFrames code, which is translated into BigQuery SQL.
+`dbt-BigFrames` использует **службу выполнения ноутбуков Colab Enterprise** в проекте GCP для запуска Python-моделей. Эти ноутбуки исполняют код BigFrames, который затем переводится в SQL для BigQuery.
 
 <!-- truncate -->
 
-> Refer to these guides to learn more: [Use BigQuery DataFrames in dbt](https://cloud.google.com/bigquery/docs/dataframes-dbt) or [Using BigQuery DataFrames with dbt Python models](/guides/dbt-python-bigframes?step=1).
+> Дополнительные материалы: [Use BigQuery DataFrames in dbt](https://cloud.google.com/bigquery/docs/dataframes-dbt) или [Using BigQuery DataFrames with dbt Python models](/guides/dbt-python-bigframes?step=1).
 
-To illustrate the practical impact of combining dbt with BigFrames, the following sections explore how this integration can streamline and scale a common machine learning task: training a linear regression model on large datasets.
+Чтобы показать практическую ценность сочетания dbt и BigFrames, далее мы рассмотрим, как эта интеграция упрощает и масштабирует типичную задачу машинного обучения — обучение модели линейной регрессии на больших наборах данных.
 
-## The power of dbt-BigFrames for large-scale linear regression
+## Возможности dbt-BigFrames для линейной регрессии в больших масштабах
 
-Linear regression is a cornerstone of predictive analytics, used in:
+Линейная регрессия — базовый инструмент предиктивной аналитики, применяемый в таких задачах, как:
 
-- Sales forecasting  
-- Financial modeling  
-- Demand planning  
-- Real estate valuation
+- Прогнозирование продаж  
+- Финансовое моделирование  
+- Планирование спроса  
+- Оценка недвижимости
 
-These tasks often require processing datasets too large for traditional in-memory Python. BigFrames alone solves this, but combining it with dbt offers a structured, maintainable, and production-ready way to train models or generate batch predictions on large data.
+Во многих подобных сценариях требуется обработка объёмов данных, которые не помещаются в память при использовании классического Python. BigFrames решает эту проблему, а в сочетании с dbt даёт структурированный, поддерживаемый и готовый к продакшену подход к обучению моделей и генерации пакетных предсказаний на больших данных.
 
-## “dbt-BigFrames” with ML: A practical example
+## «dbt-BigFrames» и ML: практический пример
 
-We’ll walk through training a linear regression model using a **dbt Python model powered by BigFrames**, focusing on the structure and orchestration provided by dbt.
+Ниже мы шаг за шагом разберём процесс обучения модели линейной регрессии с использованием **Python-модели dbt на базе BigFrames**, уделяя внимание структуре и оркестрации, которые предоставляет dbt.
 
-We’ll use the `epa_historical_air_quality` dataset from BigQuery Public Data (courtesy of the U.S. Environmental Protection Agency).
+В качестве источника данных используется датасет `epa_historical_air_quality` из BigQuery Public Data (предоставлен Агентством по охране окружающей среды США).
 
-### Problem statement
+### Постановка задачи
 
-Develop a machine learning model to predict atmospheric ozone levels using historical air quality and environmental sensor data, enabling more accurate monitoring and forecasting of air pollution trends.
+Разработать модель машинного обучения для прогнозирования уровня озона в атмосфере на основе исторических данных о качестве воздуха и показаний экологических сенсоров, чтобы повысить точность мониторинга и прогнозирования загрязнения воздуха.
 
-**Key stages:**
+**Ключевые этапы:**
 
-1. **Data Foundation**: Transform raw source tables into an analysis-ready dataset.
-2. **Machine learning Analysis**: Train a linear regression model on the cleaned data.
+1. **Подготовка данных**: Преобразование сырых исходных таблиц в датасет, готовый для аналитики.
+2. **Анализ и машинное обучение**: Обучение модели линейной регрессии на очищенных данных.
 
-## Setting up your dbt project for BigFrames
+## Настройка dbt-проекта для BigFrames
 
-### Prerequisites
+### Предварительные требования
 
-- A Google Cloud account  
-- A dbt platform or Core setup  
-- Basic to intermediate SQL and Python  
-- Familiarity with dbt using [Beginner dbt guides](/guides?level=Beginner)
+- Аккаунт Google Cloud  
+- Установленный dbt (платформа dbt или dbt Core)  
+- Базовые или средние знания SQL и Python  
+- Знакомство с dbt на уровне [Beginner dbt guides](/guides?level=Beginner)
 
-### Sample `profiles.yml` for BigFrames
+### Пример `profiles.yml` для BigFrames
 
 ```yaml
 my_epa_project:
@@ -85,7 +85,7 @@ my_epa_project:
   target: dev
 ```
 
-### Sample `dbt_project.yml`
+### Пример `dbt_project.yml`
 
 ```yaml
 name: 'my_epa_project'
@@ -101,14 +101,14 @@ models:
       +materialized: view
 ```
 
-## The dbt Python models for linear regression
+## Python-модели dbt для линейной регрессии
 
-This project uses **two modular dbt Python models**:
+В проекте используются **две модульные Python-модели dbt**:
 
-1. `prepare_table.py` &mdash; Ingests and prepares data
-2. `prediction.py` &mdash; Trains the model and generates predictions
+1. `prepare_table.py` — загрузка и подготовка данных  
+2. `prediction.py` — обучение модели и генерация предсказаний
 
-### Part 1: Preparing the table (`prepare_table.py`)
+### Часть 1: Подготовка таблицы (`prepare_table.py`)
 
 ```python
 def model(dbt, session):
@@ -147,7 +147,7 @@ def model(dbt, session):
     return df.reset_index()
 ```
 
-### Part 2: Training the model and making predictions (`prediction.py`)
+### Часть 2: Обучение модели и предсказания (`prediction.py`)
 
 ```python
 def model(dbt, session):
@@ -176,7 +176,7 @@ def model(dbt, session):
     return df_pred
 ```
 
-## Running your dbt ML pipeline
+## Запуск ML-пайплайна в dbt
 
 ```bash
 # Run all models
@@ -186,22 +186,22 @@ dbt run
 dbt run --select prepare_table prediction
 ```
 
-## Key advantages of dbt and BigFrames for ML
+## Ключевые преимущества dbt и BigFrames для ML
 
-- **Scalability & Efficiency**: Handle large datasets in BigQuery via BigFrames  
-- **Simplified Workflow**: Use familiar APIs like `pandas` and `scikit-learn`  
-- **dbt Orchestration**:
-  - Dependency management with `dbt.ref()` and `dbt.source()`
-  - Scheduled retraining with `dbt run`
-  - Testing, documentation, and reproducibility
+- **Масштабируемость и производительность**: Работа с большими датасетами в BigQuery через BigFrames  
+- **Упрощённый workflow**: Использование знакомых API, таких как `pandas` и `scikit-learn`  
+- **Оркестрация dbt**:
+  - Управление зависимостями с помощью `dbt.ref()` и `dbt.source()`
+  - Плановое переобучение моделей через `dbt run`
+  - Тестирование, документация и воспроизводимость
 
-## Conclusion and next steps
+## Заключение и дальнейшие шаги
 
-By integrating **BigFrames** into your **dbt workflows**, you can build scalable, maintainable, and production-ready machine learning pipelines. While this example used linear regression, the same principles apply across other ML use cases with `bigframes.ml`.
+Интегрируя **BigFrames** в ваши **dbt-процессы**, вы можете создавать масштабируемые, поддерживаемые и готовые к продакшену ML-пайплайны. Хотя в примере использовалась линейная регрессия, те же подходы применимы и к другим ML-сценариям с использованием `bigframes.ml`.
 
-## Feedback and support
+## Обратная связь и поддержка
 
 - 📚 [dbt Support](/docs/dbt-support)  
-- 📨 Email feedback on BigFrames: [bigframes-feedback@google.com](mailto:bigframes-feedback@google.com)
-- 🛠 [File issues on GitHub](https://github.com/googleapis/python-bigquery-dataframes)  
-- 📬 [Subscribe to BigFrames updates](https://docs.google.com/forms/d/10EnDyYdYUW9HvelHYuBRC8L3GdGVl3rX0aroinbRZyc/viewform?edit_requested=true)
+- 📨 Обратная связь по BigFrames: [bigframes-feedback@google.com](mailto:bigframes-feedback@google.com)
+- 🛠 [Создать issue на GitHub](https://github.com/googleapis/python-bigquery-dataframes)  
+- 📬 [Подписаться на обновления BigFrames](https://docs.google.com/forms/d/10EnDyYdYUW9HvelHYuBRC8L3GdGVl3rX0aroinbRZyc/viewform?edit_requested=true)
