@@ -133,9 +133,9 @@ def model(dbt, session):
 
 #### Тестирование результата
 
-Во время процесса сборки dbt проверит, есть ли какие-либо значения null. Это использует встроенный тест [`not_null`](https://docs.getdbt.com/docs/building-a-dbt-project/tests#generic-data-tests), который будет генерировать и выполнять SQL на платформе данных.
+Во время процесса сборки dbt проверит, есть ли какие-либо значения null. Это использует встроенный тест [`not_null`](https://docs.getdbt.tech/docs/building-a-dbt-project/tests#generic-data-tests), который будет генерировать и выполнять SQL на платформе данных.
 
-Наше первоначальное предложение для тестирования моделей Python — использовать [общие](https://docs.getdbt.com/docs/building-a-dbt-project/tests#generic-data-tests) и [единичные](https://docs.getdbt.com/docs/building-a-dbt-project/tests#singular-data-tests) тесты.
+Наше первоначальное предложение для тестирования моделей Python — использовать [общие](https://docs.getdbt.tech/docs/building-a-dbt-project/tests#generic-data-tests) и [единичные](https://docs.getdbt.tech/docs/building-a-dbt-project/tests#singular-data-tests) тесты.
 
 ```yaml
 version: 2

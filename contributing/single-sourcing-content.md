@@ -99,7 +99,7 @@ Both properties can be used together to set a range where the content should sho
 
 ### Example for versioning entire pages
 
-On the [Docs Defer page](https://docs.getdbt.com/reference/node-selection/defer), tabs are used to show different versions of a piece of code. **v1.5 and later** shows `DBT_DEFER`, while **v-.1.4 and earlier** changes this to `DBT_DEFER_TO_STATE`.
+On the [Docs Defer page](https://docs.getdbt.tech/reference/node-selection/defer), tabs are used to show different versions of a piece of code. **v1.5 and later** shows `DBT_DEFER`, while **v-.1.4 and earlier** changes this to `DBT_DEFER_TO_STATE`.
 
 ![oldway](https://user-images.githubusercontent.com/3880403/163254165-dea23266-2eea-4e65-b3f0-c7b6d3e51fc3.png)
 

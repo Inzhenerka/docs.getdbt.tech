@@ -41,7 +41,7 @@ is_featured: true
       version: 0.7.0
     ```
 
-2. Запустите `dbt deps` в командной строке, чтобы установить пакет(ы). Пакеты устанавливаются в директорию `dbt_packages` — по умолчанию эта директория игнорируется git, чтобы избежать дублирования исходного кода пакета. Для получения дополнительной информации о использовании пакетов в вашем проекте dbt, ознакомьтесь с [документацией dbt](https://docs.getdbt.com/docs/build/packages).
+2. Запустите `dbt deps` в командной строке, чтобы установить пакет(ы). Пакеты устанавливаются в директорию `dbt_packages` — по умолчанию эта директория игнорируется git, чтобы избежать дублирования исходного кода пакета. Для получения дополнительной информации о использовании пакетов в вашем проекте dbt, ознакомьтесь с [документацией dbt](https://docs.getdbt.tech/docs/build/packages).
 
 Теперь, когда `audit_helper` установлен, давайте поговорим о его двух основных макросах:
 - `compare_queries` — для аудита строк
@@ -241,4 +241,4 @@ select * from {{ ref('dim_product') }}
 - [Репозиторий GitHub](https://hub.getdbt.com/dbt-labs/audit_helper/latest/) `Audit_helper`
 - Пост dbt Labs об аудите данных ["Как не сойти с ума при аудите данных, часть 1"](https://discourse.getdbt.com/t/how-to-not-lose-your-mind-when-auditing-data/445)
 - Пост dbt Labs об аудите данных ["Как не сойти с ума при аудите данных, часть 2"](https://discourse.getdbt.com/t/how-to-not-lose-your-mind-when-auditing-data-part-ii/612)
-- Пост dbt Labs о [миграции от хранимых процедур SQL к моделям dbt](https://docs.getdbt.com/blog/migrating-from-stored-procs)
+- Пост dbt Labs о [миграции от хранимых процедур SQL к моделям dbt](https://docs.getdbt.tech/blog/migrating-from-stored-procs)

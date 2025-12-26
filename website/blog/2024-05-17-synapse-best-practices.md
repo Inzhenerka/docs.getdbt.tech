@@ -134,7 +134,7 @@ Fabric предлагает неоспоримый потенциал благо
 - индекс: `CLUSTERED COLUMNSTORE INDEX`
 - распределение: `ROUND_ROBIN`
 
-Если вы хотите что-то другое, вы можете определить это, как показано ниже. Для получения дополнительной информации см. [документацию dbt: конфигурации для Azure Synapse DWH: Индексы и распределения](https://docs.getdbt.com/reference/resource-configs/azuresynapse-configs#indices-and-distributions).
+Если вы хотите что-то другое, вы можете определить это, как показано ниже. Для получения дополнительной информации см. [документацию dbt: конфигурации для Azure Synapse DWH: Индексы и распределения](https://docs.getdbt.tech/reference/resource-configs/azuresynapse-configs#indices-and-distributions).
 
 ```sql
 {{

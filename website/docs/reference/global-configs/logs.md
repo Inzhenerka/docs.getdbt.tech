@@ -148,7 +148,7 @@ dbt run --quiet
 import LogLevel from '/snippets/_log-relational-cache.md';
 
 <LogLevel
-event={<a href="https://docs.getdbt.com/reference/global-configs/cache">реляционный кэш</a>}
+event={<a href="https://docs.getdbt.tech/reference/global-configs/cache">реляционный кэш</a>}
 />
 
 ### Цвет

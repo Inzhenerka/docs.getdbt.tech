@@ -9,11 +9,11 @@ date: 2023-03-29
 is_featured: true
 ---
 
-*Примечание редактора — этот пост предполагает средний уровень знаний Jinja и разработки макросов в dbt. Для введения в Jinja в dbt ознакомьтесь с [документацией](https://docs.getdbt.com/docs/build/jinja-macros) и бесплатным курсом [Jinja, Macros, Packages](https://learn.getdbt.com/courses/jinja-macros-and-packages).*
+*Примечание редактора — этот пост предполагает средний уровень знаний Jinja и разработки макросов в dbt. Для введения в Jinja в dbt ознакомьтесь с [документацией](https://docs.getdbt.tech/docs/build/jinja-macros) и бесплатным курсом [Jinja, Macros, Packages](https://learn.getdbt.com/courses/jinja-macros-and-packages).*
 
-Jinja приносит много возможностей в dbt, позволяя нам использовать `ref()`, `source()`, условный код и [макросы](https://docs.getdbt.com/docs/build/jinja-macros). Но, хотя Jinja приносит гибкость, она также добавляет сложность, и, как часто бывает с кодом, вещи могут работать не так, как ожидалось.
+Jinja приносит много возможностей в dbt, позволяя нам использовать `ref()`, `source()`, условный код и [макросы](https://docs.getdbt.tech/docs/build/jinja-macros). Но, хотя Jinja приносит гибкость, она также добавляет сложность, и, как часто бывает с кодом, вещи могут работать не так, как ожидалось.
 
-Макрос [`debug()`](https://docs.getdbt.com/reference/dbt-jinja-functions/debug-method) в dbt — отличный инструмент для тех, кто пишет много кода на Jinja, но может быть сложно понять, как его использовать и какие преимущества он приносит.
+Макрос [`debug()`](https://docs.getdbt.tech/reference/dbt-jinja-functions/debug-method) в dbt — отличный инструмент для тех, кто пишет много кода на Jinja, но может быть сложно понять, как его использовать и какие преимущества он приносит.
 
 Давайте погрузимся в последний случай, когда я использовал `debug()` и как он помог мне решить ошибки в моем коде.
 
@@ -142,9 +142,9 @@ dict_keys(['l_1_schema_project_evaluator', 'l_1_db_project_evaluator', 't_2', ..
 
 ### Использование отладчика для анализа переменных Jinja в dbt
 
-Отладчик также можно использовать для исследования [встроенных переменных и функций Jinja, доступных в dbt](https://docs.getdbt.com/reference/dbt-jinja-functions).
+Отладчик также можно использовать для исследования [встроенных переменных и функций Jinja, доступных в dbt](https://docs.getdbt.tech/reference/dbt-jinja-functions).
 
-В моем коде я также смотрел на [объект результатов](https://docs.getdbt.com/reference/dbt-jinja-functions/on-run-end-context#results), доступный в контексте `on-run-end`. Мы можем фактически увидеть его в предыдущем списке, названном `l_1_results`.
+В моем коде я также смотрел на [объект результатов](https://docs.getdbt.tech/reference/dbt-jinja-functions/on-run-end-context#results), доступный в контексте `on-run-end`. Мы можем фактически увидеть его в предыдущем списке, названном `l_1_results`.
 
 В отладчике, если я введу `type(l_1_results)`, программа скажет мне, что это `list`. Затем я могу выполнить `type(l_1_results[0])`, и dbt теперь скажет мне, что тип переменной — это `dbt.contracts.results.RunResult`.
 

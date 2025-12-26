@@ -612,7 +612,7 @@ The file or URL paths begin with:
 - /reference/
 - /community/
 
-Let's use the Regions & IP Addresses URL as an example: https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses
+Let's use the Regions & IP Addresses URL as an example: https://docs.getdbt.tech/docs/cloud/about-cloud/access-regions-ip-addresses
 If we need to reference this on another page, we can remove the domain entirely:
 
 `For more information about server availability, please refer to our [Regions & IP Addresses page](/docs/cloud/about-cloud/access-regions-ip-addresses)`
@@ -621,7 +621,7 @@ The reader will see:
 
 For more information about server availability, please refer to our [Regions & IP Addresses page](/docs/cloud/about-cloud/access-regions-ip-addresses)
 
-You can link to a specific section of the doc with a `#` at the end of the path. Enter the section’s title after the `#`, with individual words separated by hyphens. Let's use the incremental models page, https://docs.getdbt.com/docs/build/incremental-models, as an example:
+You can link to a specific section of the doc with a `#` at the end of the path. Enter the section’s title after the `#`, with individual words separated by hyphens. Let's use the incremental models page, https://docs.getdbt.tech/docs/build/incremental-models, as an example:
 
 `To better understand this model type, read our [incremental models page](/docs/build/incremental-models#understand-incremental-models).`
 
@@ -637,15 +637,15 @@ There are different methods for handling this based on page location (and other 
 
 Hyperlinks should be text only, please avoid image-based links. The text should clearly state the destination.
 
-  :x: For more information, visit https://docs.getdbt.com
+  :x: For more information, visit https://docs.getdbt.tech
 
-  :x: For more information, [_Click Here_](https://docs.getdbt.com/)
+  :x: For more information, [_Click Here_](https://docs.getdbt.tech/)
 
-  ✅ For more information, visit the [_dbt Labs doc site_](https://docs.getdbt.com/).
+  ✅ For more information, visit the [_dbt Labs doc site_](https://docs.getdbt.tech/).
   
-  ✅ For more information, read the [_dbt Labs doc site_](https://docs.getdbt.com/).
+  ✅ For more information, read the [_dbt Labs doc site_](https://docs.getdbt.tech/).
   
-  ✅ For more information, refer to the [_dbt Labs doc site_](https://docs.getdbt.com/).
+  ✅ For more information, refer to the [_dbt Labs doc site_](https://docs.getdbt.tech/).
 
 
 ### Link destinations
@@ -675,7 +675,7 @@ When describing icons that appear on-screen, use the [_Google Material Icons_](h
 :white_check_mark:Click on the menu icon
 
 #### Upload icons
-If you're using icons to document things like [third-party vendors](https://docs.getdbt.com/docs/cloud-integrations/avail-sl-integrations), etc. &mdash; you need to add the icon file in the following locations to ensure the icons render correctly in light and dark mode:
+If you're using icons to document things like [third-party vendors](https://docs.getdbt.tech/docs/cloud-integrations/avail-sl-integrations), etc. &mdash; you need to add the icon file in the following locations to ensure the icons render correctly in light and dark mode:
 
 - website/static/img/icons
 - website/static/img/icons/white

@@ -4,7 +4,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    baseUrl: "https://docs.getdbt.com",
+    baseUrl: "https://docs.getdbt.tech",
     chromeWebSecurity: false,
     video: false,
   },

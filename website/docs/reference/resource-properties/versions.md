@@ -44,8 +44,6 @@ models:
 
 Чтобы запустить модель с несколькими версиями, можно использовать [флаг `--select`](/reference/node-selection/syntax). Подробнее о возможностях и синтаксисе см. в разделе [Model versions](/docs/mesh/govern/model-versions#run-a-model-with-multiple-versions).
 
-Чтобы запустить модель с несколькими версиями, вы можете использовать [`--select` флаг](/reference/node-selection/syntax). Обратитесь к [Версии моделей](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) для получения дополнительной информации и синтаксиса.
-
 ### `defined_in`
 
 Имя файла модели (исключая расширение файла, например, `.sql` или `.py`), в котором определена версия модели.
@@ -216,7 +214,7 @@ value2="dbt также предупреждает, если у модели ес
    - order_id (number -> int)
 
 По возможности рассмотрите внесение аддитивного (не нарушающего обратную совместимость) изменения.  
-В противном случае создайте новую версию модели: https://docs.getdbt.com/docs/mesh/govern/model-versions
+В противном случае создайте новую версию модели: https://docs.getdbt.tech/docs/mesh/govern/model-versions
 ```
 
 </TabItem>

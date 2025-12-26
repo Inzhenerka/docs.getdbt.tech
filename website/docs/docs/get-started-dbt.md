@@ -25,55 +25,55 @@ pagination_prev: null
 <Card
     title="Быстрый старт для dbt и Amazon Athena"
     body="Интегрируйте dbt с Amazon Athena для выполнения преобразований данных."
-    link="https://docs.getdbt.com/guides/athena"
+    link="https://docs.getdbt.tech/guides/athena"
     icon="athena"/>
 
 <Card
     title="Быстрый старт для dbt и Azure Synapse Analytics"
     body="Узнайте, как интегрировать dbt с Azure Synapse Analytics для выполнения преобразований данных."
-    link="https://docs.getdbt.com/guides/azure-synapse-analytics"
+    link="https://docs.getdbt.tech/guides/azure-synapse-analytics"
     icon="azure-synapse-analytics-2"/>
 
 <Card
     title="Быстрый старт для dbt и BigQuery"
     body="Узнайте, как использовать dbt вместе с BigQuery для упрощения аналитических рабочих процессов."
-    link="https://docs.getdbt.com/guides/bigquery"
+    link="https://docs.getdbt.tech/guides/bigquery"
     icon="bigquery"/>
 
 <Card
     title="Быстрый старт для dbt и Databricks"
     body="Узнайте, как интегрировать dbt с Databricks для эффективной обработки и анализа данных."
-    link="https://docs.getdbt.com/guides/databricks"
+    link="https://docs.getdbt.tech/guides/databricks"
     icon="databricks"/>
 
 <Card
     title="Быстрый старт с dbt и Microsoft Fabric"
     body="Узнайте, как dbt и Microsoft Fabric работают вместе, чтобы оптимизировать ваши преобразования данных."
-    link="https://docs.getdbt.com/guides/microsoft-fabric"
+    link="https://docs.getdbt.tech/guides/microsoft-fabric"
     icon="fabric"/>
 
 <Card
     title="Быстрый старт для dbt и Redshift"
     body="Узнайте, как подключить dbt к Redshift для более гибких преобразований данных."
-    link="https://docs.getdbt.com/guides/redshift"
+    link="https://docs.getdbt.tech/guides/redshift"
     icon="redshift"/>
 
 <Card
     title="Быстрый старт для dbt и Snowflake"
     body="Раскройте весь потенциал использования dbt вместе со Snowflake для преобразования данных."
-    link="https://docs.getdbt.com/guides/snowflake"
+    link="https://docs.getdbt.tech/guides/snowflake"
     icon="snowflake"/>
 
 <Card
     title="Быстрый старт для dbt и Starburst Galaxy"
     body="Используйте dbt вместе со Starburst Galaxy, чтобы улучшить процессы трансформации данных."
-    link="https://docs.getdbt.com/guides/starburst-galaxy"
+    link="https://docs.getdbt.tech/guides/starburst-galaxy"
     icon="starburst"/>
 
 <Card
     title="Быстрый старт с dbt и Teradata"
     body="Познакомьтесь с dbt и использованием Teradata, чтобы улучшить рабочие процессы преобразования данных."
-    link="https://docs.getdbt.com/guides/teradata"
+    link="https://docs.getdbt.tech/guides/teradata"
     icon="teradata"/>
 
 </div>

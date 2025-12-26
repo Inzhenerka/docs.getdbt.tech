@@ -5,7 +5,7 @@ export const SELF_SERVICE = 'Starter';
 export const DEVELOPER = 'Developer';
 export const LEGACY = 'Legacy';
 
-const PRODUCT_LIFECYCLE_URL = 'https://docs.getdbt.com/docs/dbt-versions/product-lifecycles';
+const PRODUCT_LIFECYCLE_URL = 'https://docs.getdbt.tech/docs/dbt-versions/product-lifecycles';
 const PLAN_URL = 'https://www.getdbt.com/pricing';
 
 export const STATUS_URLS = {

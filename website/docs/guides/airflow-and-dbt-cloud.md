@@ -146,7 +146,6 @@ https://YOUR_ACCESS_URL/#/accounts/{account_id}/projects/{project_id}/jobs/{job_
 # For the dbt Job URL https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/
 # The account_id is 16173 and the job_id is 65767
 # Update lines 34 and 35
-```
 ACCOUNT_ID = "16173"
 JOB_ID = "65767"
 ```

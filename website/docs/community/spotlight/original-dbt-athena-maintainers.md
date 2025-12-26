@@ -2,7 +2,7 @@
 id: original-dbt-athena-maintainers
 title: Первоначальные поддерживающие dbt-athena
 description: |
-  Первоначальные поддерживающие dbt-athena — это группа из 5 человек: Жереми Гизелин, Маттиа, Джесси Доббелаэр, Сергей Димченко и Никола Корда, которые познакомились через dbt Slack в канале #db-athena с целью сделать <a target="_blank" rel="noopener noreferrer" href="https://docs.getdbt.com/docs/core/connect-data-platform/athena-setup">dbt-athena</a> адаптером, готовым к использованию в производственной среде.
+  Первоначальные поддерживающие dbt-athena — это группа из 5 человек: Жереми Гизелин, Маттиа, Джесси Доббелаэр, Сергей Димченко и Никола Корда, которые познакомились через dbt Slack в канале #db-athena с целью сделать <a target="_blank" rel="noopener noreferrer" href="https://docs.getdbt.tech/docs/core/connect-data-platform/athena-setup">dbt-athena</a> адаптером, готовым к использованию в производственной среде.
 
   В первые периоды, зимой 2022 и весной 2023 года, мы сосредоточились на прямом вкладе в адаптер, добавляя такие важные функции, как поддержка Iceberg и Lake Formation, и стабилизируя некоторые внутренние процессы.
 

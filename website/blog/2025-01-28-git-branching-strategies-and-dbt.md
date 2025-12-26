@@ -153,7 +153,7 @@ Workflow:
 - **Защиту ветки** `main` ([например, такие настройки в GitHub](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)), с требованиями:
   - все изменения через pull request (никаких прямых коммитов в `main`)
   - pull request должен иметь как минимум одно одобрение ревьюера
-- **Шаблон PR** ([например, наш базовый шаблон PR](https://docs.getdbt.com/blog/analytics-pull-request-template)) для `feature` → `main`
+- **Шаблон PR** ([например, наш базовый шаблон PR](https://docs.getdbt.tech/blog/analytics-pull-request-template)) для `feature` → `main`
 
 ### Процессы и окружения dbt Cloud
 
@@ -165,7 +165,7 @@ Workflow:
 Чтобы создать jobs из диаграммы, нам нужны окружения dbt Cloud. Типовые конфигурации
 для этого сценария выглядят так:
 
-| Environment Name | [Environment Type](https://docs.getdbt.com/docs/dbt-cloud-environments#types-of-environments) | [Deployment Type](https://docs.getdbt.com/docs/deploy/deploy-environments#staging-environment) | Base Branch | Will handle… |
+| Environment Name | [Environment Type](https://docs.getdbt.tech/docs/dbt-cloud-environments#types-of-environments) | [Deployment Type](https://docs.getdbt.tech/docs/deploy/deploy-environments#staging-environment) | Base Branch | Will handle… |
 | --- | --- | --- | --- | --- |
 | Development | development | - | `main` | Операции в IDE (включая создание feature-веток) |
 | Continuous Integration | deployment | General | `main` | CI job |
@@ -189,7 +189,7 @@ Workflow:
 
 :::note
 Здесь показаны конфигурации окружений, однако база данных по умолчанию задаётся на
-более высоком уровне — в **[connection](https://docs.getdbt.com/docs/cloud/connect-data-platform/about-connections)** (это обязательная настройка окружения). *Deployment*-окружения при необходимости могут переопределять database из connection.
+более высоком уровне — в **[connection](https://docs.getdbt.tech/docs/cloud/connect-data-platform/about-connections)** (это обязательная настройка окружения). *Deployment*-окружения при необходимости могут переопределять database из connection.
 :::
 
 ### Пример direct promotion

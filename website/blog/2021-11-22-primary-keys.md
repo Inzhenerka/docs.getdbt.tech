@@ -53,8 +53,8 @@ is_featured: true
 
 Неудивительно, что эти два теста соответствуют двум наиболее распространенным ошибкам, обнаруживаемым в ваших первичных ключах, и обычно являются первыми тестами, которые команды, тестирующие данные с помощью dbt, внедряют:
 
-* [Not_null](https://docs.getdbt.com/reference/resource-properties/tests#not_null)
-* [Unique](https://docs.getdbt.com/reference/resource-properties/tests#unique)
+* [Not_null](https://docs.getdbt.tech/reference/resource-properties/tests#not_null)
+* [Unique](https://docs.getdbt.tech/reference/resource-properties/tests#unique)
 
 Эти тесты указываются в конфигурационных файлах .yml ваших моделей, так что вы можете определить набор тестов для моделей из одного файла. Вместе тесты `not_null` + `unique` будут выглядеть так:
 
@@ -78,7 +78,7 @@ models:
 
 Это действительно так просто, как добавление этих двух тестов к первичным ключам всех ваших таблиц, и у вас будет встроенная защита от плохих данных в ваших первичных ключах.
 
-Наличие тестов, настроенных и работающих в производственной среде с использованием команды [`dbt test`](https://docs.getdbt.com/reference/commands/test), открывает возможность делать такие вещи, как [отправка уведомлений в Slack](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-slack-notifications) при сбоях тестов, так что вы будете первыми, кто узнает о проблемах с PK.
+Наличие тестов, настроенных и работающих в производственной среде с использованием команды [`dbt test`](https://docs.getdbt.tech/reference/commands/test), открывает возможность делать такие вещи, как [отправка уведомлений в Slack](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-slack-notifications) при сбоях тестов, так что вы будете первыми, кто узнает о проблемах с PK.
 
 ## Поддерживает ли ваше хранилище первичные ключи?
 

@@ -103,7 +103,7 @@ require-dbt-version: ">=0.17.2"
 
 ## Шаг 3: Обновите dbt
 
-Если вы используете dbt Cloud, вы можете обновиться [как описано здесь](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-choosing-a-dbt-version). Мы рекомендуем [создать второй "песочный" проект](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions#testing-your-changes-before-upgrading), чтобы ваши эксперименты не повлияли на остальную команду. Для dbt Core инструкции по обновлению будут варьироваться в зависимости от вашего [исходного метода установки](https://docs.getdbt.com/dbt-cli/installation).
+Если вы используете dbt Cloud, вы можете обновиться [как описано здесь](https://docs.getdbt.tech/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-choosing-a-dbt-version). Мы рекомендуем [создать второй "песочный" проект](https://docs.getdbt.tech/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions#testing-your-changes-before-upgrading), чтобы ваши эксперименты не повлияли на остальную команду. Для dbt Core инструкции по обновлению будут варьироваться в зависимости от вашего [исходного метода установки](https://docs.getdbt.tech/dbt-cli/installation).
 
 ## Шаг 4: Попробуйте запустить `dbt compile`
 
@@ -137,7 +137,7 @@ require-dbt-version: ">=0.17.2"
 
 В данном случае наш примерный проект, вероятно, имеет установленную версию dbt 0.3.0. Просмотрев [матрицу совместимости dbt-utils x dbt-core](https://docs.google.com/spreadsheets/d/1RoDdC69auAtrwiqmkRsgcFdZ3MdNpeKcJrWkmEpXVIs/edit#gid=0), мы видим, что как 0.4.1, так и 0.5.1 совместимы с dbt Core v.0.17.2. Те же принципы применимы к пакетам, как и к версиям dbt Core — установите последний патч-релиз и не прыгайте слишком далеко вперед за один раз. Поскольку в 0.4.x нет изменений, нарушающих совместимость, мы можем безопасно перейти на 0.5.1.
 
->⚠️ Не забудьте запустить [`dbt clean`](https://docs.getdbt.com/reference/commands/clean) и [`dbt deps`](https://docs.getdbt.com/reference/commands/deps) после обновления вашего файла `packages.yml`!
+>⚠️ Не забудьте запустить [`dbt clean`](https://docs.getdbt.tech/reference/commands/clean) и [`dbt deps`](https://docs.getdbt.tech/reference/commands/deps) после обновления вашего файла `packages.yml`!
 
 ### Шаг 5b. Исправьте ошибки, затем предупреждения
 
@@ -171,7 +171,7 @@ require-dbt-version: ">=0.17.2"
 
 После этого убедитесь, что ваша среда CI в dbt Cloud или ваш оркестратор находятся на правильной версии dbt, затем откройте PR.
 
-Если вы используете [Slim CI](https://docs.getdbt.com/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci), имейте в виду, что артефакты не обязательно совместимы от одной версии к другой, так что вы не сможете использовать его, пока задача, на которую вы ссылаетесь, не завершит выполнение с обновленной версией dbt. Это не влияет на наш пример, так как поддержка Slim CI не вышла до 0.18.0.
+Если вы используете [Slim CI](https://docs.getdbt.tech/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci), имейте в виду, что артефакты не обязательно совместимы от одной версии к другой, так что вы не сможете использовать его, пока задача, на которую вы ссылаетесь, не завершит выполнение с обновленной версией dbt. Это не влияет на наш пример, так как поддержка Slim CI не вышла до 0.18.0.
 
 ## Шаг 7. Объедините и сообщите
 

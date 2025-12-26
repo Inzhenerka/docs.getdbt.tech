@@ -41,9 +41,9 @@ is_featured: false
 
 - Версия-кандидат для v0.21.1 доступна, официальный выпуск ожидается на следующей неделе. Это обновление решает некоторые [проблемы с замедлением](https://github.com/dbt-labs/dbt-core/issues/4012?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo), возникшие в крупных проектах на v0.21.0.
 
-### dbt Cloud v1.1.38 - v1.1.39: *Список изменений и документация находятся [здесь.](https://docs.getdbt.com/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo)*
+### dbt Cloud v1.1.38 - v1.1.39: *Список изменений и документация находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo)*
 
-- [Переменные окружения](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) появились в dbt Cloud! Клонируйте приватные пакеты, ограничивайте данные, обрабатываемые в средах разработки, и многое другое.
+- [Переменные окружения](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) появились в dbt Cloud! Клонируйте приватные пакеты, ограничивайте данные, обрабатываемые в средах разработки, и многое другое.
 
 ## Новые ресурсы 
 --------------

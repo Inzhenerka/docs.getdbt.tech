@@ -2,7 +2,7 @@ const fs = require('fs')
 const Feed = require('feed').Feed
 const { getDirectoryFiles } = require('../buildGlobalData/get-directory-files')
 
-const siteUrl = 'https://docs.getdbt.com'
+const siteUrl = 'https://docs.getdbt.tech'
 
 module.exports = function buildRSSFeedsPlugin() {
   return {

@@ -2,7 +2,7 @@
 title: "Функция SQL DATE_TRUNC: Почему мы её любим"
 description: "Функция DATE_TRUNC усечет дату или время до первой единицы заданной части даты, сохраняя формат даты. Многословно, многословно, многословно! Что это на самом деле значит?"
 slug: date-trunc-sql
-canonical_url: https://docs.getdbt.com/sql-reference/date-trunc
+canonical_url: https://docs.getdbt.tech/sql-reference/date-trunc
 
 authors: [kira_furuichi]
 
@@ -12,7 +12,7 @@ hide_table_of_contents: true
 date: 2022-07-13
 is_featured: false
 ---
-В общем, люди, работающие с данными, предпочитают более детализированные данные менее детализированным. [Метки времени > даты](https://docs.getdbt.com/blog/when-backend-devs-spark-joy#signs-the-data-is-sparking-joy), ежедневные данные > еженедельные данные и т.д.; наличие данных на более детализированном уровне всегда позволяет вам приблизиться. Однако, скорее всего, вы смотрите на свои данные на несколько отдаленном уровне — еженедельно, ежемесячно или даже ежегодно. Для этого вам понадобится удобная функция, которая поможет округлить поля даты или времени.
+В общем, люди, работающие с данными, предпочитают более детализированные данные менее детализированным. [Метки времени > даты](https://docs.getdbt.tech/blog/when-backend-devs-spark-joy#signs-the-data-is-sparking-joy), ежедневные данные > еженедельные данные и т.д.; наличие данных на более детализированном уровне всегда позволяет вам приблизиться. Однако, скорее всего, вы смотрите на свои данные на несколько отдаленном уровне — еженедельно, ежемесячно или даже ежегодно. Для этого вам понадобится удобная функция, которая поможет округлить поля даты или времени.
 
 Функция DATE_TRUNC усечет дату или время до первой единицы заданной части даты. Многословно, многословно, многословно! Что это на самом деле значит? Если вы усечете `2021-12-13` до месяца, она вернет `2021-12-01` (первый день месяца).
 
@@ -63,12 +63,12 @@ date_trunc(<date/time field>, <date part>)
 
 Почему Snowflake, Amazon Redshift, Databricks и Google BigQuery решили использовать разные реализации по сути одной и той же функции, остается загадкой, и не стоит ломать голову, пытаясь это понять. Вместо того чтобы запоминать, что идет первым — `<date_part>` или `<date/time field>`, (что, честно говоря, мы никогда не можем запомнить) вы можете полагаться на макрос dbt Core, чтобы избежать сложного синтаксиса.
 
-С dbt v1.2 [адаптеры](https://docs.getdbt.com/docs/supported-data-platforms) теперь поддерживают [кросс-базовые макросы](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros), которые помогут вам писать определенные функции, такие как [DATE_TRUNC](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#date_trunc) и [DATEDIFF](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#datediff), без необходимости запоминать сложный синтаксис функций.
+С dbt v1.2 [адаптеры](https://docs.getdbt.tech/docs/supported-data-platforms) теперь поддерживают [кросс-базовые макросы](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros), которые помогут вам писать определенные функции, такие как [DATE_TRUNC](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#date_trunc) и [DATEDIFF](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#datediff), без необходимости запоминать сложный синтаксис функций.
 
 > **Примечание:**
 > Ранее [dbt_utils](https://github.com/dbt-labs/dbt-utils), пакет макросов и тестов, который могут использовать специалисты по данным для написания более DRY-кода в своем проекте dbt, обеспечивал работу кросс-базовых макросов. Теперь кросс-базовые макросы доступны **независимо от того, установлен ли dbt utils или нет.**
 
-Используя [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql), простой набор данных и проект dbt, вы можете усечь `order_date` из таблицы `orders`, используя макрос dbt [DATE_TRUNC](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#date_trunc):
+Используя [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql), простой набор данных и проект dbt, вы можете усечь `order_date` из таблицы `orders`, используя макрос dbt [DATE_TRUNC](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#date_trunc):
 
 ```sql
 select

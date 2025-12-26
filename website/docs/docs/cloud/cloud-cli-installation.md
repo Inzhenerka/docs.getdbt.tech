@@ -272,7 +272,7 @@ import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
 <Constant name="cloud_cli" /> и <a href="https://github.com/dbt-labs/dbt-core">dbt Core</a>, проект с открытым исходным кодом, — это оба инструмента командной строки, которые позволяют выполнять команды dbt.
 
-Ключевое отличие заключается в том, что <Constant name="cloud_cli" /> адаптирован под инфраструктуру <Constant name="cloud" /> и интегрирован со всеми его <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features">возможностями</a>.
+Ключевое отличие заключается в том, что <Constant name="cloud_cli" /> адаптирован под инфраструктуру <Constant name="cloud" /> и интегрирован со всеми его <a href="https://docs.getdbt.tech/docs/cloud/about-cloud/dbt-cloud-features">возможностями</a>.
 
 </DetailsToggle>
 

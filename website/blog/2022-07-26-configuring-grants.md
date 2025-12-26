@@ -30,14 +30,14 @@ is_featured: true
 
 ## Что изменилось?
 
-В версии v1.2 мы [представили](https://www.getdbt.com/blog/teaching-dbt-about-grants) конфигурацию [`grants`](https://docs.getdbt.com/reference/resource-configs/grants), которая работает очень похоже на `post-hook`, с двумя ключевыми отличиями:
+В версии v1.2 мы [представили](https://www.getdbt.com/blog/teaching-dbt-about-grants) конфигурацию [`grants`](https://docs.getdbt.tech/reference/resource-configs/grants), которая работает очень похоже на `post-hook`, с двумя ключевыми отличиями:
 
 - Вы настраиваете `grants` как структурированный словарь, а не пишете весь SQL самостоятельно
 - dbt выберет *наиболее эффективный путь* для применения этих грантов
 
 ### Почему `grants` лучше, чем хуки
 
-Во-первых, [хуки сложны](#issues-related-to-hooks)! Особенно эта путаница с [вложенными фигурными скобками](https://docs.getdbt.com/docs/building-a-dbt-project/dont-nest-your-curlies).
+Во-первых, [хуки сложны](#issues-related-to-hooks)! Особенно эта путаница с [вложенными фигурными скобками](https://docs.getdbt.tech/docs/building-a-dbt-project/dont-nest-your-curlies).
 
 #### Проблема тогда
 Предположим, вы работали над инкрементальной моделью. Ранее вы предоставили доступ к этой инкрементальной модели напрямую `reporter`, чтобы люди могли запрашивать ее далее:

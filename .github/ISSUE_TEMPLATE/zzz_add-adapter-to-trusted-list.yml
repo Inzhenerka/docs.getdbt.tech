@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        We're excited that you'd like to support your adapter formally as "Trusted"! This template will ensure that you are aware of the process and the guidelines. Additionally, that you can vouch that your adapter currently meets the standards of a Trusted adapter. For more information, see [Trusted adapters](https://docs.getdbt.com/docs/trusted-adapters)
+        We're excited that you'd like to support your adapter formally as "Trusted"! This template will ensure that you are aware of the process and the guidelines. Additionally, that you can vouch that your adapter currently meets the standards of a Trusted adapter. For more information, see [Trusted adapters](https://docs.getdbt.tech/docs/trusted-adapters)
 
   - type: input
     id: adapter-repo
@@ -44,7 +44,7 @@ body:
       options:
         - label: I am a maintainer of the adapter being submited for Trusted status
           required: true
-        - label: I have read both the [Trusted adapters](https://docs.getdbt.com/docs/trusted-adapters) and [Building a Trusted Adapter](https://docs.getdbt.com/guides/dbt-ecosystem/adapter-development/8-building-a-trusted-adapter) pages.
+        - label: I have read both the [Trusted adapters](https://docs.getdbt.tech/docs/trusted-adapters) and [Building a Trusted Adapter](https://docs.getdbt.tech/guides/dbt-ecosystem/adapter-development/8-building-a-trusted-adapter) pages.
           required: true
         - label: I believe that the adapter currently meets the expectations given above
           required: true

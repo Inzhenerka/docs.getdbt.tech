@@ -61,14 +61,12 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 Выберите **Run Python** в качестве события. Выполните следующий код:
 ```python
-store = StoreClient('abc123') #replace with your UUID secret
-store.set('DBT_WEBHOOK_KEY', 'abc123') #replace with your <Constant name="cloud" /> API token
-store.set('MODE_API_TOKEN', 'abc123') #replace with your Mode API Token
-store.set('MODE_API_SECRET', 'abc123') #replace with your Mode API Secret
+store = StoreClient('abc123')  # замените на ваш UUID secret
+store.set('DBT_WEBHOOK_KEY', 'abc123')  # замените на ваш API token <Constant name="cloud" />
+store.set('MODE_API_TOKEN', 'abc123')  # замените на ваш Mode API Token
+store.set('MODE_API_SECRET', 'abc123')  # замените на ваш Mode API Secret
 ```
 
-В этом шаге вы временно сохраняете необходимые секреты и токены в хранилище, чтобы они были доступны для последующих шагов процесса.
-```
 Протестируйте шаг. Вы можете удалить это действие, когда тест пройдет успешно. Ключ будет оставаться сохраненным, пока к нему обращаются хотя бы раз в три месяца.
 
 ## Добавление действия кода

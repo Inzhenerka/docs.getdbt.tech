@@ -8,7 +8,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 # Set up automatic exposures in Tableau <Lifecycle status="managed,managed_plus" />
 
 <IntroText>
-Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Catalog</a> and the [<Constant name="cloud" /> job scheduler](/docs/deploy/job-scheduler) for a richer experience.
+Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.tech/docs/explore/explore-projects">dbt Catalog</a> and the [<Constant name="cloud" /> job scheduler](/docs/deploy/job-scheduler) for a richer experience.
 
 </IntroText>
 

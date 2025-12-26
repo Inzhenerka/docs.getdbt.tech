@@ -50,7 +50,7 @@ cratedb_analytics:
 </File>
 
 [CrateDB]: https://cratedb.com/database
-[конфигурация PostgreSQL]: https://docs.getdbt.com/reference/resource-configs/postgres-configs
-[настройка профиля PostgreSQL]: https://docs.getdbt.com/docs/core/connect-data-platform/postgres-setup
-[`profiles.yml`]: https://docs.getdbt.com/docs/core/connect-data-platform/profiles.yml
+[конфигурация PostgreSQL]: https://docs.getdbt.tech/reference/resource-configs/postgres-configs
+[настройка профиля PostgreSQL]: https://docs.getdbt.tech/docs/core/connect-data-platform/postgres-setup
+[`profiles.yml`]: https://docs.getdbt.tech/docs/core/connect-data-platform/profiles.yml
 [использование dbt с CrateDB]: https://cratedb.com/docs/guide/integrate/dbt/

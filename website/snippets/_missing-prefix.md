@@ -1,1 +1,1 @@
-dbt объявил устаревшим указание конфигураций без [префикса `+`](https://docs.getdbt.com/reference/dbt_project.yml#the--prefix) в файле `dbt_project.yml`. Теперь только имена папок и файлов могут указываться без префикса `+` внутри конфигураций ресурсов в `dbt_project.yml`.
+dbt объявил устаревшим указание конфигураций без [префикса `+`](https://docs.getdbt.tech/reference/dbt_project.yml#the--prefix) в файле `dbt_project.yml`. Теперь только имена папок и файлов могут указываться без префикса `+` внутри конфигураций ресурсов в `dbt_project.yml`.

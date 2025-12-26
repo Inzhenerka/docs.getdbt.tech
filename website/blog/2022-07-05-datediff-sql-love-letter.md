@@ -2,7 +2,7 @@
 title: "Функция DATEDIFF в SQL: Почему мы её любим"
 description: "Функция DATEDIFF возвращает разницу в указанных единицах (например, дни, недели, годы) между начальной и конечной датой/временем. Это простая и широко используемая функция, которую вы будете использовать чаще, чем ожидаете."
 slug: datediff-sql-love-letter
-canonical_url: https://docs.getdbt.com/sql-reference/datediff
+canonical_url: https://docs.getdbt.tech/sql-reference/datediff
 
 authors: [kira_furuichi]
 
@@ -71,12 +71,12 @@ datediff(<date part>, <start date/time>, <end date/time>)
 
 К счастью, [dbt-core](https://github.com/dbt-labs/dbt-core) вас поддерживает! dbt Core — это открытый продукт dbt, который помогает специалистам по данным писать свои [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/), следуя лучшим практикам программной инженерии.
 
-С dbt v1.2 [адаптеры](https://docs.getdbt.com/docs/supported-data-platforms) теперь поддерживают [кросс-базовые макросы](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros), чтобы помочь вам писать определенные функции, такие как [DATE_TRUNC](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#date_trunc) и [DATEDIFF](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#datediff), без необходимости запоминать сложный синтаксис функций.
+С dbt v1.2 [адаптеры](https://docs.getdbt.tech/docs/supported-data-platforms) теперь поддерживают [кросс-базовые макросы](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros), чтобы помочь вам писать определенные функции, такие как [DATE_TRUNC](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#date_trunc) и [DATEDIFF](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#datediff), без необходимости запоминать сложный синтаксис функций.
 
 > **Примечание:**
 > Ранее [dbt_utils](https://github.com/dbt-labs/dbt-utils), пакет макросов и тестов, который специалисты по данным могут использовать для написания более DRY кода в своем проекте dbt, обеспечивал работу кросс-базовых макросов. Теперь кросс-базовые макросы доступны **независимо от того, установлен ли dbt utils или нет.**
 
-Используя [макрос DATEDIFF](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#datediff), вы можете вычислить разницу между двумя датами, не беспокоясь о сложном синтаксисе. Это означает, что вы можете успешно запускать *один и тот же код* в нескольких базах данных, не беспокоясь о сложных различиях в синтаксисе.
+Используя [макрос DATEDIFF](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#datediff), вы можете вычислить разницу между двумя датами, не беспокоясь о сложном синтаксисе. Это означает, что вы можете успешно запускать *один и тот же код* в нескольких базах данных, не беспокоясь о сложных различиях в синтаксисе.
 
 Используя [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql), простой набор данных и проект dbt, мы можем вычислить разницу между двумя датами, используя макрос DATEDIFF в dbt:
 

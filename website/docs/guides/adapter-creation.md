@@ -581,7 +581,7 @@ class ABCAdapter(BaseAdapter):
                     "Включение этого без предоставления необходимых разрешений приведет к ошибке. "
                     "Ожидается, что эта функция станет обязательной к весне 2025 года."
                 ),
-                "docs_url": "https://docs.getdbt.com/reference/global-configs/behavior-changes#abc-enable_new_functionality_requiring_higher_permissions",
+                "docs_url": "https://docs.getdbt.tech/reference/global-configs/behavior-changes#abc-enable_new_functionality_requiring_higher_permissions",
             }
         ]
 ```

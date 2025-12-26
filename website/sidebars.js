@@ -1087,8 +1087,9 @@ const sidebarSettings = {
       label: "Конфигурация проекта",
       link: {
         type: "generated-index",
-        title: "Project configs",
+        title: "Конфигурация проекта",
         description: "The list of project configs available in dbt.",
+        slug: "/category/project-configs"
       },
       collapsed: true,
       items: [

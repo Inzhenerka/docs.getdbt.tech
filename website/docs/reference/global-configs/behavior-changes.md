@@ -223,11 +223,11 @@ on-run-start:
 nest those values under `type_params.cumulative_type_params.window` and
 `type_params.cumulative_type_params.grain_to_date`. See documentation on
 behavior changes:
-https://docs.getdbt.com/reference/global-configs/behavior-changes
+https://docs.getdbt.tech/reference/global-configs/behavior-changes
 ```
 
 Это предупреждение означает, что кумулятивные поля `type_params.window` и `type_params.grain_to_date` были перемещены и в ближайшем будущем будут объявлены устаревшими. Теперь эти значения следует указывать вложенными в `type_params.cumulative_type_params.window` и `type_params.cumulative_type_params.grain_to_date`. Подробности см. в документации по изменениям поведения:  
-https://docs.getdbt.com/reference/global-configs/behavior-changes
+https://docs.getdbt.tech/reference/global-configs/behavior-changes
 
 ```
 
@@ -235,7 +235,7 @@ https://docs.getdbt.com/reference/global-configs/behavior-changes
 
 ```bash
 
-21:39:18  Кумулятивные поля `type_params.window` и `type_params.grain_to_date` должны быть вложены под `type_params.cumulative_type_params.window` и `type_params.cumulative_type_params.grain_to_date`. Неверные метрики: orders_last_7_days. См. документацию по изменениям в поведении: https://docs.getdbt.com/reference/global-configs/behavior-changes.
+21:39:18  Кумулятивные поля `type_params.window` и `type_params.grain_to_date` должны быть вложены под `type_params.cumulative_type_params.window` и `type_params.cumulative_type_params.grain_to_date`. Неверные метрики: orders_last_7_days. См. документацию по изменениям в поведении: https://docs.getdbt.tech/reference/global-configs/behavior-changes.
 
 ```
 

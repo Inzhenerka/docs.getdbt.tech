@@ -141,7 +141,7 @@ pagination_prev: null
 </div> <br />
 
 <!--
-<a href="https://docs.getdbt.com/docs/deploy/dbt-cloud-job" target="_blank" class="pagination-nav__label nav-create-account button button--primary">Try deploying with dbt</a> 
+<a href="https://docs.getdbt.tech/docs/deploy/dbt-cloud-job" target="_blank" class="pagination-nav__label nav-create-account button button--primary">Try deploying with dbt</a> 
 
 <DocCarousel slidesPerView={1}>
 

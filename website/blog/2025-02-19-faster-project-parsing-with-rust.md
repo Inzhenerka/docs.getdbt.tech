@@ -33,7 +33,7 @@ is_featured: true
 
 ## А что, если сделать это быстрее?
 
-Поскольку выполнение кода — это медленно, один из способов ускориться заключается в том, чтобы код не выполнять. Начиная с v1.0, парсер dbt [использует статический анализатор](https://github.com/dbt-labs/dbt-core/blob/main/docs/guides/parsing-vs-compilation-vs-runtime.md#:~:text=Simple%20Jinja%2DSQL%20models%20(using%20just%20ref()%2C%20source()%2C%20%26/or%20config()%20with%20literal%20inputs)%20are%20also%20statically%20analyzed%2C%20using%20a%20thing%20we%20built.%20This%20is%20very%20fast%20(~0.3%20ms)) для разрешения `ref`, когда это возможно, что [примерно в 3 раза быстрее](https://docs.getdbt.com/reference/parsing#:~:text=For%20now%2C%20the%20static%20parser,speedup%20in%20the%20model%20parser), чем прохождение всего описанного выше процесса.
+Поскольку выполнение кода — это медленно, один из способов ускориться заключается в том, чтобы код не выполнять. Начиная с v1.0, парсер dbt [использует статический анализатор](https://github.com/dbt-labs/dbt-core/blob/main/docs/guides/parsing-vs-compilation-vs-runtime.md#:~:text=Simple%20Jinja%2DSQL%20models%20(using%20just%20ref()%2C%20source()%2C%20%26/or%20config()%20with%20literal%20inputs)%20are%20also%20statically%20analyzed%2C%20using%20a%20thing%20we%20built.%20This%20is%20very%20fast%20(~0.3%20ms)) для разрешения `ref`, когда это возможно, что [примерно в 3 раза быстрее](https://docs.getdbt.tech/reference/parsing#:~:text=For%20now%2C%20the%20static%20parser,speedup%20in%20the%20model%20parser), чем прохождение всего описанного выше процесса.
 
 <Lightbox src="/img/blog/2025-02-19-faster-project-parsing-with-rust/evaluation_strategies_1.png" width="100%" />
 

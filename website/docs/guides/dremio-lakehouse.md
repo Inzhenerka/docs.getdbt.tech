@@ -45,7 +45,7 @@ Core:
 
   Ваша версия dbt-core устарела!
   Инструкции по обновлению можно найти здесь:
-  https://docs.getdbt.com/docs/installation
+  https://docs.getdbt.tech/docs/installation
 
 Plugins:
   - dremio: 1.5.0 - Актуально! # Должен быть 1.5 или новее

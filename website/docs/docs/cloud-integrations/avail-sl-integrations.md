@@ -29,7 +29,7 @@ import AvailIntegrations from '/snippets/_sl-partner-links.md';
 
 ## Связанные документы
 
-- <span><a href="https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview" target="_self">{frontMatter.meta.api_name}</a></span>, чтобы узнать, как интегрировать и выполнять запросы к вашим метрикам в downstream‑инструментах.
+- <span><a href="https://docs.getdbt.tech/docs/dbt-cloud-apis/sl-api-overview" target="_self">{frontMatter.meta.api_name}</a></span>, чтобы узнать, как интегрировать и выполнять запросы к вашим метрикам в downstream‑инструментах.
 - [Синтаксис запросов к API <Constant name="semantic_layer" />](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) 
 - [Ячейки Hex для <Constant name="semantic_layer" />](https://learn.hex.tech/docs/explore-data/cells/data-cells/dbt-metrics-cells) для настройки SQL‑ячеек в Hex.
 - [Устранение ошибки «Failed APN»](/faqs/Troubleshooting/sl-alpn-error) при подключении к <Constant name="semantic_layer" />.

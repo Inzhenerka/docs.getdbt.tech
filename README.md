@@ -1,14 +1,19 @@
-<!-- статистика репозитория документации -->
-[![Открытые issues](https://img.shields.io/github/issues/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/issues)
-[![Открытые PR](https://img.shields.io/github/issues-pr/dbt-labs/docs.getdbt.com)](https://github.com/dbt-labs/docs.getdbt.com/pulls)
-[![Всего страниц документации](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fmirnawong1%2F618181e9b63cd72035c4eef203705cec%2Fraw%2Fdocs_total.json&cacheSeconds=0)](https://docs.getdbt.com)
-[![Slack](https://img.shields.io/badge/Slack-Присоединиться%20к%20сообществу%20dbt-4A154B?logo=slack&logoColor=white)](https://docs.getdbt.com/community/join)
+# Перевод документации dbt
 
-_Мы используем [docusaurus](https://v2.docusaurus.io/) для сайта [docs.getdbt.com](https://docs.getdbt.com/)._
+Этот сайт — перевод оригинальной документации по dbt. Приглашаем всех желающих вносить правки и улучшения в перевод, чтобы сделать его точнее и полезнее для сообщества.
+
+Если вы заметили неточность или хотите помочь, присылайте правки в репозиторий: https://github.com/Inzhenerka/docs.getdbt.tech  
+Или напишите в поддержку: https://t.me/inzhenerkatech_sup
+
+Сайт полностью дублирует оригинальный, поэтому для перевода любой страницы достаточно заменить адрес `https://docs.getdbt.com` на `https://docs.getdbt.tech`.
+
+_Мы используем [docusaurus](https://v2.docusaurus.io/) для сайта [docs.getdbt.tech](https://docs.getdbt.tech/)._
 
 
 #### Содержание
 
+- [Перевод документации dbt](#перевод-документации-dbt)
+      - [Содержание](#содержание)
 - [Кодекс поведения](#кодекс-поведения)
 - [Вклад в проект](#вклад-в-проект)
 - [Написание документации](#написание-документации)

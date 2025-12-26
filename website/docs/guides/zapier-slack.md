@@ -228,14 +228,11 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 #### b. Добавление временного шага кода
 Выберите **Run Python** в качестве события. Запустите следующий код:
-```python 
 ```python
-store = StoreClient('abc123') #replace with your UUID secret
-store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123') #replace with your <Constant name="cloud" /> API token
+store = StoreClient('abc123')  # замените на ваш UUID secret
+store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123')  # замените на ваш API token <Constant name="cloud" />
 ```
 
-Этот фрагмент является техническим примером кода, поэтому он не переводится и приведён без изменений.
-```
 Протестируйте шаг. Вы можете удалить это действие, когда тест пройдет успешно. Ключ останется сохраненным, пока к нему обращаются хотя бы раз в три месяца.
 
 ### 6. Добавление действия кода

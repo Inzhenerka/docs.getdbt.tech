@@ -4,7 +4,7 @@
 
 Пользователи <Constant name="cloud" /> Developer или <Constant name="core" /> могут определять метрики в своём проекте, включая локальный проект <Constant name="core" />, используя <Constant name="cloud_ide" />, <Constant name="cloud_cli" /> или CLI <Constant name="core" />. Однако для работы с универсальным <Constant name="semantic_layer" /> и доступа к этим метрикам через API или сторонние инструменты пользователям необходимо иметь тариф <Constant name="cloud" /> [Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
 
-Обратитесь к разделу <a href="https://docs.getdbt.com/docs/cloud/billing">Billing</a> для получения дополнительной информации.
+Обратитесь к разделу <a href="https://docs.getdbt.tech/docs/cloud/billing">Billing</a> для получения дополнительной информации.
 
 </DetailsToggle>
 

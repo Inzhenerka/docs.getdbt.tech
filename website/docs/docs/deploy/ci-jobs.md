@@ -66,15 +66,7 @@ dbt Labs рекомендует создавать CI‑задания в отд
 
     - **Тайм-аут выполнения** &mdash; Отмените CI задание, если время выполнения превышает значение тайм-аута. Вы можете использовать эту опцию, чтобы гарантировать, что проверка CI не потребляет слишком много ресурсов вашего хранилища. Если вы включите опцию **dbt compare**, значение тайм-аута по умолчанию будет `3600` (один час), чтобы предотвратить длительные сравнения.
 
-5. (необязательно) Параметры в разделе **Расширенные настройки**:
-    - **Переменные окружения** &mdash; Определите [переменные окружения](/docs/build/environment-variables), чтобы настроить поведение вашего проекта при запуске этого CI задания. Вы можете указать, что CI задание выполняется в _Промежуточной_ или _CI_ среде, установив переменную окружения и изменив код вашего проекта для различного поведения в зависимости от контекста. Обычно команды обрабатывают только подмножество данных для CI запусков, используя переменные окружения для ветвления логики в своем коде проекта dbt.
-    - **Имя цели** &mdash; Определите [имя цели](/docs/build/custom-target-names). Подобно **Переменным окружения**, эта опция позволяет настроить поведение проекта. Вы можете использовать эту опцию, чтобы указать, что CI задание выполняется в _Промежуточной_ или _CI_ среде, установив имя цели и изменив код вашего проекта для различного поведения в зависимости от контекста.
-    - **Версия dbt** &mdash; По умолчанию установлено наследование [версии dbt](/docs/dbt-versions/core) из окружения. dbt Labs настоятельно рекомендует не изменять настройку по умолчанию. Эта опция изменения версии на уровне задания полезна только при обновлении проекта до следующей версии dbt; в противном случае несоответствие версий между окружением и заданием может привести к запутанному поведению.
-    - **Потоки** &mdash; По умолчанию установлено 4 [потока](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Увеличьте количество потоков, чтобы увеличить параллелизм выполнения моделей.
-   - **Генерация документации при запуске** &mdash; Включите это, если вы хотите [генерировать документацию проекта](/docs/collaborate/build-and-view-your-docs) при запуске этого задания. Это отключено по умолчанию, так как тестирование генерации документации при каждом проверке CI не является рекомендуемой практикой.
-    - **Запуск свежести источников** &mdash; Включите эту опцию, чтобы вызвать команду `dbt source freshness` перед запуском этого CI задания. Обратитесь к [Свежесть источников](/docs/deploy/source-freshness) для получения более подробной информации.
-
-5. (необязательно) Параметры в разделе **Advanced settings**:
+1. (необязательно) Параметры в разделе **Advanced settings**:
     - **Environment variables** &mdash; Определите [переменные окружения](/docs/build/environment-variables), чтобы настроить поведение проекта при выполнении этого CI‑задания. Вы можете указать, что CI‑задание запускается в окружении _Staging_ или _CI_, задав переменную окружения и изменив код проекта так, чтобы он вел себя по‑разному в зависимости от контекста. Для команд распространена практика обрабатывать в CI только подмножество данных, используя переменные окружения для ветвления логики в коде dbt‑проекта.
     - **Target name** &mdash; Определите [target name](/docs/build/custom-target-names). Аналогично **Environment Variables**, этот параметр позволяет настраивать поведение проекта. Его можно использовать, чтобы указать, что CI‑задание выполняется в окружении _Staging_ или _CI_, задав имя таргета и изменив код проекта так, чтобы он вел себя по‑разному в зависимости от контекста.
     - **dbt version** &mdash; По умолчанию используется [версия dbt](/docs/dbt-versions/core), унаследованная от окружения. dbt Labs настоятельно рекомендует не менять значение по умолчанию. Возможность переопределить версию на уровне задания полезна только при обновлении проекта на следующую версию dbt; в остальных случаях несоответствие версий между окружением и заданием может привести к запутанному поведению.
@@ -84,36 +76,35 @@ dbt Labs рекомендует создавать CI‑задания в отд
 
    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-ci-job.png" width="90%" title="Example of CI Job page in the dbt UI"/>
 
-### Example of CI check in pull request {#example-ci-check}
-Ниже приведён пример CI‑проверки в pull request на GitHub. Зелёная галочка означает, что сборка dbt и тесты прошли успешно. При нажатии на раздел <Constant name="cloud" /> вы перейдёте к соответствующему CI‑прогону в <Constant name="cloud" />.
+### Пример CI-проверки в pull request {#example-ci-check}
+Ниже приведен пример CI-проверки в pull request на GitHub. Зеленая галочка означает, что `dbt build` и тесты завершились успешно. Если нажать на секцию <Constant name="cloud" />, вы перейдете к соответствующему CI-запуску в <Constant name="cloud" />.
 
-### Пример отчета CI в pull запросе <Lifecycle status="preview" /> {#example-ci-report}
-Ниже приведен пример отчета CI в pull запросе GitHub, который отображается, когда для CI задания включена опция **dbt compare**. Он показывает краткое содержание моделей, измененных в pull запросе.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-pr.png" width="60%" title="Пример CI-проверки в pull request на GitHub"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-ci-report.png" width="75%" title="Пример комментария отчета CI в pull запросе GitHub"/>
+### Пример CI-отчета в pull request <Lifecycle status="preview" /> {#example-ci-report}
+Ниже приведен пример CI-отчета в pull request на GitHub, который отображается, когда для CI job включена опция **dbt compare**. В нем показана высокоуровневая сводка по моделям, которые изменились в pull request.
 
-## Запуск CI задания с помощью API
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-ci-report.png" width="75%" title="Пример комментария с CI-отчетом в pull request на GitHub"/>
 
-## Запуск CI-задачи через API <Lifecycle status="managed,managed_plus" />
+## Триггер CI job через API <Lifecycle status="managed,managed_plus" />
 
-Если вы не используете нативную интеграцию <Constant name="cloud" /> с <Constant name="git" /> — через [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab) или [Azure DevOps](/docs/cloud/git/connect-azure-devops) — вы можете воспользоваться [Administrative API](/docs/dbt-cloud-apis/admin-cloud-api), чтобы запустить CI-задачу. Однако <Constant name="cloud" /> не будет автоматически удалять временную схему. Это связано с тем, что автоматическое удаление опирается на входящие вебхуки от провайдеров <Constant name="git" />, которые доступны только при использовании нативных интеграций.
+Если вы не используете нативную интеграцию <Constant name="cloud" /> с <Constant name="git" /> через [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab) или [Azure DevOps](/docs/cloud/git/connect-azure-devops), вы можете использовать [Administrative API](/docs/dbt-cloud-apis/admin-cloud-api), чтобы запускать CI job. Однако <Constant name="cloud" /> не будет автоматически удалять временную схему. Это связано с тем, что автоматическое удаление зависит от входящих webhook’ов от провайдеров <Constant name="git" />, а это доступно только через нативные интеграции.
 
-- У вас есть аккаунт dbt Cloud.
-- Для функций [Параллельных проверок CI](/docs/deploy/continuous-integration#concurrent-ci-checks) и [Умной отмены устаревших сборок](/docs/deploy/continuous-integration#smart-cancellation) ваш аккаунт dbt Cloud должен быть на [Team или Enterprise плане](https://www.getdbt.com/pricing/).
+### Предварительные требования
 
-- У вас есть аккаунт <Constant name="cloud" />.
-- У вас есть тарифный план <Constant name="cloud" /> [Enterprise или Enterprise+](https://www.getdbt.com/pricing/). Устаревшие планы Team также сохраняют доступ.
-  - Для функций [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) и [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) ваш аккаунт <Constant name="cloud" /> должен быть на плане [Enterprise или Enterprise+](https://www.getdbt.com/pricing/) либо на устаревшем плане Team. Планы Starter не имеют доступа к этим функциям при запуске CI-задачи через API.
+- У вас есть учетная запись <Constant name="cloud" />.
+- У вас тариф <Constant name="cloud" /> [Enterprise или Enterprise+](https://www.getdbt.com/pricing/). Доступ также сохраняется у legacy Team планов.
+  - Для возможностей [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) и [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) ваш аккаунт <Constant name="cloud" /> должен быть на тарифе [Enterprise или Enterprise+](https://www.getdbt.com/pricing/) (а также у legacy Team планов). Starter планы не имеют доступа к этим возможностям при триггере CI job через API.
 
-1. Настройте CI-задачу с помощью API-эндпоинта [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job), указав `"job_type": ci`, либо через [интерфейс <Constant name="cloud" />](#set-up-ci-jobs).
-2. Вызовите API-эндпоинт [Trigger Job Run](/dbt-cloud/api-v2#/operations/Trigger%20Job%20Run), чтобы запустить CI-задачу. В payload необходимо передать оба следующих поля:
-   - Укажите идентификатор pull request (PR), используя одно из следующих полей:
+1. Настройте CI job через API endpoint [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job), указав `"job_type": ci`, или через [UI <Constant name="cloud" />](#set-up-ci-jobs).
+2. Вызовите API endpoint [Trigger Job Run](/dbt-cloud/api-v2#/operations/Trigger%20Job%20Run), чтобы запустить CI job. В payload нужно обязательно передать оба поля:
+   - Укажите ID pull request (PR) в одном из следующих полей:
 
       - `github_pull_request_id`
       - `gitlab_merge_request_id`
       - `azure_devops_pull_request_id`
-      - `non_native_pull_request_id` (например, BitBucket)
-   - Укажите `git_sha` или `git_branch`, чтобы нацелиться на правильный коммит или ветку для запуска задания.
+      - `non_native_pull_request_id` (например, для BitBucket)
+   - Укажите `git_sha` или `git_branch`, чтобы нацелиться на нужный commit или ветку, относительно которых нужно выполнить job.
 
 ## Семантические проверки в CI  <Lifecycle status="self_service,managed,managed_plus" />
 

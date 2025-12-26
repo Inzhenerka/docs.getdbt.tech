@@ -69,8 +69,6 @@ sidebar_label: "Подключение к GitHub"
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/configure-github.png" title="Configuring the dbt app"/>
 
-После того как администратор dbt Cloud [настроит подключение](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) к учетной записи вашей организации в GitHub, вам необходимо аутентифицироваться, используя вашу личную учетную запись. Вы должны подключить свой личный профиль GitHub к dbt Cloud, чтобы использовать [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) и [CLI](/docs/cloud/cloud-cli-installation) и подтвердить ваш доступ на чтение и запись в репозиторий.
-
 После того как администратор <Constant name="cloud" /> [настроит подключение](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) к GitHub-аккаунту вашей организации, вам необходимо пройти аутентификацию с использованием вашей личной учетной записи. Вы должны связать свой личный профиль GitHub с <Constant name="cloud" />, чтобы использовать [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [CLI](/docs/cloud/cloud-cli-installation), а также подтвердить наличие прав на чтение и запись в репозитории.
 
 - Разработчики dbt Cloud на [Enterprise плане](https://www.getdbt.com/pricing/) должны каждый подключить свои профили GitHub к dbt Cloud. Это необходимо, потому что dbt Cloud IDE проверяет доступ каждого разработчика на чтение/запись для репозитория dbt.
@@ -92,7 +90,7 @@ sidebar_label: "Подключение к GitHub"
 4. Выберите **Link**, чтобы начать процесс настройки. Вы будете перенаправлены на GitHub, где появится запрос на авторизацию <Constant name="cloud" /> на экране предоставления доступа.
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-auth.png" title="Authorizing the dbt app for developers"/>
 
-5. После подтверждения авторизации вы будете перенаправлены обратно в <Constant name="cloud" />, и теперь должны увидеть подключённую учётную запись.
+1. После подтверждения авторизации вы будете перенаправлены обратно в <Constant name="cloud" />, и теперь должны увидеть подключённую учётную запись.
 
 Теперь вы можете использовать <Constant name="cloud_ide" /> или CLI <Constant name="cloud" />.
 

@@ -429,7 +429,7 @@ Example:
 nest those values under `type_params.cumulative_type_params.window` and
 `type_params.cumulative_type_params.grain_to_date`. See documentation on
 behavior changes:
-https://docs.getdbt.com/reference/global-configs/behavior-changes.
+https://docs.getdbt.tech/reference/global-configs/behavior-changes.
 ```
 </File>
 
@@ -448,9 +448,9 @@ Example:
 19:56:41  [WARNING]: Time spines without YAML configuration are in the process of
 deprecation. Please add YAML configuration for your 'metricflow_time_spine'
 model. See documentation on MetricFlow time spines:
-https://docs.getdbt.com/docs/build/metricflow-time-spine and behavior change
+https://docs.getdbt.tech/docs/build/metricflow-time-spine and behavior change
 documentation:
-https://docs.getdbt.com/reference/global-configs/behavior-changes
+https://docs.getdbt.tech/reference/global-configs/behavior-changes
 ```
 </File>
 
@@ -796,7 +796,7 @@ Example:
 ```bash
 19:51:56  [WARNING]: In a future version of dbt, the `source freshness` command
 will start running `on-run-start` and `on-run-end` hooks by default. For more
-information: https://docs.getdbt.com/reference/global-configs/legacy-behaviors
+information: https://docs.getdbt.tech/reference/global-configs/legacy-behaviors
 ```
 </File>
 

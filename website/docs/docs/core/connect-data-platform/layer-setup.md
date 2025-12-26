@@ -28,7 +28,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 Вы можете использовать любой [метод аутентификации](/docs/core/connect-data-platform/bigquery-setup), поддерживаемый официальным адаптером dbt для BigQuery, поскольку Layer использует адаптер `dbt-bigquery` для подключения к вашему экземпляру BigQuery.
 
 #### Аутентификация Bigquery
-Вы можете использовать любой [метод аутентификации](https://docs.getdbt.com/reference/warehouse-profiles/bigquery-setup), поддерживаемый в официальном адаптере dbt Bigquery, так как Layer использует адаптер `dbt-bigquery` для подключения к вашей инстанции Bigquery.
+Вы можете использовать любой [метод аутентификации](https://docs.getdbt.tech/reference/warehouse-profiles/bigquery-setup), поддерживаемый в официальном адаптере dbt Bigquery, так как Layer использует адаптер `dbt-bigquery` для подключения к вашей инстанции Bigquery.
 
 Пример профиля:
 

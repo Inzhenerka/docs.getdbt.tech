@@ -113,8 +113,6 @@ hide_table_of_contents: true
 
 Этот upstream проект — это место, где вы создаете свои основные данные. Этот проект будет содержать исходные данные, модели промежуточной обработки и основную бизнес-логику.
 
-dbt Cloud позволяет специалистам по данным разрабатывать в своем любимом инструменте и оснащен локальным [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или браузерным [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
-
 <Constant name="cloud" /> позволяет специалистам по данным разрабатывать проекты в привычных им инструментах и поставляется с локальным [<Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation) или браузерной средой [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
 
 В этом разделе руководства вы настроите проект **"Jaffle | Data Analytics"** как базовый проект, используя <Constant name="cloud_ide" />.
@@ -127,13 +125,13 @@ dbt Cloud позволяет специалистам по данным разр
 6. В **File <Constant name="explorer" />** наведите курсор на директорию проекта и нажмите **...**, затем выберите **Create file**.
 7. Создайте две новые папки: `models/staging` и `models/core`.
 
-1. Сначала перейдите на страницу **Develop**, чтобы проверить корректность настройки.
-2. Нажмите **Initialize dbt project**, если вы начали с пустого репозитория.
-3. Удалите папку `models/example`.  
-4. Перейдите к файлу `dbt_project.yml` и переименуйте проект (строка 5) с `my_new_project` на `analytics`.
-5. В файле `dbt_project.yml` удалите строки 39–42 (ссылку на модель `my_new_project`).
-6. В **File <Constant name="explorer" />** наведите курсор на директорию проекта и нажмите **...**, затем выберите **Create file**.
-7. Создайте две новые папки: `models/staging` и `models/core`.
+8. Сначала перейдите на страницу **Develop**, чтобы проверить корректность настройки.
+9. Нажмите **Initialize dbt project**, если вы начали с пустого репозитория.
+10. Удалите папку `models/example`.  
+11. Перейдите к файлу `dbt_project.yml` и переименуйте проект (строка 5) с `my_new_project` на `analytics`.
+12. В файле `dbt_project.yml` удалите строки 39–42 (ссылку на модель `my_new_project`).
+13. В **File <Constant name="explorer" />** наведите курсор на директорию проекта и нажмите **...**, затем выберите **Create file**.
+14. Создайте две новые папки: `models/staging` и `models/core`.
 
 
 ### Staging layer

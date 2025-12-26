@@ -29,14 +29,14 @@ export function useCopyPage({ pageUrl } = {}) {
   if (pageUrl) {
     try {
       const parsed = new URL(pageUrl);
-      canonicalUrl = `https://docs.getdbt.com${parsed.pathname}${parsed.search}${parsed.hash}`;
+      canonicalUrl = `https://docs.getdbt.tech${parsed.pathname}${parsed.search}${parsed.hash}`;
     } catch (e) {
       // If parsing fails for any reason, fall back to using the raw pageUrl
       // (still better than an empty string), but this should be rare.
       canonicalUrl = pageUrl;
     }
   } else if (typeof window !== 'undefined') {
-    canonicalUrl = `https://docs.getdbt.com${window.location.pathname}${window.location.search}${window.location.hash}`;
+    canonicalUrl = `https://docs.getdbt.tech${window.location.pathname}${window.location.search}${window.location.hash}`;
   }
 
   // Compute LLM service URLs with the current page URL

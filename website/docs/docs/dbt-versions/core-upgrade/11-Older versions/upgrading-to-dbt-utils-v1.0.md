@@ -153,6 +153,6 @@ packages:
 	<summary><code>dbt found two tests with the name "XXX".</code></summary>
 	<div>
 		<p><b>Причина</b>: Изменение с <code>condition</code> на <code>where</code> в тесте <code>expression_is_true</code>, так как конфигурации не являются частью уникального имени теста.</p>
-		<p><b>Решение</b>: Определите <a href="https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test">пользовательское имя для вашего теста</a>.</p>
+		<p><b>Решение</b>: Определите <a href="https://docs.getdbt.tech/reference/resource-properties/tests#define-a-custom-name-for-one-test">пользовательское имя для вашего теста</a>.</p>
 	</div>
 </details>

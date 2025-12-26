@@ -215,7 +215,7 @@ dbt run-operation generate_model_yaml --args '{"model_names": [ReplaceWithYourOu
 
 ## Создание блоков docs для новых колонок
 
-[Блоки docs](https://docs.getdbt.com/docs/build/documentation#using-docs-blocks) могут быть использованы для написания более DRY и надежной документации. Чтобы использовать блоки docs, обновите структуру папок, чтобы она содержала файл `.md`. Ваша структура файлов теперь должна выглядеть следующим образом:
+[Блоки docs](https://docs.getdbt.tech/docs/build/documentation#using-docs-blocks) могут быть использованы для написания более DRY и надежной документации. Чтобы использовать блоки docs, обновите структуру папок, чтобы она содержала файл `.md`. Ваша структура файлов теперь должна выглядеть следующим образом:
 
 ```
 models/core/activity_based_interest

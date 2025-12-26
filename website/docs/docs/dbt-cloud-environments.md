@@ -31,8 +31,6 @@ import CloudEnvInfo from '/snippets/_cloud-environments-info.md';
 
 ### Установка учетных данных разработчика
 
-Чтобы использовать dbt Cloud IDE или dbt Cloud CLI, каждому разработчику необходимо настроить [персональные учетные данные для разработки](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) для подключения к вашему хранилищу данных в их **Profile Settings**. Это позволяет вам установить отдельную целевую информацию и поддерживать индивидуальные учетные данные для подключения к вашему хранилищу.
-
 Чтобы использовать dbt <Constant name="cloud_ide" /> или <Constant name="cloud_cli" />, каждому разработчику необходимо настроить [персональные учетные данные для разработки](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) для подключения к своему хранилищу данных в разделе **Profile Settings**. Это позволяет задать отдельную целевую конфигурацию (target) и поддерживать индивидуальные учетные данные для подключения к хранилищу.
 
 <Lightbox src="/img/docs/dbt-cloud/refresh-ide/new-development-environment-fields.png" width="85%" height="200" title="Создание среды разработки"/>

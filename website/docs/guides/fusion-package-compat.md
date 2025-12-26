@@ -77,19 +77,19 @@ If you're ready to get started, let's begin!
 
 ## Test package with Fusion
 
-Now that you've run `dbt-autofix`, let's test your package with <Constant name="fusion"/> to ensure it's compatible before [updating](https://docs.getdbt.com/guides/fusion-package-compat?step=6) your `require-dbt-version` config. Refer to the [<Constant name="fusion"/> limitations documentation](/docs/fusion/supported-features#limitations) for more information on what to look out for. You can test your package two ways:
+Now that you've run `dbt-autofix`, let's test your package with <Constant name="fusion"/> to ensure it's compatible before [updating](https://docs.getdbt.tech/guides/fusion-package-compat?step=6) your `require-dbt-version` config. Refer to the [<Constant name="fusion"/> limitations documentation](/docs/fusion/supported-features#limitations) for more information on what to look out for. You can test your package two ways:
 
 <!-- no toc -->
-- [Running your integration tests with Fusion](#running-your-integration-tests-with-fusion) &mdash; Use if your package has [integration tests](https://docs.getdbt.com/guides/building-packages?step=4) using an `integration_tests/` folder.
-- [Manually validating your package](#manually-validating-your-package) &mdash; Use if your package doesn't have [integration tests](https://docs.getdbt.com/guides/building-packages?step=4). Consider creating one to help validate your package.
+- [Running your integration tests with Fusion](#running-your-integration-tests-with-fusion) &mdash; Use if your package has [integration tests](https://docs.getdbt.tech/guides/building-packages?step=4) using an `integration_tests/` folder.
+- [Manually validating your package](#manually-validating-your-package) &mdash; Use if your package doesn't have [integration tests](https://docs.getdbt.tech/guides/building-packages?step=4). Consider creating one to help validate your package.
 
 #### Running your integration tests with Fusion
 
 If your package includes an `integration_tests/` folder ([like `dbt-utils`](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests)), follow these steps:
 
-1. Navigate to the folder (`cd integration_tests`) to run your tests. If you don't have an `integration_tests/` folder, you can either [create one](https://docs.getdbt.com/guides/building-packages?step=4) or navigate to the folder that contains your tests.
+1. Navigate to the folder (`cd integration_tests`) to run your tests. If you don't have an `integration_tests/` folder, you can either [create one](https://docs.getdbt.tech/guides/building-packages?step=4) or navigate to the folder that contains your tests.
 2. Then, run your tests with <Constant name="fusion"/> by running the following `dbtf build` command (or whatever <Constant name="fusion"/> executable is available in your environment).
-3. If there are no errors, your package likely supports <Constant name="fusion"/> and you're ready to [update your `require-dbt-version`](https://docs.getdbt.com//guides/fusion-package-compat?step=5#update-your-require-dbt-version). If there are errors, you'll need to fix them first before updating your `require-dbt-version`.
+3. If there are no errors, your package likely supports <Constant name="fusion"/> and you're ready to [update your `require-dbt-version`](https://docs.getdbt.tech//guides/fusion-package-compat?step=5#update-your-require-dbt-version). If there are errors, you'll need to fix them first before updating your `require-dbt-version`.
 
 #### Manually validating your package
 

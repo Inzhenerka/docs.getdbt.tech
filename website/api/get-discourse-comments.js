@@ -2,7 +2,7 @@ const axios = require('axios')
 require("dotenv").config();
 
 const { DISCOURSE_DEVBLOG_API_KEY , DISCOURSE_USER_SYSTEM } = process.env
-const DEVBLOG_PROD_URL = 'https://docs.getdbt.com/blog/'
+const DEVBLOG_PROD_URL = 'https://docs.getdbt.tech/blog/'
 const DEV_ENV = 'dev-'
 const PREVIEW_ENV = 'deploy-preview-'
 

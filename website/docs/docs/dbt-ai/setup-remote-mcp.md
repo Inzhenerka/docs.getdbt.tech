@@ -21,7 +21,7 @@ import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
 
 ## Setup instructions
 
-1. Ensure that you have [AI features](https://docs.getdbt.com/docs/cloud/enable-dbt-copilot) turned on.
+1. Ensure that you have [AI features](https://docs.getdbt.tech/docs/cloud/enable-dbt-copilot) turned on.
 2. Obtain the following information from dbt platform:
 
   - **dbt Cloud host**: Use this to form the full URL. For example, replace `<host>` here: `https://<host>/api/ai/v1/mcp/`. It may look like: `https://cloud.getdbt.com/api/ai/v1/mcp/`. If you have a multi-cell account, the host URL will be in the `<ACCOUNT_PREFIX>.us1.dbt.com` format. For more information, refer to [Access, Regions, & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).

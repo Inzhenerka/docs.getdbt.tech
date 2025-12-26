@@ -11,7 +11,7 @@ hide_table_of_contents: false
 date: 2022-05-15
 is_featured: false
 ---
-Существует множество различных функций для работы с датами в SQL — например, [DATEDIFF](https://docs.getdbt.com/blog/datediff-sql-love-letter/), [DATEADD](https://docs.getdbt.com/blog/sql-dateadd), DATE_PART и [DATE_TRUNC](https://docs.getdbt.com/date-trunc-sql). У каждой из них свои случаи использования, и понимание того, как и когда их использовать, является основой работы с SQL. Является ли какая-либо из них такой же простой в использовании, как функция EXTRACT? Ну, это тема для другого обсуждения...
+Существует множество различных функций для работы с датами в SQL — например, [DATEDIFF](https://docs.getdbt.tech/blog/datediff-sql-love-letter/), [DATEADD](https://docs.getdbt.tech/blog/sql-dateadd), DATE_PART и [DATE_TRUNC](https://docs.getdbt.tech/date-trunc-sql). У каждой из них свои случаи использования, и понимание того, как и когда их использовать, является основой работы с SQL. Является ли какая-либо из них такой же простой в использовании, как функция EXTRACT? Ну, это тема для другого обсуждения...
 
 В этом посте мы подробно рассмотрим функцию EXTRACT, как она работает и почему мы её используем.
 
@@ -20,7 +20,7 @@ is_featured: false
 Функция EXTRACT позволяет извлечь указанную часть даты из даты/времени. Например, если вы извлечете месяц из даты 14 февраля 2022 года, она вернёт 2, так как февраль — это второй месяц в году.
 
 > **Что такое функция SQL?**
-> На высоком уровне функция принимает входные данные (или несколько входных данных) и возвращает их обработку. Некоторые распространённые функции SQL — это [COALESCE](https://docs.getdbt.com/blog/coalesce-sql-love-letter/), [LOWER](https://docs.getdbt.com/blog/lower-sql-love-letter/) и [DATEDIFF](https://docs.getdbt.com/blog/datediff-sql-love-letter/). Например, функция COALESCE принимает группу значений и возвращает первое ненулевое значение из этой группы.
+> На высоком уровне функция принимает входные данные (или несколько входных данных) и возвращает их обработку. Некоторые распространённые функции SQL — это [COALESCE](https://docs.getdbt.tech/blog/coalesce-sql-love-letter/), [LOWER](https://docs.getdbt.tech/blog/lower-sql-love-letter/) и [DATEDIFF](https://docs.getdbt.tech/blog/datediff-sql-love-letter/). Например, функция COALESCE принимает группу значений и возвращает первое ненулевое значение из этой группы.
 
 ## Как использовать функцию EXTRACT
 

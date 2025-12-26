@@ -2,7 +2,7 @@
 title: "Функция DATEADD в SQL для различных хранилищ данных"
 description: "Синтаксис функции DATEADD варьируется в зависимости от хранилища данных. Узнайте, как стандартизировать ваш синтаксис независимо от платформы."
 slug: sql-dateadd
-canonical_url: https://docs.getdbt.com/sql-reference/dateadd
+canonical_url: https://docs.getdbt.tech/sql-reference/dateadd
 
 authors: david_krevitt
 
@@ -95,7 +95,7 @@ dbt (и пакет макросов [dbt_utils](https://hub.getdbt.com/dbt-labs/
 {{ dbt_utils.dateadd(month, 1, '2021-08-12' }}
 ```
 
-> *Новичок в dbt? Ознакомьтесь с [введением в dbt](https://docs.getdbt.com/docs/introduction) для получения дополнительной информации о dbt и рабочем процессе аналитической инженерии, который он облегчает.*
+> *Новичок в dbt? Ознакомьтесь с [введением в dbt](https://docs.getdbt.tech/docs/introduction) для получения дополнительной информации о dbt и рабочем процессе аналитической инженерии, который он облегчает.*
 >
 > *Кратко: dbt позволяет специалистам по данным писать код как инженеры-программисты, что в данном случае означает не повторять себя без необходимости.*
 
