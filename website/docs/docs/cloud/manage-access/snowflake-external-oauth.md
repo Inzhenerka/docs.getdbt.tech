@@ -11,9 +11,7 @@ pagination_prev: null
 
 import AboutExternal from '/snippets/_about-external-oauth.md';
 
-```md
 <AboutExternal/>
-```
 
 Процесс настройки внешнего OAuth потребует некоторого взаимодействия между вашими учетными записями dbt Cloud, IdP и Snowflake, и открытие их в нескольких вкладках браузера поможет ускорить процесс настройки:
 
@@ -108,21 +106,15 @@ external_oauth_any_role_mode = 'ENABLE'
 
 5. Откройте вкладку **Access policies** и нажмите **Add policy**. Дайте политике **Name** и **Description** и установите **Assign to** как **The following clients**. Начните вводить имя приложения, созданного на шаге 2.3, и вы увидите его автозаполнение. Выберите приложение и нажмите **Create Policy**.
 
-```md
 <Lightbox src="/img/docs/dbt-cloud/add-api-assignment.png" width="60%" title="Поле Assignment с автоматически подставленным значением." />
-```
 
 6. На экране **access policy** нажмите **Add rule**.
 
-```md
 <Lightbox src="/img/docs/dbt-cloud/add-api-rule.png" width="60%" title="Подсвечена кнопка Add rule для API." />
-```
 
 7. Дайте правилу описательное имя и прокрутите вниз до **token lifetimes**. Настройте **Access token lifetime is**, **Refresh token lifetime is**, и **but will expire if not used every** в соответствии с политиками вашей организации. Мы рекомендуем значения по умолчанию: 1 час и 90 дней. Более строгие правила увеличивают вероятность того, что вашим пользователям придется повторно проходить аутентификацию.
 
-```md
 <Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Настройки срока действия токена в окне правила API." />
-```
 
 8. Вернитесь на вкладку **Settings** и оставьте ее открытой в вашем браузере. Вам понадобится некоторая информация на следующих шагах.
 

@@ -93,10 +93,8 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
    - [Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric)
    - [PostgreSQL](/docs/cloud/connect-data-platform/connect-postgresql-alloydb)
    - [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake)
-```markdown
    - [Starburst or Trino](/docs/cloud/connect-data-platform/connect-starburst-trino)
    - [Teradata](/docs/cloud/connect-data-platform/connect-teradata)
-```
 
 2. Вы можете проверить ваши подключения к платформе данных, нажав кнопку **Тестировать подключение** в настройках ваших учетных данных для развертывания и разработки.
 

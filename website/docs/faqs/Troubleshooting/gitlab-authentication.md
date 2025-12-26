@@ -1,5 +1,4 @@
 ---
-```markdown
 title: I'm seeing a Gitlab authentication out of date error loop
 description: "GitLab and dbt deploy key mismatch "
 sidebar_label: 'GitLab authentication out of date'
@@ -7,7 +6,6 @@ id: gitlab-authentication
 ---
 
 Если вы видите страницу с ошибкой сервера 500 и сообщением **“GitLab Authentication is out of date”**, то, как правило, это означает, что deploy key в настройках репозитория в <Constant name="cloud" /> и в GitLab не совпадают.
-```
 
 Не беспокойтесь — это текущая проблема, над которой работает команда dbt Labs, и у нас есть несколько обходных путей, которые вы можете попробовать:
 

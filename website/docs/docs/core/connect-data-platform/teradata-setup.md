@@ -26,8 +26,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Совместимость с Python
 
-## Совместимость с Python
-
 | Версия плагина | Python 3.9 | Python 3.10 | Python 3.11 | Python 3.12 | Python 3.13 | 
 |----------------|------------|-------------|-------------|-------------|-------------|
 | 1.0.0.x        | ✅          | ❌           | ❌           | ❌           | ❌           |
@@ -44,7 +42,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Совместимость версий зависимых пакетов dbt
 
-```markdown
 | dbt-teradata | <Constant name="core" /> | dbt-teradata-util |  dbt-util      |
 |--------------|--------------------------|-------------------|---------------|
 | 1.2.x        | 1.2.x                    | 0.1.0             | 0.9.x or below|
@@ -55,9 +52,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | 1.8.x        | 1.8.x                    | 1.3.0             | 1.3.0         |
 | 1.9.x        | 1.9.x                    | 1.3.0             | 1.3.0         |
 | 1.10.x       | 1.10.x                   | 1.3.0             | 1.3.0         |
-```
-
-### Подключение к Teradata
 
 ### Подключение к Teradata
 

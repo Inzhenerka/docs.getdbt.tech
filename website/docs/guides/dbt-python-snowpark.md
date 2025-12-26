@@ -915,7 +915,7 @@ sources:
     ```
 
 1. Создайте *Markdown*-файл `intermediate.md`, который мы подробно разберём в разделах **Test** и **Documentation** руководства [Leverage <Constant name="cloud" /> to generate analytics and ML-ready pipelines with SQL and Python with Snowflake](/guides/dbt-python-snowpark).
-
+    
     ```markdown
     # цель этого .md — позволить многострочные длинные объяснения для наших промежуточных преобразований
 

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "Настройка AlloyDB"
 meta:
@@ -22,4 +21,3 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 ## Конфигурация профиля
 
 Цели AlloyDB настраиваются точно так же, как и [цели Postgres](postgres-setup#profile-configuration).
-```
