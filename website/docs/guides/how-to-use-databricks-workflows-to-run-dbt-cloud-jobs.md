@@ -84,11 +84,9 @@ def _trigger_job() -> int:
         url=f"https://{base_url}/api/v2/accounts/{account_id}/jobs/{job_id}/run/",
         headers={'Authorization': f"Token {api_key}"},
         json={
-```python
-# При необходимости можно передать описание, которое будет отображаться в API <Constant name="cloud" />.
-# См. документацию по API для информации о дополнительных параметрах, которые можно передать,
-# включая `schema_override`
-```
+            # При необходимости можно передать описание, которое будет отображаться в API <Constant name="cloud" />.
+            # См. документацию по API для информации о дополнительных параметрах, которые можно передать,
+            # включая `schema_override`
             'cause': f"Triggered by Databricks Workflows.",
         }
     )
@@ -130,20 +128,17 @@ if __name__ == '__main__':
 
 3. Замените **`<YOUR_SECRET_SCOPE>`** и **`<YOUR_SECRET_KEY>`** на значения, которые вы использовали [ранее](#set-up-a-databricks-secret-scope).
 
-4. Замените **`<YOUR_BASE_URL>`** и **`<YOUR_ACCOUNT_ID>`** на правильные значения вашей среды и [URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана.
+4. Замените **`<YOUR_BASE_URL>`** и **`<YOUR_ACCOUNT_ID>`** на корректные значения для вашего окружения и [Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и тарифного плана.
 
-* Чтобы найти эти значения, перейдите в <Constant name="cloud" />, выберите **Deploy -> Jobs**. Выберите Job, который вы хотите запустить, и скопируйте URL. Например: `https://YOUR_ACCESS_URL/deploy/000000/projects/111111/jobs/222222`
-  
-  Соответственно, корректный код будет выглядеть так:
+    * Чтобы найти эти значения, перейдите в <Constant name="cloud" />, выберите **Deploy -> Jobs**. Выберите задание (Job), которое хотите запустить, и скопируйте URL. Например: `https://YOUR_ACCESS_URL/deploy/000000/projects/111111/jobs/222222`
+    — тогда корректный код будет таким:
 
-Ваш URL структурирован как `https://<YOUR_BASE_URL>/deploy/<YOUR_ACCOUNT_ID>/projects/<YOUR_PROJECT_ID>/jobs/<YOUR_JOB_ID>`
+Ваш URL имеет вид `https://<YOUR_BASE_URL>/deploy/<YOUR_ACCOUNT_ID>/projects/<YOUR_PROJECT_ID>/jobs/<YOUR_JOB_ID>`
     account_id = 000000
     job_id = 222222
-    base_url =  "cloud.getdbt.com"
+    base_url = "cloud.getdbt.com"
 
 5. Запустите ноутбук. Он завершится с ошибкой, но вы должны увидеть **виджет `job_id`** в верхней части вашего ноутбука.
-
-6. В виджете **введите ваш `job_id`** из шага 4.
 
 6. В виджете **введите ваш `job_id`** из шага 4.
 

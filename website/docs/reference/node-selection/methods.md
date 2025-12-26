@@ -49,6 +49,8 @@ dbt list --select "access:protected"   # перечислить все защи�
 
 Метод `config` используется для выбора моделей, которые соответствуют указанной [конфигурации узла](/reference/configs-and-properties).
 
+
+
 ```bash
 dbt run --select "config.materialized:incremental"    # запустить все модели, которые материализуются инкрементально
 dbt run --select "config.schema:audit"                # запустить все модели, которые создаются в схеме `audit`
@@ -164,11 +166,12 @@ dbt run --select "snowplow"
 dbt run --select "snowplow.*"
 ```
 
-Use the `this` package to select nodes from the current project. From the example, running `dbt run --select "package:this"` from the `snowplow` project runs the exact same set of models as the other three selectors.
+Используйте пакет `this`, чтобы выбирать узлы из текущего проекта. Как видно из примера, запуск `dbt run --select "package:this"` из проекта `snowplow` выполняет ровно тот же набор моделей, что и остальные три селектора.
 
-Since `this` always refers to the current project, using `package:this` ensures that you're only selecting models from the project you're working in.
+Поскольку `this` всегда ссылается на текущий проект, использование `package:this` гарантирует, что вы выбираете только модели из проекта, над которым работаете.
 
 ### path
+
 <VersionBlock lastVersion="1.10">
 Метод `path` используется для выбора моделей и источников, определённых в указанном каталоге или во вложенных в него каталогах.
 Определения моделей находятся в SQL/Python-файлах (не в YAML), а определения источников — в YAML-файлах.
@@ -176,14 +179,15 @@ Since `this` always refers to the current project, using `package:this` ensures 
 
 Метод `path` используется для выбора моделей/источников, определенных в указанном пути или под ним. Определения моделей находятся в файлах SQL/Python (не YAML), а определения источников — в файлах YAML. Хотя префикс `path` не является обязательным, он может быть использован для устранения неоднозначности селекторов.
 
-```bash
-# Эти два селектора эквивалентны
-dbt run --select "path:models/staging/github"
-dbt run --select "models/staging/github"
 
-# Эти два селектора эквивалентны
-dbt run --select "path:models/staging/github/stg_issues.sql"
-dbt run --select "models/staging/github/stg_issues.sql"
+  ```bash
+  # Эти два селектора эквивалентны
+  dbt run --select "path:models/staging/github"
+  dbt run --select "models/staging/github"
+
+  # Эти два селектора эквивалентны
+  dbt run --select "path:models/staging/github/stg_issues.sql"
+  dbt run --select "models/staging/github/stg_issues.sql"
 ```
 
 </VersionBlock>
@@ -193,19 +197,20 @@ dbt run --select "models/staging/github/stg_issues.sql"
 Метод `path` используется для выбора моделей, источников или функций, определённых в указанном пути или внутри него.  
 Определения моделей находятся в SQL/Python-файлах (не в YAML), определения источников — в YAML-файлах. Функции определяются в SQL-файлах. Хотя префикс `path` не является строго обязательным, его можно использовать, чтобы сделать селекторы однозначными.
 
-```bash
-# Эти два селектора эквивалентны
-dbt run --select "path:models/staging/github"
-dbt run --select "models/staging/github"
 
-# Эти два селектора эквивалентны
-dbt run --select "path:models/staging/github/stg_issues.sql"
-dbt run --select "models/staging/github/stg_issues.sql"
+  ```bash
+  # Эти два селектора эквивалентны
+  dbt run --select "path:models/staging/github"
+  dbt run --select "models/staging/github"
 
-# Эти два селектора эквивалентны
-dbt build --select "path:functions/my_function.sql"
-dbt build --select "functions/my_function.sql"
-```
+  # Эти два селектора эквивалентны
+  dbt run --select "path:models/staging/github/stg_issues.sql"
+  dbt run --select "models/staging/github/stg_issues.sql"
+
+  # Эти два селектора эквивалентны
+  dbt build --select "path:functions/my_function.sql"
+  dbt build --select "functions/my_function.sql"
+  ```
 
 </VersionBlock>
 
@@ -215,12 +220,12 @@ dbt build --select "functions/my_function.sql"
 
 Используйте метод `resource_type` для выбора узлов определённого типа (`model`, `test`, `exposure` и т.д.). Это похоже на использование флага `--resource-type` в команде [`dbt ls`](/reference/commands/list).
 
-```bash
-dbt build --select "resource_type:exposure"    # собрать все ресурсы, находящиеся выше по зависимостям от exposures
-dbt list --select "resource_type:test"         # вывести список всех тестов в вашем проекте
-dbt list --select "resource_type:source"       # вывести список всех источников в вашем проекте
-```
-```
+
+  ```bash
+  dbt build --select "resource_type:exposure"    # собрать все ресурсы, находящиеся выше по зависимостям от exposures
+  dbt list --select "resource_type:test"         # вывести список всех тестов в вашем проекте
+  dbt list --select "resource_type:source"       # вывести список всех источников в вашем проекте
+  ```
 
 </VersionBlock>
 
@@ -234,38 +239,37 @@ dbt build --select "resource_type:function"    # build all functions in your pro
 dbt list --select "resource_type:test"         # list all tests in your project
 dbt list --select "resource_type:source"       # list all sources in your project
 ```
-```
 
 </VersionBlock>
 
 ### result
 
-The `result` method is related to the [`state` method](/reference/node-selection/methods#state) and can be used to select resources based on their result status from a prior run. Note that one of the dbt commands [`run`, `test`, `build`, `seed`] must have been performed in order to create the result on which a result selector operates. 
+Метод `result` связан с методом [`state`](/reference/node-selection/methods#state) и может использоваться для выбора ресурсов по их статусу результата из предыдущего запуска. Обратите внимание: чтобы создать результат, по которому будет работать result-селектор, предварительно должна быть выполнена одна из команд dbt: [`run`, `test`, `build`, `seed`].
 
-You can use `result` selectors in conjunction with the `+` operator. 
+Селекторы `result` можно использовать вместе с оператором `+`.
 
 ```bash
-# run all models that generated errors on the prior invocation of dbt run
+# запустить все модели, которые завершились ошибкой при предыдущем запуске dbt run
 dbt run --select "result:error" --state path/to/artifacts 
 
-# run all tests that failed on the prior invocation of dbt test
+# запустить все тесты, которые упали при предыдущем запуске dbt test
 dbt test --select "result:fail" --state path/to/artifacts 
 
-# run all the models associated with failed tests from the prior invocation of dbt build
+# запустить все модели, связанные с упавшими тестами, из предыдущего запуска dbt build
 dbt build --select "1+result:fail" --state path/to/artifacts
 
-# run all seeds that generated errors on the prior invocation of dbt seed
-dbt seed --select "result:error" --state path/to/artifacts 
+# запустить все seeds, которые завершились ошибкой при предыдущем запуске dbt seed
+dbt seed --select "result:error" --state path/to/artifacts
 ```
 
-- Only use `result:fail` when you want to re-run tests that failed during the last invocation. This selector is specific to test nodes. Tests don't have downstream nodes in the DAG, so using the `result:fail+` selector will only return the failed test itself and not the model or anything built on top of it.
-- On the other hand, `result:error` selects any resource (models, tests, snapshots, and more) that returned an error.
-- As an example, to re-run upstream and downstream resources associated with failed tests, you can use one of the following selectors:
+- Используйте `result:fail` только если вы хотите повторно запустить тесты, которые упали при последнем запуске. Этот селектор относится именно к test-нодам. У тестов нет downstream-нод в DAG, поэтому селектор `result:fail+` вернет только упавший тест, но не модель и ничего, что построено поверх нее.
+- В отличие от этого, `result:error` выбирает любой ресурс (модели, тесты, snapshots и т. д.), который завершился с ошибкой.
+- Например, чтобы повторно запустить upstream- и downstream-ресурсы, связанные с упавшими тестами, можно использовать один из следующих селекторов:
   ```bash
-  # reruns all the models associated with failed tests from the prior invocation of dbt build
+  # повторно запускает все модели, связанные с упавшими тестами, из предыдущего запуска dbt build
   dbt build --select "1+result:fail" --state path/to/artifacts
 
-  # reruns the models associated with failed tests and all downstream dependencies - especially useful in deferred state workflows
+  # повторно запускает модели, связанные с упавшими тестами, и все downstream-зависимости — особенно полезно в deferred state workflows
   dbt build --select "1+result:fail+" --state path/to/artifacts
   ```
 
@@ -342,44 +346,44 @@ dbt ls --select "state:modified" --state path/to/artifacts   # перечисл�
 
 Эти селекторы могут помочь вам сократить время выполнения, исключив неизмененные узлы. В настоящее время подселекторы недоступны, но это может измениться по мере развития сценариев использования.
 
-#### `state:modified` node and reference impacts
+#### Ноды `state:modified` и влияние на ref
 
-`state:modified` identifies any new nodes added, changes to existing nodes, and any changes made to:
+`state:modified` определяет любые новые ноды, изменения в существующих нодах, а также любые изменения, внесенные в:
 
-- [access](/reference/resource-configs/access) permissions
-- [`deprecation_date` ](/reference/resource-properties/deprecation_date)
-- [`latest_version` ](/reference/resource-properties/latest_version)
+- права доступа [access](/reference/resource-configs/access)
+- [`deprecation_date`](/reference/resource-properties/deprecation_date)
+- [`latest_version`](/reference/resource-properties/latest_version)
 
-If a node changes its group, downstream references may break, potentially causing build failures.
+Если нода меняет свою группу (group), downstream-ссылки могут сломаться, что потенциально приводит к ошибкам сборки.
 
-As `group` is a config, and configs are generally included in `state:modified` detection, modifying the group name everywhere it's referenced will flag those nodes as "modified".
+Поскольку `group` — это config, а конфиги обычно учитываются при определении `state:modified`, изменение имени группы во всех местах, где на нее есть ссылки, пометит эти ноды как «modified».
 
-Depending on whether partial parsing is enabled, you will catch the breakage as part of CI workflows.
+В зависимости от того, включен ли partial parsing, вы поймаете поломку в рамках CI-воркфлоу.
 
-- If you change a group name everywhere it's referenced, and partial parsing is enabled, dbt may only re-parse the changed model.
-- If you update a group name in all its references without partial parsing enabled, dbt will re-parse all models and identify any invalid downstream references.
+- Если вы изменили имя группы во всех местах, где она используется, и включен partial parsing, dbt может перепарсить только измененную модель.
+- Если вы обновили имя группы во всех ссылках без включенного partial parsing, dbt перепарсит все модели и обнаружит любые некорректные downstream-ссылки.
 
-An error along the lines of "there's nothing to do" can occur when you change the group name *and* something is picked up to be run via `dbt build --select state:modified`. This error will be caught at runtime so long as the CI job is selecting `state:modified+` (including downstreams).
+Ошибка вида «there's nothing to do» может возникнуть, если вы изменили имя группы *и* что-то попало в запуск через `dbt build --select state:modified`. Эта ошибка будет поймана во время выполнения, если CI job выбирает `state:modified+` (включая downstream).
 
-Certain factors can affect how references are used or resolved later on, including:
+На то, как ссылки используются или разрешаются дальше, могут влиять некоторые факторы, включая:
 
-- Modifying access: if permissions or access rules change, some references might stop working.
-- Modifying `deprecation_date`: if a reference or model version is marked  deprecated, new warnings might appear that affect how references are  processed.
-- Modifying `latest_version`: if there's no tie to a specific version, the reference or model will point to the latest version.
-  -  If a newer version is released, the reference will automatically resolve to the new version, potentially changing the behavior or output of the system that relies on it.
+- Изменение access: если меняются права или правила доступа, некоторые ссылки могут перестать работать.
+- Изменение `deprecation_date`: если ссылка или версия модели помечена как deprecated, могут появиться новые предупреждения, которые влияют на обработку ссылок.
+- Изменение `latest_version`: если ссылка не привязана к конкретной версии, ссылка или модель будет указывать на latest_version.
+  - Если выйдет более новая версия, ссылка автоматически будет разрешаться в новую версию, что потенциально изменит поведение или результат системы, которая на нее опирается.
 
-dbt handles state comparison for seed files differently depending on their size:
+dbt по-разному обрабатывает сравнение состояния для seed-файлов в зависимости от их размера:
 
-- **Seed files smaller than 1 MiB** &mdash; Included in the `state:modified` selector only when the contents change.
-- **Seed files 1 MiB or larger** &mdash; Included in the `state:modified` selector only when the seed file path changes.
+- **Seed-файлы меньше 1 MiB** &mdash; Попадают в селектор `state:modified` только если изменилось содержимое.
+- **Seed-файлы 1 MiB или больше** &mdash; Попадают в селектор `state:modified` только если изменился путь seed-файла.
 
-#### Overwrites the `manifest.json`
+#### Перезаписывает `manifest.json`
 
 import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
 
 <Overwritesthemanifest />
 
-#### Recommendation
+#### Рекомендация
 
 import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overwriting-manifest.md'; 
 

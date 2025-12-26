@@ -199,19 +199,15 @@ models:
   - name: users
     columns:
       - name: favorite_number
-```yaml
         description: "Тест favorite_number"
         data_tests:
       	  - warn_if_odd         # по умолчанию 'warn'
-```
       - name: other_number
         description: "Test other_number"
         data_tests:
           - warn_if_odd:
-```yaml
-arguments: # доступно в версии v1.10.5 и выше. В более старых версиях <argument_name> можно задавать как свойство верхнего уровня.
-  severity: error   # переопределяет
-```
+            arguments: # доступно в версии v1.10.5 и выше. В более старых версиях <argument_name> можно задавать как свойство верхнего уровня.
+              severity: error   # переопределяет
 ```
 
 </File>

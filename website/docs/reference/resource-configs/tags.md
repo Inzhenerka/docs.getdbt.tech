@@ -8,11 +8,9 @@ datatype: string | [string]
 <Tabs
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Файл свойств', value: 'other-yaml', },
-{ label: 'Конфигурация SQL-файла', value: 'config', },
-```
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'other-yaml', },
+    { label: 'Конфигурация SQL-файла', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -224,7 +222,6 @@ select ...
 
 # Run all models tagged "daily", except those that are tagged hourly
   dbt run --select tag:daily --exclude tag:hourly
-```
 ```
 
 ### Примените теги к семенам

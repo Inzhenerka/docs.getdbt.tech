@@ -45,11 +45,10 @@ dbt ls
   - [Listing semantic models](#listing-semantic-models)
   - [Listing functions](#listing-functions)
 
-#### Listing models by package
+#### Список моделей по пакету
 
 ```bash
 dbt ls --select snowplow.*
-```
 snowplow.snowplow_base_events
 snowplow.snowplow_base_web_page_context
 snowplow.snowplow_id_map
@@ -62,7 +61,6 @@ snowplow.snowplow_sessions
 
 ```bash
 dbt ls --select tag:nightly --resource-type test
-```
 my_project.schema_test.not_null_orders_order_id
 my_project.schema_test.unique_orders_order_id
 my_project.schema_test.not_null_products_product_id
@@ -74,7 +72,6 @@ my_project.schema_test.unique_products_product_id
 
 ```bash
 dbt ls --select config.materialized:incremental,test_type:schema
-```
 model.my_project.logs_parsed
 model.my_project.events_categorized
 ```
@@ -83,7 +80,6 @@ model.my_project.events_categorized
 
 ```bash
 dbt ls --select snowplow.* --output json
-```
 {"name": "snowplow_events", "resource_type": "model", "package_name": "snowplow",  ...}
 {"name": "snowplow_page_views", "resource_type": "model", "package_name": "snowplow",  ...}
 ...
@@ -98,27 +94,23 @@ dbt ls --select snowplow.* --output json --output-keys "name resource_type descr
 ...
 ```
 
-В этом примере команда выводит результаты в формате JSON и включает только указанные ключи (`name`, `resource_type`, `description`) для каждого ресурса.
-
 #### Вывод семантических моделей
 
 Вывести все ресурсы, находящиеся выше по графу зависимостей относительно семантической модели `orders`:
-
 ```bash
 dbt ls -s +semantic_model:orders
 ```
 
 #### Вывод путей к файлам
-
 ```bash
-```
 dbt ls --select snowplow.* --output path
 models/base/snowplow_base_events.sql
 models/base/snowplow_base_web_page_context.sql
 models/identification/snowplow_id_map.sql
 ...
 ```
-#### Listing functions
+
+#### Вывод функций
 
 Перечисление всех функций в вашем проекте:
 

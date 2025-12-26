@@ -27,13 +27,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 в файл конфигурации `profiles.yml`. Используйте эталонную конфигурацию ниже, чтобы настроить профиль ClickHouse:
 
 <File name='profiles.yml'>
+
 ```yaml
 clickhouse-service:
   target: dev
   outputs:
     dev:
       type: clickhouse
-```yaml
       schema: [ default ]  # База данных ClickHouse для моделей dbt
 
       # необязательно
@@ -42,7 +42,6 @@ clickhouse-service:
       user: [ default ]  # Пользователь для всех операций с базой данных
       password: [ <empty string> ]  # Пароль пользователя
       secure: [ False ]  # Использовать TLS (native protocol) или HTTPS (http protocol)
-```
 
 ```
 

@@ -28,6 +28,7 @@ level: 'Advanced'
 - [API Tableau](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm)
 - [Версией](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm#rest_api_versioning) REST API Tableau, совместимой с вашим сервером
 
+
 ## Получение учетных данных для аутентификации от Tableau
 Чтобы аутентифицироваться с помощью API Tableau, получите [Персональный токен доступа](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) от вашего экземпляра Tableau Server/Cloud. Кроме того, убедитесь, что ваша рабочая книга Tableau использует источники данных, которые позволяют доступ для обновления, что обычно устанавливается при публикации.
 
@@ -38,16 +39,14 @@ level: 'Advanced'
 
 ![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
 
-## Настройка нового вебхука в dbt Cloud
-Чтобы настроить подписку на вебхук для dbt Cloud, следуйте инструкциям в [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription). Для события выберите **Run completed** и измените список **Jobs**, чтобы включить только те задания, которые должны запускать обновление отчета.
+## Настройка нового webhook в dbt
+Чтобы настроить подписку на webhook для <Constant name="cloud" />, следуйте инструкциям в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed** и измените список **Jobs**, оставив только те задания, которые должны запускать обновление отчета.
 
-## Настройка нового вебхука в dbt
+Не забудьте сохранить Webhook Secret Key — он понадобится позже. Вставьте webhook URL, полученный из Zapier на шаге 2, в поле **Endpoint** и протестируйте endpoint.
 
-Чтобы настроить подписку на вебхук для <Constant name="cloud" />, следуйте инструкциям в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed** и измените список **Jobs**, включив в него только те задания, которые должны запускать обновление отчёта.
+После того как вы протестируете endpoint в <Constant name="cloud" />, вернитесь в Zapier и нажмите **Test Trigger** — это создаст пример тела webhook на основе тестового события, которое <Constant name="cloud" /> отправил.
 
-После того как вы протестировали конечную точку в dbt Cloud, вернитесь в Zapier и нажмите **Test Trigger**, что создаст пример тела вебхука на основе тестового события, отправленного dbt Cloud.
-
-После того как вы протестировали эндпоинт в <Constant name="cloud" />, вернитесь в Zapier и нажмите **Test Trigger** — это создаст пример тела вебхука на основе тестового события, отправленного из <Constant name="cloud" />.
+Значения в примере тела захардкожены и не отражают ваш проект, но они дают Zapier объект корректной структуры (shape) во время разработки.
 
 ## Хранение секретов
 На следующем шаге вам понадобятся секретный ключ вебхука из предыдущего шага и ваши учетные данные для аутентификации Tableau. В частности, вам понадобятся URL вашего сервера/сайта Tableau, имя сервера/сайта, имя PAT и секрет PAT.
@@ -66,8 +65,6 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 Выберите **Run Python** в качестве События и введите следующий код:
 
-Выберите **Run Python** в качестве события и вставьте следующий код:
-
 ```python 
 store = StoreClient('abc123') #replace with your UUID secret
 store.set('DBT_WEBHOOK_KEY', 'abc123') #replace with your <Constant name="cloud" /> Webhook key
@@ -75,7 +72,6 @@ store.set('TABLEAU_SITE_URL', 'abc123') #replace with your Tableau Site URL, inc
 store.set('TABLEAU_SITE_NAME', 'abc123') #replace with your Tableau Site/Server Name
 store.set('TABLEAU_API_TOKEN_NAME', 'abc123') #replace with your Tableau API Token Name
 store.set('TABLEAU_API_TOKEN_SECRET', 'abc123') #replace with your Tableau API Secret
-```
 ```
 
 Протестируйте шаг, чтобы выполнить код. Вы можете удалить это действие, когда тест пройдет успешно. Ключи останутся сохраненными, если к ним будет доступ хотя бы раз в три месяца.
@@ -116,9 +112,7 @@ raw_body = input_data['raw_body']
 signature = hmac.new(hook_secret.encode('utf-8'), raw_body.encode('utf-8'), hashlib.sha256).hexdigest()
 
 if signature != auth_header:
-```python
-raise Exception("Вычисленная подпись не совпадает с содержимым заголовка Authorization. Возможно, этот вебхук был отправлен не из <Constant name=\"cloud\" />.")
-```
+    raise Exception("Вычисленная подпись не совпадает с содержимым заголовка Authorization. Возможно, этот вебхук был отправлен не из <Constant name=\"cloud\" />.")
 
 full_body = json.loads(raw_body)
 hook_data = full_body['data'] 

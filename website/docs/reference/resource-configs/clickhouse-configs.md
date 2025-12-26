@@ -57,10 +57,8 @@ models:
 groupId="config-table"
 defaultValue="project-yaml"
 values={[
-```js
-{ label: 'Файл проекта YAML', value: 'project-yaml', },
-{ label: 'Конфигурация SQL-файла', value: 'config', },
-```
+  { label: 'Файл проекта YAML', value: 'project-yaml', },
+  { label: 'Конфигурация SQL-файла', value: 'config', },
 ]
 }>
 
@@ -116,10 +114,8 @@ models:
 groupId="config-incremental"
 defaultValue="project-yaml"
 values={[
-```js
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Конфигурация в SQL-файле', value: 'config', },
-```
+  { label: 'Файл проекта', value: 'project-yaml', },
+  { label: 'Конфигурация в SQL-файле', value: 'config', },
 ]}
 >
 

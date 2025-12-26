@@ -22,28 +22,26 @@ pagination_next: "docs/dbt-cloud-apis/discovery-api"
 <Card
     title="API v2"
     body="Наша устаревшая версия API с ограниченными конечными точками и функциями. Содержит информацию, недоступную в v3."
-link="/dbt-cloud/api-v2"
+    link="/dbt-cloud/api-v2"
     icon="pencil-paper"/>
 
 <Card
     title="API v3"
     body="Наша последняя версия API с новыми конечными точками и функциями."
-link="/dbt-cloud/api-v3"
+    link="/dbt-cloud/api-v3"
     icon="pencil-paper"/>
 
 <div className="card-container">
  <Card
-```text
-title="Terraform‑провайдер dbt"
-link="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
-body="Terraform‑провайдер, поддерживаемый компанией dbt Labs, который можно использовать для управления аккаунтом dbt."
-```
+    title="Terraform‑провайдер dbt"
+    link="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
+    body="Terraform‑провайдер, поддерживаемый компанией dbt Labs, который можно использовать для управления аккаунтом dbt."
     icon="pencil-paper"/>
-    <a href="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
+<a href="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
     className="external-link"
     target="_blank"
     rel="noopener noreferrer">
     <Icon name='fa-external-link' />
-  </a>
+</a>
 </div>
 </div>

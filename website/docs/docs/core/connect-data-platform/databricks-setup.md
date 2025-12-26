@@ -102,14 +102,12 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-```yaml
-catalog: CATALOG_NAME # необязательное имя каталога, если вы используете Unity Catalog
-schema: SCHEMA_NAME # обязательно
-host: YOUR_ORG.databrickshost.com # обязательно
-http_path: /SQL/YOUR/HTTP/PATH # обязательно
-auth_type: oauth # обязательно при использовании аутентификации на основе OAuth
-threads: 1_OR_MORE  # необязательно, по умолчанию 1
-```
+      catalog: CATALOG_NAME # необязательное имя каталога, если вы используете Unity Catalog
+      schema: SCHEMA_NAME # обязательно
+      host: YOUR_ORG.databrickshost.com # обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # обязательно
+      auth_type: oauth # обязательно при использовании аутентификации на основе OAuth
+      threads: 1_OR_MORE  # необязательно, по умолчанию 1
 ```
 </File>
 

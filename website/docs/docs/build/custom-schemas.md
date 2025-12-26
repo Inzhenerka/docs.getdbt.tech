@@ -185,9 +185,7 @@ dbt поставляется с макросом для этого случая 
 <File name='macros/generate_schema_name.sql'>
 
 ```sql
-```sql
 -- поместите это в macros/generate_schema_name.sql
-```
 
 {% macro generate_schema_name(custom_schema_name, node) -%}
     {{ generate_schema_name_for_env(custom_schema_name, node) }}

@@ -54,6 +54,8 @@ models:
 ) }}
 ```
 
+</File> 
+
 #### Установка `begin` с использованием относительных дат
 
 Чтобы настроить `begin` с использованием относительных дат, вы можете использовать переменные модулей [`modules.datetime`](/reference/dbt-jinja-functions/modules#datetime) и [`modules.pytz`](/reference/dbt-jinja-functions/modules#pytz), чтобы динамически задавать относительные временные метки, например дату вчерашнего дня или начало текущей недели.

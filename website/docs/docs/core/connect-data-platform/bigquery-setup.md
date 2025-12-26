@@ -160,9 +160,7 @@ my-bigquery-db:
       threads: 4 # Должно быть значением 1 или больше
       [OPTIONAL_CONFIG](#optional-configurations): VALUE
 
-```text
-# Эти поля берутся из JSON-файла ключа сервисного аккаунта
-```
+      # Эти поля берутся из JSON-файла ключа сервисного аккаунта
       keyfile_json:
         type: xxx
         project_id: xxx

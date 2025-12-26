@@ -8,12 +8,11 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-```text
-title="Переменные окружения"
-body="Узнайте, как можно использовать переменные окружения для настройки поведения проекта dbt."
-link="/docs/build/environment-variables"
-icon="dbt-bit"
-```
+    title="Переменные окружения"
+    body="Узнайте, как можно использовать переменные окружения для настройки поведения проекта dbt."
+    link="/docs/build/environment-variables"
+    icon="dbt-bit"/>
+
 <Card
     title="Хуки и операции"
     body="Узнайте, как использовать хуки для запуска действий и операции для вызова макросов."

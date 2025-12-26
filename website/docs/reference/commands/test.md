@@ -38,5 +38,3 @@ dbt test --select "one_specific_model,test_type:unit"
 ```
 
 Чтобы узнать больше о написании тестов, ознакомьтесь с документацией по [data testing](/docs/build/data-tests) и [unit testing](/docs/build/unit-tests).
-
-</VersionBlock>

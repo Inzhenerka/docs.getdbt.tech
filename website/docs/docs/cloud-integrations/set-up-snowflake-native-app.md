@@ -139,11 +139,9 @@ unlisted: true
 
 ## Часто задаваемые вопросы
 
-<Expandable alt_header="Не удается установить dbt Cloud Snowflake Native app из Snowflake Marketplace" >
+<Expandable alt_header="Не удаётся установить dbt Snowflake Native App из Snowflake Marketplace">
 
-<Expandable alt_header="Unable to install the dbt Snowflake Native app from the Snowflake Marketplace" >
-
-Нативное приложение <Constant name="cloud" /> для Snowflake недоступно для аккаунтов Snowflake Free Trial.
+<Constant name="cloud" /> Snowflake Native App недоступно для аккаунтов Snowflake Free Trial.
 
 </Expandable>
 
@@ -161,3 +159,4 @@ unlisted: true
 <Expandable alt_header="Поддерживаются ли переменные окружения в Native App?" >
 
 [Переменные окружения](/docs/build/environment-variables), такие как `{{env_var('DBT_WAREHOUSE') }}`, пока не поддерживаются в <Constant name="semantic_layer" />. Чтобы использовать функцию **Ask dbt**, необходимо указать фактические учетные данные напрямую.
+</Expandable>

@@ -150,11 +150,9 @@ models:
 {% macro get_where_subquery(relation) -%}
     {% set where = config.get('where') %}
     {% if where %}
-```jinja
-{% if "_days_ago__" in where %}
-    {# заменить строку-заглушку результатом пользовательского макроса #}
-    {% set where = replace_days_ago(where) %}
-```
+      {% if "_days_ago__" in where %}
+          {# заменить строку-заглушку результатом пользовательского макроса #}
+          {% set where = replace_days_ago(where) %}
         {% endif %}
         {%- set filtered -%}
             (select * from {{ relation }} where {{ where }}) dbt_subquery

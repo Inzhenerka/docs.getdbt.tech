@@ -22,10 +22,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'YAML‑файл проекта', value: 'project-yaml', },
-{ label: 'YAML‑файл свойств', value: 'property-yaml', },
-```
+    { label: 'YAML‑файл проекта', value: 'project-yaml', },
+    { label: 'YAML‑файл свойств', value: 'property-yaml', },
   ]
 }>
 

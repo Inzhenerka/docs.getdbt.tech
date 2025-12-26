@@ -21,11 +21,9 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Файл свойств', value: 'property-yaml', },
-{ label: 'Конфигурация в SQL‑файле', value: 'config', },
-```
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация в SQL‑файле', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -44,6 +42,10 @@ models:
 
 ```
 
+</VersionBlock>
+
+<VersionBlock firstVersion="1.10">
+
 ```yaml
 models:
   [<resource-path>](/reference/resource-configs/resource-path):
@@ -52,7 +54,10 @@ models:
     [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
     [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness): <dict>
+    
 ```
+
+</VersionBlock>
 </File>
 
 </TabItem>
@@ -149,11 +154,9 @@ models:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Файл свойств', value: 'property-yaml', },
-{ label: 'Конфигурация в SQL-файле', value: 'config', },
-```
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация в SQL-файле', value: 'config', },
   ]
 }>
 

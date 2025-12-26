@@ -18,10 +18,8 @@ pagination_next: null
 <div className="grid--2-col">
 
 <Card
-```text
-title="Окружения в dbt"
-body="Гибко настраивайте окружения разработки и развертывания в dbt, чтобы управлять тем, как ваш проект выполняется в Studio IDE, dbt CLI и dbt jobs."
-```
+    title="Окружения в dbt"
+    body="Гибко настраивайте окружения разработки и развертывания в dbt, чтобы управлять тем, как ваш проект выполняется в Studio IDE, dbt CLI и dbt jobs."
     link="/docs/dbt-cloud-environments"
     icon="dbt-bit"/>
 

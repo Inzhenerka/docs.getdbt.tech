@@ -24,6 +24,5 @@ hide_table_of_contents: true
     link="/docs/deploy/advanced-ci"
     icon="dbt-bit"/>
 
-```html
 </div><br />
-```
+

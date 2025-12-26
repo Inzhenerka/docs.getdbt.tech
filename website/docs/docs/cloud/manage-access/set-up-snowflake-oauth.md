@@ -150,7 +150,6 @@ Snowflake ограничивает каждую security integration (`CREATE SE
 <Expandable alt_header="Server error 500">
 
 Если при редиректе из Snowflake в <Constant name="cloud" /> вы сталкиваетесь с серверной ошибкой 500, проверьте, что вы добавили в allow-list [IP-адреса <Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses) или [VPC Endpoint ID (для подключений через PrivateLink)](/docs/cloud/secure/snowflake-privatelink#configuring-network-policies) на уровне аккаунта Snowflake.
-</Expandable>
 
 Корпоративные клиенты, у которых есть развертывания с одним арендатором, будут иметь другой диапазон IP-адресов (диапазоны сетевых CIDR) для добавления в белый список.
 

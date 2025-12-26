@@ -32,11 +32,9 @@ tags: ['Snowflake', 'dbt Fusion', 'dbt Core']
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'YAML‑файл проекта', value: 'project-yaml', },
-{ label: 'YAML‑файл свойств', value: 'property-yaml', },
-{ label: 'Конфигурация в SQL‑файле', value: 'config', },
-```
+    { label: 'YAML‑файл проекта', value: 'project-yaml', },
+    { label: 'YAML‑файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация в SQL‑файле', value: 'config', },
   ]
 }>
 
@@ -510,11 +508,9 @@ def model(dbt, session):
 <Tabs
   defaultValue="dbt_project.yml"
   values={[
-```js
-{ label: 'Файл проекта', value: 'dbt_project.yml', },
-{ label: 'Файл свойств', value: 'models/my_model.yml', },
-{ label: 'Конфигурация SQL-файла', value: 'models/events/sessions.sql', },
-```
+    { label: 'Файл проекта', value: 'dbt_project.yml', },
+    { label: 'Файл свойств', value: 'models/my_model.yml', },
+    { label: 'Конфигурация SQL-файла', value: 'models/events/sessions.sql', },
     ]}
 >
 

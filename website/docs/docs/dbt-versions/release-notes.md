@@ -16,7 +16,7 @@ pagination_prev: null
 
 Релиз‑ноты сгруппированы по месяцам отдельно для мультиарендных (multi-tenant) сред и сред виртуального частного облака (VPC).
 
-## December 2025
+## Декабрь 2025
 - **Улучшение**: теперь SSO‑slug’и dbt генерируются системой автоматически при настройке SSO и не подлежат кастомизации. Конфигурации SSO‑slug’ов, которые уже используются, останутся действительными, но будут доступны только для чтения — изменить их будет нельзя. Если вы удалите существующую конфигурацию SSO и создадите новую, вам будет выдан новый SSO‑slug, сгенерированный системой. Это изменение повышает безопасность и предотвращает возможность настройки slug’ов, которые «имитируют» другие организации.
 - **Улучшение**: для пользователей в регионе по умолчанию (`US1`), которые ранее уже создавали аккаунт dbt, расширение dbt для VS Code теперь поддерживает регистрацию через OAuth. Это упрощает регистрацию расширения для пользователей, которые могли забыть пароль или потеряли доступ к своему аккаунту. Подробнее см. [Register the extension](/docs/install-dbt-extension#register-the-extension).
 - **Новое и улучшения**: пользовательский интерфейс [Studio IDE](/docs/cloud/studio-ide/ide-user-interface) в dbt был улучшен, чтобы предоставить более мощные инструменты разработки:
@@ -24,7 +24,8 @@ pagination_prev: null
   - Отдельная встроенная вкладка **Commands** для истории и логов.
   - При обновлении среды разработки до <Constant name="fusion_engine" /> в окружении появляется новая вкладка **Problems**, которая обеспечивает живое обнаружение ошибок, способных помешать успешному выполнению проекта.
 
-## November 2025
+## Ноябрь 2025
+
 - **Изменение поведения**: [dbt Copilot](/docs/cloud/dbt-copilot) теперь требует, чтобы все входные файлы использовали кодировку UTF‑8. Файлы с другими кодировками будут возвращать ошибку. Если вы работаете с устаревшими файлами в другой кодировке, преобразуйте их в UTF‑8 перед использованием Copilot.
 - **Улучшение**: dbt Copilot стал более надежным при работе с OpenAI. Это включает более длительные тайм‑ауты, улучшенную логику повторных попыток и лучшую обработку reasoning‑сообщений при генерации длинного кода, что приводит к меньшему количеству сбоев и большему числу успешных завершений.
 - **Новое**: адаптер Snowflake теперь поддерживает базовую материализацию таблиц для Iceberg‑таблиц, зарегистрированных в каталоге Glue через [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). Подробнее см. [Glue Data Catalog](/docs/mesh/iceberg/snowflake-iceberg-support#external-catalogs).
@@ -32,14 +33,16 @@ pagination_prev: null
 - **Новое**: конфигурация `cluster_by` поддерживается в динамических таблицах. Подробнее см. [Dynamic table clustering](/reference/resource-configs/snowflake-configs#dynamic-table-clustering).
 - **Новое**: когда задания превышают настроенный тайм‑аут, адаптер BigQuery отправляет запрос на отмену задания BigQuery. Подробнее см. [Connect BigQuery](/docs/cloud/connect-data-platform/connect-bigquery#job-creation-timeout-seconds).
 
-## October 2025
+## Октябрь 2025
+
 - **Новое**: на сайте документации [docs.getdbt.com](http://docs.getdbt.com/) появился LLM Context menu на всех страницах документации по продуктам и гайдам. Это меню предоставляет быстрые способы взаимодействия с текущей страницей с помощью LLM. Теперь вы можете:
   - Скопировать страницу в виде «сырого» Markdown &mdash; это упрощает ссылки на контент или его повторное использование.
   - Открыть страницу напрямую в ChatGPT или Claude &mdash; вы будете перенаправлены в чат с LLM, где автоматически загрузится сообщение с просьбой прочитать страницу, что помогает начать диалог с учетом контекста.
   <Lightbox src="/img/llm-menu.png" width="50%" title="LLM Context menu on documentation pages" />
 - **Улучшение**: функция CodeGenCodeLen была повторно добавлена в <Constant name="cloud_ide" />. Ранее она была [временно](#pre-coalesce) удалена из‑за проблем совместимости.
 
-### Coalesce 2025 announcements
+### Анонсы Coalesce 2025
+
 Следующие функции являются новыми или улучшенными в рамках аналитической конференции dbt [Coalesce](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary), проходившей 13–16 октября 2025 года:
 
 - **Новое**: [dbt MCP server](/docs/dbt-ai/about-mcp) теперь общедоступен (GA). Подробнее о dbt MCP server и dbt Agents см. в статье [Announcing dbt Agents and the remote dbt MCP Server: Trusted AI for analytics](https://www.getdbt.com/blog/dbt-agents-remote-dbt-mcp-server-trusted-ai-for-analytics).
@@ -62,7 +65,8 @@ pagination_prev: null
   - **Улучшение**: в [dbt <Constant name="query_page" />](/docs/explore/dbt-insights) проекты, обновленные до [<Constant name="fusion_engine" />](/docs/fusion), получают поддержку [Language Server Protocol (LSP)](/docs/explore/navigate-dbt-insights#lsp-features), а компиляция выполняется на <Constant name="fusion" />.
 - **Новое**: [MetricFlow](/docs/build/about-metricflow) теперь разрабатывается и поддерживается в рамках инициативы [Open Semantic Interchange (OSI)](https://www.snowflake.com/en/blog/open-semantic-interchange-ai-standard/) и распространяется под лицензией [Apache 2.0](https://github.com/dbt-labs/metricflow/blob/main/LICENSE). Подробнее см. пост [Open sourcing MetricFlow](https://www.getdbt.com/blog/open-source-metricflow-governed-metrics).
 
-### Pre-Coalesce
+### Пре-Coalesce
+
 - **Изменение поведения**: [URL‑адреса доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) <Constant name="dbt_platform" /> для аккаунтов в US multi-tenant (US MT) регионе переводятся с `cloud.getdbt.com` на выделенные домены в `dbt.com` (например, `us1.dbt.com`). Пользователи будут автоматически перенаправлены, никаких действий не требуется. Аккаунты EMEA и APAC MT не затронуты и будут обновлены к концу ноября 2025 года.
 
   Организациям, использующим allow‑listing сетей, следует добавить `YOUR_ACCESS_URL.dbt.com` в список разрешенных адресов (например, если ваш URL доступа `ab123.us1.dbt.com`, добавьте весь домен `ab123.us1.dbt.com`).
@@ -76,36 +80,41 @@ pagination_prev: null
   - **Local MCP OAuth** &mdash; теперь вы можете аутентифицировать локальный dbt MCP server в платформе dbt с помощью OAuth (поддержка для [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor) и [VS Code](/docs/dbt-ai/integrate-mcp-vscode)), что снижает необходимость локального управления секретами и стандартизирует настройку. Подробнее см. [dbt platform authentication](/docs/dbt-ai/setup-local-mcp#dbt-platform-authentication).
 - **Изменение поведения**: функция CodeGenCodeLens для создания моделей из источников одним кликом была временно удалена из <Constant name="cloud_ide" /> из‑за проблем совместимости. Планируется повторное внедрение в ближайшем будущем как для IDE, так и для расширения VS Code.
 
-## September 2025
+## Сентябрь 2025
+
 - **Исправление**: улучшена обработка [offset metrics](/docs/build/derived) в [MetricFlow](/docs/build/about-metricflow) для более точных результатов при запросах временных данных. Теперь MetricFlow выполняет join данных _после_ агрегации, когда grain запроса совпадает с offset grain. Ранее join выполнялся _до_ агрегации, что могло исключать часть значений из общего временного периода.
 
-## August 2025
+## Август 2025
+
 - **Исправление**: устранена ошибка, из‑за которой экспорт [saved query](/docs/build/saved-queries) завершался неудачей во время `dbt build` с ошибками `Unable to get saved_query`.
 - **Новое**: GraphQL API <Constant name="semantic_layer" /> теперь имеет endpoint [`queryRecords`](/docs/dbt-cloud-apis/sl-graphql#query-records), позволяющий просматривать историю запросов как для Insights, так и для запросов <Constant name="semantic_layer" />.
 - **Исправление**: устранена ошибка, из‑за которой запросы <Constant name="semantic_layer" /> с пробелом в конце вызывали ошибку. Проблема в основном затрагивала пользователей [Push.ai](https://docs.push.ai/data-sources/semantic-layers/dbt) и теперь исправлена.
 - **Новое**: теперь можно использовать [personal access tokens (PATs)](/docs/dbt-cloud-apis/user-tokens) для аутентификации в Semantic Layer. Это позволяет выполнять аутентификацию на уровне пользователя и уменьшает необходимость совместного использования токенов. При использовании PAT запросы выполняются с вашими персональными учетными данными разработки. Подробнее см. [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
 
-## July 2025
+## Июль 2025
+
 - **Новое**: интеграция [Tableau Cloud](https://www.tableau.com/products/cloud-bi) с Semantic Layer теперь доступна. Подробнее см. [Tableau](/docs/cloud-integrations/semantic-layer/tableau).
 - **Preview**: интеграция Semantic Layer с [Power BI](/docs/cloud-integrations/semantic-layer/power-bi) доступна в режиме Preview.
 - **Улучшение**: теперь можно использовать параметры `limit` и `order_by` при создании [saved queries](/docs/build/saved-queries).
 - **Улучшение**: пользователи с IT‑[лицензиями](/docs/cloud/manage-access/seats-and-users) теперь могут редактировать и управлять [глобальными настройками подключений](/docs/cloud/connect-data-platform/about-connections#connection-management).
 - **Новое**: появились постраничные (paginated) endpoint’ы [GraphQL](/docs/dbt-cloud-apis/sl-graphql) для запросов метаданных в Semantic Layer, что ускоряет интеграции для больших manifest’ов. Подробнее см. [Metadata calls](/docs/dbt-cloud-apis/sl-graphql#metadata-calls).
 
-## June 2025
+## Июнь 2025
+
 - **Новое**: [System for Cross-Domain Identity Management](/docs/cloud/manage-access/scim#scim-configuration-for-entra-id) (SCIM) через Microsoft Entra ID теперь общедоступен (GA), а также доступен на устаревших Enterprise‑планах.
 - **Улучшение**: теперь можно настраивать [compilation environment](/docs/explore/access-dbt-insights#set-jinja-environment) для управления тем, как рендерятся Jinja‑функции в dbt Insights.
 - **Beta**: dbt Fusion engine поддерживает адаптер BigQuery в бете.
 - **Новое**: теперь доступна история изменений настроек для [проектов](/docs/cloud/account-settings), [окружений](/docs/dbt-cloud-environments) и [заданий](/docs/deploy/deploy-jobs).
 - **Новое**: добавлена поддержка последней версии учетных данных BigQuery в Semantic Layer и MetricFlow.
-- **Новое**: Snowflake External OAuth теперь поддерживается для запросов Semantic Layer. Подключения Snowflake с External OAuth могут выполнять запросы для <Constant name="query_page" />, <Constant name="cloud_cli" /> и <Constant name="cloud_ide" /> через Semantic Layer Gateway, обеспечивая безопасный, identity‑aware доступ через провайдеров вроде Okta или Microsoft Entra ID.
+- **Новое**: Snowflake External OAuth теперь поддерживается для запросов Semantic Layer.
+Подключения Snowflake с External OAuth могут выполнять запросы для <Constant name="query_page" />, <Constant name="cloud_cli" /> и <Constant name="cloud_ide" /> через Semantic Layer Gateway, обеспечивая безопасный, identity‑aware доступ через провайдеров вроде Okta или Microsoft Entra ID.
 - **Новое**: теперь можно [скачать управляемый Git‑репозиторий](/docs/cloud/git/managed-repository#download-managed-repository) из платформы dbt.
 - **Новое**: <Constant name="semantic_layer" /> теперь поддерживает Trino как платформу данных. Подробнее см. [Set up the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
 - **Новое**: dbt Fusion engine поддерживает Databricks в бете.
 - **Улучшение**: владельцы групп теперь могут указывать несколько email‑адресов для уведомлений на уровне моделей, что позволяет оповещать более широкие команды. Ранее поддерживался только один адрес. Подробнее см. [Configure groups](/docs/deploy/model-notifications#configure-groups).
 - **Новое**: в GraphQL API Semantic Layer появился endpoint [`List a saved query`](/docs/dbt-cloud-apis/sl-graphql#list-a-saved-query).
 
-## May 2025
+## Май 2025
 
 ### 2025 dbt Launch Showcase
 Следующие функции являются новыми или улучшенными в рамках [dbt Launch Showcase](https://www.getdbt.com/resources/webinars/2025-dbt-cloud-launch-showcase), прошедшего 28 мая 2025 года:
@@ -146,15 +155,14 @@ pagination_prev: null
   * Изменения тарифных планов. Подробнее см. [One dbt](https://www.getdbt.com/product/one-dbt).
   </Expandable>
 
-- <Expandable alt_header="Новое: Переопределение версии dbt с новыми настройками разработки пользователя" >
 
-## April 2025
+## Апрель 2025
 
 - **Улучшение**: [Python SDK](/docs/dbt-cloud-apis/sl-python) теперь поддерживает ленивую загрузку (lazy loading) для больших полей `dimensions`, `entities` и `measures` в объектах `Metric`. Подробнее см. [Lazy loading for large fields](/docs/dbt-cloud-apis/sl-python#lazy-loading-for-large-fields).
 - **Улучшение**: <Constant name="semantic_layer" /> теперь поддерживает SSH-туннелирование для подключений [Postgres](/docs/cloud/connect-data-platform/connect-postgresql-alloydb) или [Redshift](/docs/cloud/connect-data-platform/connect-redshift). Подробности см. в разделе [Set up the <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
 - **Изменение поведения**: Пользователи, которым назначен [набор разрешений `job admin`](/docs/cloud/manage-access/enterprise-permissions#job-admin), теперь имеют доступ к настройке интеграций для проектов, включая интеграцию с [Tableau](/docs/cloud-integrations/downstream-exposures-tableau) для заполнения downstream exposures.
 
-## March 2025
+## Март 2025
 
 - **Изменение поведения**: Начиная с 31 марта 2025 года версии <Constant name="core" /> 1.0, 1.1 и 1.2 были выведены из эксплуатации в <Constant name="cloud" />. Они больше недоступны для выбора в качестве версий для проектов dbt. Рабочие нагрузки, которые в настоящее время используют эти версии, будут автоматически обновлены до v1.3, что может привести к появлению новых ошибок.
 - **Улучшение**: Пользователям [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) в однопользовательских (single-tenant) конфигурациях больше не требуется обращаться к своему аккаунт-менеджеру для включения этой функциональности. Настройка стала self-service и доступна для всех конфигураций арендаторов.
@@ -176,7 +184,8 @@ pagination_prev: null
 - **Новое**: [Release tracks <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks) теперь находятся в статусе General Availability. В зависимости от тарифного плана клиенты могут выбрать треки Latest, Compatible или Extended для управления частотой обновлений сред разработки и развертывания.
 - **Новое**: Нативная интеграция <Constant name="cloud" /> с Azure DevOps теперь поддерживает [service principals Entra ID](/docs/cloud/git/setup-service-principal). В отличие от service user, который представляет реальный пользовательский объект в Entra ID, service principal — это защищённая идентификация, связанная с вашим приложением <Constant name="cloud" /> для неинтерактивного доступа к ресурсам Azure. Пожалуйста, как можно скорее [мигрируйте вашего service user](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) на использование service principal для Azure DevOps.
 
-## February 2025
+
+## Февраль 2025
 
 - **Улучшение**: В [Python SDK](/docs/dbt-cloud-apis/sl-python) добавлен новый параметр тайм-аута для клиента Semantic Layer и для базовых GraphQL‑клиентов, позволяющий задавать тайм-ауты. Вы можете указать значение тайм-аута напрямую или использовать параметр `total_timeout` в глобальном `TimeoutOptions`, чтобы более детально управлять тайм-аутами на подключение, выполнение и закрытие соединения. `ExponentialBackoff.timeout_ms` теперь считается устаревшим.
 - **Новое**: Интеграция [Azure DevOps](/docs/cloud/git/connect-azure-devops) для <Constant name="git" /> теперь поддерживает [приложения Entra service principal](/docs/cloud/git/setup-service-principal) в аккаунтах <Constant name="cloud" /> Enterprise. Microsoft вводит обязательное использование MFA для всех пользовательских аккаунтов, включая сервисные, что повлияет на существующие интеграции приложений. Развертывание происходит поэтапно, и dbt Labs рекомендует [мигрировать на service principal](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) в существующих интеграциях, как только эта возможность станет доступна в вашем аккаунте.

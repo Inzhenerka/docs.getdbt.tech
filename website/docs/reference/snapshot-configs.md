@@ -30,11 +30,9 @@ course="Snapshots"
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Файл свойств', value: 'property-yaml', },
-{ label: 'Конфигурация SQL-файла', value: 'config-resource', },
-```
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация SQL-файла', value: 'config-resource', },
   ]
 }>
 
@@ -168,11 +166,9 @@ import LegacySnapshotConfig from '/snippets/_legacy-snapshot-config.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-```js
-{ label: 'Файл проекта', value: 'project-yaml', },
-{ label: 'Файл свойств', value: 'property-yaml', },
-{ label: 'Конфигурация в SQL-файле', value: 'config', },
-```
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация в SQL-файле', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">

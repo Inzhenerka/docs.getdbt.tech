@@ -155,9 +155,8 @@ import LoginSlug from '/snippets/_login-slug.md';
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-6-setup-integration.png"
-```
-    title="Configuring the application in dbt"
-```
+    title="настройка приложения в dbt"
+/>
 
 21. Нажмите **Save**, чтобы завершить настройку интеграции с Okta. После этого
     вы можете перейти по URL, сгенерированному для _slug_ вашей учетной записи,

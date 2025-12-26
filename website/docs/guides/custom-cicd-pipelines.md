@@ -298,10 +298,8 @@ jobs:
 <Tabs
   defaultValue="single-job"
   values={[
-```js
-{ label: 'Только задание dbt', value: 'single-job', },
-{ label: 'Линтинг и задание dbt', value: 'multi-job', },
-```
+    { label: 'Только задание dbt', value: 'single-job', },
+    { label: 'Линтинг и задание dbt', value: 'multi-job', },
   ]
 }>
 <TabItem value="single-job">
@@ -418,10 +416,8 @@ steps:
 <Tabs
   defaultValue="single-job"
   values={[
-```js
-{ label: 'Только одно задание', value: 'single-job', },
-{ label: 'Задание с линтингом и dbt', value: 'multi-job', },
-```
+    { label: 'Только одно задание', value: 'single-job', },
+    { label: 'Задание с линтингом и dbt', value: 'multi-job', },
   ]
 }>
 <TabItem value="single-job">

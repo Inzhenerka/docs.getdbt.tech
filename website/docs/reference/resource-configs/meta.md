@@ -8,20 +8,18 @@ hide_table_of_contents: true
 <Tabs
   defaultValue="models"
   values={[
-```js
-{ label: 'Модели', value: 'models', },
-{ label: 'Источники', value: 'sources', },
-{ label: 'Сиды', value: 'seeds', },
-{ label: 'Снимки', value: 'snapshots', },
-{ label: 'Тесты', value: 'tests', },
-{ label: 'Модульные тесты', value: 'unit tests', },
-{ label: 'Аналитика', value: 'analyses', },
-{ label: 'Макросы', value: 'macros', },
-{ label: 'Экспозиции', value: 'exposures', },
-{ label: 'Семантические модели', value: 'semantic models', },
-{ label: 'Метрики', value: 'metrics', },
-{ label: 'Сохранённые запросы', value: 'saved queries', },
-```
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Тесты', value: 'tests', },
+    { label: 'Модульные тесты', value: 'unit tests', },
+    { label: 'Аналитика', value: 'analyses', },
+    { label: 'Макросы', value: 'macros', },
+    { label: 'Экспозиции', value: 'exposures', },
+    { label: 'Семантические модели', value: 'semantic models', },
+    { label: 'Метрики', value: 'metrics', },
+    { label: 'Сохранённые запросы', value: 'saved queries', },
   ]
 }>
 <TabItem value="models">
@@ -514,6 +512,8 @@ models:
       owner: "@alice"
       favorite_color: red
 ```
+
+</File>
 
 ### Назначение meta для семантической модели
 

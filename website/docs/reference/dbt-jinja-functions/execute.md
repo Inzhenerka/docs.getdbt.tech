@@ -63,6 +63,8 @@ order by 1
 {% endif %}
 ```
 
+</File>
+
 ## Парсинг и выполнение
 
 Парсинг (parsing) в Jinja — это этап, на котором dbt:
@@ -112,9 +114,11 @@ $ dbt run
 Предположим, у вас есть отношение `relation`, полученное, например, так: `{% set relation = ref('my_model') %}` или `{% set relation = source('source_name', 'table_name') %}`. Это может привести к неожиданному или запутывающему поведению на этапе парсинга:
 
 ```jinja
+
 {%- if load_relation(relation) is none -%}
     {{ log("Relation is missing: " ~ relation, True) }}
 {% endif %}
+
 ```
 
 Чтобы избежать этого, добавьте проверку флага `execute`, чтобы код выполнялся **только тогда, когда dbt действительно выполняет модели**, а не просто подготавливает их.
@@ -122,8 +126,11 @@ $ dbt run
 Используйте команду `do exceptions.warn`, чтобы вывести предупреждение во время выполнения модели, не прерывая запуск.
 
 ```jinja
+
 {%- if execute and load_relation(relation) is none -%}
     {% [do exceptions.warn](/reference/dbt-jinja-functions/exceptions#warn)("Relation is missing: " ~ relation) %}
     {{ log("Relation is missing: " ~ relation, info=True) }}
 {%- endif -%}
+
+
 ```
