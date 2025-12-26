@@ -98,6 +98,7 @@ unit_tests:
           select 2 as id, 'michelle', null as loaded_at as name
 
 ```
+</File>
 
 Или же вы можете указать имя SQL-файла, расположенного в каталоге `tests/fixtures` (или в директории, заданной параметром `test-paths`) вашего проекта, в качестве значения для `fixture`:
 
