@@ -16,20 +16,21 @@ jobs:
 
     steps:
       - name: 🔃 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: website/package-lock.json
+
+      - name: ⚙️ Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: ⚙️ Install dependencies
-        run: npm ci
+        run: bun install
 
       - name: 🛠️ Build site
-        run: NODE_ENV=production CONTEXT=production npm run build
+        run: NODE_ENV=production CONTEXT=production bun run build
 
       - name: 🔼 Upload site
         run: |

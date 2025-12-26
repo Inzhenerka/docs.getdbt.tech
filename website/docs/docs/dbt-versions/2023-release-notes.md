@@ -497,7 +497,7 @@ pagination_prev: null
 
     - Функция `{{this}}` некорректно отображается в preview/compile при использовании dbt-server
 
-</Expandable>
+  </Expandable>
 
 ## Июль 2023
 
