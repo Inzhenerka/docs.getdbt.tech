@@ -1,6 +1,6 @@
 ---
-title: Function configurations
-description: "Read this guide to learn about using function configurations in dbt."
+title: Конфигурации функций
+description: "Прочитайте это руководство, чтобы узнать, как использовать конфигурации функций в dbt."
 meta:
   resource_type: Functions
 ---
@@ -10,8 +10,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 <VersionCallout version="1.11" /> 
 
-## Available configurations
-### Function-specific configurations
+## Доступные конфигурации
+### Конфигурации, специфичные для функций
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -30,8 +30,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 ```yml
 functions:
   [<resource-path>](/reference/resource-configs/resource-path):
-    # Function-specific configs are defined in the properties YAML file
-    # See functions/schema.yml examples below
+    # Конфигурации, специфичные для функций, задаются в properties YAML файле
+    # См. примеры functions/schema.yml ниже
 
 ```
 
@@ -49,11 +49,11 @@ functions:
 functions:
   - name: [<function-name>]
     config:
-      [type](/reference/resource-configs/type): scalar  # optional, defaults to scalar. Eventually will include aggregate | table
-      [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # optional
-      [runtime_version](/reference/resource-configs/runtime-version): <string> # required for Python UDFs
-      [entry_point](/reference/resource-configs/entry-point): <string> # required for Python UDFs
-      # Standard configs that apply to functions
+      [type](/reference/resource-configs/type): scalar  # необязательно, по умолчанию scalar. В будущем появятся aggregate | table
+      [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # необязательно
+      [runtime_version](/reference/resource-configs/runtime-version): <string> # обязательно для Python UDF
+      [entry_point](/reference/resource-configs/entry-point): <string> # обязательно для Python UDF
+      # Стандартные конфигурации, применимые к функциям
       [database](/reference/resource-configs/database): <string>
       [schema](/reference/resource-properties/schema): <string>
       [alias](/reference/resource-configs/alias): <string>
@@ -68,12 +68,12 @@ functions:
 
 </Tabs>
 
-### General configurations
+### Общие конфигурации
 
 <ConfigGeneral />
 
-:::note Database, schema, and alias configuration
-Functions support `database`, `schema`, and `alias` configurations just like models. These determine where the function is created in your warehouse. The function will use the standard dbt configuration precedence (specific config > project config > target profile defaults).
+:::note Конфигурации database, schema и alias
+Функции поддерживают конфигурации `database`, `schema` и `alias` так же, как и модели. Они определяют, где именно функция будет создана в вашем хранилище данных. Для функций применяется стандартный приоритет конфигураций dbt (более специфичная конфигурация > конфигурация проекта > значения по умолчанию из target-профиля).
 :::
 
 <Tabs
@@ -130,16 +130,16 @@ functions:
 </Tabs>
 
 
-## Configuring functions
-Functions are configured in YAML files, either in `dbt_project.yml` or within an individual function's YAML properties file. The function body is defined in a SQL file in the `functions/` directory.
+## Настройка функций
+Функции настраиваются в YAML-файлах — либо в `dbt_project.yml`, либо в индивидуальном properties YAML файле конкретной функции. Тело функции при этом определяется в SQL-файле, расположенном в директории `functions/`.
 
-Function configurations, like model configurations, are applied hierarchically. For more info, refer to [config inheritance](/reference/define-configs#config-inheritance). 
+Конфигурации функций, как и конфигурации моделей, применяются иерархически. Подробнее см. в разделе [наследование конфигураций](/reference/define-configs#config-inheritance). 
 
-Functions respect the same name-generation macros as models: [`generate_database_name`](/docs/build/custom-databases), [`generate_schema_name`](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name), and [`generate_alias_name`](/docs/build/custom-aliases).
+Функции используют те же макросы генерации имён, что и модели: [`generate_database_name`](/docs/build/custom-databases), [`generate_schema_name`](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name) и [`generate_alias_name`](/docs/build/custom-aliases).
 
-### Examples
-#### Apply the `schema` configuration to all functions
-To apply a configuration to all functions, including those in any installed [packages](/docs/build/packages), nest the configuration directly under the `functions` key:
+### Примеры
+#### Применение конфигурации `schema` ко всем функциям
+Чтобы применить конфигурацию ко всем функциям, включая функции из любых установленных [пакетов](/docs/build/packages), вложите конфигурацию непосредственно под ключ `functions`:
 
 <File name='dbt_project.yml'>
 
@@ -152,10 +152,10 @@ functions:
 </File>
 
 
-#### Apply the `schema` configuration to all functions in your project
-To apply a configuration to all functions in your project only (i.e. _excluding_ any functions in installed packages), provide your [project name](/reference/project-configs/name.md) as part of the resource path.
+#### Применение конфигурации `schema` ко всем функциям в вашем проекте
+Чтобы применить конфигурацию только к функциям вашего проекта (то есть _исключая_ функции из установленных пакетов), укажите [имя проекта](/reference/project-configs/name.md) как часть пути ресурса.
 
-For a project named `jaffle_shop`:
+Для проекта с именем `jaffle_shop`:
 
 <File name='dbt_project.yml'>
 
@@ -168,11 +168,11 @@ functions:
 
 </File>
 
-Similarly, you can use the name of an installed package to configure functions in that package.
+Аналогичным образом можно использовать имя установленного пакета, чтобы настраивать функции в этом пакете.
 
-#### Apply the `schema` configuration to one function only
+#### Применение конфигурации `schema` только к одной функции
 
-To apply a configuration to one function only in a properties file, specify the configuration in the function's `config` block:
+Чтобы применить конфигурацию только к одной функции в properties файле, укажите её в блоке `config` этой функции:
 
 <File name='functions/schema.yml'>
 
@@ -186,7 +186,7 @@ functions:
 
 </File>
 
-To apply a configuration to one function only in `dbt_project.yml`, provide the full resource path (including the project name and subdirectories). For a project named `jaffle_shop`, with a function file at `functions/is_positive_int.sql`:
+Чтобы применить конфигурацию только к одной функции в `dbt_project.yml`, укажите полный путь ресурса (включая имя проекта и поддиректории). Для проекта с именем `jaffle_shop` и файлом функции `functions/is_positive_int.sql`:
 
 <File name='dbt_project.yml'>
 
@@ -200,9 +200,9 @@ functions:
 </File>
 
 
-## Example function configuration
+## Пример конфигурации функций
 
-The following example shows how to configure functions in a project named `jaffle_shop` that has two function files:
+Следующий пример показывает, как настроить функции в проекте с именем `jaffle_shop`, в котором есть два файла функций:
 - `functions/is_positive_int.sql`
 - `functions/marketing/clean_url.sql`
 
@@ -216,11 +216,11 @@ functions:
   jaffle_shop:
     +enabled: true
     +schema: udf_schema
-    # This configures functions/is_positive_int.sql
+    # Эта конфигурация применяется к functions/is_positive_int.sql
     is_positive_int:
       +tags: ['validation']
     marketing:
-      +schema: marketing_udfs # this will take precedence
+      +schema: marketing_udfs # это значение будет иметь приоритет
 ```
 
 </File>
@@ -231,7 +231,7 @@ functions:
 
 functions:
   - name: is_positive_int
-    description: Determines if a string represents a positive integer
+    description: Определяет, представляет ли строка положительное целое число
     config:
       type: scalar
       volatility: deterministic
@@ -240,10 +240,10 @@ functions:
     arguments:
       - name: a_string
         data_type: string
-        description: The string to check
+        description: Строка для проверки
     returns:
       data_type: boolean
-      description: Returns true if the string represents a positive integer
+      description: Возвращает true, если строка представляет положительное целое число
 ```
 
 </File>

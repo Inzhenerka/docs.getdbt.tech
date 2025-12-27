@@ -1,46 +1,46 @@
 ---
-title: Define properties
-sidebar_label: Define properties
-intro_text: "Learn how to define properties for your resources in a properties.yml file"
-description: "Learn how to define properties for your resources in a properties.yml file"
+title: Определение свойств
+sidebar_label: Определение свойств
+intro_text: "Узнайте, как определять свойства для ваших ресурсов в файле properties.yml"
+description: "Узнайте, как определять свойства для ваших ресурсов в файле properties.yml"
 pagination_previous: "reference/define-configs"
 ---
 
-In dbt, you can use `properties.yml` files to define properties for resources. You can declare properties in `.yml` files, in the same directory as your resources. You can name these files `whatever_you_want.yml` and nest them arbitrarily in sub-folders within each directory. 
+В dbt вы можете использовать файлы `properties.yml`, чтобы задавать свойства (properties) для ресурсов. Вы объявляете свойства в `.yml`‑файлах, расположенных в той же директории, что и соответствующие ресурсы. Вы можете называть эти файлы как угодно (`whatever_you_want.yml`) и произвольно вкладывать их в подкаталоги внутри каждой директории.
 
-We highly recommend that you define properties in dedicated paths alongside the resources they're describing.
+Мы настоятельно рекомендуем определять свойства в выделенных путях рядом с ресурсами, которые они описывают.
 
 :::info
 
-#### schema.yml files
+#### Файлы schema.yml
 
-Previous versions of the docs referred to these as `schema.yml` files — we've moved away from that terminology since the word `schema` is used to mean other things when talking about databases, and people often thought that you _had_ to name these files `schema.yml`.
+В предыдущих версиях документации такие файлы назывались `schema.yml`. Мы отказались от этой терминологии, потому что слово `schema` в контексте баз данных имеет и другие значения, и пользователи часто думали, что файлы _обязательно_ должны называться `schema.yml`.
 
-Instead, we now refer to these files as `properties.yml` files. (Of course, you're still free to name your files `schema.yml`)
+Теперь мы называем эти файлы `properties.yml`. (Разумеется, вы по‑прежнему можете называть свои файлы `schema.yml`.)
 
 :::
 
-### Which properties are _not_ also configs?
+### Какие properties _не_ являются также configs?
 
-In dbt, you can define node configs in `properties.yml` files, in addition to `config()` blocks and `dbt_project.yml`. However, some special properties can only be defined in the `.yml` file and you cannot configure them using `config()` blocks or the `dbt_project.yml` file:
+В dbt вы можете задавать конфигурации узлов (node configs) в файлах `properties.yml` — в дополнение к блокам `config()` и файлу `dbt_project.yml`. Однако существуют некоторые специальные свойства, которые можно определить **только** в `.yml`‑файлах, и которые нельзя настроить с помощью блоков `config()` или файла `dbt_project.yml`.
 
-Certain properties are special, because:
+Некоторые свойства являются особыми, потому что:
 
-- They have a unique Jinja rendering context
-- They create new project resources
-- They don't make sense as hierarchical configuration
-- They're older properties that haven't yet been redefined as configs
+- для них используется уникальный контекст рендеринга Jinja;
+- они создают новые ресурсы проекта;
+- они не имеют смысла как иерархическая конфигурация;
+- это более старые свойства, которые ещё не были переопределены как configs.
 
-These properties are:
+К таким свойствам относятся:
 
 - [`columns`](/reference/resource-properties/columns)
 - [`deprecation_date`](/reference/resource-properties/deprecation_date)
 - [`description`](/reference/resource-properties/description)
 - [`quote`](/reference/resource-properties/columns#quote)
-- [`source` properties](/reference/source-properties) (for example, `loaded_at_field`)
-- [`exposure` properties](/reference/exposure-properties) (for example, `type`, `maturity`)
-  - Note that while most exposure properties must be configured directly in `properties.yml` files, you can set the [`enabled`](/reference/resource-configs/enabled) config at the [project level](/reference/exposure-properties#project-level-configs) in the`dbt_project.yml` file.
-- [`macro` properties](/reference/macro-properties) (for example, `arguments`)
+- [`source` properties](/reference/source-properties) (например, `loaded_at_field`)
+- [`exposure` properties](/reference/exposure-properties) (например, `type`, `maturity`)
+  - Обратите внимание: хотя большинство свойств exposure необходимо задавать напрямую в файлах `properties.yml`, вы можете установить конфигурацию [`enabled`](/reference/resource-configs/enabled) на [уровне проекта](/reference/exposure-properties#project-level-configs) в файле `dbt_project.yml`.
+- [`macro` properties](/reference/macro-properties) (например, `arguments`)
 - [`tests`](/reference/resource-properties/data-tests)
 - [`versions`](/reference/resource-properties/versions)
 

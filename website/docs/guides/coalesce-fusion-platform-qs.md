@@ -1,5 +1,5 @@
 ---
-title: "Coalesce dbt Fusion Engine in platform Quickstart Guide"
+title: "Быстрый старт по движку dbt Fusion на платформе (для Coalesce)"
 id: "coalesce-fusion-platform-qs"
 # time_to_complete: '30 minutes' commenting out until we test
 level: 'Beginner'
@@ -9,103 +9,106 @@ tags: ['dbt Fusion engine', 'dbt platform','Quickstart']
 recently_updated: true
 ---
 
-## Introduction
+## Введение
 
-Get hands-on with the <Constant name="fusion_engine"/> in a sandbox dbt platform account during Coalesce. 
+В этом руководстве вы сможете на практике поработать с <Constant name="fusion_engine"/> в песочнице dbt platform во время Coalesce.
 
 :::info
-This Quickstart guide is only intended to be used by in-person Coalesce registered users.
+Этот Quickstart-гид предназначен только для участников Coalesce, присутствующих на мероприятии лично и зарегистрированных на него.
 :::
 
-Continue using this guide to get hands-on keyboard experience, preview the experience in the following video.
+Продолжайте следовать этому руководству, чтобы получить практический опыт работы «с клавиатуры», а также предварительно ознакомиться с процессом в следующем видео.
 
 <div>
-<iframe src="https://fast.wistia.net/embed/iframe/8w1n1xeqo9?web_component=true&seo=true&videoFoam=false" title="Coalesce Fusion Sandbox Walkthrough Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="840px" height="460px"></iframe>
+<iframe src="https://fast.wistia.net/embed/iframe/8w1n1xeqo9?web_component=true&seo=true&videoFoam=false" title="Видео‑обзор песочницы Coalesce Fusion" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="840px" height="460px"></iframe>
 <script src="https://fast.wistia.net/player.js" async></script>
 </div>
 
-## Section 1: Sandbox Sign-up
+## Раздел 1: Регистрация в Sandbox
 
-Let's get started with access to a <Constant name="fusion"/> sandbox!
+Давайте начнем с получения доступа к песочнице <Constant name="fusion"/>!
 
-<Lightbox src="/img/guides/coalesce-fusion-qs/workshop-form.png" width="90%" title="The form for accessing your Fusion Sandbox in dbt platform." />
+<Lightbox src="/img/guides/coalesce-fusion-qs/workshop-form.png" width="90%" title="Форма для получения доступа к вашей Fusion Sandbox в dbt platform." />
 
-1. Go to [https://workshops.us1.dbt.com/workshop](https://workshops.us1.dbt.com/workshop?id=46) (Note: In order to access the sign-up page, you may need to log out of any existing dbt Platform account you have or access this URL in Incognito Mode)
+1. Перейдите по адресу [https://workshops.us1.dbt.com/workshop](https://workshops.us1.dbt.com/workshop?id=46)  
+   (Примечание: чтобы получить доступ к странице регистрации, вам может понадобиться выйти из любого существующего аккаунта dbt Platform или открыть этот URL в режиме инкогнито)
 
-2. Enter your first name, last name, and company email.
+2. Введите имя, фамилию и корпоративный email.
 
-3. From the dropdown, select **Mom’s Flower Shop** as your workshop.
+3. В выпадающем списке выберите воркшоп **Mom’s Flower Shop**.
 
-4. Enter the passcode provided on the <Constant name="fusion"/> @ Coalesce website (linked via the QR code in your welcome bag).
+4. Введите код доступа, предоставленный на сайте <Constant name="fusion"/> @ Coalesce (ссылка доступна по QR-коду из вашего welcome-набора).
 
-5. Click **Complete Registration** and note your temporary email and password.   
+5. Нажмите **Complete Registration** и запомните выданные временные email и пароль.  
    
-   💡 *Accounts remain active for 7 days, but you must use the temporary email / password provided to you after registration to access the account. Store this in a notepad doc or password manager for the week.*	  
+   💡 *Аккаунты остаются активными в течение 7 дней, но для входа необходимо использовать временные email и пароль, выданные после регистрации. Сохраните их в заметках или менеджере паролей на время работы.*  
 
-6. Click **Login**  
+6. Нажмите **Login**
 
-## Section 2: Developer productivity with Fusion
+## Раздел 2: Продуктивность разработчиков с Fusion
 
-1. In the dbt platform left-hand navigation, click **Select a project** and choose **Mom’s Flower Shop**
+1. В левом меню навигации dbt platform нажмите **Select a project** и выберите **Mom’s Flower Shop**.
 
-2. In the left-hand navigation, click on **Studio** to open the <Constant name="fusion"/>-enabled IDE.
+2. В левом меню навигации нажмите **Studio**, чтобы открыть IDE с поддержкой <Constant name="fusion"/>.
 
-3. An in-app guide will appear for quick resources and videos about <Constant name="fusion"/>’s new capabilities. Please take a few minutes to review these resources\!
+3. В приложении появится встроенный гайд с быстрыми ресурсами и видео о новых возможностях <Constant name="fusion"/>. Пожалуйста, уделите несколько минут ознакомлению с этими материалами\!
 
-4. From the File Explorer in **Studio,** open the `models/staging/stg_flower_orders.sql` file.
+4. В файловом обозревателе **Studio** откройте файл `models/staging/stg_flower_orders.sql`.
 
-5. Use **Preview CTE** above the first CTE to preview data for just this CTE (`raw_flower_orders`) . 
+5. Используйте **Preview CTE** над первым CTE, чтобы просмотреть данные только для этого CTE (`raw_flower_orders`).  
    
-   💡 *<Constant name="fusion"/> enables modular previews for faster debugging.*  
+   💡 *<Constant name="fusion"/> поддерживает модульный предпросмотр, что ускоряет отладку.*  
 
-6. Hover over the asterisk in `select *` to see column names and data types of available columns.   
+6. Наведите курсор на звездочку в `select *`, чтобы увидеть имена столбцов и типы данных доступных колонок.  
    
-<Lightbox src="/img/guides/coalesce-fusion-qs/select-star.png" width="90%" title="💡 Fusion provides live metadata and column insights as you code." />
+<Lightbox src="/img/guides/coalesce-fusion-qs/select-star.png" width="90%" title="💡 Fusion предоставляет живые метаданные и информацию о столбцах прямо во время написания кода." />
 
-7. Test <Constant name="fusion"/>’s live error detection — introduce a typo and click **Save**. (e.g., `change order_id` to `order_key`) to see real-time feedback. Hover over the red squiggly line to see details about the error.
+7. Проверьте живое обнаружение ошибок в <Constant name="fusion"/> — внесите опечатку и нажмите **Save**  
+   (например, измените `order_id` на `order_key`), чтобы увидеть обратную связь в реальном времени. Наведите курсор на красную волнистую линию, чтобы посмотреть детали ошибки.
 
-<Lightbox src="/img/guides/coalesce-fusion-qs/sql-error.png" width="90%" title="Fusion can detect your SQL errors in real-time while you code and before you send it to your data platform." />
+<Lightbox src="/img/guides/coalesce-fusion-qs/sql-error.png" width="90%" title="Fusion может обнаруживать SQL-ошибки в реальном времени — прямо во время написания кода и до отправки его в вашу data platform." />
 
-    Please note: any file edits stay local to your <Constant name="cloud_ide"/>; no feature branches are permitted for this sandbox account.
+    Обратите внимание: любые изменения файлов остаются локальными в вашем <Constant name="cloud_ide"/>; для этой песочницы использование feature-веток не допускается.
 
-## Section 3: State-aware orchestration
+## Раздел 3: Оркестрация по состоянию
 
-1. From the left navigation, go to **Orchestration → Environments → Production**.
+1. В левом меню навигации перейдите в **Orchestration → Environments → Production**.
 
-2. Navigate to **Prod Job (State Aware Orchestration Enabled)** at the bottom of the page.
+2. В нижней части страницы перейдите к **Prod Job (State Aware Orchestration Enabled)**.
 
-3. Open **Settings** to enable State Aware Orchestration. Check **Enable Fusion cost optimization features** and expand to check **State Aware Orchestration.** Click **Save.**
+3. Откройте **Settings**, чтобы включить State Aware Orchestration. Отметьте **Enable Fusion cost optimization features**, затем раскройте этот пункт и установите флажок **State Aware Orchestration**. Нажмите **Save**.
 
-<Lightbox src="/img/guides/coalesce-fusion-qs/toggle-sao.png" width="90%" title="SAO is easily enabled through the familiar job configurations view." />
+<Lightbox src="/img/guides/coalesce-fusion-qs/toggle-sao.png" width="90%" title="SAO легко включается через привычный экран конфигурации job." />
 
-4. Navigate back to the job page by clicking on the **Prod Job (State Aware Orchestration Enabled)** in the breadcrumb path above the Run \#. 
+4. Вернитесь на страницу job, нажав **Prod Job (State Aware Orchestration Enabled)** в breadcrumb-цепочке над номером запуска (Run \#).
 
-<Lightbox src="/img/guides/coalesce-fusion-qs/return-to-job.png" width="90%" title="Navigate back to the job itself through the breadcrumb." />
+<Lightbox src="/img/guides/coalesce-fusion-qs/return-to-job.png" width="90%" title="Вернитесь к самому job через breadcrumb-навигацию." />
 
-5. Click **Run now** on the **Prod Job (State Aware Orchestration Enabled)** and click into the run to view logs.  
+5. Нажмите **Run now** для **Prod Job (State Aware Orchestration Enabled)** и откройте запуск, чтобы посмотреть логи.
 
-<Lightbox src="/img/guides/coalesce-fusion-qs/prod-job-settings.png" width="90%" title="Choose the run now button to kick off the initial SAO run." />
+<Lightbox src="/img/guides/coalesce-fusion-qs/prod-job-settings.png" width="90%" title="Используйте кнопку Run now, чтобы запустить первый SAO-запуск." />
 
-6. After completion, open the **Lineage** tab.  
-    
-    All models should show **Success**, since this is the first full run of the project. 
-
-7. Run the job again by clicking **Run now** again to see the power of State aware orchestration at work\!
-
-8. When the job completes, open the **Lineage** tab to see **Reuse** statuses appear on most models. We have new flower orders, so the `stg_flower_orders` and downstream models are rerun (status: success), while the rest of the models are reused, since there is no new data.   
+6. После завершения откройте вкладку **Lineage**.  
    
-   💡 *<Constant name="fusion"/> automatically skips models without fresh data, saving pipeline execution time and avoiding data platform costs*
+   Все модели должны иметь статус **Success**, так как это первый полный запуск проекта.
 
-9. On the **Prod Job (State Aware Orchestration Enabled)** page, click on **Models** underneath the Overview section.
+7. Запустите job еще раз, снова нажав **Run now**, чтобы увидеть, как работает State aware orchestration\!
 
-   View the **Models built vs. Models reused** charts to monitor efficiency gains.  
+8. После завершения откройте вкладку **Lineage**, чтобы увидеть статусы **Reuse** у большинства моделей.  
+   Поскольку появились новые заказы на цветы, модели `stg_flower_orders` и все downstream-модели будут перезапущены (статус: success), а остальные модели будут переиспользованы, так как новых данных для них нет.  
+   
+   💡 *<Constant name="fusion"/> автоматически пропускает модели без свежих данных, сокращая время выполнения пайплайна и снижая затраты на data platform.*
 
-<Lightbox src="/img/guides/coalesce-fusion-qs/models-reused.png" width="90%" title="💡 State aware orchestration ensures only changed data is processed." />
+9. На странице **Prod Job (State Aware Orchestration Enabled)** нажмите **Models** под разделом Overview.
 
-## Section 4: Learn More
+   Просмотрите графики **Models built vs. Models reused**, чтобы отслеживать рост эффективности.
 
-Stop by the **dbt Booth in the Discovery Hall** to learn more about the <Constant name="fusion"/>-powered features mentioned in the keynote, witness the magic firsthand at any of our demo pods, and dive deeper into use cases, success stories, and migration details through ongoing lightning talks.
+<Lightbox src="/img/guides/coalesce-fusion-qs/models-reused.png" width="90%" title="💡 State aware orchestration гарантирует, что обрабатываются только измененные данные." />
 
-- Learn more about the <Constant name="fusion_engine"/> in the docs: [the dbt Fusion engine](/docs/fusion)
-- Continue learning dbt at [learn.getdbt.com](http://learn.getdbt.com)
-- Learn about [Coalesce](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) &mdash; the premier analytics engineering conference where data leaders and practitioners reimagine tools and reshape the future of data and AI.
+## Раздел 4: Узнайте больше
+
+Загляните на **dbt Booth в Discovery Hall**, чтобы узнать больше о возможностях на базе <Constant name="fusion"/>, упомянутых в keynote: увидеть магию вживую на любом из наших demo pod, а также глубже разобраться в сценариях использования, историях успеха и деталях миграции в рамках ongoing lightning talks.
+
+- Узнайте больше о <Constant name="fusion_engine"/> в документации: [the dbt Fusion engine](/docs/fusion)
+- Продолжайте изучать dbt на [learn.getdbt.com](http://learn.getdbt.com)
+- Узнайте больше о [Coalesce](https://coalesce.getdbt.com/event/21662b38-2c17-4c10-9dd7-964fd652ab44/summary) &mdash; ведущей конференции по analytics engineering, где лидеры и практики данных переосмысливают инструменты и формируют будущее данных и AI.

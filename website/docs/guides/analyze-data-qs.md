@@ -1,77 +1,77 @@
 ---
-title: "Analyze your data in dbt"
+title: "Анализируйте данные в dbt"
 id: "analyze-your-data"
 icon: 'dbt'
 hide_table_of_contents: true
 tags: ['Analyst', 'dbt platform', 'Quickstart']
-intro_text: "Start with a stakeholder question and analyze the data to answer that question without writing any SQL"
+intro_text: "Начните с вопроса стейкхолдера и проанализируйте данные, чтобы ответить на него, не написав ни одной строки SQL"
 recently_updated: true
 ---
 
-## Introduction
+## Введение
 
-As a data analyst, you play a key role in transforming complex data into trusted, actionable insights for your team. With <Constant name="cloud" />, you can use built-in, AI-powered tools to build governed data models, explore how they’re built, and even run your own analysis.
+Как аналитик данных, вы играете ключевую роль в преобразовании сложных данных в надёжные и практичные инсайты для вашей команды. С помощью <Constant name="cloud" /> вы можете использовать встроенные инструменты на базе ИИ для создания управляемых data models, изучения того, как они устроены, и даже запуска собственного анализа.
 
-In this quickstart, you’ll learn how to:
+В этом quickstart вы узнаете, как:
 
-* Use <Constant name="explorer" /> to browse and understand data models across both dbt and Snowflake data assets
-* Use <Constant name="query_page" /> to run queries for exploring and validating your data
-* Use <Constant name="visual_editor" /> to visually build your own data models
-* Build confidence using <Constant name="cloud" /> as your workspace enhanced with AI
+* Использовать <Constant name="explorer" /> для просмотра и понимания data models как в dbt, так и в Snowflake data assets  
+* Использовать <Constant name="query_page" /> для выполнения запросов с целью исследования и валидации данных  
+* Использовать <Constant name="visual_editor" /> для визуального создания собственных data models  
+* Повысить уверенность в работе, используя <Constant name="cloud" /> как рабочее пространство, дополненное ИИ  
 
-Here's more about the tools you will use on your journey:
-* <Constant name="explorer" />: View your project's resources (such as models, tests, and metrics), their lineage, and query patterns to gain a better understanding of its latest production state.
-* <Constant name="query_page" />: Explore, validate, and query data with an intuitive, context-rich interface that bridges technical and business users by combining metadata, documentation, AI-assisted tools, and powerful querying capabilities.
-* <Constant name="visual_editor" />: Quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation.
+Подробнее об инструментах, которые вы будете использовать:
 
+* <Constant name="explorer" />: Просматривайте ресурсы проекта (такие как models, tests и metrics), их lineage и шаблоны запросов, чтобы лучше понимать актуальное production‑состояние проекта.  
+* <Constant name="query_page" />: Исследуйте, проверяйте и запрашивайте данные с помощью интуитивного, контекстно насыщенного интерфейса, который объединяет технических и бизнес‑пользователей за счёт метаданных, документации, инструментов с ИИ‑поддержкой и мощных возможностей запросов.  
+* <Constant name="visual_editor" />: Быстро получайте доступ к данным и трансформируйте их с помощью визуального интерфейса drag‑and‑drop и встроенного ИИ для генерации пользовательского кода.
 
-## Prerequisites
+## Предварительные требования
 
-Before you begin, make sure:
+Перед началом убедитесь, что:
 
-* You have access to and credentials configured for a <Constant name="cloud" /> project
-* Your team has already run a successful dbt job, so models are built and ready
-* You have a a git provider connected and authenticated
+* У вас есть доступ и настроенные учётные данные для проекта в <Constant name="cloud" />  
+* Ваша команда уже успешно запускала dbt job, поэтому models собраны и готовы к использованию  
+* У вас подключён и аутентифицирован git provider  
 
-## Analyst workflows
+## Рабочий процесс аналитика
 
-Kimiko, an analyst at the Jaffle Shop, notices they've been doing a lot of new sales and wants to investigate the most critical data they have in their warehouse.
+Кимико, аналитик в Jaffle Shop, замечает, что у компании появилось много новых продаж, и хочет исследовать наиболее важные данные, которые хранятся в их хранилище.
 
-**Question: A stakeholder is curious how many customers you've acquired month by month, in the last 12 months.**
+**Вопрос: стейкхолдеру интересно, сколько клиентов вы привлекали помесячно за последние 12 месяцев.**
 
-Kimiko wonders, "How do I find data in our project that will help me answer their question?"
+Кимико задаётся вопросом: «Как мне найти данные в нашем проекте, которые помогут ответить на этот вопрос?»
 
-### Explore a stakeholder question
+## Разбор вопроса стейкхолдера
 
-She navigates to the data catalog, <Constant name="explorer" />, by signing into <Constant name="cloud" /> and clicking <Constant name="explorer" /> in the left panel. Because the question was about customers, Kimiko begins by searching for "customers" in <Constant name="explorer" />:
+Она переходит в каталог данных — <Constant name="explorer" />, войдя в <Constant name="cloud" /> и нажав <Constant name="explorer" /> в левой панели. Поскольку вопрос касается клиентов, Кимико начинает с поиска по слову “customers” в <Constant name="explorer" />:
 
-<Lightbox src="/img/guides/analyst-qs/catalog-search.png" width="90%" title="Catalog search for customers" />
+<Lightbox src="/img/guides/analyst-qs/catalog-search.png" width="90%" title="Поиск customers в Catalog" />
 
-She finds a "customers" model, which might be what she needs. She clicks **customers** to open the model. The description reads, “Customer overview data Mart offering key details for each unique customer, one row per customer.”
+Она находит model с названием **customers**, которая, возможно, ей подходит. Кимико нажимает **customers**, чтобы открыть model. В описании указано: “Customer overview data Mart offering key details for each unique customer, one row per customer.”
 
-Next, Kimiko selects **Columns** to see which columns this model uses. 
+Затем Кимико выбирает **Columns**, чтобы посмотреть, какие колонки используются в этой model.
 
-<Lightbox src="/img/guides/analyst-qs/columns.png" width="90%" title="Columns in customers table" />
+<Lightbox src="/img/guides/analyst-qs/columns.png" width="90%" title="Колонки в таблице customers" />
 
-She notices these columns: `customer_ID`, `customer_names`, and `first_ordered_at`. 
+Она замечает следующие колонки: `customer_ID`, `customer_names` и `first_ordered_at`.
 
-The `first_ordered_at` column stands out to Kimiko, and she wonders if she might use it to see how many customers they've acquired based on when they placed their first order.
+Колонка `first_ordered_at` особенно привлекает внимание Кимико — она предполагает, что её можно использовать, чтобы определить, сколько клиентов было привлечено на основе даты их первого заказа.
 
-But first, she decides to interact with the data to learn more.
+Но сначала она решает поработать с данными напрямую, чтобы лучше их понять.
 
-### Query data in Insights
+### Запрос данных в Insights
 
-From the **Customer model page** in <Constant name="explorer" />, Kimiko selects **Analyze data** from the **Open in...** dropdown. This enables her to query data for the Customer model. Once opened, <Constant name="query_page" /> contains a query poised and ready to run.
+На **странице Customer model** в <Constant name="explorer" /> Кимико выбирает **Analyze data** в выпадающем меню **Open in...**. Это позволяет выполнять запросы к данным Customer model. После открытия <Constant name="query_page" /> уже содержит подготовленный запрос, готовый к выполнению.
 
-<Lightbox src="/img/guides/analyst-qs/query.png" width="90%" title="Open query" />
+<Lightbox src="/img/guides/analyst-qs/query.png" width="90%" title="Открытый запрос" />
 
-When Kimiko runs the query, she can look at the data underyling it. The same context she saw in <Constant name="explorer" /> she now sees in her SQL editing experience.
+Когда Кимико запускает запрос, она может просмотреть данные, лежащие в его основе. Тот же контекст, который она видела в <Constant name="explorer" />, теперь доступен и в интерфейсе редактирования SQL.
 
-As she looks through the data, she sees information about each customer. She also notices the `first_ordered_at` column. Kimiko wants to code the query but her SQL is a little rusty so she uses natural language in dbt Copilot:
+Просматривая данные, она видит информацию по каждому клиенту и снова обращает внимание на колонку `first_ordered_at`. Кимико хочет написать запрос, но её навыки SQL немного подзабыты, поэтому она использует естественный язык в dbt Copilot:
 
 *How many new customers did we get in each month last year? I'd like to use my customer model and the first ordered at field to do this analysis.*
 
-dbt Copilot writes SQL that Kimiko decides to use: 
+dbt Copilot генерирует SQL, который Кимико решает использовать:
 
 ```sql
 select 
@@ -85,11 +85,11 @@ group by 1
 order by 1;
 ```
 
-Kimiko clicks **Replace** to move all of the SQL into her editor and replaces the original query. She runs the new query and reviews the data but decides to limit the dates using Copilot once again:
+Кимико нажимает **Replace**, чтобы перенести весь SQL в редактор, заменив исходный запрос. Она запускает новый запрос и просматривает результаты, но решает ещё раз воспользоваться Copilot, чтобы ограничить даты:
 
 *Can we limit the dates to 2024?*
 
-She verifies the new filter for 2024 and reruns this query: 
+Она проверяет новый фильтр на 2024 год и повторно запускает запрос:
 
 ```sql
 select 
@@ -103,37 +103,36 @@ group by 1
 order by 1;
 ```
 
-She's happy with the results and clicks **Details** to see the AI-generated report, which includes a title and description, supplied SQL, and the compiled SQL.
+Результаты её устраивают, и она нажимает **Details**, чтобы посмотреть отчёт, сгенерированный ИИ, который включает заголовок и описание, исходный SQL и скомпилированный SQL.
 
-<Lightbox src="/img/guides/analyst-qs/details.png" width="90%" title="Details report tabe" />
+<Lightbox src="/img/guides/analyst-qs/details.png" width="90%" title="Таблица детализации отчёта" />
 
-Once she's ready to get the insight to her stakeholder, she clicks **Chart** to view the chart prefilled with the data from the **Data** tab. 
+Когда Кимико готова поделиться инсайтом со стейкхолдером, она нажимает **Chart**, чтобы увидеть график, автоматически заполненный данными из вкладки **Data**.
 
-She adds x- and y-axis labels, such as "Month of first order" and "Total new customers" to make it more comprehensible for the final report she'll share with her stakeholder. Next, she takes a screenshot to share with them.
+Она добавляет подписи к осям X и Y, например “Month of first order” и “Total new customers”, чтобы сделать итоговый отчёт более понятным. Затем она делает скриншот, чтобы поделиться им со стейкхолдером.
 
-<!-- ![ADD IMAGE Insights-axis-title](/img/analyst-walkthrough/insights-axis-title.png) -->
+<!-- ![ДОБАВИТЬ КАРТИНКУ Insights-axis-title](/img/analyst-walkthrough/insights-axis-title.png) -->
 
-She often comes back to this data so Kimiko decides to bookmark the page by clicking **Bookmark** in the top right. She also exports it to a CSV file.
+Кимико часто возвращается к этим данным, поэтому она решает добавить страницу в закладки, нажав **Bookmark** в правом верхнем углу. Также она экспортирует данные в CSV‑файл.
 
-### Visualize results
+### Визуализация результатов
 
-Kimiko has a few conversations with teammates and she finds out they're running pretty similar one-off queries, so she decides to take her long running query that she previously bookmarked and turn it into a full-fledged dbt model using <Constant name="visual_editor" />. She does this so she can share it with others, which de-duplicates work and helps her team become more efficient. 
+После нескольких разговоров с коллегами Кимико узнаёт, что они выполняют очень похожие разовые запросы. Поэтому она решает взять свой долгоживущий запрос, который ранее добавила в закладки, и превратить его в полноценную dbt model с помощью <Constant name="visual_editor" />. Это позволяет ей делиться результатом с другими, устранять дублирование работы и повышать эффективность команды.
 
-To do this, she opens the query in <Constant name="query_page" /> and clicks **Develop** then ***Develop in** <Constant name="visual_editor" />. This opens the SQL query in a visual form, represented in a DAG.
+Для этого она открывает запрос в <Constant name="query_page" />, нажимает **Develop**, затем ***Develop in** <Constant name="visual_editor" />. SQL‑запрос открывается в визуальной форме, представленной в виде DAG.
 
-<!-- ![ADD IMAGE Canvas-overview](/img/analyst-walkthrough/canvas-overview.png) -->
+<!-- ![[ДОБАВИТЬ КАРТИНКУ Canvas-overview](/img/analyst-walkthrough/canvas-overview.png) -->
 
-When she examines the model, she notes it's selecting from customers as expected, filtering for 2024, showing dates by month, and aggregating over that month. She runs it in her development environment and clicks **Commit** to submit a pull request. 
+Изучая model, она отмечает, что всё работает как ожидается: данные выбираются из customers, применяется фильтр на 2024 год, даты агрегируются по месяцам. Она запускает model в своей development‑среде и нажимает **Commit**, чтобы создать pull request.
 
-<!-- ![ADD IMAGE Canvas-commit](/img/analyst-walkthrough/canvas-commit.png) -->
+<!-- ![[ДОБАВИТЬ КАРТИНКУ Canvas-commit](/img/analyst-walkthrough/canvas-commit.png) -->
 
-Now Kimiko's entire team, those who have the same access as her, can run this model and see the same results she does! What's more is they can help her improve the model as the stakeholder requests get more complicated, and she will benefit from their help.
+Теперь вся команда Кимико — те, у кого есть такой же доступ, — может запускать эту model и видеть те же результаты! Более того, коллеги могут помогать ей улучшать model по мере усложнения запросов стейкхолдера, и Кимико будет получать пользу от их вклада.
 
-### The query becomes a model
+### Запрос становится моделью
 
-Going forward, Kimiko is able to return to her project in <Constant name="explorer" /> and run the model to get the most current results. From here, she can:
+В дальнейшем Кимико может возвращаться к проекту в <Constant name="explorer" /> и запускать model, чтобы получать самые актуальные результаты. Отсюда она может:
 
-* Manually run the model, which also runs tests and is versioned so Kimiko can track changes over time
-* Trigger a scheduled job to run the dbt model, like every Monday for her stakeholder report
-* Set up a Slack notification in case the job fails so she can recitfy any problems
-
+* Вручную запускать model, что также запускает tests и сохраняет версии, позволяя Кимико отслеживать изменения со временем  
+* Запускать запланированный job для выполнения dbt model, например, каждый понедельник для отчёта стейкхолдеру  
+* Настроить уведомление в Slack на случай сбоя job, чтобы она могла оперативно исправить проблемы  

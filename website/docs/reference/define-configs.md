@@ -1,49 +1,47 @@
 ---
-title: Define configs
-sidebar_label: Define configs
-intro_text: "Learn how to define configurations for your resources in a dbt project"
-description: "Learn how to define configurations for your resources in a dbt project"
+title: Определение конфигураций
+sidebar_label: Определение конфигураций
+intro_text: "Узнайте, как определять конфигурации для ваших ресурсов в dbt‑проекте"
+description: "Узнайте, как определять конфигурации для ваших ресурсов в dbt‑проекте"
 pagination_previous: "reference/configs-and-properties"
 pagination_next: "reference/define-properties"
 ---
 
-Depending on the resource type, you can define configurations in a dbt project and also in an installed package by:
+В зависимости от типа ресурса вы можете задавать конфигурации в dbt‑проекте, а также в установленном пакете, следующими способами:
 
 <VersionBlock firstVersion="1.9">
 
-1. Using a [`config` property](/reference/resource-properties/config) in a `.yml` file for supported resource directories like `models/`, `snapshots/`, `seeds/`, `analyses`, `tests/`, and more.
-2. From the [`dbt_project.yml` file](dbt_project.yml), under the corresponding resource key (`models:`, `snapshots:`, `data_tests:`, and so on)
+1. Используя свойство [`config`](/reference/resource-properties/config) в файле `.yml` для поддерживаемых директорий ресурсов, таких как `models/`, `snapshots/`, `seeds/`, `analyses`, `tests/` и других.
+2. Через файл [`dbt_project.yml`](dbt_project.yml), в соответствующем ключе ресурса (`models:`, `snapshots:`, `data_tests:` и так далее).
 </VersionBlock>
 
+## Наследование конфигураций
 
-## Config inheritance
+Наиболее специфичная конфигурация всегда имеет приоритет. В общем случае это следует порядку, указанному выше: блок `config()` внутри файла → свойства, определённые в `.yml` файле → конфигурация, заданная в проектном файле.
 
-The most specific config always takes precedence. This generally follows the order above: an in-file `config()` block --> properties defined in a `.yml` file --> config defined in the project file. 
+Примечание: обобщённые data tests работают немного иначе с точки зрения специфичности. Подробнее см. [test configs](/reference/data-test-configs).
 
-Note - Generic data tests work a little differently when it comes to specificity. See [test configs](/reference/data-test-configs).
+Внутри проектного файла конфигурации также применяются иерархически. Наиболее специфичная конфигурация всегда имеет приоритет. Например, конфигурации, применённые к поддиректории `marketing`, будут иметь приоритет над конфигурациями, применёнными ко всему проекту `jaffle_shop`. Чтобы применить конфигурацию к модели или директории моделей, определите [resource path](/reference/resource-configs/resource-path) в виде вложенных ключей словаря.
 
-Within the project file, configurations are also applied hierarchically. The most specific config always takes precedence. In the project file, for example, configurations applied to a `marketing` subdirectory will take precedence over configurations applied to the entire `jaffle_shop` project. To apply a configuration to a model or directory of models, define the [resource path](/reference/resource-configs/resource-path) as nested dictionary keys.
+Конфигурации в корневом dbt‑проекте имеют _более высокий_ приоритет, чем конфигурации в установленных пакетах. Это позволяет переопределять настройки установленных пакетов и даёт больше контроля над выполнением dbt.
 
-Configurations in your root dbt project have _higher_ precedence than configurations in installed packages. This enables you to override the configurations of installed packages, providing more control over your dbt runs. 
+## Комбинирование конфигураций
 
-## Combining configs
+Большинство конфигураций при иерархическом применении «перезаписываются» (clobbered). Если доступно более специфичное значение, оно полностью заменяет менее специфичное. Однако некоторые конфигурации имеют иное поведение при объединении:
+- [`tags`](/reference/resource-configs/tags) являются аддитивными. Если для модели заданы теги в `dbt_project.yml`, а дополнительные теги указаны в её `.sql` файле, итоговый набор тегов будет включать их все.
+- Словари [`meta`](/reference/resource-configs/meta) объединяются (более специфичная пара ключ‑значение заменяет менее специфичное значение с тем же ключом).
+- При использовании конфигурации [`freshness`](/reference/resource-configs/freshness) более специфичная пара ключ‑значение заменяет менее специфичное значение с тем же ключом.
+- [`pre-hook` и `post-hook`](/reference/resource-configs/pre-hook-post-hook) также являются аддитивными.
+- Для перезаписываемых и объединяемых конфигураций, наследуемых с нескольких уровней, действуют общие правила:
+    - Конфигурации на уровне ноды (более специфичные) перезаписывают конфигурации на уровне проекта (менее специфичные).
+    - Для sources конфигурации на уровне таблицы (более специфичные) перезаписывают конфигурации на уровне source (менее специфичные).
+    - Конфигурация корневого проекта в `dbt_project.yml` перезаписывает конфигурации в файлах пакетов. Это сделано для того, чтобы пользователи могли управлять поведением пакетов, устанавливаемых через `dbt deps`, без необходимости напрямую редактировать код этих пакетов.
 
-Most configurations are "clobbered"  when applied hierarchically. Whenever a more specific value is available, it will completely replace the less specific value. Note that a few configs have different merge behavior:
-- [`tags`](/reference/resource-configs/tags) are additive. If a model has some tags configured in `dbt_project.yml`, and more tags are applied in its `.sql` file, the final set of tags will include all of them.
-- [`meta`](/reference/resource-configs/meta) dictionaries are merged (a more specific key-value pair replaces a less specific value with the same key).
-- When using the [`freshness`](/reference/resource-configs/freshness) config, a more specific key-value pair replaces a less specific value with the same key.
-- [`pre-hook` and `post-hook`](/reference/resource-configs/pre-hook-post-hook) are also additive.
-- For clobbering and merging configurations that are inherited from multiple levels, the general rules are:
-    - Node-level configs (more specific) clobber project-level configs (less specific).
-    - For sources, table-level configs (more specific) clobber source-level configs (less specific).
-    - The root project's configuration in `dbt_project.yml` clobbers configuration within package files. This is so that users can control the behavior of packages they are installing using `dbt deps` without needing to edit the code in those package files directly.
-
-## The `+` prefix
+## Префикс `+`
 
 import PlusPrefix from '/snippets/_plus-prefix.md';
 
 <PlusPrefix />
-
 
 import Example from '/snippets/_configs-properties.md'  ;
 

@@ -1,8 +1,8 @@
 ---
-title: Quickstart for dbt Core using DuckDB
+title: Быстрый старт для dbt Core с использованием DuckDB
 id: duckdb
-description: "Learn to use dbt Core using DuckDB."
-hoverSnippet: "Learn to use dbt Core using DuckDB."
+description: "Узнайте, как использовать dbt Core с DuckDB."
+hoverSnippet: "Узнайте, как использовать dbt Core с DuckDB."
 platform: 'dbt-core'
 icon: 'duckdb-seeklogo'
 level: 'Beginner'
@@ -12,44 +12,44 @@ tags: ['dbt Core','Quickstart']
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use <Constant name="core" /> with DuckDB, enabling you to get set up quickly and efficiently. [DuckDB](https://duckdb.org/) is an open-source database management system which is designed for analytical workloads. It is designed to provide fast and easy access to large datasets, making it well-suited for data analytics tasks. 
-
-
-This guide will demonstrate how to: 
-
-- [Create a virtual development environment](/docs/core/pip-install#using-virtual-environments) using a template provided by dbt Labs.
-- We will set up a fully functional dbt environment with an operational and executable project. The codespace automatically connects to the DuckDB database and loads a year's worth of data from our fictional Jaffle Shop café, which sells food and beverages in several US cities.
-- Run through the steps outlined in the `jaffle_shop_duck_db` repository, but if you want to dig into the underlying code further, refer to the [README](https://github.com/dbt-labs/jaffle_shop_duckdb/blob/duckdb/README.md) for the Jaffle Shop template.
-- Run any dbt command from the environment’s terminal. 
-- Generate a larger dataset for the Jaffle Shop café (for example, five years of data instead of just one).
-
-You can learn more through high-quality [dbt Learn courses and workshops](https://learn.getdbt.com). 
+В этом кратком руководстве вы узнаете, как использовать <Constant name="core" /> вместе с DuckDB, чтобы быстро и эффективно начать работу. [DuckDB](https://duckdb.org/) — это система управления базами данных с открытым исходным кодом, предназначенная для аналитических нагрузок. Она обеспечивает быстрый и удобный доступ к большим наборам данных, что делает её хорошо подходящей для задач аналитики данных.
 
 
-### Related content
+В этом руководстве будет показано, как:
+
+- [Создать виртуальное окружение для разработки](/docs/core/pip-install#using-virtual-environments) с использованием шаблона, предоставленного dbt Labs.
+- Настроить полностью рабочее окружение dbt с готовым к выполнению проектом. Codespace автоматически подключается к базе данных DuckDB и загружает данные за один год из нашего вымышленного кафе Jaffle Shop, которое продаёт еду и напитки в нескольких городах США.
+- Пройти шаги, описанные в репозитории `jaffle_shop_duck_db`, а если вы хотите глубже разобраться в исходном коде, обратиться к [README](https://github.com/dbt-labs/jaffle_shop_duckdb/blob/duckdb/README.md) шаблона Jaffle Shop.
+- Выполнять любые команды dbt из терминала окружения.
+- Сгенерировать больший набор данных для кафе Jaffle Shop (например, данные за пять лет вместо одного).
+
+Дополнительные материалы для обучения доступны в качественных [курсах и воркшопах dbt Learn](https://learn.getdbt.com).
 
 
-- [DuckDB setup](/docs/core/connect-data-platform/duckdb-setup)
-- [Create a GitHub repository](/guides/manual-install?step=2)
-- [Build your first models](/guides/manual-install?step=3)
-- [Test and document your project](/guides/manual-install?step=4)
+### Связанный контент
 
 
-## Prerequisites
+- [Настройка DuckDB](/docs/core/connect-data-platform/duckdb-setup)
+- [Создание репозитория GitHub](/guides/manual-install?step=2)
+- [Создание первых моделей](/guides/manual-install?step=3)
+- [Тестирование и документирование проекта](/guides/manual-install?step=4)
 
-- When using DuckDB with <Constant name="core" />, you'll need to use the dbt command-line interface (CLI). Currently, DuckDB is not supported in <Constant name="cloud" />.
-- It's important that you know some basics of the terminal. In particular, you should understand `cd`, `ls` , and `pwd` to navigate through the directory structure of your computer easily.
-- You have a [GitHub account](https://github.com/join).
 
-## Set up DuckDB for dbt Core
+## Предварительные требования
 
-This section will provide a step-by-step guide for setting up DuckDB for use in local (Mac and Windows) environments and web browsers.
+- При использовании DuckDB с <Constant name="core" /> необходимо работать через интерфейс командной строки dbt (CLI). В настоящее время DuckDB не поддерживается в <Constant name="cloud" />.
+- Важно иметь базовые навыки работы с терминалом. В частности, вы должны понимать команды `cd`, `ls` и `pwd`, чтобы уверенно перемещаться по структуре каталогов на вашем компьютере.
+- У вас есть [аккаунт GitHub](https://github.com/join).
 
-In the repository, there's a [`requirements.txt`](https://github.com/dbt-labs/jaffle_shop_duckdb/blob/duckdb/requirements.txt) file which is used to install dbt Core, DuckDB, and all other necessary dependencies. You can check this file to see what will be installed on your machine. It's typically located in the root directory of your project alongside other key files like `dbt_project.yml`. Otherwise, we will show you how in later steps.
+## Настройка DuckDB для dbt Core
 
-Below is an example of the `requirements.txt` file alongside other key files like `dbt_project.yml`:
+В этом разделе приведено пошаговое руководство по настройке DuckDB для использования в локальных окружениях (Mac и Windows) и в веб-браузере.
+
+В репозитории есть файл [`requirements.txt`](https://github.com/dbt-labs/jaffle_shop_duckdb/blob/duckdb/requirements.txt), который используется для установки dbt Core, DuckDB и всех необходимых зависимостей. Вы можете ознакомиться с этим файлом, чтобы понять, что именно будет установлено на вашем компьютере. Обычно он находится в корневом каталоге проекта рядом с такими ключевыми файлами, как `dbt_project.yml`. В противном случае мы покажем это на следующих шагах.
+
+Ниже приведён пример файла `requirements.txt` рядом с другими ключевыми файлами, такими как `dbt_project.yml`:
 
 
 ```shell
@@ -64,13 +64,13 @@ Below is an example of the `requirements.txt` file alongside other key files lik
 
 ```
 
-For more information, refer to the [DuckDB setup](/docs/core/connect-data-platform/duckdb-setup).
+Для получения дополнительной информации см. [настройку DuckDB](/docs/core/connect-data-platform/duckdb-setup).
 
 <Tabs>
   <TabItem value="local" label="Local">
 
 
-1. First, [clone](https://git-scm.com/docs/git-clone) the Jaffle Shop git repository by running the following command in your terminal:
+1. Сначала [клонируйте](https://git-scm.com/docs/git-clone) git-репозиторий Jaffle Shop, выполнив следующую команду в терминале:
 
 
 
@@ -79,7 +79,7 @@ For more information, refer to the [DuckDB setup](/docs/core/connect-data-platfo
 
     ```
 
-2. Change into the docs-duckdb directory from the command line:
+2. Перейдите в каталог `jaffle_shop_duckdb` из командной строки:
 
     ```shell
 
@@ -88,9 +88,9 @@ For more information, refer to the [DuckDB setup](/docs/core/connect-data-platfo
     ```
 
 
-3. Install dbt Core and DuckDB in a virtual environment.
+3. Установите dbt Core и DuckDB в виртуальное окружение.
 
-    <Expandable alt_header="Example for Mac" >
+    <Expandable alt_header="Пример для Mac" >
 
     ```shell
 
@@ -103,7 +103,7 @@ For more information, refer to the [DuckDB setup](/docs/core/connect-data-platfo
     ```
     </Expandable>
 
-    <Expandable alt_header="Example for Windows" >
+    <Expandable alt_header="Пример для Windows" >
 
     ```shell
 
@@ -117,7 +117,7 @@ For more information, refer to the [DuckDB setup](/docs/core/connect-data-platfo
 
     </Expandable>
 
-    <Expandable alt_header="Example for Windows PowerShell" >
+    <Expandable alt_header="Пример для Windows PowerShell" >
 
     ```shell
 
@@ -131,19 +131,19 @@ For more information, refer to the [DuckDB setup](/docs/core/connect-data-platfo
     </Expandable>
 
 
-4. Ensure your profile is setup correctly from the command line by running the following [dbt commands](/reference/dbt-commands).
+4. Убедитесь, что ваш профиль настроен корректно, выполнив следующие [команды dbt](/reference/dbt-commands) из командной строки:
 
-    - [dbt seed](/reference/commands/seed) &mdash; loads CSV files located in the seed-paths directory of your project into your data warehouse
-    - [dbt compile](/reference/commands/compile) &mdash; generates executable SQL from your project source files
-    - [dbt run](/reference/commands/run) &mdash; compiles and runs your project
-    - [dbt test](/reference/commands/test) &mdash; compiles and tests your project
-    - [dbt build](/reference/commands/build) &mdash; compiles, runs, and tests your project
-    - [dbt docs generate](/reference/commands/cmd-docs#dbt-docs-generate) &mdash; generates your project's documentation.
-    - [dbt docs serve](/reference/commands/cmd-docs#dbt-docs-serve) &mdash; starts a webserver on port 8080 to serve your documentation locally and opens the documentation site in your default browser.
+    - [dbt seed](/reference/commands/seed) — загружает CSV-файлы из каталога seed-paths проекта в хранилище данных
+    - [dbt compile](/reference/commands/compile) — генерирует исполняемый SQL из исходных файлов проекта
+    - [dbt run](/reference/commands/run) — компилирует и выполняет проект
+    - [dbt test](/reference/commands/test) — компилирует и запускает тесты проекта
+    - [dbt build](/reference/commands/build) — компилирует, выполняет и тестирует проект
+    - [dbt docs generate](/reference/commands/cmd-docs#dbt-docs-generate) — генерирует документацию проекта
+    - [dbt docs serve](/reference/commands/cmd-docs#dbt-docs-serve) — запускает веб-сервер на порту 8080 для локального просмотра документации и автоматически открывает сайт в браузере по умолчанию
 
-For complete details, refer to the [dbt command reference](/reference/dbt-commands).
+Полные сведения см. в [справочнике команд dbt](/reference/dbt-commands).
 
-Here's what a successful output will look like:
+Ниже показан пример успешного вывода:
 
 ```jinja
 
@@ -168,22 +168,22 @@ Here's what a successful output will look like:
 15:10:15  Done. PASS=28 WARN=0 ERROR=0 SKIP=0 TOTAL=28
 
 ```
-To query data, some useful commands you can run from the command line: 
+Для выполнения запросов к данным можно использовать следующие полезные команды из командной строки:
 
-- `dbt show --select "raw_orders"` &mdash; run a query against the data warehouse and preview the results in the terminal.
-- [`dbt source`](/reference/commands/source) &mdash; provides subcommands such as [`dbt source freshness`](/reference/commands/source#dbt-source-freshness) that are useful when working with source data. 
-   - `dbt source freshness` &mdash; checks the freshness (how up to date) a specific source table is.
+- `dbt show --select "raw_orders"` — выполняет запрос к хранилищу данных и показывает предварительный просмотр результатов в терминале.
+- [`dbt source`](/reference/commands/source) — предоставляет подкоманды, такие как [`dbt source freshness`](/reference/commands/source#dbt-source-freshness), полезные при работе с исходными данными.
+  - `dbt source freshness` — проверяет свежесть (насколько актуальны данные) конкретной таблицы-источника.
 
 :::note
 
-The steps will fail if you decide to run this project in your data warehouse (outside of this DuckDB demo). You will need to reconfigure the project files for your warehouse. Definitely consider this if you are using a community-contributed adapter.
+Эти шаги завершатся ошибкой, если вы попытаетесь запустить данный проект в другом хранилище данных (за пределами этого демонстрационного примера с DuckDB). В этом случае потребуется перенастроить файлы проекта под ваше хранилище. Обязательно учитывайте это, если вы используете адаптер, поддерживаемый сообществом.
 
 :::
 
 
-### Troubleshoot
+### Устранение неполадок
 
-    <Expandable alt_header="Could not set lock on file error" >
+    <Expandable alt_header="Ошибка Could not set lock on file">
 
     ```Jinja
 
@@ -191,41 +191,41 @@ The steps will fail if you decide to run this project in your data warehouse (ou
 
     ```
 
-    This is a known issue in DuckDB. Try disconnecting from any sessions that are locking the database. If you are using DBeaver, this means shutting down DBeaver (disconnecting doesn't always work).
+    Это известная проблема DuckDB. Попробуйте отключиться от всех сессий, которые блокируют базу данных. Если вы используете DBeaver, это означает полное закрытие DBeaver (простое отключение не всегда помогает).
 
-    As a last resort, deleting the database file will get you back in action (_but_ you will lose all your data).
+    В крайнем случае удаление файла базы данных позволит продолжить работу (_но_ при этом вы потеряете все данные).
 
     </Expandable>
 
 
   </TabItem>
- 
-  <TabItem value="web" label="Web browser">
 
-1. Go to the `jaffle-shop-template` [repository](https://github.com/dbt-labs/jaffle_shop_duckdb) after you log in to your GitHub account. 
-1. Click **Use this template** at the top of the page and choose **Create new repository**.
-1. Click **Create repository from template** when you’re done setting the options for your new repository.
-1. Click **Code** (at the top of the new repository’s page). Under the **Codespaces** tab,  choose **Create codespace on main**. Depending on how you've configured your computer's settings, this either opens a new browser tab with the Codespace development environment with VSCode running in it or opens a new VSCode window with the codespace in it. 
-1. Wait for the codespace to finish building by waiting for the `postCreateCommand` command to complete; this can take several minutes:
+  <TabItem value="web" label="Веб-браузер">
 
-    <Lightbox src="/img/codespace-quickstart/postCreateCommand.png" title="Wait for postCreateCommand to complete" />
+1. Перейдите в репозиторий `jaffle-shop-template` на [GitHub](https://github.com/dbt-labs/jaffle_shop_duckdb) после входа в свой аккаунт.
+1. Нажмите **Use this template** в верхней части страницы и выберите **Create new repository**.
+1. После настройки параметров нового репозитория нажмите **Create repository from template**.
+1. Нажмите **Code** (в верхней части страницы нового репозитория). На вкладке **Codespaces** выберите **Create codespace on main**. В зависимости от настроек вашего компьютера откроется новая вкладка браузера с окружением Codespace и запущенным VSCode либо новое окно VSCode с этим codespace.
+1. Дождитесь завершения сборки codespace — необходимо, чтобы команда `postCreateCommand` завершилась; это может занять несколько минут:
 
-    When this command completes, you can start using the codespace development environment. The terminal the command ran in will close and you will get a prompt in a brand new terminal. 
+    <Lightbox src="/img/codespace-quickstart/postCreateCommand.png" title="Дождитесь завершения postCreateCommand" />
 
-1. At the terminal's prompt, you can execute any dbt command you want. For example:
+    После завершения этой команды вы сможете начать работу в окружении codespace. Терминал, в котором выполнялась команда, закроется, и вы увидите приглашение в новом терминале.
+
+1. В терминале вы можете выполнять любые команды dbt. Например:
 
     ```shell
     /workspaces/test (main) $ dbt build
     ```
 
-    You can also use the [duckcli](https://duckdb.org/docs/api/cli/overview.html) to write SQL against the warehouse from the command line or build reports in the [Evidence](https://evidence.dev/) project provided in the `reports` directory.
-    
-    For complete information, refer to the [dbt command reference](/reference/dbt-commands). Common commands are:
-    
-    - [dbt compile](/reference/commands/compile) &mdash; generates executable SQL from your project source files
-    - [dbt run](/reference/commands/run) &mdash; compiles and runs your project
-    - [dbt test](/reference/commands/test) &mdash; compiles and tests your project
-    - [dbt build](/reference/commands/build) &mdash; compiles, runs, and tests your project
+    Вы также можете использовать [duckcli](https://duckdb.org/docs/api/cli/overview.html) для написания SQL-запросов к хранилищу из командной строки или для построения отчётов в проекте [Evidence](https://evidence.dev/), который находится в каталоге `reports`.
+
+    Для полной информации см. [справочник команд dbt](/reference/dbt-commands). Часто используемые команды:
+
+    - [dbt compile](/reference/commands/compile) — генерирует исполняемый SQL из исходных файлов проекта
+    - [dbt run](/reference/commands/run) — компилирует и выполняет проект
+    - [dbt test](/reference/commands/test) — компилирует и запускает тесты проекта
+    - [dbt build](/reference/commands/build) — компилирует, выполняет и тестирует проект
 
 
   </TabItem>
@@ -238,48 +238,50 @@ The steps will fail if you decide to run this project in your data warehouse (ou
 
 
 
-## Generate a larger data set
+## Генерация большего набора данных
 
-If you'd like to work with a larger selection of Jaffle Shop data, you can generate an arbitrary number of years of fictitious data from within your codespace. 
+Если вы хотите работать с большим объёмом данных Jaffle Shop, вы можете сгенерировать произвольное количество лет фиктивных данных прямо в вашем codespace.
 
-1. Install the Python package called [jafgen](https://pypi.org/project/jafgen/). At the terminal's prompt, run:
+1. Установите Python-пакет [jafgen](https://pypi.org/project/jafgen/). В терминале выполните:
 
     ```shell
     python -m pip install jafgen
     ```
 
-1. When installation is done, run:
+1. После завершения установки выполните:
+
     ```shell
     jafgen [number of years to generate] # e.g. jafgen 6
-    ``` 
-    Replace `NUMBER_OF_YEARS` with the number of years you want to simulate. For example, to generate data for 6 years, you would run: `jafgen --years 6`. This command builds the CSV files and stores them in the `jaffle-data` folder, and is automatically sourced based on the `sources.yml` file and the [dbt-duckdb](/docs/core/connect-data-platform/duckdb-setup) adapter.
+    ```
+    Замените `NUMBER_OF_YEARS` на количество лет, которое вы хотите смоделировать. Например, чтобы сгенерировать данные за 6 лет, выполните: `jafgen --years 6`. Эта команда создаёт CSV-файлы и сохраняет их в папке `jaffle-data`. Данные автоматически подключаются на основе файла `sources.yml` и адаптера [dbt-duckdb](/docs/core/connect-data-platform/duckdb-setup).
 
-As you increase the number of years, it takes exponentially more time to generate the data because the Jaffle Shop stores grow in size and number. For a good balance of data size and time to build, dbt Labs suggests a maximum of 6 years.
-## Next steps
+По мере увеличения количества лет время генерации данных растёт экспоненциально, так как магазины Jaffle Shop увеличиваются в размере и количестве. Для разумного баланса между объёмом данных и временем сборки dbt Labs рекомендует максимум 6 лет.
 
-Now that you have <Constant name="core" />, DuckDB, and the Jaffle Shop data up and running, you can explore dbt's capabilities. Refer to these materials to get a better understanding of dbt projects and commands:
+## Следующие шаги
 
-- The [About projects](/docs/build/projects) page guides you through the structure of a dbt project and its components.
-- [dbt command reference](/reference/dbt-commands) explains the various commands available and what they do.
-- [dbt Labs courses](https://courses.getdbt.com/collections) offer a variety of beginner, intermediate, and advanced learning modules designed to help you become a dbt expert. 
-- Once you see the potential of dbt and what it can do for your organization, sign up for a free trial of [<Constant name="cloud" />](https://www.getdbt.com/signup). It's the fastest and easiest way to deploy dbt today!
-- Check out the other [quickstart guides](/guides?tags=Quickstart) to begin integrating into your existing data warehouse.
+Теперь, когда <Constant name="core" />, DuckDB и данные Jaffle Shop успешно настроены и работают, вы можете начать изучать возможности dbt. Для более глубокого понимания проектов и команд dbt ознакомьтесь со следующими материалами:
 
-Additionally, with your new understanding of the basics of using DuckDB, consider optimizing your setup by [documenting your project](/guides/duckdb#document-your-project), [commit your changes](/guides/duckdb#commit-your-changes) and, [schedule a job](/guides/duckdb#schedule-a-job). 
+- Страница [About projects](/docs/build/projects) описывает структуру проекта dbt и его компоненты.
+- [dbt command reference](/reference/dbt-commands) объясняет доступные команды и их назначение.
+- [Курсы dbt Labs](https://courses.getdbt.com/collections) предлагают обучающие модули начального, среднего и продвинутого уровня, которые помогут вам стать экспертом по dbt.
+- Когда вы увидите потенциал dbt для вашей организации, зарегистрируйтесь для бесплатного пробного периода [<Constant name="cloud" />](https://www.getdbt.com/signup). Это самый быстрый и простой способ развернуть dbt на сегодняшний день.
+- Ознакомьтесь с другими [quickstart‑руководствами](/guides?tags=Quickstart), чтобы начать интеграцию с вашим существующим хранилищем данных.
 
-### Document your project
+Кроме того, с новым пониманием основ работы с DuckDB стоит рассмотреть оптимизацию вашей настройки: [документируйте проект](/guides/duckdb#document-your-project), [зафиксируйте изменения](/guides/duckdb#commit-your-changes) и [настройте расписание выполнения](/guides/duckdb#schedule-a-job).
 
-To document your dbt projects with DuckDB, follow the steps:
+### Документирование проекта
 
-- Use the `dbt docs generate` command to compile information about your dbt project and warehouse into `manifest.json` and `catalog.json` files
-- Run the [`dbt docs serve`](/reference/commands/cmd-docs#dbt-docs-serve) command to create a local website using the generated `.json` files. This allows you to view your project's documentation in a web browser.
-- Enhance your documentation by adding [descriptions](/reference/resource-properties/description) to models, columns, and sources using the `description` key in your YAML files.
+Чтобы задокументировать проекты dbt с DuckDB, выполните следующие шаги:
 
-### Commit your changes
+- Используйте команду `dbt docs generate` для компиляции информации о проекте dbt и хранилище данных в файлы `manifest.json` и `catalog.json`
+- Запустите команду [`dbt docs serve`](/reference/commands/cmd-docs#dbt-docs-serve), чтобы создать локальный веб‑сайт на основе сгенерированных `.json`‑файлов. Это позволит просматривать документацию проекта в браузере.
+- Улучшите документацию, добавляя [описания](/reference/resource-properties/description) моделей, колонок и источников с помощью ключа `description` в YAML‑файлах.
 
-Commit your changes to ensure the repository is up to date with the latest code.
+### Фиксация изменений
 
-1. In the GitHub repository you created for your project, run the following commands in the terminal:
+Зафиксируйте изменения, чтобы репозиторий содержал актуальную версию кода.
+
+1. В созданном вами GitHub‑репозитории выполните в терминале следующие команды:
 
 ```shell
 git add 
@@ -287,23 +289,20 @@ git commit -m "Your commit message"
 git push
 ```
 
-2. Go back to your GitHub repository to verify your new files have been added.
+2. Вернитесь в репозиторий GitHub и убедитесь, что новые файлы были добавлены.
 
-### Schedule a job
+### Планирование задания
 
-1. Ensure <Constant name="core" /> is installed and configured to connect to your DuckDB instance.
-2. Create a dbt project and define your [`models`](/docs/build/models), [`seeds`](/reference/seed-properties), and [`tests`](/reference/commands/test).
-3. Use a scheduler such [Prefect](/docs/deploy/deployment-tools#prefect) to schedule your dbt runs. You can create a DAG (Directed Acyclic Graph) that triggers dbt commands at specified intervals.
-4. Write a script that runs your dbt commands, such as [`dbt run`](/reference/commands/run), `dbt test` and more so.
-5. Use your chosen scheduler to run the script at your desired frequency.
+1. Убедитесь, что <Constant name="core" /> установлен и настроен для подключения к вашему экземпляру DuckDB.
+2. Создайте проект dbt и определите ваши [`models`](/docs/build/models), [`seeds`](/reference/seed-properties) и [`tests`](/reference/commands/test).
+3. Используйте планировщик, например [Prefect](/docs/deploy/deployment-tools#prefect), чтобы запускать задания dbt по расписанию. Вы можете создать DAG (направленный ациклический граф), который будет запускать команды dbt через заданные интервалы.
+4. Напишите скрипт, который выполняет команды dbt, такие как [`dbt run`](/reference/commands/run), `dbt test` и другие.
+5. Используйте выбранный планировщик для запуска скрипта с нужной периодичностью.
 
 <ConfettiTrigger>
 
-Congratulations on making it through the guide 🎉!
+Поздравляем с успешным прохождением руководства 🎉!
 
 </ConfettiTrigger>
 
 </div>
-
-
-

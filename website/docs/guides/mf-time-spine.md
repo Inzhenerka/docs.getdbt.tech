@@ -1,5 +1,5 @@
 ---
-title: "Quickstart with MetricFlow time spine"
+title: "Быстрый старт с time spine в MetricFlow"
 id: "mf-time-spine"
 level: 'Intermediate'
 icon: 'guides'
@@ -9,34 +9,35 @@ hide_table_of_contents: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-This guide explains how to configure a time spine using the [<Constant name="semantic_layer" /> Jaffle shop example project](https://github.com/dbt-labs/jaffle-sl-template) as a reference. 
+В этом руководстве объясняется, как настроить time spine, используя в качестве примера проект [<Constant name="semantic_layer" /> Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template).
 
-### What is a time spine model?
+### Что такое модель time spine?
 
-A [time spine](/docs/build/metricflow-time-spine) is essential for time-based joins and aggregations in MetricFlow, the engine that powers the <Constant name="semantic_layer" />.
+[Time spine](/docs/build/metricflow-time-spine) — это ключевой компонент для временных join-ов и агрегаций в MetricFlow, движке, который лежит в основе <Constant name="semantic_layer" />.
 
-To use MetricFlow with time-based metrics and dimensions, you must provide a time spine. This serves as the foundation for time-based joins and aggregations. You can either:
+Чтобы использовать MetricFlow с метриками и измерениями, зависящими от времени, необходимо предоставить time spine. Он служит фундаментом для всех временных join-ов и агрегаций. Вы можете:
 
-- Create a time spine SQL model from scratch, or
-- Use an existing model in your project, like `dim_date`.
+- создать SQL‑модель time spine с нуля, или  
+- использовать уже существующую модель в проекте, например `dim_date`.
 
-And once you have a time spine, you need to configure it in YAML to tell MetricFlow how to use it. This guide will show you how to do both!
+После того как time spine готов, его нужно описать в YAML, чтобы MetricFlow знал, как его использовать. В этом руководстве показано, как сделать и то, и другое.
 
-### Prerequisites
-Before you start, make sure you have:
+### Предварительные требования
 
-- A dbt project set up. If you don't have one, follow the [<Constant name="semantic_layer" /> quickstart guide](/guides/sl-snowflake-qs?step=1) or the [<Constant name="cloud" /> quickstart guides](/guides?tags=Quickstart) guide to help you get started.
+Перед началом убедитесь, что у вас есть:
 
-## Add a time spine SQL model
+- настроенный dbt‑проект. Если его нет, воспользуйтесь [quickstart‑руководством по <Constant name="semantic_layer" />](/guides/sl-snowflake-qs?step=1) или одним из [quickstart‑руководств <Constant name="cloud" />](/guides?tags=Quickstart).
 
-Let's get started by assuming you're creating a time spine from scratch. If you have a dbt project set up already and have your own time spine (like a `dim_date` type model), you can skip this step and go to [Use an existing dim_date model](/guides/mf-time-spine#using-an-existing-dim-date-model).
+## Добавление SQL‑модели time spine
 
-The time spine is a dbt model that generates a series of dates (or timestamps) at a specific granularity. In this example, let's create a daily time spine &mdash; `time_spine_daily.sql`. 
+Начнём с предположения, что вы создаёте time spine с нуля. Если у вас уже есть dbt‑проект и собственная time spine (например, модель типа `dim_date`), этот шаг можно пропустить и сразу перейти к разделу [Использование существующей модели dim_date](/guides/mf-time-spine#using-an-existing-dim-date-model).
 
-1. Navigate to the `models/marts` directory in your dbt project.
-2. Add a new SQL file named `time_spine_daily.sql` with the following content:
+Time spine — это dbt‑модель, которая генерирует последовательность дат (или временных меток) с заданной гранулярностью. В этом примере мы создадим ежедневный time spine — `time_spine_daily.sql`.
+
+1. Перейдите в директорию `models/marts` вашего dbt‑проекта.
+2. Добавьте новый SQL‑файл с именем `time_spine_daily.sql` со следующим содержимым:
 
     <File name='models/marts/time_spine_daily.sql'>
 
@@ -71,24 +72,24 @@ The time spine is a dbt model that generates a series of dates (or timestamps) a
       and date_day < dateadd(day, 30, current_date())
     ```
     </File>
-      
-      This generates a model of daily dates ranging from 5 years in the past to 30 days into the future.
 
-3. Run and preview the model to create the model:
+    Эта модель генерирует ежедневные даты в диапазоне от 5 лет в прошлом до 30 дней в будущем.
+
+3. Выполните модель и при необходимости посмотрите результат:
     ```bash
     dbt run --select time_spine_daily 
-    dbt show --select time_spine_daily # Use this command to preview the model if developing locally
+    dbt show --select time_spine_daily # Используйте эту команду для предпросмотра при локальной разработке
     ```
 
-4. If developing in the <Constant name="cloud_ide" />, you can preview the model by clicking the **Preview** button:
+4. Если вы работаете в <Constant name="cloud_ide" />, вы можете посмотреть результат, нажав кнопку **Preview**:
    <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
 
-## Add YAML configuration for the time spine
+## Добавление YAML‑конфигурации для time spine
 
-Now that you've created the SQL file, configure it in YAML so MetricFlow can recognize and use it.
+Теперь, когда SQL‑файл создан, нужно описать его в YAML, чтобы MetricFlow смог распознать и использовать модель.
 
-1. Navigate to the `models/marts` directory.
-2. Add a new YAML file named `_models.yml` with the following content:
+1. Перейдите в директорию `models/marts`.
+2. Добавьте новый YAML‑файл с именем `_models.yml` со следующим содержимым:
 
     <File name='models/marts/_models.yml'>
 
@@ -105,18 +106,19 @@ Now that you've created the SQL file, configure it in YAML so MetricFlow can rec
     ```
     </File>
 
-This time spine YAML file:
-- Defines `date_day` as the base column for daily granularity.
-- Configures `time_spine` properties so MetricFlow can use the model.
+Этот YAML‑файл:
 
-### Using an existing dim_date model
+- определяет `date_day` как базовую колонку для дневной гранулярности;
+- настраивает свойства `time_spine`, чтобы MetricFlow мог использовать модель.
 
-This optional approach reuses an existing model, saving you the effort of creating a new one. However if you created a time spine from scratch, you can skip this section. 
+### Использование существующей модели dim_date
 
-If your project already includes a `dim_date` or similar model, you can configure it as a time spine:
+Этот необязательный подход позволяет переиспользовать уже существующую модель и не создавать новую. Если вы создали time spine с нуля, этот раздел можно пропустить.
 
-1. Locate the existing model (`dim_date`).
-2. Update `_models.yml` file to configure it as a time spine:
+Если в проекте уже есть модель `dim_date` или аналогичная, её можно настроить как time spine:
+
+1. Найдите существующую модель (`dim_date`).
+2. Обновите файл `_models.yml`, добавив конфигурацию time spine:
 
     <File name='_models.yml'>
 
@@ -136,50 +138,50 @@ If your project already includes a `dim_date` or similar model, you can configur
     ```
     </File>
 
-    This time spine YAML file configures the `time_spine` property so MetricFlow can use the model.
+Эта YAML‑конфигурация настраивает свойство `time_spine`, чтобы MetricFlow мог использовать модель.
 
-## Run and preview the time spine
+## Запуск и проверка time spine
 
-For the time spine you created, let's run it and preview the output if you haven't already done this. If you have already run the model, you can skip this step.
+Если вы ещё не запускали созданный time spine, сделайте это сейчас. Если модель уже была выполнена, этот шаг можно пропустить.
 
-1. Run the following command:
+1. Выполните команды:
    ```bash
    dbt run --select time_spine_daily
-   dbt show --select time_spine_daily # Use this command to preview the model if developing locally
+   dbt show --select time_spine_daily # Используйте для предпросмотра при локальной разработке
    ```
 
-2. If developing in the <Constant name="cloud_ide" />, you can preview the model by clicking the **Preview** button:
+2. При работе в <Constant name="cloud_ide" /> используйте кнопку **Preview**:
     <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
 
-3. Check that the model:
-   - Contains one row per day.
-   - Covers the date range you want (5 years back to 30 days forward).
+3. Убедитесь, что модель:
+   - содержит ровно одну строку на каждый день;
+   - покрывает нужный диапазон дат (5 лет назад и 30 дней вперёд).
 
-4. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the model/metrics using [<Constant name="semantic_layer" /> commands](/docs/build/metricflow-commands) to validate the time spine. 
-   
-   Let's say you have a `revenue` metric defined. You can query the model/metrics using the following command:
+4. (Необязательно) Если в проекте уже определены [метрики](/docs/build/metrics-overview), вы можете проверить time spine, выполнив запросы через [команды <Constant name="semantic_layer" />](/docs/build/metricflow-commands).
+
+   Например, если у вас есть метрика `revenue`, выполните:
 
     ```bash
     dbt sl query --metrics revenue --group-by metric_time
     ```
 
-    This will output results similar to the following in the <Constant name="cloud_ide" />:
+    Результат будет выглядеть примерно так в <Constant name="cloud_ide" />:
     <Lightbox src="/img/quickstarts/dbt-cloud/validate-mf-timespine-output.png" title="Validate the metrics and time spine output in the Studio IDE" />
 
-5. Double check that the results are correct and returning the expected data.
+5. Проверьте, что данные корректны и соответствуют ожиданиям.
 
-## Add additional granularities
+## Добавление дополнительных гранулярностей
 
-This section is optional and will show you how to add additional granularities to your time spine:
+Этот раздел необязательный и показывает, как добавить дополнительные гранулярности в time spine:
 
-- [Yearly](#yearly-time-spine)
-- [Custom calendars](#custom-calendars)
+- [Годовая](#yearly-time-spine)
+- [Пользовательские календари](#custom-calendars)
 
-### Yearly time spine
+### Годовая time spine
 
-To support multiple granularities (like hourly, yearly, monthly), create additional time spine models and configure them in YAML.
+Чтобы поддерживать несколько гранулярностей (например, почасовую, месячную, годовую), создайте дополнительные модели time spine и настройте их в YAML.
 
-1. Add a new SQL file named `time_spine_yearly.sql` with the following content:
+1. Добавьте SQL‑файл `time_spine_yearly.sql` со следующим содержимым:
     <File name='models/marts/time_spine_yearly.sql'>
 
     ```sql
@@ -210,13 +212,11 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
     -- filter the time spine to a specific range
     where date_year >= date_trunc('year', dateadd(year, -4, current_timestamp())) 
       and date_year < date_trunc('year', dateadd(year, 1, current_timestamp()))
-
-
     ```
     </File>
 
-2. Then update the `_models.yml` file and add the yearly time spine (below the daily time spine config):
-      
+2. Затем обновите файл `_models.yml`, добавив годовой time spine (ниже конфигурации дневного):
+
     <File name='_models.yml'>
 
     ```yaml
@@ -234,33 +234,34 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
     ```
     </File>
 
-3. Run or preview the model to create the model:
+3. Запустите или просмотрите модель:
    ```bash
    dbt run --select time_spine_yearly
-   dbt show --select time_spine_yearly # Use this command to preview the model if developing locally
+   dbt show --select time_spine_yearly # Для предпросмотра при локальной разработке
    ```
 
-4. Validate the output by querying the generated model:
+4. Проверьте результат, выполнив запрос:
    ```bash
    dbt sl query --metrics orders --group-by metric_time__year
    ```
 
-If you're developing in the <Constant name="cloud_ide" />, you can preview the model by clicking the **Preview** button.
+При работе в <Constant name="cloud_ide" /> используйте кнопку **Preview**.
    <Lightbox src="/img/mf-guide-query.png" title="Validate the metrics and time spine output in the Studio IDE" />
 
 :::tip Extra credit!
-For some extra practice, try one of the following exercises:
+Для дополнительной практики попробуйте:
 
-- Order the `dbt sl query --metrics orders --group-by metric_time__year` command output by ascending order of `metric_time__year`. Check out the [dbt Semantic Layer commands](/docs/build/metricflow-commands#query) docs for more information on how to do this.
-- Filter to this year and last year only to limit data returned.
-- Try creating a monthly time spine &mdash; duplicate your daily time spine model, adjust it to generate one row per month, and update the YAML file to include `granularity: month`. Give it a try!
+- отсортировать результат команды `dbt sl query --metrics orders --group-by metric_time__year` по возрастанию `metric_time__year` (см. документацию по [командам dbt Semantic Layer](/docs/build/metricflow-commands#query));
+- отфильтровать данные только за текущий и прошлый год;
+- создать месячный time spine: скопируйте дневную модель, измените её так, чтобы она генерировала одну строку на месяц, и добавьте в YAML `granularity: month`.
 :::
 
-### Custom calendars
+### Пользовательские календари
 
-To support custom calendars (like fiscal years, fiscal quarters, and so on), create an additional time spine and configure it in YAML. This feature is available in the <Constant name="cloud" />'s [Latest release track](/docs/dbt-versions/cloud-release-tracks) or [<Constant name="core" /> 1.9 and later](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+Для поддержки пользовательских календарей (фискальные годы, фискальные кварталы и т. д.) создайте дополнительный time spine и настройте его в YAML. Эта возможность доступна в <Constant name="cloud" /> на [Latest release track](/docs/dbt-versions/cloud-release-tracks) или в [<Constant name="core" /> версии 1.9 и выше](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
-1. Add a new SQL file named `fiscal_calendar.sql` with the following content (or use your own custom calendar and configure it in YAML):
+1. Добавьте SQL‑файл `fiscal_calendar.sql` со следующим содержимым (или используйте собственный календарь):
+
     <File name='models/marts/fiscal_calendar.sql'>
 
     ```sql
@@ -295,10 +296,10 @@ To support custom calendars (like fiscal years, fiscal quarters, and so on), cre
 
     select * from fiscal_calendar
     ```
-
     </File>
 
-2. Then update `_models.yml` file and add the fiscal calendar time spine (below the yearly time spine config):
+2. Затем обновите `_models.yml`, добавив фискальный календарь (ниже годового time spine):
+
     <File name='_models.yml'>
 
     ```yaml
@@ -325,38 +326,37 @@ To support custom calendars (like fiscal years, fiscal quarters, and so on), cre
     ```
     </File>
 
-3. Run or preview the model to create the model:
+3. Запустите или просмотрите модель:
    ```bash
    dbt run --select fiscal_calendar
-   dbt show --select fiscal_calendar # Use this command to preview the model if developing locally
+   dbt show --select fiscal_calendar # Для предпросмотра при локальной разработке
    ```
 
-   If you're developing in the <Constant name="cloud_ide" />, you can preview the model by clicking the **Preview** button.
+   В <Constant name="cloud_ide" /> используйте кнопку **Preview**.
 
-4. Validate the output by querying the generated model along with your metrics:
+4. Проверьте результат, выполнив запрос:
    ```bash
    dbt sl query --metrics orders --group-by metric_time__fiscal_year
    ```
 
    <Lightbox src="/img/mf-guide-fiscal-preview.png" title="Validate the custom calendar metrics and time spine output in the Studio IDE" />
 
-
-## What's next
+## Что дальше
 
 <ConfettiTrigger>
 
-Congratulations 🎉! You've set up a time spine and are ready to bring the benefits of MetricFlow and the <Constant name="semantic_layer" /> to your organization. You've learned:
+Поздравляем 🎉! Вы настроили time spine и готовы использовать преимущества MetricFlow и <Constant name="semantic_layer" /> в своей организации. Вы узнали:
 
-- How to create a time spine or use an existing model.
-- How to configure a time spine in YAML.
-- How to add additional granularities to your time spine.
+- как создать time spine или использовать существующую модель;
+- как настроить time spine в YAML;
+- как добавить дополнительные гранулярности.
 
-Here are some additional resources to help you continue your journey:
+Полезные материалы для дальнейшего изучения:
 
-- [MetricFlow time spine](/docs/build/metricflow-time-spine)
+- [Time spine в MetricFlow](/docs/build/metricflow-time-spine)
 - [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl)
-- [Build metrics](/docs/build/metrics-overview)
-- [Quickstart with <Constant name="semantic_layer" />](/guides/sl-snowflake-qs?step=1)
+- [Создание метрик](/docs/build/metrics-overview)
+- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-snowflake-qs?step=1)
 
 </ConfettiTrigger>
 

@@ -1,9 +1,9 @@
 ---
-title: "Fusion package upgrade guide"
+title: "Гайд по обновлению пакетов для Fusion"
 id: "fusion-package-compat"
-description: "Learn how to upgrade your packages to be compatible with the dbt Fusion engine."
-intro_text: "Learn how to upgrade your packages to be compatible with the dbt Fusion engine."
-hoverSnippet: "Learn how to upgrade your packages to be compatible with the dbt Fusion engine."
+description: "Узнайте, как обновить ваши пакеты, чтобы они были совместимы с движком dbt Fusion."
+intro_text: "Узнайте, как обновить ваши пакеты, чтобы они были совместимы с движком dbt Fusion."
+hoverSnippet: "Узнайте, как обновить ваши пакеты, чтобы они были совместимы с движком dbt Fusion."
 # time_to_complete: '30 minutes' commenting out until we test
 icon: 'zap'
 hide_table_of_contents: true
@@ -11,169 +11,169 @@ tags: ['dbt Fusion engine']
 level: 'Advanced'
 ---
 
-## Introduction
+## Введение
 
-Thank you for being part of the [dbt's package hub community](https://hub.getdbt.com/) and maintaining [packages](/docs/build/packages)! Your work makes dbt’s ecosystem possible and helps thousands of teams reuse trusted models and macros to build faster, more reliable analytics.
+Спасибо, что вы являетесь частью [сообщества dbt package hub](https://hub.getdbt.com/) и поддерживаете [пакеты](/docs/build/packages)! Ваша работа делает экосистему dbt возможной и помогает тысячам команд повторно использовать проверенные модели и макросы для более быстрой и надёжной аналитики.
 
-This guide helps you upgrade your dbt packages to be [<Constant name="fusion" />](/docs/fusion)-compatible. A <Constant name="fusion" />-compatible package:
-- Supports [<Constant name="fusion_engine" />](/docs/fusion) version `2.0.0`
-- Uses the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) to signal compatibility in the dbt package hub
-- Aligns with the latest JSON schema introduced in <Constant name="core"/> v1.10.0
+Это руководство поможет вам обновить ваши dbt‑пакеты, чтобы они были совместимы с [<Constant name="fusion" />](/docs/fusion). Пакет, совместимый с <Constant name="fusion" />:
+- Поддерживает версию [<Constant name="fusion_engine" />](/docs/fusion) `2.0.0`
+- Использует конфигурацию [`require-dbt-version`](/reference/project-configs/require-dbt-version) для указания совместимости в dbt package hub
+- Соответствует последней JSON‑схеме, представленной в <Constant name="core"/> v1.10.0
 
-In this guide, we'll go over:
+В этом руководстве мы рассмотрим:
 
-- Updating your package to be compatible with <Constant name="fusion"/>
-- Testing your package with <Constant name="fusion"/>
-- Updating the `require-dbt-version` config to include `2.0.0`
-- Updating your README to note that the package is compatible with <Constant name="fusion"/>
+- Обновление пакета для совместимости с <Constant name="fusion"/>
+- Тестирование пакета с <Constant name="fusion"/>
+- Обновление конфигурации `require-dbt-version` с добавлением `2.0.0`
+- Обновление README с указанием совместимости пакета с <Constant name="fusion"/>
 
-### Who is this for?
+### Для кого это руководство?
 
-This guide is for any dbt package maintainer, like [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), that's looking to upgrade their package to be compatible with <Constant name="fusion"/>. Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. 
+Это руководство предназначено для любого мейнтейнера dbt‑пакетов, например [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), который хочет обновить свой пакет для совместимости с <Constant name="fusion"/>. Обновление пакета гарантирует, что пользователи получают актуальную версию, пакет остаётся надёжным в dbt package hub, а пользователи получают доступ к новым возможностям и исправлениям ошибок.
 
-A user stores their package in a `packages.yml` or `dependencies.yml` file. If a package excludes `2.0.0`, <Constant name="fusion"/> warns today and errors in a future release, matching <Constant name="core"/> behavior. 
+Пользователь подключает пакет в файле `packages.yml` или `dependencies.yml`. Если пакет исключает `2.0.0`, <Constant name="fusion"/> сейчас выдаёт предупреждение, а в будущих релизах будет завершаться с ошибкой — аналогично поведению <Constant name="core"/>.
 
-This guide assumes you're using the command line and Git to make changes in your package repository. If you're interested in creating a new package from scratch, we recommend using the [dbt package guide](/guides/building-packages) to get started.
+В этом руководстве предполагается, что вы используете командную строку и Git для внесения изменений в репозиторий пакета. Если вы хотите создать новый пакет с нуля, рекомендуем начать с [руководства по созданию dbt‑пакетов](/guides/building-packages).
 
-## Prerequisites
+## Предварительные требования
 
-Before you begin, make sure you meet the following:
+Перед началом убедитесь, что выполнены следующие условия:
 
-- dbt package maintainer &mdash; You maintain a package on [dbt's package hub](https://hub.getdbt.com/) or are interested in [creating one](/guides/building-packages?step=1). 
-- `dbt-autofix` installed &mdash; [Install `dbt-autofix`](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to automatically update the package's YAML files to align with the latest dbt updates and best practices. We recommend [using/installing uv/uvx](https://docs.astral.sh/uv/getting-started/installation/) to run the tool.
-  - Run the command `uvx dbt-autofix` for the latest version of the tool. For more installation options, see the [official `dbt-autofix` doc](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
-- Repository access &mdash; You’ll need permission to create a branch and release updates/a new version of your package. You’ll need to tag a new version of your package once it’s <Constant name="fusion"/>-compatible.
-- A <Constant name="fusion"/> installation or test environment &mdash; You can use <Constant name="fusion"/> locally (using the `dbtf` binary) or in your CI pipeline to validate compatibility.
-- CLI and Git usage &mdash; You’re comfortable using the command line and Git to update the repository.
+- Мейнтейнер dbt‑пакета &mdash; вы поддерживаете пакет в [dbt package hub](https://hub.getdbt.com/) или планируете [создать новый](/guides/building-packages?step=1).
+- Установлен `dbt-autofix` &mdash; [установите `dbt-autofix`](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation), чтобы автоматически обновлять YAML‑файлы пакета в соответствии с последними изменениями dbt и лучшими практиками. Мы рекомендуем [использовать/установить uv/uvx](https://docs.astral.sh/uv/getting-started/installation/) для запуска инструмента.
+  - Запустите команду `uvx dbt-autofix`, чтобы использовать последнюю версию инструмента. Другие варианты установки см. в [официальной документации `dbt-autofix`](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
+- Доступ к репозиторию &mdash; вам понадобятся права на создание ветки и выпуск обновлений/новой версии пакета. После обеспечения совместимости с <Constant name="fusion"/> потребуется создать новый тег версии.
+- Установка или тестовое окружение <Constant name="fusion"/> &mdash; вы можете использовать <Constant name="fusion"/> локально (через бинарь `dbtf`) или в CI‑пайплайне для проверки совместимости.
+- Работа с CLI и Git &mdash; вы уверенно используете командную строку и Git для обновления репозитория.
 
-## Upgrade the package
-This section covers how to upgrade your package to be compatible with <Constant name="fusion"/> by:
-- [Using `dbt-autofix` to automatically update your YAML files](/guides/fusion-package-compat?step=)
-- [Testing your package with <Constant name="fusion"/>](/guides/fusion-package-compat?step=5)
-- [Updating your `require-dbt-version` config](/guides/fusion-package-compat?step=6)
-- [Publishing a new release of your package](/guides/fusion-package-compat?step=7)
+## Обновите пакет
 
-If you're ready to get started, let's begin!
+В этом разделе описано, как обновить пакет для совместимости с <Constant name="fusion"/>:
+- [Использование `dbt-autofix` для автоматического обновления YAML‑файлов](/guides/fusion-package-compat?step=)
+- [Тестирование пакета с <Constant name="fusion"/>](/guides/fusion-package-compat?step=5)
+- [Обновление конфигурации `require-dbt-version`](/guides/fusion-package-compat?step=6)
+- [Публикация нового релиза пакета](/guides/fusion-package-compat?step=7)
 
-## Run dbt-autofix
+Если вы готовы начать, давайте приступим!
 
-1. Before you begin, make sure you have `dbt-autofix` installed. If you don't have it installed, run the command `uvx dbt-autofix`. For more installation options, see the [official `dbt-autofix` doc](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
+## Запустите dbt-autofix
 
-2. In your dbt package repository, create a branch to work in. For example:
+1. Перед началом убедитесь, что `dbt-autofix` установлен. Если нет, выполните команду `uvx dbt-autofix`. Дополнительные варианты установки см. в [официальной документации `dbt-autofix`](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
+
+2. В репозитории вашего dbt‑пакета создайте рабочую ветку. Например:
     ```bash
     git checkout -b fusion-compat
     ```
 
-3. Run `dbt-autofix deprecations` in your package directory so it automatically updates your package code and rewrites YAML to conform to the latest JSON schema:
+3. Запустите `dbt-autofix deprecations` в директории пакета, чтобы автоматически обновить код пакета и переписать YAML‑файлы в соответствии с последней JSON‑схемой:
     ```bash
     dbt-autofix deprecations
     ```
 
-<!-- 4. (Optional) You can also run `dbt-autofix` as a temporary continuous integration (CI) check until the package is <Constant name="fusion"/>-compatible:
+<!-- 4. (Необязательно) Вы также можете запускать `dbt-autofix` как временную проверку continuous integration (CI), пока пакет не станет совместимым с <Constant name="fusion"/>:
     ```bash
     dbt-autofix deprecations --check
     ```
 -->
 
-## Test package with Fusion
+## Протестируйте пакет с Fusion
 
-Now that you've run `dbt-autofix`, let's test your package with <Constant name="fusion"/> to ensure it's compatible before [updating](https://docs.getdbt.tech/guides/fusion-package-compat?step=6) your `require-dbt-version` config. Refer to the [<Constant name="fusion"/> limitations documentation](/docs/fusion/supported-features#limitations) for more information on what to look out for. You can test your package two ways:
+Теперь, когда вы запустили `dbt-autofix`, протестируйте пакет с <Constant name="fusion"/>, чтобы убедиться в совместимости перед [обновлением](https://docs.getdbt.com/guides/fusion-package-compat?step=6) конфигурации `require-dbt-version`. Дополнительную информацию о возможных ограничениях см. в [документации по ограничениям <Constant name="fusion"/>](/docs/fusion/supported-features#limitations). Вы можете протестировать пакет двумя способами:
 
 <!-- no toc -->
-- [Running your integration tests with Fusion](#running-your-integration-tests-with-fusion) &mdash; Use if your package has [integration tests](https://docs.getdbt.tech/guides/building-packages?step=4) using an `integration_tests/` folder.
-- [Manually validating your package](#manually-validating-your-package) &mdash; Use if your package doesn't have [integration tests](https://docs.getdbt.tech/guides/building-packages?step=4). Consider creating one to help validate your package.
+- [Запуск интеграционных тестов с Fusion](#running-your-integration-tests-with-fusion) &mdash; используйте, если в пакете есть [интеграционные тесты](https://docs.getdbt.com/guides/building-packages?step=4) в папке `integration_tests/`.
+- [Ручная валидация пакета](#manually-validating-your-package) &mdash; используйте, если в пакете нет интеграционных тестов. Рекомендуем создать их для упрощения проверки.
 
-#### Running your integration tests with Fusion
+#### Запуск ваших интеграционных тестов с Fusion
 
-If your package includes an `integration_tests/` folder ([like `dbt-utils`](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests)), follow these steps:
+Если в пакете есть папка `integration_tests/` ([например, как в `dbt-utils`](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests)), выполните следующие шаги:
 
-1. Navigate to the folder (`cd integration_tests`) to run your tests. If you don't have an `integration_tests/` folder, you can either [create one](https://docs.getdbt.tech/guides/building-packages?step=4) or navigate to the folder that contains your tests.
-2. Then, run your tests with <Constant name="fusion"/> by running the following `dbtf build` command (or whatever <Constant name="fusion"/> executable is available in your environment).
-3. If there are no errors, your package likely supports <Constant name="fusion"/> and you're ready to [update your `require-dbt-version`](https://docs.getdbt.tech//guides/fusion-package-compat?step=5#update-your-require-dbt-version). If there are errors, you'll need to fix them first before updating your `require-dbt-version`.
+1. Перейдите в папку (`cd integration_tests`) для запуска тестов. Если папки `integration_tests/` нет, вы можете [создать её](https://docs.getdbt.com/guides/building-packages?step=4) или перейти в директорию с тестами.
+2. Запустите тесты с <Constant name="fusion"/>, выполнив команду `dbtf build` (или другой доступный в вашем окружении исполняемый файл <Constant name="fusion"/>).
+3. Если ошибок нет, ваш пакет, вероятно, поддерживает <Constant name="fusion"/>, и вы готовы [обновить `require-dbt-version`](https://docs.getdbt.com//guides/fusion-package-compat?step=5#update-your-require-dbt-version). Если есть ошибки, их необходимо исправить перед обновлением `require-dbt-version`.
 
-#### Manually validating your package
+#### Ручная валидация вашего пакета
 
-If your package doesn't have integration tests, follow these steps:
+Если в пакете нет интеграционных тестов, выполните следующие шаги:
 
-1. Create a small, <Constant name="fusion"/>-compatible dbt project that installs your package and has a `packages.yml` or `dependencies.yml` file. 
-2. Run it with <Constant name="fusion"/> using the `dbtf run` command.
-3. Confirm that models build successfully and that there are no warnings. If there are errors/warnings, you'll need to fix them first. If you still have issues, reach out to the [#package-ecosystem channel](https://getdbt.slack.com/archives/CU4MRJ7QB) on Slack for help.
+1. Создайте небольшой dbt‑проект, совместимый с <Constant name="fusion"/>, который устанавливает ваш пакет и содержит файл `packages.yml` или `dependencies.yml`.
+2. Запустите проект с <Constant name="fusion"/>, используя команду `dbtf run`.
+3. Убедитесь, что модели собираются успешно и нет предупреждений. При наличии ошибок или предупреждений их нужно устранить. Если проблемы сохраняются, обратитесь за помощью в канал [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) в Slack.
 
-## Update `require-dbt-version` 
+## Обновление `require-dbt-version`
 
-Only update the [`require-dbt-version` config](/reference/project-configs/require-dbt-version) after testing and confirming that your package works with <Constant name="fusion"/>. 
+Обновляйте конфигурацию [`require-dbt-version`](/reference/project-configs/require-dbt-version) **только после** тестирования и подтверждения, что пакет работает с <Constant name="fusion"/>.
 
-1. Update the `require-dbt-version` in your `dbt_project.yml` to include `2.0.0`. We recommend using a range to ensure stability across releases:
+1. Обновите `require-dbt-version` в `dbt_project.yml`, добавив `2.0.0`. Мы рекомендуем использовать диапазон версий для обеспечения стабильности:
     ```yaml
     require-dbt-version: [">=1.10.0,<3.0.0"] 
     ```
-    This signals that your package supports both <Constant name="core"/> and <Constant name="fusion"/>. 
-    dbt Labs uses this release metadata to mark your package with a <Constant name="fusion"/>-compatible badge in the [dbt package hub](https://hub.getdbt.com/). Packages without this metadata don't
-    display the <Constant name="fusion"/>-compatible badge.
+    Это указывает, что пакет поддерживает как <Constant name="core"/>, так и <Constant name="fusion"/>.
+    dbt Labs использует эти метаданные релиза, чтобы отметить ваш пакет бейджем совместимости с <Constant name="fusion"/> в [dbt package hub](https://hub.getdbt.com/). Пакеты без этих метаданных не отображают бейдж совместимости с <Constant name="fusion"/>.
 
-2. Commit and push your changes to your repository.
+2. Закоммитьте и отправьте изменения в репозиторий.
 
-## Publish a new release
+## Публикация нового релиза
 
-1. After committing and pushing your changes, publish a new release of your package by merging your branch into main (or whatever branch you're using for your package).
-2. Update your `README` to note that the package is <Constant name="fusion"/>-compatible.
-3. (Optional) Announce it in [#package-ecosystem on dbt Slack](https://getdbt.slack.com/archives/CU4MRJ7QB) if you’d like.
+1. После коммита и отправки изменений опубликуйте новый релиз пакета, смёрджив ветку в main (или в основную ветку, используемую в вашем репозитории).
+2. Обновите `README`, указав, что пакет совместим с <Constant name="fusion"/>.
+3. (Необязательно) Анонсируйте обновление в канале [#package-ecosystem в dbt Slack](https://getdbt.slack.com/archives/CU4MRJ7QB).
 
 :::tip CI Fusion testing
-When possible, add a step to your CI pipeline that runs `dbtf build` or equivalent to ensure ongoing <Constant name="fusion"/> compatibility.
+По возможности добавьте шаг в CI‑пайплайн, который запускает `dbtf build` или эквивалент, чтобы обеспечить постоянную совместимость с <Constant name="fusion"/>.
 :::
 
-Your package is now <Constant name="fusion"/>-compatible and the dbt package hub reflects these changes. To summarize, you've now:
+Теперь ваш пакет совместим с <Constant name="fusion"/>, и dbt package hub отражает эти изменения. В итоге вы:
 
-- Created a fusion compatible branch
-- Run `dbt-autofix` deprecations
-- Reviewed, committed, and tested changes 
-- Updated `require-dbt-version: [">=1.10.0,<3.0.0"]` to include `2.0.0`
-- Published a new release
-- Announced the update (optional)
-- Celebrate your new <Constant name="fusion"/>-compatible badge 🎉
+- Создали ветку для обеспечения совместимости с Fusion
+- Запустили `dbt-autofix deprecations`
+- Проверили, закоммитили и протестировали изменения
+- Обновили `require-dbt-version: [">=1.10.0,<3.0.0"]`, включив `2.0.0`
+- Опубликовали новый релиз
+- Анонсировали обновление (необязательно)
+- Отпраздновали получение бейджа совместимости с <Constant name="fusion"/> 🎉
 
-## Final thoughts
+## Финальные мысли
 
 <ConfettiTrigger>
 
-Now that you've upgraded your package to be <Constant name="fusion"/>-compatible, users can use your package with <Constant name="fusion"/>! 🎉
+Теперь, когда вы обновили пакет для совместимости с <Constant name="fusion"/>, пользователи могут использовать его вместе с <Constant name="fusion"/>! 🎉
 
-By upgrading now, you’re ensuring a smoother experience for users, paving the way for the next generation of dbt projects, and helping dbt <Constant name="fusion"/> reach full stability.
+Обновляясь уже сейчас, вы обеспечиваете более плавный пользовательский опыт, прокладываете путь для следующего поколения dbt‑проектов и помогаете <Constant name="fusion"/> достичь полной стабильности.
 
-If you have questions or run into issues:
+Если у вас есть вопросы или вы столкнулись с проблемами:
 
-- Join the conversation in the [#package-ecosystem channel](https://getdbt.slack.com/archives/CU4MRJ7QB) on Slack.
-- Open an issue in the [dbt-autofix repository](https://github.com/dbt-labs/dbt-autofix/issues) on GitHub.
+- Присоединяйтесь к обсуждению в канале [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) в Slack.
+- Создайте issue в [репозитории dbt-autofix](https://github.com/dbt-labs/dbt-autofix/issues) на GitHub.
 
-Lastly, thank you for your help in making the dbt ecosystem stronger &mdash; one package at a time 💜.
+И напоследок — спасибо за вклад в развитие экосистемы dbt &mdash; по одному пакету за раз 💜.
 </ConfettiTrigger>
 
-## Frequently asked questions
+## Часто задаваемые вопросы
 
-The following are some frequently asked questions about upgrading your package to be <Constant name="fusion"/>-compatible.
+Ниже приведены ответы на часто задаваемые вопросы об обновлении пакета для совместимости с <Constant name="fusion"/>.
 
-<Expandable alt_header="Why do we need to update our package?"> 
+<Expandable alt_header="Почему нужно обновлять наш пакет?">
 
-<Constant name="fusion"/> and <Constant name="core"/> v1.10+ use the same new authoring layer. Ensuring your package supports `2.0.0` in your `require-dbt-version` config ensures your package is compatible with both.
+<Constant name="fusion"/> и <Constant name="core"/> v1.10+ используют один и тот же новый слой авторинга. Указание поддержки `2.0.0` в конфигурации `require-dbt-version` гарантирует совместимость пакета с обоими движками.
 
-Updating your package ensures users have the latest version of your package, your package stays trusted on dbt package hub, and users benefit from the latest features and bug fixes. <Constant name="fusion"/>-compatible packages display a badge in the dbt package hub.
+Обновление пакета гарантирует, что пользователи получают актуальную версию, пакет остаётся надёжным в dbt package hub, а пользователи получают новые возможности и исправления ошибок. Пакеты, совместимые с <Constant name="fusion"/>, отображают соответствующий бейдж в dbt package hub.
 
-If a package excludes `2.0.0`, <Constant name="fusion"/> will warn today and error in a future release, matching dbt <Constant name="core"/> behavior. 
+Если пакет исключает `2.0.0`, <Constant name="fusion"/> сначала выдаёт предупреждение, а в будущих релизах завершится с ошибкой, повторяя поведение dbt <Constant name="core"/>.
 
 </Expandable>
 
-<Expandable alt_header="How do I test Fusion in CI?">
+<Expandable alt_header="Как тестировать Fusion в CI?">
 
-Add a separate job that installs <Constant name="fusion"/> (`dbtf`) and runs `dbtf build`. See this [PR](https://github.com/godatadriven/dbt-date/pull/31) for a working example.
+Добавьте отдельную задачу, которая устанавливает <Constant name="fusion"/> (`dbtf`) и запускает `dbtf build`. См. этот [PR](https://github.com/godatadriven/dbt-date/pull/31) в качестве рабочего примера.
 
-You want to do this to ensure any changes to your package remain compatible with <Constant name="fusion"/>.
+Это необходимо, чтобы любые изменения в пакете оставались совместимыми с <Constant name="fusion"/>.
 </Expandable>
 
-<Expandable alt_header="How will users know my package is Fusion-compatible?">
+<Expandable alt_header="Как пользователи узнают, что мой пакет совместим с Fusion?">
 
-Users can identify your package as <Constant name="fusion"/>-compatible by checking for 2.0.0 or higher in the `require-dbt-version` range config.
+Пользователи могут определить совместимость пакета с <Constant name="fusion"/>, проверив наличие версии 2.0.0 или выше в диапазоне `require-dbt-version`.
 
-<Constant name="fusion"/>-compatible packages also display a badge in the dbt package hub. This is automatically determined based on your package’s metadata and version requirements.
+Пакеты, совместимые с <Constant name="fusion"/>, также автоматически отображают соответствующий бейдж в dbt package hub на основе метаданных пакета и требований к версиям.
 
 </Expandable>

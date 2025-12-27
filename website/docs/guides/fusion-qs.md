@@ -1,5 +1,5 @@
 ---
-title: "Quickstart for the dbt Fusion engine"
+title: "Быстрый старт для движка dbt Fusion"
 id: "fusion"
 # time_to_complete: '30 minutes' commenting out until we test
 level: 'Beginner'
@@ -12,150 +12,150 @@ recently_updated: true
 <div style={{maxWidth: '900px'}}>
 import FusionDWH from '/snippets/_fusion-dwh.md';
 
-## Introduction
+## Введение
 
 import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 <FusionLifecycle />
 
-The <Constant name="fusion_engine" /> is a powerful new approach to classic dbt ideas! Completely rebuilt from the ground up in Rust, <Constant name="fusion" /> lets you compile and run your dbt projects faster than ever — often in seconds. 
+<Constant name="fusion_engine" /> — это мощный новый взгляд на классические идеи dbt! Полностью переписанный с нуля на Rust, <Constant name="fusion" /> позволяет компилировать и запускать dbt‑проекты быстрее, чем когда-либо раньше — часто за считанные секунды.
 
-This quickstart guide will get you from zero to running your first dbt project with <Constant name="fusion" /> + VS Code. By the end, you’ll have:
-- A working dbt project (`jaffle_shop`) built with the <Constant name="fusion_engine" />
-- The dbt VS Code extension installed and connected  
-- The ability to preview, compile, and run dbt commands directly from your IDE 
+Этот краткий старт поможет вам пройти путь от нуля до запуска вашего первого dbt‑проекта с использованием <Constant name="fusion" /> и VS Code. В результате у вас будет:
+- Рабочий dbt‑проект (`jaffle_shop`), собранный с помощью <Constant name="fusion_engine" />
+- Установленное и подключённое расширение dbt для VS Code  
+- Возможность просматривать данные, компилировать и запускать dbt‑команды прямо из IDE  
 
-### About the dbt Fusion engine
+### О движке dbt Fusion
 
-<Constant name="fusion" /> and the features it provides are available in multiple environments:
+<Constant name="fusion" /> и предоставляемые им возможности доступны в нескольких средах:
 
-| Environment | How to use <Constant name="fusion" /> |
+| Среда | Как использовать <Constant name="fusion" /> |
 |--------------|-------------------|
-| **<Constant name="cloud_ide" />** | <Constant name="fusion" /> is automatically enabled; just [upgrade your environment(s)](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine). |
-| **dbt CLI (local)** | [Install <Constant name="fusion_engine" />](/docs/fusion/install-fusion-cli) locally following this guide. |
-| **VS Code / Cursor IDE** | [Install the dbt extension](/docs/install-dbt-extension) to unlock <Constant name="fusion" />'s interactive power in your editor. |
+| **<Constant name="cloud_ide" />** | <Constant name="fusion" /> включён автоматически; просто [обновите окружение](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine). |
+| **dbt CLI (локально)** | Установите <Constant name="fusion_engine" /> локально, следуя [этому руководству](/docs/fusion/install-fusion-cli). |
+| **VS Code / Cursor IDE** | [Установите расширение dbt](/docs/install-dbt-extension), чтобы раскрыть интерактивные возможности <Constant name="fusion" /> прямо в редакторе. |
 
-To learn more about which tool is best for you, see the [Fusion availability](/docs/fusion/fusion-availability) page. To learn about the <Constant name="fusion_engine" /> and how it works, read more [about the dbt Fusion engine](/docs/fusion/about-fusion).
+Подробнее о том, какой инструмент лучше подойдёт именно вам, читайте на странице [Fusion availability](/docs/fusion/fusion-availability). А чтобы узнать больше о самом <Constant name="fusion_engine" /> и принципах его работы, ознакомьтесь с разделом [о движке dbt Fusion](/docs/fusion/about-fusion).
 
+## Предварительные требования
 
-## Prerequisites
+Чтобы получить максимум от этого руководства, вам потребуется:
 
-To take full advantage of this guide, you'll need to meet the following prerequisites:
-
-- You should have a basic understanding of [dbt projects](/docs/build/projects), [git workflows](/docs/cloud/git/git-version-control), and [data warehouse requirements](/docs/supported-data-platforms).
-- Make sure you're using a supported adapter and authentication method:
+- Базовое понимание [dbt‑проектов](/docs/build/projects), [git‑процессов](/docs/cloud/git/git-version-control) и [требований к хранилищам данных](/docs/supported-data-platforms).
+- Поддерживаемый адаптер и метод аутентификации:
     <FusionDWH /> 
-- You need a macOS (Terminal), Linux, or Windows (Powershell) machine to run the <Constant name="fusion_engine" />. 
-- You need to have [Visual Studio Code](https://code.visualstudio.com/) installed. The [Cursor](https://www.cursor.com/en) code editor will also work, but these instructions will focus on VS Code.
-- You need admin or install privileges on your machine.  
+- Компьютер с macOS (Terminal), Linux или Windows (PowerShell) для запуска <Constant name="fusion_engine" />.
+- Установленный [Visual Studio Code](https://code.visualstudio.com/). Редактор [Cursor](https://www.cursor.com/en) также подойдёт, но в инструкциях ниже используется VS Code.
+- Права администратора или возможность устанавливать программное обеспечение на машине.  
 
-### What you’ll learn
+### Чему вы научитесь
 
-By following this guide, you will:
-- Set up a fully functional dbt environment with an operational project  
-- Install and use the <Constant name="fusion_engine" /> + dbt VS Code extension  
-- Run dbt commands from your IDE or terminal  
-- Preview data, view lineage, and write SQL faster with autocomplete, and more! 
+Следуя этому руководству, вы:
+- Настроите полностью рабочее окружение dbt с функционирующим проектом  
+- Установите и начнёте использовать <Constant name="fusion_engine" /> и расширение dbt для VS Code  
+- Научитесь запускать dbt‑команды из IDE или терминала  
+- Сможете просматривать данные, анализировать lineage и быстрее писать SQL с автодополнением и другими возможностями  
 
-You can learn more through high-quality [dbt Learn courses and workshops](https://learn.getdbt.com/).  
+Дополнительные материалы доступны в виде качественных [курсов и воркшопов dbt Learn](https://learn.getdbt.com/).  
 
-## Installation
+## Установка
 
-It's easy to think of the <Constant name="fusion_engine" /> and the dbt extension as two different products, but they're a powerful combo that works together to unlock the full potential of dbt. Think of the <Constant name="fusion_engine" /> as exactly that — an engine. The dbt extension and VS Code are the chassis, and together they form a powerful vehicle for transforming your data. 
+Можно подумать, что <Constant name="fusion_engine" /> и расширение dbt — это два отдельных продукта, но на самом деле они образуют мощную связку, раскрывающую весь потенциал dbt. <Constant name="fusion_engine" /> — это, по сути, двигатель. Расширение dbt и VS Code — это шасси, и вместе они образуют мощный инструмент для трансформации данных.
 
 :::info
-- You can install the <Constant name="fusion_engine" /> and use it standalone with the CLI.
-- You *cannot* use the dbt extension without <Constant name="fusion" /> installed.
+- Вы можете установить <Constant name="fusion_engine" /> и использовать его отдельно через CLI.
+- Использовать расширение dbt без установленного <Constant name="fusion" /> **нельзя**.
 :::
 
-The following are the essential steps from the [<Constant name="fusion_engine" />](/docs/fusion/install-fusion-cli) and [extension](/docs/install-dbt-extension) installation guides:
+Ниже приведены основные шаги из руководств по установке [<Constant name="fusion_engine" />](/docs/fusion/install-fusion-cli) и [расширения](/docs/install-dbt-extension):
 
 <Tabs queryString="installation">
 <TabItem value="mac-linux" label="macOS & Linux">
 
-1. Run the following command in the terminal to install the `dbtf` binary — <Constant name="fusion" />’s CLI command.
+1. Выполните следующую команду в терминале, чтобы установить бинарный файл `dbtf` — CLI‑команду <Constant name="fusion" />:
     ```shell
     curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --update
     ```
-2. To use `dbtf` immediately after installation, reload your shell so that the new `$PATH` is recognized:
+2. Чтобы сразу начать использовать `dbtf`, перезагрузите оболочку, чтобы обновлённый `$PATH` был распознан:
     ```shell
     exec $SHELL
     ```
-    Or you can close and reopen your terminal window. This will load the updated environment settings into the new session.
+    Либо просто закройте и заново откройте окно терминала — это загрузит обновлённые переменные окружения.
 </TabItem>
 <TabItem value="windows" label="Windows (PowerShell)">
 
-1. Run the following command in PowerShell to install the `dbtf` binary:
+1. Выполните следующую команду в PowerShell, чтобы установить бинарный файл `dbtf`:
     ```powershell
     irm https://public.cdn.getdbt.com/fs/install/install.ps1 | iex
     ```
-2. To use `dbtf` immediately after installation, reload your shell so that the new `Path` is recognized:
+2. Чтобы сразу начать использовать `dbtf`, перезапустите оболочку, чтобы обновлённый `Path` был распознан:
     ```powershell
     Start-Process powershell
     ```
-    Or you can close and reopen your terminal window. This will load the updated environment settings into the new session.
+    Либо просто закройте и заново откройте окно PowerShell.
 </TabItem>
 </Tabs>
 
-### Verify the <Constant name="fusion_engine" /> installation
+### Проверка установки <Constant name="fusion_engine" />
 
-1. After installation, open a new command-line window to confirm that <Constant name="fusion" /> was installed correctly by checking the version. 
+1. После установки откройте новое окно командной строки и проверьте, что <Constant name="fusion" /> установлен корректно, запросив версию:
     ```bash
     dbtf --version
     ```
-2. You should see output similar to the following:
+2. Вы должны увидеть вывод, похожий на следующий:
     ```bash
     dbt-fusion 2.0.0-preview.45
     ```
 :::tip
-You can run these commands using `dbt`, or use `dbtf` as an unambiguous alias for <Constant name="fusion" />, if you have another dbt CLI installed on your machine.
+Вы можете запускать эти команды с помощью `dbt` или использовать `dbtf` как однозначный алиас для <Constant name="fusion" />, если на машине установлен другой dbt CLI.
 :::
 
-### Install the dbt VS Code extension
+### Установка расширения dbt для VS Code
 
-The dbt VS Code extension is available in the [Visual Studio extension marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt). Download it directly from your VS Code editor:
+Расширение dbt для VS Code доступно в [Visual Studio extension marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt). Его можно установить прямо из редактора:
 
-1. Navigate to the **Extensions** tab of VS Code (or Cursor).
-2. Search for `dbt` and choose the one from the publisher `dbt Labs Inc`.
-    <Lightbox src="/img/docs/extension/extension-marketplace.png" width="60%" title="Search for the extension"/>
-3. Click **Install**.
-4. When the prompt appears, you can register the extension now or skip it (you can register later). You can also check out our [installation instructions](/docs/install-dbt-extension) to come back to it later.
-5. Confirm you've installed the extension by looking for the **dbt Extension** label in the status bar. If you see it, the extension was installed successfully!
-    <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="Verify installation in the status bar."/>
+1. Перейдите на вкладку **Extensions** в VS Code (или Cursor).
+2. Найдите `dbt` и выберите расширение от издателя `dbt Labs Inc`.
+    <Lightbox src="/img/docs/extension/extension-marketplace.png" width="60%" title="Найдите расширение"/>
+3. Нажмите **Install**.
+4. При появлении запроса вы можете зарегистрировать расширение сразу или пропустить этот шаг (к нему можно вернуться позже). Также вы можете ознакомиться с [инструкциями по установке](/docs/install-dbt-extension).
+5. Убедитесь, что расширение установлено: в строке состояния должен появиться индикатор **dbt Extension**.
+    <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="Проверьте установку в строке состояния."/>
 
-## Initialize the Jaffle Shop project
-Now let's create your first dbt project powered by <Constant name="fusion" />!
+## Инициализация проекта Jaffle Shop
 
-1. Run `dbt init` to set up an example project and configure a database connection profile.
-   - If you *do not* have a connection profile that you want to use, start with `dbt init` and use the prompts to configure a profile:
-    - If you already have a connection profile that you want to use, use the `--skip-profile-setup` flag then edit the generated `dbt_project.yml` to replace `profile: jaffle_shop` with `profile: <YOUR-PROFILE-NAME>`.
+Теперь создадим ваш первый dbt‑проект на базе <Constant name="fusion" />!
+
+1. Запустите `dbt init`, чтобы создать пример проекта и настроить профиль подключения к базе данных.
+   - Если у вас *нет* готового профиля подключения, используйте `dbt init` и настройте его через интерактивные подсказки.
+   - Если профиль уже есть, используйте флаг `--skip-profile-setup`, а затем отредактируйте сгенерированный `dbt_project.yml`, заменив `profile: jaffle_shop` на `profile: <YOUR-PROFILE-NAME>`.
 
         ```bash
         dbtf init --skip-profile-setup
         ```
 
-    - If you created new credentials through the interactive prompts, `init` automatically runs `dbtf debug` at the end. This ensures the newly created profile establishes a valid connection with the database.
+    - Если вы создали новые учётные данные через интерактивные подсказки, команда `init` автоматически запустит `dbtf debug` в конце, чтобы проверить корректность подключения.
 
-2. Change directories into your newly created project:
+2. Перейдите в каталог созданного проекта:
     ```bash
     cd jaffle_shop
     ```
 
-3. Build your dbt project (which includes creating example data):
+3. Соберите dbt‑проект (включая создание примерных данных):
     ```bash
     dbtf build
     ```
 
-This will:
-- Load example data into your warehouse
-- Create, build, and test models
-- Verify your dbt environment is fully operational
+В процессе будет выполнено:
+- Загрузка примерных данных в хранилище
+- Создание, сборка и тестирование моделей
+- Проверка того, что окружение dbt полностью работоспособно
 
-## Explore with the dbt VS Code extension
+## Изучение возможностей с расширением dbt для VS Code
 
-The dbt VS Code extension compiles and builds your project with the <Constant name="fusion_engine" />, a powerful and blazing fast rebuild of dbt from the ground up. 
+Расширение dbt для VS Code компилирует и собирает проект с помощью <Constant name="fusion_engine" /> — сверхбыстрой, полностью переработанной реализации dbt.
 
-Want to see <Constant name="fusion" /> in action? Check out the following video to get a sense of how it works:
+Хотите увидеть <Constant name="fusion" /> в действии? Посмотрите следующее видео‑демо, чтобы понять, как это работает:
 
 <div style={{ position: 'relative', maxWidth: '960px', margin: '2rem auto', overflow: 'hidden', borderRadius: '12px', height: '500px', boxShadow: 'var(--ifm-global-shadow-lw)' }}>
   <iframe
@@ -166,74 +166,73 @@ Want to see <Constant name="fusion" /> in action? Check out the following video 
   />
 </div>
 
-Now that your project works, open it in VS Code and see Fusion in action:
+Когда проект готов, откройте его в VS Code и посмотрите Fusion в работе:
 
-1. In VS Code, open the **View** menu and click **Command Palette**. Enter **Workspaces: Add Folder to Workspace**.
-2. Select your `jaffle_shop` folder.
-        If you don't add the root folder of the dbt project to the workspace, the [dbt language server](https://docs.getdbt.tech/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server) (LSP) will not run. The LSP enables features like autocomplete, hover info, and inline error highlights.
-4. Open a model file to see the definition for the `orders` model. This is the model we'll use in all of the examples below.
+1. В VS Code откройте меню **View** и выберите **Command Palette**. Введите **Workspaces: Add Folder to Workspace**.
+2. Выберите папку `jaffle_shop`.
+        Если вы не добавите корневую папку dbt‑проекта в workspace, [dbt language server](https://docs.getdbt.com/blog/dbt-fusion-engine-components#the-dbt-vs-code-extension-and-language-server) (LSP) не запустится. Именно LSP обеспечивает автодополнение, подсказки при наведении и встроенные подсветки ошибок.
+4. Откройте файл модели, чтобы увидеть определение модели `orders` — именно её мы будем использовать в примерах ниже.
     ```bash
         models/marts/orders.sql
     ```
-5. Locate **Lineage** and **Query Results** in the lower panel, and the **dbt icon** in the upper right corner next to your editor groups. If you see all of these, the extension is installed correctly and running!
-    <Lightbox src="/img/docs/extension/extension-running.png" width="80%" title="The VS Code UI with the extension running."/>
+5. В нижней панели найдите **Lineage** и **Query Results**, а в правом верхнем углу — **иконку dbt**. Если всё это отображается, расширение установлено и работает корректно!
+    <Lightbox src="/img/docs/extension/extension-running.png" width="80%" title="Интерфейс VS Code с запущенным расширением."/>
 
-Now you're ready to see some of these awesome features in action!
+Теперь вы готовы попробовать эти возможности на практике!
 
 <!-- no toc -->
-- [Preview data and code](#preview-data-and-code)
-- [Navigate your project with lineage tools](#navigate-your-project-with-lineage-tools)
-- [Use the power of SQL understanding](#use-the-power-of-sql-understanding)
-- [Speed up common dbt commands](#speed-up-common-dbt-commands)
+- [Просмотр данных и кода](#preview-data-and-code)
+- [Навигация по проекту с помощью lineage‑инструментов](#navigate-your-project-with-lineage-tools)
+- [Использование понимания SQL](#use-the-power-of-sql-understanding)
+- [Ускорение стандартных dbt‑команд](#speed-up-common-dbt-commands)
 
-#### Preview data and code
+#### Просмотр данных и кода
 
-Gain valuable insights into your data transformation during each step of your development process. 
-You can quickly access model results and underlying data structures directly from your code. These previews help validate your code step-by-step. 
+Получайте полезные инсайты о трансформации данных на каждом этапе разработки.  
+Вы можете быстро просматривать результаты моделей и структуру данных прямо из кода. Это помогает поэтапно проверять корректность логики.
 
-1. Locate the **table icon** for **Preview File** in the upper right corner. Click it to preview results in the **Query Results** tab.
-    <Lightbox src="/img/docs/extension/preview-query-results.png" width="80%" title="Preview model query results."/>
-2. Click **Preview CTE** above `orders as (` to preview results in the **Query Results** tab.
-    <Lightbox src="/img/docs/extension/preview-cte-query-results-3.png" width="80%" title="Preview CTE query results."/>
-3. Locate the code icon for **Compile File** in between the dbt and the table icons. Clicking this icon opens a window with the compiled version of the model.
-    <Lightbox src="/img/docs/extension/compile-file-icon.png" width="50%" title="Compile File icon."/>
-    <Lightbox src="/img/docs/extension/compile-file.png" width="80%" title="Compile File results."/>
+1. Найдите **иконку таблицы** для **Preview File** в правом верхнем углу и нажмите на неё, чтобы увидеть результаты во вкладке **Query Results**.
+    <Lightbox src="/img/docs/extension/preview-query-results.png" width="80%" title="Просмотр результатов запроса модели."/>
+2. Нажмите **Preview CTE** над `orders as (`, чтобы посмотреть результаты CTE во вкладке **Query Results**.
+    <Lightbox src="/img/docs/extension/preview-cte-query-results-3.png" width="80%" title="Просмотр результатов запроса CTE."/>
+3. Найдите иконку **Compile File** между иконками dbt и таблицы. Нажатие открывает окно с скомпилированной версией модели.
+    <Lightbox src="/img/docs/extension/compile-file-icon.png" width="50%" title="Иконка Compile File."/>
+    <Lightbox src="/img/docs/extension/compile-file.png" width="80%" title="Результаты Compile File."/>
 
-#### Navigate your project with lineage tools
+#### Навигация по проекту с помощью lineage‑инструментов
 
-Almost as important as where your data is going is where it's been. The lineage tools in the extension let you visualize the lineage of the resources in your models as well as the column-level lineage. These capabilities deepen your understanding of model relationships and dependencies.
+Понимание того, откуда пришли данные, почти так же важно, как и понимание того, куда они идут. Инструменты lineage позволяют визуализировать зависимости между моделями и на уровне отдельных колонок, углубляя понимание структуры проекта.
 
-1. Open the **Lineage** tab to visualize the model-level lineage of this model.
-    <Lightbox src="/img/docs/extension/extension-pane.png" width="80%" title="Visualizing model-level lineage."/>
-1. Open the **View** menu, click **Command Palette** and enter `dbt: Show Column Lineage` to visualize the column-level lineage in the **Lineage** tab.
-    <Lightbox src="/img/docs/extension/show-cll.png" width="80%" title="Show column-level lineage."/>
+1. Откройте вкладку **Lineage**, чтобы увидеть lineage на уровне моделей.
+    <Lightbox src="/img/docs/extension/extension-pane.png" width="80%" title="Визуализация lineage на уровне моделей."/>
+1. Откройте меню **View**, выберите **Command Palette** и введите `dbt: Show Column Lineage`, чтобы увидеть lineage на уровне колонок во вкладке **Lineage**.
+    <Lightbox src="/img/docs/extension/show-cll.png" width="80%" title="Показ lineage на уровне колонок."/>
 
-#### Use the power of SQL understanding
+#### Использование понимания SQL
 
-Code smarter, not harder. The autocomplete and context clues help avoid mistakes and enable you to write fast and accurate SQL. Catch issues before you commit them!
+Пишите код умнее, а не сложнее. Автодополнение и контекстные подсказки помогают избегать ошибок и быстрее создавать корректный SQL.
 
-1. To see **Autocomplete** in action, delete `ref('stg_orders')`, and begin typing `ref(stg_` to see the subset of matching model names. Use up and down arrows to select `stg_orders`.
-    <Lightbox src="/img/docs/extension/autocomplete.png" width="80%" title="Autocomplete for a model name."/>
-1. Hover over any `*` to see the list of column names and data types being selected.
-    <Lightbox src="/img/docs/extension/hover-star.png" width="80%" title="Hovering over * to see column names and data types."/>
+1. Чтобы увидеть **Autocomplete** в действии, удалите `ref('stg_orders')` и начните вводить `ref(stg_`, чтобы увидеть подходящие имена моделей. Используйте стрелки вверх и вниз, чтобы выбрать `stg_orders`.
+    <Lightbox src="/img/docs/extension/autocomplete.png" width="80%" title="Автодополнение имени модели."/>
+1. Наведите курсор на `*`, чтобы увидеть список выбираемых колонок и их типы данных.
+    <Lightbox src="/img/docs/extension/hover-star.png" width="80%" title="Наведение на * для просмотра имён колонок и типов данных."/>
 
-#### Speed up common dbt commands
+#### Ускорение стандартных dbt‑команд
 
-Testing, testing... is this mic on? It is and it's ready to execute your commands with blazing fast speeds! When you want to test your code against various dbt commands: 
+Тестирование, тестирование… микрофон включён? Да — и он готов выполнять ваши команды с молниеносной скоростью! Когда нужно проверить код с помощью различных dbt‑команд:
 
-1. The dbt icon in the top right opens a list of extension-specific commands:
-    <Lightbox src="/img/docs/extension/run-command.png" width="80%" title="Select a command via the dbt icon."/>
-1. Opening the **View** menu, clicking the **Command Palette**, and entering `>dbt:` in the command bar shows all the new commands that are available.
-    <Lightbox src="/img/docs/extension/extension-commands-all.png" width="80%" title="dbt commands in the command bar."/>
+1. Иконка dbt в правом верхнем углу открывает список команд, доступных через расширение:
+    <Lightbox src="/img/docs/extension/run-command.png" width="80%" title="Выберите команду через иконку dbt."/>
+1. Если открыть меню **View**, выбрать **Command Palette** и ввести `>dbt:`, вы увидите полный список доступных команд.
+    <Lightbox src="/img/docs/extension/extension-commands-all.png" width="80%" title="Команды dbt в командной строке."/>
 
 <ConfettiTrigger>
-Try choosing some of them and see what they do 😎
+Попробуйте выбрать несколько команд и посмотрите, что они делают 😎
 
-This is just the start. There is so much more available and so much more coming. Be sure to check out our resources for all the information about the <Constant name="fusion_engine" /> and the dbt VS Code extension!
-
+Это только начало. Возможностей уже много, и впереди — ещё больше. Обязательно изучите наши материалы, чтобы узнать всё о <Constant name="fusion_engine" /> и расширении dbt для VS Code!
 </ConfettiTrigger>
 
-## Troubleshooting
+## Устранение неполадок
 
 import FusionTroubleshooting from '/snippets/_fusion-troubleshooting.md';
 

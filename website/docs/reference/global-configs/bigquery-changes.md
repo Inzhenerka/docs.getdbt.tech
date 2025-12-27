@@ -1,11 +1,11 @@
 ---
-title: "BigQuery adapter behavior changes"
+title: "Изменения в поведении адаптера BigQuery"
 id: "bigquery-changes"
 sidebar: "BigQuery"
 ---
 
-## The `bigquery_use_batch_source_freshness` flag
+## Флаг `bigquery_use_batch_source_freshness`
 
-The `bigquery_use_batch_source_freshness` flag is `False` by default. Setting it to `True` in your `dbt_project.yml` file enables dbt to compute `source freshness` results with a single batched query to BigQuery's [`INFORMATION_SCHEMA.TABLE_STORAGE`](https://cloud.google.com/bigquery/docs/information-schema-table-storage) view as opposed to sending a metadata request for each source.
+Флаг `bigquery_use_batch_source_freshness` по умолчанию имеет значение `False`. Установка его в `True` в файле `dbt_project.yml` включает режим, при котором dbt вычисляет результаты `source freshness` с помощью одного пакетного запроса к представлению BigQuery [`INFORMATION_SCHEMA.TABLE_STORAGE`](https://cloud.google.com/bigquery/docs/information-schema-table-storage), вместо отправки отдельного запроса метаданных для каждого источника.
 
-Setting this flag to `True` improves the performance of the `source freshness` command significantly, especially when a project contains a large (1000+) number of sources.
+Установка этого флага в `True` значительно повышает производительность команды `source freshness`, особенно в проектах с большим количеством источников (1000 и более).

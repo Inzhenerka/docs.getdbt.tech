@@ -1,5 +1,5 @@
 ---
-title: "Quickstart for dbt Canvas"
+title: "Быстрый старт для dbt Canvas"
 id: "canvas"
 level: 'Beginner'
 icon: 'dbt'
@@ -12,266 +12,266 @@ recently_updated: true
 
 import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
-## Introduction
+## Введение
 
-<Constant name="visual_editor" /> offers a quick and straightforward way for anyone to build analytics models, no background in analytics engineering is required! In this guide, you will learn about:
+<Constant name="visual_editor" /> предлагает быстрый и наглядный способ создания аналитических моделей — опыт в analytics engineering не требуется! В этом руководстве вы узнаете:
 
-- Accessing <Constant name="visual_editor" /> and creating a new model
-- Navigating the interface
-- Building a model using operators
-- Committing your changes to <Constant name="git" />
-- Locating your <Constant name="visual_editor" /> model and data
+- как получить доступ к <Constant name="visual_editor" /> и создать новую модель  
+- как ориентироваться в интерфейсе  
+- как строить модель с помощью операторов  
+- как закоммитить изменения в <Constant name="git" />  
+- где найти модель и данные, созданные в <Constant name="visual_editor" />  
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 
-:::note Prerequisite for using the Jaffle Shop
+:::note Требование для использования Jaffle Shop
 
-The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) GitHub repo sample project. You can use your own data, but the Jaffle Shop offers a full-featured project useful for testing dbt features. Ask your <Constant name="cloud" /> administrator about importing it to a project in your environment. They must also execute `dbt run` on the Jaffle Shop project in your `Production` environment before you begin, or you will be unable to reference the source models.
+Примеры в этом руководстве используют пример проекта [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) из GitHub. Вы можете использовать и собственные данные, однако Jaffle Shop — это полнофункциональный проект, удобный для тестирования возможностей dbt. Уточните у администратора <Constant name="cloud" />, как импортировать его в проект в вашем окружении. Также администратор должен выполнить `dbt run` для проекта Jaffle Shop в окружении `Production` до начала работы, иначе вы не сможете ссылаться на source-модели.
 
 :::
 
-## Access Canvas
+## Доступ к Canvas
 
-To access <Constant name="visual_editor" />:
+Чтобы открыть <Constant name="visual_editor" />:
 
-1. Click **<Constant name="visual_editor" />** on the left-side menu.
-2. From the right side, click **Create new workspace**. This will open a new workspace with a blank untitled model. You don't need to take any additional action to continue with this guide, but in scenarios where you want to create a new model, click **+Add** on the top navigation bar and click **Create new model**.
+1. Нажмите **<Constant name="visual_editor" />** в левом боковом меню.
+2. Справа нажмите **Create new workspace**. Откроется новый workspace с пустой моделью без названия. Для продолжения этого руководства дополнительных действий не требуется, но если вам нужно создать новую модель в других сценариях, нажмите **+Add** в верхней навигационной панели и выберите **Create new model**.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/canvas-create-new-model.png" width="90%" title="Create a new model from the Canvas landing page."/>
+<Lightbox src="/img/docs/dbt-cloud/canvas/canvas-create-new-model.png" width="90%" title="Создание новой модели с landing page Canvas."/>
 
-## Navigating the interface
+## Навигация по интерфейсу
 
-<Constant name="visual_editor" /> comprises a series of menus activated by clicking icons surrounding the border of the canvas workspace area. With none of the menu items activated, the workspace looks like this:
+<Constant name="visual_editor" /> состоит из набора меню, которые активируются кликом по иконкам по периметру рабочей области canvas. Когда ни одно меню не активно, рабочая область выглядит следующим образом:
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/canvas-screen.png" width="90%" title="The Canvas workspace screen. The number of items is defined in this section." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/canvas-screen.png" width="90%" title="Экран рабочей области Canvas. Номера элементов соответствуют описанию в этом разделе." />
 
-Click on an icon to expand its section or execute an action depending on its purpose. The options are as follows:
+Нажмите на иконку, чтобы раскрыть соответствующий раздел или выполнить действие — в зависимости от её назначения. Доступны следующие элементы:
 
-1. The main menu (click on the **dbt logo**) and the workspace's title. The title default is random but can be edited anytime by clicking on it.
-2. The **current model tab** and name. The name for the model is set with the **Output** operator.
-3. The **model icon** button. Manage your models in the workspace. 
-4. The **Runs** pane displays run data, including warnings and errors.
-5. The **Previews** pane that displays previews data for individual operators.
-6. The **Add** option for creating new models, editing existing, or adding seed files.
-7. The **Operators** toolbar (`Input`, `Transform`, and `Output`) contains the building blocks for creating a model with the editor. 
-8. The [<Constant name="copilot" />](/docs/cloud/dbt-copilot) icon (where available). Use natural language to build your <Constant name="visual_editor" /> models.
-9. The **SQL code** area displays the SQL that compiles your model.
-10. The **Run** command executes `dbt run` for the model.
-11. This button is initially a **Commit** command for your integrated <Constant name="git" /> provider. It will change to "Open pull request" once your first commit is made. The button will not initially appear until you begin working in the canvas area.
-12. The navigation tab that has icons for (from top to bottom):
-    - Zoom in
-    - Zoom out
-    - Center the model to fit the screen
-    - Zoom to selection (the operator selected on or off screen will be zoomed and centered)
-    - Auto-layout option for the individual operator tiles
+1. Главное меню (клик по **логотипу dbt**) и заголовок workspace. Заголовок по умолчанию генерируется случайно, но его можно изменить в любой момент, кликнув по нему.
+2. Вкладка **текущей модели** и её имя. Имя модели задаётся с помощью оператора **Output**.
+3. Кнопка с **иконкой модели** — управление моделями в workspace.
+4. Панель **Runs**, где отображаются данные запусков, включая предупреждения и ошибки.
+5. Панель **Previews**, показывающая превью данных для отдельных операторов.
+6. Опция **Add** для создания новых моделей, редактирования существующих или добавления seed-файлов.
+7. Панель **Operators** (`Input`, `Transform`, `Output`) — строительные блоки для создания модели в редакторе.
+8. Иконка [<Constant name="copilot" />](/docs/cloud/dbt-copilot) (если доступно). Позволяет использовать естественный язык для построения моделей <Constant name="visual_editor" />.
+9. Область **SQL code**, где отображается SQL-код, в который компилируется модель.
+10. Кнопка **Run**, запускающая `dbt run` для модели.
+11. Кнопка, которая изначально является **Commit** для интегрированного провайдера <Constant name="git" />. После первого коммита она изменится на **Open pull request**. Кнопка появится только после начала работы в области canvas.
+12. Навигационная панель с иконками (сверху вниз):
+    - Увеличение масштаба  
+    - Уменьшение масштаба  
+    - Центрирование модели по экрану  
+    - Масштабирование к выбранному элементу (выбранный оператор будет приближен и центрирован, даже если он вне экрана)
+    - Автоматическая раскладка тайлов операторов  
 
-## Create a model
+## Создание модели
 
-This section will walk you through creating a model with operators using sample data from the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) project. With this guide, you will create a basic model that transforms two datasets to build a view of repeat customer purchases while you consider a loyalty program for your shop. 
+В этом разделе вы создадите модель с использованием операторов и примерных данных из проекта [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop). В результате вы построите базовую модель, которая трансформирует два набора данных и формирует представление повторных покупок клиентов — полезно, например, при рассмотрении программы лояльности.
 
-The operators are the heart of your model. They determine what data will be transformed and how. Click the **+** icon to open the operator menu.
+Операторы — это сердце вашей модели. Они определяют, какие данные и каким образом будут трансформироваться. Нажмите на иконку **+**, чтобы открыть меню операторов.
 
-Operators are divided into three types:
-- **Input:** Input operators configure the source data.
-- **Transform:** Transform operators change and shape your data.
-- **Output:** Output operators define your model name and location.
+Операторы делятся на три типа:
+- **Input:** настраивают входные данные (источники).
+- **Transform:** изменяют и преобразуют данные.
+- **Output:** определяют имя и расположение итоговой модели.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/operators.png" width="90%" title="The operator’s menu on the side of the Canvas workspace." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/operators.png" width="90%" title="Меню операторов в рабочей области Canvas." />
 
-Read more about the [individual operators](/docs/cloud/canvas-interface#operators) to understand the basic purpose of each. The dbt model created by the <Constant name="visual_editor" /> builds off of existing models. In this guide, there will be input (source) models and an output model (what you are building) which will be _your model_.  
+Подробнее о назначении каждого оператора читайте в разделе [individual operators](/docs/cloud/canvas-interface#operators). dbt-модель, создаваемая в <Constant name="visual_editor" />, строится на основе уже существующих моделей. В этом руководстве будут input-модели (source) и одна output-модель — то, что вы создаёте, то есть _ваша модель_.
 
 <details>
-<summary>More about operator tiles</summary>
+<summary>Подробнее о тайлах операторов</summary>
 
-The operators are drag-and-drop from their menu to the canvas, and when they are dropped they will create a tile.
+Операторы перетаскиваются (drag-and-drop) из меню на canvas, и при добавлении создаётся тайл.
 
-The tiles have the same basic setup with different fields depending on their function. All operators except for **Model** must be connected to another tile before configuring. Once configured, they’ll have the same basic layout.
+Тайлы имеют схожую структуру, но набор полей зависит от функции оператора. Все операторы, кроме **Model**, должны быть соединены с другим тайлом до настройки. После конфигурации их внешний вид становится одинаковым по структуре.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/operator-tile.png" width="90%" title="An operator tile with configurations filled out." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/operator-tile.png" width="90%" title="Тайл оператора с заполненной конфигурацией." />
 
-1. **The connectors:** Click-and-drag to the connector on another operator to link them. Some connectors have L and R markers. When implementing joins, they designate the left and right joins, respectively.
-2. **The title:** Click to change. The examples and images in this guide will use the default names. 
-3. **Play icon and menu:** Preview the data at any point in its transformation by clicking the tile's **play icon**. The dropdown menu contains the option to **Delete** a tile. 
-4. **Column icon:** The number next to it represents the number of columns in the data at that point in its transformation.
+1. **Коннекторы:** перетаскивайте соединение к коннектору другого оператора, чтобы связать их. Некоторые коннекторы имеют метки L и R — при использовании join они обозначают левую и правую стороны соответственно.
+2. **Заголовок:** можно изменить по клику. В примерах и изображениях этого руководства используются названия по умолчанию.
+3. **Иконка Play и меню:** позволяет просмотреть данные на любом этапе трансформации, нажав **play icon**. В выпадающем меню есть опция **Delete** для удаления тайла.
+4. **Иконка колонок:** число рядом показывает количество колонок в данных на текущем этапе трансформации.
 
 :::tip
 
-Make operator tile titles unique compared to your column names to avoid confusion, and the same applies to any aliases you create.
+Делайте заголовки тайлов операторов уникальными по сравнению с именами колонок — это поможет избежать путаницы. То же относится и к создаваемым alias.
 
 :::
 
 </details>
 
-### Create your model from pre-existing models
+### Создание модели из уже существующих моделей
 
-To get started:
+Чтобы начать:
 
-1. Click the **Input** menu and drag the **Input Model** operator over to the canvas.
-2. Click **Choose a model** and then select the source `stg_models` from the dropdown. 
-3. Click the **Select model** option in the window that lists the columns.
+1. Откройте меню **Input** и перетащите оператор **Input Model** на canvas.
+2. Нажмите **Choose a model** и выберите source-модель `stg_models` из выпадающего списка.
+3. В окне со списком колонок нажмите **Select model**.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/one-model-operators.png" width="90%" title="A single model operator." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/one-model-operators.png" width="90%" title="Один оператор модели." />
 
-You now have your first input model in <Constant name="visual_editor" />!
+Теперь у вас есть первая input-модель в <Constant name="visual_editor" />!
 
-4. Drag a new **Input Model** operator to the canvas below the first and repeat the previous steps, but this time set the source model to `stg_order_items`.
+4. Перетащите ещё один оператор **Input Model** на canvas ниже первого и повторите предыдущие шаги, выбрав модель `stg_order_items`.
 
-    <Lightbox src="/img/docs/dbt-cloud/canvas/two-model-operators.png" width="90%" title="Two model operators in the canvas."/>
+    <Lightbox src="/img/docs/dbt-cloud/canvas/two-model-operators.png" width="90%" title="Два оператора моделей в Canvas."/>
 
-Now, you have two input models and are ready to transform the data!
-
-:::tip
-
-Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure it's been run in your Production environment recently and hasn't gone stale.
-
-:::
-
-### Create a join
-
-1. From the **Operators** menu, click **Transform** and drag the **Join** operator onto the canvas to the right of the source models. 
-    
-    <Lightbox src="/img/docs/dbt-cloud/canvas/join-not-connected.png" width="90%" title="A join that has not been connected to the models" />
-
-2. Click and drag a line from the **+** connector below the `L` on the join border to the **+** on the `stg_orders` model. Do the same for the `R` connector to the `stg_order_items` model.
-
-    <Lightbox src="/img/docs/dbt-cloud/canvas/join-connected.png" width="90%" title="The join is connected to two model operators." />
-
-3. In the **Join** tile, click **Configure inputs.**
-4. Set the **Join type** to `Inner`.
-5. In the pair of dropdowns, set both `stg_orders` and `stg_order_items` to `ORDER_ID`.
-6. Click **Select and rename columns** and click **Configure columns**
-select the following columns:
-    - From `stg_orders` click `ORDER_ID` and `CUSTOMER_ID`.
-    - From `stg_order_items` click `PRODUCT_ID`.
-    - Note: These will appear in the order they are clicked.
-7. You've now built your join! Test it by clicking the **Play icon** in the top right corner of the join tile. Your data will populate in the **Runs and previews** pane.
-
-    <Lightbox src="/img/docs/dbt-cloud/canvas/preview-join.png" width="90%" title="A completed join with the sample data." />
+Теперь у вас есть две input-модели, и вы готовы к трансформации данных.
 
 :::tip
 
-Your work in the <Constant name="visual_editor" /> is automatically saved as you progress, so if you need a break, you can always come back to a session later. Just be sure to give it a unique title!
+Не видите нужную pre-existing модель? Попросите администраторов dbt убедиться, что она недавно запускалась в окружении Production и не устарела.
 
 :::
 
-## Enhance your model
+### Создание join
 
-You've got the basics going with your <Constant name="visual_editor" /> model! It has successfully joined two pre-existing input models, but you want to transform the data further to get what you need: a list of customers who buy repeat items as you consider a loyalty club rewards program.
+1. В меню **Operators** выберите **Transform** и перетащите оператор **Join** на canvas справа от source-моделей.
 
-### Aggregate data
+    <Lightbox src="/img/docs/dbt-cloud/canvas/join-not-connected.png" width="90%" title="Join, не подключённый к моделям." />
 
-Multiple options for transforming your data include custom formulas, filters, and unions. Keep it simple and add an aggregation operator to tell you which customers buy the most repeat products.
+2. Перетащите линию от коннектора **+** под меткой `L` на рамке join к **+** у модели `stg_orders`. То же самое сделайте для коннектора `R` и модели `stg_order_items`.
 
-1. From **Transform**, drag the **Aggregation** operator over to the right of the join.
-2. Connect the aggregation operator to the join operator. 
-3. Click **Configure aggregation** in the **Aggregation tile**.
-4. Click in the **Group by** field and first select `CUSTOMER_ID` then `PRODUCT_ID`.
-5. Configure the next three fields with the following:
-    - **Function:** Count
-    - **Column:** PRODUCT_ID
-    - **Alias:** count_PRODUCT_ID
+    <Lightbox src="/img/docs/dbt-cloud/canvas/join-connected.png" width="90%" title="Join, подключённый к двум операторам моделей." />
 
-    <Lightbox src="/img/docs/dbt-cloud/canvas/aggregation.png" width="90%" title="The configured aggregation operator tile." />
+3. В тайле **Join** нажмите **Configure inputs**.
+4. Установите **Join type** в `Inner`.
+5. В паре выпадающих списков укажите для `stg_orders` и `stg_order_items` колонку `ORDER_ID`.
+6. Нажмите **Select and rename columns**, затем **Configure columns**, и выберите следующие колонки:
+    - из `stg_orders`: `ORDER_ID` и `CUSTOMER_ID`
+    - из `stg_order_items`: `PRODUCT_ID`
+    - Примечание: колонки будут отображаться в порядке кликов.
+7. Join готов! Проверьте результат, нажав **Play icon** в правом верхнем углу тайла join. Данные появятся в панели **Runs and previews**.
 
-6. Click the **Play icon** to preview the data. You're starting to see the results you're looking for, but the data is scattered. Let's clean it up a bit more.
+    <Lightbox src="/img/docs/dbt-cloud/canvas/preview-join.png" width="90%" title="Завершённый join с примером данных." />
 
 :::tip
 
-As your model grows, you can zoom in and out to view your needs. Click and hold in empty canvas space to drag your setup across the screen. Click the **Fit view** icon to see your entire model on the screen. Click the **Auto layout** icon to auto-arrange the tiles efficiently. 
+Вся ваша работа в <Constant name="visual_editor" /> автоматически сохраняется. Если нужно сделать перерыв, вы всегда можете вернуться к сессии позже — просто дайте ей уникальное название.
 
 :::
 
-### Add some order
+## Улучшение модели
 
-There's a lot of data there. Dozens of customers are buying hundreds of products. You will sort it so that the customers are listed ascending by their CUSTOMER_ID number, with the most purchased products listed in descending order. 
+Базовая модель в <Constant name="visual_editor" /> уже готова: она успешно объединяет две input-модели. Теперь вы хотите дополнительно преобразовать данные, чтобы получить список клиентов, которые покупают одни и те же товары повторно — например, для анализа программы лояльности.
 
-1. From **Transform**, drag the **Order** operator over to the right of the **Aggregation** tile and connect them.
-2. Click the **pencil edit icon**.
-3. In the **Sort order** field click **Select column** and click `Aggregation1.CUSTOMER_ID` from the dropdown. Set it to `Asc`. 
-4. Click **Add sorting** and in the new **Select column** field select `Aggregation1.count_PRODUCT_ID`. Set it to `Desc`.
-5. Press the **Play icon** to preview the new data.
+### Агрегация данных
 
-    <Lightbox src="/img/docs/dbt-cloud/canvas/order.png" width="90%" title="The ordered data operator tile config." />
+Существует несколько способов трансформации данных: пользовательские формулы, фильтры, union. Для простоты добавьте оператор агрегации, чтобы определить, какие клиенты чаще всего покупают повторяющиеся продукты.
+
+1. В разделе **Transform** перетащите оператор **Aggregation** вправо от join.
+2. Соедините оператор агрегации с оператором join.
+3. В тайле **Aggregation** нажмите **Configure aggregation**.
+4. В поле **Group by** сначала выберите `CUSTOMER_ID`, затем `PRODUCT_ID`.
+5. Настройте следующие поля:
+    - **Function:** Count  
+    - **Column:** PRODUCT_ID  
+    - **Alias:** count_PRODUCT_ID  
+
+    <Lightbox src="/img/docs/dbt-cloud/canvas/aggregation.png" width="90%" title="Сконфигурированный оператор агрегации." />
+
+6. Нажмите **Play icon**, чтобы просмотреть данные. Результаты уже появляются, но они выглядят неупорядоченными — давайте улучшим их.
 
 :::tip
 
-Want to practice on your own? Try adding a **Filter** operator that removes items with less than 10 sales for any customer ID. Be sure to run the preview and verify the data is correct.
+По мере роста модели вы можете увеличивать и уменьшать масштаб. Зажмите и перетащите пустое место на canvas, чтобы перемещаться по экрану. Используйте иконку **Fit view**, чтобы увидеть всю модель целиком, и **Auto layout**, чтобы автоматически и аккуратно расположить тайлы.
 
 :::
 
-## Configure your output model
+### Добавим порядок
 
-Now that you've built your model, you need to customize the output name and location:
-1. From **Output**, drag the **Output Model** operator to the right of your **Order** operator. 
-2. Connect the **Order** and **Output Model** operators.
-3. The **Output Model** configuration will default to the name of your <Constant name="visual_editor" /> project and the default models directory. Click the **pencil edit icon** to configure the optional fields:
-    - Edit the **Model name** field if you want the name to be different than that of your project.
-    - Edit the **File path** if you have a custom directory for your <Constant name="visual_editor" /> models. 
-    - Hover over a column name and click the **-** icon to remove it from the output model.
-4. Click the **play icon** to preview your final model. 
+Данных много: десятки клиентов и сотни продуктов. Отсортируйте их так, чтобы клиенты шли по возрастанию `CUSTOMER_ID`, а продукты — по убыванию количества покупок.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/output-model.png" width="90%" title="The output model configures your final model's name and location." />
+1. В разделе **Transform** перетащите оператор **Order** вправо от тайла **Aggregation** и соедините их.
+2. Нажмите на **иконку карандаша** для редактирования.
+3. В поле **Sort order** нажмите **Select column** и выберите `Aggregation1.CUSTOMER_ID`. Установите порядок `Asc`.
+4. Нажмите **Add sorting**, затем в новом поле **Select column** выберите `Aggregation1.count_PRODUCT_ID` и установите `Desc`.
+5. Нажмите **Play icon**, чтобы просмотреть обновлённые данные.
 
-:::tip Model locations
+    <Lightbox src="/img/docs/dbt-cloud/canvas/order.png" width="90%" title="Конфигурация оператора сортировки." />
 
-You can customize the location for <Constant name="visual_editor" /> models to keep them separate from other <Constant name="cloud" /> models. Check with your dbt admins for best practices and ideas for <Constant name="visual_editor" /> model locations and naming conventions.
+:::tip
+
+Хотите попрактиковаться самостоятельно? Попробуйте добавить оператор **Filter**, который исключает товары с количеством продаж менее 10 для любого CUSTOMER_ID. Не забудьте запустить preview и проверить корректность данных.
 
 :::
 
-## Run and share your model
+## Настройка output-модели
 
-Now that you've built a model that results in the data you want, it's time to run it and push it to your <Constant name="git" /> repo. Before you run your model, keep a few items in mind:
+Теперь, когда модель готова, нужно настроить имя и расположение output-модели:
 
-- When you run previews (at any stage in the process), it does not affect the state of your warehouse. So, you can test and develop in the <Constant name="visual_editor" /> without impacting anything outside of the <Constant name="cloud" /> Development environment.
-- When you're ready to use this model in a downstream tool, you can run it to materialize it in your data warehouse development schema.
-- Once your model is ready for production and ready to be used by others or orchestrated, commit it and open a pull request.
+1. В разделе **Output** перетащите оператор **Output Model** вправо от оператора **Order**.
+2. Соедините операторы **Order** и **Output Model**.
+3. По умолчанию конфигурация **Output Model** использует имя проекта <Constant name="visual_editor" /> и стандартную директорию models. Нажмите **иконку карандаша**, чтобы настроить дополнительные поля:
+    - Измените **Model name**, если хотите задать имя, отличное от имени проекта.
+    - Измените **File path**, если используете кастомную директорию для моделей <Constant name="visual_editor" />.
+    - Наведите курсор на имя колонки и нажмите иконку **-**, чтобы удалить её из output-модели.
+4. Нажмите **play icon**, чтобы просмотреть финальную модель.
+
+<Lightbox src="/img/docs/dbt-cloud/canvas/output-model.png" width="90%" title="Output Model задаёт имя и расположение итоговой модели." />
+
+:::tip Расположение моделей
+
+Вы можете настроить отдельное расположение для моделей <Constant name="visual_editor" />, чтобы отделить их от других моделей <Constant name="cloud" />. Уточните у администраторов dbt лучшие практики и рекомендации по структуре и именованию моделей <Constant name="visual_editor" />.
+
+:::
+
+## Запуск и публикация модели
+
+Теперь, когда модель готова и даёт нужные данные, пора запустить её и отправить изменения в репозиторий <Constant name="git" />. Перед запуском учтите несколько моментов:
+
+- Запуск preview на любом этапе не влияет на состояние вашего хранилища данных. Вы можете спокойно разрабатывать и тестировать в <Constant name="visual_editor" />, не затрагивая ничего за пределами окружения Development в <Constant name="cloud" />.
+- Когда модель понадобится в downstream-инструментах, вы можете выполнить run, чтобы материализовать её в development-схеме хранилища данных.
+- Когда модель готова к production и использованию другими пользователями или оркестрацией, закоммитьте её и откройте pull request.
 
 ### Run
 
-To run your model, you only need to click the big **Run** button. With the <Constant name="visual_editor" />, there is no command line and no need to memorize a list of commands; there is only **Run**. Click it to see the results populate in the **Runs and previews** pane.
+Чтобы запустить модель, просто нажмите большую кнопку **Run**. В <Constant name="visual_editor" /> нет командной строки и необходимости запоминать команды — есть только **Run**. Нажмите её, и результаты появятся в панели **Runs and previews**.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/run-results.png" width="90%" title="The results of a successful run in the 'Runs and previews' pane." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/run-results.png" width="90%" title="Результаты успешного run в панели 'Runs and previews'." />
 
-This will [materialize](/docs/build/materializations) the data as a `view` in your developer schema in the database. Once the model has been merged with your project and `dbt run` is executed in your Staging or Production environments, it will be materialized as a view in related schemas. 
+Это приведёт к [materialize](/docs/build/materializations) данных как `view` в вашей developer-схеме базы данных. После мерджа модели в проект и выполнения `dbt run` в окружениях Staging или Production она будет материализована как view в соответствующих схемах.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/preview-data.png" width="90%" title="Preview of the transformed data in Snowflake." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/preview-data.png" width="90%" title="Preview трансформированных данных в Snowflake." />
 
 :::tip
 
-Have dbt [<Constant name="copilot" />](/docs/cloud/dbt-copilot) enabled for your <Constant name="cloud" /> Enterprise account? Clear the board and try using natural language to build the model in this guide without manually configuring any operators.
+Включён ли dbt [<Constant name="copilot" />](/docs/cloud/dbt-copilot) для вашего Enterprise-аккаунта <Constant name="cloud" />? Очистите canvas и попробуйте построить модель из этого руководства, используя естественный язык, без ручной настройки операторов.
 
 :::
 
 ### Git commit
 
-The models built in the <Constant name="visual_editor" /> are a part of your larger dbt project. They are stored in the `visual_editor` folder of your `/models` directory. This is all done automatically; you don't have to configure any paths or directories. 
+Модели, созданные в <Constant name="visual_editor" />, являются частью вашего общего dbt-проекта. Они автоматически сохраняются в папке `visual_editor` внутри директории `/models`. Вам не нужно настраивать пути или директории вручную.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/ve-model-folder.png" width="90%" title="Example of the Canvas model path in GitHub." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/ve-model-folder.png" width="90%" title="Пример пути к модели Canvas в GitHub." />
 
-However, it won't be created in your <Constant name="git" /> repo until you commit your first model. So, back in the model's view:
+Однако эта папка не появится в репозитории <Constant name="git" />, пока вы не закоммитите первую модель. Вернувшись к представлению модели:
 
-1. Click **Commit** in the top right.
-    - If you've already created a commit and wish to make more, click the arrow next to **Create a pull request** to see the **Commit** option.
-2. Fill out the **Description** field with information about your model. If it's long, part of it will be included in the pull request title, and the rest will be in the body. That's okay! You can correct it during the PR creation process. 
-3. Click **Commit**. 
-4. The **Commit** button will change to **Create a pull request**. You can add more commits, but click the **Create a pull request** button for now. You will then be redirected to your <Constant name="git" /> provider in a new tab.
+1. Нажмите **Commit** в правом верхнем углу.
+    - Если вы уже делали коммиты и хотите создать новый, нажмите стрелку рядом с **Create a pull request**, чтобы увидеть опцию **Commit**.
+2. Заполните поле **Description** информацией о модели. Если описание длинное, его часть попадёт в заголовок pull request, а остальное — в тело. Это нормально, всё можно отредактировать при создании PR.
+3. Нажмите **Commit**.
+4. Кнопка **Commit** изменится на **Create a pull request**. Пока что нажмите **Create a pull request** — вы будете перенаправлены к вашему провайдеру <Constant name="git" /> в новой вкладке.
 
-The following example uses GitHub as the provider:
+В следующем примере используется GitHub:
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/demo-model-github.png" width="90%" title="Example of the screen you're taken to in GitHub when you create a pull request from Canvas." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/demo-model-github.png" width="90%" title="Экран GitHub при создании pull request из Canvas." />
 
-5. Click **Create pull request** in the GitHub window.
-6. Complete the **Add a title** and **Add a description** fields. If your description is split between both, copy all the contents to the description field and give it a shorter title.
-7. Click **Create pull request**.
+5. В окне GitHub нажмите **Create pull request**.
+6. Заполните поля **Add a title** и **Add a description**. Если описание разделено между ними, скопируйте весь текст в description и задайте более короткий title.
+7. Нажмите **Create pull request**.
 
-You've just submitted your first model from the <Constant name="visual_editor" /> for review. Once approved and merged, the model will be included in your organization’s project and run whenever `dbt run` is executed in any environment your model is in. You're now on your way to becoming an expert in data transformation!
+Вы только что отправили свою первую модель из <Constant name="visual_editor" /> на ревью. После одобрения и мерджа модель станет частью проекта вашей организации и будет выполняться при каждом запуске `dbt run` в соответствующих окружениях. Вы на верном пути к мастерству в трансформации данных!
 
 :::tip
 
-Want to take your skills to the next level? Try taking the SQL output from your <Constant name="visual_editor" /> model and using it to create a model in the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio). 
+Хотите прокачать навыки ещё сильнее? Попробуйте взять SQL-код, сгенерированный моделью <Constant name="visual_editor" />, и использовать его для создания модели в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
 
 :::
 
-Want to learn more? Be sure to check out our [Canvas fundamentals course](https://learn.getdbt.com/learn/course/canvas-fundamentals) on [dbt Learn](https://learn.getdbt.com/catalog).
+Хотите узнать больше? Обязательно посмотрите наш курс [Canvas fundamentals](https://learn.getdbt.com/learn/course/canvas-fundamentals) на платформе [dbt Learn](https://learn.getdbt.com/catalog).
 
 </div>

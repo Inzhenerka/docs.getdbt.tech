@@ -1,44 +1,44 @@
 ---
-title: Function properties
+title: Свойства функций
 ---
 
 <VersionCallout version="1.11" /> 
 
-Function properties can be declared in `.yml` files under a `functions` key.
+Свойства функций можно объявлять в `.yml`‑файлах под ключом `functions`.
 
-We recommend that you put them in the `functions/` directory. You can name these files `schema.yml` or `whatever_you_want.yml`, and nest them in subfolders within that directory.
+Мы рекомендуем размещать их в директории `functions/`. Эти файлы можно называть `schema.yml` или как угодно (`whatever_you_want.yml`), а также вкладывать их в поддиректории внутри этой директории.
 
 <File name='functions/<filename>.yml'>
 
 ```yml
 
 functions:
-  - name: <string> # required
-    [description](/reference/resource-properties/description): <markdown_string> # optional
-    [config](/reference/resource-properties/config): # optional
+  - name: <string> # обязательно
+    [description](/reference/resource-properties/description): <markdown_string> # необязательно
+    [config](/reference/resource-properties/config): # необязательно
       [<function_config>](/reference/function-configs): <config_value>
-      [type](/reference/resource-configs/type): scalar | aggregate # optional, defaults to scalar.
-      [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # optional
-      [runtime_version](/reference/resource-configs/runtime-version): <string> # required for Python UDFs
-      [entry_point](/reference/resource-configs/entry-point): <string> # required for Python UDFs
+      [type](/reference/resource-configs/type): scalar | aggregate # необязательно, по умолчанию scalar.
+      [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # необязательно
+      [runtime_version](/reference/resource-configs/runtime-version): <string> # обязательно для Python UDF
+      [entry_point](/reference/resource-configs/entry-point): <string> # обязательно для Python UDF
       [docs](/reference/resource-configs/docs):
         show: true | false
-        node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
-    [arguments](/reference/resource-properties/function-arguments): # optional
-      - name: <string> # required if arguments is specified
-        data_type: <string> # required if arguments is specified, warehouse-specific
-        description: <markdown_string> # optional
-        default_value: <string | boolean | integer> # optional, available in Snowflake and Postgres
-      - name: ... # declare additional arguments
-    [returns](/reference/resource-properties/returns): # required
-      data_type: <string> # required, warehouse-specific
-      description: <markdown_string> # optional
+        node_color: <color_id> # Используйте имя (например, node_color: purple) или hex‑код в кавычках (например, node_color: "#cd7f32")
+    [arguments](/reference/resource-properties/function-arguments): # необязательно
+      - name: <string> # обязательно, если указан arguments
+        data_type: <string> # обязательно, если указан arguments; зависит от хранилища данных
+        description: <markdown_string> # необязательно
+        default_value: <string | boolean | integer> # необязательно; доступно в Snowflake и Postgres
+      - name: ... # объявите дополнительные аргументы
+    [returns](/reference/resource-properties/returns): # обязательно
+      data_type: <string> # обязательно; зависит от хранилища данных
+      description: <markdown_string> # необязательно
 
-  - name: ... # declare properties of additional functions
+  - name: ... # объявите свойства дополнительных функций
 ```
 </File>
 
-## Example
+## Пример
 
 <File name='functions/schema.yml'>
 
@@ -46,7 +46,7 @@ functions:
 
 functions:
   - name: is_positive_int
-    description: Determines if a string represents a positive (+) integer
+    description: Определяет, представляет ли строка положительное (+) целое число
     config:
       type: scalar
       volatility: deterministic
@@ -55,9 +55,9 @@ functions:
     arguments:
       - name: a_string
         data_type: string
-        description: The string that I want to check if it's representing a positive integer (like "10")
+        description: Строка, которую нужно проверить, представляет ли она положительное целое число (например, "10")
     returns:
       data_type: boolean
-      description: Returns true if the input string represents a positive integer, false otherwise
+      description: Возвращает true, если входная строка представляет положительное целое число, и false в противном случае
 ```
 </File>

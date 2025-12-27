@@ -1,8 +1,8 @@
 ---
-title: "Using BigQuery DataFrames with dbt Python models"
+title: "Использование BigQuery DataFrames с dbt Python-моделями"
 id: dbt-python-bigframes
-description: "Use this guide to help you set up dbt with BigQuery DataFrames (BigFrames)."
-sidebar_label: "BigQuery DataFrames and dbt python"
+description: "Используйте это руководство, чтобы настроить dbt с BigQuery DataFrames (BigFrames)."
+sidebar_label: "BigQuery DataFrames и dbt python"
 # time_to_complete: '30 minutes' comment out until test
 icon: 'guides'
 hide_table_of_contents: true
@@ -13,139 +13,139 @@ level: 'Intermediate'
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this guide, you'll learn how to set up dbt so you can use it with BigQuery DataFrames (BigFrames):
-* Build scalable data transformation pipelines using dbt and Google Cloud, with SQL and Python.
-* Leverage BigFrames from dbt for scalable BigQuery SQL.
+В этом руководстве вы узнаете, как настроить dbt для работы с BigQuery DataFrames (BigFrames):
 
-In addition to the existing dataproc/pyspark based submission methods for executing python models, you can now use the BigFrames submission method to execute Python models with  pandas-like and scikit-like APIs,  without the need of any Spark setup or knowledge.
+* Построение масштабируемых пайплайнов трансформации данных с использованием dbt и Google Cloud, на SQL и Python.
+* Использование BigFrames из dbt для масштабируемых SQL-запросов BigQuery.
 
-BigQuery DataFrames is an open source Python package that transpiles pandas and scikit-learn code to scalable BigQuery SQL. The dbt-bigquery adapter relies on the BigQuery Studio Notebook Executor Service to run the Python client side code.
+В дополнение к уже существующим методам выполнения Python‑моделей на базе dataproc/pyspark, теперь вы можете использовать метод отправки BigFrames для выполнения Python‑моделей с pandas‑подобными и scikit‑подобными API — без необходимости настраивать Spark или разбираться в нём.
 
-### Prerequisites
+BigQuery DataFrames — это open source Python‑пакет, который транслирует код pandas и scikit‑learn в масштабируемый SQL для BigQuery. Адаптер dbt-bigquery использует сервис BigQuery Studio Notebook Executor Service для выполнения клиентского Python‑кода.
 
-- A [Google Cloud account](https://cloud.google.com/free) 
-- A [<Constant name="cloud" /> account](https://www.getdbt.com/signup/) 
-- Basic to intermediate SQL and python.
-- Basic understanding of dbt fundamentals. We recommend the [dbt Fundamentals course](https://learn.getdbt.com).
+### Предварительные требования
 
-During setup, you’ll need to select the **BigQuery (Legacy)** adapter and enter values for your **Google Cloud Storage Bucket** and **Dataproc Region** in the <Constant name="dbt_platform"/>. See [Configure BigQuery in dbt platform](/guides/dbt-python-bigframes?step=2#configure-bigquery-in-dbt-platform) for details.
+- Аккаунт [Google Cloud](https://cloud.google.com/free)  
+- Аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/)  
+- Базовые или средние знания SQL и Python.  
+- Базовое понимание принципов работы dbt. Рекомендуем курс [dbt Fundamentals](https://learn.getdbt.com).
 
-### What you'll build
+Во время настройки вам потребуется выбрать адаптер **BigQuery (Legacy)** и указать значения для **Google Cloud Storage Bucket** и **Dataproc Region** в <Constant name="dbt_platform"/>. Подробности см. в разделе [Configure BigQuery in dbt platform](/guides/dbt-python-bigframes?step=2#configure-bigquery-in-dbt-platform).
 
-Here's what you'll build in two parts:
-- Google Cloud project setup
-    - A one-time setup to configure the Google Cloud project you’ll be working with.
-- Build and Run the Python Model
-    - Create, configure, and execute a Python model using BigQuery DataFrames and dbt. 
+### Что вы создадите
 
-You will set up the environments, build scalable pipelines in dbt, and execute a python model.
+В этом руководстве вы создадите решение из двух частей:
 
-<Lightbox src="/img/guides/gcp-guides/gcp-bigframes-architecture.png" title="Implementation of the BigFrames submission method"/>
+- Настройка проекта Google Cloud  
+  - Одноразовая настройка проекта Google Cloud, с которым вы будете работать.
+- Создание и запуск Python‑модели  
+  - Создание, конфигурация и выполнение Python‑модели с использованием BigQuery DataFrames и dbt.
 
-**Figure 1** - Implementation of the BigFrames submission method for dbt python models
+Вы настроите окружения, построите масштабируемые пайплайны в dbt и выполните Python‑модель.
 
+<Lightbox src="/img/guides/gcp-guides/gcp-bigframes-architecture.png" title="Реализация метода отправки BigFrames"/>
 
-## Configure Google Cloud
+**Рисунок 1** — Реализация метода отправки BigFrames для Python‑моделей dbt
 
-The dbt BigFrames submission method supports both service account and OAuth credentials. You will use the service account in the following steps.
+## Настройте Google Cloud
 
-1. **Create a new Google Cloud Project**
+Метод отправки BigFrames в dbt поддерживает как service account, так и OAuth‑аутентификацию. В следующих шагах будет использоваться service account.
 
-   a. Your new project will have the following list of APIs already enabled, including BigQuery, which is required.
+1. **Создайте новый проект Google Cloud**
+
+   a. В новом проекте по умолчанию будет включён список API, включая BigQuery, который является обязательным.
       * [Default APIs](https://cloud.google.com/service-usage/docs/enabled-service#default)
 
-   b. Enable the BigQuery API which also enables the following additional APIs automatically
+   b. Включите BigQuery API, который автоматически активирует дополнительные API:
       * [BigQuery API's](https://cloud.google.com/bigquery/docs/enable-assets#automatic-api-enablement)
 
-   c. Required API's:
-   - **BigQuery API:** For all core BigQuery operations.
-   - **Vertex AI API:** To use the Colab Enterprise executor service.
-   - **Cloud Storage API:** For staging code and logs.
-   - **IAM API:** For managing permissions.
-   - **Compute Engine API:** As an underlying dependency for the notebook runtime environment.
-   - **Dataform API:** For managing the notebook code assets within BigQuery.
+   c. Обязательные API:
+   - **BigQuery API:** для всех основных операций BigQuery.
+   - **Vertex AI API:** для использования сервиса выполнения Colab Enterprise.
+   - **Cloud Storage API:** для хранения кода и логов.
+   - **IAM API:** для управления правами доступа.
+   - **Compute Engine API:** базовая зависимость для среды выполнения ноутбуков.
+   - **Dataform API:** для управления кодовыми артефактами ноутбуков внутри BigQuery.
 
+2. **Создайте service account и выдайте IAM‑права**
 
-2. **Create a service account and grant IAM permissions**
+   Этот service account будет использоваться dbt для чтения и записи данных в BigQuery, а также для работы с BigQuery Studio Notebooks.
 
-   This service account will be used by dbt to read and write data on BigQuery and use BigQuery Studio Notebooks.
-
-   Create the service account with IAM permissions:
+   Создайте service account и назначьте IAM‑права:
 
    ```python
-   #Create Service Account
+   #Создать Service Account
    gcloud iam service-accounts create dbt-bigframes-sa
-   #Grant BigQuery User Role
+   #Выдать роль BigQuery User
    gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.user
-   #Grant BigQuery Data Editor role. This can be restricted at dataset level
+   #Выдать роль BigQuery Data Editor. Её можно ограничить на уровне датасета
    gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.dataEditor
-   #Grant Service Account user 
+   #Выдать роль Service Account User
    gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
-   #Grant Colab Entperprise User
+   #Выдать роль Colab Enterprise User
    gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/aiplatform.colabEnterpriseUser
    ```
    
-   :::info When using a Shared VPC
-   When using Colab Enterprise in a Shared VPC environment, additional roles are required for the following service accounts on the Shared VPC host project:
-       - Vertex AI P4SA (`service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com`): This service account always requires the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
-         project. Replace `<PROJECT_NUMBER>` with the project number.
-       - Colab Enterprise P6SA (`service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com`): This service account also needs the Compute Network User (`roles/compute.networkUser`) role on the Shared VPC host
-         project. Replace `<PROJECT_NUMBER>` with the project number.
+   :::info При использовании Shared VPC
+   При использовании Colab Enterprise в среде Shared VPC требуются дополнительные роли для следующих service account в хост‑проекте Shared VPC:
+   - Vertex AI P4SA (`service-<PROJECT_NUMBER>@gcp-sa-aiplatform.iam.gserviceaccount.com`): этому service account всегда требуется роль Compute Network User (`roles/compute.networkUser`) в хост‑проекте Shared VPC. Замените `<PROJECT_NUMBER>` на номер проекта.
+   - Colab Enterprise P6SA (`service-<PROJECT_NUMBER>@gcp-sa-vertex-nb.iam.gserviceaccount.com`): этому service account также требуется роль Compute Network User (`roles/compute.networkUser`) в хост‑проекте Shared VPC. Замените `<PROJECT_NUMBER>` на номер проекта.
    :::
 
-4. *(Optional)* **Create a test BigQuery Dataset**
+4. *(Необязательно)* **Создайте тестовый датасет BigQuery**
 
-   Create a new BigQuery Dataset if you don't already have one:
+   Если у вас ещё нет датасета BigQuery, создайте новый:
 
    ```python
    #Create BQ dataset 
    bq mk --location=${REGION} echo "${GOOGLE_CLOUD_PROJECT}" | tr '-' '_'_dataset
    ```
 
-5. **Create a GCS bucket to stage the python code, and store logs**
+5. **Создайте бакет GCS для staging Python‑кода и хранения логов**
 
-   For temporary log and code storage, please create a GCS bucket and assign the required permissions:
+   Для временного хранения кода и логов создайте GCS‑bucket и назначьте необходимые права доступа:
 
    ```python
-   #Create GCS bucket
+   #Создать бакет GCS
    gcloud storage buckets create gs://${GOOGLE_CLOUD_PROJECT}-bucket --location=${REGION}
-   #Grant Storage Admin over the bucket to your SA 
+   #Выдать Storage Admin на бакет вашему SA
 
    gcloud storage buckets add-iam-policy-binding gs://${GOOGLE_CLOUD_PROJECT}-bucket --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/storage.admin
    ```
 
-### Configure BigQuery in the dbt platform
+### Настройте BigQuery в dbt platform
 
-To set up your BigQuery DataFrames connection in the <Constant name="dbt_platform"/>, refer to the following steps:
-1. Go to **Account settings** > **Connections**. Click **New connection**. 
-2. In the **Type** section, select **BigQuery**.
-3. Select **BigQuery (Legacy)** as your adapter.
-2. Under **Optional settings**, enter values for the following fields:
-    - **Google Cloud Storage Bucket** (for example: `dbt_name_bucket`)
-    - **Dataproc Region** (for example: `us-central1`)
-3. Click **Save**.
- 
-This is required so that BigFrames jobs execute correctly.
+Чтобы настроить подключение BigQuery DataFrames в <Constant name="dbt_platform"/>, выполните следующие шаги:
 
-Refer to [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquery) for more info on how to connect to BigQuery in the <Constant name="dbt_platform"/>.
+1. Перейдите в **Account settings** > **Connections** и нажмите **New connection**.  
+2. В разделе **Type** выберите **BigQuery**.  
+3. Выберите адаптер **BigQuery (Legacy)**.  
+4. В разделе **Optional settings** укажите значения для следующих полей:
+   - **Google Cloud Storage Bucket** (например: `dbt_name_bucket`)
+   - **Dataproc Region** (например: `us-central1`)
+5. Нажмите **Save**.
 
-<Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="80%" title="Configure BigQuery in the dbt platform"/>
+Это необходимо для корректного выполнения заданий BigFrames.
 
-## Create, configure, and execute your Python models
+Дополнительную информацию см. в разделе [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquery).
 
-1. In your dbt project, create a SQL model in your models directory, ending in the `.sql` file extension. Name it `my_sql_model.sql`.
-2. In the file, copy this SQL into it. 
+<Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="80%" title="Настройте BigQuery в dbt platform"/>
+
+## Создайте, настройте и выполните ваши Python‑модели
+
+1. В вашем dbt‑проекте создайте SQL‑модель в каталоге `models` с расширением `.sql`. Назовите файл `my_sql_model.sql`.
+2. Скопируйте в файл следующий SQL‑код:
 
    ```sql
       select 
       1 as foo,
       2 as bar
    ```
-3. Now create a new model file in the models directory, named `my_first_python_model.py`. 
 
-4. In the `my_first_python_model.py` file, add this code:
+3. Создайте новый файл модели в каталоге `models` с именем `my_first_python_model.py`.
+
+4. В файле `my_first_python_model.py` добавьте следующий код:
 
    ```python
    def model(dbt, session):
@@ -154,9 +154,9 @@ Refer to [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquer
       return bdf
    ```
 
-5. Configure the BigFrames submission method by using either:  
+5. Настройте метод отправки BigFrames одним из способов:
 
-   a. Project level configuration via dbt_project.yml
+   a. Конфигурация на уровне проекта через `dbt_project.yml`:
 
    ```python
    models:
@@ -165,9 +165,9 @@ Refer to [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquer
       python_models:
          +materialized: view
    ```
-   or 
+   или  
 
-   b. The Python code via dbt.config in the my_first_python_model.py file 
+   b. Конфигурация непосредственно в Python‑коде через `dbt.config` в файле `my_first_python_model.py`:
 
    ```python
    def model(dbt, session):
@@ -176,10 +176,10 @@ Refer to [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquer
 
    ```
 
-6. Run `dbt run` 
+6. Выполните команду `dbt run`.
 
-7. You can view the logs in [dbt logs](/reference/events-logging). You can optionally view the codes and logs (including previous executions) from the [Colab Enterprise Executions](https://console.cloud.google.com/vertex-ai/colab/execution-jobs) tab and [GCS bucket](https://console.cloud.google.com/storage/browser) from the GCP console.
+7. Логи выполнения можно посмотреть в [dbt logs](/reference/events-logging). При необходимости вы также можете просмотреть код и логи (включая предыдущие запуски) на вкладке [Colab Enterprise Executions](https://console.cloud.google.com/vertex-ai/colab/execution-jobs) и в [GCS bucket](https://console.cloud.google.com/storage/browser) в консоли GCP.
 
-8. Congrats! You just created your first two python models to run on BigFrames! 
+8. Поздравляем! Вы только что создали свои первые две Python‑модели, которые выполняются на BigFrames!
 
 </div>
