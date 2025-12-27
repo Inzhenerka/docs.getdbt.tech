@@ -4,24 +4,23 @@ sidebar_label: "anchors"
 id: anchors
 ---
 
-## Definition
+## Определение
 
-Anchors are a [YAML feature](https://yaml.org/spec/1.2.2/#692-node-anchors) that let you reuse configuration blocks inside a single YAML file. In dbt Core v1.10, the `anchors:` key was introduced to enclose configuration fragments that aren't valid on their own or that only exist as template data. Using the `anchors:` key ensures these fragments won't be rejected during file validation.
+Anchors (якоря) — это [возможность YAML](https://yaml.org/spec/1.2.2/#692-node-anchors), которая позволяет переиспользовать блоки конфигурации внутри одного YAML-файла. В dbt Core v1.10 был добавлен ключ `anchors:`, предназначенный для размещения фрагментов конфигурации, которые сами по себе не являются валидными или существуют только как шаблонные данные. Использование ключа `anchors:` гарантирует, что такие фрагменты не будут отклонены при валидации файла.
 
-In dbt Core v1.10 and higher, invalid anchors trigger a warning. In the dbt Fusion engine, these invalid anchors will result in errors when Fusion leaves beta.
+В dbt Core v1.10 и выше невалидные anchors вызывают предупреждение. В движке dbt Fusion такие невалидные anchors будут приводить к ошибкам, когда Fusion выйдет из беты.
 
 :::note
-You can define anchors in dbt Core v1.9 and earlier, but there is no dedicated location for anchors in these versions. If you need to define a standalone anchor, you can put it at the top level of your YAML file.
+Вы можете определять anchors в dbt Core v1.9 и более ранних версиях, однако в этих версиях нет выделенного места для anchors. Если вам нужно определить standalone anchor, вы можете разместить его на верхнем уровне вашего YAML-файла.
 :::
 
+## Синтаксис YAML anchors
 
-## YAML anchor syntax
+### Якоря и алиасы
 
-### Anchors and aliases
+Чтобы определить YAML anchor, добавьте блок `anchors:` в ваш YAML-файл и используйте символ `&` перед именем anchor (например, `&id_column_alias`). Это создаёт alias, на который можно ссылаться в других местах, добавляя символ `*` перед именем alias.
 
-To define a YAML anchor, add an `anchors:` block in your YAML file and use the `&` symbol in front of the anchor's name (for example, `&id_column_alias`). This creates an alias which you can reference elsewhere by prefixing the alias with a `*` character.
-
-The following example creates an anchor whose alias is `*id_column_alias`. The `id` column, its description, data type, and data tests are all applied to `my_first_model`, `my_second_model`, and `my_third_model`.
+В следующем примере создаётся anchor, alias которого — `*id_column_alias`. Колонка `id`, её описание, тип данных и data tests применяются к моделям `my_first_model`, `my_second_model` и `my_third_model`.
 
 <File name='models/_models.yml'>
 
@@ -54,11 +53,11 @@ models:
 
 </File>
 
-<Lightbox src="/img/reference/resource-properties/anchor_example_expansion.png" title="Behind the scenes, the alias is replaced with the object defined by the anchor."/>
+<Lightbox src="/img/reference/resource-properties/anchor_example_expansion.png" title="За кулисами alias заменяется объектом, определённым в anchor."/>
 
-### Merge syntax
+### Синтаксис merge
 
-Sometimes, an anchor is mostly the same but one part needs to be overridden. When the anchor refers to a dictionary/mapping (not a list or a <Term id="scalar-value" />), you can use the `<<:` merge syntax to override an already-defined key, or add extra keys to the dictionary. For example:
+Иногда anchor в основном подходит, но одну его часть нужно переопределить. Если anchor ссылается на словарь / mapping (а не на список и не на <Term id="scalar-value" />), вы можете использовать синтаксис merge `<<:` для переопределения уже определённого ключа или добавления новых ключей в словарь. Например:
 
 <File name='models/_models.yml'>
 
@@ -81,25 +80,25 @@ anchors:
 models:
   - name: my_first_model
     columns: 
-      - *id_column_alias # brings in the full anchor defined above
+      - *id_column_alias # подтягивает весь anchor, определённый выше
       - name: unrelated_column_a
         description: This column is not repeated in other models.
       - name: unrelated_column_b
   - name: my_second_model
     columns: 
       - <<: *id_column_alias
-        data_type: bigint # overrides the data_type from int to bigint, while inheriting the name, description, and data tests
+        data_type: bigint # переопределяет data_type с int на bigint, при этом наследуя name, description и data tests
       - name: unrelated_column_c
   - name: my_third_model
     columns: 
       - <<: *id_column_alias
         config:
           meta: 
-            extra_key: extra_value # adds config.meta.extra_key to just this version of the id column, in addition to the name, description, data type, and data tests
+            extra_key: extra_value # добавляет config.meta.extra_key только для этой версии колонки id, помимо name, description, data type и data tests
       - name: unrelated_column_d
 
 sources:
-  # both sources start with their database, loader, and freshness expectations set from the anchor, and merge in additional keys
+  # оба source начинаются с database, loader и ожиданий freshness, заданных через anchor, и дополняются остальными ключами
   - <<: *source_template_alias
     name: salesforce
     schema: etl_salesforce_schema
@@ -115,11 +114,11 @@ sources:
 
 </File>
 
-## Usage notes
+## Примечания по использованию
 
-- Old versions of dbt Core (v1.9 and earlier) do not have a dedicated `anchors:` key. If you need to define a standalone anchor, you can leave it at the top level of your file.
-- You can't merge additional elements into a list which was defined as an anchor. For example, if you define an anchor containing multiple columns, you can't attach extra columns to the end of the list. Instead, define each column as an individual anchor and add each one to the relevant tables.
-- You do not need to move existing anchors to the `anchors:` key if they are already defined in a larger valid YAML object. For example, the following `&customer_id_tests` anchor does not need to be moved because it is a valid part of the existing `columns` block.
+- В старых версиях dbt Core (v1.9 и ниже) нет выделенного ключа `anchors:`. Если вам нужно определить standalone anchor, вы можете оставить его на верхнем уровне файла.
+- Нельзя добавлять дополнительные элементы в список, который был определён как anchor. Например, если вы определили anchor, содержащий несколько колонок, вы не можете «прицепить» дополнительные колонки в конец этого списка. Вместо этого определяйте каждую колонку как отдельный anchor и добавляйте их по отдельности в нужные таблицы.
+- Вам не нужно переносить существующие anchors под ключ `anchors:`, если они уже определены внутри валидного YAML-объекта большего размера. Например, следующий anchor `&customer_id_tests` не нужно перемещать, так как он является валидной частью существующего блока `columns`.
 
   ```yml
   models:

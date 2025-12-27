@@ -11,24 +11,25 @@ id: entry-point
 functions:
   - name: <function name>
     config:
-      entry_point: <string> # required for Python UDFs
+      entry_point: <string> # обязательно для Python UDF
 ```
 
 </File>
 
-## Definition
+## Определение
 
-When creating Python UDFs, specify the Python function to be called in `entry_point`.
+При создании Python UDF необходимо указать Python‑функцию, которая будет вызываться, с помощью параметра `entry_point`.
 
-Python UDFs are currently supported in Snowflake and BigQuery. Each warehouse uses a different name for the entry point function. The following table shows what they’re called:
+В настоящее время Python UDF поддерживаются в Snowflake и BigQuery. В каждом хранилище данных используется своё название для функции точки входа. В следующей таблице показано, как именно используется `entry_point`:
 
 | Warehouse  | How `entry_point` is used | 
 | -- | -- | 
-| Snowflake | Becomes the `HANDLER` name in `LANGUAGE PYTHON UDF` | 
-| BigQuery |  Becomes the `entry_point` in `OPTIONS(...)` |  
+| Snowflake | Преобразуется в имя `HANDLER` в `LANGUAGE PYTHON UDF` | 
+| BigQuery | Преобразуется в `entry_point` в `OPTIONS(...)` |  
 
-## Example
-For example, if you have a Python UDF in `functions/my_function.py` with the following code which uses the function `main` as the entry point:
+## Пример
+
+Например, если у вас есть Python UDF в файле `functions/my_function.py` со следующим кодом, где функция `main` используется в качестве точки входа:
 
 <File name='functions/my_function.py'>
 
@@ -52,7 +53,7 @@ def main(a_string: str) -> int:
 
 </File>
 
-After defining the UDF, you can specify `main` as the `entry_point` in the YAML file. `entry_point: main` points to the `main` function as the entry point for the UDF, while `_digits_only` and `_to_flag` are helper functions.
+После определения UDF вы можете указать `main` в качестве значения `entry_point` в YAML‑файле. Значение `entry_point: main` указывает на функцию `main` как на точку входа для UDF, тогда как `_digits_only` и `_to_flag` являются вспомогательными функциями.
 
 <File name='functions/schema.yml'>
 
@@ -72,14 +73,13 @@ functions:
 ```
 </File>
 
+## Связанная документация
 
-## Related documentation
-
-- [User-defined functions](/docs/build/udfs)
-- [Function properties](/reference/function-properties)
-- [Function configurations](/reference/function-configs)
+- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
 - [Type](/reference/resource-configs/type)
 - [Volatility](/reference/resource-configs/volatility)
 - [runtime_version](/reference/resource-configs/runtime-version)
-- [Arguments](/reference/resource-properties/function-arguments)
+- [Аргументы](/reference/resource-properties/function-arguments)
 - [Returns](/reference/resource-properties/returns)

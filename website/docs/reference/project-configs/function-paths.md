@@ -11,17 +11,17 @@ function-paths: [directorypath]
 
 </File>
 
-## Definition
+## Определение
 
-Optionally specify a custom list of directories where [user-defined functions (UDFs)](/docs/build/udfs) are located.
+Позволяет опционально указать пользовательский список директорий, в которых расположены [пользовательские функции (UDFs)](/docs/build/udfs).
 
-## Default
+## По умолчанию
 
-By default, dbt will search for functions in the `functions` directory, for example, `function-paths: ["functions"]`
+По умолчанию dbt ищет функции в директории `functions`, например: `function-paths: ["functions"]`
 
-## Examples
+## Примеры
 
-Use a subdirectory named `udfs` instead of `functions`:
+Использовать поддиректорию с именем `udfs` вместо `functions`:
 
 <File name='dbt_project.yml'>
 
@@ -31,7 +31,7 @@ function-paths: ["udfs"]
 
 </File>
 
-Use multiple directories to organize your functions:
+Использовать несколько директорий для организации функций:
 
 <File name='dbt_project.yml'>
 
@@ -40,4 +40,3 @@ function-paths: ["functions", "custom_udfs"]
 ```
 
 </File>
-

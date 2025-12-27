@@ -1,21 +1,20 @@
 ---
-title: "About state in dbt"
-description: "dbt operations are stateless and idempotent, but artifacts enable state-based features like slim CI and deferral."
+title: "О состоянии в dbt"
+description: "Операции dbt являются stateless и идемпотентными, но артефакты позволяют реализовывать возможности, основанные на состоянии, такие как slim CI и deferral."
 pagination_next: "reference/node-selection/configure-state"
 ---
 
-One of the greatest underlying assumptions about dbt is that its operations should be **stateless** and **<Term id="idempotent" />**. That is, it doesn't matter how many times a model has been run before, or if it has ever been run before. It doesn't matter if you run it once or a thousand times. Given the same raw data, you can expect the same transformed result. A given run of dbt doesn't need to "know" about _any other_ run; it just needs to know about the code in the project and the objects in your database as they exist _right now_.
+Одно из ключевых базовых предположений dbt заключается в том, что его операции должны быть **stateless** и **<Term id="idempotent" />**. Иными словами, не имеет значения, сколько раз модель запускалась ранее или запускалась ли она вообще. Неважно, запустите вы её один раз или тысячу раз. При одних и тех же исходных данных вы можете ожидать одинаковый результат трансформации. Отдельному запуску dbt не нужно «знать» о _каких-либо других_ запусках; ему достаточно информации о коде проекта и об объектах в вашей базе данных в том виде, в каком они существуют _прямо сейчас_.
 
-That said, dbt does store "state" &mdash; a detailed, point-in-time view of project resources (also referred to as nodes), database objects, and invocation results &mdash; in the form of its [artifacts](/docs/deploy/artifacts). If you choose, dbt can use these artifacts to inform certain  operations. Crucially, the operations themselves are still stateless and <Term id="idempotent" />: given the same manifest and the same raw data, dbt will produce the same transformed result.
+При этом dbt всё же хранит «состояние» — детализированное представление ресурсов проекта (также называемых узлами), объектов базы данных и результатов выполнения в конкретный момент времени — в виде своих [артефактов](/docs/deploy/artifacts). При желании dbt может использовать эти артефакты для выполнения некоторых операций. Важно, что сами операции при этом остаются stateless и <Term id="idempotent" />: при одном и том же manifest и одних и тех же исходных данных dbt всегда будет производить одинаковый результат трансформации.
 
-dbt can leverage artifacts from a prior invocation as long as their file path is passed to the `--state` flag. This is a prerequisite for:
-- [The `state` selector](/reference/node-selection/methods#state), whereby dbt can identify resources that are new or modified
-by comparing code in the current project against the state manifest.
-- [Deferring](/reference/node-selection/defer) to another environment, whereby dbt can identify upstream, unselected resources that don't exist in your current environment and instead "defer" their references to the environment provided by the state manifest.
-- The [`dbt clone` command](/reference/commands/clone), whereby dbt can clone nodes based on their location in the manifest provided to the `--state` flag.
+dbt может использовать артефакты от предыдущего запуска, если путь к ним передан через флаг `--state`. Это является обязательным условием для:
+- [Селектора `state`](/reference/node-selection/methods#state), с помощью которого dbt может определять новые или изменённые ресурсы, сравнивая код текущего проекта с manifest состояния.
+- [Deferring](/reference/node-selection/defer) в другое окружение, когда dbt может определить вышестоящие, невыбранные ресурсы, отсутствующие в текущем окружении, и «отложить» ссылки на них, указывая на окружение, заданное manifest состояния.
+- [Команды `dbt clone`](/reference/commands/clone), с помощью которой dbt может клонировать узлы на основе их расположения в manifest, переданном через флаг `--state`.
 
-Together, the [`state`](/reference/node-selection/methods#state) selector and deferral enable ["slim CI"](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci). We expect to add more features in future releases that can leverage artifacts passed to the `--state` flag.
+В совокупности селектор [`state`](/reference/node-selection/methods#state) и механизм deferral позволяют реализовать подход ["slim CI"](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci). В будущих релизах мы планируем добавить больше возможностей, которые смогут использовать артефакты, переданные через флаг `--state`.
 
-## Related docs
-- [Configure state selection](/reference/node-selection/configure-state)
-- [State comparison caveats](/reference/node-selection/state-comparison-caveats)
+## Связанные материалы
+- [Настройка выбора по состоянию](/reference/node-selection/configure-state)
+- [Ограничения сравнения состояний](/reference/node-selection/state-comparison-caveats)

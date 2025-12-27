@@ -1,6 +1,6 @@
 ---
 title: freshness
-description: "Read this guide to understand the `freshness` configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию `freshness` в dbt."
 id: "freshness"
 ---
 # freshness <Lifecycle status="private_preview,managed,managed_plus" />
@@ -8,7 +8,7 @@ id: "freshness"
 <VersionCallout version="1.10" />
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
   
@@ -16,10 +16,10 @@ id: "freshness"
 models:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness):
-      build_after:  # build this model no more often than every X amount of time, as long as it has new data. Available only on dbt platform Enterprise tiers. 
+      build_after:  # собирать эту модель не чаще, чем раз в X единиц времени, при условии наличия новых данных. Доступно только на Enterprise-тарифах dbt platform.
         count: <positive_integer>
         period: minute | hour | day
-        updates_on: any | all # optional config
+        updates_on: any | all # необязательная настройка
 ```
   
 </File>
@@ -34,10 +34,10 @@ models:
   - name: stg_orders
     config:
       freshness:
-        build_after:  # build this model no more often than every X amount of time, as long as it has new data. Available only on dbt platform Enterprise tiers. 
+        build_after:  # собирать эту модель не чаще, чем раз в X единиц времени, при условии наличия новых данных. Доступно только на Enterprise-тарифах dbt platform.
           count: <positive_integer>
           period: minute | hour | day
-          updates_on: any | all # optional config
+          updates_on: any | all # необязательная настройка
 ```
   
 </File>
@@ -50,10 +50,10 @@ models:
 {{
     config(
       freshness={
-        "build_after": {     # build this model no more often than every X amount of time, as long as as it has new data
+        "build_after": {     # собирать эту модель не чаще, чем раз в X единиц времени, при условии наличия новых данных
         "count": <positive_integer>,
         "period": "minute" | "hour" | "day",
-        "updates_on": "any" | "all" # optional config
+        "updates_on": "any" | "all" # необязательная настройка
         } 
       }
     )
@@ -66,32 +66,32 @@ models:
 
 <VersionBlock lastVersion="1.9">
 
-This configuration is only available for the dbt Fusion engine.
+Эта конфигурация доступна только для движка dbt Fusion.
 
 </VersionBlock>
 
-## Definition
+## Определение
 
-The model `freshness` config powers state-aware orchestration by rebuilding models _only when new source or upstream data is available_, helping you reduce unnecessary rebuilds and optimize spend. This is useful for models that depend on other models but only need to be updated periodically.
+Конфигурация `freshness` для моделей обеспечивает state-aware orchestration, позволяя пересобирать модели _только при появлении новых данных в источниках или апстрим-моделях_. Это помогает сократить количество лишних сборок и оптимизировать затраты. Такой подход особенно полезен для моделей, которые зависят от других моделей, но требуют обновления лишь периодически.
 
-`freshness` works alongside dbt job orchestration by helping you determine when models should be rebuilt in a scheduled job. When a job runs, dbt makes sure models run only when needed, which helps avoid overbuilding models unnecessarily. dbt does this by:
+`freshness` работает совместно с оркестрацией джобов dbt и помогает определить, когда модели действительно нужно пересобирать в рамках запланированного запуска. При каждом запуске джоба dbt гарантирует, что модели выполняются только при необходимости, что позволяет избежать избыточных сборок. Для этого dbt:
 
-- Checking if there's new data available for the model
-- Ensuring enough time has passed since the last build, based on `count` and `period`
+- Проверяет, появились ли новые данные для модели
+- Убеждается, что с момента последней сборки прошло достаточно времени, на основе параметров `count` и `period`
 
-For sources and upstream models (for mesh), dbt considers data "new" based on custom freshness calculations (if configured). If a source's freshness goes past its warning/error threshold, dbt raises a warning/error during the build.
+Для источников и апстрим-моделей (в случае mesh) dbt определяет «новизну» данных на основе пользовательских вычислений freshness (если они настроены). Если freshness источника превышает заданный порог warning или error, dbt выдает предупреждение или ошибку во время сборки.
 
-The configuration consists of the following parts:
+Конфигурация состоит из следующих частей:
 
-| Configuration | Description |
+| Конфигурация | Описание |
 |--------------|-------------|
-| `build_after` | Available on dbt platform Enterprise tiers only. Config nested under `freshness`. Used to determine whether a model should be rebuilt when new data is present, based on whether the specified count and period have passed since the model was last built. Although dbt checks for new data every time the job runs, `build_after` ensures the model is only rebuilt if enough time has passed and new data is available. |
-| `count` and `period` | Specify how often dbt should check for new data. For example, `count: 4, period: hour` means dbt will check every 4 hours.<br /><br /> Note that for every `freshness` config, you're required to either set values for both `count` and `period`, or set `freshness: null`.|
-| `updates_on` | Optional. Determines when upstream data changes should trigger a job build. Use the following values:<br /> - `any`: The model will build once _any_ direct upstream node has new data since the last build. Faster and may increase spend.<br /> - `all`: The model will only build when _all_ direct upstream nodes have new data since the last build. Less spend and more requirements. |
+| `build_after` | Доступно только на Enterprise-тарифах dbt platform. Настройка, вложенная в `freshness`. Используется для определения того, должна ли модель пересобираться при наличии новых данных, в зависимости от того, прошло ли указанное количество времени (`count` и `period`) с момента последней сборки модели. Хотя dbt проверяет наличие новых данных при каждом запуске джоба, `build_after` гарантирует, что модель будет пересобрана только если прошло достаточно времени и при этом появились новые данные. |
+| `count` and `period` | Задают, как часто dbt должен проверять наличие новых данных. Например, `count: 4, period: hour` означает, что dbt будет выполнять проверку каждые 4 часа.<br /><br /> Обратите внимание: для каждой конфигурации `freshness` необходимо либо задать значения и для `count`, и для `period`, либо указать `freshness: null`. |
+| `updates_on` | Необязательный параметр. Определяет, при каких изменениях апстрим-данных должен запускаться билд. Возможные значения:<br /> - `any`: модель будет собираться, как только _любой_ из прямых апстрим-узлов получит новые данные с момента последней сборки. Быстрее, но может увеличить затраты.<br /> - `all`: модель будет собираться только тогда, когда _все_ прямые апстрим-узлы получат новые данные с момента последней сборки. Меньше затрат, но больше требований. |
 
-## Default
+## По умолчанию
 
-Default for the `build_after` key is:
+Значение по умолчанию для ключа `build_after`:
 
 ```yaml
 build_after:
@@ -100,19 +100,19 @@ build_after:
   updates_on: any
 ```
 
-This means that by default, the model will be built every time a scheduled job runs for any amount of new data.
+Это означает, что по умолчанию модель будет собираться при каждом запуске запланированного джоба при наличии любого объема новых данных.
 
-## Examples
+## Примеры
 
-The following examples show how to configure models to run less frequently, more frequently, or on a custom frequency.
+Ниже приведены примеры настройки моделей для более редкого, более частого или пользовательского расписания сборки.
 
-You can configure the `freshness` YAML to skip models during the build process *unless* new data is available *and* a specified time interval has passed.
+Вы можете настроить `freshness` в YAML так, чтобы пропускать модели в процессе сборки, *если только* нет новых данных *и* не прошел указанный интервал времени.
 
-### Less frequent
+### Более редкая сборка
 
-You can build a model that runs less frequently (which reduces spend) by configuring the model to only build no more often than every X amount of time, as long as as it has new data.
+Вы можете настроить модель на более редкую сборку (что снижает затраты), указав, что она должна собираться не чаще, чем раз в X единиц времени, при условии наличия новых данных.
 
-Add the `freshness` configuration to the model with `count: 4` and `period: hour`:
+Добавьте конфигурацию `freshness` в модель с параметрами `count: 4` и `period: hour`:
 
 ```yaml
 models:
@@ -132,20 +132,20 @@ models:
           updates_on: all  
 ```
 
-When the state-aware orchestration job triggers, dbt checks for two things:
+Когда срабатывает state-aware orchestration job, dbt проверяет два условия:
 
-- Whether new source data is available on all upstream models
-- Whether the models `stg_wizards` and `stg_worlds` were built more than 4 hours ago
+- Появились ли новые исходные данные во всех апстрим-моделях
+- Были ли модели `stg_wizards` и `stg_worlds` собраны более 4 часов назад
 
-When _both_ conditions are met, dbt builds the model. In this case, the `updates_on: all` config is set. If the `raw.wizards` source has new data, but `stg_wizards` and `stg_worlds` were last built 3 hours ago, then nothing would be built.
+Когда выполняются _оба_ условия, dbt собирает модель. В этом случае используется настройка `updates_on: all`. Если источник `raw.wizards` получил новые данные, но `stg_wizards` и `stg_worlds` были собраны 3 часа назад, сборка не произойдет.
 
-If `updates_on: any` had been set in the previous example, then when `raw.wizards` source has new data, dbt would build the model unless it had been built within the last 4 hours.
+Если бы в предыдущем примере было указано `updates_on: any`, то при появлении новых данных в источнике `raw.wizards` dbt собрал бы модель, если только она не была собрана в течение последних 4 часов.
 
-### More frequent
+### Более частая сборка
 
-If you want to build a model that runs more frequently (which might increase spend), you can configure the model to build as soon as _any_ dependency has new data instead of waiting for all dependencies.
+Если вы хотите, чтобы модель собиралась чаще (что может увеличить затраты), можно настроить ее на сборку сразу после появления новых данных _у любой_ зависимости, не дожидаясь обновления всех зависимостей.
 
-Add the `build_after` freshness configuration to the model with `count: 1` and `period: hour`:
+Добавьте конфигурацию `build_after` в `freshness` с параметрами `count: 1` и `period: hour`:
 
 ```yaml
 models:
@@ -166,21 +166,20 @@ models:
 
 ```
 
-When the state-aware orchestration job runs, dbt checks two things:
+При запуске state-aware orchestration job dbt проверяет:
 
-- If new source data is available on at least one upstream model.
-- If `stg_wizards` or `stg_worlds` wasn’t built in the last hour.
+- Есть ли новые исходные данные хотя бы в одной апстрим-модели
+- Не была ли `stg_wizards` или `stg_worlds` собрана в течение последнего часа
 
-If _both_ conditions are met, dbt rebuilds the model. This also means if either model (`stg_wizards` _or_ `stg_worlds`) has new data, dbt rebuilds the model. If neither model has new data, nothing will be built.
+Если выполняются _оба_ условия, dbt пересобирает модель. Это также означает, что если у любой модели (`stg_wizards` _или_ `stg_worlds`) появились новые данные, dbt выполнит сборку. Если ни у одной модели нет новых данных, сборка не произойдет.
 
-In this example, because `updates_on: any` is set in, even if only the `raw.wizards` source has new data and only `stg_wizards` was built in the last hour (while `stg_worlds` hasn’t been updated), dbt will still build the model because it only needs one source update and one eligible (stale) model.
+В этом примере, поскольку указано `updates_on: any`, даже если новые данные появились только в источнике `raw.wizards`, и при этом только `stg_wizards` была собрана в течение последнего часа (а `stg_worlds` — нет), dbt все равно выполнит сборку, потому что требуется лишь одно обновление источника и одна подходящая (устаревшая) модель.
 
-### Custom frequency
+### Произвольная частота сборки
 
-You can also use custom logic with `build_after` to set different frequencies for different days, or to skip builds during a specific period (for example, on a weekend).
+Также можно использовать пользовательскую логику с `build_after`, чтобы задать разные частоты сборки для разных дней или полностью пропускать сборки в определенные периоды (например, в выходные).
 
-If you want to build every hour on just weekdays (Monday to Friday), you can use Jinja expressions in your YAML and SQL files by using [Python functions](https://docs.python.org/3/library/datetime.html#datetime.date.weekday) such as `weekday()` where Monday is `0` and Sunday is `6`. For example:
-
+Если вы хотите выполнять сборку каждый час только в будние дни (с понедельника по пятницу), можно использовать Jinja-выражения в YAML- и SQL-файлах, применяя [Python-функции](https://docs.python.org/3/library/datetime.html#datetime.date.weekday), такие как `weekday()`, где понедельник — `0`, а воскресенье — `6`. Например:
 
 <Tabs>
 <TabItem value="yml" label="Project file">
@@ -190,8 +189,8 @@ If you want to build every hour on just weekdays (Monday to Friday), you can use
 ```yaml
 +freshness:
   build_after:
-    # wait at least 48 hours before building again, if Saturday or Sunday
-    # otherwise, wait at least 1 hour before building again
+    # если сегодня суббота или воскресенье, ждать минимум 48 часов перед следующей сборкой
+    # в противном случае — ждать минимум 1 час
     count: "{{ 48 if modules.datetime.datetime.today().weekday() in (5, 6) else 1 }}"
     period: hour
     updates_on: any
@@ -219,5 +218,3 @@ If you want to build every hour on just weekdays (Monday to Friday), you can use
 </File>
 </TabItem>
 </Tabs>
-
-

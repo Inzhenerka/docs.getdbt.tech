@@ -1,57 +1,57 @@
 ---
-title: "DeltaStream configurations"
-description: "DeltaStream Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации DeltaStream"
+description: "Конфигурации DeltaStream — прочитайте этот подробный гайд, чтобы узнать о конфигурациях в dbt."
 id: "deltastream-configs"
 ---
 
-# DeltaStream resource configurations
+# Конфигурации ресурсов DeltaStream
 
-## Supported materializations
+## Поддерживаемые материализации
 
-DeltaStream supports several unique materialization types that align with its streaming processing capabilities:
+DeltaStream поддерживает несколько специализированных типов материализации, которые соответствуют его возможностям потоковой обработки:
 
-### Standard materializations
+### Стандартные материализации
 
-| Materialization     | Description                                                                                              |
-|---------------------|----------------------------------------------------------------------------------------------------------|
-| `ephemeral`         | This materialization uses common table expressions in DeltaStream under the hood.                        |
-| `table`             | Traditional batch table materialization                                                                  |
-| `materialized_view` | Continuously updated view that automatically refreshes as underlying data changes                        |
+| Материализация      | Описание                                                                                                  |
+|---------------------|-----------------------------------------------------------------------------------------------------------|
+| `ephemeral`         | Эта материализация использует common table expressions (CTE) в DeltaStream «под капотом».               |
+| `table`             | Классическая пакетная материализация в виде таблицы                                                       |
+| `materialized_view` | Непрерывно обновляемое представление, которое автоматически обновляется при изменении исходных данных   |
 
-### Streaming materializations
+### Потоковые материализации
 
-| Materialization | Description                                                                                              |
-|-----------------|----------------------------------------------------------------------------------------------------------|
-| `stream`        | Pure streaming transformation that processes data in real-time                                           |
-| `changelog`     | Change data capture (CDC) stream that tracks changes in data                                             |
+| Материализация | Описание                                                                                                  |
+|----------------|-----------------------------------------------------------------------------------------------------------|
+| `stream`       | Чисто потоковая трансформация, обрабатывающая данные в реальном времени                                  |
+| `changelog`    | Поток change data capture (CDC), отслеживающий изменения в данных                                         |
 
-### Infrastructure materializations
+### Инфраструктурные материализации
 
-| Materialization      | Description                                                                                              |
-|----------------------|----------------------------------------------------------------------------------------------------------|
-| `store`              | External system connection (Kafka, PostgreSQL, etc.)                                                     |
-| `entity`             | Entity definition within a store                                                                         |
-| `database`           | Database definition                                                                                      |
-| `compute_pool`       | Compute pool definition for resource management                                                          |
-| `function`           | User-defined functions (UDFs) in Java                                                                    |
-| `function_source`    | JAR file sources for UDFs                                                                                |
-| `descriptor_source`  | Protocol buffer schema sources                                                                           |
-| `schema_registry`    | Schema registry connections (Confluent, and so on.)                                                            |
+| Материализация       | Описание                                                                                                  |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `store`              | Подключение к внешней системе (Kafka, PostgreSQL и т.д.)                                                  |
+| `entity`             | Определение сущности внутри хранилища                                                                     |
+| `database`           | Определение базы данных                                                                                   |
+| `compute_pool`       | Определение пула вычислительных ресурсов                                                                  |
+| `function`           | Пользовательские функции (UDF) на Java                                                                    |
+| `function_source`    | Источники JAR-файлов для UDF                                                                              |
+| `descriptor_source`  | Источники схем protocol buffer                                                                            |
+| `schema_registry`    | Подключения к schema registry (Confluent и т.п.)                                                          |
 
-## SQL model configurations
+## Конфигурации SQL-моделей
 
-### Table materialization
+### Материализация `table`
 
-Creates a traditional batch table for aggregated data:
+Создаёт классическую пакетную таблицу для агрегированных данных:
 
-**Project YAML file configuration:**
+**Конфигурация в project YAML-файле:**
 ```yaml
 models:
   <resource-path>:
     +materialized: table
 ```
 
-**SQL configuration:**
+**SQL-конфигурация:**
 ```sql
 {{ config(materialized = "table") }}
 
@@ -62,11 +62,11 @@ FROM {{ ref('transactions') }}
 GROUP BY date
 ```
 
-### Stream materialization
+### Материализация `stream`
 
-Creates a continuous streaming transformation:
+Создаёт непрерывную потоковую трансформацию:
 
-**Project YAML file configuration:**
+**Конфигурация в project YAML-файле:**
 ```yaml
 models:
   <resource-path>:
@@ -79,7 +79,7 @@ models:
       timestamp: 'event_time'
 ```
 
-**SQL configuration:**
+**SQL-конфигурация:**
 ```sql
 {{ config(
     materialized='stream',
@@ -100,22 +100,22 @@ FROM {{ ref('source_stream') }}
 WHERE action = 'purchase'
 ```
 
-#### Stream configuration options
+#### Параметры конфигурации `stream`
 
-| Option         | Description                                                                                   | Required? |
-|----------------|-----------------------------------------------------------------------------------------------|-----------|
-| `materialized` | How the model will be materialized. Must be `stream` to create a streaming model.             | Required  |
-| `topic`        | The topic name for the stream output.                                                         | Required  |
-| `value.format` | Format for the stream values (like 'json', 'avro').                                          | Required  |
-| `key.format`   | Format for the stream keys (like 'primitive', 'json').                                       | Optional  |
-| `key.type`     | Data type for the stream keys (like 'VARCHAR', 'BIGINT').                                    | Optional  |
-| `timestamp`    | Column name to use as the event timestamp.                                                    | Optional  |
+| Параметр       | Описание                                                                                      | Обязательный |
+|----------------|-----------------------------------------------------------------------------------------------|--------------|
+| `materialized` | Способ материализации модели. Для потоковой модели должен быть `stream`.                     | Да           |
+| `topic`        | Имя топика для выходного потока.                                                              | Да           |
+| `value.format` | Формат значений потока (например, `json`, `avro`).                                            | Да           |
+| `key.format`   | Формат ключей потока (например, `primitive`, `json`).                                         | Нет          |
+| `key.type`     | Тип данных ключей потока (например, `VARCHAR`, `BIGINT`).                                     | Нет          |
+| `timestamp`    | Имя колонки, используемой как временная метка события.                                        | Нет          |
 
-### Changelog materialization
+### Материализация `changelog`
 
-Captures changes in the data stream:
+Фиксирует изменения в потоке данных:
 
-**Project YAML file configuration:**
+**Конфигурация в project YAML-файле:**
 ```yaml
 models:
   <resource-path>:
@@ -126,7 +126,7 @@ models:
     +primary_key: [column_name]
 ```
 
-**SQL configuration:**
+**SQL-конфигурация:**
 ```sql
 {{ config(
     materialized='changelog',
@@ -144,20 +144,20 @@ SELECT
 FROM {{ ref('orders_stream') }}
 ```
 
-#### Changelog configuration options
+#### Параметры конфигурации `changelog`
 
-| Option         | Description                                                                                   | Required? |
-|----------------|-----------------------------------------------------------------------------------------------|-----------|
-| `materialized` | How the model will be materialized. Must be `changelog` to create a changelog model.          | Required  |
-| `topic`        | The topic name for the changelog output.                                                      | Required  |
-| `value.format` | Format for the changelog values (like 'json', 'avro').                                       | Required  |
-| `primary_key`  | List of column names that uniquely identify rows for change tracking.                         | Required  |
+| Параметр       | Описание                                                                                      | Обязательный |
+|----------------|-----------------------------------------------------------------------------------------------|--------------|
+| `materialized` | Способ материализации модели. Для changelog должен быть `changelog`.                          | Да           |
+| `topic`        | Имя топика для выходного changelog-потока.                                                    | Да           |
+| `value.format` | Формат значений changelog (например, `json`, `avro`).                                         | Да           |
+| `primary_key`  | Список колонок, однозначно идентифицирующих строки для отслеживания изменений.                | Да           |
 
 ### Materialized view
 
-Creates a continuously updated view:
+Создаёт непрерывно обновляемое представление:
 
-**SQL configuration:**
+**SQL-конфигурация:**
 ```sql
 {{ config(materialized='materialized_view') }}
 
@@ -168,21 +168,21 @@ FROM {{ ref('purchase_events') }}
 GROUP BY product_id
 ```
 
-## YAML-only resource configurations
+## Ресурсы, определяемые только в YAML
 
-DeltaStream supports two types of model definitions for infrastructure components:
+DeltaStream поддерживает два типа определений моделей для инфраструктурных компонентов:
 
-1. **Managed Resources (Models)** - Automatically included in the dbt <Term id="dag"/>
-2. **Unmanaged Resources (Sources)** - Created on-demand using specific macros
+1. **Управляемые ресурсы (Models)** — автоматически включаются в dbt <Term id="dag"/>
+2. **Неуправляемые ресурсы (Sources)** — создаются по требованию с помощью специальных макросов
 
-### Should you use managed or unmanaged resources?
+### Когда использовать управляемые или неуправляемые ресурсы?
 
-- Use managed resources if you plan to recreate all the infrastructure in different environments and/or use graph operators to execute only the creation of specific resources and downstream transformations.
-- Otherwise, it might be simpler to use unmanaged resources to avoid placeholder files.
+- Используйте управляемые ресурсы, если вы планируете пересоздавать всю инфраструктуру в разных окружениях и/или применять операторы графа для выполнения только создания конкретных ресурсов и зависимых трансформаций.
+- В противном случае может быть проще использовать неуправляемые ресурсы, чтобы избежать файлов-заглушек.
 
-### Managed resources (models)
+### Управляемые ресурсы (models)
 
-Managed resources are automatically included in the dbt DAG and defined as models:
+Управляемые ресурсы автоматически включаются в dbt DAG и описываются как модели:
 
 ```yaml
 version: 2
@@ -294,15 +294,15 @@ models:
         'tls.client.key_file': '@/path/to/tls_key'
 ```
 
-**Note:** Due to current dbt limitations, managed YAML-only resources require a placeholder .sql file that doesn't contain a SELECT statement. For example, create `my_kafka_store.sql` with:
+**Примечание:** Из‑за текущих ограничений dbt управляемые YAML-only ресурсы требуют наличия `.sql` файла-заглушки без оператора SELECT. Например, создайте `my_kafka_store.sql` со следующим содержимым:
 
 ```sql
 -- Placeholder
 ```
 
-### Unmanaged resources (sources)
+### Неуправляемые ресурсы (sources)
 
-Unmanaged resources are defined as sources and created on-demand using specific macros:
+Неуправляемые ресурсы определяются как sources и создаются по требованию с помощью специальных макросов:
 
 ```yaml
 version: 2
@@ -416,17 +416,17 @@ sources:
             'tls.client.key_file': '@/path/to/tls_key'
 ```
 
-To create unmanaged resources:
+Для создания неуправляемых ресурсов:
 
 ```bash
-# Create all sources
+# Создать все источники
 dbt run-operation create_sources
 
-# Create a specific source
+# Создать конкретный источник
 dbt run-operation create_source_by_name --args '{source_name: infrastructure}'
 ```
 
-## Store configurations
+## Конфигурации Store
 
 ### Kafka store
 
@@ -455,7 +455,7 @@ dbt run-operation create_source_by_name --args '{source_name: infrastructure}'
       postgres.password: "password"
 ```
 
-## Entity configuration
+## Конфигурация Entity
 
 ```yaml
 - name: kinesis_entity
@@ -466,7 +466,7 @@ dbt run-operation create_source_by_name --args '{source_name: infrastructure}'
       'kinesis.shards': 3
 ```
 
-## Compute pool configuration
+## Конфигурация Compute pool
 
 ```yaml
 - name: processing_pool
@@ -477,49 +477,49 @@ dbt run-operation create_source_by_name --args '{source_name: infrastructure}'
       'compute_pool.timeout_min': 5
 ```
 
-## Referencing resources
+## Ссылки на ресурсы
 
-### Managed resources
+### Управляемые ресурсы
 
-Use the standard `ref()` function:
+Используйте стандартную функцию `ref()`:
 
 ```sql
 select * from {{ ref('my_kafka_stream') }}
 ```
 
-### Unmanaged resources
+### Неуправляемые ресурсы
 
-Use the `source()` function:
+Используйте функцию `source()`:
 
 ```sql
 SELECT * FROM {{ source('infrastructure', 'user_events_stream') }}
 ```
 
-## Seeds
+## Сиды (Seeds)
 
-Load CSV data into existing DeltaStream entities using the `seed` materialization. Unlike traditional dbt seeds that create new tables, DeltaStream seeds insert data into pre-existing entities.
+Загружайте CSV-данные в существующие сущности DeltaStream с помощью материализации `seed`. В отличие от классических dbt seeds, которые создают новые таблицы, seeds в DeltaStream вставляют данные в уже существующие сущности.
 
-### Configuration
+### Конфигурация
 
-Seeds must be configured in YAML with the following properties:
+Seeds настраиваются в YAML и поддерживают следующие параметры:
 
-**Required:**
+**Обязательные:**
 
-- `entity`: The name of the target entity to insert data into
+- `entity` — имя целевой сущности, в которую будут вставляться данные
 
-**Optional:**
+**Необязательные:**
 
-- `store`: The name of the store containing the entity (omit if entity is not in a store)
-- `with_params`: A dictionary of parameters for the WITH clause
-- `quote_columns`: Control which columns get quoted. Default: `false` (no columns quoted). Can be:
-  - `true`: Quote all columns
-  - `false`: Quote no columns (default)
-  - `string`: If set to `'*'`, quote all columns
-  - `list`: List of column names to quote
+- `store` — имя store, содержащего сущность (можно опустить, если сущность не находится в store)
+- `with_params` — словарь параметров для секции WITH
+- `quote_columns` — управление экранированием имён колонок. Значение по умолчанию: `false`. Возможные варианты:
+  - `true` — экранировать все колонки
+  - `false` — не экранировать колонки (по умолчанию)
+  - `string` — если указано `'*'`, экранировать все колонки
+  - `list` — список имён колонок для экранирования
 
-### Example configuration
+### Пример конфигурации
 
-**With Store (quoting enabled):**
+**Со Store (экранирование включено):**
 
 ```yaml
 # seeds.yml
@@ -533,38 +533,37 @@ seeds:
       with_params:
         kafka.topic.retention.ms: '86400000'
         partitioned: true
-      quote_columns: true  # Quote all columns
+      quote_columns: true
 ```
 
-### Usage
+### Использование
 
-1. Place CSV files in your `seeds/` directory
-2. Configure seeds in YAML with the required `entity` parameter
-3. Optionally specify `store` if the entity is in a store
-4. Run `dbt seed` to load the data
+1. Поместите CSV-файлы в каталог `seeds/`
+2. Настройте seeds в YAML, указав обязательный параметр `entity`
+3. При необходимости укажите `store`
+4. Выполните `dbt seed` для загрузки данных
 
-:::info Important
-The target entity must already exist in DeltaStream before running seeds. Seeds only insert data, they do not create entities.
+:::info Важно
+Целевая сущность должна уже существовать в DeltaStream до запуска seeds. Seeds только вставляют данные и не создают сущности.
 :::
 
-## Function and source materializations
+## Материализации функций и источников
 
-DeltaStream supports user-defined functions (UDFs) and their dependencies through specialized materializations.
+DeltaStream поддерживает пользовательские функции (UDF) и их зависимости через специализированные материализации.
 
-### File attachment support
+### Поддержка прикрепления файлов
 
-The adapter provides seamless file attachment for function sources and descriptor sources:
+Адаптер предоставляет единый механизм работы с файлами для function source и descriptor source:
 
-- **Standardized Interface**: Common file handling logic for both function sources and descriptor sources
-- **Path Resolution**: Supports both absolute paths and relative paths (including `@` syntax for project-relative paths)
-- **Automatic Validation**: Files are validated for existence and accessibility before attachment
+- **Стандартизированный интерфейс** — общая логика работы с файлами
+- **Разрешение путей** — поддержка абсолютных и относительных путей (включая синтаксис `@`)
+- **Автоматическая валидация** — проверка существования и доступности файлов перед прикреплением
 
-### Function source
+### Источник функций (function_source)
 
-Creates a function source from a JAR file containing Java functions:
+Создаёт источник функций из JAR-файла с Java-функциями:
 
-**SQL configuration:**
-
+**SQL-конфигурация:**
 ```sql
 {{ config(
     materialized='function_source',
@@ -577,12 +576,11 @@ Creates a function source from a JAR file containing Java functions:
 SELECT 1 as placeholder
 ```
 
-### Descriptor source
+### Источник дескрипторов (descriptor_source)
 
-Creates a descriptor source from compiled protocol buffer descriptor files:
+Создаёт источник дескрипторов из скомпилированных файлов protocol buffer:
 
-**SQL configuration:**
-
+**SQL-конфигурация:**
 ```sql
 {{ config(
     materialized='descriptor_source',
@@ -595,21 +593,19 @@ Creates a descriptor source from compiled protocol buffer descriptor files:
 SELECT 1 as placeholder
 ```
 
-:::info Note
-Descriptor sources require compiled `.desc` files, not raw `.proto` files. Compile your protobuf schemas using:
+:::info Примечание
+Для descriptor source требуются скомпилированные `.desc` файлы, а не исходные `.proto`. Скомпилируйте схемы protobuf следующим образом:
 
 ```bash
 protoc --descriptor_set_out=schemas/my_schemas.desc schemas/my_schemas.proto
 ```
-
 :::
 
-### Function
+### Функция (function)
 
-Creates a user-defined function that references a function source:
+Создаёт пользовательскую функцию, ссылающуюся на function source:
 
-**SQL configuration:**
-
+**SQL-конфигурация:**
 ```sql
 {{ config(
     materialized='function',
@@ -627,12 +623,11 @@ Creates a user-defined function that references a function source:
 SELECT 1 as placeholder
 ```
 
-### Schema registry
+### Материализация Schema registry
 
-Creates a schema registry connection:
+Создаёт подключение к schema registry:
 
-**SQL configuration:**
-
+**SQL-конфигурация:**
 ```sql
 {{ config(
     materialized='schema_registry',
@@ -650,55 +645,55 @@ Creates a schema registry connection:
 SELECT 1 as placeholder
 ```
 
-## Query management macros
+## Макросы управления запросами
 
-DeltaStream dbt adapter provides macros to help you manage and terminate running queries directly from dbt.
+Адаптер DeltaStream для dbt предоставляет макросы для просмотра и управления выполняемыми запросами.
 
-### List all queries
+### Список всех запросов
 
-The `list_all_queries` macro displays all queries currently known to DeltaStream, including their state, owner, and SQL:
+Макрос `list_all_queries` выводит все запросы, известные DeltaStream, включая их состояние, владельца и SQL:
 
 ```bash
 dbt run-operation list_all_queries
 ```
 
-### Describe query
+### Описание запроса
 
-Use the `describe_query` macro to check the logs and details of a specific query:
+Макрос `describe_query` позволяет посмотреть логи и детали конкретного запроса:
 
 ```bash
 dbt run-operation describe_query --args '{query_id: "<QUERY_ID>"}'
 ```
 
-### Terminate a specific query
+### Остановка конкретного запроса
 
-Use the `terminate_query` macro to terminate a query by its ID:
+Макрос `terminate_query` завершает запрос по его ID:
 
 ```bash
 dbt run-operation terminate_query --args '{query_id: "<QUERY_ID>"}'
 ```
 
-### Terminate all running queries
+### Остановка всех выполняющихся запросов
 
-Use the `terminate_all_queries` macro to terminate all currently running queries:
+Макрос `terminate_all_queries` завершает все текущие запросы:
 
 ```bash
 dbt run-operation terminate_all_queries
 ```
 
-### Restart a query
+### Перезапуск запроса
 
-Use the `restart_query` macro to restart a failed query by its ID:
+Макрос `restart_query` позволяет перезапустить упавший запрос по его ID:
 
 ```bash
 dbt run-operation restart_query --args '{query_id: "<QUERY_ID>"}'
 ```
 
-## Application macro
+## Макрос application
 
-### Execute multiple statements as a unit
+### Выполнение нескольких операторов как одной операции
 
-The `application` macro allows you to execute multiple DeltaStream SQL statements as a single unit of work with all-or-nothing semantics:
+Макрос `application` позволяет выполнить несколько SQL-операторов DeltaStream как единую транзакционную единицу с семантикой «всё или ничего»:
 
 ```bash
 dbt run-operation application --args '{
@@ -711,29 +706,28 @@ dbt run-operation application --args '{
 }'
 ```
 
-## Troubleshooting
+## Устранение неполадок
 
-### Function source readiness
+### Готовность function source
 
-If you encounter "function source is not ready" errors when creating functions:
+Если при создании функций возникает ошибка «function source is not ready»:
 
-1. **Automatic Retry**: The adapter automatically retries function creation with exponential backoff
-2. **Timeout Configuration**: The default 30-second timeout can be extended if needed for large JAR files
-3. **Dependency Order**: Ensure function sources are created before dependent functions
-4. **Manual Retry**: If automatic retry fails, wait a few minutes and retry the operation
+1. **Автоматические повторы** — адаптер автоматически повторяет попытки с экспоненциальной задержкой
+2. **Настройка таймаута** — стандартный таймаут 30 секунд можно увеличить для больших JAR-файлов
+3. **Порядок зависимостей** — убедитесь, что function source создаётся до зависящих от него функций
+4. **Ручной повтор** — если автоматические попытки не помогли, подождите несколько минут и повторите операцию
 
-### File attachment issues
+### Проблемы с прикреплением файлов
 
-For problems with file attachments in function sources and descriptor sources:
+При проблемах с прикреплением файлов в function source и descriptor source:
 
-1. **File Paths**: Use `@/path/to/file` syntax for project-relative paths
-2. **File Types**:
-   - Function sources require `.jar` files
-   - Descriptor sources require compiled `.desc` files (not `.proto`)
-3. **File Validation**: The adapter validates file existence before attempting attachment
-4. **Compilation**: For descriptor sources, ensure protobuf files are compiled:
+1. **Пути к файлам** — используйте синтаксис `@/path/to/file` для путей относительно проекта
+2. **Типы файлов**:
+   - function source требует `.jar` файлы
+   - descriptor source требует скомпилированные `.desc` файлы (не `.proto`)
+3. **Валидация файлов** — адаптер проверяет существование файлов перед прикреплением
+4. **Компиляция** — для descriptor source убедитесь, что protobuf-файлы скомпилированы:
 
    ```bash
    protoc --descriptor_set_out=output.desc input.proto
    ```
-

@@ -1,35 +1,33 @@
 ---
-title: "Salesforce Data Cloud configurations"
-description: "Salesforce Data Cloud Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурация Salesforce Data Cloud"
+description: "Конфигурация Salesforce Data Cloud — прочитайте этот подробный гайд, чтобы узнать о конфигурациях в dbt."
 id: "data-cloud-configs"
 ---
 
-:::warning Disclaimer
-This adapter is in the Alpha product stage and is not production-ready. It should only be used in sandbox or test environments. 
+:::warning Предупреждение
+Этот адаптер находится на стадии Alpha и не готов для использования в production. Его следует использовать только в sandbox или тестовых окружениях.  
 
-As we continue to develop and take in your feedback, the experience is subject to change &mdash; commands, configuration, and workflows may be updated or removed in future releases. 
+По мере дальнейшей разработки и учёта вашего фидбэка опыт использования может меняться &mdash; команды, конфигурация и рабочие процессы могут быть обновлены или удалены в будущих релизах.
 :::
 
-
-## Supported materializations
+## Поддерживаемые материализации
 
 | Materialization | Supported | Notes |
 | --- | --- | --- |
 | View | ❌ |  |
-| Table | ✅ |Creates a batch data transform and a Data Lake Object (DLO)|
+| Table | ✅ |Создаёт пакетное преобразование данных (batch data transform) и объект Data Lake Object (DLO) |
 | Incremental | ❌ | Coming soon |
 | Ephemeral | ❌ |  |
 | Seeds | ❌ |  |
-| Sources | ✅ | Required |
+| Sources | ✅ | Обязательно |
 | Custom data tests | ❌ |  |
 | Snapshots | ❌ |  |
 
+### Источники данных (sources)
 
-### Sources
+Для моделей, которые запрашивают сырые данные Data Cloud, необходимо ссылаться на таблицу через dbt source. Прямой выбор DLO не поддерживается.
 
-For models that query raw Data Cloud data, reference the table though a dbt source. Selecting a DLO directly is not supported.
-
-For example:
+Например:
 
 ```yml
 sources:
@@ -52,13 +50,13 @@ sources:
             data_tests:
               - not_null
               - unique
-```                
+```
 
-### Table materialization 
+### Материализация таблиц
 
-dbt <Constant name="fusion" /> supports Table materialization on Salesforce Data Cloud. Execution of the materialization results in the creation of a [batch data transform](https://help.salesforce.com/s/articleView?id=data.c360_a_batch_transform_overview.htm&language=en_US&type=5) and a [Data Lake Object (DLO)](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_concepts_data_cloud_objects.htm) for querying. 
+dbt <Constant name="fusion" /> поддерживает материализацию Table в Salesforce Data Cloud. Выполнение такой материализации приводит к созданию [batch data transform](https://help.salesforce.com/s/articleView?id=data.c360_a_batch_transform_overview.htm&language=en_US&type=5) и [Data Lake Object (DLO)](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_concepts_data_cloud_objects.htm), который используется для запросов.
 
-Currently, only the `profile` type DLO is supported. Support for `engagement` DLOs is coming soon. Profile DLOs must define a `primary_key` in the model config. For example:
+В настоящее время поддерживается только DLO типа `profile`. Поддержка DLO типа `engagement` появится в ближайшее время. Для Profile DLO в конфигурации модели обязательно должен быть указан `primary_key`. Например:
 
 ```sql
 {{ config(
@@ -78,16 +76,16 @@ Currently, only the `profile` type DLO is supported. Support for `engagement` DL
 
 ```
 
-## Naming rules and required configs
+## Правила именования и обязательные конфигурации
 
-- All dbt model names must end with `__dll`. If you omit this suffix in your file name, it is appended automatically during execution (for example, `model_name` becomes `model_name__dll`). This will break downstream dbt references because dbt will look for a DLO named `model_name` when Data Cloud has `model_name__dll`. 
-- Columns must end with `__c`. Omitting the suffix causes a Data Cloud “unknown syntax” error.
-- Model names cannot contain double under scores (`__`) outside of the final `__dll`. For example, `supplies__agg__dll` will build as `agg__dll`, which can cause confusion for downstream refs.
-- All dbt models must be configured with `primary_key` and `category='Profile'` in the model configuration. You can also apply the configurations in the `resources.yml` and `dbt_project.yml`. 
+- Все имена dbt‑моделей должны оканчиваться на `__dll`. Если этот суффикс отсутствует в имени файла, он будет автоматически добавлен при выполнении (например, `model_name` станет `model_name__dll`). Это приведёт к поломке downstream‑ссылок dbt, поскольку dbt будет искать DLO с именем `model_name`, тогда как в Data Cloud он будет называться `model_name__dll`.
+- Имена колонок должны оканчиваться на `__c`. Отсутствие этого суффикса приводит к ошибке Data Cloud «unknown syntax».
+- Имена моделей не могут содержать двойные подчёркивания (`__`) за пределами финального суффикса `__dll`. Например, модель `supplies__agg__dll` будет собрана как `agg__dll`, что может вызвать путаницу в downstream‑refs.
+- Все dbt‑модели должны быть сконфигурированы с `primary_key` и `category='Profile'` в конфигурации модели. Эти настройки также можно задать в `resources.yml` и `dbt_project.yml`.
 
-## Known limitations
+## Известные ограничения
 
-- **Reruns of dbt models**: Due to the Data Cloud architecture of metadata and dependency management, dbt cannot rerun the same model if a data transform and a DLO already exist. This is because dbt can't drop the DLO during subsequent runs of table materializations, as expected in data warehouses. If you change your logic between runs, you have to delete the dependencies of the data transform and DLO manually in the UI before executing a `dbtf run`. A fix is in progress. 
-- **Static analysis in VS Code**: Column-level lineage and dbt buttons (`Build` and `Test`) are affected. You can either turn off static analysis temporarily by running all commands with `--static-analysis off` or set up your environment variables with `DBT_STATIC_ANALYSIS=off`.
-- **Arbitrary queries** (for example, `SELECT 1 AS foo`): All queries must be tied to a defined dbt source before building a dbt model on it.
-- **`select *`** Metadata queries may fail because Data Cloud injects system columns into every DLO. Bug fix is in progress.
+- **Повторные запуски dbt‑моделей**: из‑за архитектуры Data Cloud, связанной с управлением метаданными и зависимостями, dbt не может повторно запустить одну и ту же модель, если преобразование данных и DLO уже существуют. Это связано с тем, что dbt не может удалить DLO при последующих запусках table‑материализаций, как это обычно происходит в дата‑вейрхаусах. Если вы изменили логику между запусками, необходимо вручную удалить зависимости преобразования данных и DLO в UI перед выполнением `dbtf run`. Исправление находится в разработке.
+- **Статический анализ в VS Code**: затрагиваются линейдж на уровне колонок и кнопки dbt (`Build` и `Test`). Вы можете либо временно отключить статический анализ, запуская команды с флагом `--static-analysis off`, либо настроить переменные окружения, установив `DBT_STATIC_ANALYSIS=off`.
+- **Произвольные запросы** (например, `SELECT 1 AS foo`): все запросы должны быть привязаны к определённому dbt source перед созданием dbt‑модели.
+- **`select *`**: запросы к метаданным могут завершаться ошибкой, так как Data Cloud добавляет системные колонки в каждый DLO. Исправление бага находится в разработке.

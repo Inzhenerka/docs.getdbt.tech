@@ -1,49 +1,50 @@
 ---
-title: Legacy snapshot configurations
-description: Read about how to configure snapshots using legacy Jinja blocks
-sidebar: "Legacy configuration"
+title: Устаревшие конфигурации snapshots
+description: Узнайте, как настраивать snapshots с помощью устаревших Jinja-блоков
+sidebar: "Устаревшая конфигурация"
 ---
 
-# Legacy snapshot configuration <Lifecycle status='legacy' />
+# Устаревшая конфигурация snapshot <Lifecycle status='legacy' />
 
 <IntroText>
 
-Use legacy SQL-based snapshot configurations with Jinja blocks in any dbt version. dbt v1.9 introduced YAML-based configs for better readability and environment awareness.
+Используйте устаревшие SQL‑конфигурации снапшотов на основе Jinja‑блоков в любой версии dbt. В dbt v1.9 были представлены YAML‑конфигурации, которые обеспечивают лучшую читаемость и учитывают окружение.
 
 </IntroText>
 
-There are situations where you want to use the legacy syntax for [snapshots](/docs/build/snapshots) in any dbt version or release track. This page details how you can use the legacy SQL-based configurations if you need to. 
+В некоторых ситуациях вам может понадобиться использовать устаревший синтаксис для [snapshots](/docs/build/snapshots) в любой версии или ветке релизов dbt. На этой странице описано, как при необходимости использовать устаревшие SQL‑конфигурации.
 
-In dbt v1.9, this syntax was replaced with a [YAML-based configuration](/reference/snapshot-configs#configuring-snapshots) in [<Constant name="cloud" />'s "Latest" release track](/docs/dbt-versions/cloud-release-tracks). The benefits of YAML-based configurations are that the snapshots are environment aware, meaning you don't have to specify `schema` or `database`, and the syntax is more concise.
+В dbt v1.9 этот синтаксис был заменён на [YAML‑конфигурацию](/reference/snapshot-configs#configuring-snapshots) в ветке релизов <Constant name="cloud" /> "Latest" (/docs/dbt-versions/cloud-release-tracks). Преимущество YAML‑конфигураций заключается в том, что снапшоты становятся чувствительными к окружению: вам не нужно указывать `schema` или `database`, а сам синтаксис становится более лаконичным.
 
-For new snapshots, we recommend using these latest YAML-based configs. If you'd like to move to the YAML-based configuration for existing snapshots, you can [migrate over](/reference/snapshot-configs#snapshot-configuration-migration).
+Для новых снапшотов мы рекомендуем использовать актуальные YAML‑конфигурации. Если вы хотите перейти на YAML‑конфигурацию для существующих снапшотов, вы можете [выполнить миграцию](/reference/snapshot-configs#snapshot-configuration-migration).
 
-When would you want to use the SQL-based syntax and YAML-based syntax?
+Когда стоит использовать SQL‑синтаксис, а когда — YAML‑синтаксис?
 
-- SQL-based syntax:
-  - Defined in `.sql` files within a snapshot Jinja block, typically located in your `snapshots` directory. Available in all versions.
-  - Useful for existing snapshots already using this syntax.
-  - Suitable for performing very light transformations (but creating a separate ephemeral model for transformations is recommended for better maintainability).
+- SQL‑синтаксис:
+  - Определяется в файлах `.sql` внутри snapshot Jinja‑блока, обычно расположенных в директории `snapshots`. Доступен во всех версиях.
+  - Подходит для существующих снапшотов, которые уже используют этот синтаксис.
+  - Подходит для выполнения очень лёгких трансформаций (однако для лучшей поддерживаемости рекомендуется выносить трансформации в отдельную ephemeral‑модель).
 
-- YAML-based syntax:
-  - Defined in `whatever_name.yml` or in the `snapshots` or `models` directory you prefer. Available in <Constant name="cloud" />'s "Latest" release track and dbt v1.9 and later.
-  - Ideal for new snapshots or existing snapshots that need to be [migrated](/reference/snapshot-configs#snapshot-configuration-migration).
-  - Create transformations separate from the snapshot file by creating an ephemeral model and referencing it in the snapshot using the `relation` field.
+- YAML‑синтаксис:
+  - Определяется в файлах `whatever_name.yml` или в директориях `snapshots` или `models` — на ваш выбор. Доступен в ветке релизов <Constant name="cloud" /> "Latest" и в dbt v1.9 и выше.
+  - Идеален для новых снапшотов или существующих снапшотов, которые нужно [мигрировать](/reference/snapshot-configs#snapshot-configuration-migration).
+  - Трансформации выносятся за пределы файла снапшота путём создания ephemeral‑модели и ссылки на неё в снапшоте с помощью поля `relation`.
 
-## Snapshot configurations
+## Конфигурации снапшотов
 
-Although you can use the more performant YAML-based configuration, you might still want to use the legacy configuration to define your snapshots if it suits your needs.
+Хотя вы можете использовать более производительную YAML‑конфигурацию, в некоторых случаях вам всё же может подойти устаревшая конфигурация для определения снапшотов.
 
-Snapshots can be configured in two main ways: 
-- Using [snapshot-specific configurations](#snapshot-specific-configurations)
-- Or using [general configurations](#general-configuration) 
+Снапшоты можно настраивать двумя основными способами:
+- с помощью [специфичных для снапшотов конфигураций](#snapshot-specific-configurations)
+- либо с помощью [общих конфигураций](#general-configuration)
 
-These configurations allow you to control how dbt detects changes in your data and where snapshots are stored. Both types of configurations can coexist in your project in the same `config` block (or from your `dbt_project.yml` file or `properties.yaml` file). 
+Эти конфигурации позволяют управлять тем, как dbt обнаруживает изменения в данных и где хранятся снапшоты. Оба типа конфигураций могут сосуществовать в одном проекте и даже в одном `config`‑блоке (либо задаваться через файл `dbt_project.yml` или `properties.yaml`).
 
-One of the most important configs you can decide is [strategies](#snapshot-strategies), which tells dbt how to detect modified rows.
+Одной из самых важных настроек является выбор [стратегии](#snapshot-strategies), которая определяет, каким образом dbt обнаруживает изменённые строки.
 
-### Snapshot specific configurations
-Snapshot-specific configurations are applicable to only one dbt resource type rather than multiple resource types. You can define these settings within the resource’s file using the `{{ config() }}` macro (as well as in the project file (`dbt_project.yml`) or a property file (`models/properties.yml` for models, similarly for other resources)).
+### Специфичные для снапшотов конфигурации
+
+Специфичные для снапшотов конфигурации применяются только к одному типу ресурсов dbt, а не к нескольким сразу. Эти настройки можно определить непосредственно в файле ресурса с помощью макроса `{{ config() }}` (а также в файле проекта `dbt_project.yml` или в property‑файле, например `models/properties.yml` для моделей — аналогично и для других ресурсов).
 
 <File name='snapshots/orders_snapshot.sql'>
 
@@ -67,8 +68,9 @@ select * from {{ source('jaffle_shop', 'orders') }}
 ```
 </File>
 
-### General configuration
-Use general configurations for broader operational settings applicable across multiple resource types. Like resource-specific configurations, these can also be set in the project YAML file, properties YAML files, or within resource-specific files using a config block.
+### Общие конфигурации
+
+Используйте общие конфигурации для более широких операционных настроек, применимых к нескольким типам ресурсов. Как и конфигурации, специфичные для ресурсов, их можно задавать в проектном YAML‑файле, в property‑файлах YAML или непосредственно в файлах ресурсов с помощью `config`‑блока.
 
 <File name='snapshots/snapshot.sql'>
 
@@ -85,18 +87,19 @@ Use general configurations for broader operational settings applicable across mu
 ```
 </File>
 
-### Snapshot strategies
-Snapshot "strategies" define how dbt knows if a row has changed. There are two strategies built-in to dbt that require the `strategy` parameter:
+### Стратегии снапшотов
 
-- [Timestamp](/reference/resource-configs/snapshots-jinja-legacy?strategy=timestamp#snapshot-strategies) &mdash; Uses an `updated_at` column to determine if a row has changed.
-- [Check](/reference/resource-configs/snapshots-jinja-legacy?strategy=check#snapshot-strategies) &mdash; Compares a list of columns between their current and historical values to determine if a row has changed. Uses the `check_cols` parameter.
+«Стратегии» снапшотов определяют, каким образом dbt понимает, что строка изменилась. В dbt встроены две стратегии, для которых требуется параметр `strategy`:
+
+- [Timestamp](/reference/resource-configs/snapshots-jinja-legacy?strategy=timestamp#snapshot-strategies) — использует колонку `updated_at`, чтобы определить, изменилась ли строка.
+- [Check](/reference/resource-configs/snapshots-jinja-legacy?strategy=check#snapshot-strategies) — сравнивает список колонок между текущими и историческими значениями, чтобы определить изменения. Использует параметр `check_cols`.
 
 <Tabs queryString="strategy">
 <TabItem value="timestamp" label="Timestamp" id="timestamp">
 
-The timestamp strategy uses an `updated_at` field to determine if a row has changed. If the configured `updated_at` column for a row is more recent than the last time the snapshot ran, then dbt will invalidate the old record and record the new one. If the timestamps are unchanged, then dbt will not take any action.
+Стратегия timestamp использует поле `updated_at` для определения изменений строки. Если значение `updated_at` для строки новее, чем время последнего запуска снапшота, dbt помечает старую запись как неактуальную и сохраняет новую. Если временные метки не изменились, dbt не предпринимает никаких действий.
 
-#### Example
+#### Пример
 
 <File name='snapshots/timestamp_example.sql'>
 
@@ -121,9 +124,9 @@ The timestamp strategy uses an `updated_at` field to determine if a row has chan
 
 <TabItem value="check" label="Check" id="check">
 
-The check strategy is useful for tables which do not have a reliable `updated_at` column. It requires the `check_cols` parameter, which is a list of columns within the results of your snapshot query to check for changes. Alternatively, use all columns using the all value (however this may be less performant).
+Стратегия check полезна для таблиц, в которых нет надёжной колонки `updated_at`. Она требует параметр `check_cols`, который представляет собой список колонок из результата запроса снапшота, по которым проверяются изменения. В качестве альтернативы можно указать значение `all`, чтобы использовать все колонки (однако это может быть менее производительно).
 
-#### Example
+#### Пример
 
 <File name='snapshots/check_example.sql'>
 
@@ -144,8 +147,8 @@ The check strategy is useful for tables which do not have a reliable `updated_at
 ```
 </File>
 
-#### Examples
-<Expandable alt_header="Check a list of columns for changes">
+#### Примеры
+<Expandable alt_header="Проверка списка колонок на изменения">
 
 <File name='snapshots/check_example.sql'>
 
@@ -167,7 +170,7 @@ The check strategy is useful for tables which do not have a reliable `updated_at
 </File>
 </Expandable>
 
-<Expandable alt_header="Check all columns for changes">
+<Expandable alt_header="Проверка всех колонок на изменения">
 
 <File name='snapshots/check_example.sql'>
 
@@ -191,38 +194,37 @@ The check strategy is useful for tables which do not have a reliable `updated_at
 </TabItem>
 </Tabs>
 
-## Configuration reference
+## Справочник конфигураций
 
-Configure your snapshot to tell dbt how to detect record changes. Snapshots are `select` statements, defined within a snapshot block in a `.sql` file (typically in your `snapshots` directory or any other directory).
+Настройте снапшот, чтобы указать dbt, как определять изменения записей. Снапшоты — это `select`‑запросы, определённые внутри snapshot‑блока в `.sql`‑файле (обычно в директории `snapshots` или любой другой).
 
-The following table outlines the configurations available for snapshots:
+В таблице ниже перечислены конфигурации, доступные для снапшотов:
 
 <VersionBlock firstVersion="1.9">
 
-| Config | Description | Required? | Example |
-| ------ | ----------- | --------- | ------- |
-| [database](/reference/resource-configs/database) |Specify a custom database for the snapshot | No | analytics |
-| [schema](/reference/resource-configs/schema) | Specify a custom schema for the snapshot | No | snapshots |
-| [strategy](/reference/resource-configs/strategy) | The snapshot strategy to use. One of `timestamp` or `check` | Yes | timestamp |
-| [unique_key](/reference/resource-configs/unique_key) | A <Term id="primary-key" /> column or expression for the record | Yes | id |
-| [check_cols](/reference/resource-configs/check_cols) | If using the `check` strategy, then the columns to check | Only if using the `check` strategy | ["status"] |
-| [updated_at](/reference/resource-configs/updated_at) | If using the `timestamp` strategy, the timestamp column to compare | Only if using the `timestamp` strategy | updated_at |
-| [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) | Find hard deleted records in source, and set `dbt_valid_to` current time if no longer exists | No | True |
+| Config | Описание | Обязательно? | Пример |
+| ------ | -------- | ------------ | ------ |
+| [database](/reference/resource-configs/database) | Указать пользовательскую базу данных для снапшота | Нет | analytics |
+| [schema](/reference/resource-configs/schema) | Указать пользовательскую схему для снапшота | Нет | snapshots |
+| [strategy](/reference/resource-configs/strategy) | Стратегия снапшота: `timestamp` или `check` | Да | timestamp |
+| [unique_key](/reference/resource-configs/unique_key) | Колонка или выражение <Term id="primary-key" />, идентифицирующее запись | Да | id |
+| [check_cols](/reference/resource-configs/check_cols) | Колонки для проверки при использовании стратегии `check` | Только при стратегии `check` | ["status"] |
+| [updated_at](/reference/resource-configs/updated_at) | Колонка с временной меткой при использовании стратегии `timestamp` | Только при стратегии `timestamp` | updated_at |
+| [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) | Находить физически удалённые записи в источнике и устанавливать `dbt_valid_to` в текущее время, если запись больше не существует | Нет | True |
 
-- A number of other configurations are also supported (like, `tags` and `post-hook`), check out the full list [here](/reference/snapshot-configs).
-- Snapshots can be configured from both your `dbt_project.yml` file and a `config` block, check out the [configuration docs](/reference/snapshot-configs) for more information.
-- Note: BigQuery users can use `target_project` and `target_dataset` as aliases for `target_database` and `target_schema`, respectively.
-- Before v1.9, `target_schema` (required) and `target_database` (optional) set a fixed schema or database for snapshots, making it hard to separate dev and prod environments. In v1.9, `target_schema` became optional, allowing environment-aware snapshots. By default, snapshots now use `generate_schema_name` or `generate_database_name`, but developers can still specify a custom location using [schema](/reference/resource-configs/schema) and [database](/reference/resource-configs/database), consistent with other resource types.
-
+- Также поддерживается ряд других конфигураций (например, `tags` и `post-hook`) — полный список смотрите [здесь](/reference/snapshot-configs).
+- Снапшоты можно настраивать как через файл `dbt_project.yml`, так и через `config`‑блок — подробнее см. [документацию по конфигурации](/reference/snapshot-configs).
+- Примечание: пользователи BigQuery могут использовать `target_project` и `target_dataset` как алиасы для `target_database` и `target_schema` соответственно.
+- До версии v1.9 параметры `target_schema` (обязательный) и `target_database` (необязательный) задавали фиксированную схему или базу данных для снапшотов, что затрудняло разделение dev‑ и prod‑окружений. Начиная с v1.9 `target_schema` стал необязательным, что позволило использовать снапшоты с учётом окружения. По умолчанию снапшоты теперь используют `generate_schema_name` или `generate_database_name`, однако разработчики по‑прежнему могут указать пользовательское расположение с помощью [schema](/reference/resource-configs/schema) и [database](/reference/resource-configs/database), аналогично другим типам ресурсов.
 
 </VersionBlock>
 
-## Add snapshot to a project
+## Добавление снапшота в проект
 
-To add a snapshot to your project:
+Чтобы добавить снапшот в проект:
 
-1. Create a file in your `snapshots` directory with a `.sql` file extension. For example,`snapshots/orders.sql`
-2. Use a `snapshot` block to define the start and end of a snapshot:
+1. Создайте файл в директории `snapshots` с расширением `.sql`. Например, `snapshots/orders.sql`.
+2. Используйте блок `snapshot`, чтобы определить начало и конец снапшота:
 
 <File name='snapshots/orders_snapshot.sql'>
 
@@ -234,7 +236,7 @@ To add a snapshot to your project:
 
 </File>
 
-3. Write a `select` statement within the snapshot block (tips for writing a good snapshot query are below). This select statement defines the results that you want to snapshot over time. You can use `sources` or `refs` here.
+3. Напишите `select`‑запрос внутри snapshot‑блока. Этот запрос определяет результат, который вы хотите отслеживать во времени. Здесь можно использовать `sources` или `refs`.
 
 <File name='snapshots/orders_snapshot.sql'>
 
@@ -248,9 +250,9 @@ select * from {{ source('jaffle_shop', 'orders') }}
 
 </File>
 
-4. Check whether the result set of your query includes a reliable timestamp column that indicates when a record was last updated. For our example, the `updated_at` column reliably indicates record changes, so we can use the `timestamp` strategy. If your query result set does not have a reliable timestamp, you'll need to instead use the `check` strategy — more details on this in the next step.
+4. Проверьте, содержит ли результат запроса надёжную колонку с временной меткой, указывающую, когда запись была обновлена в последний раз. В нашем примере колонка `updated_at` надёжно отражает изменения, поэтому можно использовать стратегию `timestamp`. Если такой колонки нет, потребуется использовать стратегию `check`.
 
-5. Add configurations to your snapshot using a `config` block. You can also [configure your snapshot from your `dbt_project.yml` file](/reference/snapshot-configs).
+5. Добавьте конфигурации к снапшоту с помощью `config`‑блока. Также вы можете [настроить снапшот через файл `dbt_project.yml`](/reference/snapshot-configs).
 
 <VersionBlock firstVersion="1.9">
 
@@ -278,8 +280,7 @@ select * from {{ source('jaffle_shop', 'orders') }}
 </File>
 </VersionBlock>
 
-
-6. Run the `dbt snapshot` [command](/reference/commands/snapshot). For our example, a new table will be created at `analytics.snapshots.orders_snapshot`. You can change the `target_database` configuration, the `target_schema` configuration and the name of the snapshot (as defined in `{% snapshot .. %}`) will change how dbt names this table.
+6. Запустите [команду](/reference/commands/snapshot) `dbt snapshot`. В нашем примере будет создана новая таблица `analytics.snapshots.orders_snapshot`. Изменяя конфигурации `target_database`, `target_schema` и имя снапшота (заданное в `{% snapshot .. %}`), вы управляете тем, как dbt именует эту таблицу.
 
 ```dbt snapshot
 Running with dbt=1.8.0
@@ -296,11 +297,9 @@ Completed successfully
 Done. PASS=2 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-1. Inspect the results by selecting from the table dbt created. After the first run, you should see the results of your query, plus the [snapshot meta fields](/docs/build/snapshots#snapshot-meta-fields) as described earlier.
-
-2. Run the `dbt snapshot` command again, and inspect the results. If any records have been updated, the snapshot should reflect this.
-
-3. Select from the `snapshot` in downstream models using the `ref` function.
+7. Проверьте результаты, выполнив `select` из таблицы, созданной dbt. После первого запуска вы увидите результат запроса, а также [метаполя снапшота](/docs/build/snapshots#snapshot-meta-fields).
+8. Запустите `dbt snapshot` ещё раз и снова проверьте результаты. Если какие‑либо записи были обновлены, снапшот должен это отразить.
+9. Используйте снапшот в downstream‑моделях с помощью функции `ref`.
 
 <File name='models/changed_orders.sql'>
 
@@ -310,16 +309,15 @@ select * from {{ ref('orders_snapshot') }}
 
 </File>
 
-10. Snapshots are only useful if you run them frequently &mdash; schedule the `snapshot` command to run regularly.
+10. Снапшоты полезны только при регулярном запуске — настройте выполнение команды `snapshot` по расписанию.
 
+## Примеры
 
-## Examples
+В этом разделе приведены примеры применения конфигураций к снапшотам с использованием устаревшего метода.
 
-This section outlines some examples of how to apply configurations to snapshots using the legacy method.
+<Expandable alt_header="Применение конфигураций только к одному снапшоту">
 
-<Expandable alt_header="Apply configurations to one snapshot only">
-
-Use config blocks if you need to apply a configuration to one snapshot only.
+Используйте `config`‑блоки, если нужно применить конфигурацию только к одному снапшоту.
 
 <File name='snapshots/postgres_app/orders_snapshot.sql'>
 
@@ -339,9 +337,9 @@ Use config blocks if you need to apply a configuration to one snapshot only.
 </File>
 </Expandable>
 
-<Expandable alt_header="Using the updated_at parameter">
+<Expandable alt_header="Использование параметра updated_at">
 
-The `updated_at` parameter is required if using the timestamp strategy. The `updated_at` parameter is a column within the results of your snapshot query that represents when the record row was last updated.
+Параметр `updated_at` обязателен при использовании стратегии timestamp. Это колонка в результате запроса снапшота, которая указывает, когда запись была обновлена в последний раз.
 
 <File name='snapshots/orders.sql'>
 
@@ -353,9 +351,9 @@ The `updated_at` parameter is required if using the timestamp strategy. The `upd
 ```
 </File>
 
-#### Examples
+#### Примеры
 
-- #### Using a column name `updated_at`:
+- #### Использование колонки `updated_at`:
 
   <VersionBlock firstVersion="1.9">
   <File name='snapshots/orders.sql'>
@@ -380,11 +378,11 @@ The `updated_at` parameter is required if using the timestamp strategy. The `upd
   </File>
   </VersionBlock>
 
-- #### Coalescing two columns to create a reliable `updated_at` column:
-  
-  Consider a data source that only has an `updated_at` column filled in when a record is updated (so a `null` value indicates that the record hasn't been updated after it was created).
-  
-  Since the `updated_at` configuration only takes a column name, rather than an expression, you should update your snapshot query to include the coalesced column.
+- #### Объединение двух колонок для создания надёжного `updated_at`:
+
+  Рассмотрим источник данных, в котором колонка `updated_at` заполняется только при обновлении записи (то есть значение `null` означает, что запись не обновлялась после создания).
+
+  Поскольку параметр `updated_at` принимает только имя колонки, а не выражение, необходимо изменить запрос снапшота, добавив колонку с объединённым значением.
 
   <VersionBlock firstVersion="1.9">
   <File name='snapshots/orders.sql'>
@@ -413,12 +411,11 @@ The `updated_at` parameter is required if using the timestamp strategy. The `upd
   </File>
   </VersionBlock>
 
-
 </Expandable>
 
-<Expandable alt_header="Using the unique_key parameter">
+<Expandable alt_header="Использование параметра unique_key">
 
-The `unique_key` is a column name or expression that is unique for the inputs of a snapshot. dbt uses [`unique_key`](/reference/resource-configs/unique_key) to match records between a result set and an existing snapshot, so that changes can be captured correctly.
+Параметр `unique_key` — это имя колонки или выражение, уникальное для входных данных снапшота. dbt использует [`unique_key`](/reference/resource-configs/unique_key) для сопоставления записей между текущим результатом и существующим снапшотом, чтобы корректно фиксировать изменения.
 
 <File name='snapshots/orders.sql'>
 
@@ -429,9 +426,9 @@ The `unique_key` is a column name or expression that is unique for the inputs of
 ```
 </File>
 
-#### Examples
+#### Примеры
 
-- Using an `id` column as a unique key
+- Использование колонки `id` в качестве уникального ключа
 
   <File name='snapshots/orders.sql'>
 
@@ -444,11 +441,11 @@ The `unique_key` is a column name or expression that is unique for the inputs of
   ```
   </File>
 
-  You can also write this in YAML. This might be a good idea if multiple snapshots share the same `unique_key` (though we prefer to apply this configuration in a config block, as above).
+  Это также можно задать в YAML. Это может быть удобно, если несколько снапшотов используют один и тот же `unique_key` (хотя мы предпочитаем задавать эту конфигурацию в `config`‑блоке, как показано выше).
 
-- #### Using a combination of two columns as a unique key
+- #### Использование комбинации двух колонок в качестве уникального ключа
 
-  This configuration accepts a valid column expression. As such, you can concatenate two columns together as a unique key if required. It's a good idea to use a separator (like, '-') to ensure uniqueness.
+  Эта конфигурация принимает допустимое колонковое выражение. Поэтому при необходимости можно объединить две колонки в один уникальный ключ. Рекомендуется использовать разделитель (например, `'-'`), чтобы обеспечить уникальность.
 
   <File name='snapshots/transaction_items_snapshot.sql'>
 
@@ -472,26 +469,26 @@ The `unique_key` is a column name or expression that is unique for the inputs of
 
   </File>
 
-  Though, it's probably a better idea to construct this column in your query and use that as the `unique_key`:
+  Однако, как правило, лучше сформировать эту колонку непосредственно в запросе и использовать её как `unique_key`:
 
-    <File name='snapshots/transaction_items_snapshot.sql'>
+  <File name='snapshots/transaction_items_snapshot.sql'>
 
-    ```sql
-    {% snapshot transaction_items_snapshot %}
+  ```sql
+  {% snapshot transaction_items_snapshot %}
 
-        {{
-            config(
-              unique_key="id",
-              ...
-            )
-        }}
+      {{
+          config(
+            unique_key="id",
+            ...
+          )
+      }}
 
-    select
-        transaction_id || '-' || line_item_id as id,
-        *
-    from {{ source('erp', 'transactions') }}
+  select
+      transaction_id || '-' || line_item_id as id,
+      *
+  from {{ source('erp', 'transactions') }}
 
-    {% endsnapshot %}
-    ```
-    </File>
+  {% endsnapshot %}
+  ```
+  </File>
 </Expandable>

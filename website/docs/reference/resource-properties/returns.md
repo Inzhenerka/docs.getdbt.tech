@@ -13,40 +13,40 @@ id: returns
 functions:
   - name: <function name>
     returns:
-      data_type: <string> # required, warehouse-specific
-      description: <markdown_string> # optional
+      data_type: <string> # обязательно; зависит от хранилища данных
+      description: <markdown_string> # опционально
 
 ```
 
 </File>
 
-## Definition
+## Определение
 
-The `returns` property defines the output of a user-defined function (UDF). This is a required property for all functions and specifies what data type the function will return when executed.
+Свойство `returns` определяет результат выполнения пользовательской функции (UDF). Это обязательное свойство для всех функций, которое указывает, какой тип данных функция будет возвращать при выполнении.
 
-## Properties
+## Свойства
 
-### data_type (required)
+### data_type (обязательно)
 
-The `data_type` field specifies the data type that the function returns. This is a required field and must match the data types supported by your specific data platform.
+Поле `data_type` задаёт тип данных, который возвращает функция. Это обязательное поле, и его значение должно соответствовать типам данных, поддерживаемым вашей конкретной платформой хранения данных.
 
-:::important Warehouse-specific data types
-The `data_type` values are warehouse-specific. Use the data type syntax that your warehouse requires:
-- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ`, `VARIANT`, etc.
-- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>`, `STRUCT`, etc.
-- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `SUPER`, etc.
-- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `JSONB`, etc.
+:::important Типы данных зависят от хранилища
+Значения `data_type` зависят от конкретного хранилища. Используйте синтаксис типов данных, который требуется вашим хранилищем:
+- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ`, `VARIANT` и т.д.
+- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>`, `STRUCT` и т.д.
+- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `SUPER` и т.д.
+- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `JSONB` и т.д.
 
-Refer to your warehouse documentation for the complete list of supported data types and their syntax.
+Обратитесь к документации вашего хранилища для получения полного списка поддерживаемых типов данных и их синтаксиса.
 :::
 
 ### description
 
-An optional markdown string describing what the function returns. This is helpful for documentation purposes.
+Необязательная строка в формате markdown, описывающая, что именно возвращает функция. Полезна для целей документирования.
 
-## Examples
+## Примеры
 
-### Simple scalar function
+### Простая скалярная функция
 
 <File name='functions/schema.yml'>
 
@@ -66,7 +66,7 @@ functions:
 
 </File>
 
-### Function with complex return type
+### Функция со сложным типом возвращаемого значения
 
 <File name='functions/schema.yml'>
 
@@ -87,7 +87,7 @@ functions:
 
 </File>
 
-### BigQuery function with ARRAY return type
+### Функция BigQuery с типом возвращаемого значения ARRAY
 
 <File name='functions/schema.yml'>
 
@@ -106,10 +106,9 @@ functions:
 
 </File>
 
-## Related documentation
+## Связанная документация
 
-- [User-defined functions](/docs/build/udfs)
-- [Function properties](/reference/function-properties)
-- [Function configurations](/reference/function-configs)
-- [Arguments](/reference/resource-properties/function-arguments)
-
+- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
+- [Аргументы](/reference/resource-properties/function-arguments)

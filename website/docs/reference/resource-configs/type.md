@@ -2,7 +2,7 @@
 title: type
 sidebar_label: "type"
 id: type
-description: "The type config specifies the type of user-defined function you're creating."
+description: "Конфигурация type задаёт тип пользовательской функции (UDF), которую вы создаёте."
 ---
 <VersionCallout version="1.11" /> 
 
@@ -17,20 +17,20 @@ functions:
 
 </File>
 
-In the future, we're considering adding support for `table` type. Refer to [this issue](https://github.com/dbt-labs/dbt-core/issues/11917) to track the progress and provide any feedback.
+В будущем мы рассматриваем возможность добавления поддержки типа `table`. Следите за прогрессом и оставляйте обратную связь в [этом issue](https://github.com/dbt-labs/dbt-core/issues/11917).
 
-## Definition
+## Определение
 
-The `type` config specifies the type of user-defined function (UDF) you're creating. This config is optional and defaults to `scalar` if not specified.
+Конфигурация `type` определяет тип пользовательской функции (UDF), которую вы создаёте. Этот параметр является необязательным и по умолчанию принимает значение `scalar`, если он не указан.
 
-## Supported function types
+## Поддерживаемые типы функций
 
-The following function types are supported:
+Поддерживаются следующие типы функций:
 <!-- no toc -->
-- [scalar (default)](#scalar-default)
+- [scalar (по умолчанию)](#scalar-default)
 - [aggregate](#aggregate)
 
-Support for `type` differs based on the warehouse and language (SQL or Python) you're using:
+Поддержка параметра `type` зависит от используемого хранилища данных и языка (SQL или Python):
 
 | Adapter	| scalar SQL	| scalar Python	| aggregate SQL	| aggregate Python |
 | --- | --- | --- | --- | --- |
@@ -40,15 +40,14 @@ Support for `type` differs based on the warehouse and language (SQL or Python) y
 | dbt-postgres	| ✅	| ❌	| ❌	| ❌ |
 | dbt-redshift	| ✅	| ❌	| ❌	| ❌ |
 
-### scalar (default)
+### scalar (по умолчанию) {#scalar-default}
 
-A scalar function returns a single value for each row of input. This is the most common type of UDF.
+Скалярная функция возвращает одно значение для каждой входной строки. Это наиболее распространённый тип UDF.
 
-
-**Example use cases:**
-- Data validation (checking if a string matches a pattern)
-- Data transformation (converting formats, cleaning strings)
-- Custom calculations (complex mathematical operations)
+**Примеры сценариев использования:**
+- Валидация данных (проверка, соответствует ли строка шаблону)
+- Преобразование данных (конвертация форматов, очистка строк)
+- Пользовательские вычисления (сложные математические операции)
 
 <File name='functions/schema.yml'>
 
@@ -69,16 +68,15 @@ functions:
 
 ### aggregate
 
-Aggregate functions operate on multiple rows and return a single value &mdash; for example, they sum values or calculate an average for a group. Queries use these functions in `GROUP BY` operations.
+Агрегатные функции работают с несколькими строками и возвращают одно значение — например, суммируют значения или вычисляют среднее для группы. В запросах такие функции используются в операциях `GROUP BY`.
 
-Aggregate functions are currently supported only for:
-- Python functions on Snowflake
-- SQL functions on BigQuery
+В настоящее время агрегатные функции поддерживаются только для:
+- Python-функций в Snowflake
+- SQL-функций в BigQuery
 
-
-**Example use cases:**
-- Calculating totals or averages for groups of data (for example, total sales per customer)
-- Aggregating data over time (for example, daily, monthly, or yearly totals)
+**Примеры сценариев использования:**
+- Вычисление сумм или средних значений для групп данных (например, общий объём продаж по клиенту)
+- Агрегация данных по времени (например, дневные, месячные или годовые итоги)
 
 <File name='functions/schema.yml'>
 
@@ -98,11 +96,11 @@ functions:
 
 </File>
 
-## Related documentation
+## Связанная документация
 
-- [User-defined functions](/docs/build/udfs)
-- [Function properties](/reference/function-properties)
-- [Function configurations](/reference/function-configs)
+- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
 - [Volatility](/reference/resource-configs/volatility)
-- [Arguments](/reference/resource-properties/function-arguments)
+- [Аргументы](/reference/resource-properties/function-arguments)
 - [Returns](/reference/resource-properties/returns)

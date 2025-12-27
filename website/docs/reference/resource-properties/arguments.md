@@ -1,5 +1,5 @@
 ---
-title: arguments (for macros)
+title: arguments (для макросов)
 sidebar_label: "arguments"
 id: arguments
 ---
@@ -23,22 +23,22 @@ macros:
 
 </File>
 
-## Definition
+## Определение
 
 <ArgumentsShared />
 
-For **macros**, you can add `arguments` to a [macro property](/reference/macro-properties), which helps in documenting the macro and understanding what inputs it requires.
+Для **макросов** вы можете добавить секцию `arguments` в [свойства макроса](/reference/macro-properties). Это помогает документировать макрос и понимать, какие входные параметры он ожидает.
 
 ## type
 
 <VersionBlock lastVersion="1.9">
 
-The data type of your argument. This is only used for documentation purposes — there are no restrictions on the values you can use here.
+Тип данных аргумента. Он используется только в целях документации — никаких ограничений на значения, которые вы можете указать здесь, не накладывается.
 
 </VersionBlock>
 <VersionBlock firstVersion="1.10">
 
-The data type of your argument. Setting [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) to `true` ensures that documented macro argument names match those in the macro definition and validates their types against the [supported types](#supported-types). When set to `false`, `type` is only used for documentation purposes and there are no restrictions on the values you can specify.
+Тип данных аргумента. Установка параметра [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) в значение `true` гарантирует, что задокументированные имена аргументов макроса совпадают с аргументами в его определении, а также проверяет их типы на соответствие [поддерживаемым типам](#supported-types). Если установлено значение `false`, поле `type` используется только для документации, и никаких ограничений на указываемые значения нет.
 
 </VersionBlock>
 
@@ -58,24 +58,24 @@ macros:
 
 </File>
 
-### Supported types
+### Поддерживаемые типы
 
-From <Constant name="core" /> v1.10, when you use the [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) flag, dbt supports the following types for macro arguments:
+Начиная с версии <Constant name="core" /> v1.10, при использовании флага [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) dbt поддерживает следующие типы аргументов макросов:
 
-- `string` or `str`
-- `boolean` or `bool`
-- `integer` or `int`
+- `string` или `str`
+- `boolean` или `bool`
+- `integer` или `int`
 - `float`
 - `any`
-- `list[<Type>]`, for example, `list[string]`
-- `dict[<Type>, <Type>]`, for example, `dict[str, list[int]]`
-- `optional[<Type>]`, for example, `optional[integer]`
+- `list[<Type>]`, например `list[string]`
+- `dict[<Type>, <Type>]`, например `dict[str, list[int]]`
+- `optional[<Type>]`, например `optional[integer]`
 - [`relation`](/reference/dbt-classes#relation)
 - [`column`](/reference/dbt-classes#column)
 
-Note that the types follow a Python-like style but are used for documentation and validation only. They are not Python types.
+Обратите внимание, что синтаксис типов напоминает Python, однако они используются исключительно для документации и валидации. Это не Python-типы.
 
-## Examples
+## Примеры
 
 
 <File name='macros/cents_to_dollars.sql'>
@@ -107,7 +107,7 @@ macros:
 
 </File>
 
-## Related documentation
+## Связанная документация
 
-- [Macro properties](/reference/macro-properties)
-- [Arguments (for functions)](/reference/resource-properties/function-arguments)
+- [Свойства макросов](/reference/macro-properties)
+- [arguments (для функций)](/reference/resource-properties/function-arguments)

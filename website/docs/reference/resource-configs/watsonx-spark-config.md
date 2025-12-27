@@ -1,22 +1,22 @@
 ---
-title: "IBM watsonx.data Spark configurations"
+title: "Конфигурация IBM watsonx.data Spark"
 id: "watsonx-spark-config"
 ---
 
-## Instance requirements
+## Требования к инстансу
 
-To use IBM watsonx.data Spark with `dbt-watsonx-spark` adapter, ensure the instance has an attached catalog that supports creating, renaming, altering, and dropping objects such as tables and views. The user connecting to the instance via the `dbt-watsonx-spark` adapter must have the necessary permissions for the target catalog.
+Для использования IBM watsonx.data Spark с адаптером `dbt-watsonx-spark` необходимо убедиться, что инстанс имеет подключённый каталог, который поддерживает создание, переименование, изменение и удаление объектов, таких как таблицы и представления. Пользователь, подключающийся к инстансу через адаптер `dbt-watsonx-spark`, должен обладать необходимыми правами доступа к целевому каталогу.
 
-For detailed setup instructions, including setting up watsonx.data, adding the Spark engine, configuring storages, registering data sources, and managing permissions, refer to the official IBM documentation:
-- watsonx.data Software Documentation: [IBM watsonx.data Software Guide](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x)
-- watsonx.data SaaS Documentation: [IBM watsonx.data SaaS Guide](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-getting-started)
+Подробные инструкции по настройке, включая развёртывание watsonx.data, добавление Spark-движка, настройку хранилищ, регистрацию источников данных и управление правами доступа, см. в официальной документации IBM:
+- Документация watsonx.data Software: [IBM watsonx.data Software Guide](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x)
+- Документация watsonx.data SaaS: [IBM watsonx.data SaaS Guide](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-getting-started)
 
 
-## Session properties
+## Свойства сессии
 
-With IBM watsonx.data SaaS/Software instance, you can [set session properties](https://sparkdb.io/docs/current/sql/set-session.html) to modify the current configuration for your user session.
+В инстансах IBM watsonx.data SaaS/Software можно [задавать свойства сессии](https://sparkdb.io/docs/current/sql/set-session.html), чтобы изменять текущую конфигурацию для пользовательской сессии.
 
-To temporarily adjust session properties for a specific dbt model or a group of models, use a [dbt hook](/reference/resource-configs/pre-hook-post-hook). For example:
+Чтобы временно изменить свойства сессии для конкретной dbt-модели или группы моделей, используйте [dbt hook](/reference/resource-configs/pre-hook-post-hook). Например:
 
 ```sql
 {{
@@ -26,23 +26,23 @@ To temporarily adjust session properties for a specific dbt model or a group of 
 }}
 ```
 
-## Connector properties
+## Свойства коннекторов
 
-IBM watsonx.data SaaS/Software supports various Spark-specific connector properties to control data representation, execution performance, and storage format.
+IBM watsonx.data SaaS/Software поддерживает различные Spark-специфичные свойства коннекторов, которые позволяют управлять представлением данных, производительностью выполнения и форматом хранения.
 
-For more details on supported configurations for each data source, refer to:
+Подробную информацию о поддерживаемых конфигурациях для каждого источника данных см. здесь:
 
-- [watsonx.data SaaS Catalog](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-reg_database)
-- [watsonx.data Software Catalog](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=components-adding-data-source)
+- [Каталог watsonx.data SaaS](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-reg_database)
+- [Каталог watsonx.data Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=components-adding-data-source)
 
-### Additional configuration
+### Дополнительная конфигурация
 
-The `dbt-watsonx-spark` adapter allows additional configurations to be set in the catalog profile:
+Адаптер `dbt-watsonx-spark` позволяет задавать дополнительные параметры конфигурации в профиле каталога:
 
-- `Catalog:` Specifies the catalog to use for the Spark connection. The plugin can automatically detect the file format type `(Iceberg, Hive, or Delta)` based on the catalog type.
-- `use_ssl:` Enables SSL encryption for secure connections.
+- `Catalog:` указывает каталог, который будет использоваться для Spark-подключения. Плагин автоматически определяет тип формата файлов `(Iceberg, Hive или Delta)` на основе типа каталога.
+- `use_ssl:` включает SSL-шифрование для защищённых соединений.
 
-Example configuration:
+Пример конфигурации:
 
 ```yaml
 project_name:
@@ -64,18 +64,18 @@ project_name:
 
 ---
 
-### File format configuration
+### Конфигурация форматов файлов
 
-The supported file formats depend on the catalog type:
+Поддерживаемые форматы файлов зависят от типа каталога:
 
-- **Iceberg Catalog:** Supports **Iceberg** tables.
-- **Hive Catalog:** Supports **Hive** tables.
-- **Delta Lake Catalog:** Supports **Delta** tables.
-- **Hudi Catalog:** Supports **Hudi** tables.
+- **Iceberg Catalog:** поддерживает таблицы **Iceberg**.
+- **Hive Catalog:** поддерживает таблицы **Hive**.
+- **Delta Lake Catalog:** поддерживает таблицы **Delta**.
+- **Hudi Catalog:** поддерживает таблицы **Hudi**.
 
-The plugin **automatically** detects the file format type based on the catalog specified in the configuration.
+Плагин **автоматически** определяет тип формата файлов на основе каталога, указанного в конфигурации.
 
-By specifying file format dbt models. For example:
+Формат файлов также можно указать непосредственно в dbt-моделях. Например:
 
 ```sql
 {{
@@ -86,42 +86,44 @@ By specifying file format dbt models. For example:
 }}
 ```
 
-**For more details**, refer to the [documentation.](https://spark.apache.org/docs/3.5.3/sql-ref-syntax.html#sql-syntax)
+**Дополнительную информацию** см. в [документации.](https://spark.apache.org/docs/3.5.3/sql-ref-syntax.html#sql-syntax)
 
-## Seeds and prepared statements
-You can configure column data types either in the dbt_project.yml file or in property files, as supported by dbt. For more details on seed configuration and best practices, refer to the [dbt seed configuration documentation](/reference/seed-configs).
+## Seeds и подготовленные выражения (prepared statements)
+
+Вы можете настраивать типы данных столбцов либо в файле `dbt_project.yml`, либо в property-файлах, в зависимости от поддерживаемых dbt возможностей. Подробнее о конфигурации seed-данных и лучших практиках см. в [документации по настройке dbt seeds](/reference/seed-configs).
 
 
-## Materializations
-The `dbt-watsonx-spark` adapter supports table materializations, allowing you to manage how your data is stored and queried in watsonx.data Spark.
+## Материализации
 
-For further information on configuring materializations, refer to the [dbt materializations documentation](/reference/resource-configs/materialized).
+Адаптер `dbt-watsonx-spark` поддерживает материализацию таблиц, позволяя управлять тем, как данные хранятся и запрашиваются в watsonx.data Spark.
 
-### Table
+Дополнительную информацию о настройке материализаций см. в [документации по материализациям dbt](/reference/resource-configs/materialized).
 
-The `dbt-watsonx-spark` adapter enables you to create and update tables through table materialization, making it easier to work with data in watsonx.data Spark.
+### Таблицы
 
-### View
+Адаптер `dbt-watsonx-spark` позволяет создавать и обновлять таблицы с помощью материализации `table`, что упрощает работу с данными в watsonx.data Spark.
 
-The adapter automatically creates views by default if no materialization is explicitly specified.
+### Представления
 
-### Incremental
+Если материализация явно не указана, адаптер по умолчанию автоматически создаёт представления (views).
 
-Incremental materialization is supported but requires additional configuration for partitioning and performance tuning.
+### Инкрементальные таблицы
 
-#### Recommendations
-- **Check Permissions:** Ensure that the necessary permissions for table creation are enabled in the catalog or schema.
-- **Check Connector Documentation:** Review watsonx.data Spark [data ingestion in watsonx.data](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=data-overview-ingestion) to ensure it supports table 
-creation and modification.
+Инкрементальная материализация поддерживается, но требует дополнительной настройки секционирования и оптимизации производительности.
 
-## Unsupported features
-Despite its extensive capabilities, the `dbt-watsonx-spark` adapter has some limitations:
+#### Рекомендации
+- **Проверьте права доступа:** убедитесь, что в каталоге или схеме включены необходимые права для создания таблиц.
+- **Изучите документацию коннектора:** ознакомьтесь с разделом watsonx.data Spark [data ingestion in watsonx.data](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=data-overview-ingestion), чтобы убедиться, что он поддерживает создание и изменение таблиц.
 
-- **Incremental Materialization**: Supported but requires additional configuration for partitioning and performance tuning.
-- **Materialized Views**: Not natively supported in Spark SQL within Watsonx.data.
-- **Snapshots**: Not supported due to Spark’s lack of built-in snapshot functionality.
-- **Performance Considerations**:
-  - Large datasets may require tuning of Spark configurations such as shuffle partitions and memory allocation.
-  - Some transformations may be expensive due to Spark’s in-memory processing model.
+## Неподдерживаемые возможности
 
-By understanding these capabilities and constraints, users can maximize the effectiveness of dbt with Watsonx.data Spark for scalable data transformations and analytics.
+Несмотря на широкие возможности, адаптер `dbt-watsonx-spark` имеет ряд ограничений:
+
+- **Incremental Materialization**: поддерживается, но требует дополнительной настройки секционирования и оптимизации производительности.
+- **Materialized Views**: нативно не поддерживаются в Spark SQL в Watsonx.data.
+- **Snapshots**: не поддерживаются из‑за отсутствия встроенного механизма snapshot в Spark.
+- **Производительность**:
+  - Для больших наборов данных может потребоваться настройка параметров Spark, таких как количество shuffle‑партиций и распределение памяти.
+  - Некоторые преобразования могут быть ресурсоёмкими из‑за in‑memory модели обработки Spark.
+
+Понимание этих возможностей и ограничений позволяет максимально эффективно использовать dbt с Watsonx.data Spark для масштабируемых преобразований данных и аналитики.

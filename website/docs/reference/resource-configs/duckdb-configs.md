@@ -1,12 +1,12 @@
 ---
-title: "DuckDB configurations"
+title: "Конфигурация DuckDB"
 id: "duckdb-configs"
 ---
 
 
-## Profile
+## Профиль
 
-<Constant name="cloud" /> users don't have to create their own profiles.yml file. dbt-duckdb [profiles](/docs/core/connect-data-platform/duckdb-setup#connecting-to-duckdb-with-dbt-duckdb) should be set up as follows:
+Пользователям <Constant name="cloud" /> не требуется создавать собственный файл `profiles.yml`. Профиль dbt-duckdb ([profiles](/docs/core/connect-data-platform/duckdb-setup#connecting-to-duckdb-with-dbt-duckdb)) должен быть настроен следующим образом:
 
 ```yml
 your_profile_name:
@@ -24,27 +24,29 @@ your_profile_name:
         s3_secret_access_key: "{{ env_var('S3_SECRET_ACCESS_KEY') }}"
 ```
 
-This will run your dbt-duckdb pipeline against an in-memory [DuckDB](https://www.duckdb.org) database that will not be persisted after your run completes.
+В таком виде ваш конвейер dbt-duckdb будет выполняться поверх базы данных [DuckDB](https://www.duckdb.org), работающей в памяти, и данные не будут сохранены после завершения запуска.
 
-To have your dbt pipeline persist relations in a DuckDB file, set the path field in your profile to the path of the DuckDB file that you would like to read and write on your local filesystem. (If the path is not specified, the path is automatically set to the special value `:memory:` and the database will run in-memory, without persistence).
-
-
-`dbt-duckdb` adds the `database` property: its value is automatically set to the basename of the file in the path argument with the suffix removed. For example, if the path is `/tmp/a/dbfile.duckdb`, the `database` field will be set to `dbfile`.
+Чтобы ваш конвейер dbt сохранял отношения (relations) в файле DuckDB, укажите параметр `path` в профиле — путь к файлу DuckDB, из которого вы хотите читать данные и в который хотите записывать их на локальной файловой системе. (Если путь не указан, он автоматически устанавливается в специальное значение `:memory:`, и база данных будет работать в памяти без сохранения данных на диск.)
 
 
-## Using MotherDuck
+`dbt-duckdb` добавляет свойство `database`: его значение автоматически устанавливается равным базовому имени файла, указанного в `path`, без суффикса. Например, если путь — `/tmp/a/dbfile.duckdb`, то поле `database` будет установлено в значение `dbfile`.
 
 
-As of `dbt-duckdb 1.5.2`, you can connect to a DuckDB instance running on [MotherDuck](https://motherduck.com) by setting your path to use an `md:` connection string, just as you would with the DuckDB CLI or the Python API.
-MotherDuck databases generally work the same way as local DuckDB databases from the perspective of dbt, but there are a few differences to be aware of:
-1. Currently, MotherDuck requires a specific version of DuckDB, often the latest, as specified in MotherDuck's documentation.
-1. MotherDuck preloads a set of the most common DuckDB extensions for you, but does not support loading custom extensions or user-defined functions.
-1. A small subset of advanced SQL features are currently unsupported; the only impact of this on the dbt adapter is that the dbt.listagg macro and foreign-key constraints will work against a local DuckDB database, but will not work against a MotherDuck database.
+## Использование MotherDuck
 
-## Extensions
-You can load any supported [DuckDB extensions](https://duckdb.org/docs/extensions/overview) by listing them in the `extensions` field in your profile. You can also set any additional [DuckDB configuration options](https://duckdb.org/docs/sql/configuration) via the `settings` field, including options that are supported in any loaded extensions.
+Начиная с версии `dbt-duckdb 1.5.2`, вы можете подключаться к экземпляру DuckDB, работающему в [MotherDuck](https://motherduck.com), указав в `path` строку подключения с префиксом `md:`, так же как это делается в DuckDB CLI или Python API.
 
-As of `dbt-duckdb 1.4.1`, (experimental) support was added for DuckDB's filesystems implemented via `fsspec`. The fsspec library provides support for reading and writing files from a variety of cloud data storage systems including S3, GCS, and Azure Blob Storage. You can configure a list of fsspec-compatible implementations for use with your `dbt-duckdb` project by installing the relevant Python modules and configuring your profile like so:
+С точки зрения dbt базы данных MotherDuck в целом работают так же, как и локальные базы DuckDB, однако есть несколько отличий, о которых следует помнить:
+
+1. В настоящее время MotherDuck требует использования определённой версии DuckDB, зачастую самой новой, как указано в документации MotherDuck.
+1. MotherDuck заранее загружает набор наиболее распространённых расширений DuckDB, но не поддерживает загрузку пользовательских расширений или пользовательских функций.
+1. Небольшая часть продвинутых возможностей SQL пока не поддерживается; для адаптера dbt это означает, что макрос `dbt.listagg` и ограничения внешних ключей будут работать с локальной базой DuckDB, но не будут работать с базой MotherDuck.
+
+## Расширения
+
+Вы можете загружать любые поддерживаемые [расширения DuckDB](https://duckdb.org/docs/extensions/overview), перечислив их в поле `extensions` вашего профиля. Также можно задавать любые дополнительные [параметры конфигурации DuckDB](https://duckdb.org/docs/sql/configuration) через поле `settings`, включая параметры, поддерживаемые загруженными расширениями.
+
+Начиная с версии `dbt-duckdb 1.4.1`, была добавлена (экспериментальная) поддержка файловых систем DuckDB, реализованных через `fsspec`. Библиотека fsspec предоставляет возможность чтения и записи файлов в различных облачных хранилищах данных, включая S3, GCS и Azure Blob Storage. Вы можете настроить список совместимых с fsspec реализаций для использования в вашем проекте `dbt-duckdb`, установив соответствующие Python-модули и настроив профиль следующим образом:
 
 ```yml
 default:
@@ -62,11 +64,11 @@ default:
   target: dev
 ```
 
-Here, the filesystems property takes a list of configurations, where each entry must have a property named `fs` that indicates which fsspec protocol to load (for example, s3, gcs, abfs) and then an arbitrary set of other key-value pairs that are used to configure the fsspec implementation. Refer to [this example project](https://dagster.io/blog/duckdb-data-lake) that illustrates the usage of this feature to connect to a localstack instance running S3 from dbt-duckdb.
+Здесь свойство `filesystems` принимает список конфигураций, где каждая запись должна содержать свойство `fs`, указывающее, какой протокол fsspec необходимо загрузить (например, `s3`, `gcs`, `abfs`), а также произвольный набор пар ключ–значение для настройки конкретной реализации fsspec. См. [пример проекта](https://dagster.io/blog/duckdb-data-lake), демонстрирующий использование этой возможности для подключения из dbt-duckdb к экземпляру localstack с запущенным S3.
 
 ## Secret Manager
 
-To use the [DuckDB Secrets Manager](https://duckdb.org/docs/configuration/secrets_manager.html), you can use the secrets field. For example, to connect to S3 and read/write Parquet files using an AWS access key and secret, your profile should look something like this:
+Для использования [DuckDB Secrets Manager](https://duckdb.org/docs/configuration/secrets_manager.html) можно воспользоваться полем `secrets`. Например, чтобы подключиться к S3 и читать/записывать файлы Parquet с использованием ключа и секрета доступа AWS, профиль может выглядеть следующим образом:
 
 ```yml
 default:
@@ -85,9 +87,9 @@ default:
   target: dev
 ```
 
-### Fetching credentials from context
+### Получение учётных данных из контекста
 
-Instead of specifying the credentials through the settings block, you can also use the `credential_chain` secret provider. This means that you can use any supported mechanism from AWS to obtain credentials (for example, web identity tokens). To use the `credential_chain` provider and automatically fetch credentials from AWS, specify the provider in the secrets key:
+Вместо явного указания учётных данных через блок `settings` вы также можете использовать провайдер секретов `credential_chain`. Это позволяет применять любой поддерживаемый AWS механизм получения учётных данных (например, web identity tokens). Чтобы использовать провайдер `credential_chain` и автоматически получать учётные данные из AWS, укажите его в разделе `secrets`:
 
 ```yml
 default:
@@ -104,9 +106,9 @@ default:
   target: dev
 ```
 
-## Attaching Additional Databases
+## Подключение дополнительных баз данных
 
-DuckDB version `0.7.0` added support for [attaching additional databases](https://duckdb.org/docs/sql/statements/attach.html) to your `dbt-duckdb` run so that you can read and write from multiple databases. Additional databases may be configured using [dbt run hooks](/docs/build/hooks-operations) or via the attach argument in your profile that was added in `dbt-duckdb 1.4.0`:
+В версии DuckDB `0.7.0` была добавлена поддержка [подключения дополнительных баз данных](https://duckdb.org/docs/sql/statements/attach.html) к запуску `dbt-duckdb`, что позволяет читать и записывать данные в несколько баз данных. Дополнительные базы данных можно настроить с помощью [хуков dbt run](/docs/build/hooks-operations) или через аргумент `attach` в профиле, добавленный в `dbt-duckdb 1.4.0`:
 
 ```yml
 default:
@@ -124,25 +126,26 @@ default:
           type: sqlite
 ```
 
-The attached databases may be referred to in your dbt sources and models by either:
+К подключённым базам данных можно обращаться в dbt sources и моделях двумя способами:
 
--  The basename of the database file, minus its suffix (for example `/tmp/other.duckdb` is the other database and `s3://yep/even/this/works.duckdb` is the works database). 
+- по базовому имени файла базы данных без суффикса (например, `/tmp/other.duckdb` будет базой `other`, а `s3://yep/even/this/works.duckdb` — базой `works`);
 
-or 
+или
 
-- By an alias you specify (the `./yet/another.duckdb` database in the above configuration is referred to as `yet_another` instead of another). 
+- по заданному вами алиасу (в приведённой конфигурации база `./yet/another.duckdb` будет доступна как `yet_another`, а не `another`).
 
-Note, these additional databases do not necessarily have to be DuckDB files. DuckDB's storage and catalog engines are pluggable. Additionally, DuckDB 0.7.0 ships with support for reading and writing from attached SQLite databases. You can indicate the type of the database you are connecting to via the type argument, which currently supports duckdb and sqlite.
+Обратите внимание, что дополнительные базы данных не обязательно должны быть файлами DuckDB. Механизмы хранения и каталога DuckDB являются расширяемыми. Кроме того, DuckDB 0.7.0 включает поддержку чтения и записи подключённых баз данных SQLite. Тип базы данных, к которой вы подключаетесь, можно указать с помощью аргумента `type`, который в настоящее время поддерживает значения `duckdb` и `sqlite`.
 
-## Plugins
+## Плагины
 
-`dbt-duckdb` has its own [plugin](https://github.com/duckdb/dbt-duckdb/blob/master/dbt/adapters/duckdb/plugins/__init__.py) system to enable advanced users to extend dbt-duckdb with additional functionality, including:
-- Defining custom Python UDFs on the DuckDB database connection so that they can be used in your SQL models.
-- Loading source data from Excel, Google Sheets, or SQLAlchemy tables.
+`dbt-duckdb` имеет собственную систему [плагинов](https://github.com/duckdb/dbt-duckdb/blob/master/dbt/adapters/duckdb/plugins/__init__.py), которая позволяет опытным пользователям расширять функциональность dbt-duckdb, в том числе:
 
-You can find more details on [Writing Your Own Plugins](https://github.com/duckdb/dbt-duckdb#writing-your-own-plugins). 
+- определять пользовательские Python UDF на соединении с базой данных DuckDB, чтобы использовать их в SQL-моделях;
+- загружать исходные данные из Excel, Google Sheets или таблиц SQLAlchemy.
 
-To configure a plugin for use in your dbt project, use the `plugins` property on the profile:
+Подробности см. в разделе [Writing Your Own Plugins](https://github.com/duckdb/dbt-duckdb#writing-your-own-plugins).
+
+Чтобы настроить плагин для использования в проекте dbt, укажите свойство `plugins` в профиле:
 
 ```yml
 default:
@@ -161,28 +164,28 @@ default:
         - module: path.to.custom_udf_module
 ```
 
-Every plugin must have a module property that indicates where the plugin class to load is defined. There are a [set of built-in plugins](https://github.com/duckdb/dbt-duckdb/blob/master/dbt/adapters/duckdb/plugins) you can define, that may be referenced by their base filename (`excel` or `gsheet`), while user-defined plugins (which are described later in this document) should be referred to by their full module path name (such as, a `lib.my.custom` module that defines a class named plugin.)
+Каждый плагин должен иметь свойство `module`, указывающее, где определён класс плагина для загрузки. Существует [набор встроенных плагинов](https://github.com/duckdb/dbt-duckdb/blob/master/dbt/adapters/duckdb/plugins), на которые можно ссылаться по имени базового файла (`excel` или `gsheet`), в то время как пользовательские плагины (описанные далее в документе) должны указываться по полному пути модуля (например, модуль `lib.my.custom`, определяющий класс с именем `plugin`).
 
-Each plugin instance has a name for logging and reference purposes that defaults to the name of the module but that may be overridden by the user by setting the alias property in the configuration. Finally, modules may be initialized using an arbitrary set of key-value pairs that are defined in the config dictionary. In this example, the gsheet plugin is initialized with the setting method: oauth and the `sqlalchemy` plugin (aliased as "sql") is initialized with a `connection_url` that is set as an environment variable.
+Каждый экземпляр плагина имеет имя, используемое для логирования и ссылок, которое по умолчанию совпадает с именем модуля, но может быть переопределено пользователем с помощью свойства `alias`. Кроме того, модули могут инициализироваться произвольным набором пар ключ–значение, определённых в словаре `config`. В данном примере плагин `gsheet` инициализируется с параметром `method: oauth`, а плагин `sqlalchemy` (с алиасом `sql`) — с параметром `connection_url`, значение которого задаётся через переменную окружения.
 
-Note, using plugins may require you to add additional dependencies to the Python environment that your dbt-duckdb pipeline runs in:
+Обратите внимание, что использование плагинов может потребовать добавления дополнительных зависимостей в Python-среду, в которой выполняется конвейер dbt-duckdb:
 
-- `excel` depends on `pandas`, and `openpyxl` or `xlsxwriter` to perform writes
-- `gsheet` depends on `gspread` and `pandas`
-- `iceberg` depends on `pyiceberg` and `Python >= 3.8`
-- `sqlalchemy` depends on `pandas`, `sqlalchemy`, and the driver(s) you need
+- `excel` зависит от `pandas` и `openpyxl` или `xlsxwriter` для записи файлов;
+- `gsheet` зависит от `gspread` и `pandas`;
+- `iceberg` зависит от `pyiceberg` и `Python >= 3.8`;
+- `sqlalchemy` зависит от `pandas`, `sqlalchemy` и необходимых драйверов.
 
-## Python Support
+## Поддержка Python
 
-dbt added support for [Python models](/docs/build/python-models) in version `1.3.0`. For most data platforms, dbt will package up the Python code defined in a `.py` file and ship it off to be executed in whatever Python environment that data platform supports (for example, Snowpark for Snowflake or Dataproc for BigQuery). 
+Поддержка [Python-моделей](/docs/build/python-models) была добавлена в dbt в версии `1.3.0`. Для большинства платформ данных dbt упаковывает Python-код, определённый в файле `.py`, и отправляет его на выполнение в ту Python-среду, которую поддерживает соответствующая платформа (например, Snowpark для Snowflake или Dataproc для BigQuery).
 
-In `dbt-duckdb`, Python models are executed in the same process that owns the connection to the DuckDB database, which by default, is the Python process that is created when you run dbt. To execute the Python model, the `.py` file that your model is defined in is teated as a Python module and loaded into the running process using [`importlib`](https://docs.python.org/3/library/importlib.html). Then construct the arguments to the model function that you defined (a dbt object that contains the names of any ref and source information your model needs and a `DuckDBPyConnection` object for you to interact with the underlying DuckDB database), call the model function, and then materialize the returned object as a table in DuckDB.
+В `dbt-duckdb` Python-модели выполняются в том же процессе, который владеет соединением с базой данных DuckDB; по умолчанию это Python-процесс, создаваемый при запуске dbt. Для выполнения Python-модели файл `.py`, в котором она определена, рассматривается как Python-модуль и загружается в работающий процесс с помощью [`importlib`](https://docs.python.org/3/library/importlib.html). Затем формируются аргументы для определённой вами функции модели (объект `dbt`, содержащий имена всех `ref` и `source`, необходимых модели, а также объект `DuckDBPyConnection` для взаимодействия с базой DuckDB), вызывается функция модели, после чего возвращаемый объект материализуется в виде таблицы в DuckDB.
 
-The value of the `dbt.ref` and `dbt.source` functions inside of a Python model will be a [DuckDB Relation](https://duckdb.org/docs/api/python/reference/) object that can be easily converted into a Pandas/Polars DataFrame or an Arrow table. The return value of the model function can be any Python object that DuckDB knows how to turn into a table, including a Pandas/Polars DataFrame, a DuckDB Relation, or an Arrow Table, Dataset, RecordBatchReader, or Scanner.
+Значения функций `dbt.ref` и `dbt.source` внутри Python-модели будут объектами типа [DuckDB Relation](https://duckdb.org/docs/api/python/reference/), которые легко преобразуются в DataFrame Pandas/Polars или в таблицу Arrow. Возвращаемое значение функции модели может быть любым Python-объектом, который DuckDB умеет преобразовывать в таблицу, включая DataFrame Pandas/Polars, DuckDB Relation или Arrow Table, Dataset, RecordBatchReader или Scanner.
 
-### Batch Processing
+### Пакетная обработка
 
-As of version 1.6.1, it is possible to both read and write data in chunks, which allows for larger-than-memory datasets to be manipulated in Python models. Here is a basic example:
+Начиная с версии `1.6.1`, появилась возможность читать и записывать данные порциями (chunks), что позволяет обрабатывать в Python-моделях наборы данных, превышающие объём доступной памяти. Ниже приведён базовый пример:
 
 ```py
 import pyarrow as pa
@@ -201,17 +204,17 @@ def model(dbt, session):
     return pa.RecordBatchReader.from_batches(batch_reader.schema, batch_iter)
 ```
 
-### Using Local Python Modules
+### Использование локальных Python‑модулей
 
-In `dbt-duckdb 1.6.0`, the profile setting `module_paths` was added which allows users to specify a list of paths on the file system that contain additional Python modules that should be added to the Python processes' `sys.path` property. This allows users to include additional helper Python modules in their dbt projects that can be accessed by running the dbt process and used to define custom dbt-duckdb plugins or library code that is helpful for creating dbt Python models.
+В `dbt-duckdb 1.6.0` была добавлена настройка профиля `module_paths`, которая позволяет указать список путей в файловой системе, содержащих дополнительные Python-модули, которые должны быть добавлены в свойство `sys.path` Python-процесса. Это позволяет включать в dbt-проекты вспомогательные Python-модули, доступные во время выполнения dbt, и использовать их для определения пользовательских плагинов dbt-duckdb или библиотечного кода, полезного при создании Python-моделей dbt.
 
-## External Files
+## Внешние файлы
 
-One of DuckDB's most powerful features is its ability to read and write CSV, JSON, and Parquet files directly, without needing to import/export them from the database first.
+Одной из самых мощных возможностей DuckDB является способность напрямую читать и записывать файлы CSV, JSON и Parquet без необходимости предварительного импорта или экспорта данных в базу данных.
 
-### Reading from external files
+### Чтение из внешних файлов
 
-You may reference external files in your dbt models either directly or as dbt sources by configuring the `external_location` in either the meta or the config option on the source definition. The difference is that the settings under the meta option will be propagated to the documentation for the source generated in dbt docs generate, but the settings under the config option will not be. Any source settings that should be excluded from the docs should be specified by the config, while any options that you would like to be included in the generated documentation should live under meta.
+Вы можете ссылаться на внешние файлы в dbt-моделях напрямую или как на dbt sources, настроив `external_location` либо в разделе `meta`, либо в опции `config` определения источника. Разница заключается в том, что настройки в разделе `meta` будут включены в документацию по источнику, сгенерированную командой `dbt docs generate`, тогда как настройки в разделе `config` — нет. Любые параметры источника, которые следует исключить из документации, нужно указывать в `config`, а те, которые вы хотите видеть в сгенерированной документации, — в `meta`.
 
 ```yml
 sources:
@@ -224,23 +227,23 @@ sources:
       - name: source2
 ```
 
-Here, the meta options on external_source defines `external_location` as an f-string that allows us to express a pattern that indicates the location of any of the tables defined for that source. 
+Здесь параметры `meta` у `external_source` определяют `external_location` как f-string, что позволяет задать шаблон расположения файлов для всех таблиц, определённых в этом источнике.
 
-So a dbt model like:
+Таким образом, dbt-модель:
 
 ```sql
 SELECT *
 FROM {{ source('external_source', 'source1') }}
 ```
 
-will be compiled as:
+будет скомпилирована как:
 
 ```sql
 SELECT *
 FROM 's3://my-bucket/my-sources/source1.parquet'
 ```
 
-If one of the source tables deviates from the pattern or needs some other special handling, then the `external_location` can also be set on the meta options for the table itself, for example:
+Если одна из таблиц источника отклоняется от этого шаблона или требует особой обработки, параметр `external_location` можно задать и на уровне самой таблицы в `meta`, например:
 
 ```yml
 sources:
@@ -255,23 +258,23 @@ sources:
           external_location: "read_parquet(['s3://my-bucket/my-sources/source2a.parquet', 's3://my-bucket/my-sources/source2b.parquet'])"
 ```
 
-In this situation, the `external_location` setting on the source2 table will take precedence. 
+В этом случае настройка `external_location` для таблицы `source2` будет иметь приоритет.
 
-A dbt model like:
+Соответственно, dbt-модель:
 
 ```sql
 SELECT *
 FROM {{ source('external_source', 'source2') }}
 ```
 
-will be compiled to the SQL query:
+будет скомпилирована в SQL-запрос:
 
 ```sql
 SELECT *
 FROM read_parquet(['s3://my-bucket/my-sources/source2a.parquet', 's3://my-bucket/my-sources/source2b.parquet'])
 ```
 
-Note that the value of the `external_location` property does not need to be a path-like string; it can also be a function call, which is helpful in the case that you have an external source that is a CSV file which requires special handling for DuckDB to load it correctly:
+Обратите внимание, что значение свойства `external_location` не обязательно должно быть строкой, похожей на путь; оно также может быть вызовом функции. Это полезно, например, если внешний источник — CSV-файл, который требует специальной обработки для корректной загрузки в DuckDB:
 
 ```yml
 sources:
@@ -283,13 +286,13 @@ sources:
           formatter: oldstyle
 ```
 
-Note, you will need to override the default `str.format` string formatting strategy for this example because the `types={'FlightDate': 'DATE'}` argument to the `read_csv` function will be interpreted by `str.format` as a template to be matched on. This will cause a `KeyError: "'FlightDate'"` when there's an attempt to parse the source in a dbt model. 
+Обратите внимание, что для этого примера необходимо переопределить стратегию форматирования строк по умолчанию (`str.format`), поскольку аргумент `types={'FlightDate': 'DATE'}` функции `read_csv` будет интерпретирован `str.format` как шаблон. Это приведёт к ошибке `KeyError: "'FlightDate'"` при попытке разобрать источник в dbt-модели.
 
-The formatter configuration option for the source indicates whether you should use newstyle string formatting (the default), oldstyle string formatting, or template string formatting. 
+Параметр `formatter` в конфигурации источника указывает, какую стратегию форматирования строк следует использовать: newstyle (по умолчанию), oldstyle или template string.
 
-You can read up on the strategies for different string formatting techniques and find examples, in this [discussion of dbt-duckdb's integration test](https://stackoverflow.com/questions/78821149/formatting-strings-in-dask-duckdb).
+Подробнее о различных стратегиях форматирования строк и примеры можно найти в этом [обсуждении интеграционного теста dbt-duckdb](https://stackoverflow.com/questions/78821149/formatting-strings-in-dask-duckdb).
 
-You can also create dbt models that are backed by external files via the external materialization strategy:
+Вы также можете создавать dbt-модели, основанные на внешних файлах, используя стратегию материализации `external`:
 
 ```sql 
 {{
@@ -302,31 +305,30 @@ LEFT JOIN {{ source('upstream', 'source') }} s USING (id)
 ```
 
 
-| Option | Default | Description |
+| Опция | По умолчанию | Описание |
 | --- | --- | --- |
-| location | `external_location` macro | The path to write the external materialization to. See below for more details. |
-| format | parquet |The format of the external file |(parquet, CSV, or JSON).
-| delimiter | , | For CSV files, the delimiter to use for fields. |
-| options | None | Any other options to pass to DuckDB's COPY operation (for example partition_by, codec, etc). |
-| `glue_register` | false | If true, try to register the file created by this model with the AWS Glue Catalog. |
-| `glue_database` | default | The name of the AWS Glue database to register the model with. |
+| location | `external_location` macro | Путь, по которому будет записана внешняя материализация. Подробнее см. ниже. |
+| format | parquet | Формат внешнего файла (parquet, CSV или JSON). |
+| delimiter | , | Для CSV-файлов — разделитель полей. |
+| options | None | Любые дополнительные параметры для операции COPY DuckDB (например, `partition_by`, `codec` и т. д.). |
+| `glue_register` | false | Если true, попытаться зарегистрировать файл, созданный этой моделью, в AWS Glue Catalog. |
+| `glue_database` | default | Имя базы данных AWS Glue, в которой будет зарегистрирована модель. |
 
 
-If the location argument is specified, it must be a filename (or S3 bucket/path), and `dbt-duckdb` will attempt to infer the format argument from the file extension of the location if the format argument is unspecified (this functionality was added in version 1.4.1.)
+Если аргумент `location` указан, он должен быть именем файла (или S3 bucket/path), и `dbt-duckdb` попытается определить аргумент `format` по расширению файла в `location`, если `format` не указан (эта возможность была добавлена в версии `1.4.1`).
 
-If the location argument is not specified, then the external file will be named after the `model.sql` (or `model.py`) file that defined it with an extension that matches the format argument (parquet, CSV, or JSON). By default, the external files are created relative to the current working directory, but you can change the default directory (or S3 bucket/prefix) by specifying the `external_root` setting in your DuckDB profile.
+Если аргумент `location` не указан, внешний файл будет назван по имени файла `model.sql` (или `model.py`), в котором он определён, с расширением, соответствующим аргументу `format` (parquet, CSV или JSON). По умолчанию внешние файлы создаются относительно текущего рабочего каталога, но вы можете изменить каталог по умолчанию (или S3 bucket/prefix), указав настройку `external_root` в профиле DuckDB.
 
 
-`dbt-duckdb` supports the `delete+insert` and `append` [strategies](/docs/build/incremental-strategy#built-in-strategies) for incremental table models, but there's no support for incremental materialization strategies for external models.
+`dbt-duckdb` поддерживает стратегии [incremental](/docs/build/incremental-strategy#built-in-strategies) `delete+insert` и `append` для инкрементальных табличных моделей, однако для внешних моделей стратегии инкрементальной материализации не поддерживаются.
 
-### Registering External Models
+### Регистрация внешних моделей
 
-When using `:memory:` as the DuckDB database, subsequent dbt runs can fail when selecting a subset of models that depend on external tables. This is because external files are only registered as DuckDB views when they are created, not when they are referenced. To overcome this issue, use the `register_upstream_external_models` macro that can be triggered at the beginning of a run. To enable this automatic registration, place the following in your `dbt_project.yml` file:
+При использовании `:memory:` в качестве базы данных DuckDB последующие запуски dbt могут завершаться ошибками при выборе подмножества моделей, зависящих от внешних таблиц. Это связано с тем, что внешние файлы регистрируются как представления DuckDB только в момент их создания, а не при обращении к ним. Чтобы решить эту проблему, используйте макрос `register_upstream_external_models`, который можно запускать в начале выполнения.
 
+Чтобы включить автоматическую регистрацию, добавьте следующее в файл `dbt_project.yml`:
 
 ```yml
 on-run-start:
   - "{{ register_upstream_external_models() }}"
 ```
-
-

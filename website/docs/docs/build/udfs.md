@@ -1,23 +1,23 @@
 ---
-title: "User-defined functions"
-description: "Learn how to add user-defined functions (UDFs) to your dbt projects."
+title: "Пользовательские функции"
+description: "Узнайте, как добавлять пользовательские функции (UDF) в ваши dbt‑проекты."
 id: "udfs"
 ---
 
-# User-defined functions
+# Пользовательские функции (User-defined functions)
 
-User-defined functions (UDFs) enable you to define and register custom functions in your warehouse. Like [macros](/docs/build/jinja-macros), UDFs promote code reuse, but they are objects in the warehouse so you can reuse the same logic in tools outside dbt, such as BI tools, data science notebooks, and more. 
+Пользовательские функции (UDF) позволяют определять и регистрировать собственные функции непосредственно в вашем хранилище данных. Подобно [макросам](/docs/build/jinja-macros), UDF способствуют повторному использованию кода, но в отличие от макросов они являются объектами в хранилище. Это означает, что одну и ту же логику можно использовать не только в dbt, но и в других инструментах — например, в BI-системах, ноутбуках для data science и т.д.
 
-UDFs are particularly valuable for sharing logic across multiple tools, standardizing complex business calculations, improving performance for compute-intensive operations (since they're compiled and optimized by your warehouse's query engine), and version controlling custom logic within your dbt project.
+UDF особенно полезны для переиспользования логики в нескольких инструментах, стандартизации сложных бизнес‑расчётов, повышения производительности вычислительно тяжёлых операций (поскольку они компилируются и оптимизируются движком запросов вашего хранилища), а также для контроля версий кастомной логики внутри вашего dbt‑проекта.
 
-dbt creates, updates, and renames UDFs as part of DAG execution. The UDF is built in the warehouse before the model that references it. Refer to [listing and building UDFs](/docs/build/udfs#listing-and-building-udfs) for more info on how to build UDFs in your project.
+dbt создаёт, обновляет и переименовывает UDF в процессе выполнения DAG. UDF создаётся в хранилище до той модели, которая на него ссылается. Подробнее о том, как dbt строит UDF в проекте, см. [listing and building UDFs](/docs/build/udfs#listing-and-building-udfs).
 
-Refer to [Function properties](/reference/function-properties) or [Function configurations](/reference/function-configs) for more information on the configs/properties for UDFs.
+Дополнительную информацию о конфигурациях и свойствах UDF см. в разделах [Function properties](/reference/function-properties) и [Function configurations](/reference/function-configs).
 
-## Prerequisites
+## Предварительные требования
 
-* Make sure you're using dbt platform's **Latest Fusion** or **Latest** [release track](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.11.
-* Use one of the following adapters:
+* Убедитесь, что вы используете **Latest Fusion** или **Latest** [release track](/docs/dbt-versions/cloud-release-tracks) платформы dbt либо dbt Core версии v1.11.
+* Используйте один из следующих адаптеров:
 
 	<Tabs>
 	
@@ -42,26 +42,26 @@ Refer to [Function properties](/reference/function-properties) or [Function conf
 	</Tabs>
 
 :::important UDF support
-When developing UDFs, it's important to understand the following support limitations:
+При разработке UDF важно учитывать следующие ограничения поддержки:
 
-- Python UDFs aren't yet supported in <Constant name="fusion" />.
-- Additional languages (for example, Java, JavaScript, Scala) aren't currently supported.
+- Python UDF пока не поддерживаются в <Constant name="fusion" />.
+- Дополнительные языки (например, Java, JavaScript, Scala) в настоящий момент не поддерживаются.
 
-See the [Limitations](#limitations) section below for the full list of currently supported UDF capabilities.
+Полный список поддерживаемых возможностей UDF см. в разделе [Limitations](#limitations) ниже.
 :::
 
-## Defining UDFs in dbt
+## Определение UDF в dbt
 
-You can define SQL and Python UDFs in dbt. Python UDFs are currently supported in Snowflake and BigQuery when using <Constant name="core" />. 
+В dbt можно определять UDF на SQL и Python. Python UDF в настоящее время поддерживаются в Snowflake и BigQuery при использовании <Constant name="core" />.
 
-Follow these steps to define UDFs in dbt:
+Выполните следующие шаги, чтобы определить UDF в dbt:
 
-1. Create a SQL or Python file under the `functions` directory. For example, this UDF checks if a string represents a positive integer:
+1. Создайте SQL‑ или Python‑файл в каталоге `functions`. Например, следующая UDF проверяет, представляет ли строка положительное целое число:
 
     <Tabs>
 
     <TabItem value="SQL">
-    Define a SQL UDF in a SQL file.
+    Определение SQL UDF в SQL‑файле.
 
     <File name='functions/is_positive_int.sql'>
 
@@ -76,10 +76,9 @@ Follow these steps to define UDFs in dbt:
 
     </File>
 
-
     </TabItem>
     <TabItem value="Python">
-    Define a Python UDF in a Python file. 
+    Определение Python UDF в Python‑файле.
 
     <File name='functions/is_positive_int.py'>
 
@@ -93,9 +92,9 @@ Follow these steps to define UDFs in dbt:
     </TabItem>
     </Tabs>
 
-    **Note**: You can specify configs in a config block in the SQL file or in the corresponding properties YAML file in next step (Step 2). 
+    **Примечание**: конфигурации можно указать либо в config‑блоке SQL‑файла, либо в соответствующем YAML‑файле со свойствами на следующем шаге (шаг 2).
 
-2. Specify the function name and define the config, properties, return type, and optional arguments in a corresponding properties YAML file. For example:
+2. Укажите имя функции и задайте конфигурации, свойства, тип возвращаемого значения и (опционально) аргументы в соответствующем YAML‑файле со свойствами. Например:
 
     <Tabs>
     <TabItem value="SQL">
@@ -121,16 +120,16 @@ Follow these steps to define UDFs in dbt:
     </File>
     </TabItem>
 
-    <!--other types not yet supported
-    <Expandable alt_header="Supported UDF types">
+    <!--другие типы пока не поддерживаются
+    <Expandable alt_header="Поддерживаемые типы UDF">
 
-    You can use these values for the `type` property when you define a function in a properties YAML file.
+    Вы можете использовать эти значения для свойства `type`, когда определяете функцию в properties YAML‑файле.
 
-    - `scalar` - Returns a single value per row
-    - `aggregate` - Returns a single value per group, aggregating several rows
-    - `table` - Returns a table result
+    - `scalar` - Возвращает одно значение на строку
+    - `aggregate` - Возвращает одно значение на группу, агрегируя несколько строк
+    - `table` - Возвращает табличный результат
     <br></br>
-    For example:
+    Например:
 
     ```yml
     functions:
@@ -140,68 +139,67 @@ Follow these steps to define UDFs in dbt:
 	      type: scalar # default value
     ```
 
-    If not explicitly specified, the `type` config defaults to `scalar`.
+    Если не указано явно, конфигурация `type` по умолчанию равна `scalar`.
 
     </Expandable>
     -->
-    
+
     <TabItem value="Python">
     
-    The following configs are required when defining a Python UDF: 
+    При определении Python UDF требуются следующие конфигурации:
 
-    - [`runtime_version`](/reference/resource-configs/runtime-version) &mdash; Specify the Python version to run. Supported values are:
-      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
+    - [`runtime_version`](/reference/resource-configs/runtime-version) — версия Python, в которой будет выполняться код. Поддерживаемые значения:
+      - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, `3.13`
       - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
-    - [`entry_point`](/reference/resource-configs/entry-point) &mdash; Specify the Python function to be called.
+    - [`entry_point`](/reference/resource-configs/entry-point) — имя Python‑функции, которая будет вызываться.
 
-    
-    For example:
+    Пример:
 
     <File name='functions/schema.yml'>
 
     ```yml
       functions:
-        - name: is_positive_int # required
-          description: My UDF that returns 1 if a string represents a naked positive integer (like "10", "+8" is not allowed). # optional
+        - name: is_positive_int # обязательно
+          description: Моя UDF, которая возвращает 1, если строка представляет собой «чистое» положительное целое число (например, "10"; "+8" не допускается). # optional
           config:
-            runtime_version: "3.11"   # required
-            entry_point: main         # required
+            runtime_version: "3.11"   # обязательно
+            entry_point: main         # обязательно
             schema: udf_schema
             database: udf_db
             volatility: deterministic  
-          arguments:                   # optional
-            - name: a_string           # required if arguments is specified
-              data_type: string        # required if arguments is specified
-              description: The string that I want to check if it's representing a positive integer (like "10")
-              default_value: "'1'"     # optional, available in Snowflake and Postgres
-          returns:                     # required
-            data_type: integer         # required
+          arguments:                   # опционально
+            - name: a_string           # обязательно, если указан arguments
+              data_type: string        # обязательно, если указан arguments
+              description: Строка, по которой я хочу проверить, что она представляет положительное целое число (например, "10")
+              default_value: "'1'"     # опционально; доступно в Snowflake и Postgres
+          returns:                     # обязательно
+            data_type: integer         # обязательно
     ```
     </File>
     </TabItem>
     </Tabs>
 
-    :::info volatility warehouse-specific
-   	Something to note is that `volatility` is accepted in dbt for both SQL and Python UDFs, but the handling of it is warehouse-specific. BigQuery ignores `volatility` and dbt displays a warning. In Snowflake, `volatility` is applied when creating the UDF. Refer to [volatility](/reference/resource-configs/volatility) for more information.
+    :::info volatility зависит от хранилища данных
+    Обратите внимание, что параметр `volatility` принимается dbt как для SQL‑, так и для Python‑UDF, но его обработка зависит от хранилища. BigQuery игнорирует `volatility`, и dbt выводит предупреждение. В Snowflake `volatility` применяется при создании UDF. Подробнее см. в разделе [volatility](/reference/resource-configs/volatility).
     :::
 
-3. Run one of the following `dbt build` commands to build your UDFs and create them in the warehouse:
+3. Выполните одну из следующих команд `dbt build`, чтобы собрать UDF и создать их в хранилище:
 
-    Build all UDFs:
-    
+    Сборка всех UDF:
+
     ```bash
     dbt build --select "resource_type:function"
     ```
 
-    Or build a specific UDF:
+    Или сборка конкретной UDF:
 
     ```bash
     dbt build --select is_positive_int
     ```
 
-     When you run `dbt build`, both the `functions/schema.yml` file and the corresponding SQL or Python file (for example, `functions/is_positive_int.sql` or `functions/is_positive_int.py`) work together to generate the `CREATE FUNCTION` statement.
-     
-     The rendered `CREATE FUNCTION` statement depends on which adapter you're using. For example:
+    При выполнении `dbt build` файл `functions/schema.yml` и соответствующий SQL‑ или Python‑файл (например, `functions/is_positive_int.sql` или `functions/is_positive_int.py`) совместно используются для генерации оператора `CREATE FUNCTION`.
+
+    Сгенерированный оператор `CREATE FUNCTION` зависит от используемого адаптера. Например:
 
     <Tabs>
 
@@ -304,7 +302,7 @@ Follow these steps to define UDFs in dbt:
     </TabItem>
     </Tabs>
 
-4. Reference the UDF in a model using the `{{ function(...) }}` macro. For example:
+4. Используйте UDF в модели с помощью макроса `{{ function(...) }}`. Например:
 
     <File name="models/my_model.sql">
 
@@ -316,7 +314,7 @@ Follow these steps to define UDFs in dbt:
     ```
     </File>
 
-5. Run `dbt compile` to see how the UDF is referenced. In the following example, the `{{ function('is_positive_int') }}` is replaced by the UDF name `udf_db.udf_schema.is_positive_int`.
+5. Выполните `dbt compile`, чтобы увидеть, как UDF подставляется в скомпилированный SQL. В следующем примере `{{ function('is_positive_int') }}` заменяется на имя UDF `udf_db.udf_schema.is_positive_int`.
 
     <File name="models/my_model.sql">
 
@@ -328,28 +326,28 @@ Follow these steps to define UDFs in dbt:
     ```
     </File>
 
-    In your DAG, a UDF node is created from the SQL/Python and YAML definitions, and there will be a dependency between `is_positive_int` → `my_model`.
-   <Lightbox src="/img/docs/building-a-dbt-project/UDF-DAG.png" width="85%" title="The DAG for the UDF node" />
+    В DAG создаётся узел UDF на основе SQL/Python‑файла и YAML‑описания, и появляется зависимость `is_positive_int` → `my_model`.
 
-After defining a UDF, if you update the SQL/Python file that contains its function body (`is_positive_int.sql` or `is_positive_int.py` in this example) or its configurations, your changes will be applied to the UDF in the warehouse next time you `build`.
+   <Lightbox src="/img/docs/building-a-dbt-project/UDF-DAG.png" width="85%" title="DAG для узла UDF" />
 
+После определения UDF, если вы обновите SQL‑ или Python‑файл с телом функции либо её конфигурации, изменения будут применены к UDF в хранилище при следующем запуске `build`.
 
-## Using UDFs in unit tests
+## Использование UDF в unit‑тестах
 
-You can use [unit tests](/docs/build/unit-tests) to validate models that reference UDFs. Before running unit tests, make sure the function exists in your warehouse. To ensure that the function exists for a unit test, run:
+Вы можете использовать [unit tests](/docs/build/unit-tests) для проверки моделей, которые ссылаются на UDF. Перед запуском unit‑тестов убедитесь, что функция существует в хранилище. Чтобы гарантировать это для unit‑теста, выполните:
 
 ```bash
 dbt build --select "+my_model_to_test" --empty
 ```
 
-Following the example in [Defining UDFs in dbt](#defining-udfs-in-dbt), here's an example of a unit test that validates a model that calls a UDF:
+Следуя примеру из раздела [Определение UDF в dbt](#определение-udfs-в-dbt), ниже приведён пример unit‑теста, который проверяет модель, вызывающую UDF:
 
 <File name="tests/test_is_positive_int.yml">
 
 ```yml
 unit_tests:
   - name: test_is_positive_int 
-    description: "Check my is_positive_int logic captures edge cases"
+    description: "Проверьте, что моя логика is_positive_int учитывает крайние случаи"
     model: my_model
     given:
       - input: ref('a_model_i_like')
@@ -367,20 +365,23 @@ unit_tests:
 ```
 </File>
 
-## Listing and building UDFs
+## Просмотр и сборка UDF
 
-Use the [`list` command](/reference/commands/list#listing-functions) to list UDFs in your project: `dbt list --select "resource_type:function"` or `dbt list --resource-type function`.
+Используйте команду [`list`](/reference/commands/list#listing-functions), чтобы вывести список UDF в проекте:  
+`dbt list --select "resource_type:function"` или `dbt list --resource-type function`.
 
-Use the [`build` command](/reference/commands/build#functions) to select UDFs when building a project: `dbt build --select "resource_type:function"`.
+Используйте команду [`build`](/reference/commands/build#functions), чтобы выбирать UDF при сборке проекта:  
+`dbt build --select "resource_type:function"`.
 
-For more information about selecting UDFs, see the examples in [Node selector methods](/reference/node-selection/methods#file).
+Подробнее о выборе UDF см. в примерах в разделе [Node selector methods](/reference/node-selection/methods#file).
 
-## Limitations
-- Creating UDFs in other languages (for example, Java, JavaScript, or Scala) is not yet supported. 
-- Creating Python UDFs are currently supported in Snowflake and BigQuery only. Other warehouses aren't yet supported.
-- Support for Python UDFs in <Constant name="fusion" /> is not yet available. Read the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements) for the latest updates.
-- Only <Term id="scalar">scalar</Term> and <Term id="aggregate">aggregate</Term> functions are currently supported. For more information, see [Supported function types](/reference/resource-configs/type#supported-function-types).
+## Ограничения
 
-## Related FAQs
+- Создание UDF на других языках (например, Java, JavaScript или Scala) пока не поддерживается.
+- Python UDF в настоящее время поддерживаются только в Snowflake и BigQuery. Другие хранилища пока не поддерживаются.
+- Поддержка Python UDF в <Constant name="fusion" /> пока недоступна. Актуальные обновления см. в [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements).
+- В настоящий момент поддерживаются только функции типов <Term id="scalar">scalar</Term> и <Term id="aggregate">aggregate</Term>. Подробнее см. в разделе [Supported function types](/reference/resource-configs/type#supported-function-types).
+
+## Связанные FAQ
 
 <FAQ path="Project/udfs-vs-macros" />

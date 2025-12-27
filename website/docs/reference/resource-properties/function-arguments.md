@@ -1,5 +1,5 @@
 ---
-title: arguments (for functions)
+title: arguments (для функций)
 sidebar_label: "arguments"
 id: function-arguments
 ---
@@ -14,56 +14,57 @@ functions:
   - name: <function name>
     arguments:
       - name: <arg name>
-        data_type: <string> # warehouse-specific
+        data_type: <string> # зависит от хранилища данных
         description: <markdown_string>
-        default_value: <string | boolean | integer> # optional, available in Snowflake and Postgres
+        default_value: <string | boolean | integer> # опционально, доступно в Snowflake и Postgres
 
 ```
 
 </File>
 
-## Definition
+## Определение
 
 <ArgumentsShared />
 
-For **functions**, you can add `arguments` to a [function property](/reference/function-properties), which defines the parameters for user-defined functions (UDFs) in your warehouse. The `data_type` for function arguments is warehouse-specific (for example, `STRING`, `VARCHAR`, `INTEGER`) and should match the data types supported by your data platform.
+Для **functions** вы можете добавить свойство `arguments` к [свойствам функции](/reference/function-properties). Оно определяет параметры пользовательских функций (UDF) в вашем хранилище данных. Поле `data_type` для аргументов функции зависит от конкретного хранилища (например, `STRING`, `VARCHAR`, `INTEGER`) и должно соответствовать типам данных, поддерживаемым вашей платформой данных.
 
-## Properties
+## Свойства
 
 ### name
 
-The name of the argument. This is a required field if `arguments` is specified.
+Имя аргумента. Это обязательное поле, если указано свойство `arguments`.
 
 ### data_type
 
-The data type that the warehouse expects for this parameter. This is a required field if `arguments` is specified and must match the data types supported by your specific data platform.
+Тип данных, который ожидает хранилище для данного параметра. Это обязательное поле, если указано свойство `arguments`, и оно должно соответствовать типам данных, поддерживаемым вашей конкретной платформой данных.
 
-:::important Warehouse-specific data types
+:::important Типы данных, зависящие от хранилища
 
-The `data_type` values are warehouse-specific. Use the data type syntax that your warehouse requires:
+Значения `data_type` зависят от конкретного хранилища. Используйте синтаксис типов данных, который требуется вашим хранилищем:
 
-- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ`, etc.
-- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>`, etc.
-- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, etc.
-- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, etc.
+- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ` и т.д.
+- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>` и т.д.
+- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP` и т.д.
+- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP` и т.д.
 
-Refer to your warehouse documentation for the complete list of supported data types.
+Полный список поддерживаемых типов данных смотрите в документации вашего хранилища.
 
 :::
 
 ### description
 
-An optional markdown string describing the argument. This is helpful for documentation purposes.
+Необязательная строка в формате markdown, описывающая аргумент. Полезно для целей документации.
 
 ### default_value
 
-Use the `default_value` property to make a function argument optional.
-- When an argument isn't defined with a `default_value`, it becomes a required argument, and you must pass a value for them when you use the function. If a required argument isn’t passed, the function call fails.
-- Arguments with a `default_value` are optional &mdash; if you don't pass a value for the argument, the warehouse uses the value you set in `default_value`.
+Используйте свойство `default_value`, чтобы сделать аргумент функции необязательным.
 
-This property is supported in [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) and [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
+- Если аргумент не определён с помощью `default_value`, он становится обязательным, и при использовании функции вы должны передать для него значение. Если обязательный аргумент не передан, вызов функции завершится ошибкой.
+- Аргументы с `default_value` являются необязательными &mdash; если вы не передадите значение для такого аргумента, хранилище использует значение, указанное в `default_value`.
 
-When you use `default_value`, the order of your arguments matter. Any required arguments (those without default values) have to come before optional ones. Here's an example with the correct order: 
+Это свойство поддерживается в [Snowflake](https://docs.snowflake.com/en/developer-guide/udf-stored-procedure-arguments#designating-an-argument-as-optional) и [Postgres](https://www.postgresql.org/docs/current/sql-createfunction.html). 
+
+При использовании `default_value` порядок аргументов имеет значение. Все обязательные аргументы (то есть аргументы без значений по умолчанию) должны идти перед необязательными. Ниже приведён пример с корректным порядком:
 
 <File name='functions/schema.yml'>
 
@@ -84,23 +85,21 @@ functions:
 ```
 </File>
 
-In this example:
-- `val1` has no `default_value`, so it’s required.
-- `val2` has a `default_value` of `0`, so it’s optional. If you don’t provide a value for `val2`, the function uses `0` instead.
+В этом примере:
+- `val1` не имеет `default_value`, поэтому является обязательным.
+- `val2` имеет `default_value`, равный `0`, поэтому является необязательным. Если вы не передадите значение для `val2`, функция использует `0`.
 
-See the following examples of calling the `sum_2_values` function:
+Ниже приведены примеры вызова функции `sum_2_values`:
 
 ```text
-sum_2_values(5)                # val1 = 5, val2 = 0 (default value used since user did not specify val2)
+sum_2_values(5)                # val1 = 5, val2 = 0 (используется значение по умолчанию, так как пользователь не указал val2)
 sum_2_values(5, 10)            # val1 = 5, val2 = 10
-sum_2_values()                 # ❌ error: val1 is required and must be passed
+sum_2_values()                 # ❌ ошибка: val1 является обязательным и должен быть передан
 ```
 
+## Примеры
 
-
-## Examples
-
-### Simple function arguments
+### Простые аргументы функций
 
 <File name='functions/schema.yml'>
 
@@ -118,7 +117,7 @@ functions:
 
 </File>
 
-### Complex data types
+### Сложные типы данных
 
 <File name='functions/schema.yml'>
 
@@ -140,7 +139,7 @@ functions:
 
 </File>
 
-### Array data types (BigQuery example)
+### Типы данных Array (пример для BigQuery)
 
 <File name='functions/schema.yml'>
 
@@ -159,11 +158,9 @@ functions:
 
 </File>
 
-## Related documentation
+## Связанная документация
 
-- [Function properties](/reference/function-properties)
-- [Function configurations](/reference/function-configs)
-- [Arguments (for macros)](/reference/resource-properties/arguments)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
+- [Аргументы (для макросов)](/reference/resource-properties/arguments)
 - [Returns](/reference/resource-properties/returns)
-
-

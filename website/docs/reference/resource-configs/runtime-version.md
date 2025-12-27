@@ -11,22 +11,23 @@ id: runtime-version
 functions:
   - name: <function name>
     config:
-      runtime_version: <string> # required for Python UDFs
+      runtime_version: <string> # обязательно для Python UDF
 ```
 
 </File>
 
-## Definition
+## Определение
 
-When creating Python UDFs, specify the Python version to run in `runtime_version`.
+При создании Python UDF необходимо указать версию Python, которая будет использоваться для выполнения функции, с помощью параметра `runtime_version`.
 
-## Supported values
+## Поддерживаемые версии
 
-- [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12`, and `3.13`
+- [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12` и `3.13`
 - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
 
-## Example
-In this example, we're using the Python version `3.11` for the UDF.
+## Пример
+
+В этом примере для UDF используется версия Python `3.11`.
 
 <File name='functions/schema.yml'>
 
@@ -37,13 +38,14 @@ functions:
       runtime_version: "3.11"
 ```
 </File>
-## Related documentation
 
-- [User-defined functions](/docs/build/udfs)
-- [Function properties](/reference/function-properties)
-- [Function configurations](/reference/function-configs)
+## Связанная документация
+
+- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
 - [Type](/reference/resource-configs/type)
 - [Volatility](/reference/resource-configs/volatility)
 - [entry_point](/reference/resource-configs/entry-point)
-- [Arguments](/reference/resource-properties/function-arguments)
+- [Аргументы](/reference/resource-properties/function-arguments)
 - [Returns](/reference/resource-properties/returns)

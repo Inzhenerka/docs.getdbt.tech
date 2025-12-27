@@ -1,13 +1,13 @@
 ---
-title: "Snowflake adapter behavior changes"
+title: "Изменения в поведении адаптера Snowflake"
 id: "snowflake-changes"
 sidebar: "Snowflake"
 ---
 
-## The `enable_truthy_nulls_equals_macro` flag
+## Флаг `enable_truthy_nulls_equals_macro`
 
-The `enable_truthy_nulls_equals_macro` flag is `False` by default. Setting it to `True` in your `dbt_project.yml` file enables null-safe equality on the dbt equals macro, which is used in the incremental and snapshot materializations. 
+Флаг `enable_truthy_nulls_equals_macro` по умолчанию установлен в `False`. Установка его значения в `True` в файле `dbt_project.yml` включает null-safe сравнение в макросе dbt `equals`, который используется в materialization типа incremental и snapshot.
 
-For example, when you compare NULL using `=` without the flag, it doesn't return `TRUE`, even when comparing `NULL = NULL`. Making it null safe allows for proper comparisons with `NULL`.
-If both values are `NULL`, it evaluates to `TRUE` instead of `UNKNOWN`.
+Например, при сравнении `NULL` с использованием оператора `=` без этого флага результатом не будет `TRUE`, даже в случае сравнения `NULL = NULL`. Включение null-safe логики позволяет выполнять корректные сравнения с `NULL`.
 
+Если оба значения равны `NULL`, выражение будет вычисляться как `TRUE`, а не как `UNKNOWN`.
