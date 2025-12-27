@@ -1,105 +1,103 @@
 ---
-title: When should I use a UDF instead of a macro?
-description: "Guidance on choosing between UDFs and macros"
-sidebar_label: 'UDFs or macros'
+title: Когда следует использовать UDF вместо макроса?
+description: "Рекомендации по выбору между UDF и макросами"
+sidebar_label: "UDF или макросы"
 id: udfs-vs-macros
 ---
 
-Both user-defined functions (UDFs) and macros let you reuse logic across your dbt project, but they work in fundamentally different ways. Here's when to use each:
+И пользовательские функции (UDF), и макросы позволяют переиспользовать логику в dbt‑проекте, однако работают они принципиально по‑разному. Ниже — рекомендации, когда стоит использовать каждый из подходов.
 
-#### Use UDFs when:
+#### Используйте UDF, когда:
 
-<Expandable alt_header="You need logic accessible outside dbt">
+<Expandable alt_header="Вам нужна логика, доступная за пределами dbt">
 
-UDFs are created in your warehouse and can be used by BI tools, data science notebooks, SQL clients, or any other tool that connects to your warehouse. Macros only work within dbt.
-
-</Expandable>
-
-<Expandable alt_header="You want to standardize warehouse-native functions">
-
-UDFs let you create reusable warehouse functions for data validation, custom formatting, or business-specific calculations that need to be consistent across all your data tools. Once created, they become part of your warehouse's function catalog.
+UDF создаются непосредственно в хранилище данных и могут использоваться BI‑инструментами, ноутбуками для data science, SQL‑клиентами или любыми другими инструментами, которые подключаются к вашему хранилищу. Макросы же работают только внутри dbt.
 
 </Expandable>
 
+<Expandable alt_header="Вы хотите стандартизировать нативные функции хранилища">
 
-<Expandable alt_header="You want dbt to manage the function lifecycle">
-
-dbt manages UDFs as part of your DAG execution, ensuring they're created before models that reference them. You can version control UDF definitions alongside your models, test changes in development environments, and deploy them together through CI/CD pipelines.
-
-</Expandable>
-
-<Expandable alt_header="Jinja compiles at creation time, not on each function call">
-
-You can use Jinja (loops, conditionals, macros, `ref`, `source`, `var`) inside a UDF configuration.  dbt resolves that Jinja **when the UDF is created**, and the resulting SQL body is what gets stored in your warehouse.
-
-Jinja influences the function when it’s created, whereas arguments influence it when it runs in the warehouse:
-
-- :white_check_mark: **Allowed:** Jinja that depends on project or build-time state — for example, `var(“can_do_things”)`, static `ref(‘orders’)`, or environment-specific logic. These are all evaluated once at creation time.  
-- :x: **Not allowed:** Jinja that depends on **function arguments** passed at runtime. The compiler can’t see those, so dynamic `ref(ref_name)` or conditional Jinja based on argument values won’t work.
+UDF позволяют создавать переиспользуемые функции хранилища для валидации данных, пользовательского форматирования или бизнес‑специфичных вычислений, которые должны быть единообразными во всех инструментах работы с данными. После создания такие функции становятся частью каталога функций вашего хранилища.
 
 </Expandable>
 
+<Expandable alt_header="Вы хотите, чтобы dbt управлял жизненным циклом функции">
 
-<Expandable alt_header="You need Python logic that runs in your warehouse">
-
-A Python UDF creates a Python function directly within your data warehouse, which you can invoke using SQL.  
-This makes it easier to apply complex transformations, calculations, or logic that would be difficult or verbose to express in SQL.  
-
-Python UDFs support conditionals and looping within the function logic itself (using Python syntax), and execute at runtime, not at compile time like macros. Python UDFs are currently supported in Snowflake and BigQuery.
+dbt управляет UDF как частью выполнения DAG, гарантируя, что они будут созданы до моделей, которые на них ссылаются. Вы можете хранить определения UDF в системе контроля версий вместе с моделями, тестировать изменения в средах разработки и разворачивать их через CI/CD‑пайплайны.
 
 </Expandable>
 
-#### Use macros when:
+<Expandable alt_header="Jinja компилируется в момент создания, а не при каждом вызове функции">
 
-<Expandable alt_header="You need to generate SQL at compile time">
+В конфигурации UDF можно использовать Jinja (циклы, условия, макросы, `ref`, `source`, `var`). dbt разрешает этот Jinja **в момент создания UDF**, и именно получившееся SQL‑тело сохраняется в хранилище.
 
-Macros generate SQL dynamically **before** it's sent to the warehouse (at compile time). This is essential for:
-- Building different SQL for different warehouses
-- Generating repetitive SQL patterns (like creating dozens of similar columns)
-- Creating entire model definitions or DDL statements
-- Dynamically referencing models based on project structure
+Jinja влияет на функцию в момент её создания, тогда как аргументы влияют на неё во время выполнения в хранилище:
 
-UDFs execute **at query runtime** in the warehouse. While they can use Jinja templating in their definitions, they don't generate new SQL queries—they're pre-defined functions that get called by your SQL.
+- :white_check_mark: **Разрешено:** Jinja, зависящий от состояния проекта или времени сборки — например, `var(“can_do_things”)`, статический `ref(‘orders’)` или логика, зависящая от окружения. Всё это вычисляется один раз при создании.  
+- :x: **Запрещено:** Jinja, зависящий от **аргументов функции**, передаваемых во время выполнения. Компилятор их не видит, поэтому динамический `ref(ref_name)` или условный Jinja на основе значений аргументов работать не будут.
+
+</Expandable>
+
+<Expandable alt_header="Вам нужна Python‑логика, выполняемая в вашем хранилище">
+
+Python UDF создаёт Python‑функцию непосредственно в хранилище данных, которую затем можно вызывать с помощью SQL.  
+Это упрощает применение сложных трансформаций, вычислений или логики, которые трудно или громоздко выразить на SQL.
+
+Python UDF поддерживают условия и циклы внутри самой функции (с использованием синтаксиса Python) и выполняются во время выполнения запроса, а не на этапе компиляции, как макросы. В настоящее время Python UDF поддерживаются в Snowflake и BigQuery.
+
+</Expandable>
+
+#### Используйте макросы, когда:
+
+<Expandable alt_header="Вам нужно генерировать SQL на этапе компиляции">
+
+Макросы динамически генерируют SQL **до** отправки его в хранилище (на этапе компиляции). Это критично для:
+- построения разного SQL для разных хранилищ;
+- генерации повторяющихся SQL‑паттернов (например, создания десятков похожих колонок);
+- создания целых определений моделей или DDL‑выражений;
+- динамических ссылок на модели в зависимости от структуры проекта.
+
+UDF выполняются **во время выполнения запроса** в хранилище. Хотя в их определениях можно использовать Jinja, они не генерируют новые SQL‑запросы — это заранее определённые функции, которые просто вызываются из SQL.
 
 :::note Expanding UDFs
-Currently, SQL and Python UDFs are supported. Java and Scala UDFs are planned for future releases. 
+В настоящее время поддерживаются SQL‑ и Python‑UDF. Поддержка Java и Scala UDF планируется в будущих релизах.
 :::
 
 </Expandable>
 
-<Expandable alt_header="You want to generate DDL or DML statements">
+<Expandable alt_header="Вам нужно генерировать DDL или DML‑выражения">
 
-Currently, SQL and Python UDFs are supported. Java and Scala UDFs are planned for future releases. 
-
-</Expandable>
-
-<Expandable alt_header="You need to adapt SQL across different warehouses">
-
-Macros can use Jinja conditional logic to generate warehouse-specific SQL (see [cross-database macros](/reference/dbt-jinja-functions/cross-database-macros)), making your dbt project portable across platforms.
-
-UDFs are warehouse-specific objects. Even though UDFs can include Jinja templating in their definitions, each warehouse has different syntax for creating functions, different supported data types, and different SQL dialects. You would need to define separate UDF files for each warehouse you support.
+В настоящее время поддерживаются SQL‑ и Python‑UDF. Поддержка Java и Scala UDF планируется в будущих релизах.
 
 </Expandable>
 
-<Expandable alt_header="Your logic needs access to dbt context">
+<Expandable alt_header="Вам нужно адаптировать SQL под разные хранилища">
 
-Both macros and UDFs can use Jinja, which means they can access dbt context variables like `{{ ref() }},` `{{ source() }}`, environment variables, and project configurations. You can even call a macro from within a UDF (and vice versa) to combine dynamic SQL generation with runtime execution.
+Макросы могут использовать условную логику Jinja для генерации SQL, специфичного для конкретного хранилища (см. [cross-database macros](/reference/dbt-jinja-functions/cross-database-macros)), что делает dbt‑проект переносимым между платформами.
 
-However, the difference between the two is _when_ the logic runs:
-- Macros run at compile time, generating SQL before it’s sent to the warehouse.
-- UDFs run inside the warehouse at query time.
+UDF — это объекты, специфичные для хранилища. Даже несмотря на то, что в определениях UDF можно использовать Jinja, у каждого хранилища свой синтаксис создания функций, разные поддерживаемые типы данных и диалекты SQL. Для каждого поддерживаемого хранилища вам придётся определять отдельные файлы UDF.
 
 </Expandable>
 
-<Expandable alt_header="You want to avoid creating warehouse objects">
+<Expandable alt_header="Вашей логике нужен доступ к контексту dbt">
 
-Macros don't create anything in your warehouse; they just generate SQL at compile time. UDFs create actual function objects in your warehouse that need to be managed.
+И макросы, и UDF могут использовать Jinja, а значит имеют доступ к переменным контекста dbt, таким как `{{ ref() }}`, `{{ source() }}`, переменные окружения и конфигурации проекта. Более того, можно вызывать макрос из UDF (и наоборот), комбинируя динамическую генерацию SQL с выполнением логики во время выполнения.
+
+Однако ключевое различие между ними — это _момент_, когда выполняется логика:
+- Макросы выполняются на этапе компиляции, генерируя SQL до отправки его в хранилище.
+- UDF выполняются внутри хранилища во время выполнения запроса.
 
 </Expandable>
 
-#### Can I use both together?
+<Expandable alt_header="Вы хотите избежать создания объектов в хранилище">
 
-Yes! You can use a macro to call a UDF or call a macro from within a UDF, combining the benefits of both. So the following example shows how to use a macro to define default values for arguments alongside your logic, for your UDF
+Макросы ничего не создают в вашем хранилище; они лишь генерируют SQL на этапе компиляции. UDF же создают реальные объекты функций в хранилище, которыми нужно управлять.
+
+</Expandable>
+
+#### Можно ли использовать оба подхода вместе?
+
+Да! Вы можете использовать макрос для вызова UDF или вызывать макрос внутри UDF, сочетая преимущества обоих подходов. Например, следующий пример показывает, как использовать макрос для задания значений аргументов по умолчанию вместе с логикой UDF:
 
 ```sql
 {% macro cents_to_dollars(column_name, scale=2) %}
@@ -107,7 +105,7 @@ Yes! You can use a macro to call a UDF or call a macro from within a UDF, combin
 {% endmacro %}
 ```
 
-#### Related documentation
+#### Связанная документация
 
-- [User-defined functions](/docs/build/udfs)
-- [Jinja macros](/docs/build/jinja-macros)
+- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Jinja‑макросы](/docs/build/jinja-macros)

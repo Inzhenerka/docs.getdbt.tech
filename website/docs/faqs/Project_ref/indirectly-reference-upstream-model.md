@@ -1,21 +1,21 @@
 ---
-title: Why doesn’t an indirectly referenced upstream public model appear in Explorer?
-sidebar_label: Indirectly referenced upstream model
+title: Почему косвенно используемая upstream public модель не отображается в Explorer?
+sidebar_label: Косвенно используемая upstream модель
 id: indirectly-reference-upstream-model
-description: Learn why an indirectly referenced upstream public models don't appear in Explorer
+description: Узнайте, почему косвенно используемые upstream public модели не отображаются в Explorer
 ---
 
-For [project dependencies](/docs/mesh/govern/project-dependencies) in <Constant name="mesh" />, [<Constant name="explorer" />](/docs/explore/explore-multiple-projects) only displays directly referenced [public models](/docs/mesh/govern/model-access) from upstream projects, even if an upstream model indirectly depends on another public model.
+Для [зависимостей проекта](/docs/mesh/govern/project-dependencies) в <Constant name="mesh" /> [<Constant name="explorer" />](/docs/explore/explore-multiple-projects) отображает **только напрямую используемые** [публичные модели](/docs/mesh/govern/model-access) из вышестоящих проектов, даже если модель из вышестоящего проекта косвенно зависит от другой публичной модели.
 
-So for example, if:
+Например, если:
 
-- `project_b` adds `project_a` as a dependency
-- `project_b`'s model `downstream_c` references `project_a.upstream_b`
-- `project_a.upstream_b` references another public model, `project_a.upstream_a`
+- `project_b` добавляет `project_a` как зависимость
+- модель `downstream_c` в `project_b` ссылается на `project_a.upstream_b`
+- `project_a.upstream_b` ссылается на другую публичную модель — `project_a.upstream_a`
 
-Then:
+Тогда:
 
-- In Explorer, only directly referenced public models (`upstream_b` in this case) appear.
-- In the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) lineage view, however, `upstream_a` (the indirect dependency) _will_ appear because <Constant name="cloud" /> dynamically resolves the full dependency graph.
+- В Explorer отображаются только напрямую используемые публичные модели (в данном случае — `upstream_b`).
+- В представлении lineage в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), однако, `upstream_a` (косвенная зависимость) **будет** отображаться, поскольку <Constant name="cloud" /> динамически разрешает полный граф зависимостей.
 
-This behavior makes sure that <Constant name="explorer" /> only shows the immediate dependencies available to that specific project.
+Такое поведение гарантирует, что <Constant name="explorer" /> показывает только непосредственные зависимости, доступные для конкретного проекта.

@@ -1,16 +1,16 @@
 ---
-title: GitLab token refresh message
-description: "Learn how to resolve GitLab token refresh messages during your CI jobs"
-sidebar_label: 'GitLab token refresh message'
+title: Сообщение об обновлении токена GitLab
+description: "Узнайте, как устранить сообщения об обновлении токена GitLab во время ваших CI jobs"
+sidebar_label: "Сообщение об обновлении токена GitLab"
 id: gitlab-token-refresh
 ---
 
-When you connect <Constant name="cloud" /> to a GitLab repository, GitLab automatically creates a [project access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) in your GitLab repository in the background. This sends the job run status back to Gitlab using the <Constant name="cloud" /> API for CI jobs. 
+Когда вы подключаете <Constant name="cloud" /> к репозиторию GitLab, GitLab автоматически в фоновом режиме создаёт [project access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) в вашем репозитории GitLab. Этот токен используется для отправки статуса выполнения джоб обратно в GitLab с помощью API <Constant name="cloud" /> для CI‑задач.
 
-By default, the project access token follows a naming pattern: `dbt token for GitLab project: <project_id>`. If you have multiple tokens in your repository, look for one that follows this pattern to identify the correct token used by <Constant name="cloud" />.
+По умолчанию project access token имеет следующий шаблон имени: `dbt token for GitLab project: <project_id>`. Если в вашем репозитории есть несколько токенов, ищите токен с таким шаблоном имени, чтобы определить, какой именно используется <Constant name="cloud" />.
 
-If you're receiving a "Refresh token" message, don't worry &mdash; <Constant name="cloud" /> automatically refreshes this project access token for you, which means you never have to manually rotate it.
+Если вы видите сообщение «Refresh token», не переживайте &mdash; <Constant name="cloud" /> автоматически обновляет этот project access token, поэтому вам не нужно вручную выполнять его ротацию.
 
-If you still experience any token refresh errors, please try disconnecting and reconnecting the repository in your <Constant name="cloud" /> project to refresh the token. 
+Если после этого вы всё ещё сталкиваетесь с ошибками обновления токена, попробуйте отключить и заново подключить репозиторий в вашем проекте <Constant name="cloud" />, чтобы обновить токен.
 
-For any issues, please reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если у вас возникнут какие‑либо проблемы, пожалуйста, свяжитесь с командой поддержки по адресу support@getdbt.com — мы с радостью поможем!

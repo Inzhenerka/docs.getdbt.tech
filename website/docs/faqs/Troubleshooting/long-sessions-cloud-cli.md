@@ -1,14 +1,15 @@
 ---
-title: "I'm getting a \"Session occupied\" error in dbt CLI?"
-description: "How to debug long-running sessions in dbt CLI"
-sidebar_label: 'Debug long-running sessions in dbt CLI'
+title: "Я получаю ошибку «Session occupied» в dbt CLI"
+description: "Как отлаживать долгие сессии в dbt CLI"
+sidebar_label: "Отладка долгих сессий в dbt CLI"
 id: long-sessions-cloud-cli
 ---
 
-If you're receiving a `Session occupied` error in the <Constant name="cloud_cli" /> or if you're experiencing a long-running session, you can use the `dbt invocation list` command in a separate terminal window to view the status of your active session. This helps debug the issue and identify the arguments that are causing the long-running session.
 
-To cancel an active session, use the `Ctrl + Z` shortcut.
+Если вы получаете ошибку `Session occupied` в <Constant name="cloud_cli" /> или сталкиваетесь с длительно выполняющейся сессией, вы можете использовать команду `dbt invocation list` в отдельном окне терминала, чтобы посмотреть статус вашей активной сессии. Это помогает отладить проблему и определить аргументы, которые приводят к длительному выполнению сессии.
 
-To learn more about the `dbt invocation` command, see the [dbt invocation command reference](/reference/commands/invocation).
+Чтобы отменить активную сессию, используйте сочетание клавиш `Ctrl + Z`.
 
-Alternatively, you can reattach to your existing session with <code>dbt reattach</code> and then press <code>Control-C</code> and choose to cancel the invocation.
+Подробнее о команде `dbt invocation` см. в [справочнике команд dbt invocation](/reference/commands/invocation).
+
+В качестве альтернативы вы можете переподключиться к существующей сессии с помощью <code>dbt reattach</code>, затем нажать <code>Control-C</code> и выбрать отмену invocation.

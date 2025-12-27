@@ -1,131 +1,129 @@
 ---
-title: Account-specific features
-description: "Account-specific features"
-sidebar_label: 'Account-specific features'
+title: Функции, зависящие от аккаунта
+description: "Функции, зависящие от аккаунта"
+sidebar_label: "Функции, зависящие от аккаунта"
 id: account-specific-features
 ---
 
 <IntroText>
-The features in <Constant name="cloud" /> are tailored to each organization's unique configuration, including user permissions, project setup, and subscription level, with guidance provided to help teams make the most of their available capabilities.
+Функциональные возможности в <Constant name="cloud" /> адаптированы под уникальную конфигурацию каждой организации, включая права пользователей, настройку проектов и уровень подписки. При этом предоставляются рекомендации, которые помогают командам максимально эффективно использовать доступные возможности.
 </IntroText>
 
-This document provides a comprehensive overview of account-specific features in <Constant name="cloud" /> according to plan type.
+В этом документе представлен подробный обзор функций, зависящих от типа аккаунта, в <Constant name="cloud" /> в разрезе тарифных планов.
 
 ## Copilot
 
-[<Constant name="copilot" />](/docs/cloud/dbt-copilot) is an AI-powered assistant designed to accelerate your development workflow and help you focus on delivering high-quality data.
+[<Constant name="copilot" />](/docs/cloud/dbt-copilot) — это AI‑ассистент, предназначенный для ускорения процесса разработки и помощи командам в создании качественных дата‑решений.
 
-<Constant name="copilot" /> is available to all users in <Constant name="cloud" /> but limits are imposed according to plan type. Have a look at [dbt Cloud's pricing](https://www.getdbt.com/pricing) for more information.
+<Constant name="copilot" /> доступен всем пользователям <Constant name="cloud" />, однако ограничения зависят от выбранного тарифного плана. Подробности см. на странице [dbt Cloud pricing](https://www.getdbt.com/pricing).
 
-## Copilot features
+## Возможности Copilot
 
 ### Codegen <Lifecycle status="Starter, Enterprise, Enterprise+"/>
 
-<Constant name="copilot" /> codegen refers to the code generation capabilities provided by <Constant name="copilot" />, an AI-powered assistant integrated into <Constant name="cloud" />. This feature allows users to generate SQL code, documentation, tests, and semantic models directly from natural language prompts, helping automate and accelerate common analytics engineering workflows.⁠⁠⁠⁠
+<Constant name="copilot" /> codegen — это возможности генерации кода, предоставляемые <Constant name="copilot" />, AI‑ассистентом, встроенным в <Constant name="cloud" />. Эта функция позволяет генерировать SQL‑код, документацию, тесты и семантические модели напрямую из запросов на естественном языке, помогая автоматизировать и ускорить типовые рабочие процессы аналитической инженерии.
 
-<Constant name="copilot" /> codegen uses metadata such as relationships, lineage, and model context from your dbt projects to produce contextually accurate code. This helps avoid mistakes common with generic AI tools by ensuring generated code matches your actual schema and conventions.⁠⁠⁠⁠
+<Constant name="copilot" /> codegen использует метаданные dbt‑проектов, такие как связи, lineage и контекст моделей, чтобы создавать контекстно корректный код. Это помогает избежать ошибок, характерных для универсальных AI‑инструментов, за счёт соответствия сгенерированного кода реальной схеме данных и принятым соглашениям.
 
-The code <Constant name="copilot" /> generates may include:
+Код, который может генерировать <Constant name="copilot" />, включает:
 
-- Base/staging/semantic models (including SQL for new models)
-- YAML files for documentation or tests
-- Inline SQL expressions
-- Semantic model structures and metrics
+- Base/staging/semantic models (включая SQL для новых моделей)
+- YAML‑файлы для документации или тестов
+- Встроенные SQL‑выражения
+- Структуры семантических моделей и метрики
 
-<Constant name="copilot" /> codegen is available in the <Constant name="cloud_ide" />, <Constant name="visual_editor" />, and (soon) <Constant name="query_page" />, making it possible to generate and edit code directly within these interfaces.⁠ 
+<Constant name="copilot" /> codegen доступен в <Constant name="cloud_ide" />, <Constant name="visual_editor" /> и (в ближайшее время) в <Constant name="query_page" />, что позволяет генерировать и редактировать код напрямую в этих интерфейсах.
 
-### Bring your own key (BYOK) <Lifecycle status="Enterprise, Enterprise+"/>
+### Использование собственного ключа (BYOK) <Lifecycle status="Enterprise, Enterprise+"/>
 
-BYOK allows users to provide and manage their own encryption or API keys, rather than relying on keys managed by a vendor or third party. This gives organizations greater control over data security, compliance, and contracts.
+BYOK позволяет пользователям предоставлять и управлять собственными ключами шифрования или API‑ключами вместо использования ключей, управляемых вендором или третьей стороной. Это даёт организациям больший контроль над безопасностью данных, соответствием требованиям и контрактами.
 
-BYOK means users can bring and configure their own OpenAI or Azure OpenAI API key. With BYOK, users have more control over privacy, observability, and security for their data and metadata. Take note of the following when using BYOK:
+BYOK означает, что пользователи могут подключить и настроить собственный API‑ключ OpenAI или Azure OpenAI. При использовании BYOK у пользователей появляется больший контроль над приватностью, наблюдаемостью и безопасностью данных и метаданных. При этом важно учитывать следующее:
 
-- When you use your own API key, your contract with the LLM provider (not dbt Labs') applies. You are responsible for managing costs, usage limits, and data handling. This means ownership and liability for API use rests with the user, not dbt Labs.
-- dbt Labs does not impose usage limits on the user's key, as it does with internally managed keys.
+- При использовании собственного API‑ключа действует контракт с провайдером LLM (а не с dbt Labs). Пользователь самостоятельно отвечает за управление затратами, лимитами использования и обработкой данных. Соответственно, ответственность за использование API лежит на пользователе, а не на dbt Labs.
+- dbt Labs не накладывает ограничений на использование пользовательского ключа, в отличие от ключей, управляемых внутри сервиса.
 
-Currently, BYOK in <Constant name="cloud" /> supports OpenAI and Azure-hosted OpenAI API keys. Users enter their key through the [account settings](/docs/cloud/account-settings), and requests made by <Constant name="copilot" /> or other AI features are billed directly to the customer by the respective provider.⁠⁠⁠⁠
+В настоящее время BYOK в <Constant name="cloud" /> поддерживает API‑ключи OpenAI и Azure OpenAI. Пользователи вводят ключ в [настройках аккаунта](/docs/cloud/account-settings), а запросы, выполняемые <Constant name="copilot" /> или другими AI‑функциями, биллятся напрямую соответствующим провайдером.
 
 :::info
-The <Constant name="copilot" /> experience with BYOK and Azure OpenAI will not use metadata information in <Constant name="query_page" />, <Constant name="visual_editor" />, or the <Constant name="cloud_ide" />. 
+При использовании <Constant name="copilot" /> с BYOK и Azure OpenAI не будет использоваться информация из метаданных в <Constant name="query_page" />, <Constant name="visual_editor" /> или <Constant name="cloud_ide" />.
 
-Without this contextual data, the LLM's responses may be suboptimal compared to those generated by the default dbt AI service. This is a temporary limitation, and we are working on an update that will enable the use of Azure OpenAI APIs.
+Без этих контекстных данных ответы LLM могут быть менее качественными по сравнению с результатами, получаемыми с помощью стандартного AI‑сервиса dbt. Это временное ограничение — мы работаем над обновлением, которое позволит использовать API Azure OpenAI с контекстом.
 :::
 
+Если вы выбираете BYOK, мы не отслеживаем и не собираем данные, связанные с вашим использованием.
 
-If you choose to BYOK, we don't monitor or collect any data related to your usage.
+Некоторые причины, по которым организациям требуется BYOK:
 
-Some of the reasons organizations require BYOK include:
+- Регуляторные требования и требования комплаенса (например, необходимость держать ключи шифрования или чувствительные операции под контролем заказчика)
+- Гарантии того, как и где обрабатываются данные
+- Возможность самостоятельно согласовывать и управлять контрактами с вендорами
+- Возможность собирать собственные метрики наблюдаемости
 
-- Regulatory and compliance demands (for example, keeping encryption keys or sensitive operations under customer control)
-- Assurances about how and where data is processed
-- Ability to negotiate and manage their own vendor contracts
-- Ability to collect their own observability metrics
+Обратите внимание, что BYOK отличается от bring your own cloud (BYOC). BYOK относится к управлению ключами или учётными данными, тогда как BYOC — к запуску программных нагрузок в собственной облачной среде.
 
-Note that BYOK is different from bring your own cloud (BYOC). BYOK refers to key or credential management, whereas BYOC refers to running software workloads in your own cloud environment.
+### Естественный язык в Canvas <Lifecycle status="Enterprise, Enterprise+"/>
 
-### Natural language in Canvas <Lifecycle status="Enterprise, Enterprise+"/>
+Natural language в <Constant name="visual_editor" /> — это возможность визуально строить модели данных в <Constant name="visual_editor" /> с помощью запросов на естественном языке, используя GenAI (<Constant name="copilot" />). Вы описываете, что хотите создать или преобразовать, а инструмент генерирует соответствующий SQL и шаги трансформации. Знание SQL при этом не требуется. Функция ориентирована на менее технических пользователей или тех, кто предпочитает визуальный или диалоговый интерфейс ручному написанию SQL.
 
-Natural language in <Constant name="visual_editor" /> refers to the ability to build data models visually in <Constant name="visual_editor" /> using plain language prompts, powered by GenAI (<Constant name="copilot" />). You can describe what you want to build or transform, and the tool generates the underlying SQL and transformation steps for you. No SQL expertise is required. It's aimed at making data modeling more accessible to less-technical users or anyone who prefers a drag-and-drop or conversational interface over hand-coding SQL.⁠⁠
+Natural language позволяет напрямую переводить бизнес‑вопросы или запросы на трансформацию в дата‑workflow. Это ускоряет создание управляемых, готовых к продакшену моделей при сохранении best practices и контроля версий. Модели <Constant name="visual_editor" /> можно редактировать совместно, при этом доступен как графический workflow, так и сгенерированный SQL‑код.
 
-Natural language lets users translate business questions or transformation requests directly into data workflows. This accelerates the process of creating governed, production-ready models while maintaining best practices and version control. You can edit <Constant name="visual_editor" /> models collaboratively, and you can see both the graphical workflow and the SQL code it produces.⁠⁠⁠⁠
+Функциональность natural language полностью интегрирована в рабочее пространство <Constant name="visual_editor" />. Можно начать с пустой модели и генерировать модели или шаги трансформации, описывая требования обычным языком. <Constant name="copilot" /> интерпретирует запрос, строит модель в <Constant name="visual_editor" /> и отображает её визуально, что упрощает доработку, предпросмотр и публикацию изменений.
 
-The natural language capability is fully integrated into the <Constant name="visual_editor" /> workspace. You can start with a blank model and generate models or transformation steps by specifying requirements in everyday language. <Constant name="copilot" /> interprets the request, constructs the model in the <Constant name="visual_editor" />, and presents it visually &mdash; making it easy to refine, preview, and publish changes.⁠⁠
-
-This approach is especially valuable for analysts and business users, allowing broader participation in data transformation tasks without losing dbt's governance, reproducibility, and code review processes.
+Этот подход особенно ценен для аналитиков и бизнес‑пользователей, позволяя более широкому кругу участников вовлекаться в задачи трансформации данных без потери таких преимуществ dbt, как управление, воспроизводимость и процессы code review.
 
 ## Canvas <Lifecycle status="Enterprise, Enterprise+"/>
 
-<Constant name="visual_editor" /> enables efficient data access and transformation through a visual interface, combining the benefits of code-driven development with AI-assisted code generation for a seamless, flexible experience.
+<Constant name="visual_editor" /> обеспечивает эффективный доступ к данным и их трансформацию через визуальный интерфейс, объединяя преимущества кодо‑ориентированной разработки с AI‑ассистированной генерацией кода для гибкого и цельного опыта.
 
 ## dbt Insights <Lifecycle status="Enterprise, Enterprise+"/>
 
-<Constant name="query_page" /> is an interactive feature in <Constant name="cloud" /> designed for writing, running, and analyzing SQL queries within an intuitive interface. It brings together SQL query execution, results visualization, and integration with dbt metadata and documentation &mdash; all in one place.⁠⁠
+<Constant name="query_page" /> — это интерактивная функция в <Constant name="cloud" />, предназначенная для написания, выполнения и анализа SQL‑запросов в удобном интерфейсе. Она объединяет выполнение SQL‑запросов, визуализацию результатов и интеграцию с метаданными и документацией dbt в одном месте.
 
-It supports key features such as query history, the ability to export results to CSV, basic charting (for example, line and bar charts), and direct links to <Constant name="explorer" /> and the <Constant name="cloud_ide" /> for a seamless workflow between exploration and development.⁠⁠⁠⁠
+Поддерживаются такие возможности, как история запросов, экспорт результатов в CSV, базовые визуализации (например, линейные и столбчатые графики), а также прямые ссылки на <Constant name="explorer" /> и <Constant name="cloud_ide" /> для бесшовного перехода между исследованием данных и разработкой.
 
-Analysts can quickly analyze metrics across data, while engineers can leverage context, metadata, and dbt lineage details to debug or validate data models.⁠⁠⁠⁠
+Аналитики могут быстро анализировать метрики, а инженеры — использовать контекст, метаданные и информацию о lineage dbt для отладки и валидации моделей данных.
 
-You can save and share frequently used SQL queries, and explore documentation or data lineage as you work. Each query's results are, for now, limited to 500 rows (with plans to increase this).⁠⁠
+Можно сохранять и делиться часто используемыми SQL‑запросами, а также изучать документацию и lineage в процессе работы. На данный момент результаты каждого запроса ограничены 500 строками (планируется увеличение этого лимита).
 
-The interface supports syntax highlighting, code completion, asset linking (to easily reference dbt models/tables), and connects to the Semantic Layer for querying metrics or columns by name.
+Интерфейс поддерживает подсветку синтаксиса, автодополнение, связывание ассетов (для удобной ссылки на dbt‑модели и таблицы) и интеграцию с Semantic Layer для запросов метрик или колонок по имени.
 
-While <Constant name="query_page" /> supports some light visualizations and query sharing, it is not intended to replace BI tools for reporting or dashboarding. Instead, it's focused on fast ad hoc analysis and insight generation. Integrations allow users to "jump off" into downstream BI tools with their queries if needed.⁠
+Хотя <Constant name="query_page" /> поддерживает простые визуализации и обмен запросами, он не предназначен для замены BI‑инструментов для отчётности или дашбордов. Основной фокус — быстрый ad hoc анализ и получение инсайтов. Интеграции позволяют при необходимости передавать запросы в downstream BI‑инструменты.
 
-## dbt Mesh cross platform <Lifecycle status="Enterprise, Enterprise+"/>
+## Кросс-платформенный dbt Mesh <Lifecycle status="Enterprise, Enterprise+"/>
 
-dbt Mesh cross-platform (sometimes called "cross-platform Mesh" or "cross-platform dbt Mesh") is a capability in dbt Mesh that allows for referencing models and sharing lineage across multiple dbt projects, even when those projects use different data warehouse platforms.
+dbt Mesh cross‑platform (иногда называемый «cross‑platform Mesh» или «cross‑platform dbt Mesh») — это возможность dbt Mesh, которая позволяет ссылаться на модели и делиться lineage между несколькими dbt‑проектами, даже если эти проекты используют разные платформы хранилищ данных.
 
 ## SCIM <Lifecycle status="Enterprise, Enterprise+"/>
 
-SCIM (System for Cross-Domain Identity Management) automates user identities and groups, enhancing security and simplifying admin tasks. It allows for real-time user provisioning, deprovisioning, and profile updates in <Constant name="cloud" />, primarily using Okta as the identity provider.
+SCIM (System for Cross‑Domain Identity Management) автоматизирует управление пользователями и группами, повышая безопасность и упрощая административные задачи. Он обеспечивает автоматическое создание, удаление и обновление профилей пользователей в <Constant name="cloud" />, преимущественно с использованием Okta в качестве провайдера идентификации.
 
-## Hybrid projects <Lifecycle status="Enterprise, Enterprise+"/>
+## Гибридные проекты <Lifecycle status="Enterprise, Enterprise+"/>
 
-Hybrid projects refer to a setup where both <Constant name="core" /> and <Constant name="cloud" /> are utilized within the same organization, often working on the same codebase or data platform. This approach enables different teams or contributors to work in the environment that aligns best with their preferences or workflows, while still benefiting from shared assets and centralized metadata.
+Hybrid projects — это конфигурация, при которой <Constant name="core" /> и <Constant name="cloud" /> используются в рамках одной организации, часто с общей кодовой базой или платформой данных. Такой подход позволяет разным командам или участникам работать в наиболее удобной для них среде, при этом используя общие ассеты и централизованные метаданные.
 
 ## Enterprise security <Lifecycle status="Enterprise+"/>
 
-Enterprise security includes robust capabilities for managing network access and user permissions, designed to safeguard sensitive data. Two widely used features that support these efforts are PrivateLink and IP allowlisting.
+Enterprise security включает расширенные возможности управления сетевым доступом и правами пользователей, предназначенные для защиты чувствительных данных. Две широко используемые функции в этой области — PrivateLink и IP allowlisting.
 
 ### PrivateLink
 
-PrivateLink provides a secure and private connection between your organization's environments, such as databases, version control systems, or data warehouses and <Constant name="cloud" />. This setup ensures that traffic remains within the AWS network, avoiding exposure to the public internet.
+PrivateLink обеспечивает безопасное и приватное соединение между средами вашей организации (например, базами данных, системами контроля версий или хранилищами данных) и <Constant name="cloud" />. Такой подход гарантирует, что трафик остаётся внутри сети AWS и не выходит в публичный интернет.
 
 ### IP allowlist
 
-IP restrictions (IP allowlist/blocklist) let organizations control which IPs can access their <Constant name="cloud" /> account.
+Ограничения по IP (IP allowlist/blocklist) позволяют организациям контролировать, с каких IP‑адресов возможен доступ к аккаунту <Constant name="cloud" />.
 
-## Projects and run slots 
+## Проекты и слоты выполнения
 
-The number of projects and run slots available to your organization varies based on your selected plan tier. For detailed information, please refer to our [pricing page](https://www.getdbt.com/pricing).
+Количество доступных проектов и run slots для вашей организации зависит от выбранного тарифного плана. Подробную информацию см. на нашей [странице с ценами](https://www.getdbt.com/pricing).
 
-## Upgrade plan
+## Обновление тарифного плана
 
-<Constant name="cloud" /> offers a range of plans with varying features to suit different organizational needs. 
+<Constant name="cloud" /> предлагает несколько тарифных планов с различным набором функций для удовлетворения потребностей организаций разного масштаба.
 
-For information on the different plan types and upgrading your plan, refer to our document on [How to upgrade a dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions).
+Информацию о типах планов и процессе обновления тарифа см. в документе [How to upgrade a dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions).
 
-## Related content
+## Связанные материалы
 
-- [Billing](/docs/cloud/billing)
-
+- [Биллинг](/docs/cloud/billing)

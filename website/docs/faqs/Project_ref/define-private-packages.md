@@ -1,11 +1,11 @@
 ---
-title: Can I define private packages in the dependencies.yml file?
-sidebar_label: Define private packages
+title: Можно ли определять приватные пакеты в файле dependencies.yml?
+sidebar_label: Определение приватных пакетов
 id: define-private-packages
-description: Learn how to define private packages in your project
+description: Узнайте, как определять приватные пакеты в вашем проекте
 ---
 
-It depends on how you're accessing your private packages:
+Это зависит от того, каким способом вы получаете доступ к приватным пакетам:
 
-- If you're using [native private packages](/docs/build/packages#native-private-packages), you can define them in the `dependencies.yml` file.
-- If you're using the [git token method](/docs/build/packages#git-token-method), you must define them in the `packages.yml` file instead of the `dependencies.yml` file. This is because conditional rendering (like Jinja-in-yaml) is not supported in `dependencies.yml`.
+- Если вы используете [нативные приватные пакеты](/docs/build/packages#native-private-packages), вы можете определять их в файле `dependencies.yml`.
+- Если вы используете [метод с git-токеном](/docs/build/packages#git-token-method), вы должны определять их в файле `packages.yml`, а не в `dependencies.yml`. Это связано с тем, что условный рендеринг (например, Jinja в YAML) не поддерживается в `dependencies.yml`.
