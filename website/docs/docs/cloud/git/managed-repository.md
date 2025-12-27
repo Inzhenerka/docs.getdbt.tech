@@ -1,38 +1,37 @@
 ---
-title: "Connect with managed repository"
+title: "Подключение к управляемому репозиторию"
 id: "managed-repository"
-description: "Learn how to set up a project with a managed repository."
+description: "Узнайте, как настроить проект с управляемым репозиторием."
 pagination_next: "docs/cloud/git/import-a-project-by-git-url"
 pagination_prev: "docs/cloud/git/git-configuration-in-dbt-cloud"
 ---
 
-Managed repositories are a great way to trial dbt without needing to create a new repository. If you don't already have a <Constant name="git" /> repository for your dbt project, you can let <Constant name="cloud" /> host and manage a repository for you. 
+Управляемые репозитории — это отличный способ попробовать dbt без необходимости создавать новый репозиторий. Если у вас ещё нет репозитория <Constant name="git" /> для вашего dbt‑проекта, вы можете позволить <Constant name="cloud" /> разместить и управлять репозиторием за вас. 
 
-If in the future you choose to host this repository elsewhere, you can export the information from <Constant name="cloud" /> at any time. Refer to [Move from a managed repository to a self-hosted repository](/faqs/Git/managed-repo) for more information on how to do that.
-
+Если в будущем вы решите разместить этот репозиторий в другом месте, вы в любой момент сможете экспортировать данные из <Constant name="cloud" />. Подробнее о том, как это сделать, см. [Move from a managed repository to a self-hosted repository](/faqs/Git/managed-repo).
 
 :::info
-dbt Labs recommends against using a managed repository in a production environment. You can't use <Constant name="git" /> features like pull requests, which are part of our recommended version control best practices.
+dbt Labs не рекомендует использовать управляемый репозиторий в production‑окружении. Вы не сможете использовать возможности <Constant name="git" />, такие как pull request’ы, которые являются частью рекомендуемых лучших практик управления версиями.
 :::
 
-To set up a project with a managed repository:
+Чтобы настроить проект с управляемым репозиторием:
 
-1. From your **Account settings** in <Constant name="cloud" />, select the project you want to set up with a managed repository. If the project already has a repository set up, you need to edit the repository settings and disconnect the existing repository.
-2. Click **Edit** for the project.
-3. Under Repository, click **Configure repository**.
-4. Select **Managed**.
-5. Enter a name for the repository. For example, "analytics" or "dbt-models."
-6. Click **Create**.
-   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/managed-repo.png" title="Adding a managed repository"/>
+1. В **Account settings** в <Constant name="cloud" /> выберите проект, для которого вы хотите настроить управляемый репозиторий. Если для проекта уже настроен репозиторий, необходимо отредактировать настройки репозитория и отключить существующий репозиторий.
+2. Нажмите **Edit** для проекта.
+3. В разделе Repository нажмите **Configure repository**.
+4. Выберите **Managed**.
+5. Введите имя репозитория. Например, "analytics" или "dbt-models".
+6. Нажмите **Create**.
+   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/managed-repo.png" title="Добавление управляемого репозитория"/>
 
-## Download managed repository
+## Загрузка управляемого репозитория
 
-To download a copy of your managed repository from <Constant name="cloud" /> to your local machine:
+Чтобы скачать копию вашего управляемого репозитория из <Constant name="cloud" /> на локальный компьютер:
 
-1. Use the **Project** selector on the main left-side menu to navigate to a project that's using a managed repository.
-2. Click **Dashboard** from the main left-side menu.
-3. From the dashboard, click **Settings**.
-4. Locate the **Repository** field and click the hyperlink for the repo.
-5. Below the **Deploy key** you will find the **Download repository** option. Click the button to download. If you don't see this option, you're either not assigned a [permission set](/docs/cloud/manage-access/enterprise-permissions#account-permissions) with `write` access to Git repositories, or you don't have a managed repo for your project. 
+1. Используйте селектор **Project** в главном левом меню, чтобы перейти к проекту, использующему управляемый репозиторий.
+2. В главном левом меню нажмите **Dashboard**.
+3. На дашборде нажмите **Settings**.
+4. Найдите поле **Repository** и нажмите на гиперссылку репозитория.
+5. Под полем **Deploy key** вы найдёте опцию **Download repository**. Нажмите кнопку, чтобы скачать репозиторий. Если вы не видите эту опцию, значит, вам либо не назначен [permission set](/docs/cloud/manage-access/enterprise-permissions#account-permissions) с доступом `write` к Git‑репозиториям, либо у вашего проекта нет управляемого репозитория.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/download-managed-repo.png" size="60%" title="The download button for a managed repo." />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/download-managed-repo.png" size="60%" title="Кнопка загрузки для управляемого репозитория." />

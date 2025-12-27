@@ -1,8 +1,8 @@
 ---
-title: "About private connectivity"
+title: "О приватном подключении"
 id: about-private-connectivity
-description: "Configuring private connections"
-sidebar_label: "About private connectivity"
+description: "Настройка приватных подключений"
+sidebar_label: "О приватном подключении"
 ---
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
@@ -12,19 +12,19 @@ import PrivateConnectivityMatrix from '/snippets/_private-connectivity-matrix.md
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-Private connections enables secure communication from any <Constant name="cloud" /> environment to your data platform hosted on a cloud provider, such as [AWS](https://aws.amazon.com/privatelink/) or [Azure](https://azure.microsoft.com/en-us/products/private-link), using that provider’s private connection technology. Private connections allow <Constant name="cloud" /> customers to meet security and compliance controls as it allows connectivity between <Constant name="cloud" /> and your data platform without traversing the public internet. This feature is supported in most regions across North America, Europe, and Asia, but [contact us](https://www.getdbt.com/contact/) if you have questions about availability.
+Приватные подключения обеспечивают безопасную коммуникацию из любой среды <Constant name="cloud" /> к вашей платформе данных, размещённой у облачного провайдера, например [AWS](https://aws.amazon.com/privatelink/) или [Azure](https://azure.microsoft.com/en-us/products/private-link), с использованием технологии приватных подключений этого провайдера. Приватные подключения позволяют клиентам <Constant name="cloud" /> соответствовать требованиям безопасности и комплаенса, поскольку обеспечивают связь между <Constant name="cloud" /> и вашей платформой данных без прохождения через публичный интернет. Эта функция поддерживается в большинстве регионов Северной Америки, Европы и Азии, однако, если у вас есть вопросы о доступности, [свяжитесь с нами](https://www.getdbt.com/contact/).
 
 <CloudProviders type='a data platform' />
 
 <PrivateConnectivityMatrix/>
 
-### Cross-region private connections
+### Кросс-региональные приватные подключения
 
-dbt Labs has globally connected private networks specifically used to host private endpoints, which are connected to <Constant name="cloud" /> instance environments. This connectivity allows for <Constant name="cloud" /> environments to connect to any supported region from any <Constant name="cloud" /> instance within the same cloud provider network. To ensure security, access to these endpoints is protected by security groups, network policies, and application connection safeguards, in addition to the authentication and authorization mechanisms provided by each of the connected platforms.
+dbt Labs использует глобально связанные приватные сети, специально предназначенные для размещения приватных эндпоинтов, которые подключены к средам экземпляров <Constant name="cloud" />. Такая связность позволяет средам <Constant name="cloud" /> подключаться к любому поддерживаемому региону из любого экземпляра <Constant name="cloud" /> в рамках сети одного и того же облачного провайдера. Для обеспечения безопасности доступ к этим эндпоинтам защищён с помощью security groups, сетевых политик и механизмов защиты соединений на уровне приложения, в дополнение к механизмам аутентификации и авторизации, предоставляемым каждой из подключённых платформ.
 
-### Configuring private connections
+### Настройка приватных подключений
 
-<Constant name="cloud" /> supports the following data platforms for use with the private connections feature. Instructions for enabling private connections for the various data platform providers are unique. The following guides will walk you through the necessary steps, including working with [dbt Support](/community/resources/getting-help#dbt-cloud-support) to complete the connection in the dbt private network and setting up the endpoint in <Constant name="cloud" />.
+<Constant name="cloud" /> поддерживает следующие платформы данных для использования с функцией приватных подключений. Инструкции по включению приватных подключений для различных провайдеров платформ данных отличаются. Следующие руководства проведут вас через необходимые шаги, включая взаимодействие с [поддержкой dbt](/community/resources/getting-help#dbt-cloud-support) для завершения подключения в приватной сети dbt и настройку эндпоинта в <Constant name="cloud" />.
 
 #### AWS
 - [Snowflake](/docs/cloud/secure/snowflake-privatelink)

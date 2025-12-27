@@ -1,65 +1,65 @@
 ---
-title: "Connect Onehouse"
+title: "Подключение Onehouse"
 id: connect-onehouse
-sidebar_label: "Connect Onehouse"
-description: "Setup instructions for connecting Onehouse to dbt"
+sidebar_label: "Подключение Onehouse"
+description: "Инструкции по настройке подключения Onehouse к dbt"
 pagination_next: null
 ---
 
 
-<Constant name="cloud" /> supports connecting to [Onehouse SQL](https://www.onehouse.ai/product/quanton) using the Apache Spark Connector with the Thrift method.
+<Constant name="cloud" /> поддерживает подключение к [Onehouse SQL](https://www.onehouse.ai/product/quanton) с использованием Apache Spark Connector через метод Thrift.
 
 :::note
-Connect to a Onehouse SQL Cluster with the [dbt-spark](/docs/cloud/connect-data-platform/connect-apache-spark) adapter.**
+Подключайтесь к Onehouse SQL Cluster с помощью адаптера [dbt-spark](/docs/cloud/connect-data-platform/connect-apache-spark).**
 :::
 
-## Requirements
+## Требования
 
-* For <Constant name="cloud" />, ensure your Onehouse SQL endpoint is accessible via external DNS/IP, whitelisting <Constant name="cloud" /> IPs.
+* Для <Constant name="cloud" /> убедитесь, что ваш Onehouse SQL endpoint доступен через внешний DNS/IP, и выполнена настройка whitelisting IP-адресов <Constant name="cloud" />.
 
-## What works 
+## Что работает 
 
-* All dbt Commands, including: `dbt clean`, `dbt compile`, `dbt debug`, `dbt seed`, and `dbt run`.
-* dbt materializations: `table` and `incremental`
-* Apache Hudi table types of Merge on Read (MoR) and Copy on Write (CoW). It is recommended to use MoR for mutable workloads.
+* Все команды dbt, включая: `dbt clean`, `dbt compile`, `dbt debug`, `dbt seed` и `dbt run`.
+* Материализации dbt: `table` и `incremental`
+* Типы таблиц Apache Hudi: Merge on Read (MoR) и Copy on Write (CoW). Для изменяемых (mutable) нагрузок рекомендуется использовать MoR.
 
-## Limitations
+## Ограничения
 
-* Views are not supported
-* `dbt seed` has row / record limits.
-* `dbt seed` only supports Copy on Write tables.
+* Представления (views) не поддерживаются
+* Для `dbt seed` существуют ограничения по количеству строк / записей.
+* `dbt seed` поддерживает только таблицы Copy on Write.
 
-## dbt connection
+## Подключение dbt
 
-Fill in the following fields when creating an **Apache Spark** warehouse connection using the Thrift connection method:
+При создании подключения **Apache Spark** с использованием метода Thrift заполните следующие поля:
 
 | Field | Description | Examples |
 | ----- | ----------- | -------- |
-| Method | The method for connecting to Spark | Thrift |
-| Hostname | The hostname of your Onehouse SQL Cluster endpoint | `yourProject.sparkHost.com` |
-| Port | The port to connect to Spark on | 10000 |
-| Cluster | Onehouse does not use this field | |
-| Connection Timeout | Number of seconds after which to timeout a connection | 10 |
-| Connection Retries | Number of times to attempt connecting to cluster before failing | 0 |
-| Organization | Onehouse does not use this field | |
-| User | Optional. Not enabled by default. | dbt_cloud_user |
-| Auth | Optional, supply if using Kerberos. Not enabled by default. | `KERBEROS` |
-| Kerberos Service Name | Optional, supply if using Kerberos. Not enabled by default. | `hive` |
+| Method | Метод подключения к Spark | Thrift |
+| Hostname | Имя хоста endpoint’а вашего Onehouse SQL Cluster | `yourProject.sparkHost.com` |
+| Port | Порт для подключения к Spark | 10000 |
+| Cluster | Onehouse не использует это поле | |
+| Connection Timeout | Количество секунд до таймаута соединения | 10 |
+| Connection Retries | Количество попыток подключения к кластеру перед ошибкой | 0 |
+| Organization | Onehouse не использует это поле | |
+| User | Необязательно. По умолчанию не включено. | dbt_cloud_user |
+| Auth | Необязательно, укажите при использовании Kerberos. По умолчанию не включено. | `KERBEROS` |
+| Kerberos Service Name | Необязательно, укажите при использовании Kerberos. По умолчанию не включено. | `hive` |
 
-<Lightbox src="/img/onehouse/onehouse-dbt.png" width="70%" title="Onehouse configuration"/>
+<Lightbox src="/img/onehouse/onehouse-dbt.png" width="70%" title="Конфигурация Onehouse"/>
 
 ## dbt project
 
-We recommend that you set default configurations on the dbt_project.yml to ensure that the adapter executes with Onehouse compatible sql
+Мы рекомендуем задать конфигурации по умолчанию в dbt_project.yml, чтобы адаптер выполнялся с SQL, совместимым с Onehouse.
 
 | Field | Description | Required | Default  | Recommended |
 | ----- | ----------- | -------- | -------- | -------- |
-| materialized | materialization the project/directory will default to | Yes | without input, `view`  |  `table` |
-| file_format | table format the project will default to  | Yes |  N/A | hudi   |
-| location_root | Location of the database in DFS | Yes | N/A  | `<your_database_location_dfs>`  |
-| hoodie.table.type | Merge on Read or Copy on Write | No | cow  | mor   |
+| materialized | Материализация, используемая по умолчанию для проекта/каталога | Yes | без указания — `view` | `table` |
+| file_format | Формат таблиц, используемый по умолчанию в проекте | Yes | N/A | hudi |
+| location_root | Расположение базы данных в DFS | Yes | N/A | `<your_database_location_dfs>` |
+| hoodie.table.type | Merge on Read или Copy on Write | No | cow | mor |
 
-dbt_project.yml template
+Шаблон dbt_project.yml
 
 ```yml
       +materialized: table | incremental
@@ -69,7 +69,7 @@ dbt_project.yml template
          hoodie.table.type: mor | cow
 ```
 
-A dbt_project.yml example if using jaffle shop would be
+Пример dbt_project.yml при использовании jaffle shop:
 ```sql
 models:
   jaffle_shop:
@@ -82,5 +82,3 @@ models:
     marts:
       +materialized: table
 ```
-
-

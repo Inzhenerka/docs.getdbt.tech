@@ -1,174 +1,171 @@
 ---
-title: "Set up Azure DevOps"
+title: "Настройка Azure DevOps"
 id: "setup-service-principal"
-description: "You can set up your Azure DevOps by creating a Microsoft Entra ID app and adding it to dbt."
-sidebar_label: "Set up service principal"
+description: "Вы можете настроить Azure DevOps, создав приложение Microsoft Entra ID и добавив его в dbt."
+sidebar_label: "Настройка service principal"
 ---
 
-# Set up Azure DevOps <Lifecycle status="managed,managed_plus" />
+# Настройка Azure DevOps <Lifecycle status="managed,managed_plus" />
 
-## Service principal overview
+## Обзор service principal
 
 :::note
 
-If this is your first time setting up an Entra app as a service principal, refer to the [Microsoft documentation](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) for any prerequisite steps you may need to take to prepare. 
+Если вы впервые настраиваете приложение Entra как service principal, ознакомьтесь с [документацией Microsoft](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) и выполните необходимые предварительные шаги для подготовки среды.
 
 :::
 
-To use <Constant name="cloud" />'s native integration with Azure DevOps, an account admin needs to set up a Microsoft Entra ID app as a service principal. We recommend setting up a separate [Entra ID application than used for SSO](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id).
+Чтобы использовать нативную интеграцию <Constant name="cloud" /> с Azure DevOps, администратору аккаунта необходимо настроить приложение Microsoft Entra ID в качестве service principal. Мы рекомендуем настраивать [отдельное приложение Entra ID, не то, которое используется для SSO](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id).
 
-The application's service principal represents the Entra ID application object. While a "service user" represents a real user in Azure with an Entra ID (and an applicable license), the "service principal" is a secure identity used by an application to access Azure resources unattended. The service principal authenticates with a client ID and secret rather than a username and password (or any other form of user auth). Service principals are the [Microsoft recommended method](https://learn.microsoft.com/en-us/entra/architecture/secure-service-accounts#types-of-microsoft-entra-service-accounts) for authenticating apps. 
+Service principal приложения представляет собой объект приложения Entra ID. В то время как «service user» представляет реального пользователя в Azure с Entra ID (и соответствующей лицензией), «service principal» — это защищённая идентификация, используемая приложением для неинтерактивного доступа к ресурсам Azure. Service principal проходит аутентификацию с помощью client ID и секрета, а не имени пользователя и пароля (или других форм пользовательской аутентификации). Service principal — это [рекомендуемый Microsoft способ](https://learn.microsoft.com/en-us/entra/architecture/secure-service-accounts#types-of-microsoft-entra-service-accounts) аутентификации приложений.
 
+1. [Зарегистрировать приложение Entra ID](#register-a-microsoft-entra-id-app).
+2. [Подключить Azure DevOps к новому приложению](#connect-azure-devops-to-your-new-app).
+3. [Добавить приложение Entra ID в <Constant name="cloud" />](#connect-your-microsoft-entra-id-app-to-dbt).
 
-1. [Register an Entra ID app](#register-a-microsoft-entra-id-app).
-2. [Connect Azure DevOps to your new app](#connect-azure-devops-to-your-new-app).
-3. [Add your Entra ID app to <Constant name="cloud" />](#connect-your-microsoft-entra-id-app-to-dbt).
+После добавления приложения Microsoft Entra ID в <Constant name="cloud" /> оно будет использоваться как [service principal](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser), который обеспечит выполнение headless-действий в <Constant name="cloud" />, таких как deployment runs и CI. Разработчики <Constant name="cloud" /> смогут затем персонально аутентифицироваться в <Constant name="cloud" /> через Azure DevOps. Подробнее см. [Аутентификация с Azure DevOps](/docs/cloud/git/authenticate-azure).
 
-Once the Microsoft Entra ID app is added to <Constant name="cloud" />, it will act as a [service principal](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser), which will be used to power headless actions in <Constant name="cloud" /> such as deployment runs and CI. The <Constant name="cloud" /> developers can then personally authenticate in <Constant name="cloud" /> from Azure DevOps. For more, see [Authenticate with Azure DevOps](/docs/cloud/git/authenticate-azure).
+Для выполнения шагов на этой странице требуются следующие роли:
+- администратор Microsoft Entra ID
+- администратор Azure DevOps
+- администратор аккаунта <Constant name="cloud" />
+- администратор Azure (если среды Entra ID и Azure DevOps не связаны)
 
-The following personas are required to complete the steps on this page:
-- Microsoft Entra ID admin
-- Azure DevOps admin
-- <Constant name="cloud" /> account admin
-- Azure admin (if your Entra ID and Azure DevOps environments are not connected)
+## Регистрация приложения Microsoft Entra ID
 
-## Register a Microsoft Entra ID app
+Администратор Microsoft Entra ID должен выполнить следующие шаги:
 
-A Microsoft Entra ID admin needs to perform the following steps:
+1. Войдите в портал Azure и выберите **Microsoft Entra ID**.
+2. В левой панели выберите **App registrations**.
+3. Нажмите **New registration**. Откроется форма создания нового приложения Entra ID.
+4. Укажите имя приложения. Мы рекомендуем использовать «dbt Labs Azure DevOps app».
+5. В качестве Supported Account Types выберите **Accounts in any organizational directory (Any Entra ID directory - Multitenant)**.  
+   Многие пользователи задаются вопросом, почему нужно выбирать Multitenant вместо Single Tenant, и часто ошибаются на этом шаге. Microsoft рассматривает Azure DevOps (ранее Visual Studio) и Microsoft Entra ID как разные тенанты, поэтому для корректной работы приложения Entra ID необходимо выбрать Multitenant.
+6. Установите **Redirect URI** в значение **Web**. Скопируйте Redirect URI из <Constant name="cloud" /> и вставьте его в соответствующее поле. Чтобы найти Redirect URI в <Constant name="cloud" />:
+    1. В <Constant name="cloud" /> перейдите в **Account Settings** -> **Integrations**.
+    2. Нажмите на **иконку редактирования** рядом с **Azure DevOps**.
+    3. Скопируйте первое значение **Redirect URIs**, которое выглядит как `https://<YOUR_ACCESS_URL>/complete/azure_active_directory` и **не** оканчивается на `service_user`.
+7. Нажмите **Register**.
 
-1. Sign into your Azure portal and click **Microsoft Entra ID**.
-2. Select **App registrations** in the left panel.
-3. Select **New registration**. The form for creating a new Entra ID app opens.
-4. Provide a name for your app. We recommend using, "dbt Labs Azure DevOps app".
-5. Select **Accounts in any organizational directory (Any Entra ID directory - Multitenant)** as the Supported Account Types.
-Many customers ask why they need to select Multitenant instead of Single Tenant, and they frequently get this step wrong. Microsoft considers Azure DevOps (formerly called Visual Studio) and Microsoft Entra ID separate tenants, and for the Entra ID application to work properly, you must select Multitenant.
-6. Set **Redirect URI** to **Web**. Copy and paste the Redirect URI from <Constant name="cloud" /> into the next field.  To find the Redirect URI in <Constant name="cloud" />:
-    1. In <Constant name="cloud" />, navigate to **Account Settings** -> **Integrations**.
-    2. Click the **edit icon** next to **Azure DevOps**.
-    3. Copy the first **Redirect URIs** value which looks like `https://<YOUR_ACCESS_URL>/complete/azure_active_directory` and does NOT end with `service_user`.
-7. Click **Register**.
+Перед регистрацией приложение должно выглядеть следующим образом:
 
-Here's what your app should look like before registering it:
+<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/AD app.png" title="Регистрация приложения Microsoft Entra ID"/>
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/AD app.png" title="Registering a Microsoft Entra ID app"/>
+## Создание client secret
 
-## Create a client secret
+Администратор Microsoft Entra ID должен выполнить следующие шаги:
 
-A Microsoft Entra ID admin needs to complete the following steps:
+1. Перейдите в **Microsoft Entra ID**, выберите **App registrations** и откройте ваше приложение.
+2. В левой панели навигации выберите **Certificates and Secrets**.
+3. Выберите **Client secrets** и нажмите **New client secret**.
+4. Укажите описание секрета и срок действия. Нажмите **Add**.
+5. Скопируйте значение поля **Value** и безопасно передайте его администратору аккаунта <Constant name="cloud" />, который завершит настройку.
 
-1. Navigate to **Microsoft Entra ID**, click **App registrations**, and click on your app.
-2. Select **Certificates and Secrets** from the left navigation panel.
-3. Select **Client secrets** and click **New client secret**
-4. Give the secret a description and select the expiration time. Click **Add**.
-5. Copy the **Value** field and securely share it with the <Constant name="cloud" /> account admin, who will complete the setup. 
+## Создание service principal для приложения
 
-## Create the app's service principal
+После создания приложения необходимо проверить, существует ли для него service principal. Во многих случаях, если подобная настройка выполнялась ранее, новые приложения получают service principal автоматически при создании.
 
-After you've created the app, you need to verify whether it has a service principal. In many cases, if this has been configured before, new apps will get one assigned upon creation.
+1. Перейдите в **Microsoft Entra ID**.
+2. В разделе **Manage** в левом меню выберите **App registrations**.
+3. Откройте приложение для интеграции <Constant name="cloud" /> и Azure DevOps.
+4. Найдите поле **Managed application in local directory** и, если доступна соответствующая опция, нажмите **Create Service Principal**. Если поле уже заполнено, значит service principal уже создан.
 
-1. Navigate to **Microsoft Entra ID**.
-2. Under **Manage** on the left-side menu, click **App registrations**.
-3. Click the app for the <Constant name="cloud" /> and Azure DevOps integration.
-4. Locate the **Managed application in local directory** field and, if it has the option, click **Create Service Principal**. If the field is already populated, a service principal has already been assigned.  
+    <Lightbox src="/img/docs/cloud-integrations/create-service-principal.png" width="80%" title="Пример с выделенной опцией «Create Service Principal»."/>
 
-    <Lightbox src="/img/docs/cloud-integrations/create-service-principal.png" width="80%" title="Example of the 'Create Service Principal' option highlighted ."/>
+## Добавление разрешений для service principal
 
-## Add permissions to your service principal
+Администратор Entra ID должен предоставить новому приложению доступ к Azure DevOps:
 
-An Entra ID admin needs to provide your new app access to Azure DevOps:
+1. В левой панели навигации выберите **API permissions**.
+2. Удалите разрешение **Microsoft Graph / User Read**.
+3. Нажмите **Add a permission**.
+4. Выберите **Azure DevOps**.
+5. Выберите разрешение **user_impersonation**. Это единственное доступное разрешение для Azure DevOps.
 
-1. Select **API permissions** in the left navigation panel.
-2. Remove the **Microsoft Graph / User Read** permission.
-3. Click **Add a permission**.
-4. Select **Azure DevOps**.
-5. Select the **user_impersonation** permission. This is the only permission available for Azure DevOps.
+## Подключение Azure DevOps к новому приложению
 
-## Connect Azure DevOps to your new app
-
-An Azure admin will need one of the following permissions in both the Microsoft Entra ID and Azure DevOps environments:
+Администратору Azure потребуется одна из следующих ролей как в Microsoft Entra ID, так и в Azure DevOps:
 - Azure Service Administrator
 - Azure Co-administrator
 
 :::note
 
-You can only add a managed identity or service principal for the tenant to which your organization is connected. You need to add a directory to your organization so that it can access all the service principals and other identities.
-Navigate to **Organization settings** --> **Microsoft Entra** --> **Connect Directory** to connect.
+Вы можете добавить managed identity или service principal только для того тенанта, к которому подключена ваша организация. Необходимо добавить директорию в организацию, чтобы она имела доступ ко всем service principal и другим идентификациям.  
+Перейдите в **Organization settings** --> **Microsoft Entra** --> **Connect Directory**, чтобы выполнить подключение.
 
 :::
 
-1. From your Azure DevOps account organization screen, click **Organization settings** in the bottom left.
-2. Under **General** settings, click **Users**.
-3. Click **Add users**, and in the resulting panel, enter the service principal's name in the first field. Then, click the name when it appears below the field.
-4. In the **Add to projects** field, click the boxes for any projects you want to include (or select all).
-5. Set the **Azure DevOps Groups** to **Project Administrator**.
+1. На экране организации Azure DevOps нажмите **Organization settings** в левом нижнем углу.
+2. В разделе **General** выберите **Users**.
+3. Нажмите **Add users** и в появившейся панели введите имя service principal в первом поле. Затем выберите его из выпадающего списка.
+4. В поле **Add to projects** отметьте проекты, которые нужно включить (или выберите все).
+5. В поле **Azure DevOps Groups** выберите **Project Administrator**.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/add-service-principal.png" width="80%" title="Example setup with the service principal added as a user."/>
+<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/add-service-principal.png" width="80%" title="Пример настройки с добавленным service principal в качестве пользователя."/>
 
-## Connect your Microsoft Entra ID app to dbt
+## Подключение приложения Microsoft Entra ID к dbt
 
-A <Constant name="cloud" /> account admin must take the following actions.
+Администратор аккаунта <Constant name="cloud" /> должен выполнить следующие действия.
 
-Once you connect your Microsoft Entra ID app and Azure DevOps, you must provide <Constant name="cloud" /> information about the app. If this is a first-time setup, you will create a new configuration. If you are [migrating from a service user](#migrate-to-service-principal), you can edit an existing configuration and change it to **Service principal**.
+После подключения приложения Microsoft Entra ID и Azure DevOps необходимо предоставить <Constant name="cloud" /> информацию о приложении. Если это первичная настройка, вы создадите новую конфигурацию. Если вы [мигрируете с service user](#migrate-to-service-principal), вы можете отредактировать существующую конфигурацию и изменить её на **Service principal**.
 
+Чтобы создать конфигурацию:
+1. Перейдите в настройки аккаунта в <Constant name="cloud" />.
+2. Выберите **Integrations**.
+3. Прокрутите до раздела Azure DevOps и нажмите **иконку редактирования**.
+4. Выберите опцию **Service principal** (конфигурации service user при необходимости автоматически заполнят поля).
+5. Заполните или отредактируйте форму (при миграции существующие значения сохраняются):
+    - **Azure DevOps Organization:** Должно точно совпадать с именем вашей организации Azure DevOps. Не указывайте префикс `dev.azure.com/`. ✅ Используйте `my-DevOps-org` ❌ Не используйте `dev.azure.com/my-DevOps-org`
+    - **Application (client) ID:** Указывается из приложения Microsoft Entra ID.
+    - **Client Secret:** Скопируйте значение поля **Value** из client secrets приложения Microsoft Entra ID и вставьте его в поле **Client Secret** в <Constant name="cloud" />. Администраторы Entra ID отвечают за срок действия секрета, а администраторы dbt должны зафиксировать дату истечения для последующей ротации.
+    - **Directory(tenant) ID:** Указывается из приложения Microsoft Entra ID.
+        <Lightbox src="/img/docs/cloud-integrations/service-principal-fields.png" title="Поля для добавления приложения Entra ID в dbt."/>
 
-To create the configuration: 
-1. Navigate to your account settings in <Constant name="cloud" />.
-2. Select **Integrations**.
-3. Scroll to the Azure DevOps section and click the **Edit icon**.
-4. Select the **Service principal** option (service user configurations will auto-complete the fields, if applicable).
-5. Complete/edit the form (if you are migrating, the existing configurations carry over):
-    - **Azure DevOps Organization:** Must match the name of your Azure DevOps organization exactly. Do not include the `dev.azure.com/` prefix in this field. ✅ Use `my-DevOps-org` ❌ Avoid `dev.azure.com/my-DevOps-org`
-    - **Application (client) ID:** Found in the Microsoft Entra ID app.
-    - **Client Secret**: Copy the **Value** field in the Microsoft Entra ID app client secrets and paste it into the **Client Secret** field in <Constant name="cloud" />. Entra ID admins are responsible for the expiration of the app secret, and dbt Admins should note the expiration date for rotation.
-    - **Directory(tenant) ID:** Found in the Microsoft Entra ID app.
-        <Lightbox src="/img/docs/cloud-integrations/service-principal-fields.png" title="Fields for adding Entra ID app to dbt."/>
+Теперь приложение Microsoft Entra ID должно быть добавлено в ваш аккаунт <Constant name="cloud" />. Участники вашей команды, которые хотят работать в <Constant name="cloud_ide" /> или CLI <Constant name="cloud" />, могут персонально [авторизовать Azure DevOps из своих профилей](/docs/cloud/git/authenticate-azure).
 
-Your Microsoft Entra ID app should now be added to your <Constant name="cloud" /> Account. People on your team who want to develop in the <Constant name="cloud_ide" /> or <Constant name="cloud" /> CLI can now personally [authorize Azure DevOps from their profiles](/docs/cloud/git/authenticate-azure).
+## Миграция на service principal
 
+Выполните миграцию с service user на service principal, используя существующее приложение. Это займёт всего несколько шагов и не приведёт к перерывам в работе сервиса.
 
-## Migrate to service principal
+- Проверьте, существует ли у приложения service principal
+    - Если нет — создайте service principal для приложения
+- Обновите конфигурацию приложения
+- Обновите конфигурацию в <Constant name="cloud" />
 
-Migrate from a service user to a service principal using the existing app. It will only take a few steps, and you won't experience any service disruptions. 
+### Проверка service principal
 
-- Verify whether or not your app has a service principal
-    - If not, create the app service principal
-- Update the application's configuration
-- Update the configuration in <Constant name="cloud" />
+Для выполнения этих шагов потребуется администратор Entra ID.
 
-### Verify the service principal
+Чтобы проверить, есть ли у существующего приложения service principal:
 
-You will need an Entra ID admin to complete these steps.
+1. В аккаунте Azure перейдите в **Microsoft Entra ID** -> **Manage** -> **App registrations**.
+2. Откройте приложение, используемое для интеграции service user с <Constant name="cloud" />.
+3. Проверьте, заполнено ли поле **Managed application in local directory**.
+    - Если имя указано: service principal уже создан. Перейдите к шагу 4.
+    - Если имя отсутствует: перейдите к следующему разделу [Создание service principal](#create-the-service-principal).
+4. Следуйте инструкциям по [добавлению разрешений](#add-permissions-to-your-service-principal) для service principal.
+5. Следуйте инструкциям по [подключению DevOps к приложению](#connect-azure-devops-to-your-new-app).
+6. В аккаунте <Constant name="cloud" />:
+    1. Перейдите в **Account settings** и выберите **Integrations**
+    2. Нажмите **иконку редактирования** справа от настроек **Azure DevOps**
+    3. Измените **Service user** на **Service principal** и нажмите **Save**. Изменять существующие поля не требуется.
 
-To confirm whether your existing app already has a service principal:
- 
-1. In the Azure account, navigate to **Microsoft Entra ID** -> **Manage** -> **App registrations**.
-2. Click on the application for the service user integration with <Constant name="cloud" />. 
-3. Verify whether a name populates the **Managed application in local directory** field. 
-    - If a name exists: The service principal has been created. Move on to step 4.
-    - If no name exists: Go to the next section, [Create the service principal](#create-the-service-principal).
-4. Follow the instructions to [add permissions](#add-permissions-to-your-service-principal) to your service principal.
-5. Follow the instructions to [connect DevOps to your app](#connect-azure-devops-to-your-new-app).
-6. In your <Constant name="cloud" /> account:
-    1. Navigate to **Account settings** and click **Integrations**
-    2. Click the **edit icon** to the right of the **Azure DevOps** settings.
-    3. Change **Service user** to **Service principal** and click **Save**. You do not need to edit any existing fields.
+### Создание service principal
 
-### Create the service principal
+Если поле не заполнено, service principal не существует. Чтобы настроить service principal, выполните следующие инструкции.
 
-If there is no name populating that field, a Service Principal does not exist. To configure a Service Principal, please review the instructions here.
+Если у приложения <Constant name="cloud" /> нет service principal, выполните следующие действия в аккаунте Azure:
 
-If your <Constant name="cloud" /> app does not have a service principal, take the following actions in your Azure account:
+1. Перейдите в **Microsoft Entra ID**.
+2. В разделе **Manage** в левом меню выберите **App registrations**.
+3. Откройте приложение для интеграции <Constant name="cloud" /> и Azure DevOps.
+4. Найдите поле **Managed application in local directory** и нажмите **Create Service Principal**.
 
-1. Navigate to **Microsoft Entra ID**.
-2. Under **Manage** on the left-side menu, click **App registrations**.
-3. Click the app for the <Constant name="cloud" /> and Azure DevOps integration.
-4. Locate the **Managed application in local directory** field and click **Create Service Principal**. 
+    <Lightbox src="/img/docs/cloud-integrations/create-service-principal.png" width="80%" title="Пример с выделенной опцией «Create Service Principal»."/>
 
-    <Lightbox src="/img/docs/cloud-integrations/create-service-principal.png" width="80%" title="Example of the 'Create Service Principal' option highlighted ."/>
-
-5. Follow the instructions to [add permissions](#add-permissions-to-your-service-principal) to your service principal.
-6. Follow the instructions to [connect DevOps to your app](#connect-azure-devops-to-your-new-app).
-7. In your <Constant name="cloud" /> account:
-    1. Navigate to **Account settings** and click **Integrations**
-    2. Click the **edit icon** to the right of the **Azure DevOps** settings.
-    3. Change **Service user** to **Service principal** and click **Save**. You do not need to edit any existing fields.
+5. Следуйте инструкциям по [добавлению разрешений](#add-permissions-to-your-service-principal) для service principal.
+6. Следуйте инструкциям по [подключению DevOps к приложению](#connect-azure-devops-to-your-new-app).
+7. В аккаунте <Constant name="cloud" />:
+    1. Перейдите в **Account settings** и выберите **Integrations**
+    2. Нажмите **иконку редактирования** справа от настроек **Azure DevOps**
+    3. Измените **Service user** на **Service principal** и нажмите **Save**. Изменять существующие поля не требуется.

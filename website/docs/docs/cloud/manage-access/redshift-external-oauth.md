@@ -1,243 +1,234 @@
 ---
-title: "Set up external OAuth for Redshift"
+title: "Настройка внешнего OAuth для Redshift"
 id: redshift-external-oauth
-description: "Configuration instructions for dbt and external OAuth connections with Redshift"
-sidebar_label: "Set up external OAuth with Redshift"
+description: "Инструкции по настройке dbt и внешних OAuth-подключений с Redshift"
+sidebar_label: "Настройка внешнего OAuth с Redshift"
 pagination_next: null
 pagination_prev: null
 ---
 
-# Set up external OAuth with Redshift <Lifecycle status="managed, managed_plus" />
+# Настройка внешнего OAuth с Redshift <Lifecycle status="managed, managed_plus" />
 
 import AboutExternal from '/snippets/_about-external-oauth.md';
 
 <AboutExternal/>
 
-## Getting started
+## Начало работы
 
-The process of setting up external OAuth will require a little bit of back-and-forth between your <Constant name="cloud" />, IdP, and data warehouse accounts, and having them open in multiple browser tabs will help speed up the configuration process:
+Процесс настройки внешнего OAuth потребует некоторого взаимодействия между вашими аккаунтами <Constant name="cloud" />, IdP и хранилища данных. Чтобы ускорить процесс конфигурации, рекомендуется держать их открытыми в нескольких вкладках браузера:
 
-- **<Constant name="cloud" />:** You’ll primarily be working in the **Account settings** —> **Integrations** page. You will need [proper permission](/docs/cloud/manage-access/enterprise-permissions) to set up the integration and create the connections.
-- **Identity providers:**
-   - **Okta:** You’ll be working in multiple areas of the Okta account, but you can start in the **Applications** section. You will need permissions to [create an application](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Application_permissions) and an [authorization server](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Authorization_server_permissions).
-   - **Entra ID** An admin with access to create [Entra ID apps](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/custom-available-permissions) who is also a user in the data warehouse is required. 
-- **Data warehouse:**
-   - **Redshift:** Create and manage the [Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with your identity provider.
+- **<Constant name="cloud" />:** Основная работа будет в разделе **Account settings** —> **Integrations**. Для настройки интеграции и создания подключений вам потребуются [соответствующие права доступа](/docs/cloud/manage-access/enterprise-permissions).
+- **Провайдеры идентификации (Identity providers):**
+   - **Okta:** Вам предстоит работать в нескольких разделах аккаунта Okta, но начать можно с раздела **Applications**. Потребуются права на [создание приложения](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Application_permissions) и [authorization server](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Authorization_server_permissions).
+   - **Entra ID:** Требуется администратор с доступом к созданию [приложений Entra ID](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/custom-available-permissions), который также является пользователем в хранилище данных. 
+- **Хранилище данных:**
+   - **Redshift:** Создайте и управляйте интеграцией с [Identity Center](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) совместно с вашим провайдером идентификации.
 
-If the admins that handle these products are all different people, it’s better to have them coordinating simultaneously to reduce friction.
+Если администраторы, отвечающие за эти продукты, — разные люди, лучше координировать работу одновременно, чтобы снизить трение в процессе настройки.
 
-Ensure your Amazon admins have completed the [Amazon Identity Center integration](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) with Okta or Entra ID.
+Убедитесь, что ваши администраторы Amazon завершили интеграцию [Amazon Identity Center](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) с Okta или Entra ID.
 
+## Конфигурация провайдера идентификации
 
-## Identity provider configuration
-
-Select a supported identity provider (IdP) for instructions on configuring external OAuth in their environment and completing the integration in <Constant name="cloud" />:
+Выберите поддерживаемого провайдера идентификации (IdP), чтобы получить инструкции по настройке внешнего OAuth в его среде и завершению интеграции в <Constant name="cloud" />:
 
 <Tabs>
 
 <TabItem value="Okta">
 
-### 1. Initialize the dbt settings
+### 1. Инициализация настроек dbt
 
-1. In your <Constant name="cloud" /> account, navigate to **Account settings** —> **Integrations**.
-2. Scroll down to **Custom integrations** and click **Add integrations**
-3. Leave this window open. You can set the **Integration type** to Okta and note the **Redirect URI** at the bottom of the page. Copy this to your clipboard for use in the next steps.
+1. В вашем аккаунте <Constant name="cloud" /> перейдите в **Account settings** —> **Integrations**.
+2. Прокрутите страницу до раздела **Custom integrations** и нажмите **Add integrations**.
+3. Оставьте это окно открытым. Установите **Integration type** в значение Okta и обратите внимание на **Redirect URI** в нижней части страницы. Скопируйте его в буфер обмена — он понадобится на следующих шагах.
 
-<Lightbox src="/img/docs/dbt-cloud/callback-uri.png" width="60%" title="Copy the callback URI at the bottom of the integration page in dbt." />
+<Lightbox src="/img/docs/dbt-cloud/callback-uri.png" width="60%" title="Скопируйте callback URI в нижней части страницы интеграции в dbt." />
 
-### 2. Create the Okta app
+### 2. Создание приложения Okta
 
-1. Expand the **Applications** section from the Okta dashboard and click **Applications.** Click the **Create app integration** button.
-2. Select **OIDC** as the sign-in method and **Web applications** as the application type. Click **Next**.
+1. В панели управления Okta раскройте раздел **Applications** и нажмите **Applications**. Затем нажмите кнопку **Create app integration**.
+2. Выберите **OIDC** в качестве метода входа и **Web applications** в качестве типа приложения. Нажмите **Next**.
 
-<Lightbox src="/img/docs/dbt-cloud/create-okta-app.png" width="60%" title="The Okta app creation window with OIDC and Web Application selected." />
+<Lightbox src="/img/docs/dbt-cloud/create-okta-app.png" width="60%" title="Окно создания приложения Okta с выбранными OIDC и Web Application." />
 
-3. Give the application an appropriate name, something like “External OAuth app for <Constant name="cloud" />,” that will make it easily identifiable.
-4. In the **Grant type** section, enable the **Refresh token** option.
-5. Scroll down to the **Sign-in redirect URIs** option. You’ll need to paste the redirect URI you gathered from <Constant name="cloud" /> in step 1.3.
+3. Задайте приложению понятное имя, например “External OAuth app for <Constant name="cloud" />”, чтобы его было легко идентифицировать.
+4. В разделе **Grant type** включите опцию **Refresh token**.
+5. Прокрутите страницу до параметра **Sign-in redirect URIs**. Вставьте redirect URI, полученный из <Constant name="cloud" /> на шаге 1.3.
 
-<Lightbox src="/img/docs/dbt-cloud/configure-okta-app.png" width="60%" title="The Okta app configuration window with the sign-in redirect URI configured to the dbt value." />
+<Lightbox src="/img/docs/dbt-cloud/configure-okta-app.png" width="60%" title="Окно конфигурации приложения Okta с настроенным sign-in redirect URI." />
 
-6. Save the app configuration. You’ll come back to it, but move on to the next steps for now.
+6. Сохраните конфигурацию приложения. Вы вернетесь к нему позже, а пока переходите к следующим шагам.
 
-### 3. Create the Okta API
+### 3. Создание Okta API
 
-1. Expand the **Security** section and click **API** from the Okta sidebar menu.
-2. On the API screen, click **Add authorization server**. Give the authorization server a name (a nickname for your data warehouse account would be appropriate). For the **Audience** field, copy and paste your data warehouse login URL. Give the server an appropriate description and click **Save**.
+1. Раскройте раздел **Security** и выберите **API** в боковом меню Okta.
+2. На экране API нажмите **Add authorization server**. Задайте имя authorization server (подойдет псевдоним вашего аккаунта хранилища данных). В поле **Audience** скопируйте и вставьте URL входа в хранилище данных. Добавьте описание и нажмите **Save**.
 
-<Lightbox src="/img/docs/dbt-cloud/create-okta-api.png" width="60%" title="The Okta API window with the Audience value set." />
+<Lightbox src="/img/docs/dbt-cloud/create-okta-api.png" width="60%" title="Окно Okta API с заданным значением Audience." />
 
-3. On the authorization server config screen, open the **Metadata URI** in a new tab. You’ll need information from this screen in later steps.
+3. На экране конфигурации authorization server откройте **Metadata URI** в новой вкладке. Информация с этой страницы понадобится на следующих шагах.
 
-<Lightbox src="/img/docs/dbt-cloud/metadata-uri.png" width="60%" title="The Okta API settings page with the metadata URI highlighted." />
+<Lightbox src="/img/docs/dbt-cloud/metadata-uri.png" width="60%" title="Страница настроек Okta API с выделенным metadata URI." />
 
-<Lightbox src="/img/docs/dbt-cloud/metadata-example.png" width="60%" title="Sample output of the metadata URI." />
+<Lightbox src="/img/docs/dbt-cloud/metadata-example.png" width="60%" title="Пример вывода metadata URI." />
 
-4. Click on the **Scopes** tab and **Add scope**. In the **Name** field, add `session:role-any`. (Optional) Configure **Display phrase** and **Description** and click **Create**.
+4. Перейдите на вкладку **Scopes** и нажмите **Add scope**. В поле **Name** укажите `session:role-any`. (Необязательно) Настройте **Display phrase** и **Description**, затем нажмите **Create**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-api-scope.png" width="60%" title="API scope configured in the Add Scope window." />
+<Lightbox src="/img/docs/dbt-cloud/add-api-scope.png" width="60%" title="Настройка API scope в окне Add Scope." />
 
-5. Open the **Access policies** tab and click **Add policy**. Give the policy a **Name** and **Description** and set **Assign to** as **The following clients**. Start typing the name of the app you created in step 2.3, and you’ll see it autofill. Select the app and click **Create Policy**.
+5. Откройте вкладку **Access policies** и нажмите **Add policy**. Укажите **Name** и **Description**, а в поле **Assign to** выберите **The following clients**. Начните вводить имя приложения, созданного на шаге 2.3 — оно подставится автоматически. Выберите приложение и нажмите **Create Policy**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-api-assignment.png" width="60%" title="Assignment field autofilling the value." />
+<Lightbox src="/img/docs/dbt-cloud/add-api-assignment.png" width="60%" title="Поле Assignment с автоматически подставленным значением." />
 
-6. On the **access policy** screen, click **Add rule**.
+6. На экране **access policy** нажмите **Add rule**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-api-rule.png" width="60%" title="API Add rule button highlighted." />
+<Lightbox src="/img/docs/dbt-cloud/add-api-rule.png" width="60%" title="Выделенная кнопка Add rule в API." />
 
-7. Give the rule a descriptive name and scroll down to **token lifetimes**. Configure the **Access token lifetime is**, **Refresh token lifetime is**, and **but will expire if not used every** settings according to your organizational policies. We recommend the defaults of 1 hour and 90 days. Stricter rules increase the odds of your users having to re-authenticate.
+7. Задайте правилу понятное имя и прокрутите страницу до раздела **token lifetimes**. Настройте параметры **Access token lifetime is**, **Refresh token lifetime is** и **but will expire if not used every** в соответствии с политиками вашей организации. Мы рекомендуем значения по умолчанию — 1 час и 90 дней. Более строгие правила увеличивают вероятность того, что пользователям придется чаще проходить повторную аутентификацию.
 
-<Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Token lifetime settings in the API rule window." />
+<Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Настройки времени жизни токенов в окне API rule." />
 
-8. Navigate back to the **Settings** tab and leave it open in your browser. You’ll need some of the information in later steps.
+8. Вернитесь на вкладку **Settings** и оставьте ее открытой в браузере — часть информации понадобится позже.
 
-### 4. Create the OAuth settings in the data warehouse
+### 4. Создание настроек OAuth в хранилище данных
 
-Ensure your Amazon admins have completed the Identity Center integration with Okta.
+Убедитесь, что администраторы Amazon завершили интеграцию Identity Center с Okta.
 
-Configure the Okta application and APIs in accordance with your Amazon configs.
+Настройте приложение Okta и API в соответствии с конфигурацией Amazon.
 
-### 5. Configuring the integration in dbt
+### 5. Настройка интеграции в dbt
 
-1. Navigate back to the <Constant name="cloud" /> **Account settings** —> **Integrations** page you were on at the beginning. It’s time to start filling out all of the fields.
-   1. `Integration name`: Give the integration a descriptive name that includes identifying information about the Okta environment so future users won’t have to guess where it belongs.
-   2. `Client ID` and `Client secrets`: Retrieve these from the Okta application page.
-   <Lightbox src="/img/docs/dbt-cloud/gather-clientid-secret.png" width="60%" title="The client ID and secret highlighted in the Okta app." />
-   3. Authorize URL and Token URL: Found in the metadata URI.
-   <Lightbox src="/img/docs/dbt-cloud/gather-authorization-token-endpoints.png" width="60%" title="The authorize and token URLs highlighted in the metadata URI." />
+1. Вернитесь на страницу <Constant name="cloud" /> **Account settings** —> **Integrations**, открытую в начале. Теперь заполните все поля.
+   1. `Integration name`: Укажите описательное имя интеграции, включающее информацию об окружении Okta, чтобы будущим пользователям не приходилось догадываться о ее назначении.
+   2. `Client ID` и `Client secrets`: Получите эти значения на странице приложения Okta.
+   <Lightbox src="/img/docs/dbt-cloud/gather-clientid-secret.png" width="60%" title="Client ID и secret, выделенные на странице приложения Okta." />
+   3. `Authorize URL` и `Token URL`: Эти значения можно найти в metadata URI.
+   <Lightbox src="/img/docs/dbt-cloud/gather-authorization-token-endpoints.png" width="60%" title="Authorize и token URLs, выделенные в metadata URI." />
 
-2. **Save** the configuration
+2. Нажмите **Save**, чтобы сохранить конфигурацию.
 
+### 6. Создание нового подключения в dbt
 
-### 6. Create a new connection in dbt
+1. Перейдите в **Account settings** и выберите **Connections** в меню. Нажмите **New connection**.
+2. Настройте `Account`, `Database` и `Warehouse` как обычно, а в поле `OAuth method` выберите созданный вами внешний OAuth.
 
+<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="Окно новой конфигурации в dbt с опцией External OAuth." />
 
-1. Navigate to **Account settings** and click **Connections** from the menu. Click **New connection**.
-2. Configure the `Account`, `Database`, and `Warehouse` as you normally would, and for the `OAuth method`, select the external OAuth you just created.
+3. Прокрутите страницу до блока **External OAuth** и выберите нужную конфигурацию из списка.
 
+<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="Новое подключение, отображаемое в блоке External OAuth Configurations." />
 
-<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="The new configuration window in dbt with the External OAuth showing as an option." />
-
-
-3. Scroll down to the **External OAuth** configurations box and select the config from the list.
-
-
-<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="The new connection displayed in the External OAuth Configurations box." />
-
-4. **Save** the connection, and you have now configured External OAuth with Okta!
+4. Нажмите **Save** — внешняя OAuth-аутентификация с Okta настроена!
 
 </TabItem>
 
 <TabItem value="Entra ID">
 
-### 1. Initialize the dbt settings
+### 1. Инициализация настроек dbt
 
-1. In your <Constant name="cloud" /> account, navigate to **Account settings** —> **Integrations**.
-2. Scroll down to **Custom integrations** and click **Add integrations**.
-3. Leave this window open. You can set the **Integration type** to Entra ID and note the **Redirect URI** at the bottom of the page. Copy this to your clipboard for use in the next steps.
+1. В вашем аккаунте <Constant name="cloud" /> перейдите в **Account settings** —> **Integrations**.
+2. Прокрутите страницу до **Custom integrations** и нажмите **Add integrations**.
+3. Оставьте это окно открытым. Установите **Integration type** в значение Entra ID и обратите внимание на **Redirect URI** внизу страницы. Скопируйте его для использования на следующих шагах.
 
-### 2. Create the Entra ID apps
+### 2. Создание приложений Entra ID
 
-You’ll create two apps in the Azure portal: A resource server and a client app.
+В портале Azure необходимо создать два приложения: resource server и client app.
 
-#### Create a resource server
+#### Создание resource server
 
-In your Entra ID account: 
+В вашем аккаунте Entra ID: 
 
-1. From the app registrations screen, click **New registration**.
-    1. Give the app a name.
-    2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
-    3. Click **Register** to see the application’s overview.
-2. From the app overview page left menu, click **Expose an API**.
-3. Click **Add** next to **Application ID URI**. The field will automatically populate. 
-4. Click **Save**.
+1. На странице регистрации приложений нажмите **New registration**.
+    1. Задайте имя приложения.
+    2. Убедитесь, что **Supported account types** установлено в значение “Accounts in this organizational directory only (`Org name` - Single Tenant).”
+    3. Нажмите **Register**, чтобы перейти к обзору приложения.
+2. В левом меню страницы обзора приложения выберите **Expose an API**.
+3. Нажмите **Add** рядом с **Application ID URI** — поле будет заполнено автоматически. 
+4. Нажмите **Save**.
 
-   <Lightbox src="/img/docs/dbt-cloud/create-resource-server.png" width="60%" title="Create the Entra ID resource server." />
+   <Lightbox src="/img/docs/dbt-cloud/create-resource-server.png" width="60%" title="Создание resource server в Entra ID." />
 
-5. Record the `value` field for use in a future step.
-6. From the same screen, click **Add scope**:
-    1. Name the scope `dbt-redshift`.
-    2. Set **Who can consent?** to **Admins and users**.
-    3. Set **Admin consent display name** to `dbt-redshift` and give it a description.
-    4. Ensure **State** is set to **Enabled**.
-    5. Click **Add scope**.
+5. Запишите значение поля `value` — оно понадобится позже.
+6. На той же странице нажмите **Add scope**:
+    1. Назовите scope `dbt-redshift`.
+    2. В поле **Who can consent?** выберите **Admins and users**.
+    3. В **Admin consent display name** укажите `dbt-redshift` и добавьте описание.
+    4. Убедитесь, что **State** установлено в **Enabled**.
+    5. Нажмите **Add scope**.
 
+#### Создание client app
 
-#### Create a client app
+1. На странице **App registration** нажмите **New registration**.
+    1. Задайте имя, однозначно идентифицирующее приложение как client app.
+    2. Убедитесь, что **Supported account types** установлено в “Accounts in this organizational directory only (`Org name` - Single Tenant).”
+    3. В поле **Redirect URI** выберите **Web** и вставьте **Redirect URI** из dbt.
+    4. Нажмите **Register**.
+2. На странице обзора приложения выберите **API permissions** в левом меню и нажмите **Add permission**.
 
-1. From the **App registration page**, click **New registration**.
-    1. Give the app a name that uniquely identifies it as the client app.
-    2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
-    3. Set the **Redirect URI** to **Web** and copy/paste the **Redirect URI** from dbt into the field.
-    4. Click **Register**.
-2. From the app overview page, click **API permissions** from the left menu, and click **Add permission**.
+   <Lightbox src="/img/docs/dbt-cloud/add-permission-entra.png" width="60%" title="Добавление разрешений для приложения Entra ID." />
 
-   <Lightbox src="/img/docs/dbt-cloud/add-permission-entra.png" width="60%" title="Add permissions to the Entra ID app." />
+3. В появившемся окне выберите **APIs my organization uses**, найдите resource server, созданный ранее, и выберите его.
+4. Убедитесь, что разрешение `dbt-redshift` отмечено, и нажмите **Add permissions**.
+5. Нажмите **Grant admin consent** и в модальном окне подтвердите выбор, нажав **Yes**.
+6. В левом меню выберите **Certificates and secrets** и нажмите **New client secret**. Укажите имя секрета, срок действия и нажмите **Add**.
+    - **Примечание:** Microsoft не разрешает использовать “forever” в качестве срока действия. Максимальный срок — два года. Крайне важно зафиксировать дату истечения срока действия, чтобы обновить секрет до того, как истечет срок или авторизация пользователя перестанет работать.
+7. Сразу запишите значение `value` для дальнейшего использования.
+   - **Примечание:** Entra ID больше не покажет это значение после ухода с данной страницы.
 
-3. From the pop-out screen, click **APIs my organization uses**, search for the resource server name from the previous steps, and click it.
-4. Ensure the box for the **Permissions** `dbt-redshift` is enabled and click **Add permissions**.
-5. Click **Grant admin consent** and from the popup modal click **Yes**.
-6. From the left menu, click **Certificates and secrets** and click **New client secret**. Name the secret, set an expiration, and click **Add**. 
-    - **Note**: Microsoft does not allow “forever” as an expiration date. The maximum time is two years. Documenting the expiration date so you can refresh the secret before the expiration or user authorization fails is essential.
-7. Record the `value` for use in a future step and record it immediately. 
-   - **Note**: Entra ID will not display this value again once you navigate away from this screen.
+### 3. Настройка интеграции в dbt
 
-### 3. Configuring the integration in dbt
-
-1. Navigate back to the <Constant name="cloud" /> **Account settings** —> **Integrations** page you were on at the beginning. It’s time to start filling out all of the fields. There will be some back-and-forth between the Entra ID account and <Constant name="cloud" />.
-2. `Integration name`: Give the integration a descriptive name that includes identifying information about the Entra ID environment so future users won’t have to guess where it belongs.
-3. `Client secrets`: Found in the Client ID from the **Certificates and secrets** page. `Value` is the `Client secret`. Note that it only appears when created; _Microsoft hides the secret if you return later, and you must recreate it._
-4. `Client ID`: Copy the’ Application (client) ID’ on the overview page for the client ID app.
-5. `Authorization URL` and `Token URL`: From the client ID app, open the `Endpoints` tab. These URLs map to the `OAuth 2.0 authorization endpoint (v2)` and `OAuth 2.0 token endpoint (v2)` fields. *You must use v2 of the `OAuth 2.0 authorization endpoint`. Do not use V1.* You can use either version of the `OAuth 2.0 token endpoint`.
-6. `Application ID URI`: Copy the `Application ID URI` field from the resource server’s Overview screen.
-
+1. Вернитесь на страницу <Constant name="cloud" /> **Account settings** —> **Integrations**, открытую в начале. Здесь потребуется некоторое переключение между аккаунтом Entra ID и <Constant name="cloud" />.
+2. `Integration name`: Укажите описательное имя интеграции с информацией об окружении Entra ID.
+3. `Client secrets`: Находится в Client ID на странице **Certificates and secrets**. Поле `Value` — это `Client secret`. Учтите, что оно отображается только при создании; _Microsoft скрывает секрет при повторном посещении страницы, и его необходимо создавать заново_.
+4. `Client ID`: Скопируйте значение **Application (client) ID** на странице обзора client app.
+5. `Authorization URL` и `Token URL`: В client app откройте вкладку `Endpoints`. Эти URL соответствуют полям `OAuth 2.0 authorization endpoint (v2)` и `OAuth 2.0 token endpoint (v2)`. *Обязательно используйте версию v2 для `OAuth 2.0 authorization endpoint`. Не используйте v1.* Для `OAuth 2.0 token endpoint` можно использовать любую версию.
+6. `Application ID URI`: Скопируйте значение поля `Application ID URI` со страницы Overview resource server.
 
 </TabItem>
 
 </Tabs>
 
-## Configure the Trusted Token Issuer in IAM IdC
+## Настройка Trusted Token Issuer в IAM IdC
 
-A *trusted token issuer* generates an access token that is used to identify a user, and then authenticates that user. This essentially lets services outside of the AWS ecosystem, such as the dbt platform, connect to IAM IdC (and Redshift) with access tokens they have generated or retrieved from an external IdP (Entra ID or Okta). 
+*Trusted token issuer* генерирует access token, который используется для идентификации пользователя, а затем аутентифицирует его. Это позволяет сервисам за пределами экосистемы AWS, таким как платформа dbt, подключаться к IAM IdC (и Redshift), используя access tokens, полученные или сгенерированные внешним IdP (Entra ID или Okta).
 
-The following steps are outlined per [this blog post](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/): 
+Следующие шаги описаны в [этой статье блога](https://aws.amazon.com/blogs/big-data/integrate-tableau-and-microsoft-entra-id-with-amazon-redshift-using-aws-iam-identity-center/):
 
-1. Open the AWS Management Console and navigate to [IAM Identity Center](https://console.aws.amazon.com/singlesignon), and then to the **Settings**.
-2. Select the **Authentication** tab and under **Trusted token issuers**, choose **Create trusted token issuer**.
-3. On the **Set up an external IdP to issue trusted tokens** page, under **Trusted token issuer details**, do the following:
-    1. For **Issuer URL**, enter the OIDC discovery URL of the external IdP that will issue tokens for trusted identity propagation. _Include the forward slash at the end of the URL_. 
-    2. For **Trusted token issuer name**, enter a name to identify this TTI in IAM Identity Center and the application console.
-    3. Under Map attributes, do the following:
-        1. For **Identity provider attribute**, select an attribute from the list to map to an attribute in the Identity Center identity store. You can choose:
-         - Email 
+1. Откройте AWS Management Console и перейдите в [IAM Identity Center](https://console.aws.amazon.com/singlesignon), затем в раздел **Settings**.
+2. Выберите вкладку **Authentication** и в разделе **Trusted token issuers** нажмите **Create trusted token issuer**.
+3. На странице **Set up an external IdP to issue trusted tokens** в разделе **Trusted token issuer details** выполните следующее:
+    1. В поле **Issuer URL** укажите OIDC discovery URL внешнего IdP, который будет выпускать токены для trusted identity propagation. _Обязательно включите завершающий слеш в конце URL_.
+    2. В поле **Trusted token issuer name** укажите имя для идентификации TTI в IAM Identity Center и консоли приложений.
+    3. В разделе Map attributes выполните следующее:
+        1. В поле **Identity provider attribute** выберите атрибут для сопоставления с атрибутом в identity store Identity Center. Можно выбрать:
+         - Email 
          - Object Identifier
          - Subject
-         - Other &mdash; When using this options with UPN, it's been our experience that `upn` matched up with `Email`.
+         - Other — по нашему опыту, при использовании этого варианта с UPN значение `upn` совпадало с `Email`.
 
-## Configure Redshift IdC application to utilize TTI
+## Настройка приложения Redshift IdC для использования TTI
 
-To start, select **IAM Identity Center connection** from the Amazon Redshift console menu.
+Для начала в консоли Amazon Redshift выберите **IAM Identity Center connection**.
 
-   <Lightbox src="/img/docs/dbt-cloud/redshift-idc.png" width="60%" title="The AWS Redshift console." />
+<Lightbox src="/img/docs/dbt-cloud/redshift-idc.png" width="60%" title="Консоль AWS Redshift." />
 
-1. Select the Amazon Redshift application that you created as part of the setup.
-2. Select the **Client connections tab** and choose **Edit**.
-3. Choose **Yes** under **Configure client connections that use third-party IdPs**.
-4. Select the checkbox for **Trusted token issuer** that you created in the previous section.
-5. Enter the aud claim value under **Configure selected trusted token issuers**. **This should be the application ID URI you set for the integration in the dbt platform.**
+1. Выберите приложение Amazon Redshift, созданное в рамках первоначальной настройки.
+2. Перейдите на вкладку **Client connections tab** и нажмите **Edit**.
+3. В разделе **Configure client connections that use third-party IdPs** выберите **Yes**.
+4. Отметьте checkbox для **Trusted token issuer**, созданного на предыдущем шаге.
+5. Введите значение aud claim в разделе **Configure selected trusted token issuers**. **Это должно быть значение Application ID URI, которое вы указали для интеграции в платформе dbt.**
 
+## Завершение настройки dbt
 
-## Finalizing the dbt configuration
+Если у вас уже есть подключение, убедитесь, что в нем выбран метод аутентификации **External OAuth**, и выберите интеграцию, созданную ранее. В противном случае создайте новое подключение Redshift, обязательно указав значения для:
+- **Server Hostname**
+- **OAuth Method**
+- **Database name** (это поле находится в разделе **Optional Settings**)
 
-If you have an existing connection, make sure that the OAuth method is set to **External OAuth** and select the integration you created in an earlier step. Otherwise, create a new Redshift connection, being sure to set values for:
-- **Server Hostname** 
-- **OAuth Method** 
-- **Database name** (this field can be found under the **Optional Settings**)
+Это подключение должно быть назначено среде разработки в существующем или новом проекте.
 
-This connection should be set as the connection for a development environment in an existing or new project. 
+После того как подключение назначено среде разработки, вы можете настроить учетные данные пользователя для этой среды в разделе `Account Settings > Your Profile > Credentials > <Your Project Name>`. Установите метод аутентификации `External OAuth`, при необходимости задайте `schema` и другие поля и сохраните учетные данные. После этого вы сможете нажать кнопку `Connect to Redshift`.
 
-Once the connection has been assigned to a development environment, you can configure your user credentials for that development environment under `Account Settings > Your Profile > Credentials > <Your Project Name>`. Set the authentication method to `External OAuth`, set the `schema` and other fields if desired, and save the credentials. You can then click the `Connect to Redshift` button.
+### Проверка подключения в Studio
 
-### Verify connection in Studio
-
-Once your development session has initialized, you can test that you’re able to connect to Redshift using external OAuth by running `dbt debug`.
+После инициализации сессии разработки вы можете проверить подключение к Redshift с использованием внешнего OAuth, выполнив команду `dbt debug`.

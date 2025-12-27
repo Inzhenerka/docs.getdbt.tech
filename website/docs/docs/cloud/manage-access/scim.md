@@ -1,170 +1,170 @@
 ---
-title: "Set up SCIM"
-description: "Configure SCIM for SSO"
+title: "Настройка SCIM"
+description: "Настройка SCIM для SSO"
 id: "scim"
 sidebar: "Set up SCIM"
 ---
 
-# Set up SCIM <Lifecycle status="managed, managed_plus" />
+# Настройка SCIM <Lifecycle status="managed, managed_plus" />
 
-The System for Cross-Domain Identity Management (SCIM) makes user data more secure and simplifies the admin and end-user lifecycle experience by automating user identities and groups. You can create or disable user identities in your Identity Provider (IdP), and SCIM will automatically make those changes in near real-time downstream in <Constant name="cloud" />.
+System for Cross-Domain Identity Management (SCIM) делает данные пользователей более защищёнными и упрощает жизненный цикл администрирования и работы конечных пользователей за счёт автоматизации управления пользовательскими учётными записями и группами. Вы можете создавать или отключать пользователей в своём Identity Provider (IdP), а SCIM будет автоматически применять эти изменения практически в реальном времени downstream в <Constant name="cloud" />.
 
-## Prerequisites 
+## Предварительные требования 
 
-To configure SCIM in your <Constant name="cloud" /> environment:
-- You must be on an [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing).
-- You must use Okta or Entra ID as your SSO provider and have it connected in the dbt platform.
-- You must have permissions to configure the account settings in [<Constant name="cloud" />](/docs/cloud/manage-access/enterprise-permissions) and change application settings in [Okta](https://help.okta.com/en-us/content/topics/security/administrators-admin-comparison.htm).
-- If you have IP restrictions enabled, you must add [Okta's IPs](https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm) to your allowlist.
+Чтобы настроить SCIM в вашей среде <Constant name="cloud" />:
 
-### Supported features
+- У вас должен быть план [Enterprise или Enterprise+](https://www.getdbt.com/pricing).
+- В качестве провайдера SSO вы должны использовать Okta или Entra ID, и он должен быть подключён в платформе dbt.
+- У вас должны быть права на настройку параметров аккаунта в [<Constant name="cloud" />](/docs/cloud/manage-access/enterprise-permissions) и на изменение настроек приложений в [Okta](https://help.okta.com/en-us/content/topics/security/administrators-admin-comparison.htm).
+- Если у вас включены IP-ограничения, необходимо добавить [IP-адреса Okta](https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm) в allowlist.
 
-The currently available supported features for SCIM are:
+### Поддерживаемые возможности
 
-- User provisioning and de-provisioning
-- User profile updates
-- Group creation and management
-- Importing groups and users
+В настоящее время SCIM поддерживает следующие возможности:
 
-When SCIM is enabled, the following functionality will change: 
-- Users are not automatically added to default groups
-- Manual actions such as inviting users, updating user information and updating group memberships are disabled by default
-- SSO group mappings are disabled in favor of SCIM group management
+- Провижининг и депровижининг пользователей
+- Обновление профилей пользователей
+- Создание и управление группами
+- Импорт групп и пользователей
 
-To overwrite these updates to functionality with SCIM enabled, enable manual updates as part of the SCIM configuration (not recommended). 
+После включения SCIM поведение следующих функций изменится: 
+- Пользователи не будут автоматически добавляться в группы по умолчанию
+- Ручные действия, такие как приглашение пользователей, обновление информации о пользователях и изменение состава групп, по умолчанию отключены
+- Маппинги групп SSO отключаются в пользу управления группами через SCIM
 
-When users are provisioned, the following attributes are supported
+Чтобы переопределить эти изменения при включённом SCIM, можно разрешить ручные обновления в настройках SCIM (не рекомендуется).
+
+При провижининге пользователей поддерживаются следующие атрибуты:
 - Username
 - Family name
 - Given name
 
-The following IdPs are supported in the <Constant name="cloud" /> UI:
+В UI <Constant name="cloud" /> поддерживаются следующие IdP:
 - [Okta](#scim-configuration-for-okta)
 - [Entra ID](#scim-configuration-for-entra-id)
 
-If your IdP isn’t on the list, it can be supported using <Constant name="cloud" /> [APIs](/dbt-cloud/api-v3#/operations/Retrieve%20SCIM%20configuration).
+Если вашего IdP нет в списке, его можно поддержать с помощью [API <Constant name="cloud" />](/dbt-cloud/api-v3#/operations/Retrieve%20SCIM%20configuration).
 
-## Set up dbt
+## Настройка dbt
 
-To retrieve the necessary <Constant name="cloud" /> configurations for use in Okta or Entra ID:
+Чтобы получить необходимые конфигурации <Constant name="cloud" /> для использования в Okta или Entra ID:
 
-1. Navigate to your <Constant name="cloud" /> **Account settings**.
-2. Select **Single sign-on** from the left-side menu.
-3. Scroll to the bottom of your SSO configuration settings and click **Enable SCIM**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/enable-scim.png" width="60%" title="SCIM enabled in the configuration settings." />
-4. Record the **SCIM base URL** field for use in a later step.
-5. Click **Create SCIM token**.
+1. Перейдите в **Account settings** в <Constant name="cloud" />.
+2. В левом меню выберите **Single sign-on**.
+3. Прокрутите настройки SSO вниз и нажмите **Enable SCIM**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/enable-scim.png" width="60%" title="SCIM включён в настройках конфигурации." />
+4. Сохраните значение поля **SCIM base URL** — оно понадобится на следующих шагах.
+5. Нажмите **Create SCIM token**.
     :::note
     
-    To follow best practices, you should regularly rotate your SCIM tokens. To do so, follow these same instructions you did to create a new one. To avoid service disruptions, remember to replace your token in your IdP before deleting the old token in <Constant name="cloud" />.
+    В соответствии с лучшими практиками рекомендуется регулярно ротировать SCIM-токены. Для этого выполните те же шаги, что и при создании нового токена. Чтобы избежать сбоев в работе, обязательно замените токен в вашем IdP до удаления старого токена в <Constant name="cloud" />.
 
     :::
-6. In the pop-up window, give the token a name that will make it easily identifiable. Click **Save**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/name-scim-token.png" width="60%" title="Give your token and identifier." />
-7. Copy the token and record it securely, as _it will not be available again after you close the window_. You must create a new token if you lose the current one. 
-    <Lightbox src="/img/docs/dbt-cloud/access-control/copy-scim-token.png" width="60%" title="Give your token and identifier." />
-8. (Optional) Manual updates are turned off by default for all SCIM-managed entities, including the ability to invite new users manually. This ensures SCIM-managed entities stay in sync with the IdP, and we recommend keeping this setting disabled.
-   - However, if you need to make manual updates (like update group membership for a SCIM-managed group), you can enable this setting by clicking **Allow manual updates**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-manual-updates.png" width="70%" title="Enabling manual updates in SCIM settings." />
+6. Во всплывающем окне задайте имя токена, по которому его будет легко идентифицировать, и нажмите **Save**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/name-scim-token.png" width="60%" title="Задайте имя токена и идентификатор." />
+7. Скопируйте токен и сохраните его в безопасном месте, так как _после закрытия окна он больше не будет доступен_. В случае утери потребуется создать новый токен.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/copy-scim-token.png" width="60%" title="Скопируйте токен и сохраните его." />
+8. (Опционально) Ручные обновления по умолчанию отключены для всех сущностей, управляемых SCIM, включая возможность вручную приглашать новых пользователей. Это гарантирует синхронизацию SCIM-управляемых сущностей с IdP, и мы рекомендуем оставлять этот параметр отключённым.
+   - Однако, если вам необходимо выполнять ручные изменения (например, менять состав группы, управляемой SCIM), вы можете включить этот параметр, нажав **Allow manual updates**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-manual-updates.png" width="70%" title="Включение ручных обновлений в настройках SCIM." />
 
-## SCIM configuration for Okta
+## Конфигурация SCIM для Okta
 
-Please complete the [setup SSO with Okta](/docs/cloud/manage-access/set-up-sso-okta) steps before configuring SCIM settings.
+Перед настройкой SCIM выполните шаги из руководства [настройки SSO с Okta](/docs/cloud/manage-access/set-up-sso-okta).
 
-### Set up Okta
+### Настройка Okta
 
-1. Log in to your Okta account and locate the app configured for the <Constant name="cloud" /> SSO integration.
-2. Navigate to the **General** tab and ensure **Enable SCIM provisioning** is checked or the **Provisioning** tab will not be displayed. 
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-provisioned.png" width="60%" title="Enable SCIM provisioning in Okta." />
-3. Open the **Provisioning** tab and select **Integration**.
-4. Paste the [**SCIM base URL** from <Constant name="cloud" />](#set-up-dbt-cloud) to the first field, then enter your preferred **Unique identifier field for users** &mdash; we recommend `userName`.
-5. Click the checkboxes for the following **Supported provisioning actions**:
+1. Войдите в свой аккаунт Okta и найдите приложение, настроенное для SSO-интеграции с <Constant name="cloud" />.
+2. Перейдите на вкладку **General** и убедитесь, что опция **Enable SCIM provisioning** включена, иначе вкладка **Provisioning** не будет отображаться.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-provisioned.png" width="60%" title="Включение SCIM provisioning в Okta." />
+3. Откройте вкладку **Provisioning** и выберите **Integration**.
+4. Вставьте [**SCIM base URL** из <Constant name="cloud" />](#set-up-dbt-cloud) в первое поле, затем укажите предпочитаемое значение **Unique identifier field for users** — мы рекомендуем `userName`.
+5. Отметьте следующие **Supported provisioning actions**:
     - Push New Users
     - Push Profile Updates
     - Push Groups
-    - Import New Users and Profile Updates  (Optional for users created before SSO/SCIM setup)
-6. From the **Authentication mode** dropdown, select **HTTP Header**.
-7. In the **Authorization** section, paste the token from <Constant name="cloud" /> into the **Bearer** field.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-okta-config.png" width="60%" title="The completed SCIM configuration in the Okta app." />
-8. Ensure that the following provisioning actions are selected:
+    - Import New Users and Profile Updates (опционально для пользователей, созданных до настройки SSO/SCIM)
+6. В выпадающем списке **Authentication mode** выберите **HTTP Header**.
+7. В разделе **Authorization** вставьте токен из <Constant name="cloud" /> в поле **Bearer**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-okta-config.png" width="60%" title="Заполненная конфигурация SCIM в приложении Okta." />
+8. Убедитесь, что выбраны следующие действия провижининга:
     - Create users
     - Update user attributes
     - Deactivate users
-    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning-actions.png" width="60%" title="Ensure the users are properly provisioned with these settings." />
+    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning-actions.png" width="60%" title="Убедитесь, что пользователи корректно провижинятся с этими настройками." />
+9. Протестируйте соединение и после завершения нажмите **Save**.
 
-9. Test the connection and click **Save** once completed. 
+Теперь SCIM для SSO-интеграции с Okta в <Constant name="cloud" /> настроен.
 
-You've now configured SCIM for the Okta SSO integration in <Constant name="cloud" />.
+### Формат имени пользователя для SCIM
 
-### SCIM username format
+SCIM требует, чтобы имя пользователя было в формате email-адреса. Если в настройках Okta поле `Username` сопоставлено с другим атрибутом, провижининг пользователей через SCIM завершится ошибкой. Чтобы избежать этого без изменения профилей пользователей, установите в конфигурации приложения Okta значение `Email`:
 
-SCIM requires the username to be in the email address format. If your Okta configurations map the `Username` field to a different attribute, SCIM user provisioning will fail. To get around this without altering your user profiles, set your Okta app config to `Email`:
+1. Откройте SAML-приложение, созданное для интеграции с dbt.
+2. На вкладке **Sign on** нажмите **Edit** в секции **Settings**.
+3. Установите поле **Application username format** в значение **Email**.
+4. Нажмите **Save**.
 
-1. Open the SAML app created for the dbt integration.
-2. In the **Sign on** tab, click **Edit** in the **Settings** pane.
-3. Set the **Application username format** field to **Email**.
-4. Click **Save**.
+### Существующие интеграции Okta
 
-### Existing Okta integrations
+Если вы добавляете SCIM к уже существующей интеграции Okta в <Constant name="cloud" /> (а не настраиваете SCIM и SSO одновременно с нуля), обратите внимание на следующие моменты:
 
-If you are adding SCIM to an existing Okta integration in <Constant name="cloud" /> (as opposed to setting up SCIM and SSO concurrently for the first time), there is some functionality you should be aware of:
+- Пользователи и группы, уже синхронизированные с <Constant name="cloud" />, станут управляемыми SCIM после завершения настройки.
+- (Рекомендуется) Импортируйте и управляйте существующими группами и пользователями <Constant name="cloud" /> с помощью функций **Import Groups** и **Import Users** в Okta. Обновите группы в вашем IdP, используя ту же схему наименований, что и для групп <Constant name="cloud" />. Новые пользователи, группы и изменения существующих профилей будут автоматически импортироваться в <Constant name="cloud" />.
+    - Убедитесь, что флажки **Import users and profile updates** и **Import groups** включены на вкладке **Provisioning settings** в конфигурации SCIM для Okta.
+    - Используйте **Import Users**, чтобы синхронизировать всех пользователей из <Constant name="cloud" />, включая ранее удалённых, если вам нужно повторно их провижинить.
+    - Подробнее об этой функции читайте в [документации Okta](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-import-groups-app-provisioning.htm).
 
-- Users and groups already synced to <Constant name="cloud" /> will become SCIM-managed once you complete the SCIM configuration.
-- (Recommended) Import and manage existing <Constant name="cloud" /> groups and users with Okta's **Import Groups** and **Import Users** features. Update the groups in your IdP with the same naming convention used for <Constant name="cloud" /> groups. New users, groups, and changes to existing profiles will be automatically imported into <Constant name="cloud" />.
-    - Ensure the **Import users and profile updates** and **Import groups** checkboxes are selected in the **Provisioning settings** tab in the Okta SCIM configuration.
-    - Use **Import Users** to sync all users from <Constant name="cloud" />, including previously deleted users, if you need to re-provision those users. 
-    - Read more about this feature in the [Okta documentation](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-import-groups-app-provisioning.htm).
+## Конфигурация SCIM для Entra ID 
 
-## SCIM configuration for Entra ID 
+Перед настройкой SCIM выполните шаги из руководства [настройки SSO с Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id).
 
-Please complete the [setup SSO with Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) steps before configuring SCIM settings.
+### Настройка Entra ID
 
-### Set up Entra ID
+1. Войдите в свой аккаунт Azure и откройте настройки **Entra ID**.
+2. В боковом меню в разделе **Manage** выберите **Enterprise Applications**.
+3. Нажмите **New Application** и выберите вариант **Create your own application**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/create-your-own.png" width="60%" title="Создание собственного приложения." />
+4. Задайте уникальное имя приложения и убедитесь, что выбран пункт **Integrate any other application you don't find in the gallery (Non-gallery)**. Игнорируйте любые подсказки о существующих приложениях и нажмите **Create**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/create-application.png" width="60%" title="Задайте уникальное имя приложения." />
+5. На экране **Overview** приложения нажмите **Provision User Accounts**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/provision-user-accounts.png" width="60%" title="Опция Provision user accounts." />
+6. В разделе **Create configuration** нажмите **Connect your application**.
+7. Заполните форму данными из вашего dbt-аккаунта:
+    - **Tenant URL** в Entra ID — это ваш **SCIM base URL** из dbt
+    - **Secret token** в Entra ID — это ваш **SCIM token** из dbt
+8. Нажмите **Test connection**, а после успешного теста — **Create**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning-config.png" width="60%" title="Настройка приложения и тестирование соединения." />
 
-1. Log in to your Azure account and open the **Entra ID** configurations.
-2. From the sidebar, under **Manage**, click **Enterprise Applications**.
-3. Click **New Application** and select the option to **Create your own application**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/create-your-own.png" width="60%" title="Create your own application." />
-4. Give your app a unique name and ensure the **Integrate any other application you don't find in the gallery (Non-gallery)** field is selected. Ignore any prompts for existing apps. Click **Create**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/create-application.png" width="60%" title="Give your app a unique name." />
-5. From the application **Overview** screen, click **Provision User Accounts**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/provision-user-accounts.png" width="60%" title="The 'Provision user accounts' option." />
-6. From the **Create configuration** section, click **Connect your application**
-7. Fill out the form with the information from your dbt account:
-    - The **Tenant URL** in Entra ID is your **SCIM based URL** from dbt
-    - The **Secret token** in Entra ID is your *SCIM token** from dbt
-8. Click **Test connection** and click **Create** once complete.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning-config.png" width="60%" title="Configure the app and test the connection." />
+### Маппинг атрибутов
 
-### Attribute mapping
+Чтобы настроить атрибуты, которые будут синхронизироваться с dbt:
 
-To map the attributes that will sync with dbt:
-
-1. From the enteprise app **Overview** screen sidebar menu, click **Provisioning**. 
-    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning.png" width="60%" title="The Provisioning option on the sidebar." />
-2. From under **Manage**, again click **Provisioning**.
-3. Expand the **Mappings** section and click **Provision Microsoft Entra ID users**.
-     <Lightbox src="/img/docs/dbt-cloud/access-control/provision-entra-users.png" width="60%" title="Provision the Entra ID users." />
-4. Click the box for **Show advanced options** and then click **Edit attribute list for customappsso**.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-attributes.png" width="60%" title="Click to edit the customappsso attributes." />
-5. Scroll to the bottom of the **Edit attribute list** window and find an empty field where you can add a new entry with the following fields: 
+1. В боковом меню экрана **Overview** enterprise-приложения нажмите **Provisioning**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/provisioning.png" width="60%" title="Пункт Provisioning в боковом меню." />
+2. В разделе **Manage** снова нажмите **Provisioning**.
+3. Разверните раздел **Mappings** и нажмите **Provision Microsoft Entra ID users**.
+     <Lightbox src="/img/docs/dbt-cloud/access-control/provision-entra-users.png" width="60%" title="Провижининг пользователей Entra ID." />
+4. Установите флажок **Show advanced options**, затем нажмите **Edit attribute list for customappsso**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-attributes.png" width="60%" title="Редактирование атрибутов customappsso." />
+5. Прокрутите окно **Edit attribute list** вниз и найдите пустое поле, чтобы добавить новую запись со следующими параметрами:
     - **Name:** `emails[type eq "work"].primary`
     - **Type:** `Boolean`
     - **Required:** True
-    <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-entry.png" width="60%" title="Add the new field to the entry list." />
-6. Mark all of the fields listed in Step 10 below as `Required`.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Mark the fields as required." />    
-7. Click **Save**
-8. Back on the **Attribute mapping** window, click **Add new mapping** and complete fields with the following:
+    <Lightbox src="/img/docs/dbt-cloud/access-control/customappsso-entry.png" width="60%" title="Добавление нового поля в список." />
+6. Отметьте все поля, перечисленные в шаге 10 ниже, как `Required`.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/mark-as-required.png" width="60%" title="Отметьте поля как обязательные." />    
+7. Нажмите **Save**.
+8. Вернувшись в окно **Attribute mapping**, нажмите **Add new mapping** и заполните поля следующим образом:
     - **Mapping type:** `none`
     - **Default value if null (optional):** `True`
     - **Target attribute:** `emails[type eq "work"].primary`
     - **Match objects using this attribute:** `No`
-    - **Matching precedence:** *Leave blank*
+    - **Matching precedence:** *Оставьте пустым*
     - **Apply this mapping:** `Always`
-9. Click **Ok**
-    <Lightbox src="/img/docs/dbt-cloud/access-control/edit-attribute.png" width="60%" title="Edit the attribute as shown." />
-10. Make sure the following mappings are in place and delete any others:
+9. Нажмите **Ok**.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/edit-attribute.png" width="60%" title="Отредактируйте атрибут, как показано." />
+10. Убедитесь, что настроены следующие маппинги, и удалите все остальные:
     - **UserName:** `userPrincipalName`
     - **active:** `Switch([IsSoftDeleted], , "False", "True", "True", "False")`
     - **emails[type eq "work"].value:** `userPrincipalName`
@@ -172,64 +172,65 @@ To map the attributes that will sync with dbt:
     - **name.familyName:** `surname`
     - **externalid:** `mailNickname`
     - **emails[type eq "work"].primary** 
-     <Lightbox src="/img/docs/dbt-cloud/access-control/attribute-list.png" width="60%" title="Edit the attributes so they match the list as shown." />
-11. Click **Save**.
+     <Lightbox src="/img/docs/dbt-cloud/access-control/attribute-list.png" width="60%" title="Приведите атрибуты в соответствие со списком." />
+11. Нажмите **Save**.
 
-You can now begin assigning users to your SCIM app in Entra ID!
+Теперь вы можете начинать назначать пользователей для SCIM-приложения в Entra ID!
 
-## Assign users to SCIM app
+## Назначение пользователей SCIM-приложению
 
-The following steps go over how to assign users/groups to the SCIM app. Refer to Microsoft's [official instructions for assigning users or groups to an Enterprise App in Entra ID](https://learn.microsoft.com/en-us/azure/databricks/admin/users-groups/scim/aad#step-3-assign-users-and-groups-to-the-application) to learn more. Although the article is written for Databricks, the steps are identical.
+Ниже описаны шаги по назначению пользователей и групп SCIM-приложению. Для получения дополнительной информации см. [официальную документацию Microsoft по назначению пользователей или групп Enterprise-приложению в Entra ID](https://learn.microsoft.com/en-us/azure/databricks/admin/users-groups/scim/aad#step-3-assign-users-and-groups-to-the-application). Хотя статья написана для Databricks, шаги полностью идентичны.
 
-1. Navigate to Enterprise applications and select the SCIM app.
-2. Go to **Manage** > **Provisioning**.
-3. To synchronize Microsoft Entra ID users and groups to dbt, click the **Start provisioning** button.
-    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-start-provision.png" width="80%" title="Start provisioning to synchronize users and groups." />
-4. Navigate back to the SCIM app's overview page and go to **Manage** > **Users and groups**.
-5. Click **Add user/group** and select the users and groups. 
-       <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-add-users.png" width="80%" title="Add user/group." />
-7. Click the **Assign** button.
-8. Wait a few minutes. In the <Constant name="dbt_platform" />, confirm the users and groups exist in your dbt account.
-    - Users and groups that you add and assign will automatically be provisioned to your dbt account when Microsoft Entra ID schedules the next sync.
-    - By enabling provisioning, you immediately trigger the initial Microsoft Entra ID sync. Subsequent syncs are triggered every 20-40 minutes, depending on the number of users and groups in the application. Refer to Microsoft Entra ID's [Provisioning tips](https://learn.microsoft.com/en-us/azure/databricks/admin/users-groups/scim/aad#provisioning-tips) documentation for more information.
-    - You can also prompt a manual provisioning outside of the cycle by clicking **Restart provisioning**.
-    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-manual.png" width="80%" title="Prompt manual provisioning." />
+1. Перейдите в Enterprise applications и выберите SCIM-приложение.
+2. Откройте **Manage** > **Provisioning**.
+3. Чтобы синхронизировать пользователей и группы Microsoft Entra ID с dbt, нажмите кнопку **Start provisioning**.
+    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-start-provision.png" width="80%" title="Запуск провижининга для синхронизации пользователей и групп." />
+4. Вернитесь на страницу обзора SCIM-приложения и перейдите в **Manage** > **Users and groups**.
+5. Нажмите **Add user/group** и выберите пользователей и группы.
+       <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-add-users.png" width="80%" title="Добавление пользователя или группы." />
+7. Нажмите кнопку **Assign**.
+8. Подождите несколько минут. В <Constant name="dbt_platform" /> убедитесь, что пользователи и группы появились в вашем dbt-аккаунте.
+    - Пользователи и группы, которые вы добавляете и назначаете, будут автоматически провижиниться в ваш dbt-аккаунт при следующей синхронизации Microsoft Entra ID.
+    - При включении провижининга сразу запускается первоначальная синхронизация Microsoft Entra ID. Последующие синхронизации выполняются каждые 20–40 минут в зависимости от количества пользователей и групп в приложении. Подробнее см. документацию Microsoft Entra ID [Provisioning tips](https://learn.microsoft.com/en-us/azure/databricks/admin/users-groups/scim/aad#provisioning-tips).
+    - Вы также можете запустить ручной провижининг вне расписания, нажав **Restart provisioning**.
+    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/scim-entraid-manual.png" width="80%" title="Ручной запуск провижининга." />
 
-## Manage user licenses with SCIM
+## Управление лицензиями пользователей с помощью SCIM
 
-You can manage user license assignments via SCIM with a user attribute in your IdP environment. This ensures accurate license assignment as users are provisioned in the IdP and onboarded into your dbt account.
-:::note Analyst license assignment
+Вы можете управлять назначением лицензий пользователей через SCIM, используя пользовательский атрибут в вашей среде IdP. Это обеспечивает корректное распределение лицензий по мере провижининга пользователей в IdP и их онбординга в ваш dbt-аккаунт.
+:::note Назначение лицензии Analyst
 
-    The `Analyst` license is only available for select plans. Assigning an `Analyst` license via SCIM will result in a user update error if that license type is not available for your dbt account. 
+    Лицензия `Analyst` доступна только для некоторых планов. Назначение лицензии `Analyst` через SCIM приведёт к ошибке обновления пользователя, если данный тип лицензии недоступен для вашего dbt-аккаунта.
 
 :::
 
-To use license management via SCIM, enable the feature under the **SCIM** section in the **Single sign-on** settings. This setting will enforce license type for a user based on their SCIM attribute and disable the license mapping and manual configuration set up in dbt.  
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-managed-licenses.png" width="60%" title="Enable SCIM managed user license distribution." />
+Чтобы использовать управление лицензиями через SCIM, включите эту функцию в разделе **SCIM** настроек **Single sign-on**. Этот параметр будет принудительно устанавливать тип лицензии пользователя на основе его SCIM-атрибута и отключит маппинг лицензий и ручную настройку лицензий в dbt.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-managed-licenses.png" width="60%" title="Включение управления распределением лицензий через SCIM." />
 
-_We recommend that you complete the setup instructions for your identity provider prior to enabling this toggle in your dbt account. Once enabled, any existing license mappings in <Constant name="dbt_platform" /> will be ignored. SCIM license mapping is currently only supported for Okta._
+_Мы рекомендуем завершить настройку вашего провайдера идентификации до включения этого переключателя в dbt-аккаунте. После его включения все существующие маппинги лицензий в <Constant name="dbt_platform" /> будут игнорироваться. В настоящее время маппинг лицензий через SCIM поддерживается только для Okta._
 
-The recommended steps for migrating to SCIM license mapping are as follows:
-1. Set up SCIM but keep the toggle disabled so existing license mappings continue to work as expected.
-2. Configure license attributes in your Identity Provider (IdP). 
-3. Test that SCIM attributes are being used to set license type in <Constant name="dbt_platform" />.
-4. Enable the toggle to ignore existing license mappings so that SCIM is the source-of-truth for assigning licenses to users. 
+Рекомендуемые шаги для миграции на маппинг лицензий через SCIM:
 
-### Add license type attribute for Okta 
+1. Настройте SCIM, но оставьте переключатель выключенным, чтобы существующие маппинги лицензий продолжали работать.
+2. Настройте атрибуты лицензий в вашем Identity Provider (IdP).
+3. Протестируйте, что SCIM-атрибуты используются для установки типа лицензии в <Constant name="dbt_platform" />.
+4. Включите переключатель, чтобы игнорировать существующие маппинги лицензий и сделать SCIM источником истины для назначения лицензий пользователям.
 
-To add the attribute for license types to your Okta environment:
+### Добавление атрибута типа лицензии для Okta
 
-1. From your Okta application, navigate to the **Provisioning** tab, scroll down to **Attribute Mappings**, and click **Go to Profile Editor**.
-2. Click **Add Attribute**.
-3. Configure the attribute fields as follows (the casing should match for the values of each):
+Чтобы добавить атрибут для типов лицензий в среде Okta:
+
+1. В приложении Okta перейдите на вкладку **Provisioning**, прокрутите до **Attribute Mappings** и нажмите **Go to Profile Editor**.
+2. Нажмите **Add Attribute**.
+3. Настройте поля атрибута следующим образом (регистр значений должен совпадать):
     - **Date type:** `string`
     - **Display name:** `License Type`
     - **Variable name:** `licenseType`
     - **External name:** `licenseType`
     - **External namespace:** `urn:ietf:params:scim:schemas:extension:dbtLabs:2.0:User`
-    - **Description:** An arbitrary string of your choosing.
-    - **Enum:** Check the box for **Define enumerated list of values**
-    - **Attribute members:** Add the initial attribute and then click **Add another** until each license type is defined. We recommend adding all of the values even if you don't use them today, so they'll be available in the future. 
+    - **Description:** Произвольная строка на ваше усмотрение.
+    - **Enum:** Установите флажок **Define enumerated list of values**
+    - **Attribute members:** Добавьте начальный атрибут и нажимайте **Add another**, пока не будут добавлены все типы лицензий. Мы рекомендуем добавить все значения, даже если вы не используете их сейчас, чтобы они были доступны в будущем.
         | Display name | Value |
         |--------------|-------|
         | **IT**       | `it`  |
@@ -238,8 +239,8 @@ To add the attribute for license types to your Okta environment:
         | **Read Only**| `read_only` |
     - **Attribute type:** Personal
 
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-license-attributes.png" width="60%" title="Enter the fields as they appear in the image. Ensure the cases match." /> 
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-license-attributes.png" width="60%" title="Заполните поля, как показано на изображении. Убедитесь, что регистр совпадает." /> 
 
-4. **Save** the attribute mapping.
-5. Users can now have license types set in their profiles and when they are being provisioned.
-    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-license-provisioning.png" width="60%" title="Set the license type for the user in their Okta profile." /> 
+4. Нажмите **Save**, чтобы сохранить маппинг атрибута.
+5. Теперь пользователям можно назначать типы лицензий в их профилях, и они будут применяться при провижининге.
+    <Lightbox src="/img/docs/dbt-cloud/access-control/scim-license-provisioning.png" width="60%" title="Задание типа лицензии для пользователя в профиле Okta." />

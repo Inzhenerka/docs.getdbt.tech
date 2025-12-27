@@ -1,8 +1,8 @@
 ---
-title: "Configuring Snowflake and Azure Private Link"
+title: "Настройка Snowflake и Azure Private Link"
 id: snowflake-private-link
-description: "Configuring Azure Private Link for Snowflake"
-sidebar_label: "Azure Private Link for Snowflake"
+description: "Настройка Azure Private Link для Snowflake"
+sidebar_label: "Azure Private Link для Snowflake"
 ---
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
@@ -10,24 +10,24 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-The following steps walk you through the setup of an Azure-hosted Snowflake Private Link endpoint in a <Constant name="cloud" /> multi-tenant environment.
+Следующие шаги проводят вас через настройку endpoint’а Snowflake Private Link, размещённого в Azure, в многоарендной среде <Constant name="cloud" />.
 
 <CloudProviders type='Snowflake' />
 
-:::note Snowflake OAuth with PrivateLink
-Users connecting to Snowflake using [Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth) over an AWS PrivateLink connection from <Constant name="cloud" /> will also require access to a PrivateLink endpoint from their local workstation. Where possible, use [Snowflake External OAuth](/docs/cloud/manage-access/snowflake-external-oauth) instead to bypass this limitation.
+:::note Snowflake OAuth с PrivateLink
+Пользователям, которые подключаются к Snowflake с использованием [Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth) через AWS PrivateLink из <Constant name="cloud" />, также потребуется доступ к PrivateLink endpoint’у с их локальной рабочей станции. Где это возможно, используйте [Snowflake External OAuth](/docs/cloud/manage-access/snowflake-external-oauth), чтобы обойти это ограничение.
 
-Snowflake docs:
->Currently, for any given Snowflake account, SSO works with only one account URL at a time: either the public account URL or the URL associated with the private connectivity service
+Документация Snowflake:
+>В настоящее время для любой учетной записи Snowflake SSO может работать только с одним URL учетной записи одновременно: либо с публичным URL учетной записи, либо с URL, связанным с сервисом приватного подключения
 
 - [Snowflake SSO with Private Connectivity](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview#label-sso-private-connectivity)
 :::
 
-## Configure Azure Private Link
+## Настройка Azure Private Link
 
-To configure Snowflake instances hosted on Azure for [Private Link](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview):
+Чтобы настроить экземпляры Snowflake, размещённые в Azure, для использования [Private Link](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview):
 
-1. In your Snowflake account, run the following SQL statements and copy the output: 
+1. В вашей учетной записи Snowflake выполните следующие SQL-запросы и скопируйте вывод: 
 
 ```sql
 
@@ -36,7 +36,7 @@ SELECT SYSTEM$GET_PRIVATELINK_CONFIG();
 
 ```
 
-2. Add the required information to the following template and submit your request to  [dbt Support](/docs/dbt-support#dbt-cloud-support): 
+2. Добавьте необходимую информацию в следующий шаблон и отправьте запрос в [службу поддержки dbt](/docs/dbt-support#dbt-cloud-support): 
 
 ```
 Subject: New Multi-Tenant Azure PrivateLink Request
@@ -47,12 +47,11 @@ Subject: New Multi-Tenant Azure PrivateLink Request
 - dbt Azure multi-tenant environment (EMEA):
 ```
 
-3. dbt Support will provide the `private endpoint resource_id` of our `private_endpoint` and the `CIDR` range for you to complete the [PrivateLink configuration](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors) by contacting the Snowflake Support team. 
+3. Служба поддержки dbt предоставит вам `private endpoint resource_id` нашего `private_endpoint`, а также диапазон `CIDR`, чтобы вы могли завершить [настройку PrivateLink](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors), обратившись в службу поддержки Snowflake. 
 
+4. (Опционально) При включении [Azure private endpoint для Internal Stage](https://docs.snowflake.com/en/user-guide/private-internal-stages-azure) также будет предоставлен `resource_id` для endpoint’а Internal Stage. 
 
-4. (Optional) If enabling an [Azure private endpoint for an Internal Stage](https://docs.snowflake.com/en/user-guide/private-internal-stages-azure), it will also provide the `resource_id` for the Internal Stage endpoint. 
-
-As the Snowflake administrator, call the `SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS` function using the resource ID value as the function argument. This authorizes access to the Snowflake internal stage through the private endpoint. 
+Как администратор Snowflake, вызовите функцию `SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS`, передав в качестве аргумента значение resource ID. Это авторизует доступ к внутреннему stage Snowflake через private endpoint. 
 
 ```sql
 
@@ -63,12 +62,12 @@ SELECT SYSTEMS$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESO
 
 ```
 
-## Configuring Network Policies
-If your organization uses [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) to restrict access to your Snowflake account, you will need to add a network rule for <Constant name="cloud" />. 
+## Настройка Network Policies
+Если в вашей организации используются [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к учетной записи Snowflake, вам потребуется добавить сетевое правило для <Constant name="cloud" />. 
 
-### Find the endpoint Azure Link ID
+### Поиск Azure Link ID endpoint’а
 
-Snowflake allows for finding the Azure Link ID of configured endpoints by running the `` command. The following can be used to better isolate the Link ID value and the associated endpoint resource name:
+Snowflake позволяет определить Azure Link ID настроенных endpoint’ов, выполнив соответствующую команду. Следующий запрос можно использовать для более точного выделения значения Link ID и связанного с ним имени ресурса endpoint’а:
 
 ```sql
 
@@ -83,42 +82,41 @@ from
 
 ```
 
-### Using the UI
+### Использование UI
 
-Open the Snowflake UI and take the following steps:
-1. Go to the **Security** tab.
-2. Click on **Network Rules**.
-3. Click on **+ Network Rule**.
-4. Give the rule a name.
-5. Select a database and schema where the rule will be stored. These selections are for permission settings and organizational purposes; they do not affect the rule itself.
-6. Set the type to `Azure Link ID` and the mode to `Ingress`.
-7. In the identifier box, type the Azure Link ID obtained in the previous section and press **Enter**.
-8. Click **Create Network Rule**.
+Откройте UI Snowflake и выполните следующие шаги:
+1. Перейдите на вкладку **Security**.
+2. Нажмите **Network Rules**.
+3. Нажмите **+ Network Rule**.
+4. Задайте имя правила.
+5. Выберите базу данных и схему, в которых будет храниться правило. Эти настройки используются для управления правами и организации и не влияют на само правило.
+6. Установите тип `Azure Link ID`, а режим — `Ingress`.
+7. В поле identifier введите Azure Link ID, полученный в предыдущем разделе, и нажмите **Enter**.
+8. Нажмите **Create Network Rule**.
 
-<Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink2.png" title="Create Network Rule"/>
+<Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink2.png" title="Создание Network Rule"/>
 
-9. In the **Network Policy** tab, edit the policy to which you want to add the rule. This could be your account-level policy or one specific to the users connecting from <Constant name="cloud" />.
+9. На вкладке **Network Policy** отредактируйте политику, в которую вы хотите добавить правило. Это может быть политика на уровне учетной записи или политика, применяемая только к пользователям, подключающимся из <Constant name="cloud" />.
 
+10. Добавьте новое правило в список разрешённых и нажмите **Update Network Policy**.
 
-10. Add the new rule to the allowed list and click **Update Network Policy**.
+<Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink3.png" title="Обновление Network Policy"/>
 
-<Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink3.png" title="Update Network Policy"/>
+### Использование SQL
 
-### Using SQL
+Для быстрой и автоматизированной настройки сетевых правил через SQL в Snowflake следующие команды позволяют создать и настроить правила доступа для <Constant name="cloud" />. Эти SQL-примеры демонстрируют, как добавить сетевое правило и обновить Network Policy.
 
-For quick and automated setup of network rules via SQL in Snowflake, the following commands allow you to create and configure access rules for <Constant name="cloud" />. These SQL examples demonstrate how to add a network rule and update your network policy accordingly.
-
-1. Create a new network rule with the following SQL:
+1. Создайте новое сетевое правило с помощью следующего SQL:
 ```sql
 
 CREATE NETWORK RULE allow_dbt_cloud_access
   MODE = INGRESS
   TYPE = AZURELINKID
-  VALUE_LIST = ('<Azure Link ID>'); -- Replace '<Azure Link ID>' with the actual ID obtained above
+  VALUE_LIST = ('<Azure Link ID>'); -- Замените '<Azure Link ID>' на фактический ID, полученный выше
 
 ```
 
-2. Add the rule to a network policy with the following SQL:
+2. Добавьте правило в Network Policy с помощью следующего SQL:
 ```sql
 
 ALTER NETWORK POLICY <network_policy_name>

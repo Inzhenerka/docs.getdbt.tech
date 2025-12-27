@@ -1,8 +1,8 @@
 ---
-title: "Configuring Private Link for Azure Database for Postgres Flexible Server"
+title: "Настройка Private Link для Azure Database for Postgres Flexible Server"
 id: az-postgres-private-link
-description: "Configuring Private Link for Azure Database for Postgres Flexible Server"
-sidebar_label: "Private Link for Azure Database for Postgres Flexible Server"
+description: "Настройка Private Link для Azure Database for Postgres Flexible Server"
+sidebar_label: "Private Link для Azure Database for Postgres Flexible Server"
 ---
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
@@ -10,19 +10,19 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-The following steps walk you through the setup of a Private Link endpoint for Azure Database for Postgres Flexible Server in a <Constant name="cloud" /> multi-tenant environment.
+Следующие шаги проведут вас через процесс настройки endpoint’а Private Link для Azure Database for Postgres Flexible Server в многотенантной среде <Constant name="cloud" />.
 
 <CloudProviders type='Azure Database' />
 
-## Configure Azure Private Link
+## Настройка Azure Private Link
 
-From your Azure portal:
+В Azure portal:
 
-1. Navigate to your Azure Database for Postgres Flexible Server.
-2. From the server overview, click **JSON view**. 
-3. Copy the value in the **Resource ID** field at the top of the pane.  
-    The path format is: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.DBforPostgreSQL/flexibleServers/<server_name>`.
-4. Add the required information to the following template and submit your Azure Private Link request to [dbt Support](/docs/dbt-support#dbt-cloud-support): 
+1. Перейдите к вашему Azure Database for Postgres Flexible Server.
+2. На странице обзора сервера нажмите **JSON view**. 
+3. Скопируйте значение в поле **Resource ID** в верхней части панели.  
+   Формат пути выглядит так: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.DBforPostgreSQL/flexibleServers/<server_name>`.
+4. Добавьте необходимую информацию в следующий шаблон и отправьте запрос на создание Azure Private Link в [dbt Support](/docs/dbt-support#dbt-cloud-support): 
     ```
       Subject: New Azure Multi-Tenant Private Link Request
     - Type: Azure Database for Postgres Flexible Server
@@ -31,15 +31,14 @@ From your Azure portal:
     - dbt Azure multi-tenant environment (EMEA):
     - Azure Postgres server region (for example, WestEurope, NorthEurope):
     ```
-5. Once our support team confirms the endpoint has been created, navigate to the Azure Database for Postgres Flexible Server in the Azure Portal and browse to **Settings** > **Networking**. In the **Private Endpoints** section, highlight the `dbt` named option and select **Approve**. Confirm with Support that the connection has been approved so they can validate the connection and make it available for use in  <Constant name="cloud" />.
+5. После того как команда поддержки подтвердит, что endpoint создан, перейдите к Azure Database for Postgres Flexible Server в Azure Portal и откройте **Settings** > **Networking**. В разделе **Private Endpoints** выделите вариант с именем `dbt` и выберите **Approve**. Подтвердите в Support, что соединение было одобрено, чтобы они могли проверить его и сделать доступным для использования в <Constant name="cloud" />.
 
+## Создание подключения в dbt
 
-## Create connection in dbt
+После завершения настройки в среде Azure вы сможете сконфигурировать private endpoint в <Constant name="cloud" />:
 
-Once you've completed the setup in the Azure environment, you will be able to configure a private endpoint in <Constant name="cloud" />:
-
-1. Navigate to **Settings** → **Create new project** → select **Postgres**. 
-2. You will see two radio buttons: **Default Endpoint** and **PrivateLink Endpoint**. Select **PrivateLink Endpoint**. 
-3. Select the private endpoint from the dropdown (this will automatically populate the hostname/account field).
-4. Configure the remaining data platform details.
-5. Test your connection and save it.
+1. Перейдите в **Settings** → **Create new project** → выберите **Postgres**. 
+2. Вы увидите две radio-кнопки: **Default Endpoint** и **PrivateLink Endpoint**. Выберите **PrivateLink Endpoint**. 
+3. Выберите private endpoint из выпадающего списка (hostname/account будет автоматически заполнен).
+4. Настройте остальные параметры подключения к платформе данных.
+5. Протестируйте соединение и сохраните его.

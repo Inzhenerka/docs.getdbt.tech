@@ -1,24 +1,24 @@
 ---
-title: "Exposure tile object schema"
-sidebar_label: "Exposure tile"
+title: "Схема объекта тайла экспозиции"
+sidebar_label: "Тайл экспозиции"
 id: "discovery-schema-environment-applied-exposure-tile"
 ---
- 
+
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Exposure health tiles](/docs/explore/data-tile) distill data health signals for data consumers and can be embedded in downstream tools. You can query information on these tiles from the Discovery API.
+[Тайлы состояния экспозиции](/docs/explore/data-tile) сводят сигналы о состоянии данных для потребителей данных и могут быть встроены в downstream‑инструменты. Информацию об этих тайлах можно запрашивать через Discovery API.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `exposureTile` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `exposureTile`. Полный список доступных полей см. в разделе [Поля](#fields), где приведена вся схема со всеми возможными полями для запроса.
 
-### Arguments
+### Аргументы
 
-When querying for `exposureTile`, you can use the following arguments:
+При запросе `exposureTile` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="exposureTile" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId` and filter by a model's `uniqueId` to understand the data quality and metadata information for the exposure tile associated with the `customers` model in the `marketing` package:
+Вы можете указать `environmentId` и отфильтровать по `uniqueId` модели, чтобы получить информацию о качестве данных и метаданных для тайла экспозиции, связанного с моделью `customers` в пакете `marketing`:
 
 ```graphql
 query {
@@ -39,8 +39,8 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `exposureTile`, you can use the following fields:
+При запросе `exposureTile` можно использовать следующие поля:
 
 <SchemaTable nodeName="ExposureTileNode" />

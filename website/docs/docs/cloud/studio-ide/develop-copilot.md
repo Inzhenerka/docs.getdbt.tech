@@ -1,25 +1,25 @@
 --- 
-title: "Develop with dbt Copilot" 
-sidebar_label: "Develop with dbt Copilot" 
-description: "Use dbt Copilot to generate documentation, tests, semantic models, and SQL code from scratch, giving you the flexibility to modify or fix generated code." 
+title: "Разработка с dbt Copilot" 
+sidebar_label: "Разработка с dbt Copilot" 
+description: "Используйте dbt Copilot для генерации документации, тестов, семантических моделей и SQL-кода с нуля, получая гибкость в изменении или исправлении сгенерированного кода." 
 ---
 
-# Develop with dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
+# Разработка с dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
 
 <IntroText>
 
-This page describes how to use <Constant name="copilot" /> in the <Constant name="cloud_ide" /> to improve your development workflow.
+На этой странице описывается, как использовать <Constant name="copilot" /> в <Constant name="cloud_ide" /> для улучшения процесса разработки.
 </IntroText>
 
-Use [<Constant name="copilot" />](/docs/cloud/dbt-copilot) in the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) to generate documentation, tests, semantic models, metrics, and SQL code from scratch &mdash; making it easier for you to build your dbt project, accelerate your development, and focus on high-level tasks. For information about using <Constant name="copilot" /> in the [<Constant name="visual_editor" />](/docs/cloud/canvas), see [Build with <Constant name="copilot" />](/docs/cloud/build-canvas-copilot).
+Используйте [<Constant name="copilot" />](/docs/cloud/dbt-copilot) в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) для генерации документации, тестов, семантических моделей, метрик и SQL-кода с нуля &mdash; это упрощает построение dbt‑проекта, ускоряет разработку и позволяет сосредоточиться на задачах более высокого уровня. Информацию об использовании <Constant name="copilot" /> в [<Constant name="visual_editor" />](/docs/cloud/canvas) см. в разделе [Сборка с помощью <Constant name="copilot" />](/docs/cloud/build-canvas-copilot).
 
 import CopilotResources from '/snippets/_use-copilot-resources.md';
 import CopilotEditCode from '/snippets/_use-copilot-edit-code.md';
 
-## Generate resources
+## Генерация ресурсов
 
 <CopilotResources/>
 
-## Generate and edit code
+## Генерация и редактирование кода
 
 <CopilotEditCode/>

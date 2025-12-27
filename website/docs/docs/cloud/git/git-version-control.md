@@ -1,27 +1,27 @@
 ---
-title: "About git"
+title: "О git"
 id: git-version-control
-description: "Git overview"
-sidebar_label: "About git"
+description: "Обзор Git"
+sidebar_label: "О git"
 pagination_next: null
 pagination_prev: null
 ---
 
-A [version control](https://en.wikipedia.org/wiki/Version_control) system allows you and your teammates to work collaboratively, safely, and simultaneously on a single project. Version control helps you track all the code changes made in your dbt project.
+Система [контроля версий](https://en.wikipedia.org/wiki/Version_control) позволяет вам и вашим коллегам совместно, безопасно и одновременно работать над одним проектом. Контроль версий помогает отслеживать все изменения кода, которые вносятся в ваш dbt‑проект.
 
-In a distributed version control system, every developer has a full copy of the project and project history. <Constant name="git" /> is one of the most popular distributed version control systems and is commonly used for both open source and commercial software development, with great benefits for individuals, teams and businesses.
+В распределённой системе контроля версий у каждого разработчика есть полная копия проекта и всей его истории. <Constant name="git" /> — одна из самых популярных распределённых систем контроля версий, которая широко используется как в open source, так и в коммерческой разработке программного обеспечения, принося значительные преимущества отдельным разработчикам, командам и компаниям.
 
 ![<Constant name="git" /> overview](/img/docs/dbt-cloud/cloud-ide/git-overview.png)
 
 
-<Constant name="git" /> allows developers see the entire timeline of their changes, decisions, and progression of any project in one place. From the moment they access the history of a project, the developer has all the context they need to understand it and start contributing.
+<Constant name="git" /> позволяет разработчикам видеть полную временную шкалу своих изменений, решений и развития любого проекта в одном месте. С момента доступа к истории проекта у разработчика есть весь необходимый контекст, чтобы понять его и начать вносить свой вклад.
 
-When you develop in the command line interface (CLI) or Cloud  integrated development environment (<Constant name="cloud_ide" />), you can leverage <Constant name="git" /> directly to version control your code. To use version control, make sure you are connected to a <Constant name="git" /> repository in the CLI or Cloud <Constant name="cloud_ide" />. 
+При разработке в интерфейсе командной строки (CLI) или в облачной интегрированной среде разработки (<Constant name="cloud_ide" />) вы можете напрямую использовать <Constant name="git" /> для управления версиями кода. Чтобы использовать контроль версий, убедитесь, что вы подключены к репозиторию <Constant name="git" /> в CLI или в Cloud <Constant name="cloud_ide" />. 
 
 
-## Related docs
-- [Version control basics](/docs/cloud/git/version-control-basics)
-- [Merge conflicts](/docs/cloud/git/merge-conflicts) 
-- [Connect to GitHub](/docs/cloud/git/connect-github)
-- [Connect to GitLab](/docs/cloud/git/connect-gitlab)
-- [Connect to Azure DevOps](/docs/cloud/git/connect-azure-devops)
+## Связанные документы
+- [Основы контроля версий](/docs/cloud/git/version-control-basics)
+- [Конфликты слияния](/docs/cloud/git/merge-conflicts) 
+- [Подключение к GitHub](/docs/cloud/git/connect-github)
+- [Подключение к GitLab](/docs/cloud/git/connect-gitlab)
+- [Подключение к Azure DevOps](/docs/cloud/git/connect-azure-devops)

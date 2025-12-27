@@ -1,36 +1,36 @@
 ---
-title: "Configuring Snowflake and GCP Private Service Connect"
+title: "Настройка Private Service Connect между Snowflake и GCP"
 id: snowflake-psc
-description: "Configuring GCP Private Service Connect for Snowflake"
-sidebar_label: "GCP Private Service Connect for Snowflake"
+description: "Настройка GCP Private Service Connect для Snowflake"
+sidebar_label: "GCP Private Service Connect для Snowflake"
 ---
 
-# Configuring Snowflake Private Service Connect <Lifecycle status="managed_plus" />
+# Настройка Snowflake Private Service Connect <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-private-connection.md'}/>
 
-The following steps walk you through the setup of a GCP Snowflake Private Service Connect (PSC) endpoint in a <Constant name="cloud" /> multi-tenant environment.
+Следующие шаги описывают процесс настройки эндпоинта GCP Snowflake Private Service Connect (PSC) в мультиарендной среде <Constant name="cloud" />.
 
 <CloudProviders type='Snowflake' />
 
 :::warning
 
-GCP Internal Stage PSC connections are not currently supported.
+Соединения GCP Internal Stage PSC в настоящее время не поддерживаются.
 
 :::
 
-## Configure GCP Private Service Connect
+## Настройка GCP Private Service Connect
 
-The dbt Labs GCP project has been pre-authorized for connections to Snowflake accounts. 
+Проект dbt Labs в GCP заранее авторизован для подключения к аккаунтам Snowflake. 
 
-To configure Snowflake instances hosted on GCP for [Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect):
+Чтобы настроить экземпляры Snowflake, размещённые в GCP, для использования [Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect):
 
-1. Run the Snowflake system function [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) and copy the output.
+1. Выполните системную функцию Snowflake [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) и скопируйте результат.
 
-2. Add the required information to the following template and submit your request to  [dbt Support](/docs/dbt-support#dbt-cloud-support):
+2. Добавьте необходимую информацию в следующий шаблон и отправьте запрос в [службу поддержки dbt](/docs/dbt-support#dbt-cloud-support):
 
 ```
 Subject: New Multi-Tenant GCP PSC Request
@@ -39,58 +39,58 @@ Subject: New Multi-Tenant GCP PSC Request
 - *Use privatelink-account-url or regionless-privatelink-account-url?: 
 - dbt GCP multi-tenant environment:
 ```
-_*By default, <Constant name="cloud" /> will be configured to use `privatelink-account-url` from the provided [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) as the PrivateLink endpoint. Upon request, `regionless-privatelink-account-url` can be used instead._
+_*По умолчанию <Constant name="cloud" /> будет настроен на использование `privatelink-account-url` из предоставленного вывода [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) в качестве эндпоинта PrivateLink. По запросу вместо него может быть использован `regionless-privatelink-account-url`._
 
 
 import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Create Connection in dbt
+## Создание подключения в dbt
 
-Once <Constant name="cloud" /> support completes the configuration, you can start creating new connections using PrivateLink. 
+После того как служба поддержки <Constant name="cloud" /> завершит настройку, вы сможете начать создавать новые подключения с использованием PrivateLink. 
 
-1. Navigate to **Settings** → **Create new project** → select **Snowflake**. 
-2. You will see two radio buttons: **Public** and **Private.** Select **Private**. 
-3. Select the private endpoint from the dropdown (this will automatically populate the hostname/account field).
-4. Configure the remaining data platform details.
-5. Test your connection and save it.
+1. Перейдите в **Settings** → **Create new project** → выберите **Snowflake**. 
+2. Вы увидите два переключателя: **Public** и **Private**. Выберите **Private**. 
+3. Выберите приватный эндпоинт из выпадающего списка (поле hostname/account будет заполнено автоматически).
+4. Настройте остальные параметры платформы данных.
+5. Протестируйте подключение и сохраните его.
 
-## Configuring Network Policies
+## Настройка сетевых политик
 
-If your organization uses [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) to restrict access to your Snowflake account, you will need to add a network rule for <Constant name="cloud" />. 
+Если в вашей организации используются [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к аккаунту Snowflake, вам потребуется добавить сетевое правило для <Constant name="cloud" />. 
 
-You can request the CIDR range from [<Constant name="cloud" /> Support](mailto:support@getdbt.com), that you can use to create a network policy. 
+Вы можете запросить диапазон CIDR у [службы поддержки <Constant name="cloud" />](mailto:support@getdbt.com), который затем можно использовать для создания сетевой политики. 
 
-### Using the UI
+### Использование UI
 
-Open the Snowflake UI and take the following steps:
-1. Go to the **Security** tab.
-2. Click on **Network Rules**.
-3. Click on **Add Rule**.
-4. Give the rule a name.
-5. Select a database and schema where the rule will be stored. These selections are for permission settings and organizational purposes; they do not affect the rule itself.
-6. Set the type to `IPV4` and the mode to `Ingress`.
-7. Type the CIDR range provided by <Constant name="cloud" /> Support into the identifier box and press **Enter**.
-8. Click **Create Network Rule**.
-9. In the **Network Policy** tab, edit the policy you want to add the rule to. This could be your account-level policy or a policy specific to the users connecting from <Constant name="cloud" />.
-10. Add the new rule to the allowed list and click **Update Network Policy**.
+Откройте интерфейс Snowflake и выполните следующие шаги:
+1. Перейдите на вкладку **Security**.
+2. Нажмите **Network Rules**.
+3. Нажмите **Add Rule**.
+4. Задайте имя правила.
+5. Выберите базу данных и схему, в которых будет храниться правило. Эти настройки используются для управления правами доступа и организационных целей и не влияют на само правило.
+6. Установите тип `IPV4` и режим `Ingress`.
+7. Введите диапазон CIDR, предоставленный службой поддержки <Constant name="cloud" />, в поле identifier и нажмите **Enter**.
+8. Нажмите **Create Network Rule**.
+9. На вкладке **Network Policy** отредактируйте политику, в которую вы хотите добавить правило. Это может быть политика уровня аккаунта или политика, предназначенная для пользователей, подключающихся из <Constant name="cloud" />.
+10. Добавьте новое правило в список разрешённых и нажмите **Update Network Policy**.
 
-### Using SQL
+### Использование SQL
 
-For quick and automated setup of network rules via SQL in Snowflake, the following commands allow you to create and configure access rules for <Constant name="cloud" />. These SQL examples demonstrate how to add a network rule and update your network policy accordingly.
+Для быстрого и автоматизированного создания сетевых правил в Snowflake с помощью SQL можно использовать следующие команды. Эти примеры SQL демонстрируют, как добавить сетевое правило и соответствующим образом обновить сетевую политику для <Constant name="cloud" />.
 
-1. Create a new network rule with the following SQL:
+1. Создайте новое сетевое правило с помощью следующего SQL:
 ```sql
 
 CREATE NETWORK RULE allow_dbt_cloud_access
   MODE = INGRESS
   TYPE = IPV4
-  VALUE_LIST = ('<CIDR_RANGE>'); -- Replace '<CIDR_RANGE>' with the actual CIDR provided
+  VALUE_LIST = ('<CIDR_RANGE>'); -- Замените '<CIDR_RANGE>' на фактический CIDR, предоставленный службой поддержки
 
 ```
 
-2. Add the rule to a network policy with the following SQL:
+2. Добавьте правило в сетевую политику с помощью следующего SQL:
 ```sql
 
 ALTER NETWORK POLICY <network_policy_name>

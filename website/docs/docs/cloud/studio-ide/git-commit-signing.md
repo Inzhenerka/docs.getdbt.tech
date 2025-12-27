@@ -1,80 +1,75 @@
 ---
-title: "Git commit signing"
-description: "Learn how to sign your Git commits when using the IDE for development."
+title: "Подписание Git-коммитов"
+description: "Узнайте, как подписывать Git-коммиты при использовании IDE для разработки."
 sidebar_label: Git commit signing
 ---
 
-# Git commit signing <Lifecycle status="managed,managed_plus" />
+# Подписание Git-коммитов <Lifecycle status="managed,managed_plus" />
 
-To prevent impersonation and enhance security, you can sign your <Constant name="git" /> commits before pushing them to your repository. Using your signature, a <Constant name="git" /> provider can cryptographically verify a commit and mark it as "verified", providing increased confidence about its origin.
+Чтобы предотвратить подмену личности и повысить уровень безопасности, вы можете подписывать свои коммиты в <Constant name="git" /> перед отправкой их в репозиторий. Используя подпись, <Constant name="git" />‑провайдер может криптографически проверить коммит и пометить его как «verified», что повышает доверие к его источнику.
 
-You can configure <Constant name="cloud" /> to sign your <Constant name="git" /> commits when using the <Constant name="cloud_ide" /> for development. To set up, enable the feature in <Constant name="cloud" />, follow the flow to generate a keypair, and upload the public key to your <Constant name="git" /> provider to use for signature verification.  
+Вы можете настроить <Constant name="cloud" /> так, чтобы он подписывал ваши <Constant name="git" />‑коммиты при использовании <Constant name="cloud_ide" /> для разработки. Для этого включите функцию в <Constant name="cloud" />, пройдите процесс генерации пары ключей и загрузите публичный ключ в ваш <Constant name="git" />‑провайдер, чтобы использовать его для проверки подписи.  
 
+## Требования
 
-## Prerequisites 
+- В качестве <Constant name="git" />‑провайдера используется GitHub или GitLab. В настоящее время Azure DevOps не поддерживается.
+- У вас есть аккаунт <Constant name="cloud" /> на тарифе [Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
 
-- GitHub or GitLab is your <Constant name="git" /> provider. Currently, Azure DevOps is not supported.
-- You have a <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/).
+## Генерация пары GPG-ключей в dbt
 
-## Generate GPG keypair in dbt
+Чтобы сгенерировать пару GPG-ключей в <Constant name="cloud" />, выполните следующие шаги:
+1. Перейдите на страницу **Personal profile** в <Constant name="cloud" />.
+2. Откройте раздел **Signed Commits**.
+3. Включите переключатель **Sign commits originating from this user**.
+4. В результате будет сгенерирована пара GPG-ключей. Приватный ключ будет использоваться для подписания всех будущих <Constant name="git" />‑коммитов. Публичный ключ будет отображён и его можно будет загрузить в ваш <Constant name="git" />‑провайдер.
 
-To generate a GPG keypair in <Constant name="cloud" />, follow these steps:
-1. Go to your **Personal profile** page in <Constant name="cloud" />.
-2. Navigate to **Signed Commits** section.
-3. Enable the **Sign commits originating from this user** toggle.
-4. This will generate a GPG keypair. The private key will be used to sign all future <Constant name="git" /> commits. The public key will be displayed, allowing you to upload it to your <Constant name="git" /> provider.
+<Lightbox src="/img/docs/dbt-cloud/example-git-signed-commits-setting.png" width="95%" title="Пример настройки профиля Signed commits" />
 
-<Lightbox src="/img/docs/dbt-cloud/example-git-signed-commits-setting.png" width="95%" title="Example of profile setting Signed commits" />
+## Загрузка публичного ключа в Git-провайдер
 
-## Upload public key to Git provider 
+Чтобы загрузить публичный ключ в ваш <Constant name="git" />‑провайдер, следуйте подробной документации соответствующего поддерживаемого <Constant name="git" />‑провайдера:
 
-To upload the public key to your <Constant name="git" /> provider, follow the detailed documentation provided by the supported <Constant name="git" /> provider:
+- [Инструкции GitHub](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account) 
+- [Инструкции GitLab](https://docs.gitlab.com/ee/user/project/repository/signed_commits/gpg.html) 
 
-- [GitHub instructions](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account) 
-- [GitLab instructions](https://docs.gitlab.com/ee/user/project/repository/signed_commits/gpg.html) 
+После того как вы загрузите публичный ключ в ваш <Constant name="git" />‑провайдер, ваши <Constant name="git" />‑коммиты будут помечаться как «Verified» после отправки изменений в репозиторий.
 
-Once you have uploaded the public key to your <Constant name="git" /> provider, your <Constant name="git" /> commits will be marked as "Verified" after you push the changes to the repository.
+<Lightbox src="/img/docs/dbt-cloud/git-sign-verified.png" width="95%" title="Пример подтверждённого Git-коммита в Git-провайдере." />
 
-<Lightbox src="/img/docs/dbt-cloud/git-sign-verified.png" width="95%" title="Example of a verified Git commit in a Git provider." />
+## Важные моменты
 
-## Considerations
-
-- The GPG keypair is tied to the user, not a specific account. There is a 1:1 relationship between the user and keypair. The same key will be used for signing commits on any accounts the user is a member of.
-- The GPG keypair generated in <Constant name="cloud" /> is linked to the email address associated with your account at the time of keypair creation. This email identifies the author of signed commits.
-- For your <Constant name="git" /> commits to be marked as "verified", your <Constant name="cloud" /> email address must be a verified email address with your <Constant name="git" /> provider. The <Constant name="git" /> provider (such as, GitHub, GitLab) checks that the commit's signed email matches a verified email in your <Constant name="git" /> provider account. If they don’t match, the commit won't be marked as "verified."
-- Keep your <Constant name="cloud" /> email and <Constant name="git" /> provider's verified email in sync to avoid verification issues. If you change your <Constant name="cloud" /> email address:
-  - Generate a new GPG keypair with the updated email, following the [steps mentioned earlier](/docs/cloud/studio-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
-  - Add and verify the new email in your <Constant name="git" /> provider.
+- Пара GPG-ключей привязана к пользователю, а не к конкретному аккаунту. Между пользователем и парой ключей существует соотношение 1:1. Один и тот же ключ используется для подписания коммитов во всех аккаунтах, участником которых является пользователь.
+- Пара GPG-ключей, сгенерированная в <Constant name="cloud" />, привязана к адресу электронной почты, связанному с вашим аккаунтом на момент создания ключей. Этот email используется для идентификации автора подписанных коммитов.
+- Чтобы ваши <Constant name="git" />‑коммиты помечались как «verified», ваш email в <Constant name="cloud" /> должен быть подтверждённым адресом у вашего <Constant name="git" />‑провайдера. <Constant name="git" />‑провайдер (например, GitHub или GitLab) проверяет, что email, указанный в подписанном коммите, совпадает с подтверждённым email в аккаунте провайдера. Если они не совпадают, коммит не будет помечен как «verified».
+- Поддерживайте синхронизацию email в <Constant name="cloud" /> и подтверждённого email у <Constant name="git" />‑провайдера, чтобы избежать проблем с верификацией. Если вы измените email в <Constant name="cloud" />:
+  - Сгенерируйте новую пару GPG-ключей с обновлённым email, следуя [описанным ранее шагам](/docs/cloud/studio-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
+  - Добавьте и подтвердите новый email у вашего <Constant name="git" />‑провайдера.
 
 <!-- vale off -->
 
-## FAQs
+## Часто задаваемые вопросы
 
 <!-- vale on -->
 
-<DetailsToggle alt_header="What happens if I delete my GPG keypair in dbt?">
+<DetailsToggle alt_header="Что произойдёт, если я удалю свою пару GPG-ключей в dbt?">
 
-If you delete your GPG keypair in <Constant name="cloud" />, your Git commits will no longer be signed. You can generate a new GPG keypair by following the [steps mentioned earlier](/docs/cloud/studio-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
+Если вы удалите свою пару GPG-ключей в <Constant name="cloud" />, ваши Git-коммиты больше не будут подписываться. Вы можете сгенерировать новую пару GPG-ключей, следуя [описанным ранее шагам](/docs/cloud/studio-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
 </DetailsToggle>
 
-<DetailsToggle alt_header="What Git providers support GPG keys?">
+<DetailsToggle alt_header="Какие Git-провайдеры поддерживают GPG-ключи?">
 
-GitHub and GitLab support commit signing, while Azure DevOps does not. Commit signing is a [git feature](https://git-scm.com/book/ms/v2/Git-Tools-Signing-Your-Work), and is independent of any specific provider. However, not all providers support the upload of public keys, or the display of verification badges on commits.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="What if my Git provider doesn't support GPG keys?">
-
-If your Git Provider does not explicitly support the uploading of public GPG keys, then
-commits will still be signed using the private key, but no verification information will
-be displayed by the provider.
+GitHub и GitLab поддерживают подписание коммитов, тогда как Azure DevOps — нет. Подписание коммитов является [функцией git](https://git-scm.com/book/ms/v2/Git-Tools-Signing-Your-Work) и не зависит от конкретного провайдера. Однако не все провайдеры поддерживают загрузку публичных ключей или отображение значков подтверждения на коммитах.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="What if my Git provider requires that all commits are signed?">
+<DetailsToggle alt_header="Что делать, если мой Git-провайдер не поддерживает GPG-ключи?">
 
-If your Git provider is configured to enforce commit verification, then unsigned commits
-will be rejected. To avoid this, ensure that you have followed all previous steps to generate
-a keypair, and uploaded the public key to the provider.
+Если ваш Git-провайдер явно не поддерживает загрузку публичных GPG-ключей, коммиты всё равно будут подписываться с использованием приватного ключа, однако провайдер не будет отображать информацию о верификации.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Что если мой Git-провайдер требует, чтобы все коммиты были подписаны?">
+
+Если ваш Git-провайдер настроен на обязательную проверку коммитов, неподписанные коммиты будут отклоняться. Чтобы этого избежать, убедитесь, что вы выполнили все предыдущие шаги по генерации пары ключей и загрузили публичный ключ в провайдер.
 
 </DetailsToggle>
