@@ -85,6 +85,7 @@ description: "`modules` Jinja variables предоставляет полезн�
   {{ item }}
 {%- endfor -%}
 ```
+
 ```
   (1, 'x')
   (1, 'y')

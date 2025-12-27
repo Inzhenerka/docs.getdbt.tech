@@ -25,13 +25,11 @@ __Args__:
 ```jinja2
 {% set results = run_query('select 1 as id') %}
 
-```jinja
 {% if results is not none %}
   {{ log(results.print_table(), info=True) }}
 {% endif %}
 
 {# do something with `results` here... #}
-```
 ```
 
 </File>

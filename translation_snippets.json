@@ -1,7 +1,7 @@
 {
     "_default": {
         "1": {
-            "checked_hash": null,
+            "checked_hash": "8d497af61cbe8bfcf9b9696fb4b7680098c3e6a7c41057cdba4facaa5c10f7f1",
             "elapsed_seconds": 4.04262113571167,
             "input_tokens": 482,
             "model_name": "gpt-5.2-chat-latest",
@@ -21,10 +21,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "8d497af61cbe8bfcf9b9696fb4b7680098c3e6a7c41057cdba4facaa5c10f7f1",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "10": {
-            "checked_hash": null,
+            "checked_hash": "809e5cd8ead16679adcb28651c46bc55f79dfd1798b649cc35b559e282a5cd15",
             "elapsed_seconds": 6.053828001022339,
             "input_tokens": 392,
             "model_name": "gpt-4o",
@@ -44,10 +44,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "809e5cd8ead16679adcb28651c46bc55f79dfd1798b649cc35b559e282a5cd15",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "100": {
-            "checked_hash": null,
+            "checked_hash": "ac1d200a3e0f9a5abb0a45b3d2c23f9c99a964f78d03ee9cd33a22cb87a23278",
             "elapsed_seconds": 7.046299457550049,
             "input_tokens": 830,
             "model_name": "gpt-5.2-chat-latest",
@@ -67,10 +67,13 @@
             "translated_source_lines": 30,
             "translated_target_hash": "ac1d200a3e0f9a5abb0a45b3d2c23f9c99a964f78d03ee9cd33a22cb87a23278",
             "translated_target_lines": 30,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                5,
+                10
+            ]
         },
         "101": {
-            "checked_hash": null,
+            "checked_hash": "bb6828d7dbb4285588a563ad2ea90e2e2db02512e2ea0487726d266ad451aca1",
             "elapsed_seconds": 2.3552863597869873,
             "input_tokens": 297,
             "model_name": "gpt-5.2-chat-latest",
@@ -90,10 +93,18 @@
             "translated_source_lines": 11,
             "translated_target_hash": "bb6828d7dbb4285588a563ad2ea90e2e2db02512e2ea0487726d266ad451aca1",
             "translated_target_lines": 11,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                2,
+                3,
+                6,
+                9,
+                10,
+                11,
+                12
+            ]
         },
         "102": {
-            "checked_hash": null,
+            "checked_hash": "d1236f5a00542ca1959ac2fffe6374ec6bf86e57da0ae7975b902176c584d204",
             "elapsed_seconds": 1.8844342231750488,
             "input_tokens": 253,
             "model_name": "gpt-5.2-chat-latest",
@@ -113,10 +124,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "d1236f5a00542ca1959ac2fffe6374ec6bf86e57da0ae7975b902176c584d204",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "103": {
-            "checked_hash": null,
+            "checked_hash": "60fc4218b7bfeab3f87755e7dad22d27eb70e26b7adeb08519d85797604942e6",
             "elapsed_seconds": 3.8703322410583496,
             "input_tokens": 571,
             "model_name": "gpt-5.2-chat-latest",
@@ -136,10 +147,10 @@
             "translated_source_lines": 16,
             "translated_target_hash": "60fc4218b7bfeab3f87755e7dad22d27eb70e26b7adeb08519d85797604942e6",
             "translated_target_lines": 16,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "104": {
-            "checked_hash": null,
+            "checked_hash": "fe37c8c963b01821b8c44ebe59953ca0d639f45fc5f7f1c3df3c430b34be3d07",
             "elapsed_seconds": 2.4569716453552246,
             "input_tokens": 422,
             "model_name": "gpt-5.2-chat-latest",
@@ -159,10 +170,10 @@
             "translated_source_lines": 11,
             "translated_target_hash": "fe37c8c963b01821b8c44ebe59953ca0d639f45fc5f7f1c3df3c430b34be3d07",
             "translated_target_lines": 11,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "105": {
-            "checked_hash": null,
+            "checked_hash": "175f1b6739fa9a0832ef97b19e8a38d67201e921bd3bd2b89dde22237004f8fe",
             "elapsed_seconds": 3.6080288887023926,
             "input_tokens": 523,
             "model_name": "gpt-5.2-chat-latest",
@@ -182,10 +193,10 @@
             "translated_source_lines": 13,
             "translated_target_hash": "175f1b6739fa9a0832ef97b19e8a38d67201e921bd3bd2b89dde22237004f8fe",
             "translated_target_lines": 13,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "106": {
-            "checked_hash": null,
+            "checked_hash": "3849c4771137162f06665d698845010dbebba49fe997815843f429f1ca68d773",
             "elapsed_seconds": 3.3699841499328613,
             "input_tokens": 336,
             "model_name": "gpt-5.2-chat-latest",
@@ -205,10 +216,10 @@
             "translated_source_lines": 8,
             "translated_target_hash": "3849c4771137162f06665d698845010dbebba49fe997815843f429f1ca68d773",
             "translated_target_lines": 8,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "107": {
-            "checked_hash": null,
+            "checked_hash": "f80bbef103cf6529660435f11716d64148c8cbadae9e554e1db948594264fb71",
             "elapsed_seconds": 6.876022815704346,
             "input_tokens": 1150,
             "model_name": "gpt-5.2-chat-latest",
@@ -228,10 +239,10 @@
             "translated_source_lines": 98,
             "translated_target_hash": "f80bbef103cf6529660435f11716d64148c8cbadae9e554e1db948594264fb71",
             "translated_target_lines": 98,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "108": {
-            "checked_hash": null,
+            "checked_hash": "09681489546290c969cff59d4555592bca6c39769ad0bd2905261a1c6a22b517",
             "elapsed_seconds": 18.76405382156372,
             "input_tokens": 2408,
             "model_name": "gpt-5.2-chat-latest",
@@ -251,10 +262,10 @@
             "translated_source_lines": 124,
             "translated_target_hash": "09681489546290c969cff59d4555592bca6c39769ad0bd2905261a1c6a22b517",
             "translated_target_lines": 124,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "109": {
-            "checked_hash": null,
+            "checked_hash": "16951ac46b97c2484a1aa1334e4676521c28cb1761195df91fc0655d9a657296",
             "elapsed_seconds": 4.699872970581055,
             "input_tokens": 728,
             "model_name": "gpt-5.2-chat-latest",
@@ -274,10 +285,10 @@
             "translated_source_lines": 28,
             "translated_target_hash": "16951ac46b97c2484a1aa1334e4676521c28cb1761195df91fc0655d9a657296",
             "translated_target_lines": 28,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "11": {
-            "checked_hash": null,
+            "checked_hash": "801c1854f072584f85738eed35e0fb6916e393af893c0decf8aaa7331d27195a",
             "elapsed_seconds": 6.666738033294678,
             "input_tokens": 529,
             "model_name": "gpt-5.2-chat-latest",
@@ -297,10 +308,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "801c1854f072584f85738eed35e0fb6916e393af893c0decf8aaa7331d27195a",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "110": {
-            "checked_hash": null,
+            "checked_hash": "055528d66f5f41115a407fcf7c036b47f2ba61565bc90afd241ef37b9d8abd2c",
             "elapsed_seconds": 2.894989490509033,
             "input_tokens": 588,
             "model_name": "gpt-5.2-chat-latest",
@@ -320,10 +331,10 @@
             "translated_source_lines": 13,
             "translated_target_hash": "055528d66f5f41115a407fcf7c036b47f2ba61565bc90afd241ef37b9d8abd2c",
             "translated_target_lines": 13,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "111": {
-            "checked_hash": null,
+            "checked_hash": "d557b0c9d4551bc10bec06625db6f2318f7bbdd2828a9264c8c5bccf3f9a6af7",
             "elapsed_seconds": 2.755723714828491,
             "input_tokens": 458,
             "model_name": "gpt-5.2-chat-latest",
@@ -343,10 +354,10 @@
             "translated_source_lines": 7,
             "translated_target_hash": "d557b0c9d4551bc10bec06625db6f2318f7bbdd2828a9264c8c5bccf3f9a6af7",
             "translated_target_lines": 7,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "112": {
-            "checked_hash": null,
+            "checked_hash": "30e2069c3fa06af286a44f871fe7e99191c311f270fde813947caf6be24d0dfb",
             "elapsed_seconds": 2.0629971027374268,
             "input_tokens": 416,
             "model_name": "gpt-5.2-chat-latest",
@@ -366,10 +377,10 @@
             "translated_source_lines": 28,
             "translated_target_hash": "30e2069c3fa06af286a44f871fe7e99191c311f270fde813947caf6be24d0dfb",
             "translated_target_lines": 28,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "113": {
-            "checked_hash": null,
+            "checked_hash": "0356352b966d1aa29e8c4d25fdeeb993c3e43cfb4ba223706b1d2b9824f793ed",
             "elapsed_seconds": 3.1875298023223877,
             "input_tokens": 434,
             "model_name": "gpt-5.2-chat-latest",
@@ -389,10 +400,10 @@
             "translated_source_lines": 10,
             "translated_target_hash": "0356352b966d1aa29e8c4d25fdeeb993c3e43cfb4ba223706b1d2b9824f793ed",
             "translated_target_lines": 10,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "114": {
-            "checked_hash": null,
+            "checked_hash": "129c50b9556222e2e4d870b015963378d0b7e8f088d0383fded241f9a606e145",
             "elapsed_seconds": 3.410475730895996,
             "input_tokens": 418,
             "model_name": "gpt-5.2-chat-latest",
@@ -412,10 +423,10 @@
             "translated_source_lines": 11,
             "translated_target_hash": "129c50b9556222e2e4d870b015963378d0b7e8f088d0383fded241f9a606e145",
             "translated_target_lines": 11,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "115": {
-            "checked_hash": null,
+            "checked_hash": "31b3c34606793185138ce21ff66d5d315ef83e1c759245b2af148ba309ac2282",
             "elapsed_seconds": 1.2367463111877441,
             "input_tokens": 216,
             "model_name": "gpt-5.2-chat-latest",
@@ -435,10 +446,10 @@
             "translated_source_lines": 5,
             "translated_target_hash": "31b3c34606793185138ce21ff66d5d315ef83e1c759245b2af148ba309ac2282",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "116": {
-            "checked_hash": null,
+            "checked_hash": "16c58f07e20f54d3d763126a4097118ad45105f833a35c9a603b933af151e4ae",
             "elapsed_seconds": 1.801818609237671,
             "input_tokens": 335,
             "model_name": "gpt-5.2-chat-latest",
@@ -458,10 +469,10 @@
             "translated_source_lines": 10,
             "translated_target_hash": "16c58f07e20f54d3d763126a4097118ad45105f833a35c9a603b933af151e4ae",
             "translated_target_lines": 10,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "117": {
-            "checked_hash": null,
+            "checked_hash": "d4ee4863f4fd7639ad85c44061f1f645b72d55f2bdbaf4ebc7480540a8d73f09",
             "elapsed_seconds": 2.0310781002044678,
             "input_tokens": 383,
             "model_name": "gpt-5.2-chat-latest",
@@ -481,10 +492,10 @@
             "translated_source_lines": 16,
             "translated_target_hash": "d4ee4863f4fd7639ad85c44061f1f645b72d55f2bdbaf4ebc7480540a8d73f09",
             "translated_target_lines": 16,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "118": {
-            "checked_hash": null,
+            "checked_hash": "d7efd6df38b705e16e36d637e1fef9ed9edebe47fa4e3869d31388ae1411c837",
             "elapsed_seconds": 2.2348780632019043,
             "input_tokens": 292,
             "model_name": "gpt-5.2-chat-latest",
@@ -504,10 +515,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "d7efd6df38b705e16e36d637e1fef9ed9edebe47fa4e3869d31388ae1411c837",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "119": {
-            "checked_hash": null,
+            "checked_hash": "bcb2317ef727ac7906693df07d594f84bb08f5bc6b23a6a7cd1327c5e923dfcc",
             "elapsed_seconds": 2.3695013523101807,
             "input_tokens": 349,
             "model_name": "gpt-5.2-chat-latest",
@@ -527,10 +538,23 @@
             "translated_source_lines": 22,
             "translated_target_hash": "fda6b6b71749823b4c3887c7554c187864ff85374da617fc241f4c7384d6975e",
             "translated_target_lines": 24,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                2,
+                3,
+                4,
+                9,
+                10,
+                14,
+                15,
+                19,
+                20,
+                21,
+                22,
+                23
+            ]
         },
         "12": {
-            "checked_hash": null,
+            "checked_hash": "855b05166a5bba4c620e7ca57165915ee9f430d0d555d7bf5430c1ad50660395",
             "elapsed_seconds": 5.4084312915802,
             "input_tokens": 621,
             "model_name": "gpt-5.2-chat-latest",
@@ -550,10 +574,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "855b05166a5bba4c620e7ca57165915ee9f430d0d555d7bf5430c1ad50660395",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "120": {
-            "checked_hash": null,
+            "checked_hash": "761cfdcb1c74f6c65213ff8e7d04eea3a0a76c70beb4452e610ec174b90f7200",
             "elapsed_seconds": 1.8763115406036377,
             "input_tokens": 360,
             "model_name": "gpt-5.2-chat-latest",
@@ -573,10 +597,10 @@
             "translated_source_lines": 8,
             "translated_target_hash": "761cfdcb1c74f6c65213ff8e7d04eea3a0a76c70beb4452e610ec174b90f7200",
             "translated_target_lines": 8,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "121": {
-            "checked_hash": null,
+            "checked_hash": "c95b55dede05a002403a37a78560fd74b9fbeccc5954bc3c68d46b753fcdf7bf",
             "elapsed_seconds": 4.077476739883423,
             "input_tokens": 628,
             "model_name": "gpt-5.2-chat-latest",
@@ -596,10 +620,10 @@
             "translated_source_lines": 34,
             "translated_target_hash": "c95b55dede05a002403a37a78560fd74b9fbeccc5954bc3c68d46b753fcdf7bf",
             "translated_target_lines": 34,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "122": {
-            "checked_hash": null,
+            "checked_hash": "ce9ac31775e1da8e045247d7c38363c4f4be7d79b83e28230d067b0853585bf0",
             "elapsed_seconds": 14.387464046478271,
             "input_tokens": 1949,
             "model_name": "gpt-5.2-chat-latest",
@@ -619,10 +643,10 @@
             "translated_source_lines": 20,
             "translated_target_hash": "ce9ac31775e1da8e045247d7c38363c4f4be7d79b83e28230d067b0853585bf0",
             "translated_target_lines": 20,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "123": {
-            "checked_hash": null,
+            "checked_hash": "19620b5612f8635e68859075430da76b64652c2cb77ded48c623d465f7b6a2d6",
             "elapsed_seconds": 4.1357340812683105,
             "input_tokens": 641,
             "model_name": "gpt-5.2-chat-latest",
@@ -642,10 +666,12 @@
             "translated_source_lines": 16,
             "translated_target_hash": "19620b5612f8635e68859075430da76b64652c2cb77ded48c623d465f7b6a2d6",
             "translated_target_lines": 16,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                1
+            ]
         },
         "124": {
-            "checked_hash": null,
+            "checked_hash": "35db12dad18052a7da4ca4b3afee9364a8a0b67f25e8c8c09b6f927b3688abc8",
             "elapsed_seconds": 2.894054889678955,
             "input_tokens": 365,
             "model_name": "gpt-5.2-chat-latest",
@@ -665,10 +691,10 @@
             "translated_source_lines": 12,
             "translated_target_hash": "35db12dad18052a7da4ca4b3afee9364a8a0b67f25e8c8c09b6f927b3688abc8",
             "translated_target_lines": 12,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "125": {
-            "checked_hash": null,
+            "checked_hash": "cf975dab7e616b059ee591d05e7cbbec94db2e4acfae938a81e04b351fe4d23c",
             "elapsed_seconds": 1.5687880516052246,
             "input_tokens": 260,
             "model_name": "gpt-5.2-chat-latest",
@@ -688,10 +714,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "cf975dab7e616b059ee591d05e7cbbec94db2e4acfae938a81e04b351fe4d23c",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "126": {
-            "checked_hash": null,
+            "checked_hash": "bfc063d0d5a6e2844f8f6f56465925277ceb8320000b1ca730109aff75d18a1c",
             "elapsed_seconds": 3.6563830375671387,
             "input_tokens": 539,
             "model_name": "gpt-5.2-chat-latest",
@@ -711,10 +737,10 @@
             "translated_source_lines": 9,
             "translated_target_hash": "7b1557e3ad9fd43880f97c5da6f8ed344b60ae15e19ee86a367467e7807729b2",
             "translated_target_lines": 9,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "127": {
-            "checked_hash": null,
+            "checked_hash": "427571d13a7e83f3bd0e28c0cd663daf962439f6952d2d3be4b7c059e59c1fec",
             "elapsed_seconds": 7.82680869102478,
             "input_tokens": 1115,
             "model_name": "gpt-5.2-chat-latest",
@@ -734,10 +760,20 @@
             "translated_source_lines": 46,
             "translated_target_hash": "427571d13a7e83f3bd0e28c0cd663daf962439f6952d2d3be4b7c059e59c1fec",
             "translated_target_lines": 46,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                3,
+                11,
+                16,
+                27,
+                36,
+                54,
+                59,
+                62,
+                71
+            ]
         },
         "128": {
-            "checked_hash": null,
+            "checked_hash": "745c253caf7df999d9b850f131c0331eec78ca5ccf71d6b4e0ac965315d78794",
             "elapsed_seconds": 3.894167423248291,
             "input_tokens": 529,
             "model_name": "gpt-5.2-chat-latest",
@@ -757,10 +793,10 @@
             "translated_source_lines": 8,
             "translated_target_hash": "745c253caf7df999d9b850f131c0331eec78ca5ccf71d6b4e0ac965315d78794",
             "translated_target_lines": 8,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "129": {
-            "checked_hash": null,
+            "checked_hash": "2a59b8f666940bf7d88540e80e0fb9f627d77cad02d507364d049b37b0f48f13",
             "elapsed_seconds": 7.873532056808472,
             "input_tokens": 1179,
             "model_name": "gpt-5.2-chat-latest",
@@ -780,10 +816,10 @@
             "translated_source_lines": 12,
             "translated_target_hash": "2a59b8f666940bf7d88540e80e0fb9f627d77cad02d507364d049b37b0f48f13",
             "translated_target_lines": 12,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "13": {
-            "checked_hash": null,
+            "checked_hash": "f1d678b7788733eeef958ac8d3cd2bf40b54dda04c95e9003d5bf0a07d6617a0",
             "elapsed_seconds": 2.3187270164489746,
             "input_tokens": 259,
             "model_name": "gpt-4o",
@@ -803,10 +839,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "f1d678b7788733eeef958ac8d3cd2bf40b54dda04c95e9003d5bf0a07d6617a0",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "130": {
-            "checked_hash": null,
+            "checked_hash": "5dae9f3b939c6dddb8da5880eb62bcfad3830939625cd9f560c98fc337227775",
             "elapsed_seconds": 7.37037992477417,
             "input_tokens": 1007,
             "model_name": "gpt-5.2-chat-latest",
@@ -826,10 +862,10 @@
             "translated_source_lines": 21,
             "translated_target_hash": "5dae9f3b939c6dddb8da5880eb62bcfad3830939625cd9f560c98fc337227775",
             "translated_target_lines": 21,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "131": {
-            "checked_hash": null,
+            "checked_hash": "549a711f38e535018c2cd4132b0ba373d8f55077dcf037a7b4da975863dcac3c",
             "elapsed_seconds": 3.867074966430664,
             "input_tokens": 648,
             "model_name": "gpt-5.2-chat-latest",
@@ -849,10 +885,10 @@
             "translated_source_lines": 10,
             "translated_target_hash": "549a711f38e535018c2cd4132b0ba373d8f55077dcf037a7b4da975863dcac3c",
             "translated_target_lines": 10,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "132": {
-            "checked_hash": null,
+            "checked_hash": "373a741a835af2d9c63eb1f8d9ff31e5b0a6e4a90f06b31fae66eef3369598e7",
             "elapsed_seconds": 3.0603525638580322,
             "input_tokens": 293,
             "model_name": "gpt-5.2-chat-latest",
@@ -872,10 +908,10 @@
             "translated_source_lines": 5,
             "translated_target_hash": "373a741a835af2d9c63eb1f8d9ff31e5b0a6e4a90f06b31fae66eef3369598e7",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "133": {
-            "checked_hash": null,
+            "checked_hash": "45a25981b2061426c3fdfd031b48ab971480f7af7af993424694993d55f37374",
             "elapsed_seconds": 4.709955930709839,
             "input_tokens": 733,
             "model_name": "gpt-5.2-chat-latest",
@@ -895,10 +931,10 @@
             "translated_source_lines": 56,
             "translated_target_hash": "45a25981b2061426c3fdfd031b48ab971480f7af7af993424694993d55f37374",
             "translated_target_lines": 56,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "134": {
-            "checked_hash": null,
+            "checked_hash": "5f0316015698df5b91349e100956b4317675ed1d55da77c8f1cba6b65d13f458",
             "elapsed_seconds": 21.227964401245117,
             "input_tokens": 4454,
             "model_name": "gpt-5.2-chat-latest",
@@ -909,19 +945,40 @@
             "source_lines": 160,
             "source_mtime": 1766698864.9655178,
             "source_size_kb": 18.1103515625,
-            "target_hash": "3aed286794f7e92a7b23ac098d67e2d61203bf977b5df07f2a6b280266dc0a45",
-            "target_lines": 101,
-            "target_mtime": 1766722037.3359957,
-            "target_size_kb": 17.2724609375,
+            "target_hash": "5f0316015698df5b91349e100956b4317675ed1d55da77c8f1cba6b65d13f458",
+            "target_lines": 160,
+            "target_mtime": 1766857282.6041374,
+            "target_size_kb": 26.8603515625,
             "translated_at": "2025-12-26T04:05:47.054349+00:00",
             "translated_source_hash": "7ce5991c583497fa558c1bc41aed94315e09cbf9eb36ccba970202f9c1b73d76",
             "translated_source_lines": 160,
             "translated_target_hash": "2f14ba24b229833e0892e71de060c6aa1531382151b75ea93e09e40f10188734",
             "translated_target_lines": 107,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                33,
+                35,
+                37,
+                39,
+                44,
+                48,
+                72,
+                73,
+                74,
+                75,
+                99,
+                100,
+                101,
+                102,
+                107,
+                108,
+                165,
+                166,
+                167,
+                169
+            ]
         },
         "135": {
-            "checked_hash": null,
+            "checked_hash": "8eb87af033bb0d1fe86b465d818b70aa0c98d84d84b49341c8f7d31400ad6c59",
             "elapsed_seconds": 1.6606907844543457,
             "input_tokens": 299,
             "model_name": "gpt-5.2-chat-latest",
@@ -941,10 +998,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "8eb87af033bb0d1fe86b465d818b70aa0c98d84d84b49341c8f7d31400ad6c59",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "136": {
-            "checked_hash": null,
+            "checked_hash": "a85a701e3ca4cc5deb207ebf18b5bb9fc7c91af3e638d8ab81bfe222a740e1e2",
             "elapsed_seconds": 2.584819793701172,
             "input_tokens": 249,
             "model_name": "gpt-5.2-chat-latest",
@@ -964,10 +1021,12 @@
             "translated_source_lines": 4,
             "translated_target_hash": "a85a701e3ca4cc5deb207ebf18b5bb9fc7c91af3e638d8ab81bfe222a740e1e2",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                1
+            ]
         },
         "137": {
-            "checked_hash": null,
+            "checked_hash": "3d92722a6435f919d82d48000eb401c4103a852ff5d6267a15867253867b5efd",
             "elapsed_seconds": 4.982881546020508,
             "input_tokens": 936,
             "model_name": "gpt-5.2-chat-latest",
@@ -987,10 +1046,10 @@
             "translated_source_lines": 77,
             "translated_target_hash": "3d92722a6435f919d82d48000eb401c4103a852ff5d6267a15867253867b5efd",
             "translated_target_lines": 77,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "138": {
-            "checked_hash": null,
+            "checked_hash": "554acc47e762821824b8ea3b47891b6703a3d5a8e5c824f1dbd04bf02e3c9cc6",
             "elapsed_seconds": 1.9407644271850586,
             "input_tokens": 282,
             "model_name": "gpt-5.2-chat-latest",
@@ -1010,10 +1069,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "554acc47e762821824b8ea3b47891b6703a3d5a8e5c824f1dbd04bf02e3c9cc6",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "139": {
-            "checked_hash": null,
+            "checked_hash": "421346b37e0980ac51e6473ca991c3491544a1eb10945152472b49e18a5ea12a",
             "elapsed_seconds": 2.8735499382019043,
             "input_tokens": 496,
             "model_name": "gpt-5.2-chat-latest",
@@ -1033,10 +1092,10 @@
             "translated_source_lines": 19,
             "translated_target_hash": "421346b37e0980ac51e6473ca991c3491544a1eb10945152472b49e18a5ea12a",
             "translated_target_lines": 19,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "14": {
-            "checked_hash": null,
+            "checked_hash": "6d80e4bbf02c2c99a46e456789b5436a2a03a5ee72b9ca88aa00dee314458aeb",
             "elapsed_seconds": 1.9092793464660645,
             "input_tokens": 248,
             "model_name": "gpt-4o",
@@ -1056,10 +1115,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "6d80e4bbf02c2c99a46e456789b5436a2a03a5ee72b9ca88aa00dee314458aeb",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "140": {
-            "checked_hash": null,
+            "checked_hash": "04c3c9f607da197d3e76504ba4c59f7ec47df9a1f616be5812f8bc050605f8a7",
             "elapsed_seconds": 1.2826728820800781,
             "input_tokens": 229,
             "model_name": "gpt-5.2-chat-latest",
@@ -1079,10 +1138,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "04c3c9f607da197d3e76504ba4c59f7ec47df9a1f616be5812f8bc050605f8a7",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "141": {
-            "checked_hash": null,
+            "checked_hash": "e10b7544f0b89b727786e41611f5287d8ee802c163dd53fa675a90ab9f5c4fbd",
             "elapsed_seconds": 3.194875955581665,
             "input_tokens": 601,
             "model_name": "gpt-5.2-chat-latest",
@@ -1102,10 +1161,10 @@
             "translated_source_lines": 40,
             "translated_target_hash": "e10b7544f0b89b727786e41611f5287d8ee802c163dd53fa675a90ab9f5c4fbd",
             "translated_target_lines": 40,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "142": {
-            "checked_hash": null,
+            "checked_hash": "51f0dae92eb5ea3184335dc30fdb8129e8bc58eb2604135d3a1b124d79631c7e",
             "elapsed_seconds": 2.1504008769989014,
             "input_tokens": 333,
             "model_name": "gpt-5.2-chat-latest",
@@ -1125,10 +1184,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "51f0dae92eb5ea3184335dc30fdb8129e8bc58eb2604135d3a1b124d79631c7e",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "143": {
-            "checked_hash": null,
+            "checked_hash": "c31a9dc571d50ab74cc27119de35833f69fd387703f9541a87902ce0ecf5f75a",
             "elapsed_seconds": 1.830075740814209,
             "input_tokens": 252,
             "model_name": "gpt-5.2-chat-latest",
@@ -1148,10 +1207,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "c31a9dc571d50ab74cc27119de35833f69fd387703f9541a87902ce0ecf5f75a",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "144": {
-            "checked_hash": null,
+            "checked_hash": "ee6d67d357bc4b1ae1db157a5d886a367a1f3dabbcddfd495905dfcb98bd1fc6",
             "elapsed_seconds": 1.634939193725586,
             "input_tokens": 248,
             "model_name": "gpt-5.2-chat-latest",
@@ -1171,10 +1230,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "a108809aed2e9f64b36ba16329d264df3631167f478e32e5b7acf278714aa8f7",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "145": {
-            "checked_hash": null,
+            "checked_hash": "20aa5eb9d9e970353f3e104e9b1ea6653551767edd8c4f0bb10e1da285fdf8f8",
             "elapsed_seconds": 2.945746421813965,
             "input_tokens": 343,
             "model_name": "gpt-5.2-chat-latest",
@@ -1194,10 +1253,12 @@
             "translated_source_lines": 5,
             "translated_target_hash": "20aa5eb9d9e970353f3e104e9b1ea6653551767edd8c4f0bb10e1da285fdf8f8",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                1
+            ]
         },
         "146": {
-            "checked_hash": null,
+            "checked_hash": "1b82340006fdbe393369b70f82904b80ff820735ff1f7f5bc6761adc66df32b2",
             "elapsed_seconds": 2.30244517326355,
             "input_tokens": 391,
             "model_name": "gpt-5.2-chat-latest",
@@ -1217,10 +1278,12 @@
             "translated_source_lines": 6,
             "translated_target_hash": "1b82340006fdbe393369b70f82904b80ff820735ff1f7f5bc6761adc66df32b2",
             "translated_target_lines": 6,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                1
+            ]
         },
         "147": {
-            "checked_hash": null,
+            "checked_hash": "347d6edab77c3b208ee3ad26e8e22938a63d707f2507e4010505dacf08ac4562",
             "elapsed_seconds": 2.5272390842437744,
             "input_tokens": 375,
             "model_name": "gpt-5.2-chat-latest",
@@ -1240,10 +1303,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "347d6edab77c3b208ee3ad26e8e22938a63d707f2507e4010505dacf08ac4562",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "148": {
-            "checked_hash": null,
+            "checked_hash": "30eb3a08bd830cb6aaabdeabfe1ed200c4b9476fc6959a2c7a37b1c1198f40a9",
             "elapsed_seconds": 2.2279038429260254,
             "input_tokens": 288,
             "model_name": "gpt-5.2-chat-latest",
@@ -1263,10 +1326,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "30eb3a08bd830cb6aaabdeabfe1ed200c4b9476fc6959a2c7a37b1c1198f40a9",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "149": {
-            "checked_hash": null,
+            "checked_hash": "7826468fe965f3db0dca8f94d49726a90d633cadf4d32ea272fc7e1a46543e0f",
             "elapsed_seconds": 1.7820847034454346,
             "input_tokens": 278,
             "model_name": "gpt-5.2-chat-latest",
@@ -1286,10 +1349,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "7826468fe965f3db0dca8f94d49726a90d633cadf4d32ea272fc7e1a46543e0f",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "15": {
-            "checked_hash": null,
+            "checked_hash": "3f62ae70d4d99a076825e76b84efea3591a7f893b6eb8a346220e78724f8bad6",
             "elapsed_seconds": 9.830302000045776,
             "input_tokens": 834,
             "model_name": "gpt-5.2-chat-latest",
@@ -1309,10 +1372,10 @@
             "translated_source_lines": 50,
             "translated_target_hash": "3f62ae70d4d99a076825e76b84efea3591a7f893b6eb8a346220e78724f8bad6",
             "translated_target_lines": 50,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "150": {
-            "checked_hash": null,
+            "checked_hash": "835e72f2d4c2df492d35466b5fd3fd4a3dd9c7791df8729da196248a760079b4",
             "elapsed_seconds": 2.588121175765991,
             "input_tokens": 258,
             "model_name": "gpt-5.2-chat-latest",
@@ -1332,10 +1395,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "835e72f2d4c2df492d35466b5fd3fd4a3dd9c7791df8729da196248a760079b4",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "151": {
-            "checked_hash": null,
+            "checked_hash": "60c8c5044218f40e4df467354b739ddf12161a6b9c4ace1502bcbe7db385984d",
             "elapsed_seconds": 1.4448192119598389,
             "input_tokens": 225,
             "model_name": "gpt-5.2-chat-latest",
@@ -1355,10 +1418,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "60c8c5044218f40e4df467354b739ddf12161a6b9c4ace1502bcbe7db385984d",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "152": {
-            "checked_hash": null,
+            "checked_hash": "9f04c444d99700eb2aa437ee945e255004f01a720e7a640eb4e92aecb1694bfa",
             "elapsed_seconds": 4.927315950393677,
             "input_tokens": 1026,
             "model_name": "gpt-5.2-chat-latest",
@@ -1378,10 +1441,10 @@
             "translated_source_lines": 29,
             "translated_target_hash": "9f04c444d99700eb2aa437ee945e255004f01a720e7a640eb4e92aecb1694bfa",
             "translated_target_lines": 29,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "153": {
-            "checked_hash": null,
+            "checked_hash": "3108e9e1571d29cade2c5c19e600eb716959c1c6176cc7462904f18b965fc322",
             "elapsed_seconds": 3.8182966709136963,
             "input_tokens": 543,
             "model_name": "gpt-5.2-chat-latest",
@@ -1401,10 +1464,12 @@
             "translated_source_lines": 25,
             "translated_target_hash": "3108e9e1571d29cade2c5c19e600eb716959c1c6176cc7462904f18b965fc322",
             "translated_target_lines": 25,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                36
+            ]
         },
         "154": {
-            "checked_hash": null,
+            "checked_hash": "0084a5239cbfdb3b888fd433a7d20d9d6bc706be159eb70be01927803db655a3",
             "elapsed_seconds": 2.5381853580474854,
             "input_tokens": 396,
             "model_name": "gpt-5.2-chat-latest",
@@ -1415,19 +1480,19 @@
             "source_lines": 4,
             "source_mtime": 1766698864.9965189,
             "source_size_kb": 0.9677734375,
-            "target_hash": "80d1a5836e473108d7efe5c78b972c4b149aee518cf931973fdb6e342765e986",
-            "target_lines": 5,
-            "target_mtime": 1766721999.7448673,
-            "target_size_kb": 1.7802734375,
+            "target_hash": "0084a5239cbfdb3b888fd433a7d20d9d6bc706be159eb70be01927803db655a3",
+            "target_lines": 4,
+            "target_mtime": 1766858623.924611,
+            "target_size_kb": 1.6982421875,
             "translated_at": "2025-12-26T04:06:39.753782+00:00",
             "translated_source_hash": "0bf54beed3cadf442529f43627176d765dd1cf0533f8ec688fb420715a488e7f",
             "translated_source_lines": 4,
             "translated_target_hash": "80d1a5836e473108d7efe5c78b972c4b149aee518cf931973fdb6e342765e986",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "155": {
-            "checked_hash": null,
+            "checked_hash": "09079c58d8f134293d9958aa4adcad740575d5318a6a5e3162807a0178f9b0d5",
             "elapsed_seconds": 5.843793630599976,
             "input_tokens": 734,
             "model_name": "gpt-5.2-chat-latest",
@@ -1447,10 +1512,10 @@
             "translated_source_lines": 24,
             "translated_target_hash": "09079c58d8f134293d9958aa4adcad740575d5318a6a5e3162807a0178f9b0d5",
             "translated_target_lines": 24,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "156": {
-            "checked_hash": null,
+            "checked_hash": "9aeee38ed576066e5bb074300744787311950e3a41acb62a11e4e28e76c9f6aa",
             "elapsed_seconds": 2.6584324836730957,
             "input_tokens": 346,
             "model_name": "gpt-5.2-chat-latest",
@@ -1470,10 +1535,10 @@
             "translated_source_lines": 5,
             "translated_target_hash": "9aeee38ed576066e5bb074300744787311950e3a41acb62a11e4e28e76c9f6aa",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "157": {
-            "checked_hash": null,
+            "checked_hash": "b66b28be5251d104473019c838fadc5d3d49f365c1b211f3edfd67d33ff7ba88",
             "elapsed_seconds": 6.295903205871582,
             "input_tokens": 917,
             "model_name": "gpt-5.2-chat-latest",
@@ -1493,10 +1558,19 @@
             "translated_source_lines": 29,
             "translated_target_hash": "b66b28be5251d104473019c838fadc5d3d49f365c1b211f3edfd67d33ff7ba88",
             "translated_target_lines": 29,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                11,
+                15,
+                20,
+                22,
+                27,
+                32,
+                36,
+                42
+            ]
         },
         "158": {
-            "checked_hash": null,
+            "checked_hash": "cad013fb0e0590739fba8583a28ded259da38d24373529de616a74171cc6b640",
             "elapsed_seconds": 3.2032902240753174,
             "input_tokens": 517,
             "model_name": "gpt-5.2-chat-latest",
@@ -1516,10 +1590,10 @@
             "translated_source_lines": 11,
             "translated_target_hash": "cad013fb0e0590739fba8583a28ded259da38d24373529de616a74171cc6b640",
             "translated_target_lines": 11,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "159": {
-            "checked_hash": null,
+            "checked_hash": "b4292612918f5b2438cf1287da81b99c2fdab91e3e8604dd379323cf32c470b1",
             "elapsed_seconds": 4.7063000202178955,
             "input_tokens": 701,
             "model_name": "gpt-5.2-chat-latest",
@@ -1539,10 +1613,14 @@
             "translated_source_lines": 17,
             "translated_target_hash": "b4292612918f5b2438cf1287da81b99c2fdab91e3e8604dd379323cf32c470b1",
             "translated_target_lines": 17,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                7,
+                12,
+                16
+            ]
         },
         "16": {
-            "checked_hash": null,
+            "checked_hash": "bfc416d68c24ca48ec728e52df347e2b6e14facc4f63eb0098ac9dadadbdb4fc",
             "elapsed_seconds": 11.334501028060913,
             "input_tokens": 1139,
             "model_name": "gpt-5.2-chat-latest",
@@ -1562,10 +1640,10 @@
             "translated_source_lines": 47,
             "translated_target_hash": "b588ea1cb1da58f085b7c39d8c3fe4efabc1338df98964e71b52940262115fde",
             "translated_target_lines": 53,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "160": {
-            "checked_hash": null,
+            "checked_hash": "b105091d1f6e6b664bdd7d7bf098659b50c6228fedde0d3480835475ae4c9da2",
             "elapsed_seconds": 1.7800207138061523,
             "input_tokens": 289,
             "model_name": "gpt-5.2-chat-latest",
@@ -1585,10 +1663,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "b105091d1f6e6b664bdd7d7bf098659b50c6228fedde0d3480835475ae4c9da2",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "161": {
-            "checked_hash": null,
+            "checked_hash": "dc40e09fe3ebda74ae362b33cddec28d7eb686f5f8b21249ef192e29669bedd0",
             "elapsed_seconds": 2.4701662063598633,
             "input_tokens": 322,
             "model_name": "gpt-5.2-chat-latest",
@@ -1608,10 +1686,10 @@
             "translated_source_lines": 7,
             "translated_target_hash": "dc40e09fe3ebda74ae362b33cddec28d7eb686f5f8b21249ef192e29669bedd0",
             "translated_target_lines": 7,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "162": {
-            "checked_hash": null,
+            "checked_hash": "1eac1b2b2ebf95ef02727abb67679abc3319955cf3a63f5adf14ad620eaeecd2",
             "elapsed_seconds": 2.5702221393585205,
             "input_tokens": 368,
             "model_name": "gpt-5.2-chat-latest",
@@ -1631,10 +1709,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "1eac1b2b2ebf95ef02727abb67679abc3319955cf3a63f5adf14ad620eaeecd2",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "163": {
-            "checked_hash": null,
+            "checked_hash": "18e90a8ea7fdc67a3677b908b6614a7f37b5e71a5df3279d46fb54fe817d2379",
             "elapsed_seconds": 3.2951712608337402,
             "input_tokens": 455,
             "model_name": "gpt-5.2-chat-latest",
@@ -1654,10 +1732,10 @@
             "translated_source_lines": 10,
             "translated_target_hash": "18e90a8ea7fdc67a3677b908b6614a7f37b5e71a5df3279d46fb54fe817d2379",
             "translated_target_lines": 10,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "164": {
-            "checked_hash": null,
+            "checked_hash": "003b1eadf9a59f150bba09b50152e85f6ea256477772999a4f4723a5f9bbd603",
             "elapsed_seconds": 6.620351076126099,
             "input_tokens": 796,
             "model_name": "gpt-5.2-chat-latest",
@@ -1677,10 +1755,10 @@
             "translated_source_lines": 17,
             "translated_target_hash": "003b1eadf9a59f150bba09b50152e85f6ea256477772999a4f4723a5f9bbd603",
             "translated_target_lines": 17,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "17": {
-            "checked_hash": null,
+            "checked_hash": "096370fbd9fb60502cd022a103aa70d97c641871c03241734950565b4430ed57",
             "elapsed_seconds": 3.1596760749816895,
             "input_tokens": 276,
             "model_name": "gpt-4o",
@@ -1700,10 +1778,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "096370fbd9fb60502cd022a103aa70d97c641871c03241734950565b4430ed57",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "18": {
-            "checked_hash": null,
+            "checked_hash": "c55a884bd48d468d37010f7b72482e1a85d56ff3c291e4ab9b97d2156478ec0d",
             "elapsed_seconds": 3.710840940475464,
             "input_tokens": 308,
             "model_name": "gpt-4o",
@@ -1723,10 +1801,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "c55a884bd48d468d37010f7b72482e1a85d56ff3c291e4ab9b97d2156478ec0d",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "19": {
-            "checked_hash": null,
+            "checked_hash": "6e170c12d6c30a608e8cfdb7027ffd8d1479659795f1757b206e3eee54105c46",
             "elapsed_seconds": 2.942742347717285,
             "input_tokens": 305,
             "model_name": "gpt-4o",
@@ -1746,10 +1824,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "6e170c12d6c30a608e8cfdb7027ffd8d1479659795f1757b206e3eee54105c46",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "2": {
-            "checked_hash": null,
+            "checked_hash": "a2cc08ab3fde1cc410a9f698d31958acd5aac1d8d36ed820617fdd8556a717c6",
             "elapsed_seconds": 6.8308188915252686,
             "input_tokens": 674,
             "model_name": "gpt-5.2-chat-latest",
@@ -1760,19 +1838,19 @@
             "source_lines": 5,
             "source_mtime": 1766698865.0185256,
             "source_size_kb": 0.65625,
-            "target_hash": "76fc69b42351b8af1026138cc6085fe8940b25d1dc152cb2a5d8847b5e4e4977",
-            "target_lines": 7,
-            "target_mtime": 1766720267.7271335,
-            "target_size_kb": 1.4775390625,
+            "target_hash": "a2cc08ab3fde1cc410a9f698d31958acd5aac1d8d36ed820617fdd8556a717c6",
+            "target_lines": 5,
+            "target_mtime": 1766858684.9810514,
+            "target_size_kb": 0.916015625,
             "translated_at": "2025-12-25T23:19:01.700181+00:00",
             "translated_source_hash": "29babdfb4c214c44c21fb126dda6bd536c69a001cda199b878730bec2b2ae67e",
             "translated_source_lines": 5,
             "translated_target_hash": "76fc69b42351b8af1026138cc6085fe8940b25d1dc152cb2a5d8847b5e4e4977",
             "translated_target_lines": 7,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "20": {
-            "checked_hash": null,
+            "checked_hash": "64bfce71f0b5c038001ad8b4245c90bb7394f85ae5a3760781dc713f4c23a66c",
             "elapsed_seconds": 12.15410304069519,
             "input_tokens": 1053,
             "model_name": "gpt-4o",
@@ -1792,10 +1870,15 @@
             "translated_source_lines": null,
             "translated_target_hash": "df7a4f40731a7270c3dabff2cc19743505336476bebe1202e495e947a9e6b636",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                2,
+                65,
+                129,
+                193
+            ]
         },
         "21": {
-            "checked_hash": null,
+            "checked_hash": "4c53e614d8afed58f76dd2c96ae24e08edeb7ab5f376447899ec8685125b8b49",
             "elapsed_seconds": 4.759918451309204,
             "input_tokens": 559,
             "model_name": "gpt-5.2-chat-latest",
@@ -1815,10 +1898,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "4c53e614d8afed58f76dd2c96ae24e08edeb7ab5f376447899ec8685125b8b49",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "22": {
-            "checked_hash": null,
+            "checked_hash": "7a822327b3ad98b86f81d15fe32dc13bf94664c085eaa5bae7504e998a0b4179",
             "elapsed_seconds": 9.119651794433594,
             "input_tokens": 770,
             "model_name": "gpt-5.2-chat-latest",
@@ -1829,19 +1912,19 @@
             "source_lines": 12,
             "source_mtime": 1766698865.0295167,
             "source_size_kb": 1.25390625,
-            "target_hash": "72b42988e0751afc7829c95073d6960fa6edda269279e87e17c333bfd4fd0be3",
-            "target_lines": 13,
-            "target_mtime": 1766720267.7721434,
-            "target_size_kb": 1.9326171875,
+            "target_hash": "7a822327b3ad98b86f81d15fe32dc13bf94664c085eaa5bae7504e998a0b4179",
+            "target_lines": 12,
+            "target_mtime": 1766858863.6660974,
+            "target_size_kb": 1.94140625,
             "translated_at": "2025-12-25T23:19:06.787116+00:00",
             "translated_source_hash": "903234e9e96d1540fefbcda740c61a66a227aa5af67e30c443b0d1d6783fa849",
             "translated_source_lines": 12,
             "translated_target_hash": "72b42988e0751afc7829c95073d6960fa6edda269279e87e17c333bfd4fd0be3",
             "translated_target_lines": 13,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "23": {
-            "checked_hash": null,
+            "checked_hash": "cee39df42f2bde76195f94d0e3472685d3da234c0f93b394835ac0917fae3f67",
             "elapsed_seconds": 3.5833327770233154,
             "input_tokens": 264,
             "model_name": "gpt-4o",
@@ -1861,10 +1944,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "cee39df42f2bde76195f94d0e3472685d3da234c0f93b394835ac0917fae3f67",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "24": {
-            "checked_hash": null,
+            "checked_hash": "bbe10e52885048b29997000030976dccca127cfbd1362f84c1088c68db962cf6",
             "elapsed_seconds": 54.108514070510864,
             "input_tokens": 6059,
             "model_name": "gpt-5.2-chat-latest",
@@ -1884,10 +1967,10 @@
             "translated_source_lines": 114,
             "translated_target_hash": "73e877b73a0e50cdbd4b57c9d1a446a7b64961d780306dcd9d5a0987b43101de",
             "translated_target_lines": 351,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "25": {
-            "checked_hash": null,
+            "checked_hash": "bcd99e7e53448e200463e6eb2831d936147980b7e3e83bed3959d5739bd26978",
             "elapsed_seconds": 10.72846531867981,
             "input_tokens": 1331,
             "model_name": "gpt-5.2-chat-latest",
@@ -1907,10 +1990,20 @@
             "translated_source_lines": 26,
             "translated_target_hash": "bcd99e7e53448e200463e6eb2831d936147980b7e3e83bed3959d5739bd26978",
             "translated_target_lines": 26,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+            ]
         },
         "26": {
-            "checked_hash": null,
+            "checked_hash": "01689cd705546bdff589e7beb69745a8196fd5ed13ee7b2eb6c3f8e26c067fb8",
             "elapsed_seconds": 3.7765920162200928,
             "input_tokens": 474,
             "model_name": "gpt-5.2-chat-latest",
@@ -1930,10 +2023,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "01689cd705546bdff589e7beb69745a8196fd5ed13ee7b2eb6c3f8e26c067fb8",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "27": {
-            "checked_hash": null,
+            "checked_hash": "7ed836860f545431bd81755e7b6b00b786ae109109f23afaddead28cabda0308",
             "elapsed_seconds": 3.702969789505005,
             "input_tokens": 460,
             "model_name": "gpt-5.2-chat-latest",
@@ -1953,7 +2046,7 @@
             "translated_source_lines": 6,
             "translated_target_hash": "7ed836860f545431bd81755e7b6b00b786ae109109f23afaddead28cabda0308",
             "translated_target_lines": 6,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "28": {
             "elapsed_seconds": 2.107410430908203,
@@ -1971,7 +2064,7 @@
             "translated_target_hash": "992a8ba8af8f9a8b76c8bc1acd12e15eff17718a1dcd3f5e6aec24c84f372181"
         },
         "29": {
-            "checked_hash": null,
+            "checked_hash": "d30e687eab3ab6578c9c67a9ccb1c1c6b6b32dc7f66df203b59ae328ea2856f9",
             "elapsed_seconds": 2.2961018085479736,
             "input_tokens": 266,
             "model_name": "gpt-4o",
@@ -1991,10 +2084,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "d30e687eab3ab6578c9c67a9ccb1c1c6b6b32dc7f66df203b59ae328ea2856f9",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "3": {
-            "checked_hash": null,
+            "checked_hash": "ec2d57a8f40fc79201c37346b3f067ea7fc4d375ec130bbdfe31bad7617d0800",
             "elapsed_seconds": 4.8431477546691895,
             "input_tokens": 561,
             "model_name": "gpt-5.2-chat-latest",
@@ -2014,10 +2107,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "ec2d57a8f40fc79201c37346b3f067ea7fc4d375ec130bbdfe31bad7617d0800",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "30": {
-            "checked_hash": null,
+            "checked_hash": "ae59b5be611cb5b1fdab8c2fbd0c0e1093ae41add7a866d517f2dcab39492b03",
             "elapsed_seconds": 3.7064342498779297,
             "input_tokens": 514,
             "model_name": "gpt-5.2-chat-latest",
@@ -2037,10 +2130,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "ae59b5be611cb5b1fdab8c2fbd0c0e1093ae41add7a866d517f2dcab39492b03",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "31": {
-            "checked_hash": null,
+            "checked_hash": "874197bf2b3c5afddf69e75598c9076652b4a9068de75a4121833e2e80bff4ab",
             "elapsed_seconds": 34.89263200759888,
             "input_tokens": 3728,
             "model_name": "gpt-5.2-chat-latest",
@@ -2051,19 +2144,19 @@
             "source_lines": 57,
             "source_mtime": 1766698864.940529,
             "source_size_kb": 6.2802734375,
-            "target_hash": "f0b1c71934b73c9d87e686597ee384e0c0e85b93d8c6357b2d54647c8ac61b96",
-            "target_lines": 61,
-            "target_mtime": 1766720267.6601336,
-            "target_size_kb": 12.0771484375,
+            "target_hash": "874197bf2b3c5afddf69e75598c9076652b4a9068de75a4121833e2e80bff4ab",
+            "target_lines": 57,
+            "target_mtime": 1766859016.204764,
+            "target_size_kb": 9.4130859375,
             "translated_at": "2025-12-25T23:08:43.868292+00:00",
             "translated_source_hash": "1545f1e1454ef833c0685b66ff6a5336ff727a11b92094fd7a3cc67c365755b8",
             "translated_source_lines": 57,
             "translated_target_hash": "b757a46982426cfddc56aec5faf2ea72d200993395ddfa8de78c3d81fb321420",
             "translated_target_lines": 63,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "32": {
-            "checked_hash": null,
+            "checked_hash": "d5eb01af89730763f6a8ae172d4c0d88ce563e1e6b517d31da4d735b2b6f9acb",
             "elapsed_seconds": 10.01021409034729,
             "input_tokens": 990,
             "model_name": "gpt-5.2-chat-latest",
@@ -2074,19 +2167,19 @@
             "source_lines": 18,
             "source_mtime": 1766698864.94259,
             "source_size_kb": 1.751953125,
-            "target_hash": "2f0b236ec9c64f8d64a463a33c2a01ea45609f07b693b89389d1130cf14ab4cc",
-            "target_lines": 19,
-            "target_mtime": 1766720267.6611423,
-            "target_size_kb": 3.017578125,
+            "target_hash": "d5eb01af89730763f6a8ae172d4c0d88ce563e1e6b517d31da4d735b2b6f9acb",
+            "target_lines": 18,
+            "target_mtime": 1766859074.0295732,
+            "target_size_kb": 2.5732421875,
             "translated_at": "2025-12-25T23:09:56.603577+00:00",
             "translated_source_hash": "990d1c38bae05ba7ab59453fe4531f1d1f3ccfebbcae014e44a729529728f5bb",
             "translated_source_lines": 18,
             "translated_target_hash": "2f0b236ec9c64f8d64a463a33c2a01ea45609f07b693b89389d1130cf14ab4cc",
             "translated_target_lines": 19,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "33": {
-            "checked_hash": null,
+            "checked_hash": "c0105678b371376975b183bd3c69cbaa88ecf0650c9f1bac7effac5a7ade6ae5",
             "elapsed_seconds": 1.5676908493041992,
             "input_tokens": 223,
             "model_name": "gpt-4o",
@@ -2106,10 +2199,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "c0105678b371376975b183bd3c69cbaa88ecf0650c9f1bac7effac5a7ade6ae5",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "34": {
-            "checked_hash": null,
+            "checked_hash": "424efd242024d71d64be4ec0279d393fc55cd2643519c8467d25e0f5c0d1d965",
             "elapsed_seconds": 2.432288408279419,
             "input_tokens": 275,
             "model_name": "gpt-4o",
@@ -2129,10 +2222,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "424efd242024d71d64be4ec0279d393fc55cd2643519c8467d25e0f5c0d1d965",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "35": {
-            "checked_hash": null,
+            "checked_hash": "1ebe2b1f4c197b53d91de4b808beebcab2024edd4fbfede774ecd676d775de61",
             "elapsed_seconds": 4.02611231803894,
             "input_tokens": 544,
             "model_name": "gpt-5.2-chat-latest",
@@ -2143,19 +2236,19 @@
             "source_lines": 1,
             "source_mtime": 1766698864.9435139,
             "source_size_kb": 0.3251953125,
-            "target_hash": "8a8945f89ba964c665c26f2a0d5630f755623a7b38d1bb08e202b57605bb6e5f",
-            "target_lines": 3,
-            "target_mtime": 1766757587.3101783,
-            "target_size_kb": 0.4609375,
+            "target_hash": "1ebe2b1f4c197b53d91de4b808beebcab2024edd4fbfede774ecd676d775de61",
+            "target_lines": 1,
+            "target_mtime": 1766859150.271425,
+            "target_size_kb": 0.4287109375,
             "translated_at": "2025-12-25T23:10:00.957348+00:00",
             "translated_source_hash": "2fdf6b87a23780bff74841386736c18425ba36f8b757af86226144d422fd269e",
             "translated_source_lines": 1,
             "translated_target_hash": "d32fe8f13f67fdf78274612a350f53d15daea71dc42f8e033f9beac77c5b9fad",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "36": {
-            "checked_hash": null,
+            "checked_hash": "4f2918cda397ce2adb641c80a062f1d5d1d686ca358dc690db1e6ac3d34e5d7b",
             "elapsed_seconds": 10.650034427642822,
             "input_tokens": 1192,
             "model_name": "gpt-5.2-chat-latest",
@@ -2175,10 +2268,10 @@
             "translated_source_lines": 12,
             "translated_target_hash": "4f2918cda397ce2adb641c80a062f1d5d1d686ca358dc690db1e6ac3d34e5d7b",
             "translated_target_lines": 12,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "37": {
-            "checked_hash": null,
+            "checked_hash": "0e73e96c1e1def4c6430115cd54faeb53306599fd0e4f12bc24cda7690659cb5",
             "elapsed_seconds": 5.204065561294556,
             "input_tokens": 590,
             "model_name": "gpt-5.2-chat-latest",
@@ -2198,10 +2291,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "0e73e96c1e1def4c6430115cd54faeb53306599fd0e4f12bc24cda7690659cb5",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "38": {
-            "checked_hash": null,
+            "checked_hash": "b6e21ba70fddb3a8c88d6dc9ae60368dd3cfa8325f84f53e13e3b8aee910064c",
             "elapsed_seconds": 70.58590650558472,
             "input_tokens": 5876,
             "model_name": "gpt-5.2-chat-latest",
@@ -2221,10 +2314,12 @@
             "translated_source_lines": 91,
             "translated_target_hash": "b6e21ba70fddb3a8c88d6dc9ae60368dd3cfa8325f84f53e13e3b8aee910064c",
             "translated_target_lines": 94,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                48
+            ]
         },
         "39": {
-            "checked_hash": null,
+            "checked_hash": "b1a9b08d38c932f1897ed9815c5446460b376e23de020ccf45977b36a41ad90a",
             "elapsed_seconds": 3.120765447616577,
             "input_tokens": 484,
             "model_name": "gpt-5.2-chat-latest",
@@ -2244,10 +2339,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "b1a9b08d38c932f1897ed9815c5446460b376e23de020ccf45977b36a41ad90a",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "4": {
-            "checked_hash": null,
+            "checked_hash": "1dcbec0804ed85a6cd99d7f429514fd23ceffa2e259d2141cdb925f1a8912a6e",
             "elapsed_seconds": 6.038651943206787,
             "input_tokens": 644,
             "model_name": "gpt-5.2-chat-latest",
@@ -2267,10 +2362,10 @@
             "translated_source_lines": 2,
             "translated_target_hash": "1dcbec0804ed85a6cd99d7f429514fd23ceffa2e259d2141cdb925f1a8912a6e",
             "translated_target_lines": 2,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "40": {
-            "checked_hash": null,
+            "checked_hash": "e85de1de318b711411c0189c8cbae08ee853630fd784c1f4516f228e892a7df9",
             "elapsed_seconds": 2.9791812896728516,
             "input_tokens": 484,
             "model_name": "gpt-5.2-chat-latest",
@@ -2290,10 +2385,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "e85de1de318b711411c0189c8cbae08ee853630fd784c1f4516f228e892a7df9",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "41": {
-            "checked_hash": null,
+            "checked_hash": "e4e56a64854843e384f6c219dfd9991059ec7cbed8709bfa144c5b3a70ed8261",
             "elapsed_seconds": 4.3828794956207275,
             "input_tokens": 365,
             "model_name": "gpt-4o",
@@ -2313,10 +2408,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "e4e56a64854843e384f6c219dfd9991059ec7cbed8709bfa144c5b3a70ed8261",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "42": {
-            "checked_hash": null,
+            "checked_hash": "0941da884c2fe11a0e686397b8341af43abf5a6e1b48282e94b6f2b46f9621e6",
             "elapsed_seconds": 4.840829610824585,
             "input_tokens": 594,
             "model_name": "gpt-4o",
@@ -2336,10 +2431,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "0941da884c2fe11a0e686397b8341af43abf5a6e1b48282e94b6f2b46f9621e6",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "43": {
-            "checked_hash": null,
+            "checked_hash": "6a36deaf796245d01a9be7db215940144a7bb9970bbe87ee66c7c9ef134aa666",
             "elapsed_seconds": 4.602968454360962,
             "input_tokens": 601,
             "model_name": "gpt-5.2-chat-latest",
@@ -2359,10 +2454,10 @@
             "translated_source_lines": 5,
             "translated_target_hash": "6a36deaf796245d01a9be7db215940144a7bb9970bbe87ee66c7c9ef134aa666",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "44": {
-            "checked_hash": null,
+            "checked_hash": "06885628b72186882a365a802e2b1f5a230d2876886e11d0ca642ee2f7e350a3",
             "elapsed_seconds": 4.555473566055298,
             "input_tokens": 608,
             "model_name": "gpt-5.2-chat-latest",
@@ -2382,10 +2477,10 @@
             "translated_source_lines": 3,
             "translated_target_hash": "1f026509506ad54abd90a91b15f46dbc9f7613976ecffd7ce878ec2b3d59bc6f",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "45": {
-            "checked_hash": null,
+            "checked_hash": "a8b44f7c8d7ee027050ea23ffe9320cfa9142dae8c44829456bd6eea259296e7",
             "elapsed_seconds": 4.172006845474243,
             "input_tokens": 419,
             "model_name": "gpt-5.2-chat-latest",
@@ -2396,19 +2491,19 @@
             "source_lines": 4,
             "source_mtime": 1766698864.9695175,
             "source_size_kb": 0.15625,
-            "target_hash": "9580ea6b0cd9a9014fbaa0b3791b15e82ac9ee406edefdfbac1fd59b809b3da3",
-            "target_lines": 5,
-            "target_mtime": 1766720267.6771367,
-            "target_size_kb": 0.259765625,
+            "target_hash": "a8b44f7c8d7ee027050ea23ffe9320cfa9142dae8c44829456bd6eea259296e7",
+            "target_lines": 4,
+            "target_mtime": 1766859210.2815938,
+            "target_size_kb": 0.2265625,
             "translated_at": "2025-12-25T23:10:36.680375+00:00",
             "translated_source_hash": "a3fa24793ff3b9cf535ce242feb51d241c69db862cfe22b7d5fd0f7d1b96cd0f",
             "translated_source_lines": 4,
             "translated_target_hash": "9580ea6b0cd9a9014fbaa0b3791b15e82ac9ee406edefdfbac1fd59b809b3da3",
             "translated_target_lines": 5,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "46": {
-            "checked_hash": null,
+            "checked_hash": "813b9e8ef3e5d672b52ff987afacd276e1e64896424658e7ce0a92c0a04fa1c9",
             "elapsed_seconds": 6.719340085983276,
             "input_tokens": 978,
             "model_name": "gpt-5.2-chat-latest",
@@ -2428,10 +2523,10 @@
             "translated_source_lines": 12,
             "translated_target_hash": "813b9e8ef3e5d672b52ff987afacd276e1e64896424658e7ce0a92c0a04fa1c9",
             "translated_target_lines": 12,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "47": {
-            "checked_hash": null,
+            "checked_hash": "d04f1e10bcada327e4e26eaec7c5a4395712be09b5dfa6331a05d0b655e2c636",
             "elapsed_seconds": 4.3972790241241455,
             "input_tokens": 398,
             "model_name": "gpt-4o",
@@ -2451,10 +2546,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "d04f1e10bcada327e4e26eaec7c5a4395712be09b5dfa6331a05d0b655e2c636",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "48": {
-            "checked_hash": null,
+            "checked_hash": "20ff6c95a50f383ef5ea7ca568054b50871b0c19a81feb66d68c56913585f5d1",
             "elapsed_seconds": 6.641576290130615,
             "input_tokens": 676,
             "model_name": "gpt-5.2-chat-latest",
@@ -2474,10 +2569,10 @@
             "translated_source_lines": 9,
             "translated_target_hash": "20ff6c95a50f383ef5ea7ca568054b50871b0c19a81feb66d68c56913585f5d1",
             "translated_target_lines": 9,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "49": {
-            "checked_hash": null,
+            "checked_hash": "c9d4854367637f735a332a0a0e50c4c174e7b378224409d310722a01c7099fc9",
             "elapsed_seconds": 2.299269676208496,
             "input_tokens": 324,
             "model_name": "gpt-4o",
@@ -2497,10 +2592,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "c9d4854367637f735a332a0a0e50c4c174e7b378224409d310722a01c7099fc9",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "5": {
-            "checked_hash": null,
+            "checked_hash": "994b51beafdf1592fe51cdb475b6ba85dbf90a89671fe957041236298294069d",
             "elapsed_seconds": 9.339197158813477,
             "input_tokens": 1174,
             "model_name": "gpt-5.2-chat-latest",
@@ -2520,10 +2615,10 @@
             "translated_source_lines": 17,
             "translated_target_hash": "994b51beafdf1592fe51cdb475b6ba85dbf90a89671fe957041236298294069d",
             "translated_target_lines": 17,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "50": {
-            "checked_hash": null,
+            "checked_hash": "9dcd45537e0b9e77581bfabe17458afc5d3f3f0798e6797f49e8ee88464e2b7e",
             "elapsed_seconds": 69.17462205886841,
             "input_tokens": 6319,
             "model_name": "gpt-5.2-chat-latest",
@@ -2543,10 +2638,16 @@
             "translated_source_lines": 111,
             "translated_target_hash": "9dcd45537e0b9e77581bfabe17458afc5d3f3f0798e6797f49e8ee88464e2b7e",
             "translated_target_lines": 111,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                46,
+                50,
+                57,
+                70,
+                86
+            ]
         },
         "51": {
-            "checked_hash": null,
+            "checked_hash": "c3d83b74fb9a69fc7c9a19fd655ec215fdeb6834af9ca5c5e014669f8bde49d0",
             "elapsed_seconds": 1.7619843482971191,
             "input_tokens": 252,
             "model_name": "gpt-4o",
@@ -2566,10 +2667,12 @@
             "translated_source_lines": null,
             "translated_target_hash": "c3d83b74fb9a69fc7c9a19fd655ec215fdeb6834af9ca5c5e014669f8bde49d0",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                1
+            ]
         },
         "52": {
-            "checked_hash": null,
+            "checked_hash": "656d7705a9007be8c48c980a991e365c1577c90d31cdda2c4ffd6e2cb0129982",
             "elapsed_seconds": 16.541409492492676,
             "input_tokens": 2123,
             "model_name": "gpt-5.2-chat-latest",
@@ -2589,7 +2692,7 @@
             "translated_source_lines": 26,
             "translated_target_hash": "8a2d093b225409b59c0987fccc30920527ba204bd1609fa549c46c9977baeeb1",
             "translated_target_lines": 28,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "53": {
             "elapsed_seconds": 2.5371105670928955,
@@ -2607,7 +2710,7 @@
             "translated_target_hash": "e8c97da442c95ad5288c38aa6b91a77be23f42786afd76f41a35af59df95677a"
         },
         "54": {
-            "checked_hash": null,
+            "checked_hash": "aee94e7c7cb5898a6cdbe6a4d7c472f070637adb751aae883e36675f6799d5bd",
             "elapsed_seconds": 6.13251805305481,
             "input_tokens": 665,
             "model_name": "gpt-5.2-chat-latest",
@@ -2618,16 +2721,16 @@
             "source_lines": 4,
             "source_mtime": 1766698864.9935155,
             "source_size_kb": 0.712890625,
-            "target_hash": "f16ca92b63c3c5d308b1222326b5fe84fdf308fb7ff666f18071c45ad5ce18eb",
-            "target_lines": 6,
-            "target_mtime": 1766720267.685135,
-            "target_size_kb": 2.06640625,
+            "target_hash": "aee94e7c7cb5898a6cdbe6a4d7c472f070637adb751aae883e36675f6799d5bd",
+            "target_lines": 4,
+            "target_mtime": 1766859249.3759024,
+            "target_size_kb": 1.2333984375,
             "translated_at": "2025-12-25T23:16:45.951603+00:00",
             "translated_source_hash": "d9c9002edcc66ad17ea759e2899bfcef83a702c414b665c565884b1c290b8d80",
             "translated_source_lines": 4,
             "translated_target_hash": "f16ca92b63c3c5d308b1222326b5fe84fdf308fb7ff666f18071c45ad5ce18eb",
             "translated_target_lines": 6,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "55": {
             "elapsed_seconds": 2.2516045570373535,
@@ -2660,7 +2763,7 @@
             "translated_target_hash": "1fe956f6aaefe54d18ac47f268f3cd186888221bfc58ea7e533898df4fcdfd7d"
         },
         "57": {
-            "checked_hash": null,
+            "checked_hash": "10dd87e7afb1edefbe9d21246ab7de191f8b2010fda890ddfe4d3627985ed4ea",
             "elapsed_seconds": 22.720211029052734,
             "input_tokens": 2633,
             "model_name": "gpt-5.2-chat-latest",
@@ -2680,10 +2783,10 @@
             "translated_source_lines": 28,
             "translated_target_hash": "10dd87e7afb1edefbe9d21246ab7de191f8b2010fda890ddfe4d3627985ed4ea",
             "translated_target_lines": 28,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "58": {
-            "checked_hash": null,
+            "checked_hash": "9f39ee37156213d98ea85cc5b6688cf8557f31fa991bf66183f374cac4b804c3",
             "elapsed_seconds": 6.1405744552612305,
             "input_tokens": 961,
             "model_name": "gpt-5.2-chat-latest",
@@ -2703,10 +2806,10 @@
             "translated_source_lines": 8,
             "translated_target_hash": "9f39ee37156213d98ea85cc5b6688cf8557f31fa991bf66183f374cac4b804c3",
             "translated_target_lines": 8,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "59": {
-            "checked_hash": null,
+            "checked_hash": "57254be2051956acf80aea0faf5a7866177b7d78a865fe9373b67a2ce0a835d5",
             "elapsed_seconds": 1.699462652206421,
             "input_tokens": 241,
             "model_name": "gpt-4o",
@@ -2726,10 +2829,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "57254be2051956acf80aea0faf5a7866177b7d78a865fe9373b67a2ce0a835d5",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "6": {
-            "checked_hash": null,
+            "checked_hash": "432daa24ad4093584d338b3af195e4e17079475f9625d32578840fbda244b61b",
             "elapsed_seconds": 8.316277503967285,
             "input_tokens": 742,
             "model_name": "gpt-5.2-chat-latest",
@@ -2749,10 +2852,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "432daa24ad4093584d338b3af195e4e17079475f9625d32578840fbda244b61b",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "60": {
-            "checked_hash": null,
+            "checked_hash": "9e9e76ba74aff1ee613427a0c341713506a9b0c2cc819ea902d84d2a4ec12eb6",
             "elapsed_seconds": 1.658797264099121,
             "input_tokens": 263,
             "model_name": "gpt-4o",
@@ -2772,10 +2875,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "9e9e76ba74aff1ee613427a0c341713506a9b0c2cc819ea902d84d2a4ec12eb6",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "61": {
-            "checked_hash": null,
+            "checked_hash": "408866af5396c3f4bfe78365b32d3cc291257a7c0cb9fde75c45235f18b806ee",
             "elapsed_seconds": 3.004474401473999,
             "input_tokens": 325,
             "model_name": "gpt-4o",
@@ -2795,10 +2898,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "1318e5e9e8593cc92b146515a6388b5f8390555b2e97765ab55621e3afad97b3",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "62": {
-            "checked_hash": null,
+            "checked_hash": "850fee68352f7582e3decd28d9188e131406f5e9028f7a47281eae47c085638c",
             "elapsed_seconds": 5.062403917312622,
             "input_tokens": 644,
             "model_name": "gpt-5.2-chat-latest",
@@ -2818,10 +2921,10 @@
             "translated_source_lines": 2,
             "translated_target_hash": "850fee68352f7582e3decd28d9188e131406f5e9028f7a47281eae47c085638c",
             "translated_target_lines": 2,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "63": {
-            "checked_hash": null,
+            "checked_hash": "a0603083697b0d5390643e33767e3263e768aa6b6fd1feb3c9afed470a678d1d",
             "elapsed_seconds": 13.129400253295898,
             "input_tokens": 1546,
             "model_name": "gpt-5.2-chat-latest",
@@ -2832,19 +2935,19 @@
             "source_lines": 16,
             "source_mtime": 1766698864.999513,
             "source_size_kb": 1.7880859375,
-            "target_hash": "95fa467972b2715c4d9eea1424aa9ff125217af195dccd3d156a95553c63754d",
-            "target_lines": 17,
-            "target_mtime": 1766720267.696136,
-            "target_size_kb": 2.5234375,
+            "target_hash": "a0603083697b0d5390643e33767e3263e768aa6b6fd1feb3c9afed470a678d1d",
+            "target_lines": 16,
+            "target_mtime": 1766859302.837275,
+            "target_size_kb": 2.2294921875,
             "translated_at": "2025-12-25T23:17:16.262105+00:00",
             "translated_source_hash": "fc34cefe66a566417fe2b28bd3d0d57962f401fa28b912cf610abf9806064600",
             "translated_source_lines": 16,
             "translated_target_hash": "344f0be6388551dda75a4a78125bbe1d486b45cc394b7523e6950c8d193fb24f",
             "translated_target_lines": 19,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "64": {
-            "checked_hash": null,
+            "checked_hash": "2489fba420b656e143f6636ccaa7cfc5ebaa0f1c52c11f64c2969658138e8f3d",
             "elapsed_seconds": 1.5789268016815186,
             "input_tokens": 250,
             "model_name": "gpt-4o",
@@ -2864,10 +2967,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "2489fba420b656e143f6636ccaa7cfc5ebaa0f1c52c11f64c2969658138e8f3d",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "65": {
-            "checked_hash": null,
+            "checked_hash": "42b6cde796712ed9b9a87c806cb65d0131e1343ee856083ce3c8bb37b5deda38",
             "elapsed_seconds": 3.748706579208374,
             "input_tokens": 377,
             "model_name": "gpt-4o",
@@ -2887,10 +2990,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "42b6cde796712ed9b9a87c806cb65d0131e1343ee856083ce3c8bb37b5deda38",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "66": {
-            "checked_hash": null,
+            "checked_hash": "be5dae4892efb0c7a8b409303cd8bfcccaff224e1e2738076a8ace9e269f96d5",
             "elapsed_seconds": 3.1566386222839355,
             "input_tokens": 357,
             "model_name": "gpt-4o",
@@ -2910,10 +3013,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "be5dae4892efb0c7a8b409303cd8bfcccaff224e1e2738076a8ace9e269f96d5",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "67": {
-            "checked_hash": null,
+            "checked_hash": "dd65f9ee7bb833b95e013039e0e5720de6f978b619d6e1f08cf61505d3343723",
             "elapsed_seconds": 25.885945081710815,
             "input_tokens": 2121,
             "model_name": "gpt-5.2-chat-latest",
@@ -2933,10 +3036,10 @@
             "translated_source_lines": 136,
             "translated_target_hash": "dd65f9ee7bb833b95e013039e0e5720de6f978b619d6e1f08cf61505d3343723",
             "translated_target_lines": 138,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "68": {
-            "checked_hash": null,
+            "checked_hash": "22e8362176f6283a77acb68acc78b763aecf07d4805734bc428a260c8e349c57",
             "elapsed_seconds": 7.910459041595459,
             "input_tokens": 836,
             "model_name": "gpt-5.2-chat-latest",
@@ -2956,10 +3059,10 @@
             "translated_source_lines": 25,
             "translated_target_hash": "22e8362176f6283a77acb68acc78b763aecf07d4805734bc428a260c8e349c57",
             "translated_target_lines": 25,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "69": {
-            "checked_hash": null,
+            "checked_hash": "7d2d8947dd84847c771d95971fed7876195075e65c26aec67c580849902a3235",
             "elapsed_seconds": 136.91250705718994,
             "input_tokens": 814,
             "model_name": "gpt-5.2-chat-latest",
@@ -2979,10 +3082,10 @@
             "translated_source_lines": 15,
             "translated_target_hash": "7d2d8947dd84847c771d95971fed7876195075e65c26aec67c580849902a3235",
             "translated_target_lines": 15,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "7": {
-            "checked_hash": null,
+            "checked_hash": "41b2ea8e05646a15dd91b9ae3b8ce67610b617725606c3ee15f684677f18b7b8",
             "elapsed_seconds": 16.22965979576111,
             "input_tokens": 1962,
             "model_name": "gpt-5.2-chat-latest",
@@ -3002,10 +3105,10 @@
             "translated_source_lines": 19,
             "translated_target_hash": "2d614cc3d9fcc09c036b052bed62797dad6ecffaf2539f898d8a365536fcd72b",
             "translated_target_lines": 19,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "70": {
-            "checked_hash": null,
+            "checked_hash": "e133560afd892a000b0b4ec365bae25a2d0098db1c703e47c92dcfb384b825da",
             "elapsed_seconds": 3.508172035217285,
             "input_tokens": 322,
             "model_name": "gpt-4o",
@@ -3025,10 +3128,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "e133560afd892a000b0b4ec365bae25a2d0098db1c703e47c92dcfb384b825da",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "71": {
-            "checked_hash": null,
+            "checked_hash": "36b13ec76d3a3a001a80ad7f6ee7b19bcd2bc0270a0ef26c048acb1ddbf4409a",
             "elapsed_seconds": 27.661990880966187,
             "input_tokens": 2242,
             "model_name": "gpt-5.2-chat-latest",
@@ -3048,10 +3151,10 @@
             "translated_source_lines": 87,
             "translated_target_hash": "36b13ec76d3a3a001a80ad7f6ee7b19bcd2bc0270a0ef26c048acb1ddbf4409a",
             "translated_target_lines": 88,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "72": {
-            "checked_hash": null,
+            "checked_hash": "27461b6f4118714e55dbeaf62ed534344fbee523932e08c74b41dbf08dc68458",
             "elapsed_seconds": 24.40989589691162,
             "input_tokens": 2299,
             "model_name": "gpt-5.2-chat-latest",
@@ -3071,10 +3174,10 @@
             "translated_source_lines": 29,
             "translated_target_hash": "acd1af526d8fdfd425687059fb1cd0905f68cac13ae9d0826e1907b15b3c83ad",
             "translated_target_lines": 29,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "73": {
-            "checked_hash": null,
+            "checked_hash": "e1e0d81dd10696773e5434b35ce89683e4b5b9f65f05d9e7467ccf65906271f6",
             "elapsed_seconds": 11.942516088485718,
             "input_tokens": 1221,
             "model_name": "gpt-5.2-chat-latest",
@@ -3094,10 +3197,10 @@
             "translated_source_lines": 12,
             "translated_target_hash": "e1e0d81dd10696773e5434b35ce89683e4b5b9f65f05d9e7467ccf65906271f6",
             "translated_target_lines": 12,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "74": {
-            "checked_hash": null,
+            "checked_hash": "13ca0007918a61125a85c5469191761d5cb12f3a1691d017934f9631e9802149",
             "elapsed_seconds": 17.28556513786316,
             "input_tokens": 1457,
             "model_name": "gpt-5.2-chat-latest",
@@ -3117,10 +3220,12 @@
             "translated_source_lines": 116,
             "translated_target_hash": "13ca0007918a61125a85c5469191761d5cb12f3a1691d017934f9631e9802149",
             "translated_target_lines": 116,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                10
+            ]
         },
         "75": {
-            "checked_hash": null,
+            "checked_hash": "48a0854f42b083a8a4f321557377d138ef7c00712bef5904e97497aaed07c3a1",
             "elapsed_seconds": 2.461642265319824,
             "input_tokens": 291,
             "model_name": "gpt-4o",
@@ -3140,10 +3245,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "0a31c1065fe272c131da2a6d41a84088dc4b7b289611dd0662898907d814aa38",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "76": {
-            "checked_hash": null,
+            "checked_hash": "e7828a9580e67788093e5a6e2d70eede11cf3f2876c82198b90b141e61654a9b",
             "elapsed_seconds": 17.057441473007202,
             "input_tokens": 1552,
             "model_name": "gpt-5.2-chat-latest",
@@ -3163,10 +3268,10 @@
             "translated_source_lines": 19,
             "translated_target_hash": "e7828a9580e67788093e5a6e2d70eede11cf3f2876c82198b90b141e61654a9b",
             "translated_target_lines": 19,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "77": {
-            "checked_hash": null,
+            "checked_hash": "3569afb173c8dca57e23928f36cb63979e95979b3d11588931d24ccfa500712c",
             "elapsed_seconds": 26.34529709815979,
             "input_tokens": 2630,
             "model_name": "gpt-5.2-chat-latest",
@@ -3186,10 +3291,10 @@
             "translated_source_lines": 26,
             "translated_target_hash": "3569afb173c8dca57e23928f36cb63979e95979b3d11588931d24ccfa500712c",
             "translated_target_lines": 26,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "78": {
-            "checked_hash": null,
+            "checked_hash": "383beea9d6f17fbcbe6e756875a453a77f27d8f81adfbb9a79bf3e56f22d9a47",
             "elapsed_seconds": 4.78008508682251,
             "input_tokens": 588,
             "model_name": "gpt-5.2-chat-latest",
@@ -3209,7 +3314,7 @@
             "translated_source_lines": 3,
             "translated_target_hash": "383beea9d6f17fbcbe6e756875a453a77f27d8f81adfbb9a79bf3e56f22d9a47",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "79": {
             "elapsed_seconds": 2.5472640991210938,
@@ -3227,7 +3332,7 @@
             "translated_target_hash": "2d4ad477123ec00844076809b650848e42c237eef3db6941c7d1b36bb10b3539"
         },
         "8": {
-            "checked_hash": null,
+            "checked_hash": "48ce4d20e09f63eff822ed64c0fd5ddf3914c6789d61e7a824e819e6be4ff3f8",
             "elapsed_seconds": 2.6894359588623047,
             "input_tokens": 306,
             "model_name": "gpt-4o",
@@ -3247,10 +3352,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "48ce4d20e09f63eff822ed64c0fd5ddf3914c6789d61e7a824e819e6be4ff3f8",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "80": {
-            "checked_hash": null,
+            "checked_hash": "65d2926ed3aabe32fe511404ba8faedfeef31f7cfb280c4bfd01a787288b17dc",
             "elapsed_seconds": 4.612105369567871,
             "input_tokens": 567,
             "model_name": "gpt-5.2-chat-latest",
@@ -3270,10 +3375,10 @@
             "translated_source_lines": 2,
             "translated_target_hash": "65d2926ed3aabe32fe511404ba8faedfeef31f7cfb280c4bfd01a787288b17dc",
             "translated_target_lines": 2,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "81": {
-            "checked_hash": null,
+            "checked_hash": "865c5748b710f46923a3d9a7ce8ea418d3d5963218a4b47fc03cde0bbb7677c0",
             "elapsed_seconds": 3.5648064613342285,
             "input_tokens": 415,
             "model_name": "gpt-5.2-chat-latest",
@@ -3293,10 +3398,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "865c5748b710f46923a3d9a7ce8ea418d3d5963218a4b47fc03cde0bbb7677c0",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "82": {
-            "checked_hash": null,
+            "checked_hash": "d70d1f788f2a3463343813b06940280587e8caf18608e9af23ac758e7925e5e1",
             "elapsed_seconds": 7.795304298400879,
             "input_tokens": 845,
             "model_name": "gpt-5.2-chat-latest",
@@ -3316,7 +3421,7 @@
             "translated_source_lines": 7,
             "translated_target_hash": "d70d1f788f2a3463343813b06940280587e8caf18608e9af23ac758e7925e5e1",
             "translated_target_lines": 7,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "83": {
             "elapsed_seconds": 3.2314252853393555,
@@ -3334,7 +3439,7 @@
             "translated_target_hash": "0fb67e40523970a68ed721dc9d6e1df06c0cb53e372124181ebfe677590278ee"
         },
         "84": {
-            "checked_hash": null,
+            "checked_hash": "1cea55532ef4ffde4d5ba43fc2dc80f7b1963a371dce68207580ae412798980d",
             "elapsed_seconds": 1.9487419128417969,
             "input_tokens": 243,
             "model_name": "gpt-4o",
@@ -3354,10 +3459,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "1cea55532ef4ffde4d5ba43fc2dc80f7b1963a371dce68207580ae412798980d",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "85": {
-            "checked_hash": null,
+            "checked_hash": "ca9e3d58769b3e0092f3f08259758c801268d9a3580cb0229fd4a3ee4f639d8a",
             "elapsed_seconds": 2.92531156539917,
             "input_tokens": 312,
             "model_name": "gpt-4o",
@@ -3377,33 +3482,35 @@
             "translated_source_lines": null,
             "translated_target_hash": "ca9e3d58769b3e0092f3f08259758c801268d9a3580cb0229fd4a3ee4f639d8a",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "86": {
-            "checked_hash": null,
+            "checked_hash": "43a026321b4f3f8590e64e371367fb6236eee78388561c478d47fa015bc00777",
             "elapsed_seconds": 1.5446836948394775,
             "input_tokens": 265,
             "model_name": "gpt-4o",
             "output_tokens": 66,
             "path": "connect-starburst-trino/roles-starburst-enterprise.md",
             "relative_dir": "connect-starburst-trino",
-            "source_hash": "82b5afe3b538c37d202bdd56694354d94eaa15ba425ad2ca0be3a78d71a55aef",
+            "source_hash": "8cf89d057a930fb2e622ed97554afd13568e4ebb715b8a498af8498f0f5f83a8",
             "source_lines": 5,
-            "source_mtime": 1734479148.8265245,
-            "source_size_kb": 0.3681640625,
-            "target_hash": "dfde8b26afa2a4031aa97955405a720e4ddacc03caf333558b56ff9d96f970b0",
-            "target_lines": 1,
-            "target_mtime": 1766720267.7311378,
-            "target_size_kb": 0.552734375,
+            "source_mtime": 1766857528.7513275,
+            "source_size_kb": 0.369140625,
+            "target_hash": "43a026321b4f3f8590e64e371367fb6236eee78388561c478d47fa015bc00777",
+            "target_lines": 5,
+            "target_mtime": 1766857365.16893,
+            "target_size_kb": 0.603515625,
             "translated_at": "2024-12-22T01:08:22.090338+00:00",
             "translated_source_hash": "82b5afe3b538c37d202bdd56694354d94eaa15ba425ad2ca0be3a78d71a55aef",
             "translated_source_lines": null,
             "translated_target_hash": "dfde8b26afa2a4031aa97955405a720e4ddacc03caf333558b56ff9d96f970b0",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                1
+            ]
         },
         "87": {
-            "checked_hash": null,
+            "checked_hash": "5a5183f41d182cbbce6ceee00aaae5a6a5260dd9fb2ccc0ca37baf9822d8933e",
             "elapsed_seconds": 2.091243028640747,
             "input_tokens": 290,
             "model_name": "gpt-4o",
@@ -3423,10 +3530,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "5a5183f41d182cbbce6ceee00aaae5a6a5260dd9fb2ccc0ca37baf9822d8933e",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "88": {
-            "checked_hash": null,
+            "checked_hash": "88eee1393c8620967b74cca5b3c60d4d962af3c3dd788241cbd2d14a56cc3d5c",
             "elapsed_seconds": 10.0560462474823,
             "input_tokens": 710,
             "model_name": "gpt-4o",
@@ -3446,10 +3553,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "2726ed2ded55987af13246d9a7b0e5c241f7a8260a9932e4feda5e28cb5cbdd6",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "89": {
-            "checked_hash": null,
+            "checked_hash": "2f9fbab71000aa5ef4fcf749cfe278ad18ecf9cf6f039114b7fe145f533ef46f",
             "elapsed_seconds": 3.4747672080993652,
             "input_tokens": 369,
             "model_name": "gpt-4o",
@@ -3469,10 +3576,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "2f9fbab71000aa5ef4fcf749cfe278ad18ecf9cf6f039114b7fe145f533ef46f",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "9": {
-            "checked_hash": null,
+            "checked_hash": "68ca371454185fa9335aec62eb0987d1affe7bdbeefb3177466949d0b69013b7",
             "elapsed_seconds": 1.1060070991516113,
             "input_tokens": 192,
             "model_name": "gpt-4o",
@@ -3492,10 +3599,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "68ca371454185fa9335aec62eb0987d1affe7bdbeefb3177466949d0b69013b7",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "90": {
-            "checked_hash": null,
+            "checked_hash": "d831ad210c34ebbb68c05d21e2faa79f2e1c06b87c341b69e520d4bf4908d1c4",
             "elapsed_seconds": 2.219264030456543,
             "input_tokens": 291,
             "model_name": "gpt-4o",
@@ -3515,10 +3622,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "d831ad210c34ebbb68c05d21e2faa79f2e1c06b87c341b69e520d4bf4908d1c4",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "91": {
-            "checked_hash": null,
+            "checked_hash": "7259139f409af3eb80b60c02f081489e5e839481db5e352c38710f143879854b",
             "elapsed_seconds": 21.31795048713684,
             "input_tokens": 2060,
             "model_name": "gpt-5.2-chat-latest",
@@ -3529,19 +3636,19 @@
             "source_lines": 39,
             "source_mtime": 1766698865.0265129,
             "source_size_kb": 3.560546875,
-            "target_hash": "d2ac576acd2b5c51d0f0befc95cf88da7440b2b40ff9ebc962f93e0bc1e929aa",
-            "target_lines": 45,
-            "target_mtime": 1766720267.7501364,
-            "target_size_kb": 8.0576171875,
+            "target_hash": "7259139f409af3eb80b60c02f081489e5e839481db5e352c38710f143879854b",
+            "target_lines": 39,
+            "target_mtime": 1766859379.2555106,
+            "target_size_kb": 5.826171875,
             "translated_at": "2025-12-25T23:19:13.894099+00:00",
             "translated_source_hash": "805867e53677e8a3275a319040b71d6b09f35020bad67a5ace12fb5608451037",
             "translated_source_lines": 39,
             "translated_target_hash": "d2ac576acd2b5c51d0f0befc95cf88da7440b2b40ff9ebc962f93e0bc1e929aa",
             "translated_target_lines": 45,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "92": {
-            "checked_hash": null,
+            "checked_hash": "e2646a1bd9c7e47fca1acd3f159333951a7db366fd4f973602d4ca52f1b5ba2e",
             "elapsed_seconds": 2.155904769897461,
             "input_tokens": 265,
             "model_name": "gpt-4o",
@@ -3561,10 +3668,10 @@
             "translated_source_lines": null,
             "translated_target_hash": "e2646a1bd9c7e47fca1acd3f159333951a7db366fd4f973602d4ca52f1b5ba2e",
             "translated_target_lines": null,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "93": {
-            "checked_hash": null,
+            "checked_hash": "a7f0bce7b28baa695da4bb2e6f4c2e673ed486a88f7aa40e9d7e84c4c69f08de",
             "elapsed_seconds": 2.5109755992889404,
             "input_tokens": 317,
             "model_name": "gpt-5.2-chat-latest",
@@ -3584,10 +3691,10 @@
             "translated_source_lines": 4,
             "translated_target_hash": "a7f0bce7b28baa695da4bb2e6f4c2e673ed486a88f7aa40e9d7e84c4c69f08de",
             "translated_target_lines": 4,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "94": {
-            "checked_hash": null,
+            "checked_hash": "a9ac89f0da538506412295dbe02e753d522164fbed52a060dde62d662d6fd108",
             "elapsed_seconds": 2.3991801738739014,
             "input_tokens": 431,
             "model_name": "gpt-5.2-chat-latest",
@@ -3607,10 +3714,10 @@
             "translated_source_lines": 12,
             "translated_target_hash": "a9ac89f0da538506412295dbe02e753d522164fbed52a060dde62d662d6fd108",
             "translated_target_lines": 12,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "95": {
-            "checked_hash": null,
+            "checked_hash": "a8d9ba382681db6fdd763c2378e4543117570f550bd4e5d9f4772ea613c71d40",
             "elapsed_seconds": 3.6520111560821533,
             "input_tokens": 524,
             "model_name": "gpt-5.2-chat-latest",
@@ -3630,10 +3737,14 @@
             "translated_source_lines": 21,
             "translated_target_hash": "a8d9ba382681db6fdd763c2378e4543117570f550bd4e5d9f4772ea613c71d40",
             "translated_target_lines": 21,
-            "untranslated_lines": null
+            "untranslated_lines": [
+                3,
+                16,
+                22
+            ]
         },
         "96": {
-            "checked_hash": null,
+            "checked_hash": "653bc27bd8294e4d3947bc1bfe4d16c2a30e295d6176089f7bb02d66e8cd6252",
             "elapsed_seconds": 1.1623878479003906,
             "input_tokens": 228,
             "model_name": "gpt-5.2-chat-latest",
@@ -3653,10 +3764,10 @@
             "translated_source_lines": 1,
             "translated_target_hash": "653bc27bd8294e4d3947bc1bfe4d16c2a30e295d6176089f7bb02d66e8cd6252",
             "translated_target_lines": 1,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "97": {
-            "checked_hash": null,
+            "checked_hash": "20b1318130cfa1175f02587d2764511310054b79525ad14baa9d94c4532fa0ba",
             "elapsed_seconds": 6.279212951660156,
             "input_tokens": 900,
             "model_name": "gpt-5.2-chat-latest",
@@ -3676,10 +3787,10 @@
             "translated_source_lines": 42,
             "translated_target_hash": "20b1318130cfa1175f02587d2764511310054b79525ad14baa9d94c4532fa0ba",
             "translated_target_lines": 42,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "98": {
-            "checked_hash": null,
+            "checked_hash": "9da82b4f8d16ad9b1859b34708f0443c947725b1842adf53b376371e19489ba3",
             "elapsed_seconds": 1.4824187755584717,
             "input_tokens": 249,
             "model_name": "gpt-5.2-chat-latest",
@@ -3699,10 +3810,10 @@
             "translated_source_lines": 6,
             "translated_target_hash": "9da82b4f8d16ad9b1859b34708f0443c947725b1842adf53b376371e19489ba3",
             "translated_target_lines": 6,
-            "untranslated_lines": null
+            "untranslated_lines": []
         },
         "99": {
-            "checked_hash": null,
+            "checked_hash": "491d181b9390fde1d2e6e1fba34a8be954770344e7dfab5c3b4cb5ae1ce9dfe0",
             "elapsed_seconds": 1.6252226829528809,
             "input_tokens": 256,
             "model_name": "gpt-5.2-chat-latest",
@@ -3722,7 +3833,7 @@
             "translated_source_lines": 3,
             "translated_target_hash": "491d181b9390fde1d2e6e1fba34a8be954770344e7dfab5c3b4cb5ae1ce9dfe0",
             "translated_target_lines": 3,
-            "untranslated_lines": null
+            "untranslated_lines": []
         }
     }
 }

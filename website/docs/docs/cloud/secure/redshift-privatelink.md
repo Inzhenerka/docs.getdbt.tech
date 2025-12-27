@@ -129,7 +129,6 @@ Subject: New Multi-Tenant PrivateLink Request
 - Redshift cluster AWS Region (for example, us-east-1, eu-west-2):
 - dbt AWS multi-tenant environment (US, EMEA, AU):
 ```
-```
 
 <PrivateLinkSLA />
 

@@ -20,7 +20,6 @@ tags: [Metrics, Semantic Layer]
 dbt sl validate # <Constant name="cloud" /> users
 mf validate-configs # <Constant name="core" /> users
 ```
-```
 
 ## Синтаксическая валидация
 

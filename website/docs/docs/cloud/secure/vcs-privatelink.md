@@ -89,7 +89,6 @@ Subject: New Multi-Tenant PrivateLink Request
 - VCS install AWS Region (for example, us-east-1, eu-west-2):
 - dbt AWS multi-tenant environment (US, EMEA, AU):
 ```
-```
 
 import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
