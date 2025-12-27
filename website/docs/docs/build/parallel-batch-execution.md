@@ -1,44 +1,44 @@
 ---
-title: "Parallel microbatch execution"
-sidebar_label: "Parallel microbatch execution"
-description: "Learn about the 'parallel batch execution' strategy for incremental models."
-intro_text: "Use parallel batch execution to process your microbatch models faster."
+title: "Параллельное выполнение microbatch"
+sidebar_label: "Параллельное выполнение microbatch"
+description: "Узнайте о стратегии «parallel batch execution» для инкрементальных моделей."
+intro_text: "Используйте parallel batch execution, чтобы быстрее обрабатывать ваши microbatch‑модели."
 ---
 
-The microbatch strategy offers the benefit of updating a model in smaller, more manageable batches. Depending on your use case, configuring your microbatch models to run in parallel offers faster processing, in comparison to running batches sequentially.
+Стратегия microbatch даёт преимущество обновления модели небольшими, более управляемыми батчами. В зависимости от вашего сценария использования, настройка microbatch‑моделей на параллельное выполнение может обеспечить более быструю обработку по сравнению с последовательным запуском батчей.
 
-Parallel batch execution means that multiple batches are processed at the same time, instead of one after the other (sequentially) for faster processing of your microbatch models.  
+Параллельное выполнение батчей означает, что несколько батчей обрабатываются одновременно, а не один за другим (последовательно), что ускоряет выполнение microbatch‑моделей.  
 
-dbt automatically detects whether a batch can be run in parallel in most cases, which means you don’t need to configure this setting. However, the [`concurrent_batches` config](/reference/resource-properties/concurrent_batches) is available as an override (not a gate), allowing you to specify whether batches should or shouldn’t be run in parallel in specific cases.
+В большинстве случаев dbt автоматически определяет, можно ли запускать батчи параллельно, поэтому вам не требуется явно настраивать этот параметр. Однако конфигурация [`concurrent_batches`](/reference/resource-properties/concurrent_batches) доступна как переопределение (но не как жёсткое ограничение) и позволяет указать, должны ли батчи выполняться параллельно или нет в отдельных случаях.
 
-For example, if you have a microbatch model with 12 batches, you can execute those batches to run in parallel. Specifically they'll run in parallel limited by the number of [available threads](/docs/running-a-dbt-project/using-threads).
+Например, если у вас есть microbatch‑модель с 12 батчами, вы можете настроить их выполнение в параллельном режиме. Фактически они будут выполняться параллельно с ограничением по количеству [доступных потоков](/docs/running-a-dbt-project/using-threads).
 
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-To use parallel execution, you must meet the following prerequisites:
+Для использования параллельного выполнения необходимо выполнить следующие условия:
 
-- Use Snowflake as a supported adapter.
-  - We'll continue to test and add concurrency support for more adapters in the future.
-- A batch can only be run in parallel if:
-  - The batch is _not_ the first batch.
-  - The batch is _not_ the last batch.
+- Использовать Snowflake как поддерживаемый адаптер.
+  - В будущем мы продолжим тестировать и добавлять поддержку конкурентного выполнения для других адаптеров.
+- Батч может быть запущен параллельно только если:
+  - Это _не_ первый батч.
+  - Это _не_ последний батч.
 
-## How parallel batch execution works
+## Как работает параллельное выполнение батчей
 
-After checking for the conditions in the [prerequisites](#prerequisites), and if `concurrent_batches` value isn't set, dbt will intelligently auto-detect if the model invokes the [`{{ this }}`](/reference/dbt-jinja-functions/this) Jinja function. If it references `{{ this }}`, the batches will run sequentially since  `{{ this }}` represents the database of the current model and referencing the same relation causes conflict. 
+После проверки условий из раздела [Prerequisites](#prerequisites), и если значение `concurrent_batches` не задано, dbt интеллектуально определяет, использует ли модель Jinja‑функцию [`{{ this }}`](/reference/dbt-jinja-functions/this). Если модель ссылается на `{{ this }}`, батчи будут выполняться последовательно, так как `{{ this }}` представляет собой отношение текущей модели в базе данных, и одновременные обращения к одному и тому же объекту вызывают конфликт. 
 
-Otherwise, if `{{ this }}` isn't detected (and other conditions are met), the batches will run in parallel, which can be overriden when you [set a value for `concurrent_batches`](/reference/resource-properties/concurrent_batches).
+В противном случае, если `{{ this }}` не обнаружен (и выполнены остальные условия), батчи будут выполняться параллельно. Это поведение можно переопределить, если вы [зададите значение для `concurrent_batches`](/reference/resource-properties/concurrent_batches).
 
-## Parallel or sequential execution
+## Параллельное или последовательное выполнение
 
-Choosing between parallel batch execution and sequential processing depends on the specific requirements of your use case. 
+Выбор между параллельным выполнением батчей и последовательной обработкой зависит от конкретных требований вашего сценария. 
 
-- Parallel batch execution is faster but requires logic independent of batch execution order. For example, if you're developing a data pipeline for a system that processes user transactions in batches, each batch is executed in parallel for better performance. However, the logic used to process each transaction shouldn't depend on the order of how batches are executed or completed.
-- Sequential processing is slower but essential for calculations like [cumulative metrics](/docs/build/cumulative)  in microbatch models. It processes data in the correct order, allowing each step to build on the previous one.
+- Параллельное выполнение батчей работает быстрее, но требует логики, независимой от порядка выполнения батчей. Например, если вы разрабатываете data‑pipeline для системы, которая обрабатывает пользовательские транзакции батчами, каждый батч может выполняться параллельно для повышения производительности. При этом логика обработки каждой транзакции не должна зависеть от порядка запуска или завершения батчей.
+- Последовательная обработка медленнее, но необходима для вычислений, таких как [накопительные метрики](/docs/build/cumulative) в microbatch‑моделях. Она обрабатывает данные в корректном порядке, позволяя каждому шагу опираться на предыдущий.
 
-## Configure `concurrent_batches` 
+## Конфигурация `concurrent_batches` 
 
-By default, dbt auto-detects whether batches can run in parallel for microbatch models, and this works correctly in most cases. However, you can override dbt's detection by setting the [`concurrent_batches` config](/reference/resource-properties/concurrent_batches) in your `dbt_project.yml` or model `.sql` file to specify parallel or sequential execution, given you meet all the [conditions](#prerequisites):
+По умолчанию dbt автоматически определяет, могут ли батчи выполняться параллельно для microbatch‑моделей, и в большинстве случаев это работает корректно. Однако вы можете переопределить это поведение, задав конфигурацию [`concurrent_batches`](/reference/resource-properties/concurrent_batches) в файле `dbt_project.yml` или в `.sql`‑файле модели, чтобы явно указать параллельное или последовательное выполнение, при условии что выполнены все [conditions](#prerequisites):
 
 <Tabs>
 <TabItem value="yaml" label="dbt_project.yml">

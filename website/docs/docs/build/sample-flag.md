@@ -1,61 +1,60 @@
 ---
-title: "About the sample flag"
-description: "Use the sample flag to lower development time and reduce warehouse spend."
-sidebar_label: "The sample flag"
+title: "О флаге sample"
+description: "Используйте флаг sample, чтобы сократить время разработки и снизить расходы на хранилище данных."
+sidebar_label: "Флаг sample"    
 pagination_next: null
 pagination_prev: "docs/build/empty-flag"
 ---
 
-# About the `--sample` flag
+# О флаге `--sample`
 
 :::note
 
-The `--sample` flag is not currently available for Python models. If the flag is used with a Python model, it will be ignored.
+Флаг `--sample` в настоящее время недоступен для Python-моделей. Если этот флаг используется с Python-моделью, он будет проигнорирован.
 
-Seeds will be created normally, but are sampled when referenced by downstream nodes. 
+Seeds создаются как обычно, но при обращении к ним из downstream-узлов они будут семплироваться.
 
 :::
 
-Large data sets can drastically increase build times and reduce how quickly dbt developers can build and test new code. The dbt `--sample` flag can help to reduce build times and warehouse spend by running dbt in sample mode. Sample mode enables you to address cases where you don't need to build the entire model during the development or CI cycle but include enough data to validate the outputs. 
+Большие наборы данных могут значительно увеличивать время сборки и снижать скорость, с которой разработчики dbt могут разрабатывать и тестировать новый код. Флаг dbt `--sample` помогает сократить время сборки и затраты на хранилище данных за счёт запуска dbt в режиме выборки (sample mode). Режим выборки позволяет обрабатывать сценарии, в которых нет необходимости строить модель целиком в процессе разработки или CI, но при этом важно включить достаточный объём данных для валидации результатов.
 
-Sample mode takes the [`--empty` flag's](/docs/build/empty-flag) validation of semantic results a step further by including a sampling of data from the model(s) in your development schema. It won't solve every scenario; for example, there are cases where not all joins will be populated. However, it presents a viable solution for faster building, testing, and validating many strategies. 
+Режим выборки развивает идею проверки семантических результатов, предоставляемую флагом [`--empty`](/docs/build/empty-flag), добавляя выборку данных из модели (или моделей) в вашей development-схеме. Он не покрывает абсолютно все сценарии — например, в некоторых случаях не все join’ы будут заполнены. Тем не менее, это жизнеспособное решение для более быстрой сборки, тестирования и валидации многих стратегий.
 
-The `--sample` flag will become more robust over time, but it only supports time-based sampling for now.
+Со временем флаг `--sample` станет более функциональным, но на данный момент он поддерживает только выборку на основе времени.
 
-## Using the `--sample` flag
+## Использование флага `--sample`
 
-The `--sample` flag is available for the [`run`](/reference/commands/run) and [`build`](/reference/commands/build) commands. When used, sample mode generates filtered refs and sources. Since it's using time-based sampling, if you have refs like `{{ ref('some_model') }}` being sampled, you need to set [`event_time`](/reference/resource-configs/event-time) for `some_model` to the field that will be used as the timestamp. 
+Флаг `--sample` доступен для команд [`run`](/reference/commands/run) и [`build`](/reference/commands/build). При его использовании режим выборки генерирует отфильтрованные `ref` и `source`. Поскольку используется выборка на основе времени, если у вас есть `ref`, например `{{ ref('some_model') }}`, который должен семплироваться, необходимо задать [`event_time`](/reference/resource-configs/event-time) для `some_model` — поле, которое будет использоваться как временная метка.
 
-There are two time-based sample specifications supported for sample mode:
-- **Relative time specs:** Filters sampled data from the time the command is run back to a specified integer and granularity. Supported granularities are:
-    - Hours
-    - Days
-    - Months
-    - Years
-- **Static time specs:** Filters your data between a defined start and end period using date and/or timestamp.
+Для режима выборки поддерживаются два типа спецификаций на основе времени:
+- **Относительные спецификации времени (relative time specs):** фильтруют данные выборки от момента запуска команды назад на заданное целое значение и гранулярность. Поддерживаемые гранулярности:
+    - часы
+    - дни
+    - месяцы
+    - годы
+- **Статические спецификации времени (static time specs):** фильтруют данные между заданными начальным и конечным периодами с использованием даты и/или timestamp.
 
+### Примеры
 
-### Examples
-
-Let's say you want to run your `stg_customers` model and build the table in your development schema with a relative time spec sample size of three days. Your command in the IDE would look something like this:
+Предположим, вы хотите запустить модель `stg_customers` и построить таблицу в вашей development-схеме, используя относительную выборку размером три дня. Команда в IDE будет выглядеть примерно так:
 
 ```
 dbt run --select path/to/stg_customers --sample="3 days"
 ```
 
-If you have an even larger model, for example, `stg_orders` you can set sample mode to hours:
+Если у вас есть ещё более крупная модель, например `stg_orders`, вы можете задать режим выборки в часах:
 
 ```
 dbt run --select path/to/stg_customers --sample="6 hours"
 ```
 
-Next, let's say you want to validate data for your entire business from a sample size further in the past - your busiest week in July, from the first until closing time on the eighth. You can run the following: 
+Теперь предположим, что вы хотите провалидировать данные по всему бизнесу, используя выборку за более ранний период — вашу самую загруженную неделю в июле, с первого числа до момента закрытия восьмого. В этом случае можно выполнить следующую команду:
 
 ```
 dbt run --sample="{'start': '2024-07-01', 'end': '2024-07-08 18:00:00'}"
 ```
 
-To prevent a `ref` from being sampled, append `.render()` to it:
+Чтобы предотвратить семплирование `ref`, добавьте к нему `.render()`:
 
 ```sql
 
@@ -71,5 +70,4 @@ source as (
 
 ```
 
-dbt will then execute the model SQL against the target data warehouse and build the tables with data from the sample sizes.
- 
+После этого dbt выполнит SQL модели в целевом хранилище данных и построит таблицы с данными из указанных размеров выборки.

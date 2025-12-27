@@ -1,8 +1,8 @@
---- 
-title: "About dbt Canvas" 
-id: canvas      
-sidebar_label: "About dbt Canvas" 
-description: "dbt Canvas enables you to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt." 
+---
+title: "О dbt Canvas"
+id: canvas
+sidebar_label: "О dbt Canvas"
+description: "dbt Canvas позволяет быстро создавать и визуализировать dbt‑модели с помощью визуального drag‑and‑drop интерфейса прямо в dbt."
 pagination_next: "docs/cloud/canvas-interface"
 pagination_prev: null
 image: /img/docs/dbt-cloud/canvas/canvas.png
@@ -10,34 +10,35 @@ image: /img/docs/dbt-cloud/canvas/canvas.png
 
 import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
-# About Canvas <Lifecycle status='managed,managed_plus'/> 
+# О Canvas <Lifecycle status='managed,managed_plus'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-<Constant name="visual_editor" /> helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation.
+<Constant name="visual_editor" /> помогает быстро получать доступ к данным и трансформировать их с помощью визуального интерфейса drag-and-drop, а также встроенного ИИ для генерации пользовательского кода.
 </p>
 
-<Constant name="visual_editor" /> allows organizations to enjoy the many benefits of code-driven development—such as increased precision, ease of debugging, and ease of validation &mdash; while retaining the flexibility to have different contributors develop wherever they are most comfortable. Users can also take advantage of built-in AI for custom code generation, making it an end-to-end frictionless experience.
+<Constant name="visual_editor" /> позволяет организациям получать все преимущества разработки, основанной на коде, — такие как повышенная точность, удобство отладки и простота валидации — при этом сохраняя гибкость и позволяя разным участникам работать в тех инструментах и форматах, которые им наиболее удобны. Пользователи также могут воспользоваться встроенным ИИ для генерации пользовательского кода, что делает процесс разработки сквозным и практически без трения.
 
-These models compile directly to SQL and are indistinguishable from other dbt models in your projects:
-- Visual models are version-controlled in your backing <Constant name="git" /> provider.
-- All models are accessible across projects in [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro).
-- Models can be materialized into production through [<Constant name="cloud" /> orchestration](/docs/deploy/deployments), or be built directly into a user's development schema.
-- Integrate with [<Constant name="explorer" />](/docs/explore/explore-projects) and the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
+Эти модели компилируются напрямую в SQL и неотличимы от других dbt-моделей в ваших проектах:
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/canvas.png" width="90%" title="Create or edit dbt models with Canvas, enabling everyone to develop with dbt through a drag-and-drop experience inside of dbt." />
+- Визуальные модели находятся под версионным контролем в вашем провайдере <Constant name="git" />.
+- Все модели доступны между проектами в рамках [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro).
+- Модели могут быть материализованы в продакшене с помощью [оркестрации <Constant name="cloud" />](/docs/deploy/deployments) или собраны напрямую в схеме разработки пользователя.
+- Возможна интеграция с [<Constant name="explorer" />](/docs/explore/explore-projects) и [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
+
+<Lightbox src="/img/docs/dbt-cloud/canvas/canvas.png" width="90%" title="Создавайте или редактируйте dbt-модели с помощью Canvas, позволяя каждому работать с dbt через интерфейс drag-and-drop внутри dbt." />
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 
-## Feedback
+## Обратная связь
 
-Please note, always review AI-generated code and content as it may produce incorrect results.
+Обратите внимание: всегда проверяйте код и контент, сгенерированные ИИ, так как они могут содержать ошибки или некорректные результаты.
 
-To give feedback, please reach out to your dbt Labs account team. We appreciate your feedback and suggestions as we improve <Constant name="visual_editor" />.
+Чтобы оставить обратную связь, пожалуйста, свяжитесь с вашей аккаунт-командой dbt Labs. Мы ценим ваши отзывы и предложения и используем их для улучшения <Constant name="visual_editor" />.
 
-## Resources
+## Ресурсы
 
-Learn more about Canvas: 
+Узнайте больше о Canvas:
 
-- How to [use Canvas](/docs/cloud/use-canvas)
-- The Canvas [quickstart guide](/guides/canvas)
-- [Canvas fundamentals course](https://learn.getdbt.com/learn/course/canvas-fundamentals) on [dbt Learn](https://learn.getdbt.com/catalog)
+- Как [использовать Canvas](/docs/cloud/use-canvas)
+- [Быстрый старт по Canvas](/guides/canvas)
+- [Курс Canvas fundamentals](https://learn.getdbt.com/learn/course/canvas-fundamentals) на платформе [dbt Learn](https://learn.getdbt.com/catalog)

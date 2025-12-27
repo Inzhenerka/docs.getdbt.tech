@@ -1,64 +1,63 @@
 ---
-title: "Orchestrate downstream exposures"
-sidebar_label: "Orchestrate exposures"
-description: "Use dbt to proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs."
+title: "Оркестрация downstream exposures"
+sidebar_label: "Оркестрация exposures"
+description: "Используйте dbt, чтобы проактивно обновлять базовые источники данных (например, Tableau extracts) во время запланированных dbt jobs."
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Orchestrate downstream exposures <Lifecycle status="managed,managed_plus,beta" />
+# Оркестрация downstream exposures <Lifecycle status="managed,managed_plus,beta" />
 
 <IntroText>
 
-Use dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh downstream exposures and the underlying data sources (extracts) that power your Tableau Workbooks.
+Используйте [Cloud job scheduler](/docs/deploy/job-scheduler) в dbt, чтобы проактивно обновлять downstream exposures и базовые источники данных (extracts), которые используются в Tableau Workbooks, во время запланированных dbt jobs.
 
 </IntroText>
 
-:::tip Available in private beta
-Orchestrating exposures is currently available in private beta to <Constant name="cloud" /> Enterprise accounts. To join the beta, contact your account representative.
+:::tip Доступно в private beta
+Оркестрация exposures в настоящее время доступна в private beta для Enterprise‑аккаунтов <Constant name="cloud" />. Чтобы присоединиться к бете, обратитесь к вашему account representative.
 :::
 
-Orchestrating exposures integrates with [downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+Оркестрация exposures интегрируется с [downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) и использует ваш `dbt build` job, чтобы Tableau extracts регулярно обновлялись.
 
-Control the frequency of these refreshes by configuring environment variables in your dbt environment.
+Вы можете управлять частотой этих обновлений, настраивая переменные окружения в вашем dbt environment.
 
 <Expandable alt_header="Differences between visualizing and orchestrating downstream exposures">
 
-The following table summarizes the differences between visualizing and orchestrating downstream exposures:
+В следующей таблице показаны основные различия между визуализацией и оркестрацией downstream exposures:
 
 | Info | Set up and visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
-| Purpose | Automatically brings downstream assets into your dbt lineage. | Proactively refreshes the underlying data sources during scheduled dbt jobs. |
-| Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
-| Location  | Exposed in [<Constant name="explorer" />](/docs/explore/explore-projects) | Exposed in [<Constant name="cloud" /> scheduler](/docs/deploy/deployments) |
+| Purpose | Автоматически добавляет downstream‑активы в lineage dbt. | Проактивно обновляет базовые источники данных во время запланированных dbt jobs. |
+| Benefits | Обеспечивает видимость потоков данных и зависимостей. | Гарантирует, что BI‑инструменты всегда используют актуальные данные без ручного вмешательства. |
+| Location  | Отображается в [<Constant name="explorer" />](/docs/explore/explore-projects) | Отображается в [scheduler <Constant name="cloud" />](/docs/deploy/deployments) |
 | Supported BI tool | Tableau | Tableau |
-| Use case | Helps users understand how models are used and reduces incidents. | Optimizes timeliness and reduces costs by running models when needed. |
+| Use case | Помогает пользователям понять, как используются модели, и снижает количество инцидентов. | Оптимизирует своевременность и снижает затраты за счёт запуска моделей только при необходимости. |
 </Expandable>
 
-## Prerequisites
+## Предварительные требования
 
-To orchestrate downstream exposures, you should meet the following:
+Чтобы оркестрировать downstream exposures, необходимо выполнить следующие условия:
 
-- [Configured downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) and ensured desired exposures are included in your lineage.
-- Verified your environment and jobs are on a supported dbt [release track](/docs/dbt-versions/cloud-release-tracks).
-- Have a <Constant name="cloud" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/).
-- Created a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run.
-- Have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in <Constant name="cloud" /> to edit project settings or production environment settings.
-- Configured a [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) whose creator has privileges to view and refresh the data sources used by your exposures. The PAT inherits the permissions of its creator. Use a PAT created by:
-   - A Tableau server or site administrator
-   - A data source owner or a project leader
+- [Настроены downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) и нужные exposures включены в lineage.
+- Проверено, что environment и jobs используют поддерживаемый dbt [release track](/docs/dbt-versions/cloud-release-tracks).
+- Наличие аккаунта <Constant name="cloud" /> на тарифе [Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
+- Создан production [deployment environment](/docs/deploy/deploy-environments#set-as-production-environment) для каждого проекта, который вы хотите использовать, с как минимум одним успешным запуском job.
+- Наличие [admin permissions](/docs/cloud/manage-access/enterprise-permissions) в <Constant name="cloud" /> для редактирования настроек проекта или production environment.
+- Настроен [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm), создатель которого имеет права на просмотр и обновление data sources, используемых вашими exposures. PAT наследует права своего создателя. Используйте PAT, созданный:
+   - администратором Tableau Server или Tableau Site;
+   - владельцем data source или project leader.
 
+## Оркестрация downstream exposures
 
-## Orchestrate downstream exposures
+Чтобы оркестрировать downstream exposures и видеть, как обновление происходит автоматически во время запланированных dbt jobs:
 
-To orchestrate downstream exposures and see the refresh happen automatically during scheduled dbt jobs:
-
-1. In the <Constant name="cloud" />, click **Deploy**, then **Environments**, and select the **Environment variables** tab.
-2. Click **Add variable** and set the [environment level variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) `DBT_ACTIVE_EXPOSURES` to `1` within the environment you want the refresh to happen.
-3. Then set the `DBT_ACTIVE_EXPOSURES_BUILD_AFTER` to control the maximum refresh frequency (in minutes) you want between each exposure refresh.
-4. Set the variable to **1440** minutes (24 hours) by default. This means that downstream exposures won’t refresh Tableau extracts more often than this set interval, even if the related models run more frequently.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposures-env-var.jpg" width="100%" title="Set the environment variable `DBT_ACTIVE_EXPOSURES` to `1`."/>
-5. Run a job in production. You will see the update each time a job runs in production. 
-   - If a job runs before the set interval has passed, <Constant name="cloud" /> skips the downstream exposure refresh and marks it as `skipped` in the job logs.
-6. View the downstream exposure logs in the dbt run job logs.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposure-log.jpg" title="View the downstream exposure logs in the dbt run job logs."/ >
-   - View more details in the debug logs for any troubleshooting.
+1. В <Constant name="cloud" /> нажмите **Deploy**, затем **Environments**, и выберите вкладку **Environment variables**.
+2. Нажмите **Add variable** и задайте [environment level variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) `DBT_ACTIVE_EXPOSURES` со значением `1` в том environment, где должно происходить обновление.
+3. Затем задайте `DBT_ACTIVE_EXPOSURES_BUILD_AFTER`, чтобы контролировать максимальную частоту обновлений (в минутах) между каждым обновлением exposure.
+4. По умолчанию установите значение **1440** минут (24 часа). Это означает, что downstream exposures не будут обновлять Tableau extracts чаще этого интервала, даже если связанные модели запускаются чаще.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposures-env-var.jpg" width="100%" title="Установите переменную окружения `DBT_ACTIVE_EXPOSURES` в `1`."/>
+5. Запустите job в production. Вы будете видеть обновление при каждом запуске job в production.
+   - Если job запускается до истечения заданного интервала, <Constant name="cloud" /> пропускает обновление downstream exposure и помечает его как `skipped` в job logs.
+6. Просматривайте логи downstream exposure в dbt run job logs.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposure-log.jpg" title="Просматривайте логи downstream exposures в логах выполнения dbt job."/ >
+   - Для диагностики проблем смотрите дополнительные детали в debug logs.

@@ -1,101 +1,101 @@
---- 
-title: "Navigate the interface" 
-id: canvas-interface      
-sidebar_label: "Navigate the interface" 
-description: "The dbt Canvas interface contains an operator toolbar, operators, and a canvas to help you access and transform data through a seamless drag-and-drop dbt model creation experience in dbt." 
+---
+title: "Навигация по интерфейсу"
+id: canvas-interface
+sidebar_label: "Навигация по интерфейсу"
+description: "Интерфейс dbt Canvas включает панель инструментов операторов, операторы и холст, чтобы вы могли получать доступ к данным и преобразовывать их благодаря удобному drag‑and‑drop созданию dbt‑моделей в dbt."
 pagination_next: "docs/cloud/use-canvas"
 pagination_prev: "docs/cloud/canvas"
 image: /img/docs/dbt-cloud/canvas/canvas.png
 ---
 
-# Navigate the interface <Lifecycle status='managed, managed_plus'/> 
+# Навигация по интерфейсу <Lifecycle status='managed, managed_plus'/>
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
 
-The <Constant name="visual_editor" /> interface contains an operator toolbar, operators, canvas, built-in AI, and more to help you access and transform data through a seamless drag-and-drop dbt model creation experience in <Constant name="cloud" />.
+Интерфейс <Constant name="visual_editor" /> включает панель операторов, сами операторы, canvas, встроенные AI‑возможности и другие элементы, которые помогают получать доступ к данным и трансформировать их с помощью удобного drag-and-drop‑подхода к созданию dbt‑моделей в <Constant name="cloud" />.
 
 </p>
 
-This page offers comprehensive definitions and terminology of user interface elements, allowing you to navigate the <Constant name="visual_editor" /> landscape with ease.
+На этой странице приведены подробные определения и терминология элементов пользовательского интерфейса, которые помогут вам легко ориентироваться в интерфейсе <Constant name="visual_editor" />.
 
-The <Constant name="visual_editor" /> interface is composed of:
+Интерфейс <Constant name="visual_editor" /> состоит из следующих элементов:
 
-- **Navigation bars** &mdash; The top and ledft-side navigation bars contain options for switching between models in the workspace, opening existing or creating new models, uploading CSV data, previewing data and runs, and viewing helpful shortcuts.
-- **Operator toolbar** &mdash; Located at the top of the canvas area, the toolbar displays all the node categories available, as well as tools to help you develop:
-	- **Input:** Source models and data
-	- **Transform:** Data transformation tools
-	- **Output:** Output model configurations
-	- **[Copilot](/docs/cloud/build-canvas-copilot):** AI tools to help you build fast and efficiently
-	- **SQL:** View your completed model's compiled SQL
-- **Operators** &mdash; Tiles that provide source data, perform specific transformations, and layer configurations (such as model, join, aggregate, filter, and so on). Use connectors to link the operators and build a complete data transformation pipeline. 
-- **Canvas** &mdash; The main whiteboard space below the node toolbar. The canvas allows you to create or modify models through a sleek drag-and-drop experience.
-- **Configuration panel** &mdash; Each operator has a configuration panel that opens when you click on it. The configuration panel allows you to configure the operator, review the current model, preview changes to the table, view the SQL code for the node, and delete the operator.
+- **Панели навигации** &mdash; Верхняя и левая панели навигации содержат опции для переключения между моделями в рабочем пространстве, открытия существующих или создания новых моделей, загрузки CSV‑данных, предпросмотра данных и запусков, а также просмотра полезных сочетаний клавиш.
+- **Панель операторов** &mdash; Расположена в верхней части области canvas. Панель отображает все доступные категории узлов, а также инструменты, помогающие в разработке:
+	- **Input:** Исходные модели и данные
+	- **Transform:** Инструменты трансформации данных
+	- **Output:** Конфигурации выходных моделей
+	- **[Copilot](/docs/cloud/build-canvas-copilot):** AI‑инструменты, помогающие быстро и эффективно создавать модели
+	- **SQL:** Просмотр скомпилированного SQL для завершённой модели
+- **Операторы** &mdash; Плитки, которые предоставляют исходные данные, выполняют конкретные трансформации и добавляют уровни конфигурации (например, model, join, aggregate, filter и т.д.). Используйте коннекторы для связывания операторов и построения полного пайплайна трансформации данных.
+- **Canvas** &mdash; Основное рабочее пространство (whiteboard) под панелью узлов. Canvas позволяет создавать или изменять модели с помощью удобного drag-and-drop‑интерфейса.
+- **Панель конфигурации** &mdash; У каждого оператора есть панель конфигурации, которая открывается при клике на него. Она позволяет настраивать оператор, просматривать текущую модель, предварительно просматривать изменения в таблице, смотреть SQL‑код узла и удалять оператор.
 
-## Operators
+## Операторы
 
-The operator toolbar above the canvas contains the different transformation operators available to use. Use each operator to configure or perform specific tasks, like adding filters or joining models by dragging an operator onto the canvas. You can connect operators using the connector line, which allows you to form a complete model for your data transformation.
+Панель операторов над canvas содержит различные операторы трансформации, доступные для использования. Каждый оператор применяется для настройки или выполнения конкретных задач, например добавления фильтров или объединения моделей, путём перетаскивания оператора на canvas. Вы можете соединять операторы с помощью линий‑коннекторов, формируя полноценную модель для трансформации данных.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/operators.png" width="90%" title="Use the operator toolbar to perform different transformation operations." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/operators.png" width="90%" title="Используйте панель инструментов операторов, чтобы выполнять разные операции преобразования." />
 
-Here the following operators are available:
-#### Input
+Доступны следующие операторы:
+#### Ввод
 
-Input operators configure source data:
-- **Model explorer**: Select the model and columns you want to use. 
+Операторы ввода настраивают исходные данные:
+- **Model explorer**: Выбор модели и колонок, которые вы хотите использовать.
 
-#### Transform
+#### Трансформация
 
-Transform operators shape your data:
-- **Join**: Define the join conditions and choose columns from both tables.
-- **Union:** Perform a `UNION` to remove duplicates or `UNION ALL` to prevent deduplicaation.
-- **Formula**: Add the formula to create a new column. Use the built-AI code generator to help 
-- **Aggregate**: Specify the aggregation functions and the columns they apply to generate SQL code by clicking on the question mark (?) icon. Enter your prompt and wait to see the results.
-- **Pivot:** Select the column and values to create a pivot.
-- **Limit**: Set the maximum number of rows you want to return.  
-- **Order**: Select the columns to sort by and the sort order.
-- **Filter**: Set the conditions to filter data.	
-- **Rename:** Provide custom alias' for your columns.
+Операторы трансформации изменяют данные:
+- **Join**: Определение условий объединения и выбор колонок из обеих таблиц.
+- **Union:** Выполнение `UNION` для удаления дубликатов или `UNION ALL` для сохранения всех строк без дедупликации.
+- **Formula**: Добавление формулы для создания нового столбца. Можно использовать встроенный AI‑генератор кода.
+- **Aggregate**: Задание агрегатных функций и колонок, к которым они применяются. Для генерации SQL‑кода нажмите на иконку вопросительного знака (?). Введите запрос и дождитесь результата.
+- **Pivot:** Выбор столбца и значений для создания pivot‑таблицы.
+- **Limit**: Установка максимального количества строк, которые нужно вернуть.
+- **Order**: Выбор столбцов для сортировки и порядка сортировки.
+- **Filter**: Задание условий для фильтрации данных.
+- **Rename:** Задание пользовательских alias для столбцов.
 
-#### Output model
+#### Модель вывода
 
-Output operators configure the names and location of your transformed data: 
-- **Output model**: The final transformed dataset generated by a dbt model. You can only have one output model.
+Операторы вывода настраивают имя и расположение трансформированных данных:
+- **Output model**: Итоговый трансформированный датасет, создаваемый dbt‑моделью. Можно использовать только одну output‑модель.
 
-When you click on each operator, it opens a configuration panel. The configuration panel allows you to configure the operator, review the current model, preview changes to the model, view the SQL code for the node, and delete the operator.
+При клике на любой оператор открывается панель конфигурации. Она позволяет настраивать оператор, просматривать текущую модель, выполнять предпросмотр изменений, смотреть SQL‑код узла и удалять оператор.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/canvas.png" width="90%" title="The Canvas interface that contains a node toolbar and canvas." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/canvas.png" width="90%" title="Интерфейс Canvas, включающий панель инструментов узлов и холст." />
 
-If you have any feedback on additional operators that you might need, we'd love to hear it! Please contact your dbt Labs account team and share your thoughts.
+Если у вас есть предложения по дополнительным операторам, которые могли бы быть полезны, мы будем рады их услышать. Пожалуйста, свяжитесь с вашей командой dbt Labs и поделитесь своими идеями.
 
-## Canvas
+## Оператор Canvas
 
-<Constant name="visual_editor" /> has a sleek drag-and-drop interface for creating and modifying dbt SQL models. It's like a digital whiteboard space for easily viewing and delivering trustworthy data. Use the canvas to:
+<Constant name="visual_editor" /> предоставляет современный drag-and-drop‑интерфейс для создания и изменения dbt SQL‑моделей. Это своего рода цифровая доска, которая упрощает просмотр и предоставление надёжных данных. Используйте canvas, чтобы:
 
-- Drag-and-drop operators to create and configure your model(s)
-- Generate SQL code using the built-in AI generator
-- Zoom in or out for better visualization
-- Version-control your dbt models
-- [Coming soon] Test and document your created models
+- Перетаскивать операторы для создания и настройки модели(ей)
+- Генерировать SQL‑код с помощью встроенного AI‑генератора
+- Приближать и отдалять масштаб для лучшей визуализации
+- Использовать контроль версий для dbt‑моделей
+- [Скоро] Тестировать и документировать созданные модели
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/operators.png" width="90%" title="The operator toolbar allows you to select different nodes to configure or perform specific tasks, like adding filters or joining models." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/operators.png" width="90%" title="Панель инструментов операторов позволяет выбирать разные узлы для настройки или выполнения конкретных задач, например добавления фильтров или соединения моделей." />
 
-### Connector
+### Коннектор
 
-Connectors allow you to connect your operators to create dbt models. Once you've added operators to the canvas:
-- Hover over the "+" sign next to the operator and click. 
-- Drag your cursor between the operator's "+" start point to the other node you want to connect to. This should create a connector line.
-- As an example, to create a join, connect one operator to the "L" (Left) and the other to the "R" (Right). The endpoints are located to the left of the operator so you can easily drag the connectors to the endpoint.
+Коннекторы позволяют соединять операторы для создания dbt‑моделей. После добавления операторов на canvas:
+- Наведите курсор на знак «+» рядом с оператором и нажмите на него.
+- Перетащите курсор от стартовой точки «+» оператора к другому узлу, который вы хотите соединить. В результате появится линия‑коннектор.
+- Например, чтобы создать join, подключите один оператор к «L» (Left), а другой — к «R» (Right). Точки подключения расположены слева от оператора, что упрощает перетаскивание коннекторов.
 
 <Lightbox src="/img/docs/dbt-cloud/canvas/connector.png" width="100%" title="Click and drag your cursor to connect operators." />
 
-## Configuration panel
+## Панель конфигурации
 
-Each operator has a configuration side panel that opens when you click on it. The configuration panel allows you to configure the operator, review the current model, preview changes, view the SQL code for the operator, and delete the operator.
+У каждого оператора есть боковая панель конфигурации, которая открывается при клике на него. Эта панель позволяет настраивать оператор, просматривать текущую модель, выполнять предпросмотр изменений, смотреть SQL‑код оператора и удалять его.
 
-The configuration side panel has the following:
-- Configure tab &mdash; This section allows you to configure the operator to your specified requirements, such as using the built-in AI code generator to generate SQL.
-- Input tab &mdash; This section allows you to view the data for the current source table. Not available for model operators.
-- Output tab &mdash; This section allows you to preview the data for the modified source model.
-- Code &mdash; This section allows you to view the underlying SQL code for the data transformation.
+Боковая панель конфигурации содержит следующие разделы:
+- **Configure** &mdash; Раздел для настройки оператора в соответствии с вашими требованиями, включая использование встроенного AI‑генератора кода для генерации SQL.
+- **Input** &mdash; Раздел для просмотра данных текущей исходной таблицы. Недоступен для model‑операторов.
+- **Output** &mdash; Раздел для предпросмотра данных модифицированной исходной модели.
+- **Code** &mdash; Раздел для просмотра базового SQL‑кода, используемого для трансформации данных.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/config-panel.png" width="90%" title="A sleek drag-and-drop canvas interface that allows you to create or modify dbt SQL models." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/config-panel.png" width="90%" title="Современный drag‑and‑drop интерфейс Canvas, который позволяет создавать или изменять dbt SQL‑модели." />

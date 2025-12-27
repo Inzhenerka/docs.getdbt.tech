@@ -1,69 +1,69 @@
 ---
-title: "Coordinating model versions"
-description: Use this guide to coordinate producers and consumers when introducing model versions
-hoverSnippet: Learn how to coordinate producers and consumers when introducing model versions
-intro_text: Coordinating model versions across your mesh is a critical part of the model versioning process. This guide will walk you through the safe best practices for coordinating producers and consumers when introducing model versions.
+title: "Координация версий моделей"
+description: Используйте это руководство, чтобы координировать производителей и потребителей при внедрении версий моделей
+hoverSnippet: Узнайте, как координировать производителей и потребителей при внедрении версий моделей
+intro_text: Координация версий моделей по всей вашей mesh — это критически важная часть процесса версионирования моделей. Это руководство проведёт вас через безопасные best practices по координации производителей и потребителей при внедрении версий моделей.
 ---
 
 
-An important part of our dbt <Constant name="mesh" /> workflow is [model versions](/docs/mesh/govern/model-versions). This enables better data model management and is critical in a scenario where multiple teams share models across projects.
+Важной частью нашего рабочего процесса dbt <Constant name="mesh" /> являются [версии моделей](/docs/mesh/govern/model-versions). Они позволяют лучше управлять моделями данных и особенно важны в сценариях, когда несколько команд используют общие модели в разных проектах.
 
-Releasing a new model version safely requires coordination between model producers (who build the models) and model consumers (who depend on them).
+Безопасный выпуск новой версии модели требует координации между производителями моделей (теми, кто их создаёт) и потребителями моделей (теми, кто от них зависит).
 
-This guide goes over the following topics:
-- [How producers introduce new model versions safely](#best-practices-for-producers)
-- [How consumers evaluate and migrate to those new versions](#best-practices-for-consumers)
+В этом руководстве рассматриваются следующие темы:
+- [Как производители безопасно вводят новые версии моделей](#best-practices-for-producers)
+- [Как потребители оценивают и мигрируют на новые версии](#best-practices-for-consumers)
 
-For how versioning works at a technical level (YAML structure, contracts, aliasing), see [model versions](/docs/mesh/govern/model-versions).
+Подробнее о том, как версионирование работает на техническом уровне (структура YAML, контракты, алиасы), см. [версии моделей](/docs/mesh/govern/model-versions).
 
-## Best practices for producers
+## Лучшие практики для производителей
 
-Producers own the creation, rollout, communication, and deprecation of model versions. The following steps go over what producers should do when introducing a new version of a model.
+Производители отвечают за создание, развёртывание, коммуникацию и вывод из эксплуатации версий моделей. Ниже описаны шаги, которые следует выполнить при внедрении новой версии модели.
 
 <!-- no toc -->
-  - [Step 1: Decide when a change needs a new version](#step-1-decide-when-a-changes-needs-a-new-version)
-  - [Step 2: Create the new version safely](#step-2-create-the-new-version-safely)
-  - [Step 3: Add a deprecation date](#step-3-add-a-deprecation-date)
-  - [Step 4: Communicate the new version](#step-4-communicate-the-new-version)
-  - [Step 5: Remove the old version](#step-5-remove-the-old-version)
-  - [Step 6: Clean up deprecated versions](#step-6-clean-up-deprecated-versions)
+  - [Шаг 1: Определить, когда изменение требует новой версии](#step-1-decide-when-a-changes-needs-a-new-version)
+  - [Шаг 2: Безопасно создать новую версию](#step-2-create-the-new-version-safely)
+  - [Шаг 3: Добавить дату депрекейта](#step-3-add-a-deprecation-date)
+  - [Шаг 4: Сообщить о новой версии](#step-4-communicate-the-new-version)
+  - [Шаг 5: Удалить старую версию](#step-5-remove-the-old-version)
+  - [Шаг 6: Очистить депрекейтнутые версии](#step-6-clean-up-deprecated-versions)
 
-#### Step 1: Decide when a change needs a new version
+#### Шаг 1: Определить, когда изменение требует новой версии
 
-When creating an original version of a model, use [model contracts](/docs/mesh/govern/model-contracts) to ensure that breaking changes produce errors during development. The model contract ensures you, as a producer, are not changing the shape or data type of the output model. If a change breaks the contract, like removing or changing a column type, this means you should create a new model contract, and thus a new model version.
+При создании первой версии модели используйте [контракты моделей](/docs/mesh/govern/model-contracts), чтобы разрушающие изменения приводили к ошибкам уже на этапе разработки. Контракт модели гарантирует, что вы, как производитель, не меняете форму или типы данных выходной модели. Если изменение нарушает контракт (например, удаление столбца или изменение его типа), это означает, что нужно создать новый контракт модели и, соответственно, новую версию модели.
 
-Here are some examples of breaking changes that might need a new version:
-- Removing a column
-- Renaming a column
-- Changing a column type
+Примеры разрушающих изменений, которые могут потребовать новую версию:
+- Удаление столбца
+- Переименование столбца
+- Изменение типа столбца
 
-Here are some examples of non-breaking changes:
-- Adding a new column
-- Fixing a bug in an existing column
+Примеры неразрушающих изменений:
+- Добавление нового столбца
+- Исправление ошибки в существующем столбце
 
-Here are examples of changes that might be breaking depending on your business logic:
-- Changing logic behind a metric
-- Changing granularity
-- Modifying filters
-- Rewriting `CASE` statements
+Примеры изменений, которые могут быть разрушающими в зависимости от бизнес-логики:
+- Изменение логики метрики
+- Изменение гранулярности
+- Модификация фильтров
+- Переписывание `CASE`-выражений
 
-#### Step 2: Create the new version safely
-After deciding that a change needs a new [version](/reference/resource-properties/versions), follow these steps to create the new version without disrupting existing workflows. Let's say you're removing a column:
+#### Шаг 2: Безопасно создать новую версию
+После того как вы решили, что изменение требует новой [версии](/reference/resource-properties/versions), выполните следующие шаги, чтобы создать её без нарушения существующих рабочих процессов. Допустим, вы удаляете столбец:
 
-1. Create a new version of the model file. For example, `fishtown_analytics_orders_v2.sql`. Each version of a model must have its own SQL file.
-2. Keep the default version stable. In the model's `properties.yml` file:
-   - Set [`versions`](/reference/resource-properties/versions) to include the old version and the new version: `- v: 1` and `- v: 2` respectively.
-   - Set the [`latest_version:`](/reference/resource-properties/latest_version) to `latest_version: 1`.
+1. Создайте новый файл модели для новой версии. Например, `fishtown_analytics_orders_v2.sql`. У каждой версии модели должен быть свой SQL-файл.
+2. Оставьте версию по умолчанию стабильной. В файле `properties.yml` модели:
+   - Укажите [`versions`](/reference/resource-properties/versions), включив старую и новую версии: `- v: 1` и `- v: 2` соответственно.
+   - Установите [`latest_version:`](/reference/resource-properties/latest_version) в `latest_version: 1`.
 
-    This ensures that downstream consumers using `ref(...)` won’t accidentally start using v2. Without setting this, the default will be the highest numerical version, which could be a breaking change for consumers.
+    Это гарантирует, что downstream‑потребители, использующие `ref(...)`, не начнут случайно использовать v2. Если этого не сделать, по умолчанию будет выбрана версия с наибольшим номером, что может привести к разрушающим изменениям для потребителей.
 
-3. Set an [alias](/reference/resource-configs/alias) or create a view over the latest model version. By aliasing or creating a view over the latest model version, you ensure `fishtown_analytics_orders` (without the version suffix) always exists as an object in the warehouse, pointing to the latest version. This also protects external tools and BI dashboards.
+3. Настройте [alias](/reference/resource-configs/alias) или создайте представление (view) поверх последней версии модели. Это гарантирует, что `fishtown_analytics_orders` (без суффикса версии) всегда существует как объект в хранилище и указывает на последнюю версию. Это также защищает внешние инструменты и BI‑дашборды.
 
-#### Step 3: Add a deprecation date
+#### Шаг 3: Добавить дату депрекейта
 
-1. In the model's `properties.yml` file, set a [`deprecation_date`](/reference/resource-properties/deprecation_date) for the model's old version. The `deprecation_date` is a date in the future that signifies when the old version will be removed.
+1. В файле `properties.yml` модели задайте [`deprecation_date`](/reference/resource-properties/deprecation_date) для старой версии модели. `deprecation_date` — это дата в будущем, которая указывает, когда старая версия будет удалена.
    
-   This notifies downstream consumers and will appear in the `dbt run` logs as a warning that the old version is nearing deprecation and consumers will need to [migrate](#best-practices-for-consumers) to the new version. 
+   Это уведомляет downstream‑потребителей и будет отображаться в логах `dbt run` в виде предупреждения о том, что старая версия скоро будет выведена из эксплуатации и потребителям потребуется [мигрировать](#best-practices-for-consumers) на новую версию.
    
     <File name='models/properties.yml'>
     ```yaml
@@ -75,63 +75,63 @@ After deciding that a change needs a new [version](/reference/resource-propertie
           - name: column_to_keep
 
         versions:
-          - v: 1                 # old version — uses all top-level columns
+          - v: 1                 # старая версия — использует все столбцы верхнего уровня
             deprecation_date: "2025-12-31"
-          - v: 2                 # new version
+          - v: 2                 # новая версия
             columns:
               - include: all
-                exclude: [column_to_remove]   # <— specify which columns were removed in v2
+                exclude: [column_to_remove]   # <— указываем, какие столбцы были удалены в v2
     ```
     </File>
-2. Merge the new version into the main branch.
-3. Run the job to build the new version.
-4. Verify that the new version builds successfully.
-5. Verify that the deprecation date is set correctly in the `dbt run` logs.
+2. Вмержите новую версию в основную ветку.
+3. Запустите джобу для сборки новой версии.
+4. Убедитесь, что новая версия успешно собирается.
+5. Проверьте, что дата депрекейта корректно отображается в логах `dbt run`.
 
-If you try to reference models (for example, `{{ ref('upstream_project', 'model_name', v=1) }}`) using the `v=1` argument after the deprecation date, the `ref` call will fail once the producer project removes the `v1` version.
+Если вы попытаетесь ссылаться на модели (например, `{{ ref('upstream_project', 'model_name', v=1) }}`) с аргументом `v=1` после наступления даты депрекейта, вызов `ref` завершится ошибкой после того, как проект‑производитель удалит версию `v1`.
 
-#### Step 4: Communicate the new version
-After creating a new version and setting a deprecation date for the old version, communicate the new version to downstream consumers. Let them know that:
-- A new version is available and a deprecation timeline exists.
-- Consumers can test the new version and [migrate](#best-practices-for-consumers) over. 
-- To test the new version, consumers can use `v=2` when referencing the model. For example, `{{ ref('upstream_project', 'model_name', v=2) }}`.
+#### Шаг 4: Сообщить о новой версии
+После создания новой версии и установки даты депрекейта для старой версии сообщите об этом downstream‑потребителям. Дайте им знать, что:
+- Доступна новая версия и определён таймлайн депрекейта.
+- Потребители могут протестировать новую версию и [мигрировать](#best-practices-for-consumers) на неё.
+- Для тестирования новой версии можно использовать `v=2` при обращении к модели. Например: `{{ ref('upstream_project', 'model_name', v=2) }}`.
 
-#### Step 5: Remove the old version
-Once the consumers confirm they've tested and migrated over to the new version, you can set the new version as the latest version:
+#### Шаг 5: Удалить старую версию
+После того как потребители подтвердили, что протестировали и мигрировали на новую версию, вы можете сделать её версией по умолчанию:
 
 <File name='models/properties.yml'>
 
 ```yaml
 models:
   - name: fishtown_analytics_orders
-    latest_version: 2 # update from 1 to 2 to set the new version as the latest version
+    latest_version: 2 # обновляем с 1 на 2, чтобы сделать новую версию версией по умолчанию
     versions:
-      - v: 1 # this represents the old version
-      - v: 2 # this represents the new version
+      - v: 1 # старая версия
+      - v: 2 # новая версия
 ```
 </File>
 
-This then updates the default `ref` to the new version. For example, `{{ ref('upstream_project', 'fishtown_analytics_orders') }}` will now resolve to the `fishtown_analytics_orders_v2` model in the `upstream_project`. If consumers want to use the old version, they can use `v=1` when referencing the model: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=1) }}`.
+Это обновит `ref` по умолчанию на новую версию. Например, `{{ ref('upstream_project', 'fishtown_analytics_orders') }}` теперь будет указывать на модель `fishtown_analytics_orders_v2` в проекте `upstream_project`. Если потребителям всё ещё нужна старая версия, они могут использовать `v=1`: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=1) }}`.
 
-#### Step 6: Clean up deprecated versions
+#### Шаг 6: Очистить депрекейтнутые версии
 
-After all consumers have [migrated](#best-practices-for-consumers) to the new version, you can clean up the deprecated version. You could choose to "hard delete" all old versions, or "soft delete" them for continuity. 
+После того как все потребители [мигрировали](#best-practices-for-consumers) на новую версию, можно очистить депрекейтнутую версию. Вы можете выбрать «жёсткое удаление» или «мягкое удаление» для сохранения непрерывности.
 
 <Tabs>
-<TabItem value="hard-delete" label="Hard delete (cleanest)">
+<TabItem value="hard-delete" label="Жёсткое удаление (самый чистый вариант)">
 
-"Hard deleting" old versions is the cleanest approach and removes all old version artifacts from your project:
-1. Delete the `fishtown_analytics_orders_v1.sql` file and rename the new version back to `fishtown_analytics_orders.sql`.
-2. Delete all version specifications from your `.yml` file.
-3. Drop or delete the `fishtown_analytics_orders_v1` object from your warehouse with a manual script or using a cleanup macro.
+«Жёсткое удаление» — самый чистый подход, при котором все артефакты старых версий полностью удаляются из проекта:
+1. Удалите файл `fishtown_analytics_orders_v1.sql` и переименуйте файл новой версии обратно в `fishtown_analytics_orders.sql`.
+2. Удалите все спецификации версий из `.yml`‑файла.
+3. Удалите объект `fishtown_analytics_orders_v1` из хранилища вручную с помощью скрипта или cleanup‑макроса.
 
 </TabItem>
 
-<TabItem value="soft-delete" label="Soft delete (retains continuity)">
+<TabItem value="soft-delete" label="Мягкое удаление (с сохранением непрерывности)">
 
-"Soft deleting" old versions retains all old version artifacts to avoid confusion if more model versions get introduced in future, and for continuity. Bear in mind that your version control platform will also have the history of all of these changes.
-1. Repoint the `fishtown_analytics_orders` alias to your latest version file (for example, `fishtown_analytics_orders_v2`), or create a view on top of the latest model version.
-2. Use the `enabled` [config option](/reference/resource-configs/enabled) to disable the deprecated model version so that it doesn’t run in dbt jobs and can’t be referenced in a cross-project ref. For example:
+«Мягкое удаление» сохраняет все артефакты старых версий, чтобы избежать путаницы при появлении новых версий моделей в будущем и для сохранения непрерывности. Учитывайте, что история всех изменений также будет доступна в системе контроля версий.
+1. Перенаправьте alias `fishtown_analytics_orders` на файл последней версии (например, `fishtown_analytics_orders_v2`) или создайте view поверх последней версии модели.
+2. Используйте опцию конфигурации [`enabled`](/reference/resource-configs/enabled), чтобы отключить депрекейтнутую версию модели — она не будет запускаться в dbt‑джобах и на неё нельзя будет сослаться через cross‑project ref. Например:
        <File name='models/properties.yml'>
     ```yaml
     models:
@@ -142,36 +142,35 @@ After all consumers have [migrated](#best-practices-for-consumers) to the new ve
           - name: column_to_keep
 
         versions:
-          - v: 1                 # old version — uses all top-level columns
+          - v: 1                 # старая версия — использует все столбцы верхнего уровня
             deprecation_date: "2025-12-31"
             config:
-              enabled: false  #  disable deprecated version so it no longer runs
-          - v: 2                 # new version
+              enabled: false  # отключаем депрекейтнутую версию, чтобы она больше не запускалась
+          - v: 2                 # новая версия
             columns:
               - include: all
-                exclude: [column_to_remove]   # <— specify which columns were removed in v2
+                exclude: [column_to_remove]   # <— указываем, какие столбцы были удалены в v2
     ```
     </File>
-3. Drop or delete the `fishtown_analytics_orders_v1` object from your warehouse with a manual script or appropriate process or using a cleanup macro.
+3. Удалите объект `fishtown_analytics_orders_v1` из хранилища вручную, через соответствующий процесс или с помощью cleanup‑макроса.
 
 </TabItem>
 </Tabs>
 
 <ConfettiTrigger>
 
-... and that's it! You should now have a new version of the model and a deprecated version. The next section is meant for consumers to evaluate and migrate to the new version.
+… и это всё! Теперь у вас есть новая версия модели и депрекейтнутая старая версия. Следующий раздел предназначен для потребителей, чтобы они могли оценить и мигрировать на новую версию.
 </ConfettiTrigger>
 
-## Best practices for consumers
-Consumers rely on upstream models and need to make sure that version transitions don’t introduce unintended breakages. Refer to the following steps to migrate to the new version:
+## Best practices для потребителей
+Потребители зависят от upstream‑моделей и должны убедиться, что переходы между версиями не приводят к непреднамеренным поломкам. Используйте следующие шаги для миграции на новую версию:
 
-1. Begin writing a cross-project reference to use a public model from a different project. In this case, `{{ ref('upstream_project', 'fishtown_analytics_orders') }}`.
-2. Once you see deprecation warnings, test the latest version of a model by explicitly referencing it in your `ref`. For example, `{{ ref('upstream_project', 'fishtown_analytics_orders', v=2) }}`. Check if it's a breaking change for you or has any unintended impacts on your project. 
-   - If it does, consider explicitly “pinning” to the current, working version of the model before the new version becomes the default: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=1) }}`. Bear in mind that you will need to migrate at some point before the deprecation date.
-3. Before the deprecation date, you can migrate to the new version of the model by removing the version specification in your cross-project reference:  `{{ ref('upstream_project', 'fishtown_analytics_orders')`. Make any downstream logic changes needed to accommodate this new version.
+1. Начните с использования cross‑project ref для публичной модели из другого проекта. В данном случае: `{{ ref('upstream_project', 'fishtown_analytics_orders') }}`.
+2. После появления предупреждений о депрекейте протестируйте последнюю версию модели, явно указав её в `ref`. Например: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=2) }}`. Проверьте, является ли это разрушающим изменением для вас и нет ли нежелательных эффектов для вашего проекта.
+   - Если проблемы есть, рассмотрите возможность явно «зафиксировать» текущую рабочую версию модели до того, как новая версия станет версией по умолчанию: `{{ ref('upstream_project', 'fishtown_analytics_orders', v=1) }}`. Помните, что до даты депрекейта вам всё равно потребуется выполнить миграцию.
+3. До наступления даты депрекейта вы можете мигрировать на новую версию модели, убрав указание версии в cross‑project ref: `{{ ref('upstream_project', 'fishtown_analytics_orders')`. Внесите все необходимые изменения в downstream‑логику, чтобы она корректно работала с новой версией.
 
-Consumers should plan migrations to align with their own team’s release cycles.
-
+Потребителям следует планировать миграции с учётом собственных циклов релизов команды.
 
 ## Related docs
-- [Quickstart with <Constant name="mesh" />](/guides/mesh-qs)
+- [Quickstart с <Constant name="mesh" />](/guides/mesh-qs)

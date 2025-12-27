@@ -1,84 +1,84 @@
 ---
-title: "View documentation"
-description: "Learn how robust documentation for your dbt models helps stakeholders discover and understand your datasets."
+title: "Просмотр документации"
+description: "Узнайте, как подробная документация для ваших dbt‑моделей помогает стейкхолдерам находить и понимать ваши наборы данных."
 id: "view-documentation"
 ---
 
-dbt provides intuitive and scalable tools for viewing your dbt documentation. Detailed documentation is essential for your developers and other stakeholders to gain shared context for your dbt project.
+dbt предоставляет интуитивно понятные и масштабируемые инструменты для просмотра документации dbt. Подробная документация крайне важна для разработчиков и других заинтересованных сторон, чтобы сформировать общее понимание контекста вашего dbt‑проекта.
 
-You can view documentation in two complementary ways, depending on your needs:
+Вы можете просматривать документацию двумя взаимодополняющими способами — в зависимости от ваших задач:
 
-| Option | Description | Availability |
+| Опция | Описание | Доступность |
 |------|-------------|--------------|
-| [**dbt Docs**](#dbt-docs) | Generates a static website with model lineage, metadata, and documentation that can be hosted on your web server (like S3 or Netlify). | <Constant name="core" /> or <Constant name="cloud" /> Developer plans |
-| [**<Constant name="explorer" />**](/docs/explore/explore-projects) | The premier documentation experience in <Constant name="cloud" />. Builds on dbt Docs to provide a dynamic, real-time interface with rich [metadata](/docs/explore/explore-projects#generate-metadata), customizable views, deep insight into your project and resources, and collaborative tools. | <Constant name="cloud" /> Starter, Enterprise, or Enterprise+ plans |
+| [**dbt Docs**](#dbt-docs) | Генерирует статический веб‑сайт с lineage моделей, метаданными и документацией, который можно разместить на вашем веб‑сервере (например, S3 или Netlify). | <Constant name="core" /> или <Constant name="cloud" /> Developer планы |
+| [**<Constant name="explorer" />**](/docs/explore/explore-projects) | Основной способ работы с документацией в <Constant name="cloud" />. Расширяет возможности dbt Docs, предоставляя динамический интерфейс в реальном времени с богатыми [метаданными](/docs/explore/explore-projects#generate-metadata), настраиваемыми представлениями, глубоким пониманием проекта и ресурсов, а также инструментами для совместной работы. | <Constant name="cloud" /> Starter, Enterprise или Enterprise+ планы |
 
-## Navigating your documentation
-The following sections describe how to navigate your documentation in <Constant name="explorer" /> and dbt Docs.
+## Навигация по документации
+В следующих разделах описано, как перемещаться по документации в <Constant name="explorer" /> и dbt Docs.
 
-### Catalog <Lifecycle status="self_service,managed,managed_plus" />
+### Каталог <Lifecycle status="self_service,managed,managed_plus" />
 
-[<Constant name="explorer" />](/docs/explore/explore-projects) offers a dynamic, interactive way to explore your models, sources, and lineage.
-To access <Constant name="explorer" />, navigate to the **Explore** option in the <Constant name="cloud" /> navigation menu.
+[<Constant name="explorer" />](/docs/explore/explore-projects) предлагает динамичный и интерактивный способ исследования моделей, источников и lineage.
+Чтобы открыть <Constant name="explorer" />, выберите пункт **Explore** в меню навигации <Constant name="cloud" />.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Example of Catalog's resource details page and its lineage." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Пример страницы с деталями ресурса в Catalog и его lineage." />
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate Catalog to discover your project's resources and lineage."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Навигация по Catalog для изучения ресурсов и lineage проекта."/>
 
 </DocCarousel>
 
-<Constant name="explorer" /> offers users a comprehensive suite of features to enhance data project navigation and understanding, like:
+<Constant name="explorer" /> предоставляет пользователям широкий набор возможностей для упрощения навигации по data‑проекту и его понимания, включая:
 
-- Interactive lineage visualization for your project's DAG to understand relationships between resources. 
-- Resource search bar with comprehensive filters to help find project resources efficiently and quickly.
-- Model performance insights to access metadata on <Constant name="cloud" /> runs for in-depth analysis of model performance and quality. 
-- Project recommendations with suggestions to improve test coverage and documentation across your data estate. 
-- Data health signals to monitor the health and performance of each resource through data health indicators. 
-- Model query history to track consumption queries on your models to gain deeper insights into data usage. 
-- Downstream exposures to automatically expose relevant data models from tools like Tableau to enhance visibility.
+- Интерактивную визуализацию lineage DAG проекта для понимания связей между ресурсами.  
+- Поиск ресурсов с расширенными фильтрами для быстрого и эффективного нахождения нужных объектов.  
+- Инсайты о производительности моделей — доступ к метаданным запусков в <Constant name="cloud" /> для глубокого анализа производительности и качества моделей.  
+- Рекомендации по проекту с предложениями по улучшению покрытия тестами и документации.  
+- Data health signals для мониторинга состояния и производительности каждого ресурса.  
+- Историю запросов к моделям, позволяющую отслеживать использование данных и лучше понимать их потребление.  
+- Downstream exposures — автоматическое отображение релевантных моделей данных из инструментов вроде Tableau для повышения прозрачности.
 
-For additional details and instructions on how to explore your lineage, navigate your resources, view model query history and data health signals, feature availability, and more &mdash; refer to [Discover data with <Constant name="explorer" />](/docs/explore/explore-projects).
+Для получения дополнительной информации о том, как исследовать lineage, навигировать по ресурсам, просматривать историю запросов моделей и data health signals, доступность функций и многое другое — см. [Discover data with <Constant name="explorer" />](/docs/explore/explore-projects).
 
-### dbt Docs
+### Документация dbt Docs
 
-dbt Docs provides valuable insights into your <Constant name="core" /> or <Constant name="cloud" /> Developer plan projects. The interface enables you to navigate to the documentation for specific models. That might look something like this:
+dbt Docs предоставляет ценные инсайты по проектам на планах <Constant name="core" /> или <Constant name="cloud" /> Developer. Интерфейс позволяет перейти к документации конкретных моделей. Это может выглядеть примерно так:
 
-<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/f2221dc-Screen_Shot_2018-08-14_at_6.29.55_PM.png" title="Auto-generated documentation for a dbt model"/>
+<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/f2221dc-Screen_Shot_2018-08-14_at_6.29.55_PM.png" title="Автоматически сгенерированная документация для модели dbt"/>
 
-Here, you can see a representation of the project structure, a markdown description for a model, and a list of all of the columns (with documentation) in the model.
+Здесь вы видите представление структуры проекта, markdown‑описание модели и список всех колонок модели с документацией.
 
-From the dbt Docs page, click the green button in the bottom-right corner of the webpage to expand a "mini-map" of your DAG. This pane displays the immediate parents and children of the model that you're exploring.
+На странице dbt Docs нажмите зелёную кнопку в правом нижнем углу страницы, чтобы развернуть «мини‑карту» вашего DAG. В этой панели отображаются непосредственные родители и потомки модели, которую вы изучаете.
 
-<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ec77c45-Screen_Shot_2018-08-14_at_6.31.56_PM.png" title="Opening the DAG mini-map"/>
+<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ec77c45-Screen_Shot_2018-08-14_at_6.31.56_PM.png" title="Открытие мини‑карты DAG"/>
 
-In this example, the `fct_subscription_transactions` model only has one direct parent. By clicking the "Expand" button in the top-right corner of the window, we can pivot the graph horizontally and view the full <Term id="data-lineage">lineage</Term> for our model. This lineage is filterable using the `--select` and `--exclude` flags, which are consistent with the semantics of [model selection syntax](/reference/node-selection/syntax). Further, you can right-click to interact with the DAG, jump to documentation, or share links to your graph visualization with your coworkers.
+В этом примере модель `fct_subscription_transactions` имеет только одного прямого родителя. Нажав кнопку **Expand** в правом верхнем углу окна, можно развернуть граф по горизонтали и увидеть полный <Term id="data-lineage">lineage</Term> модели. Этот lineage можно фильтровать с помощью флагов `--select` и `--exclude`, которые соответствуют семантике [model selection syntax](/reference/node-selection/syntax). Кроме того, вы можете щёлкнуть правой кнопкой мыши для взаимодействия с DAG, перехода к документации или обмена ссылками на визуализацию графа с коллегами.
 
-<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ac97fba-Screen_Shot_2018-08-14_at_6.35.14_PM.png" title="The full lineage for a dbt model"/>
+<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ac97fba-Screen_Shot_2018-08-14_at_6.35.14_PM.png" title="Полный lineage для модели dbt"/>
 
-## Deploy the documentation site
+## Развёртывание сайта документации
 
-Effortlessly deploy documentation in <Constant name="explorer" /> or dbt Docs to make it available to your teams.
+Легко разворачивайте документацию в <Constant name="explorer" /> или dbt Docs, чтобы сделать её доступной для ваших команд.
 
 :::caution Security
 
-The `dbt docs serve` command is only intended for local/development hosting of the documentation site. Please use one of the methods listed in the next section (or similar) to ensure that your documentation site is hosted securely!
+Команда `dbt docs serve` предназначена только для локального или dev‑хостинга сайта документации. Пожалуйста, используйте один из методов, перечисленных в следующем разделе (или аналогичный), чтобы обеспечить безопасный хостинг документации.
 
 :::
 
-### Catalog <Lifecycle status="self_service,managed,managed_plus" />
+### Каталог <Lifecycle status="self_service,managed,managed_plus" />
 
-<Constant name="explorer" /> automatically updates documentation after each production or staging job run using the metadata generated. This means it always has the latest results for your project with no manual deployment required. For details on how <Constant name="explorer" /> uses metadata to automatically update documentation, refer to [Generate metadata](/docs/explore/explore-projects#generate-metadata). 
+<Constant name="explorer" /> автоматически обновляет документацию после каждого production или staging job run, используя сгенерированные метаданные. Это означает, что документация всегда отражает актуальное состояние проекта и не требует ручного деплоя. Подробнее о том, как <Constant name="explorer" /> использует метаданные для автоматического обновления документации, см. [Generate metadata](/docs/explore/explore-projects#generate-metadata).
 
-To learn how to deploy your documentation site, see [Build and view your docs with <Constant name="cloud" />](/docs/explore/build-and-view-your-docs).
+Чтобы узнать, как развернуть сайт документации, см. [Build and view your docs with <Constant name="cloud" />](/docs/explore/build-and-view-your-docs).
 
-### dbt Docs
-dbt Docs was built to make it easy to host on the web. The site is "static," meaning you don't need any "dynamic" servers to serve the docs. You can host your documentation in several ways:
+### Документация dbt Docs
+dbt Docs изначально спроектирован так, чтобы его было легко размещать в вебе. Сайт является «статическим», то есть вам не нужны «динамические» серверы для его обслуживания. Вы можете разместить документацию несколькими способами:
 
-* Host on [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html) (optionally [with IP access restrictions](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html#example-bucket-policies-use-case-3))
-* Publish with [Netlify](https://discourse.getdbt.com/t/publishing-dbt-docs-to-netlify/121)
-* Use your own web server like Apache/Nginx
-* If you're on a <Constant name="cloud" /> Developer plan, see [Build and view your docs with <Constant name="cloud" />](/docs/explore/build-and-view-your-docs#dbt-docs) to learn how to deploy your documentation site.
+* Разместить на [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html) (при необходимости — [с ограничениями доступа по IP](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html#example-bucket-policies-use-case-3))
+* Опубликовать с помощью [Netlify](https://discourse.getdbt.com/t/publishing-dbt-docs-to-netlify/121)
+* Использовать собственный веб‑сервер, например Apache или Nginx
+* Если вы используете план <Constant name="cloud" /> Developer, см. [Build and view your docs with <Constant name="cloud" />](/docs/explore/build-and-view-your-docs#dbt-docs), чтобы узнать, как развернуть сайт документации.
 
-Interested in using <Constant name="explorer" /> for the complete dbt documentation experience, sign up for a free [<Constant name="cloud" /> trial](https://www.getdbt.com/signup) or [contact us](https://www.getdbt.com/contact). 
+Если вы хотите использовать <Constant name="explorer" /> для полноценного опыта работы с документацией dbt, зарегистрируйтесь для бесплатного [trial <Constant name="cloud" />](https://www.getdbt.com/signup) или [свяжитесь с нами](https://www.getdbt.com/contact).

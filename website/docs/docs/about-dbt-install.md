@@ -1,21 +1,21 @@
 ---
-title: About dbt installation
+title: О установке dbt
 id: about-dbt-install
-description: "Learn how to install dbt in local environments"
-sidebar_label: "About dbt installation"
+description: "Узнайте, как установить dbt в локальных окружениях"
+sidebar_label: "О установке dbt"
 pagination_next: "docs/core/dbt-core-environments"
 pagination_prev: null
 ---
 
-<Constant name="dbt" /> enables data teams to transform data using analytics engineering best practices. Choose your local development experience from these tools:
+<Constant name="dbt" /> позволяет командам по работе с данными трансформировать данные, используя лучшие практики аналитической инженерии. Выберите удобный для вас вариант локальной среды разработки из следующих инструментов:
 
-* Local command line interface (CLI) tools leveraging the speed and scale of the <Constant name="fusion_engine" /> or using <Constant name="core" />.
-* VS Code or Cursor with the dbt extension
+* Локальные инструменты командной строки (CLI), использующие скорость и масштаб <Constant name="fusion_engine" /> или работающие на базе <Constant name="core" />.
+* VS Code или Cursor с расширением dbt.
 
-If you're interested in using the <Constant name="dbt_platform" />, our feature-rich, browser-based UI, you can learn more in [About dbt set up](/docs/cloud/about-cloud-setup).
+Если вас интересует использование <Constant name="dbt_platform" /> — нашего функционального браузерного интерфейса — вы можете узнать больше в разделе [About dbt set up](/docs/cloud/about-cloud-setup).
  
-After choosing and installing your local development experience, you can get started:
+После выбора и установки локальной среды разработки вы можете приступить к работе:
 
-- Explore a detailed first-time setup guide for [dbt Fusion engine](/guides/fusion?step=1).
-- [Connect to a data platform](/docs/core/connect-data-platform/about-core-connections).
-- Learn [how to run your dbt projects](/docs/running-a-dbt-project/run-your-dbt-projects).
+- Изучите подробное руководство по первичной настройке для [dbt Fusion engine](/guides/fusion?step=1).
+- [Подключитесь к платформе данных](/docs/core/connect-data-platform/about-core-connections).
+- Узнайте, [как запускать ваши dbt‑проекты](/docs/running-a-dbt-project/run-your-dbt-projects).

@@ -1,34 +1,33 @@
 ---
-title: "About the empty flag"
-description: "Use the empty flag to test your code and build your tables without populating data."
-sidebar_label: "The empty flag"
+title: "О флаге empty"
+description: "Используйте флаг empty, чтобы протестировать код и создать таблицы, не заполняя их данными."
+sidebar_label: "Флаг empty"
 pagination_next: "docs/build/sample-flag"
 pagination_prev: null
 ---
 
-# About the `--empty` flag
+# О флаге `--empty`
 
 :::note
 
-The `--empty` flag is not currently available for Python models. If the flag is used with a Python model, it will be ignored.
+Флаг `--empty` в настоящее время недоступен для Python‑моделей. Если этот флаг используется вместе с Python‑моделью, он будет проигнорирован.
 
 :::
 
-During dbt development, you might want to validate that your models are semantically correct without the time-consuming cost of building the entire model in the data warehouse. The [`run`](/reference/commands/run) and [`build`](/reference/commands/build) commands support the `--empty` flag for building schema-only dry runs. The `--empty` flag limits the refs and sources to zero rows. dbt will still execute the model SQL against the target data warehouse but will avoid expensive reads of input data. This validates dependencies and ensures your models will build properly.
+Во время разработки dbt вам может понадобиться проверить, что ваши модели семантически корректны, не тратя время на полное построение модели в хранилище данных. Команды [`run`](/reference/commands/run) и [`build`](/reference/commands/build) поддерживают флаг `--empty` для выполнения «сухих» прогонов, при которых создаётся только схема. Флаг `--empty` ограничивает `ref` и `source` нулевым количеством строк. dbt по‑прежнему выполняет SQL‑код модели в целевом хранилище данных, но при этом избегает дорогостоящего чтения входных данных. Это позволяет проверить зависимости и убедиться, что ваши модели будут корректно собираться.
 
-### Examples
+### Примеры
 
-Run all models in a project while building only the schemas in your development environment:
+Запуск всех моделей в проекте с созданием только схем в среде разработки:
 
 ```
 dbt run --empty
 ```
 
-Run a specific model:
+Запуск конкретной модели:
 
 ```
 dbt run --select path/to/your_model --empty
 ```
 
-dbt will build and execute the SQL, resulting in an empty schema in the data warehouse.
-
+dbt построит и выполнит SQL, в результате чего в хранилище данных будет создана пустая схема.
