@@ -1,89 +1,88 @@
 ---
-title: "Data health signals"
-sidebar_label: "Data health signals"
+title: "Сигналы здоровья данных"
+sidebar_label: "Сигналы здоровья данных"
 id: data-health-signals
-description: "Learn how data health signals offer a quick, at-a-glance view of data health when browsing your resources in dbt Catalog."
+description: "Узнайте, как сигналы здоровья данных дают быстрый обзор состояния данных при просмотре ресурсов в dbt Catalog."
 image: /img/docs/collaborate/dbt-explorer/data-health-signal.jpg
 ---
 
-# Data health signals <Lifecycle status="preview" />
-Data health signals offer a quick, at-a-glance view of data health when browsing your resources in <Constant name="explorer" />. They keep you informed on the status of your resource's health using the indicators **Healthy**, **Caution**, **Degraded**, or **Unknown**.
+# Сигналы здоровья данных <Lifecycle status="preview" />
+Сигналы здоровья данных предоставляют быстрый, наглядный обзор состояния данных при просмотре ресурсов в <Constant name="explorer" />. Они позволяют вам быть в курсе состояния здоровья ресурса с помощью индикаторов **Healthy**, **Caution**, **Degraded** или **Unknown**.
 
-Note,  we don’t calculate data health for non-dbt resources.
+Обратите внимание: для ресурсов, не относящихся к dbt, расчет состояния здоровья данных не выполняется.
 
-- Supported resources are [models](/docs/build/models), [sources](/docs/build/sources), and [exposures](/docs/build/exposures).
-- For accurate health data, ensure the resource is up-to-date and had a recent job run.
-- Each data health signal reflects key data health components, such as test success status, missing resource descriptions, missing tests, absence of builds in 30-day windows, [and more](#data-health-signal-criteria).
-
+- Поддерживаемые ресурсы: [models](/docs/build/models), [sources](/docs/build/sources) и [exposures](/docs/build/exposures).
+- Для получения корректных данных о здоровье убедитесь, что ресурс актуален и по нему недавно выполнялся job.
+- Каждый сигнал здоровья данных отражает ключевые компоненты состояния данных, такие как статус выполнения тестов, отсутствие описаний ресурсов, отсутствие тестов, отсутствие сборок за последние 30 дней [и многое другое](#data-health-signal-criteria).
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.jpg" width="55%" title="View data health signals for your models."/> 
 
-## Access data health signals
+## Доступ к сигналам здоровья данных
 
-Access data health signals in the following places:
-- In the [search function](/docs/explore/explore-projects#search-resources) or under **Models**, **Sources**, or **Exposures** in the **Resource** tab.  
-  - For sources, the data health signal also indicates the [source freshness](/docs/deploy/source-freshness) status.
-- In the **Health** column on [each resource's details page](/docs/explore/explore-projects#view-resource-details). Hover over or click the signal to view detailed information.
-- In the **Health** column of public models tables.
-- In the [DAG lineage graph](/docs/explore/explore-projects#project-lineage). Click any node to open the node details panel where you can view it and its details.
-- In [Data health tiles](/docs/explore/data-tile) through an embeddable iFrame and visible in your BI dashboard.
+Сигналы здоровья данных доступны в следующих местах:
+- В [функции поиска](/docs/explore/explore-projects#search-resources) или в разделах **Models**, **Sources** или **Exposures** на вкладке **Resource**.  
+  - Для sources сигнал здоровья данных также отражает статус [source freshness](/docs/deploy/source-freshness).
+- В колонке **Health** на [странице деталей каждого ресурса](/docs/explore/explore-projects#view-resource-details). Наведите курсор или нажмите на сигнал, чтобы посмотреть подробную информацию.
+- В колонке **Health** в таблицах публичных models.
+- В [DAG lineage graph](/docs/explore/explore-projects#project-lineage). Нажмите на любой узел, чтобы открыть панель с деталями узла и посмотреть его состояние.
+- В [Data health tiles](/docs/explore/data-tile), доступных через встраиваемый iFrame и отображаемых в вашем BI-дашборде.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.gif" width="95%" title="Access data health signals in multiple places in dbt Catalog."/> 
 
-## Data health signal criteria
+## Критерии сигналов здоровья данных
 
-Each resource has a health state that is determined by specific set of criteria. Select the following tabs to view the criteria for that resource type.
+Каждый ресурс имеет состояние здоровья, которое определяется определенным набором критериев. Выберите вкладки ниже, чтобы посмотреть критерии для соответствующего типа ресурса.
 <Tabs>
-<TabItem value="models" label="Models">
+<TabItem value="models" label="Модели">
 
-The health state of a model is determined by the following criteria:
+Состояние здоровья model определяется следующими критериями:
 <!-- TODO: remove the 'tbd' lines in the table once meta 4025 is done -->
-| **Health state** | **Criteria**   |
+| **Состояние здоровья** | **Критерии**   |
 |-------------------|---------------|
-| ✅ **Healthy**    | All of the following must be true:<br /><br /> - Built successfully in the last run<br />- Built in the last 30 days<br />- Model has tests configured<br />- All tests passed<br />- All upstream [sources are fresh](/docs/build/sources#source-data-freshness) or freshness is not applicable (set to `null`)<br />- Has a description |
-| 🟡 **Caution**   | One of the following must be true: <br /><br />- Not built in the last 30 days<br />- Tests are not configured<br />- Tests return warnings<br />- One or more upstream sources are stale:<br />&nbsp;&nbsp;&nbsp;&nbsp;- Has a freshness check configured<br />&nbsp;&nbsp;&nbsp;&nbsp;- Freshness check ran in the past 30 days<br />&nbsp;&nbsp;&nbsp;&nbsp;- Freshness check returned a warning<br />- Missing a description |
-| 🔴 **Degraded**  | One of the following must be true: <br /><br />- Model failed to build<br />- Model has failing tests<br />- One or more upstream sources are stale:<br />&nbsp;&nbsp;&nbsp;&nbsp;- Freshness check hasn’t run in the past 30 days<br />&nbsp;&nbsp;&nbsp;&nbsp;- Freshness check returned an error |
-| ⚪ **Unknown**    | - Unable to determine health of resource; no job runs have processed the resource.         |
+| ✅ **Healthy**    | Все следующие условия должны быть выполнены:<br /><br /> - Успешно собрана в последнем запуске<br />- Собиралась в течение последних 30 дней<br />- Для model настроены тесты<br />- Все тесты прошли успешно<br />- Все upstream [sources являются свежими](/docs/build/sources#source-data-freshness) или freshness не применяется (установлено в `null`)<br />- Есть описание |
+| 🟡 **Caution**   | Выполняется хотя бы одно из следующих условий: <br /><br />- Не собиралась в течение последних 30 дней<br />- Тесты не настроены<br />- Тесты возвращают предупреждения<br />- Один или несколько upstream sources являются устаревшими:<br />&nbsp;&nbsp;&nbsp;&nbsp;- Настроена проверка freshness<br />&nbsp;&nbsp;&nbsp;&nbsp;- Проверка freshness выполнялась в течение последних 30 дней<br />&nbsp;&nbsp;&nbsp;&nbsp;- Проверка freshness вернула предупреждение<br />- Отсутствует описание |
+| 🔴 **Degraded**  | Выполняется хотя бы одно из следующих условий: <br /><br />- Model не смогла собраться<br />- У model есть падающие тесты<br />- Один или несколько upstream sources являются устаревшими:<br />&nbsp;&nbsp;&nbsp;&nbsp;- Проверка freshness не выполнялась в течение последних 30 дней<br />&nbsp;&nbsp;&nbsp;&nbsp;- Проверка freshness вернула ошибку |
+| ⚪ **Unknown**    | - Невозможно определить состояние ресурса; ни один job не обрабатывал данный ресурс. |
 
 </TabItem>
 
-<TabItem value="sources" label="Sources">
+<TabItem value="sources" label="Источники">
 
-The health state of a source is determined by the following criteria:
+Состояние здоровья source определяется следующими критериями:
 
-| **Health state** | **Criteria**   |
+| **Состояние здоровья** | **Критерии**   |
 |-------------------|---------------|
-| ✅ Healthy	| All of the following must be true: <br /><br />- Freshness check configured<br />- Freshness check passed<br />- Freshness check ran in the past 30 days<br />- Has a description |
-| 🟡 Caution	| One of the following must be true: <br /><br />- Freshness check returned a warning<br />- Freshness check not configured<br />- Freshness check not run in the past 30 days<br />- Missing a description |
-| 🔴 Degraded	| - Freshness check returned an error |
-| ⚪ Unknown	| Unable to determine health of resource; no job runs have processed the resource.     |
+| ✅ Healthy	| Все следующие условия должны быть выполнены: <br /><br />- Настроена проверка freshness<br />- Проверка freshness прошла успешно<br />- Проверка freshness выполнялась в течение последних 30 дней<br />- Есть описание |
+| 🟡 Caution	| Выполняется хотя бы одно из следующих условий: <br /><br />- Проверка freshness вернула предупреждение<br />- Проверка freshness не настроена<br />- Проверка freshness не выполнялась в течение последних 30 дней<br />- Отсутствует описание |
+| 🔴 Degraded	| - Проверка freshness вернула ошибку |
+| ⚪ Unknown	| Невозможно определить состояние ресурса; ни один job не обрабатывал данный ресурс.     |
 
 </TabItem>
 
-<TabItem value="exposures" label="Exposures">
+<TabItem value="exposures" label="Экспозиции">
 
-The health state of an exposure is determined by the following criteria:
+Состояние здоровья exposure определяется следующими критериями:
 
-| **Health state** | **Criteria**   |
+| **Состояние здоровья** | **Критерии**   |
 |-------------------|---------------|
-| ✅ Healthy	| All of the following must be true: <br /><br />- Underlying sources are fresh<br />- Underlying models built successfully<br />- Underlying models’ tests passing<br /><!-- - Freshness must be applicable <br /> - (TBD) Underlying models built in the last 30 days --> |
-| 🟡 Caution	| One of the following must be true: <br /><br />- At least one underlying source’s freshness checks returned a warning<br />- At least one underlying model was skipped<br />- At least one underlying model’s tests returned a warning<br /><!-- - (TBD) At least one model not built in the last 30 days --> |   
-| 🔴 Degraded	| One of the following must be true: <br /><br />- At least one underlying source’s freshness checks returned an error<br />- At least one underlying model did not build successfully<br />- At least one model’s tests returned an error |
+| ✅ Healthy	| Все следующие условия должны быть выполнены: <br /><br />- Базовые sources являются свежими<br />- Базовые models успешно собираются<br />- Тесты базовых models проходят успешно<br /><!-- - Freshness must be applicable <br /> - (TBD) Underlying models built in the last 30 days --> |
+| 🟡 Caution	| Выполняется хотя бы одно из следующих условий: <br /><br />- Проверки freshness хотя бы одного базового source вернули предупреждение<br />- Хотя бы одна базовая model была пропущена<br />- Тесты хотя бы одной базовой model вернули предупреждение<br /><!-- - (TBD) At least one model not built in the last 30 days --> |   
+| 🔴 Degraded	| Выполняется хотя бы одно из следующих условий: <br /><br />- Проверки freshness хотя бы одного базового source вернули ошибку<br />- Хотя бы одна базовая model не собралась успешно<br />- Тесты хотя бы одной model вернули ошибку |
 
 </TabItem>
 
-<!-- TODO: Add source collection health once META-3973/3971 are completed 
-<TabItem value="source-collection" label="Source collection health">
+<!-- TODO: Добавить здоровье source collection, когда будут завершены META-3973/3971 
+<TabItem value="source-collection" label="Здоровье source collection">
 
-The health state of a source collection is determined by the following criteria:
+Состояние здоровья source collection определяется следующими критериями:
 
-Functions as an aggregate of underlying sources
+Работает как агрегат по базовым sources
 
-| **Health state** | **Criteria**   |
+| **Состояние здоровья** | **Критерии**   |
 |-------------------|---------------|
-| ✅ Healthy	| - All underlying sources have freshness checks configured OR<br />- All passed their freshness checks OR<br />- All freshness checks ran in the past 30 days OR<br /> - All sources have a description |
-| 🟡 Caution	| - One or more sources lack freshness checks OR<br />- One or more freshness checks returned a warning OR<br />- One or more freshness checks not run in the past 30 days OR<br />- One or more sources missing a description |
-| 🔴 Degraded	| - One or more underlying sources’ freshness checks returned error |
+| ✅ Healthy	| - Для всех базовых sources настроены проверки freshness ИЛИ<br />- Все прошли проверки freshness ИЛИ<br />- Все проверки freshness выполнялись за последние 30 дней ИЛИ<br /> - У всех sources есть описание |
+| 🟡 Caution	| - У одного или нескольких sources нет проверок freshness ИЛИ<br />- Одна или несколько проверок freshness вернули предупреждение ИЛИ<br />- Одна или несколько проверок freshness не выполнялись за последние 30 дней ИЛИ<br />- У одного или нескольких sources отсутствует описание |
+| 🔴 Degraded	| - Проверки freshness у одного или нескольких базовых sources вернули ошибку |
 
 </TabItem>
 -->

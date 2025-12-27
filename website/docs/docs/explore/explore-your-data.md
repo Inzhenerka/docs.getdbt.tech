@@ -1,39 +1,39 @@
 ---
-title: "Explore your data"
+title: "Исследуйте ваши данные"
 id: "explore-your-data"
-sidebar_label: "Explore your data"
-description: "Explore your data, models, and other resources in dbt"
+sidebar_label: "Исследуйте ваши данные"
+description: "Исследуйте ваши данные, модели и другие ресурсы в dbt"
 hide_table_of_contents: true
 ---
 
-<Constant name="cloud" /> provides a variety of tools for you to explore your data, models, and other resources. Many of the features you'd traditionally use your data warehouse services to explore are at your fingertips in your <Constant name="cloud" /> account.
+<Constant name="cloud" /> предоставляет набор инструментов для исследования ваших данных, моделей и других ресурсов. Многие возможности, которые вы традиционно использовали бы через сервисы вашего хранилища данных для анализа и изучения данных, доступны прямо в вашем аккаунте <Constant name="cloud" />.
 
 <div className="grid--3-col">
 
 <Card
     title="dbt Catalog"
-    body="Interact with dbt Catalog to understand, improve, and leverage your dbt projects."
+    body="Взаимодействуйте с dbt Catalog, чтобы понимать, улучшать и эффективно использовать ваши dbt‑проекты."
     link="/docs/explore/explore-projects"
     icon="dbt-bit"/>
 
 <Card
     title="dbt Insights"
-    body="Query data and perform exploratory data analysis using dbt Insights"
+    body="Выполняйте запросы к данным и проводите исследовательский анализ данных с помощью dbt Insights."
     link="/docs/explore/dbt-insights"
     icon="dbt-bit"/>
 
 <Card
     title="Documentation"
-    body="Document your dbt projects so stakeholders, engineers, and analysts can understand your resources and lineage from start to finish."
+    body="Документируйте ваши dbt‑проекты, чтобы стейкхолдеры, инженеры и аналитики могли понять ваши ресурсы и их lineage от начала до конца."
     link="/docs/explore/build-and-view-your-docs"
     icon="dbt-bit"/>
 
 </div> <br />
 
-Some features are only available on [selected plans](https://www.getdbt.com/pricing/).
+Некоторые возможности доступны только в рамках [определённых тарифных планов](https://www.getdbt.com/pricing/).
 
-## Related docs
+## Связанные материалы
 
-- [<Constant name="cloud" /> plans and pricing](https://www.getdbt.com/pricing/)
-- [Quickstart guides](/docs/get-started-dbt)
-- [Reference material](/reference/references-overview)
+- [Тарифные планы и цены <Constant name="cloud" />](https://www.getdbt.com/pricing/)
+- [Руководства по быстрому старту](/docs/get-started-dbt)
+- [Справочные материалы](/reference/references-overview)

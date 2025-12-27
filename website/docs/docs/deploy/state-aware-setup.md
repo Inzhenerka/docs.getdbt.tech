@@ -1,16 +1,16 @@
 ---
-title: "Setting up state-aware orchestration"
-sidebar_label: "Setting up state-aware"
-description: "Set up state-aware orchestration to automatically determine which models to build by detecting changes in code or data every time a job runs." 
+title: "Настройка оркестрации по состоянию"
+sidebar_label: "Настройка оркестрации по состоянию"
+description: "Настройте state-aware orchestration, чтобы автоматически определять, какие модели нужно собирать, обнаруживая изменения в коде или данных при каждом запуске job."
 id: "state-aware-setup"
 tags: ['scheduler']
 ---
 
-# Setting up state-aware orchestration <Lifecycle status="private_preview,managed,managed_plus" />
+# Настройка оркестрации по состоянию <Lifecycle status="private_preview,managed,managed_plus" />
 
 <IntroText>
 
-Set up state-aware orchestration to automatically determine which models to build by detecting changes in code or data and only building the changed models each time a job is run.
+Настройте state-aware orchestration, чтобы автоматически определять, какие модели нужно собирать, обнаруживая изменения в коде или данных и собирая только изменившиеся модели при каждом запуске задания.
 
 </IntroText>
 
@@ -18,141 +18,141 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 <FusionLifecycle />
 
-## Prerequisites
+## Предварительные требования
 
-To use state-aware orchestration, make sure you meet these prerequisites:
+Чтобы использовать state-aware orchestration, убедитесь, что выполнены следующие требования:
 
-- You must have a <Constant name="cloud" /> [Enterprise and Enterprise+ accounts](https://www.getdbt.com/signup/) and a [Developer seat license](/docs/cloud/manage-access/seats-and-users).
-- You have updated the environment that will run state-aware orchestration to the dbt Fusion engine. For more information, refer to [Upgrading to dbt Fusion engine](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
-- You must have a dbt project connected to a [data platform](/docs/cloud/connect-data-platform/about-connections).
-- You must have [access permission](/docs/cloud/manage-access/about-user-access) to view, create, modify, or run jobs.
-- You must set up a [deployment environment](/docs/deploy/deploy-environments) that is production or staging only. 
-- (Optional) To customize behavior, you have configured your model or source data with [advanced configurations](#advanced-configurations).
+- У вас есть аккаунт <Constant name="cloud" /> уровня [Enterprise или Enterprise+](https://www.getdbt.com/signup/) и [лицензия Developer seat](/docs/cloud/manage-access/seats-and-users).
+- Среда, в которой будет запускаться state-aware orchestration, обновлена до движка dbt Fusion. Подробнее см. [Upgrading to dbt Fusion engine](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
+- У вас есть dbt‑проект, подключенный к [платформе данных](/docs/cloud/connect-data-platform/about-connections).
+- У вас есть [права доступа](/docs/cloud/manage-access/about-user-access) для просмотра, создания, изменения или запуска заданий.
+- У вас настроена [deployment environment](/docs/deploy/deploy-environments) типа production или staging.
+- (Необязательно) Для кастомизации поведения вы настроили модели или исходные данные с помощью [advanced configurations](#advanced-configurations).
 
 :::info
 
-State-aware orchestration is available for SQL models only. Python models are not supported.
+State-aware orchestration доступна только для SQL‑моделей. Python‑модели не поддерживаются.
 
 :::
 
-## Default settings
+## Настройки по умолчанию
 
-By default, for an Enterprise-tier account upgraded to the dbt Fusion engine, any newly created job will automatically be state-aware. Out of the box, without custom configurations, when you run a job, the job will only build models when either the code has changed, or there’s any new data in a source.
+По умолчанию, для аккаунта уровня Enterprise, обновлённого до движка dbt Fusion, любое вновь созданное задание автоматически является state-aware. «Из коробки», без пользовательских настроек, при запуске задания будут собираться только те модели, в которых изменился код или появились новые данные в источниках.
 
-## Create a job
+## Создание задания
 
-:::info New jobs are state-aware by default
-For existing jobs, make them state-aware by selecting **Enable Fusion cost optimization features** in the **Job settings** page.
+:::info Новые задания являются state-aware по умолчанию
+Для существующих заданий включите state-aware orchestration, выбрав **Enable Fusion cost optimization features** на странице **Job settings**.
 :::
 
-To create a state-aware job:
+Чтобы создать state-aware задание:
 
-1. From your deployment environment page, click **Create job** and select **Deploy job**.
-2. Options in the **Job settings** section:
-    - **Job name**: Specify the name, for example, `Daily build`.
-    - (Optional) **Description**: Provide a description of what the job does (for example, what the job consumes and what the job produces). 
-    - **Environment**: By default, it’s set to the deployment environment you created the state-aware job from.
-3. Options in the **Execution settings** and **Triggers** sections:
+1. На странице deployment environment нажмите **Create job** и выберите **Deploy job**.
+2. Параметры в разделе **Job settings**:
+    - **Job name**: Укажите имя, например `Daily build`.
+    - (Необязательно) **Description**: Опишите, что делает задание (например, какие данные оно использует и что создаёт).
+    - **Environment**: По умолчанию установлена та deployment environment, из которой вы создаёте задание.
+3. Параметры в разделах **Execution settings** и **Triggers**:
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Example of Triggers on the Deploy Job page"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Пример Triggers на странице Deploy Job"/>
 
-- **Execution settings** section:
-     - **Commands**: By default, it includes the `dbt build` command. Click **Add command** to add more [commands](/docs/deploy/job-commands) that you want to be invoked when the job runs.
-     - **Generate docs on run**: Enable this option if you want to [generate project docs](/docs/build/documentation) when this deploy job runs.
-     - **Enable Fusion cost optimization features**: Select this option to enable **State-aware orchestration**. **Efficient testing** is disabled by default. You can expand **More options** to enable or disable individual settings. 
-- **Triggers** section:
-    - **Run on schedule**: Run the deploy job on a set schedule.
-      - **Timing**: Specify whether to [schedule](#schedule-days) the deploy job using **Intervals** that run the job every specified number of hours, **Specific hours** that run the job at specific times of day, or **Cron schedule** that run the job specified using [cron syntax](#cron-schedule).
-      - **Days of the week**: By default, it’s set to every day when **Intervals** or **Specific hours** is chosen for **Timing**.
-    - **Run when another job finishes**: Run the deploy job when another _upstream_ deploy [job completes](#trigger-on-job-completion).  
-        - **Project**: Specify the parent project that has that upstream deploy job. 
-        - **Job**: Specify the upstream deploy job. 
-        - **Completes on**: Select the job run status(es) that will [enqueue](/docs/deploy/job-scheduler#scheduler-queue) the deploy job.  
+- Раздел **Execution settings**:
+     - **Commands**: По умолчанию включает команду `dbt build`. Нажмите **Add command**, чтобы добавить другие [команды](/docs/deploy/job-commands), которые должны выполняться при запуске задания.
+     - **Generate docs on run**: Включите, если хотите [генерировать документацию проекта](/docs/build/documentation) при запуске этого deploy‑задания.
+     - **Enable Fusion cost optimization features**: Выберите этот пункт, чтобы включить **State-aware orchestration**. **Efficient testing** по умолчанию отключён. В разделе **More options** можно включать или отключать отдельные настройки.
+- Раздел **Triggers**:
+    - **Run on schedule**: Запускать deploy‑задание по расписанию.
+      - **Timing**: Укажите, как именно планировать запуск: **Intervals** (каждые N часов), **Specific hours** (в определённые часы суток) или **Cron schedule** (по расписанию в формате [cron](#cron-schedule)).
+      - **Days of the week**: По умолчанию — каждый день, если выбран **Intervals** или **Specific hours**.
+    - **Run when another job finishes**: Запускать deploy‑задание, когда завершается другое _upstream_ deploy‑[задание](#trigger-on-job-completion).
+        - **Project**: Укажите родительский проект, в котором находится upstream deploy‑задание.
+        - **Job**: Укажите upstream deploy‑задание.
+        - **Completes on**: Выберите статусы выполнения, при которых deploy‑задание будет поставлено в очередь ([enqueue](/docs/deploy/job-scheduler#scheduler-queue)).
 
-6. (Optional) Options in the **Advanced settings** section: 
-    - **Environment variables**: Define [environment variables](/docs/build/environment-variables) to customize the behavior of your project when the deploy job runs.
-    - **Target name**: Define the [target name](/docs/build/custom-target-names) to customize the behavior of your project when the deploy job runs. Environment variables and target names are often used interchangeably. 
-    - **Run timeout**: Cancel the deploy job if the run time exceeds the timeout value. 
-    - **Compare changes against**: By default, it’s set to **No deferral**. Select either **Environment** or **This Job** to let <Constant name="cloud" /> know what it should compare the changes against. 
+6. (Необязательно) Параметры в разделе **Advanced settings**:
+    - **Environment variables**: Определите [переменные окружения](/docs/build/environment-variables), чтобы настроить поведение проекта при запуске deploy‑задания.
+    - **Target name**: Определите [target name](/docs/build/custom-target-names) для настройки поведения проекта при запуске. Переменные окружения и target name часто используются взаимозаменяемо.
+    - **Run timeout**: Отменить deploy‑задание, если время выполнения превысит заданный лимит.
+    - **Compare changes against**: По умолчанию установлено **No deferral**. Выберите **Environment** или **This Job**, чтобы указать <Constant name="cloud" />, с чем сравнивать изменения.
 
-7. Click **Save**. 
+7. Нажмите **Save**.
 
-You can see which models dbt builds in the run summary logs. Models that weren't rebuilt during the run are tagged as **Reused** with context about why dbt skipped rebuilding them (and saving you unnecessary compute!). You can also see the reused models under the **Reused** tab.
+В логах сводки запуска вы можете увидеть, какие модели dbt собирал. Модели, которые не были пересобраны, помечаются как **Reused** с пояснением, почему dbt пропустил их пересборку (и тем самым сэкономил вычислительные ресурсы). Также переиспользованные модели отображаются во вкладке **Reused**.
 
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/SAO_logs_view.png" width="90%" title="Пример логов для state-aware orchestration"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/SAO_logs_view.png" width="90%" title="Example logs for state-aware orchestration"/>
-
-## Delete a job
+## Удаление job
 
 import DeleteJob from '/snippets/_delete-job.md';
 
 <DeleteJob/>
 
-## Advanced configurations
+## Расширенные конфигурации
 
-By default, we use the warehouse metadata to check if sources (or upstream models in the case of Mesh) are fresh. For more advanced use cases, dbt provides other options that enable you to specify what gets run by state-aware orchestration. 
+По умолчанию dbt использует метаданные хранилища данных, чтобы проверять свежесть источников (или upstream‑моделей в случае Mesh). Для более сложных сценариев dbt предоставляет дополнительные возможности, позволяющие точно указать, что именно должно запускаться в рамках state-aware orchestration.
 
-You can customize with:
-- `loaded_at_field`: Specify a specific column to use from the data.
+Вы можете настроить следующее:
+- `loaded_at_field`: указать конкретный столбец в данных, который следует использовать.
+- `loaded_at_query`: определить пользовательское SQL‑условие свежести, например, для частичных загрузок или потоковых данных.
 
-- `loaded_at_query`: Define a custom freshness condition in SQL to account for partial loading or streaming data.
-
-If a source is a view in the data warehouse, dbt can’t track updates from the warehouse metadata when the view changes. Without a `loaded_at_field` or `loaded_at_query`, dbt treats the source as "always fresh” and emits a warning during freshness checks. To check freshness for sources that are views, add a `loaded_at_field` or `loaded_at_query` to your configuration.
+Если источник является представлением (view) в хранилище данных, dbt не может отслеживать его обновления через метаданные хранилища при изменении представления. Без `loaded_at_field` или `loaded_at_query` dbt считает такой источник «всегда свежим» и выдаёт предупреждение при проверке свежести. Чтобы проверять свежесть источников‑представлений, добавьте `loaded_at_field` или `loaded_at_query` в конфигурацию.
 
 :::note 
-You can either define `loaded_at_field` or `loaded_at_query` but not both.
+Можно определить либо `loaded_at_field`, либо `loaded_at_query`, но не оба одновременно.
 :::
-You can also customize with:
-- `updates_on`: Change the default from `any` to `all` so it doesn’t build unless all upstreams have fresh data reducing compute even more.
-- `build_after`: Don’t build a model more often than every x period to reduce build frequency when you need data less often than sources are fresh.
 
+Также можно настроить:
+- `updates_on`: изменить значение по умолчанию с `any` на `all`, чтобы модель не собиралась, пока все upstream‑зависимости не будут свежими, что ещё сильнее снижает вычислительные затраты.
+- `build_after`: ограничить частоту сборки модели — не чаще, чем раз в указанный период, если данные нужны реже, чем обновляются источники.
 
-To learn more about model freshness and build after, refer to [model `freshness` config](/reference/resource-configs/freshness). To learn more about source and upstream model freshness configs, refer to [resource `freshness` config](/reference/resource-properties/freshness).
+Подробнее о свежести моделей и `build_after` см. [model `freshness` config](/reference/resource-configs/freshness). О настройках свежести источников и upstream‑моделей см. [resource `freshness` config](/reference/resource-properties/freshness).
 
-## Customizing behavior
+## Кастомизация поведения
 
-You can optionally configure state-aware orchestration when you want to fine-tune orchestration behavior for these reasons:
+При необходимости вы можете дополнительно настроить state-aware orchestration, чтобы более точно управлять поведением оркестрации:
 
-- **Defining source freshness:**
+- **Определение свежести источников**
 
-  By default, dbt uses metadata from the data warehouse. You can instead:
-  * Specify a custom column and dbt will go to that column in the table instead
-  * Specify a custom SQL statement to define what freshness means
+  По умолчанию dbt использует метаданные хранилища данных. Вместо этого вы можете:
+  * Указать пользовательский столбец, и dbt будет ориентироваться на него
+  * Задать пользовательский SQL‑запрос, определяющий, что считается свежими данными
 
-  Not all source freshness is equal — especially with partial ingestion pipelines. You may want to delay a model build until your sources have received a larger volume of data or until a specific time window has passed.
+  Свежесть источников может существенно различаться — особенно при частичных пайплайнах загрузки. Возможно, вам нужно отложить сборку модели до тех пор, пока в источники не поступит больший объём данных или пока не пройдёт определённое время.
 
-  You can define what "fresh" means on a source-by-source basis using a custom freshness query. This lets you:
-  - Add a time difference to account for late-arriving data
-  - Delay freshness detection until a threshold is reached (for example, number of records or hours of data)
+  Вы можете определить понятие «свежести» отдельно для каждого источника с помощью пользовательского запроса, что позволяет:
+  - Учитывать задержки поступления данных
+  - Откладывать определение свежести до достижения порога (например, по количеству записей или часов данных)
 
-- **Reducing model build frequency**
+- **Снижение частоты сборки моделей**
 
-  Some models don’t need to be rebuilt every time their source data is updated. To control this:
-  - Set a refresh interval on models, folders, or the project to define how often they should be rebuilt at most
-  - This helps avoid overbuilding and reduces costs by only running what's really needed
+  Некоторым моделям не требуется пересборка при каждом обновлении источников. Для этого можно:
+  - Задать интервал обновления для моделей, папок или всего проекта
+  - Избежать избыточных сборок и снизить затраты, запуская только действительно нужные процессы
 
-- **Changing the default from `any` to `all`**
+- **Изменение поведения с `any` на `all`**
 
-  Based on what a model depends on upstream, you may want to wait until all upstream models have been refreshed rather than going as soon as there is any new data.
-  - Change what orchestration waits on from any to all for models, folders, or the project to wait until all upstream models have new data
-  - This helps avoid overbuilding and reduces costs by building models once everything has been refreshed
+  В зависимости от upstream‑зависимостей модели может быть предпочтительно дождаться обновления всех upstream‑моделей, а не начинать сборку при появлении любых новых данных.
+  - Измените ожидание оркестрации с `any` на `all` для моделей, папок или всего проекта
+  - Это помогает избежать лишних сборок и снижает затраты
 
-  To configure and customize behavior, you can do so in the following places using the `build_after` config:
-  - `dbt_project.yml` at the project level in YAML
-  - `model/properties.yml` at the model level in YAML
-  - `model/model.sql` at the model level in SQL
-These configurations are powerful because you can define a sensible default at the project level or for specific model folders, and override it for individual models or model groups that require more frequent updates.
-## Example
+  Настройки с использованием `build_after` можно задавать в следующих местах:
+  - `dbt_project.yml` — на уровне проекта (YAML)
+  - `model/properties.yml` — на уровне модели (YAML)
+  - `model/model.sql` — на уровне модели (SQL)
 
-Let's use an example to illustrate how to customize our project so a model and its parent model are rebuilt only if they haven't been refreshed in the past 4 hours &mdash; even if a job runs more frequently than that.
+Эти настройки удобны тем, что позволяют задать разумное значение по умолчанию для проекта или папок моделей и при необходимости переопределить его для отдельных моделей или групп.
 
-A Jaffle shop has recently expanded globally and wanted to make savings. To reduce spend, they found out about <Constant name="cloud" />'s state-aware orchestration and want to rebuild models only when needed. Maggie &mdash; the analytics engineer &mdash; wants to configure her dbt `jaffle_shop` project to only rebuild certain models if they haven't been refreshed in the last 4 hours, even if a job runs more often than that. 
+## Пример
 
-To do this, she uses the model `freshness` config. This config helps state-aware orchestration decide _when_ a model should be rebuilt. 
+Рассмотрим пример, показывающий, как настроить проект так, чтобы модель и её родительская модель пересобирались только в том случае, если они не обновлялись в течение последних 4 часов — даже если задание запускается чаще.
 
-Note that for every `freshness` config, you're required to set values for both `count` and `period`. This applies to all `freshness` types: `freshness.warn_after`, `freshness.error_after`, and `freshness.build_after`.
+Магазин Jaffle недавно расширился на глобальный рынок и решил сократить расходы. Чтобы снизить затраты, команда узнала о state-aware orchestration в <Constant name="cloud" /> и решила пересобирать модели только при необходимости. Maggie — analytics engineer — хочет настроить dbt‑проект `jaffle_shop` так, чтобы определённые модели пересобирались только если они не обновлялись последние 4 часа, даже если задание запускается чаще.
 
-Refer to the following examples for using the `freshness` config in the model file, in the project YAML file, and in the config block of the `model.sql` file:
+Для этого она использует конфигурацию `freshness` у модели. Эта настройка помогает state-aware orchestration определить, _когда_ модель должна быть пересобрана.
+
+Обратите внимание: для каждой настройки `freshness` необходимо указать оба значения — `count` и `period`. Это относится ко всем типам `freshness`: `freshness.warn_after`, `freshness.error_after` и `freshness.build_after`.
+
+Ниже приведены примеры использования `freshness` в файле модели, в YAML‑файле проекта и в блоке `config` внутри `model.sql`:
 
 <Tabs>
 <TabItem value="project" label="Model YAML">
@@ -165,9 +165,9 @@ models:
     config:
       freshness: 
         build_after:
-          count: 4         # how long to wait before rebuilding
-          period: hour     # unit of time
-          updates_on: all  # only rebuild if all upstream dependencies have new data
+          count: 4         # сколько ждать перед пересборкой
+          period: hour     # единица времени
+          updates_on: all  # пересобирать только если у всех upstream-зависимостей есть новые данные
   - name: dim_worlds
     config:
       freshness:
@@ -217,14 +217,14 @@ models:
 </TabItem>
 </Tabs>
 
-With this config, dbt:
+С такой конфигурацией dbt:
 
-- Checks if there's new data in the upstream sources
-- Checks when `dim_wizards` and `dim_worlds` were last built
+- Проверяет наличие новых данных в upstream‑источниках
+- Проверяет, когда `dim_wizards` и `dim_worlds` собирались в последний раз
 
-If any new data is available _and_ at least 4 hours have passed, <Constant name="cloud" /> rebuilds the models.
+Если есть новые данные _и_ прошло не менее 4 часов, <Constant name="cloud" /> пересобирает модели.
 
-You can override freshness rules set at higher levels in your dbt project. For example, in the project YAML file, you set:
+Вы можете переопределять правила свежести, заданные на более высоком уровне проекта. Например, если в YAML‑файле проекта указано:
 
 <File name="dbt_project.yml">
 ```yml
@@ -241,7 +241,7 @@ models:
 ```
 </File>
 
-This configuration means that every model in the project has a `build_after` of 4 hours. To change this for specific models or groups of models, you could set:
+Это означает, что для каждой модели в проекте установлен `build_after` равный 4 часам. Чтобы изменить это для отдельных моделей или групп, можно задать:
 
 <File name="dbt_project.yml">
 ```yml
@@ -258,13 +258,13 @@ models:
 ```
 </File>
 
-If you want to exclude a model from the freshness rule set at a higher level, set `freshness: null` for that model. With freshness disabled, state-aware orchestration falls back to its default behavior and builds the model whenever there’s an upstream code or data change.
+Если вы хотите исключить модель из правила свежести, заданного на более высоком уровне, установите `freshness: null` для этой модели. При отключённой свежести state-aware orchestration возвращается к поведению по умолчанию и собирает модель при любом изменении кода или данных upstream.
 
-### Differences between `all` and `any`
+### Различия между `all` и `any`
 
-- Since Maggie configured `updates_on: all`, this means _both_ models must have new upstream data to trigger a rebuild. If only one model has fresh data and the other doesn't, nothing is built -- which will massively reduce unnecessary compute costs and save time.
+- Так как Maggie настроила `updates_on: all`, это означает, что _обе_ модели должны иметь новые upstream‑данные, чтобы запустить пересборку. Если свежие данные есть только у одной модели, сборка не произойдёт — что значительно снижает вычислительные затраты и экономит время.
 
-- If Maggie wanted these models to rebuild more often (for example, if _any_ upstream source has new data), she would then use `updates_on: any` instead:
+- Если бы Maggie хотела пересобирать модели чаще (например, когда _любой_ upstream‑источник обновился), она могла бы использовать `updates_on: any`:
 
 <File name="models/model.yml">
 
@@ -277,23 +277,23 @@ If you want to exclude a model from the freshness rule set at a higher level, se
 ```
 </File>
 
-This way, if either `dim_wizards` or `dim_worlds` has fresh upstream data and enough time passed, dbt rebuilds the models. This method helps when the need for fresher data outweighs the costs.
+В этом случае, если у `dim_wizards` или `dim_worlds` появятся свежие upstream‑данные и пройдёт достаточно времени, dbt пересоберёт модели. Такой подход полезен, когда актуальность данных важнее стоимости вычислений.
 
-## Limitation
+## Ограничения
 
-The following section lists considerations when using state-aware-orchestration:
+Ниже перечислены ограничения и особенности использования state-aware orchestration:
 
-### Deleted tables
+### Удалённые таблицы
 
-If a table was deleted in the warehouse, and neither the model’s code nor the data it depends on has changed, state-aware orchestration does not detect a change and will not rebuild the table. This is because dbt decides what to build based on code and data changes, not by checking whether every table still exists. To build the table, you have the following options:
+Если таблица была удалена в хранилище данных, а код модели и данные, от которых она зависит, не изменились, state-aware orchestration не обнаружит изменений и не пересоберёт таблицу. Это связано с тем, что dbt определяет, что нужно собирать, на основе изменений кода и данных, а не проверяет существование каждой таблицы. Чтобы пересобрать таблицу, можно:
 
-- **Clear cache and rebuild**: Go to **Orchestration** > **Environments** and click **Clear cache**. The next run will rebuild all models from a clean state.
+- **Clear cache and rebuild**: Перейдите в **Orchestration** > **Environments** и нажмите **Clear cache**. Следующий запуск пересоберёт все модели с чистого состояния.
 
-- **Temporarily disable state-aware orchestration**: Go to **Orchestration** > **Jobs**. Select your job and click **Edit**. Under **Enable Fusion cost optimization features**, disable **State-aware orchestration** and click **Save**. Run the job to force a full build, then re‑enable the feature after the run.
+- **Temporarily disable state-aware orchestration**: Перейдите в **Orchestration** > **Jobs**, выберите задание и нажмите **Edit**. В разделе **Enable Fusion cost optimization features** отключите **State-aware orchestration** и нажмите **Save**. Запустите задание для полной сборки, затем снова включите эту функцию.
 
-## Related docs
+## Связанные материалы
 
-- [State-aware orchestration configuration](/docs/deploy/state-aware-about)
-- [Artifacts](/docs/deploy/artifacts)
-- [Continuous integration (CI) jobs](/docs/deploy/ci-jobs)
+- [Конфигурация state-aware orchestration](/docs/deploy/state-aware-about)
+- [Артефакты](/docs/deploy/artifacts)
+- [Jobs непрерывной интеграции (CI)](/docs/deploy/ci-jobs)
 - [`freshness`](/reference/resource-configs/freshness)

@@ -1,51 +1,51 @@
 ---
-title: "Access the dbt Insights interface"
-description: "Learn how to access the dbt Insights interface and run queries"
-sidebar_label: "Access and run queries"
+title: "Доступ к интерфейсу dbt Insights"
+description: "Узнайте, как получить доступ к интерфейсу dbt Insights и запускать запросы"
+sidebar_label: "Доступ и запуск запросов"
 tags: [dbt Insights]
 image: /img/docs/dbt-insights/insights-chart.jpg
 ---
 
-# Access the dbt Insights interface <Lifecycle status="managed,managed_plus" />
+# Доступ к интерфейсу dbt Insights <Lifecycle status="managed,managed_plus" />
 
 <IntroText>
-Learn how to access <Constant name="query_page" />, run queries, and view results.
+Узнайте, как получить доступ к <Constant name="query_page" />, запускать запросы и просматривать результаты.
 </IntroText>
 
-<Constant name="query_page" /> provides a rich console experience with editor navigation. You can expect <Constant name="query_page" /> to:
-- Enable you to write SQL queries, with the option to open multiple tabs 
-- Have SQL + dbt autocomplete suggestions and syntax highlighting
-- Save SQL queries
-- View the results of the query and its details using the **Data** or **Details** tabs
-- Create a visualization of your query results using the **Chart** tab
-- View the history of queries and their statuses (like Success, Error, Pending) using the **Query history** tab
-- Use <Constant name="copilot" /> to generate or edit SQL queries using natural language prompts
-- Integrate with [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/explore/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), and [<Constant name="visual_editor" />](/docs/cloud/canvas) to provide a seamless experience for data exploration, AI-assisted writing, and collaboration
+<Constant name="query_page" /> предоставляет полноценный консольный интерфейс с удобной навигацией в редакторе. Вы можете ожидать, что <Constant name="query_page" /> позволит:
+- Писать SQL‑запросы с возможностью открывать несколько вкладок  
+- Использовать автодополнение SQL + dbt и подсветку синтаксиса  
+- Сохранять SQL‑запросы  
+- Просматривать результаты запроса и его детали во вкладках **Data** и **Details**  
+- Создавать визуализации результатов запроса во вкладке **Chart**  
+- Просматривать историю запросов и их статусы (например, Success, Error, Pending) во вкладке **Query history**  
+- Использовать <Constant name="copilot" /> для генерации или редактирования SQL‑запросов с помощью подсказок на естественном языке  
+- Интегрироваться с [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/explore/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [<Constant name="visual_editor" />](/docs/cloud/canvas), обеспечивая единый опыт исследования данных, написания SQL с поддержкой ИИ и совместной работы
 
-## Access the dbt Insights interface
+## Доступ к интерфейсу dbt Insights
 
-Before accessing <Constant name="query_page" />, ensure that the [prerequisites](/docs/explore/dbt-insights#prerequisites) are met.
+Перед тем как получить доступ к <Constant name="query_page" />, убедитесь, что выполнены [предварительные требования](/docs/explore/dbt-insights#prerequisites).
 
-1. To access <Constant name="query_page" />, select the **Insights** option in the navigation sidebar.
-2. If your [developer credentials](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) aren’t set up, <Constant name="query_page" /> will prompt you to set them up. The ability to query data is subject to warehouse provider permissions according to your developer credentials.
-3. Once your credentials are set up, you can write, run, and edit SQL queries in the <Constant name="query_page" /> editor for existing models in your project. 
+1. Чтобы открыть <Constant name="query_page" />, выберите пункт **Insights** в боковой панели навигации.
+2. Если ваши [developer credentials](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) ещё не настроены, <Constant name="query_page" /> предложит настроить их. Возможность выполнять запросы к данным зависит от разрешений провайдера хранилища данных и ваших developer credentials.
+3. После настройки учётных данных вы сможете писать, запускать и редактировать SQL‑запросы в редакторе <Constant name="query_page" /> для существующих моделей в вашем проекте.
 
-## Run queries
+## Запуск запросов
 
-To run queries in <Constant name="query_page" />, you can use:
-- Standard SQL  
-- Jinja ([`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) functions, and other Jinja functions)
-- Links from SQL code `ref` to the corresponding Explorer page
-- <Term id="cte">CTEs</Term> and <Term id="subquery">subqueries</Term>  
-- Basic aggregations and joins 
-- <Constant name="semantic_layer" /> queries using <Constant name="semantic_layer" /> Jinja functions
+Для запуска запросов в <Constant name="query_page" /> можно использовать:
+- Стандартный SQL  
+- Jinja (функции [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и другие Jinja‑функции)
+- Ссылки из SQL‑кода `ref` на соответствующие страницы в Explorer  
+- <Term id="cte">CTE</Term> и <Term id="subquery">подзапросы</Term>  
+- Базовые агрегации и join‑ы  
+- Запросы <Constant name="semantic_layer" /> с использованием Jinja‑функций <Constant name="semantic_layer" />
 
-## Example
+## Пример
 
-Let's use an example to illustrate how to run queries in <Constant name="query_page" />:
+Рассмотрим пример, который показывает, как запускать запросы в <Constant name="query_page" />:
 
-- A [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) location wants to count unique orders and unique customers to understand whether they can expand their awesome Jaffle shop business to other parts of the world.
-- To express this logic in SQL, you (an analyst assigned to this project) want to understand yearly trends to help guide expansion decisions. Write the following SQL query to calculate the number of unique customers, cities, and total order revenue: <br /><br />
+- Один из магазинов [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) хочет посчитать количество уникальных заказов и уникальных клиентов, чтобы понять, можно ли расширить бизнес в других регионах мира.
+- Чтобы выразить эту логику в SQL, вы (аналитик, назначенный на этот проект) хотите проанализировать годовые тренды, которые помогут принять решение о расширении. Напишите следующий SQL‑запрос, чтобы вычислить количество уникальных клиентов, городов и общий доход от заказов: <br /><br />
     ```sql
     with 
 
@@ -69,115 +69,117 @@ Let's use an example to illustrate how to run queries in <Constant name="query_p
     order by 1
     ```
 
-### Use dbt Copilot 
-To make things easier, [use <Constant name="copilot" />](/docs/cloud/use-dbt-copilot#build-queries) to save time and explore other ways to analyze the data. <Constant name="copilot" /> can help you quickly update the query or generate a new one based on your prompt.
+### Использование dbt Copilot
 
-1. Click the **<Constant name="copilot" />** icon in the Query console sidebar to open the prompt box.  
-2. Enter your prompt in natural language and ask for a yearly breakdown of unique customers and total revenue. Then click **Submit**.
-3. <Constant name="copilot" /> responds with:
-   - A summary of the query
-   - An explanation of the logic
-   - The SQL it generated
-   - Options to **Add** or **Replace** the existing query with the generated SQL
-4. Review the output and click **Replace** to use the <Constant name="copilot" />-generated SQL in your editor.
-5. Then, click **Run** to preview the results.
+Чтобы упростить работу, [используйте <Constant name="copilot" />](/docs/cloud/use-dbt-copilot#build-queries) — это поможет сэкономить время и изучить другие способы анализа данных. <Constant name="copilot" /> может быстро обновить существующий запрос или сгенерировать новый на основе вашего запроса.
 
-<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="95%" title="dbt Insights with dbt Copilot" />
+1. Нажмите на иконку **<Constant name="copilot" />** в боковой панели Query console, чтобы открыть окно ввода запроса.  
+2. Введите подсказку на естественном языке с просьбой показать годовую разбивку по уникальным клиентам и общему доходу, затем нажмите **Submit**.
+3. <Constant name="copilot" /> вернёт:
+   - Краткое описание запроса  
+   - Объяснение логики  
+   - Сгенерированный SQL  
+   - Опции **Add** или **Replace** для добавления или замены текущего запроса
+4. Просмотрите результат и нажмите **Replace**, чтобы использовать SQL, сгенерированный <Constant name="copilot" />, в редакторе.
+5. Затем нажмите **Run**, чтобы предварительно посмотреть результаты.
 
-From here, you can:
-- Continue building or modifying the query using <Constant name="copilot" />
-- Explore the [results](#view-results) in the **Data** tab
-- [View metadata and query details](#view-details) in the **Details** tab
-- [Visualize results](#chart-results) in the **Chart** tab
-- Check the [**Query history**](#query-history) for status and past runs
-- Use [**<Constant name="explorer" />**](#use-dbt-explorer) to explore model lineage and context
-- If you want to save the query, you can click **Save Insight** in the [query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to save it for future reference.
+<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="95%" title="dbt Insights с dbt Copilot" />
 
-:::tip Want to turn a query into a model?
-You can access the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) or [<Constant name="visual_editor" />](/docs/cloud/canvas) from the [Query console menu](/docs/explore/navigate-dbt-insights#query-console-menu) to promote your SQL into a reusable dbt model &mdash; all within <Constant name="cloud" />!
+После этого вы можете:
+- Продолжить создание или изменение запроса с помощью <Constant name="copilot" />
+- Изучить [результаты](#view-results) во вкладке **Data**
+- [Просмотреть метаданные и детали запроса](#view-details) во вкладке **Details**
+- [Визуализировать результаты](#chart-results) во вкладке **Chart**
+- Проверить [**Query history**](#query-history) для просмотра статусов и прошлых запусков
+- Использовать [**<Constant name="explorer" />**](#use-dbt-explorer) для изучения lineage и контекста моделей
+- Если вы хотите сохранить запрос, нажмите **Save Insight** в [меню Query console](/docs/explore/navigate-dbt-insights#query-console-menu), чтобы сохранить его для дальнейшего использования
+
+:::tip Хотите превратить запрос в модель?
+Вы можете открыть [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="visual_editor" />](/docs/cloud/canvas) из [меню Query console](/docs/explore/navigate-dbt-insights#query-console-menu), чтобы превратить SQL в переиспользуемую модель dbt — и всё это прямо в <Constant name="cloud" />!
 :::
 
-### View results
+### Просмотр результатов
 
-Using the same example, you can perform some exploratory data analysis by running the query and:
+Используя тот же пример, вы можете выполнить небольшой exploratory data analysis, запустив запрос и:
 
-- Viewing results in **Data** tab &mdash; View the paginated results of the query.
-- Sorting results &mdash; Click on the column header to sort the results by that column.
-- Exporting to CSV &mdash; On the top right of the table, click the download button to export the dataset.
-<Lightbox src="/img/docs/dbt-insights/insights-export-csv.png" width="95%" title="dbt Insights Export to CSV" />
+- Просмотреть результаты во вкладке **Data** — отображаются постраничные результаты запроса.
+- Отсортировать результаты — нажмите на заголовок столбца, чтобы отсортировать данные по нему.
+- Экспортировать в CSV — в правом верхнем углу таблицы нажмите кнопку загрузки, чтобы выгрузить датасет.
+<Lightbox src="/img/docs/dbt-insights/insights-export-csv.png" width="95%" title="Экспорт в CSV в dbt Insights" />
 
-### View details
-View the details of the query by clicking on the **Details** tab:
-- **Query metadata** &mdash; <Constant name="copilot" />-generated title and description, the supplied SQL, and corresponding compiled SQL.
-- **Connection details** &mdash; Relevant data platform connection information.
-- **Query details** &mdash; Query duration, status, column count, row count.
+### Просмотр деталей
 
-<Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="dbt Insights Details tab" />
+Откройте вкладку **Details**, чтобы посмотреть детали запроса:
+- **Query metadata** — заголовок и описание, сгенерированные <Constant name="copilot" />, исходный SQL и соответствующий скомпилированный SQL.
+- **Connection details** — информация о подключении к платформе данных.
+- **Query details** — длительность выполнения, статус, количество столбцов и строк.
 
-### Chart results
+<Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="Вкладка Details в dbt Insights" />
 
-Visualize the chart results of the query by clicking on the **Chart** tab to:
-- Select the chart type using the chart icon.
-- Choose from **line chart, bar chart, or scatterplot**.
-- Select the axis and columns to visualize using the **Chart settings** icon.
+### Визуализация результатов
 
-<Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="dbt Insights Chart tab" />
+Визуализируйте результаты запроса, перейдя на вкладку **Chart**, где можно:
+- Выбрать тип графика с помощью иконки графика.
+- Выбрать **line chart, bar chart или scatterplot**.
+- Настроить оси и столбцы для визуализации с помощью иконки **Chart settings**.
 
-### Query history
+<Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="Вкладка Chart в dbt Insights" />
 
-View the history of queries and their statuses (All, Success, Error, or Pending) using the **Query history** icon:
-- Select a query to re-run to view the results. 
-- Search for past queries and filter by status.
-- Hover over the query to view the SQL code or copy it.
+### История запросов
 
-The query history is stored indefinitely.
+Просматривайте историю запросов и их статусы (All, Success, Error или Pending) с помощью иконки **Query history**:
+- Выберите запрос, чтобы запустить его повторно и посмотреть результаты.
+- Ищите прошлые запросы и фильтруйте их по статусу.
+- Наведите курсор на запрос, чтобы посмотреть SQL‑код или скопировать его.
 
-<Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="95%" title="dbt Insights Query history icon" />
+История запросов хранится бессрочно.
 
-### Use dbt Catalog
+<Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="95%" title="Иконка Query history в dbt Insights" />
 
-Access [<Constant name="explorer" />](/docs/explore/explore-projects) directly in <Constant name="query_page" /> to view project resources such as models, columns, metrics, and dimensions, and more — all integrated in the <Constant name="query_page" /> interface. 
+### Использование dbt Catalog
 
-This integrated view allows you and your users to maintain your query workflow, while getting more context on models, semantic models, metrics, macros, and more. The integrated <Constant name="explorer" /> view comes with:
-- Same search capabilities as <Constant name="explorer" />
-- Allows users to narrow down displayed objects by type
-- Hyperlink from SQL code `ref` to the corresponding <Constant name="explorer" /> page
-- View assets in more detail by opening with the full <Constant name="explorer" /> experience or open them in <Constant name="copilot" />.
+Откройте [<Constant name="explorer" />](/docs/explore/explore-projects) напрямую в <Constant name="query_page" />, чтобы просматривать ресурсы проекта — модели, столбцы, метрики, измерения и многое другое — прямо в интерфейсе <Constant name="query_page" />.
 
-To access <Constant name="explorer" />, click on the **<Constant name="explorer" />** icon in the [Query console sidebar menu](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
+Такой интегрированный вид позволяет вам и другим пользователям не прерывать рабочий процесс с запросами, получая при этом больше контекста о моделях, семантических моделях, метриках, макросах и другом. Встроенный <Constant name="explorer" /> предоставляет:
+- Те же возможности поиска, что и <Constant name="explorer" />
+- Возможность ограничивать отображаемые объекты по типу
+- Гиперссылки из SQL‑кода `ref` на соответствующие страницы <Constant name="explorer" />
+- Просмотр активов более детально, открыв полный интерфейс <Constant name="explorer" /> или открыв их в <Constant name="copilot" />
 
-<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Catalog" />
+Чтобы открыть <Constant name="explorer" />, нажмите на иконку **<Constant name="explorer" />** в [боковом меню Query console](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
 
-### Set Jinja environment
+<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights, интегрированный с dbt Catalog" />
 
-Set the compilation environment to control how Jinja functions are rendered. This feature:
-- Supports "typed" environments marked as `Production`, `Staging`, and/or `Development`.
-- Enables you to run <Constant name="semantic_layer" />. queries against staging environments (development environments not supported).
-- Still uses the individual user credentials, so users must have appropriate access to query `PROD` and `STG`. 
-- Changing the environment changes context for the <Constant name="explorer" /> view in <Constant name="query_page" />, as well as the environment context during the handoff to <Constant name="explorer" /> and <Constant name="visual_editor" />. For example, switching to `Staging` in <Constant name="query_page" /> and selecting **View in Catalog** will open the `Staging` view in <Constant name="explorer" />. 
+### Настройка окружения Jinja
 
-<Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Set the environment for your Jinja context" />
+Настройте окружение компиляции, чтобы управлять тем, как рендерятся Jinja‑функции. Эта функция:
+- Поддерживает «типизированные» окружения, помеченные как `Production`, `Staging` и/или `Development`.
+- Позволяет выполнять запросы <Constant name="semantic_layer" /> к staging‑окружениям (development‑окружения не поддерживаются).
+- По‑прежнему использует индивидуальные учётные данные пользователей, поэтому у них должен быть соответствующий доступ для выполнения запросов к `PROD` и `STG`.
+- При смене окружения меняется контекст для представления <Constant name="explorer" /> в <Constant name="query_page" />, а также контекст окружения при переходе в <Constant name="explorer" /> и <Constant name="visual_editor" />. Например, если переключиться на `Staging` в <Constant name="query_page" /> и выбрать **View in Catalog**, откроется представление `Staging` в <Constant name="explorer" />.
 
-## Save your Insights
+<Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Настройка окружения для Jinja‑контекста" />
 
-Insights offers a robust save feature for quickly finding the queries you use most. There's also an option to share saved Insights with other dbt users (and have them share with you). Click the **bookmark icon** in a query to add it to your list!
+## Сохранение Insights
 
-- Click the **bookmark icon** on the right menu to manage your saved Insights. You can view your personal and shared queries
+Insights предоставляет удобный механизм сохранения запросов, которые вы используете чаще всего. Также есть возможность делиться сохранёнными Insights с другими пользователями dbt (и получать доступ к их сохранённым запросам). Нажмите на **иконку закладки** в запросе, чтобы добавить его в список!
 
-    <Lightbox src="/img/docs/dbt-insights/saved-insights.png" width="90%" title="Manage your saved Insights" />
+- Нажмите **иконку закладки** в правом меню, чтобы управлять сохранёнными Insights. Вы можете просматривать свои личные и общие запросы.
+
+    <Lightbox src="/img/docs/dbt-insights/saved-insights.png" width="90%" title="Управление сохранёнными Insights" />
     
-- View saved Insight details including description and creation date in the **Overview** tab.
-- View the Insight history in the **Version history** tab. Click a version to compare it the current and view changes. 
+- Просматривайте детали сохранённого Insight, включая описание и дату создания, во вкладке **Overview**.
+- Просматривайте историю изменений Insight во вкладке **Version history**. Нажмите на версию, чтобы сравнить её с текущей и увидеть изменения.
 
+## Особенности и ограничения
 
-## Considerations 
-- <Constant name="query_page" /> uses your development credentials to query. You have the ability to query against any object in your data warehouse that is accessible using your development credentials. 
-- Every Jinja function uses [`defer --favor-state`](/reference/node-selection/defer) to resolve Jinja.
+- <Constant name="query_page" /> использует ваши development credentials для выполнения запросов. Вы можете выполнять запросы к любым объектам в вашем хранилище данных, к которым у вас есть доступ с этими учётными данными.
+- Каждая Jinja‑функция использует [`defer --favor-state`](/reference/node-selection/defer) для разрешения Jinja.
 
 <!-- this can move to another page -->
 
 ## FAQs
-- What’s the difference between <Constant name="query_page" /> and <Constant name="explorer" />?
-  - That’s a great question! <Constant name="explorer" /> helps you understand your dbt project's structure, resources, lineage, and metrics, offering context for your data.
-  - <Constant name="query_page" /> builds on that context, allowing you to write, run, and iterate on SQL queries directly in <Constant name="cloud" />. It’s designed for ad-hoc or exploratory analysis and empowers business users and analysts to explore data, ask questions, and collaborate seamlessly.
-  - <Constant name="explorer" /> provides the context, while <Constant name="query_page" /> enables action.
+- В чём разница между <Constant name="query_page" /> и <Constant name="explorer" />?
+  - Отличный вопрос! <Constant name="explorer" /> помогает понять структуру вашего dbt‑проекта, его ресурсы, lineage и метрики, предоставляя контекст для данных.
+  - <Constant name="query_page" /> развивает этот контекст, позволяя писать, запускать и итеративно дорабатывать SQL‑запросы прямо в <Constant name="cloud" />. Он предназначен для ad‑hoc и исследовательской аналитики и помогает бизнес‑пользователям и аналитикам исследовать данные, задавать вопросы и эффективно сотрудничать.
+  - <Constant name="explorer" /> даёт контекст, а <Constant name="query_page" /> позволяет действовать.

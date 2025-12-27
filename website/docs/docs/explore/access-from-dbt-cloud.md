@@ -1,56 +1,56 @@
 ---
-title: "Access Catalog from dbt platform features"
-sidebar_label: "Access from dbt platform"
-description: "Learn where and how to directly access and interact with Catalog from dbt platform features and products."
+title: "Доступ к Catalog из возможностей dbt platform"
+sidebar_label: "Доступ из dbt platform"
+description: "Узнайте, где и как напрямую получать доступ к Catalog и взаимодействовать с ним из возможностей и продуктов dbt platform."
 ---
 
-Access <Constant name="explorer" /> from other features and products inside <Constant name="cloud" />, ensuring you have a seamless experience navigating between resources and lineage in your project. 
+Получайте доступ к <Constant name="explorer" /> из других функций и продуктов внутри <Constant name="cloud" />, обеспечивая единый и непрерывный опыт навигации между ресурсами и lineage в вашем проекте.
 
-This page explains how to access <Constant name="explorer" /> from various <Constant name="cloud" /> features, including the <Constant name="cloud_ide" /> and jobs. While the primary way to navigate to <Constant name="explorer" /> is through the **Explore** link in the navigation, you can also access it from other <Constant name="cloud" /> features.
+На этой странице объясняется, как получить доступ к <Constant name="explorer" /> из различных функций <Constant name="cloud" />, включая <Constant name="cloud_ide" /> и jobs. Хотя основной способ перейти к <Constant name="explorer" /> — это ссылка **Explore** в навигации, вы также можете открывать его и из других возможностей <Constant name="cloud" />.
 
 ### Studio IDE 
-You can enhance your project navigation and editing experience by directly accessing resources from the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) to <Constant name="explorer" /> for model, seed, or snapshot files. This workflow offers a seamless transition between the <Constant name="cloud_ide" /> and <Constant name="explorer" />, allowing you to quickly navigate between viewing project metadata and making updates to your models or other resources without switching contexts.
+Вы можете улучшить навигацию по проекту и процесс редактирования, напрямую переходя к ресурсам из [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) в <Constant name="explorer" /> для файлов моделей, seed или snapshot. Такой рабочий процесс обеспечивает плавный переход между <Constant name="cloud_ide" /> и <Constant name="explorer" />, позволяя быстро переключаться между просмотром метаданных проекта и внесением изменений в модели или другие ресурсы без смены контекста.
 
-#### Access Catalog from the IDE
-- In your model, seed, or snapshot file, click the **View in <Constant name="explorer" />** icon to the right of your file breadcrumb (under the file name tab). 
-- This opens the model, seed, or snapshot file in a new tab, allowing you to view resources/lineage directly in <Constant name="explorer" />. 
+#### Доступ к Catalog из IDE
+- В файле модели, seed или snapshot нажмите на иконку **View in <Constant name="explorer" />**, расположенную справа от breadcrumbs файла (под вкладкой с именем файла).
+- Это откроет модель, seed или snapshot в новой вкладке, где вы сможете напрямую просматривать ресурсы и lineage в <Constant name="explorer" />.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-ide.jpg" title="Access dbt Catalog from the IDE by clicking on the 'View in Explorer' icon next to the file breadcrumbs. " />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-ide.jpg" title="Доступ к dbt Catalog из IDE при нажатии на иконку 'View in Explorer' рядом с breadcrumbs файла." />
 
 ### Canvas
 
-Seamlessly access <Constant name="explorer" /> via <Constant name="visual_editor" /> to bring your workflow to life with visual editing.
+Получайте доступ к <Constant name="explorer" /> напрямую через <Constant name="visual_editor" />, чтобы оживить рабочий процесс с помощью визуального редактирования.
 
-#### Access Catalog from Canvas
+#### Доступ к Catalog из Canvas
 
-Steps here
-[Roxi to check with Greg and team and will add images on response]
+Шаги будут добавлены здесь  
+[Roxi проверит с Greg и командой и добавит изображения после получения ответа]
 
-### Lineage tab in jobs
-The **Lineage tab** in <Constant name="cloud" /> jobs displays the lineage associated with the [job run](/docs/deploy/jobs). Access <Constant name="explorer" /> directly from this tab, allowing you understand dependencies/relationships of resources in your project.
+### Вкладка Lineage в jobs
+Вкладка **Lineage** в jobs <Constant name="cloud" /> отображает lineage, связанный с [job run](/docs/deploy/jobs). Вы можете напрямую перейти в <Constant name="explorer" /> с этой вкладки, чтобы лучше понять зависимости и взаимосвязи ресурсов в вашем проекте.
 
-#### Access Catalog from the lineage tab
-- From a job, select the **Lineage tab**. 
-- Double-click the node in the lineage to open a new tab and view its metadata directly in <Constant name="explorer" />.
+#### Доступ к Catalog из вкладки lineage
+- В job выберите вкладку **Lineage**.
+- Дважды щёлкните по узлу в lineage, чтобы открыть новую вкладку и просмотреть его метаданные напрямую в <Constant name="explorer" />.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Access dbt Catalog from the lineage tab by double-clicking on the lineage node." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Доступ к dbt Catalog из вкладки lineage при двойном клике по узлу lineage." />
 
-### Model timing tab in jobs <Lifecycle status="self_service,managed,managed_plus"/>
+### Вкладка Model timing в jobs <Lifecycle status="self_service,managed,managed_plus"/>
 
-The [model timing tab](/docs/deploy/run-visibility#model-timing) in <Constant name="cloud" /> jobs displays the composition, order, and time taken by each model in a job run. 
+[Вкладка model timing](/docs/deploy/run-visibility#model-timing) в jobs <Constant name="cloud" /> показывает состав, порядок выполнения и время, затраченное каждой моделью в рамках job run.
 
-Access <Constant name="explorer" /> directly from the **modeling timing tab**, which helps you investigate resources, diagnose performance bottlenecks, understand dependencies/relationships of slow-running models, and potentially make changes to improve their performance.
+Вы можете получить доступ к <Constant name="explorer" /> напрямую из **вкладки model timing**, что помогает исследовать ресурсы, диагностировать узкие места производительности, понимать зависимости и взаимосвязи медленно выполняющихся моделей, а также при необходимости вносить изменения для улучшения их производительности.
 
-#### Access Catalog from the model timing tab
-- From a job, select the **model timing tab**.
-- Hover over a resource and click on **View on <Constant name="explorer" />** to view the resource metadata directly in <Constant name="explorer" />. 
+#### Доступ к Catalog из вкладки model timing
+- В job выберите **вкладку model timing**.
+- Наведите курсор на ресурс и нажмите **View on <Constant name="explorer" />**, чтобы открыть метаданные ресурса напрямую в <Constant name="explorer" />.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.jpg" title="Access dbt Catalog from the model timing tab by hovering over the resource and clicking 'View in Explorer'." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.jpg" title="Доступ к dbt Catalog из вкладки model timing при наведении на ресурс и нажатии 'View in Explorer'." />
 
 ### dbt Insights <Lifecycle status="managed,managed_plus" />
 
-Access <Constant name="explorer" /> directly from [<Constant name="query_page" />](/docs/explore/access-dbt-insights) to view the project lineage and project resources with access to tables, columns, metrics, dimensions, and more.
+Получайте доступ к <Constant name="explorer" /> напрямую из [<Constant name="query_page" />](/docs/explore/access-dbt-insights), чтобы просматривать lineage проекта и его ресурсы, включая таблицы, колонки, метрики, измерения и многое другое.
 
-To access <Constant name="explorer" /> from <Constant name="query_page" />, click on the **<Constant name="explorer" />** icon in the Query console sidebar menu and search for the resource you're interested in.
+Чтобы открыть <Constant name="explorer" /> из <Constant name="query_page" />, нажмите на иконку **<Constant name="explorer" />** в боковом меню Query console и найдите интересующий вас ресурс.
 
-<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Catalog" />
+<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights, интегрированный с dbt Catalog" />

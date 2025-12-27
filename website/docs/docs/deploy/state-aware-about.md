@@ -1,15 +1,15 @@
 ---
-title: "About state-aware orchestration"
-description: "Learn about how state-aware orchestration automatically determines which models to build by detecting changes in code or data every time a job runs." 
+title: "Об оркестрации по состоянию"
+description: "Узнайте, как state-aware orchestration автоматически определяет, какие модели нужно собирать, обнаруживая изменения в коде или данных при каждом запуске job."
 id: "state-aware-about"
 tags: ['scheduler','SAO']
 ---
 
-# About state-aware orchestration <Lifecycle status="private_preview,managed,managed_plus" />
+# Об оркестрации по состоянию <Lifecycle status="private_preview,managed,managed_plus" />
 
 <IntroText>
 
-Every time a job runs, state-aware orchestration automatically determines which models to build by detecting changes in code or data.
+При каждом запуске job state-aware orchestration автоматически определяет, какие модели нужно собрать, обнаруживая изменения в коде или данных.
 
 </IntroText>
 
@@ -17,71 +17,71 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 <FusionLifecycle />
 
-State-aware orchestration saves you compute costs and reduces runtime because when a job runs, it checks for new records and only builds the models that will change.
+State-aware orchestration помогает экономить вычислительные ресурсы и сокращать время выполнения, потому что при запуске job она проверяет наличие новых записей и собирает только те модели, которые действительно изменятся.
 
 <Lightbox src="/img/docs/deploy/sao.gif" title="Fusion powered state-aware orchestration" />
 
-We built <Constant name="cloud" />'s state-aware orchestration on these four core principles:
+State-aware orchestration в <Constant name="cloud" /> построена на четырёх ключевых принципах:
 
-- **Real-time shared state:** All jobs write to a real-time shared model-level state, allowing <Constant name="cloud" /> to rebuild only changed models regardless of which jobs the model is built in.
-- **Model-level queueing:** Jobs queue up at the model-level so you can avoid any 'collisions' and prevent rebuilding models that were just updated by another job.
-- **State-aware and state agnostic support:** You can build jobs dynamically (state-aware) or explicitly (state-agnostic). Both approaches update shared state so everything is kept in sync.
-- **Sensible defaults:** State-aware orchestration works out-of-the-box (natively), with an optional configuration setting for more advanced controls. For more information, refer to [state-aware advanced configurations](/docs/deploy/state-aware-setup#advanced-configurations).
+- **Общее состояние в реальном времени:** Все jobs записывают состояние на уровне моделей в общее хранилище в реальном времени. Это позволяет <Constant name="cloud" /> пересобирать только изменённые модели независимо от того, в каких jobs они собираются.
+- **Очереди на уровне моделей:** Jobs выстраиваются в очередь на уровне моделей, что позволяет избежать «коллизий» и предотвратить повторную сборку моделей, которые только что были обновлены другой job.
+- **Поддержка state-aware и state-agnostic подходов:** Jobs можно определять динамически (state-aware) или явно (state-agnostic). Оба подхода обновляют общее состояние, благодаря чему всё остаётся синхронизированным.
+- **Разумные настройки по умолчанию:** State-aware orchestration работает «из коробки» (нативно) и имеет дополнительную настройку конфигурации для более продвинутого управления. Подробнее см. в разделе [state-aware advanced configurations](/docs/deploy/state-aware-setup#advanced-configurations).
 
 :::note
-State-aware orchestration does not depend on [static analysis](/docs/fusion/new-concepts#principles-of-static-analysis) and works even when `static_analysis` is disabled.
+State-aware orchestration не зависит от [static analysis](/docs/fusion/new-concepts#principles-of-static-analysis) и работает даже если `static_analysis` отключён.
 :::
 
-## Optimizing builds with state-aware orchestration
+## Оптимизация сборок с помощью state-aware orchestration
 
-State-aware orchestration uses shared state tracking to determine which models need to be built by detecting changes in code or data every time a job runs. It also supports custom refresh intervals and custom source freshness configurations, so <Constant name="cloud" /> only rebuilds models when they're actually needed.
+State-aware orchestration использует общее отслеживание состояния, чтобы определять, какие модели нужно собирать, обнаруживая изменения в коде или данных при каждом запуске job. Также поддерживаются пользовательские интервалы обновления и пользовательские настройки freshness для sources, благодаря чему <Constant name="cloud" /> пересобирает модели только тогда, когда это действительно необходимо.
 
-For example, you can configure your project so that <Constant name="cloud" /> skips rebuilding the dim_wizards model (and its parents) if they’ve already been refreshed within the last 4 hours, even if the job itself runs more frequently.
+Например, вы можете настроить проект так, чтобы <Constant name="cloud" /> пропускал пересборку модели dim_wizards (и её родителей), если она уже обновлялась в течение последних 4 часов, даже если сама job запускается чаще.
 
-Without configuring anything, <Constant name="cloud" />'s state-aware orchestration automatically knows to build your models either when the code has changed or if there’s any new data in a source (or upstream model in the case of [dbt Mesh](/docs/mesh/about-mesh)).
+Без какой‑либо дополнительной настройки state-aware orchestration в <Constant name="cloud" /> автоматически понимает, что модели нужно собирать либо при изменении кода, либо при появлении новых данных в source (или в upstream‑модели в случае [dbt Mesh](/docs/mesh/about-mesh)).
 
-## Efficient testing in state-aware orchestration <Lifecycle status="private_beta" />
+## Эффективное тестирование в state-aware orchestration <Lifecycle status="private_beta" />
 
-:::info Private beta feature
-State-aware orchestration features in the <Constant name="dbt_platform" /> are only available in Fusion, which is in private preview. Contact your account manager to enable Fusion in your account. 
+:::info Функция в private beta
+Возможности state-aware orchestration в <Constant name="dbt_platform" /> доступны только в Fusion, который находится в private preview. Свяжитесь с вашим account manager, чтобы включить Fusion в вашей учётной записи. 
 :::
 
-Data quality can get degraded in two ways: 
+Качество данных может ухудшаться по двум причинам:
 
-- New code changes definitions or introduces edge cases.
-- New data, like duplicates or unexpected values, invalidates downstream metrics.
+- Новые изменения в коде меняют определения или добавляют граничные случаи.
+- Новые данные, например дубликаты или неожиданные значения, делают downstream‑метрики некорректными.
 
-Running dbt’s out-of-the-box [data tests](/docs/build/data-tests) (`unique`, `not_null`, `accepted_values`, `relationships`) on every build helps catch data errors before they impact business decisions. Catching these errors often requires having multiple tests on every model and running tests even when not necessary. If nothing relevant has changed, repeated test executions don’t improve coverage and only increase cost.
+Запуск стандартных [data tests](/docs/build/data-tests) dbt (`unique`, `not_null`, `accepted_values`, `relationships`) при каждой сборке помогает выявлять ошибки в данных до того, как они повлияют на бизнес‑решения. Однако для этого часто требуется несколько тестов на каждую модель и выполнение тестов даже тогда, когда в них нет необходимости. Если ничего значимого не изменилось, повторные запуски тестов не повышают покрытие и лишь увеличивают стоимость.
 
-With Fusion, dbt gains an understanding of the SQL code based on the logical plan for the compiled code. dbt then can determine when a test must run again, or when a prior upstream test result can be reused.
+С Fusion dbt получает понимание SQL‑кода на основе логического плана скомпилированного кода. Это позволяет dbt определять, когда тест необходимо запустить повторно, а когда можно переиспользовать результат предыдущего upstream‑теста.
 
-Efficient testing in state-aware orchestration reduces warehouse costs by avoiding redundant data tests and combining multiple tests into one run. This feature includes two optimizations:
-    
-- **Test reuse** &mdash; Tests are reused in cases where no logic in the code or no new data could have changed the test's outcome.
-- **Test aggregation** &mdash; When there are multiple tests on a model, dbt combines tests to run as a single query against the warehouse, rather than running separate queries for each test.
+Эффективное тестирование в state-aware orchestration снижает затраты на хранилище данных за счёт исключения избыточных data tests и объединения нескольких тестов в один запуск. Эта функциональность включает две оптимизации:
 
-### Supported data tests
+- **Переиспользование тестов (Test reuse)** — тесты переиспользуются в случаях, когда ни логика кода, ни новые данные не могли повлиять на результат теста.
+- **Агрегация тестов (Test aggregation)** — при наличии нескольких тестов на одной модели dbt объединяет их и выполняет одним запросом к хранилищу данных, вместо отдельных запросов для каждого теста.
 
-The following tests can be reused when Efficient testing is enabled:
+### Поддерживаемые data tests
+
+Следующие тесты могут быть переиспользованы при включённом Efficient testing:
 - [`unique`](/reference/resource-properties/data-tests#unique)
 - [`not_null`](/reference/resource-properties/data-tests#not_null)
 - [`accepted_values`](/reference/resource-properties/data-tests#accepted_values)
 
-### Enabling Efficient testing
+### Включение Efficient testing
 
-Before enabling Efficient testing, make sure you have configured [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis).
+Перед включением Efficient testing убедитесь, что у вас настроен [`static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis).
 
-To enable Efficient testing:
+Чтобы включить Efficient testing:
 
-1. From the main menu, go to **Orchestration** > **Jobs**. 
-2. Select your job. Go to your job settings and click **Edit**. 
-3. Under **Enable Fusion cost optimization features**, expand **More options**.
-4. Select **Efficient testing**. This feature is disabled by default.
-5. Click **Save**.
+1. В главном меню перейдите в **Orchestration** > **Jobs**. 
+2. Выберите нужную job. Перейдите в её настройки и нажмите **Edit**. 
+3. В разделе **Enable Fusion cost optimization features** раскройте **More options**.
+4. Выберите **Efficient testing**. По умолчанию эта функция отключена.
+5. Нажмите **Save**.
 
-### Example
+### Пример
 
-In the following query, you’re joining an `orders` and a `customers` table:
+В следующем запросе выполняется join таблиц `orders` и `customers`:
 
 ```sql
 with
@@ -112,15 +112,15 @@ joined as (
 select * from joined
 ```
 
-- `not_null` test: A `left join` can introduce null values for customers without orders. Even if upstream tests verified `not_null(order_id)` in orders, the join can create null values downstream. dbt must always run a `not_null` test on `order_id` in this joined result.
+- Тест `not_null`: `left join` может привести к появлению null‑значений для клиентов без заказов. Даже если upstream‑тесты проверили `not_null(order_id)` в orders, join может создать null‑значения downstream. Поэтому dbt всегда должен запускать тест `not_null` для `order_id` в этом результате.
 
-- `unique` test: If `orders.order_id` and `customers.customer_id` are unique upstream, uniqueness of `order_id` is preserved and the upstream result can be reused. 
+- Тест `unique`: если `orders.order_id` и `customers.customer_id` уникальны upstream, уникальность `order_id` сохраняется, и можно переиспользовать результат upstream‑теста.
 
-### Limitation
+### Ограничение
 
-The following section lists some considerations when using Efficient testing in state-aware-orchestration:
+Ниже приведены важные моменты, которые следует учитывать при использовании Efficient testing в state-aware orchestration:
 
-- **Aggregated tests do not support custom configs**. Tests that include the following [custom config options](/reference/data-test-configs) will run individually rather than as part of the aggregated batch:
+- **Агрегированные тесты не поддерживают пользовательские конфигурации**. Тесты, в которых используются следующие [custom config options](/reference/data-test-configs), будут выполняться отдельно, а не в составе агрегированного пакета:
 
   ```yaml
   config:
@@ -133,9 +133,9 @@ The following section lists some considerations when using Efficient testing in 
     where: <string>
   ```
 
-## Related docs
+## Связанные материалы
 
-- [State-aware orchestration configuration](/docs/deploy/state-aware-setup)
-- [Artifacts](/docs/deploy/artifacts)
-- [Continuous integration (CI) jobs](/docs/deploy/ci-jobs)
+- [Конфигурация state-aware orchestration](/docs/deploy/state-aware-setup)
+- [Артефакты](/docs/deploy/artifacts)
+- [Jobs непрерывной интеграции (CI)](/docs/deploy/ci-jobs)
 - [`freshness`](/reference/resource-configs/freshness)

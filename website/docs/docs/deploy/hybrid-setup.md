@@ -1,51 +1,51 @@
 ---
-title: "Hybrid setup"
-sidebar_label: "Hybrid setup"
-description: "Learn how to set up hybrid projects in the dbt platform."
+title: "Гибридная настройка"
+sidebar_label: "Гибридная настройка"
+description: "Узнайте, как настраивать гибридные проекты в dbt platform."
 pagination_next: "docs/deploy/deployment-tools"
 pagination_prev: "docs/deploy/hybrid-projects"
 ---
 
-# Hybrid setup <Lifecycle status='managed_plus'/>
+# Гибридная настройка <Lifecycle status='managed_plus'/>
 
 <IntroText>
-Set up Hybrid projects to upload <Constant name="core" /> artifacts into <Constant name="cloud" /> for better collaboration and visibility.
+Настройте Hybrid‑проекты, чтобы загружать артефакты <Constant name="core" /> в <Constant name="cloud" /> и получить лучшую совместную работу и прозрачность.
 </IntroText>
 
-:::tip Available in public preview
-Hybrid projects is available in public preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing).
+:::tip Доступно в public preview
+Hybrid‑проекты доступны в режиме публичного превью для [Enterprise‑аккаунтов <Constant name="cloud" />](https://www.getdbt.com/pricing).
 :::
 
-## Set up Hybrid projects
+## Настройка гибридных проектов
 
-In a hybrid project, you use <Constant name="core" /> locally and can upload artifacts of that <Constant name="core" /> project to <Constant name="cloud" /> for central visibility, cross-project referencing, and easier collaboration. 
+В Hybrid‑проекте вы используете <Constant name="core" /> локально и можете загружать артефакты этого проекта <Constant name="core" /> в <Constant name="cloud" /> для централизованной видимости, кросс‑проектных ссылок и более удобного сотрудничества.
 
-This setup requires connecting your <Constant name="core" /> project to a <Constant name="cloud" /> project and configuring a few environment variables and access settings. 
+Такая конфигурация требует подключения вашего проекта <Constant name="core" /> к проекту <Constant name="cloud" />, а также настройки нескольких переменных окружения и параметров доступа.
 
-Follow these steps to set up a <Constant name="cloud" /> Hybrid project and upload <Constant name="core" /> artifacts into <Constant name="cloud" />:
+Следуйте этим шагам, чтобы настроить Hybrid‑проект в <Constant name="cloud" /> и загрузить артефакты <Constant name="core" /> в <Constant name="cloud" />:
 
 <!--no toc --> 
-    - [Make <Constant name="core" /> models public](#make-dbt-core-models-public) (optional)
-    - [Create hybrid project](#create-hybrid-project)
-    - [Generate service token and artifact upload values](#generate-service-token-and-artifact-upload-values)
-    - [Configure <Constant name="core" /> project and upload artifacts](#configure-dbt-core-project-and-upload-artifacts)
-    - [Review artifacts in <Constant name="cloud" />](#review-artifacts-in-dbt-cloud)
+- [Сделать модели <Constant name="core" /> публичными](#make-dbt-core-models-public) (опционально)
+- [Создать hybrid‑проект](#create-hybrid-project)
+- [Сгенерировать service token и значения для загрузки артефактов](#generate-service-token-and-artifact-upload-values)
+- [Настроить проект <Constant name="core" /> и загрузить артефакты](#configure-dbt-core-project-and-upload-artifacts)
+- [Просмотреть артефакты в <Constant name="cloud" />](#review-artifacts-in-dbt-cloud)
 
-Make sure to enable the hybrid projects toggle in <Constant name="cloud" />’s **Account settings** page.
+Убедитесь, что в <Constant name="cloud" /> на странице **Account settings** включён переключатель hybrid‑проектов.
 
-### Make dbt Core models public (optional) {#make-dbt-core-models-public}
+### Сделайте модели dbt Core публичными (необязательно) {#make-dbt-core-models-public}
 
-This step is optional and and only needed if you want to share your <Constant name="core" /> models with other <Constant name="cloud" /> projects using the [cross-project referencing](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) feature.
+Этот шаг является необязательным и нужен только в том случае, если вы хотите делиться своими моделями <Constant name="core" /> с другими проектами <Constant name="cloud" /> с помощью функции [cross-project referencing](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref).
 
-Before connecting your dbt Core project to a <Constant name="cloud" /> project, make sure models that you want to share have `access: public` in their model configuration. This setting makes those models visible to other <Constant name="cloud" /> projects for better collaboration, such as [cross-project referencing](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref).
+Перед подключением проекта dbt Core к проекту <Constant name="cloud" /> убедитесь, что модели, которыми вы хотите делиться, имеют `access: public` в конфигурации модели. Эта настройка делает такие модели видимыми для других проектов <Constant name="cloud" /> и упрощает совместную работу, например при использовании [cross-project referencing](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref).
 
-1. The easiest way to set this would be in your `dbt_project.yml` file, however you can also set this in the following places:
-   - `dbt_project.yml` (project-level)
-   - `properties.yml` (for individual models)
-   - A model's `.sql` file using a `config` block
+1. Самый простой способ задать это — через файл `dbt_project.yml`, однако вы также можете указать настройку в следующих местах:
+   - `dbt_project.yml` (на уровне проекта)
+   - `properties.yml` (для отдельных моделей)
+   - `.sql`‑файл модели с использованием блока `config`
 
-   Here's an example using a `dbt_project.yml` file where the marts directory is set as public so they can be consumed by downstream tools:
-  
+   Ниже приведён пример `dbt_project.yml`, в котором каталог marts объявлен публичным, чтобы его могли использовать downstream‑инструменты:
+
    <File name='dbt_project.yml'>
 
    ```yaml
@@ -56,57 +56,58 @@ Before connecting your dbt Core project to a <Constant name="cloud" /> project, 
    ```
    </File>
 
-2. After defining `access: public`, rerun a dbt execution in the dbt Core command line interface (CLI) (like `dbt run`) to apply the change.
+2. После задания `access: public` повторно запустите выполнение dbt в интерфейсе командной строки dbt Core (CLI), например `dbt run`, чтобы применить изменения.
 
-3. For more details on how to set this up, see [access modifier](/docs/mesh/govern/model-access#access-modifiers) and [`access` config](/reference/resource-configs/access). 
+3. Подробнее о настройке читайте в разделах [access modifier](/docs/mesh/govern/model-access#access-modifiers) и [`access` config](/reference/resource-configs/access).
 
-### Create hybrid project
+### Создайте гибридный проект {#create-hybrid-project}
 
-Create a hybrid project in <Constant name="cloud" /> to allow you to upload your <Constant name="core" /> artifacts to <Constant name="cloud" />. 
+Создайте hybrid‑проект в <Constant name="cloud" />, чтобы иметь возможность загружать артефакты <Constant name="core" /> в <Constant name="cloud" />.
 
-A [<Constant name="cloud" /> account admin](/docs/cloud/manage-access/enterprise-permissions#permission-sets) should perform the following steps and share the artifacts information with a <Constant name="core" /> user:
+[Администратор аккаунта <Constant name="cloud" />](/docs/cloud/manage-access/enterprise-permissions#permission-sets) должен выполнить следующие шаги и передать информацию об артефактах пользователю <Constant name="core" />:
 
-1. To create a new project in <Constant name="cloud" />, navigate to **Account home**.
-2. Click on **+New project**. 
-3. Fill out the **Project name**. Name the project something that allows you to recognize it's a <Constant name="core" /> project. 
-   - You don't need to set up a [data warehouse](/docs/supported-data-platforms) or [<Constant name="git" /> connection](/docs/cloud/git/git-configuration-in-dbt-cloud), however to upgrade the hybrid project to a full <Constant name="cloud" /> project, you'd need to set up data warehouse and <Constant name="git" /> connection.
-4. Select the **Advanced settings** toggle and then select the **Hybrid development** checkbox. Click **Continue**.
-   - The hybrid project will have a visible **Hybrid** indicator in the project list to help you identify it.
+1. Чтобы создать новый проект в <Constant name="cloud" />, перейдите на страницу **Account home**.
+2. Нажмите **+New project**.
+3. Заполните поле **Project name**. Назовите проект так, чтобы было понятно, что это проект <Constant name="core" />.
+   - Вам не нужно настраивать [хранилище данных](/docs/supported-data-platforms) или [подключение <Constant name="git" />](/docs/cloud/git/git-configuration-in-dbt-cloud), однако для обновления hybrid‑проекта до полноценного проекта <Constant name="cloud" /> эти настройки понадобятся.
+4. Включите переключатель **Advanced settings**, затем отметьте чекбокс **Hybrid development** и нажмите **Continue**.
+   - В списке проектов hybrid‑проект будет помечен индикатором **Hybrid**, чтобы его было легко отличить.
 <Lightbox src="/img/docs/deploy/hp-new-project.jpg" title="Hybrid project new project" />
 
-5. After creating a project, create a corresponding [production environment](/docs/deploy/deploy-environments#create-a-deployment-environment) and click **Save**. Note that you can leave the **Connection** field blank.
-6. (Optional) To update an existing dbt project to a hybrid project, navigate to **Account settings** and then select the **Project**. Click **Edit** and then check the **Hybrid development** checkbox.
-<Lightbox src="/img/docs/deploy/hp-existing-project.jpg" width="80%" title="Hybrid project for an existing project" />
+5. После создания проекта создайте соответствующую [production‑среду](/docs/deploy/deploy-environments#create-a-deployment-environment) и нажмите **Save**. Обратите внимание, что поле **Connection** можно оставить пустым.
+6. (Опционально) Чтобы обновить существующий dbt‑проект до hybrid‑проекта, перейдите в **Account settings**, выберите **Project**, нажмите **Edit** и отметьте чекбокс **Hybrid development**.
+<Lightbox src="/img/docs/deploy/hp-existing-project.jpg" width="80%" title="Hybrid‑проект для существующего проекта" />
 
-### Generate service token and artifact upload values
-A <Constant name="cloud" /> admin should perform these steps to generate a [service token](/docs/dbt-cloud-apis/service-tokens#enterprise-plans-using-service-account-tokens) (with both **Job Runner** _and_ **Job Viewer** permissions) and copy the values needed to configure a <Constant name="core" /> project so it's ready to upload generated artifacts to <Constant name="cloud" />.
+### Сгенерируйте service token и значения для загрузки артефактов
 
-The <Constant name="cloud" /> admin should share the values with a <Constant name="core" /> user.
+Администратор <Constant name="cloud" /> должен выполнить эти шаги, чтобы сгенерировать [service token](/docs/dbt-cloud-apis/service-tokens#enterprise-plans-using-service-account-tokens) (с правами **Job Runner** и **Job Viewer**) и скопировать значения, необходимые для настройки проекта <Constant name="core" /> для загрузки артефактов в <Constant name="cloud" />.
 
-1. Go to the Hybrid project environment you created in the previous step by navigating to **Deploy** > **Environments** and selecting the environment.
-2. Select the **Artifact upload** button and copy the following values, which the dbt Core user will need to reference in their dbt Core's `dbt_project.yml` configuration:
+Администратор <Constant name="cloud" /> должен передать эти значения пользователю <Constant name="core" />.
+
+1. Перейдите в среду hybrid‑проекта, созданную на предыдущем шаге: **Deploy** > **Environments**, затем выберите нужную среду.
+2. Нажмите кнопку **Artifact upload** и скопируйте следующие значения, которые пользователю dbt Core понадобятся для настройки `dbt_project.yml`:
    - **[Tenant URL](/docs/cloud/about-cloud/access-regions-ip-addresses)**
    - **Account ID**
    - **Environment ID**
    - **Create a service token**
-     - <Constant name="cloud" /> creates a service token with both **Job Runner** _and_ **Job Viewer** permissions.
-     - Note if you don't see the **Create service token** button, it's likely you don't have the necessary permissions to create a service token. Contact your <Constant name="cloud" /> admin to either get the necessary permissions or create the service token for you.
-<Lightbox src="/img/docs/deploy/hp-artifact-upload.png" title="Generate hybrid project service token" />
+     - <Constant name="cloud" /> создаёт service token с правами **Job Runner** и **Job Viewer**.
+     - Если вы не видите кнопку **Create service token**, скорее всего, у вас нет необходимых прав. Обратитесь к администратору <Constant name="cloud" />, чтобы получить доступ или чтобы он создал token за вас.
+<Lightbox src="/img/docs/deploy/hp-artifact-upload.png" title="Сгенерируйте service token для hybrid‑проекта" />
 
-3. Make sure to copy and save the values as they're needed to configure your <Constant name="core" /> project in the next step. Once the service token is created, you can't access it again.
+3. Обязательно скопируйте и сохраните эти значения — они понадобятся для настройки проекта <Constant name="core" /> на следующем шаге. После создания service token получить его повторно невозможно.
 
-### Configure dbt Core project and upload artifacts
+### Настройте dbt Core‑проект и загрузку артефактов
 
-Once you have the values from the previous step, you can prepare your <Constant name="core" /> project for artifact upload by following these steps:
+Получив значения с предыдущего шага, вы можете подготовить проект <Constant name="core" /> к загрузке артефактов, выполнив следующие действия:
 
-1. Check your dbt version by running `dbt --version` and you should see the following:
+1. Проверьте версию dbt, выполнив `dbt --version`. Вы должны увидеть примерно следующее:
    ```bash
       Core:
       - installed: 1.10.0-b1
       - latest:    1.9.3     - Ahead of latest version!
    ```
-2. If you don't have the latest version (1.10 or later), [upgrade](/docs/core/pip-install#change-dbt-core-versions) your dbt Core project by running `python -m pip install --upgrade dbt-core`.
-3. Set the following environment variables in your dbt Core project by running the following commands in the CLI. Replace the `your_account_id`, `your_environment_id`, and `your_token` with the actual values in the [previous step](#generate-service-token-and-artifact-upload-values).
+2. Если у вас не установлена последняя версия (1.10 или выше), [обновите](/docs/core/pip-install#change-dbt-core-versions) dbt Core, выполнив `python -m pip install --upgrade dbt-core`.
+3. Задайте следующие переменные окружения в проекте dbt Core, выполнив команды в CLI. Замените `your_account_id`, `your_environment_id` и `your_token` реальными значениями с [предыдущего шага](#generate-service-token-and-artifact-upload-values).
 
    ```bash
    export DBT_CLOUD_ACCOUNT_ID=your_account_id
@@ -115,10 +116,10 @@ Once you have the values from the previous step, you can prepare your <Constant 
    export DBT_UPLOAD_TO_ARTIFACTS_INGEST_API=True
    ```
 
-   - Set the environment variables in whatever way you use them in your project.
-   - To unset an environment variable, run `unset environment_variable_name`, replacing `environment_variable_name` with the actual name of the environment variable.
+   - Задавайте переменные окружения тем способом, который используется в вашем проекте.
+   - Чтобы удалить переменную окружения, выполните `unset environment_variable_name`, заменив `environment_variable_name` на имя переменной.
 
-4. In your local dbt Core project, add the following items you copied in the [previous section](/docs/deploy/hybrid-setup#enable-artifact-upload) to the dbt Core's `dbt_project.yml` file:
+4. В локальном проекте dbt Core добавьте в файл `dbt_project.yml` элемент, скопированный на [предыдущем шаге](/docs/deploy/hybrid-setup#enable-artifact-upload):
    - `tenant_hostname`
    ```yaml
    name: "jaffle_shop"
@@ -129,33 +130,33 @@ Once you have the values from the previous step, you can prepare your <Constant 
    dbt-cloud:
      tenant_hostname: cloud.getdbt.com # Replace with your Tenant URL
    ```
-5. Once you set the environment variables using the `export` command in the same dbt Core CLI session, you can execute a `dbt run` in the CLI. 
+5. После того как переменные окружения заданы с помощью `export` в той же сессии CLI dbt Core, выполните `dbt run`:
    ```bash
     dbt run
     ```
 
-   To override the environment variables set, execute a `dbt run` with the environment variable prefix. For example, to use a different account ID and environment ID:
+   Чтобы переопределить заданные переменные окружения, выполните `dbt run` с префиксом переменных окружения. Например, чтобы использовать другой Account ID и Environment ID:
    ```bash
     DBT_CLOUD_ACCOUNT_ID=1 DBT_CLOUD_ENVIRONMENT_ID=123 dbt run
    ```
 
-6. After the run completes, you should see a `Artifacts uploaded successfully to artifact ingestion API: command run completed successfully` message and a run in <Constant name="cloud" /> under your production environment.
+6. После завершения выполнения вы должны увидеть сообщение `Artifacts uploaded successfully to artifact ingestion API: command run completed successfully`, а также запуск в <Constant name="cloud" /> в вашей production‑среде.
 
-### Review artifacts in the dbt platform
-Now that you've uploaded dbt Core artifacts into the <Constant name="dbt_platform" /> and executed a `dbt run`, you can view the artifacts job run:
-1. Navigate to **Deploy**
-2. Click on **Jobs** and then the **Runs** tab.
-3. You should see a job run with the status **Success** with a `</> Artifact ingestion` indicator.
-4. Click on the job run to review the logs to confirm a successfully artifacts upload message. If there are any errors, resolve them by checking out the debug logs.
+### Просмотрите артефакты в dbt platform
 
-<Lightbox src="/img/docs/deploy/hp-artifact-job.jpg" width="70%" title="Hybrid project job run with artifact ingestion" />
+После загрузки артефактов dbt Core в <Constant name="dbt_platform" /> и выполнения `dbt run` вы можете просмотреть запуск job с артефактами:
 
-## Benefits of using Hybrid projects
+1. Перейдите в **Deploy**
+2. Нажмите **Jobs**, затем откройте вкладку **Runs**
+3. Вы должны увидеть запуск со статусом **Success** и индикатором `</> Artifact ingestion`
+4. Откройте этот запуск, чтобы просмотреть логи и убедиться, что загрузка артефактов прошла успешно. Если есть ошибки, изучите debug‑логи для их устранения.
 
+<Lightbox src="/img/docs/deploy/hp-artifact-job.jpg" width="70%" title="Запуск job в hybrid‑проекте с импортом артефактов" />
 
-Now that you've integrated <Constant name="core" /> artifacts with your <Constant name="cloud" /> project, you can now:
+## Преимущества использования hybrid‑проектов
 
+Теперь, когда вы интегрировали артефакты <Constant name="core" /> с проектом <Constant name="cloud" />, вы можете:
 
-- Collaborate with <Constant name="cloud" /> users by enabling them to visualize and perform [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
-- (Coming soon) New users interested in the [<Constant name="visual_editor" />](/docs/cloud/canvas) can build off of dbt models already created by a central data team in <Constant name="core" /> rather than having to start from scratch.
-- <Constant name="core" /> users can navigate to [<Constant name="explorer" />](/docs/explore/explore-projects) and view their models and assets. To view <Constant name="explorer" />, you must have a [read-only seat](/docs/cloud/manage-access/seats-and-users).
+- Совместно работать с пользователями <Constant name="cloud" />, позволяя им визуализировать и использовать [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) для dbt‑моделей, которые находятся в Core‑проектах.
+- (Скоро) Новые пользователи, заинтересованные в [<Constant name="visual_editor" />](/docs/cloud/canvas), смогут строить решения на основе dbt‑моделей, уже созданных центральной командой данных в <Constant name="core" />, вместо того чтобы начинать с нуля.
+- Пользователи <Constant name="core" /> смогут перейти в [<Constant name="explorer" />](/docs/explore/explore-projects) и просматривать свои модели и ассеты. Для доступа к <Constant name="explorer" /> требуется [read‑only seat](/docs/cloud/manage-access/seats-and-users).

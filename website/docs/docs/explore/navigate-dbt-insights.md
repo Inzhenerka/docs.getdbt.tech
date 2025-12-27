@@ -1,161 +1,162 @@
 ---
-title: "Navigate the dbt Insights interface"
-description: "Learn how to navigate the dbt Insights interface"
-sidebar_label: "Navigate the interface"
+title: "Навигация по интерфейсу dbt Insights"
+description: "Узнайте, как ориентироваться в интерфейсе dbt Insights"
+sidebar_label: "Навигация по интерфейсу"
 tags: [dbt Insights]
 image: /img/docs/dbt-insights/insights-results.jpg
 ---
 
-# Navigate the dbt Insights interface <Lifecycle status="managed,managed_plus" />
+# Навигация по интерфейсу dbt Insights <Lifecycle status="managed,managed_plus" />
 
 <IntroText>
-Learn how to navigate <Constant name="query_page" /> interface and use the main components.
+Узнайте, как ориентироваться в интерфейсе <Constant name="query_page" /> и использовать его основные компоненты.
 </IntroText>
 
-<Constant name="query_page" /> provides an interactive interface for writing, running, and analyzing SQL queries. This section highlights the main components of <Constant name="query_page" />. 
+<Constant name="query_page" /> предоставляет интерактивный интерфейс для написания, запуска и анализа SQL-запросов. В этом разделе описаны основные компоненты <Constant name="query_page" />.
 
 ## Query console
-The query console is the main component of <Constant name="query_page" />. It allows you to write, run, and analyze SQL queries. The Query console supports:
-1. Query console editor, which allows you to write, run, and analyze SQL queries:
-  - It supports syntax highlighting and autocomplete suggestions 
-  - Hyperlink from SQL code `ref` to the corresponding Explorer page
-2. [Query console menu](#query-console-menu), which contains **Bookmark (icon)**, **Develop**, and **Run** buttons. 
-3. [Query output panel](#query-output-panel), below the query editor and displays the results of a query:
-  - Has three tabs: **Data**, **Chart**, and **Details**, which allow you to analyze query execution and visualize results.
-4. [Query console sidebar menu](#query-console-sidebar-menu), which contains the **<Constant name="explorer" />**, **Bookmark**, **Query history**, and **<Constant name="copilot" />** icons.
+Query console — это основной компонент <Constant name="query_page" />. Он позволяет писать, запускать и анализировать SQL-запросы. Query console включает:
 
-<Lightbox src="/img/docs/dbt-insights/insights-main.png" title="dbt Insights main interface with blank query editor" />
+1. Редактор Query console, который позволяет писать, запускать и анализировать SQL-запросы:
+  - Поддерживает подсветку синтаксиса и подсказки автодополнения  
+  - Гиперссылку из SQL-кода `ref` на соответствующую страницу Explorer
+2. [Query console menu](#query-console-menu), в котором находятся кнопки **Bookmark (icon)**, **Develop** и **Run**.
+3. [Query output panel](#query-output-panel), расположенную под редактором запросов и отображающую результаты выполнения запроса:
+  - Содержит три вкладки: **Data**, **Chart** и **Details**, которые позволяют анализировать выполнение запроса и визуализировать результаты.
+4. [Query console sidebar menu](#query-console-sidebar-menu), в котором находятся иконки **<Constant name="explorer" />**, **Bookmark**, **Query history** и **<Constant name="copilot" />**.
 
-### Query console menu
-The Query console menu is located at the top right of the Query editor. It contains the **Bookmark**, **Develop**, and **Run** buttons:
+<Lightbox src="/img/docs/dbt-insights/insights-main.png" title="Основной интерфейс dbt Insights с пустым редактором запросов" />
 
-- **Bookmark** button &mdash; Save your frequently used SQL queries as favorites for easier access.
-  - When you click **Bookmark**, a **Bookmark Query Details** modal (pop up box) will appear where you can add a **Title** and **Description**.
-  - Let [<Constant name="copilot" />](/docs/cloud/dbt-copilot) do the writing for you &mdash; use the AI assistant to automatically generate a helpful description for your bookmark.
-  - Access the newly created bookmark from the **Bookmark** icon in the [Query console sidebar menu](#query-console-sidebar-menu). 
- - **Develop**: Open the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) or [<Constant name="visual_editor" />](/docs/cloud/canvas) to continue editing your SQL query.
-- **Run** button &mdash; Run your SQL query and view the results in the **Data** tab.
+### Меню Query console
+Меню Query console расположено в правом верхнем углу редактора запросов. В нем находятся кнопки **Bookmark**, **Develop** и **Run**:
+
+- **Bookmark** — сохранение часто используемых SQL-запросов в избранное для быстрого доступа.
+  - При нажатии **Bookmark** откроется модальное окно **Bookmark Query Details**, в котором можно указать **Title** и **Description**.
+  - Позвольте [<Constant name="copilot" />](/docs/cloud/dbt-copilot) помочь с текстом — используйте AI‑ассистента для автоматической генерации полезного описания закладки.
+  - Доступ к созданной закладке можно получить через иконку **Bookmark** в [Query console sidebar menu](#query-console-sidebar-menu).
+- **Develop** — открыть [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="visual_editor" />](/docs/cloud/canvas), чтобы продолжить редактирование SQL-запроса.
+- **Run** — запуск SQL-запроса и просмотр результатов на вкладке **Data**.
 
 ## Query Builder <Lifecycle status="beta" />
 
-Query Builder in dbt <Constant name="query_page" /> lets you build queries against the Semantic Layer without writing SQL code. It guides you in creating queries based on available metrics, dimensions, and entities. With Query Builder, you can:
+Query Builder в dbt <Constant name="query_page" /> позволяет создавать запросы к Semantic Layer без написания SQL-кода. Он помогает формировать запросы на основе доступных метрик, измерений и сущностей. С помощью Query Builder вы можете:
 
-- Build analyses from your predefined semantic layer metrics.
-- Have filters, time ranges, and aggregates tailored to the semantic model.
-- View the underlying SQL code for each metric query. 
+- Создавать аналитические запросы на основе заранее определённых метрик semantic layer.
+- Использовать фильтры, временные диапазоны и агрегаты, соответствующие semantic model.
+- Просматривать сгенерированный SQL-код для каждого запроса по метрике.
 
-To create a query in Query Builder:
+Чтобы создать запрос с помощью Query Builder:
 
-1. From the main menu, go to **<Constant name="query_page" />**.
-2. Click **Build a query**. 
-3. Select what you want to include in your query.
-    - Click **Add Metric** to select the metrics for your query. 
-    - Click **Add Group by** to choose the dimensions that break down your metric, such as time grain (day, week, month), region, product, or customer.
-    - Click **Add Filter** to create a filter to narrow your results.
-    - Click **Add Order by** to select how you want to sort the results of your query. 
-    - Click **Add Limit**, select the amount of results you want to see when you run your query. If left blank, you will get all the results. 
-4. Click **Run** to run your query.
-    Results are available in the **Data** tab. You can see the SQL code generated in the **Details** tab.
+1. В главном меню перейдите в **<Constant name="query_page" />**.
+2. Нажмите **Build a query**.
+3. Выберите, что включить в запрос:
+    - Нажмите **Add Metric**, чтобы выбрать метрики для запроса.
+    - Нажмите **Add Group by**, чтобы выбрать измерения для разбиения метрик, например временную гранулярность (day, week, month), регион, продукт или клиента.
+    - Нажмите **Add Filter**, чтобы добавить фильтр и сузить результаты.
+    - Нажмите **Add Order by**, чтобы выбрать порядок сортировки результатов.
+    - Нажмите **Add Limit** и укажите количество результатов, которые нужно получить при выполнении запроса. Если оставить поле пустым, будут возвращены все результаты.
+4. Нажмите **Run**, чтобы выполнить запрос.  
+   Результаты будут доступны на вкладке **Data**. Сгенерированный SQL-код можно посмотреть на вкладке **Details**.
 
     <DocCarousel slidesPerView={1}>
 
-    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-interface.png" title="Query Builder in dbt Insights" />
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-interface.png" title="Query Builder в dbt Insights" />
 
-    <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="Results are displayed in the Data tab" />
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder.png" title="Результаты отображаются на вкладке Data" />
 
-    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-sql.png" title="The generated SQL code in the Details tab" />
+    <Lightbox src="/img/docs/dbt-insights/insights-query-builder-sql.png" title="Сгенерированный SQL-код на вкладке Details" />
 
     </DocCarousel>
 
-## Query output panel
+## Панель Query output
 
-The Query output panel is below the query editor and displays the results of a query. It displays the following tabs to analyze query execution and visualize results:
-- **Data** tab &mdash; Preview your SQL results, with results paginated.
-- **Details** tab &mdash; Generates succinct details of executed SQL query:
-  - Query metadata &mdash; <Constant name="copilot" />'s AI-generated title and description. Along with the supplied SQL and compiled SQL.
-  - Connection details &mdash; Relevant data platform connection information.
-  - Query details &mdash; Query duration, status, column count, row count.
-- **Chart** tab &mdash; Visualizes query results with built-in charts. 
-  - Use the chart icon to select the type of chart you want to visualize your results. Available chart types are **line chart, bar chart, or scatterplot**.
-  - Use the **Chart settings** to customize the chart type and the columns you want to visualize. 
-  - Available chart types are **line chart, bar chart, or scatterplot**.
-- **Download**  button &mdash; Allows you to export the results to CSV
+Query output panel расположена под редактором запросов и отображает результаты выполнения запроса. Она включает следующие вкладки для анализа выполнения запроса и визуализации результатов:
+
+- **Data** — предварительный просмотр результатов SQL-запроса с постраничной навигацией.
+- **Details** — отображает краткую информацию о выполненном SQL-запросе:
+  - Метаданные запроса — сгенерированные <Constant name="copilot" /> заголовок и описание, а также исходный и скомпилированный SQL.
+  - Сведения о подключении — информация о подключении к платформе данных.
+  - Детали запроса — длительность выполнения, статус, количество колонок и строк.
+- **Chart** — визуализация результатов запроса с помощью встроенных графиков.
+  - Используйте иконку графика, чтобы выбрать тип визуализации. Доступные типы: **line chart**, **bar chart** и **scatterplot**.
+  - Используйте **Chart settings** для настройки типа графика и колонок, которые нужно визуализировать.
+  - Доступные типы графиков: **line chart**, **bar chart** и **scatterplot**.
+- **Download** — позволяет экспортировать результаты в CSV.
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/dbt-insights/insights-chart-tab.png" width="95%" title="dbt Insights Data tab" />
-<Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="dbt Insights Chart tab" />
-<Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="dbt Insights Details tab" />
+<Lightbox src="/img/docs/dbt-insights/insights-chart-tab.png" width="95%" title="Вкладка Data в dbt Insights" />
+<Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="Вкладка Chart в dbt Insights" />
+<Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="Вкладка Details в dbt Insights" />
 </DocCarousel>
 
-## Query console sidebar menu
-The Query console sidebar menu and icons contains the following options:
+## Боковое меню Query console
+Боковое меню Query console содержит следующие разделы и иконки:
 
 ### dbt Catalog
 
-**<Constant name="explorer" /> icon** &mdash; View your project's models, columns, metrics, and more using the integrated <Constant name="explorer" /> view.
+**Иконка <Constant name="explorer" />** — просмотр моделей проекта, колонок, метрик и других объектов с помощью встроенного представления <Constant name="explorer" />.
 
-<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights dbt Catalog icon" />
+<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="Иконка dbt Catalog в dbt Insights" />
 
-### Bookmark 
+### Закладки
 
-Save and access your frequently used queries. 
+Сохранение и доступ к часто используемым запросам.
 
-<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Manage your query bookmarks" /> 
+<Lightbox src="/img/docs/dbt-insights/manage-bookmarks.png" width="90%" title="Управление закладками запросов" />
 
-### Query history
+### История запросов (Query history)
 
-View past queries, their statuses (All, Success, Error, or Pending), start time, and duration. Search for past queries and filter by status. You can also re-run a query from the Query history.
+Просмотр ранее выполненных запросов, их статусов (All, Success, Error или Pending), времени запуска и длительности выполнения. Можно искать запросы и фильтровать их по статусу, а также повторно запускать запросы из истории.
 
-<Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="90%" title="dbt Insights Query history icon" />
+<Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="90%" title="Иконка Query history в dbt Insights" />
 
 ### dbt Copilot
 
-Use [dbt <Constant name="copilot" />'s AI assistant](/docs/cloud/dbt-copilot) to modify or generate queries using natural language prompts or to chat with the Analyst agent to gather insights about your data. There are two ways you can use dbt <Constant name="copilot" /> in <Constant name="query_page" /> to interact with your data:
+Используйте [AI‑ассистента dbt <Constant name="copilot" />](/docs/cloud/dbt-copilot) для изменения или генерации запросов с помощью запросов на естественном языке, а также для общения с Analyst agent с целью получения инсайтов по данным. Существует два способа использования dbt <Constant name="copilot" /> в <Constant name="query_page" /> для взаимодействия с данными:
 
-<Lightbox src="/img/docs/dbt-insights/insights-copilot-tabs.png" width="90%" title="dbt Copilot in Insights" />
+<Lightbox src="/img/docs/dbt-insights/insights-copilot-tabs.png" width="90%" title="dbt Copilot в Insights" />
 
-- **Agent** tab<Lifecycle status='private_beta' /> - Ask questions to the Analyst agent to get intelligent data analysis with automated workflows, governed insights, and actionable recommendations. This is a conversational AI feature where you can ask natural language prompts and receive analysis in real-time. To request access to the Analyst agent, [join the waitlist](https://www.getdbt.com/product/dbt-agents#dbt-Agents-signup).  
+- **Agent** tab <Lifecycle status='private_beta' /> — задавайте вопросы Analyst agent, чтобы получать интеллектуальный анализ данных с автоматизированными рабочими процессами, управляемыми инсайтами и практическими рекомендациями. Это разговорная AI‑функция, позволяющая задавать вопросы на естественном языке и получать анализ в реальном времени. Чтобы запросить доступ к Analyst agent, [присоединитесь к списку ожидания](https://www.getdbt.com/product/dbt-agents#dbt-Agents-signup).
 
-  Some sample questions you can ask the agent: 
+  Примеры вопросов, которые можно задать агенту:
 
-  - _What region are my sales growing the fastest?_ 
-  - _What was the revenue last month?_
-  - _How should I optimize my marketing spend next quarter?_
+  - _What region are my sales growing the fastest?_  
+  - _What was the revenue last month?_  
+  - _How should I optimize my marketing spend next quarter?_  
   - _How many customers do I have, broken down by customer type?_
 
-  The Analyst agent creates an analysis plan based on your question. The agent:
+  Analyst agent формирует план анализа на основе вашего вопроса. Агент:
 
-  1. Gets context using your semantic models and metrics. 
-  2. Generates SQL queries using your project's definitions.  
-  3. Executes the SQL query and returns results with context.
-  4. Reviews and summarizes the generated insights and provides a comprehensive answer.
+  1. Получает контекст, используя semantic models и метрики проекта.
+  2. Генерирует SQL-запросы на основе определений проекта.
+  3. Выполняет SQL-запрос и возвращает результаты с контекстом.
+  4. Анализирует и суммирует полученные инсайты, предоставляя развернутый ответ.
 
-  The agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
+  Агент может проходить эти шаги несколько раз, если не был получен полный ответ, что позволяет выполнять сложный многошаговый анализ.
 
-  For more information, see [Analyze data with the Analyst agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-analyst-agent).
+  Подробнее см. [Analyze data with the Analyst agent](/docs/cloud/use-dbt-copilot#analyze-data-with-the-analyst-agent).
 
-- **Generate SQL** tab - Build queries in <Constant name="query_page" /> with natural language prompts to explore and query data with an intuitive, context-rich interface. For more information, see [Build queries](/docs/cloud/use-dbt-copilot#build-queries).
+- **Generate SQL** tab — создание запросов в <Constant name="query_page" /> с помощью запросов на естественном языке для исследования и анализа данных в интуитивном интерфейсе с богатым контекстом. Подробнее см. [Build queries](/docs/cloud/use-dbt-copilot#build-queries).
 
-## LSP features
+## Возможности LSP
 
-The following Language Server Protocol (LSP) features are available for projects upgraded to <Constant name="fusion" />:
+Следующие возможности Language Server Protocol (LSP) доступны для проектов, обновлённых до <Constant name="fusion" />:
 
-- **Live CTE previews:** Preview a CTE’s output for faster validation and debugging.
+- **Live CTE previews:** предварительный просмотр результата CTE для более быстрой валидации и отладки.
 
-    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="90%" title="Preview CTE in Insights" />
+    <Lightbox src="/img/docs/dbt-insights/preview-cte.png" width="90%" title="Предварительный просмотр CTE в Insights" />
 
-- **Real-time error detection:** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
+- **Real-time error detection:** автоматическая валидация SQL-кода для обнаружения ошибок и предупреждений без обращения к хранилищу данных. Включает как ошибки dbt (например, некорректный `ref`), так и SQL‑ошибки (например, неверное имя колонки или синтаксис SQL).
 
-    <Lightbox src="/img/docs/dbt-insights/sql-validation.png" width="90%" title="Live error detection" />
+    <Lightbox src="/img/docs/dbt-insights/sql-validation.png" width="90%" title="Обнаружение ошибок в реальном времени" />
 
-- **`ref` suggestions:** Autocomplete model names when using the `ref()` function to reference other models in your project.
+- **`ref` suggestions:** автодополнение имён моделей при использовании функции `ref()` для ссылок на другие модели проекта.
   
-    <Lightbox src="/img/docs/dbt-insights/ref-autocomplete.png" width="90%" title="ref suggestions in Insights" />
+    <Lightbox src="/img/docs/dbt-insights/ref-autocomplete.png" width="90%" title="Подсказки ref в Insights" />
 
-- **Hover insights:** View context on tables, columns, and functions without leaving your code. Hover over any SQL element to see details like column names and data types.
+- **Hover insights:** просмотр контекста по таблицам, колонкам и функциям без выхода из кода. При наведении курсора на элемент SQL отображаются детали, такие как имена колонок и типы данных.
 
     <DocCarousel slidesPerView={1}>
-    <Lightbox src="/img/docs/dbt-insights/column-info.png" width="60%" title="Sample column details" />
-    <Lightbox src="/img/docs/dbt-insights/column-hover.png" width="60%" title="Sample column details" />
+    <Lightbox src="/img/docs/dbt-insights/column-info.png" width="60%" title="Пример сведений о колонке" />
+    <Lightbox src="/img/docs/dbt-insights/column-hover.png" width="60%" title="Пример сведений о колонке" />
     </DocCarousel>
-

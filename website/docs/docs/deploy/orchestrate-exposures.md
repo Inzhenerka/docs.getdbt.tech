@@ -1,12 +1,12 @@
 ---
-title: "Visualize and orchestrate exposures"
-sidebar_label: "Visualize and orchestrate exposures"
-description: "Learn how to use dbt to automatically generate downstream exposures from dashboards and proactively refresh the underlying data sources during scheduled dbt jobs."
+title: "Визуализация и оркестрация exposures"
+sidebar_label: "Визуализация и оркестрация exposures"
+description: "Узнайте, как использовать dbt для автоматической генерации downstream exposures из дашбордов и проактивного обновления базовых источников данных во время запланированных dbt‑запусков."
 pagination_prev: null
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 
-# Visualize and orchestrate downstream exposures <Lifecycle status="managed,managed_plus" />
+# Визуализация и оркестрация downstream exposures <Lifecycle status="managed,managed_plus" />
 
 import ActiveAutoExposuresOverview from '/snippets/_active-auto-exposures-overview.md';
 

@@ -1,36 +1,36 @@
 ---
-title: "About Hybrid projects"
-sidebar_label: "About hybrid projects"
-description: "Learn how to upload dbt Core artifacts into the dbt platform to create and set up hybrid projects."
+title: "О гибридных проектах"
+sidebar_label: "О гибридных проектах"
+description: "Узнайте, как загружать артефакты dbt Core в dbt platform, чтобы создавать и настраивать hybrid‑проекты."
 pagination_next: "docs/deploy/hybrid-setup"
 ---
 
-# About Hybrid projects <Lifecycle status='managed_plus'/>
+# О гибридных проектах <Lifecycle status='managed_plus'/>
 
 <IntroText>
-With Hybrid projects, your organization can adopt complementary <Constant name="core" /> and <Constant name="cloud" /> workflows (where some teams deploy projects in <Constant name="core" /> and others in <Constant name="cloud" />) and seamlessly integrate these workflows by automatically uploading <Constant name="core" /> [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud" />.
+Гибридные проекты позволяют вашей организации использовать дополняющие друг друга рабочие процессы <Constant name="core" /> и <Constant name="cloud" /> (когда одни команды деплоят проекты в <Constant name="core" />, а другие — в <Constant name="cloud" />) и бесшовно интегрировать эти процессы за счёт автоматической загрузки [артефактов](/reference/artifacts/dbt-artifacts) <Constant name="core" /> в <Constant name="cloud" />.
 </IntroText>
 
-:::tip Available in public preview
-Hybrid projects is available in public preview to [<Constant name="cloud" /> Enterprise accounts](https://www.getdbt.com/pricing).
+:::tip Доступно в публичном превью
+Гибридные проекты доступны в публичном превью для [аккаунтов <Constant name="cloud" /> Enterprise](https://www.getdbt.com/pricing).
 :::
 
-<Constant name="core" /> users can seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) like [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json), and so on &mdash; into <Constant name="cloud" /> after executing a run in the <Constant name="core" /> command line interface (CLI), which helps:
+Пользователи <Constant name="core" /> могут без проблем загружать [артефакты](/reference/artifacts/dbt-artifacts), такие как [run results.json](/reference/artifacts/run-results-json), [manifest.json](/reference/artifacts/manifest-json), [catalog.json](/reference/artifacts/catalog-json), [sources.json](/reference/artifacts/sources-json) и другие &mdash; в <Constant name="cloud" /> после выполнения запуска в интерфейсе командной строки (CLI) <Constant name="core" />, что позволяет:
 
-- Collaborate with <Constant name="cloud" /> + <Constant name="core" /> users by enabling them to visualize and perform [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) to dbt models that live in Core projects.
-- (Coming soon) New users interested in the [<Constant name="visual_editor" />](/docs/cloud/canvas) can build off of dbt models already created by a central data team in <Constant name="core" /> rather than having to start from scratch.
-- <Constant name="core" /> and <Constant name="cloud" /> users can navigate to [<Constant name="explorer" />](/docs/explore/explore-projects) and view their models and assets. To view <Constant name="explorer" />, you must have a [read-only seat](/docs/cloud/manage-access/seats-and-users).
+- Совместно работать пользователям <Constant name="cloud" /> и <Constant name="core" />, давая им возможность визуализировать и использовать [кросс-проектные ссылки](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) на dbt-модели, которые находятся в проектах Core.
+- (Скоро) Новым пользователям, заинтересованным в [<Constant name="visual_editor" />](/docs/cloud/canvas), строить решения на основе dbt-моделей, уже созданных центральной командой данных в <Constant name="core" />, вместо того чтобы начинать с нуля.
+- Пользователям <Constant name="core" /> и <Constant name="cloud" /> переходить в [<Constant name="explorer" />](/docs/explore/explore-projects) и просматривать свои модели и ассеты. Для доступа к <Constant name="explorer" /> необходима [лицензия только для чтения](/docs/cloud/manage-access/seats-and-users).
 
-## Prerequisites
+## Предварительные требования
 
-To upload artifacts, make sure you meet these prerequisites:
+Чтобы загружать артефакты, убедитесь, что выполнены следующие условия:
 
-- Your organization is on a [<Constant name="cloud" /> Enterprise+ plan](https://www.getdbt.com/pricing)
-- You're on [<Constant name="cloud" />'s release tracks](/docs/dbt-versions/cloud-release-tracks) and your <Constant name="core" /> project is on dbt v1.10 or higher
-- [Configured](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) a hybrid project in <Constant name="cloud" />.
-- Updated your existing <Constant name="core" /> project with latest changes and [configured it with model access](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
-    - Ensure models that you want to share with other <Constant name="cloud" /> projects use `access: public` in their model configuration. This makes the models more discoverable and shareable
-    - Learn more about [access modifier](/docs/mesh/govern/model-access#access-modifiers) and how to set the [`access` config](/reference/resource-configs/access)
-- Update [<Constant name="cloud" /> permissions](/docs/cloud/manage-access/enterprise-permissions) to create a new project in <Constant name="cloud" />
+- Ваша организация использует тариф [<Constant name="cloud" /> Enterprise+](https://www.getdbt.com/pricing)
+- Вы используете [release tracks <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), а ваш проект <Constant name="core" /> работает на dbt версии 1.10 или выше
+- Вы [настроили](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud) гибридный проект в <Constant name="cloud" />
+- Вы обновили существующий проект <Constant name="core" /> с учётом последних изменений и [настроили в нём доступ к моделям](/docs/deploy/hybrid-setup#make-dbt-core-models-public):
+    - Убедитесь, что модели, которыми вы хотите делиться с другими проектами <Constant name="cloud" />, используют `access: public` в конфигурации модели. Это делает модели более доступными для обнаружения и повторного использования
+    - Подробнее об [модификаторе доступа](/docs/mesh/govern/model-access#access-modifiers) и о том, как задать конфигурацию [`access`](/reference/resource-configs/access)
+- Обновите [права доступа <Constant name="cloud" />](/docs/cloud/manage-access/enterprise-permissions), чтобы иметь возможность создавать новый проект в <Constant name="cloud" />
 
-**Note:** Uploading artifacts doesn't count against <Constant name="cloud" /> run slots.
+**Примечание:** Загрузка артефактов не расходует слоты запусков <Constant name="cloud" />.
