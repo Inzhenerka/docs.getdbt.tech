@@ -59,9 +59,9 @@ Fusion engine в сочетании с расширением для VS Code —
 
 Это возможно потому, что Fusion больше не воспринимает SQL просто как строку — он действительно его понимает. Плюс, он показывает полезную информацию о самой ошибке.
 
-<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_function_error.png" title="Showing function errors." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_function_error.png" title="Показ ошибок функций." />
 
-<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_column_error.png" title="Showing column name errors." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_column_error.png" title="Показ ошибок в названиях колонок." />
 
 На мой взгляд, это самое большое улучшение во всём этом движке.
 
@@ -71,13 +71,13 @@ Fusion engine в сочетании с расширением для VS Code —
 
 Теперь прямо в VS Code есть вкладка lineage, которая показывает lineage проекта в интерактивном и «живом» виде. Можно использовать lenses — это удобный способ визуализировать проект по разным атрибутам, например `resource_type` или `materialization`.
 
-<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_project_lineage.png" title="Project Lineage." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_project_lineage.png" title="Линейность проекта." />
 
 И ещё одна вещь, которую я не ожидал здесь увидеть, но очень рад, что она есть, — column‑level lineage. Не просто откуда берутся колонки, но и как они меняются: переименовываются, трансформируются или прокидываются дальше без изменений.
 
 Это невероятно полезно для отладки трансформаций или для понимания того, как формируется ключевая метрика на протяжении всей цепочки моделей.
 
-<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_cll.png" title="Column-level Lineage." />
+<Lightbox src="/img/blog/2025-06-16-the-new-dbt-vscode-extension/vs_code_extension_cll.png" title="Линейность на уровне колонок." />
 
 ### Мгновенный рефакторинг
 

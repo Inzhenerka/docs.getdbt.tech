@@ -13,7 +13,7 @@ is_featured: true
 ---
 Помните, каким dbt ощущался, когда у вас был небольшой проект? Вы нажимали Enter — и всё начинало происходить практически мгновенно. Мы возвращаем это ощущение.
 
-<Lightbox src="/img/blog/2025-02-19-faster-project-parsing-with-rust/parsing_10k.gif" width="100%" title="Benchmarking tip: always try to get data that's good enough that you don't need to do statistics on it" />
+<Lightbox src="/img/blog/2025-02-19-faster-project-parsing-with-rust/parsing_10k.gif" width="100%" title="Совет по бенчмаркингу: всегда старайтесь получать данные, которые достаточно хороши, чтобы вам не пришлось делать по ним статистику" />
 
 После [серии подробных разборов](/blog/the-levels-of-sql-comprehension), посвящённых [внутреннему устройству понимания SQL](/blog/sql-comprehension-technologies), давайте немного поговорим о скорости. А именно — об одном из самых раздражающих замедлений по мере роста проекта: парсинге проекта.
 
@@ -55,7 +55,7 @@ is_featured: true
 
 Как вы видели в начале поста, я запускал несколько синтетических проектов на ранней сборке нового движка dbt, и он оказался весьма шустрым — **парсинг проекта из 10 000 моделей занимает менее 600 мс**. Посмотрим, как он справляется с другими типичными размерами проектов:
 
-<Lightbox src="/img/blog/2025-02-19-faster-project-parsing-with-rust/parse_time_comparison_linear.png" width="100%" title="You might have to squint, but I promise there's a yellow line on each of those groups" />
+<Lightbox src="/img/blog/2025-02-19-faster-project-parsing-with-rust/parse_time_comparison_linear.png" width="100%" title="Возможно, придётся прищуриться, но обещаю: в каждой из этих групп есть жёлтая линия" />
 
 Даже проект с 20 000 моделей завершил парсинг примерно за одну секунду. Эквивалентный cold parse занимает значительно больше минуты, а partial parse (без изменённых файлов) — около 12 секунд.
 

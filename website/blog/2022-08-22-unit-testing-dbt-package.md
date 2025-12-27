@@ -173,7 +173,7 @@ dbt run-operation run_unit_tests --profile postgres
 
 Исторически сложилось так, что выполнение модульного тестирования в вашем dbt пакете было сложной задачей, так как Jinja2 не предлагает встроенной функции модульного тестирования. Но у нас есть хорошие новости: dbt предоставляет макрос `exceptions.raise_compiler_error`, чтобы мы могли вызывать ошибки в `dbt run-operation`. Используя это, я реализовал dbt пакет под названием [yu-iskw/dbt-unittest](https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/), который вдохновлен [модулем unittest в Python](https://docs.python.org/3/library/unittest.html), чтобы улучшить модульное тестирование в разработке dbt пакетов.
 
-[GitHub - yu-iskw/dbt-unittest: A dbt Package provides macros for unit testing](https://github.com/yu-iskw/dbt-unittest)
+[GitHub — yu-iskw/dbt-unittest: пакет dbt, предоставляющий макросы для модульного тестирования](https://github.com/yu-iskw/dbt-unittest)
 
 Используя это, мы можем переосуществить пример, используя макрос `dbt_unittest.assert_equals`, и реализация становится намного проще.
 

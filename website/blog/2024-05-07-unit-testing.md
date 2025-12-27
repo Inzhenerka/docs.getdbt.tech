@@ -210,7 +210,7 @@ group by 1
 
 ### Исправление SQL кода
 
-You can see that we changed `count` to `sum` in the SQL code:
+Вы можете видеть, что в SQL-коде мы заменили `count` на `sum`:
 
 <Lightbox src="/img/blog/2024-05-07-unit-testing/changed_code.png" title="SQL changes in code" />
 
