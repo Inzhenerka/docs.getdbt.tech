@@ -13,13 +13,13 @@
 <div className="grid--2-col">
 
 <Card
-16 |     title="Настройка и визуализация последующих воздействий"
+    title="Настройка и визуализация последующих воздействий"
     body="Автоматически настраивайте downstream exposures на основе дашбордов, чтобы понять, как модели используются во внешних инструментах, и получить более полное downstream lineage."
     link="/docs/cloud-integrations/downstream-exposures-tableau"
     icon="dbt-bit"/>
 
 <Card
-22 |     title="Оркестрация последующих воздействий"
+    title="Оркестрация последующих воздействий"
     link="/docs/cloud-integrations/orchestrate-exposures"
     body="Проактивно обновляет базовые источники данных (например, Tableau extracts) с помощью планировщика dbt во время запланированных dbt‑задач."
     icon="dbt-bit"/>
