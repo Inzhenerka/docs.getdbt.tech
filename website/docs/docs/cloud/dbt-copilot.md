@@ -2,7 +2,6 @@
 title: "О dbt Copilot"
 sidebar_label: "О dbt Copilot"
 description: "dbt Copilot — это мощный ассистент на базе ИИ, предназначенный для ускорения аналитических рабочих процессов на протяжении всего ADLC."
----
 pagination_next: "docs/cloud/enable-dbt-copilot"
 keywords: ["dbt Copilot", "dbt", "AI", "AI-powered", "dbt"]
 ---

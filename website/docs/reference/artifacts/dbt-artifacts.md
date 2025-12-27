@@ -1,6 +1,6 @@
 ---
-title: "О dbt артефактах"
-sidebar_label: "О dbt артефактах"
+title: "Об артефактах dbt"
+sidebar_label: "Об артефактах dbt"
 ---
 
 При каждом запуске dbt генерирует и сохраняет один или несколько *артефактов*. Несколько из них представляют собой <Term id="json" /> файлы (`semantic_manifest.json`, `manifest.json`, `catalog.json`, `run_results.json` и `sources.json`), которые используются для:

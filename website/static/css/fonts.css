@@ -68,3 +68,19 @@
     font-style: oblique;
     src: url("/fonts/burlingame/dbt_cloud-04112018/Fonts/8457c435-aede-4c82-a152-d697bb1f30b0.woff") format("woff");
 }
+
+@font-face {
+  font-family: "SourceSansWeb";
+  src: url("/fonts/SourceSans3VF-Upright.otf.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SourceSansWeb";
+  src: url("/fonts/SourceSans3VF-Italic.otf.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}

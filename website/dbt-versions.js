@@ -16,21 +16,21 @@
 exports.versions = [
   {
     version: "1.12",
-    customDisplay: "dbt platform (Latest)",
+    customDisplay: "Платформа dbt (аткуальная)",
   },
   {
     version: "2.0",
-    customDisplay: "dbt Fusion engine",
+    customDisplay: "Движок dbt Fusion",
     isPrerelease: true,
   },
  {
     version: "1.11",
-    customDisplay: "Core v1.11",
+    customDisplay: "dbt Core v1.11",
     EOLDate: "2026-12-18",
   },
   {
     version: "1.10",
-    customDisplay: "Core v1.10 (Compatible/Extended)",
+    customDisplay: "dbt Core v1.10 (на поддержке)",
     EOLDate: "2026-06-15",
   },
 ];

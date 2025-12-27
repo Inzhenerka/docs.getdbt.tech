@@ -2,9 +2,9 @@
 
 :root {
   /* Font Families */
-  --font-display: 'polymath', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
+  --font-display: 'SourceSansWeb', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'segoe ui',
     'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
-  --font-sans: 'polymath-text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+  --font-sans: 'SourceSansWeb', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
     'segoe ui', 'Ubuntu', 'roboto', 'noto', Arial, sans-serif;
   --font-mono: 'ibm-plex-mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
     Consolas, monospace;
