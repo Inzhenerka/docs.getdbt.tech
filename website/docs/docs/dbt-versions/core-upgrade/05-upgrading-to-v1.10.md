@@ -1,41 +1,41 @@
 ---
-title: "Upgrading to v1.10"
+title: "Обновление до v1.10"
 id: upgrading-to-v1.10
-description: New features and changes in dbt Core v1.10
+description: Новые возможности и изменения в dbt Core v1.10
 displayed_sidebar: "docs"
 ---
  
-## Resources 
+## Ресурсы 
 
 - <Constant name="core" /> [v1.10 changelog](https://github.com/dbt-labs/dbt-core/blob/1.10.latest/CHANGELOG.md)
 - [<Constant name="core" /> CLI Installation guide](/docs/core/installation-overview)
 - [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x. Any behavior changes will be accompanied by a [behavior change flag](/reference/global-configs/behavior-changes#behavior-change-flags) to provide a migration window for existing projects. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+dbt Labs стремится обеспечивать обратную совместимость для всех версий 1.x. Любые изменения в поведении будут сопровождаться [флагом изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags), который предоставляет окно для миграции существующих проектов. Если после обновления вы столкнулись с ошибкой, пожалуйста, сообщите нам, [открыв issue](https://github.com/dbt-labs/dbt-core/issues/new).
 
-Starting in 2024, <Constant name="cloud" /> provides the functionality from new versions of <Constant name="core" /> via [release tracks](/docs/dbt-versions/cloud-release-tracks) with automatic upgrades. If you have selected the "Latest" release track in <Constant name="cloud" />, you already have access to all the features, fixes, and other functionality that is included in <Constant name="core" /> v1.10! If you have selected the "Compatible" release track, you will have access in the next monthly "Compatible" release after the <Constant name="core" /> v1.10 final release.
+Начиная с 2024 года, <Constant name="cloud" /> предоставляет функциональность новых версий <Constant name="core" /> через [release tracks](/docs/dbt-versions/cloud-release-tracks) с автоматическими обновлениями. Если в <Constant name="cloud" /> у вас выбран release track **Latest**, у вас уже есть доступ ко всем возможностям, исправлениям и прочему функционалу, включённому в <Constant name="core" /> v1.10! Если выбран release track **Compatible**, доступ появится в следующем ежемесячном выпуске **Compatible** после финального релиза <Constant name="core" /> v1.10.
 
-For users of dbt Core, since v1.8, we recommend explicitly installing both `dbt-core` and `dbt-<youradapter>`. This may become required for a future version of dbt. For example:
+Для пользователей dbt Core, начиная с v1.8, мы рекомендуем явно устанавливать как `dbt-core`, так и `dbt-<youradapter>`. В будущих версиях dbt это может стать обязательным требованием. Например:
 
 ```sql
 python3 -m pip install dbt-core dbt-snowflake
 ```
 
-## New and changed features and functionality
+## Новые и измененные возможности и функциональность
 
-New features and functionality available in <Constant name="core" /> v1.10
+Новые возможности и изменения, доступные в <Constant name="core" /> v1.10
 
-### The `--sample` flag
+### Флаг `--sample`
 
-Large data sets can slow down dbt build times, making it harder for developers to test new code efficiently. The [`--sample` flag](/docs/build/sample-flag), available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
+Большие наборы данных могут существенно замедлять время выполнения сборок dbt, усложняя эффективное тестирование нового кода. Флаг [`--sample`](/docs/build/sample-flag), доступный для команд `run` и `build`, помогает сократить время сборки и затраты на хранилище данных, запуская dbt в режиме выборки. Он генерирует отфильтрованные refs и sources с использованием временной выборки, позволяя разработчикам проверять результаты без построения моделей целиком.
 
-### Move standalone anchors under `anchors:` key
+### Перемещение независимых якорей под ключ `anchors:`
 
-As part of the ongoing process of making the dbt authoring language more precise, dbt Core v1.10 raises a warning when it sees an unexpected top-level key in a properties YAML file. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a properties YAML file. You can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
+В рамках продолжающейся работы по повышению точности языка описания dbt, dbt Core v1.10 выводит предупреждение при обнаружении неожиданного ключа верхнего уровня в properties YAML-файле. Распространённый сценарий появления таких ключей — это отдельные определения anchors на верхнем уровне YAML-файла свойств. Для таких повторно используемых блоков конфигурации теперь можно использовать новый ключ верхнего уровня `anchors:`.
 
-For example, rather than using this configuration:
+Например, вместо следующей конфигурации:
 
 <File name='models/_models.yml'>
 
@@ -61,7 +61,7 @@ models:
 
 </File>
 
-Move the anchor under the `anchors:` key instead:
+Следует переместить anchor под ключ `anchors:`:
 
 <File name='models/_models.yml'>
 
@@ -88,13 +88,13 @@ models:
 
 </File>
 
-This move is only necessary for fragments defined outside of the main YAML structure. For more information about this new key, see [anchors](/reference/resource-properties/anchors).
+Это перемещение необходимо только для фрагментов, определённых вне основной структуры YAML. Подробнее о новом ключе см. в разделе [anchors](/reference/resource-properties/anchors).
 
-### Parsing `catalogs.yml`
+### Парсинг `catalogs.yml`
 
-dbt Core can now parse the `catalogs.yml` file. This is an important milestone in the journey to supporting external catalogs for Iceberg tables, as it enables write integrations. You'll be able to provide a config specifying a catalog integration for your producer model:
+dbt Core теперь умеет парсить файл `catalogs.yml`. Это важная веха на пути к поддержке внешних каталогов для таблиц Iceberg, так как она позволяет реализовывать write-интеграции. Теперь можно задать конфигурацию, указывающую интеграцию каталога для producer-модели:
 
-For example:
+Например:
 
 ```yml
 
@@ -109,7 +109,7 @@ catalogs:
 
 ```
 
-The implementation for the model would look like this:
+Реализация на стороне модели будет выглядеть так:
 
 <File name='models/schemas.yml'>
 
@@ -124,65 +124,64 @@ models:
 
 </File>
 
-Check out our [docs on external catalog support](/docs/mesh/iceberg/about-catalogs) today! We'll have more information about this in the coming weeks, but this is an exciting step in journey to cross-platform support. 
+Уже сейчас ознакомьтесь с нашей [документацией по поддержке внешних каталогов](/docs/mesh/iceberg/about-catalogs)! В ближайшие недели мы поделимся дополнительной информацией, но уже сейчас это важный шаг на пути к кросс-платформенной поддержке.
 
-### Integrating dbt Core artifacts with dbt projects
+### Интеграция артефактов dbt Core с dbt‑проектами
 
-With [hybrid projects](/docs/deploy/hybrid-projects), <Constant name="core"/> users working in the command line interface (CLI) can execute runs that seamlessly upload [artifacts](/reference/artifacts/dbt-artifacts) into <Constant name="cloud"/>. This enhances hybrid <Constant name="core"/>/<Constant name="cloud"/> deployments by:
+С использованием [гибридных проектов](/docs/deploy/hybrid-projects) пользователи <Constant name="core"/> при работе в командной строке (CLI) могут выполнять запуски, которые автоматически загружают [артефакты](/reference/artifacts/dbt-artifacts) в <Constant name="cloud"/>. Это расширяет возможности гибридных развёртываний <Constant name="core"/> / <Constant name="cloud"/> за счёт:
 
-- Fostering collaboration between <Constant name="cloud"/> + <Constant name="core"/> users by enabling them to visualize and perform [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) to models defined in <Constant name="core"/> projects. This feature unifies <Constant name="cloud"/> + <Constant name="core"/> workflows for a more connected dbt experience.
-- Giving <Constant name="cloud"/> and <Constant name="core"/> users insights into their models and assets in [<Constant name="explorer"/>](/docs/explore/explore-projects). To view <Constant name="explorer"/>, you must have have a [developer or read-only license](/docs/cloud/manage-access/seats-and-users).
-- (Coming soon) Enabling users working in the [<Constant name="visual_editor"/>](/docs/cloud/canvas) to build off of models already created by a central data team in <Constant name="core"/> rather than having to start from scratch.
+- Улучшения совместной работы между пользователями <Constant name="cloud"/> и <Constant name="core"/> за счёт возможности визуализации и использования [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) к моделям, определённым в проектах <Constant name="core"/>. Эта функция объединяет рабочие процессы <Constant name="cloud"/> и <Constant name="core"/> в единый, более связный опыт работы с dbt.
+- Предоставления пользователям <Constant name="cloud"/> и <Constant name="core"/> информации о моделях и активах в [<Constant name="explorer"/>](/docs/explore/explore-projects). Для доступа к <Constant name="explorer"/> необходима [лицензия developer или read-only](/docs/cloud/manage-access/seats-and-users).
+- (Скоро) Возможности для пользователей, работающих в [<Constant name="visual_editor"/>](/docs/cloud/canvas), развивать модели, уже созданные центральной командой данных в <Constant name="core"/>, без необходимости начинать с нуля.
 
-Hybrid projects are available as a private beta to [<Constant name="cloud"/> Enterprise accounts](https://www.getdbt.com/pricing). Contact your account representative to register your interest in the beta.
+Hybrid projects доступны в рамках закрытой беты для [<Constant name="cloud"/> Enterprise-аккаунтов](https://www.getdbt.com/pricing). Чтобы зарегистрировать интерес к бете, свяжитесь с вашим аккаунт-менеджером.
 
-### Managing changes to legacy behaviors
+### Управление изменениями в устаревших поведениях
 
-dbt Core v1.10 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
+dbt Core v1.10 вводит новые флаги для [управления изменениями устаревшего поведения](/reference/global-configs/behavior-changes). Вы можете включать недавно добавленные изменения (по умолчанию отключены) или, наоборот, отключать зрелые изменения (по умолчанию включены), задавая значения `True` / `False` для `flags` в `dbt_project.yml`.
 
-You can read more about each of these behavior changes in the following links:
+Подробнее о каждом изменении поведения можно прочитать по следующим ссылкам:
 
-- (Introduced, disabled by default) [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation). If the flag is set to `True`, dbt will raise a warning if the argument `type` names you've added in your macro YAMLs don't match the argument names in your macro or if the argument types aren't valid according to the [supported types](/reference/resource-properties/arguments#supported-types).
-- (Introduced, disabled by default) [`require_all_warnings_handled_by_warn_error`](/reference/global-configs/behavior-changes#warn-error-handler-for-all-warnings). If this flag is set to `True`, all warnings raised during a run will be routed through the `--warn-error` / `--warn-error-options` handler. This ensures consistent behavior when promoting warnings to errors or silencing them. When the flag is `False` (which is the current default), only some warnings are processed by the handler &mdash; others may bypass it. Turning it on for projects that use `--warn-error` (or `--warn-error-options='{"error":"all"}'`) may cause build failures on warnings that were previously ignored to fail so we recommend enabling it gradually, one a project at a time.
+- (Добавлено, отключено по умолчанию) [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation). Если флаг установлен в `True`, dbt выдаст предупреждение, если имена аргументов `type`, указанные в YAML для макросов, не совпадают с именами аргументов в самом макросе или если типы аргументов не соответствуют [поддерживаемым типам](/reference/resource-properties/arguments#supported-types).
+- (Добавлено, отключено по умолчанию) [`require_all_warnings_handled_by_warn_error`](/reference/global-configs/behavior-changes#warn-error-handler-for-all-warnings). Если этот флаг установлен в `True`, все предупреждения, возникающие во время выполнения, будут обрабатываться через механизм `--warn-error` / `--warn-error-options`. Это обеспечивает единообразное поведение при повышении предупреждений до ошибок или их подавлении. Когда флаг равен `False` (текущее значение по умолчанию), только часть предупреждений проходит через этот механизм — остальные могут его обходить. Включение этого флага в проектах, использующих `--warn-error` (или `--warn-error-options='{"error":"all"}'`), может привести к падению сборок из‑за предупреждений, которые ранее игнорировались, поэтому мы рекомендуем включать его постепенно, по одному проекту за раз.
 
-### Deprecation warnings
+### Предупреждения об устаревании
 
-Starting in `v1.10`, you will receive deprecation warnings for dbt code that will become invalid in the future, including: 
+Начиная с версии `v1.10`, вы будете получать предупреждения об устаревании (deprecation warnings) для dbt-кода, который станет недопустимым в будущем, включая:
 
-- Custom inputs (for example, unrecognized resource properties, configurations, and top-level keys)
-- Duplicate YAML keys in the same file
-- Unexpected Jinja blocks (for example, `{% endmacro %}` tags without a corresponding `{% macro %}` tag)
-- Some `properties` are moving to `configs`
-- And more
+- Пользовательские входные данные (например, нераспознанные свойства ресурсов, конфигурации и ключи верхнего уровня)
+- Дублирующиеся ключи YAML в одном файле
+- Неожиданные Jinja-блоки (например, теги `{% endmacro %}` без соответствующего тега `{% macro %}`)
+- Перемещение некоторых `properties` в `configs`
+- И другое
 
+dbt начнёт выдавать эти предупреждения в версии `1.10`, однако внесение изменений не является обязательным условием для её использования. В dbt Labs мы понимаем, что существующим пользователям потребуется время на миграцию проектов, и наша цель — не нарушить вашу работу этим обновлением. Основная цель — дать вам больше безопасности, обратной связи и уверенности в дальнейшей работе.
 
-dbt will start raising these warnings in version `1.10`, but making these changes will not be a prerequisite for using it. We at dbt Labs understand that it will take existing users time to migrate their projects, and it is not our goal to disrupt anyone with this update. The goal is to enable you to work with more safety, feedback, and confidence going forward.
+Что это значит для вас?
 
-What does this mean for you?
+1. Если в вашем проекте (или пакете dbt) появляется новое предупреждение об устаревании в `v1.10`, запланируйте обновление некорректного кода в ближайшее время. Пока это всего лишь предупреждение, но в будущих версиях dbt будет применяться более строгая валидация входных данных проекта. Обратите внимание на инструмент [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix), который может автоматически исправить многие из этих проблем.
+2. В будущем конфигурация [`meta`](/reference/resource-configs/meta) станет единственным местом для пользовательских атрибутов. Всё остальное будет строго типизировано и валидировано. Если у вас есть дополнительный атрибут, который вы хотите включить в проект, или конфигурация модели, к которой нужно обращаться в кастомной материализации, в дальнейшем её необходимо размещать внутри `meta`.
+3. Если вы используете флаг [`—-warn-error`](/reference/global-configs/warnings) (или `--warn-error-options '{"error": "all"}'`) для повышения всех предупреждений до уровня ошибок, это будет включать и новые предупреждения об устаревании, появившиеся в dbt Core. Если вы не хотите, чтобы они становились ошибками, флаг `--warn-error-options` позволяет более гибко управлять тем, какие типы предупреждений считаются ошибками. Вы можете задать `"warn": ["Deprecations"]` (новое в `v1.10`), чтобы продолжать обрабатывать предупреждения об устаревании как предупреждения.
+4. Флаг `--models` / `--model` / `-m` был переименован в `--select` / `--s` ещё в dbt Core v0.21 (октябрь 2021). Тихое игнорирование этого флага означает игнорирование критериев выбора в команде, что может привести к сборке всего DAG вместо небольшой подмножества моделей. По этой причине флаг `--models` / `--model` / `-m` **будет выдавать предупреждение** в dbt Core v1.10 и ошибку в Fusion. Пожалуйста, обновите определения ваших job’ов соответствующим образом.
 
-1. If your project (or dbt package) encounters a new deprecation warning in `v1.10`, plan to update your invalid code soon. Although it’s just a warning for now, in a future version, dbt will enforce stricter validation of the inputs in your project. Check out the [`dbt-autofix` tool](https://github.com/dbt-labs/dbt-autofix) to autofix many of these!
-2. In the future, the [`meta` config](/reference/resource-configs/meta) will be the only place to put custom user-defined attributes. Everything else will be strongly typed and strictly validated. If you have an extra attribute you want to include in your project, or a model config you want to access in a custom materialization, you must nest it under `meta` moving forward.
-3. If you are using the [`—-warn-error` flag](/reference/global-configs/warnings) (or `--warn-error-options '{"error": "all"}'`) to promote all warnings to errors, this will include new deprecation warnings coming to dbt Core. If you don’t want these to be promoted to errors, the `--warn-error-options` flag gives you more granular control over exactly which types of warnings are treated as errors. You can set `"warn": ["Deprecations"]` (new as of `v1.10`) to continue treating the deprecation warnings as warnings.
-4. The `--models` / `--model` / `-m` flag was renamed to `--select` / `--s` way back in dbt Core v0.21 (Oct 2021). Silently skipping this flag means ignoring your command's selection criteria, which could mean building your entire DAG when you only meant to select a small subset. For this reason, the `--models` / `--model` / `-m` flag **will raise a warning** in dbt Core v1.10, and an error in Fusion. Please update your job definitions accordingly.
+#### Пользовательские входные данные
 
-#### Custom inputs
-  
-Historically, dbt has allowed you to configure inputs largely unconstrained. A common example of this is setting custom YAML properties:
+Исторически dbt позволял настраивать входные данные практически без ограничений. Типичный пример — задание пользовательских свойств в YAML:
 
 ```yml
 
 models:
   - name: my_model
     description: A model in my project.
-    dbt_is_awesome: true # a custom property
+    dbt_is_awesome: true # пользовательское свойство
 
 ```
 
-dbt detects the unrecognized custom property (`dbt_is_awesome`) and silently continues. Without a set of strictly defined inputs, it becomes challenging to validate your project's configuration. This creates unintended issues such as:
-- Silently ignoring misspelled properties and configurations (for example, `desciption:` instead of `description:`).
-- Unintended collisions with user code when dbt introduces a new “reserved” property or configuration.
+dbt обнаруживает нераспознанное пользовательское свойство (`dbt_is_awesome`) и молча продолжает работу. При отсутствии строго определённого набора входных данных становится сложно валидировать конфигурацию проекта. Это приводит к непреднамеренным проблемам, таким как:
+- Тихое игнорирование опечаток в свойствах и конфигурациях (например, `desciption:` вместо `description:`).
+- Непреднамеренные конфликты с пользовательским кодом, когда dbt вводит новое «зарезервированное» свойство или конфигурацию.
 
-If you have an unrecognized custom property, you will receive a warning, and in a future version, dbt will cease to support custom properties. Moving forward, these should be nested under the [`meta` config](/reference/resource-configs/meta), which will be the only place to put custom user-defined attributes:
+Если у вас есть нераспознанное пользовательское свойство, вы получите предупреждение, а в будущей версии dbt поддержка таких свойств будет прекращена. В дальнейшем их следует размещать внутри конфигурации [`meta`](/reference/resource-configs/meta), которая станет единственным местом для пользовательских атрибутов:
 
 ```yml
 
@@ -195,11 +194,11 @@ models:
 
 ```
 
-#### Custom keys not nested under meta
+#### Пользовательские ключи не вложенные под meta
 
-Previously, when you could define any additional fields directly under `config`, it could lead to collisions between pre-existing user-defined configurations and official configurations of the dbt framework. 
+Ранее возможность определять любые дополнительные поля напрямую под `config` могла приводить к конфликтам между пользовательскими конфигурациями и официальными конфигурациями фреймворка dbt.
 
-In the future, the `meta` config will be the sole location for custom user-defined attributes. Everything else will be strongly typed and strictly validated. If you have an extra attribute you want to include in your project, or a model config you want to access in a custom materialization, you must nest it under `meta` moving forward:
+В будущем конфигурация `meta` станет единственным допустимым местом для пользовательских атрибутов. Всё остальное будет строго типизировано и валидировано. Если у вас есть дополнительный атрибут, который вы хотите включить в проект, или конфигурация модели, к которой требуется доступ в кастомной материализации, её необходимо размещать под `meta`:
 
 ```yaml
 models:
@@ -214,9 +213,9 @@ models:
             some_key: some_value
 ```
 
-#### Duplicate keys in the same yaml file
+#### Дублирующиеся ключи в одном YAML‑файле
 
-If two identical keys exist in the same properties YAML file, you will get a warning, and in a future version, dbt will stop supporting duplicate keys. Previously, if identical keys existed in the same properties YAML file, dbt silently overwrite, using the last configuration listed in the file.
+Если в одном properties YAML-файле присутствуют два одинаковых ключа, вы получите предупреждение, а в будущей версии dbt поддержка дублирующихся ключей будет прекращена. Ранее при наличии одинаковых ключей dbt молча перезаписывал значение, используя последнюю конфигурацию в файле.
 
 <File name='profiles.yml'>
 
@@ -236,11 +235,11 @@ my_profile: # dbt would use only this profile key
 
 </File>
 
-Moving forward, you should delete unused keys or move them to a separate properties YAML file.
+В дальнейшем следует удалить неиспользуемые ключи или перенести их в отдельный properties YAML-файл.
 
-#### Unexpected Jinja blocks
+#### Неожиданные Jinja-блоки
 
-If you have an orphaned Jinja block, you will receive a warning, and in a future version, dbt will stop supporting unexpected Jinja blocks. Previously, these orphaned Jinja blocks were silently ignored.
+Если у вас есть «осиротевший» Jinja-блок, вы получите предупреждение, а в будущей версии dbt поддержка неожиданных Jinja-блоков будет прекращена. Ранее такие блоки молча игнорировались.
 
 <File name='macros/my_macro.sql'>
 
@@ -255,15 +254,15 @@ hello!
 ```
 </File>
 
-Moving forward, you should delete these orphaned Jinja blocks.
+В дальнейшем следует удалить такие осиротевшие Jinja-блоки.
 
-#### Properties moving to configs
+#### Свойства, перемещённые в конфигурацию
 
-Some historical properties are moving entirely to configs.
+Некоторые исторические properties полностью перемещаются в configs.
 
-This will include: `freshness`, `meta`, `tags`, `docs`, `group`, and `access`
+К ним относятся: `freshness`, `meta`, `tags`, `docs`, `group` и `access`.
 
-If you previously set one of the impacted properties, such as `freshness`:
+Если ранее вы задавали одно из затронутых свойств, например `freshness`:
 
 ```yaml
 
@@ -278,7 +277,7 @@ sources:
 
 ```
 
-You should now set it under `config`:
+Теперь его следует задавать внутри `config`:
 
 ```yaml
 
@@ -294,13 +293,13 @@ sources:
 
 ```
 
-#### Custom output path for source freshness
+#### Пользовательский путь вывода для свежести источника
 
-The ability to override the default path for `sources.json` via the `--output` or `-o` flags has been deprecated. You can still set the path for all artifacts in the step with `--target-path`, but will receive a warning if trying to set the path for just source freshness.
+Возможность переопределять путь по умолчанию для `sources.json` с помощью флагов `--output` или `-o` была признана устаревшей. Вы по-прежнему можете задавать путь для всех artifacts с помощью `--target-path`, но при попытке указать путь только для source freshness будет выдаваться предупреждение.
 
-#### Warn error options
+#### Опции warn/error
 
-The `warn_error_option` options for `include` and `exclude` have been deprecated and replaced with `error` and `warn`, respectively.
+Опции `warn_error_option` для `include` и `exclude` были признаны устаревшими и заменены на `error` и `warn` соответственно.
 
   ```yaml
 ...
@@ -312,19 +311,17 @@ The `warn_error_option` options for `include` and `exclude` have been deprecated
         - NoNodesForSelectionCriteria
   ```
 
-## Adapter-specific features and functionalities
+## Адаптер-специфичные возможности и функциональность
 
 ### Snowflake
-- You can use the `platform_detection_timeout_seconds` parameter to control how long the Snowflake connector waits when detecting the cloud platform where the connection is being made. For more information, see [Snowflake setup](/docs/core/connect-data-platform/snowflake-setup#platform_detection_timeout_seconds).
-
+- Вы можете использовать параметр `platform_detection_timeout_seconds`, чтобы управлять временем ожидания коннектора Snowflake при определении облачной платформы, с которой устанавливается соединение. Подробнее см. в разделе [Snowflake setup](/docs/core/connect-data-platform/snowflake-setup#platform_detection_timeout_seconds).
 
 ### BigQuery
 
-- `dbt-bigquery` cancels BigQuery jobs that exceed their configured timeout by sending a cancellation request. If the request succeeds, dbt stops the job. If the request fails, the BigQuery job may keep running in the background until it finishes or you cancel it manually. For more information, see [Timeout and retries](/docs/core/connect-data-platform/bigquery-setup#timeouts-and-retries).
+- `dbt-bigquery` отменяет задания BigQuery, превышающие настроенный таймаут, отправляя запрос на отмену. Если запрос выполнен успешно, dbt останавливает задание. Если запрос не удался, задание BigQuery может продолжать выполняться в фоне до завершения или до его ручной отмены. Подробнее см. в разделе [Timeout and retries](/docs/core/connect-data-platform/bigquery-setup#timeouts-and-retries).
 
+## Коротко о главном
 
-## Quick hits
+- Используйте свойство [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) для source freshness, чтобы задать собственный SQL для вычисления временной метки `maxLoadedAt` источника (в отличие от [встроенного запроса](https://github.com/dbt-labs/dbt-adapters/blob/6c41bedf27063eda64375845db6ce5f7535ef6aa/dbt/include/global_project/macros/adapters/freshness.sql#L4-L16), который использует `loaded_at_field`). Нельзя определять `loaded_at_query`, если также задана конфигурация `loaded_at_field`.
 
-- Provide the [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) property for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the [built-in query](https://github.com/dbt-labs/dbt-adapters/blob/6c41bedf27063eda64375845db6ce5f7535ef6aa/dbt/include/global_project/macros/adapters/freshness.sql#L4-L16), which uses the `loaded_at_field`). You cannot define `loaded_at_query` if the `loaded_at_field` config is also provided.
-
-- Provide validation for macro arguments using the [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) flag, which is disabled by default. When enabled, this flag checks that documented macro argument names match those in the macro definition and validates their types against a supported format. Previously, dbt did not enforce standard argument types, treating the type field as documentation-only. If no arguments are documented, dbt infers them from the macro and includes them in the manifest.json file. Learn more about [supported types](/reference/resource-properties/arguments#supported-types). 
+- Используйте валидацию аргументов макросов с помощью флага [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation), который по умолчанию отключён. При включении этот флаг проверяет, что имена аргументов, задокументированные для макроса, совпадают с определением макроса, а их типы соответствуют поддерживаемому формату. Ранее dbt не обеспечивал строгую проверку типов аргументов, рассматривая поле типа исключительно как документацию. Если аргументы не задокументированы, dbt выводит их из определения макроса и включает в файл `manifest.json`. Подробнее см. раздел [supported types](/reference/resource-properties/arguments#supported-types).

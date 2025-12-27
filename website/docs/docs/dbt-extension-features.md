@@ -1,172 +1,172 @@
 ---
-title: dbt extension features
+title: Возможности расширения dbt
 id: dbt-extension-features
-description: "The dbt VS Code extension is backed by the dbt Fusion engine and a powerful LSP."
-sidebar_label: "dbt extension features"
+description: "Расширение dbt для VS Code работает на базе движка dbt Fusion и мощного LSP."
+sidebar_label: "Возможности расширения dbt"
 pagination_next: "docs/install-dbt-extension"
 image: /img/docs/extension/extension-features.png
 ---
 
-# dbt VS Code extension features <Lifecycle status="preview" />
+# Возможности расширения dbt для VS Code <Lifecycle status="preview" />
 
-The dbt VS Code extension is backed by the speed and power of the dbt Fusion engine and a dynamic Language Server Protocol (<Term id="lsp"/>) that enables enhanced workflows, faster development, and easy navigation.
+Расширение dbt для VS Code работает на базе быстрого и мощного движка dbt Fusion и динамического Language Server Protocol (<Term id="lsp"/>), который обеспечивает более удобные рабочие процессы, ускоренную разработку и простую навигацию по проекту.
 
-The following extension features help you get more done, fast:
+Следующие возможности расширения помогают выполнять больше задач за меньшее время:
 
-- **[Live error detection](#live-error-detection):** Automatically validate your SQL code to detect errors and surface warnings, without hitting the warehouse. This includes both dbt errors (like invalid `ref`) and SQL errors (like invalid column name or SQL syntax).
-- **[Lightning-fast parse times](#lightning-fast-parse-times):** Parse even the largest projects up to 30x faster than dbt Core.
-- **[Powerful IntelliSense](#powerful-intellisense):** Autocomplete SQL functions, model names, macros, and more.
-- **[Instant refactoring](#instant-refactoring):** Rename models or columns and see references update project-wide.
-- **[Go-to-definition](#go-to-definition-and-reference):** Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros. Excludes definitions from installed packages.
-- **[Hover insights](#hover-insights):** See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
-- **[Live CTE previews](#live-preview-for-models-and-ctes):** Preview a CTE’s output directly from inside your dbt model for faster validation and debugging.
-- **[Rich lineage in context](#rich-lineage-in-context):** See lineage at the column or table level as you develop with no context switching or breaking the flow.
-  - If you use Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
-- **[View compiled code](#view-compiled-code):** Get a live view of the SQL code your models will build alongside your dbt code.
-- **[Build flexibly](#build-flexibly):** Use the command palette to build models with complex selectors.
- 
-### Live error detection
+- **[Живое обнаружение ошибок](#live-error-detection):** Автоматическая валидация SQL-кода для обнаружения ошибок и отображения предупреждений без обращения к хранилищу. Включает как ошибки dbt (например, некорректный `ref`), так и SQL-ошибки (например, неверное имя колонки или синтаксическую ошибку).
+- **[Молниеносное время парсинга](#lightning-fast-parse-times):** Парсинг даже самых крупных проектов до 30 раз быстрее, чем в dbt Core.
+- **[Мощный IntelliSense](#powerful-intellisense):** Автодополнение SQL-функций, имён моделей, макросов и не только.
+- **[Мгновенный рефакторинг](#instant-refactoring):** Переименование моделей или колонок с автоматическим обновлением всех ссылок по проекту.
+- **[Переход к определению](#go-to-definition-and-reference):** Переход к определению любого `ref`, макроса, модели или колонки одним кликом. Особенно полезно в больших проектах с большим количеством моделей и макросов. Определения из установленных пакетов не включаются.
+- **[Подсказки при наведении](#hover-insights):** Просмотр контекста таблиц, колонок и функций без выхода из кода. Просто наведите курсор на SQL-элемент, чтобы увидеть детали, такие как имена колонок и типы данных.
+- **[Живой предпросмотр CTE](#live-preview-for-models-and-ctes):** Предпросмотр результата CTE прямо внутри dbt-модели для более быстрой проверки и отладки.
+- **[Насыщенный lineage в контексте](#rich-lineage-in-context):** Просмотр lineage на уровне таблиц или колонок в процессе разработки без переключения контекста и потери фокуса.
+  - Если вы используете Cursor, вкладка lineage лучше всего работает в режиме Editor и не отображается в режиме Agent. Если вы находитесь в режиме Agent и вкладка lineage не отображается, просто переключитесь в режим Editor, чтобы увидеть lineage таблиц и колонок вашего проекта.
+- **[Просмотр скомпилированного кода](#view-compiled-code):** Просмотр SQL-кода, который будут строить ваши модели, в реальном времени — рядом с dbt-кодом.
+- **[Гибкая сборка](#build-flexibly):** Использование палитры команд для сборки моделей с применением сложных селекторов.
 
-Automatically validate your SQL code to detect errors and surface warnings without hitting the warehouse.
+### Живое обнаружение ошибок
 
-- Displays diagnostics (red squiggles) for:
-  - Syntax errors (missing commas, misspelled keywords, etc).
-  - Invalid / missing column names (for example, `select not_a_column from {{ ref('real_model') }}`).
-  - Missing `group by` clauses, or columns that are neither grouped nor aggregated.
-  - Invalid function names or arguments
-- Hover over red squiggles to display errors.
-- Full diagnostic information is available in the “Problems”.
+Автоматически валидирует SQL-код, обнаруживая ошибки и отображая предупреждения без обращения к хранилищу.
+
+- Отображает диагностические сообщения (красные подчёркивания) для:
+  - Синтаксических ошибок (пропущенные запятые, опечатки в ключевых словах и т.д.).
+  - Некорректных или отсутствующих имён колонок (например, `select not_a_column from {{ ref('real_model') }}`).
+  - Отсутствующих `group by` или колонок, которые не агрегированы и не входят в группировку.
+  - Некорректных имён функций или аргументов.
+- Наведите курсор на красное подчёркивание, чтобы увидеть описание ошибки.
+- Полная диагностическая информация доступна во вкладке **Problems**.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/live-error-detection.mp4" type="video/webm" />
 </video>
 
-### Lightning-fast parse times
+### Молниеносное время парсинга
 
-Parse even the largest projects up to 30x faster than with dbt Core.
+Парсинг даже самых крупных проектов выполняется до 30 раз быстрее, чем с dbt Core.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/zoomzoom.mp4" type="video/webm" />
 </video>
 
-### Powerful IntelliSense
+### Мощный IntelliSense
 
-Autocomplete SQL functions, model names, macros and more.
+Автодополнение SQL-функций, имён моделей, макросов и другого.
 
-Usage:
-- Autocomplete `ref`s and `source` calls. For example, type `{{ ref(`  or `{{ source(` and you will see a list of available resources and their type complete the function call. Autocomplete doesn’t trigger when replacing existing model names inside parentheses.
-- Autocomplete dialect-specific function names.
+Использование:
+- Автодополнение вызовов `ref` и `source`. Например, введите `{{ ref(` или `{{ source(`, и вы увидите список доступных ресурсов и их типов для завершения вызова функции. Автодополнение не срабатывает при замене существующих имён моделей внутри скобок.
+- Автодополнение имён функций, специфичных для диалекта.
 
 <Lightbox src="/img/docs/extension/vsce-intellisense.gif" width="100%" title="Example of the VS Code extension IntelliSense"/>
 
-### Instant refactoring
+### Мгновенный рефакторинг
 
-Renaming models:
- - Right-click on a file in the file tree and select **Rename**.
- - After renaming the file, you'll get a prompt asking if you want to make refactoring changes.
-  - Select **OK** to apply the changes, or **Show Preview** to display a preview of refactorings.
- - After applying your changes, `ref`s should be updated to use the updated model name.
+Переименование моделей:
+ - Щёлкните правой кнопкой мыши по файлу в дереве файлов и выберите **Rename**.
+ - После переименования файла появится запрос с вопросом, хотите ли вы применить изменения рефакторинга.
+  - Выберите **OK**, чтобы применить изменения, или **Show Preview**, чтобы посмотреть предварительный список изменений.
+ - После применения изменений `ref` будут обновлены и будут использовать новое имя модели.
 
-Renaming columns:
-- Right-click on a column alias and select **Rename Symbol**.
-- After renaming the column, you'll get a prompt asking if you want to make refactoring changes.
-  - Select **OK** to apply the changes, or **Show Preview** to show a preview of refactorings.
-- After applying your changes, downstream references to the column should be updated to use the new column name.
+Переименование колонок:
+- Щёлкните правой кнопкой мыши по алиасу колонки и выберите **Rename Symbol**.
+- После переименования колонки появится запрос с вопросом, хотите ли вы применить изменения рефакторинга.
+  - Выберите **OK**, чтобы применить изменения, или **Show Preview**, чтобы посмотреть предварительный список изменений.
+- После применения изменений все downstream-ссылки на колонку будут обновлены и начнут использовать новое имя колонки.
 
-Note: Renaming models and columns is not yet supported for snapshots, or any resources defined in a .yml file.
+Примечание: Переименование моделей и колонок пока не поддерживается для snapshots и ресурсов, определённых в файлах `.yml`.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/refactor.mp4" type="video/webm" />
 </video>
 
-### Go-to-definition and reference
+### Переход к определению и ссылкам
 
-Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros. Excludes definitions from installed packages.
+Переход к определению любого `ref`, макроса, модели или колонки одним кликом. Особенно полезно в крупных проектах с большим количеством моделей и макросов. Определения из установленных пакетов не поддерживаются.
 
-Usage:
-- Command or Ctrl-click to go to the definition for an identifier.
-- You can also right-click an identifier or and select **Go to Definition** or **Go to References**.
-- Supports CTE names, column names, `*`, macro names, and dbt `ref()` and `source()` call.
+Использование:
+- Используйте Command или Ctrl-клик, чтобы перейти к определению идентификатора.
+- Также можно щёлкнуть правой кнопкой мыши по идентификатору и выбрать **Go to Definition** или **Go to References**.
+- Поддерживаются имена CTE, имена колонок, `*`, имена макросов, а также вызовы dbt `ref()` и `source()`.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/go-to-definition.mp4" type="video/webm" />
 </video>
 
-### Hover insights
+### Подсказки при наведении
 
-See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
+Просматривайте контекст таблиц, колонок и функций, не покидая редактор. Просто наведите курсор на любой SQL-элемент, чтобы увидеть такие детали, как имена колонок и типы данных.
 
-Usage:
-- Hover over `*` to see expanded list of columns and their types.
-- Hover over column name or alias to see its type.
+Использование:
+- Наведите курсор на `*`, чтобы увидеть развёрнутый список колонок и их типы.
+- Наведите курсор на имя колонки или алиас, чтобы увидеть её тип.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/hover-insights.mp4" type="video/webm" />
 </video>
 
-### Live preview for models and CTEs
+### Живой предпросмотр моделей и CTE
 
-Preview a CTE’s output, or an entire model, directly from inside your editor for faster validation and debugging.
+Предпросмотр результата CTE или всей модели прямо внутри редактора для более быстрой проверки и отладки.
 
-Usage:
-- Click the **table icon** or use keyboard shortcut `cmd+enter` (macOS) / `ctrl+enter` (Windows/Linux) to preview query results.
-- Click the **Preview CTE** codelens to preview CTE results.
-- Results will be displayed in the **Query Results** tab in the bottom panel.
-- The preview table is sortable and results are stored until the tab is closed.
-- You can also select a range of SQL to preview the results of a specific SQL snippet.
+Использование:
+- Нажмите на **иконку таблицы** или используйте сочетание клавиш `cmd+enter` (macOS) / `ctrl+enter` (Windows/Linux), чтобы посмотреть результаты запроса.
+- Нажмите **Preview CTE** в codelens, чтобы посмотреть результаты CTE.
+- Результаты будут отображены во вкладке **Query Results** в нижней панели.
+- Таблицу предпросмотра можно сортировать, а результаты сохраняются до закрытия вкладки.
+- Также можно выделить диапазон SQL-кода, чтобы посмотреть результаты конкретного фрагмента запроса.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/preview-cte.mp4" type="video/webm" />
 </video>
 
-### Rich lineage in context
+### Насыщенный lineage в контексте
 
-See lineage at the column or table level as you develop — no context switching or breaking flow.
+Просматривайте lineage на уровне таблиц или колонок прямо в процессе разработки — без переключения контекста и потери фокуса.
 
-:::tip Using the lineage tab in Cursor
+:::tip Использование вкладки lineage в Cursor
 
-If you're using the dbt VS Code extension in Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
+Если вы используете расширение dbt для VS Code в Cursor, вкладка lineage лучше всего работает в режиме Editor и не отображается в режиме Agent. Если вы находитесь в режиме Agent и вкладка lineage не отображается, просто переключитесь в режим Editor, чтобы увидеть lineage таблиц и колонок вашего проекта.
 :::
 
-View table lineage:
-- Open the **Lineage** tab in your editor. It will reflect table lineage focused on the currently-open file.
-- Double-click nodes to open the files in your editor.
-- The lineage pane updates as you navigate the files in your dbt project.
-- Right-click on a node to update the DAG, or view column lineage for a node.
+Просмотр lineage таблиц:
+- Откройте вкладку **Lineage** в редакторе. Она будет отображать lineage таблиц с фокусом на текущем открытом файле.
+- Дважды щёлкните по узлу, чтобы открыть соответствующий файл в редакторе.
+- Панель lineage обновляется по мере навигации по файлам dbt-проекта.
+- Щёлкните правой кнопкой мыши по узлу, чтобы обновить DAG или посмотреть lineage колонок для узла.
 
-View column lineage:
-- Right-click on a filename, or in the SQL contents of a model file.
-- Select **dbt: View Lineage** --> **Show column lineage**.
-- Select the column to view lineage for.
-- Double-click on a node to update the DAG selector.
-- You can also use column selectors in the lineage window by adding the `column:` prefix and appending the column name. 
-  - For example, if you want the lineage for the `AMOUNT` column of your `stg_payments` model, edit the `+model.jaffle_shop.stg_payments+` to `+column:model.jaffle_shop.stg_payments.AMOUNT+`.
+Просмотр lineage колонок:
+- Щёлкните правой кнопкой мыши по имени файла или внутри SQL-кода модели.
+- Выберите **dbt: View Lineage** --> **Show column lineage**.
+- Выберите колонку, для которой нужно посмотреть lineage.
+- Дважды щёлкните по узлу, чтобы обновить селектор DAG.
+- Также можно использовать селекторы колонок в окне lineage, добавив префикс `column:` и указав имя колонки.
+  - Например, если вам нужен lineage для колонки `AMOUNT` модели `stg_payments`, измените `+model.jaffle_shop.stg_payments+` на `+column:model.jaffle_shop.stg_payments.AMOUNT+`.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/lineage.mp4" type="video/webm" />
 </video>
 
-### View compiled code
+### Просмотр скомпилированного кода
 
-Get a live view of the SQL code your models will build — right alongside your dbt code.
+Просматривайте SQL-код, который будут строить ваши модели, в реальном времени — рядом с dbt-кодом.
 
-Usage:
-- Click the **code icon** to view compiled code side-by-side with source code.
-- Compiled code will update as you save your source code.
-- Clicking on a dbt macro will focus the corresponding compiled code.
-- Clicking on a compiled code block will focus the corresponding source code.
+Использование:
+- Нажмите на **иконку кода**, чтобы посмотреть скомпилированный код рядом с исходным.
+- Скомпилированный код обновляется при сохранении исходного кода.
+- Клик по dbt-макросу переводит фокус на соответствующий участок скомпилированного кода.
+- Клик по блоку скомпилированного кода переводит фокус на соответствующий исходный код.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/compiled-code.mp4" type="video/webm" />
 </video>
 
-### Build flexibly
+### Гибкая сборка
 
-Use the command palette to quickly build models using complex selectors. 
+Используйте палитру команд для быстрой сборки моделей с применением сложных селекторов.
 
-Usage:
-- Click the **dbt icon** or use keyboard shortcut `cmd+shift+enter` (macOS) / `ctrl+shift+enter` (Windows/Linux) to launch a quickpick menu.
-- Select a command to run.
+Использование:
+- Нажмите на **иконку dbt** или используйте сочетание клавиш `cmd+shift+enter` (macOS) / `ctrl+shift+enter` (Windows/Linux), чтобы открыть меню быстрого выбора.
+- Выберите команду для запуска.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/build-flexibly.mp4" type="video/webm" />

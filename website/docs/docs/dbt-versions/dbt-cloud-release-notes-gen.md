@@ -1,161 +1,163 @@
 ---
-title: "Weekly dbt single-tenant release notes"
-description: "Release notes for weekly single-tenant updates."
+title: "Еженедельные release notes dbt для single-tenant"
+description: "Release notes для еженедельных обновлений single-tenant."
 id: "dbt-cloud-release-notes-gen"
-sidebar: "dbt single-tenant release notes"
+sidebar: "Обновления для dbt single-tenant"
 pagination_next: null
 pagination_prev: null
 unlisted: true
 ---
 
-<Constant name="cloud" /> Single-tenant release notes for weekly updates. Release notes fall into one of these categories:
 
-- **New:** New products and features
-- **Enhancement:** Performance improvements and feature enhancements
-- **Fix:** Bug and security fixes
-- **Behavior change:** A change to existing behavior that doesn't fit into the other categories, such as feature deprecations or changes to default settings
+<Constant name="cloud" /> Заметки о релизах для single-tenant окружений с еженедельными обновлениями. Все релизы относятся к одной из следующих категорий:
 
-Release notes are grouped by date for single-tenant environments.
+- **New:** новые продукты и возможности  
+- **Enhancement:** улучшения производительности и расширение функциональности  
+- **Fix:** исправления ошибок и проблем безопасности  
+- **Behavior change:** изменения существующего поведения, не подпадающие под другие категории, например, депрекации или изменения значений по умолчанию  
 
-## December 24, 2025
+Заметки о релизах сгруппированы по датам для single-tenant окружений.
 
-### New
+## Декабрь 24, 2025
+
+### Новое
 
 - **AI Codegen**
-  - **File-aware LangGraph agents**: Analysts can now drop `@path` references in the bundled CLI to stream local files into `/private/v1/agents/run`, which are auto-rendered as text inside the run so copilots have the exact config or SQL snippet you referenced.  
-
+  - **File-aware LangGraph agents**: Аналитики теперь могут использовать ссылки `@path` в комплектном CLI, чтобы передавать локальные файлы в `/private/v1/agents/run`. Эти файлы автоматически отображаются как текст внутри запуска, благодаря чему копилоты получают точную конфигурацию или SQL‑фрагмент, на который вы ссылаетесь.  
 
 - **dbt platform**
-  - **Slack Copilot feedback loops**: Copilot replies now carry inline "Did that answer your question?" buttons, so you can rate answers without leaving Slack.  
+  - **Slack Copilot feedback loops**: Ответы Copilot теперь содержат встроенные кнопки «Did that answer your question?», позволяя оценивать ответы, не покидая Slack.  
 
 - **Codex workflows**
-  - **Databricks cost tracking for Model Cost Over Time**: A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.  
+  - **Databricks cost tracking for Model Cost Over Time**: Провайдер истории Databricks и запрос стоимости на основе DBU теперь показывают ежедневную стоимость моделей наряду с поддержкой Snowflake, так что клиенты Databricks получают единый FinOps‑отчет.  
 
 - **Canvas**
-  - **CSV upload GA**: The CSV upload endpoint is now generally available.
+  - **CSV upload GA**: Эндпоинт загрузки CSV теперь находится в статусе general availability.
 
-### Enhancements
+### Улучшения
 
 - **Cloud artifacts**
-  - **Better similar-model suggestions**: Attachment workflows now only recommend meaningfully related models.  
+  - **Better similar-model suggestions**: В рабочих процессах с вложениями теперь предлагаются только действительно связанные модели.  
 
 - **dbt platform**
-  - **Unified SSO & SCIM admin**: Settings consolidate SSO + SCIM, add an empty state for auto-generated slugs, and render read-only login URLs so admins can start configuration without touching slug fields.  
-  - **SCIM token management polish**: Token tables gain fixed pagination, inline search, consistent iconography, and clearer deletion warnings to avoid accidental cuts to live integrations.  
-  - **Twice the per-environment custom variables**: The v3 API/UI now allow up to 20 scoped environment variables before enforcing limits, giving larger projects more room for secrets.  
+  - **Unified SSO & SCIM admin**: Настройки объединяют SSO и SCIM, добавляют пустое состояние для автоматически сгенерированных slug’ов и отображают URL‑адреса входа в режиме только для чтения, чтобы администраторы могли начать настройку, не изменяя slug.  
+  - **SCIM token management polish**: Таблицы токенов получили фиксированную пагинацию, встроенный поиск, единый набор иконок и более понятные предупреждения при удалении, чтобы избежать случайного отключения активных интеграций.  
+  - **Twice the per-environment custom variables**: В API/UI v3 теперь разрешено до 20 переменных окружения с областью действия, прежде чем применяются ограничения, что дает больше пространства для секретов в крупных проектах.  
 
 - **Canvas**
-  - **Dialect-aware projection SQL**: SELECT * RENAME/EXCEPT support now respects each warehouse's syntax using schema metadata, so SQL previews and column metadata stay accurate across Snowflake, Databricks, BigQuery, and Redshift.  
+  - **Dialect-aware projection SQL**: Поддержка SELECT * RENAME/EXCEPT теперь учитывает синтаксис каждого хранилища на основе метаданных схемы, благодаря чему SQL‑превью и метаданные колонок остаются корректными для Snowflake, Databricks, BigQuery и Redshift.  
 
-### Fixes
+### Исправления
 
 - **dbt platform**
-  - **Webhook editor keeps job selections**: Default values are cached after the first render and stop resetting once the user edits the form, eliminating accidental job-list clearing while tabbing through fields.  
+  - **Webhook editor keeps job selections**: Значения по умолчанию кэшируются после первого рендера и больше не сбрасываются при редактировании формы, что устраняет случайную очистку списка джобов при переходе между полями.  
 
 - **Codex GraphQL**
-  - **Exposure parents mirror the manifest**: `parentsModels` and `parentsSources` now derive from the manifest's `parents` list, so exposures with mixed upstreams display complete lineage in both the GraphQL API and UI.  
+  - **Exposure parents mirror the manifest**: Поля `parentsModels` и `parentsSources` теперь формируются на основе списка `parents` из manifest, поэтому exposures со смешанными апстримами показывают полную lineage как в GraphQL API, так и в UI.  
 
-
-### Behavior changes
-
-- **dbt platform**
-  - **Legacy Cost Management UI retired**: All cost management pages and hooks were removed, and platform metadata credentials now only expose catalog ingestion and Cost Insights toggles, eliminating dead-end controls.  
-
-
-## December 17, 2025
-
-### New
+### Изменения в поведении
 
 - **dbt platform**
-  - **Feature licensing service**: A new `/accounts/<id>/feature-licenses` endpoint issues short-lived JWTs that encode entitled features, and service/PAT authentication now checks that a caller holds an active license on the target account before any Fusion-enabled workflow runs. 
-  - **Databricks platform metadata credentials**: Databricks warehouses can register platform metadata credentials (token plus optional catalog), enabling catalog ingestion, metadata sharing, and Cost Insights pipelines without custom adapters. 
+  - **Legacy Cost Management UI retired**: Все страницы и хуки управления затратами были удалены, а учетные данные метаданных платформы теперь предоставляют только переключатели для ingest’а каталога и Cost Insights, устраняя неиспользуемые элементы управления.  
 
-### Enhancements
+## Декабрь 17, 2025
+
+### Новое
 
 - **dbt platform**
-  - **Large list pagination**: Settings's Projects and Credentials now paginate after 25 rows (with search boxes and skeleton states), keeping navigation responsive for large deployments.
+  - **Feature licensing service**: Новый эндпоинт `/accounts/<id>/feature-licenses` выдает краткоживущие JWT, кодирующие доступные функции. Аутентификация service/PAT теперь проверяет наличие активной лицензии на целевом аккаунте перед запуском любых Fusion‑процессов.  
+  - **Databricks platform metadata credentials**: Кластеры Databricks могут регистрировать учетные данные метаданных платформы (токен плюс опциональный каталог), что позволяет выполнять ingest каталога, делиться метаданными и запускать пайплайны Cost Insights без кастомных адаптеров.  
+
+### Улучшения
+
+- **dbt platform**
+  - **Large list pagination**: В настройках Projects и Credentials теперь используется пагинация после 25 строк (с поиском и skeleton‑состояниями), что сохраняет отзывчивость интерфейса в крупных установках.  
+
 - **Metadata Explorer**
-  - **Model context & lineage polish**: Model panels now show materialization type, lineage renders metadata strips only when content exists, and upstream public-model columns load automatically for better cross-project visibility.
-  - **Freshness clarity & Studio navigation**: Source tiles respect the `meta5161ExpiredUnconfiguredSources` flag (showing warn/error thresholds) and "Open in IDE" links now point at `/studio/{accountId}/projects/{projectId}` to drop users directly into dbt Studio.
+  - **Model context & lineage polish**: Панели моделей теперь показывают тип материализации, lineage отображает метаданные только при наличии контента, а колонки апстрим‑моделей из публичных проектов загружаются автоматически для лучшей межпроектной видимости.  
+  - **Freshness clarity & Studio navigation**: Тайлы источников учитывают флаг `meta5161ExpiredUnconfiguredSources` (показывая пороги warn/error), а ссылки «Open in IDE» теперь ведут на `/studio/{accountId}/projects/{projectId}`, сразу открывая dbt Studio.  
 
 - **Insights UI**
-  - **Copilot guardrails**: The Copilot listener now hydrates builder tabs only when a semantic-layer payload arrives, preventing plain-SQL replies from overwriting editor state. 
+  - **Copilot guardrails**: Слушатель Copilot теперь инициализирует вкладки билдера только при получении payload семантического слоя, предотвращая перезапись состояния редактора ответами с обычным SQL.  
+
 - **dbt CLI**
   - **Improved monorepo support for file sync and the IDE**:
-    - File sync now anchors itself to the invocation directory, making monorepo structures behave more predictably.
-    - Nested `dependencies.yml` files correctly trigger dependency installs.
-    - The IDE’s LSP and file sync now recognize dbt subdirectories properly.
-    - Exclusion lists remain accurate even in multi-project repositories.
+    - File sync теперь привязывается к директории вызова, делая поведение monorepo более предсказуемым.
+    - Вложенные файлы `dependencies.yml` корректно инициируют установку зависимостей.
+    - LSP IDE и file sync теперь корректно распознают подкаталоги dbt.
+    - Списки исключений остаются корректными даже в репозиториях с несколькими проектами.  
+
 - **Notifications system**
-  - **Webhook auditability**: Outbound calls now persist the exact JSON body in webhook history, making allowlisting and troubleshooting easier. 
+  - **Webhook auditability**: Исходящие вызовы теперь сохраняют точное JSON‑тело в истории webhook’ов, упрощая allowlisting и отладку.  
 
 - **Studio**
-  - **Git sidebar & file refresh parity**: The file tree now mirrors Cloud VCS statuses (including conflicts) and automatically invalidates caches after `dbt deps`/`dbt clean`, so new or removed files appear without a reload.
-  - **Log viewers & Autofix UX**: Command and interactive query logs adopt the new accordion-based viewer, and Autofix sessions in Fusion treat plain `parse` commands as the trigger for deprecation summaries, keeping remediation flows consistent.
+  - **Git sidebar & file refresh parity**: Дерево файлов теперь отражает статусы VCS Cloud (включая конфликты) и автоматически инвалидирует кэши после `dbt deps`/`dbt clean`, так что новые или удаленные файлы появляются без перезагрузки.  
+  - **Log viewers & Autofix UX**: Логи команд и интерактивных запросов используют новый accordion‑viewer, а сессии Autofix в Fusion считают обычные команды `parse` триггером для сводок по депрекациям, сохраняя единообразие remediation‑процессов.  
 
-### Fixes
-
-- **dbt platform**
-  - **Environment variable editor stability**: Editing one variable no longer backfills blank cells with previously edited values, preventing accidental overrides. 
-  - **Cost optimization indicator accuracy**: Job pages once again display “Cost optimization features” whenever Fusion actually runs (and gating conditions are met), so users see the right coverage status regardless of feature-flag permutations. 
-
-### Behavior changes
+### Исправления
 
 - **dbt platform**
-  - **Stronger tenant identity enforcement**: Service/PAT calls without an active license now fail authentication, Slack Copilot sessions build a scoped identity JWT for the invoking user, and SSO providers enforce auto-generated slugs (draft configs can’t be targeted), reducing misconfiguration risk. 
+  - **Environment variable editor stability**: Редактирование одной переменной больше не заполняет пустые ячейки значениями из предыдущих правок, предотвращая случайные перезаписи.  
+  - **Cost optimization indicator accuracy**: Страницы джобов снова отображают «Cost optimization features», когда Fusion действительно запускается (и выполняются условия), независимо от комбинаций feature‑флагов.  
+
+### Изменения в поведении
+
+- **dbt platform**
+  - **Stronger tenant identity enforcement**: Вызовы service/PAT без активной лицензии теперь не проходят аутентификацию, сессии Slack Copilot формируют scoped JWT для вызывающего пользователя, а SSO‑провайдеры требуют автоматически сгенерированные slug’и (черновые конфигурации нельзя таргетировать), снижая риск неправильной настройки.  
 
 - **dbt CLI**
-  - **User-isolated invocation history**: Every invocation lookup validates the caller’s user ID, preventing admins from accidentally reading another developer’s runs when multiple accounts share a CLI server. 
+  - **User-isolated invocation history**: Каждый запрос истории запусков проверяет user ID вызывающего, предотвращая случайный доступ администраторов к запускам других разработчиков при использовании общего CLI‑сервера.  
+
 - **IDE server**
-  - **Enhanced security for support-assisted sessions:** Support impersonation sessions now restrict the execution of `show`, `run`, `build`, and `test` commands. Artifacts generated by `dbt show` are also short-lived and will automatically expire after 15 minutes to limit unintended data retention.
+  - **Enhanced security for support-assisted sessions:** Сессии impersonation для поддержки теперь ограничивают выполнение команд `show`, `run`, `build` и `test`. Артефакты, созданные `dbt show`, также являются краткоживущими и автоматически истекают через 15 минут, чтобы снизить риск нежелательного хранения данных.  
 
 - **dbt Orchestration**
-  - **Fusion compare support & new dependency**: Fusion tracks now treat `dbt compare` as a supported command (no more target-path hacks). 
+  - **Fusion compare support & new dependency**: Fusion‑треки теперь считают `dbt compare` поддерживаемой командой (без обходных решений с target‑path).  
 
-## December 10, 2025
+## Декабрь 10, 2025
 
-### Enhancements
+### Улучшения
 
-- **AI codegen API**: Streaming middleware enforces request-scoped instrumentation across every AI endpoint, offload warehouse calls via threads, and expose human-readable tool names while gating keyword search behind feature flag for approved tenants.
-  
-- **dbt platform**
-  - **Operations clarity**: Environment profile drawers link directly to connection settings and treat Snowflake fields as optional, while Compare Changes and run-step drawers now explain whether steps failed or were skipped so troubleshooting is faster.
-  - **Collaboration & notifications**: Slack Copilot mentions are now more reliable, with hardened workers, support for CSV attachments, and improved logging. Webhook channels now accept longer URLs, handle “warning-only” subscriptions correctly, and automatically clean up corrupted job IDs.
-  - **Profile & credential management**: Environment APIs accept `secondary_profile_ids`, run acquisition favors profile-backed credentials, and whoami/auth metrics are scrubbed so cross-platform profiles stay in sync.
-
-- **dbt CLI server**: Improved stability and performance for large projects.
-- **Studio IDE**: For dbt Fusion logging, node start and end times will now properly be displayed in command output. 
-- **Studio IDE**: Copilot Chat automatically appears anywhere AI entitlements exist, preview runs auto-cancel when nodes change, and keyboard shortcuts respect native keymaps with clear UI labels. 
-- **Studio IDE**: Tab view, console pane, and command drawer have been redesigned to enhance efficiency and multitasking.
-
-### Fixes
-
-- **Studio IDE server**: Branch creation now returns explicit feedback for bad branch names/SHAs and detects unauthorized Git errors earlier, making automation failures actionable.
-
-## December 3, 2025
-
-### New
+- **AI codegen API**: Стриминговый middleware обеспечивает инструментирование в рамках запроса для всех AI‑эндпоинтов, выносит вызовы хранилищ в отдельные потоки и отображает человекочитаемые имена инструментов, при этом поиск по ключевым словам остается под feature‑флагом для одобренных клиентов.  
 
 - **dbt platform**
-  - **Autofix deprecation warnings**: When deprecations are detected, you now see "Autofix deprecation warnings."
-  - **Autofix Packages detailed results**: After running Autofix, you see a results panel with upgraded packages (with links), packages left unchanged and why, and quick access to `packages.yml` to help assess Fusion readiness and next steps.
+  - **Operations clarity**: Панели профилей окружений теперь напрямую ссылаются на настройки подключений и считают поля Snowflake опциональными, а панели Compare Changes и шагов запуска поясняют, были ли шаги завершены с ошибкой или пропущены, ускоряя диагностику.  
+  - **Collaboration & notifications**: Упоминания Slack Copilot стали надежнее благодаря укрепленным воркерам, поддержке CSV‑вложений и улучшенному логированию. Каналы webhook теперь принимают более длинные URL, корректно обрабатывают подписки «warning-only» и автоматически очищают поврежденные job ID.  
+  - **Profile & credential management**: API окружений принимают `secondary_profile_ids`, получение run’ов отдает приоритет учетным данным из профилей, а метрики whoami/auth очищаются, чтобы кросс‑платформенные профили оставались синхронизированными.  
 
-### Enhancements
+- **dbt CLI server**: Улучшена стабильность и производительность для крупных проектов.  
+- **Studio IDE**: Для логирования dbt Fusion времена начала и окончания нод теперь корректно отображаются в выводе команд.  
+- **Studio IDE**: Copilot Chat автоматически появляется везде, где есть AI‑права, preview‑запуски автоматически отменяются при изменении нод, а горячие клавиши учитывают нативные keymap’ы с понятными подписями в UI.  
+- **Studio IDE**: Представление вкладок, панель консоли и command drawer были переработаны для повышения эффективности и удобства многозадачности.  
+
+### Исправления
+
+- **Studio IDE server**: Создание веток теперь возвращает явную обратную связь при некорректных именах веток/SHА и раньше выявляет ошибки неавторизованного доступа к Git, делая сбои автоматизации более понятными.  
+
+## Декабрь 3, 2025
+
+### Новое
+
+- **dbt platform**
+  - **Autofix deprecation warnings**: При обнаружении депрекаций теперь отображается сообщение «Autofix deprecation warnings».  
+  - **Autofix Packages detailed results**: После запуска Autofix отображается панель результатов с обновленными пакетами (с ссылками), пакетами без изменений и причинами этого, а также быстрым доступом к `packages.yml`, чтобы оценить готовность Fusion и дальнейшие шаги.  
+
+### Улучшения
 
 - **dbt platform**
   - **Code Quality tab improvements**
-    - Clearer lint/format actions (SQLFluff, Prettier), better empty states, visible Config button when applicable, and simplified logs retrieval.
-    - Applies to SQL, JSON, YAML, and Markdown workflows.  
+    - Более понятные действия lint/format (SQLFluff, Prettier), улучшенные пустые состояния, видимая кнопка Config при наличии и упрощенное получение логов.
+    - Применяется к рабочим процессам с SQL, JSON, YAML и Markdown.  
   - **Editor experience**
-    - Upgraded editor for stability.
-    - Improved container sizing/overflow.
-    - "Save" overlay only appears when tabs are open.
-    - Minor action‑bar refinements.
+    - Обновленный редактор для повышения стабильности.
+    - Улучшенное управление размерами контейнеров и overflow.
+    - Оверлей «Save» появляется только при открытых вкладках.
+    - Небольшие доработки панели действий.  
 
-### Fixes
+### Исправления
 
-- **dbt platform lineage and command pane stability**: Reliability improved by aligning with updated IDE and VS Code command APIs; eliminates intermittent skips.
+- **dbt platform lineage and command pane stability**: Надежность повышена за счет согласования с обновленными API команд IDE и VS Code; устранены периодические пропуски.  
 
-### Behavior changes
+### Изменения в поведении
 
-- **dbt platform:** dbt Core “versionless” renamed to “latest” so it's consistent and clear across tenants.
+- **dbt platform:** dbt Core «versionless» переименован в «latest», чтобы обеспечить единообразие и понятность во всех окружениях.
