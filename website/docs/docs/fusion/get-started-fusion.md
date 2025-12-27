@@ -1,63 +1,63 @@
 ---
-title: "Get started with Fusion"
-description: "Start using the Fusion engine locally to take data transformation to the next level."
+title: "Начало работы с Fusion"
+description: "Начните использовать движок Fusion локально, чтобы вывести трансформацию данных на новый уровень."
 id: get-started-fusion
 hide_table_of_contents: true
 hide_title: true
 ---
 
-### Already using dbt? Start here
+### Уже используете dbt? Начните здесь
 
-Upgrade your existing projects to the <Constant name="fusion_engine" /> and learn about the tools available to you once you're there!
+Обновите свои существующие проекты до <Constant name="fusion_engine" /> и узнайте, какие инструменты будут вам доступны после перехода!
 
 <div className="grid--3-col">
 
 <Card
-    title="dbt VS Code extension"
-    body="Add the dbt VS Code extension to your existing development workflows for both dbt platform and the CLI."
+    title="Расширение dbt для VS Code"
+    body="Добавьте расширение dbt для VS Code в существующие процессы разработки — как для dbt platform, так и для CLI."
     link="/docs/install-dbt-extension"
     icon="dbt-bit"
     lifecycle="preview"/>
 
 <Card
-    title="Guide: Prepare to upgrade to Fusion"
-    body="Step-by-step guide to prepare your dbt platform projects for upgrading to Fusion."
+    title="Руководство: Подготовка к обновлению до Fusion"
+    body="Пошаговое руководство по подготовке проектов dbt platform к обновлению до Fusion."
     link="/guides/prepare-fusion-upgrade"
     icon="dbt-bit"
     lifecycle="private_preview"/>
 
 <Card
-    title="Guide: Upgrade to Fusion"
-    body="Learn how to upgrade your eligible projects on the dbt platform to the Fusion engine with this comprehensive guide."
+    title="Руководство: Обновление до Fusion"
+    body="Подробное руководство, которое поможет обновить подходящие проекты на dbt platform до движка Fusion."
     link="/guides/upgrade-to-fusion"
     icon="dbt-bit"
     lifecycle="private_preview"/>
 
 </div>
 
-### New to dbt? Start here
+### Только начинаете знакомство с dbt? Начните здесь
 
-Once you've caught up on everything [<Constant name="fusion" /> has to offer](/docs/fusion/about-fusion), begin your journey with the most powerful data transformation engine available! 
+После того как вы ознакомитесь со всем, что предлагает [<Constant name="fusion" />](/docs/fusion/about-fusion), начните свой путь с самым мощным движком трансформации данных из доступных!
 
 <div className="grid--3-col">
 
 <Card
-    title="Install Fusion + VS Code extension"
-    body="Learn how to install and configure our most robust set of tools for local development."
+    title="Установка Fusion + расширения VS Code"
+    body="Узнайте, как установить и настроить наш самый полный набор инструментов для локальной разработки."
     link="/docs/fusion/install-dbt-extension"
     icon="dbt-bit"
     lifecycle="preview"/>
 
 <Card
-    title="Install Fusion CLI only"
-    body="Learn how to install and configure the dbt Fusion engine from your command line."
+    title="Установка только Fusion CLI"
+    body="Узнайте, как установить и настроить движок dbt Fusion через командную строку."
     link="/docs/fusion/install-fusion-cli"
     icon="dbt-bit"
     lifecycle="preview"/>
 
 <Card
-    title="Sign up for the dbt platform"
-    body="Create a cloud-based dbt platform account to unlock the full potential of the Fusion engine."
+    title="Регистрация в dbt platform"
+    body="Создайте облачную учетную запись dbt platform, чтобы раскрыть весь потенциал движка Fusion."
     link="https://www.getdbt.com/signup"
     icon="dbt-bit"/>
 

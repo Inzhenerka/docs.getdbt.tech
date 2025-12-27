@@ -1,6 +1,6 @@
 ---
-title: "Snowflake setup"
-description: "Read this guide to learn about the Snowflake warehouse setup in dbt Fusion."
+title: "Настройка Snowflake"
+description: "Прочитайте это руководство, чтобы узнать о настройке Snowflake warehouse в dbt Fusion."
 id: "snowflake-setup"
 meta:
   maintained_by: dbt Labs
@@ -15,57 +15,56 @@ meta:
   config_page: '/reference/resource-configs/snowflake-configs'
 ---
 
-# Snowflake setup <Lifecycle status='preview' />
+# Настройка Snowflake <Lifecycle status='preview' />
 
-You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+Вы можете настроить адаптер Snowflake, выполнив команду `dbt init` в CLI, либо вручную создав файл `profiles.yml` с полями, соответствующими выбранному типу аутентификации.
 
-The Snowflake adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
-- Password 
-- Key pair
-- Single sign-on (SSO)
-- Password with MFA
+Адаптер Snowflake для Fusion поддерживает следующие [методы аутентификации](#supported-authentication-types):
+- Password  
+- Key pair  
+- Single sign-on (SSO)  
+- Password with MFA  
 
 :::note
-[Snowflake is deprecating single-access password login](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). Individual developers should use MFA or SSO instead of password authentication. Password-based login remains supported for service users (Snowflake user type: `LEGACY_SERVICE`).
+[Snowflake выводит из эксплуатации вход по паролю без MFA](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). Отдельным разработчикам рекомендуется использовать MFA или SSO вместо аутентификации только по паролю. Аутентификация на основе пароля по‑прежнему поддерживается для сервисных пользователей (тип пользователя Snowflake: `LEGACY_SERVICE`).
 :::
 
-## Snowflake configuration details
+## Детали конфигурации Snowflake
 
-The information required for configuring the Snowflake adapter can be found conveniently in your Snowflake account menu:
-1. Click on your name from the Snowflake sidebar. 
-2. Hover over the **Account** field.
-3. In the field with your account name, click **View account details**.
-4. Click **Config file** and select the appropriate **Warehouse** and **Database**. 
+Информацию, необходимую для настройки адаптера Snowflake, удобно получить через меню аккаунта Snowflake:
+1. Нажмите на свое имя в боковой панели Snowflake.  
+2. Наведите курсор на поле **Account**.  
+3. В поле с названием аккаунта нажмите **View account details**.  
+4. Нажмите **Config file** и выберите подходящие **Warehouse** и **Database**.  
 
-<Lightbox src="/img/fusion/connect-adapters/snowflake-account-details.png" width="60%" title="Sample config file in Snowflake." />
+<Lightbox src="/img/fusion/connect-adapters/snowflake-account-details.png" width="60%" title="Пример config file в Snowflake." />
 
-## Configure Fusion
+## Конфигурация Fusion
 
-Executing `dbt init` in your CLI will prompt for the following fields:
+При выполнении `dbt init` в CLI вам будет предложено указать следующие параметры:
 
-- **Account:** Snowflake account number
-- **User:** Your Snowflake username
-- **Database:** The database within your Snowflake account to connect to your project
-- **Warehouse:** The compute warehouse that will handle the tasks for your project
-- **Schema:** The development/staging/deployment schema for the project
-- **Role (Optional):** The role dbt should assume when connnecting to the warehouse
+- **Account:** номер аккаунта Snowflake  
+- **User:** ваше имя пользователя Snowflake  
+- **Database:** база данных в аккаунте Snowflake, к которой будет подключен проект  
+- **Warehouse:** вычислительный warehouse, который будет выполнять задачи проекта  
+- **Schema:** схема для разработки / стейджинга / деплоя проекта  
+- **Role (Optional):** роль, которую dbt должен использовать при подключении к warehouse  
 
+В качестве альтернативы вы можете вручную создать файл `profiles.yml` и настроить необходимые поля. Примеры форматирования приведены в разделе [authentication](#supported-authentication-types). Если файл `profiles.yml` уже существует, вам будет предложено сохранить текущие значения или перезаписать их.
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+Далее выберите метод аутентификации и следуйте подсказкам на экране, чтобы указать необходимую информацию.
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
-
-## Supported authentication types
+## Поддерживаемые типы аутентификации
 
 <Tabs>
 
 <TabItem value="Password">
 
-Password authentication prompts for your Snowflake account password. This is becoming an increasingly less common option as organizations opt for more secure authentication.
+Аутентификация по паролю запрашивает пароль вашего аккаунта Snowflake. Этот вариант становится все менее распространенным, поскольку организации переходят на более безопасные способы аутентификации.
 
-Selecting **Password with MFA** redirects you to the Snowflake account login to provide your passkey or authenticator password.
+При выборе **Password with MFA** вы будете перенаправлены на страницу входа Snowflake для ввода passkey или пароля из приложения‑аутентификатора.
 
-#### Example password configuration
+#### Пример конфигурации с паролем
 
 <File name="profiles.yml">
 
@@ -86,7 +85,7 @@ default:
 
 </File>
 
-#### Example password with MFA configuration
+#### Пример конфигурации с паролем и MFA
 
 <File name="profiles.yml">
 
@@ -111,22 +110,22 @@ default:
 
 <TabItem value="Key pair">
 
-Key pair authentication gives you the option to:
-- Define the path to the key. 
-- Provide the plain-text PEM format key inline.
+Аутентификация с помощью пары ключей позволяет:
+- указать путь к ключу;  
+- либо передать ключ в формате PEM в виде plain‑text прямо в конфигурации.
 
-In either case, we recommend using PKCS#8 format with AES-256 encryption for key pair authentication with Fusion. Fusion doesn't support legacy 3DES encryption or headerless key formats. Using older key formats may cause authentication failures.
+В обоих случаях рекомендуется использовать формат PKCS#8 с шифрованием AES‑256 для аутентификации по паре ключей в Fusion. Fusion не поддерживает устаревшее шифрование 3DES и форматы ключей без заголовков. Использование старых форматов может привести к ошибкам аутентификации.
 
-If you encounter the `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8` error, then your private key is in the wrong format. You have two options:
+Если вы столкнулись с ошибкой `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8`, это означает, что приватный ключ имеет неверный формат. Возможны два варианта:
 
-- (Recommended fix) Re-export your key with modern encryption:
+- (Рекомендуемый способ) Повторно экспортировать ключ с современным шифрованием:
 
   ```bash
   # Convert to PKCS#8 with AES-256 encryption
   openssl genrsa 2048 | openssl pkcs8 -topk8 -v2 aes-256-cbc -inform PEM -out rsa_key.p8
   ```
 
-- (Temporary workaround) Add the `BEGIN` header and `END` footer to your PEM body:
+- (Временный обходной путь) Добавить заголовок `BEGIN` и завершающую строку `END` к телу PEM‑ключа:
 
   ```
   -----BEGIN ENCRYPTED PRIVATE KEY-----
@@ -134,9 +133,9 @@ If you encounter the `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8
   -----END ENCRYPTED PRIVATE KEY-----
   ```
 
-  Once the key is configuted, you will be given the option to provide a passphrase, if required. 
+  После настройки ключа вам будет предложено указать passphrase, если он требуется.
 
-#### Example key pair configuration
+#### Пример конфигурации с парой ключей
 
 <File name="profiles.yml">
 
@@ -162,13 +161,13 @@ default:
 
 <TabItem value="Single sign-on">
 
-Single sign-on will leverage your browser to authenticate the Snowflake session.
+Single sign-on использует браузер для аутентификации сессии Snowflake.
 
-By default, every connection that dbt opens will require you to re-authenticate in a browser. The Snowflake connector package supports caching your session token, but it [currently only supports Windows and Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
+По умолчанию каждое подключение, которое открывает dbt, будет требовать повторной аутентификации через браузер. Пакет коннектора Snowflake поддерживает кэширование токена сессии, однако [в настоящее время это поддерживается только в Windows и Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
 
-Refer to the [Snowflake docs](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) for information on enabling this feature in your account.
+Дополнительную информацию о включении этой возможности в аккаунте Snowflake см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token).
 
-#### Example SSO configuration
+#### Пример конфигурации SSO
 
 <File name="profiles.yml">
 
@@ -192,6 +191,6 @@ default:
 
 </Tabs>
 
-## More information
+## Больше информации
 
-Find Snowflake-specific configuration information in the [Snowflake adapter reference guide](/reference/resource-configs/snowflake-configs).
+Дополнительную информацию о настройках, специфичных для Snowflake, см. в [справочнике по конфигурации адаптера Snowflake](/reference/resource-configs/snowflake-configs).

@@ -1,11 +1,11 @@
 ---
-title: Install the dbt VS Code extension
+title: Установка расширения dbt для VS Code
 id: install-dbt-extension
-description: "Installation instructions for the dbt extension."
-sidebar_label: "Install the VS Code extension + Fusion"
+description: "Инструкции по установке расширения dbt."
+sidebar_label: "Установка расширения VS Code + Fusion"
 ---
 
-# Install the dbt VS Code extension <Lifecycle status="preview" />
+# Установка расширения dbt для VS Code <Lifecycle status="preview" />
 
 import InstallExtension from '/snippets/_install-dbt-extension.md'; 
 

@@ -1,16 +1,16 @@
 ---
-title: "About dbt Mesh"
+title: "О dbt Mesh"
 id: about-mesh
-sidebar_label: "About dbt Mesh"
-description: Getting started with dbt Mesh patterns
+sidebar_label: "О dbt Mesh"
+description: Начало работы с паттернами dbt Mesh
 ---
 
 import Mesh from '/snippets/_what-is-mesh.md';
 
 <Mesh feature={'/snippets/_what-is-mesh.md'} />
 
-<Constant name="cloud" /> is designed to coordinate the features above and simplify the complexity to solve for these problems.
+<Constant name="cloud" /> предназначен для координации описанных выше возможностей и упрощения сложности, возникающей при решении этих задач.
 
-If you're just starting your dbt journey, don't worry about building a multi-project architecture right away. You can _incrementally_ adopt the features as you scale. The collection of features work effectively as independent tools. Familiarizing yourself with the tooling and features that make up a multi-project architecture, and how they can apply to your organization will help you make better decisions as you grow.
+Если вы только начинаете работать с dbt, не беспокойтесь о том, чтобы сразу строить многопроектную архитектуру. Вы можете _постепенно_ внедрять эти возможности по мере масштабирования. Этот набор функций эффективно работает и как независимые инструменты. Ознакомление с инструментарием и возможностями, из которых состоит многопроектная архитектура, а также понимание того, как они могут быть применены в вашей организации, помогут вам принимать более взвешенные решения по мере роста.
 
-For additional information, refer to the [<Constant name="mesh" /> FAQs](/best-practices/how-we-mesh/mesh-5-faqs).
+Для получения дополнительной информации см. [FAQ по <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-5-faqs).

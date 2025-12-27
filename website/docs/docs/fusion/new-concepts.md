@@ -1,13 +1,13 @@
 ---
-title: "New concepts in the dbt Fusion engine"
+title: "Новые концепции в движке dbt Fusion"
 id: "new-concepts"
-sidebar_label: "New concepts"
-description: "New concepts and configurations you will encounter when you install the dbt Fusion engine."
+sidebar_label: "Новые концепции"
+description: "Новые концепции и конфигурации, с которыми вы столкнётесь при установке движка dbt Fusion."
 pagination_next: null
 pagination_prev: null
 ---
 
-# New concepts
+# Новые концепции
 
 <VersionBlock lastVersion="1.99">
 
@@ -19,103 +19,103 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 <IntroText>
 
-The <Constant name="fusion_engine" /> [fully comprehends your project's SQL](/blog/the-levels-of-sql-comprehension), enabling advanced capabilities like dialect-aware validation and precise column-level lineage.
+<Constant name="fusion_engine" /> [полностью понимает SQL вашего проекта](/blog/the-levels-of-sql-comprehension), что открывает продвинутые возможности, такие как валидация с учётом диалекта и точный lineage на уровне отдельных колонок.
 
-It can do this because its compilation step is more comprehensive than that of the <Constant name="core" /> engine. When <Constant name="core" /> referred to _compilation_, it only meant _rendering_ &mdash; converting Jinja-templated strings into a SQL query to send to a database.
+Это возможно благодаря тому, что этап компиляции у него более всеобъемлющий, чем у движка <Constant name="core" />. Когда <Constant name="core" /> говорил о _компиляции_, под этим понимался только _рендеринг_ &mdash; преобразование строк с Jinja-шаблонами в SQL‑запрос для отправки в базу данных.
 
-The dbt Fusion engine can also render Jinja, but then it completes a second phase: producing and validating with _static analysis_ a logical plan for every rendered query in the project. This static analysis step is the cornerstone of Fusion's new capabilities.
+dbt Fusion engine также умеет рендерить Jinja, но затем выполняет вторую фазу: построение и валидацию _логического плана_ для каждого отрендеренного запроса в проекте с помощью _статического анализа_. Именно этот этап статического анализа лежит в основе новых возможностей Fusion.
 
 </IntroText>
 
-| Step | dbt Core engine | dbt Fusion engine |
+| Шаг | Движок dbt Core | Движок dbt Fusion |
 |------|-----------------|--------------------|
-| Render Jinja into SQL | ✅ | ✅ |
-| Produce and statically analyze logical plan  | ❌ | ✅ |
-| Run rendered SQL | ✅ | ✅ |
+| Рендеринг Jinja в SQL | ✅ | ✅ |
+| Построение и статический анализ логического плана | ❌ | ✅ |
+| Выполнение отрендеренного SQL | ✅ | ✅ |
 
-## Rendering strategies
+## Стратегии рендеринга
 
-<Lightbox src="/img/fusion/annotated_steps.png" title="Each dot represents a step in that model's execution (render, analyze, run). The numbers reflect step order across the DAG. JIT steps are green; AOT steps are purple." alignment="left" width="600px"/>
+<Lightbox src="/img/fusion/annotated_steps.png" title="Каждая точка представляет шаг выполнения модели (render, analyze, run). Числа отражают порядок шагов по всему DAG. JIT‑шаги отмечены зелёным, AOT‑шаги — фиолетовым." alignment="left" width="600px"/>
 
-<Expandable alt_header="JIT rendering and execution (dbt Core)" is_open="true">
+<Expandable alt_header="JIT‑рендеринг и выполнение (dbt Core)" is_open="true">
   <video src="/img/fusion/CoreJitRun.mp4" autoPlay loop muted style={{ width: "100%", maxWidth: 950 }} />
 </Expandable>
 
-<Constant name="core" /> will _always_ use **Just In Time (JIT) rendering**. It renders a model, runs it in the warehouse, then moves on to the next model.
+<Constant name="core" /> _всегда_ использует **Just In Time (JIT) рендеринг**. Он рендерит модель, выполняет её в хранилище, а затем переходит к следующей модели.
 
-<Expandable alt_header="AOT rendering, analysis and execution (dbt Fusion engine)" is_open="true">
+<Expandable alt_header="AOT‑рендеринг, анализ и выполнение (dbt Fusion engine)" is_open="true">
   <video src="/img/fusion/FusionAotRun.mp4" autoPlay loop muted style={{ width: "100%", maxWidth: 950 }} />
 </Expandable>
 
-The <Constant name="fusion_engine" /> will _default to_ **Ahead of Time (AOT) rendering and analysis**. It renders all models in the project, then produces and statically analyzes every model's logical plan, and only then will it start running models in the warehouse.
+<Constant name="fusion_engine" /> **по умолчанию** использует **Ahead of Time (AOT) рендеринг и анализ**. Он рендерит все модели проекта, затем строит и статически анализирует логический план каждой модели, и только после этого начинает выполнять модели в хранилище.
 
-By rendering and analyzing all models ahead of time, and only beginning execution once everything is proven to be valid, the <Constant name="fusion_engine" /> avoids consuming any warehouse resources unnecessarily. By contrast, SQL errors in models run by <Constant name="core" />'s engine will only be flagged by the database itself during execution.
+Рендеря и анализируя все модели заранее и начиная выполнение только после того, как доказана их корректность, <Constant name="fusion_engine" /> избегает ненужного расходования ресурсов хранилища. Для сравнения, SQL‑ошибки в моделях, запускаемых движком <Constant name="core" />, выявляются самой базой данных только во время выполнения.
 
-### Rendering introspective queries
+### Рендеринг интроспективных запросов
 
-The exception to AOT rendering is an introspective model: a model whose rendered SQL depends on the results of a database query. Models containing macros like `run_query()` or `dbt_utils.get_column_values()` are introspective. Introspection causes issues with ahead-of-time rendering because:
+Исключением из AOT‑рендеринга являются интроспективные модели — модели, у которых отрендеренный SQL зависит от результатов запроса к базе данных. Модели, содержащие макросы вроде `run_query()` или `dbt_utils.get_column_values()`, считаются интроспективными. Интроспекция создаёт проблемы для AOT‑рендеринга, потому что:
 
-- Most introspective queries are run against the results of an earlier model in the DAG, which may not yet exist in the database during AOT rendering.
-- Even if the model does exist in the database, it might be out of date until after the model has been refreshed.
+- Большинство интроспективных запросов выполняются поверх результатов более ранней модели в DAG, которая может ещё не существовать в базе данных во время AOT‑рендеринга.
+- Даже если модель существует в базе данных, она может быть неактуальной до тех пор, пока модель не будет обновлена.
 
-The <Constant name="fusion_engine" /> switches to **JIT rendering for introspective models**, to ensure it renders them the same way as <Constant name="core" />.
+<Constant name="fusion_engine" /> переключается на **JIT‑рендеринг для интроспективных моделей**, чтобы рендерить их так же, как это делает <Constant name="core" />.
 
-Note that macros like `adapter.get_columns_in_relation()` and `dbt_utils.star()` _can_ be rendered and analyzed ahead of time, as long as the [`Relations`](/reference/dbt-classes#relation) they inspect aren't themselves dynamic. This is because the <Constant name="fusion_engine" /> populates schemas into memory as part of the compilation process.
+Обратите внимание, что макросы вроде `adapter.get_columns_in_relation()` и `dbt_utils.star()` _могут_ быть отрендерены и проанализированы заранее, при условии что [`Relations`](/reference/dbt-classes#relation), которые они исследуют, сами по себе не являются динамическими. Это возможно потому, что <Constant name="fusion_engine" /> загружает схемы в память в рамках процесса компиляции.
 
-## Principles of static analysis
+## Принципы статического анализа
 
-The concept of [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) is meant to guarantee that if a model compiles without error in development, it will also run without compilation errors when deployed. Introspective queries can break this promise by making it possible to modify the rendered query after a model is committed to source control. 
+Идея [статического анализа](https://en.wikipedia.org/wiki/Static_program_analysis) заключается в том, чтобы гарантировать: если модель компилируется без ошибок в разработке, то при деплое она также выполнится без ошибок компиляции. Интроспективные запросы могут нарушить это обещание, поскольку позволяют изменить отрендеренный запрос после того, как модель уже закоммичена в систему контроля версий.
 
-The <Constant name="fusion_engine" /> uses the [`static_analysis`](/reference/resource-configs/static-analysis) config to help you control how it performs static analysis for your models.
+<Constant name="fusion_engine" /> использует конфигурацию [`static_analysis`](/reference/resource-configs/static-analysis), чтобы дать вам контроль над тем, как выполняется статический анализ моделей.
 
-The <Constant name="fusion_engine" /> is unique in that it can statically analyze not just a single model in isolation, but every query from one end of your DAG to the other. Even your database can only validate the query in front of it! Concepts like [information flow theory](https://roundup.getdbt.com/i/156064124/beyond-cll-information-flow-theory-and-metadata-propagation) &mdash; although not incorporated into the dbt platform [yet](https://www.getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine) &mdash; rely on stable inputs and the ability to trace columns DAG-wide.
+Уникальность <Constant name="fusion_engine" /> в том, что он способен статически анализировать не одну модель в изоляции, а каждый запрос от одного конца DAG до другого. Даже сама база данных может валидировать только тот запрос, который перед ней! Такие концепции, как [теория потоков информации](https://roundup.getdbt.com/i/156064124/beyond-cll-information-flow-theory-and-metadata-propagation) &mdash; хотя они и не внедрены в платформу dbt [пока](https://www.getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine) &mdash; опираются на стабильные входные данные и возможность отслеживать колонки по всему DAG.
 
-### Static analysis and introspective queries
+### Статический анализ и интроспективные запросы
 
-When Fusion encounters an introspective query, that model will switch to just-in-time rendering (as described above). Both the introspective model and all of its descendants will also be opted in to JIT static analysis. We refer to JIT static analysis as "unsafe" because it will still capture most SQL errors and prevent execution of an invalid model, but only after upstream models have already been materialized.
+Когда Fusion сталкивается с интроспективным запросом, соответствующая модель переключается на JIT‑рендеринг (как описано выше). Эта модель и все её потомки также будут переведены на JIT‑статический анализ. Мы называем JIT‑статический анализ «небезопасным», потому что он всё ещё отлавливает большинство SQL‑ошибок и предотвращает выполнение некорректной модели, но делает это только после того, как upstream‑модели уже были материализованы.
 
-This classification is meant to indicate that Fusion can no longer 100% guarantee alignment between what it analyzes and what will be executed. The most common real-world example where unsafe static analysis can cause an issue is a standalone `dbt compile` step (as opposed to the compilation that happens as part of a `dbt run`).
+Эта классификация означает, что Fusion больше не может на 100 % гарантировать соответствие между тем, что он анализирует, и тем, что в итоге будет выполнено. Наиболее распространённый реальный пример, когда небезопасный статический анализ может вызвать проблемы, — это отдельный шаг `dbt compile` (в отличие от компиляции, происходящей как часть `dbt run`).
 
-During a `dbt run`, JIT rendering ensures the downstream model's code will be up to date with the current warehouse state, but a standalone compile does not refresh the upstream model. In this scenario Fusion will read from the upstream model as it was last run. This is _probably_ fine, but could lead to errors being raised incorrectly (a false positive) or not at all (a false negative).
+Во время `dbt run` JIT‑рендеринг гарантирует, что код downstream‑модели будет соответствовать текущему состоянию хранилища, но отдельная компиляция не обновляет upstream‑модели. В этом сценарии Fusion читает upstream‑модель в том виде, в каком она была выполнена в последний раз. Это _скорее всего_ нормально, но может привести к тому, что ошибки будут подняты некорректно (ложноположительный результат) или не будут обнаружены вовсе (ложноотрицательный результат).
 
-<Expandable alt_header="Rendering and analyzing without execution" is_open="true">
+<Expandable alt_header="Рендеринг и анализ без выполнения" is_open="true">
   <video src="/img/fusion/FusionJitCompileUnsafe.mp4" autoPlay loop muted style={{ width: "100%", maxWidth: 950 }} />
-  Note that `model_d` is rendered AOT, since it doesn't use introspection, but it still has to wait for `introspective_model_c` to be analyzed.
+  Обратите внимание, что `model_d` рендерится AOT, так как не использует интроспекцию, но всё равно должен ждать анализа `introspective_model_c`.
 </Expandable>
 
-You will still derive significant benefits from "unsafe" static analysis compared to no static analysis, and we recommend leaving it on unless you notice it causing you problems. Better still, you should consider whether your introspective code could be rewritten in a way that is eligible for AOT rendering and static analysis.
+Вы всё равно получите значительные преимущества от «небезопасного» статического анализа по сравнению с его отсутствием, и мы рекомендуем оставлять его включённым, если только вы не заметили, что он создаёт проблемы. А ещё лучше — подумать, можно ли переписать интроспективный код так, чтобы он подходил для AOT‑рендеринга и статического анализа.
 
-## Recapping the differences between engines
+## Краткое сравнение движков
 
 dbt Core:
 
-- renders all models just-in-time
-- never runs static analysis
+- рендерит все модели just‑in‑time
+- никогда не выполняет статический анализ
 
-The dbt Fusion engine:
+dbt Fusion engine:
 
-- renders all models ahead-of-time, unless they use introspective queries
-- statically analyzes all models, defaulting to ahead-of-time unless they or their parents were rendered just-in-time, in which case the static analysis step will also happen just-in-time.
+- рендерит все модели заранее, если только они не используют интроспективные запросы
+- статически анализирует все модели, по умолчанию ahead‑of‑time, если только сама модель или её родители не были отрендерены just‑in‑time, в этом случае этап статического анализа также выполняется just‑in‑time.
 
-## Configuring `static_analysis`
+## Настройка `static_analysis`
 
-Beyond the default behavior described above, you can always modify the way static analysis is applied for specific models in your project. Remember that **a model is only eligible for static analysis if all of its parents are also eligible.**
+Помимо поведения по умолчанию, описанного выше, вы всегда можете изменить то, как статический анализ применяется к конкретным моделям в вашем проекте. Помните, что **модель может участвовать в статическом анализе только в том случае, если все её родительские модели также подходят для него.**
 
-The [`static_analysis`](/reference/resource-configs/static-analysis) config options are:
+Доступные параметры конфигурации [`static_analysis`](/reference/resource-configs/static-analysis):
 
-- `on`: Statically analyze SQL. The default for non-introspective models, depends on AOT rendering.
-- `unsafe`: Statically analyze SQL. The default for introspective models. Always uses JIT rendering.
-- `off`: Skip SQL analysis on this model and its descendants.
+- `on`: Выполнять статический анализ SQL. Значение по умолчанию для неинтроспективных моделей, зависит от AOT‑рендеринга.
+- `unsafe`: Выполнять статический анализ SQL. Значение по умолчанию для интроспективных моделей. Всегда использует JIT‑рендеринг.
+- `off`: Пропустить SQL‑анализ для этой модели и всех её потомков.
 
-When you disable static analysis, features of the VS Code extension which depend on SQL comprehension will be unavailable.
+При отключении статического анализа функции расширения VS Code, зависящие от понимания SQL, будут недоступны.
 
-The best place to configure `static_analysis` is as a config on an individual model or group of models. As a debugging aid, you can also use the [`--static-analysis off` or `--static-analysis unsafe` CLI flags](/reference/global-configs/static-analysis-flag) to override all model-level configuration. 
+Лучшее место для настройки `static_analysis` — это конфигурация на уровне отдельной модели или группы моделей. В качестве вспомогательного инструмента для отладки вы также можете использовать [CLI‑флаги `--static-analysis off` или `--static-analysis unsafe`](/reference/global-configs/static-analysis-flag), чтобы переопределить конфигурацию для всех моделей.
 
-Refer to [CLI options](/reference/global-configs/command-line-options) and [Configurations and properties](/reference/configs-and-properties) to learn more about configs.
+Подробнее о конфигурациях см. [CLI options](/reference/global-configs/command-line-options) и [Configurations and properties](/reference/configs-and-properties).
 
-### Example configurations
+### Примеры конфигураций
 
-Disable static analysis for all models in a package:
+Отключение статического анализа для всех моделей в пакете:
 
 <File name='dbt_project.yml'>
 
@@ -133,7 +133,7 @@ models:
 
 </File>
 
-Disable static analysis in YAML:
+Отключение статического анализа в YAML:
 
 <File name='models/my_udf_using_model.yml'>
 
@@ -146,8 +146,7 @@ models:
 
 </File>
 
-
-Disable static analysis for a model using a custom UDF:
+Отключение статического анализа для модели, использующей пользовательскую UDF:
 
 <File name='models/my_udf_using_model.sql'>
 
@@ -162,45 +161,45 @@ from {{ ref('my_model') }}
 
 </File>
 
-### When should I turn static analysis `off`?
+### Когда стоит выключать static analysis (`off`)?
 
-Static analysis may incorrectly fail on valid queries if they contain:
+Статический анализ может ошибочно падать на корректных запросах, если они содержат:
 
-- **syntax or native functions** that the <Constant name="fusion_engine" /> doesn't recognize. Please [open an issue](https://github.com/dbt-labs/dbt-fusion/issues) in addition to disabling static analysis.
-- **user-defined functions** that the <Constant name="fusion_engine" /> doesn't recognize. You will need to temporarily disable static analysis. Native support for UDF compilation will arrive in a future version - see [dbt-fusion#69](https://github.com/dbt-labs/dbt-fusion/issues/69).
-- **dynamic SQL** such as [Snowflake's PIVOT ANY](https://docs.snowflake.com/en/sql-reference/constructs/pivot#dynamic-pivot-on-all-distinct-column-values-automatically) which cannot be statically analyzed. You can disable static analysis, refactor your pivot to use explicit column names, or create a [dynamic pivot in Jinja](https://github.com/dbt-labs/dbt-utils#pivot-source).
-- **highly volatile data feeding an introspective query** during a standalone `dbt compile` invocation. Because the `dbt compile` step does not run models, it uses old data or defers to a different environment when running introspective queries. The more frequently the input data changes, the more likely it is for this divergence to cause a compilation error. Consider whether these standalone `dbt compile` commands are necessary before disabling static analysis.
+- **синтаксис или нативные функции**, которые <Constant name="fusion_engine" /> не распознаёт. Пожалуйста, [создайте issue](https://github.com/dbt-labs/dbt-fusion/issues) в дополнение к отключению статического анализа.
+- **пользовательские функции (UDF)**, которые <Constant name="fusion_engine" /> не распознаёт. В этом случае потребуется временно отключить статический анализ. Нативная поддержка компиляции UDF появится в будущей версии — см. [dbt-fusion#69](https://github.com/dbt-labs/dbt-fusion/issues/69).
+- **динамический SQL**, например [PIVOT ANY в Snowflake](https://docs.snowflake.com/en/sql-reference/constructs/pivot#dynamic-pivot-on-all-distinct-column-values-automatically), который невозможно проанализировать статически. Вы можете отключить статический анализ, переписать pivot с явными именами колонок или создать [динамический pivot в Jinja](https://github.com/dbt-labs/dbt-utils#pivot-source).
+- **высоковолатильные данные, питающие интроспективный запрос**, при отдельном запуске `dbt compile`. Поскольку шаг `dbt compile` не выполняет модели, он использует устаревшие данные или обращается к другой среде при выполнении интроспективных запросов. Чем чаще меняются входные данные, тем выше вероятность того, что это расхождение приведёт к ошибке компиляции. Прежде чем отключать статический анализ, подумайте, действительно ли необходимы такие отдельные вызовы `dbt compile`.
 
-## Examples
+## Примеры
 
-### No introspective models
+### Нет интроспективных моделей
 
-<Expandable alt_header="AOT rendering, analysis and execution" is_open="true">
+<Expandable alt_header="AOT‑рендеринг, анализ и выполнение" is_open="true">
   <video src="/img/fusion/FusionAotRun.mp4" autoPlay loop muted style={{ width: "100%", maxWidth: 950 }} />
 </Expandable>
 
-- Fusion renders each model in order.
-- Then it statically analyzes each model's logical plan in order.
-- Finally, it runs each model's rendered SQL. Nothing is persisted to the database until Fusion has validated the entire project.
+- Fusion рендерит каждую модель по порядку.
+- Затем он по порядку выполняет статический анализ логического плана каждой модели.
+- Наконец, он выполняет отрендеренный SQL каждой модели. Ничего не сохраняется в базе данных до тех пор, пока Fusion не провалидирует весь проект.
 
-### Introspective model with `unsafe` static analysis
+### Интроспективная модель с `unsafe` static analysis
 
-Imagine we update `model_c` to contain an introspective query (such as `dbt_utils.get_column_values`). We'll say it's querying `model_b`, but the <Constant name="fusion_engine" />'s response is the same regardless of what the introspection does.
+Представим, что мы обновили `model_c`, добавив в неё интроспективный запрос (например, `dbt_utils.get_column_values`). Пусть он обращается к `model_b`, но реакция <Constant name="fusion_engine" /> будет одинаковой независимо от того, что именно делает интроспекция.
 
-<Expandable alt_header="Unsafe static analysis of introspective models" is_open="true">
+<Expandable alt_header="Небезопасный статический анализ интроспективных моделей" is_open="true">
   <video src="/img/fusion/FusionJitRunUnsafe.mp4" autoPlay loop muted style={{ width: "100%", maxWidth: 950 }} />
 </Expandable>
 
-- During parsing, Fusion discovers `model_c`'s introspective query. It switches `model_c` to JIT rendering and opts `model_c+` in to JIT static analysis.
-- `model_a` and `model_b` are still eligible for AOT compilation, so Fusion handles them the same as in the introspection-free example above. `model_d` is still eligible for AOT rendering (but not analysis).
-- Once `model_b` is run, Fusion renders `model_c`'s SQL (using the just-refreshed data), analyzes it, and runs it. All three steps happen back-to-back.
-- `model_d`'s AOT-rendered SQL is analyzed and run.
+- Во время парсинга Fusion обнаруживает интроспективный запрос в `model_c`. Он переключает `model_c` на JIT‑рендеринг и переводит `model_c+` на JIT‑статический анализ.
+- `model_a` и `model_b` по‑прежнему подходят для AOT‑компиляции, поэтому Fusion обрабатывает их так же, как и в примере без интроспекции. `model_d` по‑прежнему подходит для AOT‑рендеринга (но не для анализа).
+- После выполнения `model_b` Fusion рендерит SQL для `model_c` (используя только что обновлённые данные), анализирует его и выполняет. Все три шага происходят последовательно.
+- AOT‑отрендеренный SQL для `model_d` анализируется и выполняется.
 
-<Expandable alt_header="Complex DAG with an introspective branch" is_open="true">
+<Expandable alt_header="Сложный DAG с интроспективной веткой" is_open="true">
   <video src="/img/fusion/FusionJitRunUnsafeComplexDag.mp4" autoPlay loop muted style={{ width: "100%", maxWidth: 950 }} />
 </Expandable>
 
-As you'd expect, a branching DAG will AOT compile as much as possible before moving on to the JIT components, and will work with multiple `--threads` if they're available. Here, `model_c` can start rendering as soon as `model_b` has finished running, while the AOT-compiled `model_x` and `model_y` run separately:
+Как и ожидается, DAG с ветвлением будет AOT‑компилироваться настолько полно, насколько это возможно, прежде чем перейти к JIT‑компонентам, и будет работать с несколькими `--threads`, если они доступны. В этом примере `model_c` может начать рендеринг сразу после завершения выполнения `model_b`, в то время как AOT‑скомпилированные `model_x` и `model_y` выполняются параллельно:
 
 import AboutFusion from '/snippets/_about-fusion.md';
 

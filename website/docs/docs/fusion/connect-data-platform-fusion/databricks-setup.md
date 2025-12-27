@@ -1,6 +1,6 @@
 ---
-title: "Databricks setup"
-description: "Read this guide to learn about the Databricks warehouse setup in dbt Fusion."
+title: "Настройка Databricks"
+description: "Прочитайте это руководство, чтобы узнать о настройке Databricks warehouse в dbt Fusion."
 id: "databricks-setup"
 meta:
   maintained_by: Databricks
@@ -15,46 +15,45 @@ meta:
   config_page: '/reference/resource-configs/databricks-configs'
 --- 
 
-# Databricks setup <Lifecycle status='preview' />
+# Настройка Databricks <Lifecycle status='preview' />
 
-You can configure the Databricks adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+Вы можете настроить адаптер Databricks, запустив `dbt init` в CLI, либо вручную создав файл `profiles.yml` и указав в нём поля, соответствующие выбранному типу аутентификации.
 
-The Databricks adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
-- Personal access token (for individual users)
-- Service Principal token (for service users)
+Адаптер Databricks для Fusion поддерживает следующие [методы аутентификации](#supported-authentication-types):
+- Personal access token (для индивидуальных пользователей)
+- Service Principal token (для сервисных пользователей)
 - OAuth
 
-## Databricks configuration details
+## Детали конфигурации Databricks
 
-The <Constant name="fusion_engine" /> `dbt-databricks` adapter is the only supported connection method for Databricks.
+Адаптер <Constant name="fusion_engine" /> `dbt-databricks` — это единственный поддерживаемый способ подключения к Databricks.
 
-`dbt-databricks` can connect to Databricks SQL Warehouses. These warehouses are the recommended way to get started with Databricks.
+`dbt-databricks` может подключаться к Databricks SQL Warehouses. Эти хранилища рекомендуется использовать для начала работы с Databricks.
 
-Refer to the [Databricks docs](https://docs.databricks.com/dev-tools/dbt.html#) for more info on how to obtain the credentials for configuring your profile.
+Дополнительную информацию о получении учётных данных для настройки профиля см. в [документации Databricks](https://docs.databricks.com/dev-tools/dbt.html#).
 
-## Configure Fusion
+## Настройка Fusion
 
-Executing `dbt init` in your CLI will prompt for the following fields:
+При выполнении `dbt init` в CLI вам будет предложено указать следующие поля:
 
-- **Host:** Databricks instance hostname (excluding the `http` or `https` prefix)
-- **HTTP Path:** Path to your SQL server or cluster
-- **Schema:** The development/staging/deployment schema for the project
-- **Catalog (Optional):** The Databricks catalog containing your schemas and tables
+- **Host:** имя хоста экземпляра Databricks (без префикса `http` или `https`)
+- **HTTP Path:** путь к вашему SQL-серверу или кластеру
+- **Schema:** схема для разработки / стейджинга / деплоя проекта
+- **Catalog (Optional):** каталог Databricks, содержащий ваши схемы и таблицы
 
+В качестве альтернативы вы можете вручную создать файл `profiles.yml` и настроить необходимые поля. Примеры форматирования см. в разделе [authentication](#supported-authentication-types). Если файл `profiles.yml` уже существует, вам будет предложено сохранить текущие поля или перезаписать их.
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+Далее выберите метод аутентификации и следуйте инструкциям на экране, чтобы предоставить требуемую информацию.
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
-
-## Supported authentication types
+## Поддерживаемые типы аутентификации
 
 <Tabs>
 
 <TabItem value="Personal access token">
 
-Enter your personal access token (PAT) for the Databricks environment. For more information about obtaining a PAT, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/dev-tools/auth/pat). This is considered a legacy feature by Databricks and OAuth is recommended over PATs.
+Введите ваш personal access token (PAT) для среды Databricks. Подробнее о получении PAT см. в [документации Databricks](https://docs.databricks.com/aws/en/dev-tools/auth/pat). Databricks считает этот механизм устаревшим, поэтому рекомендуется использовать OAuth вместо PAT.
 
-#### Example personal access token configuration
+#### Пример конфигурации с personal access token
 
 <File name="profiles.yml">
 
@@ -79,9 +78,9 @@ default:
 
 <TabItem value="Service Principal token">
 
-Enter your Service Principal token for the Databricks environment. For more information about obtaining a Service Principal token, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/admin/users-groups/service-principals).
+Введите Service Principal token для среды Databricks. Подробнее о получении Service Principal token см. в [документации Databricks](https://docs.databricks.com/aws/en/admin/users-groups/service-principals).
 
-#### Example Service Principal token configuration
+#### Пример конфигурации с Service Principal token
 
 <File name="profiles.yml">
 
@@ -106,9 +105,9 @@ default:
 
 <TabItem value="OAuth (Recommended)">
 
-Selecting the OAuth option will create a connection to your Databricks environment and open a web browser so you can complete the authentication. Users will be prompted to re-authenticate with each new dbt session they initiate.
+При выборе OAuth будет создано подключение к вашей среде Databricks и автоматически открыт веб-браузер для завершения аутентификации. Пользователям потребуется проходить повторную аутентификацию при запуске каждой новой сессии dbt.
 
-#### Example OAuth configuration
+#### Пример конфигурации OAuth
 
 <File name="profiles.yml">
 
@@ -131,6 +130,6 @@ default:
 
 </Tabs>
 
-## More information
+## Дополнительная информация
 
-Find Databricks-specific configuration information in the [Databricks adapter reference guide](/reference/resource-configs/databricks-configs).
+Конфигурационные параметры, специфичные для Databricks, см. в [справочнике по адаптеру Databricks](/reference/resource-configs/databricks-configs).

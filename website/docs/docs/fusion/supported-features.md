@@ -1,16 +1,16 @@
 ---
-title: "Supported features"
+title: "Поддерживаемые функции"
 id: "supported-features"
-description: "Feature support and parity information for the dbt Fusion engine."
+description: "Информация о поддержке функций и паритете возможностей для движка dbt Fusion."
 pagination_next: null
 pagination_prev: null
 ---
 
-# Supported features
+# Поддерживаемые функции
 
 <IntroText>
 
-Learn about the features supported by the dbt Fusion engine, including requirements and limitations.
+Узнайте, какие возможности поддерживает движок dbt Fusion, а также о требованиях и ограничениях.
 
 </IntroText>
 
@@ -23,95 +23,94 @@ import FusionDWH from '/snippets/_fusion-dwh.md';
 
 </VersionBlock>
 
-## Requirements
+## Требования
 
-To use Fusion in your dbt project:
-- You're using a supported adapter and authentication method:
+Чтобы использовать Fusion в вашем dbt-проекте:
+- Вы используете поддерживаемый адаптер и метод аутентификации:
   <FusionDWH /> 
-- Have only SQL models defined in your project. Python models are not currently supported because Fusion cannot parse these to extract dependencies (refs) on other models. <!-- [TODO: Link to dbt-fusion Python issue.] -->
+- В проекте определены только SQL-модели. Python-модели в настоящее время не поддерживаются, так как Fusion не может анализировать их для извлечения зависимостей (refs) от других моделей. <!-- [TODO: Link to dbt-fusion Python issue.] -->
 
-## Parity with dbt Core
+## Паритет с dbt Core
 
-Our goal is for the <Constant name="fusion_engine" /> to support all capabilities of the <Constant name="core" /> framework, and then some. <Constant name="fusion" /> already supports many of the capabilities in <Constant name="core" /> v1.9, and we're working fast to add more.
+Наша цель — чтобы <Constant name="fusion_engine" /> поддерживал все возможности фреймворка <Constant name="core" />, и даже больше. <Constant name="fusion" /> уже поддерживает многие возможности <Constant name="core" /> версии 1.9, и мы активно работаем над добавлением остальных.
 
-Note that we have removed some deprecated features and introduced more rigorous validation of erroneous project code. Refer to the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) for details.
+Обратите внимание, что мы удалили некоторые устаревшие функции и внедрили более строгую валидацию ошибочного кода проекта. Подробности см. в [руководстве по обновлению](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 
-## Features and capabilities
-<!-- table for feature comparison ("What's available where?")-->
-<Constant name="fusion_engine" /> (built on Rust) gives your team up to 30x faster performance and comes with different features depending on where you use it. 
-- It powers both _engine-level_ improvements (like faster compilation and incremental builds) and _editor-level_ features (like IntelliSense, hover info, and inline errors) through the <Term id="lsp"/> through the dbt VS Code extension.
-- To learn about the <Term id="lsp"/> features supported across the <Constant name="dbt_platform"/>, refer to [About dbt LSP](/docs/about-dbt-lsp).
-- To stay up-to-date on the latest features and capabilities, check out the [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
+## Возможности и функциональность
+<!-- таблица сравнения возможностей («Что где доступно?»)-->
+<Constant name="fusion_engine" /> (построенный на Rust) обеспечивает до 30× более высокую производительность и предлагает разные возможности в зависимости от того, где вы его используете.
+- Он лежит в основе как улучшений на уровне движка (например, более быстрая компиляция и инкрементальные сборки), так и функций на уровне редактора (таких как IntelliSense, подсказки при наведении и встроенные ошибки) через <Term id="lsp"/> в расширении dbt для VS Code.
+- Подробнее о возможностях <Term id="lsp"/>, поддерживаемых в рамках <Constant name="dbt_platform"/>, см. в разделе [About dbt LSP](/docs/about-dbt-lsp).
+- Чтобы быть в курсе последних возможностей и обновлений, следите за [Fusion diaries](https://github.com/dbt-labs/dbt-fusion/discussions).
 
-<Constant name="core" /> (built on Python) supports <Term id="sql-rendering" /> but lacks SQL parsing and modern editor features powered by <Constant name="fusion_engine" /> and the <Term id="lsp"/>. 
+<Constant name="core" /> (построенный на Python) поддерживает <Term id="sql-rendering" />, но не включает парсинг SQL и современные функции редактора, которые реализованы с помощью <Constant name="fusion_engine" /> и <Term id="lsp"/>.
 
 :::tip 
-<Constant name="dbt_platform" /> customers using <Constant name="fusion" /> can [develop across multiple development surfaces](/docs/fusion/fusion-availability), including  <Constant name="cloud_ide"/> and VS Code with the dbt extension. 
+Клиенты <Constant name="dbt_platform" />, использующие <Constant name="fusion" />, могут [разрабатывать на нескольких рабочих поверхностях](/docs/fusion/fusion-availability), включая <Constant name="cloud_ide"/> и VS Code с расширением dbt.
 
-<Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about), and more) are available regardless of which surface you use, depending on your [dbt plan](https://www.getdbt.com/pricing). 
+Возможности <Constant name="dbt_platform" /> [features](/docs/cloud/about-cloud/dbt-cloud-features) (такие как [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), [State-aware orchestration](/docs/deploy/state-aware-about) и другие) доступны независимо от того, какую среду разработки вы используете, в зависимости от вашего [тарифного плана dbt](https://www.getdbt.com/pricing).
 :::
 
-If you're not sure what features are available in <Constant name="fusion" />, the dbt VS Code extension, <Constant name="fusion"/>-CLI, or more, the following table focuses on <Constant name="fusion" />-powered options. 
+Если вы не уверены, какие функции доступны в <Constant name="fusion" />, расширении dbt для VS Code, <Constant name="fusion"/>-CLI и других инструментах, следующая таблица фокусируется на возможностях, работающих на базе <Constant name="fusion" />.
 
-In this table, self-hosted means it's open-source/source-available and runs on your own infrastructure; <Constant name="dbt_platform" /> is hosted by dbt Labs and includes platform-level features.
+В этой таблице self-hosted означает, что решение является open-source/source-available и работает в вашей собственной инфраструктуре; <Constant name="dbt_platform" /> размещается и поддерживается dbt Labs и включает функции уровня платформы.
 
-> ✅ = Available | 🟡 = Partial/at compile-time only | ❌ = Not available | Coming soon = Not yet available
+> ✅ = Доступно | 🟡 = Частично / только на этапе компиляции | ❌ = Недоступно | Coming soon = Пока недоступно
 
-| **Category/Capability** |<span style={{whiteSpace: 'nowrap'}}>**Fusion CLI**</span><br/><span style={{whiteSpace: 'nowrap'}}><small>(self-hosted)</small></span> | **Fusion + VS Code extension**<br/><span style={{whiteSpace: 'nowrap'}}><small>(self-hosted)</small></span> | <span style={{whiteSpace: 'nowrap'}}>**dbt platform**</span> <br/>** + VS Code extension**<sup>1</sup> | **dbt platform** <span style={{whiteSpace: 'nowrap'}}> ** + Studio IDE** </span><br/><span style={{whiteSpace: 'nowrap'}}> ** + Other dev surfaces**<sup>2</sup> </span> | **Requires <br />[<span style={{whiteSpace: 'nowrap'}}>static analysis</span>](/docs/fusion/new-concepts#principles-of-static-analysis)** |
+| **Категория/возможность** |<span style={{whiteSpace: 'nowrap'}}>**Fusion CLI**</span><br/><span style={{whiteSpace: 'nowrap'}}><small>(self-hosted)</small></span> | **Fusion + расширение VS Code**<br/><span style={{whiteSpace: 'nowrap'}}><small>(self-hosted)</small></span> | <span style={{whiteSpace: 'nowrap'}}>**dbt platform**</span> <br/>** + расширение VS Code**<sup>1</sup> | **dbt platform** <span style={{whiteSpace: 'nowrap'}}> ** + Studio IDE** </span><br/><span style={{whiteSpace: 'nowrap'}}> ** + Другие dev-интерфейсы**<sup>2</sup> </span> | **Требует <br />[<span style={{whiteSpace: 'nowrap'}}>статического анализа</span>](/docs/fusion/new-concepts#principles-of-static-analysis)** |
 |:--------------|:---------------:|:-------------:|:-------------:|:-------------:|:--------------:|
-| **Engine performance** |  |  |  |  |  |
+| **Производительность движка** |  |  |  |  |  |
 | <Term id="sql-rendering" /> | ✅ | ✅ | ✅ | ✅ | ❌ |
-| SQL parsing and compilation <small>(SQL understanding)</small> | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Editor and dev experience** |  |  |  |  |  |
+| Парсинг и компиляция SQL <small>(понимание SQL)</small> | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Редактор и опыт разработки** |  |  |  |  |  |
 | IntelliSense/autocomplete/hover info | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Inline errors (on save/in editor) | 🟡 | ✅ | ✅ | ✅ | ✅ |
-| Live CTE previews/compiled SQL view | ❌ | ✅ | ✅ | ✅ | 🟡 <br /><small>(Live CTE previews only)</small> |
-| Refactoring tools (rename model/column) | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(Column refactor only)</small> |
-| Go-to definition/references/macro | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(Column go-to definition only)</small> |
-| Column-level lineage (in editor) | ❌ | ✅ | ✅ | <small>Coming soon</small>  | ✅ |
-| Developer compare changes | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ❌ |
-| **Platform and governance** |  |  |  |  |  |
+| Ошибки inline (при сохранении/в редакторе) | 🟡 | ✅ | ✅ | ✅ | ✅ |
+| Live CTE previews/просмотр скомпилированного SQL | ❌ | ✅ | ✅ | ✅ | 🟡 <br /><small>(только Live CTE previews)</small> |
+| Инструменты рефакторинга (переименование модели/колонки) | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(только рефакторинг колонок)</small> |
+| Переход к определению/ссылкам/макросу | ❌ | ✅ | ✅ | <small>Coming soon</small> | 🟡 <br /><small>(только переход к определению колонки)</small> |
+| Column-level lineage (в редакторе) | ❌ | ✅ | ✅ | <small>Coming soon</small>  | ✅ |
+| Сравнение изменений разработчика | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ❌ |
+| **Платформа и governance** |  |  |  |  |  |
 | Advanced CI compare changes | ❌ | ❌ | ✅ | ✅ | ❌ |
 | dbt <Constant name="mesh" /> | ❌ | ❌ | ✅ | ✅ | ❌ |
 | Efficient testing | ❌ | ❌ | ✅ | ✅ | ✅ |
 | State-aware orchestration (SAO) | ❌ | ❌ | ✅ | ✅ | ❌ |
 | Governance (PII/PHI tracking) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
-| CI/CD cost optimization (Slimmer CI) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
+| Оптимизация стоимости CI/CD (Slimmer CI) | ❌ | ❌ | <small>Coming soon</small> | <small>Coming soon</small> | ✅ |
 
-<sup>1</sup> Support for other <Constant name="dbt_platform" /> and <Term id="lsp"/> features, like <Constant name="visual_editor"/>, <Constant name="semantic_layer" /> or Column-level lineage, is coming soon. See [About LSP](/docs/about-dbt-lsp) for a more detailed comparison of dbt development environments.<br />
-<sup>2</sup> The [dbt VS Code extension](/docs/about-dbt-extension) is usable in VS Code, Cursor, Windsurf, and other VS Code–based editors.
+<sup>1</sup> Поддержка других возможностей <Constant name="dbt_platform" /> и <Term id="lsp"/>, таких как <Constant name="visual_editor"/>, <Constant name="semantic_layer" /> или column-level lineage, появится в ближайшее время. См. [About LSP](/docs/about-dbt-lsp) для более подробного сравнения сред разработки dbt.<br />
+<sup>2</sup> [Расширение dbt для VS Code](/docs/about-dbt-extension) можно использовать в VS Code, Cursor, Windsurf и других редакторах на базе VS Code.
 
+#### Дополнительные соображения
+Ниже приведены дополнительные моменты, которые стоит учитывать при использовании Fusion CLI без расширения VS Code или расширения VS Code без Fusion CLI:
+- **Fusion CLI** ([binary](/blog/dbt-fusion-engine-components))
+  - Бесплатен в использовании и работает на <Constant name="fusion_engine" /> (отличается от <Constant name="core" />).
+  - Использует преимущества производительности Fusion engine для `parse`, `compile`, `build` и `run`, но _не_ включает возможности <Term id="lsp"/> [features](/docs/dbt-extension-features), такие как автодополнение, подсказки при наведении, lineage и другие.
+  - Требует только `profiles.yml` (файл `dbt_cloud.yml` не нужен).
+- **dbt VS Code extension**
+  - Бесплатно, работает на <Constant name="fusion_engine" />; необходимо зарегистрировать email в течение 14 дней.
+  - Использует преимущества производительности <Constant name="fusion" /> engine для `parse`, `compile`, `build` и `run`, а также включает возможности <Term id="lsp"/> [features](/docs/dbt-extension-features), такие как автодополнение, подсказки при наведении, lineage и другие.
+  - Ограничение — до 15 пользователей на организацию. Подробнее см. в [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup).
+  - Если у вас уже есть учетная запись <Constant name="dbt_platform" /> (даже если пробный период истек), войдите с тем же email. При необходимости разблокируйте или сбросьте учетную запись.
+  - Требуются файлы `profiles.yml` и `dbt_cloud.yml`.
 
-#### Additional considerations
-Here are some additional considerations if using the Fusion CLI without the VS Code extension or the VS Code extension without the Fusion CLI:
-    - **Fusion CLI** ([binary](/blog/dbt-fusion-engine-components))
-      - Free to use and runs on the <Constant name="fusion_engine" /> (distinct from <Constant name="core" />). 
-      - Benefits from Fusion engine's performance for `parse`, `compile`, `build`, and `run`, but _doesn't_ include <Term id="lsp"/> [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.  
-      - Requires `profiles.yml` only (no `dbt_cloud.yml`).
-    - **dbt VS Code extension**
-      - Free to use and runs on the <Constant name="fusion_engine" />; register your email within 14 days. 
-      - Benefits from <Constant name="fusion" /> engine's performance for `parse`, `compile`, `build`, and `run`, and includes <Term id="lsp"/> [features](/docs/dbt-extension-features) like autocomplete, hover insights, lineage, and more.
-      - Capped at 15 users per organization. See the [acceptable use policy](https://www.getdbt.com/dbt-assets/vscode-plugin-aup) for more information.
-      - If you already have a <Constant name="dbt_platform" /> user account (even if a trial expired), sign in with the same email. Unlock or reset it if locked.  
-      - Requires both `profiles.yml` and `dbt_cloud.yml` files.
+## Ограничения
 
-## Limitations
-
-If your project is using any of the features listed in the following table, you can use Fusion, but you won't be able to fully migrate all your workloads because you have:
-- Models that leverage specific materialization features may be unable to run or may be missing some desirable configurations.
-- Tooling that expects dbt Core's exact log output. Fusion's logging system is currently unstable and incomplete.
-- Workflows built around complementary features of the dbt platform (like model-level notifications, Advanced CI, and Semantic Layer) that Fusion does not yet support.
-- When using the dbt VS Code extension in Cursor, lineage visualization works best in Editor mode and doesn't render in Agent mode. If you're working in Agent mode and need to view lineage, switch to Editor mode to access the full lineage tab functionality.
+Если ваш проект использует какие-либо из функций, перечисленных в таблице ниже, вы можете использовать Fusion, но не сможете полностью перенести все рабочие нагрузки, так как у вас есть:
+- Модели, использующие специфические возможности materialization, которые могут не запускаться или не поддерживать некоторые желаемые настройки.
+- Инструменты, ожидающие точный формат логов dbt Core. Система логирования Fusion в настоящее время нестабильна и не завершена.
+- Процессы, построенные вокруг дополнительных возможностей dbt platform (таких как уведомления на уровне моделей, Advanced CI и Semantic Layer), которые Fusion пока не поддерживает.
+- При использовании расширения dbt VS Code в Cursor визуализация lineage лучше всего работает в режиме Editor и не отображается в режиме Agent. Если вы работаете в режиме Agent и вам нужно посмотреть lineage, переключитесь в режим Editor, чтобы получить доступ к полной функциональности вкладки lineage.
 
 :::note
-We have been moving quickly to implement many of these features ahead of General Availability. Read more about [the path to GA](/blog/dbt-fusion-engine-path-to-ga), and track our progress in the [`dbt-fusion` milestones](https://github.com/dbt-labs/dbt-fusion/milestones).
+Мы активно внедряем многие из этих возможностей в преддверии General Availability. Подробнее читайте о [пути к GA](/blog/dbt-fusion-engine-path-to-ga) и отслеживайте прогресс в [`dbt-fusion` milestones](https://github.com/dbt-labs/dbt-fusion/milestones).
 :::
 
 import FusionFeatures from '/snippets/_fusion-missing-features.md';
 
 <FusionFeatures />
 
-## Package support
+## Поддержка пакетов
 
 import FusionPackages from '/snippets/_fusion-supported-packages.md';
 

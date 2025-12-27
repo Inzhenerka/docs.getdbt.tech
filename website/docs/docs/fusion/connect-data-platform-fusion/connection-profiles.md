@@ -1,13 +1,13 @@
 ---
-title: "Connection profiles"
+title: "Профили подключений"
 id: "connection-profiles"
-description: "Configure the connection profile for your dbt project in Fusion."
+description: "Настройка профиля подключения для вашего проекта dbt в Fusion."
 ---
 
 import ConnectionProfiles from '/snippets/_connection-profiles.md';
 
 <ConnectionProfiles />
 
-## Related docs
+## Связанная документация
 
 - [About `profiles.yml`](/docs/fusion/connect-data-platform-fusion/profiles.yml)

@@ -1,59 +1,59 @@
 ---
-title: Fusion readiness checklist
+title: Чеклист готовности к Fusion
 id: fusion-readiness
-description: "Your to-do list for preparing for Fusion"
-sidebar_label: "Fusion readiness checklist"
+description: "Ваш список дел для подготовки к Fusion"
+sidebar_label: "Чеклист готовности к Fusion"
 pagination_next: null
 pagination_prev: null
 ---
 
-The <Constant name="fusion_engine" /> is here! We currently offer it as a [private preview](/docs/dbt-versions/product-lifecycles#the-dbt-platform) on the <Constant name="dbt_platform" />. Even if we haven't enabled it for your account, you can still start preparing your projects for upgrade. Use this checklist to ensure a smooth upgrade once <Constant name="fusion" /> becomes available. If this is all new to you, first [learn about <Constant name="fusion" />](/docs/fusion), its current state, and the features available. 
+<Constant name="fusion_engine" /> уже здесь! Сейчас мы предлагаем его в формате [private preview](/docs/dbt-versions/product-lifecycles#the-dbt-platform) на платформе <Constant name="dbt_platform" />. Даже если он ещё не включён для вашего аккаунта, вы уже можете начать подготовку своих проектов к обновлению. Используйте этот чеклист, чтобы обеспечить плавный апгрейд, когда <Constant name="fusion" /> станет доступен. Если для вас это новая тема, сначала [узнайте больше о <Constant name="fusion" />](/docs/fusion), его текущем статусе и доступных возможностях.
 
-## Preparing for Fusion
+## Подготовка к Fusion
 
-Use the following checklist to prepare your projects for the <Constant name="fusion_engine" />
+Используйте следующий чеклист, чтобы подготовить ваши проекты к <Constant name="fusion_engine" />.
 
-### 1. Upgrade to the latest dbt version
+### 1. Обновитесь до последней версии dbt
 
-The `Latest` [release track](/docs/dbt-versions/cloud-release-tracks) has all of the most recent features to help you prepare for <Constant name="fusion" />.
+Трек релизов `Latest` содержит самые свежие возможности, которые помогут подготовиться к <Constant name="fusion" />.
 
-- [ ] Make sure all your projects are on the `Latest` release track across all deployment environments and jobs. This will ensure the simplest, most predictable experience by allowing you to pre-validate that your project doesn't rely on deprecated behaviors. 
+- [ ] Убедитесь, что все ваши проекты используют трек релизов `Latest` во всех средах деплоя и заданиях. Это обеспечит наиболее простой и предсказуемый процесс, позволяя заранее проверить, что ваш проект не зависит от устаревшего поведения.
 
-### 2. Resolve all deprecation warnings
+### 2. Устраните все предупреждения о депрекациях
 
-You must resolve deprecations while your projects are on a <Constant name="core" /> release track, as they result in warnings that will become errors once you upgrade to <Constant name="fusion" />. The autofix tool can automatically resolve many deprecations (such as moving arbitrary configs into the meta dictionary). Start a new branch to begin resolving deprecation warnings using one of the following methods:
+Вы должны устранить депрекации, пока ваши проекты находятся на релиз-треке <Constant name="core" />, поскольку сейчас они проявляются как предупреждения, но после обновления до <Constant name="fusion" /> станут ошибками. Инструмент autofix может автоматически исправить многие депрекации (например, перенос произвольных конфигураций в словарь `meta`). Создайте новую ветку и начните устранение предупреждений одним из следующих способов:
 
-- [ ] **Run autofix in the dbt platform:** You can address deprecation warnings using the [autofix tool in the Studio IDE](/docs/cloud/studio-ide/autofix-deprecations). You can run the autofix tool on the `Compatible` or `Latest` release track.
-- [ ] **Run autofix locally:** Use the [VS Code extension](/docs/about-dbt-extension). The extension has a built-in ["Getting Started" workflow](/docs/install-dbt-extension#getting-started) that will debug your dbt project in the VS Code or Cursor IDE and execute the autofix tool. This has the added benefit of installing <Constant name="fusion" /> to your computer so you can begin testing locally before implementing in your <Constant name="dbt_platform" /> account.
-- [ ] **Run autofix locally (without the extension):** Visit the autofix [GitHub repo](https://github.com/dbt-labs/dbt-autofix) to run the tool locally if you're not using VS Code or Cursor. This will only run the tool, it will not install <Constant name="fusion" />.
+- [ ] **Запуск autofix в dbt platform:** Вы можете устранять предупреждения о депрекациях с помощью [инструмента autofix в Studio IDE](/docs/cloud/studio-ide/autofix-deprecations). Инструмент можно запускать на релиз-треке `Compatible` или `Latest`.
+- [ ] **Запуск autofix локально:** Используйте [расширение VS Code](/docs/about-dbt-extension). В расширении есть встроенный workflow ["Getting Started"](/docs/install-dbt-extension#getting-started), который отладит ваш dbt-проект в IDE VS Code или Cursor и запустит autofix. Дополнительное преимущество — установка <Constant name="fusion" /> на ваш компьютер, что позволит начать локальное тестирование до внедрения в аккаунте <Constant name="dbt_platform" />.
+- [ ] **Запуск autofix локально (без расширения):** Посетите [GitHub-репозиторий autofix](https://github.com/dbt-labs/dbt-autofix), чтобы запустить инструмент локально, если вы не используете VS Code или Cursor. В этом случае будет запущен только инструмент, без установки <Constant name="fusion" />.
 
-### 3. Validate and upgrade your dbt packages
+### 3. Проверьте и обновите dbt-пакеты
 
-The most commonly used dbt Labs managed packages (such as `dbt_utils` and `dbt_project_evaluator`) are already compatible with <Constant name="fusion" />, as are a large number of external and community packages. Review [the dbt package hub](https://hub.getdbt.com) to see verified <Constant name="fusion" />-compatible packages by checking that the `require-dbt-version` configuration includes `2.0.0` or higher. Refer to [package support](/docs/fusion/supported-features#package-support) for more information.
+Наиболее популярные пакеты, поддерживаемые dbt Labs (например, `dbt_utils` и `dbt_project_evaluator`), уже совместимы с <Constant name="fusion" />, так же как и большое количество внешних и community-пакетов. Ознакомьтесь с [dbt package hub](https://hub.getdbt.com), чтобы увидеть проверенные пакеты, совместимые с <Constant name="fusion" /> — для этого убедитесь, что конфигурация `require-dbt-version` включает `2.0.0` или выше. Дополнительную информацию смотрите в разделе [package support](/docs/fusion/supported-features#package-support).
 
-- [ ] Make sure that all of your packages are upgraded to the most recent version, many of which contain enhancements to support <Constant name="fusion" />. 
-- [ ] Check package repositories to make sure they're compatible with <Constant name="fusion" />. If a package you use is not yet compatible, we recommend opening an issue with the maintainer, making the contribution yourself, or removing the package temporarily before you upgrade.
+- [ ] Убедитесь, что все используемые пакеты обновлены до последних версий — многие из них содержат улучшения для поддержки <Constant name="fusion" />.
+- [ ] Проверьте репозитории пакетов на совместимость с <Constant name="fusion" />. Если используемый вами пакет пока не поддерживается, рекомендуем открыть issue у мейнтейнера, внести вклад самостоятельно или временно удалить пакет перед обновлением.
 
-### 4. Check for known Fusion limitations
+### 4. Проверьте известные ограничения Fusion
 
-Your project may implement features that <Constant name="fusion" /> currently [limits](/docs/fusion/supported-features#limitations) or doesn't support. 
+В вашем проекте могут использоваться возможности, которые <Constant name="fusion" /> в данный момент [ограничивает](/docs/fusion/supported-features#limitations) или не поддерживает.
 
-- [ ] Remove unnecessary features from your project to make it <Constant name="fusion" /> compatible. 
-- [ ] Monitor progress for critical features, knowing we are working to bring them to <Constant name="fusion" />. You can monitor their progress using the issues linked in the [limitations table](/docs/fusion/supported-features#limitations). 
+- [ ] Удалите из проекта необязательные возможности, чтобы обеспечить совместимость с <Constant name="fusion" />.
+- [ ] Отслеживайте прогресс по критически важным возможностям, понимая, что мы активно работаем над их добавлением в <Constant name="fusion" />. Следить за статусом можно через issues, на которые есть ссылки в [таблице ограничений](/docs/fusion/supported-features#limitations).
 
-### 5. Review jobs configured in the dbt platform
+### 5. Проверьте задания, настроенные в dbt platform
 
-We determine <Constant name="fusion" /> eligibility using data from your job runs. 
+Мы определяем доступность <Constant name="fusion" /> на основе данных о запусках ваших заданий.
 
-- [ ] Ensure you have at least one job running in each of your projects in the <Constant name="dbt_platform" />. 
-- [ ] Delete any jobs that are no longer in use to ensure accurate eligibility reporting. 
-- [ ] Make sure you've promoted the changes for deprecation resolution and package upgrades to your git branches that map to your deployment environments.
+- [ ] Убедитесь, что в каждом проекте в <Constant name="dbt_platform" /> есть хотя бы одно выполняемое задание.
+- [ ] Удалите задания, которые больше не используются, чтобы отчёты о доступности были корректными.
+- [ ] Проверьте, что изменения, связанные с устранением депрекаций и обновлением пакетов, были промоутированы в git-ветки, соответствующие вашим средам деплоя.
 
-### 6. Stay informed about Fusion progress
+### 6. Следите за развитием Fusion
 
-The <Constant name="fusion_engine" /> remains in private preview and we currently offer it for eligible projects! We will notify you when all your projects are ready for <Constant name="fusion" /> based on our eligibility checks on your deployment jobs. In the meantime, keep up-to-date with these resources: 
+<Constant name="fusion_engine" /> по‑прежнему находится в private preview, и сейчас мы предлагаем его для подходящих проектов. Мы уведомим вас, когда все ваши проекты будут готовы к <Constant name="fusion" /> на основе проверок доступности по вашим заданиям деплоя. Пока что рекомендуем следить за следующими ресурсами:
 
-- [ ] Check out the [Fusion homepage](https://www.getdbt.com/product/fusion) for available resources, including supported adapters, prerequisites, installation instructions, limitations, and deprecations.
-- [ ] Read the [Upgrade guide](/docs/dbt-versions/core-upgrade/upgrading-to-fusion) to learn about the new features and functionality that impact your dbt projects.
-- [ ] Monitor progress and get insight into the development process by reading the [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements).
-- [ ] Catch up on the [cost savings potential](https://www.getdbt.com/blog/announcing-state-aware-orchestration) of Fusion-powered [state-aware orchestration](https://docs.getdbt.tech/docs/deploy/state-aware-about) (hint: 30%+ reduction in warehouse spend!)
+- [ ] Ознакомьтесь с [главной страницей Fusion](https://www.getdbt.com/product/fusion), где собраны доступные материалы, включая поддерживаемые адаптеры, предварительные требования, инструкции по установке, ограничения и депрекации.
+- [ ] Прочитайте [руководство по обновлению](/docs/dbt-versions/core-upgrade/upgrading-to-fusion), чтобы узнать о новых возможностях и изменениях, влияющих на ваши dbt-проекты.
+- [ ] Следите за прогрессом и загляните «за кулисы» разработки, читая [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements).
+- [ ] Узнайте больше о [потенциальной экономии затрат](https://www.getdbt.com/blog/announcing-state-aware-orchestration), которую даёт оркестрация на базе Fusion с учётом состояния — [Оркестрация по состоянию](https://docs.getdbt.com/docs/deploy/state-aware-about) (подсказка: снижение затрат на хранилище данных на 30% и более!).

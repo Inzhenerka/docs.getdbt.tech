@@ -1,18 +1,18 @@
 ---
-title: "Apache Iceberg Support"
+title: "Поддержка Apache Iceberg"
 id: apache-iceberg-support
-sidebar_label: "Apache Iceberg support"
+sidebar_label: "Поддержка Apache Iceberg"
 pagination_next: "docs/mesh/iceberg/about-catalogs"
-description: Understand dbt platform support for Iceberg catalogs.
+description: Узнайте о поддержке каталогов Iceberg в dbt platform.
 ---
 
-Apache Iceberg is an open standard table format that brings greater portability and interoperability to the data ecosystem. By standardizing how data is stored and accessed, Iceberg enables teams to work across different engines and platforms with confidence. It has many components to it but the main ones that dbt interacts with are:
+Apache Iceberg — это открытый стандарт табличного формата, который обеспечивает большую портируемость и совместимость в экосистеме данных. За счёт стандартизации способов хранения и доступа к данным Iceberg позволяет командам уверенно работать с разными движками и платформами. Iceberg состоит из нескольких компонентов, но основные из них, с которыми взаимодействует dbt, следующие:
 
-- **Iceberg Table Format** - an open-source table format. Tables materialized in iceberg table format are stored on a user’s infrastructure, such as a S3 Bucket.
-- **Iceberg Data Catalog** - an open-source metadata management system that tracks the schema, partition, and versions of Iceberg tables.
-- **Iceberg REST Protocol** (also referred to as Iceberg REST API) is how engines can support and speak to other Iceberg-compatible catalogs.
+- **Iceberg Table Format** — формат таблиц с открытым исходным кодом. Таблицы, материализованные в формате Iceberg, хранятся в инфраструктуре пользователя, например в S3 Bucket.
+- **Iceberg Data Catalog** — система управления метаданными с открытым исходным кодом, которая отслеживает схемы, партиции и версии таблиц Iceberg.
+- **Iceberg REST Protocol** (также называемый Iceberg REST API) — протокол, с помощью которого вычислительные движки могут поддерживать и взаимодействовать с другими каталогами, совместимыми с Iceberg.
 
-dbt abstracts the complexity of table formats so teams can focus on delivering reliable, well-modeled data. Our initial integration with Iceberg supports table materializations and catalog integrations, allowing users to define and manage Iceberg tables directly in their dbt projects. To learn more, click on one of the following tiles
+dbt абстрагирует сложность табличных форматов, чтобы команды могли сосредоточиться на создании надёжных и хорошо смоделированных данных. Первоначальная интеграция dbt с Iceberg поддерживает материализации таблиц и интеграции с каталогами, позволяя пользователям определять и управлять таблицами Iceberg напрямую в своих проектах dbt. Чтобы узнать больше, выберите один из следующих разделов:
 
 <div className="grid--4-col">
 

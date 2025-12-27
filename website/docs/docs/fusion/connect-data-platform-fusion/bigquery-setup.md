@@ -1,6 +1,6 @@
 ---
-title: "BigQuery setup"
-description: "Read this guide to learn about the BigQuery warehouse setup in dbt Fusion."
+title: "Настройка BigQuery"
+description: "Прочитайте это руководство, чтобы узнать о настройке BigQuery warehouse в dbt Fusion."
 id: "bigquery-setup"
 meta:
   maintained_by: dbt Labs
@@ -15,49 +15,49 @@ meta:
   config_page: '/reference/resource-configs/bigquery-configs'
 ---
 
-# BigQuery setup <Lifecycle status='preview' />
+# Настройка BigQuery <Lifecycle status='preview' />
 
-You can configure the BigQuery adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+Вы можете настроить адаптер BigQuery, выполнив команду `dbt init` в CLI, либо вручную создав файл `profiles.yml` с полями, настроенными в соответствии с выбранным типом аутентификации.
 
-The BigQuery adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
+Адаптер BigQuery для Fusion поддерживает следующие [методы аутентификации](#supported-authentication-types):
 - Service account (JSON file)
 - gcloud OAuth
 
-## BigQuery permssions
+## Разрешения BigQuery
 
-dbt user accounts need the following permissions to read from and create tables and views in a BigQuery project:
+Для чтения данных, а также создания таблиц и представлений в проекте BigQuery, учетным записям пользователей dbt требуются следующие разрешения:
 
 - BigQuery Data Editor
 - BigQuery User
-- BigQuery Read Session User (New in Fusion. For Storage Read API access)
+- BigQuery Read Session User (новое в Fusion; требуется для доступа к Storage Read API)
 
-For BigQuery DataFrames, users need these additional permissions:
+Для работы с BigQuery DataFrames дополнительно требуются следующие разрешения:
 - BigQuery Job User
 - BigQuery Read Session User
 - Notebook Runtime User
 - Code Creator
 - colabEnterpriseUser
 
-## Configure Fusion
+## Конфигурация Fusion
 
-Executing `dbt init` in your CLI will prompt for the following fields:
-- **Project ID:** The GCP BigQuery project ID
-- **Dataset:** The schema name
-- **Location:** The location for your GCP environment (for example, us-east1)
+При выполнении `dbt init` в CLI вам будет предложено указать следующие параметры:
+- **Project ID:** идентификатор проекта GCP BigQuery
+- **Dataset:** имя схемы
+- **Location:** регион размещения вашей среды GCP (например, us-east1)
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you have the option to retain the existing fields or overwrite them. 
+В качестве альтернативы вы можете вручную создать файл `profiles.yml` и настроить в нем необходимые поля. Примеры форматирования приведены в разделе [authentication](#supported-authentication-types). Если файл `profiles.yml` уже существует, вы можете либо сохранить текущие значения полей, либо перезаписать их.
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
+Затем выберите метод аутентификации и следуйте подсказкам в интерфейсе, чтобы предоставить необходимую информацию.
 
-## Supported authentication types
+## Поддерживаемые типы аутентификации
 
 <Tabs>
 
-<TabItem value="Service account (JSON file)">
+<TabItem value="Сервисный аккаунт (JSON-файл)">
 
-Selecting the **Service account (JSON file)** authentication type will prompt you for the path to your JSON file. You can also manually define the path in your `profiles.yml` file.
+При выборе метода аутентификации **Service account (JSON file)** вам будет предложено указать путь к JSON-файлу. Также вы можете вручную задать этот путь в файле `profiles.yml`.
 
-#### Example service account JSON file configuration
+#### Пример конфигурации с JSON-файлом сервисного аккаунта
 
 <File name="profiles.yml">
 
@@ -82,12 +82,12 @@ default:
 
 <TabItem value="gcloud OAuth">
 
-Prior to selecting this authentication method, you must first configure local OAuth for gcloud:
+Перед выбором этого метода аутентификации необходимо сначала настроить локальный OAuth для gcloud:
 
-#### Local OAuth gcloud setup
+#### Локальная настройка OAuth через gcloud
 
-1. Make sure the `gcloud` command is [installed on your computer](https://cloud.google.com/sdk/downloads).
-2. Activate the application-default account with:
+1. Убедитесь, что команда `gcloud` [установлена на вашем компьютере](https://cloud.google.com/sdk/downloads).
+2. Активируйте application-default account с помощью команды:
 
 ```shell
 gcloud auth application-default login \           
@@ -96,12 +96,12 @@ https://www.googleapis.com/auth/drive.readonly,\
 https://www.googleapis.com/auth/iam.test,\
 https://www.googleapis.com/auth/cloud-platform
 
-# This command uses the `--scopes` flag to request access to Google Sheets. This makes it possible to transform data in Google Sheets using dbt. If your dbt project does not transform data in Google Sheets, then you may omit the `--scopes` flag.
+# Эта команда использует флаг `--scopes` для запроса доступа к Google Sheets. Это позволяет трансформировать данные в Google Sheets с помощью dbt. Если ваш проект dbt не работает с данными из Google Sheets, вы можете опустить флаг `--scopes`.
 ```
 
-A browser window should open, and you should be prompted to log into your Google account. Once you've done that, dbt will use your OAuth'd credentials to connect to BigQuery.
+Откроется окно браузера, в котором вам будет предложено войти в учетную запись Google. После этого dbt будет использовать ваши OAuth-учетные данные для подключения к BigQuery.
 
-#### Example gcloud configuration
+#### Пример конфигурации gcloud
 
 <File name="profiles.yml">
 
@@ -126,6 +126,6 @@ default:
 
 </Tabs>
 
-## More information
+## Дополнительная информация
 
-Find BigQuery-specific configuration information in the [BigQuery adapter reference guide](/reference/resource-configs/bigquery-configs).
+Дополнительную информацию о настройках, специфичных для BigQuery, вы найдете в [справочном руководстве по адаптеру BigQuery](/reference/resource-configs/bigquery-configs).

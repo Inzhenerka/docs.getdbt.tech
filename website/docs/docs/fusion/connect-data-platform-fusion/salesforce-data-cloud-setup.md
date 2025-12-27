@@ -1,6 +1,6 @@
 ---
-title: "Salesforce Data Cloud setup"
-description: "Read this guide to learn about the Salesforce Data Cloud warehouse setup in dbt."
+title: "Настройка Salesforce Data Cloud"
+description: "Прочитайте это руководство, чтобы узнать о настройке Salesforce Data Cloud warehouse в dbt."
 id: "salesforce-data-cloud-setup"
 meta:
   maintained_by: dbt Labs
@@ -16,29 +16,29 @@ meta:
   config_page: '/reference/resource-configs/data-cloud-configs'
 ---
 
-:::warning Disclaimer
-This adapter is in the Alpha product stage and is not production-ready. It should only be used in sandbox or test environments. 
+:::warning Предупреждение
+Этот адаптер находится на стадии Alpha и не готов для использования в production. Его следует применять только в sandbox- или тестовых окружениях.
 
-As we continue to develop and take in your feedback, the experience is subject to change &mdash; commands, configuration, and workflows may be updated or removed in future releases. 
+По мере дальнейшей разработки и с учётом вашей обратной связи поведение может меняться &mdash; команды, конфигурация и рабочие процессы могут быть обновлены или удалены в будущих релизах.
 :::
 
-This `dbt-salesforce` adapter is available via the <Constant name="fusion_engine" /> CLI. To access the adapter, [install dbt Fusion](/docs/fusion/about-fusion-install). We recommend using the [VS Code Extension](/docs/fusion/install-dbt-extension) as the development interface. <Constant name="dbt_platform" /> support coming soon. 
+Адаптер `dbt-salesforce` доступен через CLI <Constant name="fusion_engine" />. Чтобы получить доступ к адаптеру, [установите dbt Fusion](/docs/fusion/about-fusion-install). В качестве интерфейса для разработки рекомендуется использовать [расширение VS Code](/docs/fusion/install-dbt-extension). Поддержка <Constant name="dbt_platform" /> появится в ближайшее время.
 
-## Prerequisites
+## Предварительные требования
 
-Before you can connect dbt to the Salesforce Data Cloud, you need the following:
+Перед тем как подключить dbt к Salesforce Data Cloud, вам потребуется следующее:
 
-- A Data Cloud instance
-- [An external client app that dbt connects to for the Data Cloud instance](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5), with [OAuth configured](https://help.salesforce.com/s/articleView?id=xcloud.configure_external_client_app_oauth_settings.htm&type=5). OAuth scopes must include:
-  - `api` - To manage user data via APIs.
-  - `refresh_token`, `offline_access` - To perform requests at any time, even when the user is offline or tokens have expired.
-  - `cdp_query_api` - To execute ANSI SQL queries on Data Cloud data.
-- [A private key and the `server.key` file](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
-- User with `Data Cloud Admin` permission
+- Экземпляр Data Cloud
+- [Внешнее клиентское приложение, через которое dbt подключается к Data Cloud](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5), с [настроенным OAuth](https://help.salesforce.com/s/articleView?id=xcloud.configure_external_client_app_oauth_settings.htm&type=5). OAuth scopes должны включать:
+  - `api` — для управления пользовательскими данными через API.
+  - `refresh_token`, `offline_access` — для выполнения запросов в любое время, даже когда пользователь не в сети или токены истекли.
+  - `cdp_query_api` — для выполнения ANSI SQL‑запросов к данным Data Cloud.
+- [Приватный ключ и файл `server.key`](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
+- Пользователь с разрешением `Data Cloud Admin`
 
-## Configure Fusion
+## Конфигурация Fusion
 
-To connect dbt to Salesforce Data Cloud, set up your `profiles.yml`. Refer to the following configuration:
+Чтобы подключить dbt к Salesforce Data Cloud, настройте файл `profiles.yml`. Используйте следующую конфигурацию:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -56,17 +56,16 @@ company-name:
 ```
 </File>
 
-
-| Profile field | Required | Description | Example |
+| Поле профиля | Обязательно | Описание | Пример |
 | --- | --- | --- | --- |
-| `method` | Yes | Authentication Method. Currently, only `jwt_bearer` supported. | `jwt_bearer` |
-| `client_id` | Yes | This is the `Consumer Key` from your connected app secrets. |  |
-| `private_key_path` | Yes | File path of the `server.key` file in your computer. | `/Users/dbt_user/Documents/server.key` |
-| `login_url` | Yes | Login URL of the Salesforce instance.  | [https://login.salesforce.com](https://login.salesforce.com/) |
-| `username` | Yes | Username on the Data Cloud Instance. | dbt_user@dbtlabs.com |
+| `method` | Yes | Метод аутентификации. В настоящее время поддерживается только `jwt_bearer`. | `jwt_bearer` |
+| `client_id` | Yes | Значение `Consumer Key` из настроек вашего connected app. |  |
+| `private_key_path` | Yes | Путь к файлу `server.key` на вашем компьютере. | `/Users/dbt_user/Documents/server.key` |
+| `login_url` | Yes | URL для входа в экземпляр Salesforce. | [https://login.salesforce.com](https://login.salesforce.com/) |
+| `username` | Yes | Имя пользователя в экземпляре Data Cloud. | dbt_user@dbtlabs.com |
 
 <!--For username, the sample above says [Data cloud instance] but the sample here is an email-->
 
-## More information
+## Больше информации
 
-Find Salesforce-specific configuration information in the [Salesforce adapter reference guide](/reference/resource-configs/data-cloud-configs).
+Дополнительную информацию о конфигурации, специфичной для Salesforce, см. в [справочнике по настройкам адаптера Salesforce](/reference/resource-configs/data-cloud-configs).

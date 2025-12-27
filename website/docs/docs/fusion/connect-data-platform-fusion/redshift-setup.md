@@ -1,6 +1,6 @@
 ---
-title: "Redshift setup"
-description: "Read this guide to learn about the Redshift warehouse setup in dbt Fusion."
+title: "Настройка Redshift"
+description: "Прочитайте это руководство, чтобы узнать о настройке Redshift warehouse в dbt Fusion."
 id: "redshift-setup"
 meta:
   maintained_by: dbt Labs
@@ -15,35 +15,35 @@ meta:
   config_page: '/reference/resource-configs-fusion/redshift-configs'
 ---
 
-# Redshift setup <Lifecycle status='preview' />
+# Настройка Redshift <Lifecycle status='preview' />
 
-You can configure the Redshift adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+Вы можете настроить адаптер Redshift, запустив `dbt init` в CLI, либо вручную создав файл `profiles.yml` и заполнив в нём поля, соответствующие выбранному типу аутентификации.
 
-The Redshift adapter for Fusion supports the following [authentication methods](#supported-authentication-types):
+Адаптер Redshift для Fusion поддерживает следующие [методы аутентификации](#supported-authentication-types):
 - Password
 - IAM profile
 
-## Configure Fusion
+## Конфигурация Fusion
 
-Executing `dbt init` in your CLI will prompt for the following fields:
-- **Host:** The hostname of your Redshift cluster
-- **User:** Username of the account that will be connecting to the database
-- **Database:** The database name
-- **Schema:** The schema name
-- **Port (default: 5439):** Port for your Redshift environment
+При выполнении `dbt init` в CLI вам будет предложено ввести следующие поля:
+- **Host:** имя хоста вашего кластера Redshift  
+- **User:** имя пользователя учётной записи, которая будет подключаться к базе данных  
+- **Database:** имя базы данных  
+- **Schema:** имя схемы  
+- **Port (default: 5439):** порт для вашего окружения Redshift  
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+В качестве альтернативы вы можете вручную создать файл `profiles.yml` и настроить в нём необходимые поля. Примеры форматирования приведены в разделе [authentication](#supported-authentication-types). Если файл `profiles.yml` уже существует, вам будет предложено либо сохранить текущие значения, либо перезаписать их.
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
+Далее выберите метод аутентификации и следуйте подсказкам на экране, чтобы предоставить требуемую информацию.
 
-## Supported authentication types
+## Поддерживаемые типы аутентификации
 
 <Tabs>
 <TabItem value="Password">
 
-Use your Redshift user's password to authenticate. You can also manually enter it in plain text into the `profiles.yml` file configuration.
+Используйте пароль пользователя Redshift для аутентификации. Также вы можете вручную указать его в открытом виде в конфигурации файла `profiles.yml`.
 
-#### Example password configuration
+#### Пример конфигурации с паролем
 
 <File name="profiles.yml">
 
@@ -69,13 +69,13 @@ default:
 
 <TabItem value="IAM profile">
 
-Specify the IAM profile to use to connect your Fusion sessions. You will need to provide the following information:
-- **IAM Profile:** The profile name
-- **Cluster ID:** The unique identifier for your AWS cluster
-- **Region:** Your AWS region (for example, us-east-1)
-- **Use RA3 node type (y/n):** Use high performance AWS RA3 node
+Укажите IAM profile, который будет использоваться для подключения сессий Fusion. Вам потребуется предоставить следующую информацию:
+- **IAM Profile:** имя профиля  
+- **Cluster ID:** уникальный идентификатор вашего AWS-кластера  
+- **Region:** регион AWS (например, us-east-1)  
+- **Use RA3 node type (y/n):** использовать высокопроизводительный тип узлов AWS RA3  
 
-#### Example password configuration
+#### Пример конфигурации с IAM profile
 
 <File name="profiles.yml">
 
@@ -102,6 +102,6 @@ default:
 </TabItem>
 </Tabs>
 
-## More information
+## Больше информации
 
-Find Redshift-specific configuration information in the [Redshift adapter reference guide](/reference/resource-configs/redshift-configs).
+Дополнительную информацию о конфигурации, специфичной для Redshift, см. в [справочном руководстве по адаптеру Redshift](/reference/resource-configs/redshift-configs).

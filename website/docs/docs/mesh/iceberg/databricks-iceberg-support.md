@@ -1,16 +1,16 @@
 ---
-title: "Databricks and Apache Iceberg"
+title: "Databricks и Apache Iceberg"
 id: databricks-iceberg-support
-sidebar_label: "Databricks Iceberg support"
-description: Understand Databricks support for Apache Iceberg.
+sidebar_label: "Поддержка Iceberg в Databricks"
+description: Узнайте о поддержке Apache Iceberg в Databricks.
 ---
 
-Databricks is built on [Delta Lake](https://docs.databricks.com/aws/en/delta/) and stores data in the [Delta table](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture) format. Databricks does not support writing to Iceberg catalogs. 
-Databricks can create both managed Iceberg tables and Iceberg-compatible Delta tables by storing the table metadata in Iceberg and Delta, readable from external clients. In terms of reading, Unity Catalog does support reading from external Iceberg catalogs.
+Databricks построен на базе [Delta Lake](https://docs.databricks.com/aws/en/delta/) и хранит данные в формате [Delta table](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture). Databricks не поддерживает запись в каталоги Iceberg.  
+При этом Databricks может создавать как управляемые Iceberg-таблицы, так и Delta-таблицы, совместимые с Iceberg, за счёт хранения метаданных таблиц одновременно в Iceberg и Delta, что позволяет внешним клиентам их читать. Что касается чтения, Unity Catalog поддерживает чтение из внешних каталогов Iceberg.
 
-When a dbt model is configured with the table property `UniForm`, it will duplicate the Delta metadata for an Iceberg-compatible metadata. This allows external Iceberg compute engines to read from Unity Catalogs. 
+Когда модель dbt сконфигурирована с табличным свойством `UniForm`, метаданные Delta дублируются в метаданные, совместимые с Iceberg. Это позволяет внешним вычислительным движкам Iceberg читать данные из Unity Catalog.
 
-Example SQL:
+Пример SQL:
 
 ```sql
 {{ config(
@@ -21,30 +21,30 @@ Example SQL:
  ) }}
 
 ```
-To set up Databricks for reading and querying external tables, configure [Lakehouse Federation](https://docs.databricks.com/aws/en/query-federation/) and establish the catalog as a foreign catalog. This will be configured outside of dbt, and once completed, it will be another database you can query. 
 
-We do not currently support the new Private Priview features of Databricks managed Iceberg tables. 
+Чтобы настроить Databricks для чтения и выполнения запросов к внешним таблицам, необходимо сконфигурировать [Lakehouse Federation](https://docs.databricks.com/aws/en/query-federation/) и определить каталог как внешний (foreign catalog). Эта настройка выполняется вне dbt, и после её завершения каталог будет доступен как ещё одна база данных, к которой можно выполнять запросы.
 
+В настоящее время новые возможности Databricks managed Iceberg tables, находящиеся в статусе Private Preview, не поддерживаются.
 
-## dbt Catalog integration configurations for Databricks
+## Конфигурации интеграции dbt Catalog для Databricks
 
-The following table outlines the configuration fields required to set up a catalog integration for [Iceberg compatible tables in Databricks](https://docs.databricks.com/aws/en/delta/uniform).
+В таблице ниже перечислены поля конфигурации, необходимые для настройки интеграции каталога для [Iceberg-совместимых таблиц в Databricks](https://docs.databricks.com/aws/en/delta/uniform).
 
 | Field | Description | Required | Accepted values |
 | :---- | :---- | :---- | :---- |
-| name | Name of the Catalog on Databricks | Yes | “my_unity_catalog” |
-| catalog_type | Type of catalog  | Yes | unity, hive_metastore |
-| table_format | Format for tables created by dbt models.  | Optional | Automatically set to `iceberg` for `catalog_type=unity`; and `default` for `hive_metastore`. |
-| file_format | Format used for dbt model outputs.   | Optional | Defaults to `delta` unless overwritten in Databricks account.  |
+| name | Имя каталога в Databricks | Yes | “my_unity_catalog” |
+| catalog_type | Тип каталога | Yes | unity, hive_metastore |
+| table_format | Формат таблиц, создаваемых моделями dbt. | Optional | Автоматически устанавливается в `iceberg` для `catalog_type=unity` и в `default` для `hive_metastore`. |
+| file_format | Формат файлов, используемый для результатов моделей dbt. | Optional | По умолчанию `delta`, если не переопределён на уровне аккаунта Databricks. |
 
 #### Note
 
-On Databricks, if a model has `catalog_name=<>` in its model config, the catalog name becomes the catalog part of the model's FQN. For example, if the catalog is named `my_database`, a model with `catalog_name='my_database'` is materialized as `my_database.<schema>.<model>`.
+В Databricks, если у модели в конфигурации указано `catalog_name=<>`, имя каталога становится частью FQN модели. Например, если каталог называется `my_database`, модель с `catalog_name='my_database'` будет материализована как `my_database.<schema>.<model>`.
 
-### Configure catalog integration for managed Iceberg tables
+### Настройте интеграцию каталога для управляемых таблиц Iceberg
 
-1. Create a `catalogs.yml` at the top level of your dbt project (at the same level as dbt_project.yml)<br />
-<br />An example of Unity Catalog as the catalog:
+1. Создайте файл `catalogs.yml` в корне проекта dbt (на одном уровне с `dbt_project.yml`).  
+<br />Пример использования Unity Catalog в качестве каталога:
 
 ```yaml
 
@@ -58,10 +58,10 @@ catalogs:
         file_format: delta   
 ```
 
-2. Add the `catalog_name` config parameter in either a config block (inside the .sql model file), properties YAML file (model folder), or your project YAML file (`dbt_project.yml`). <br />
+2. Добавьте параметр конфигурации `catalog_name` либо в блок `config` (внутри `.sql`-файла модели), либо в YAML-файл свойств (папка модели), либо в файл проекта (`dbt_project.yml`).  
 <br />
 
-An example of `iceberg_model.sql`:
+Пример `iceberg_model.sql`:
 
 ```yaml
 
@@ -77,7 +77,4 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 ```
 
-3. Execute the dbt model with a `dbt run -s iceberg_model`.
-
-
-
+3. Запустите модель dbt с помощью команды `dbt run -s iceberg_model`.

@@ -1,53 +1,52 @@
 ---
-title: "Install Fusion CLI"
-sidebar_label: "Install Fusion CLI only" 
-description: "Install the Fusion engine locally from the command line interface (CLI) to take data transformation to the next level."
+title: "Установка Fusion CLI"
+sidebar_label: "Только установка Fusion CLI"
+description: "Установите движок Fusion локально через интерфейс командной строки (CLI), чтобы вывести преобразование данных на новый уровень."
 keywords: ["dbt Fusion engine", "Fusion", "Install Fusion", "Update Fusion", "Fusion updates" ]
 id: install-fusion-cli
 ---
 
 import FusionManualInstall from '/snippets/_fusion-manual-install.md';
 
-# Install Fusion from the CLI <Lifecycle status="preview" />
+# Установка Fusion через CLI <Lifecycle status="preview" />
 
-Fusion can be installed via the command line from our official content delivery network (CDN).
+Fusion можно установить из командной строки, загрузив его из нашего официального CDN (content delivery network).
 
 <FusionManualInstall />
 
-## Update Fusion
+## Обновление Fusion
 
-The following command will update to the latest version of Fusion and adapter code:
+Следующая команда обновит Fusion и код адаптеров до последней версии:
 
 ```shell
 dbtf system update
 ```
 
-## Uninstall Fusion
+## Удаление Fusion
 
-This command will uninstall the Fusion binary from your system, but aliases will remain wherever they are installed (for example `~/.zshrc`):
+Эта команда удалит бинарный файл Fusion из вашей системы, однако алиасы останутся там, где они были настроены (например, `~/.zshrc`):
 
 ```shell
 dbtf system uninstall
 ```
 
-## Adapter installation
+## Установка адаптеров
 
-The Fusion install automatically includes adapters outlined in the [Fusion requirements](/docs/fusion/supported-features#requirements). Other adapters will be available at a later date.
+Установка Fusion автоматически включает адаптеры, перечисленные в разделе [Fusion requirements](/docs/fusion/supported-features#requirements). Поддержка дополнительных адаптеров будет добавлена позднее.
 
+## Устранение неполадок
 
-## Troubleshooting
+Распространённые проблемы и способы их решения:
 
-Common issues and resolutions:
+- **dbt command not found:** убедитесь, что путь установки корректно добавлен в ваш `$PATH`.
+- **Version conflicts:** проверьте, что на системе не установлены (или не активны) другие версии <Constant name="core" /> или dbt CLI, которые могут конфликтовать с Fusion.
+- **Installation permissions:** убедитесь, что у вашего пользователя есть необходимые права для локальной установки программного обеспечения.
 
-- **dbt command not found:** Ensure installation location is correctly added to your `$PATH`.
-- **Version conflicts:** Verify no existing <Constant name="core" /> or dbt CLI versions are installed (or active) that could conflict with Fusion.
-- **Installation permissions:** Confirm your user has appropriate permissions to install software locally.
+## Часто задаваемые вопросы
 
-## Frequently asked questions
+- Можно ли вернуться к предыдущей установке dbt?
 
-- Can I revert to my previous dbt installation?
-
-    Yes. If you want to test Fusion without affecting your existing workflows, consider isolating or managing your installation via separate environments or virtual machines.
+    Да. Если вы хотите протестировать Fusion, не затрагивая существующие рабочие процессы, рекомендуется изолировать установку или управлять ею с помощью отдельных окружений или виртуальных машин.
 
 import AboutFusion from '/snippets/_about-fusion.md';
 

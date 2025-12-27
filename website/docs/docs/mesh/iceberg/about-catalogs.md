@@ -1,66 +1,71 @@
 ---
-title: "About Iceberg catalogs"
+title: "О каталогах Iceberg"
 id: about-catalogs
-sidebar_label: "About Iceberg catalogs"
-description: Understand how Iceberg catalogs fit into your dbt Mesh configurations.
+sidebar_label: "О каталогах Iceberg"
+description: Узнайте, как каталоги Iceberg вписываются в конфигурации dbt Mesh.
 ---
 
-Data catalogs have recently become at the top of the data industry's mind, especially given the excitement about Iceberg and data governance for AI. It has become an overused term that represents a broad set of tools. So, before we dive into Iceberg catalogs, let's start at the beginning: 
+Каталоги данных в последнее время оказались в центре внимания индустрии данных — особенно на фоне ажиотажа вокруг Iceberg и управления данными для AI. Этот термин стал чрезмерно употребляемым и теперь охватывает очень широкий набор инструментов. Поэтому прежде чем погружаться в Iceberg catalogs, начнём с основ.
 
-## About data catalogs
+## О каталогах данных
 
-The short answer is it’s **data about your data**.
+Короткий ответ — это **данные о ваших данных**.
 
-A Data Catalog is a centralized metadata management layer that enables users and tools to discover, understand, and govern data effectively. At its core, it organizes metadata about datasets, including information about the schemas, lineage, access controls, and business context to help technical and non-technical users work with data more efficiently.
+Каталог данных — это централизованный слой управления метаданными, который позволяет пользователям и инструментам находить, понимать и эффективно управлять данными. В своей основе он организует метаданные о наборах данных, включая информацию о схемах, lineage, контроле доступа и бизнес-контексте, помогая как техническим, так и нетехническим пользователям работать с данными более эффективно.
 
-### History of data catalogs
+### История каталогов данных
 
-Data catalogs aren’t a new concept. 
+Каталоги данных — не новая концепция.
 
-Data dictionaries were the earliest forms of catalogs, and they were part of relational databases. These dictionaries stored schema-level metadata (like table names). They weren’t made for business users and were very manual.
+Словари данных (data dictionaries) были самыми ранними формами каталогов и являлись частью реляционных баз данных. Эти словари хранили метаданные на уровне схем (например, имена таблиц). Они не предназначались для бизнес-пользователей и требовали значительного ручного сопровождения.
 
-Fast forward to the early 2010s, and the industry began to delve deeply into [Hadoop](https://hadoop.apache.org/) and data lakes. [Hive Metastore](https://hive.apache.org/) became the standard for managing schema metadata in Hadoop ecosystems. However, it was still limited to structural metadata, as it lacked lineage, discovery, and business context metadata. 
+Перенесёмся в начало 2010‑х годов, когда индустрия начала активно осваивать [Hadoop](https://hadoop.apache.org/) и data lake‑архитектуры. [Hive Metastore](https://hive.apache.org/) стал стандартом для управления метаданными схем в экосистемах Hadoop. Однако он по‑прежнему был ограничен структурными метаданными, так как не поддерживал lineage, поиск и бизнес-контекст.
 
-Next, there was the emergence of open source technical catalogs like [Iceberg](https://iceberg.apache.org/terms/), [Polaris](https://polaris.apache.org/), and [Unity Catalog](https://www.unitycatalog.io/), and business catalogs like [Atlan](https://atlan.com/what-is-a-data-catalog/). In the era of AI, it’s more important than ever to have catalogs that can support structural metadata and business logic. 
+Затем появились open source технические каталоги, такие как [Iceberg](https://iceberg.apache.org/terms/), [Polaris](https://polaris.apache.org/) и [Unity Catalog](https://www.unitycatalog.io/), а также бизнес‑каталоги, например [Atlan](https://atlan.com/what-is-a-data-catalog/). В эпоху AI как никогда важно иметь каталоги, способные поддерживать как структурные метаданные, так и бизнес-логику.
 
-For data teams, the catalogs can fall into two buckets: 
+Для команд по работе с данными каталоги обычно делятся на две категории:
 
-- **Technical data catalogs:** Focus on structural metadata, including information about data like table and column names, data types, storage locations (particularly important for open table formats), and access controls. They usually come either “built-in” (no setup needed) or externally managed and integrated into your data platform. They are used by compute engines to locate and interact with data. 
+- **Технические каталоги данных:**  
+  Сфокусированы на структурных метаданных, включая информацию о таблицах и колонках, типах данных, местах хранения (что особенно важно для open table formats) и контроле доступа. Обычно они либо «встроенные» (не требуют настройки), либо управляются отдельно и интегрируются в вашу платформу данных. Такие каталоги используются вычислительными движками для поиска и работы с данными.
 
-- **Business data catalogs:** Serve broader organizational users (BI analysts, product managers, etc.). They enrich technical metadata with business context in the form of metrics, business definitions, data quality indicators, usage patterns, and ownership. 
+- **Бизнес‑каталоги данных:**  
+  Ориентированы на более широкую аудиторию внутри организации (BI‑аналитики, product‑менеджеры и т.д.). Они дополняют технические метаданные бизнес-контекстом: метриками, бизнес‑определениями, индикаторами качества данных, паттернами использования и ответственными владельцами.
 
-### Why data catalogs are important to dbt
+### Почему каталоги данных важны для dbt
 
-For dbt users working in a lakehouse or multi-engine architecture, understanding and interacting with data catalogs is essential for several reasons, including:
+Для пользователей dbt, работающих в lakehouse или multi‑engine архитектуре, понимание и использование каталогов данных критически важно по нескольким причинам:
 
-- **Table Discovery:** dbt models are registered in catalogs. Understanding the catalog structure is critical for managing datasets and informing dbt about what has already been built and where it resides.
+- **Table Discovery:**  
+  Модели dbt регистрируются в каталогах. Понимание структуры каталога необходимо для управления наборами данных и для того, чтобы dbt знал, что уже создано и где это находится.
 
-- **Cross-Engine Interoperability:** Iceberg catalogs allow datasets created by one compute engine to be read by another.  This is what dbt Mesh’s cross-platform functionality is built on. 
+- **Cross-Engine Interoperability:**  
+  Iceberg catalogs позволяют наборам данных, созданным одним вычислительным движком, читаться другим. Именно на этом построена кросс‑платформенная функциональность dbt Mesh.
 
-## About Iceberg catalogs
+## О каталогах Iceberg
 
-Apache Iceberg is an open table format designed for petabyte-scale analytic datasets. It supports schema evolution, time travel, partition pruning, and transactional operations across distributed compute engines.
+Apache Iceberg — это open table format, разработанный для аналитических наборов данных петабайтного масштаба. Он поддерживает эволюцию схем, time travel, partition pruning и транзакционные операции в распределённых вычислительных движках.
 
-Iceberg catalogs are a critical abstraction layer that maps logical table names to their metadata locations and provides a namespace mechanism. They decouple compute engines from the physical layout of data, enabling multiple tools to interoperate consistently on the same dataset.
+Iceberg catalogs — это критически важный абстрактный слой, который сопоставляет логические имена таблиц с местоположением их метаданных и предоставляет механизм пространств имён (namespace). Они отделяют вычислительные движки от физической организации данных, позволяя нескольким инструментам согласованно работать с одним и тем же набором данных.
 
-There are multiple types of Iceberg catalogs:
+Существует несколько типов Iceberg catalogs:
 - Iceberg REST
 - Iceberg REST compatible
 - Delta/Iceberg Hybrid*
 
-Hybrid catalogs support storing duplicate table metadata in Iceberg and Delta Lake formats, enabling workflows like an Iceberg engine to read from Delta Lake or vice versa. There will be limitations specific to how the platform has implemented this. 
+Гибридные каталоги поддерживают хранение дублирующихся метаданных таблиц в форматах Iceberg и Delta Lake, что позволяет реализовывать сценарии, при которых Iceberg‑движок читает данные из Delta Lake или наоборот. При этом существуют ограничения, зависящие от конкретной реализации на стороне платформы.
 
-### How dbt works with Iceberg catalogs
+### Как dbt работает с каталогами Iceberg
 
-dbt interacts with Iceberg catalogs through the adapters in two ways:
+dbt взаимодействует с Iceberg catalogs через адаптеры двумя способами:
 
-- **Model Materialization:** When dbt materializes a model as a table or view, if the catalog integration is declared, the underlying adapter (Spark, Trino, Snowflake, etc.) creates an Iceberg table entry in the specified catalog, both built-in or external. 
+- **Model Materialization:**  
+  Когда dbt материализует модель в виде таблицы или представления, при объявленной интеграции с каталогом соответствующий адаптер (Spark, Trino, Snowflake и т.д.) создаёт запись Iceberg‑таблицы в указанном каталоге — как встроенном, так и внешнем.
 
+- **Catalog Integration:**  
+  В рамках первоначального релиза нового catalog framework пользователи могут указывать, в какой каталог записываются метаданные таблицы.
 
-- **Catalog Integration**: With our initial release of the new catalog framework, users can declare which catalog the table's metadata is written to. 
+Почему это важно? dbt использует и создаёт значительный объём метаданных. Перед каждым запуском dbt необходимо знать, что уже существует, чтобы корректно компилировать код (например, разрешать `{{ref()}}` в фактическое имя таблицы) и понимать, где материализовать объект. Поддержка этих двух механизмов позволяет dbt гибко адаптироваться к окружению, логике кода и use case, определённым в вашем dbt‑проекте.
 
-Why is this important? dbt uses and creates a significant amount of metadata. Before every run, dbt needs to know what already exists so it knows how to compile code (ex. resolving your `{{ref()}}` to the actual table name) and where to materialize the object. By supporting these two methods, dbt can cleverly adjust based on the environment, code logic, and use case defined in your dbt project. 
+### Ограничения
 
-### Limitations
-
-To ensure that your compute engine has access to the catalog, you must provide the networking and permissions are set up correctly. This means that if you are using X warehouse with Y catalog but want to read Y catalog from Z warehouse, you need to ensure that Z warehouse can connect to Y catalog. If IP restrictions are turned on, you must resolve this by removing restrictions on allowlisting (only possible if the warehouse supports static IP addresses) or setting something like Privatelink to support this. 
+Чтобы вычислительный движок имел доступ к каталогу, необходимо корректно настроить сетевое взаимодействие и права доступа. Это означает, что если вы используете warehouse X с каталогом Y, но хотите читать каталог Y из warehouse Z, необходимо убедиться, что warehouse Z может подключаться к каталогу Y. Если включены IP‑ограничения, их нужно снять через allowlisting (возможно только если warehouse поддерживает статические IP‑адреса) либо настроить такие механизмы, как Privatelink, для обеспечения доступа.

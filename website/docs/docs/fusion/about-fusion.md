@@ -1,15 +1,15 @@
 ---
-title: "About Fusion"
-sidebar_label: "About Fusion"
+title: "О Fusion"
+sidebar_label: "О Fusion"
 id: "about-fusion"
-description: "Fusion is the next-generation engine for dbt."
+description: "Fusion — это движок нового поколения для dbt."
 ---
 
-# About the dbt Fusion engine
+# О движке dbt Fusion
 
 <IntroText>
 
-dbt is the industry standard for data transformation. The <Constant name="fusion_engine" /> enables dbt to operate at speed and scale like never before.
+dbt — это отраслевой стандарт для трансформации данных. <Constant name="fusion_engine" /> позволяет dbt работать с беспрецедентной скоростью и масштабируемостью.
 </IntroText>
 
 <VersionBlock lastVersion="1.99">
@@ -20,50 +20,49 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 </VersionBlock>
 
-The <Constant name="fusion_engine" /> shares the same familiar framework for authoring data transformations as <Constant name="core" />, while enabling data developers to work faster and deploy transformation workloads more efficiently.
+<Constant name="fusion_engine" /> использует тот же знакомый фреймворк для написания трансформаций данных, что и <Constant name="core" />, но при этом позволяет разработчикам данных работать быстрее и более эффективно развёртывать нагрузки трансформаций.
 
-### What is Fusion
+### Что такое Fusion
 
-Fusion is an entirely new piece of software, written in a different programming language (Rust) than <Constant name="core" /> (Python). Fusion is significantly faster than <Constant name="core" />, and it has a native understanding of SQL across multiple engine dialects. Fusion will eventually support the full dbt Core framework, a superset of dbt Core’s capabilities, and the vast majority of existing dbt projects.
+Fusion — это полностью новый программный продукт, написанный на другом языке программирования (Rust), чем <Constant name="core" /> (Python). Fusion значительно быстрее, чем <Constant name="core" />, и нативно понимает SQL в диалектах различных движков. Со временем Fusion будет поддерживать весь фреймворк dbt Core, включая надмножество его возможностей, а также подавляющее большинство существующих проектов dbt.
 
-Fusion contains mixture of source-available, proprietary, and open source code. That means:
-- dbt Labs publishes much of the source code in the [`dbt-fusion` repository](https://github.com/dbt-labs/dbt-fusion), where you can read the code and participate in community discussions.
-- Some Fusion capabilities are exclusively available for paying customers of the cloud-based [dbt platform](https://www.getdbt.com/signup). Refer to [supported features](/docs/fusion/supported-features#paid-features) for more information.
+Fusion содержит смесь source-available, проприетарного и open source кода. Это означает, что:
+- dbt Labs публикует значительную часть исходного кода в репозитории [`dbt-fusion`](https://github.com/dbt-labs/dbt-fusion), где вы можете изучать код и участвовать в обсуждениях сообщества.
+- Некоторые возможности Fusion доступны исключительно платным клиентам облачной [платформы dbt](https://www.getdbt.com/signup). Подробнее см. в разделе [поддерживаемые возможности](/docs/fusion/supported-features#paid-features).
 
-Read more about the licensing for the dbt Fusion engine [here](http://www.getdbt.com/licenses-faq).
+Подробнее о лицензировании движка dbt Fusion можно прочитать [здесь](http://www.getdbt.com/licenses-faq).
 
-## Why use Fusion
+## Зачем использовать Fusion
 
-As a developer, Fusion can:
-- Immediately catch incorrect SQL in your dbt models
-- Preview inline <Term id="cte">CTEs</Term> for faster debugging
-- Trace model and column definitions across your dbt project
+Для разработчика Fusion позволяет:
+- Мгновенно обнаруживать некорректный SQL в моделях dbt
+- Просматривать встроенные <Term id="cte">CTE</Term> для более быстрого отладки
+- Отслеживать определения моделей и колонок по всему проекту dbt
 
-All of that and more is available in the [dbt extension for VSCode](/docs/about-dbt-extension), with Fusion at the foundation.
+Всё это и многое другое доступно в [расширении dbt для VSCode](/docs/about-dbt-extension), в основе которого лежит Fusion.
 
-Fusion also enables more-efficient deployments of large DAGs. By tracking which columns are used where, and which source tables have fresh data, Fusion can ensure that models are rebuilt only when they need to process new data. This ["state-aware orchestration"](/docs/deploy/state-aware-about) is a feature of the dbt platform (formerly dbt Cloud).
+Fusion также обеспечивает более эффективное развёртывание больших DAG. Отслеживая, какие колонки где используются и в каких исходных таблицах появились свежие данные, Fusion может гарантировать, что модели будут пересобраны только тогда, когда им действительно нужно обработать новые данные. Такая ["оркестрация с учётом состояния"](/docs/deploy/state-aware-about) является возможностью платформы dbt (ранее dbt Cloud).
 
-### Thread management
+### Управление потоками
 
-The <Constant name="fusion_engine" /> manages parallelism differently than <Constant name="core" />. Rather than treating the `threads` setting as a strict limit on concurrent operations, Fusion dynamically optimizes parallelism based on the selected warehouse.
+<Constant name="fusion_engine" /> управляет параллелизмом иначе, чем <Constant name="core" />. Вместо того чтобы рассматривать параметр `threads` как жёсткое ограничение на количество параллельных операций, Fusion динамически оптимизирует параллелизм в зависимости от выбранного хранилища данных.
 
-In Redshift, the `threads` setting limits the number of queries or statements that can run in parallel, which is important for managing Redshift's concurrency limits. In other warehouses, Fusion dynamically adjusts thread usage based on each warehouse's capabilities, using your thread configuration as guidance while automatically optimizing for maximum efficiency.
+В Redshift параметр `threads` ограничивает количество запросов или операторов, которые могут выполняться параллельно, что важно для управления лимитами конкурентности Redshift. В других хранилищах Fusion динамически регулирует использование потоков в зависимости от возможностей конкретного хранилища, используя вашу конфигурацию потоков как ориентир и автоматически оптимизируя выполнение для максимальной эффективности.
 
-For more information, refer to [Using threads](/docs/running-a-dbt-project/using-threads#fusion-engine-thread-behavior).
+Подробнее см. в разделе [Using threads](/docs/running-a-dbt-project/using-threads#fusion-engine-thread-behavior).
 
-### How to use Fusion
+### Как использовать Fusion
  
-You can:
-- Select Fusion from the [dropdown/toggle in the dbt platform](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) <Lifecycle status="private_preview" />
-- [Install the dbt extension for VSCode](/docs/install-dbt-extension) <Lifecycle status="preview" />
-- [Install the Fusion CLI](/docs/fusion/install-fusion-cli) <Lifecycle status="preview" />
+Вы можете:
+- Выбрать Fusion в [выпадающем списке/переключателе на платформе dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud#dbt-fusion-engine) <Lifecycle status="private_preview" />
+- [Установить расширение dbt для VSCode](/docs/install-dbt-extension) <Lifecycle status="preview" />
+- [Установить Fusion CLI](/docs/fusion/install-fusion-cli) <Lifecycle status="preview" />
 
+Сразу переходите к разделу [Quickstart](/guides/fusion), чтобы как можно быстрее _почувствовать Fusion_.
 
-Go straight to the [Quickstart](/guides/fusion) to _feel the Fusion_ as fast as possible.
+## Что дальше?
 
-## What's next?
-
-dbt Labs launched the dbt Fusion engine as a public beta on May 28, 2025, with plans to reach full feature parity with <Constant name="core" /> ahead of [Fusion's general availability](/blog/dbt-fusion-engine-path-to-ga).
+dbt Labs запустила движок dbt Fusion в статусе публичной беты 28 мая 2025 года и планирует достичь полного паритета возможностей с <Constant name="core" /> до [общей доступности Fusion](/blog/dbt-fusion-engine-path-to-ga).
 
 import AboutFusion from '/snippets/_about-fusion.md';
 
