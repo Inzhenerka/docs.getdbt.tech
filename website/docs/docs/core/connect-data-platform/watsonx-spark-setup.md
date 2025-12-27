@@ -1,6 +1,6 @@
 ---
-title: "IBM watsonx.data Spark setup"
-description: "Read this guide to learn about the IBM watsonx.data Spark setup in dbt."
+title: "Настройка Spark в IBM watsonx.data"
+description: "Прочитайте это руководство, чтобы узнать о настройке Spark в IBM watsonx.data для dbt."
 id: "watsonx-spark-setup"
 meta:
   maintained_by: IBM
@@ -20,31 +20,31 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-The `dbt-watsonx-spark` adapter allows you to use dbt to transform and manage data on IBM watsonx.data Spark, leveraging its distributed SQL query engine capabilities.
+Адаптер `dbt-watsonx-spark` позволяет использовать dbt для трансформации и управления данными в IBM watsonx.data Spark, используя возможности его распределённого SQL-движка.
 
-Before proceeding, ensure you have the following:
-- An active IBM watsonx.data, For [IBM Cloud (SaaS)](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-getting-started). For [Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=installing-watsonxdata-developer-version)
-- Provision **Native Spark engine** in watsonx.data, For [IBM Cloud (SaaS)](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-prov_nspark). For [Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=spark-native-engine)
-- An active **Spark query server** in your **Native Spark engine** 
+Перед тем как продолжить, убедитесь, что у вас есть следующее:
+- Активный экземпляр IBM watsonx.data. Для [IBM Cloud (SaaS)](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-getting-started). Для [Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=installing-watsonxdata-developer-version)
+- Развёрнутый **Native Spark engine** в watsonx.data. Для [IBM Cloud (SaaS)](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-prov_nspark). Для [Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=spark-native-engine)
+- Активный **Spark query server** в вашем **Native Spark engine**
 
-Read the official documentation for using **watsonx.data** with `dbt-watsonx-spark`
+Ознакомьтесь с официальной документацией по использованию **watsonx.data** с `dbt-watsonx-spark`:
 
-- [Documentation for IBM Cloud and SaaS offerings](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-dbt_watsonx_spark_inst)
-- [Documentation for IBM watsonx.data software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=integration-data-build-tool-adapter-spark)
+- [Документация для IBM Cloud и SaaS-версий](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-dbt_watsonx_spark_inst)
+- [Документация для IBM watsonx.data (Software)](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=integration-data-build-tool-adapter-spark)
 
-## Installing dbt-watsonx-spark
-Note: Installing an adapter doesn't install '<Constant name="core" />' automatically. This is because adapters and <Constant name="core" /> versions are decoupled to avoid overwriting <Constant name="core" /> installations. Use the following command for installation:
+## Установка dbt-watsonx-spark
+Примечание: установка адаптера не устанавливает `<Constant name="core" />` автоматически. Это связано с тем, что версии адаптеров и `<Constant name="core" />` разделены, чтобы избежать перезаписи существующих установок `<Constant name="core" />`. Используйте следующую команду для установки:
 
 ```sh
 python -m pip install <Constant name="core" /> dbt-watsonx-spark
 ```
 
-## Configuring `dbt-watsonx-spark`
-For IBM watsonx.data-specific configuration, refer to [IBM watsonx.data configs.](/reference/resource-configs/watsonx-spark-config)
+## Настройка `dbt-watsonx-spark`
+Для параметров конфигурации, специфичных для IBM watsonx.data, см. [настройки IBM watsonx.data.](/reference/resource-configs/watsonx-spark-config)
 
-## Connecting to IBM watsonx.data Spark
+## Подключение к IBM watsonx.data Spark
 
-To connect dbt with watsonx.data Spark, configure a profile in your `profiles.yml` file located in the `.dbt/` directory of your home folder. The following is an example configuration for connecting to IBM watsonx.data SaaS and Software instances:
+Чтобы подключить dbt к watsonx.data Spark, настройте профиль в файле `profiles.yml`, который находится в директории `.dbt/` вашего домашнего каталога. Ниже приведён пример конфигурации для подключения к экземплярам IBM watsonx.data SaaS и Software:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -68,47 +68,47 @@ project_name:
 
 </File>
 
-## Host parameters
+## Параметры host
 
-The following profile fields are required to configure watsonx.data Spark connections. For IBM watsonx.data SaaS or Software instances, To get the 'profile' details, click 'View connect details' when the 'query server' is in RUNNING status in watsonx.data (In watsonx.data (both SaaS or Software). The Connection details page opens with the profile configuration.
-Copy and paste the connection details in the profiles.yml file that is located in .dbt of your home directory
+Следующие поля профиля необходимы для настройки подключения к watsonx.data Spark. Для экземпляров IBM watsonx.data SaaS или Software, чтобы получить данные для профиля, нажмите **View connect details**, когда **query server** находится в статусе RUNNING в watsonx.data (как в SaaS, так и в Software). Откроется страница с параметрами подключения и конфигурацией профиля.
+Скопируйте и вставьте эти данные подключения в файл `profiles.yml`, расположенный в директории `.dbt` вашего домашнего каталога.
 
-The following profile fields are required to configure watsonx.data Spark connections:
+Следующие поля профиля необходимы для настройки подключения к watsonx.data Spark:
 
-| Option     | Required/Optional             |  <div style={{width:'200px'}}>Description</div>                           | <div style={{width:'300px'}}>Example</div>         |
+| Option     | Required/Optional             |  <div style={{width:'200px'}}>Описание</div>                           | <div style={{width:'300px'}}>Пример</div>         |
 | ---------- | ----------------------------- | ------------------------------------------------------------------------- | ----------------- |
-| `method`   | Required |    Specifies the connection method to the spark query server. Use `http`.    | `http`            |
-| `schema`   | Required|    To choose an existing schema within spark engine or create a new schema.  | `spark_schema`    |
-| `host`     | Required |    Hostname of the watsonx.data console. For more information, see [Getting connection information](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=references-getting-connection-information#connection_info__conn_info_).| `https://dataplatform.cloud.ibm.com`       |
-| `uri`      | Required| URI of your query server that is running on watsonx.data. For more information, see [Getting connection information](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=references-getting-connection-information#connection_info__conn_info_). | `/lakehouse/api/v2/spark_engines/<sparkID>/query_servers/<queryID>/connect/cliservice`|
-| `catalog`  | Required                      | The catalog that is associated with the Spark engine.                     | `my_catalog`      |
-| `use_ssl`  | Optional (default: **false**) | Specifies whether to use SSL.                                             | `true` or `false` |
-| `instance` | Required                      | For **SaaS** set it as CRN of watsonx.data. As for **Software**, set it as instance ID of watsonx.data| `1726574045872688`|
-| `user`     | Required                      | Username for the watsonx.data instance. for [Saas] use email as username                                  | `username` or `user@example.com`|
-| `apikey`   | Required                      | Your API key. For more info on [SaaS](https://www.ibm.com/docs/en/software-hub/5.1.x?topic=started-generating-api-keys), For [Software](https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui#manage-user-keys)                                                       | `API key`        |
+| `method`   | Required |    Указывает метод подключения к Spark query server. Используйте `http`.    | `http`            |
+| `schema`   | Required|    Выбор существующей схемы в Spark engine или создание новой схемы.  | `spark_schema`    |
+| `host`     | Required |    Имя хоста консоли watsonx.data. Подробнее см. [Getting connection information](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=references-getting-connection-information#connection_info__conn_info_).| `https://dataplatform.cloud.ibm.com`       |
+| `uri`      | Required| URI вашего query server, запущенного в watsonx.data. Подробнее см. [Getting connection information](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=references-getting-connection-information#connection_info__conn_info_). | `/lakehouse/api/v2/spark_engines/<sparkID>/query_servers/<queryID>/connect/cliservice`|
+| `catalog`  | Required                      | Каталог, связанный с Spark engine.                     | `my_catalog`      |
+| `use_ssl`  | Optional (default: **false**) | Указывает, следует ли использовать SSL.                                             | `true` или `false` |
+| `instance` | Required                      | Для **SaaS** укажите CRN watsonx.data. Для **Software** — instance ID watsonx.data | `1726574045872688`|
+| `user`     | Required                      | Имя пользователя для экземпляра watsonx.data. Для **SaaS** используйте email в качестве имени пользователя | `username` или `user@example.com`|
+| `apikey`   | Required                      | Ваш API key. Подробнее: для [SaaS](https://www.ibm.com/docs/en/software-hub/5.1.x?topic=started-generating-api-keys), для [Software](https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui#manage-user-keys)                                                       | `API key`        |
 
-### Schemas and catalogs
+### Схемы и каталоги
 
-When selecting the catalog, ensure the user has read and write access. This selection does not limit your ability to query into the schema spcified/created but also serves as the default location for materialized `tables`, `views`, and `incremental`.
+При выборе каталога убедитесь, что у пользователя есть права на чтение и запись. Этот выбор не ограничивает возможность выполнения запросов к указанной или созданной схеме, а также используется как расположение по умолчанию для материализованных `tables`, `views` и `incremental`.
 
-### SSL verification
+### Проверка SSL
 
-- If the Spark instance uses an unsecured HTTP connection, set `use_ssl` to `false`.
-- If the instance uses `HTTPS`, set it `true`.
+- Если экземпляр Spark использует незащищённое HTTP-подключение, установите `use_ssl` в `false`.
+- Если экземпляр использует `HTTPS`, установите значение `true`.
 
-## Additional parameters
+## Дополнительные параметры
 
-The following profile fields are optional. You can configure the instance session and dbt for the connection.
+Следующие поля профиля являются необязательными. Вы можете настроить сессию экземпляра и поведение dbt для подключения.
 
-| Profile field            | Description                                                  | Example                           |
+| Profile field            | Описание                                                  | Пример                           |
 | ------------------------ | ------------------------------------------------------------ | --------------------------------- |
-| `threads`                | How many threads dbt should use (default is `1`)             | `8`                               |
-| `retry_all`              | Enables automatic retries for transient connection failures. | `true`                            |
-| `connect_timeout`        | Timeout for establishing a connection (in seconds).          | `5`                               |
-| `connect_retries`        | Number of retry attempts for connection failures.            | `3`                               |
+| `threads`                | Количество потоков, которые должен использовать dbt (по умолчанию `1`)             | `8`                               |
+| `retry_all`              | Включает автоматические повторы при временных ошибках подключения. | `true`                            |
+| `connect_timeout`        | Таймаут установления соединения (в секундах).          | `5`                               |
+| `connect_retries`        | Количество попыток повторного подключения при ошибках.            | `3`                               |
 
-## Limitations and considerations
+## Ограничения и особенности
 
-- **Supports only HTTP**: No support for ODBC, Thrift, or session-based connections.
-- **Limited <Constant name="cloud" /> Support**: Not fully compatible with <Constant name="cloud" />.
-- **Metadata Persistence**: Some dbt features, such as column descriptions, may not persist in all table formats.
+- **Поддерживается только HTTP**: нет поддержки ODBC, Thrift или сессионных подключений.
+- **Ограниченная поддержка <Constant name="cloud" />**: не полностью совместим с <Constant name="cloud" />.
+- **Сохранение метаданных**: некоторые возможности dbt, такие как описания колонок, могут не сохраняться во всех форматах таблиц.

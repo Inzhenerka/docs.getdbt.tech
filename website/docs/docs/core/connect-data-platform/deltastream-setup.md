@@ -1,6 +1,6 @@
 ---
-title: "DeltaStream setup"
-description: "Read this guide to learn about the DeltaStream warehouse setup in dbt."
+title: "Настройка DeltaStream"
+description: "Прочитайте это руководство, чтобы узнать, как настроить хранилище DeltaStream в dbt."
 meta:
   maintained_by: Community
   authors: 'DeltaStream Team'
@@ -18,10 +18,10 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to DeltaStream with **dbt-deltastream**
+## Подключение к DeltaStream с помощью **dbt-deltastream**
 
-To connect to DeltaStream from dbt, you'll need to add a [profile](/docs/core/connect-data-platform/connection-profiles)
-to your `profiles.yml` file. A DeltaStream profile conforms to the following syntax:
+Чтобы подключиться к DeltaStream из dbt, вам необходимо добавить [профиль](/docs/core/connect-data-platform/connection-profiles)
+в файл `profiles.yml`. Профиль DeltaStream должен соответствовать следующему синтаксису:
 
 <File name='profiles.yml'>
 
@@ -49,25 +49,25 @@ to your `profiles.yml` file. A DeltaStream profile conforms to the following syn
 
 </File>
 
-### Description of DeltaStream profile fields
+### Описание полей профиля DeltaStream
 
-| Field             | Required | Description                                                                                                                                                                                                                                                                                                                                                      |
-|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`            | ✅        | This must be included either in `profiles.yml` or in the `dbt_project.yml` file. Must be set to `deltastream`.                                                                                                                                                                                                                                                |
-| `token`           | ✅        | Authentication token for DeltaStream API. This should be stored securely, preferably as an environment variable.                                                                                                                                                                                                                                               |
-| `database`        | ✅        | Target default database name in DeltaStream where your dbt models will be created.                                                                                                                                                                                                                                                                             |
-| `schema`          | ✅        | Target default schema name within the specified database.                                                                                                                                                                                                                                                                                                      |
-| `organization_id` | ✅        | Organization identifier that determines which DeltaStream organization you're connecting to.                                                                                                                                                                                                                                                                   |
-| `url`             | ❌        | DeltaStream API URL. Defaults to `https://api.deltastream.io/v2` if not specified.                                                                                                                                                                                                                                                                            |
-| `timezone`        | ❌        | Timezone for operations. Defaults to `UTC` if not specified.                                                                                                                                                                                                                                                                                                  |
-| `session_id`      | ❌        | Custom session identifier for debugging purposes. Helps track operations in DeltaStream logs.                                                                                                                                                                                                                                                                 |
-| `role`            | ❌        | User role within the DeltaStream organization. If not specified, uses the default role associated with the token.                                                                                                                                                                                                                                             |
-| `store`           | ❌        | Target default store name. Stores represent external system connections (Kafka, PostgreSQL, etc.) in DeltaStream.                                                                                                                                                                                                                                            |
-| `compute_pool`    | ❌        | Compute pool name to be used for models that require computational resources. If not specified, uses the default compute pool.                                                                                                                                                                                                                                |
+| Поле              | Обязательное | Описание                                                                                                                                                                                                                                                                                                                                                           |
+|-------------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`            | ✅            | Должно быть указано либо в `profiles.yml`, либо в файле `dbt_project.yml`. Значение должно быть `deltastream`.                                                                                                                                                                                                                                                    |
+| `token`           | ✅            | Токен аутентификации для API DeltaStream. Рекомендуется хранить его в безопасном месте, предпочтительно в виде переменной окружения.                                                                                                                                                                                                                              |
+| `database`        | ✅            | Имя целевой базы данных по умолчанию в DeltaStream, в которой будут создаваться модели dbt.                                                                                                                                                                                                                                                                       |
+| `schema`          | ✅            | Имя целевой схемы по умолчанию в указанной базе данных.                                                                                                                                                                                                                                                                                                             |
+| `organization_id` | ✅            | Идентификатор организации, который определяет, к какой организации DeltaStream вы подключаетесь.                                                                                                                                                                                                                                                                 |
+| `url`             | ❌            | URL API DeltaStream. Если не указан, по умолчанию используется `https://api.deltastream.io/v2`.                                                                                                                                                                                                                                                                    |
+| `timezone`        | ❌            | Часовой пояс для выполнения операций. Если не указан, по умолчанию используется `UTC`.                                                                                                                                                                                                                                                                            |
+| `session_id`      | ❌            | Пользовательский идентификатор сессии для целей отладки. Помогает отслеживать операции в логах DeltaStream.                                                                                                                                                                                                                                                       |
+| `role`            | ❌            | Роль пользователя внутри организации DeltaStream. Если не указана, используется роль по умолчанию, связанная с токеном.                                                                                                                                                                                                                                          |
+| `store`           | ❌            | Имя целевого хранилища по умолчанию. Хранилища представляют собой подключения к внешним системам (Kafka, PostgreSQL и т.д.) в DeltaStream.                                                                                                                                                                                                                         |
+| `compute_pool`    | ❌            | Имя пула вычислительных ресурсов, который будет использоваться для моделей, требующих вычислительных ресурсов. Если не указано, используется пул по умолчанию.                                                                                                                                                                                                   |
 
-## Security best practices
+## Рекомендации по безопасности
 
-When configuring your project for production, it is strongly recommended to use environment variables to store sensitive information such as the authentication token:
+При настройке проекта для продакшена настоятельно рекомендуется использовать переменные окружения для хранения конфиденциальной информации, такой как токен аутентификации:
 
 <File name='profiles.yml'>
 
@@ -85,12 +85,12 @@ your_profile_name:
 
 </File>
 
-## Troubleshooting connections
+## Устранение проблем с подключением
 
-If you encounter issues connecting to DeltaStream from dbt, verify the following:
+Если у вас возникают проблемы с подключением к DeltaStream из dbt, проверьте следующее:
 
-### Authentication issues
+### Проблемы с аутентификацией
 
-- Ensure your API token is valid and has not expired
-- Verify the token has appropriate permissions for the target organization
-- Check that the `organization_id` matches your DeltaStream organization
+- Убедитесь, что ваш API-токен действителен и не истёк
+- Проверьте, что у токена есть необходимые разрешения для целевой организации
+- Убедитесь, что значение `organization_id` соответствует вашей организации DeltaStream

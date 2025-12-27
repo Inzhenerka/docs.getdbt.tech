@@ -1,6 +1,6 @@
 ---
-title: "Microsoft Fabric Lakehouse setup"
-description: "Read this guide to learn about the Microsoft Fabric spark setup for Lakehouse in dbt."
+title: "Настройка Microsoft Fabric Lakehouse"
+description: "Прочитайте это руководство, чтобы узнать о настройке Microsoft Fabric Spark для Lakehouse в dbt."
 id: "fabricspark-setup"
 meta:
   maintained_by: Microsoft
@@ -20,9 +20,9 @@ meta:
 <Snippet path="warehouse-setups-cloud-callout" />
 
 
-Below is a guide for use with [Fabric Data Engineering](https://learn.microsoft.com/en-us/fabric/data-engineering/data-engineering-overview), a new product within Microsoft Fabric. This adapter currently supports connecting to a  lakehouse endpoint.
+Ниже приведено руководство по использованию [Fabric Data Engineering](https://learn.microsoft.com/en-us/fabric/data-engineering/data-engineering-overview) — нового продукта в составе Microsoft Fabric. В настоящее время этот адаптер поддерживает подключение только к endpoint’у lakehouse.
 
-To learn how to set up dbt using Fabric Warehouse, refer to [Microsoft Fabric Data Warehouse](/docs/core/connect-data-platform/fabric-setup).
+Чтобы узнать, как настроить dbt для работы с Fabric Warehouse, см. [Microsoft Fabric Data Warehouse](/docs/core/connect-data-platform/fabric-setup).
 
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
@@ -30,22 +30,22 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-<p>For further info, refer to the GitHub repository: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
+<p>Для получения дополнительной информации см. GitHub-репозиторий: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
 
-## Connection methods
+## Способы подключения
 
-dbt-fabricspark can connect to Fabric Spark runtime using Fabric Livy API method. The Fabric Livy API allows submitting jobs in two different modes:  
+dbt-fabricspark может подключаться к Fabric Spark runtime с использованием Fabric Livy API. Fabric Livy API позволяет отправлять задания в двух разных режимах:  
 
-- [`session-jobs`](#session-jobs) A Livy session job entails establishing a Spark session that remains active throughout the spark session. A spark session, can run multiple jobs (each job is an action), sharing state and cached data between jobs.
-- batch jobs entails submitting a Spark application for a single job execution. In contrast to a Livy session job, a batch job doesn't sustain an ongoing Spark session. With Livy batch jobs, each job initiates a new Spark session that ends when the job finishes.
+- [`session-jobs`](#session-jobs) Livy session job предполагает установку Spark-сессии, которая остаётся активной на протяжении всей работы Spark. В рамках одной Spark-сессии можно выполнять несколько заданий (каждое задание — это действие), при этом между заданиями разделяется состояние и кэшированные данные.
+- batch jobs предполагают отправку Spark-приложения для выполнения одного задания. В отличие от Livy session job, batch job не поддерживает длительную Spark-сессию. При использовании Livy batch jobs для каждого задания создаётся новая Spark-сессия, которая завершается после окончания выполнения задания.
 
-:::info Supported mode
-To share the session state among jobs and reduce the overhead of session management,  dbt-fabricspark adapter supports only `session-jobs` mode.
+:::info Поддерживаемый режим
+Чтобы разделять состояние сессии между заданиями и уменьшить накладные расходы на управление сессиями, адаптер dbt-fabricspark поддерживает только режим `session-jobs`.
 :::
 
 ### session-jobs
 
-session-jobs is the preferred method when connecting to Fabric Lakehouse.
+session-jobs — это предпочтительный способ подключения к Fabric Lakehouse.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -86,13 +86,13 @@ your_profile_name:
 
 </File>
 
-## Optional configurations
+## Дополнительные настройки
 
-### Retries
+### Повторы (Retries)
 
-Intermittent errors can crop up unexpectedly while running queries against Fabric Spark. If `retry_all` is enabled, dbt-fabricspark will naively retry any queries that fails, based on the configuration supplied by `connect_timeout` and `connect_retries`. It does not attempt to determine if the query failure was transient or likely to succeed on retry. This configuration is recommended in production environments, where queries ought to be succeeding. The default `connect_retries` configuration is 2. 
+При выполнении запросов к Fabric Spark могут неожиданно возникать кратковременные ошибки. Если включена опция `retry_all`, dbt-fabricspark будет повторно выполнять любые неудавшиеся запросы в соответствии с настройками `connect_timeout` и `connect_retries`. При этом не предпринимается попытка определить, была ли ошибка временной или имеет ли смысл повторный запуск. Такая конфигурация рекомендуется для production-окружений, где запросы в норме должны успешно выполняться. Значение `connect_retries` по умолчанию равно 2. 
 
-For instance, this will instruct dbt to retry all failed queries up to 3 times, with a 5 second delay between each retry:
+Например, следующая конфигурация укажет dbt повторять все неудавшиеся запросы до 3 раз с задержкой 5 секунд между попытками:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -105,22 +105,22 @@ connect_retries: 3
 
 
 
-### Spark configuration
+### Конфигурация Spark
 
-Spark can be customized using [Application Properties](https://spark.apache.org/docs/latest/configuration.html). Using these properties the execution can be customized, for example, to allocate more memory to the driver process. Also, the Spark SQL runtime can be set through these properties. For example, this allows the user to [set a Spark catalogs](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
+Spark можно настраивать с помощью [Application Properties](https://spark.apache.org/docs/latest/configuration.html). Используя эти свойства, можно изменить параметры выполнения, например, выделить больше памяти для процесса драйвера. Также через эти свойства можно задать настройки Spark SQL runtime. Например, это позволяет пользователю [настроить Spark catalogs](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
 
 
-### Supported functionality
+### Поддерживаемая функциональность
 
-Most <Constant name="core" /> functionality is supported, Please refer to [Delta Lake interoporability](https://learn.microsoft.com/en-us/fabric/fundamentals/delta-lake-interoperability).
+Поддерживается большая часть функциональности <Constant name="core" />. Подробнее см. [Delta Lake interoporability](https://learn.microsoft.com/en-us/fabric/fundamentals/delta-lake-interoperability).
 
-Delta-only features:
-1. Incremental model updates by `unique_key` instead of `partition_by` (see [`merge` strategy](/reference/resource-configs/spark-configs#the-merge-strategy))
+Функциональность, доступная только для Delta:
+1. Инкрементальные обновления моделей по `unique_key` вместо `partition_by` (см. стратегию [`merge`](/reference/resource-configs/spark-configs#the-merge-strategy))
 2. [Snapshots](/docs/build/snapshots)
-3. [Persisting](/reference/resource-configs/persist_docs) column-level descriptions as database comments
+3. [Сохранение](/reference/resource-configs/persist_docs) описаний столбцов на уровне базы данных в виде комментариев
 
-### Limitations
+### Ограничения
 
-1. Lakehouse schemas are not supported. Refer to [limitations](https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-schemas#public-preview-limitations)
-2. Service Principal Authentication is not supported yet by Livy API.
-3. Only Delta, CSV & Parquet table data formats are supported by Fabric Lakehouse.
+1. Схемы Lakehouse не поддерживаются. См. [ограничения](https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-schemas#public-preview-limitations)
+2. Аутентификация через Service Principal пока не поддерживается Livy API.
+3. Fabric Lakehouse поддерживает только форматы данных таблиц Delta, CSV и Parquet.

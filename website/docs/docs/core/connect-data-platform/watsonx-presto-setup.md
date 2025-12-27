@@ -1,6 +1,6 @@
 ---
-title: "IBM watsonx.data Presto setup"
-description: "Read this guide to learn about the IBM watsonx.data Presto setup in dbt."
+title: "Настройка IBM watsonx.data Presto"
+description: "Прочитайте это руководство, чтобы узнать о настройке IBM watsonx.data Presto в dbt."
 id: "watsonx-presto-setup"
 meta:
   maintained_by: IBM
@@ -16,23 +16,23 @@ meta:
   config_page: /reference/resource-configs/watsonx-presto-config
 ---
 
-The dbt-watsonx-presto adapter allows you to use dbt to transform and manage data on IBM watsonx.data Presto(Java), leveraging its distributed SQL query engine capabilities. Before proceeding, ensure you have the following:
+Адаптер **dbt-watsonx-presto** позволяет использовать dbt для трансформации и управления данными в IBM watsonx.data Presto (Java), используя возможности его распределённого SQL-движка запросов. Перед началом убедитесь, что у вас есть следующее:
 <ul>
-  <li>An active IBM watsonx.data Presto(Java) engine with connection details (host, port, catalog, schema) in SaaS/Software.</li>
-  <li>Authentication credentials: Username and password/apikey.</li>
-  <li>For watsonx.data instances, SSL verification is required for secure connections. If the instance host uses HTTPS, there is no need to specify the SSL certificate parameter. However, if the instance host uses an unsecured HTTP connection, ensure you provide the path to the SSL certificate file.</li>
+  <li>Активный движок IBM watsonx.data Presto (Java) с параметрами подключения (host, port, catalog, schema) в SaaS или Software.</li>
+  <li>Учётные данные для аутентификации: имя пользователя и пароль или API key.</li>
+  <li>Для экземпляров watsonx.data требуется SSL‑проверка для безопасных подключений. Если хост экземпляра использует HTTPS, указывать параметр SSL‑сертификата не требуется. Однако если хост использует небезопасное HTTP‑подключение, необходимо указать путь к файлу SSL‑сертификата.</li>
 </ul>
-Refer to [Configuring dbt-watsonx-presto](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=presto-configuration-setting-up-your-profile) for guidance on obtaining and organizing these details.
 
+См. руководство [Configuring dbt-watsonx-presto](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=presto-configuration-setting-up-your-profile) для получения инструкций по получению и организации этих данных.
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
 
-## Connecting to IBM watsonx.data presto
+## Подключение к IBM watsonx.data Presto
 
-To connect dbt with watsonx.data Presto(java), you need to configure a profile in your `profiles.yml` file located in the `.dbt/` directory of your home folder. The following is an example configuration for connecting to IBM watsonx.data SaaS and Software instances:
+Чтобы подключить dbt к watsonx.data Presto (Java), необходимо настроить профиль в файле `profiles.yml`, который находится в каталоге `.dbt/` вашей домашней директории. Ниже приведён пример конфигурации для подключения к экземплярам IBM watsonx.data SaaS и Software:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -68,36 +68,36 @@ my_project:
 
 </File>
 
-## Host parameters
+## Параметры хоста
 
-The following profile fields are required to configure watsonx.data Presto(java) connections. For IBM watsonx.data SaaS or Software instances, you can get the `hostname` and `port` details by clicking **View connect details** on the Presto(java) engine details page.
+Следующие поля профиля необходимы для настройки подключения к watsonx.data Presto (Java). Для экземпляров IBM watsonx.data SaaS или Software вы можете получить значения `hostname` и `port`, нажав **View connect details** на странице сведений о движке Presto (Java).
 
 | Option    | Required/Optional | Description | Example  |
 | --------- | ------- | ------- | ----------- |
-| `method`  | Required | Specifies the authentication method for secure connections. Use `BasicAuth` when connecting to IBM watsonx.data SaaS or Software instances. | `BasicAuth` |
-|   `user`  | Required | Username or email address for authentication. | `user` |
-| `password`| Required | Password or API key for authentication | `password` |
-|   `host`  | Required | Hostname for connecting to Presto. | `127.0.0.1` |
-| `catalog`| Required | The catalog name in your Presto instance. | `Analytics` |
-|  `schema` | Required | The schema name within your Presto instance catalog. | `my_schema`  |
-|   `port`  | Required | The port for connecting to Presto.  | `443`  |
-| `ssl_verify` | Optional (default: **true**) | Specifies the path to the SSL certificate or a boolean value. The SSL certificate path is required if the watsonx.data instance is not secure (HTTP).| `path/to/certificate` or `true` |
+| `method`  | Required | Указывает метод аутентификации для безопасных подключений. Используйте `BasicAuth` при подключении к экземплярам IBM watsonx.data SaaS или Software. | `BasicAuth` |
+|   `user`  | Required | Имя пользователя или адрес электронной почты для аутентификации. | `user` |
+| `password`| Required | Пароль или API key для аутентификации. | `password` |
+|   `host`  | Required | Имя хоста для подключения к Presto. | `127.0.0.1` |
+| `catalog`| Required | Имя каталога в вашем экземпляре Presto. | `Analytics` |
+|  `schema` | Required | Имя схемы внутри каталога Presto. | `my_schema`  |
+|   `port`  | Required | Порт для подключения к Presto.  | `443`  |
+| `ssl_verify` | Optional (default: **true**) | Указывает путь к SSL‑сертификату или логическое значение. Путь к SSL‑сертификату требуется, если экземпляр watsonx.data не является защищённым (HTTP). | `path/to/certificate` или `true` |
 
 
-### Schemas and databases
-When selecting the catalog and the schema, make sure the user has read and write access to both. This selection does not limit your ability to query the catalog. Instead, they serve as the default location for where tables and views are materialized. In addition, the Presto connector used in the catalog must support creating tables. This default can be changed later from within your dbt project.
+### Схемы и базы данных
+При выборе каталога и схемы убедитесь, что у пользователя есть права на чтение и запись для обоих. Этот выбор не ограничивает вашу возможность выполнять запросы к каталогу. Вместо этого они служат местом по умолчанию, где будут материализовываться таблицы и представления. Кроме того, используемый в каталоге коннектор Presto должен поддерживать создание таблиц. Это значение по умолчанию можно изменить позже в рамках проекта dbt.
 
-### SSL verification
-- If the Presto instance uses an unsecured HTTP connection, you must set `ssl_verify` to the path of the SSL certificate file.
-- If the instance uses `HTTPS`, this parameter is not required and can be omitted.
+### Проверка SSL
+- Если экземпляр Presto использует небезопасное HTTP‑подключение, необходимо установить `ssl_verify` в путь к файлу SSL‑сертификата.
+- Если экземпляр использует `HTTPS`, этот параметр не требуется и может быть опущен.
 
-## Additional parameters
+## Дополнительные параметры
 
-The following profile fields are optional to set up. They let you configure your instance session and dbt for your connection. 
+Следующие поля профиля являются необязательными. Они позволяют настроить сессию экземпляра и параметры dbt для подключения. 
 
 
 | Profile field                 |  Description                                                                                                | Example                              |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| `threads`                     | How many threads dbt should use (default is `1`)                                                            | `8`                                  |
-| `http_headers`                | HTTP headers to send alongside requests to Presto, specified as a yaml dictionary of (header, value) pairs. | `X-Presto-Routing-Group: my-instance` |
-| `http_scheme`                 | The HTTP scheme to use for requests to    (default: `http`, or `https` if `BasicAuth`)                | `https` or `http`                    |
+| `threads`                     | Количество потоков, которые должен использовать dbt (значение по умолчанию — `1`).                         | `8`                                  |
+| `http_headers`                | HTTP‑заголовки, отправляемые вместе с запросами к Presto, задаются как YAML‑словарь пар (заголовок, значение). | `X-Presto-Routing-Group: my-instance` |
+| `http_scheme`                 | HTTP‑схема, используемая для запросов (по умолчанию: `http`, либо `https` при использовании `BasicAuth`).   | `https` или `http`                    |

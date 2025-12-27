@@ -1,5 +1,5 @@
 ---
-title: "Databricks Lakebase setup"
+title: "Настройка Databricks Lakebase"
 meta:
   maintained_by: dbt Labs
   authors: dbt Labs
@@ -19,15 +19,14 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Profile Configuration
+## Конфигурация профиля
 
-Databricks Lakebase targets are configured exactly the same as [Postgres targets](postgres-setup#profile-configuration).
+Цели Databricks Lakebase настраиваются точно так же, как и [цели Postgres](postgres-setup#profile-configuration).
 
-Use these key parameters to connect to Databricks Lakebase:
+Используйте следующие ключевые параметры для подключения к Databricks Lakebase:
 
-- `host name`: Found in **Databricks** > **Compute** > **Database instances** > **Connect with PSQL** using the format `instance-123abcdef456.database.cloud.databricks.com`
-- `database name`: Use `databricks_postgres` by default
-- Authentication: dbt-postgres only supports username/password. You can generate a username/password by [enabling Native Postgres Role Login](https://docs.databricks.com/aws/en/oltp/oauth?language=UI#authenticate-with-databricks-identities) and use the role name as the username. To learn more about managing the Postgres roles and privileges, check out the [docs](https://docs.databricks.com/aws/en/oltp/pg-roles#create-postgres-roles-and-grant-privileges-for-databricks-identities).
+- `host name`: Можно найти в **Databricks** > **Compute** > **Database instances** > **Connect with PSQL**. Используется формат `instance-123abcdef456.database.cloud.databricks.com`
+- `database name`: По умолчанию используйте `databricks_postgres`
+- Аутентификация: `dbt-postgres` поддерживает только аутентификацию по имени пользователя и паролю. Вы можете сгенерировать имя пользователя и пароль, [включив Native Postgres Role Login](https://docs.databricks.com/aws/en/oltp/oauth?language=UI#authenticate-with-databricks-identities), и использовать имя роли в качестве имени пользователя. Подробнее об управлении ролями и привилегиями Postgres см. в [документации](https://docs.databricks.com/aws/en/oltp/pg-roles#create-postgres-roles-and-grant-privileges-for-databricks-identities).
 
-Alternatively you can [generate an OAuth token](https://docs.databricks.com/aws/en/oltp/oauth?language=UI#authenticate-with-databricks-identities) that will need to be refreshed every hour to use with your Databricks username. 
-
+В качестве альтернативы вы можете [сгенерировать OAuth‑токен](https://docs.databricks.com/aws/en/oltp/oauth?language=UI#authenticate-with-databricks-identities), который необходимо обновлять каждый час, и использовать его вместе с вашим именем пользователя Databricks.
