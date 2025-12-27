@@ -1,4 +1,4 @@
-:::info Model versions, dbt_project.yml versions, and .yml versions
+:::info Версии моделей, версии dbt_project.yml и версии .yml
 
 Слово «version» встречается в документации в нескольких местах и используется в разных значениях:
 - [Model versions](/docs/mesh/govern/model-versions) &mdash; функция dbt <Constant name="mesh" />, которая обеспечивает более эффективное управление и контроль моделей данных, позволяя отслеживать изменения и обновления моделей с течением времени.

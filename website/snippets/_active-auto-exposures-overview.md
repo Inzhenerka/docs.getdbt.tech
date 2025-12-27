@@ -1,6 +1,6 @@
 Следующая таблица обобщает различия между **визуализацией** и **оркестрацией** downstream exposures:
 
-| Info | Set up and visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
+3 | | Информация | Настройка и визуализация последующих воздействий | Оркестрация последующих воздействий <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
 | Purpose | Автоматически добавляет downstream‑активы в lineage dbt. | Проактивно обновляет базовые источники данных во время запланированных dbt‑задач. |
 | Benefits | Обеспечивает наглядность потоков данных и зависимостей. | Гарантирует, что BI‑инструменты всегда работают с актуальными данными без ручного вмешательства. |
@@ -13,13 +13,13 @@
 <div className="grid--2-col">
 
 <Card
-    title="Set up and visualize downstream exposures"
+16 |     title="Настройка и визуализация последующих воздействий"
     body="Автоматически настраивайте downstream exposures на основе дашбордов, чтобы понять, как модели используются во внешних инструментах, и получить более полное downstream lineage."
     link="/docs/cloud-integrations/downstream-exposures-tableau"
     icon="dbt-bit"/>
 
 <Card
-    title="Orchestrate downstream exposures"
+22 |     title="Оркестрация последующих воздействий"
     link="/docs/cloud-integrations/orchestrate-exposures"
     body="Проактивно обновляет базовые источники данных (например, Tableau extracts) с помощью планировщика dbt во время запланированных dbt‑задач."
     icon="dbt-bit"/>

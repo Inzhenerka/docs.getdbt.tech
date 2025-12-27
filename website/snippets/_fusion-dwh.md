@@ -1,25 +1,25 @@
 <Expandable alt_header="BigQuery">  
-  - Service Account / User Token  
-  - Native OAuth  
-  - External OAuth  
+  - Служебная учетная запись / токен пользователя  
+  - Нативный OAuth  
+  - Внешний OAuth  
   - [Требуемые разрешения](/docs/core/connect-data-platform/bigquery-setup#required-permissions)  
 </Expandable>
 
 <Expandable alt_header="Databricks">
-  - Service Account / User Token  
-  - Native OAuth  
+  - Служебная учетная запись / токен пользователя  
+  - Нативный OAuth  
 </Expandable>
 
 <Expandable alt_header="Redshift">
-  - Username / Password  
-  - IAM profile  
+  - Имя пользователя / пароль  
+  - Профиль IAM  
 </Expandable>
 
 <Expandable alt_header="Snowflake">
-  - Username / Password  
-  - Native OAuth  
-  - External OAuth  
-  - Key pair using a modern PKCS#8 method  
+  - Имя пользователя / пароль  
+  - Нативный OAuth  
+  - Внешний OAuth  
+  - Пара ключей с использованием современного метода PKCS#8  
   - MFA  
 </Expandable>
 

@@ -1,4 +1,4 @@
-[comment: For context, the section title used for this snippet is "Роли в Starburst Enterprise" ]: #
+[comment: Для контекста, заголовок раздела, используемый для этого фрагмента, это "Роли в Starburst Enterprise" ]: #
 
 Если вы подключаетесь к кластеру Starburst Enterprise со включёнными встроенными
 контролями доступа,

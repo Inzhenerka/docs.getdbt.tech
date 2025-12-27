@@ -7,7 +7,7 @@
 <Card
     title="Power BI"
     link="/docs/cloud-integrations/semantic-layer/power-bi"
-    body="Use reports to query the dbt Semantic Layer with Power BI and produce dashboards with trusted data."
+    body="Используйте отчёты для выполнения запросов к семантическому слою dbt с помощью Power BI и создания дашбордов с проверенными данными."
     icon="pbi"/>
 
  <Card

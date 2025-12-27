@@ -2,12 +2,12 @@
 
 После сохранения подключения для него будет сгенерирован и отображён публичный ключ. Вы можете скопировать этот публичный ключ на bastion‑сервер, чтобы авторизовать <Constant name="cloud" /> для подключения к вашей базе данных через bastion‑сервер.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="A public key is generated after saving"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="Открытый ключ создаётся после сохранения"/>
 
-#### About the Bastion server in AWS
+#### О бастионном сервере в AWS
 
 <details>
-  <summary>What is a bastion server?</summary>
+  <summary>Что такое бастионный сервер?</summary>
   <div>
     <div>
       Bastion‑сервер в <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> — это хост, который позволяет <Constant name="cloud" /> устанавливать SSH‑соединение.
@@ -22,7 +22,7 @@
 </details>
 
 
-#### Configuring the Bastion Server in AWS
+#### Настройка bastion‑сервера в AWS
 
 Чтобы настроить SSH‑туннель в <Constant name="cloud" />, вам нужно указать hostname/IP вашего bastion‑сервера, имя пользователя и порт (на ваш выбор), к которому будет подключаться <Constant name="cloud" />. Выполните следующие шаги:
 

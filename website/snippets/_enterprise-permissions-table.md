@@ -22,7 +22,7 @@
 * **(W)rite** &mdash; Создание новых или изменение существующих. Включает `send`, `create`, `delete`, `allocate`, `modify` и `develop`.
 * **(R)ead** &mdash; Можно просматривать, но нельзя создавать или изменять какие‑либо поля.
 
-#### Account access for account permissions
+#### Доступ к аккаунту для разрешений аккаунта
 
 <FilterableTable>
 
@@ -45,7 +45,7 @@
 | Вебхуки                       | W                      | -                      | -                                    | -                  | -                          | -           |
 </FilterableTable>
 
-\* Permission sets with write (**W**) access to Account settings can modify account-level settings, including [setting up Slack notifications](/docs/deploy/job-notifications#slack-notifications).
+\* Наборы разрешений с правом записи (**W**) к настройкам учетной записи могут изменять настройки уровня учетной записи, включая [настройку уведомлений Slack](/docs/deploy/job-notifications#slack-notifications).
 
 #### Доступ к проекту для разрешений уровня аккаунта
 

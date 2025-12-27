@@ -30,13 +30,13 @@ import FusionManualInstall from '/snippets/_fusion-manual-install.md';
 Чтобы установить расширение dbt для VS Code, выполните следующие шаги в выбранном редакторе:
 
 1. Перейдите на вкладку **Extensions** и найдите `dbt`. Выберите расширение от издателя `dbtLabsInc` или `dbt Labs Inc` и нажмите **Install**.
-    <Lightbox src="/img/docs/extension/extension-marketplace.png" width="90%" title="Search for the extension"/>
+    <Lightbox src="/img/docs/extension/extension-marketplace.png" width="90%" title="Поиск расширения"/>
 2. Откройте dbt‑проект в среде VS Code, если вы ещё этого не сделали, и убедитесь, что он добавлен в текущее рабочее пространство. Если в строке состояния редактора отображается метка **dbt Extension**, значит расширение успешно установлено. Наведите курсор на эту метку, чтобы увидеть диагностическую информацию.
-    <Lightbox src="/img/docs/extension/dbt-extension-statusbar.png" width="60%" title="If you see the 'dbt Extension` label, the extension is activated"/>
+    <Lightbox src="/img/docs/extension/dbt-extension-statusbar.png" width="60%" title="Если вы видите метку 'dbt Extension`, расширение активировано"/>
 3. После активации расширение автоматически начнёт загрузку подходящего dbt Language Server (<Term id="lsp"/>) для вашей операционной системы.
-    <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="The dbt Language Server will be installed automatically"/>
+    <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="Языковой сервер dbt будет установлен автоматически"/>
 4. Если dbt Fusion engine ещё не установлен на вашем компьютере, расширение предложит скачать и установить его. Следуйте инструкциям в уведомлении или [установите его вручную из командной строки](#install-fusion-manually).
-    <Lightbox src="/img/docs/extension/install-dbt-fusion-engine.png" width="60%" title="Follow the prompt to install the dbt Fusion engine"/>
+    <Lightbox src="/img/docs/extension/install-dbt-fusion-engine.png" width="60%" title="Следуйте подсказке, чтобы установить движок dbt Fusion"/>
 5. Запустите [инструмент обновления](#upgrade-to-fusion) расширения VS Code, чтобы подготовить ваш dbt‑проект к работе с Fusion и исправить ошибки и устаревшие конструкции.
 6. (Необязательно) Если вы впервые используете расширение или VS Code/Cursor, вы можете [настроить локальную среду](/docs/configure-dbt-extension), чтобы она соответствовала вашей среде <Constant name="dbt_platform" />, и [задать локальные переменные окружения](/docs/configure-dbt-extension#configure-environment-variables) для использования функций расширения.
 
@@ -69,10 +69,10 @@ import FusionManualInstall from '/snippets/_fusion-manual-install.md';
 2. Нажмите на статус **dbt Walkthrough**, чтобы открыть приветственный экран.
     <Lightbox src="/img/docs/extension/welcome-screen.png" width="80%" title="Экран приветствия расширения dbt для VS Code."/>
 3. Последовательно выполните пункты для начала работы:
-    - **Open your dbt project:** Открывает проводник файлов для выбора dbt‑проекта, который вы хотите открыть с Fusion.
-    - **Check Fusion compatibility:** Запускает процесс [обновления до Fusion](#upgrade-to-fusion). Если возникнут ошибки парсинга, можно дополнительно запустить [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
-    - **Explore features:** Открывает [документацию](/docs/about-dbt-extension) с описанием возможностей расширения.
-    - [**Register:**](#register-the-extension) Запускает процесс регистрации для продолжения использования расширения после пробного периода.
+    - **Открыть ваш dbt‑проект:** Открывает проводник файлов для выбора dbt‑проекта, который вы хотите открыть с Fusion.
+    - **Проверить совместимость с Fusion:** Запускает процесс [обновления до Fusion](#upgrade-to-fusion). Если возникнут ошибки парсинга, можно дополнительно запустить [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation).
+    - **Изучить возможности:** Открывает [документацию](/docs/about-dbt-extension) с описанием возможностей расширения.
+    - [**Зарегистрироваться:**](#register-the-extension) Запускает процесс регистрации для продолжения использования расширения после пробного периода.
 
 ## Обновитесь до Fusion
 
@@ -96,16 +96,16 @@ dbt init --fusion-upgrade
 ```
 
 Инструмент обновления проведёт вас через процесс апгрейда Fusion с помощью серии вопросов:
-- **Do you have an existing dbt platform account?**: Если ответить `Y`, вы получите инструкции по загрузке профиля dbt platform для регистрации расширения. Ответ `N` пропустит этот шаг.
-- **Ready to run a dbtf init?** (если файл `profiles.yml` отсутствует): Выполняется конфигурация dbt, включая подключение к хранилищу данных.
-- **Ready to run a dbtf debug?** (если `profiles.yml` уже существует): Проверяет корректность конфигурации и возможность подключения к хранилищу данных.
-- **Ready to run a dbtf parse?**: Проект dbt будет распарсен для проверки совместимости с <Constant name="fusion" />.
+- **У вас уже есть аккаунт dbt platform?**: Если ответить `Y`, вы получите инструкции по загрузке профиля dbt platform для регистрации расширения. Ответ `N` пропустит этот шаг.
+- **Готовы запустить dbtf init?** (если файл `profiles.yml` отсутствует): Выполняется конфигурация dbt, включая подключение к хранилищу данных.
+- **Готовы запустить dbtf debug?** (если `profiles.yml` уже существует): Проверяет корректность конфигурации и возможность подключения к хранилищу данных.
+- **Готовы запустить dbtf parse?**: Проект dbt будет распарсен для проверки совместимости с <Constant name="fusion" />.
     - Если во время парсинга возникнут проблемы, вам будет предложено запустить [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation). Без устранения ошибок процесс обновления не может быть продолжен.
         :::tip AI Agents
         В некоторых случаях dbt-autofix не может исправить все ошибки и требуется ручное вмешательство. Для таких ситуаций инструмент dbt-autofix предоставляет файл [AI Agents.md](https://github.com/dbt-labs/dbt-autofix/blob/main/AGENTS.md), который позволяет использовать AI‑агентов для помощи в миграции после завершения работы dbt-autofix.
         :::
-- **Ready to run a ‘dbtf compile -static-analysis off’?** (выполняется только после успешного parse): Компилирует проект без статического анализа, имитируя поведение dbt Core.
-- **Ready to run a ‘dbtf compile’?**: Компилирует проект с полным статическим анализом <Constant name="fusion" />, проверяя корректность SQL с учётом таблиц и колонок в вашем хранилище.
+- **Готовы запустить ‘dbtf compile -static-analysis off’?** (выполняется только после успешного parse): Компилирует проект без статического анализа, имитируя поведение dbt Core.
+- **Готовы запустить ‘dbtf compile’?**: Компилирует проект с полным статическим анализом <Constant name="fusion" />, проверяя корректность SQL с учётом таблиц и колонок в вашем хранилище.
 
     <Lightbox src="/img/docs/extension/fusion-onboarding-complete.png" width="70%" title="Сообщение, которое вы получаете после завершения обновления проекта до движка dbt Fusion." />
 

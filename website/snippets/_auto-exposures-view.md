@@ -9,22 +9,22 @@
 - [Дерево файлов](#file-tree)
 - [Линейность проекта](#project-lineage)
 
-### Exposures menu
-View downstream exposures from the **Exposures** menu item under **Resources**. This menu provides a comprehensive list of all the exposures so you can quickly access and manage them. The menu displays the following information:
-   - **Name**: The name of the exposure.
-   - **Health**: The [data health signal](/docs/explore/data-health-signals) of the exposure.
-   - **Type**: The type of exposure, such as `dashboard` or `notebook`.
-   - **Owner**: The owner of the exposure.
-   - **Owner email**: The email address of the owner of the exposure.
-   - **Integration**: The BI tool that the exposure is integrated with.
-   - **Exposure mode**: The type of exposure defined: **Auto** or **Manual**.
-<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-view-resources.jpg" width="120%" title="View from the dbt Catalog under the 'Resources' menu."/>
+### Меню Exposures {#exposures-menu}
+Просматривайте нисходящие зависимости из пункта меню **Exposures** в разделе **Resources**. Это меню предоставляет исчерпывающий список всех экспозиций, чтобы вы могли быстро получать к ним доступ и управлять ими. В меню отображается следующая информация:
+   - **Name**: Название экспозиции.
+   - **Health**: [Сигнал качества данных](/docs/explore/data-health-signals) экспозиции.
+   - **Type**: Тип экспозиции, например `dashboard` или `notebook`.
+   - **Owner**: Владелец экспозиции.
+   - **Owner email**: Адрес электронной почты владельца экспозиции.
+   - **Integration**: BI-инструмент, с которым интегрирована экспозиция.
+   - **Exposure mode**: Определённый тип экспозиции: **Auto** или **Manual**.
+<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-view-resources.jpg" width="120%" title="Вид в dbt Catalog в меню «Resources»."/>
 
-### Дерево файлов
+### Дерево файлов {#file-tree}
 Найдите экспозиции непосредственно в **File tree** (дереве файлов) внутри подпапки **imported_from_tableau**. Этот режим органично встраивает экспозиции в файлы вашего проекта, упрощая их поиск и использование в рамках структуры проекта.
 <Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-view-file-tree.jpg" width="120%" title="Вид из dbt Catalog в меню «File tree»."/>
 
-### Линейность проекта
+### Граф зависимостей проекта {#project-lineage}
 В представлении **Project lineage**, которое визуализирует зависимости и связи в вашем проекте. Экспозиции отображаются с иконкой Tableau, что позволяет наглядно увидеть, как они вписываются в общий поток данных проекта.
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="95%" title="Вид из dbt Catalog в представлении Project lineage, отображается с иконкой Tableau."/>

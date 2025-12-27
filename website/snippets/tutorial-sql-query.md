@@ -1,5 +1,5 @@
 <WHCode>
-<!-- Bigquery snippet -->
+<!-- Сниппет Bigquery -->
 <div warehouse="BigQuery">
 
 ```sql
@@ -62,7 +62,7 @@ select * from final
 
 </div>
 
-<!-- Databricks snippet -->
+<!-- Сниппет Databricks -->
 
 <div warehouse="Databricks">
 
@@ -126,7 +126,7 @@ select * from final
 
 </div>
 
-<!-- Redshift snippet -->
+<!-- Сниппет Redshift -->
 
 <div warehouse="Redshift">
 
@@ -190,7 +190,7 @@ select * from final
 
 </div>
 
-<!-- Snowflake snippet -->
+<!-- Сниппет Snowflake -->
 
 <div warehouse="Snowflake">
 

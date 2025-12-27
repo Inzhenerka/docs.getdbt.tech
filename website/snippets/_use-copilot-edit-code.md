@@ -8,35 +8,35 @@
 - эффективное выполнение массовых правок  
 - создание сложных паттернов, например regex  
 
-### Use the prompt window 
+### Используйте окно промпта
 
 Откройте AI‑окно запросов <Constant name="copilot" /> с помощью сочетания клавиш Cmd+B (Mac) или Ctrl+B (Windows), чтобы:
 
-#### 1. Generate SQL from scratch
+#### 1. Сгенерировать SQL с нуля
 - Использовать сочетания клавиш Cmd+B (Mac) или Ctrl+B (Windows) для генерации SQL с нуля.  
 - Ввести инструкции на естественном языке для генерации SQL‑кода, соответствующего вашим требованиям.  
 - Попросить <Constant name="copilot" /> исправить код или добавить определённую часть SQL‑файла.  
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/copilot-sql-generation-prompt.png" width="90%" title="dbt Copilot's prompt window accessible by keyboard shortcut Cmd+B (Mac) or Ctrl+B (Windows)" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/copilot-sql-generation-prompt.png" width="90%" title="Окно промпта dbt Copilot, доступное по сочетанию клавиш Cmd+B (Mac) или Ctrl+B (Windows)" />
 
-#### 2. Edit existing SQL code
+#### 2. Редактировать существующий SQL-код
 - Выделите участок SQL‑кода и нажмите Cmd+B (Mac) или Ctrl+B (Windows), чтобы открыть окно запросов для редактирования.  
 - Используйте это для доработки или изменения конкретных фрагментов кода в соответствии с вашими потребностями.  
 - Попросите <Constant name="copilot" /> исправить код или добавить определённую часть SQL‑файла.  
 
-#### 3. Review changes with the diff view to quickly assess the impact of the changes before making changes
+#### 3. Просмотреть изменения в режиме diff, чтобы быстро оценить влияние изменений перед их внесением
 - Когда предложение сгенерировано, <Constant name="copilot" /> отображает визуальный режим «diff», который помогает сравнить предлагаемые изменения с текущим кодом:  
   - **Green**: новый код, который будет добавлен при принятии предложения.  
   - **Red**: существующий код, который будет удалён или заменён предложенными изменениями.  
 
-#### 4. Accept or reject suggestions
+#### 4. Принять или отклонить предложения
 - **Accept**: если сгенерированный SQL соответствует вашим требованиям, нажмите кнопку **Accept**, чтобы применить изменения напрямую к вашему `.sql`‑файлу в IDE.  
 - **Reject**: если предложение не соответствует вашему запросу/промпту, нажмите **Reject**, чтобы отклонить сгенерированный SQL без внесения изменений и начать заново.  
 
-#### 5. Regenerate code
+#### 5. Сгенерировать код заново
 - Чтобы сгенерировать код заново, нажмите клавишу **Escape** на клавиатуре (или кнопку Reject во всплывающем окне). Это удалит сгенерированный код и вернёт курсор в поле ввода запроса.  
 - Обновите запрос и нажмите **Enter**, чтобы попробовать другую генерацию. Нажмите **Escape** ещё раз, чтобы полностью закрыть всплывающее окно.  
 
 После принятия предложения вы можете продолжать использовать окно запросов для генерации дополнительного SQL‑кода и коммитить изменения в ветку.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/copilot-sql-generation.gif" width="100%" title="Edit existing SQL code using dbt Copilot's prompt window accessible by keyboard shortcut Cmd+B (Mac) or Ctrl+B (Windows)" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/copilot-sql-generation.gif" width="100%" title="Редактируйте существующий SQL-код с помощью окна промпта dbt Copilot, доступного по сочетанию клавиш Cmd+B (Mac) или Ctrl+B (Windows)" />

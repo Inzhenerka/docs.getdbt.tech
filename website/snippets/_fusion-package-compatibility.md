@@ -1,4 +1,4 @@
-<!--remove when the deprecation warnings are updated to match `dbt-autofix`'s enhanced compatibility detection-->
+<!--удалить, когда предупреждения об устаревании будут обновлены и начнут соответствовать улучшенному определению совместимости в `dbt-autofix`-->
 
 #### Сообщения о совместимости пакетов
 
