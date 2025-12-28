@@ -16,7 +16,7 @@ meta:
   config_page: '/reference/resource-configs/glue-configs'
 ---
 
-:::info Community plugin
+:::info Плагин сообщества
 
 Некоторая базовая функциональность может быть ограничена. Если вы заинтересованы в том, чтобы внести вклад, ознакомьтесь с исходным кодом каждого репозитория, перечисленного ниже.
 
@@ -273,7 +273,6 @@ location: "s3://dbt_demo_bucket/dbt_demo_data"
 | buckets  | Количество бакетов при кластеризации | Required if `clustered_by` is specified                | `8`              |
 | custom_location  | По умолчанию адаптер сохраняет данные по пути: `location path`/`schema`/`table`. Если вы не хотите использовать это поведение, можно задать собственное расположение в S3 с помощью этого параметра. | No | `s3://mycustombucket/mycustompath`              |
 | hudi_options | При использовании `file_format: hudi` позволяет переопределить любые параметры конфигурации по умолчанию. | Optional | `{'hoodie.schema.on.read.enable': 'true'}` |
-
 ## Инкрементальные модели
 
 dbt стремится предоставлять удобные и интуитивно понятные абстракции моделирования с помощью встроенных конфигураций и материализаций.
@@ -422,17 +421,409 @@ NB:
 
 В этом [посте блога](https://aws.amazon.com/blogs/big-data/part-1-integrate-apache-hudi-delta-lake-apache-iceberg-datasets-at-scale-aws-glue-studio-notebook/) также объясняется, как настроить и использовать Glue Connectors.
 
-(Дальнейшие разделы Hudi, Delta, Iceberg, мониторинг, Auto Scaling и все примеры кода сохранены без изменений, за исключением пояснительного текста, который переведён аналогичным образом.)
 
-## Доступ к каталогу Glue в другом аккаунте AWS
-Во многих случаях вам может понадобиться запускать ваши dbt‑задачи так, чтобы они читали данные из другого аккаунта AWS.
+#### Hudi
 
-Ознакомьтесь со следующей ссылкой https://repost.aws/knowledge-center/glue-tables-cross-accounts, чтобы настроить политики доступа в исходном и целевом аккаунтах.
+**Примечания по использованию:** стратегия инкремента `merge` с Hudi требует:
+- Добавить `file_format: hudi` в конфигурацию таблицы
+- Добавить `datalake_formats` в профиль: `datalake_formats: hudi`
+  - Либо добавить подключение в профиль: `connections: name_of_your_hudi_connector`
+- Добавить Kryo serializer в Interactive Session Config (в профиле): `conf: spark.serializer=org.apache.spark.serializer.KryoSerializer --conf spark.sql.hive.convertMetastoreParquet=false`
 
-Добавьте следующий параметр `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` в `conf` в профиле dbt. Таким образом вы сможете иметь несколько outputs для каждого аккаунта, к которому у вас есть доступ.
+dbt выполнит [атомарный `merge`‑statement](https://hudi.apache.org/docs/writing_data#spark-datasource-writer), который выглядит почти идентично поведению merge по умолчанию в Snowflake и BigQuery. Если указан `unique_key` (рекомендуется), dbt обновит старые записи значениями из новых записей, которые совпадают по ключевой колонке. Если `unique_key` не указан, dbt не будет использовать критерии сопоставления и просто вставит все новые записи (аналогично стратегии `append`).
 
-Примечание: кросс-аккаунтный доступ должен быть настроен в пределах одного и того же региона AWS.
+#### Пример конфигурации профиля
+```yaml
+test_project:
+  target: dev
+  outputs:
+    dev:
+      type: glue
+      query-comment: my comment
+      role_arn: arn:aws:iam::1234567890:role/GlueInteractiveSessionRole
+      region: eu-west-1
+      glue_version: "4.0"
+      workers: 2
+      worker_type: G.1X
+      schema: "dbt_test_project"
+      session_provisioning_timeout_in_seconds: 120
+      location: "s3://aws-dbt-glue-datalake-1234567890-eu-west-1/"
+      conf: spark.serializer=org.apache.spark.serializer.KryoSerializer --conf spark.sql.hive.convertMetastoreParquet=false
+      datalake_formats: hudi
+```
 
+#### Пример исходного кода
+```sql
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key='user_id',
+    file_format='hudi',
+    hudi_options={
+        'hoodie.datasource.write.precombine.field': 'eventtime',
+    }
+) }}
+
+with new_events as (
+
+    select * from {{ ref('events') }}
+
+    {% if is_incremental() %}
+    where date_day >= date_add(current_date, -1)
+    {% endif %}
+
+)
+
+select
+    user_id,
+    max(date_day) as last_seen
+
+from events
+group by 1
+```
+
+#### Delta
+
+Вы также можете использовать Delta Lake, чтобы иметь возможность применять merge к таблицам.
+
+**Примечания по использованию:** стратегия инкремента `merge` с Delta требует:
+- Добавить `file_format: delta` в конфигурацию таблицы
+- Добавить `datalake_formats` в профиль: `datalake_formats: delta`
+  - Либо добавить подключение в профиль: `connections: name_of_your_delta_connector`
+- Добавить следующую конфигурацию в Interactive Session Config (в профиле): `conf: "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog`
+
+**Athena:** Athena по умолчанию не совместима с delta‑таблицами, но вы можете настроить адаптер так, чтобы он создавал таблицы Athena поверх вашей delta‑таблицы. Для этого нужно настроить в профиле следующие опции:
+- Для Delta Lake 2.1.0, нативно поддерживаемого в Glue 4.0: `extra_py_files: "/opt/aws_glue_connectors/selected/datalake/delta-core_2.12-2.1.0.jar"`
+- Для Delta Lake 1.0.0, нативно поддерживаемого в Glue 3.0: `extra_py_files: "/opt/aws_glue_connectors/selected/datalake/delta-core_2.12-1.0.0.jar"`
+- `delta_athena_prefix: "the_prefix_of_your_choice"`
+- Если ваша таблица партиционирована, добавление новых партиций не происходит автоматически — после добавления каждой новой партиции нужно выполнять `MSCK REPAIR TABLE your_delta_table`
+
+#### Пример конфигурации профиля
+```yaml
+test_project:
+  target: dev
+  outputs:
+    dev:
+      type: glue
+      query-comment: my comment
+      role_arn: arn:aws:iam::1234567890:role/GlueInteractiveSessionRole
+      region: eu-west-1
+      glue_version: "4.0"
+      workers: 2
+      worker_type: G.1X
+      schema: "dbt_test_project"
+      session_provisioning_timeout_in_seconds: 120
+      location: "s3://aws-dbt-glue-datalake-1234567890-eu-west-1/"
+      datalake_formats: delta
+      conf: "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+      extra_py_files: "/opt/aws_glue_connectors/selected/datalake/delta-core_2.12-2.1.0.jar"
+      delta_athena_prefix: "delta"
+```
+
+#### Пример исходного кода
+```sql
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key='user_id',
+    partition_by=['dt'],
+    file_format='delta'
+) }}
+
+with new_events as (
+
+    select * from {{ ref('events') }}
+
+    {% if is_incremental() %}
+    where date_day >= date_add(current_date, -1)
+    {% endif %}
+
+)
+
+select
+    user_id,
+    max(date_day) as last_seen,
+    current_date() as dt
+
+from events
+group by 1
+```
+
+#### Iceberg
+
+**Примечания по использованию:** стратегия инкремента `merge` с Iceberg требует:
+- Прикрепить managed policy AmazonEC2ContainerRegistryReadOnly к вашей execution role:
+- Добавить следующую политику к вашей execution role, чтобы включить commit locking в таблице DynamoDB (подробнее [здесь](https://iceberg.apache.org/docs/latest/aws/#dynamodb-lock-manager)). Обратите внимание: таблица DynamoDB, указанная в поле resource этой политики, должна совпадать с той, что указана в ваших dbt profiles (`--conf spark.sql.catalog.glue_catalog.lock.table=myGlueLockTable`). По умолчанию эта таблица называется `myGlueLockTable` и создаётся автоматически (с On-Demand Pricing) при запуске модели dbt-glue с инкрементальной материализацией и форматом файла Iceberg. Если вы хотите назвать таблицу иначе или создать свою таблицу, не позволяя Glue делать это за вас, укажите параметр `iceberg_glue_commit_lock_table` с именем вашей таблицы (например, `MyDynamoDbTable`) в профиле dbt.
+```yaml
+iceberg_glue_commit_lock_table: "MyDynamoDbTable"
+```
+- Последний коннектор для Iceberg в AWS Marketplace использует версию 0.14.0 для Glue 3.0 и версию 1.2.1 для Glue 4.0. В Glue 4.0 Kryo serialization падает при записи Iceberg, поэтому вместо этого используйте `"org.apache.spark.serializer.JavaSerializer"` для `spark.serializer`. Подробнее [здесь](https://github.com/apache/iceberg/pull/546).
+
+Убедитесь, что вы обновили `conf`, добавив `--conf spark.sql.catalog.glue_catalog.lock.table=<YourDynamoDBLockTableName>`, и что вы заменили IAM‑права ниже на корректное имя вашей таблицы.
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CommitLockTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:CreateTable",
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:PutItem",
+                "dynamodb:DescribeTable",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": "arn:aws:dynamodb:<AWS_REGION>:<AWS_ACCOUNT_ID>:table/myGlueLockTable"
+        }
+    ]
+}
+```
+- Добавить `file_format: Iceberg` в конфигурацию таблицы
+- Добавить `datalake_formats` в профиль: `datalake_formats: iceberg`
+  - Либо добавить connections в профиль: `connections: name_of_your_iceberg_connector` (
+    - Для Athena версии 3:
+      - Адаптер совместим с Iceberg Connector из AWS Marketplace с Fulfillment option Glue 3.0 и версией ПО 0.14.0 (11 октября 2022)
+      - Последний коннектор для Iceberg в AWS Marketplace использует версию 0.14.0 для Glue 3.0 и версию 1.2.1 для Glue 4.0. В Glue 4.0 Kryo serialization падает при записи Iceberg, поэтому вместо этого используйте "org.apache.spark.serializer.JavaSerializer" для spark.serializer. Подробнее [здесь](https://github.com/apache/iceberg/pull/546)
+    - Для Athena версии 2: адаптер совместим с Iceberg Connector из AWS Marketplace с Fulfillment option Glue 3.0 и версией ПО 0.12.0-2 (14 февраля 2022)
+- Добавить следующую конфигурацию в Interactive Session Config (в профиле):
+```--conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions 
+    --conf spark.serializer=org.apache.spark.serializer.KryoSerializer
+    --conf spark.sql.warehouse=s3://<your-bucket-name>
+    --conf spark.sql.catalog.glue_catalog=org.apache.iceberg.spark.SparkCatalog 
+    --conf spark.sql.catalog.glue_catalog.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog 
+    --conf spark.sql.catalog.glue_catalog.io-impl=org.apache.iceberg.aws.s3.S3FileIO 
+    --conf spark.sql.catalog.glue_catalog.lock-impl=org.apache.iceberg.aws.dynamodb.DynamoDbLockManager
+    --conf spark.sql.catalog.glue_catalog.lock.table=myGlueLockTable  
+    --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions
+```
+  - Для Glue 3.0 вместо этого установите `spark.sql.catalog.glue_catalog.lock-impl` в `org.apache.iceberg.aws.glue.DynamoLockManager`
+
+dbt выполнит [атомарный `merge`‑statement](https://iceberg.apache.org/docs/latest/spark-writes/), который выглядит почти идентично поведению merge по умолчанию в Snowflake и BigQuery. Чтобы выполнить merge, нужно указать `unique_key`, иначе операция завершится ошибкой. Этот ключ нужно указывать в формате Python‑списка; он может содержать несколько имён колонок, чтобы создать составной (composite) unique_key.
+
+##### Примечания
+- При использовании custom_location в Iceberg избегайте завершающего слэша. Добавление завершающего слэша приводит к некорректной обработке location и проблемам при чтении данных движками запросов, например Trino. Проблема должна быть исправлена для Iceberg версии > 0.13. Связанный issue на GitHub — [здесь](https://github.com/apache/iceberg/issues/4582).
+- Iceberg также поддерживает стратегии `insert_overwrite` и `append`.
+- Параметр `warehouse` в `conf` обязателен, но переопределяется значением `location` в профиле адаптера или `custom_location` в конфигурации модели.
+- По умолчанию у этой материализации `iceberg_expire_snapshots` установлен в 'True'. Если вам нужно сохранять исторические изменения для аудита, задайте: `iceberg_expire_snapshots='False'`.
+- Сейчас из‑за некоторых внутренних особенностей dbt iceberg‑каталог, который используется внутри при запуске glue interactive sessions с dbt-glue, имеет захардкоженное имя `glue_catalog`. Это имя — алиас, указывающий на AWS Glue Catalog, но он специфичен для каждой сессии. Если вы хотите работать с данными в другой сессии без dbt-glue (например, из Glue Studio notebook), вы можете настроить другой алиас (то есть другое имя для Iceberg Catalog). Чтобы проиллюстрировать это, в конфигурационном файле можно задать: 
+```
+--conf spark.sql.catalog.RandomCatalogName=org.apache.iceberg.spark.SparkCatalog
+```
+Затем запустите сессию в AWS Glue Studio Notebook со следующей конфигурацией:
+```
+--conf spark.sql.catalog.AnotherRandomCatalogName=org.apache.iceberg.spark.SparkCatalog
+```
+В обоих случаях базовым каталогом будет AWS Glue Catalog, уникальный для вашего AWS Account и Region, и вы сможете работать с ровно теми же данными. Также убедитесь, что если вы меняете имя алиаса Glue Catalog, вы меняете его во всех остальных `--conf`, где он используется:
+```
+ --conf spark.sql.catalog.RandomCatalogName=org.apache.iceberg.spark.SparkCatalog 
+ --conf spark.sql.catalog.RandomCatalogName.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog 
+ ...
+ --conf spark.sql.catalog.RandomCatalogName.lock-impl=org.apache.iceberg.aws.glue.DynamoLockManager
+```
+- Полная справка по `table_properties` доступна [здесь](https://iceberg.apache.org/docs/latest/configuration/).
+- Таблицы Iceberg нативно поддерживаются Athena. Поэтому вы можете выполнять запросы к таблицам, созданным и обслуживаемым адаптером dbt-glue, из Athena.
+- Инкрементальная материализация с форматом файла Iceberg поддерживает dbt snapshot. Вы можете запустить команду dbt snapshot, которая делает запрос к таблице Iceberg, и создать для неё snapshot в стиле dbt.
+
+#### Пример конфигурации профиля
+```yaml
+test_project:
+  target: dev
+  outputs:
+    dev:
+      type: glue
+      query-comment: my comment
+      role_arn: arn:aws:iam::1234567890:role/GlueInteractiveSessionRole
+      region: eu-west-1
+      glue_version: "4.0"
+      workers: 2
+      worker_type: G.1X
+      schema: "dbt_test_project"
+      session_provisioning_timeout_in_seconds: 120
+      location: "s3://aws-dbt-glue-datalake-1234567890-eu-west-1/"
+      datalake_formats: iceberg
+      conf: --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions --conf spark.serializer=org.apache.spark.serializer.KryoSerializer --conf spark.sql.warehouse=s3://aws-dbt-glue-datalake-1234567890-eu-west-1/dbt_test_project --conf spark.sql.catalog.glue_catalog=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.glue_catalog.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog --conf spark.sql.catalog.glue_catalog.io-impl=org.apache.iceberg.aws.s3.S3FileIO --conf spark.sql.catalog.glue_catalog.lock-impl=org.apache.iceberg.aws.dynamodb.DynamoDbLockManager --conf spark.sql.catalog.glue_catalog.lock.table=myGlueLockTable  --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions 
+```
+
+#### Пример исходного кода
+```sql
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key=['user_id'],
+    file_format='iceberg',
+    iceberg_expire_snapshots='False', 
+    partition_by=['status']
+    table_properties={'write.target-file-size-bytes': '268435456'}
+) }}
+
+with new_events as (
+
+    select * from {{ ref('events') }}
+
+    {% if is_incremental() %}
+    where date_day >= date_add(current_date, -1)
+    {% endif %}
+
+)
+
+select
+    user_id,
+    max(date_day) as last_seen
+
+from events
+group by 1
+```
+#### Пример исходного кода Iceberg Snapshot
+
+<VersionBlock firstVersion="1.9">
+
+```sql
+
+{% snapshot demosnapshot %}
+
+{{
+    config(
+        strategy='timestamp',
+        schema='jaffle_db',
+        updated_at='dt',
+        file_format='iceberg'
+) }}
+
+select * from {{ ref('customers') }}
+
+{% endsnapshot %}
+
+```
+
+</VersionBlock>
+
+## Мониторинг Glue Interactive Session
+
+Мониторинг — важная часть поддержания надёжности, доступности
+и производительности AWS Glue и ваших других AWS‑решений. AWS предоставляет инструменты мониторинга,
+которые можно использовать, чтобы наблюдать за AWS Glue, определить нужное количество workers
+для вашей Glue Interactive Session, сообщать, когда что-то идёт не так, и
+при необходимости автоматически предпринимать действия. AWS Glue предоставляет Spark UI,
+а также логи и метрики CloudWatch для мониторинга ваших AWS Glue jobs.
+Подробнее: [Monitoring AWS Glue Spark jobs](https://docs.aws.amazon.com/glue/latest/dg/monitor-spark.html)
+
+**Примечания по использованию:** для мониторинга требуется:
+- Добавить следующую IAM‑политику к вашей IAM role:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CloudwatchMetrics",
+            "Effect": "Allow",
+            "Action": "cloudwatch:PutMetricData",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "cloudwatch:namespace": "Glue"
+                }
+            }
+        },
+        {
+            "Sid": "CloudwatchLogs",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "logs:CreateLogStream",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:*:*:/aws-glue/*",
+                "arn:aws:s3:::bucket-to-write-sparkui-logs/*"
+            ]
+        }
+    ]
+}
+```
+
+- Добавить параметры мониторинга в Interactive Session Config (в профиле).
+Подробнее см. [Job parameters used by AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html)
+
+#### Пример конфигурации профиля
+```yaml
+test_project:
+  target: dev
+  outputs:
+    dev:
+      type: glue
+      query-comment: my comment
+      role_arn: arn:aws:iam::1234567890:role/GlueInteractiveSessionRole
+      region: eu-west-1
+      glue_version: "4.0"
+      workers: 2
+      worker_type: G.1X
+      schema: "dbt_test_project"
+      session_provisioning_timeout_in_seconds: 120
+      location: "s3://aws-dbt-glue-datalake-1234567890-eu-west-1/"
+      default_arguments: "--enable-metrics=true, --enable-continuous-cloudwatch-log=true, --enable-continuous-log-filter=true, --enable-spark-ui=true, --spark-event-logs-path=s3://bucket-to-write-sparkui-logs/dbt/"
+```
+
+Если вы хотите использовать Spark UI, вы можете запустить Spark history server с помощью
+шаблона AWS CloudFormation, который размещает сервер на EC2‑инстансе,
+или запустить локально с помощью Docker. Подробнее см. [Launching the Spark history server](https://docs.aws.amazon.com/glue/latest/dg/monitor-spark-ui-history.html#monitor-spark-ui-history-local)
+
+## Включение AWS Glue Auto Scaling
+Auto Scaling доступен начиная с AWS Glue версии 3.0 и выше. Подробнее см.
+в посте AWS: ["Introducing AWS Glue Auto Scaling: Automatically resize serverless computing resources for lower cost with optimized Apache Spark"](https://aws.amazon.com/blogs/big-data/introducing-aws-glue-auto-scaling-automatically-resize-serverless-computing-resources-for-lower-cost-with-optimized-apache-spark/)
+
+При включённом Auto Scaling вы получаете следующие преимущества:
+
+* AWS Glue автоматически добавляет и удаляет workers из кластера в зависимости от параллелизма на каждом этапе или microbatch выполнения job.
+
+* Не нужно экспериментировать и решать, сколько workers назначать для ваших AWS Glue Interactive sessions.
+
+* После того как вы выберете максимальное число workers, AWS Glue подберёт ресурсы нужного размера для нагрузки.
+
+* Вы можете увидеть, как меняется размер кластера во время выполнения Glue Interactive sessions, посмотрев метрики CloudWatch.
+Подробнее см. [Monitoring your Glue Interactive Session](#Monitoring-your-Glue-Interactive-Session).
+
+**Примечания по использованию:** для AWS Glue Auto Scaling требуется:
+- Установить AWS Glue версии 3.0 или выше.
+- Задать максимальное число workers (если Auto Scaling включён, параметр `workers`
+задаёт максимальное число workers)
+- Указать параметр `--enable-auto-scaling=true` в Glue Interactive Session Config (в профиле).
+Подробнее см. [Job parameters used by AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html)
+
+#### Пример конфигурации профиля
+```yaml
+test_project:
+  target: dev
+  outputs:
+    dev:
+      type: glue
+      query-comment: my comment
+      role_arn: arn:aws:iam::1234567890:role/GlueInteractiveSessionRole
+      region: eu-west-1
+      glue_version: "3.0"
+      workers: 2
+      worker_type: G.1X
+      schema: "dbt_test_project"
+      session_provisioning_timeout_in_seconds: 120
+      location: "s3://aws-dbt-glue-datalake-1234567890-eu-west-1/"
+      default_arguments: "--enable-auto-scaling=true"
+```
+
+## Доступ к Glue catalog в другом AWS account
+Во многих случаях вам может понадобиться запускать dbt jobs, чтобы читать данные из другого AWS account.
+
+Ознакомьтесь со ссылкой https://repost.aws/knowledge-center/glue-tables-cross-accounts, чтобы настроить политики доступа в source и target accounts.
+
+Добавьте `"spark.hadoop.hive.metastore.glue.catalogid=<AWS-ACCOUNT-ID>"` в `conf` в dbt profile — так вы сможете иметь несколько outputs для каждого account, к которому у вас есть доступ.
+
+Примечание: кросс‑аккаунтный доступ должен быть в пределах одного и того же AWS Region.
 #### Пример конфигурации профиля
 ```yaml
 test_project:
@@ -466,8 +857,7 @@ test_project:
 
 Apache Spark использует термины «schema» и «database» как взаимозаменяемые. dbt же
 понимает `database` как уровень, находящийся выше, чем `schema`. Поэтому при работе с dbt-glue
-вам _никогда_ не следует использовать или задавать `database` ни в конфигурации узлов,
-ни в целевом профиле.
+вам _никогда_ не следует использовать или задавать `database` ни в конфигурации узлов, ни в целевом профиле.
 
 Если вы хотите управлять схемой/базой данных, в которой dbt будет материализовывать модели,
 используйте только конфигурацию `schema` и макрос `generate_schema_name`.
@@ -505,7 +895,6 @@ lf_grants={
         }
     }
 ```
-
 Следующая конфигурация позволяет указанному принципалу (IAM‑пользователь lf-data-scientist) получать доступ к строкам, у которых `customer_lifetime_value > 15`, и ко всем колонкам, *кроме* указанной (`first_name`):
 
 ```sql
@@ -638,6 +1027,7 @@ $ python3 -m pytest tests/functional
 
 Функции, доступные только с Apache Hudi:
 1. Инкрементальные обновления моделей по `unique_key` вместо `partition_by` (см. [стратегию `merge`](/reference/resource-configs/glue-configs#the-merge-strategy))
+
 
 Некоторые возможности dbt, доступные в core‑адаптерах, пока не поддерживаются в Glue:
 1. [Сохранение](/reference/resource-configs/persist_docs) описаний колонок в виде комментариев базы данных
