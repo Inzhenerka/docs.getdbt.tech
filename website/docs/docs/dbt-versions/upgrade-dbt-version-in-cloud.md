@@ -1,5 +1,5 @@
 ---
-title: "Upgrade versions in dbt platform"
+title: "Обновление версий в dbt platform"
 id: "upgrade-dbt-version-in-cloud"
 ---
 

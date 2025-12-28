@@ -1,10 +1,10 @@
 ---
 title: "Что такое dbt?"
 id: "introduction"
-description: "dbt is the industry standard for data transformation."
+description: "dbt — отраслевой стандарт для преобразования данных."
 pagination_next: null
 pagination_prev: null
-intro_text: "dbt is the industry standard for data transformation. Learn how it can help you transform data and deploy analytics code following software engineering best practices like version control, modularity, portability, CI/CD, and documentation."
+intro_text: "dbt — отраслевой стандарт для преобразования данных. Узнайте, как он помогает преобразовывать данные и разворачивать аналитический код, следуя best practices software engineering, таким как контроль версий, модульность, переносимость, CI/CD и документация."
 ---
  
 <Snippet path="what-is-dbt-intro" />

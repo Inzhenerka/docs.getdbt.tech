@@ -2,7 +2,7 @@
 title: "Чат Copilot в Studio"
 id: copilot-chat-in-studio 
 description: "Используйте функцию чата Copilot в Studio для генерации SQL на основе вашего ввода и контекста активного проекта." 
-sidebar_label: Copilot chat in studio
+sidebar_label: Чат Copilot в Studio
 pagination_next: null
 pagination_prev: null
 ---

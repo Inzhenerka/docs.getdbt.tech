@@ -1,7 +1,7 @@
 ---
-title: "Use dbt Copilot"
-sidebar_label: "Use dbt Copilot"
-description: "Use dbt Copilot to generate documentation, tests, semantic models, and SQL code from scratch, giving you the flexibility to modify or fix generated code."
+title: "Использование dbt Copilot"
+sidebar_label: "Использование dbt Copilot"
+description: "Используйте dbt Copilot для генерации документации, тестов, семантических моделей и SQL-кода с нуля, сохраняя при этом возможность изменять или исправлять сгенерированный код."
 ---
 
 import CopilotResources from '/snippets/_use-copilot-resources.md';
