@@ -1,40 +1,41 @@
 ---
-title: "Настройка SSO с использованием SAML 2.0"
+title: "Настройка SSO с помощью SAML 2.0"
 id: "set-up-sso-saml-2.0"
 ---
 
 import LoginSlug from '/snippets/_login-slug.md';
 
-# Настройка SSO с использованием SAML 2.0 <Lifecycle status="managed, managed_plus" />
+# Настройка SSO с помощью SAML 2.0 <Lifecycle status="managed, managed_plus" />
 
-Тарифы уровня Enterprise в <Constant name="cloud" /> поддерживают единый вход (Single Sign-On, SSO) для любого провайдера удостоверений (IdP), совместимого с SAML 2.0.  
+Тарифные планы уровня Enterprise в <Constant name="cloud" /> поддерживают единый вход (SSO) для любого провайдера идентификации (IdP), совместимого с SAML 2.0.
 В настоящее время поддерживаются следующие возможности:
 * SSO, инициируемый IdP
 * SSO, инициируемый SP
-* Provisioning «just-in-time»
+* Автоматическое создание пользователей (Just-in-time provisioning)
 
-В этом документе описаны шаги по интеграции <Constant name="cloud" /> с провайдером удостоверений для настройки единого входа и [ролевого управления доступом](/docs/cloud/manage-access/about-user-access#role-based-access-control).
+В этом документе описаны шаги по интеграции <Constant name="cloud" /> с провайдером идентификации
+для настройки единого входа (Single Sign-On) и [управления доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control).
 
-## Auth0 URIs
+## URI Auth0
 
 <Snippet path="auth0-uri" />
 
 ## Универсальные интеграции SAML 2.0
 
-Если ваш SAML‑провайдер удостоверений — это Okta, Google, Azure или OneLogin, перейдите к соответствующему разделу ниже на этой странице. Для всех остальных провайдеров удостоверений, совместимых с SAML, вы можете использовать инструкции из этого раздела для их настройки.
+Если ваш SAML‑провайдер идентификации — Okta, Google, Azure или OneLogin, перейдите к соответствующему разделу ниже на этой странице. Для всех остальных SAML‑совместимых провайдеров идентификации вы можете использовать инструкции из этого раздела для их настройки.
 
-### Настройка провайдера удостоверений
+### Настройка провайдера идентификации
 
-Для настройки провайдера удостоверений вам потребуется доступ администратора к вашему SAML 2.0‑совместимому IdP. Эти инструкции можно использовать с любым IdP, поддерживающим SAML 2.0.
+Для настройки провайдера идентификации вам потребуется доступ администратора к вашему SAML 2.0‑совместимому IdP. Эти инструкции можно использовать с любым провайдером идентификации, поддерживающим SAML 2.0.
 
 ### Создание приложения
 
-1. Войдите в ваш SAML 2.0‑провайдер удостоверений и создайте новое приложение.
+1. Войдите в ваш SAML 2.0 провайдер идентификации и создайте новое приложение.
 2. При появлении запроса настройте приложение со следующими параметрами:
-   - **Platform:** Web  
-   - **Sign on method:** SAML 2.0  
-   - **App name:** <Constant name="cloud" />  
-   - **App logo (optional):** при желании вы можете [скачать логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа приложения.
+   - **Platform:** Web
+   - **Sign on method:** SAML 2.0
+   - **App name:** <Constant name="cloud" />
+   - **App logo (optional):** при необходимости вы можете [загрузить логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа приложения.
 
 #### Настройка приложения
 
@@ -42,41 +43,46 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
-Когда система запросит параметры конфигурации SAML 2.0, укажите следующие значения:
+Когда система запросит параметры конфигурации приложения SAML 2.0, укажите следующие значения:
 
 * Single sign on URL: `https://YOUR_AUTH0_URI/login/callback?connection=<login URL slug>`
 * Audience URI (SP Entity ID): `urn:auth0:<YOUR_AUTH0_ENTITYID>:{login URL slug}`
-- Relay State: `<login URL slug>` (Примечание: в настройках IdP поле Relay State может отображаться как необязательное, однако для конфигурации SSO в dbt оно является _обязательным_.)
+- Relay State: `<login URL slug>` (Примечание: Relay State может отображаться как необязательный параметр в настройках IdP; для конфигурации SSO в dbt он является _обязательным_.) 
 
-Дополнительно вы можете настроить атрибуты IdP, которые будут передаваться из вашего провайдера удостоверений в <Constant name="cloud" />. Для [настройки SCIM](/docs/cloud/manage-access/scim) требуются атрибуты `NameID` и `email`, чтобы сопоставлять входы с правильными пользователями. Если вы используете сопоставление лицензий по группам, также необходимо настроить атрибут `groups`. Мы рекомендуем использовать следующие значения:
+Дополнительно вы можете настроить атрибуты IdP, которые будут передаваться из вашего провайдера идентификации в <Constant name="cloud" />. Для [настройки SCIM](/docs/cloud/manage-access/scim) требуются атрибуты `NameID` и `email`, чтобы связать входы с корректным пользователем. Если вы используете сопоставление лицензий для групп, необходимо дополнительно настроить атрибут `groups`. Мы рекомендуем использовать следующие значения:
 
 | name | name format | value | description |
 | ---- | ----------- | ----- | ----------- |
 | email | Unspecified | user.email | Адрес электронной почты пользователя |
 | first_name | Unspecified | user.first_name | Имя пользователя |
 | last_name | Unspecified | user.last_name | Фамилия пользователя |
-| NameID | Unspecified | ID | Постоянный идентификатор пользователя |
+| NameID | Unspecified | ID | Неизменяемый идентификатор пользователя |
 
-Значения `NameID` могут быть постоянными (`urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`), если ваш IdP поддерживает такой формат. Использование адреса электронной почты в качестве `NameID` будет работать, однако <Constant name="cloud" /> создаст нового пользователя, если адрес электронной почты изменится. Лучшей практикой является настройка значения, которое не меняется, даже если электронная почта пользователя обновится.
+Значения `NameID` могут быть постоянными (`urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`), а не `Unspecified`, если ваш IdP поддерживает такой формат. Использование адреса электронной почты в качестве `NameID` будет работать, однако <Constant name="cloud" /> создаст нового пользователя, если адрес электронной почты изменится. Лучшей практикой является настройка значения, которое не будет изменяться, даже если email пользователя меняется.
 
-[Ролевое управление доступом](/docs/cloud/manage-access/about-user-access#role-based-access-control) в <Constant name="cloud" />  
-основано на сопоставлении групп из IdP для назначения пользователей <Constant name="cloud" /> в группы <Constant name="cloud" />.  
-Чтобы использовать ролевое управление доступом в <Constant name="cloud" />, также настройте ваш провайдер удостоверений на передачу информации о членстве в группах в пользовательском атрибуте с именем `groups`:
+[Управление доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control) в <Constant name="cloud" />
+опирается на сопоставление групп, передаваемых из IdP, для назначения пользователей <Constant name="cloud" /> в группы <Constant name="cloud" />. Чтобы
+использовать RBAC в <Constant name="cloud" />, также настройте ваш провайдер идентификации так, чтобы он передавал информацию о членстве в группах в пользовательском атрибуте
+`groups`:
 
 | name | name format | value | description |
 | ---- | ----------- | ----- | ----------- |
 | groups | Unspecified | `<IdP-specific>` | Группы, к которым принадлежит пользователь в IdP |
 
 :::info Примечание
-Вы можете использовать ограниченное выражение атрибута групп, чтобы сократить набор групп, передаваемых в <Constant name="cloud" /> для каждого аутентифицированного пользователя. Например, если все ваши группы <Constant name="cloud" /> начинаются с `DBT_CLOUD_...`, вы можете применить фильтр `Starts With: DBT_CLOUD_`.
+Вы можете использовать ограниченное выражение атрибута групп, чтобы сократить набор групп,
+передаваемых в <Constant name="cloud" /> для каждого аутентифицированного пользователя. Например, если все ваши группы <Constant name="cloud" /> начинаются с
+`DBT_CLOUD_...`, вы можете применить фильтр вида `Starts With: DBT_CLOUD_`.
 :::
 
 ### Сбор секретов интеграции
 
-После подтверждения деталей IdP должен отобразить следующие значения для новой интеграции SAML 2.0. Сохраните их в надежном месте — они понадобятся для завершения настройки в <Constant name="cloud" />.
+После подтверждения настроек IdP должен отобразить следующие значения для новой
+интеграции SAML 2.0. Сохраните их в безопасном месте, так как они понадобятся
+для завершения настройки в <Constant name="cloud" />.
 
-- Identity Provider Issuer  
-- Identity Provider SSO Url  
+- Identity Provider Issuer
+- Identity Provider SSO Url
 - X.509 Certificate (требуется формат PEM)
   <!-- vale off -->
     - <Expandable alt_header="Пример формата PEM" >
@@ -103,12 +109,13 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ### Завершение настройки
 
-После создания приложения следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup), чтобы завершить интеграцию.
+После создания приложения следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup),
+чтобы завершить интеграцию.
 
 ## Интеграция с Okta
-В этом разделе описана настройка Okta в качестве провайдера удостоверений.
+Используйте инструкции из этого раздела для настройки Okta в качестве провайдера идентификации.
 
-1. Войдите в свою учетную запись Okta. Используя панель администратора, создайте новое приложение.
+1. Войдите в свою учетную запись Okta. В административной панели создайте новое приложение.
 
 <Lightbox
     collapsed={false}
@@ -117,8 +124,8 @@ import LoginSlug from '/snippets/_login-slug.md';
 />
 
 2. Выберите следующие параметры:
-   - **Platform**: Web  
-   - **Sign on method**: SAML 2.0  
+   - **Platform**: Web
+   - **Sign on method**: SAML 2.0
 
 3. Нажмите **Create**, чтобы продолжить процесс настройки.
 
@@ -134,11 +141,11 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
-1. На странице **General Settings** укажите следующие значения:
+1. На странице **General Settings** введите следующие данные:
 
-   * **App name**: <Constant name="cloud" />  
-   * **App logo** (необязательно): при желании вы можете [скачать логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing)  
-     и загрузить его в Okta для использования в качестве логотипа приложения.
+   * **App name**: <Constant name="cloud" />
+   * **App logo** (optional): при необходимости вы можете [загрузить логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing)
+     и загрузить его в Okta, чтобы использовать в качестве логотипа приложения.
 
 2. Нажмите **Next**, чтобы продолжить.
 
@@ -148,7 +155,7 @@ import LoginSlug from '/snippets/_login-slug.md';
     title="Настройка общих параметров приложения"
 />
 
-### Настройка SAML Settings
+### Настройка параметров SAML
 
 1. На странице **SAML Settings** укажите следующие значения:
 
@@ -161,24 +168,29 @@ import LoginSlug from '/snippets/_login-slug.md';
 
   <Lightbox collapsed={false} src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-3-saml-settings-top.png" title="Настройка параметров SAML приложения"/>
 
-2. Сопоставьте пользовательские и групповые атрибуты Okta вашей организации с форматом, который ожидает <Constant name="cloud" />, используя формы **Attribute Statements** и **Group Attribute Statements**. Для [настройки SCIM](/docs/cloud/manage-access/scim) требуется атрибут `email` для корректного сопоставления пользователей. Если вы используете сопоставление лицензий по группам, также необходимо настроить атрибут `groups`.
+2. Сопоставьте пользовательские и групповые атрибуты Okta вашей организации с форматом,
+который ожидает <Constant name="cloud" />, используя формы Attribute Statements и Group Attribute Statements. Для [настройки SCIM](/docs/cloud/manage-access/scim) требуется атрибут `email` для сопоставления входов с корректным пользователем. Если вы используете сопоставление лицензий по группам, также необходимо настроить атрибут `groups`.
 
-3. В следующей таблице показаны ожидаемые **User Attribute Statements**:
+3. Следующая таблица иллюстрирует ожидаемые **User Attribute Statements**:
 
-   | Name           | Name format | Value              | Description                 |
-   | -------------- | ----------- | ------------------ | --------------------------- |
-   | `email`        | Unspecified | `user.email`       | _Адрес электронной почты пользователя_ |
-   | `first_name`   | Unspecified | `user.firstName`   | _Имя пользователя_          |
-   | `last_name`    | Unspecified | `user.lastName`    | _Фамилия пользователя_      |
+   | Name           | Name format | Value                | Description                |
+   | -------------- | ----------- | -------------------- | -------------------------- |
+   | `email`        | Unspecified | `user.email`      | _Адрес электронной почты пользователя_ |
+   | `first_name`   | Unspecified | `user.firstName`  | _Имя пользователя_    |
+   | `last_name`    | Unspecified | `user.lastName`   | _Фамилия пользователя_     |
 
-4. В следующей таблице показаны ожидаемые **Group Attribute Statements**:
+4. Следующая таблица иллюстрирует ожидаемые **Group Attribute Statements**:
 
-   | Name     | Name format | Filter        | Value | Description                             |
-   | -------- | ----------- | ------------- | ----- | --------------------------------------- |
+   | Name     | Name format | Filter        | Value | Description                           |
+   | -------- | ----------- | ------------- | ----- | ------------------------------------- |
    | `groups` | Unspecified | Matches regex | `.*`  | _Группы, к которым принадлежит пользователь_ |
 
-Вместо примера из предыдущих шагов вы можете использовать более ограничительное выражение для групп. Например, если все ваши группы <Constant name="cloud" /> начинаются с  
-`DBT_CLOUD_`, вы можете использовать фильтр `Starts With: DBT_CLOUD_`. **Okta возвращает только 100 групп для каждого пользователя, поэтому если ваши пользователи состоят более чем в 100 группах IdP, необходимо использовать более строгий фильтр**. Если у вас есть вопросы, пожалуйста, свяжитесь со службой поддержки.
+Вместо этого вы можете использовать более ограничивающее выражение Group Attribute Statement,
+чем показано в примере выше. Например, если все ваши группы <Constant name="cloud" /> начинаются с
+`DBT_CLOUD_`, вы можете использовать фильтр вида `Starts With: DBT_CLOUD_`. **Okta
+возвращает не более 100 групп для каждого пользователя, поэтому если ваши пользователи состоят более чем в 100
+группах IdP, вам потребуется использовать более строгий фильтр**. Если у вас есть вопросы, пожалуйста, свяжитесь
+со службой поддержки.
 
 <Lightbox
     collapsed={false}
@@ -190,9 +202,10 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ### Завершение настройки Okta
 
-1. Выберите *I'm an Okta customer adding an internal app*.  
-2. Выберите *This is an internal app that we have created*.  
-3. Нажмите **Finish**, чтобы завершить настройку приложения.
+1. Выберите *I'm an Okta customer adding an internal app*.
+2. Выберите *This is an internal app that we have created*.
+3. Нажмите **Finish**, чтобы завершить настройку
+приложения.
 
 <Lightbox
     collapsed={false}
@@ -202,8 +215,9 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ### Просмотр инструкций по настройке
 
-1. На следующей странице нажмите **View Setup Instructions**.  
-2. В шагах ниже вы будете использовать эти значения в настройках учетной записи <Constant name="cloud" /> для завершения интеграции между Okta и <Constant name="cloud" />.
+1. На следующей странице нажмите **View Setup Instructions**.
+2. На следующих шагах вы будете использовать эти значения в настройках учетной записи <Constant name="cloud" /> для завершения
+интеграции между Okta и <Constant name="cloud" />.
 
 <Lightbox
     collapsed={true}
@@ -217,11 +231,12 @@ import LoginSlug from '/snippets/_login-slug.md';
     title="Инструкции по настройке приложения"
 />
 
-3. После создания приложения Okta следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup), чтобы завершить интеграцию.
+3. После создания приложения Okta следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup),
+чтобы завершить интеграцию.
 
 ## Интеграция с Google
 
-Используйте этот раздел, если вы настраиваете Google в качестве провайдера удостоверений.
+Используйте этот раздел, если вы настраиваете Google в качестве провайдера идентификации.
 
 ### Настройка приложения Google
 
@@ -230,37 +245,38 @@ import LoginSlug from '/snippets/_login-slug.md';
 <LoginSlug />
 
 1. Войдите в **Google Admin Console** под учетной записью с правами суперадминистратора.
-2. На главной странице Admin Console перейдите в **Apps**, затем нажмите **Web and mobile apps**.
+2. На главной странице консоли администратора перейдите в **Apps**, затем нажмите **Web and mobile apps**.
 3. Нажмите **Add**, затем выберите **Add custom SAML app**.
 4. Нажмите **Next**, чтобы продолжить.
 5. На странице App Details выполните следующие действия:
     - Задайте имя пользовательского приложения
-    - Загрузите логотип приложения (необязательно)
+    - Загрузите логотип приложения (optional)
     - Нажмите **Continue**.
 
-### Настройка SAML Settings
+### Настройка параметров SAML
 
 1. Перейдите на страницу **Google Identity Provider details**.
-2. Скачайте **IDP metadata**.
-3. Скопируйте **SSO URL** и **Entity ID**, а также скачайте **Certificate** (или **SHA-256 fingerprint**, если требуется).
+2. Загрузите **IDP metadata**.
+3. Скопируйте **SSO URL** и **Entity ID**, а также загрузите **Certificate** (или **SHA-256 fingerprint**, если требуется).
 4. В окне **Service Provider Details** укажите следующие значения:
    * **ACS URL**: `https://YOUR_AUTH0_URI/login/callback?connection=<login URL slug>`
    * **Audience URI (SP Entity ID)**: `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login URL slug>`
    - **Start URL**: `<login URL slug>`
 5. Установите флажок **Signed response**.
-6. По умолчанию **Name ID** — это основной адрес электронной почты. Многозначный ввод не поддерживается. Если в профиле пользователя есть уникальное и стабильное значение, которое сохраняется при изменении адреса электронной почты, рекомендуется использовать его; в противном случае электронная почта тоже подойдет.
-7. На странице **Attribute mapping** сопоставьте атрибуты каталога Google вашей организации с форматом, который ожидает <Constant name="cloud" />.
+6. По умолчанию **Name ID** — это основной адрес электронной почты. Ввод нескольких значений не поддерживается. Если в профиле пользователя есть уникальное стабильное значение, которое сохраняется при изменении email, рекомендуется использовать его; в противном случае подойдет email.
+7. На странице **Attribute mapping** сопоставьте атрибуты Google Directory вашей организации с форматом,
+который ожидает <Constant name="cloud" />.
 8. Нажмите **Add another mapping**, чтобы добавить дополнительные атрибуты.
 
 Ожидаемые **Attributes**:
 
-| Name            | Name format | Value        | Description                  |
-| --------------- | ----------- | ------------ | ---------------------------- |
-| `First name`    | Unspecified | `first_name` | Имя пользователя.            |
-| `Last name`     | Unspecified | `last_name`  | Фамилия пользователя.        |
-| `Primary email` | Unspecified | `email`      | Адрес электронной почты пользователя. |
+| Name           | Name format | Value                | Description                |
+| -------------- | ----------- | -------------------- | -------------------------- |
+| `First name`   | Unspecified | `first_name`         | Имя пользователя.  |
+| `Last name`    | Unspecified | `last_name`          | Фамилия пользователя.     |
+| `Primary email`| Unspecified | `email`              | Адрес электронной почты пользователя. |
 
-9. Чтобы использовать [ролевое управление доступом](/docs/cloud/manage-access/about-user-access#role-based-access-control) в <Constant name="cloud" />, укажите группы в поле **Group membership** во время настройки:
+9. Чтобы использовать [управление доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control) в <Constant name="cloud" />, укажите группы в поле **Group membership** во время настройки:
 
 | Google groups  | App attributes |
 | -------------- | -------------- |
@@ -270,21 +286,21 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ### Завершение настройки Google
 
-1. На главной странице Admin Console перейдите в **Apps**, затем нажмите **Web and mobile apps**.
+1. На главной странице консоли администратора перейдите в **Apps**, затем нажмите **Web and mobile apps**.
 2. Выберите ваше SAML‑приложение.
 3. Нажмите **User access**.
-4. Чтобы включить или отключить сервис для всех пользователей в организации, нажмите **On for everyone** или **Off for everyone**, затем нажмите **Save**.
+4. Чтобы включить или отключить сервис для всех пользователей организации, выберите **On for everyone** или **Off for everyone**, затем нажмите **Save**.
 5. Убедитесь, что адреса электронной почты, которые пользователи используют для входа в SAML‑приложение, совпадают с адресами, используемыми для входа в домен Google.
 
-**Примечание:** изменения обычно вступают в силу в течение нескольких минут, но иногда могут занимать до 24 часов.
+**Примечание:** изменения обычно вступают в силу в течение нескольких минут, но в некоторых случаях могут занять до 24 часов.
 
 ### Завершение настройки
 
-После создания приложения Google следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup).
+После создания приложения Google следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup)
 
 ## Интеграция с Microsoft Entra ID (ранее Azure AD)
 
-Если вы используете Microsoft Entra ID (ранее Azure AD), инструкции ниже помогут настроить его в качестве провайдера удостоверений.
+Если вы используете Microsoft Entra ID (ранее Azure AD), приведенные ниже инструкции помогут настроить его в качестве провайдера идентификации.
 
 ### Создание корпоративного приложения Microsoft Entra ID
 
@@ -292,26 +308,26 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 <LoginSlug />
 
-Выполните следующие шаги, чтобы настроить единый вход (SSO) с <Constant name="cloud" />:
+Выполните следующие шаги для настройки единого входа (SSO) с <Constant name="cloud" />:
 
 1. Войдите в свою учетную запись Azure.
 2. В портале Entra ID выберите **Enterprise applications** и нажмите **+ New application**.
 3. Выберите **Create your own application**.
-4. Назовите приложение «<Constant name="cloud" />» или любым другим описательным именем.
-5. В качестве типа приложения выберите **Integrate any other application you don't find in the gallery (Non-gallery)**.
+4. Назовите приложение "<Constant name="cloud" />" или другим описательным именем.
+5. Выберите тип приложения **Integrate any other application you don't find in the gallery (Non-gallery)**.
 6. Нажмите **Create**.
-7. Найти новое приложение можно, выбрав **Enterprise applications** и затем **All applications**.
-8. Нажмите на только что созданное приложение.
+7. Вы сможете найти новое приложение, выбрав **Enterprise applications** и **All applications**.
+8. Откройте только что созданное приложение.
 9. В левом меню в разделе Manage выберите **Single sign-on**.
 10. В разделе Getting Started нажмите **Set up single sign on**.
-<Lightbox src="/img/docs/dbt-cloud/access-control/single-sign-on-overview.jpg" width="75%" title="На странице Overview выберите «Set up single sign on»" />
+<Lightbox src="/img/docs/dbt-cloud/access-control/single-sign-on-overview.jpg" width="75%" title="На странице Overview выберите 'Set up single sign on'" />
 
-11. В разделе «Select a single sign-on method» нажмите **SAML**.
-<Lightbox src="/img/docs/dbt-cloud/access-control/saml.jpg" width="75%" title="Выберите карточку «SAML» в разделе «Select a single sign-on method»." />
+11. В разделе "Select a single sign-on method" нажмите **SAML**.
+<Lightbox src="/img/docs/dbt-cloud/access-control/saml.jpg" width="75%" title="Выбор карточки 'SAML' в разделе 'Select a single sign-on method'." />
 
-12. В разделе Basic SAML Configuration нажмите **Edit**.
+12. Нажмите **Edit** в разделе Basic SAML Configuration.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/basic-saml.jpg" width="75%" title="На странице «Set up Single Sign-On with SAML» нажмите «Edit» в карточке «Basic SAML Configuration»"  />
+<Lightbox src="/img/docs/dbt-cloud/access-control/basic-saml.jpg" width="75%" title="На странице 'Set up Single Sign-On with SAML' нажмите 'Edit' в карточке 'Basic SAML Configuration'"  />
 
 13. Используйте следующую таблицу для заполнения обязательных полей и подключения к dbt:
 
@@ -323,15 +339,15 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 14. Нажмите **Save** в верхней части формы.
 
-### Создание настроек SAML
+### Создание параметров SAML
 
-На странице **Set up Single Sign-On with SAML**:
+На странице Set up Single Sign-On with SAML:
 
-1. Нажмите **Edit** в разделе **User Attributes & Claims**.
-2. В разделе **Required claim** нажмите **Unique User Identifier (Name ID)**.
+1. Нажмите **Edit** в разделе User Attributes & Claims.
+2. Выберите **Unique User Identifier (Name ID)** в разделе **Required claim.**
 3. Установите **Name identifier format** в значение **Unspecified**.
 4. Установите **Source attribute** в значение **user.objectid**.
-5. Удалите все утверждения в разделе **Additional claims**.
+5. Удалите все значения в разделе **Additional claims.**
 6. Нажмите **Add new claim** и добавьте следующие утверждения:
 
    | Name | Source attribute |
@@ -341,15 +357,15 @@ import LoginSlug from '/snippets/_login-slug.md';
    | **last_name** | user.surname |
 
 7. В разделе **User Attributes and Claims** нажмите **Add a group claim**.
-8. Если вы назначаете пользователей напрямую корпоративному приложению, выберите **Security Groups**. Если нет — выберите **Groups assigned to the application**.
+8. Если вы назначаете пользователей напрямую корпоративному приложению, выберите **Security Groups**. В противном случае выберите **Groups assigned to the application**.
 9. Установите **Source attribute** в значение **Group ID**.
-10. В разделе **Advanced options** отметьте **Customize the name of the group claim** и укажите **Name** как **groups**.
+10. В разделе **Advanced options** отметьте **Customize the name of the group claim** и задайте **Name** равным **groups**.
 
-**Примечание:** имейте в виду, что Group ID в Entra ID сопоставляется с GUID группы. Для корректной работы сопоставлений его следует указывать в нижнем регистре. Поле Source Attribute при желании можно установить в другое значение.
+**Примечание:** имейте в виду, что Group ID в Entra ID сопоставляется с GUID группы. Для корректной работы сопоставлений он должен быть указан в нижнем регистре. Поле Source Attribute также может быть установлено в другое значение по вашему усмотрению.
 
 ### Завершение настройки
 
-9. После создания приложения Azure следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup), чтобы завершить интеграцию. Названия полей в <Constant name="cloud" /> отличаются от названий в приложении Entra ID и сопоставляются следующим образом:
+9. После создания приложения Azure следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup), чтобы завершить интеграцию. Названия полей в <Constant name="cloud" /> отличаются от названий в приложении Entra ID. Соответствие выглядит следующим образом:
 
    | Поле <Constant name="cloud" /> | Соответствующее поле Entra ID |
    | ----- | ----- |
@@ -358,7 +374,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ## Интеграция с OneLogin
 
-Используйте этот раздел, если вы настраиваете OneLogin в качестве провайдера удостоверений.
+Используйте этот раздел, если вы настраиваете OneLogin в качестве провайдера идентификации.
 
 Для настройки OneLogin вам потребуется доступ **Administrator**.
 
@@ -370,12 +386,12 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 1. Войдите в OneLogin и добавьте новое приложение SAML 2.0.
 2. Настройте приложение со следующими параметрами:
-   - **Platform:** Web  
-   - **Sign on method:** SAML 2.0  
-   - **App name:** <Constant name="cloud" />  
-   - **App logo (optional):** при желании вы можете [скачать логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа приложения.
+   - **Platform:** Web
+   - **Sign on method:** SAML 2.0
+   - **App name:** <Constant name="cloud" />
+   - **App logo (optional):** при необходимости вы можете [загрузить логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа приложения.
 
-### Настройка SAML settings
+### Настройка параметров SAML
 
 3. На вкладке **Configuration** укажите следующие значения:
 
@@ -384,7 +400,7 @@ import LoginSlug from '/snippets/_login-slug.md';
    - **ACS (Consumer) URL Validator:** `https://YOUR_AUTH0_URI/login/callback?connection=<login URL slug>`
    - **ACS (Consumer) URL:** `https://YOUR_AUTH0_URI/login/callback?connection=<login URL slug>`
 
-4. Затем перейдите на вкладку **Parameters**. У вас должны быть параметры для атрибутов Email, First Name и Last Name, и все параметры должны включаться в SAML‑утверждения. При добавлении пользовательских параметров убедитесь, что установлен флажок **Include in SAML assertion**.
+4. Далее перейдите на вкладку **Parameters**. У вас должны быть параметры для атрибутов Email, First Name и Last Name, и все параметры должны быть включены в SAML assertions. При добавлении пользовательских параметров обязательно установите флажок **Include in SAML assertion**.
 
 Мы рекомендуем использовать следующие значения:
 
@@ -395,9 +411,10 @@ import LoginSlug from '/snippets/_login-slug.md';
 | first_name | Unspecified | First Name |
 | last_name | Unspecified | Last Name |
 
-[Ролевое управление доступом](/docs/cloud/manage-access/about-user-access#role-based-access-control) в <Constant name="cloud" />  
-основано на сопоставлении групп из IdP для назначения пользователей <Constant name="cloud" /> в группы <Constant name="cloud" />.  
-Чтобы использовать ролевое управление доступом в <Constant name="cloud" />, также настройте OneLogin на передачу информации о членстве в группах в пользовательском атрибуте с именем `groups`:
+[Управление доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control) в <Constant name="cloud" />
+опирается на сопоставление групп, передаваемых из IdP, для назначения пользователей <Constant name="cloud" /> в группы <Constant name="cloud" />. Чтобы
+использовать RBAC в <Constant name="cloud" />, также настройте OneLogin так, чтобы он передавал информацию о членстве в группах в пользовательском атрибуте
+`groups`:
 
 | name | name format | value | description |
 | ---- | ----------- | ----- | ----------- |
@@ -405,10 +422,11 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ### Сбор секретов интеграции
 
-5. После подтверждения деталей перейдите на вкладку **SSO**. OneLogin отобразит следующие значения для новой интеграции. Сохраните их в надежном месте — они понадобятся для завершения настройки в <Constant name="cloud" />.
+5. После подтверждения настроек перейдите на вкладку **SSO**. OneLogin отобразит следующие значения для
+новой интеграции. Сохраните их в безопасном месте, так как они понадобятся для завершения настройки в <Constant name="cloud" />.
 
-- Issuer URL  
-- SAML 2.0 Endpoint (HTTP)  
+- Issuer URL
+- SAML 2.0 Endpoint (HTTP)
 - X.509 Certificate (требуется формат PEM)
   <!-- vale off -->
     - <Expandable alt_header="Пример формата PEM" >
@@ -435,7 +453,8 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 ### Завершение настройки
 
-6. После создания приложения OneLogin следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup), чтобы завершить интеграцию.
+6. После создания приложения OneLogin следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup),
+чтобы завершить интеграцию.
 
 ## Настройка dbt
 
@@ -443,33 +462,33 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 Чтобы завершить настройку, выполните следующие шаги в <Constant name="cloud" />:
 
-1. Перейдите в **Account Settings**, затем нажмите **Single Sign On**.
-2. В правом верхнем углу нажмите **Edit**.
+1. Перейдите в **Account Settings**, затем выберите **Single Sign On**.
+2. Нажмите **Edit** в правом верхнем углу.
 3. Укажите следующие параметры SSO:
 
    | Field | Value |
    | ----- | ----- |
    | Log&nbsp;in&nbsp;with | SAML 2.0 |
-   | Identity&nbsp;Provider&nbsp;SSO&nbsp;Url | Вставьте **Identity Provider Single Sign-On URL**, указанный в инструкциях настройки IdP |
-   | Identity&nbsp;Provider&nbsp;Issuer | Вставьте **Identity Provider Issuer**, указанный в инструкциях настройки IdP |
-   | X.509&nbsp;Certificate | Вставьте **X.509 Certificate**, указанный в инструкциях настройки IdP; <br />**Примечание:** после истечения срока действия сертификата администратору IdP необходимо сгенерировать новый и вставить его в <Constant name="cloud" />, чтобы обеспечить непрерывный доступ к приложению. |
-
+   | Identity&nbsp;Provider&nbsp;SSO&nbsp;Url | Вставьте **Identity Provider Single Sign-On URL**, указанный в инструкциях по настройке IdP |
+   | Identity&nbsp;Provider&nbsp;Issuer | Вставьте **Identity Provider Issuer**, указанный в инструкциях по настройке IdP |
+   | X.509&nbsp;Certificate | Вставьте **X.509 Certificate**, указанный в инструкциях по настройке IdP; <br />**Примечание:** после истечения срока действия сертификата администратор IdP должен сгенерировать новый сертификат и вставить его в <Constant name="cloud" />, чтобы обеспечить бесперебойный доступ к приложению. |
+  
     <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-6-setup-integration.png"
         title="Настройка приложения в dbt" />
 
 4. Нажмите **Save**, чтобы завершить настройку интеграции SAML 2.0.
-5. После завершения настройки вы можете перейти по URL, сгенерированному для _slug_ вашей учетной записи, чтобы протестировать вход через провайдера удостоверений. Кроме того, пользователи, добавленные в приложение SAML 2.0, смогут входить в <Constant name="cloud" /> напрямую из IdP.
+5. После завершения настройки вы можете перейти по URL, сгенерированному для _slug_ вашей учетной записи, чтобы протестировать вход через провайдера идентификации. Кроме того, пользователи, добавленные в SAML 2.0 приложение, смогут входить в <Constant name="cloud" /> напрямую из IdP.
 
 ### Дополнительные параметры конфигурации
 
-Раздел **Single sign-on** также содержит дополнительные параметры конфигурации, которые находятся ниже полей учетных данных.
+В разделе **Single sign-on** также доступны дополнительные параметры конфигурации, расположенные ниже полей с учетными данными.
 
-- **Sign SAML Auth Request:** <Constant name="cloud" /> будет подписывать SAML‑запросы, отправляемые вашему провайдеру удостоверений при попытке входа пользователей. Метаданные для настройки этого параметра в IdP можно скачать по ссылке, указанной в поле **SAML Metadata URL**. Для большинства сценариев рекомендуется оставить этот параметр отключенным.
+- **Sign SAML Auth Request:** <Constant name="cloud" /> будет подписывать SAML‑запросы, отправляемые вашему провайдеру идентификации при попытке входа пользователей. Метаданные для настройки этого поведения в вашем IdP можно скачать по ссылке, указанной в поле **SAML Metadata URL**. В большинстве случаев мы рекомендуем оставлять этот параметр отключенным.
 
-- **Attribute Mappings:** позволяет сопоставить SAML‑атрибуты, необходимые <Constant name="cloud" />, с атрибутами, которые ваш провайдер удостоверений включает в SAML‑утверждения. Значение должно быть корректным JSON‑объектом с ключами `email`, `first_name`, `last_name` или `groups`, а значениями — строками или списками строк. Например, если ваш провайдер удостоверений не может включить атрибут `email` в утверждения, но включает атрибут `EmailAddress`, то **Attribute Mappings** следует установить в `{ "email": "EmailAddress" }`. Эти сопоставления нужны только в том случае, если вы не можете настроить атрибуты так, как указано в инструкциях на этой странице. Если можете — значение по умолчанию `{}` является допустимым.
+- **Attribute Mappings:** сопоставление SAML‑атрибутов, которые требуются <Constant name="cloud" />, с атрибутами, включаемыми вашим провайдером идентификации в SAML assertions. Значение должно быть корректным JSON‑объектом с ключами `email`, `first_name`, `last_name` или `groups` и значениями в виде строк или списков строк. Например, если ваш провайдер идентификации не может включить атрибут `email` в assertions, но включает атрибут `EmailAddress`, тогда в **Attribute Mappings** следует указать `{ "email": "EmailAddress" }`. Эти сопоставления нужны только в том случае, если вы не можете настроить атрибуты в соответствии с инструкциями на этой странице. Если можете, значение по умолчанию `{}` является допустимым.
 
 <Snippet path="login_url_note" />
 
 ### Настройка RBAC
 
-После настройки провайдера удостоверений вы сможете настроить [ролевое управление доступом](/docs/cloud/manage-access/enterprise-permissions) для своей учетной записи.
+После настройки провайдера идентификации вы сможете настроить [управление доступом на основе ролей](/docs/cloud/manage-access/enterprise-permissions) для своей учетной записи.

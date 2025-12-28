@@ -5,17 +5,23 @@ id: "graph"
 description: "Контекстная переменная `graph` содержит информацию об узлах в вашем проекте."
 ---
 
-Контекстная переменная `graph` содержит информацию об _узлах_ (nodes) в вашем dbt‑проекте. Модели, источники, тесты и снимки (snapshots) — всё это примеры узлов в проектах dbt.
+Контекстная переменная `graph` содержит информацию об _узлах_ в вашем dbt‑проекте.
+Модели, источники, тесты и снапшоты — все это примеры узлов в dbt‑проектах.
 
-:::danger Важно
+:::danger Внимание
 
-dbt активно формирует переменную `graph` во время [фазы парсинга](/reference/dbt-jinja-functions/execute) при выполнении dbt‑проекта, поэтому некоторые свойства контекстной переменной `graph` будут отсутствовать или содержать некорректные значения во время парсинга. Пожалуйста, внимательно прочитайте информацию ниже, чтобы понять, как эффективно использовать эту переменную.
+dbt активно строит переменную `graph` во время [фазы парсинга](/reference/dbt-jinja-functions/execute)
+при запуске dbt‑проектов, поэтому некоторые свойства контекстной переменной `graph`
+будут отсутствовать или будут некорректными во время парсинга. Пожалуйста,
+внимательно ознакомьтесь с информацией ниже, чтобы понять, как эффективно
+использовать эту переменную.
 
 :::
 
 ### Контекстная переменная graph
 
-Контекстная переменная `graph` — это словарь, который сопоставляет идентификаторы узлов с их словарными представлениями. Упрощённый пример может выглядеть так:
+Контекстная переменная `graph` — это словарь, который сопоставляет идентификаторы
+узлов (`node id`) со словарными представлениями этих узлов. Упрощенный пример может выглядеть так:
 
 ```json
 {
@@ -73,18 +79,24 @@ dbt активно формирует переменную `graph` во врем
 }
 ```
 
-Точный контракт для этих узлов моделей и источников в настоящее время не задокументирован, но в будущем это изменится.
+Точный контракт для этих узлов моделей и источников в настоящее время не
+документирован, но в будущем это изменится.
 
 ### Доступ к моделям
 
-Записи `model` в словаре `graph` будут неполными или некорректными во время парсинга. Если вы обращаетесь к моделям вашего проекта через переменную `graph`, обязательно используйте флаг [execute](/reference/dbt-jinja-functions/execute), чтобы этот код выполнялся только во время выполнения (run‑time), а не во время парсинга. Не используйте переменную `graph` для построения DAG, так как поведение dbt в этом случае будет неопределённым и, скорее всего, некорректным. Пример использования:
+Записи `model` в словаре `graph` будут неполными или некорректными во время
+парсинга. Если вы обращаетесь к моделям вашего проекта через переменную `graph`,
+обязательно используйте флаг [execute](/reference/dbt-jinja-functions/execute), чтобы
+гарантировать, что этот код выполняется только во время выполнения, а не во время
+парсинга. Не используйте переменную `graph` для построения DAG, так как поведение
+dbt в этом случае будет неопределенным и, скорее всего, некорректным. Пример использования:
 
 <File name='graph-usage.sql'>
 
 ```sql
 
 /*
-  Print information about all of the models in the Snowplow package
+  Вывод информации обо всех моделях в пакете Snowplow
 */
 
 {% if execute %}
@@ -98,7 +110,7 @@ dbt активно формирует переменную `graph` во врем
 {% endif %}
 
 /*
-  Example output
+  Пример вывода
 ---------------------------------------------------------------
 model.snowplow.snowplow_id_map, materialized: incremental
 model.snowplow.snowplow_page_views, materialized: incremental
@@ -118,7 +130,8 @@ model.snowplow.snowplow_sessions, materialized: table
 
 ### Доступ к источникам
 
-Чтобы программно получить доступ к источникам в вашем dbt‑проекте, используйте атрибут `sources` объекта `graph`.
+Чтобы программно получить доступ к источникам в вашем dbt‑проекте, используйте
+атрибут `sources` объекта `graph`.
 
 Пример использования:
 
@@ -126,8 +139,8 @@ model.snowplow.snowplow_sessions, materialized: table
 
 ```sql
 /*
-  Union all of the Snowplow sources defined in the project
-  which begin with the string "event_"
+  Объединение (union) всех источников Snowplow, определенных в проекте,
+  которые начинаются со строки "event_"
 */
 
 {% set sources = [] -%}
@@ -144,7 +157,7 @@ select * from (
 )
 
 /*
-  Example compiled SQL
+  Пример скомпилированного SQL
 ---------------------------------------------------------------
 select * from (
   select * from raw.snowplow.event_add_to_cart union all
@@ -159,14 +172,15 @@ select * from (
 
 ### Доступ к exposures
 
-Чтобы программно получить доступ к exposures в вашем dbt‑проекте, используйте атрибут `exposures` объекта `graph`.
+Чтобы программно получить доступ к exposures в вашем dbt‑проекте, используйте
+атрибут `exposures` объекта `graph`.
 
 Пример использования:
 
 <File name='models/my_important_view_model.sql'>
 
 ```sql
-{# Include a SQL comment naming all of the exposures that this model feeds into #}
+{# Добавляем SQL‑комментарий со списком всех exposures, на которые влияет эта модель #}
 
 {% set exposures = [] -%}
 {% for exposure in graph.exposures.values() -%}
@@ -175,18 +189,18 @@ select * from (
   {%- endif -%}
 {%- endfor %}
 
--- HELLO database administrator! Before dropping this view,
--- please be aware that doing so will affect:
+-- ПРИВЕТ, администратор базы данных! Перед тем как удалить это представление,
+-- пожалуйста, имейте в виду, что это повлияет на:
 
 {% for exposure in exposures %}
 --   * {{ exposure.name }} ({{ exposure.type }})
 {% endfor %}
 
 /*
-  Example compiled SQL
+  Пример скомпилированного SQL
 ---------------------------------------------------------------
--- HELLO database administrator! Before dropping this view,
--- please be aware that doing so will affect:
+-- ПРИВЕТ, администратор базы данных! Перед тем как удалить это представление,
+-- пожалуйста, имейте в виду, что это повлияет на:
 
 --   * our_metrics (dashboard)
 --   * my_sync (application)
@@ -211,8 +225,8 @@ select * from (
   
   {% set metric = (metrics | selectattr('name', 'equalto', metric_name) | list).pop() %}
 
-  /* Elsewhere, I've defined a macro, get_metric_timeseries_sql, that will return 
-     the SQL needed to perform a time-based rollup of this metric's calculation */
+  /* В другом месте у меня определен макрос get_metric_timeseries_sql,
+     который возвращает SQL, необходимый для выполнения временной агрегации вычисления этой метрики */
 
   {% set metric_sql = get_metric_timeseries_sql(
       relation = metric['model'],
