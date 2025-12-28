@@ -86,27 +86,25 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="85%" title="Исследуйте в промежуточной среде" />
 
-### Создание промежуточной среды
 
-В dbt Cloud перейдите в **Deploy** -> **Environments** и нажмите **Create Environment**. Выберите **Deployment** в качестве типа среды. Опция будет недоступна, если у вас уже есть среда разработки.
+### Создание staging‑окружения
 
-В <Constant name="cloud" /> перейдите в раздел **Deploy** → **Environments**, затем нажмите **Create Environment**. В качестве типа окружения выберите **Deployment**. Этот вариант будет недоступен (отображаться серым), если у вас уже есть окружение для разработки.
+В <Constant name="cloud" /> перейдите в **Deploy** -> **Environments**, затем нажмите **Create Environment**. Выберите **Deployment** в качестве типа окружения. Эта опция будет неактивна (серой), если у вас уже есть окружение разработки.
 
-Следуйте шагам, описанным в [учетных данных развертывания](#deployment-connection), чтобы завершить настройку среды.
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-staging-environment.png" width="85%" title="Создайте staging‑окружение" />
 
-Мы рекомендуем, чтобы учетные данные для хранилища данных были для выделенного пользователя или служебного принципала.
+
+Следуйте шагам, описанным в разделе [deployment credentials](#deployment-connection), чтобы завершить остальную настройку окружения.
+
+Мы рекомендуем, чтобы учётные данные хранилища данных принадлежали выделенному пользователю или service principal.
 
 ## Подключение для развертывания
 
-:::info Подключения к хранилищу
-
-## Deployment connection
-
-:::info Warehouse Connections
+:::info Подключения к хранилищу данных
 
 Подключения к хранилищам создаются и управляются на уровне аккаунта для аккаунтов <Constant name="cloud" /> и затем назначаются окружению. Чтобы изменить тип хранилища, мы рекомендуем создать новое окружение.
 
-Each project can have multiple connections (Snowflake account, Redshift host, Bigquery project, Databricks host, and so on.) of the same warehouse type. Some details of that connection (databases/schemas/and so on.) can be overridden within this section of the <Constant name="cloud" /> environment settings.
+В каждом проекте может быть несколько подключений (аккаунт Snowflake, хост Redshift, проект BigQuery, хост Databricks и т. д.) одного и того же типа хранилища. Некоторые детали этого подключения (databases/schemas и т. п.) можно переопределить в этом разделе настроек окружения <Constant name="cloud" />.
 :::
 
 Эта секция определяет точное местоположение в вашем хранилище, на которое dbt должен нацелиться при создании объектов хранилища! Эта секция будет выглядеть немного по-разному в зависимости от вашего поставщика хранилища.
@@ -175,54 +173,78 @@ Each project can have multiple connections (Snowflake account, Redshift host, Bi
 
 <div warehouse="Postgres">
 
-Эта секция не появится, если вы используете Postgres, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределить эти значения.
+<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Postgres"/>
+
+#### Редактируемые поля
+
+- **Username**: имя пользователя Postgres (скорее всего service account)
+- **Password**: пароль Postgres для указанного пользователя
+- **Schema**: целевая схема
 
 </div>
 
 <div warehouse="Redshift">
 
-Эта секция не появится, если вы используете Redshift, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределить эти значения.
+<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Redshift"/>
+
+#### Редактируемые поля
+
+- **Username**: имя пользователя Redshift (скорее всего service account)
+- **Password**: пароль Redshift для указанного пользователя
+- **Schema**: целевая схема
 
 </div>
 
 <div warehouse="Snowflake">
 
-<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-connection.png" width="85%" title="Настройки подключения для развертывания Snowflake"/>
+<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Snowflake"/>
 
 #### Редактируемые поля
 
-- **Auth Method**: Определяет способ, с помощью которого dbt подключается к вашему хранилищу данных  
-  - Один из вариантов: [**Username & Password**, **Key Pair**]
-- Если выбран **Username & Password**:
-  - **Username**: имя пользователя, которое будет использоваться (чаще всего это сервисный аккаунт)
+- **Auth Method**: определяет способ подключения dbt к вашему warehouse
+  - Один из: [**Username & Password**, **Key Pair**]
+- Если **Username & Password**:
+  - **Username**: имя пользователя (скорее всего service account)
   - **Password**: пароль для указанного пользователя
-- Если выбран **Key Pair**:
-  - **Username**: имя пользователя, которое будет использоваться (чаще всего это сервисный аккаунт)
-  - **Private Key**: значение Private SSH Key (необязательно в пользовательском интерфейсе, но обязательно для аутентификации по ключевой паре при выполнении dbt)
-  - **Private Key Passphrase**: значение Private SSH Key Passphrase (необязательно, требуется только если используется)
-- **Schema**: целевая схема (Target Schema) для этого окружения
+- Если **Key Pair**:
+  - **Username**: имя пользователя (скорее всего service account)
+  - **Private Key**: значение Private SSH Key (необязательно в пользовательском интерфейсе, но обязательно для key pair authentication при запуске dbt)
+  - **Private Key Passphrase**: значение passphrase для Private SSH Key (необязательно; только если требуется)
+- **Schema**: целевая схема для этого окружения
 
 </div>
 
 <div warehouse="Bigquery">
 
-Эта секция не появится, если вы используете Bigquery, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределить эти значения.
+<Lightbox src="/img/docs/collaborate/bigquery-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Bigquery"/>
+
+#### Редактируемые поля
+
+- **Dataset**: целевой датасет
+
+Используйте [extended attributes](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределять отсутствующие или неактивные (серые) настройки. Для учётных данных мы рекомендуем оборачивать extended attributes в [environment variables](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`), чтобы не отображать значение секрета в текстовом поле и логах.
 
 </div>
 
 <div warehouse="Spark">
 
-Эта секция не появится, если вы используете Spark, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределить эти значения.
+<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Spark"/>
+
+#### Редактируемые поля
+
+- **Token**: токен доступа
+- **Schema**: целевая схема
 
 </div>
 
 <div warehouse="Databricks">
 
-<Lightbox src="/img/docs/collaborate/databricks-deploy-env-deploy-connection.png" width="85%" title="Настройки подключения для развертывания Databricks"/>
+<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Databricks"/>
 
 #### Редактируемые поля
 
-- **Каталог** (необязательно): [Пространство имен Unity Catalog](/docs/core/connect-data-platform/databricks-setup)
+- **Token**: токен доступа
+- **Schema**: целевая схема
 
 </div>
 
@@ -234,99 +256,9 @@ import DeleteEnvironment from '/snippets/_delete-environment.md';
 
 <DeleteEnvironment />
 
-## Связанная документация
+## Связанные материалы
 
-- [Лучшие практики для окружений <Constant name="cloud" />](/guides/set-up-ci)
-- [Задания деплоя](/docs/deploy/deploy-jobs)
-- [CI-задания](/docs/deploy/continuous-integration)
-- [Удаление задания или окружения в <Constant name="cloud" />](/faqs/Environments/delete-environment-job)
-
-Для всех хранилищ используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределить отсутствующие или неактивные (серые) настройки. Для учетных данных мы рекомендуем оборачивать расширенные атрибуты в [переменные среды](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`), чтобы избежать отображения секретного значения в текстовом поле и журналах.
-
-<WHCode>
-
-<div warehouse="Postgres">
-
-<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных для развертывания Postgres"/>
-
-#### Редактируемые поля
-
-- **Имя пользователя**: Имя пользователя Postgres (скорее всего, учетная запись службы)
-- **Пароль**: Пароль Postgres для указанного пользователя
-- **Схема**: Целевая схема
-
-</div>
-
-<div warehouse="Redshift">
-
-<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных для развертывания Redshift"/>
-
-#### Редактируемые поля
-
-- **Имя пользователя**: Имя пользователя Redshift (скорее всего, учетная запись службы)
-- **Пароль**: Пароль Redshift для указанного пользователя
-- **Схема**: Целевая схема
-
-</div>
-
-<div warehouse="Snowflake">
-
-<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных для развертывания Snowflake"/>
-
-#### Редактируемые поля
-
-- **Метод аутентификации**: Определяет способ подключения dbt к вашему хранилищу
-  - Один из: [**Имя пользователя и пароль**, **Парная ключевая аутентификация**]
-- Если **Имя пользователя и пароль**:
-  - **Имя пользователя**: Имя пользователя (скорее всего, учетная запись службы)
-  - **Пароль**: Пароль для указанного пользователя
-- Если **Парная ключевая аутентификация**:
-  - **Имя пользователя**: Имя пользователя (скорее всего, учетная запись службы)
-  - **Закрытый ключ**: Значение закрытого SSH-ключа (необязательно)
-  - **Пароль закрытого ключа**: Значение пароля закрытого SSH-ключа (необязательно, только если требуется)
-- **Схема**: Целевая схема для этой среды
-
-</div>
-
-<div warehouse="Bigquery">
-
-<Lightbox src="/img/docs/collaborate/bigquery-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных для развертывания Bigquery"/>
-
-#### Редактируемые поля
-
-- **Набор данных**: Целевой набор данных
-
-Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes), чтобы переопределить отсутствующие или неактивные (серые) настройки. Для учетных данных мы рекомендуем оборачивать расширенные атрибуты в [переменные среды](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`), чтобы избежать отображения секретного значения в текстовом поле и журналах.
-
-</div>
-
-<div warehouse="Spark">
-
-<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных для развертывания Spark"/>
-
-#### Редактируемые поля
-
-- **Токен**: Токен доступа
-- **Схема**: Целевая схема
-
-</div>
-
-<div warehouse="Databricks">
-
-<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных для развертывания Databricks"/>
-
-#### Редактируемые поля
-
-- **Токен**: Токен доступа
-- **Схема**: Целевая схема
-
-</div>
-
-</WHCode>
-
-## Связанные документы
-
-- [Лучшие практики для сред dbt Cloud](/guides/set-up-ci)
-- [Развертывание задач](/docs/deploy/deploy-jobs)
-- [Задачи CI](/docs/deploy/continuous-integration)
-- [Удаление задачи или среды в dbt Cloud](/faqs/Environments/delete-environment-job)
+- [Best practices для окружений <Constant name="cloud" />](/guides/set-up-ci)
+- [Deploy jobs](/docs/deploy/deploy-jobs)
+- [CI jobs](/docs/deploy/continuous-integration)
+- [Удаление job или окружения в <Constant name="cloud" />](/faqs/Environments/delete-environment-job)

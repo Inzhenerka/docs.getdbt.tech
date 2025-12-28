@@ -8,6 +8,9 @@ title: "Разрешения в Redshift"
 
 Следующий пример предоставляет вам SQL-запросы, которые можно использовать для управления разрешениями.
 
+**Обратите внимание**, что `database_name`, `database.schema_name` и `user_name` — это плейсхолдеры, и вы можете заменить их в соответствии с соглашениями об именовании в вашей организации.
+
+
 ```
 grant create schema on database database_name to user_name;
 grant usage on schema database.schema_name to user_name;

@@ -1,3 +1,4 @@
+---
 title: Установка и настройка расширения dbt для VS Code
 id: install-dbt-extension
 description: "Инструкции по установке расширения dbt."
