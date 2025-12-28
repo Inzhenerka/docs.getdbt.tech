@@ -21,13 +21,13 @@ pagination_prev: null
 
 <Card
     title="Packages"
-    body="Learn how you can leverage code reuse through packages (libraries)."
+    body="Узнайте, как можно использовать повторное использование кода с помощью пакетов (библиотек)."
     link="/docs/build/packages"
     icon="dbt-bit"/>
 
 <Card
     title="Project variables"
-    body="Learn how to use project variables to provide data to models for compilation."
+    body="Узнайте, как использовать переменные проекта для предоставления данных моделям при компиляции."
     link="/docs/build/project-variables"
     icon="dbt-bit"/>    
 

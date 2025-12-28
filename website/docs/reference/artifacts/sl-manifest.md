@@ -20,7 +20,7 @@ dbt создает файл [артефакта](/reference/artifacts/dbt-artifa
 - **Deserialization**: `dbt-core` и MetricFlow используют разные библиотеки для работы с сериализацией данных.
 - **Efficiency and performance**: MetricFlow и семантический слой dbt нуждаются в конкретных семантических деталях из манифеста. За счёт сокращения объёма информации, выводимой в `semantic_manifest.json`, процесс становится более эффективным и обеспечивает более быструю передачу и обработку данных между `dbt-core` и MetricFlow.
 
-## Top-level keys
+## Ключи верхнего уровня
 
 Ключи верхнего уровня в semantic manifest:
 

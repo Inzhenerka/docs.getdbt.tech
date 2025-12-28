@@ -133,7 +133,7 @@ saved-queries:
 
 Вы также можете вручную инвалидировать кэш через [API dbt Semantic Layer](/docs/dbt-cloud-apis/sl-api-overview), используя поле `InvalidateCacheResult`.
 
-## FAQs
+## Часто задаваемые вопросы
 
 <DetailsToggle alt_header="Как кэширование взаимодействует с контролем доступа?">
 

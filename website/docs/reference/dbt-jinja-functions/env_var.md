@@ -9,7 +9,7 @@ import Envvarsecrets from '/snippets/_env-var-secrets.md';
 
 <Envvarsecrets />
 
-If the `DBT_USER` and `DBT_ENV_SECRET_PASSWORD` environment variables are present when dbt is invoked, then these variables will be pulled into the profile as expected. If any environment variables are not set, then dbt will raise a compilation error.
+Если при запуске dbt присутствуют переменные окружения `DBT_USER` и `DBT_ENV_SECRET_PASSWORD`, то эти переменные будут, как и ожидается, подтянуты в профиль. Если какие‑либо переменные окружения не заданы, то dbt вызовет ошибку компиляции.
 
 :::info Переменные окружения для целых чисел и логических значений
 При использовании переменных окружения для свойств, которые ожидают целое число или логическое значение (`true`/`false`), необходимо добавить фильтр в Jinja-выражение. Например:
@@ -24,7 +24,7 @@ Convert the string to a boolean explicitly:
 `{{ env_var('SECURE').lower() == 'true' }}`
 :::
 
-:::caution Quoting, curly brackets, & you
+:::caution Кавычки, фигурные скобки и вы
 
 Обязательно заключайте **всю строку Jinja в кавычки** (как показано выше), иначе YAML‑парсер запутается из‑за фигурных скобок Jinja.
 

@@ -1,7 +1,7 @@
 ---
 title: "Быстрый старт для движка dbt Fusion"
 id: "fusion"
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' закомментировано до тех пор, пока мы не протестируем
 level: 'Beginner'
 icon: 'zap'
 hide_table_of_contents: true

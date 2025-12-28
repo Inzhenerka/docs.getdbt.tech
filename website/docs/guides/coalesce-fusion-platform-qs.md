@@ -1,7 +1,7 @@
 ---
 title: "Быстрый старт по движку dbt Fusion на платформе (для Coalesce)"
 id: "coalesce-fusion-platform-qs"
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' закомментировано до тестирования
 level: 'Beginner'
 icon: 'zap'
 hide_table_of_contents: true

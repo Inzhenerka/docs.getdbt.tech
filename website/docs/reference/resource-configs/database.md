@@ -64,7 +64,7 @@ snapshots:
 ```
 </File>
 
-Or in a `snapshot_name.yml` file:
+Или в файле `snapshot_name.yml`:
 
 <File name='snapshots/snapshot_name.yml'>
 

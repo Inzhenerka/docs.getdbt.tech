@@ -11,13 +11,13 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 
 В разделе [Example query](#example-query) показаны несколько полей, которые можно запрашивать с помощью объекта `sources`. Полный список всех доступных для запроса полей см. в разделе [Fields](#fields), где представлена полная схема.
 
-### Arguments
+### Аргументы
 
 При выполнении запросов к `sources` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="sources" />
 
-### Example query
+### Пример запроса
 
 Вы можете указать `environmentId` и отфильтровать по имени базы данных, чтобы получить информацию о свежести данных и статусе выполнения для первых 100 источников из указанной базы данных:
 
@@ -59,13 +59,13 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
 При запросе `sources` можно использовать следующие поля:
 
 <SchemaTable nodeName="SourceAppliedStateNodeConnection" />
 
-### Key fields from nodes
+### Ключевые поля из узлов
 
 Основные поля, доступные в узлах:
 

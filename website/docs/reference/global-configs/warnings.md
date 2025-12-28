@@ -1,9 +1,9 @@
 ---
 title: "Предупреждения"
 id: "warnings"
-sidebar: "Warnings"
+sidebar: "Предупреждения"
 toc_max_heading_level: 2
-intro_text: "Use the --warn-error flag to promote all warnings to errors or --warn-error-options for granular control through options."
+intro_text: "Используйте флаг --warn-error, чтобы повышать все предупреждения до ошибок, или --warn-error-options для более детального управления через параметры."
 ---
 
 ## Используйте `--warn-error`, чтобы повысить все предупреждения до ошибок
@@ -26,39 +26,39 @@ intro_text: "Use the --warn-error flag to promote all warnings to errors or --wa
 :::
 
 
-## Use `--warn-error-options` for targeted warnings
+## Используйте `--warn-error-options` для целевых предупреждений
 
-In some cases, you may want to convert _all_ warnings to errors. However, when you want _some_ warnings to stay as warnings and only promote or silence specific warnings you can instead use `--warn-error-options`. The `WARN_ERROR_OPTIONS` config or `--warn-error-options` flag gives you more granular control over _exactly which types of warnings_ are treated as errors. 
+В некоторых случаях вы можете захотеть преобразовать _все_ предупреждения в ошибки. Однако, когда вы хотите, чтобы _некоторые_ предупреждения оставались предупреждениями и повышать или подавлять только конкретные предупреждения, вы можете вместо этого использовать `--warn-error-options`. Конфигурация `WARN_ERROR_OPTIONS` или флаг `--warn-error-options` дают вам более детальный контроль над тем, _какие именно типы предупреждений_ считаются ошибками.
 
-:::info `WARN_ERROR` and `WARN_ERROR_OPTIONS` are mutually exclusive
-`WARN_ERROR` and `WARN_ERROR_OPTIONS` are mutually exclusive. You can only specify one, even when you're specifying the config in multiple places (like env var or a flag), otherwise, you'll see a usage error.
+:::info `WARN_ERROR` и `WARN_ERROR_OPTIONS` являются взаимоисключающими
+`WARN_ERROR` и `WARN_ERROR_OPTIONS` являются взаимоисключающими. Вы можете указать только один из них, даже если вы задаёте конфигурацию в нескольких местах (например, через переменную окружения или флаг), иначе вы увидите ошибку использования.
 :::
 
-Warnings that should be treated as errors can be specified through `error` parameter. Warning names can be found in:
-  - [dbt-core's types.py file](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py), where each class name that inherits from `WarnLevel` corresponds to a warning name (e.g. `AdapterDeprecationWarning`, `NoNodesForSelectionCriteria`).
-  - Using the `--log-format json` flag.
+Предупреждения, которые следует рассматривать как ошибки, можно указать через параметр `error`. Имена предупреждений можно найти в:
+  - [файле types.py в dbt-core](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py), где каждое имя класса, наследующегося от `WarnLevel`, соответствует имени предупреждения (например, `AdapterDeprecationWarning`, `NoNodesForSelectionCriteria`).
+  - Используя флаг `--log-format json`.
 
-The `error` parameter can be set to `"all"` or `"*"` to treat all warnings as errors (this behavior is the same as using the `--warn-error` flag), or to a list of specific warning names to treat as exceptions.
+Параметр `error` может быть установлен в значение `"all"` или `"*"`, чтобы рассматривать все предупреждения как ошибки (это поведение эквивалентно использованию флага `--warn-error`), либо в список конкретных имён предупреждений, которые следует рассматривать как исключения.
 - When `error` is set to `"all"` or `"*"`, the optional `warn` parameter can be set to exclude specific warnings from being treated as exceptions.
-- Use the `silence` parameter to ignore warnings. To silence certain warnings you want to ignore, you can specify them in the `silence` parameter. This is useful in large projects where certain warnings aren't critical and can be ignored to keep the noise low and logs clean.
+- Используйте параметр `silence`, чтобы игнорировать предупреждения. Чтобы подавить определённые предупреждения, которые вы хотите игнорировать, вы можете указать их в параметре `silence`. Это полезно в крупных проектах, где некоторые предупреждения не являются критичными и могут быть проигнорированы, чтобы снизить уровень шума и сохранить логи чистыми.
 
-Here's how you can use the [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings) flag to promote _specific_ warnings to errors:
-- [Test warnings](/reference/resource-configs/severity) with the `--warn-error-options '{"error": ["LogTestResult"]}'` flag.
-- Jinja [exception warnings](/reference/dbt-jinja-functions/exceptions#warn) with `--warn-error-options '{"error": ["JinjaLogWarning"]}'`.
-- No nodes selected with `--warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'`.
-- Deprecation warnings with `--warn-error-options '{"error": ["Deprecations"]}'` (new in v1.10).
+Вот как вы можете использовать флаг [`--warn-error-options`](#use---warn-error-options-for-targeted-warnings), чтобы повышать _конкретные_ предупреждения до ошибок:
+- [Предупреждения тестов](/reference/resource-configs/severity) с флагом `--warn-error-options '{"error": ["LogTestResult"]}'`.
+- Jinja [предупреждения об исключениях](/reference/dbt-jinja-functions/exceptions#warn) с `--warn-error-options '{"error": ["JinjaLogWarning"]}'`.
+- Отсутствие выбранных узлов с `--warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'`.
+- Предупреждения об устаревании с `--warn-error-options '{"error": ["Deprecations"]}'` (новое в v1.10).
 
-### Configuration
+### Конфигурация
 
-You can configure warnings as errors or which warnings to silence, by warn error options through command flag, environment variable, or `dbt_project.yml`.
+Вы можете настраивать предупреждения как ошибки или определять, какие предупреждения следует подавлять, с помощью warn error options через флаг командной строки, переменную окружения или `dbt_project.yml`.
 
 You can choose to:
 
-- Promote all warnings to errors using `{"error": "all"}` or `--warn-error` flag.
-- Promote specific warnings to errors using `error` and optionally exclude others from being treated as errors with `--warn-error-options` flag. `warn` tells dbt to continue treating the warnings as warnings.
-- Ignore warnings using `silence` with `--warn-error-options` flag.
+- Повышайте все предупреждения до ошибок, используя `{"error": "all"}` или флаг `--warn-error`.
+- Повышайте конкретные предупреждения до ошибок, используя `error`, и при необходимости исключайте другие из обработки как ошибки с помощью флага `--warn-error-options`. `warn` указывает dbt продолжать обрабатывать предупреждения как предупреждения.
+- Игнорируйте предупреждения, используя `silence` с флагом `--warn-error-options`.
 
-In the following example, we're silencing the [`NoNodesForSelectionCriteria` warning](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py#L1227) in the `dbt_project.yml` file by adding it to the `silence` parameter:
+В следующем примере мы подавляем [предупреждение `NoNodesForSelectionCriteria`](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/events/types.py#L1227) в файле `dbt_project.yml`, добавляя его в параметр `silence`:
 
   <File name='dbt_project.yml'>
 
@@ -66,63 +66,63 @@ In the following example, we're silencing the [`NoNodesForSelectionCriteria` war
 ...
   flags:
     warn_error_options:
-      error: # Previously called "include"
-      warn: # Previously called "exclude"
-      silence: # To silence or ignore warnings
+      error: # ранее называлось "include"
+      warn: # ранее называлось "exclude"
+      silence: # чтобы заглушать или игнорировать предупреждения
         - NoNodesForSelectionCriteria
   ```
 
   </File>
 
-### Examples
-Here are some examples that show you how to configure `warn_error_options` using flags or file-based configuration.
+### Примеры
+Вот несколько примеров, которые показывают, как настроить `warn_error_options` с помощью флагов или файловой конфигурации.
 
-#### Target specific warnings
-Some of the examples use `NoNodesForSelectionCriteria`, which is a specific warning that occurs when your `--select` flag doesn't match any nodes/resources in your dbt project:
+#### Целевые предупреждения
+В некоторых примерах используется `NoNodesForSelectionCriteria` — это конкретное предупреждение, которое возникает, когда ваш флаг `--select` не соответствует ни одному узлу/ресурсу в вашем проекте dbt:
 
 
-- This command promotes all warnings to errors, except for `NoNodesForSelectionCriteria`:
+- Эта команда повышает все предупреждения до ошибок, за исключением `NoNodesForSelectionCriteria`:
   ```text
   dbt run --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}'
   ```
 
-- This command promotes all warnings to errors, except for deprecation warnings:
+- Эта команда повышает все предупреждения до ошибок, за исключением предупреждений об устаревании:
   ```text
   dbt run --warn-error-options '{"error": "all", "warn": ["Deprecations"]}'
   ```
 
-- This command promotes only `NoNodesForSelectionCriteria` as an error:
+- Эта команда повышает только `NoNodesForSelectionCriteria` до уровня ошибки:
   ```text
   dbt run --warn-error-options '{"error": ["NoNodesForSelectionCriteria"]}'
   ```
 
-- This promotes only `NoNodesForSelectionCriteria` as an error, using an environment variable:
+- Это повышает только `NoNodesForSelectionCriteria` до уровня ошибки, используя переменную окружения:
   ```text
   DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}' dbt run
   ```
 
-Values for `error`, `warn`, and/or `silence` should be passed on as arrays. For example, `dbt run --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}'` not `dbt run --warn-error-options '{"error": "all", "warn": "NoNodesForSelectionCriteria"}'`.
+Значения для `error`, `warn` и/или `silence` должны передаваться в виде массивов. Например, `dbt run --warn-error-options '{"error": "all", "warn": ["NoNodesForSelectionCriteria"]}'`, а не `dbt run --warn-error-options '{"error": "all", "warn": "NoNodesForSelectionCriteria"}'`.
 
-The following example shows how to promote all warnings to errors, except for the `NoNodesForSelectionCriteria` warning using the `silence` and `warn` parameters in the `dbt_project.yml` file:
+Следующий пример показывает, как повысить все предупреждения до ошибок, за исключением предупреждения `NoNodesForSelectionCriteria`, используя параметры `silence` и `warn` в файле `dbt_project.yml`:
   <File name='dbt_project.yml'>
 
   ```yaml
   ...
   flags:
     warn_error_options:
-      error: all # Previously called "include"
-      warn:      # Previously called "exclude"
+      error: all # ранее называлось "include"
+      warn:      # ранее называлось "exclude"
         - NoNodesForSelectionCriteria
-      silence:   # To silence or ignore warnings
+      silence:   # чтобы заглушать или игнорировать предупреждения
         - NoNodesForSelectionCriteria
   ```
 
   </File>
 
-#### Promote all warnings to errors
-Some examples of how to promote all warnings to errors:
+#### Повышение всех предупреждений до ошибок
+Несколько примеров того, как повысить все предупреждения до ошибок:
 
-##### using dbt command flags
+##### используя флаги команд dbt
 
 ```bash 
 dbt run --warn-error
@@ -130,7 +130,7 @@ dbt run --warn-error-options '{"error": "all"}'
 dbt run --warn-error-options '{"error": "*"}'
 ```
 
-##### using environment variables
+##### используя переменные окружения
 
 
 ```bash 

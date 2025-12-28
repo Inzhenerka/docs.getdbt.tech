@@ -5,11 +5,11 @@ hide_table_of_contents: true
 pagination_next: "docs/cloud/git/managed-repository"
 ---
 
-[Version control](/docs/cloud/git/version-control-basics) &mdash; a system that allows you and your teammates to work safely and simultaneously on a single project &mdash; is an essential part of the dbt workflow. It enables teams to collaborate effectively and maintain a history of changes to their dbt projects. 
+[Контроль версий](/docs/cloud/git/version-control-basics) &mdash; система, которая позволяет вам и вашим коллегам безопасно и одновременно работать над одним проектом &mdash; является неотъемлемой частью рабочего процесса dbt. Она позволяет командам эффективно сотрудничать и поддерживать историю изменений в их проектах dbt. 
 
-In <Constant name="cloud" />, you can configure <Constant name="git" /> integrations to manage your dbt project code with ease. <Constant name="cloud" /> offers multiple ways to integrate with you <Constant name="git" /> provider, catering to diverse team needs and preferences. 
+В <Constant name="cloud" />, вы можете настраивать интеграции <Constant name="git" />, чтобы с легкостью управлять кодом вашего проекта dbt. <Constant name="cloud" /> предлагает несколько способов интеграции с вашим провайдером <Constant name="git" />, удовлетворяя разнообразные потребности и предпочтения команд. 
 
-Whether you use a <Constant name="git" /> integration that natively connects with <Constant name="cloud" /> or prefer to work with a managed or cloned repository, <Constant name="cloud" /> supports flexible options to streamline your workflow.
+Независимо от того, используете ли вы интеграцию <Constant name="git" />, которая нативно подключается к <Constant name="cloud" />, или предпочитаете работать с управляемым или клонированным репозиторием, <Constant name="cloud" /> поддерживает гибкие варианты для упрощения вашего рабочего процесса.
 
 <div className="grid--3-col">
 
@@ -45,7 +45,7 @@ Whether you use a <Constant name="git" /> integration that natively connects wit
 
 <Card
     title="Availability of CI features by Git provider"
-    body="Learn which Git providers have native support for Continuous Integration workflows"
+    body="Узнайте, какие провайдеры Git имеют нативную поддержку рабочих процессов непрерывной интеграции"
     link="/docs/deploy/continuous-integration#git-providers-who-support-ci"
     icon="dbt-bit"/>
 </div>

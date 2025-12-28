@@ -3,7 +3,7 @@ title: "Column-level lineage"
 description: "Use dbt Catalog's column-level lineage to gain insights about your data at a granular level."
 ---
 
-# Column-level lineage <Lifecycle status="managed,managed_plus" />
+# Происхождение на уровне столбцов <Lifecycle status="managed,managed_plus" />
 
 <Constant name="explorer" /> теперь предлагает column-level lineage (CLL) для ресурсов в вашем dbt‑проекте. Аналитические инженеры могут быстро и удобно получать представление о происхождении своих дата‑продуктов на более детальном уровне. Для каждого столбца в ресурсе (модели, источнике или snapshot) в dbt‑проекте <Constant name="explorer" /> предоставляет сквозную lineage данных в этом столбце с учётом того, как он используется.
 

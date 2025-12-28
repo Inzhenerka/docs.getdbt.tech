@@ -1,7 +1,7 @@
 ---
 title: "Обновление до Fusion, часть 2: переход"
 id: "upgrade-to-fusion"
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' закомментировано до тестирования
 level: 'Intermediate'
 icon: 'zap'
 hide_table_of_contents: true

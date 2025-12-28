@@ -1,7 +1,7 @@
 ---
-title: How do I delete a project in dbt?
-description: "Deleting a project in dbt"
-sidebar_label: 'How to delete a project'
+title: Как удалить проект в dbt?
+description: "Удаление проекта в dbt"
+sidebar_label: 'Как удалить проект'
 id: delete-a-project
 
 ---

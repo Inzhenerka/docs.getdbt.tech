@@ -259,7 +259,7 @@ location: "s3://dbt_demo_bucket/dbt_demo_data"
 | glue_session_reuse                      | Повторное использование glue‑сессии для запуска нескольких команд `dbt run`: если установлено в true, сессия не будет закрыта; если false — будет закрыта.                                                                                                                                     | no        | 
 | datalake_formats	                      | ACID‑формат data lake, используемый при выполнении merge: `hudi`, `ìceberg` или `delta`.                                                                                                                                                                                                        | no        |
 
-## Configs
+## Конфигурации
 
 ### Настройка таблиц
 

@@ -227,9 +227,9 @@ def model(dbt, session):
 
 </File>
 
-#### Accessing custom meta values
+#### Доступ к пользовательским значениям meta
 
-To store custom values, use the [`meta` config](/reference/resource-configs/meta). For example, if you have a model named `my_python_model` and you want to store custom values, you can do the following:
+Чтобы хранить пользовательские значения, используйте [конфигурацию `meta`](/reference/resource-configs/meta). Например, если у вас есть модель с именем `my_python_model` и вы хотите хранить пользовательские значения, вы можете сделать следующее:
 
 <File name='models/schema.yml'>
 
@@ -245,7 +245,7 @@ models:
 
 </File>
 
-Then access them in your Python model using the `dbt.config.get()` method to access the `meta` object first and then access your custom values:
+Затем получите к ним доступ в вашей Python-модели, используя метод `dbt.config.get()`, чтобы сначала обратиться к объекту `meta`, а затем получить ваши пользовательские значения:
 
 <File name='models/my_python_model.py'>
 
@@ -561,7 +561,7 @@ models:
 - [PySpark functions: udf](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.udf.html)
 
 :::tip
-You can also define [SQL or Python UDFs](/docs/build/udfs) as first-class resources under `/functions` with a matching `YAML` file. dbt builds them as part of the DAG, and you reference them from SQL using `{{ function('my_udf') }}`. These UDFs are reusable across tools (BI, notebooks, SQL clients) because they live in your warehouse.
+Вы также можете определять [SQL- или Python-UDF](/docs/build/udfs) как ресурсы первого класса в каталоге `/functions` с соответствующим файлом `YAML`. dbt собирает их как часть DAG, и вы ссылаетесь на них из SQL, используя `{{ function('my_udf') }}`. Эти UDF являются переиспользуемыми в разных инструментах (BI, ноутбуки, SQL-клиенты), поскольку они находятся в вашем хранилище данных.
 :::
 
 <Tabs>

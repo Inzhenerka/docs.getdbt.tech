@@ -482,10 +482,10 @@ select * from final
 
 </div>
 
-## Add data tests to your models
+## Добавьте тесты данных в ваши модели
 
 Добавление [data tests](/docs/build/data-tests) в проект помогает убедиться, что ваши модели работают корректно.
-
+  
 Чтобы добавить data tests в ваш проект:
 
 1. Создайте новый YAML‑файл с описанием свойств в директории `models` с именем `models/schema.yml`.

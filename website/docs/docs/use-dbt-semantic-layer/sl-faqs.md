@@ -149,7 +149,7 @@ dbt Labs обрабатывает это безопасным образом, и
 
 </Expandable>
 
-<Expandable alt_header="Where is MetricFlow hosted? How do queries pass through MetricFlow and dbt and back to the end user?">
+<Expandable alt_header="Где размещается MetricFlow? Как запросы проходят через MetricFlow и dbt и возвращаются конечному пользователю?">
 
 MetricFlow размещён в <Constant name="cloud" />. Запросы из [Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview) направляются от нашего API‑шлюза в MetricFlow, который генерирует SQL для вычисления того, что запрашивает пользователь. Затем MetricFlow передаёт сгенерированный SQL обратно нашему шлюзу, который выполняет его на платформе данных.
 </Expandable>

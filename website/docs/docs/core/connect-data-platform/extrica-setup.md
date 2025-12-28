@@ -4,11 +4,11 @@ description: "Прочтите это руководство, чтобы узн�
 id: "extrica-setup"
 meta:
   maintained_by: Extrica, Trianz 
-  authors: Gaurav Mittal, Viney Kumar, Mohammed Feroz, and Mrinal Mayank
+  authors: Gaurav Mittal, Viney Kumar, Mohammed Feroz, и Mrinal Mayank
   github_repo: 'extricatrianz/dbt-extrica'
   pypi_package: 'dbt-extrica'
   min_core_version: 'v1.7.2'
-  cloud_support: 'Not Supported'
+  cloud_support: 'Не поддерживается'
   min_supported_version: 'n/a'
   platform_name: 'Extrica'
 ---

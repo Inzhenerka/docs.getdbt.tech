@@ -202,7 +202,7 @@ pip uninstall dbt
   ```bash
   pip install dbt --no-cache-dir
   ```
-
+  
   Если возникают проблемы с установкой, выполнение команды с аргументом `--force-reinstall` может помочь:
    ```bash
    pip install dbt --no-cache-dir --force-reinstall

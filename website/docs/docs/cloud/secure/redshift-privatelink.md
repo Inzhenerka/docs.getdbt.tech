@@ -5,7 +5,7 @@ description: "Настройка PrivateLink для Redshift"
 sidebar_label: "AWS PrivateLink для Redshift"
 ---
 
-# Configure AWS PrivateLink for Redshift <Lifecycle status="managed_plus" />
+# Настройка AWS PrivateLink для Redshift <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';

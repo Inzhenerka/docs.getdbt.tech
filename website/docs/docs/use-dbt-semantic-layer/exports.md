@@ -1,11 +1,11 @@
 ---
-title: "Write queries with exports"
-description: "Use exports to write tables to the data platform on a schedule."
-sidebar_label: "Write queries with exports"
+title: "Пишите запросы с помощью экспортами"
+description: "Используйте экспорты, чтобы по расписанию записывать таблицы в платформу данных."
+sidebar_label: "Пишите запросы с помощью экспортами"
 keywords: [DBT_INCLUDE_SAVED_QUERY, exports, DBT_EXPORTS_SAVED_QUERY, dbt, Semantic Layer]
 ---
 
-# Write queries with exports <Lifecycle status="self_service,managed,managed_plus" />
+# Пишите запросы с помощью экспортами <Lifecycle status="self_service,managed,managed_plus" />
 
 Экспорты расширяют возможности [saved queries](/docs/build/saved-queries), выполняя сохранённые запросы и записывая результат в таблицу или представление (view) на вашей платформе данных. Сохранённые запросы — это способ сохранять и повторно использовать часто применяемые запросы в MetricFlow. Экспорты выводят эту функциональность на новый уровень за счёт следующего:
 

@@ -45,7 +45,7 @@ clickhouse-service:
 
 ```
 
-For a complete list of configuration options, see the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
+Полный список параметров конфигурации см. в [документации ClickHouse](https://clickhouse.com/docs/integrations/dbt).
 </File>
 
 ### Создание проекта dbt

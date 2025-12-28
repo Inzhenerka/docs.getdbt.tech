@@ -6,11 +6,11 @@ description: "Learn how to create and set up CI checks to test code changes befo
 
 Вы можете настроить задания [непрерывной интеграции](/docs/deploy/continuous-integration) (CI), которые будут запускаться, когда кто‑то открывает новый pull request (PR) в вашем репозитории <Constant name="git" />. Запуская и тестируя только _изменённые_ модели, <Constant name="cloud" /> обеспечивает максимальную эффективность таких заданий и бережное использование ресурсов вашей платформы данных.
 
-:::note Triggering CI jobs in monorepos
+:::note Запуск CI-задач в монорепозиториях
 Если у вас монорепозиторий с несколькими dbt‑проектами, открытие одного pull request в одном из проектов приведёт к запуску заданий для всех проектов, подключённых к этому монорепозиторию. Чтобы избежать этого, вы можете использовать отдельные целевые ветки для каждого проекта (например, `main-project-a`, `main-project-b`), чтобы разделить триггеры CI.
 :::
 
-## Prerequisites
+## Предварительные требования
 - У вас есть аккаунт <Constant name="cloud" />. 
 - Возможности CI:
    - Для функций [параллельных CI‑проверок](/docs/deploy/continuous-integration#concurrent-ci-checks) и [умной отмены устаревших сборок](/docs/deploy/continuous-integration#smart-cancellation) ваш аккаунт <Constant name="cloud" /> должен быть на тарифе [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
@@ -24,7 +24,7 @@ import GitProvidersCI from '/snippets/_git-providers-supporting-ci.md';
 
 <GitProvidersCI />   
 
-## Set up CI jobs {#set-up-ci-jobs}
+## Настройка CI-задач {#set-up-ci-jobs}
 
 dbt Labs рекомендует создавать CI‑задания в отдельной [deployment environment](/docs/deploy/deploy-environments#create-a-deployment-environment) <Constant name="cloud" />, подключённой к staging‑базе данных. Наличие отдельного окружения, выделенного специально для CI, обеспечивает лучшую изоляцию между временными схемами, создаваемыми в CI, и вашими production‑сборками данных.  
 
@@ -270,8 +270,8 @@ fatal: reference is not a tree: e845be54e6dc72342d5a8f814c8b3316ee220312
 
 Одной из возможных проблем является **Сброс условий** в разделе **Проверки статуса** в политике ветки репозитория ADO. Если вы включите флажок **Сбрасывать статус при наличии новых изменений** (в разделе **Сброс условий**), это может помешать dbt обновлять ADO о статусе выполнения вашего CI задания.
 Вы можете найти соответствующую информацию здесь:
-- [Azure DevOps Services Status checks](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#status-checks)
-- [Azure DevOps Services Pull Request Stuck Waiting on Status Update](https://support.hashicorp.com/hc/en-us/articles/18670331556627-Azure-DevOps-Services-Pull-Request-Stuck-Waiting-on-Status-Update-from-Terraform-Cloud-Enterprise-Run)
-- [Pull request status](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops#pull-request-status)
+- [Проверки статуса Azure DevOps Services](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#status-checks)
+- [Запрос на слияние Azure DevOps Services застрял в ожидании обновления статуса](https://support.hashicorp.com/hc/en-us/articles/18670331556627-Azure-DevOps-Services-Pull-Request-Stuck-Waiting-on-Status-Update-from-Terraform-Cloud-Enterprise-Run)
+- [Статус pull request](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops#pull-request-status)
 
 </DetailsToggle>

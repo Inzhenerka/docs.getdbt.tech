@@ -15,7 +15,7 @@ pagination_prev: null
 
 Используйте <Constant name="explorer" /> для навигации и управления проектами в <Constant name="cloud" />, чтобы вы и другие дата-разработчики, аналитики и потребители данных могли находить и эффективно использовать ресурсы dbt. <Constant name="explorer" /> интегрируется с [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), [dbt <Constant name="query_page" />](/docs/explore/dbt-insights), [<Constant name="orchestrator" />](/docs/deploy/deployments) и [<Constant name="visual_editor" />](/docs/cloud/canvas), помогая разрабатывать или просматривать ваши dbt‑ресурсы.
 
-## Prerequisites
+## Предварительные требования
 
 - У вас есть аккаунт <Constant name="cloud" /> с тарифом [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
 - Для каждого проекта, который вы хотите исследовать, настроена среда деплоя [production](/docs/deploy/deploy-environments#set-as-production-environment) или [staging](/docs/deploy/deploy-environments#create-a-staging-environment).
@@ -30,13 +30,13 @@ import Generatemetadata from '/snippets/_generate-metadata.md';
 Если в вашей организации используются и dbt Core, и dbt Cloud, вы можете объединить эти рабочие процессы, автоматически загружая артефакты dbt Core в dbt Cloud и просматривая их в <Constant name="explorer" />. Это обеспечивает более связный опыт работы с dbt. Подробнее см. в разделе [гибридные проекты](/docs/deploy/hybrid-projects).
 :::
 
-### External metadata ingestion <Lifecycle status="preview" />
+### Импорт внешних метаданных <Lifecycle status="preview" />
 
 Подключайтесь напрямую к вашему хранилищу данных с помощью [external metadata ingestion](/docs/explore/external-metadata-ingestion), чтобы получить видимость таблиц, представлений и других ресурсов, которые не определены в dbt, в <Constant name="explorer" />.
 
 Мы создаём метаданные dbt и подтягиваем внешние метаданные. <Constant name="explorer" /> использует метаданные, предоставляемые [Discovery API](/docs/dbt-cloud-apis/discovery-api), чтобы отображать детали о состоянии вашего проекта. Доступный набор метаданных зависит от того, какая [deployment environment](/docs/deploy/deploy-environments) назначена production или staging в вашем dbt‑проекте.
 
-## Catalog overview 
+## Обзор каталога 
 
 :::info [Global navigation](/docs/explore/global-navigation) <Lifecycle status='self_service,managed,managed_plus' /> <Lifecycle status="preview" />
 
@@ -56,7 +56,7 @@ import Generatemetadata from '/snippets/_generate-metadata.md';
 - **Visualize downstream exposures** &mdash; [Настройте](/docs/cloud-integrations/downstream-exposures-tableau) и [визуализируйте downstream exposures](/docs/explore/view-downstream-exposures), чтобы автоматически отображать связанные модели данных из Tableau и повышать их прозрачность.
 - **Data health signals** &mdash; Просматривайте [data-health-signals](/docs/explore/data-health-signals) для каждого ресурса, чтобы оценить его состояние и производительность.
 
-### Catalog permissions
+### Права доступа к каталогу
 
 При использовании глобальной навигации и поиске по всем проектам действуют следующие правила доступа:
 

@@ -1,5 +1,5 @@
 ---
-title: How do I transfer account ownership to another user?
+title: Как передать владение учётной записью другому пользователю?
 description: "Инструкции о том, как передать вашу учетную запись dbt другому пользователю"
 sidebar_label: 'Как передать учетную запись dbt?'
 id: transfer-account

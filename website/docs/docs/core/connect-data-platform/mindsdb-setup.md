@@ -7,7 +7,7 @@ meta:
   github_repo: 'mindsdb/dbt-mindsdb'
   pypi_package: 'dbt-mindsdb'
   min_core_version: 'v1.0.1'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: '?'
   slack_channel_name: 'n/a'
   slack_channel_link: 'https://www.getdbt.com/community'

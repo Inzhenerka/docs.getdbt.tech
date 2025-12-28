@@ -167,6 +167,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `software_host` | Yes | None | Имя хоста или IP-адрес координаторного узла кластера Dremio. | 
 | `port` | Yes | `9047` | Порт для API‑эндпоинтов кластера Dremio Software. | 
 | `user` | Yes | None | Имя пользователя учетной записи, которая используется для входа в кластер Dremio. | 
-| `password` | Yes, if you are not using the pat configuration. | None | Пароль учетной записи, которая используется для входа в кластер Dremio. | 
-| `pat` | Yes, if you are not using the user and password configurations. | None | Персональный токен доступа, используемый для аутентификации в Dremio. Инструкции по получению токена см. в разделе [Personal Access Tokens](https://docs.dremio.com/software/security/personal-access-tokens/). Использование персонального токена доступа имеет приоритет, если указаны значения для трех параметров `user`, `password` и `pat`. | 
+170 | | `password` | Да, если вы не используете конфигурацию pat. | Нет. | Пароль учетной записи, которая используется для входа в кластер Dremio. | 
+171 | | `pat` | Да, если вы не используете конфигурации user и password. | Нет. | Персональный токен доступа, используемый для аутентификации в Dremio. Инструкции по получению токена см. в разделе [Personal Access Tokens](https://docs.dremio.com/software/security/personal-access-tokens/). Использование персонального токена доступа имеет приоритет, если указаны значения для трех параметров `user`, `password` и `pat`. | 
 | `use_ssl` | Yes | `true` | Допустимые значения — `true` и `false`. Если значение установлено в `true`, убедитесь, что в вашем кластере Dremio настроено полное шифрование соединения. См. раздел [Prerequisites for Dremio Software](#prerequisites-for-dremio-software). |

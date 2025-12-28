@@ -285,8 +285,8 @@ my-snowflake-db:
 
 Флаг `retry_on_database_errors` вместе с указанием количества `connect_retries` предназначен для настройки повторных попыток после того, как snowflake connector сталкивается с ошибками типа snowflake.connector.errors.DatabaseError. Эти повторные попытки могут быть полезны для обработки ошибок типа "JWT token is invalid" при использовании аутентификации с парой ключей.
 
-By default, `retry_on_database_errors` is set to `False` when using <Constant name="core" /> (for example, if you're running dbt locally with `pip install dbt-core dbt-snowflake`).
-
+По умолчанию `retry_on_database_errors` имеет значение `False` при использовании <Constant name="core" /> (например, если вы запускаете dbt локально с помощью `pip install dbt-core dbt-snowflake`).
+  
 However, in the <Constant name="dbt_platform" />, this setting is automatically set to `True`, unless the user explicitly configures it. 
 
 ### retry_all

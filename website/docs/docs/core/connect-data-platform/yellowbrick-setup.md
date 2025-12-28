@@ -56,10 +56,10 @@ company-name:
 
 Этот адаптер основан на адаптере dbt-postgres, документированном здесь [Настройка профиля Postgres](/docs/core/connect-data-platform/postgres-setup)
 
-#### role
+#### роль
 
 Конфигурация `role` управляет ролью пользователя, которую dbt принимает при открытии новых подключений к базе данных.
-
+  
 #### sslmode / sslrootcert
 
 Параметры конфигурации ssl управляют тем, как dbt подключается к Yellowbrick с использованием SSL. Обратитесь к [документации Yellowbrick](https://docs.yellowbrick.com/5.2.27/client_tools/config_ssl_for_clients_intro.html) для получения подробностей.

@@ -404,7 +404,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 Мы рекомендуем использовать следующие значения:
 
-| name | name format | value |
+| имя | формат имени | значение |
 | ---- | ----------- | ----- |
 | NameID | Unspecified | OneLogin ID |
 | email | Unspecified | Email |
@@ -416,9 +416,9 @@ import LoginSlug from '/snippets/_login-slug.md';
 использовать RBAC в <Constant name="cloud" />, также настройте OneLogin так, чтобы он передавал информацию о членстве в группах в пользовательском атрибуте
 `groups`:
 
-| name | name format | value | description |
+| имя | формат имени | значение | описание |
 | ---- | ----------- | ----- | ----------- |
-| groups | Unspecified | Series of groups to be used for your organization | Группы, к которым принадлежит пользователь в IdP |
+421 | | groups | Не указано | Набор групп, которые будут использоваться в вашей организации | Группы, к которым принадлежит пользователь в IdP |
 
 ### Сбор секретов интеграции
 

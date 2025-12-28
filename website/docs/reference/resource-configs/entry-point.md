@@ -22,7 +22,7 @@ functions:
 
 В настоящее время Python UDF поддерживаются в Snowflake и BigQuery. В каждом хранилище данных используется своё название для функции точки входа. В следующей таблице показано, как именно используется `entry_point`:
 
-| Warehouse  | How `entry_point` is used | 
+| Хранилище  | Как используется `entry_point` | 
 | -- | -- | 
 | Snowflake | Преобразуется в имя `HANDLER` в `LANGUAGE PYTHON UDF` | 
 | BigQuery | Преобразуется в `entry_point` в `OPTIONS(...)` |  

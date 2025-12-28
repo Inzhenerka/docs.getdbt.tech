@@ -92,9 +92,9 @@ flags:
 | [require_unique_project_resource_names](#unique-project-resource-names) | 2025.12 | TBD* | 1.11.0 | TBD* |
 | [require_ref_searches_node_package_before_root](#package-ref-search-order) | 2025.12 | TBD* | 1.11.0 | TBD* |
 
-#### dbt adapter behavior changes
+#### Изменения поведения адаптера dbt
 
-This table outlines which version of the dbt adapter contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
+В этой таблице указано, какая версия адаптера dbt содержит внедрение изменения поведения (отключено по умолчанию) или его зрелость (включено по умолчанию).
 
 | Flag                          | dbt-ADAPTER: Intro | dbt-ADAPTER: Maturity |
 | ----------------------------- | ----------------------- | -------------------------- |
@@ -105,7 +105,7 @@ This table outlines which version of the dbt adapter contains the behavior chang
 | [restrict_direct_pg_catalog_access](/reference/global-configs/redshift-changes#the-restrict_direct_pg_catalog_access-flag) | Redshift 1.9.0 | TBD |
 | [bigquery_use_batch_source_freshness](/reference/global-configs/bigquery-changes#bigquery-use-batch-source-freshness) | BigQuery 1.11.0rc2 | TBD |
 
-When the <Constant name="cloud" /> Maturity is "TBD," it means we have not yet determined the exact date when these flags' default values will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
+Когда значение Maturity для <Constant name="cloud" /> равно "TBD", это означает, что мы еще не определили точную дату, когда значения по умолчанию для этих флагов изменятся. Затронутые пользователи тем временем будут видеть предупреждения об устаревании, а также получать электронные письма с заблаговременным уведомлением перед датой достижения зрелости. В это время, если вы видите предупреждение об устаревании, вы можете либо:
 
 - Мигрируйте свой проект, чтобы он поддерживал новое поведение, а затем установите флаг в значение `True`, чтобы перестать видеть предупреждения.
 - Установите флаг в значение `False`. Вы продолжите видеть предупреждения и сохраните устаревшее поведение даже после даты зрелости (когда значение по умолчанию изменится).
@@ -280,7 +280,7 @@ When you set the `validate_macro_args` flag to `True`, dbt will:
 - If no arguments are documented in the YAML, infer them from the macro and include them in the [`manifest.json` file](/reference/artifacts/manifest-json)
 
 
-### Warn-error handler for all warnings
+### Обработчик предупреждений как ошибок
 
 By default, the `require_all_warnings_handled_by_warn_error` flag is set to `False`.
 
@@ -309,7 +309,7 @@ We recommend the following rollout plan when setting the `require_all_warnings_h
 
 </Expandable>
 
-### Generic test arguments property
+### Свойство аргументов универсального теста
 
 dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
 
@@ -354,7 +354,7 @@ When you set the `require_generic_test_arguments_property` flag to `True`, dbt w
 - Parse any key-value pairs under `arguments` in generic tests as inputs to the generic test macro.
 - Raise a `MissingArgumentsPropertyInGenericTestDeprecation` warning if additional non-config arguments are specified outside of the `arguments` property.
 
-### Unique project resource names
+### Уникальные имена ресурсов проекта
 
 The `require_unique_project_resource_names` flag enforces uniqueness of resource names within the same package. dbt resources such as models, seeds, snapshots, analyses, tests, and functions share a common namespace. When two resources in the same package have the same name, dbt must decide which one a `ref()` or `source()` refers to. Previously, this check was not always enforced, which meant duplicate names could result in dbt referencing the wrong resource.
 

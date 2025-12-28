@@ -307,7 +307,7 @@ Merge‑процесс оптимизирует затраты на облачн
 * [Best Practices for Optimizing Your dbt and Snowflake Deployment](https://www.snowflake.com/wp-content/uploads/2021/10/Best-Practices-for-Optimizing-Your-dbt-and-Snowflake-Deployment.pdf) 
 * [How to optimize and troubleshoot dbt models on Databricks](/guides/optimize-dbt-models-on-databricks)
 
-## FAQs
+## Часто задаваемые вопросы
 
 * Что произойдёт, если мне понадобится больше лицензий на плане Starter?  
 _Если вам нужно больше лицензий developer, выберите [Contact Sales](https://www.getdbt.com/contact) в настройках биллинга и свяжитесь с отделом продаж для обсуждения плана Enterprise или Enterprise+._  

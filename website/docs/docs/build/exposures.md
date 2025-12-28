@@ -12,11 +12,11 @@ Exposures можно определить двумя способами:
 - **Вручную** — объявляются [явно](/docs/build/exposures#declaring-an-exposure) в YAML-файлах вашего проекта.
 - **Автоматически** — <Constant name="cloud" /> автоматически [создаёт и визуализирует downstream exposures](/docs/cloud-integrations/downstream-exposures) для поддерживаемых интеграций, устраняя необходимость в ручном описании YAML. Эти downstream exposures хранятся в системе метаданных dbt, отображаются в [<Constant name="explorer" />](/docs/explore/explore-projects) и ведут себя так же, как и вручную объявленные exposures. Однако они не существуют в виде YAML-файлов.
 
-### Declaring an exposure
+### Объявление exposure
 
 Экспозиции определяются в файлах `.yml`, вложенных под ключом `exposures:`.
 
-The following example shows an exposure definition in a `models/<filename>.yml` file:
+Следующий пример показывает определение exposure в файле `models/<filename>.yml`:
 
 <File name='models/<filename>.yml'>
 

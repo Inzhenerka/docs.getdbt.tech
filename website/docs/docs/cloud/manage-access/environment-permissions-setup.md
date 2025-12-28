@@ -20,7 +20,7 @@ pagination_prev: null
 
    Однако перед удалением этих групп убедитесь, что все существующие пользователи — включая вас — переназначены в соответствующие организационные группы. Вы не сможете удалить группу `Owner`, пока _как минимум_ один пользователь не будет добавлен в другую группу с набором разрешений администратора аккаунта либо пока не будет пользователя с IT‑лицензией. Этот защитный механизм гарантирует, что в аккаунте всегда есть администратор, способный управлять изменениями групп.
 
-<Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Groups & Licenses page in dbt with the default groups highlighted."/>
+<Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Страница «Группы и лицензии» в dbt с выделенными группами по умолчанию."/>
 
 3. Создайте новую группу или откройте существующую. Если это новая группа, задайте ей имя, затем прокрутите страницу до раздела **Access & permissions**. Нажмите **Add permission**.
 
@@ -33,7 +33,7 @@ pagination_prev: null
     - Analyst
     - Developer
 
-   Other permission sets are restricted because they have access to everything (for example, Account admin), or limitations prevent them from having write access to environments (for example, Account viewer).
+   Другие наборы разрешений ограничены, потому что у них есть доступ ко всему (например, Account admin), либо ограничения не позволяют им иметь доступ на запись к средам (например, Account viewer).
 
 Если вы выберете набор разрешений, который не поддерживается, параметр разрешений для среды не будет отображаться.
 

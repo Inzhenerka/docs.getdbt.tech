@@ -120,7 +120,7 @@ https://YOUR_ACCESS_URL/#/accounts/{account_id}/projects/{project_id}/jobs/{job_
 
 <WistiaVideo id="qiife5rzlp" paddingTweak="62.25%" />
 
-## Connect dbt to Airflow
+## Подключение dbt к Airflow
 
 Теперь у вас есть все необходимые рабочие компоненты, чтобы начать использовать связку Airflow + <Constant name="cloud" />. Пришло время **настроить подключение** и **запустить DAG в Airflow**, который будет инициировать выполнение задания <Constant name="cloud" />.
 

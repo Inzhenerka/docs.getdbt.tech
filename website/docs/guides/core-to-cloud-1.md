@@ -23,7 +23,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 <CoretoCloudTable/>
 
-<Expandable alt_header="What are dbt and dbt Core?">
+<Expandable alt_header="Что такое dbt и dbt Core?">
 
    - <Constant name="cloud" /> — это самый быстрый и надежный способ развертывания dbt. Он позволяет разрабатывать, тестировать, разворачивать и исследовать дата‑продукты с помощью единого полностью управляемого сервиса. Также он поддерживает:
      - Процессы разработки, адаптированные под разные роли ([<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation))

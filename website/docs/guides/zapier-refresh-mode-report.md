@@ -3,7 +3,7 @@ title: "Обновление дашборда Mode при завершении �
 id: zapier-refresh-mode-report
 description: Используйте Zapier, чтобы запускать обновление дашборда Mode после завершения задания dbt.  
 hoverSnippet: Узнайте, как использовать Zapier для запуска обновления дашборда Mode после завершения задания dbt.
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 минут' комментируем до тех пор, пока не протестируем
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']
@@ -45,7 +45,7 @@ level: 'Advanced'
 
 Значения в примере тела жестко закодированы и не отражают ваш проект, но они дают Zapier правильно сформированный объект во время разработки.
 
-## Store secrets 
+## Хранение секретов
 На следующем шаге вам понадобятся **Webhook Secret Key** из предыдущего шага, а также <Constant name="cloud" /> [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens), а также [Mode API token and secret](https://mode.com/developer/api-reference/authentication/).
 
 Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps), что предотвращает отображение ваших ключей в открытом виде в коде Zap. Вы сможете получить к ним доступ через [утилиту StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).

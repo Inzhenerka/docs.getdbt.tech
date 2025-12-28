@@ -242,7 +242,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-### Git commit
+### Коммит Git
 
 Модели, созданные в <Constant name="visual_editor" />, являются частью вашего общего dbt-проекта. Они автоматически сохраняются в папке `visual_editor` внутри директории `/models`. Вам не нужно настраивать пути или директории вручную.
 

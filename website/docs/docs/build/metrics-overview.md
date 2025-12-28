@@ -165,8 +165,8 @@ metrics:
 </File>
 
 <!-- not supported
-### Expression metrics
-Use [expression metrics](/docs/build/expr) when you're building a metric that involves a SQL expression of multiple measures.
+### Метрики выражений
+Используйте [expression metrics](/docs/build/expr), когда вы создаёте метрику, которая включает SQL-выражение из нескольких мер.
 
 ```yaml
 # Expression metric

@@ -19,8 +19,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project YAML file', value: 'project-yaml', },
-    { label: 'Properties YAML file', value: 'property-yaml', },
+    { label: 'YAML-файл проекта', value: 'project-yaml', },
+    { label: 'YAML-файл свойств', value: 'property-yaml', }
   ]
 }>
 <TabItem value="project-yaml">

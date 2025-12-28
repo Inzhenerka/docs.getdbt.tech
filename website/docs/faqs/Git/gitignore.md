@@ -35,7 +35,7 @@ dbt_modules/
 4. Сохраните изменения, но _не коммитьте_.
 5. Перезапустите IDE, нажав на три точки рядом с кнопкой **IDE Status** в нижнем правом углу экрана IDE и выберите **Restart IDE**.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.png" width="50%" title="Restart the IDE by clicking the three dots on the lower right or click on the Status bar" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.png" width="50%" title="Перезапустите IDE, нажав на три точки в правом нижнем углу, или нажмите на строку состояния" />
 
 6. После перезапуска <Constant name="cloud_ide" /> откройте **File <Constant name="explorer" />** и удалите следующие файлы или папки (если они существуют). Данные при этом не будут потеряны:
     * `target`, `dbt_modules`, `dbt_packages`, `logs`

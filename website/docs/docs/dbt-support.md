@@ -67,15 +67,15 @@ AI-виджет dbt Support Assistant является отдельным инс
 </details>
 
 <!--
-- **Enterprise plans** 
-  - Have [priority access](#severity-level-for-enterprise-support)
-  - Options for custom support coverage hours
-  - Receive implementation assistance
-  - Dedicated account management
-  - Security review by dbt Labs depending on price point
-- **Developer and Starter plans**
-  - 24x5 support
-  - No service level agreement included. If you are interested in adding one, [contact Sales](https://www.getdbt.com/pricing/) to ask about our Enterprise plan.
+- **Планы Enterprise**
+  - Имеют [приоритетный доступ](#severity-level-for-enterprise-support)
+  - Варианты индивидуальных часов покрытия поддержки
+  - Получают помощь при внедрении
+  - Выделенный менеджер аккаунта
+  - Проверка безопасности от dbt Labs в зависимости от ценового уровня
+- **Планы Developer и Starter**
+  - Поддержка 24x5
+  - Соглашение об уровне обслуживания не включено. Если вы заинтересованы в добавлении такого соглашения, [свяжитесь с отделом продаж](https://www.getdbt.com/pricing/), чтобы узнать о нашем плане Enterprise.
 -->
 
 ## Enterprise-аккаунты dbt

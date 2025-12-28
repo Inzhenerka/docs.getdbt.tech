@@ -9,7 +9,7 @@ meta:
   pypi_package: 'dbt-starrocks'
   min_core_version: 'v1.6.2'
   min_supported_version: 'Starrocks 2.5'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   slack_channel_name: '#db-starrocks'
   slack_channel_link: 'https://www.getdbt.com/community'
   platform_name: 'Starrocks'

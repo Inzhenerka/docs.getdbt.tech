@@ -6,24 +6,23 @@ title: Свойства моделей
 
 Вы можете назвать эти файлы как угодно, например, `whatever_you_want.yml`, и вкладывать их на любую глубину в подкаталоги внутри каталога `models/`.
 
-## Available top-level model properties
+## Доступные свойства модели верхнего уровня
 
-|Property|	Type	|Required	|Description|
+|Свойство|	Тип	|Обязательно	|Описание|
 |--------|--------|---------|-----------|
-|[name](/reference/resource-properties/model_name)	|string	|Yes	|The model name (must match the model filename).|
-|[description](/reference/resource-properties/description)|	string	|No	|Documentation for the model.|
-|[columns](/reference/resource-properties/columns) |	array	|No	|List of column definitions.|
-|[config](/reference/resource-properties/config)	|object|	No	|Model configuration (materialization, tags, etc.).|
-|[constraints](/reference/resource-properties/constraints)	|array	|No|	Model-level constraints (primary key, foreign key, etc.).|
-|[data_tests](/reference/resource-properties/data-tests)|	array|	No	|Model-level data tests.|
-|tests|	array|	No	|Legacy alias for data_tests.|
-|[versions](/reference/resource-properties/versions)|	array	|No	|Model version definitions.|
-|[latest_version](/reference/resource-properties/latest_version)|	string/float|	No	|The latest version of the model.|
-|[deprecation_date](/reference/resource-properties/deprecation_date)|	string|	No	|Date when the model is deprecated.|
-|[access](/reference/resource-configs/access)	|string|	No|	Access level: private, protected, or public. Supported at the top-level for backwards compatibility only. |
-|[time_spine](/docs/build/metricflow-time-spine)|	object	|No	|Time spine configuration for semantic layer.|
-
-### Example file
+|[name](/reference/resource-properties/model_name)	|string	|Да	|Имя модели (должно совпадать с именем файла модели).|
+|[description](/reference/resource-properties/description)|	string	|Нет	|Документация для модели.|
+|[columns](/reference/resource-properties/columns) |	array	|Нет	|Список определений столбцов.|
+|[config](/reference/resource-properties/config)	|object|	Нет	|Конфигурация модели (материализация, теги и т. д.).|
+|[constraints](/reference/resource-properties/constraints)	|array	|	Нет|	Ограничения на уровне модели (первичный ключ, внешний ключ и т. д.).|
+|[data_tests](/reference/resource-properties/data-tests)|	array|	Нет	|Тесты данных на уровне модели.|
+|tests|	array|	Нет	|Устаревший псевдоним для data_tests.|
+|[versions](/reference/resource-properties/versions)|	array	|Нет	|Определения версий модели.|
+|[latest_version](/reference/resource-properties/latest_version)|	string/float|	Нет	|Последняя версия модели.|
+|[deprecation_date](/reference/resource-properties/deprecation_date)|	string|	Нет	|Дата, когда модель помечена как устаревшая.|
+|[access](/reference/resource-configs/access)	|string|	Нет|	Уровень доступа: private, protected или public. Поддерживается только на верхнем уровне для обратной совместимости. |
+|[time_spine](/docs/build/metricflow-time-spine)|	object	|Нет	|Конфигурация временной оси для семантического слоя.|
+### Пример файла
 
 <File name='models/<filename>.yml'>
 

@@ -34,7 +34,7 @@ import LicenseTypes from '/snippets/_cloud-license-types.md';
 
 Вы можете изменить лицензию существующего пользователя, перейдя в раздел **Пользователи** в **Настройках аккаунта**, нажав на пользователя и выбрав **Редактировать** в панели пользователя. Удалите пользователей из этого же окна, чтобы освободить лицензии для новых пользователей.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/edit-user.png" width="40%" title="Example of the user information window in the user directory" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/edit-user.png" width="40%" title="Пример окна информации о пользователе в каталоге пользователей" />
 
 ### Пароли пользователей
 
@@ -70,7 +70,7 @@ import LicenseTypes from '/snippets/_cloud-license-types.md';
 - Создавайте новые группы в разделе **Groups & Licenses** в **Account settings**.
 - Если вы используете внешний IdP для SSO, вы можете синхронизировать эти SSO‑группы с <Constant name="cloud" /> из панели **Group details** при создании новой группы или редактировании существующей.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/new-group.png" width="60%" title="Example the new group pane in the account settings." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/new-group.png" width="60%" title="Пример панели новой группы в настройках учетной записи." />
 
 :::important
 
@@ -88,7 +88,7 @@ import LicenseTypes from '/snippets/_cloud-license-types.md';
 
 Такая настройка дает гибкость в определении уровня доступа для пользователей в любой группе. Например, вы можете разрешить одной группе аналитиков редактировать задания (jobs) в своем проекте, но предоставить им только просмотр связанных проектов. Или же вы можете выдать доступ уровня администратора команде, которая владеет конкретным проектом, оставив для остальных пользователей доступ только для чтения.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-access-policy.png" width="60%" title="Assign a variety of roles and access permissions to user groups." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-access-policy.png" width="60%" title="Назначайте различные роли и права доступа группам пользователей." />
 
 #### Права на запись в окружения (Environment write access)
 
@@ -96,7 +96,7 @@ import LicenseTypes from '/snippets/_cloud-license-types.md';
 
 В следующем примере набор разрешений `analyst`, который по умолчанию имеет доступ к jobs только для чтения, назначен группе во всех проектах. Однако параметр **Environment write access** установлен в значение `All Environments`. Это дает всем пользователям в данной группе возможность создавать, редактировать и удалять jobs во всех окружениях и проектах.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-write.png" width="60%" title="Users assigned environment write access will be able to edit environment settings." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-write.png" width="60%" title="Пользователи, которым назначен доступ на запись к среде, смогут редактировать настройки среды." />
 
 Используйте настройки **Environment write access** только в том случае, если вы действительно хотите предоставить пользователям возможность редактировать окружения. Если необходимо выдать пользователям только те права, которые заложены в их наборе разрешений, оставьте эту настройку пустой (все флажки сняты).
 
@@ -139,7 +139,7 @@ import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 <LicenseOverrideNote />
 
-### Permissions
+### Разрешения
 
 Права доступа определяют, что пользователь с лицензией Developer может делать в вашем аккаунте <Constant name="cloud" />. По умолчанию участники групп `Owner` и `Member` имеют полный доступ ко всем разделам и возможностям. Если вам нужно ограничить доступ к отдельным функциям, назначайте пользователей в группы с более строгими наборами прав. Обратите внимание: если пользователь состоит в нескольких группах, приоритет имеет группа с наиболее широкими правами.
 
@@ -213,11 +213,11 @@ import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 5. Их адрес электронной почты теперь подтверждён. Они нажимают **Authenticate with your enterprise login**, после чего процесс завершается.
 
-    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/email-verified.png" width="60%" title="The confirmation that the email address is verified." />
+    <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/email-verified.png" width="60%" title="Подтверждение того, что адрес электронной почты проверен." />
 
 Теперь Euclid вошёл в свою учётную запись. У него есть доступ только к проекту `Jaffle Shop`. В разделе **Orchestration** он может настроить учётные данные для разработки.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/orchestration-environments.png" width="60%" title="The Orchestration page with the environments." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/orchestration-environments.png" width="60%" title="Страница оркестрации со средами." />
 
 Окружение `Production` отображается, но доступ к нему ограничен режимом `read-only`, тогда как в окружении `Staging` у него есть полный доступ.
 
@@ -269,6 +269,6 @@ import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 </Expandable>
 
-## Learn more
+## Узнать больше
 
 <WistiaVideo id="al3w450mcn" paddingTweak="62.25%" />

@@ -3,7 +3,7 @@ title: "Обновление рабочей книги Tableau с извлече
 id: zapier-refresh-tableau-workbook
 description: Используйте Zapier, чтобы запускать обновление рабочей книги Tableau после успешного завершения задания dbt.
 hoverSnippet: Узнайте, как с помощью Zapier запускать обновление рабочей книги Tableau после успешного завершения задания dbt.
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' закомментировано до проведения тестирования
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']

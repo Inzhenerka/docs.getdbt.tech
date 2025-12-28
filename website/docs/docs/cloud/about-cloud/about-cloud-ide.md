@@ -1,8 +1,8 @@
 ---
-title: "About Studio IDE"
+title: "О Studio IDE"
 id: about-cloud-ide
-description: "about dbt Studio Integrated Development Environment"
-sidebar_label: About dbt Studio IDE
+description: "О интегрированной среде разработки dbt Studio"
+sidebar_label: О dbt Studio IDE
 ---
 
 Интегрированная среда разработки <Constant name="cloud" /> (<Constant name="cloud_ide" />) — это единый интерфейс для создания, тестирования, запуска и управления версиями dbt‑проектов прямо из браузера. С помощью Cloud <Constant name="cloud_ide" /> вы можете компилировать dbt‑код в SQL и выполнять его непосредственно в вашей базе данных.

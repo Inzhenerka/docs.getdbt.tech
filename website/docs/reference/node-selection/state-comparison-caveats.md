@@ -8,7 +8,7 @@ import StateModified from '/snippets/_state-modified-compare.md';
 
 Метод выбора [`state:`](/reference/node-selection/methods#state) — это мощная функция с множеством сложностей. Ниже приведены некоторые соображения при настройке автоматизированных задач, использующих сравнение состояний.
 
-### Seeds
+### Сиды
 
 dbt сохраняет хэш-файл seed-файлов размером менее 1 МиБ. Если содержимое этих seed-файлов изменено, seed будет включен в `state:modified`.
 
@@ -45,13 +45,13 @@ dbt test -s "state:modified"
 dbt run -s "state:modified"
 dbt test -s "state:modified" --exclude "test_name:relationships"
 ```
-### Overwrites the `manifest.json`
+### Перезаписывает `manifest.json`
 
 import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
 
 <Overwritesthemanifest />
 
-#### Recommendation
+#### Рекомендация
 
 import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overwriting-manifest.md'; 
 

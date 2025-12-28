@@ -16,7 +16,7 @@ sidebar_label: "Ошибка прав доступа GitHub и dbt"
 
 2. Затем перейдите в **Integrations**, после чего выберите **Applications**, чтобы определить, требуются ли какие-либо изменения разрешений. Обратите внимание, что администратор репозитория GitHub может видеть другой запрос на разрешения.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/github-applications.png" width="80%" title="Navigate to Application settings to identify permission changes." />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/github-applications.png" width="80%" title="Перейдите в настройки приложения, чтобы определить изменения разрешений." />
 
 3. Нажмите на **Review request**, а затем на следующей странице нажмите кнопку **Accept new permissions**.
 
@@ -35,7 +35,7 @@ sidebar_label: "Ошибка прав доступа GitHub и dbt"
 3. Нажмите на ссылку репозитория в разделе **Repository**.
 4. На странице **Repository details** нажмите **Edit**.
 5. Нажмите **Disconnect**, чтобы удалить интеграцию с GitHub.
-        <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" title="Disconnect and reconnect your git repository in your dbt Account settings pages."/>
+        <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" title="Отключите и повторно подключите ваш git-репозиторий на страницах настроек учетной записи dbt."/>
 6. Нажмите **Confirm Disconnect**.
 7. Вернитесь на страницу **Project details** и подключите репозиторий заново, нажав ссылку **Configure Repository**.
 8. Нажмите **GitHub** и выберите нужный репозиторий.

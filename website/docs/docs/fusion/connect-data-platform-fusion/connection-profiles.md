@@ -10,4 +10,4 @@ import ConnectionProfiles from '/snippets/_connection-profiles.md';
 
 ## Связанная документация
 
-- [About `profiles.yml`](/docs/fusion/connect-data-platform-fusion/profiles.yml)
+- [О `profiles.yml`](/docs/fusion/connect-data-platform-fusion/profiles.yml)

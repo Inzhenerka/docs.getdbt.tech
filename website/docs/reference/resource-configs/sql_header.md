@@ -4,14 +4,14 @@ description: "Sql_header - Прочтите это подробное руков
 datatype: "string"
 ---
 
-:::info `sql_header` does not support Jinja or macros like `ref` and `source`
+:::info `sql_header` не поддерживает Jinja или макросы вроде `ref` и `source`
 
-Unlike [pre-hooks and post-hooks](/reference/resource-configs/pre-hook-post-hook), macros like [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source), and references like [`{{ this }}`](/reference/dbt-jinja-functions/this), aren't supported.
+В отличие от [pre-хуков и post-хуков](/reference/resource-configs/pre-hook-post-hook), макросы вроде [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и ссылки вроде [`{{ this }}`](/reference/dbt-jinja-functions/this) не поддерживаются.
 
-The primary function of `set_sql_header` is fairly limited. It's intended to: 
-- [Create UDFs](/reference/resource-configs/sql_header#create-a-bigquery-temporary-udf)
-- [Set script variables](https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language) (BigQuery) 
-- [Set temporary session parameters](/reference/resource-configs/sql_header#set-snowflake-session-parameters-for-a-particular-model) (Snowflake)
+Основная функция `set_sql_header` довольно ограничена. Она предназначена для:
+- [Создания UDF](/reference/resource-configs/sql_header#create-a-bigquery-temporary-udf)
+- [Установки переменных скрипта](https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language) (BigQuery)
+- [Установки временных параметров сеанса](/reference/resource-configs/sql_header#set-snowflake-session-parameters-for-a-particular-model) (Snowflake)
 
 :::
 

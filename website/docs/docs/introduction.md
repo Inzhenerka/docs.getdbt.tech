@@ -23,7 +23,7 @@ dbt компилирует и выполняет ваш аналитически
 
 <Constant name="dbt_platform" /> предоставляет самый быстрый, надежный и масштабируемый способ развертывания dbt. Она позволяет командам данных оптимизировать процессы трансформации данных за счет разработки, тестирования, планирования и анализа моделей данных в рамках единого, полностью управляемого сервиса с веб‑интерфейсом (UI).
 
-You can learn about plans and pricing on [www.getdbt.com](https://www.getdbt.com/pricing/). Learn more about the [<Constant name="dbt_platform" /> features](/docs/cloud/about-cloud/dbt-cloud-features) and try one of the [<Constant name="cloud" /> quickstarts](/docs/get-started-dbt).
+Вы можете узнать о планах и ценах на [www.getdbt.com](https://www.getdbt.com/pricing/). Узнайте больше о [<Constant name="dbt_platform" /> возможностях](/docs/cloud/about-cloud/dbt-cloud-features) и попробуйте один из [<Constant name="cloud" /> быстрых стартов](/docs/get-started-dbt).
 
 ### Движок dbt Fusion
 

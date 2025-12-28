@@ -75,6 +75,6 @@ dbt Docs, доступный на планах разработчиков или
 
 <Constant name="cloud_ide" /> позволяет просматривать [документацию](/docs/build/documentation) вашего проекта dbt, пока код всё ещё находится в разработке. Такой рабочий процесс даёт возможность заранее изучить и проверить, как будет выглядеть сгенерированная документация проекта, ещё до того, как изменения будут выведены в продакшен.
 
-## Related docs
-- [Documentation](/docs/build/documentation)
+## Связанные документы
+- [Документация](/docs/build/documentation)
 - [<Constant name="explorer" />](/docs/explore/explore-projects)

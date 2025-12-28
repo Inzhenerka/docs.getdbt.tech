@@ -26,7 +26,7 @@ image: /img/docs/collaborate/dbt-explorer/model-query-queried-models.jpg
 Например, если `model_super_santi` был запрошен 10 раз за последнюю неделю, это будет считаться как 10 запросов на потребление за этот период времени.
 </Expandable>
 
-:::info Support for Snowflake (Enterprise tier or higher) and BigQuery
+:::info Поддержка Snowflake (уровень Enterprise или выше) и BigQuery
 
 История запросов моделей для пользователей Snowflake **доступна только для Enterprise tier или выше**. Эта функция также поддерживает BigQuery. Поддержка дополнительных платформ появится в ближайшее время.
 :::
@@ -51,13 +51,13 @@ image: /img/docs/collaborate/dbt-explorer/model-query-queried-models.jpg
 4. Нажмите кнопку **Test Permissions**, чтобы проверить, что права учетных данных для деплоя достаточны для поддержки истории запросов.
 5. Установите флажок **Enable query history**, чтобы включить функциональность.
 6. Нажмите **Save**, чтобы сохранить настройки.
-
-<Constant name="cloud" /> automatically enables query history for brand new environments. If query history fails to retrieve data, <Constant name="cloud" /> automatically disables it to prevent unintended warehouse costs.
+ 
+<Constant name="cloud" /> автоматически включает историю запросов для совершенно новых сред. Если истории запросов не удаётся получить данные, <Constant name="cloud" /> автоматически отключает её, чтобы предотвратить непредвиденные затраты на вычислительные ресурсы хранилища.
    - If the failure is temporary (like a network timeout), <Constant name="cloud" /> may retry.
-   - If the problem keeps happening (for example, missing permissions), <Constant name="cloud" /> turns off query history so customers don’t waste warehouse compute.
+   - Если проблема продолжает возникать (например, из‑за отсутствующих разрешений), <Constant name="cloud" /> отключает историю запросов, чтобы клиенты не тратили вычислительные ресурсы хранилища.
    
    To turn it back on, click **Test Permissions** in **Environment settings**. If the test succeeds, <Constant name="cloud" /> re-enables the environment.
-
+  
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.png" width="95%" title="Enable query history in your environment settings." />
 

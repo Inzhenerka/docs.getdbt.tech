@@ -15,7 +15,7 @@ image: /img/docs/collaborate/dbt-explorer/data-health-signal.jpg
 - Для получения корректных данных о здоровье убедитесь, что ресурс актуален и по нему недавно выполнялся job.
 - Каждый сигнал здоровья данных отражает ключевые компоненты состояния данных, такие как статус выполнения тестов, отсутствие описаний ресурсов, отсутствие тестов, отсутствие сборок за последние 30 дней [и многое другое](#data-health-signal-criteria).
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.jpg" width="55%" title="View data health signals for your models."/> 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.jpg" width="55%" title="Просматривайте сигналы состояния данных для ваших моделей."/> 
 
 ## Доступ к сигналам здоровья данных
 
@@ -27,7 +27,7 @@ image: /img/docs/collaborate/dbt-explorer/data-health-signal.jpg
 - В [DAG lineage graph](/docs/explore/explore-projects#project-lineage). Нажмите на любой узел, чтобы открыть панель с деталями узла и посмотреть его состояние.
 - В [Data health tiles](/docs/explore/data-tile), доступных через встраиваемый iFrame и отображаемых в вашем BI-дашборде.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.gif" width="95%" title="Access data health signals in multiple places in dbt Catalog."/> 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.gif" width="95%" title="Получайте доступ к сигналам состояния данных в нескольких местах в каталоге dbt."/> 
 
 ## Критерии сигналов здоровья данных
 

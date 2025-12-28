@@ -400,7 +400,7 @@ my-profile:
       execution_project: buck-stops-here-456
 ```
 
-### Quota project
+### Проект квот
 
 По умолчанию dbt использует значение `quota_project_id`, указанное в учётных данных аккаунта, с помощью которого вы аутентифицируетесь в BigQuery.
 
@@ -422,7 +422,7 @@ my-profile:
       quota_project: my-bq-quota-project
 ```
 
-### Running Python models on BigQuery DataFrames
+### Запуск моделей Python в DataFrames BigQuery
 
 Для запуска Python-моделей dbt в GCP dbt использует BigQuery DataFrames, которые выполняются напрямую на вычислительных ресурсах BigQuery, используя масштабируемость и производительность BigQuery.
 
@@ -444,7 +444,7 @@ my-profile:
       type: bigquery
 ```
 
-### Running Python models on Dataproc
+### Запуск моделей Python в Dataproc
 
 import BigQueryDataproc from '/snippets/_bigquery-dataproc.md';
 

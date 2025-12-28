@@ -79,7 +79,7 @@ import BastionServer from '/snippets/_bastion-server.md';
 
 ## FAQs
 
-<DetailsToggle alt_header="Database Error - could not connect to server: Connection timed out">
+<DetailsToggle alt_header="Ошибка базы данных - не удалось подключиться к серверу: время ожидания подключения истекло">
 При настройке подключения к базе данных через SSH-туннель требуются следующие компоненты:
 
 - Балансировщик нагрузки (например, ELB или NLB) для управления трафиком.

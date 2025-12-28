@@ -25,7 +25,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 
 В следующей таблице показаны основные различия между визуализацией и оркестрацией downstream exposures:
 
-| Info | Set up and visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
+28 | | Информация | Настройка и визуализация нижестоящих экспозиций | Оркестрация нижестоящих экспозиций <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
 | Purpose | Автоматически добавляет downstream‑активы в lineage dbt. | Проактивно обновляет базовые источники данных во время запланированных dbt jobs. |
 | Benefits | Обеспечивает видимость потоков данных и зависимостей. | Гарантирует, что BI‑инструменты всегда используют актуальные данные без ручного вмешательства. |

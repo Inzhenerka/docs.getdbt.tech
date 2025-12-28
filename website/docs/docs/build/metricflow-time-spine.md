@@ -317,7 +317,7 @@ and date_hour < dateadd(day, 30, current_timestamp())
 ## Пользовательский календарь <Lifecycle status="Preview"/>
 
 :::tip
-Check out our mini guide on [how to create a time spine table](/guides/mf-time-spine) to get started!
+Ознакомьтесь с нашим мини‑руководством о [how to create a time spine table](/guides/mf-time-spine) для начала!
 :::
 
 

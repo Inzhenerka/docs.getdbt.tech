@@ -35,8 +35,8 @@ dbt test --select "test_type:singular"
 
 <IndirSelect features={'/snippets/indirect-selection-definitions.md'}/>
 
-<!--tabs for eager mode, cautious mode, empty, and buildable mode -->
-<!--Tabs for 1.5+ -->
+<!--вкладки для жадного режима, осторожного режима, пустого и режима сборки -->
+<!--Вкладки для 1.5+ -->
 
 ### Примеры косвенного выбора
 

@@ -14,7 +14,7 @@ sidebar_label: invalidate_hard_deletes
 
 </IntroText>
 
-:::warning This is a legacy config &mdash; Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) config instead.
+:::warning Это устаревшая конфигурация &mdash; используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes) вместо этого.
 
 В релизных ветках <Constant name="cloud" />, а также в dbt Core версии 1.9 и выше, конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет `invalidate_hard_deletes`, обеспечивая более гибкий контроль над тем, как обрабатывать строки, удалённые из источника.
 

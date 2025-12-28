@@ -238,5 +238,5 @@ query ModelsAndTests($environmentId: BigInt!, $first: Int!) {
 
 ## Связанные материалы
 
-- [Use cases and examples for the Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples)
-- [Schema](/docs/dbt-cloud-apis/discovery-schema-job)
+- [Сценарии использования и примеры для API Discovery](/docs/dbt-cloud-apis/discovery-use-cases-and-examples)
+- [Схема](/docs/dbt-cloud-apis/discovery-schema-job)

@@ -5,7 +5,7 @@ description: "Настройка подключения PrivateLink между d
 sidebar_label: "PrivateLink для VCS"
 ---
 
-# Configuring PrivateLink for self-hosted cloud VCS <Lifecycle status="managed_plus" />
+# Настройка PrivateLink для самостоятельно размещённого облачного VCS <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
@@ -119,11 +119,11 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 **Чтобы настроить существующую git‑интеграцию с PrivateLink:**
 
-1. Click your account name at the bottom left-hand menu and go to **Account settings** > **Integrations**.
-2. Under **Gitlab**, select **PrivateLink Endpoint** as the connection type.
-    Your configured integrations will appear in the dropdown menu. 
-3. Select the configured endpoint from the dropdown list.
-4. Click **Save**.
+1. Щёлкните имя своей учётной записи в нижнем левом меню и перейдите в **Account settings** > **Integrations**.
+2. В разделе **Gitlab** выберите **PrivateLink Endpoint** в качестве типа подключения.
+     Настроенные интеграции появятся в выпадающем меню.
+3. Выберите настроенную конечную точку из выпадающего списка.
+4. Нажмите **Save**.
 
 
 <PrivateLinkTroubleshooting features={'/snippets/_privatelink-troubleshooting.md'}/>

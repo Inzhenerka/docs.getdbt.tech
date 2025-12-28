@@ -78,7 +78,7 @@ pagination_prev: null
 
 После настройки опции **Project subdirectory**, <Constant name="cloud" /> будет использовать её как корневой каталог вашего dbt‑проекта. Это означает, что команды dbt, такие как `dbt run` или `dbt test`, будут выполняться над файлами внутри указанного подкаталога. Если в подкаталоге Project отсутствует файл `dbt_project.yml`, вам будет предложено инициализировать dbt‑проект.
 
-:::info Project support in <Constant name="cloud" /> plans
+:::info Поддержка проекта в планах <Constant name="cloud" />
 
 Некоторые [планы](https://www.getdbt.com/pricing) поддерживают только один dbt‑проект, тогда как [планы уровня Enterprise](https://www.getdbt.com/contact) позволяют работать с несколькими проектами и использовать [межпроектные ссылки](/best-practices/how-we-mesh/mesh-1-intro) с помощью <Constant name="mesh" />.
 

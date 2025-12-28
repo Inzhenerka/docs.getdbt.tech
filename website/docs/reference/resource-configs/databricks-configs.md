@@ -8,7 +8,7 @@ tags: ['Databricks', 'dbt Fusion', 'dbt Core']
 
 При материализации модели как `table`, вы можете включить несколько дополнительных конфигураций, специфичных для плагина dbt-databricks, в дополнение к стандартным [конфигурациям моделей](/reference/model-configs).
 
-dbt-databricks v1.9 adds support for the `table_format: iceberg` config. Try it now on the [<Constant name="cloud" /> "Latest" release track](/docs/dbt-versions/cloud-release-tracks). All other table configurations were also supported in 1.8.
+dbt-databricks v1.9 добавляет поддержку конфигурации `table_format: iceberg`. Попробуйте уже сейчас в ветке релизов [<Constant name="cloud" /> "Latest"](/docs/dbt-versions/cloud-release-tracks). Все остальные конфигурации таблиц также поддерживались в версии 1.8.
 
 | Option    | Description| Required?     | Model support   | Example      |
 |-------------|--------|-----------|-----------------|---------------|
@@ -30,14 +30,14 @@ dbt-databricks v1.9 adds support for the `table_format: iceberg` config. Try it 
 
 ‡ `databricks_tags` are applied via `ALTER` statements. Tags cannot be removed via dbt-databricks once applied. To remove tags, use Databricks directly or a post-hook.
 
-<sup>^</sup> When `liquid_clustered_by` is enabled, dbt-databricks issues an `OPTIMIZE` (Liquid Clustering) operation after each run. To disable this behavior, set the variable `DATABRICKS_SKIP_OPTIMIZE=true`, which can be passed into the dbt run command (`dbt run --vars "{'databricks_skip_optimize': true}"`) or set as an environment variable. See [issue #802](https://github.com/databricks/dbt-databricks/issues/802).
+<sup>^</sup> Когда включён `liquid_clustered_by`, dbt-databricks выполняет операцию `OPTIMIZE` (Liquid Clustering) после каждого запуска. Чтобы отключить это поведение, установите переменную `DATABRICKS_SKIP_OPTIMIZE=true`, которую можно передать в команду запуска dbt (`dbt run --vars "{'databricks_skip_optimize': true}"`) или задать как переменную окружения. См. [issue #802](https://github.com/databricks/dbt-databricks/issues/802).
 
 \+ Do not use `liquid_clustered_by` and `auto_liquid_cluster` on the same model.
 
-In dbt-databricks v1.10, there are several new model configurations options gated behind the `use_materialization_v2` flag.
-For details, see the [documentation of Databricks behavior flags](/reference/global-configs/databricks-changes).
+В dbt-databricks v1.10 появилось несколько новых вариантов конфигурации моделей, доступных при включённом флаге `use_materialization_v2`.
+Подробнее см. [документацию по флагам поведения Databricks](/reference/global-configs/databricks-changes).
 
-### Python submission methods
+### Методы отправки Python
 _Доступно в версиях 1.9 и выше_
 
 В dbt-databricks v1.9 (попробуйте уже сейчас в [треке релизов <Constant name="cloud" /> «Latest»](/docs/dbt-versions/cloud-release-tracks)) вы можете использовать следующие четыре варианта для `submission_method`:
@@ -637,14 +637,14 @@ insert into analytics.replace_where_incremental
 </TabItem>
 </Tabs>
 
-### The `delete+insert` strategy
+### Стратегия `delete+insert`
+ 
+_Доступно в версиях 1.11 или выше_
 
-_Available in versions 1.11 or higher_
-
-The `delete+insert` incremental strategy requires:
+Инкрементальная стратегия `delete+insert` требует:
 - `file_format: delta`
-- A required `unique_key` configuration
-- Databricks Runtime 12.2 LTS or higher
+- Обязательной конфигурации `unique_key`
+- Databricks Runtime 12.2 LTS или выше
 
 The `delete+insert` strategy is a simpler alternative to the `merge` strategy for cases where you want to replace matching records without the complexity of updating specific columns. This strategy works in two steps:
 
@@ -656,9 +656,9 @@ This strategy is particularly useful when:
 - Your business logic requires a clean "remove and replace" approach
 - You need a simpler incremental strategy than `merge` for full record replacement
 
-When using Databricks Runtime 17.1 or higher, dbt uses the efficient [`INSERT INTO ... REPLACE ON` syntax](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) to perform this operation atomically. For older runtime versions, dbt executes separate `DELETE` and `INSERT` statements.
+При использовании Databricks Runtime версии 17.1 или выше dbt применяет эффективный синтаксис [`INSERT INTO ... REPLACE ON`](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) для атомарного выполнения этой операции. Для более старых версий runtime dbt выполняет отдельные операторы `DELETE` и `INSERT`.
 
-You can optionally use `incremental_predicates` to further filter which records are processed, providing more control over which rows are deleted and inserted.
+При необходимости вы можете использовать `incremental_predicates`, чтобы дополнительно отфильтровать обрабатываемые записи, получив больший контроль над тем, какие строки удаляются и вставляются.
 
 <Tabs
   defaultValue="source"
@@ -852,15 +852,15 @@ insert into analytics.replace_where_incremental
 
 ## Python model configuration
 
-The Databricks adapter supports Python models. Databricks uses PySpark as the processing framework for these models. 
+Адаптер Databricks поддерживает Python-модели. Databricks использует PySpark в качестве фреймворка обработки для этих моделей.
 
-**Submission methods:** Databricks supports a few different mechanisms to submit PySpark code, each with relative advantages. Some are better for supporting iterative development, while others are better for supporting lower-cost production deployments. The options are:
-- `all_purpose_cluster` (default): dbt will run your Python model using the cluster ID configured as `cluster` in your connection profile or for this specific model. These clusters are more expensive but also much more responsive. We recommend using an interactive all-purpose cluster for quicker iteration in development.
-  - `create_notebook: True`: dbt will upload your model's compiled PySpark code to a notebook in the namespace `/Shared/dbt_python_model/{schema}`, where `{schema}` is the configured schema for the model, and execute that notebook to run using the all-purpose cluster. The appeal of this approach is that you can easily open the notebook in the Databricks UI for debugging or fine-tuning right after running your model. Remember to copy any changes into your dbt `.py` model code before re-running.
-  - `create_notebook: False` (default): dbt will use the [Command API](https://docs.databricks.com/dev-tools/api/1.2/index.html#run-a-command), which is slightly faster.
-- `job_cluster`: dbt will upload your model's compiled PySpark code to a notebook in the namespace `/Shared/dbt_python_model/{schema}`, where `{schema}` is the configured schema for the model, and execute that notebook to run using a short-lived jobs cluster. For each Python model, Databricks will need to spin up the cluster, execute the model's PySpark transformation, and then spin down the cluster. As such, job clusters take longer before and after model execution, but they're also less expensive, so we recommend these for longer-running Python models in production. To use the `job_cluster` submission method, your model must be configured with `job_cluster_config`, which defines key-value properties for `new_cluster`, as defined in the [JobRunsSubmit API](https://docs.databricks.com/dev-tools/api/latest/jobs.html#operation/JobsRunsSubmit).
-
-You can configure each model's `submission_method` in all the standard ways you supply configuration:
+**Методы отправки:** Databricks поддерживает несколько различных механизмов отправки кода PySpark, каждый из которых имеет свои относительные преимущества. Одни лучше подходят для итеративной разработки, другие — для более дешёвых продакшн-развёртываний. Доступны следующие варианты:
+- `all_purpose_cluster` (по умолчанию): dbt будет запускать вашу Python-модель, используя идентификатор кластера, настроенный как `cluster` в вашем профиле подключения или для конкретной модели. Эти кластеры дороже, но значительно более отзывчивы. Мы рекомендуем использовать интерактивный all-purpose кластер для более быстрой итерации при разработке.
+  - `create_notebook: True`: dbt загрузит скомпилированный PySpark-код вашей модели в ноутбук в пространстве имён `/Shared/dbt_python_model/{schema}`, где `{schema}` — это настроенная схема модели, и выполнит этот ноутбук с использованием all-purpose кластера. Преимущество этого подхода в том, что вы можете легко открыть ноутбук в интерфейсе Databricks для отладки или тонкой настройки сразу после выполнения модели. Не забудьте скопировать все изменения обратно в код вашей dbt-модели `.py` перед повторным запуском.
+  - `create_notebook: False` (по умолчанию): dbt будет использовать [Command API](https://docs.databricks.com/dev-tools/api/1.2/index.html#run-a-command), который работает немного быстрее.
+- `job_cluster`: dbt загрузит скомпилированный PySpark-код вашей модели в ноутбук в пространстве имён `/Shared/dbt_python_model/{schema}`, где `{schema}` — это настроенная схема модели, и выполнит этот ноутбук, используя краткоживущий jobs-кластер. Для каждой Python-модели Databricks потребуется поднять кластер, выполнить PySpark-трансформацию модели, а затем остановить кластер. Поэтому job-кластеры требуют больше времени до и после выполнения модели, но они также дешевле, поэтому мы рекомендуем их для длительно выполняющихся Python-моделей в продакшене. Чтобы использовать метод отправки `job_cluster`, ваша модель должна быть настроена с `job_cluster_config`, который определяет свойства ключ-значение для `new_cluster`, как описано в [JobRunsSubmit API](https://docs.databricks.com/dev-tools/api/latest/jobs.html#operation/JobsRunsSubmit).
+ 
+Вы можете настроить `submission_method` для каждой модели всеми стандартными способами задания конфигурации:
 
 ```python
 def model(dbt, session):
@@ -891,14 +891,14 @@ models:
       +cluster_id: abcd-1234-wxyz
 ```
 
-If not configured, `dbt-spark` will use the built-in defaults: the all-purpose cluster (based on `cluster` in your connection profile) without creating a notebook. The `dbt-databricks` adapter will default to the cluster configured in `http_path`. We encourage explicitly configuring the clusters for Python models in Databricks projects.
-
+Если конфигурация не задана, `dbt-spark` будет использовать встроенные значения по умолчанию: all-purpose кластер (на основе `cluster` в вашем профиле подключения) без создания ноутбука. Адаптер `dbt-databricks` по умолчанию будет использовать кластер, настроенный в `http_path`. Мы рекомендуем явно настраивать кластеры для Python-моделей в проектах Databricks.
+ 
 **Installing packages:** When using all-purpose clusters, we recommend installing packages which you will be using to run your Python models.
 
 **Related docs:**
-- [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
-- [Databricks: Introduction to DataFrames - Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
-
+- [Синтаксис PySpark DataFrame](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
+- [Databricks: Введение в DataFrames — Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
+ 
 ## Выбор вычислительных ресурсов для каждой модели
 
 Начиная с версии 1.7.2, вы можете назначать, какой вычислительный ресурс использовать для каждой модели.
@@ -1188,16 +1188,16 @@ select * from {{ ref('my_seed') }}
 `partition_by` работает так же, как для представлений и таблиц, т.е. может быть одним столбцом или массивом столбцов для разделения.
 
 #### liquid_clustered_by
-_Available in versions 1.11 or higher_
+_Доступно в версиях 1.11 или выше_
 
-`liquid_clustered_by` enables [liquid clustering](https://docs.databricks.com/en/delta/clustering.html) for materialized views and streaming tables. Liquid clustering optimizes query performance by co-locating similar data within the same files, particularly beneficial for queries with selective filters on the clustered columns.
+`liquid_clustered_by` включает [liquid clustering](https://docs.databricks.com/en/delta/clustering.html) для материализованных представлений и стриминговых таблиц. Liquid clustering оптимизирует производительность запросов за счёт совместного размещения похожих данных в одних и тех же файлах, что особенно полезно для запросов с селективными фильтрами по кластеризованным столбцам.
 
-**Note:** You cannot use both `partition_by` and `liquid_clustered_by` on the same materialization, as Databricks doesn't allow combining these features.
+**Примечание:** Нельзя использовать `partition_by` и `liquid_clustered_by` одновременно в одной материализации, так как Databricks не позволяет комбинировать эти возможности.
 
 #### databricks_tags
-_Available in versions 1.11 or higher_
+_Доступно в версиях 1.11 или выше_
 
-`databricks_tags` allows you to apply [Unity Catalog tags](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html) to your materialized views and streaming tables for data governance and organization. Tags are key-value pairs that can be used for data classification, access control policies, and metadata management.
+`databricks_tags` позволяет применять [теги Unity Catalog](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html) к вашим материализованным представлениям и стриминговым таблицам для управления данными и их организации. Теги представляют собой пары ключ-значение и могут использоваться для классификации данных, политик контроля доступа и управления метаданными.
 
 ```sql
 {{ config(
@@ -1206,7 +1206,7 @@ _Available in versions 1.11 or higher_
 ) }}
 ```
 
-Tags are applied via `ALTER` statements after the materialization is created. Once applied, tags cannot be removed through dbt-databricks configuration changes. To remove tags, you must use Databricks directly or a post-hook.
+Теги применяются с помощью операторов `ALTER` после создания материализации. После применения теги нельзя удалить через изменения конфигурации dbt-databricks. Для удаления тегов необходимо использовать Databricks напрямую или post-hook.
 
 #### description
 Как и в случае представлений и таблиц, добавление `description` в вашу конфигурацию приведет к добавлению комментария на уровне таблицы в вашу материализацию.

@@ -19,7 +19,7 @@ flags:
 
 Словарь `flags` — это _единственное_ место, где вы можете отказаться от [изменений поведения](/reference/global-configs/behavior-changes), пока поддерживается устаревшее поведение.
 
-## Config precedence
+## Приоритет конфигурации
 
 import SettingFlags from '/snippets/_setting-flags.md';
 

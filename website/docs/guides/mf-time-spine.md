@@ -248,7 +248,7 @@ Time spine — это dbt‑модель, которая генерирует п
 При работе в <Constant name="cloud_ide" /> используйте кнопку **Preview**.
    <Lightbox src="/img/mf-guide-query.png" title="Validate the metrics and time spine output in the Studio IDE" />
 
-:::tip Extra credit!
+:::tip Дополнительные баллы!
 Для дополнительной практики попробуйте:
 
 - отсортировать результат команды `dbt sl query --metrics orders --group-by metric_time__year` по возрастанию `metric_time__year` (см. документацию по [командам dbt Semantic Layer](/docs/build/metricflow-commands#query));

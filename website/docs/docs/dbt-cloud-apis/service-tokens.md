@@ -4,7 +4,7 @@ id: "service-tokens"
 description: "Service account tokens help you define permissions for securing access to your dbt account and its projects."
 ---
 
-# Service account tokens <Lifecycle status="self_service,managed,managed_plus" />
+# Токены служебных учетных записей <Lifecycle status="self_service,managed,managed_plus" />
 
 Токены сервисных аккаунтов позволяют безопасно аутентифицироваться при работе с API <Constant name="cloud" />, назначая каждому токену узкий набор разрешений. Это обеспечивает более точное управление доступом к API. Хотя по своей сути они похожи на [personal access tokens](user-tokens), токены сервисных аккаунтов принадлежат аккаунту, а не конкретному пользователю.
 

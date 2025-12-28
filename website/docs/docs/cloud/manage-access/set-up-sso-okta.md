@@ -84,18 +84,18 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 Ожидаемые **User Attribute Statements**:
 
-| Name           | Name format | Value                | Description                     |
+| Имя           | Формат имени | Значение                | Описание                     |
 | -------------- | ----------- | -------------------- | ------------------------------- |
-| `email`        | Unspecified | `user.email`      | _Адрес электронной почты пользователя_ |
-| `first_name`   | Unspecified | `user.firstName`  | _Имя пользователя_              |
-| `last_name`    | Unspecified | `user.lastName`   | _Фамилия пользователя_          |
+| `email`        | Не указано | `user.email`      | _Адрес электронной почты пользователя_ |
+| `first_name`   | Не указано | `user.firstName`  | _Имя пользователя_              |
+| `last_name`    | Не указано | `user.lastName`   | _Фамилия пользователя_          |
 
 
 Ожидаемые **Group Attribute Statements**:
 
-| Name     | Name format | Filter        | Value | Description                                   |
+| Имя     | Формат имени | Фильтр        | Значение | Описание                                   |
 | -------- | ----------- | ------------- | ----- | --------------------------------------------- |
-| `groups` | Unspecified | Matches regex | `.*`  | _Группы, в которые входит пользователь_       |
+| `groups` | Не указано | Соответствует регулярному выражению | `.*`  | _Группы, в которые входит пользователь_       |
 
 
 **Примечание:** вы можете использовать более строгие условия для Group Attribute Statements, чем показано в примере выше. Например, если все группы <Constant name="cloud" /> в вашей организации начинаются с
@@ -148,9 +148,9 @@ internal app that we have created*. Нажмите **Finish**, чтобы зав
 Сначала перейдите на страницу **Enterprise &gt; Single Sign On** в разделе Account
 Settings. Затем нажмите кнопку **Edit** и укажите следующие параметры SSO:
 
-| Field | Value |
+| Поле | Значение |
 | ----- | ----- |
-| **Log&nbsp;in&nbsp;with** | Okta |
+| **Войти&nbsp;с&nbsp;помощью** | Okta |
 | **Identity&nbsp;Provider&nbsp;SSO&nbsp;Url** | Вставьте значение **Identity Provider Single Sign-On URL**, указанное в инструкциях по настройке Okta |
 | **Identity&nbsp;Provider&nbsp;Issuer** | Вставьте значение **Identity Provider Issuer**, указанное в инструкциях по настройке Okta |
 | **X.509&nbsp;Certificate** | Вставьте значение **X.509 Certificate**, указанное в инструкциях по настройке Okta; <br />**Примечание:** когда срок действия сертификата истечет, администратору Okta потребуется сгенерировать новый сертификат и вставить его в <Constant name="cloud" />, чтобы обеспечить непрерывный доступ к приложению. |

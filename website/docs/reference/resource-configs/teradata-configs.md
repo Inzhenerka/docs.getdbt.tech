@@ -162,7 +162,7 @@ id: "teradata-configs"
       ```
 
 Examples:
-* In SQL materialization definition file:
+* В файле определения материализации SQL:
 
 Перевод:
 

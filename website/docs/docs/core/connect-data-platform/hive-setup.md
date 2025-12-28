@@ -8,7 +8,7 @@ meta:
   github_repo: 'cloudera/dbt-hive'
   pypi_package: 'dbt-hive'
   min_core_version: 'v1.1.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-hive'
   slack_channel_link: 'https://getdbt.slack.com/archives/C0401DTNSKW'
@@ -36,7 +36,7 @@ dbt-hive поддерживает два механизма аутентифик
 - [`insecure`](#Insecure) Без аутентификации, рекомендуется только для тестирования.
 - [`ldap`](#ldap) Аутентификация через LDAP
 
-### Insecure
+### Небезопасно
 
 Этот метод рекомендуется только в случае, если у вас установлена локальная версия Hive и вы хотите протестировать адаптер dbt-hive.
 

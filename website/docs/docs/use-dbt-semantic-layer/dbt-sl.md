@@ -29,7 +29,7 @@ dbt Semantic Layer, работающий на базе [MetricFlow](/docs/build/
 
 ## Начало работы с dbt Semantic Layer
 
-<!-- this partial lives here: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Use it on diff pages and to tailor the message depending which instance can access the SL and what product lifecycle we're in. -->
+<!-- этот partial находится здесь: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. используйте его на разных страницах и для адаптации сообщения в зависимости от того, какой экземпляр может получить доступ к SL и на каком этапе жизненного цикла продукта мы находимся. -->
 
 import Features from '/snippets/_sl-plan-info.md'
 

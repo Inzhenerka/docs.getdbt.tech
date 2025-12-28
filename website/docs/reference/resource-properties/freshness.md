@@ -115,7 +115,7 @@ loaded_at_field: "convert_timezone('Australia/Sydney', 'UTC', created_at_local)"
 
 ## loaded_at_query
 
-Specify custom SQL to generate the `maxLoadedAt` timestamp on the source (rather than via warehouse metadata or the `loaded_at_field` config). Note that `loaded_at_query` should not be used if `loaded_at_field` is defined.
+Укажите пользовательский SQL для генерации временной метки `maxLoadedAt` на источнике (а не через метаданные хранилища или конфигурацию `loaded_at_field`). Обратите внимание, что `loaded_at_query` не следует использовать, если определён `loaded_at_field`.
 
 Examples: 
 
@@ -157,9 +157,9 @@ sources:
 
 ```
 
-Should not be configured if `loaded_at_field` is also configured, but if it is, dbt will use which ever value is closest to the table.
+Не следует настраивать, если также настроен `loaded_at_field`, но если это сделано, dbt будет использовать то значение, которое ближе всего к таблице.
 
-[Filter](#filter) won't work for `loaded_at_query`.
+[Filter](#filter) не будет работать для `loaded_at_query`.
 
 </VersionBlock>
 

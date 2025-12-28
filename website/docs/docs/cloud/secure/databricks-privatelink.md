@@ -6,7 +6,7 @@ sidebar_label: "AWS PrivateLink для Databricks"
 pagination_next: null
 ---
 
-# Configuring Databricks PrivateLink <Lifecycle status="managed_plus" />
+# Настройка Databricks PrivateLink <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';

@@ -24,15 +24,15 @@ id: "forum-guidelines"
 
 Форум разделен на три категории:
 
-- [Help](https://discourse.getdbt.com/c/help/19)
+- [Помощь](https://discourse.getdbt.com/c/help/19)
   - Это форум в формате вопросов и ответов, где вы можете обратиться к сообществу dbt за помощью с конкретными вопросами по dbt, <Constant name="cloud" />, моделированию данных или чему угодно ещё, по чему вы хотите получить однозначный ответ.
   - Эта категория предназначена для вопросов, на которые правдоподобно может существовать _единственный правильный ответ_.
-    - ✅ How do I debug this Jinja error?
-    - ✅ How do I set up CI in <Constant name="cloud" /> on GitHub?
-    - ❌ What is the best way to do marketing attribution? (Более общие обсуждения такого рода отлично подойдут для категории [In-Depth Discussions](https://discourse.getdbt.com/c/discussions/21))
-- [Show and Tell](https://discourse.getdbt.com/c/show-and-tell/22)
+    - ✅ Как отладить эту ошибку Jinja?
+    - ✅ Как настроить CI в <Constant name="cloud" /> на GitHub?
+    - ❌ Какой лучший способ делать маркетинговую атрибуцию? (Более общие обсуждения такого рода отлично подойдут для категории [In-Depth Discussions](https://discourse.getdbt.com/c/discussions/21))
+- [Покажи и расскажи](https://discourse.getdbt.com/c/show-and-tell/22)
   - Это место, где можно показать всё крутое, что вы делаете в dbt. Будь то новый макрос, паттерн проектирования или пакет — публикуйте здесь, чтобы поделиться с сообществом тем, над чем вы работаете!
-- [In-Depth Discussions](https://discourse.getdbt.com/c/discussions/21)
+- [Подробные обсуждения](https://discourse.getdbt.com/c/discussions/21)
   - Делитесь любыми мыслями, которые у вас возникают по поводу dbt или analytics engineering! Это отличное место, чтобы набросать идеи, поделиться ими с сообществом или запустить обсуждение темы, которая вас сейчас интересует.
 
 ## Инклюзивность на форуме сообщества

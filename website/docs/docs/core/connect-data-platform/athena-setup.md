@@ -21,7 +21,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-:::tip `dbt-athena` vs `dbt-athena-community`
+:::tip `dbt-athena` против `dbt-athena-community`
 
 `dbt-athena-community` был адаптером, поддерживаемым сообществом, до тех пор пока dbt Labs не взяла на себя его сопровождение в конце 2024 года. Сейчас и `dbt-athena`, и `dbt-athena-community` поддерживаются dbt Labs, однако `dbt-athena-community` фактически является лишь обёрткой над `dbt-athena`, опубликованной для обеспечения обратной совместимости.
 

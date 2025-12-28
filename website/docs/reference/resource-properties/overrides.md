@@ -4,7 +4,7 @@ datatype: string
 ---
 
 :::warning Deprecation
-The `overrides` property is deprecated in v1.10.
+Свойство `overrides` устарело в v1.10.
 :::
 
 <File name='models/<filename>.yml'>

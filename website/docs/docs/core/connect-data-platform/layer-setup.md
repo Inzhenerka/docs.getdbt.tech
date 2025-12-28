@@ -8,7 +8,7 @@ meta:
   github_repo: 'layerai/dbt-layer'
   pypi_package: 'dbt-layer-bigquery'
   min_core_version: 'v1.0.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#tools-layer'
   slack_channel_link: 'https://getdbt.slack.com/archives/C03STA39TFE'

@@ -48,13 +48,13 @@ image: /img/docs/collaborate/dbt-explorer/data-tile-pass.jpg
 4. Выберите exposure для дашборда и перейдите на вкладку **General**, чтобы посмотреть информацию о состоянии данных.
 5. На этой вкладке вы увидите:  
    - Имя exposure.  
-   - Статус data health: Data freshness passed, Data quality passed, Data may be stale, Data quality degraded.  
+   - Статус data health: Актуальность данных пройдена, Качество данных пройдено, Данные могут быть устаревшими, Качество данных ухудшено.  
    - Тип ресурса (model, source и так далее).  
-   - Статус дашборда: Failure, Pass, Stale.  
+   - Статус дашборда: Сбой, Пройдено, Устаревший.  
    - Также отображаются время последней выполненной проверки, время последней проверки и её длительность.
 6. Вы можете нажать кнопку **Open Dashboard** в правом верхнем углу, чтобы сразу открыть дашборд в вашем аналитическом инструменте.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-exposures.jpg" width="95%" title="View an exposure in dbt Catalog." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-exposures.jpg" width="95%" title="Просмотреть exposure в dbt Catalog." />
 
 ## Встраивание в вашу панель
 
@@ -66,7 +66,7 @@ image: /img/docs/collaborate/dbt-explorer/data-tile-pass.jpg
 2. В левой боковой панели выберите **API tokens**, затем — **Service tokens**.
 3. Нажмите **Create service token** и задайте для него имя.
 4. Выберите разрешение [**Metadata Only**](/docs/dbt-cloud-apis/service-tokens). Этот токен будет использоваться для встраивания плитки в ваш дашборд на следующих шагах.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-setup.jpg" width="95%" title="Set up your dashboard status tile and service token to embed a data health tile" />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-setup.jpg" width="95%" title="Настройте плитку статуса дашборда и сервисный токен, чтобы встроить плитку data health" />
 
 5. Скопируйте токен **Metadata Only** и сохраните его в безопасном месте. Он понадобится вам на следующих шагах.
 6. Вернитесь в <Constant name="explorer" /> и выберите exposure.
@@ -77,7 +77,7 @@ image: /img/docs/collaborate/dbt-explorer/data-tile-pass.jpg
 
 7. Ниже раздела **Data health** разверните переключатель с инструкциями о том, как встроить плитку exposure (если вы являетесь администратором аккаунта с правами develop).
 8. В развернутом блоке вы увидите текстовое поле, куда можно вставить ваш **Metadata Only token**.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-example.jpg" width="85%" title="Expand the toggle to embed data health tile into your dashboard." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-example.jpg" width="85%" title="Разверните переключатель, чтобы встроить плитку data health в ваш дашборд." />
 
 9. После того как вы вставили ваш токен, вы можете выбрать либо **URL**, либо **iFrame** в зависимости от того, что вам нужно добавить на вашу панель.
 

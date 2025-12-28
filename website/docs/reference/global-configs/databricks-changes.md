@@ -14,7 +14,7 @@ sidebar: "Databricks"
 | [`use_managed_iceberg`](#use-managed-iceberg) | 1.11.0 | 1.12.0 | Активен |
 | [`use_replace_on_for_insert_overwrite`](#use-replace-on-for-insert_overwrite-strategy) | 1.11.0 | 1.12.0 | Активен, по умолчанию `True` |
 
-## Use information schema for columns
+## Используйте information schema для столбцов
 
 :::caution Удалён в v1.11.0
 
@@ -38,7 +38,7 @@ _Применимо к версиям dbt-databricks v1.11 и ниже_
 
 :::
 
-## Use user's folder for Python model notebooks
+## Используйте папку пользователя для блокнотов моделей Python
 
 :::info Значение по умолчанию изменено в v1.11.0
 
@@ -60,7 +60,7 @@ flags:
   use_user_folder_for_python: false
 ```
 
-## Use restructured materializations
+## Используйте реструктурированные материализации
 
 Флаг `use_materialization_v2` по умолчанию имеет значение `False` и используется для защиты значительных переработок базовых materialization в `dbt-databricks`, пока они находятся на экспериментальной стадии.
 
@@ -199,11 +199,11 @@ models:
 
 </File>
 
-## Use managed Iceberg
+## Используйте управляемый Iceberg
 
 При установке `table_format` в `iceberg` флаг `use_managed_iceberg` определяет, как будет создана таблица. По умолчанию этот флаг равен `False`, и dbt создаёт таблицу в формате [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability). При установке в `True` dbt создаёт [managed Iceberg](https://docs.databricks.com/aws/en/tables/managed) таблицу.
 
-## Use `replace on` for `insert_overwrite` strategy
+## Используйте `replace on` для стратегии `insert_overwrite`
 
 Флаг `use_replace_on_for_insert_overwrite` актуален только при использовании incremental-моделей со стратегией `insert_overwrite` в SQL warehouses. По умолчанию флаг равен `True`, и используется синтаксис [`insert into ... replace on`](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) для выполнения динамической перезаписи партиций или кластеров — это то же поведение, что и в cluster computes. Если флаг установлен в `False`, `insert_overwrite` будет очищать всю таблицу при использовании SQL warehouses. Для cluster computes этот флаг не имеет значения, поскольку поведение `insert_overwrite` там всегда было динамической перезаписью партиций или кластеров.
 

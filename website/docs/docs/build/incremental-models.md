@@ -88,7 +88,7 @@ import Incrementalpredicates from '/snippets/_incremental-predicates.md';
 
 <Incrementalpredicates />
 
-### Defining a unique key
+### Определение уникального ключа
 
 Определение необязательного параметра [`unique_key`](/reference/resource-configs/unique_key) позволяет обновлять существующие строки, а не просто добавлять новые. Если для уже существующего `unique_key` поступает новая информация, она может заменить текущие данные вместо того, чтобы быть добавленной в таблицу. Если приходит дублирующаяся строка, она может быть проигнорирована. Подробнее о дополнительных возможностях управления этим поведением обновления (например, выборе конкретных столбцов для обновления) см. в разделе [strategy specific configs](/docs/build/incremental-strategy#strategy-specific-configs).
 

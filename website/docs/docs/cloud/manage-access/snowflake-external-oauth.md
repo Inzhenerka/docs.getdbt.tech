@@ -185,13 +185,13 @@ external_oauth_any_role_mode = 'ENABLE'
 
 <TabItem value="Entra ID">
 
-### 1. Initialize the dbt settings
+### 1. Инициализация настроек dbt
 
 1. В вашем аккаунте <Constant name="cloud" /> перейдите в **Account settings** —> **Integrations**.
 2. Прокрутите страницу вниз до раздела **Custom integrations** и нажмите **Add integrations**.
 3. Оставьте это окно открытым. Вы можете установить **Integration type** в значение Entra ID и обратить внимание на **Redirect URI** внизу страницы. Скопируйте его в буфер обмена — он понадобится на следующих шагах.
 
-### 2. Create the Entra ID apps
+### 2. Создание приложений Entra ID
 
 - Вам потребуется создать два приложения в портале Azure: **resource server** и **client app**.
 - В портале Azure откройте **Entra ID** и в левом меню выберите **App registrations**.

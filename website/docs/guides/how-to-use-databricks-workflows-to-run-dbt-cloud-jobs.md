@@ -4,7 +4,7 @@ id: how-to-use-databricks-workflows-to-run-dbt-cloud-jobs
 description: Узнайте, как использовать Databricks workflows для запуска dbt jobs
 displayText: "Использование Databricks workflows для запуска dbt jobs"
 hoverSnippet: Узнайте, как использовать Databricks workflows для запуска dbt jobs
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' закомментировано до проведения тестов
 icon: 'databricks'
 hide_table_of_contents: true
 tags: ['Databricks', 'dbt Core','dbt platform','Orchestration']

@@ -4,7 +4,7 @@ id: customize-schema-alias
 description: "Узнайте, как правильно настраивать макросы generate_schema_name() и generate_alias_name()."
 displayText: Узнайте, как настраивать generate schema name и generate alias name.
 hoverSnippet: Узнайте, как настраивать generate schema name и generate alias name.
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' комментируем до проведения тестирования
 icon: 'guides'
 hide_table_of_contents: true
 level: 'Advanced'

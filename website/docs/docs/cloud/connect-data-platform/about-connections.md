@@ -1,7 +1,7 @@
 ---
 title: "О подключениях к платформам данных"
 id: about-connections
-description: "Information about data platform connections"
+description: "Информация о подключениях к платформе данных"
 sidebar_label: "About data platform connections"
 pagination_next: "docs/cloud/connect-data-platform/connect-apache-spark"
 pagination_prev: null

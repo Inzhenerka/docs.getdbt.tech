@@ -3,7 +3,7 @@ title: Конфигурации снимков
 description: "Прочтите это руководство, чтобы узнать о конфигурациях снимков в dbt."
 meta:
   resource_type: Snapshots
-intro_text: "Learn about using snapshot configurations in dbt, including snapshot-specific configurations and general configurations."
+intro_text: "Узнайте об использовании конфигураций снимков в dbt, включая конфигурации, специфичные для снимков, и общие конфигурации."
 ---
 
 import ConfigResource from '/snippets/_config-description-resource.md';

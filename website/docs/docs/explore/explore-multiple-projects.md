@@ -20,7 +20,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
   - Это включает все проекты, указывающие вышестоящий как зависимость в файле `dependencies.yml`, даже без прямого `{{ ref() }}`.
 - Выбор узла проекта из публичной модели открывает его детализированный граф родословной, если у вас есть [разрешения](/docs/cloud/manage-access/enterprise-permissions) для этого.
 
-:::tip Indirect dependencies
+:::tip Косвенные зависимости
 При просмотре lineage проекта <Constant name="explorer" /> показывает только _напрямую_ [указанные](/docs/mesh/govern/project-dependencies) публичные модели. Он не отображает [косвенные зависимости](/faqs/Project_ref/indirectly-reference-upstream-model). Если модель, на которую ссылается ваш проект, зависит от другой публичной модели выше по цепочке, эта модель второго уровня не появится в <Constant name="explorer" />, однако она будет видна в представлении lineage в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
 :::
 

@@ -4,7 +4,7 @@ description: "Установить конфигурацию full_refresh для 
 datatype: boolean
 ---
 
-The `full_refresh` config allows you to control whether a resource will always or never perform a full-refresh. This config overrides the `--full-refresh` command-line flag.
+Конфигурация `full_refresh` позволяет управлять тем, будет ли ресурс всегда или никогда выполнять полное обновление. Эта конфигурация переопределяет флаг командной строки `--full-refresh`.
 
 <Tabs
   defaultValue="models"

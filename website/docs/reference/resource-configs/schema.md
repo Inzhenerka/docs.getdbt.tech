@@ -54,7 +54,7 @@ seeds:
 
 Например, если у вас есть снапшот, который вы хотите загрузить в схему, отличную от целевой схемы, вы можете настроить это следующим образом:
 
-In a `dbt_project.yml` file:
+В файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -66,7 +66,7 @@ snapshots:
 ```
 </File>
 
-In a `snapshots/snapshot_name.yml` file:
+В файле `snapshots/snapshot_name.yml`:
 
 <File name='snapshots/snapshot_name.yml'>
 
@@ -88,7 +88,7 @@ snapshots:
 
 <TabItem value="saved-queries" label="Сохраненные запросы">
 
-Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a [saved query](/docs/build/saved-queries#parameters) in your `dbt_project.yml` or property file.
+Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для [сохранённого запроса](/docs/build/saved-queries#parameters) в вашем `dbt_project.yml` или файле свойств.
 
 <File name='dbt_project.yml'>
 ```yml
@@ -97,7 +97,7 @@ saved-queries:
 ```
 </File>
 
-This would result in the saved query being stored in the `metrics` schema.
+В результате сохранённый запрос будет сохранён в схеме `metrics`.
 
 </TabItem>
 <TabItem value="tests" label="Тест">

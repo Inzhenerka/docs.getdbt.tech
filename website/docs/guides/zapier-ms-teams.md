@@ -3,7 +3,7 @@ title: "Отправка сообщения в Microsoft Teams при завер
 id: zapier-ms-teams
 description: Используйте Zapier и вебхуки dbt, чтобы отправлять сообщения в Microsoft Teams после завершения выполнения задания.
 hoverSnippet: Узнайте, как использовать Zapier вместе с вебхуками dbt для отправки сообщений в Microsoft Teams после завершения выполнения задания.
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' комментируем до тестирования
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']

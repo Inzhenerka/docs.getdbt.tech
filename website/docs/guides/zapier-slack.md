@@ -196,8 +196,8 @@ output = {'step_summary_post': step_summary_post, 'send_error_thread': send_erro
 
 ### 2. Добавление шага фильтрации
 Добавьте шаг **Filter** с следующими условиями:
-- **1. Text contains failed on Job**
-- **1. User Is Bot Is true**
+- **1. Текст содержит failed on Job**
+- **1. User Is Bot равно true**
 - **1. User Name Exactly matches <Constant name="cloud" />**
 
 ![Скриншот интерфейса Zapier, показывающий правильно настроенный шаг фильтрации](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-filter.png)

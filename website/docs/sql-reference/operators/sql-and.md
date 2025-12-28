@@ -30,7 +30,7 @@ join <table_b> on
 <a_id_1> = <b_id_1> and <a_id_2> = <b_id_2>
 ```
 
-:::tip Surrogate keys > joins with AND
+:::tip Суррогатные ключи > соединения с AND
 Использование <Term id="surrogate-key">surrogate keys</Term> — хешированных значений из нескольких колонок — отличный способ избежать использования операторов AND в join-ах. Как правило, наличие AND или [OR operators](/sql-reference/or) в условии join может приводить к потенциально неэффективным запросам или моделям, особенно при больших объёмах данных. Поэтому создание surrogate keys заранее в upstream-таблицах ([using the surrogate key macro](/blog/sql-surrogate-keys)) может потенциально повысить производительность downstream-моделей.
 :::
 :::

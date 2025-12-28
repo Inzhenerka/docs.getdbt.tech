@@ -9,7 +9,7 @@ sidebar_label: "Power BI"
 
 Интеграция с Power BI позволяет напрямую выполнять запросы к <Constant name="semantic_layer" />, что дает возможность строить дашборды в Power BI на основе доверенных, актуальных данных. Интеграция обеспечивает живое подключение к <Constant name="semantic_layer" /> через Power BI Desktop или Power BI Service.
 
-## Prerequisites
+## Предварительные требования
 
 - У вас настроен [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
 - Вы используете поддерживаемый [релизный трек <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks) или dbt версии 1.6 и выше.
@@ -22,15 +22,15 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Install the connector
+## Установка коннектора
 
 Power BI коннектор для <Constant name="semantic_layer" /> состоит из пользовательского Power BI коннектора `.pqx` и ODBC-драйвера. Установите оба компонента с помощью нашего Windows-инсталлятора, следуя шагам ниже:
 
-#### 1. Download and install the [`.msi` installer](https://github.com/dbt-labs/semantic-layer-powerbi-connector/releases/download/v1.0.0/dbt.Semantic.Layer.for.Power.BI.zip)
+#### 1. Загрузите и установите [`.msi`-установщик](https://github.com/dbt-labs/semantic-layer-powerbi-connector/releases/download/v1.0.0/dbt.Semantic.Layer.for.Power.BI.zip)
    - Запустите установщик и следуйте инструкциям на экране.
    - В результате ODBC-драйвер и коннектор будут установлены в Power BI Desktop.
 
-#### 2. Verify installation
+#### 2. Проверьте установку
    - Откройте **ODBC Data Sources (64-bit)** на вашем компьютере.
    - Перейдите в раздел **System DSN** и убедитесь, что зарегистрирован `dbt Labs ODBC DSN`. 
    - Перейдите в раздел **Drivers** и убедитесь, что установлен `dbt Labs ODBC Driver`.
@@ -38,7 +38,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Чтобы опубликованные отчеты в Power BI Service могли использовать коннектор, IT-администратор вашей организации должен установить и настроить его в On-premises Data Gateway.
 
-## For IT admins
+## Для ИТ-администраторов
 
 Этот раздел предназначен для IT-администраторов, которые устанавливают ODBC-драйвер и коннектор в On-premises Data Gateway.
 
@@ -60,7 +60,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Для получения дополнительной информации о настройке пользовательских коннекторов в Power BI On-premises Data Gateway обратитесь к [официальной документации Power BI](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors).
 
-## Configure the connector
+## Настройка коннектора
 
 После установки коннектора необходимо настроить учетные данные проекта, чтобы подключиться к <Constant name="semantic_layer" /> из отчета.
 
@@ -81,7 +81,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 После настройки коннектора вы можете настроить опубликованные отчеты в следующем разделе для использования этого подключения.
 
-## Configure published reports
+## Настройка опубликованных отчётов
 
 После публикации отчета и при первом нажатии **Publish** для конкретного отчета необходимо настроить Power BI Service для использования On-premises Data Gateway вашей организации для доступа к данным из <Constant name="semantic_layer" />:
 
@@ -100,7 +100,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Теперь вы можете вернуться к опубликованному отчету в Power BI Service и убедиться, что данные загружаются корректно.
 
-## Use the connector
+## Использование коннектора
 
 В этом разделе описывается, как использовать коннектор <Constant name="semantic_layer" /> в Power BI.
 
@@ -118,7 +118,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Это обеспечивает очень гибкие аналитические сценарии, такие как перетаскивание метрик и разрез данных по измерениям и сущностям &mdash; <Constant name="semantic_layer" /> автоматически сгенерирует корректный SQL для запроса к вашему источнику данных.
 
-## Considerations
+## Соображения
 
 <Expandable alt_header="Не каждый «столбец» METRICS.ALL совместим с любым другим столбцом">
 

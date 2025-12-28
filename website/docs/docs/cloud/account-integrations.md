@@ -24,7 +24,7 @@ description: "Узнайте, как настроить интеграции а�
 
 Вы можете подключить свой аккаунт <Constant name="cloud" /> к дополнительным провайдерам <Constant name="git" />, импортировав git‑репозиторий по любому допустимому git URL. Подробнее см. раздел [Import a git repository](/docs/cloud/git/import-a-project-by-git-url).
 
-<Lightbox src="/img/docs/dbt-cloud/account-integration-git.png" width="85%" title="Example of the Git integration page" />
+<Lightbox src="/img/docs/dbt-cloud/account-integration-git.png" width="85%" title="Пример страницы интеграции с Git" />
 
 ## Интеграции с OAuth
 

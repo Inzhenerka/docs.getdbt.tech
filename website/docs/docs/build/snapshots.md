@@ -440,7 +440,7 @@ snapshots:
 
   </Expandable>
 
-- For the `check` strategy, the current timestamp is used to populate each column. If configured, the `check` strategy uses the `updated_at` column instead, as with the timestamp strategy.
+ - Для стратегии `check` текущая временная метка используется для заполнения каждого столбца. Если настроено, стратегия `check` вместо этого использует столбец `updated_at`, как и стратегия временных меток.
 
 <Expandable alt_header="Пример результатов для стратегии check">
 

@@ -37,7 +37,7 @@ Databricks построен на базе [Delta Lake](https://docs.databricks.c
 | table_format | Формат таблиц, создаваемых моделями dbt. | Optional | Автоматически устанавливается в `iceberg` для `catalog_type=unity` и в `default` для `hive_metastore`. |
 | file_format | Формат файлов, используемый для результатов моделей dbt. | Optional | По умолчанию `delta`, если не переопределён на уровне аккаунта Databricks. |
 
-#### Note
+#### Примечание
 
 В Databricks, если у модели в конфигурации указано `catalog_name=<>`, имя каталога становится частью FQN модели. Например, если каталог называется `my_database`, модель с `catalog_name='my_database'` будет материализована как `my_database.<schema>.<model>`.
 

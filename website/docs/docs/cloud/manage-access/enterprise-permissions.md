@@ -6,7 +6,7 @@ hide_table_of_contents: true #Для таблиц на этой странице
 pagination_next: null
 ---
 
-# Enterprise permissions <Lifecycle status="managed,managed_plus" />
+# Корпоративные разрешения <Lifecycle status="managed,managed_plus" />
 
 import Permissions from '/snippets/_enterprise-permissions-table.md';
 import SetUpPages from '/snippets/_available-enterprise-only.md';

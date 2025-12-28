@@ -33,7 +33,7 @@ id: "connect-gitlab"
 - Для планов Developer или Starter ознакомьтесь с этими [инструкциями](#for-dbt-developer-and-starter-plans).
 - Для планов Enterprise или Enterprise+ перейдите к этим [инструкциям](#for-the-dbt-enterprise-plans).
 
-## For dbt Developer and Starter plans
+## Для планов dbt Developer и Starter
 
 Прежде чем вы сможете работать с репозиториями GitLab в <Constant name="cloud" />, необходимо подключить ваш аккаунт GitLab к пользовательскому профилю. Это позволяет <Constant name="cloud" /> аутентифицировать ваши действия при взаимодействии с Git‑репозиториями. Перед подключением аккаунта обязательно ознакомьтесь с [ограничениями](#limitations) планов Team и Developer.
 

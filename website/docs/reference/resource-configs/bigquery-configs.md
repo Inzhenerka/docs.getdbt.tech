@@ -6,7 +6,7 @@ tags: ['BigQuery', 'dbt Fusion', 'dbt Core']
 ---
 
 <!----
-To-do:
+Список дел:
 - использовать структуру reference-доков для этой статьи / разбить на отдельные статьи
 --->
 
@@ -20,7 +20,7 @@ To-do:
 
 ## Использование партиционирования и кластеризации таблиц
 
-### Partition clause
+### Предложение PARTITION
 
 BigQuery поддерживает использование выражения [partition by](https://cloud.google.com/bigquery/docs/data-definition-language#specifying_table_partitioning_options), которое позволяет легко партиционировать <Term id="table" /> по колонке или выражению. Эта опция помогает снизить задержки и стоимость при запросах к большим таблицам. Обратите внимание, что отсечение партиций (partition pruning) [работает только](https://cloud.google.com/bigquery/docs/querying-partitioned-tables#use_a_constant_filter_expression) в том случае, если фильтрация партиций выполняется с использованием литеральных значений (то есть выбор партиций через <Term id="subquery" /> не улучшит производительность).
 
@@ -266,7 +266,7 @@ as (
 
 </File>
 
-### Clustering clause
+### Предложение CLUSTERING
 
 Таблицы BigQuery могут быть [кластеризованы](https://cloud.google.com/bigquery/docs/clustered-tables) для совместного размещения связанных данных.
 

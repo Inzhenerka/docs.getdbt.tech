@@ -70,7 +70,7 @@ select 1 as id
 
 ## flags.WHICH
 
-`flags.WHICH` is a global variable that gets set when you run a dbt command. If used in a macro, it allows you to conditionally change behavior depending on the command currently being executed. For example, conditionally modifying SQL:
+`flags.WHICH` — это глобальная переменная, которая устанавливается при выполнении команды dbt. При использовании в макросе она позволяет условно изменять поведение в зависимости от команды, которая выполняется в данный момент. Например, условно изменяя SQL:
 
 ```sql
 {% macro conditional_filter(table_name) %}
@@ -90,32 +90,32 @@ select 1 as id
 {% endmacro %}
 ```
 
-The following commands are supported: 
+Поддерживаются следующие команды:
 
-| `flags.WHICH` value | Description                                                                                     |
+| `flags.WHICH` value | Описание                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `"build"`           | Build and test all selected resources.                                 |
-| `"clean"`           | Remove artifacts like target directory and packages.                 |
-| `"clone"`           | Clone models and other resources.                                                      |
-| `"compile"`         | Compile SQL, but do not execute.                                     |
-| `"debug"`           | Test connections and validate configs.                                 |
-| `"deps"`            | Download package dependencies.                                          |
-| `"docs"`            | Generate and serve documentation.                                         |
-| `"environment"`     | Workspace environment commands (cloud CLI).                      |
-| `"help"`            | Show help for commands and subcommands.                                    |
-| `"init"`            | Bootstrap a new project.                                                |
-| `"invocation"`      | For interacting with or inspecting current invocation (cloud CLI). |
-| `"list"`            | List resources.                                              |
-| `"parse"`           | Parse project and report errors, but don’t build/test.                 |
-| `"retry"`           | Retry the last invocation from the point of failure.                   |
-| `"run"`             | Execute models.                                                          |
-| `"run-operation"`   | Invoke arbitrary macros or SQL ops.                            |
-| `"seed"`            | Load CSV(s) into the database.                                          |
-| `"show"`            | Inspect resource definitions or materializations.                       |
-| `"snapshot"`        | Execute snapshots.                                                  |
-| `"source"`          | Validate freshness and inspect source definitions.                       |
-| `"test"`            | Schema and data tests.                                                    |
-| `"version"`         | Display dbt version.                                                 |
+| "build"           | Сборка и тестирование всех выбранных ресурсов.                                 |
+| "clean"           | Удаление артефактов, таких как каталог target и пакеты.                 |
+| "clone"           | Клонирование моделей и других ресурсов.                                                      |
+| "compile"         | Компиляция SQL без выполнения.                                     |
+| "debug"           | Проверка подключений и валидация конфигураций.                                 |
+| "deps"            | Загрузка зависимостей пакетов.                                          |
+| "docs"            | Генерация и публикация документации.                                         |
+| "environment"     | Команды окружения рабочего пространства (cloud CLI).                      |
+| "help"            | Отображение справки по командам и подкомандам.                                    |
+| "init"            | Инициализация нового проекта.                                                |
+| "invocation"      | Взаимодействие с текущим вызовом или его инспекция (cloud CLI). |
+| "list"            | Вывод списка ресурсов.                                              |
+| "parse"           | Разбор проекта и сообщение об ошибках без сборки/тестирования.                 |
+| "retry"           | Повтор последнего вызова с места сбоя.                   |
+| "run"             | Выполнение моделей.                                                          |
+| "run-operation"   | Вызов произвольных макросов или SQL-операций.                            |
+| "seed"            | Загрузка CSV-файлов в базу данных.                                          |
+| "show"            | Просмотр определений ресурсов или материализаций.                       |
+| "snapshot"        | Выполнение снапшотов.                                                  |
+| "source"          | Проверка свежести и просмотр определений источников.                       |
+| "test"            | Схемные и тесты данных.                                                    |
+| "version"         | Отображение версии dbt.                                                 |
 
 
 

@@ -48,7 +48,7 @@ pagination_next: null
 
 <Lightbox src="/img/onehouse/onehouse-dbt.png" width="70%" title="Конфигурация Onehouse"/>
 
-## dbt project
+## проект dbt
 
 Мы рекомендуем задать конфигурации по умолчанию в dbt_project.yml, чтобы адаптер выполнялся с SQL, совместимым с Onehouse.
 

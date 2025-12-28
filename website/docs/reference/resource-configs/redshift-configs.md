@@ -6,9 +6,9 @@ tags: ['Redshift', 'dbt Fusion', 'dbt Core']
 ---
 
 <!----
-To-do:
-- use the reference doc structure for this article/split into separate articles
-- think about whether some of these should be outside of models
+Список задач:
+- использовать структуру справочной документации для этой статьи/разделить на отдельные статьи
+- подумать, не должны ли некоторые из них быть вне моделей
 --->
 
 ## Стратегии инкрементальной материализации

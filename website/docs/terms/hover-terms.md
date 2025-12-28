@@ -85,7 +85,7 @@ json:
 
 lsp:
   displayText: LSP
-  hoverSnippet: Language Server Protocol (LSP) enables developer features like live CTE previews, hover info, error highlighting, and more.
+  hoverSnippet: Протокол Language Server Protocol (LSP) обеспечивает возможности для разработчиков, такие как живые предпросмотры CTE, информация при наведении, подсветка ошибок и многое другое.
 
 materialization:
   displayText: materialization 
@@ -117,19 +117,19 @@ reverse-etl:
 
 scalar:
   displayText: scalar
-  hoverSnippet: A UDF type that returns a single value per row.
+  hoverSnippet: Тип UDF, который возвращает одно значение на строку.
 
 scalar-value:
   displayText: scalar value
-  hoverSnippet: A single piece of data (for example, a number or string) rather than a collection or set of values.
+  hoverSnippet: Отдельное значение данных (например, число или строка), а не коллекция или набор значений.
 
 sql-expression:
   displayText: SQL expression
-  hoverSnippet: A SQL expression is a combination of columns, values, operators, and functions that evaluates to a single value.
+  hoverSnippet: SQL-выражение — это комбинация столбцов, значений, операторов и функций, которая вычисляется в одно значение.
 
 sql-rendering:
   displayText: SQL rendering  
-  hoverSnippet: The dbt Core engine takes SQL with Jinja, and renders all the macros present in the model to produce SQL that is ready to run against the database. For SQL parsing and compilation capabilities, use the Fusion engine instead to better understand your SQL structure.
+  hoverSnippet: Движок dbt Core принимает SQL с Jinja и рендерит все макросы, присутствующие в модели, чтобы получить SQL, готовый к выполнению в базе данных. Для возможностей парсинга и компиляции SQL вместо этого используйте движок Fusion, чтобы лучше понимать структуру вашего SQL.
 
 subquery:
   displayText: subquery

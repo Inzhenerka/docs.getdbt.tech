@@ -33,7 +33,7 @@ dbt run --select "3+my_model+4"      # select my_model, its ancestors up to the 
 
 Селектор `@snowplow_web_page_context` соберёт все три модели, показанные на диаграмме ниже.
 
-<Lightbox src="/img/docs/running-a-dbt-project/command-line-interface/1643e30-Screen_Shot_2019-03-11_at_7.18.20_PM.png" title="@snowplow_web_page_context will select all of the models shown here"/>
+<Lightbox src="/img/docs/running-a-dbt-project/command-line-interface/1643e30-Screen_Shot_2019-03-11_at_7.18.20_PM.png" title="@snowplow_web_page_context выберет все модели, показанные здесь"/>
 
 ```bash
 dbt run --select "@my_model"         # select my_model, its descendants, and the ancestors of its descendants

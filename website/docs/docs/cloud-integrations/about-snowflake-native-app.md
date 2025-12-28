@@ -42,15 +42,15 @@ dbt Snowflake Native App &mdash; созданное на базе Snowflake Nati
 
 Если ваш dbt Snowflake Native App уже настроен, при следующем доступе к <Constant name="cloud" /> из приложения вам будет предложено [связать учетные данные](#link-credentials). Это одноразовая процедура.
 
-## Procurement
+## Закупки
 dbt Snowflake Native App доступен в [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2UA/dbt-labs-dbt). Его приобретение включает доступ к Native App и учетную запись <Constant name="cloud" /> на тарифном плане Enterprise. Существующие клиенты <Constant name="cloud" /> с тарифом Enterprise также могут получить к нему доступ. Если вам это интересно, свяжитесь с вашим аккаунт-менеджером Enterprise.
 
 Если вы заинтересованы, пожалуйста, [свяжитесь с нами](mailto:sales_snowflake_marketplace@dbtlabs.com) для получения дополнительной информации.
 
-## Support
+## Поддержка
 Если у вас есть какие-либо вопросы по dbt Snowflake Native App, вы можете [связаться с нашей командой поддержки](mailto:dbt-snowflake-marketplace@dbtlabs.com) для получения помощи. Пожалуйста, предоставьте информацию о вашей установке Native App, включая идентификатор аккаунта <Constant name="cloud" /> и идентификатор аккаунта Snowflake.
 
-## Limitations
+## Ограничения
 - Native App не поддерживает аккаунты <Constant name="cloud" /> с включёнными [IP Restrictions](/docs/cloud/secure/ip-restrictions).
 
 ## Ограничения

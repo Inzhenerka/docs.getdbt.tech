@@ -26,7 +26,7 @@ sidebar_label: "Подключение Snowflake"
 
 В этом разделе описываются различные методы аутентификации для подключения <Constant name="cloud" /> к Snowflake. Учетные данные для сред развертывания (Production, Staging, General) настраиваются глобально в разделе [**Connections**](/docs/deploy/deploy-environments#deployment-connection) в **Account settings**. Отдельные пользователи настраивают свои учетные данные для разработки в разделе [**Credentials**](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) своего профиля пользователя.
 
-### Username and password with MFA
+### Имя пользователя и пароль с MFA
 
 :::info Snowflake authentication
 

@@ -231,7 +231,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
       ```sql
       GRANT EXECUTE FUNCTION ON GLOBAL_FUNCTIONS TO PUBLIC WITH GRANT OPTION;
       ```
-  Instruction on how to add md5_udf variable in dbt_project.yml for custom hash function:
+  Инструкция о том, как добавить переменную md5_udf в dbt_project.yml для пользовательской хеш-функции:
   ```yaml
   vars:
     md5_udf: Custom_database_name.hash_method_function

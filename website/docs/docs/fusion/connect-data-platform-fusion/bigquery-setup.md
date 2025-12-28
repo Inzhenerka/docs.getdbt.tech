@@ -20,7 +20,7 @@ meta:
 Вы можете настроить адаптер BigQuery, выполнив команду `dbt init` в CLI, либо вручную создав файл `profiles.yml` с полями, настроенными в соответствии с выбранным типом аутентификации.
 
 Адаптер BigQuery для Fusion поддерживает следующие [методы аутентификации](#supported-authentication-types):
-- Service account (JSON file)
+- Сервисный аккаунт (JSON-файл)
 - gcloud OAuth
 
 ## Разрешения BigQuery

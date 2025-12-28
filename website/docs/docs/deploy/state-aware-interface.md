@@ -31,14 +31,14 @@ tags: ['scheduler','SAO', 'cost savings', 'models built']
 State-aware jobs предоставляют диаграммы, которые показывают информацию о запусках job, а также сколько моделей было собрано и повторно использовано за последнюю неделю, за последние 14 дней или за последние 30 дней. В разделе **Overview** вашего job доступны следующие диаграммы:
 
 Во вкладке **Runs**:
-- **Recent runs**
-- **Total run duration time** 
+ - **Последние запуски**
+ - **Общая длительность выполнения** 
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-runs-chart.png" width="90%" title="Диаграммы Recent runs и Total run duration time"/>
 
 Во вкладке **Models**:
-- **Models built** 
-- **Models reused**
+ - **Созданные модели** 
+ - **Повторно использованные модели** 
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-models-chart.png" width="90%" title="Диаграммы Models built и Models reused"/>
 

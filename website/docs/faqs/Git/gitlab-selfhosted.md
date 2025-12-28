@@ -1,7 +1,7 @@
 ---
-title: Can self-hosted GitLab instances only be connected via dbt Enterprise plans?
-description: "Self hosted GitLab instances plan availability"
-sidebar_label: 'Self-hosted GitLab instances available for dbt Enterprise'
+title: Можно ли подключать самостоятельно размещённые экземпляры GitLab только через планы dbt Enterprise?
+description: "Доступность планов для самостоятельно размещённых экземпляров GitLab"
+sidebar_label: 'Самостоятельно размещённые экземпляры GitLab, доступные для dbt Enterprise'
 id: gitlab-selfhosted
 ---
 

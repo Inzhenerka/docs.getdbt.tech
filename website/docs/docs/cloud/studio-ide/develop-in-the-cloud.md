@@ -1,170 +1,170 @@
 ---
-title: "About the Studio IDE"
+title: "О Studio IDE"
 id: develop-in-studio
-description: "Develop, test, run, and build in the Studio IDE. You can compile dbt code into SQL and run it against your database directly"
-sidebar_label: About the IDE
+description: "Разрабатывайте, тестируйте, запускайте и собирайте в Studio IDE. Вы можете компилировать dbt‑код в SQL и запускать его напрямую в вашей базе данных"
+sidebar_label: О IDE
 tags: [IDE]
 pagination_next: "docs/cloud/studio-ide/keyboard-shortcuts"
 pagination_prev: null
 ---
 
-The <Constant name="cloud" /> integrated development environment (<Constant name="cloud_ide" />) is a single web-based interface for building, testing, running, and version-controlling dbt projects. It compiles dbt code into SQL and executes it directly on your database. 
+Интегрированная среда разработки <Constant name="cloud" /> (<Constant name="cloud_ide" />) — это единый веб-интерфейс для разработки, тестирования, запуска и управления версиями проектов dbt. Она компилирует код dbt в SQL и выполняет его напрямую в вашей базе данных.
 
-The <Constant name="cloud_ide" /> offers several [keyboard shortcuts](/docs/cloud/studio-ide/keyboard-shortcuts) and [editing features](/docs/cloud/studio-ide/ide-user-interface#editing-features) for faster and efficient development and governance:
+<Constant name="cloud_ide" /> предлагает несколько [сочетаний клавиш](/docs/cloud/studio-ide/keyboard-shortcuts) и [функций редактирования](/docs/cloud/studio-ide/ide-user-interface#editing-features) для более быстрой и эффективной разработки и управления:
 
-- Syntax highlighting for SQL &mdash; Makes it easy to distinguish different parts of your code, reducing syntax errors and enhancing readability.
-- AI copilot &mdash; Use [<Constant name="copilot" />](/docs/cloud/dbt-copilot), an AI-powered assistant that can [generate code](/docs/cloud/studio-ide/develop-copilot#generate-and-edit-code) using natural language, and [generate resources](/docs/cloud/studio-ide/develop-copilot#generate-resources) (like documentation, tests, and semantic models) for you &mdash; with the click of a button. Check out [Develop with <Constant name="copilot" />](/docs/cloud/studio-ide/develop-copilot) for more details.
-- Auto-completion &mdash; Suggests table names, arguments, and column names as you type, saving time and reducing typos.
-- Code [formatting and linting](/docs/cloud/studio-ide/lint-format) &mdash; Helps standardize and fix your SQL code effortlessly.
-- Navigation tools &mdash; Easily move around your code, jump to specific lines, find and replace text, and navigate between project files.
-- Version control &mdash; Manage code versions with a few clicks.
-- Project documentation &mdash; Generate and view your [project documentation](#build-and-document-your-projects) for your dbt project in real-time.
-- Build, test, and run button &mdash; Build, test, and run your project with a button click or by using the <Constant name="cloud_ide" /> command bar.  
+- Подсветка синтаксиса для SQL &mdash; упрощает различение различных частей кода, снижая количество синтаксических ошибок и повышая читаемость.
+- AI copilot &mdash; используйте [<Constant name="copilot" />](/docs/cloud/dbt-copilot), помощника на базе ИИ, который может [генерировать код](/docs/cloud/studio-ide/develop-copilot#generate-and-edit-code) с помощью естественного языка и [создавать ресурсы](/docs/cloud/studio-ide/develop-copilot#generate-resources) (например, документацию, тесты и семантические модели) для вас &mdash; одним нажатием кнопки. Подробнее см. [Разработка с <Constant name="copilot" />](/docs/cloud/studio-ide/develop-copilot).
+- Автодополнение &mdash; предлагает имена таблиц, аргументы и названия столбцов по мере ввода, экономя время и уменьшая количество опечаток.
+- [Форматирование и линтинг](/docs/cloud/studio-ide/lint-format) кода &mdash; помогает легко стандартизировать и исправлять ваш SQL-код.
+- Инструменты навигации &mdash; позволяют легко перемещаться по коду, переходить к конкретным строкам, находить и заменять текст, а также перемещаться между файлами проекта.
+- Контроль версий &mdash; управляйте версиями кода всего в несколько кликов.
+- Документация проекта &mdash; создавайте и просматривайте [документацию проекта](#build-and-document-your-projects) для вашего проекта dbt в реальном времени.
+- Кнопка сборки, тестирования и запуска &mdash; собирайте, тестируйте и запускайте проект нажатием кнопки или с помощью командной панели <Constant name="cloud_ide" />.
 
-These [features](#dbt-cloud-ide-features) create a powerful editing environment for efficient SQL coding, suitable for both experienced and beginner developers.
+Эти [функции](#dbt-cloud-ide-features) создают мощную среду редактирования для эффективной работы с SQL, подходящую как для опытных, так и для начинающих разработчиков.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.png" width="85%" title="The Studio IDE includes version control, files/folders, an editor, a command/console, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.png" width="85%" title="Studio IDE включает version control, файлы/папки, редактор, командную строку/консоль и многое другое."/>
 
-<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.png" width="85%" title="Enable dark mode for a great viewing experience in low-light environments."/>
+<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.png" width="85%" title="Включите тёмную тему для комфортного просмотра в условиях низкой освещённости."/>
 </DocCarousel>
 
-:::tip Disable ad blockers
+:::tip Отключите блокировщики рекламы
 
-To improve your experience using <Constant name="cloud" />, we suggest that you turn off ad blockers. This is because some project file names, such as `google_adwords.sql`, might resemble ad traffic and trigger ad blockers.
+Чтобы улучшить ваш опыт использования <Constant name="cloud" />, мы рекомендуем отключить блокировщики рекламы. Это связано с тем, что некоторые имена файлов проекта, такие как `google_adwords.sql`, могут напоминать рекламный трафик и вызывать срабатывание блокировщиков.
 
 :::
 
-## Prerequisites
+## Предварительные требования
 
-- A [<Constant name="cloud" /> account](https://www.getdbt.com/signup) and [Developer seat license](/docs/cloud/manage-access/seats-and-users)
-- A git repository set up and git provider must have `write` access enabled. See [Connecting your GitHub Account](/docs/cloud/git/connect-github) or [Importing a project by git URL](/docs/cloud/git/import-a-project-by-git-url) for detailed setup instructions
-- A dbt project connected to a [data platform](/docs/cloud/connect-data-platform/about-connections)
-- A [development environment and development credentials](#get-started-with-the-cloud-ide) set up
-- The environment must be on dbt version 1.0 or higher
+- [Учетная запись <Constant name="cloud" />](https://www.getdbt.com/signup) и [лицензия Developer seat](/docs/cloud/manage-access/seats-and-users)
+- Настроенный git-репозиторий, а также git-провайдер с включенным доступом `write`. Подробные инструкции по настройке см. в [Подключении учетной записи GitHub](/docs/cloud/git/connect-github) или [Импорте проекта по git URL](/docs/cloud/git/import-a-project-by-git-url).
+- Проект dbt, подключенный к [платформе данных](/docs/cloud/connect-data-platform/about-connections)
+- Настроенная [среда разработки и учетные данные разработчика](#get-started-with-the-cloud-ide)
+- Среда должна использовать dbt версии 1.0 или выше
 
-## Studio IDE features
+## Возможности Studio IDE
 
-The <Constant name="cloud_ide" /> comes with features that make it easier for you to develop, build, compile, run, and test data models. 
+<Constant name="cloud_ide" /> содержит функции, которые упрощают разработку, сборку, компиляцию, запуск и тестирование моделей данных.
 
-To understand how to navigate the <Constant name="cloud_ide" /> and its user interface elements, refer to the [<Constant name="cloud_ide" /> user interface](/docs/cloud/studio-ide/ide-user-interface) page.
+Чтобы понять, как работать с <Constant name="cloud_ide" /> и элементами его пользовательского интерфейса, обратитесь к странице [пользовательского интерфейса <Constant name="cloud_ide" />](/docs/cloud/studio-ide/ide-user-interface).
 
-| Feature  |  Description |
+| Функция  |  Описание |
 |---|---|
-| [**<Constant name="cloud_ide" /> shortcuts**](/docs/cloud/studio-ide/keyboard-shortcuts) | You can access a variety of [commands and actions](/docs/cloud/studio-ide/keyboard-shortcuts) in the <Constant name="cloud_ide" /> by choosing the appropriate keyboard shortcut. Use the shortcuts for common tasks like building modified models or resuming builds from the last failure. |
-| **IDE version control** | The <Constant name="cloud_ide" /> version control section and git button allow you to apply the concept of [version control](/docs/cloud/git/version-control-basics) to your project directly into the <Constant name="cloud_ide" />. <br /><br /> - Create or change branches, execute git commands using the git button.<br /> - Commit or revert individual files by right-clicking the edited file<br /> - [Resolve merge conflicts](/docs/cloud/git/merge-conflicts)<br /> - Link to the repo directly by clicking the branch name <br /> - Edit, format, or lint files and execute dbt commands in your primary protected branch, and commit to a new branch.<br /> - Use Git diff view to view what has been changed in a file before you make a pull request.<br /> - Use the **Prune branches** [button](/docs/cloud/studio-ide/ide-user-interface#prune-branches-modal) to delete local branches that have been deleted from the remote repository, keeping your branch management tidy.<br /> - Sign your [git commits](/docs/cloud/studio-ide/git-commit-signing) to mark them as 'Verified'. <Lifecycle status="managed,managed_plus" /> |
-| **Preview and Compile button** | You can [compile or preview](/docs/cloud/studio-ide/ide-user-interface#console-section) code, a snippet of dbt code, or one of your dbt models after editing and saving. |
-| [**<Constant name="copilot" />**](/docs/cloud/studio-ide/develop-copilot)| A powerful AI-powered assistant that can [generate code](/docs/cloud/studio-ide/develop-copilot#generate-and-edit-code) using natural language, and [generate resources](/docs/cloud/studio-ide/develop-copilot#generate-resources) (like documentation, tests, metrics, and semantic models) for you &mdash; with the click of a button. <Lifecycle status="self_service,managed,managed_plus" />. |
-| **Build, test, and run button**  | Build, test, and run your project with the click of a button or by using the command bar.  
-| **Command bar** | You can enter and run commands from the command bar at the bottom of the <Constant name="cloud_ide" />. Use the [rich model selection syntax](/reference/node-selection/syntax) to execute [dbt commands](/reference/dbt-commands) directly within <Constant name="cloud" />. You can also view the history, status, and logs of previous runs by clicking History on the left of the bar.
-| **Drag and drop**  | Drag and drop files located in the file explorer, and use the file breadcrumb on the top of the <Constant name="cloud_ide" /> for quick, linear navigation. Access adjacent files in the same file by right-clicking on the breadcrumb file.  
-| **Organize tabs and files**  | - Move your tabs around to reorganize your work in the IDE <br /> - Right-click on a tab to view and select a list of actions, including duplicate files  <br /> - Close multiple, unsaved tabs to batch save your work <br /> - Double click files to rename files |
-| **Find and replace** | - Press Command-F or Control-F to open the find-and-replace bar in the upper right corner of the current file in the IDE. The IDE highlights your search results in the current file and code outline<br /> - You can use the up and down arrows to see the match highlighted in the current file when there are multiple matches<br /> - Use the left arrow to replace the text with something else |
-| **Multiple selections**  | You can make multiple selections for small and simultaneous edits. The below commands are a common way to add more cursors and allow you to insert cursors below or above with ease.<br /><br /> - Option-Command-Down arrow or Ctrl-Alt-Down arrow<br /> - Option-Command-Up arrow or Ctrl-Alt-Up arrow<br /> - Press Option and click on an area or Press Ctrl-Alt and click on an area<br /> 
-| **Lint and Format** | [Lint and format](/docs/cloud/studio-ide/lint-format) your files with a click of a button, powered by SQLFluff, sqlfmt, Prettier, and Black.
-| **dbt autocomplete**  |  Autocomplete features to help you develop faster:<br /><br />  - Use `ref` to autocomplete your model names<br /> - Use `source` to autocomplete your source name + table name<br /> - Use `macro` to autocomplete your arguments<br /> - Use `env var` to autocomplete env var<br /> - Start typing a hyphen (-) to use in-line autocomplete in a YAML file<br /> - Automatically create models from dbt sources with a click of a button.  |
-| **<Term id="dag" /> in the IDE** | You can see how models are used as building blocks from left to right to transform your data from raw sources into cleaned-up modular derived pieces and final outputs on the far right of the DAG. The default view is 2+model+2 (defaults to display 2 nodes away), however, you can change it to +model+ (full  <Term id="dag" />). Note the `--exclude` flag isn't supported. |
-| **Status bar** | This area provides you with useful information about your <Constant name="cloud_ide" /> and project status. You also have additional options like enabling light or dark mode, restarting the <Constant name="cloud_ide" />, or [recloning your repo](/docs/cloud/git/version-control-basics).
+| [**Сочетания клавиш <Constant name="cloud_ide" />**](/docs/cloud/studio-ide/keyboard-shortcuts) | Вы можете получить доступ к различным [командам и действиям](/docs/cloud/studio-ide/keyboard-shortcuts) в <Constant name="cloud_ide" />, используя соответствующие сочетания клавиш. Используйте их для типовых задач, таких как сборка измененных моделей или возобновление сборок после последней ошибки. |
+| **Контроль версий в IDE** | Раздел контроля версий и кнопка git в <Constant name="cloud_ide" /> позволяют применять концепцию [контроля версий](/docs/cloud/git/version-control-basics) к вашему проекту непосредственно в <Constant name="cloud_ide" />. <br /><br /> - Создавайте или изменяйте ветки, выполняйте git-команды с помощью кнопки git.<br /> - Фиксируйте или откатывайте отдельные файлы, щелкнув правой кнопкой мыши по отредактированному файлу.<br /> - [Разрешайте конфликты слияния](/docs/cloud/git/merge-conflicts).<br /> - Переходите к репозиторию напрямую, щелкнув по имени ветки.<br /> - Редактируйте, форматируйте или выполняйте линтинг файлов и запускайте команды dbt в основной защищенной ветке, фиксируя изменения в новой ветке.<br /> - Используйте представление Git diff, чтобы увидеть изменения в файле перед созданием pull request.<br /> - Используйте [кнопку](/docs/cloud/studio-ide/ide-user-interface#prune-branches-modal) **Prune branches**, чтобы удалять локальные ветки, удаленные из удаленного репозитория, поддерживая порядок в управлении ветками.<br /> - Подписывайте ваши [git-коммиты](/docs/cloud/studio-ide/git-commit-signing), чтобы помечать их как «Verified». <Lifecycle status="managed,managed_plus" /> |
+| **Кнопка Preview и Compile** | Вы можете [скомпилировать или просмотреть](/docs/cloud/studio-ide/ide-user-interface#console-section) код, фрагмент кода dbt или одну из ваших моделей dbt после редактирования и сохранения. |
+| [**<Constant name="copilot" />**](/docs/cloud/studio-ide/develop-copilot)| Мощный помощник на базе ИИ, который может [генерировать код](/docs/cloud/studio-ide/develop-copilot#generate-and-edit-code) с помощью естественного языка и [создавать ресурсы](/docs/cloud/studio-ide/develop-copilot#generate-resources) (например, документацию, тесты, метрики и семантические модели) для вас &mdash; одним нажатием кнопки. <Lifecycle status="self_service,managed,managed_plus" />. |
+| **Кнопка Build, test, and run**  | Собирайте, тестируйте и запускайте проект нажатием кнопки или с помощью командной панели. |
+| **Командная панель** | Вы можете вводить и выполнять команды из командной панели внизу <Constant name="cloud_ide" />. Используйте [расширенный синтаксис выбора моделей](/reference/node-selection/syntax), чтобы выполнять [команды dbt](/reference/dbt-commands) напрямую в <Constant name="cloud" />. Также вы можете просматривать историю, статус и логи предыдущих запусков, нажав History слева от панели. |
+| **Перетаскивание**  | Перетаскивайте файлы из проводника файлов и используйте хлебные крошки файлов в верхней части <Constant name="cloud_ide" /> для быстрой линейной навигации. Получайте доступ к соседним файлам в том же каталоге, щелкнув правой кнопкой мыши по файлу в цепочке навигации. |
+| **Организация вкладок и файлов**  | - Перемещайте вкладки, чтобы реорганизовать работу в IDE <br /> - Щелкните правой кнопкой мыши по вкладке, чтобы увидеть и выбрать список действий, включая дублирование файлов <br /> - Закрывайте несколько несохраненных вкладок, чтобы пакетно сохранить работу <br /> - Дважды щелкните по файлам, чтобы переименовать их |
+| **Поиск и замена** | - Нажмите Command-F или Control-F, чтобы открыть панель поиска и замены в правом верхнем углу текущего файла в IDE. IDE подсвечивает результаты поиска в текущем файле и структуре кода.<br /> - Используйте стрелки вверх и вниз, чтобы переходить между совпадениями, когда их несколько.<br /> - Используйте стрелку влево, чтобы заменить текст на другой. |
+| **Множественные выделения**  | Вы можете делать несколько выделений для небольших и одновременных правок. Ниже приведены распространенные команды для добавления курсоров, позволяющие легко вставлять курсоры ниже или выше.<br /><br /> - Option-Command-Down arrow или Ctrl-Alt-Down arrow<br /> - Option-Command-Up arrow или Ctrl-Alt-Up arrow<br /> - Нажмите Option и щелкните по области или нажмите Ctrl-Alt и щелкните по области |
+| **Lint и Format** | Выполняйте [линтинг и форматирование](/docs/cloud/studio-ide/lint-format) файлов одним нажатием кнопки с использованием SQLFluff, sqlfmt, Prettier и Black. |
+| **Автодополнение dbt**  |  Функции автодополнения, помогающие разрабатывать быстрее:<br /><br />  - Используйте `ref` для автодополнения имен моделей<br /> - Используйте `source` для автодополнения имени источника и имени таблицы<br /> - Используйте `macro` для автодополнения аргументов<br /> - Используйте `env var` для автодополнения переменных окружения<br /> - Начните вводить дефис (-), чтобы использовать встроенное автодополнение в YAML-файле<br /> - Автоматически создавайте модели из источников dbt одним нажатием кнопки.  |
+| **<Term id="dag" /> в IDE** | Вы можете видеть, как модели используются в качестве строительных блоков слева направо для преобразования данных из сырых источников в очищенные модульные производные и финальные результаты в правой части DAG. Вид по умолчанию — 2+model+2 (отображаются узлы на расстоянии 2), однако вы можете изменить его на +model+ (полный <Term id="dag" />). Обратите внимание, что флаг `--exclude` не поддерживается. |
+| **Строка состояния** | Эта область предоставляет полезную информацию о состоянии <Constant name="cloud_ide" /> и проекта. Также доступны дополнительные опции, такие как включение светлой или темной темы, перезапуск <Constant name="cloud_ide" /> или [повторное клонирование репозитория](/docs/cloud/git/version-control-basics). |
 | **Dark mode**  | From the status bar in the <Constant name="cloud_ide" />, enable dark mode for a great viewing experience in low-light environments. 
 
 
-### Code generation
+### Генерация кода
 
-The <Constant name="cloud_ide" /> comes with **CodeGenCodeLens**, a powerful feature that simplifies creating models from your sources with a click of a button. To use this feature, click on the  **Generate model** action next to each table in the source YAML file(s). It automatically creates a basic starting staging model for you to expand on. This feature helps streamline your workflow by automating the first steps of model generation.
+<Constant name="cloud_ide" /> включает **CodeGenCodeLens** — мощную функцию, упрощающую создание моделей из источников одним нажатием кнопки. Чтобы воспользоваться этой функцией, нажмите действие **Generate model** рядом с каждой таблицей в YAML-файлах источников. Она автоматически создает базовую стартовую staging-модель, которую вы можете дальше развивать. Эта функция помогает оптимизировать рабочий процесс, автоматизируя первые шаги генерации моделей.
 
-### dbt YAML validation
+### Валидация dbt YAML
 
-Use dbt-jsonschema to validate dbt YAML files, helping you leverage the autocomplete and assistance capabilities of the <Constant name="cloud_ide" />. This also provides immediate feedback on YAML file structure and syntax, helping you make sure your project configurations meet the required standards.
+Используйте dbt-jsonschema для проверки YAML-файлов dbt, что помогает задействовать возможности автодополнения и подсказок <Constant name="cloud_ide" />. Это также обеспечивает мгновенную обратную связь о структуре и синтаксисе YAML-файлов, помогая убедиться, что конфигурации проекта соответствуют требуемым стандартам.
 
-## Get started with the Studio IDE
+## Начало работы со Studio IDE
 
-In order to start experiencing the great features of the <Constant name="cloud_ide" />, you need to first set up a [<Constant name="cloud" /> development environment](/docs/dbt-cloud-environments). In the following steps, we outline how to set up developer credentials and access the <Constant name="cloud_ide" />. If you're creating a new project, you will automatically configure this during the project setup. 
+Чтобы начать пользоваться возможностями <Constant name="cloud_ide" />, сначала необходимо настроить [среду разработки <Constant name="cloud" />](/docs/dbt-cloud-environments). В следующих шагах мы опишем, как настроить учетные данные разработчика и получить доступ к <Constant name="cloud_ide" />. Если вы создаете новый проект, это будет автоматически выполнено в процессе настройки проекта.
 
-The <Constant name="cloud_ide" /> uses developer credentials to connect to your data platform. These developer credentials should be specific to your user and they should *not* be super user credentials or the same credentials that you use for your production deployment of dbt.
+<Constant name="cloud_ide" /> использует учетные данные разработчика для подключения к вашей платформе данных. Эти учетные данные должны быть индивидуальными для вашего пользователя и *не* должны быть учетными данными суперпользователя или теми же учетными данными, которые вы используете для производственного развертывания dbt.
 
-Set up your developer credentials:
+Настройте учетные данные разработчика:
 
-1. Navigate to your **Credentials** under **Your Profile** settings, which you can access at `https://YOUR_ACCESS_URL/settings/profile#credentials`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan.
-2. Select the relevant project in the list.
-3. Click **Edit** on the bottom right of the page.
-4. Enter the details under **Development Credentials**.
-5. Click **Save.**
+1. Перейдите в раздел **Credentials** в настройках **Your Profile**, доступных по адресу `https://YOUR_ACCESS_URL/settings/profile#credentials`, заменив `YOUR_ACCESS_URL` на [соответствующий Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана.
+2. Выберите соответствующий проект из списка.
+3. Нажмите **Edit** в правом нижнем углу страницы.
+4. Введите данные в разделе **Development Credentials**.
+5. Нажмите **Save.**
 
-<Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.png" width="85%" height="100" title="Configure developer credentials in your profile"/>
+<Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.png" width="85%" height="100" title="Настройте учётные данные разработчика в профиле"/>
 
-6. Navigate to the <Constant name="cloud_ide" /> by clicking **Studio** in the left menu.
-7. Initialize your project and familiarize yourself with the <Constant name="cloud_ide" /> and its delightful [features](#cloud-ide-features).
+6. Перейдите в <Constant name="cloud_ide" />, нажав **Studio** в левом меню.
+7. Инициализируйте проект и ознакомьтесь с <Constant name="cloud_ide" /> и его замечательными [функциями](#cloud-ide-features).
 
-Nice job, you're ready to start developing and building models 🎉!  
+Отличная работа, вы готовы начать разработку и сборку моделей 🎉!
 
-### Considerations
+### К рассмотрению
 
-- To improve your experience using <Constant name="cloud" />, we suggest that you turn off ad blockers. This is because some project file names, such as `google_adwords.sql`, might resemble ad traffic and trigger ad blockers.
-- To preserve performance, there's a file size limitation for repositories over 6 GB. If you have a repo over 6 GB, please contact [dbt Support](mailto:support@getdbt.com) before running <Constant name="cloud" />.
-- The <Constant name="cloud_ide" />'s idle session timeout is one hour.
+- Чтобы улучшить ваш опыт использования <Constant name="cloud" />, мы рекомендуем отключить блокировщики рекламы. Это связано с тем, что некоторые имена файлов проекта, такие как `google_adwords.sql`, могут напоминать рекламный трафик и вызывать срабатывание блокировщиков.
+- Для сохранения производительности существует ограничение на размер файлов для репозиториев более 6 ГБ. Если размер вашего репозитория превышает 6 ГБ, пожалуйста, свяжитесь с [поддержкой dbt](mailto:support@getdbt.com) перед запуском <Constant name="cloud" />.
+- Тайм-аут неактивной сессии <Constant name="cloud_ide" /> составляет один час.
 - <Expandable alt_header="About the start up process and work retention">
   
-    The following sections describe the start-up process and work retention in the <Constant name="cloud_ide" />.
+    В следующих разделах описывается процесс запуска и сохранения работы в <Constant name="cloud_ide" />.
   
-  - #### Start-up process
-      There are three start-up states when using or launching the <Constant name="cloud_ide" />:
-      - **Creation start &mdash;** This is the state where you are starting the IDE for the first time. You can also view this as a *cold start* (see below), and you can expect this state to take longer because the git repository is being cloned.
-      - **Cold start &mdash;** This is the process of starting a new develop session, which will be available for you for one hour. The environment automatically turns off one hour after the last activity. This includes compile, preview, or any dbt invocation, however, it *does not* include editing and saving a file.
-      - **Hot start &mdash;** This is the state of resuming an existing or active develop session within one hour of the last activity. <br /><br />
+  - #### Процесс запуска
+      Существует три состояния запуска при использовании или открытии <Constant name="cloud_ide" />:
+      - **Начальный запуск (Creation start) &mdash;** состояние, при котором вы запускаете IDE в первый раз. Его также можно рассматривать как *холодный старт* (см. ниже); он занимает больше времени, так как происходит клонирование git-репозитория.
+      - **Холодный старт (Cold start) &mdash;** процесс запуска новой сессии разработки, которая будет доступна в течение одного часа. Среда автоматически выключается через час после последней активности. Активностью считаются компиляция, предпросмотр или любой вызов dbt, однако *не* считается редактирование и сохранение файла.
+      - **Горячий старт (Hot start) &mdash;** состояние возобновления существующей или активной сессии разработки в течение одного часа после последней активности. <br /><br />
 
-  - #### Work retention
+  - #### Сохранение работы
 
-      The <Constant name="cloud_ide" /> needs explicit action to save your changes. There are three ways your work is stored:
+      <Constant name="cloud_ide" /> требует явного действия для сохранения ваших изменений. Существует три способа хранения вашей работы:
 
-      - **Unsaved, local code &mdash;** The browser stores your code only in its local storage. In this state, you might need to commit any unsaved changes in order to switch branches or browsers. If you have saved and committed changes, you can access the "Change branch" option even if there are unsaved changes. But if you attempt to switch branches without saving changes, a warning message will appear, notifying you that you will lose any unsaved changes.
+      - **Несохраненный локальный код &mdash;** браузер хранит ваш код только в локальном хранилище. В этом состоянии вам может потребоваться зафиксировать несохраненные изменения, чтобы переключить ветки или браузеры. Если вы сохранили и зафиксировали изменения, вы можете воспользоваться опцией «Change branch» даже при наличии несохраненных изменений. Однако при попытке переключить ветку без сохранения изменений появится предупреждение о потере несохраненных данных.
 
       <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.png" width="85%" title="If you attempt to switch branches without saving changes, a warning message will appear, telling you that you will lose your changes."/>
 
-      - **Saved but uncommitted code &mdash;** When you save a file, the data gets stored in durable, long-term storage, but isn't synced back to git. To switch branches using the **Change branch** option, you must "Commit and sync" or "Revert" changes. Changing branches isn't available for saved-but-uncommitted code. This is to ensure your uncommitted changes don't get lost.
+      - **Сохраненный, но не зафиксированный код &mdash;** при сохранении файла данные сохраняются в долговременном хранилище, но не синхронизируются с git. Чтобы переключить ветку с помощью опции **Change branch**, необходимо «Commit and sync» или «Revert» изменения. Переключение веток недоступно для сохраненного, но незафиксированного кода, чтобы избежать потери изменений.
       - **Committed code &mdash;** This is stored in the branch with your git provider and you can check out other (remote) branches.
 
   </Expandable>
 
-## Build and document your projects
+## Собирайте и документируйте ваши проекты
 
 - **Build, compile, and run projects** &mdash; You can *build*, *compile*, *run*, and *test* dbt projects using the command bar or **Build** button. Use the **Build** button to quickly build, run, or test the model you're working on. The <Constant name="cloud_ide" /> will update in real time when you run models, tests, seeds, and operations.
-  - If a model or test fails, <Constant name="cloud" /> makes it easy for you to view and download the run logs for your dbt invocations to fix the issue.
-  - Use dbt's [rich model selection syntax](/reference/node-selection/syntax) to [run dbt commands](/reference/dbt-commands) directly within <Constant name="cloud" />.
-  - Leverage [environments variables](/docs/build/environment-variables#special-environment-variables) to dynamically use the <Constant name="git" /> branch name. For example, using the branch name as a prefix for a development schema.
-  - Run [MetricFlow commands](/docs/build/metricflow-commands) to create and manage metrics in your project with the [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl).
+- Если модель или тест завершается с ошибкой, <Constant name="cloud" /> упрощает просмотр и загрузку логов запусков ваших вызовов dbt для устранения проблемы.
+- Используйте [расширенный синтаксис выбора моделей dbt](/reference/node-selection/syntax), чтобы [запускать команды dbt](/reference/dbt-commands) напрямую в <Constant name="cloud" />.
+- Используйте [переменные окружения](/docs/build/environment-variables#special-environment-variables), чтобы динамически применять имя ветки <Constant name="git" />. Например, использовать имя ветки в качестве префикса для схемы разработки.
+- Запускайте [команды MetricFlow](/docs/build/metricflow-commands) для создания и управления метриками в вашем проекте с помощью [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl).
 
-- **Generate your YAML configurations with <Constant name="copilot" />** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence (AI) feature that helps automate development in <Constant name="cloud" />. It can [generate code](/docs/cloud/studio-ide/develop-copilot#generate-and-edit-code) using natural language, and [generate resources](/docs/cloud/studio-ide/develop-copilot#generate-resources) (like documentation, tests, metrics,and semantic models) for you directly in the <Constant name="cloud_ide" />, so you can accomplish more in less time. <Lifecycle status="self_service,managed,managed_plus" /> 
+- **Генерируйте конфигурации YAML с помощью <Constant name="copilot" />** &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) — это мощная функция искусственного интеллекта (ИИ), помогающая автоматизировать разработку в <Constant name="cloud" />. Она может [генерировать код](/docs/cloud/studio-ide/develop-copilot#generate-and-edit-code) с помощью естественного языка и [создавать ресурсы](/docs/cloud/studio-ide/develop-copilot#generate-resources) (например, документацию, тесты, метрики и семантические модели) прямо в <Constant name="cloud_ide" />, позволяя вам делать больше за меньшее время. <Lifecycle status="self_service,managed,managed_plus" />
 
-- **Build and view your project's docs** &mdash; The <Constant name="cloud_ide" /> makes it possible to [build and view](/docs/explore/build-and-view-your-docs) documentation for your dbt project while your code is still in development. With this workflow, you can inspect and verify what your project's generated documentation will look like before your changes are released to production.
+- **Собирайте и просматривайте документацию проекта** &mdash; <Constant name="cloud_ide" /> позволяет [создавать и просматривать](/docs/explore/build-and-view-your-docs) документацию для вашего проекта dbt, пока код все еще находится в разработке. Такой рабочий процесс позволяет проверить и убедиться, как будет выглядеть сгенерированная документация проекта, до выпуска изменений в продакшен.
 
 
-## Related docs
+## Связанные материалы
 
-- [How we style our dbt projects](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
-- [User interface](/docs/cloud/studio-ide/ide-user-interface)
-- [Version control basics](/docs/cloud/git/version-control-basics)
-- [dbt commands](/reference/dbt-commands)
+- [Как мы оформляем наши dbt‑проекты](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
+- [Пользовательский интерфейс](/docs/cloud/studio-ide/ide-user-interface)
+- [Основы version control](/docs/cloud/git/version-control-basics)
+- [Команды dbt](/reference/dbt-commands)
 
 ## FAQs
 
-<DetailsToggle alt_header="Is there a cost to using the Studio IDE?">
-Not at all! You can use <Constant name="cloud" /> when you sign up for the <a href="https://www.getdbt.com/pricing/">Free Developer plan</a>, which comes with one developer seat. If you'd like to access more features or have more developer seats, you can upgrade your account to the Starter, Enterprise, or Enterprise+ plan.<br />
+<DetailsToggle alt_header="Есть ли стоимость использования Studio IDE?">
+Совсем нет! Вы можете использовать <Constant name="cloud" />, зарегистрировавшись на <a href="https://www.getdbt.com/pricing/">бесплатном плане Free Developer</a>, который включает одно место разработчика. Если вам нужен доступ к большему количеству функций или дополнительных мест разработчика, вы можете обновить аккаунт до плана Starter, Enterprise или Enterprise+.<br />
 
-Refer to <a href="https://www.getdbt.com/pricing/">dbt pricing plans</a> for more details.
+Подробнее см. <a href="https://www.getdbt.com/pricing/">тарифные планы dbt</a>.
 </DetailsToggle>
 
-<DetailsToggle alt_header="Can I be a contributor to dbt">
-As a proprietary product, <Constant name="cloud" />'s source code isn't available for community contributions. If you want to build something in the dbt ecosystem, we encourage you to review [this article](/community/contributing/contributing-coding) about contributing to a dbt package, a plugin, dbt-core, or this documentation site. Participation in open-source is a great way to level yourself up as a developer, and give back to the community.
+<DetailsToggle alt_header="Могу ли я быть контрибьютором в dbt">
+Как проприетарный продукт, исходный код <Constant name="cloud" /> недоступен для вкладов сообщества. Если вы хотите создать что-то в экосистеме dbt, мы рекомендуем ознакомиться с [этой статьей](/community/contributing/contributing-coding) о внесении вклада в пакет dbt, плагин, dbt-core или этот сайт документации. Участие в open-source — отличный способ прокачать навыки разработчика и внести вклад в сообщество.
 </DetailsToggle>
 
-<DetailsToggle alt_header="What is the difference between developing on the Studio IDE, the dbt CLI, and dbt Core?">
-You can develop dbt using the web-based IDE in <Constant name="cloud" /> or on the command line interface using the <Constant name="cloud_cli" /> or open-source <Constant name="core" />, all of which enable you to execute dbt commands. The key distinction between the <Constant name="cloud_cli" /> and <Constant name="core" /> is the <Constant name="cloud_cli" /> is tailored for <Constant name="cloud" />'s infrastructure and integrates with all its features:
+<DetailsToggle alt_header="В чём разница между разработкой в Studio IDE, dbt CLI и dbt Core?">
+Вы можете разрабатывать dbt, используя веб-IDE в <Constant name="cloud" />, либо через интерфейс командной строки с помощью <Constant name="cloud_cli" /> или open-source <Constant name="core" />, все из которых позволяют выполнять команды dbt. Ключевое отличие между <Constant name="cloud_cli" /> и <Constant name="core" /> заключается в том, что <Constant name="cloud_cli" /> адаптирован под инфраструктуру <Constant name="cloud" /> и интегрируется со всеми ее функциями:
 
-- <Constant name="cloud_ide" />: <a href="https://docs.getdbt.tech/docs/cloud/about-cloud/dbt-cloud-features"><Constant name="cloud" /></a> is a web-based application that allows you to develop dbt projects with the IDE, includes a purpose-built scheduler, and provides an easier way to share your dbt documentation with your team. The IDE is a faster and more reliable way to deploy your dbt models and provides a real-time editing and execution environment for your dbt project.
+- <Constant name="cloud_ide" />: <a href="https://docs.getdbt.tech/docs/cloud/about-cloud/dbt-cloud-features"><Constant name="cloud" /></a> — это веб-приложение, позволяющее разрабатывать проекты dbt в IDE, включающее специализированный планировщик и предоставляющее более простой способ делиться документацией dbt с командой. IDE — это более быстрый и надежный способ развертывания моделей dbt и среда редактирования и выполнения в реальном времени для вашего проекта dbt.
 
-- <Constant name="cloud_cli" />: <a href="https://docs.getdbt.tech/docs/cloud/cloud-cli-installation">The <Constant name="cloud_cli" /></a> allows you to run dbt commands against your dbt <Constant name="cloud" /> development environment from your local command line or code editor. It supports cross-project ref, speedier, lower-cost builds, automatic deferral of build artifacts, and more.
+- <Constant name="cloud_cli" />: <a href="https://docs.getdbt.tech/docs/cloud/cloud-cli-installation"> <Constant name="cloud_cli" /></a> позволяет запускать команды dbt для вашей среды разработки <Constant name="cloud" /> из локальной командной строки или редактора кода. Он поддерживает cross-project ref, более быстрые и дешевые сборки, автоматическую отложенную подстановку артефактов сборки и многое другое.
 
-- <Constant name="core" />: <Constant name="core" /> is an <a href="https://github.com/dbt-labs/dbt">open-sourced</a> software that's freely available. You can build your dbt project in a code editor, and run dbt commands from the command line
+- <Constant name="core" />: <Constant name="core" /> — это программное обеспечение с <a href="https://github.com/dbt-labs/dbt">открытым исходным кодом</a>, доступное бесплатно. Вы можете разрабатывать проект dbt в редакторе кода и запускать команды dbt из командной строки.
 
 </DetailsToggle>

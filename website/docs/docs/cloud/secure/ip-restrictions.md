@@ -7,7 +7,7 @@ pagination_next: "docs/cloud/secure/about-private-connectivity"
 pagination_prev: null
 ---
 
-# Configuring IP restrictions <Lifecycle status="managed_plus" />
+# Настройка ограничений по IP <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-iprestrictions.md';
 

@@ -3,7 +3,7 @@ title: "Используйте dbt для создания аналитичес�
 id: "dbt-python-snowpark"
 description: "Используйте dbt для создания аналитических и готовых к ML пайплайнов с помощью SQL и Python в Snowflake"
 hoverSnippet: Узнайте, как использовать dbt для создания аналитических и готовых к ML пайплайнов с помощью SQL и Python в Snowflake.
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' комментируем до тестирования
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Snowflake']

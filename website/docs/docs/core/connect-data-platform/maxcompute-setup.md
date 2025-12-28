@@ -7,7 +7,7 @@ meta:
   github_repo: "aliyun/dbt-maxcompute"
   pypi_package: "dbt-maxcompute"
   min_core_version: "v1.8.0"
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   platform_name: "MaxCompute"
   config_page: "/reference/resource-configs/no-configs"
 ---

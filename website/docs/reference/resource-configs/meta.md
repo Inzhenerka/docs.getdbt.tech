@@ -269,7 +269,7 @@ exposures:
 
 <TabItem value="semantic models">
 
-Configure `meta` in the your [semantic models](/docs/build/semantic-models) property file or under the `semantic-models` config in the project file (`dbt_project.yml`). 
+Настройте `meta` в файле свойств ваших [семантических моделей](/docs/build/semantic-models) или в разделе конфигурации `semantic-models` в файле проекта (`dbt_project.yml`). 
 
 <VersionBlock lastVersion="1.9">
 
@@ -411,7 +411,7 @@ saved_queries:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 Поле `meta` можно использовать для задания метаданных ресурса и оно принимает любые пары «ключ-значение». Эти метаданные компилируются в файл `manifest.json`, который генерируется dbt, и отображаются в автоматически сгенерированной документации.
 
 В зависимости от ресурса, который вы настраиваете, `meta` может быть доступно в свойстве `config` и/или в качестве ключа верхнего уровня. (Для обратной совместимости `meta` часто (но не всегда) поддерживается в качестве ключа верхнего уровня, хотя без возможностей наследования конфигурации.)

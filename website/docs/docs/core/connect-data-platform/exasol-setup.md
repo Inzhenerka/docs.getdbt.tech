@@ -7,7 +7,7 @@ meta:
   github_repo: 'tglunde/dbt-exasol'
   pypi_package: 'dbt-exasol'
   min_core_version: 'v0.14.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'Exasol 6.x'
   slack_channel_name: 'n/a'
   slack_channel_link: 'https://www.getdbt.com/community'

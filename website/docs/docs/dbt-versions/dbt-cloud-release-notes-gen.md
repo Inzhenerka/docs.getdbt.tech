@@ -26,7 +26,7 @@ unlisted: true
   - **File-aware LangGraph agents**: Аналитики теперь могут использовать ссылки `@path` в комплектном CLI, чтобы передавать локальные файлы в `/private/v1/agents/run`. Эти файлы автоматически отображаются как текст внутри запуска, благодаря чему копилоты получают точную конфигурацию или SQL‑фрагмент, на который вы ссылаетесь.  
 
 - **dbt platform**
-  - **Slack Copilot feedback loops**: Ответы Copilot теперь содержат встроенные кнопки «Did that answer your question?», позволяя оценивать ответы, не покидая Slack.  
+  - **Циклы обратной связи Slack Copilot**: Ответы Copilot теперь содержат встроенные кнопки «Did that answer your question?», позволяя оценивать ответы, не покидая Slack.
 
 - **Codex workflows**
   - **Databricks cost tracking for Model Cost Over Time**: Провайдер истории Databricks и запрос стоимости на основе DBU теперь показывают ежедневную стоимость моделей наряду с поддержкой Snowflake, так что клиенты Databricks получают единый FinOps‑отчет.  

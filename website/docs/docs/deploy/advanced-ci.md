@@ -16,7 +16,7 @@ image: /img/docs/dbt-cloud/example-ci-compare-changes-tab.png
 
 :::
 
-## Prerequisites
+## Предварительные требования
 - У вас есть учетная запись <Constant name="cloud" /> уровня Enterprise или Enterprise+.
 - У вас включены [Advanced CI features](/docs/cloud/account-settings#account-access-to-advanced-features).
 - Вы используете поддерживаемую платформу данных: BigQuery, Databricks, Postgres, Redshift или Snowflake. Поддержка дополнительных платформ данных появится в ближайшее время.

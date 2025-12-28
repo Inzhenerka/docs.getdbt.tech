@@ -23,8 +23,8 @@ id: "contributing-coding"
 
 - Используйте пакеты в своих собственных проектах! Лучший способ понять, как улучшить пакет, — это применять его в production‑среде, а затем искать способы его доработки или улучшения.
 - Ознакомьтесь со следующими материалами по разработке пакетов:
-  - [So You Want to Build a dbt Package](/blog/so-you-want-to-build-a-package)
-  - [Package Best Practices](https://github.com/dbt-labs/hubcap/blob/main/package-best-practices.md)
+  - [Итак, вы хотите создать пакет dbt](/blog/so-you-want-to-build-a-package)
+  - [Лучшие практики пакетов](https://github.com/dbt-labs/hubcap/blob/main/package-best-practices.md)
 - Нужна помощь: посетите #package-ecosystem в Slack-сообществе dbt
 
 ### Участвуйте в развитии open source или source-available программного обеспечения dbt

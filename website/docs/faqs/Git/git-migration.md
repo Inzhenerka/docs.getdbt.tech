@@ -16,7 +16,7 @@ tags: [Git]
 2. Вернитесь в <Constant name="cloud" /> и при необходимости настройте [интеграцию с новым провайдером <Constant name="git" />](/docs/cloud/git/git-configuration-in-dbt-cloud).  
 3. Отключите старый репозиторий в <Constant name="cloud" />, перейдя в **Account Settings**, затем в **Projects**.  
 4. Нажмите на ссылку **Repository**, затем выберите **Edit** и **Disconnect**.
-      <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" width="80%" title="Disconnect and reconnect your Git repository in your dbt Account settings page." />
+       <Lightbox src="/img/docs/dbt-cloud/disconnect-repo.png" width="80%" title="Отключите и снова подключите ваш репозиторий Git на странице настроек учетной записи dbt." />
 
 5. Нажмите **Confirm Disconnect**.  
 6. На той же странице подключите репозиторий нового провайдера <Constant name="git" />, нажав **Configure Repository**.

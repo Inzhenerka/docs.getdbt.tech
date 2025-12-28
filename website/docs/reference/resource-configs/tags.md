@@ -48,7 +48,7 @@ datatype: string | [string]
 
 <VersionBlock firstVersion="1.9">
 
-The following examples show how to add tags to dbt resources in YAML files. Replace `resource_type` with `exposures`, `models`, `snapshots`, `seeds`, or `saved_queries` as appropriate.
+Следующие примеры показывают, как добавлять теги к ресурсам dbt в YAML-файлах. Замените `resource_type` на `exposures`, `models`, `snapshots`, `seeds` или `saved_queries` по мере необходимости.
 </VersionBlock>
 
 <File name='resource_type/properties.yml'>
@@ -72,7 +72,7 @@ resource_type:
 
 </File>
 
-To apply tags to a model in your `models/` directory, add the `config` property similar to the following example:
+Чтобы применить теги к модели в вашем каталоге `models/`, добавьте свойство `config`, аналогично следующему примеру:
 
 <File name='models/model.yml'>
 
@@ -100,7 +100,7 @@ models:
 
 </TabItem>
 </Tabs>
-Note that for backwards compatibility, `tags` is supported as a top-level key, but without the capabilities of config inheritance.
+Обратите внимание, что для обратной совместимости `tags` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
 
 ## Определение
 Примените тег (или список тегов) к ресурсу.

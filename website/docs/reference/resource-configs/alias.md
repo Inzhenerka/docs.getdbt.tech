@@ -2,7 +2,7 @@
 resource_types: [models, seeds, snapshots, tests]
 description: "Псевдонимизация ресурса позволяет задать ему пользовательское имя в базе данных вместо использования имени файла."
 datatype: string
-intro_text: Specify a custom alias for a model, data test, snapshot, or seed and give it a more user-friendly name in the database.
+intro_text: Укажите пользовательский алиас для модели, теста данных, snapshot или seed и присвойте ему более удобное для пользователя имя в базе данных.
 ---
 
 <Tabs>

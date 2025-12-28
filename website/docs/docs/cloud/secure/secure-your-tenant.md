@@ -65,7 +65,7 @@ hide_table_of_contents: true
 
 <Card
     title="Azure Private Link for Postgres Flexible Server"
-    body="Learn how to configure Private Link for Azure Database for Postgres Flexible Server."
+    body="Узнайте, как настроить Private Link для Azure Database for Postgres Flexible Server."
     link="/docs/cloud/secure/az-postgres-private-link"
     icon="dbt-bit"/>
 </div>
@@ -74,19 +74,19 @@ hide_table_of_contents: true
 
 <Card
     title="Azure Private Link for Synapse"
-    body="Learn how to configure Private Link for Azure Synapse."
+    body="Узнайте, как настроить Private Link для Azure Synapse."
     link="/docs/cloud/secure/az-synapse-private-link"
     icon="dbt-bit"/>
 
 <Card
     title="GCP Private Service Connect for Snowflake"
-    body="Learn how to configure GCP Private Service Connect for Snowflake."
+    body="Узнайте, как настроить GCP Private Service Connect для Snowflake."
     link="/docs/cloud/secure/snowflake-psc"
     icon="dbt-bit"/>
 
 <Card
     title="GCP Private Service Connect for BigQuery"
-    body="Learn how to configure GCP Private Service Connect for BigQuery."
+    body="Узнайте, как настроить GCP Private Service Connect для BigQuery."
     link="/docs/cloud/secure/bigquery-psc"
     icon="dbt-bit"/>
 

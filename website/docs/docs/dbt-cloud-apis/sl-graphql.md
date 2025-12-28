@@ -315,9 +315,9 @@ savedQueriesPaginated(
 }
 ```
 
-#### List a saved query
+#### Вывести сохранённый запрос
 
-List a single saved query using environment ID and query name:
+Вывести один сохранённый запрос, используя идентификатор окружения и имя запроса:
 
 ```graphql
 
@@ -535,7 +535,7 @@ order_total  ordered_at
 - [Query with just compiling SQL](#query-with-just-compiling-sql) &mdash; Запрос, использующий ключевое слово compile через мутацию `compileSql`.
 - [Query records](#query-records) &mdash; Просмотр всех запросов, выполненных в вашем проекте.
 
-#### Query metric alias
+#### Псевдоним метрики запроса
 
 ```graphql
 mutation {

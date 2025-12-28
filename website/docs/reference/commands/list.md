@@ -37,13 +37,13 @@ dbt ls
 В следующих примерах показано, как использовать команду `dbt ls` для вывода списка ресурсов в вашем проекте.
 
 <!-- no toc -->
-  - [Listing models by package](#listing-models-by-package)
-  - [Listing tests by tag name](#listing-tests-by-tag-name)
-  - [Listing schema tests of incremental models](#listing-schema-tests-of-incremental-models)
-  - [Listing JSON output](#listing-json-output)
-  - [Listing JSON output with custom keys](#listing-json-output-with-custom-keys)
-  - [Listing semantic models](#listing-semantic-models)
-  - [Listing functions](#listing-functions)
+  - [Перечень моделей по пакету](#listing-models-by-package)
+  - [Перечень тестов по имени тега](#listing-tests-by-tag-name)
+  - [Перечень схемных тестов инкрементальных моделей](#listing-schema-tests-of-incremental-models)
+  - [Перечень вывода в формате JSON](#listing-json-output)
+  - [Перечень вывода в формате JSON с пользовательскими ключами](#listing-json-output-with-custom-keys)
+  - [Перечень семантических моделей](#listing-semantic-models)
+  - [Перечень функций](#listing-functions)
 
 #### Список моделей по пакету
 

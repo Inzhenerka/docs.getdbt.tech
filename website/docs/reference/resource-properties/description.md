@@ -145,7 +145,7 @@ macros:
 
 <VersionBlock firstVersion="1.9">
 
-You can add a description to a [singular data test](/docs/build/data-tests#singular-data-tests) or a [generic data test](/docs/build/data-tests#generic-data-tests).
+Вы можете добавить описание к [сингулярному тесту данных](/docs/build/data-tests#singular-data-tests) или к [обобщённому тесту данных](/docs/build/data-tests#generic-data-tests).
 
 <File name='tests/schema.yml'>
 

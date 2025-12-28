@@ -58,22 +58,22 @@ models:
 
 </Tabs>
 
-> **Limitation:** Nested <Term id="cte"/> aren't supported in model materialization. Models using multiple nested CTEs may fail during compilation or execution.
+> **Ограничение:** Вложенные <Term id="cte"/> не поддерживаются при материализации моделей. Модели, использующие несколько вложенных CTE, могут завершиться с ошибкой во время компиляции или выполнения.
 
-## Table Clone
-The `table_clone` materialization creates a physical copy of an existing table using Fabric’s cloning capabilities. This is useful for versioning, branching, or snapshot-like workflows.
+## Клонирование таблиц
+Материализация `table_clone` создает физическую копию существующей таблицы, используя возможности клонирования Fabric. Это полезно для версионирования, ветвления или рабочих процессов наподобие снапшотов.
 
 ```sql
 {{ config(materialized='table_clone', clone_from='staging_table') }}
 select * from staging_table
 ```
 
-**Notes:**
-- The source table must exist in the target warehouse.
-- Cloning preserves the schema and data state at the time of creation.
-- Ideal for scenarios requiring fast, zero-copy duplication for testing or rollback.
+**Заметки:**
+- Исходная таблица должна существовать в целевом хранилище данных.
+- Клонирование сохраняет схему и состояние данных на момент создания.
+- Идеально подходит для сценариев, требующих быстрого дублирования без копирования данных (zero-copy) для тестирования или отката.
 
-## Seeds
+## Сиды (Seeds)
 
 По умолчанию `dbt-fabric` пытается загружать seed‑файлы пакетами по 400 строк.  
 Если это значение превышает ограничение Microsoft Fabric Data Warehouse в 2100 параметров, адаптер автоматически уменьшит размер пакета до максимально допустимого безопасного значения.
@@ -108,7 +108,7 @@ models:
 > **Ограничение:** В материализациях моделей не поддерживаются вложенные CTE (Common Table Expressions). Модели, использующие несколько уровней вложенных CTE, могут завершиться ошибкой на этапе компиляции или выполнения.
 
 
-## Snapshots
+## Снимки (Snapshots)
 
 Столбцы в исходных таблицах не могут иметь никаких ограничений. Если, например, любой столбец имеет ограничение `NOT NULL`, будет выдана ошибка.
 
@@ -190,11 +190,11 @@ select * from raw_events
 
 Подробнее см. [Incremental models](/docs/build/incremental-models).
 
-## Permissions
+## Разрешения
 
 Идентификатор Microsoft Entra (пользователь или служебный принципал) должен быть администратором рабочей области Fabric, чтобы работать на уровне базы данных в настоящее время. В будущем будет внедрен более детальный контроль доступа.
 
-## Cross-warehouse references
+## Ссылки между хранилищами
 
 Адаптер **dbt-fabric** поддерживает межхранилищные запросы (cross-warehouse queries) с использованием макросов `source()` или `ref()`.
 
@@ -218,7 +218,7 @@ sources:
 
 > Чтобы использовать межхранилищные ссылки или снимки хранилища (warehouse snapshots), убедитесь, что настроенная здесь учётная запись (identity) имеет доступ ко всем используемым Fabric Warehouses.
 
-## Warehouse snapshots
+## Снимки хранилища
 
 Снимки хранилища Microsoft Fabric (warehouse snapshots) — это доступные только для чтения копии вашего хранилища на определённый момент времени, которые хранятся до 30 дней. Они позволяют аналитикам выполнять запросы к стабильному набору данных, даже когда ELT-процессы обновляют хранилище. При перемещении временной метки снимка вперёд все изменения применяются одновременно (атомарно).
 
@@ -242,7 +242,7 @@ fabric_dw:
       warehouse_snapshot_name: dbt-dwtests-snpshot
 ```
 
-### Behavior
+### Поведение
 - Перед выполнением операции dbt (`run`, `build`, `snapshot`) адаптер фиксирует состояние затронутых таблиц до изменений.
 - После выполнения создаётся снимок хранилища с соответствующей временной меткой.
 

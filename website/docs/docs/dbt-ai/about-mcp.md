@@ -16,9 +16,9 @@ MCP server предоставляет доступ к dbt CLI, [API](/docs/dbt-c
 Для получения дополнительной информации о MCP см. [Get started with the Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction).
 
 <!--TODO need to create>
-## Architecture
+## Архитектура
 
-There are two ways to access the dbt-mcp server: locally hosted or remotely hosted on the cloud-based dbt platform.
+Существует два способа доступа к серверу dbt-mcp: размещённый локально или размещённый удалённо на облачной платформе dbt.
 
 <-->
 
@@ -77,7 +77,7 @@ dbt MCP server имеет доступ ко многим частям экоси
 
 Разрешение клиенту использовать команды dbt через MCP‑инструменты может привести к изменениям в моделях данных, источниках и объектах хранилища. Используйте это только в том случае, если вы доверяете клиенту и понимаете потенциальные последствия.
 
-### Semantic Layer
+### Семантический слой
 
 Чтобы узнать больше о dbt Semantic Layer, перейдите [сюда](/docs/use-dbt-semantic-layer/dbt-sl).
 
@@ -87,7 +87,7 @@ dbt MCP server имеет доступ ко многим частям экоси
 - `query_metrics`: Выполняет запрос метрик с опциональной группировкой, сортировкой, фильтрацией и ограничением
 - `get_metrics_compiled_sql`: Возвращает скомпилированный SQL для указанных метрик и группировок без выполнения запроса
 
-### Metadata Discovery
+### Обнаружение метаданных
 
 Чтобы узнать больше о dbt Discovery API, перейдите [сюда](/docs/dbt-cloud-apis/discovery-api).
 
@@ -108,7 +108,7 @@ dbt MCP server имеет доступ ко многим частям экоси
 - `get_snapshot_details`: Возвращает детали конкретного snapshot
 - `get_test_details`: Возвращает детали конкретного теста
 
-### Administrative API
+### Административный API
 
 Чтобы узнать больше о dbt Administrative API, перейдите [сюда](/docs/dbt-cloud-apis/admin-cloud-api).
 
@@ -123,12 +123,12 @@ dbt MCP server имеет доступ ко многим частям экоси
 - `get_job_run_artifact`: Загружает конкретный файл артефакта запуска job для анализа или интеграции
 - `get_job_run_error`: Возвращает детали ошибок для неудавшихся запусков job, чтобы упростить диагностику (включает опцию возврата предупреждений и сведений о депрекейтах)
 
-### SQL (remote)
+### SQL (удалённый)
 
 - `text_to_sql`: Генерирует SQL из запросов на естественном языке
 - `execute_sql`: Выполняет SQL на backend‑инфраструктуре dbt platform с поддержкой синтаксиса Semantic Layer SQL. Примечание: для этого инструмента требуется использовать PAT вместо service token в `DBT_TOKEN`.
 
-### Codegen tools
+### Инструменты генерации кода
 
 Эти инструменты помогают автоматизировать генерацию шаблонного кода для файлов dbt‑проекта. Чтобы использовать их, установите [dbt-codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/) в ваш dbt‑проект. По умолчанию эти инструменты отключены. Чтобы включить их, установите переменную окружения `DISABLE_DBT_CODEGEN` в значение `false`.
 
@@ -136,14 +136,14 @@ dbt MCP server имеет доступ ко многим частям экоси
 - `generate_model_yaml`: Генерирует YAML‑документацию для существующих dbt‑моделей, включая имена колонок, типы данных и placeholders для описаний.
 - `generate_staging_model`: Создает staging SQL‑модели из sources для преобразования сырых данных в чистые staging‑модели.
 
-### Fusion tools (remote)
+### Инструменты Fusion (удалённые)
 
 Набор инструментов, использующих движок <Constant name="fusion" /> для расширенной компиляции SQL и анализа lineage на уровне колонок.
 
 - `compile_sql`: Компилирует SQL‑выражение в контексте текущего проекта и окружения.
 - `get_column_lineage`: Эксклюзивно для <Constant name="fusion" />! Возвращает информацию о lineage колонок по DAG проекта для конкретной колонки.
 
-### Fusion tools (local)
+### Инструменты Fusion (локальные)
 
 Набор инструментов, использующих движок <Constant name="fusion" /> через локально запущенный <Constant name="fusion" /> Language Server Protocol (LSP) в VS Code или Cursor с расширением dbt для VS Code.
 

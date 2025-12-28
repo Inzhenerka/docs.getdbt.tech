@@ -90,7 +90,7 @@ pagination_prev: null
 
 <Card
     title="Visualize and orchestrate exposures*"
-    body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
+    body="Автоматически настраивайте downstream-экспозиции из дашбордов и понимайте, как модели используются в downstream-инструментах. Проактивно обновляйте базовые источники данных во время запланированных заданий dbt."
     link="/docs/cloud-integrations/downstream-exposures"
     icon="dbt-bit"/>
 
@@ -114,7 +114,7 @@ pagination_prev: null
 
 <Card
     title="dbt Insights*"
-    body="Learn how to query data and perform exploratory data analysis using dbt Insights."
+    body="Узнайте, как выполнять запросы к данным и проводить разведочный анализ данных с помощью dbt Insights."
     link="/docs/explore/dbt-insights"
     icon="dbt-bit"/>
 

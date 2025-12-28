@@ -86,7 +86,7 @@ image: /img/docs/dbt-cloud/canvas/canvas.png
 - Перетащите курсор от стартовой точки «+» оператора к другому узлу, который вы хотите соединить. В результате появится линия‑коннектор.
 - Например, чтобы создать join, подключите один оператор к «L» (Left), а другой — к «R» (Right). Точки подключения расположены слева от оператора, что упрощает перетаскивание коннекторов.
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/connector.png" width="100%" title="Click and drag your cursor to connect operators." />
+<Lightbox src="/img/docs/dbt-cloud/canvas/connector.png" width="100%" title="Щёлкните и перетащите курсор, чтобы соединить операторы." />
 
 ## Панель конфигурации
 

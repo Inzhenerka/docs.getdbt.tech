@@ -7,7 +7,7 @@ meta:
   github_repo: 'deltastreaminc/dbt-deltastream'
   pypi_package: 'dbt-deltastream'
   min_core_version: 'v1.10.0'
-  cloud_support: Not supported
+  cloud_support: Не поддерживается
   min_supported_version: '?'
   slack_channel_name: '#db-deltastream'
   platform_name: 'DeltaStream'

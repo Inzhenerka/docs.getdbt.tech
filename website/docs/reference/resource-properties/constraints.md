@@ -80,7 +80,7 @@ models:
 </File>
 
 Supported dbt-adapters use these fields when populated, to render out the foreign key constraint instead of `expression`.
-
+  
 Для получения дополнительной информации об адаптерах, которые поддерживают ограничения внешних ключей, ознакомьтесь с нашим руководством по [поддержке ограничений платформами](/docs/mesh/govern/model-contracts#platform-constraint-support).
 
 </VersionBlock>

@@ -30,7 +30,7 @@ pagination_prev: null
 
 Узнайте, как использовать возможности <Constant name="cloud" />, чтобы помочь вашей команде проще и быстрее поставлять в продакшен качественные данные.
 
-## Deploy with dbt
+## Развертывание с помощью dbt
 
 <div className="grid--3-col">
 
@@ -47,13 +47,13 @@ pagination_prev: null
     icon="dbt-bit"/>
 
 <Card
-    title="State-aware orchestration"
+    title="Оркестрация с учетом состояния"
     body="Интеллектуально определяет, какие модели нужно собирать, обнаруживая изменения в коде или данных при каждом запуске задания."
     link="/docs/deploy/state-aware-about"
     icon="dbt-bit"/>
 
 <Card
-    title="Continuous integration"
+    title="Непрерывная интеграция"
     body="Настройте CI-проверки, чтобы вы могли собирать и тестировать любой изменённый код в staging-окружении при открытии PR и отправке новых коммитов в ваш репозиторий dbt."
     link="/docs/deploy/continuous-integration"
     icon="dbt-bit"/>
@@ -83,7 +83,7 @@ pagination_prev: null
     icon="dbt-bit"/>
 
 <Card
-    title="Artifacts"
+    title="Артефакты"
     body="dbt генерирует и сохраняет артефакты вашего проекта, которые используются для таких возможностей, как создание документации по проекту и отчетность о свежести источников данных."
     link="/docs/deploy/artifacts"
     icon="dbt-bit"/>
@@ -119,8 +119,8 @@ pagination_prev: null
     icon="dbt-bit"/>
 
 <Card
-    title="Webhooks"
-    body="Create outbound webhooks to send events about your dbt jobs' statuses to other systems in your organization."
+    title="Вебхуки"
+    body="Создавайте исходящие вебхуки для отправки событий о статусах ваших заданий dbt в другие системы вашей организации."
     link="/docs/deploy/webhooks"
     icon="dbt-bit"/>
 
@@ -133,7 +133,7 @@ pagination_prev: null
 <div className="grid--3-col">
 
 <Card
-    title="Hybrid projects"
+    title="Гибридные проекты"
     body="Используйте гибридные проекты, чтобы загружать артефакты dbt Core в платформу dbt для централизованной видимости, перекрёстных ссылок между проектами и более удобной совместной работы."
     link="/docs/deploy/hybrid-projects"
     icon="dbt-bit"/>

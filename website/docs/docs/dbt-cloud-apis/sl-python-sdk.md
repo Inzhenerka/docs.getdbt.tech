@@ -48,7 +48,7 @@ pip install "dbt-sl-sdk[sync]"
 </TabItem>
 </Tabs>
 
-## Usage
+## Использование
 Чтобы выполнять операции с API <Constant name="semantic_layer" />, необходимо создать (инициализировать) экземпляр `SemanticLayerClient`, указав ваши конкретные [параметры подключения к API](/docs/dbt-cloud-apis/sl-api-overview):
 
 ```python

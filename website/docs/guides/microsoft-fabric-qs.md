@@ -20,7 +20,7 @@ tags: ['Platform', 'Quickstart']
 - Задокументировать ваши модели.  
 - Запланировать выполнение задания (job).
 
-### Prerequisites
+### Предварительные требования
 - У вас есть аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/).  
 - Вы запустили пробный период Microsoft Fabric (Preview). Подробнее см. [Microsoft Fabric (Preview) trial](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial) в документации Microsoft.  
 - Как администратор Microsoft, вы включили аутентификацию с использованием service principal. Необходимо добавить service principal в рабочее пространство Microsoft Fabric с правами Member (рекомендуется) или Admin. Также service principal должен иметь привилегии `CONNECT` к базе данных в хранилище. Подробнее см. [Enable service principal authentication](https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-enable-read-only-apis) в документации Microsoft. <Constant name="cloud" /> использует эти учётные данные аутентификации для подключения к Microsoft Fabric.

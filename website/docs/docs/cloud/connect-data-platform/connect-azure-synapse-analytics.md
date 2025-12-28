@@ -53,6 +53,6 @@ sidebar_label: "Подключение Azure Synapse Analytics"
 
 ## Конфигурация
 
-## Configuration 
+## Конфигурация
 
 Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, см. раздел [Microsoft Azure Synapse DWH configurations](/reference/resource-configs/azuresynapse-configs).

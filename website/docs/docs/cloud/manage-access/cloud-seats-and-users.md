@@ -2,7 +2,7 @@
 title: "Пользователи и лицензии"
 description: "Узнайте, как администраторы dbt могут использовать лицензии и места (seats) для управления доступом в аккаунте dbt."
 id: "seats-and-users"
-sidebar: "Users and licenses"
+sidebar: "Пользователи и лицензии"
 pagination_next: "docs/cloud/manage-access/enterprise-permissions"
 pagination_prev: null
 ---

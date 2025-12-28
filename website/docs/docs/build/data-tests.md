@@ -26,7 +26,7 @@ import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
 
 :::
 
-## Overview
+## Обзор
 
 Data tests — это утверждения, которые вы задаёте для своих моделей и других ресурсов в проекте dbt (например, sources, seeds и snapshots). Когда вы запускаете `dbt test`, dbt сообщает, проходит ли каждый тест в вашем проекте или завершается с ошибкой.
 

@@ -132,14 +132,14 @@ Snowflake ограничивает каждую security integration (`CREATE SE
 
 ### Устранение неполадок
 
-<Expandable alt_header="Invalid consent request">
+<Expandable alt_header="Недопустимый запрос согласия">
 
 Если при нажатии на кнопку `Connect Snowflake Account` происходит успешный редирект на страницу входа Snowflake, но затем вы получаете ошибку `Invalid consent request`, это может означать следующее:
 * У вашего пользователя может не быть доступа к роли Snowflake, указанной в учетных данных для разработки в <Constant name="cloud" />. Проверьте, что у вас есть доступ к этой роли и что имя роли введено корректно, так как Snowflake чувствителен к регистру.
 * Вы пытаетесь использовать роль, которая входит в [BLOCKED_ROLES_LIST](https://docs.snowflake.com/en/user-guide/oauth-partner.html#blocking-specific-roles-from-using-the-integration), например `ACCOUNTADMIN`.
 </Expandable>
 
-<Expandable alt_header="The requested scope is invalid">
+<Expandable alt_header="Запрошенный scope недопустим">
 
 При нажатии на кнопку `Connect Snowflake Account` для подключения к аккаунту Snowflake вы можете получить ошибку `The requested scope is invalid`, даже если редирект на страницу входа Snowflake прошёл успешно.
 
@@ -147,7 +147,7 @@ Snowflake ограничивает каждую security integration (`CREATE SE
 * В OAuth-потоке Snowflake параметр `role` в конфигурации профиля не является опциональным, так как он не наследуется из конфигурации подключения проекта. Поэтому каждый пользователь должен указывать свою роль, даже если она задана в настройках подключения проекта.
 </Expandable>
 
-<Expandable alt_header="Server error 500">
+<Expandable alt_header="Ошибка сервера 500">
 
 Если при редиректе из Snowflake в <Constant name="cloud" /> вы сталкиваетесь с серверной ошибкой 500, проверьте, что вы добавили в allow-list [IP-адреса <Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses) или [VPC Endpoint ID (для подключений через PrivateLink)](/docs/cloud/secure/snowflake-privatelink#configuring-network-policies) на уровне аккаунта Snowflake.
 

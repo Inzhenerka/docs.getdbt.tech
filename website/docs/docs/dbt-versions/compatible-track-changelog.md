@@ -10,7 +10,7 @@ description: "Совместимый трек релизов обновляет�
 
 Подробнее см. в разделе [release tracks](/docs/dbt-versions/cloud-release-tracks).
 
-## December 2025
+## Декабрь 2025
 
 Дата релиза: 9 декабря 2025 г.
 
@@ -58,7 +58,7 @@ dbt-trino==1.9.3
 - [dbt-teradata 1.10.0](https://github.com/Teradata/dbt-teradata/releases/tag/v1.10.0)
 - [dbt-trino 1.9.3](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-193---july-22-2025)
 
-## November 2025
+## Ноябрь 2025
 
 Дата релиза: 11 ноября 2025 г.
 
@@ -112,7 +112,7 @@ dbt-trino==1.9.3
 - [dbt-teradata 1.10.0](https://github.com/Teradata/dbt-teradata/releases/tag/v1.10.0)
 - [dbt-trino 1.9.3](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-193---july-22-2025)
 
-## October 2025
+## Октябрь 2025
 
 Дата релиза: 23 октября 2025 г.
 
@@ -163,7 +163,7 @@ dbt-trino==1.9.3
 - [dbt-teradata 1.10.0](https://github.com/Teradata/dbt-teradata/releases/tag/v1.10.0)
 - [dbt-trino 1.9.3](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-193---july-22-2025)
 
-## September 2025
+## Сентябрь 2025
 
 Дата релиза: 10 сентября 2025 г.
 
@@ -278,13 +278,13 @@ dbt-trino==1.9.3
 - [dbt-teradata 1.9.3](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.3)
 - [dbt-trino 1.9.3](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-193---july-22-2025)
 
-## July 2025
+## Июль 2025
 
 Совместимый релиз, запланированный на июль 2025 года, будет пропущен для дополнительной стабилизации минорного обновления `dbt-core==1.10.0` ([выпущенного 16 июня 2025 г.](https://pypi.org/project/dbt-core/1.10.0/)) на всей платформе dbt.
 
 Совместимые релизы возобновятся в августе 2025 года.
 
-## June 2025
+## Июнь 2025
 
 Дата релиза: 12 июня 2025 г.
 
@@ -332,7 +332,7 @@ dbt-trino==1.9.2
 - [dbt-teradata 1.9.2](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.2)
 - [dbt-trino 1.9.1](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-192---june-03-2025)
 
-## May 2025
+## Май 2025
 
 Дата релиза: 19 мая 2025 г.
 
@@ -387,7 +387,7 @@ dbt-trino==1.9.1
 - [dbt-teradata 1.9.2](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.2)
 - [dbt-trino 1.9.1](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-191---march-26-2025)
 
-## April 2025
+## Апрель 2025
 
 Дата релиза: 9 апреля 2025 г.
 
@@ -438,7 +438,7 @@ dbt-trino==1.9.1
 - [dbt-teradata 1.9.2](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.2)
 - [dbt-trino 1.9.1](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-191---march-26-2025)
 
-## March 2025
+## Март 2025
 
 Дата релиза: 11 марта 2025 г.
 
@@ -480,7 +480,7 @@ dbt-trino==1.9.0
 - [dbt-teradata 1.9.1](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.1)
 - [dbt-trino 1.9.0](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-190---december-20-2024)
 
-## February 2025
+## Февраль 2025
 
 Дата релиза: 12 февраля 2025 г.
 
@@ -591,7 +591,7 @@ dbt-trino==1.9.0
 - [dbt-teradata 1.9.0](https://github.com/Teradata/dbt-teradata/releases/tag/v1.9.0)
 - [dbt-trino 1.9.0](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-190---december-20-2024)
 
-## December 2024
+## Декабрь 2024
 
 Дата релиза: 12 декабря 2024 г.
 

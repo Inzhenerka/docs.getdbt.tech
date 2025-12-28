@@ -120,10 +120,10 @@ Query output panel расположена под редактором запро
 
   Примеры вопросов, которые можно задать агенту:
 
-  - _What region are my sales growing the fastest?_  
-  - _What was the revenue last month?_  
-  - _How should I optimize my marketing spend next quarter?_  
-  - _How many customers do I have, broken down by customer type?_
+  - _В каком регионе мои продажи растут быстрее всего?_  
+  - _Какой была выручка в прошлом месяце?_  
+  - _Как мне оптимизировать маркетинговые расходы в следующем квартале?_  
+  - _Сколько у меня клиентов, в разбивке по типам клиентов?_  
 
   Analyst agent формирует план анализа на основе вашего вопроса. Агент:
 

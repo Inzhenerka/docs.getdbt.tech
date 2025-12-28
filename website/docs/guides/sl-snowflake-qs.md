@@ -12,7 +12,7 @@ keywords: ['dbt Semantic Layer','Metrics','dbt platform', 'Snowflake', 'Google S
 level: 'Intermediate'
 ---
 
-<!-- The below snippets (or reusables) can be found in the following file locations in the docs code repository) -->
+<!-- Приведённые ниже сниппеты (или reusables) можно найти в репозитории кода документации по следующим путям файлов) -->
 import CreateModel from '/snippets/_sl-create-semanticmodel.md';
 import DefineMetrics from '/snippets/_sl-define-metrics.md';
 import ConfigMetric from '/snippets/_sl-configure-metricflow.md';
@@ -64,10 +64,10 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
 
-- [Step 2: Create a new GCP project](/guides/bigquery?step=2)
-- [Step 3: Create BigQuery dataset](/guides/bigquery?step=3)
-- [Step 4: Generate BigQuery credentials](/guides/bigquery?step=4)
-- [Step 5: Connect <Constant name="cloud" /> to BigQuery](/guides/bigquery?step=5)
+- [Шаг 2: Создайте новый проект GCP](/guides/bigquery?step=2)
+- [Шаг 3: Создайте набор данных BigQuery](/guides/bigquery?step=3)
+- [Шаг 4: Сгенерируйте учётные данные BigQuery](/guides/bigquery?step=4)
+- [Шаг 5: Подключите <Constant name="cloud" /> к BigQuery](/guides/bigquery?step=5)
 
 </TabItem>
 
@@ -75,9 +75,9 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
 
-- [Step 2: Create a Databricks workspace](/guides/databricks?step=2)
-- [Step 3: Load data](/guides/databricks?step=3)
-- [Step 4: Connect <Constant name="cloud" /> to Databricks](/guides/databricks?step=4)
+- [Шаг 2: Создайте рабочее пространство Databricks](/guides/databricks?step=2)
+- [Шаг 3: Загрузите данные](/guides/databricks?step=3)
+- [Шаг 4: Подключите <Constant name="cloud" /> к Databricks](/guides/databricks?step=4)
 
 </TabItem>
 
@@ -85,8 +85,8 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
 
-- [Step 2: Load data into your Microsoft Fabric warehouse](/guides/microsoft-fabric?step=2)
-- [Step 3: Connect <Constant name="cloud" /> to Microsoft Fabric](/guides/microsoft-fabric?step=3)
+- [Шаг 2: Загрузите данные в ваш склад Microsoft Fabric](/guides/microsoft-fabric?step=2)
+- [Шаг 3: Подключите <Constant name="cloud" /> к Microsoft Fabric](/guides/microsoft-fabric?step=3)
 
 </TabItem>
 
@@ -94,9 +94,9 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
 
-- [Step 2: Create a Redshift cluster](/guides/redshift?step=2)
-- [Step 3: Load data](/guides/redshift?step=3)
-- [Step 4: Connect <Constant name="cloud" /> to Redshift](/guides/redshift?step=3)
+- [Шаг 2: Создайте кластер Redshift](/guides/redshift?step=2)
+- [Шаг 3: Загрузите данные](/guides/redshift?step=3)
+- [Шаг 4: Подключите <Constant name="cloud" /> к Redshift](/guides/redshift?step=3)
 
 </TabItem>
 
@@ -104,10 +104,10 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Откройте новую вкладку и выполните следующие быстрые шаги по настройке учетной записи и загрузке данных:
 
-- [Step 2: Load data to an Amazon S3 bucket](/guides/starburst-galaxy?step=2)
-- [Step 3: Connect Starburst Galaxy to Amazon S3 bucket data](/guides/starburst-galaxy?step=3)
-- [Step 4: Create tables with Starburst Galaxy](/guides/starburst-galaxy?step=4)
-- [Step 5: Connect <Constant name="cloud" /> to Starburst Galaxy](/guides/starburst-galaxy?step=5)
+- [Шаг 2: Загрузите данные в бакет Amazon S3](/guides/starburst-galaxy?step=2)
+- [Шаг 3: Подключите Starburst Galaxy к данным в бакете Amazon S3](/guides/starburst-galaxy?step=3)
+- [Шаг 4: Создайте таблицы с помощью Starburst Galaxy](/guides/starburst-galaxy?step=4)
+- [Шаг 5: Подключите <Constant name="cloud" /> к Starburst Galaxy](/guides/starburst-galaxy?step=5)
 
 </TabItem>
 
@@ -487,9 +487,9 @@ semantic_models:
 - [Measures](#measures) вычисляют показатели по данным, предоставляя ценные инсайты через агрегации.
 
 
-### Entities
+### Сущности
 
-[Entities](/docs/build/semantic-models#entities) — это понятие из реального мира бизнеса, которое служит основой вашей семантической модели. В наших semantic models это будут ID-колонки (например, `order_id`). Они будут выступать ключами для join с другими semantic models.
+[Сущности](/docs/build/semantic-models#entities) — это понятия реального бизнеса, которые служат основой вашей семантической модели. В наших semantic models это будут ID-колонки (например, `order_id`). Они будут выступать ключами для join с другими semantic models.
 
 Добавьте entities в файл семантической модели `fct_orders.yml`:
 
@@ -514,9 +514,9 @@ semantic_models:
 
 </File>
 
-### Dimensions
+### Измерения
 
-[Dimensions](/docs/build/semantic-models#entities) — это способ группировать или фильтровать информацию по категориям или по времени.
+[Измерения](/docs/build/semantic-models#entities) — это способ группировать или фильтровать информацию по категориям или по времени.
 
 Добавьте dimensions в файл семантической модели `fct_orders.yml`:
 
@@ -546,7 +546,7 @@ semantic_models:
 
 </File>
 
-### Measures
+### Меры
 
 [Measures](/docs/build/semantic-models#measures) — это агрегации, выполняемые над колонками в вашей модели. Часто вы будете использовать их как конечные метрики. Measures также могут служить строительными блоками для более сложных метрик.
 
@@ -609,22 +609,22 @@ semantic_models:
 
 ### Определите метрики
 
-[Metrics](/docs/build/metrics-overview) — это язык, на котором говорят бизнес-пользователи, и способ измерять эффективность бизнеса. Метрика — это агрегация над колонкой в вашем warehouse, которую вы обогащаете измерениями (dimensional cuts).
+[Метрики](/docs/build/metrics-overview) — это язык, на котором говорят бизнес-пользователи, и способ измерять эффективность бизнеса. Метрика — это агрегация над колонкой в вашем warehouse, которую вы обогащаете измерениями (dimensional cuts).
 
 Существует несколько типов метрик, которые можно настроить:
 
-- [Conversion metrics](/docs/build/conversion) &mdash; Отслеживают, когда для сущности происходит базовое событие и последующее событие-конверсия в пределах заданного периода времени.
-- [Cumulative metrics](/docs/build/cumulative) &mdash; Агрегируют measure в рамках заданного окна. Если окно не задано, окно будет накапливать measure за весь зафиксированный период. Обратите внимание: перед добавлением cumulative metrics необходимо создать модель time spine.
-- [Derived metrics](/docs/build/metrics-overview#derived-metrics) &mdash; Позволяют выполнять вычисления поверх метрик.
-- [Simple metrics](/docs/build/metrics-overview#simple-metrics) &mdash; Напрямую ссылаются на один measure без дополнительных measures.
-- [Ratio metrics](/docs/build/metrics-overview#ratio-metrics) &mdash; Состоят из метрики-числителя и метрики-знаменателя. Constraint string можно применить и к числителю, и к знаменателю, либо отдельно к числителю или знаменателю.
+- [Метрики конверсии](/docs/build/conversion) &mdash; Отслеживают, когда для сущности происходит базовое событие и последующее событие-конверсия в пределах заданного периода времени.
+- [Накопительные метрики](/docs/build/cumulative) &mdash; Агрегируют measure в рамках заданного окна. Если окно не задано, окно будет накапливать measure за весь зафиксированный период. Обратите внимание: перед добавлением cumulative metrics необходимо создать модель time spine.
+- [Производные метрики](/docs/build/metrics-overview#derived-metrics) &mdash; Позволяют выполнять вычисления поверх метрик.
+- [Простые метрики](/docs/build/metrics-overview#simple-metrics) &mdash; Напрямую ссылаются на один measure без дополнительных measures.
+- [Относительные метрики](/docs/build/metrics-overview#ratio-metrics) &mdash; Состоят из метрики-числителя и метрики-знаменателя. Constraint string можно применить и к числителю, и к знаменателю, либо отдельно к числителю или знаменателю.
 
 После того как вы создали semantic models, пора начать использовать созданные вами measures, чтобы определить метрики:
 
-1. Добавьте metrics в файл семантической модели `fct_orders.yml`:
+1. Добавьте метрики в файл семантической модели `fct_orders.yml`:
 
 :::tip 
-Убедитесь, что вы сохраняете все semantic models и metrics в директории, указанной в [`model-paths`](/reference/project-configs/model-paths) (или в ее поддиректории, например `models/semantic_models/`). Если сохранить их вне этого пути, файл `semantic_manifest.json` окажется пустым, и ваши semantic models или metrics не будут распознаны.
+Убедитесь, что вы сохраняете все semantic models и метрики в директории, указанной в [`model-paths`](/reference/project-configs/model-paths) (или в её поддиректории, например `models/semantic_models/`). Если сохранить их вне этого пути, файл `semantic_manifest.json` окажется пустым, и ваши semantic models или метрики не будут распознаны.
 :::
 
 <File name='models/metrics/fct_orders.yml'>

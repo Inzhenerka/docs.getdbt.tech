@@ -59,53 +59,53 @@ dbt Labs сотрудничает с Auth0, чтобы предоставить 
 
 ### SAML 2.0 and Entra ID
 
-The Entra ID fields that will be updated are:
+Поля Entra ID, которые будут обновлены:
 - Single sign-on URL &mdash; `https://<YOUR_AUTH0_URI>/login/callback?connection=<SLUG>`
 - Audience URI (SP Entity ID) &mdash; `urn:auth0:<YOUR_AUTH0_ENTITYID>:<SLUG>`
 
-The new values for these fields can be found in <Constant name="cloud" /> by navigating to **Account settting** --> **Single sign-on**.
+Новые значения для этих полей можно найти в <Constant name="cloud" />, перейдя в **Account settting** --> **Single sign-on**.
 
-1. Replace `<SLUG>` with your organization’s login URL slug. 
+1. Замените `<SLUG>` на слаг URL входа вашей организации.
 
-2. Locate your <Constant name="cloud" /> SAML2.0 app in the **Enterprise applications** section of Azure. Click **Single sign-on** on the left side menu.
+2. Найдите ваше SAML2.0‑приложение <Constant name="cloud" /> в разделе **Enterprise applications** в Azure. Нажмите **Single sign-on** в меню слева.
 
-3. Edit the **Basic SAML configuration** tile and enter the values from your account:
+3. Отредактируйте плитку **Basic SAML configuration** и введите значения из вашей учетной записи:
     - Entra ID **Identifier (Entity ID)** = <Constant name="cloud" /> **Audience URI (SP Entity ID)**
     - Entra ID **Reply URL (Assertion Consumer Service URL)** = <Constant name="cloud" /> **Single sign-on URL**
 
     <Lightbox src="/img/docs/dbt-cloud/access-control/edit-entra-saml.png" width="90%" title="Editing the SAML configuration window in Entra ID"/>
 
-4. Save the fields and the completed configuration will look something like this: 
+4. Сохраните поля, и завершенная конфигурация будет выглядеть примерно так:
 
     <Lightbox src="/img/docs/dbt-cloud/access-control/entra-id-saml.png" width="90%" title="Completed configuration of the SAML fields in Entra ID"/>
 
-3. Toggle the `Enable new SSO authentication` option to ensure the traffic is routed correctly. _The new SSO migration action is final and cannot be undone._
+3. Включите параметр `Enable new SSO authentication`, чтобы обеспечить корректную маршрутизацию трафика. _Новое действие миграции SSO является окончательным и не может быть отменено._
 
-4. Save the settings and test the new configuration using the SSO login URL provided on the settings page.
+4. Сохраните настройки и протестируйте новую конфигурацию, используя URL входа SSO, указанный на странице настроек.
 
 ## Microsoft Entra ID
 
 Microsoft Entra ID admins using OpenID Connect (ODIC) will need to make a slight adjustment to the existing authentication app in the Azure portal. This migration does not require that the entire app be deleted or recreated; you can edit the existing app. Start by opening the Azure portal and navigating to the Microsoft Entra ID overview.
 
-Below are steps to update. You must complete all of them to ensure uninterrupted access to <Constant name="cloud" /> and you should coordinate with your identity provider admin when making these changes.
+Ниже приведены шаги по обновлению. Вы должны выполнить все из них, чтобы обеспечить бесперебойный доступ к <Constant name="cloud" />, и при внесении этих изменений следует координировать действия с администратором вашего провайдера удостоверений.
 
-1. Click **App Registrations** on the left side menu. 
+1. Нажмите **App Registrations** в меню слева.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/aad-app-registration.png" title="Select App Registrations"/>
 
-2. Select the proper **<Constant name="cloud" />** app (name may vary) from the list. From the app overview, click on the hyperlink next to **Redirect URI**
+2. Выберите соответствующее приложение **<Constant name="cloud" />** (название может отличаться) из списка. На странице обзора приложения нажмите на гиперссылку рядом с **Redirect URI**
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/app-overview.png" title="Click the Redirect URI hyperlink"/>
 
-3. In the **Web** pane with **Redirect URIs**, click **Add URI** and enter the appropriate `https://<YOUR_AUTH0_URI>/login/callback`. Save the settings and verify it is counted in the updated app overview.
+3. В панели **Web** с **Redirect URIs** нажмите **Add URI** и введите соответствующий `https://<YOUR_AUTH0_URI>/login/callback`. Сохраните настройки и убедитесь, что он учтен в обновленном обзоре приложения.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/redirect-URI.png" title="Enter new redirect URI"/>
 
-4. Navigate to the <Constant name="cloud" /> environment and open the **Account Settings**. Click the **Single Sign-on** option from the left side menu and click the **Edit** option from the right side of the SSO pane. The **domain** field is the domain your organization uses to login to Microsoft Entra ID. Toggle the **Enable New SSO Authentication** option and **Save**. _Once this option is enabled, it cannot be undone._
+4. Перейдите в среду <Constant name="cloud" /> и откройте **Account Settings**. Нажмите пункт **Single Sign-on** в меню слева и выберите **Edit** в правой части панели SSO. Поле **domain** — это домен, который ваша организация использует для входа в Microsoft Entra ID. Включите параметр **Enable New SSO Authentication** и нажмите **Save**. _После включения этого параметра его нельзя будет отключить._
 
 :::warning Domain authorization
 
-You must complete the domain authorization before you toggle `Enable New SSO Authentication`, or the migration will not complete successfully.
+Вы должны завершить авторизацию домена до того, как включите `Enable New SSO Authentication`, иначе миграция не будет успешно завершена.
 
 :::
 

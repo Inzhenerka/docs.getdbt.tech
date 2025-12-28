@@ -5,13 +5,13 @@ description: "Настройка подключения BigQuery."
 sidebar_label: "Подключение BigQuery"
 ---
 
-## Required permissions
+## Необходимые разрешения
 
 import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 <BigQueryPerms />
 
-## Authentication
+## Аутентификация
 
 <Constant name="cloud" /> поддерживает различные методы аутентификации в зависимости от вашего окружения и типа плана:
 
@@ -73,7 +73,7 @@ import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 Если вы являетесь конечным пользователем и в вашей организации настроен BigQuery OAuth, вы можете связать проект со своей личной учетной записью BigQuery в разделе Profile в <Constant name="cloud" />.
 
-### BigQuery Workload Identity Federation <Lifecycle status="managed, preview" />
+### Федерация удостоверений рабочей нагрузки BigQuery <Lifecycle status="managed, preview" />
 
 :::note
 
@@ -224,7 +224,7 @@ import BigQueryDataproc from '/snippets/_bigquery-dataproc.md';
 
 </Expandable>
 
-### Account level connections and credential management
+### Подключения и управление учетными данными на уровне аккаунта
 
 Вы можете повторно использовать подключения в нескольких проектах с помощью [глобальных подключений](/docs/cloud/connect-data-platform/about-connections#migration-from-project-level-connections-to-account-level-connections). Подключения привязаны на уровне среды (ранее на уровне проекта), поэтому вы можете использовать несколько подключений внутри одного проекта (для управления разработкой, тестированием, производством и т.д.).
 
