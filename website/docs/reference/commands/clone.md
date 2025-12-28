@@ -5,59 +5,52 @@ id: "clone"
 ---
 
 Команда `dbt clone` клонирует выбранные ноды из [указанного состояния](/reference/node-selection/syntax#establishing-state) в целевые схемы. Эта команда использует материализацию `clone`:
-
-- Если ваша платформа данных поддерживает zero-copy клонирование таблиц (Snowflake, Databricks или BigQuery), и эта модель существует в исходном окружении как таблица, dbt создаст её в целевом окружении как клон.
+- Если ваша платформа данных поддерживает zero-copy клонирование таблиц (Snowflake, Databricks или BigQuery), и модель существует как таблица в исходном окружении, dbt создаст её в целевом окружении как клон.
 - В противном случае dbt создаст простое представление-указатель (`select * from` исходного объекта).
-- По умолчанию `dbt clone` не пересоздаёт уже существующие отношения (relations) в текущем target. Чтобы переопределить это поведение, используйте флаг `--full-refresh`.
-- Вы можете указать большее количество [threads](/docs/running-a-dbt-project/using-threads), чтобы сократить время выполнения, поскольку отдельные операции клонирования независимы друг от друга.
+- По умолчанию `dbt clone` не пересоздаёт уже существующие relation’ы в текущем target. Чтобы изменить это поведение, используйте флаг `--full-refresh`.
+- Вы можете указать большее количество [threads](/docs/running-a-dbt-project/using-threads), чтобы сократить время выполнения, поскольку отдельные операции клонирования не зависят друг от друга.
 
 Команда `clone` полезна для:
-
-- blue/green непрерывного деплоя (на хранилищах данных, поддерживающих zero-copy клонирование таблиц)
-- клонирования текущего состояния production в схемы разработки
-- работы с инкрементальными моделями в CI-задачах <Constant name="cloud" /> (на хранилищах данных, поддерживающих zero-copy клонирование таблиц)
+- blue/green непрерывного деплоя (на хранилищах данных, которые поддерживают zero-copy клонирование таблиц)
+- клонирования текущего production-состояния в development-схемы
+- работы с инкрементальными моделями в CI-задачах <Constant name="cloud" /> (на хранилищах данных, которые поддерживают zero-copy клонирование таблиц)
 - тестирования изменений кода на downstream-зависимостях в вашем BI-инструменте
 
-Команда `clone` полезна для:
-- непрерывного развертывания blue/green (в хранилищах данных, поддерживающих клонирование таблиц без копирования)
-- клонирования текущего производственного состояния в схему(ы) разработки
-- обработки инкрементных моделей в заданиях CI dbt Cloud (в хранилищах данных, поддерживающих клонирование таблиц без копирования)
-- тестирования изменений кода на зависимостях в вашем BI-инструменте
 
 ```bash
-# клонировать все мои модели из указанного состояния в мою целевую схему(ы)
+# clone all of my models from specified state to my target schema(s)
 dbt clone --state path/to/artifacts
 
-# клонировать одну_конкретную_модель из указанного состояния в мою целевую схему(ы)
+# clone one_specific_model of my models from specified state to my target schema(s)
 dbt clone --select "one_specific_model" --state path/to/artifacts
 
-# клонировать все мои модели из указанного состояния в мою целевую схему(ы) и воссоздать все уже существующие отношения в текущей цели
+# clone all of my models from specified state to my target schema(s) and recreate all pre-existing relations in the current target
 dbt clone --state path/to/artifacts --full-refresh
 
-# клонировать все мои модели из указанного состояния в мою целевую схему(ы), выполняя до 50 команд клонирования параллельно
+# clone all of my models from specified state to my target schema(s), running up to 50 clone statements in parallel
 dbt clone --state path/to/artifacts --threads 50
 ```
 
-### Когда использовать `dbt clone` вместо [отложенного выполнения](/reference/node-selection/defer)?
+### Когда использовать `dbt clone` вместо [deferral](/reference/node-selection/defer)?
 
-В отличие от отложенного выполнения, `dbt clone` требует некоторого вычислительного ресурса и создания дополнительных объектов в вашем хранилище данных. Во многих случаях отложенное выполнение является более дешевым и простым альтернативным вариантом `dbt clone`. Однако, `dbt clone` охватывает дополнительные случаи использования, где отложенное выполнение может быть невозможным.
+В отличие от deferral, `dbt clone` требует некоторого объёма вычислений и создания дополнительных объектов в вашем хранилище данных. Во многих случаях deferral является более дешёвой и простой альтернативой `dbt clone`. Однако `dbt clone` покрывает дополнительные сценарии использования, где deferral может быть невозможен.
 
-Например, создавая реальные объекты в хранилище данных, `dbt clone` позволяет вам тестировать изменения кода на зависимостях _вне dbt_ (например, в BI-инструменте).
+Например, за счёт создания реальных объектов в хранилище данных, `dbt clone` позволяет тестировать изменения кода на downstream-зависимостях _вне dbt_ (например, в BI-инструменте).
 
-В качестве ещё одного примера, вы можете выполнить `clone` ваших изменённых инкрементальных моделей в качестве первого шага вашего CI‑джоба в <Constant name="cloud" />, чтобы избежать дорогостоящих сборок с `full-refresh` для хранилищ данных, которые поддерживают zero-copy cloning.
+В качестве другого примера, вы можете выполнить `clone` изменённых инкрементальных моделей как первый шаг CI-задачи в <Constant name="cloud" />, чтобы избежать дорогостоящих `full-refresh` сборок для хранилищ, поддерживающих zero-copy клонирование.
 
 ## Клонирование в dbt
 
-Вы можете клонировать ноды между состояниями в <Constant name="cloud" /> с помощью команды `dbt clone`. Она доступна в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и в [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) и опирается на возможность [`--defer`](/reference/node-selection/defer). Подробнее о defer в <Constant name="cloud" /> читайте в разделе [Using defer in <Constant name="cloud" />](/docs/cloud/about-cloud-develop-defer).
+Вы можете клонировать ноды между состояниями в <Constant name="cloud" /> с помощью команды `dbt clone`. Она доступна в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) и опирается на функциональность [`--defer`](/reference/node-selection/defer). Подробнее о defer в <Constant name="cloud" /> читайте в разделе [Using defer in <Constant name="cloud" />](/docs/cloud/about-cloud-develop-defer).
 
-- **Использование <Constant name="cloud_cli" />** &mdash; команда `dbt clone` в <Constant name="cloud_cli" /> автоматически включает флаг `--defer`. Это означает, что вы можете использовать команду `dbt clone` без какой‑либо дополнительной настройки.
+- **Использование <Constant name="cloud_cli" />** &mdash; Команда `dbt clone` в <Constant name="cloud_cli" /> автоматически включает флаг `--defer`. Это означает, что вы можете использовать команду `dbt clone` без какой-либо дополнительной настройки.
 
-- **Использование <Constant name="cloud_ide" />** &mdash; чтобы использовать команду `dbt clone` в <Constant name="cloud_ide" />, выполните следующие шаги перед запуском `dbt clone`:
+- **Использование <Constant name="cloud_ide" />** &mdash; Чтобы использовать команду `dbt clone` в <Constant name="cloud_ide" />, выполните следующие шаги перед запуском `dbt clone`:
 
-  - Настройте ваше **Production environment** и убедитесь, что есть успешно выполненный job.
+  - Настройте **Production environment** и убедитесь, что есть успешно выполненный job.
   - Включите **Defer to production**, переключив тумблер в правом нижнем углу командной панели.
-    <Lightbox src="/img/docs/dbt-cloud/defer-toggle.png" width="80%" title="Select the 'Defer to production' toggle on the bottom right of the command bar to enable defer in the Studio IDE."/>
+    <Lightbox src="/img/docs/dbt-cloud/defer-toggle.png" width="80%" title="Выберите переключатель «Defer to production» в правом нижнем углу командной панели, чтобы включить defer в Studio IDE."/>
   - Запустите команду `dbt clone` из командной панели.
   
   
-Ознакомьтесь с [этим постом в Developer blog](/blog/to-defer-or-to-clone), чтобы узнать больше о лучших практиках и о том, когда использовать `dbt clone`, а когда — deferral.
+Ознакомьтесь с [этим постом в Developer blog](/blog/to-defer-or-to-clone), чтобы узнать больше о лучших практиках и о том, когда стоит использовать `dbt clone` по сравнению с deferral.
