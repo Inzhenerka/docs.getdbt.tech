@@ -30,7 +30,11 @@ jobs:
         run: bun install
 
       - name: 🛠️ Build site
-        run: NODE_ENV=production CONTEXT=production bun run build
+        env:
+          NODE_ENV: production
+          CONTEXT: production
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+        run: bun run build
 
       - name: 🔼 Upload site
         run: |

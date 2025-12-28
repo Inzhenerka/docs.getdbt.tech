@@ -48,7 +48,7 @@ var siteSettings = {
   url: SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  // trailingSlash: false,
+  trailingSlash: false,
   i18n: {
     defaultLocale: 'ru',
     locales: ['ru'],
@@ -73,12 +73,12 @@ var siteSettings = {
     },
     // Adding non-empty strings for Algolia config
     // allows Docusaurus to run locally without .env file
-//    algolia: {
-//      apiKey: ALGOLIA_API_KEY ? ALGOLIA_API_KEY : "dbt",
-//      indexName: ALGOLIA_INDEX_NAME ? ALGOLIA_INDEX_NAME : "dbt",
-//      appId: ALGOLIA_APP_ID ? ALGOLIA_APP_ID : "dbt",
-//      //debug: true,
-//    },
+   algolia: {
+     apiKey: ALGOLIA_API_KEY ? ALGOLIA_API_KEY : "dbt",
+     indexName: ALGOLIA_INDEX_NAME ? ALGOLIA_INDEX_NAME : "dbt",
+     appId: ALGOLIA_APP_ID ? ALGOLIA_APP_ID : "IJCHV1DNA9",
+     //debug: true,
+   },
     announcementBar: {
       id: "dwh-demo",
       content: "Получи бесплатный доступ к симулятору Data Warehouse Analytics Engineer на базе dbt",
