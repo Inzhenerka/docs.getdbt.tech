@@ -2612,6 +2612,37 @@ html[data-theme='dark'] .home .translated-note__image {
   }
 }
 
+.home .home-video__content {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 2rem;
+}
+
+.home .home-video__frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-neutral-tertiary);
+  background: var(--bg-neutral-secondary-subtle);
+}
+
+.home .home-video__frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 996px) {
+  .home .home-video__content {
+    grid-template-columns: 1fr;
+  }
+}
+
 .docswiper .swiper {
   padding: 0 40px 10px;
 }

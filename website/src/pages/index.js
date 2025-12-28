@@ -10,6 +10,7 @@ import { getInzhenerkaPromo } from '../utils/get-inzhenerka-promo';
 import Link from '@docusaurus/Link';
 import BlogPostCard from '@site/src/components/blogPostCard';
 import StructuredData from '@site/src/components/StructuredData';
+import YoutubeVideo from '@site/src/components/youtube';
 
 const bannerAnimation = require('@site/static/img/banner-white.svg');
 
@@ -249,6 +250,22 @@ function Home() {
                   <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Что нового в dbt</Link>
                   <Link to="/blog">Блог разработчиков</Link>
                   <Link to="/community/join">Присоединиться к сообществу</Link>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="section--compact home-video">
+            <div className="container">
+              <div className="home-video__content">
+                <div>
+                  <span className="eyebrow">Ознакомительное видео</span>
+                  <h2 className="heading-2">Введение в dbt: основы моделирования данных</h2>
+                  <p>Практический разбор dbt: как уйти от хаотичных SQL и ETL к управляемому хранилищу данных.
+Без теории — реальные решения, подводные камни и лайфхаки, как dbt помогает команде и бизнесу.</p>
+                </div>
+                <div className="home-video__frame">
+                  <YoutubeVideo id="BSge0lPJeHk" />
                 </div>
               </div>
             </div>
