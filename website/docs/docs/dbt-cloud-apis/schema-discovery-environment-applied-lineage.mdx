@@ -1,24 +1,24 @@
 ---
-title: "Lineage object schema"
+title: "Схема объекта Lineage"
 sidebar_label: "Lineage"
 id: "discovery-schema-environment-applied-lineage"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The <Term id="data-lineage">lineage</Term> object allows you to query lineage across your resources. 
+Объект <Term id="data-lineage">lineage</Term> позволяет выполнять запросы lineage (происхождения и зависимостей данных) для ваших ресурсов. 
 
-The [Example query](#example-query) illustrates a few fields you can query with the `lineage` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `lineage`. Полную схему со всеми доступными для запроса полями см. в разделе [Поля](#fields).
 
-### Arguments
+### Аргументы
 
-When querying for `lineage`, you can use the following arguments:
+При выполнении запроса к `lineage` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="lineage" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId` and filter by "Model" as the resource type to see lineage information for all models in this environment, including their dependencies, materialization type, and metadata:
+Вы можете указать `environmentId` и отфильтровать по типу ресурса `"Model"`, чтобы получить информацию о lineage для всех моделей в этом окружении, включая их зависимости, тип материализации и метаданные:
 
 ```graphql
 query {
@@ -41,8 +41,8 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `lineage`, you can use the following fields:
+При выполнении запроса к `lineage` можно использовать следующие поля:
 
 <SchemaTable nodeName="LineageNode" />

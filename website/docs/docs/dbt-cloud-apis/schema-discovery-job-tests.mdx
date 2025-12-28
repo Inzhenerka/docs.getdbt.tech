@@ -1,24 +1,24 @@
 ---
-title: "Tests object schema"
+title: "Схема объекта tests"
 sidebar_label: "Tests"
 id: "discovery-schema-job-tests"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The tests object allows you to query information about all tests in a given job.
+Объект `tests` позволяет запрашивать информацию обо всех тестах в рамках заданного job.
 
-### Arguments
+### Аргументы
 
-When querying for `tests`, the following arguments are available.
+При выполнении запроса к `tests` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="tests" />
 
-Below we show some illustrative example queries and outline the schema (all possible fields you can query) of the tests object.
+Ниже приведены иллюстративные примеры запросов, а также описание схемы (всех возможных полей, которые можно запрашивать) объекта `tests`.
 
-### Example query
+### Пример запроса
 
-The example query below finds all tests in this job and includes information about those tests.
+Пример запроса ниже находит все тесты в данном job и включает информацию об этих тестах.
 
 ```graphql
 {
@@ -36,8 +36,8 @@ The example query below finds all tests in this job and includes information abo
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `tests`, the following fields are available:
+При выполнении запроса к `tests` доступны следующие поля:
 
 <SchemaTable nodeName="TestNode" />

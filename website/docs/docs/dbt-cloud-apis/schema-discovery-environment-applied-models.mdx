@@ -1,24 +1,24 @@
 ---
-title: "Models object schema"
+title: "Схема объекта Models"
 sidebar_label: "Models"
 id: "discovery-schema-environment-applied-models"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Models](/docs/build/models) are the foundational dbt resource that transform raw data into curated datasets using SQL (or Python). Each model represents a single SELECT statement, typically materialized as a table or view in your warehouse. You can query information about models through the Discovery API.
+[Models](/docs/build/models) — это базовый ресурс dbt, который преобразует сырые данные в подготовленные наборы данных с помощью SQL (или Python). Каждая модель представляет собой один SELECT‑запрос, который обычно материализуется в виде таблицы или представления в вашем хранилище данных. Информацию о моделях можно запрашивать через Discovery API.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `models` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Example query](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `models`. Полную схему со всеми доступными для запроса полями см. в разделе [Fields](#fields).
 
 ### Arguments
 
-When querying for `models`, you can use the following arguments:
+При выполнении запросов к `models` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="models" />
 
 ### Example query
 
-You can specify the `environmentId` to return model information for all models in the given environment, including their metadata, configuration, tests, and ownership details, limited to the first 100 results:
+Вы можете указать `environmentId`, чтобы получить информацию обо всех моделях в заданном окружении, включая их метаданные, конфигурацию, тесты и сведения о владельцах, с ограничением на первые 100 результатов:
 
 ```graphql
 query {
@@ -50,11 +50,12 @@ query {
 
 ### Fields
 
-When querying for `models`, you can use the following fields:
+При запросе `models` можно использовать следующие поля:
 
 <SchemaTable nodeName="ModelAppliedStateNodeConnection" />
 
 ### Key fields from nodes
 
-<SchemaTable nodeName="ModelAppliedStateNode" />
+Основные поля узлов:
 
+<SchemaTable nodeName="ModelAppliedStateNode" />

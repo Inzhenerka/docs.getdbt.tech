@@ -1,24 +1,24 @@
 ---
-title: "Exposure object schema"
+title: "Схема объекта Exposure"
 sidebar_label: "Exposure"
 id: "discovery-schema-job-exposure"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The exposure object allows you to query information about a particular exposure. To learn more, refer to [Add Exposures to your DAG](/docs/build/exposures).
+Объект exposure позволяет запрашивать информацию о конкретном exposure. Подробнее см. [Add Exposures to your DAG](/docs/build/exposures).
 
-### Arguments
+### Аргументы
 
-When querying for an `exposure`, the following arguments are available.
+При запросе `exposure` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="exposure" />
 
-Below we show some illustrative example queries and outline the schema of the exposure object.
+Ниже приведены иллюстративные примеры запросов и описание схемы объекта exposure.
 
-### Example query
+### Пример запроса
 
-The example below queries information about an exposure including the owner's name and email, the URL, and information about parent sources and parent models.
+Пример ниже запрашивает информацию об exposure, включая имя и email владельца, URL, а также информацию о родительских источниках и родительских моделях.
 
 ```graphql
 {
@@ -58,7 +58,7 @@ The example below queries information about an exposure including the owner's na
 }
 ```
 
-### Fields
-When querying for an `exposure`, the following fields are available:
+### Поля
+При запросе `exposure` доступны следующие поля:
 
 <SchemaTable nodeName="ExposureNode" />

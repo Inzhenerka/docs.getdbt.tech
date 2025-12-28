@@ -1,48 +1,48 @@
 ---
-title: "Set up local MCP"
-sidebar_label: "Set up local MCP"
-description: "Learn how to set up the local dbt-mcp server"
+title: "Настройка локального MCP"
+sidebar_label: "Настройка локального MCP"
+description: "Узнайте, как настроить локальный сервер dbt-mcp"
 id: "setup-local-mcp"
 ---
 
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-[The local dbt MCP server](https://github.com/dbt-labs/dbt-mcp) runs locally on your machine and supports <Constant name="core" />, <Constant name="fusion_engine" />, and <Constant name="cloud_cli" />. You can use it with or without a <Constant name="dbt_platform" /> account.
+[Локальный сервер dbt MCP](https://github.com/dbt-labs/dbt-mcp) запускается на вашей машине и поддерживает <Constant name="core" />, <Constant name="fusion_engine" /> и <Constant name="cloud_cli" />. Вы можете использовать его как с учетной записью <Constant name="dbt_platform" />, так и без неё.
 
-## Prerequisites
+## Предварительные требования
 
-- [Install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to run `dbt-mcp` and [related dependencies](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) into an isolated virtual environment.
-- Have a local dbt project (if you want to use dbt CLI commands).
+- [Установите uv](https://docs.astral.sh/uv/getting-started/installation/), чтобы иметь возможность запускать `dbt-mcp` и [связанные зависимости](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) в изолированном виртуальном окружении.
+- Иметь локальный проект dbt (если вы хотите использовать команды dbt CLI).
 
-## Setup options
+## Варианты настройки
 
-Choose the setup method that best fits your workflow:
+Выберите способ настройки, который лучше всего подходит под ваш рабочий процесс:
 
-### OAuth authentication with dbt platform <Lifecycle status="managed, managed_plus" />
+### OAuth-аутентификация с dbt platform <Lifecycle status="managed, managed_plus" />
 
-This method uses OAuth to authenticate with your <Constant name="dbt_platform" /> account. It's the simplest setup and doesn't require managing tokens or environment variables manually.
+Этот метод использует OAuth для аутентификации в вашей учетной записи <Constant name="dbt_platform" />. Это самый простой вариант настройки, который не требует ручного управления токенами или переменными окружения.
 
-:::info Static subdomains required
+:::info Требуются статические поддомены
 
-Only accounts with static subdomains (for example, `abc123.us1.dbt.com`) can use OAuth with MCP servers. All accounts are in the process of being migrated to static subdomains by December 2025. Contact support for more information.
+Только учетные записи со статическими поддоменами (например, `abc123.us1.dbt.com`) могут использовать OAuth с MCP-серверами. Все учетные записи находятся в процессе миграции на статические поддомены до декабря 2025 года. Для получения дополнительной информации обратитесь в службу поддержки.
 
 :::
 
-#### Configuration options
+#### Параметры конфигурации
 
 <MCPExample />
 
-Once configured, your session connects to the dbt platform account, starts the OAuth authentication workflow, and then opens your account where you can select the project you want to reference.
+После настройки ваша сессия подключается к учетной записи dbt platform, запускает процесс OAuth-аутентификации, а затем открывает вашу учетную запись, где вы можете выбрать проект, на который хотите ссылаться.
 
-<Lightbox src="/img/mcp/select-project.png" width="60%" title="Select your dbt platform project"/>
+<Lightbox src="/img/mcp/select-project.png" width="60%" title="Выбор проекта dbt platform"/>
 
-After completing OAuth setup, skip to [Test your configuration](#optional-test-your-configuration).
+После завершения настройки OAuth перейдите к разделу [Проверка конфигурации](#optional-test-your-configuration).
 
-### CLI only (no dbt platform)
+### Только CLI (без dbt platform)
 
-If you're using the <Constant name="core" /> or <Constant name="fusion" /> CLI and don't need access to <Constant name="dbt_platform" /> features (Discovery API, Semantic Layer, Administrative API), you can set up local MCP with just your dbt project information.
+Если вы используете CLI <Constant name="core" /> или <Constant name="fusion" /> и вам не нужен доступ к возможностям <Constant name="dbt_platform" /> (Discovery API, Semantic Layer, Administrative API), вы можете настроить локальный MCP, указав только информацию о вашем проекте dbt.
 
-Add this configuration to your MCP client (refer to the specific [integration guides](#set-up-your-mcp-client) for exact file locations):
+Добавьте следующую конфигурацию в ваш MCP-клиент (точное расположение файлов см. в соответствующих [руководствах по интеграции](#set-up-your-mcp-client)):
 
 ```json
 {
@@ -59,48 +59,48 @@ Add this configuration to your MCP client (refer to the specific [integration gu
 }
 ```
 
-#### Locating your paths
+#### Определение путей
 
-Follow the appropriate instructions for your OS to locate your path:
+Следуйте инструкциям для вашей ОС, чтобы определить нужные пути:
 
 <Expandable alt_header="macOS/Linux" >
 
-- **DBT_PROJECT_DIR**: The full path to your dbt project folder
-   - Example: `/Users/yourname/dbt-projects/my_project`
-   - This is the folder containing your `dbt_project.yml` file.
+- **DBT_PROJECT_DIR**: Полный путь к папке с вашим проектом dbt  
+   - Пример: `/Users/yourname/dbt-projects/my_project`
+   - Это папка, содержащая файл `dbt_project.yml`.
 
-- **DBT_PATH**: Find your dbt executable path by running in terminal:
+- **DBT_PATH**: Найдите путь к исполняемому файлу dbt, выполнив в терминале:
    ```bash
    which dbt
    ```
-   - Example output: `/opt/homebrew/bin/dbt`
-   - Use this exact path in your configuration.
+   - Пример вывода: `/opt/homebrew/bin/dbt`
+   - Используйте именно этот путь в конфигурации.
 
 </Expandable>
 
 <Expandable alt_header="Windows" >
 
-- **DBT_PROJECT_DIR**: The full path to your dbt project folder
-   - Example: `C:\Users\yourname\dbt-projects\my_project`
-   - This is the folder containing your `dbt_project.yml` file.
-   - Use forward slashes or escaped backslashes: `C:/Users/yourname/dbt-projects/my_project`
+- **DBT_PROJECT_DIR**: Полный путь к папке с вашим проектом dbt  
+   - Пример: `C:\Users\yourname\dbt-projects\my_project`
+   - Это папка, содержащая файл `dbt_project.yml`.
+   - Используйте прямые слеши или экранированные обратные слеши: `C:/Users/yourname/dbt-projects/my_project`
 
-- **DBT_PATH**: Find your dbt executable path by running in Command Prompt or PowerShell:
+- **DBT_PATH**: Найдите путь к исполняемому файлу dbt, выполнив команду в Command Prompt или PowerShell:
    ```bash
    where dbt
    ```
-   - Example output: `C:\Python39\Scripts\dbt.exe`
-   - Use forward slashes or escaped backslashes: `C:/Python39/Scripts/dbt.exe`
+   - Пример вывода: `C:\Python39\Scripts\dbt.exe`
+   - Используйте прямые слеши или экранированные обратные слеши: `C:/Python39/Scripts/dbt.exe`
 
 </Expandable>
 
-After completing this setup, skip to [Test your configuration](#optional-test-your-configuration).
+После завершения этой настройки перейдите к разделу [Проверка конфигурации](#optional-test-your-configuration).
 
-### Environment variable configuration
+### Настройка через переменные окружения
 
-If you need to configure multiple environment variables or prefer to manage them separately, you can use environment variables. If you are only using the dbt CLI commands, you do not need to supply the dbt platform-specific environment variables, and vice versa.
+Если вам нужно настроить несколько переменных окружения или вы предпочитаете управлять ими отдельно, вы можете использовать переменные окружения. Если вы используете только команды dbt CLI, вам не нужно указывать переменные окружения, специфичные для dbt platform, и наоборот.
 
-Here is an example of the file:
+Пример файла:
 
 ```code
 DBT_HOST=cloud.getdbt.com
@@ -113,97 +113,98 @@ DBT_PROJECT_DIR=/path/to/your/dbt/project
 DBT_PATH=/path/to/your/dbt/executable
 MULTICELL_ACCOUNT_PREFIX=your-account-prefix
 ```
-You will need this file for integrating with MCP-compatible tools.
 
-## API and SQL tool settings
+Этот файл потребуется для интеграции с инструментами, совместимыми с MCP.
 
-| Environment Variable | Required | Description |
+## Настройки API и SQL-инструментов
+
+| Переменная окружения | Обязательна | Описание |
 | --- | --- | --- |
-| `DBT_HOST` | Required | Your <Constant name="dbt_platform" /> [instance hostname](/docs/cloud/about-cloud/access-regions-ip-addresses). **Important:** For Multi-cell accounts, exclude the account prefix from the hostname. The default is `cloud.getdbt.com`. |
-| MULTICELL_ACCOUNT_PREFIX | Only required for Multi-cell instances | Set your Multi-cell account prefix here (not in DBT_HOST). If you are not using Multi-cell, don't set this value. You can learn more about regions and hosting [here](/docs/cloud/about-cloud/access-regions-ip-addresses). |
-| DBT_TOKEN | Required | Your personal access token or service token from the <Constant name="dbt_platform" />. <br/>**Note**: When using the Semantic Layer, it is recommended to use a personal access token. If you're using a service token, make sure that it has at least `Semantic Layer Only`, `Metadata Only`, and `Developer` permissions.  |
-| DBT_ACCOUNT_ID | Required for Administrative API tools | Your [dbt account ID](/faqs/Accounts/find-user-id) |
-| DBT_PROD_ENV_ID | Required | Your <Constant name="dbt_platform" /> production environment ID |
-| DBT_DEV_ENV_ID | Optional | Your <Constant name="dbt_platform" /> development environment ID |
-| DBT_USER_ID | Optional | Your <Constant name="dbt_platform" /> user ID ([docs](/faqs/Accounts/find-user-id)) |
+| `DBT_HOST` | Обязательна | Имя хоста вашего [инстанса <Constant name="dbt_platform" />](/docs/cloud/about-cloud/access-regions-ip-addresses). **Важно:** для Multi-cell учетных записей не включайте префикс учетной записи в hostname. Значение по умолчанию — `cloud.getdbt.com`. |
+| MULTICELL_ACCOUNT_PREFIX | Требуется только для Multi-cell инстансов | Укажите здесь префикс вашей Multi-cell учетной записи (не в DBT_HOST). Если вы не используете Multi-cell, не задавайте это значение. Подробнее о регионах и хостинге см. [здесь](/docs/cloud/about-cloud/access-regions-ip-addresses). |
+| DBT_TOKEN | Обязательна | Ваш персональный access token или service token из <Constant name="dbt_platform" />. <br/>**Примечание**: при использовании Semantic Layer рекомендуется использовать персональный access token. Если вы используете service token, убедитесь, что у него есть как минимум разрешения `Semantic Layer Only`, `Metadata Only` и `Developer`. |
+| DBT_ACCOUNT_ID | Требуется для инструментов Administrative API | Ваш [ID учетной записи dbt](/faqs/Accounts/find-user-id) |
+| DBT_PROD_ENV_ID | Обязательна | ID production-окружения <Constant name="dbt_platform" /> |
+| DBT_DEV_ENV_ID | Необязательна | ID development-окружения <Constant name="dbt_platform" /> |
+| DBT_USER_ID | Необязательна | Ваш user ID в <Constant name="dbt_platform" /> ([документация](/faqs/Accounts/find-user-id)) |
 
-**Multi-cell configuration examples:**
+**Примеры конфигурации Multi-cell:**
 
-✅ **Correct configuration:**
+✅ **Корректная конфигурация:**
 ```bash
 DBT_HOST=us1.dbt.com
 MULTICELL_ACCOUNT_PREFIX=abc123
 ```
 
-❌ **Incorrect configuration (common mistake):**
+❌ **Некорректная конфигурация (распространённая ошибка):**
 ```bash
-DBT_HOST=abc123.us1.dbt.com  # Don't include prefix in host!
-# MULTICELL_ACCOUNT_PREFIX not set
+DBT_HOST=abc123.us1.dbt.com  # Не включайте префикс в host!
+# MULTICELL_ACCOUNT_PREFIX не задан
 ```
 
-If your full URL is `abc123.us1.dbt.com`, separate it as:
+Если ваш полный URL — `abc123.us1.dbt.com`, разделите его так:
 - `DBT_HOST=us1.dbt.com`
 - `MULTICELL_ACCOUNT_PREFIX=abc123`
 
-## dbt CLI settings
+## Настройки dbt CLI
 
-The local dbt-mcp supports all flavors of dbt, including <Constant name="core" /> and <Constant name="fusion_engine" />.
+Локальный dbt-mcp поддерживает все варианты dbt, включая <Constant name="core" /> и <Constant name="fusion_engine" />.
 
-| Environment Variable | Required | Description | Example |
+| Переменная окружения | Обязательна | Описание | Пример |
 | --- | --- | --- | --- |
-| `DBT_PROJECT_DIR` | Required | The full path to where the repository of your dbt project is hosted locally. This is the folder containing your `dbt_project.yml` file. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
-| DBT_PATH | Required | The full path to your dbt executable (<Constant name="core" />/<Constant name="fusion" />/<Constant name="cloud_cli" />). See the next section for how to find this. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
-| DBT_CLI_TIMEOUT | Optional | Configure the number of seconds before your agent will timeout dbt CLI commands.  | Defaults to 60 seconds. |
+| `DBT_PROJECT_DIR` | Обязательна | Полный путь к локальному репозиторию вашего проекта dbt. Это папка, содержащая файл `dbt_project.yml`. | macOS/Linux: `/Users/myname/reponame`<br/>Windows: `C:/Users/myname/reponame` |
+| DBT_PATH | Обязательна | Полный путь к исполняемому файлу dbt (<Constant name="core" />/<Constant name="fusion" />/<Constant name="cloud_cli" />). См. следующий раздел для поиска этого пути. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
+| DBT_CLI_TIMEOUT | Необязательна | Количество секунд до тайм-аута выполнения команд dbt CLI агентом. | По умолчанию 60 секунд. |
 
-### Locating your `DBT_PATH`
+### Определение `DBT_PATH`
 
-Follow the instructions for your OS to locate your `DBT_PATH`:
+Следуйте инструкциям для вашей ОС, чтобы найти `DBT_PATH`:
 
 <Expandable alt_header="macOS/Linux" >
 
-Run this command in your Terminal:
+Выполните команду в терминале:
 ```bash
 which dbt
 ```
-Example output: `/opt/homebrew/bin/dbt`
+Пример вывода: `/opt/homebrew/bin/dbt`
 
 </Expandable>
 
 <Expandable alt_header="Windows" >
 
-Run this command in Command Prompt or PowerShell:
+Выполните команду в Command Prompt или PowerShell:
 ```bash
 where dbt
 ```
-Example output: `C:\Python39\Scripts\dbt.exe`
+Пример вывода: `C:\Python39\Scripts\dbt.exe`
 
-**Note:** Use forward slashes in your configuration: `C:/Python39/Scripts/dbt.exe`
+**Примечание:** используйте прямые слеши в конфигурации: `C:/Python39/Scripts/dbt.exe`
 
 </Expandable>
 
-**Additional notes:**
+**Дополнительные примечания:**
 
-- You can set any environment variable supported by your dbt executable, like [the ones supported in <Constant name="core" />](/reference/global-configs/about-global-configs#available-flags). 
-- dbt MCP respects the standard environment variables and flags for usage tracking mentioned [here](/reference/global-configs/usage-stats).
-- `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` is automatically set so that the MCP server knows if no node is selected when running a dbt command. You can overwrite it if needed, but it provides a better experience when calling dbt from the MCP server, ensuring the tool selects valid nodes.
+- Вы можете задавать любые переменные окружения, поддерживаемые вашим исполняемым файлом dbt, например [поддерживаемые в <Constant name="core" />](/reference/global-configs/about-global-configs#available-flags).
+- dbt MCP учитывает стандартные переменные окружения и флаги для сбора статистики использования, описанные [здесь](/reference/global-configs/usage-stats).
+- `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` устанавливается автоматически, чтобы MCP-сервер понимал, что при выполнении команды dbt не был выбран ни один узел. При необходимости вы можете переопределить это значение, однако оно обеспечивает более удобную работу при вызове dbt из MCP-сервера, гарантируя выбор корректных узлов.
 
-## Disabling tools
+## Отключение инструментов
 
-You can disable the following tool access on the local `dbt-mcp`:
+Вы можете отключить следующий доступ к инструментам в локальном `dbt-mcp`:
 
-| Name                     | Default | Description                                                                     |
+| Название | По умолчанию | Описание |
 | ------------------------ | ------- | ------------------------------------------------------------------------------- |
-| `DISABLE_DBT_CLI`        | `false` | Set this to `true` to disable <Constant name="core" />, <Constant name="cloud_cli" />, and dbt <Constant name="fusion" /> MCP tools. |
-| `DISABLE_SEMANTIC_LAYER` | `false` | Set this to `true` to disable dbt Semantic Layer MCP tools.                    |
-| `DISABLE_DISCOVERY`      | `false` | Set this to `true` to disable dbt Discovery API MCP tools.                     |
-| `DISABLE_ADMIN_API`      | `false` | Set this to `true` to disable dbt Administrative API MCP tools.                         |
-| `DISABLE_SQL`            | `true`  | Set this to `false` to enable SQL MCP tools.                                |
-| `DISABLE_DBT_CODEGEN`    | `true`  | Set this to `false` to enable [dbt codegen MCP tools](/docs/dbt-ai/about-mcp#codegen-tools) (requires dbt-codegen package). |
-| `DISABLE_TOOLS`          | ""      | Set this to a list of tool names delimited by a `,` to disable specific tools.    |
+| `DISABLE_DBT_CLI` | `false` | Установите `true`, чтобы отключить MCP-инструменты <Constant name="core" />, <Constant name="cloud_cli" /> и dbt <Constant name="fusion" />. |
+| `DISABLE_SEMANTIC_LAYER` | `false` | Установите `true`, чтобы отключить MCP-инструменты dbt Semantic Layer. |
+| `DISABLE_DISCOVERY` | `false` | Установите `true`, чтобы отключить MCP-инструменты dbt Discovery API. |
+| `DISABLE_ADMIN_API` | `false` | Установите `true`, чтобы отключить MCP-инструменты dbt Administrative API. |
+| `DISABLE_SQL` | `true` | Установите `false`, чтобы включить SQL MCP-инструменты. |
+| `DISABLE_DBT_CODEGEN` | `true` | Установите `false`, чтобы включить [MCP-инструменты dbt codegen](/docs/dbt-ai/about-mcp#codegen-tools) (требуется пакет dbt-codegen). |
+| `DISABLE_TOOLS` | "" | Укажите список имён инструментов, разделённых `,`, чтобы отключить конкретные инструменты. |
 
-#### Using environment variables in your MCP client configuration
+#### Использование переменных окружения в конфигурации MCP-клиента
 
-The recommended way to configure your MCP client is to use the `env` field in your JSON configuration file. This keeps all configuration in one file:
+Рекомендуемый способ настройки MCP-клиента — использовать поле `env` в вашем JSON-файле конфигурации. Это позволяет хранить всю конфигурацию в одном файле:
 
 ```json
 {
@@ -223,9 +224,9 @@ The recommended way to configure your MCP client is to use the `env` field in yo
 }
 ```
 
-#### Using an `.env` file
+#### Использование файла `.env`
 
-If you prefer to manage environment variables in a separate file, you can create an `.env` file and reference it:
+Если вы предпочитаете управлять переменными окружения в отдельном файле, вы можете создать файл `.env` и сослаться на него:
 
 ```json
 {
@@ -238,59 +239,60 @@ If you prefer to manage environment variables in a separate file, you can create
 }
 ```
 
-However, this approach requires managing two files instead of one.
+Однако этот подход требует управления двумя файлами вместо одного.
 
-## (Optional) Test your configuration
+## (Необязательно) Проверка конфигурации
 
-In your command line tool, run the following to test your setup:
+В командной строке выполните следующее, чтобы проверить настройку:
 
-**If using the `env` field in JSON:**
+**Если используется поле `env` в JSON:**
 ```bash
 export DBT_PROJECT_DIR=/path/to/project
 export DBT_PATH=/path/to/dbt
 uvx dbt-mcp
 ```
 
-**If using an `.env` file:**
+**Если используется файл `.env`:**
 ```bash
 uvx --env-file <path-to-.env-file> dbt-mcp
 ```
 
-If there are no errors, your configuration is correct.
+Если ошибок нет, значит конфигурация настроена корректно.
 
-## Set up your MCP client
+## Настройка MCP-клиента
 
-After completing your configuration, follow the specific integration guide for your chosen tool:
+После завершения конфигурации следуйте соответствующему руководству по интеграции для выбранного инструмента:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
 
-## Debug configurations
-These settings allow you to customize the MCP server’s logging level to help with diagnosing and troubleshooting.
+## Отладочные настройки
 
-| Name                     | Default | Description                                                                     |
+Эти параметры позволяют настроить уровень логирования MCP-сервера для диагностики и устранения проблем.
+
+| Название | По умолчанию | Описание |
 | ------------------------ | ------- | ------------------------------------------------------------------------------- |
-| `DBT_MCP_LOG_LEVEL`        | `INFO` |  Environment variable to override the MCP server log level. Options are: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`.  |
+| `DBT_MCP_LOG_LEVEL` | `INFO` | Переменная окружения для переопределения уровня логирования MCP-сервера. Возможные значения: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. |
 
-To see more detail about what’s happening inside the MCP server and help debug issues, you can temporarily set the log level to `DEBUG`. We recommend setting it temporarily to avoid filling up disk space with logs.
+Чтобы увидеть больше деталей о работе MCP-сервера и упростить отладку, вы можете временно установить уровень логирования `DEBUG`. Рекомендуется использовать его временно, чтобы избежать переполнения диска логами.
 
-## Troubleshooting
+## Устранение неполадок
 
-#### Can't find `uvx` executable
+#### Не удаётся найти исполняемый файл `uvx`
 
-Some MCP clients may be unable to find `uvx` from the JSON config. This will result in error messages like `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT`, or similar.
+Некоторые MCP-клиенты могут не находить `uvx` из JSON-конфигурации. Это приводит к ошибкам вида `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT` и подобным.
 
-**Solution:** Locate the full path to `uvx` and use it in your configuration:
+**Решение:** найдите полный путь к `uvx` и укажите его в конфигурации:
 
-- **macOS/Linux:** Run `which uvx` in your Terminal.
-- **Windows:** Run `where uvx` in CMD or PowerShell.
+- **macOS/Linux:** выполните `which uvx` в терминале.
+- **Windows:** выполните `where uvx` в CMD или PowerShell.
 
-Then update your JSON configuration to use the full path:
+Затем обновите JSON-конфигурацию, указав полный путь:
 ```json
 {
   "mcpServers": {
     "dbt": {
-      "command": "/full/path/to/uvx", # For example, on macOS with Homebrew: "command": "/opt/homebrew/bin/uvx"
+      "command": "/full/path/to/uvx", # Например, на macOS с Homebrew: "command": "/opt/homebrew/bin/uvx"
       "args": ["dbt-mcp"],
       "env": { ... }
     }

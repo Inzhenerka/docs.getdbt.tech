@@ -1,24 +1,24 @@
 ---
-title: "Owners object schema"
+title: "Схема объекта Owners"
 sidebar_label: "Owners"
 id: "discovery-schema-environment-applied-owners"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Owners](/docs/build/groups) help you identify the user or domain responsible for a dbt asset. For most assets, owners are defined in your project code using groups. Exposures are an exception: for downstream exposures that represent BI assets, owners are automatically pulled from the downstream tool based on who owns that asset. You can query ownership information through the Discovery API.
+[Owners](/docs/build/groups) помогают определить пользователя или домен, ответственный за dbt-ассет. Для большинства ассетов владельцы задаются в коде вашего проекта с использованием groups. Исключением являются exposures: для downstream‑exposures, представляющих BI‑ассеты, владельцы автоматически подтягиваются из downstream‑инструмента на основе того, кому принадлежит этот ассет. Информацию о владельцах можно запрашивать через Discovery API.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `owners` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Example query](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `owners`. Полный список доступных полей смотрите в разделе [Fields](#fields), где представлена вся схема со всеми возможными полями для запроса.
 
-### Arguments
+### Аргументы
 
-When querying for `owners`, you can use the following arguments:
+При запросе `owners` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="owners" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId` and "exposure" as the `OwnerResourceType` to return people who own exposures (downstream BI assets) in this environment, including their contact information.
+Вы можете указать `environmentId` и значение `"exposure"` для `OwnerResourceType`, чтобы вернуть пользователей, владеющих exposures (downstream BI‑ассетами) в этом окружении, включая их контактную информацию.
 
 ```graphql
 query {
@@ -33,8 +33,8 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `owners`, you can use the following fields:
+При запросе `owners` можно использовать следующие поля:
 
 <SchemaTable nodeName="ExposureOwner" />

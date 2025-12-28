@@ -1,24 +1,24 @@
 ---
-title: "Exposures object schema"
+title: "Схема объекта Exposures"
 sidebar_label: "Exposures"
 id: "discovery-schema-environment-applied-exposures"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Exposures](/docs/build/exposures) are dbt resources that represent downstream uses of your project, such as dashboards, applications, or data science pipelines. You can query exposures through the Discovery API to understand which assets depend on your models.
+[Exposures](/docs/build/exposures) — это ресурсы dbt, которые представляют нисходящее использование вашего проекта, например дашборды, приложения или пайплайны data science. Вы можете запрашивать exposures через Discovery API, чтобы понять, какие активы зависят от ваших моделей.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `exposures` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+[Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать с помощью объекта `exposures`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, которая содержит все возможные поля, доступные для запроса.
 
-### Arguments
+### Аргументы
 
-When querying for `exposures`, you can use the following arguments:
+При выполнении запроса к `exposures` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="exposures" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId`, `first: 100`, and filter by model `uniqueIds` to return all the downstream exposures (dashboards, applications, etc.) that depend on the `customers` model in the `marketing` package, limited to the first 100 results:
+Вы можете указать `environmentId`, `first: 100` и отфильтровать по `uniqueIds` моделей, чтобы вернуть все downstream exposures (дашборды, приложения и т. д.), которые зависят от модели `customers` в пакете `marketing`, ограничив результат первыми 100 записями:
 
 ```graphql
 query {
@@ -45,13 +45,12 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `exposures`, you can use the following fields:
+При выполнении запроса к `exposures` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="ExposureAppliedStateNodeConnection" />
 
-### Key fields from nodes
+### Ключевые поля узлов
 
 <SchemaTable nodeName="ExposureAppliedStateNode" />
-

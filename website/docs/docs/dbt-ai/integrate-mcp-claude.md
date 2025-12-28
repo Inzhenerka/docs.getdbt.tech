@@ -1,56 +1,53 @@
 ---
-title: "Integrate Claude with dbt MCP"
-sidebar_label: "Integrate Claude with MCP"
-description: "Guide to set up claude with dbt-mcp"
+title: "Интеграция Claude с dbt MCP"
+sidebar_label: "Интеграция Claude с MCP"
+description: "Руководство по настройке Claude с dbt-mcp"
 id: "integrate-mcp-claude"
 ---
 
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-Claude is an AI assistant from Anthropic with two primary interfaces: 
-- [Claude Code](https://www.anthropic.com/claude-code): A terminal/IDE tool for development
-- [Claude for desktop](https://claude.ai/download): A GUI with MCP support for file access and commands as well as basic coding features 
+Claude — это AI-ассистент от Anthropic с двумя основными интерфейсами:
+- [Claude Code](https://www.anthropic.com/claude-code): инструмент для разработки в терминале/IDE
+- [Claude for desktop](https://claude.ai/download): графический интерфейс с поддержкой MCP для доступа к файлам и выполнения команд, а также базовыми возможностями для работы с кодом
 
 ## Claude Code
 
-You can set up Claude Code with both the local and remote `dbt-mcp` server. We recommend using the local `dbt-mcp` for more developer-focused workloads. See the [About MCP](/docs/dbt-ai/about-mcp#server-access) page for more more information about local and remote server features.
+Вы можете настроить Claude Code как с локальным, так и с удалённым сервером `dbt-mcp`. Мы рекомендуем использовать локальный `dbt-mcp` для задач, ориентированных на разработчиков. Подробнее о возможностях локальных и удалённых серверов см. на странице [About MCP](/docs/dbt-ai/about-mcp#server-access).
 
-### Set up with local dbt MCP server
+### Настройка с локальным сервером dbt MCP
 
-Prerequisites:
-- Complete the [local MCP setup](/docs/dbt-ai/setup-local-mcp).
-- Know your configuration method (OAuth <Constant name="dbt_core"/> or <Constant name="fusion"/>, or environment variables)
+Предварительные требования:
+- Завершите [настройку локального MCP](/docs/dbt-ai/setup-local-mcp).
+- Знайте ваш способ конфигурации (OAuth <Constant name="dbt_core"/> или <Constant name="fusion"/>, либо переменные окружения)
 
+### Области (scopes) Claude Code
 
-### Claude Code scopes
+По умолчанию MCP-сервер устанавливается в области `"local"`, что означает его активность для сессий Claude Code в текущей директории для пользователя, который выполнил установку.
 
-By default, the MCP server is installed in the "local" scope, meaning that it will be active for Claude Code sessions in the current directory for the user who installed it.
+Также возможно установить MCP-сервер:
+- В области `"user"`, чтобы он был доступен для всех сессий Claude Code независимо от используемой директории
+- В области `"project"`, чтобы создать конфигурационный файл, который можно хранить в системе контроля версий, и тогда все разработчики проекта будут иметь MCP-сервер уже установленным
 
-It is also possible to install the MCP server:
-- In the "user" scope, to have it installed for all Claude Code sessions, independently of the directory used
-- In the "project" scope, to create a config file that can be version controlled so that all developers of the same project can have the MCP server already installed
-
-To install it in the project scope, run the following and commit the `.mcp.json` file. Be sure to use an env var file path that is the same for all users.
+Чтобы установить сервер в области проекта, выполните следующую команду и закоммитьте файл `.mcp.json`. Убедитесь, что путь к файлу env-переменных одинаков для всех пользователей.
 ```bash
 claude mcp add dbt -s project -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
 
-For more information on scopes, refer to [Understanding MCP server scopes](https://docs.anthropic.com/en/docs/claude-code/mcp#understanding-mcp-server-scopes).
-
+Дополнительную информацию об областях см. в документации [Understanding MCP server scopes](https://docs.anthropic.com/en/docs/claude-code/mcp#understanding-mcp-server-scopes).
 
 ### Claude for desktop
 
-1. Go to the Claude settings. Click on the Claude menu in your system's menu bar (not the settings within the Claude window itself) and select **Settings…**.
-2. In the Settings window, navigate to the **Developer** tab in the left sidebar. This section contains options for configuring MCP servers and other developer features.
-3. Click the **Edit Config** button and open the configuration file with a text editor.
-4. Add your server configuration based on your use case. Choose the [correct JSON structure](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server) from the following options:
-
+1. Перейдите в настройки Claude. Нажмите на меню Claude в системной строке меню (не настройки внутри окна Claude) и выберите **Settings…**.
+2. В окне настроек перейдите на вкладку **Developer** в левой боковой панели. Этот раздел содержит параметры для настройки MCP-серверов и других функций для разработчиков.
+3. Нажмите кнопку **Edit Config** и откройте конфигурационный файл в текстовом редакторе.
+4. Добавьте конфигурацию сервера в зависимости от вашего сценария использования. Выберите [корректную JSON-структуру](https://modelcontextprotocol.io/quickstart/user#installing-the-filesystem-server) из следующих вариантов:
 
     <Expandable alt_header="Local MCP with OAuth">
 
-    #### Local MCP with dbt platform authentication <Lifecycle status="managed, managed_plus" />
+    #### Локальный MCP с аутентификацией через платформу dbt <Lifecycle status="managed, managed_plus" />
 
-    Configuration for users who want seamless OAuth authentication with the <Constant name="dbt_platform" />
+    Конфигурация для пользователей, которым нужна бесшовная OAuth-аутентификация с <Constant name="dbt_platform" />
 
     <MCPExample />
 
@@ -58,7 +55,7 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 
     <Expandable alt_header="Local MCP (CLI only)">
 
-    Local configuration for users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion" />
+    Локальная конфигурация для пользователей, которым нужно использовать только команды dbt CLI с <Constant name="core" /> или <Constant name="fusion" />
 
     ```json 
     {
@@ -75,17 +72,17 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
     }
     ```
 
-    Finding your paths:
-    - **DBT_PROJECT_DIR**: Full path to the folder containing your `dbt_project.yml` file
-    - **DBT_PATH**: Find by running `which dbt` in Terminal (macOS/Linux) or `where dbt` (Windows) in Powershell
+    Как найти нужные пути:
+    - **DBT_PROJECT_DIR**: полный путь к папке, содержащей файл `dbt_project.yml`
+    - **DBT_PATH**: определите, выполнив `which dbt` в Terminal (macOS/Linux) или `where dbt` (Windows) в Powershell
 
     </Expandable>
 
     <Expandable alt_header="Local MCP with .env">
 
-    Advanced configuration for users who need custom environment variables
+    Расширенная конфигурация для пользователей, которым нужны пользовательские переменные окружения
 
-    Using the `env` field (recommended):
+    Использование поля `env` (рекомендуется):
     ```json 
     {
       "mcpServers": {
@@ -104,7 +101,7 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
     }
     ```
 
-    Using an .env file (alternative):
+    Использование файла .env (альтернатива):
     ```json 
     {
       "mcpServers": {
@@ -118,32 +115,31 @@ For more information on scopes, refer to [Understanding MCP server scopes](https
 
     </Expandable>
 
+5. Сохраните файл. После успешного перезапуска Claude Desktop вы увидите индикатор MCP-сервера в правом нижнем углу поля ввода сообщения.
 
-5. Save the file. Upon a successful restart of Claude Desktop, you'll see an MCP server indicator in the bottom-right corner of the conversation input box.
+Для отладки логи Claude Desktop находятся по пути `~/Library/Logs/Claude` для Mac или `%APPDATA%\Claude\logs` для Windows.
 
-For debugging, you can find the Claude desktop logs at `~/Library/Logs/Claude` for Mac or `%APPDATA%\Claude\logs` for Windows.
+#### Использование OAuth или переменных окружения напрямую
 
-#### Using OAuth or environment variables directly
+Рекомендуемый способ — настроить переменные окружения напрямую в конфигурационном файле Claude Code без необходимости использовать отдельный файл `.env`:
 
-The recommended method is to configure environment variables directly in Claude Code's configuration file without needing a separate `.env` file:
-
-1. Add the MCP server:
+1. Добавьте MCP-сервер:
 
   ```bash
   claude mcp add dbt -- uvx dbt-mcp
   ```
-2. Open the configuration editor:
+2. Откройте редактор конфигурации:
 
   ```bash
   claude mcp edit dbt
   ```
 
-3. In the configuration editor, add your environment variables based on your use case:
+3. В редакторе конфигурации добавьте переменные окружения в зависимости от вашего сценария использования:
 
 <Tabs>
 <TabItem value="CLI only">
 
-For <Constant name="core" /> or <Constant name="fusion" /> only (no <Constant name="dbt_platform" />):
+Только для <Constant name="core" /> или <Constant name="fusion" /> (без <Constant name="dbt_platform" />):
 ```json
 {
   "command": "uvx",
@@ -158,7 +154,7 @@ For <Constant name="core" /> or <Constant name="fusion" /> only (no <Constant na
 </TabItem>
 <TabItem value="OAuth with dbt platform">
 
-For OAuth authentication (requires static subdomain):
+Для OAuth-аутентификации (требуется статический поддомен):
 ```json
 {
   "command": "uvx",
@@ -174,18 +170,15 @@ For OAuth authentication (requires static subdomain):
 </TabItem>
 </Tabs>
 
-#### Using an `.env` file
+#### Использование файла `.env`
 
-If you prefer to manage environment variables in a separate file:
+Если вы предпочитаете управлять переменными окружения в отдельном файле:
 
 ```bash
 claude mcp add dbt -- uvx --env-file <path-to-.env-file> dbt-mcp
 ```
-Replace `<path-to-.env-file>` with the full path to your `.env` file. 
-
+Замените `<path-to-.env-file>` на полный путь к вашему файлу `.env`.
 
 ## Troubleshooting
 
-- Claude desktop may return errors such as `Error: spawn uvx ENOENT` or `Could not connect to MCP server dbt-mcp`. Try replacing the command
-and environment variables file path with the full path. For `ux`, find the full path to `uvx` by running `which uvx` on Unix systems and placing this full path in the JSON. For instance: `"command": "/the/full/path/to/uvx"`.
-
+- Claude Desktop может возвращать ошибки, такие как `Error: spawn uvx ENOENT` или `Could not connect to MCP server dbt-mcp`. Попробуйте заменить команду и путь к файлу с переменными окружения на полный путь. Для `uvx` определите полный путь, выполнив `which uvx` в Unix-системах, и укажите этот путь в JSON. Например: `"command": "/the/full/path/to/uvx"`.

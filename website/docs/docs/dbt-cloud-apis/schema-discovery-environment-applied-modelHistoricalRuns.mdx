@@ -1,24 +1,24 @@
 ---
-title: "Model Historical Runs object schema"
-sidebar_label: "Model historical runs"
+title: "Схема объекта исторических запусков модели"
+sidebar_label: "Исторические запуски модели"
 id: "discovery-schema-environment-applied-modelHistoricalRuns"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The model historical runs object allows you to query information about a model's run history. 
+Объект исторических запусков модели позволяет запрашивать информацию об истории запусков конкретной модели.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `modelHistoricalRuns` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `modelHistoricalRuns`. Обратитесь к разделу [Поля](#fields), чтобы увидеть полную схему, которая содержит все возможные поля, доступные для запроса.
 
-### Arguments
+### Аргументы
 
-When querying for `modelHistoricalRuns`, you can use the following arguments:
+При выполнении запроса `modelHistoricalRuns` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="modelHistoricalRuns" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId` and the model's `uniqueId` to return the model and its execution history for the `customers` model in the `marketing` package, including performance metrics and test results for the last 20 times it was run, regardless of which job ran it.
+Вы можете указать `environmentId` и `uniqueId` модели, чтобы вернуть модель и историю её выполнения для модели `customers` из пакета `marketing`, включая метрики производительности и результаты тестов за последние 20 запусков, независимо от того, какой job выполнял эту модель.
 
 ```graphql
 query {
@@ -43,8 +43,8 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `modelHistoricalRuns`, you can use the following fields:
+При выполнении запроса `modelHistoricalRuns` можно использовать следующие поля:
 
 <SchemaTable nodeName="ModelNode" />

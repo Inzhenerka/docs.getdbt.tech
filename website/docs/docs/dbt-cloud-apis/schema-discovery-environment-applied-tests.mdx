@@ -1,25 +1,24 @@
 ---
-title: "Tests object schema"
+title: "Схема объекта tests"
 sidebar_label: "Tests"
 id: "discovery-schema-environment-applied-tests"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Tests](/docs/build/data-tests) are assertions you make about your models and other resources in your dbt project. When you run `dbt test`, dbt will tell you if each test in your project passes or fails. You can query tests through the Discovery API to understand information about them.
+[Tests](/docs/build/data-tests) — это утверждения (assertions), которые вы задаёте для своих моделей и других ресурсов в проекте dbt. Когда вы запускаете `dbt test`, dbt сообщает, прошёл ли каждый тест в вашем проекте успешно или завершился с ошибкой. Вы можете запрашивать информацию о тестах через Discovery API, чтобы лучше понимать их структуру и свойства.
 
+[Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать у объекта `tests`. Обратитесь к разделу [Fields](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `tests` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+### Аргументы
 
-### Arguments
-
-When querying for `tests`, you can use the following arguments:
+При запросе `tests` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="tests" />
 
-### Example query
+### Пример запроса
 
-You can use the `environmentId` and filter by test types to return metadata for all tests in the environment:
+Вы можете использовать `environmentId` и отфильтровать по типам тестов, чтобы вернуть метаданные всех тестов в окружении:
 
 ```graphql
 query {
@@ -52,13 +51,12 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `tests`, you can use the following fields:
+При запросе `tests` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="TestAppliedStateNodeConnection" />
 
-### Key fields from nodes
+### Ключевые поля узлов
 
 <SchemaTable nodeName="TestAppliedStateNode" />
-

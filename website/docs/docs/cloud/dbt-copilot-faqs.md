@@ -1,138 +1,137 @@
---- 
-title: "dbt Copilot FAQs" 
-sidebar_label: "dbt Copilot FAQs" 
-description: "Answers to common questions about dbt Copilot."
+---
+title: "dbt Copilot: часто задаваемые вопросы"
+sidebar_label: "dbt Copilot FAQs"
+description: "Ответы на распространённые вопросы о dbt Copilot."
 ---
 
 <IntroText>
-Read about common questions about <Constant name="copilot" /> to understand how it works and how it can help you.
+Ознакомьтесь с распространёнными вопросами о <Constant name="copilot" />, чтобы понять, как он работает и как может вам помочь.
 </IntroText>
 
-<Constant name="copilot" /> is an AI-powered assistant fully integrated into your <Constant name="cloud" /> experience that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster.
+<Constant name="copilot" /> — это AI‑ассистент, полностью интегрированный в вашу среду <Constant name="cloud" />, который берёт на себя рутинные задачи, ускоряет рабочие процессы и обеспечивает единообразие, помогая быстрее создавать качественные data‑продукты.
 
-dbt Labs is committed to protecting your privacy and data. This page provides information about how <Constant name="copilot" /> handles your data. For more information, check out the [dbt Labs AI development principles](https://www.getdbt.com/legal/ai-principles) page.
+dbt Labs привержена защите вашей конфиденциальности и данных. На этой странице представлена информация о том, как <Constant name="copilot" /> обрабатывает ваши данные. Подробнее см. на странице [принципов разработки ИИ dbt Labs](https://www.getdbt.com/legal/ai-principles).
 
-## Overview 
+## Обзор
 
-<Expandable alt_header="What is dbt Copilot?">
+<Expandable alt_header="Что такое dbt Copilot?">
 
-<Constant name="copilot" /> is a powerful AI-powered assistant that's fully integrated into your <Constant name="cloud" /> experience and designed to accelerate your analytics workflows. <Constant name="copilot" /> embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
+<Constant name="copilot" /> — это мощный AI‑ассистент, полностью интегрированный в вашу среду <Constant name="cloud" /> и предназначенный для ускорения аналитических рабочих процессов. <Constant name="copilot" /> встраивает AI‑поддержку на каждом этапе жизненного цикла разработки аналитики (ADLC), помогая специалистам по данным быстрее поставлять data‑продукты, повышать качество данных и улучшать их доступность.
 
-With automatic code generation, let <Constant name="copilot" /> [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [data tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-copilot), [<Constant name="visual_editor" />](/docs/cloud/use-canvas), and [<Constant name="query_page" />](/docs/explore/dbt-insights).
-
-</Expandable>
-
-<Expandable alt_header="Where can I find dbt Copilot?">
-
-<Constant name="copilot" /> is available in the [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-copilot), [<Constant name="visual_editor" />](/docs/cloud/use-canvas), and [<Constant name="query_page" />](/docs/explore/dbt-insights). Future releases will bring <Constant name="copilot" /> to even more parts of the <Constant name="cloud" /> application!
-
-To use <Constant name="copilot" />, you must have a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise+ account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
-
-Certain features like [BYOK](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok), [natural prompts in Canvas](/docs/cloud/build-canvas-copilot), and more are only available on Enterprise and Enterprise+ plans.
+Благодаря автоматической генерации кода вы можете позволить <Constant name="copilot" /> [генерировать код](/docs/cloud/use-dbt-copilot) на основе естественного языка, а также [создавать документацию](/docs/build/documentation), [data‑тесты](/docs/build/data-tests), [метрики](/docs/build/metrics-overview) и [семантические модели](/docs/build/semantic-models) одним нажатием кнопки в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-copilot), [<Constant name="visual_editor" />](/docs/cloud/use-canvas) и [<Constant name="query_page" />](/docs/explore/dbt-insights).
 
 </Expandable>
 
-<Expandable alt_header="What are the benefits of using dbt Copilot?">
+<Expandable alt_header="Где можно найти dbt Copilot?">
 
-Use <Constant name="copilot" /> to:
+<Constant name="copilot" /> доступен в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-copilot), [<Constant name="visual_editor" />](/docs/cloud/use-canvas) и [<Constant name="query_page" />](/docs/explore/dbt-insights). В будущих релизах <Constant name="copilot" /> появится и в других частях приложения <Constant name="cloud" />.
 
-- Generate code from scratch or edit existing code with natural language.
-- Generate documentation, tests, metrics, and semantic models for your models.
-- Accelerate your development workflow with AI-driven assistance.
+Чтобы использовать <Constant name="copilot" />, у вас должен быть аккаунт <Constant name="cloud" /> уровня [Starter, Enterprise или Enterprise+](https://www.getdbt.com/contact), а также административные права для включения этой функции для вашей команды.
 
-with a click of a button and ensuring data privacy and security.
-
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
+Некоторые возможности, такие как [BYOK](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok), [естественные запросы в Canvas](/docs/cloud/build-canvas-copilot) и другие, доступны только на планах Enterprise и Enterprise+.
 
 </Expandable>
 
-## Availability 
+<Expandable alt_header="Какие преимущества даёт использование dbt Copilot?">
 
-<Expandable alt_header="Who has access to dbt Copilot?" >
+Используйте <Constant name="copilot" />, чтобы:
 
-When enabled by an admin, <Constant name="copilot" /> is available on a <Constant name="cloud" /> [Starter, Enterprise, or Enterprise+ account](https://www.getdbt.com/contact) to all <Constant name="cloud" /> [developer license users](/docs/cloud/manage-access/seats-and-users).
+- Генерировать код с нуля или редактировать существующий код с помощью естественного языка.
+- Создавать документацию, тесты, метрики и семантические модели для ваших моделей.
+- Ускорять процесс разработки благодаря AI‑поддержке.
 
-</Expandable>
+— всё это одним нажатием кнопки при сохранении конфиденциальности и безопасности данных.
 
-<Expandable alt_header="Is dbt Copilot available for all deployment types?">
-
-Yes, <Constant name="copilot" /> is powered by ai-codegen-api, which is deployed everywhere including [multi-tenant and single-tenant deployments](/docs/cloud/about-cloud/access-regions-ip-addresses).
-
-</Expandable>
-
-## How it works 
-
-<Expandable alt_header="What data/code is used to train the model supporting dbt Copilot?">
-
-<Constant name="copilot" /> is not used to train a large language model (LLM). dbt Labs does not train any models at all. Currently, we use OpenAI models, and our agreement with OpenAI prohibits OpenAI from retaining our data persistently. Refer our [dbt Labs AI principles page](https://www.getdbt.com/legal/ai-principles) for more information.
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Пример использования dbt Copilot для генерации документации в IDE" />
 
 </Expandable>
 
-<Expandable alt_header="Which model providers does dbt Copilot use?">
+## Доступность
 
-dbt Labs works with OpenAI to build and operationalize <Constant name="copilot" />. Enterprise-tier accounts can [supply their own OpenAI keys](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok).
+<Expandable alt_header="Кто имеет доступ к dbt Copilot?">
 
-</Expandable>
-
-<Expandable alt_header="Do we support BYOK (bring your own key) at the project level?">
-
-The <Constant name="copilot" /> BYOK option is currently an account-only configuration. However, there may be a future where we make this configurable on a project-level.
+После включения администратором <Constant name="copilot" /> становится доступен в аккаунтах <Constant name="cloud" /> уровня [Starter, Enterprise или Enterprise+](https://www.getdbt.com/contact) для всех пользователей с лицензией разработчика <Constant name="cloud" /> ([developer license users](/docs/cloud/manage-access/seats-and-users)).
 
 </Expandable>
 
-## Privacy and data
+<Expandable alt_header="Доступен ли dbt Copilot для всех типов развертывания?">
 
-<Expandable alt_header="Does dbt Copilot store or use personal data?">
-
-The user clicks the <Constant name="copilot" /> button. Aside from authentication, it works without personal data, but the user controls what is input into <Constant name="copilot" />.
+Да, <Constant name="copilot" /> работает на базе ai-codegen-api, который развернут во всех средах, включая [мультиарендные и выделенные развертывания](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
 </Expandable>
 
-<Expandable alt_header="Can dbt Copilot data be deleted upon client written request?">
+## Как это работает
 
-To the extent client identifies personal or sensitive information uploaded by or on behalf of client to dbt Labs systems by the user in error, such data can be deleted within 30 days of written request.
+<Expandable alt_header="Какие данные или код используются для обучения модели, поддерживающей dbt Copilot?">
 
-
-</Expandable>
-
-<Expandable alt_header="Does dbt Labs own the output generated by dbt Copilot?">
-
-No, dbt Labs will not dispute your ownership of any code or artifacts unique to your company that's generated when you use <Constant name="copilot" />. Your code will not be used to train AI models for the benefit of dbt Labs or other third parties, including other dbt Labs customers. 
+<Constant name="copilot" /> не используется для обучения больших языковых моделей (LLM). dbt Labs вообще не обучает собственные модели. В настоящее время мы используем модели OpenAI, и наше соглашение с OpenAI запрещает им длительное хранение наших данных. Дополнительную информацию см. на странице [принципов ИИ dbt Labs](https://www.getdbt.com/legal/ai-principles).
 
 </Expandable>
 
-<Expandable alt_header="Does dbt Labs have terms in place for dbt Copilot?">
+<Expandable alt_header="Каких провайдеров моделей использует dbt Copilot?">
 
-Clients who signed with terms after January 2024 don't need additional terms prior to enabling <Constant name="copilot" />. Longer term clients have also protected their data through confidentiality and data deletion obligations. In the event client prefer additional terms, clients may enter into the presigned AI & Beta Addendum available at [here](https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=85817ff4-9ce5-4fae-8e34-20b854fdb52a&env=na2&acct=858db9e4-4a6d-48df-954f-84ece3303aac&v=2) (the dbt Labs signature will be dated as of the date the client signs).
-
-</Expandable>
-
-## Considerations
-
-<Expandable alt_header="What are the considerations for using dbt Copilot?">
-
-<Constant name="copilot" /> has the following considerations to keep in mind:
-
-- <Constant name="copilot" /> is not available in the <Constant name="cloud_cli" />.
-- <Constant name="copilot" /> is not available in the <Constant name="cloud" /> API.
-
-Future releases are planned that may bring <Constant name="copilot" /> to even more parts of the <Constant name="cloud" /> application.
+dbt Labs сотрудничает с OpenAI для создания и эксплуатации <Constant name="copilot" />. Аккаунты уровня Enterprise могут [использовать собственные ключи OpenAI](/docs/cloud/enable-dbt-copilot#bringing-your-own-openai-api-key-byok).
 
 </Expandable>
 
-## Copilot allowlisting URLs
+<Expandable alt_header="Поддерживается ли BYOK (bring your own key) на уровне проекта?">
+
+В настоящее время опция BYOK для <Constant name="copilot" /> настраивается только на уровне аккаунта. Однако в будущем возможно появление настройки на уровне проекта.
+
+</Expandable>
+
+## Конфиденциальность и данные
+
+<Expandable alt_header="Хранит или использует ли dbt Copilot персональные данные?">
+
+Пользователь нажимает кнопку <Constant name="copilot" />. За исключением аутентификации, работа происходит без использования персональных данных, при этом пользователь сам контролирует, какие данные передаются в <Constant name="copilot" />.
+
+</Expandable>
+
+<Expandable alt_header="Могут ли данные dbt Copilot быть удалены по письменному запросу клиента?">
+
+В той мере, в какой клиент укажет на персональную или чувствительную информацию, загруженную пользователем в системы dbt Labs по ошибке, такие данные могут быть удалены в течение 30 дней с момента получения письменного запроса.
+
+</Expandable>
+
+<Expandable alt_header="Принадлежит ли dbt Labs результат, сгенерированный dbt Copilot?">
+
+Нет, dbt Labs не оспаривает ваше право собственности на любой код или артефакты, уникальные для вашей компании, которые были сгенерированы при использовании <Constant name="copilot" />. Ваш код не будет использоваться для обучения AI‑моделей в интересах dbt Labs или третьих лиц, включая других клиентов dbt Labs.
+
+</Expandable>
+
+<Expandable alt_header="Есть ли у dbt Labs отдельные условия использования для dbt Copilot?">
+
+Клиентам, подписавшим договоры после января 2024 года, не требуются дополнительные условия перед включением <Constant name="copilot" />. Клиенты с более ранними договорами также защищают свои данные за счёт обязательств по конфиденциальности и удалению данных. Если клиенту потребуются дополнительные условия, он может подписать предварительно согласованное AI & Beta Addendum, доступное [здесь](https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=85817ff4-9ce5-4fae-8e34-20b854fdb52a&env=na2&acct=858db9e4-4a6d-48df-954f-84ece3303aac&v=2) (подпись dbt Labs будет датирована датой подписания клиентом).
+
+</Expandable>
+
+## Ограничения и особенности
+
+<Expandable alt_header="Какие моменты стоит учитывать при использовании dbt Copilot?">
+
+При использовании <Constant name="copilot" /> следует учитывать следующее:
+
+- <Constant name="copilot" /> недоступен в <Constant name="cloud_cli" />.
+- <Constant name="copilot" /> недоступен через API <Constant name="cloud" />.
+
+В будущих релизах планируется расширить доступность <Constant name="copilot" /> в других частях приложения <Constant name="cloud" />.
+
+</Expandable>
+
+## Allowlisting URL для Copilot
 
 <Expandable alt_header="Allowlisting URLs">
 
-<Constant name="copilot" /> doesn't specifically block AI-related URLs. However, if your organization use endpoint protection platforms, firewalls, or network proxies (such as Zscaler), you may encounter the following issues with <Constant name="copilot" />: 
+<Constant name="copilot" /> не блокирует AI‑URL напрямую. Однако если в вашей организации используются платформы защиты конечных точек, файрволы или сетевые прокси (например, Zscaler), при работе с <Constant name="copilot" /> могут возникать следующие проблемы:
 
-    - Block unknown or AI-related domains.
-    - Break TLS/SSL traffic to inspect it.
-    - Disallow specific ports or services.
+- Блокировка неизвестных или AI‑связанных доменов.
+- Разрыв TLS/SSL‑трафика для его инспекции.
+- Запрет определённых портов или сервисов.
 
-We recommend the following URLs to be allowlisted:
+Мы рекомендуем добавить следующие URL в allowlist:
 
-**For <Constant name="copilot" /> in the IDE**:
+**Для <Constant name="copilot" /> в IDE**:
 
 - `/api/ide/accounts/${accountId}/develop/${developId}/ai/generate_generic_tests/...`
 - `/api/ide/accounts/${accountId}/develop/${developId}/ai/generate_documentation/...`
@@ -141,7 +140,7 @@ We recommend the following URLs to be allowlisted:
 - `/api/ide/accounts/${accountId}/develop/${developId}/ai/generate_metrics/...`
 - `/api/ide/accounts/${accountId}/develop/${developId}/ai/track_response`
 
-**For <Constant name="copilot" /> in Canvas**:
+**Для <Constant name="copilot" /> в Canvas**:
 
 - `/api/private/visual-editor/v1/ai/llm-generate`
 - `/api/private/visual-editor/v1/ai/track-response`

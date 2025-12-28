@@ -1,24 +1,24 @@
 ---
-title: "Snapshots object schema"
+title: "Схема объекта Snapshots"
 sidebar_label: "Snapshots"
 id: "discovery-schema-environment-applied-snapshots"
 ---
- 
+
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Snapshots](/docs/build/snapshots) represent point-in-time copies of your data, allowing you to track historical changes. You can query your snapshots from the Discovery API.
+[Snapshots](/docs/build/snapshots) представляют собой снимки данных на определённый момент времени, которые позволяют отслеживать исторические изменения. Вы можете выполнять запросы к своим snapshots через Discovery API.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `snapshots` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+[Пример запроса](#example-query) демонстрирует некоторые поля, которые можно запрашивать с помощью объекта `snapshots`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запросов.
 
-### Arguments
+### Аргументы
 
-When querying for `snapshots`, you can use the following arguments:
+При выполнении запросов к `snapshots` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="snapshots" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId`, filter by the database, and limit to the first 100 to see the first 100 snapshots in the `analytics` database, including their execution performance and status information:
+Вы можете указать `environmentId`, отфильтровать по базе данных и ограничить выборку первыми 100 записями, чтобы получить первые 100 snapshots в базе данных `analytics`, включая информацию об их производительности выполнения и статусе:
 
 ```graphql
 query {
@@ -51,12 +51,12 @@ query {
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `snapshots`, you can use the following fields:
+При выполнении запросов к `snapshots` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="SnapshotAppliedStateNodeConnection" />
 
-### Key fields from nodes
+### Ключевые поля узлов
 
 <SchemaTable nodeName="SnapshotAppliedStateNode" />

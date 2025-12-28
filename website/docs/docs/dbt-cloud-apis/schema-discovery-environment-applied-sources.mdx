@@ -1,5 +1,5 @@
 ---
-title: "Sources object schema"
+title: "Схема объекта Sources"
 sidebar_label: "Sources"
 id: "discovery-schema-environment-applied-sources"
 ---
@@ -7,19 +7,19 @@ id: "discovery-schema-environment-applied-sources"
 import { NodeArgsTable, SchemaTable } from "./schema";
 
 
-[Sources](/docs/build/sources) make it possible to name and describe the data loaded into your warehouse by your extract and load tools. You can query sources through the Discovery API.
+[Sources](/docs/build/sources) позволяют задавать имена и описывать данные, загружаемые в ваше хранилище инструментами извлечения и загрузки данных. Вы можете запрашивать источники данных через Discovery API.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `sources` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Example query](#example-query) показаны несколько полей, которые можно запрашивать с помощью объекта `sources`. Полный список всех доступных для запроса полей см. в разделе [Fields](#fields), где представлена полная схема.
 
 ### Arguments
 
-When querying for `sources`, you can use the following arguments:
+При выполнении запросов к `sources` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="sources" />
 
 ### Example query
 
-You can specify the `environmentId` and filter on the database name, to return the freshness and execution status, for the first 100 sources from the given database:
+Вы можете указать `environmentId` и отфильтровать по имени базы данных, чтобы получить информацию о свежести данных и статусе выполнения для первых 100 источников из указанной базы данных:
 
 ```graphql
 query {
@@ -61,11 +61,12 @@ query {
 
 ### Fields
 
-When querying for `sources`, you can use the following fields:
+При запросе `sources` можно использовать следующие поля:
 
 <SchemaTable nodeName="SourceAppliedStateNodeConnection" />
 
 ### Key fields from nodes
 
-<SchemaTable nodeName="SourceAppliedStateNode" />
+Основные поля, доступные в узлах:
 
+<SchemaTable nodeName="SourceAppliedStateNode" />

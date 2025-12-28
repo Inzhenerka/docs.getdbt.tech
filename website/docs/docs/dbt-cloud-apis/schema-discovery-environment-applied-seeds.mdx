@@ -1,24 +1,24 @@
 ---
-title: "Seeds object schema"
+title: "Схема объекта Seeds"
 sidebar_label: "Seeds"
 id: "discovery-schema-environment-applied-seeds"
 ---
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Seeds](/docs/build/seeds) are CSV files in your dbt project that dbt can load into your data warehouse. You can query seeds through the Discovery API.
+[Seeds](/docs/build/seeds) — это CSV-файлы в вашем dbt‑проекте, которые dbt может загрузить в ваше хранилище данных. Вы можете запрашивать seeds через Discovery API.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `seeds` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `seeds`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
 
-### Arguments
+### Аргументы
 
-When querying for `seeds`, you can use the following arguments:
+При выполнении запроса `seeds` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="seeds" />
 
-### Example query
+### Пример запроса
 
-You can specify the `environmentId`, filter by the database, and limit to the first 100 to show information about the first 100 seed files in the `analytics` database, including their metadata and file locations:
+Вы можете указать `environmentId`, отфильтровать по базе данных и ограничить результат первыми 100 записями, чтобы получить информацию о первых 100 seed‑файлах в базе данных `analytics`, включая их метаданные и расположение файлов:
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!, $filter: GenericMaterializedFilter) {
@@ -48,13 +48,12 @@ query ($environmentId: BigInt!, $first: Int!, $filter: GenericMaterializedFilter
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `seeds`, you can use the following fields:
+При выполнении запроса `seeds` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="SeedAppliedStateNodeConnection" />
 
-### Key fields from nodes
+### Ключевые поля узлов
 
 <SchemaTable nodeName="SeedAppliedStateNode" />
-

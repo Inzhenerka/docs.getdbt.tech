@@ -1,34 +1,34 @@
 ---
-title: "About the Discovery API schema"
-sidebar_label: "About the schema"
+title: "О схеме Discovery API"
+sidebar_label: "О схеме"
 id: "discovery-schema-about"
 ---
 
-With the Discovery API, you can query the metadata in dbt to learn more about your dbt deployments and the data they generate. You can analyze the data to make improvements. If you are new to the API, refer to [About the Discovery API](/docs/dbt-cloud-apis/discovery-api) for an introduction. You might also find the [use cases and examples](/docs/dbt-cloud-apis/discovery-use-cases-and-examples) helpful.
+С помощью Discovery API вы можете запрашивать метаданные в dbt, чтобы лучше понимать свои развертывания dbt и данные, которые они генерируют. Вы можете анализировать эти данные и находить возможности для улучшений. Если вы только начинаете работать с API, ознакомьтесь с документом [About the Discovery API](/docs/dbt-cloud-apis/discovery-api), где приводится вводное описание. Также вам могут быть полезны [use cases and examples](/docs/dbt-cloud-apis/discovery-use-cases-and-examples).
 
-The Discovery API *schema* provides all the pieces necessary to query and interact with the Discovery API. The most common queries use the `environment` endpoint:
+*Схема* Discovery API предоставляет все необходимые элементы для выполнения запросов и взаимодействия с Discovery API. Наиболее распространённые запросы используют эндпоинт `environment`:
 
 <div className="grid--2-col">
 
 <Card
-    title="Environment schema"
-    body="Query and compare a model’s definition (intended) and its applied (actual) state."
+    title="Схема environment"
+    body="Запрос и сравнение определения модели (задуманного состояния) и её применённого (фактического) состояния."
     link="/docs/dbt-cloud-apis/discovery-schema-environment"
     icon="dbt-bit"/>
 <Card
-    title="Applied schema"
-    body="Query the actual state of objects and metadata in the warehouse after a `dbt run` or `dbt build`."
+    title="Схема applied"
+    body="Запрос фактического состояния объектов и метаданных в хранилище данных после выполнения `dbt run` или `dbt build`."
     link="/docs/dbt-cloud-apis/discovery-schema-environment-applied"
     icon="dbt-bit"/>
 <Card
-    title="Definition schema"
-    body="Query intended state in project code and configuration defined in your dbt project."
+    title="Схема definition"
+    body="Запрос задуманного состояния в коде проекта и конфигурации, определённой в вашем dbt-проекте."
     link="/docs/dbt-cloud-apis/discovery-schema-environment-definition"
     icon="dbt-bit"/>
 
  <Card
-    title="Model Historical Runs schema"
-    body="Query information about a model's run history."
+    title="Схема Model Historical Runs"
+    body="Запрос информации об истории запусков модели."
     link="/docs/dbt-cloud-apis/discovery-schema-environment-applied-modelHistoricalRuns"
     icon="dbt-bit"/>
 

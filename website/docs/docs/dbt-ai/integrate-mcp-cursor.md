@@ -1,84 +1,82 @@
 ---
-title: "Integrate Cursor with dbt MCP"
-sidebar_label: "Integrate Cursor with MCP"
-description: "Guide to set up Cursor with dbt-mcp"
+title: "Интеграция Cursor с dbt MCP"
+sidebar_label: "Интеграция Cursor с MCP"
+description: "Руководство по настройке Cursor с dbt-mcp"
 id: "integrate-mcp-cursor"
 ---
 
-[Cursor](https://docs.cursor.com/context/model-context-protocol) is an AI-powered code editor, powered by Microsoft Visual Studio Code (VS Code). 
+[Cursor](https://docs.cursor.com/context/model-context-protocol) — это AI-ориентированный редактор кода, построенный на базе Microsoft Visual Studio Code (VS Code).
 
-After setting up your MCP server, you connect it to Cursor. Log in to Cursor and follow the steps that align with your use case.
+После настройки вашего MCP-сервера необходимо подключить его к Cursor. Войдите в Cursor и следуйте шагам, соответствующим вашему сценарию использования.
 
-## Set up with local dbt MCP server
+## Настройка с локальным dbt MCP-сервером
 
-Choose your setup based on your workflow:
-- OAuth for <Constant name="dbt_platform" /> connections
-- CLI only if using <Constant name="core" /> or the <Constant name="fusion_engine" /> locally. 
-- Configure environment variables if you're using them in your <Constant name="dbt_platform" /> account.
+Выберите вариант настройки в зависимости от вашего рабочего процесса:
+- OAuth для подключений к <Constant name="dbt_platform" />
+- Только CLI, если вы используете <Constant name="core" /> или <Constant name="fusion_engine" /> локально
+- Настройка переменных окружения, если вы используете их в своем аккаунте <Constant name="dbt_platform" />
 
-### OAuth or CLI
+### OAuth или CLI
 
-Click one of the following application links with Cursor open to automatically configure your MCP server:
+Нажмите на одну из следующих ссылок приложений при открытом Cursor, чтобы автоматически сконфигурировать ваш MCP-сервер:
 
 <Tabs>
 
 <TabItem value="CLI only (dbt Core and Fusion)">
 
-Local configuration for users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion_engine" /> (no <Constant name="dbt_platform" /> features).
+Локальная конфигурация для пользователей, которые хотят использовать только команды dbt CLI с <Constant name="core" /> или <Constant name="fusion_engine" /> (без функций <Constant name="dbt_platform" />).
 
 [Add dbt Core or Fusion to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX1BST0pFQ1RfRElSIjoiL3BhdGgvdG8veW91ci9kYnQvcHJvamVjdCIsIkRCVF9QQVRIIjoiL3BhdGgvdG8veW91ci9kYnQvZXhlY3V0YWJsZSJ9LCJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl19)
 
-After clicking:
-1. Update `DBT_PROJECT_DIR` with the full path to your dbt project (the folder containing `dbt_project.yml`).
-2. Update `DBT_PATH` with the full path to your dbt executable:
-   - macOS/Linux: Run `which dbt` in Terminal.
-   - Windows: Run `where dbt` in Command Prompt or PowerShell.
-3. Save the configuration.
+После нажатия:
+1. Обновите `DBT_PROJECT_DIR`, указав полный путь к вашему dbt-проекту (папка, содержащая `dbt_project.yml`).
+2. Обновите `DBT_PATH`, указав полный путь к исполняемому файлу dbt:
+   - macOS/Linux: выполните `which dbt` в терминале.
+   - Windows: выполните `where dbt` в Command Prompt или PowerShell.
+3. Сохраните конфигурацию.
 
 </TabItem>
 
 <TabItem value="OAuth with dbt platform">
 
-Configuration settings for users who want OAuth authentication with the <Constant name="dbt_platform" /> <Lifecycle status="managed, managed_plus" />
+Настройки конфигурации для пользователей, которым требуется OAuth-аутентификация с <Constant name="dbt_platform" /> <Lifecycle status="managed, managed_plus" />
 
 - [dbt platform only](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX0hPU1QiOiJodHRwczovLzx5b3VyLWRidC1ob3N0LXdpdGgtY3VzdG9tLXN1YmRvbWFpbj4iLCJESVNBQkxFX0RCVF9DTEkiOiJ0cnVlIn0sImNvbW1hbmQiOiJ1dngiLCJhcmdzIjpbImRidC1tY3AiXX0%3D)
 - [dbt platform + CLI](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX0hPU1QiOiJodHRwczovLzx5b3VyLWRidC1ob3N0LXdpdGgtY3VzdG9tLXN1YmRvbWFpbj4iLCJEQlRfUFJPSkVDVF9ESVIiOiIvcGF0aC90by9wcm9qZWN0IiwiREJUX1BBVEgiOiJwYXRoL3RvL2RidC9leGVjdXRhYmxlIn0sImNvbW1hbmQiOiJ1dngiLCJhcmdzIjpbImRidC1tY3AiXX0%3D)
 
-After clicking:
-1. Replace `<your-dbt-host-with-custom-subdomain>` with your actual host (for example, `abc123.us1.dbt.com`).
-2. (For <Constant name="dbt_platform" /> + CLI) Update `DBT_PROJECT_DIR` and `DBT_PATH` as described above.
-3. Save the configuration.
+После нажатия:
+1. Замените `<your-dbt-host-with-custom-subdomain>` на ваш реальный хост (например, `abc123.us1.dbt.com`).
+2. (Для <Constant name="dbt_platform" /> + CLI) Обновите `DBT_PROJECT_DIR` и `DBT_PATH`, как описано выше.
+3. Сохраните конфигурацию.
 
 </TabItem>
 
 </Tabs>
 
-### Custom environment variables
+### Пользовательские переменные окружения
 
-If you need custom environment variable configuration or prefer to use service tokens:
+Если вам требуется нестандартная конфигурация переменных окружения или вы предпочитаете использовать service tokens:
 
-1. Click the following link with Cursor open:
+1. Нажмите на следующую ссылку при открытом Cursor:
 
     [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl0sImVudiI6e319)
 
-2. In the template, add your environment variables to the `env` section based on your needs.
-3. Save the configuration.
+2. В шаблоне добавьте необходимые вам переменные окружения в секцию `env`.
+3. Сохраните конфигурацию.
 
-#### Using an `.env` file
+#### Использование файла `.env`
 
-If you prefer to manage environment variables in a separate file, click this link:
+Если вы предпочитаете управлять переменными окружения в отдельном файле, нажмите на эту ссылку:
 
 [Add to Cursor (with .env file)](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt-mcp&config=eyJjb21tYW5kIjoidXZ4IC0tZW52LWZpbGUgPGVudi1maWxlLXBhdGg%252BIGRidC1tY3AifQ%3D%3D)
 
-Then update `<env-file-path>` with the full path to your `.env` file.
+Затем замените `<env-file-path>` на полный путь к вашему файлу `.env`.
 
+## Настройка с удалённым dbt MCP-сервером
 
-## Set up with remote dbt MCP server
-
-1. Click the following application link with Cursor open:
+1. Нажмите на следующую ссылку приложения при открытом Cursor:
 
     [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJ1cmwiOiJodHRwczovLzxob3N0Pi9hcGkvYWkvdjEvbWNwLyIsImhlYWRlcnMiOnsiQXV0aG9yaXphdGlvbiI6InRva2VuIDx0b2tlbj4iLCJ4LWRidC1wcm9kLWVudmlyb25tZW50LWlkIjoiPHByb2QtaWQ%252BIn19)
 
-2. Provide your URL/headers by updating the **host**, **production environment ID**, and **service token** in the template. 
-3. Save, and now you have access to the dbt MCP server!
-
+2. Укажите ваш URL и заголовки, обновив **host**, **production environment ID** и **service token** в шаблоне.
+3. Сохраните конфигурацию — теперь у вас есть доступ к dbt MCP-серверу!

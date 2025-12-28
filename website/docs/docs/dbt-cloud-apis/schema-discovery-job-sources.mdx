@@ -1,31 +1,31 @@
 ---
-title: "Sources object schema"
+title: "Схема объекта Sources"
 sidebar_label: "Sources"
 id: "discovery-schema-job-sources"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The sources object allows you to query information about all sources in a given job.
+Объект `sources` позволяет запрашивать информацию обо всех источниках в рамках заданного job.
 
-### Arguments
+### Аргументы
 
-When querying for `sources`, the following arguments are available.
+При запросе `sources` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="sources" />
 
-Below we show some illustrative example queries and outline the schema of the sources object.
+Ниже приведены наглядные примеры запросов и описана схема объекта `sources`.
 
-### Example queries
+### Примеры запросов
 
-The database, schema, and identifier arguments are optional. This means that with this endpoint you can:
+Аргументы `database`, `schema` и `identifier` являются необязательными. Это означает, что с помощью данного эндпоинта вы можете:
 
-- Find a specific source by providing `<database>.<schema>.<identifier>`
-- Find all of the sources in a database and/or schema by providing `<database>` and/or `<schema>`
+- Найти конкретный источник, указав `<database>.<schema>.<identifier>`
+- Найти все источники в базе данных и/или схеме, указав `<database>` и/или `<schema>`
 
-#### Finding sources by their database, schema, and identifier
+#### Поиск источников по базе данных, схеме и идентификатору
 
-The example query below finds a source by its unique database, schema, and identifier.
+Пример запроса ниже находит источник по его уникальным значениям базы данных, схемы и идентификатора.
 
 ```graphql
 {
@@ -41,9 +41,9 @@ The example query below finds a source by its unique database, schema, and ident
 }
 ```
 
-#### Finding sources by their schema
+#### Поиск источников по схеме
 
-The example query below finds all sources in this schema and their respective states (pass, error, fail).
+Пример запроса ниже находит все источники в указанной схеме и их соответствующие состояния (pass, error, fail).
 
 ```graphql
 {
@@ -56,10 +56,10 @@ The example query below finds all sources in this schema and their respective st
 }
 ```
 
-### Fields
+### Поля
 
-The sources object can access the _same fields_ as the [source node](/docs/dbt-cloud-apis/discovery-schema-job-source). The difference is that the sources object can output a list so instead of querying for fields for one specific source, you can query for those parameters for all sources within a jobID, database, and so on.
+Объект `sources` предоставляет доступ к _тем же полям_, что и [узел source](/docs/dbt-cloud-apis/discovery-schema-job-source). Разница заключается в том, что объект `sources` возвращает список, поэтому вместо запроса полей для одного конкретного источника вы можете запросить эти параметры сразу для всех источников в рамках jobID, базы данных и т.д.
 
-When querying for `sources`, the following fields are available:
+При запросе `sources` доступны следующие поля:
 
 <SchemaTable nodeName="SourceNode" />

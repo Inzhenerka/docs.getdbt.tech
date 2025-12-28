@@ -1,24 +1,24 @@
 ---
-title: "Source object schema"
+title: "Схема объекта Source"
 sidebar_label: "Source"
 id: "discovery-schema-job-source"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The source object allows you to query information about a particular source in a given job.
+Объект `source` позволяет запрашивать информацию о конкретном источнике в рамках заданного job.
 
-### Arguments
+### Аргументы
 
-When querying for a `source`, the following arguments are available.
+При выполнении запроса к `source` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="source" />
 
-Below we show some illustrative example queries and outline the schema of the source object.
+Ниже приведены иллюстративные примеры запросов, а также описание схемы объекта source.
 
-### Example query
+### Пример запроса
 
-The query below pulls relevant information about a given source. For instance, you can view the load time and the state (pass, fail, error) of that source.
+Запрос ниже извлекает релевантную информацию о конкретном источнике. Например, вы можете посмотреть время последней загрузки и состояние (pass, fail, error) этого источника.
 
 ```graphql
 {
@@ -45,8 +45,8 @@ The query below pulls relevant information about a given source. For instance, y
 }
 ```
 
-### Fields
+### Поля
 
-When querying for a `source`, the following fields are available:
+При выполнении запроса к `source` доступны следующие поля:
 
 <SchemaTable nodeName="SourceNode" />

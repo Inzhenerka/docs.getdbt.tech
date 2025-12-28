@@ -1,19 +1,18 @@
 ---
-title: "Applied object schema"
+title: "Схема объекта applied"
 sidebar_label: "Applied"
 id: "discovery-schema-environment-applied"
 ---
- 
+
 import { SchemaTable } from "./schema";
 
-The applied object allows you to query information about a particular model based on `environmentId`.
+Объект `applied` позволяет запрашивать информацию о конкретной модели на основе `environmentId`.
 
-The [Example queries](#example-queries) illustrate a few fields you can query with this `environment` object. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Примеры запросов](#example-queries) показаны некоторые поля, которые можно запрашивать с помощью объекта `environment`. Полный список доступных полей см. в разделе [Поля](#fields), где представлена вся схема со всеми возможными полями для запросов.
 
+### Примеры запросов
 
-### Example queries
-
-You can use your production environment's `id`:
+Вы можете использовать `id` вашего production-окружения:
 
 ```graphql
 query Example {
@@ -34,9 +33,7 @@ query Example {
 }
 ```
 
+### Поля
 
-
-### Fields
-
-When querying the `applied` field of `environment`, you can use the following fields.
+При запросе поля `applied` у объекта `environment` вы можете использовать следующие поля.
 <SchemaTable nodeName="AppliedState" />

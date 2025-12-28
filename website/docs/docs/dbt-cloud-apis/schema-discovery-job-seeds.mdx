@@ -1,24 +1,24 @@
 ---
-title: "Seeds object schema"
+title: "Схема объекта seeds"
 sidebar_label: "Seeds"
 id: "discovery-schema-job-seeds"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The seeds object allows you to query information about all seeds in a given job.
+Объект `seeds` позволяет запрашивать информацию обо всех seed-файлах в рамках заданного job.
 
-### Arguments
+### Аргументы
 
-When querying for `seeds`, the following arguments are available.
+При выполнении запроса к `seeds` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="seed" />
 
-Below we show some illustrative example queries and outline the schema of the seeds object.
+Ниже приведены иллюстративные примеры запросов, а также описание схемы объекта `seeds`.
 
-### Example query
+### Пример запроса
 
-The example query below pulls relevant information about all seeds in a given job. For instance, you can view load times.
+В примере ниже показан запрос, который извлекает релевантную информацию обо всех seed-файлах в заданном job. Например, так можно посмотреть время загрузки.
 
 ```graphql
 {
@@ -33,8 +33,8 @@ The example query below pulls relevant information about all seeds in a given jo
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `seeds`, the following fields are available:
+При выполнении запроса к `seeds` доступны следующие поля:
 
 <SchemaTable nodeName="SeedNode" />

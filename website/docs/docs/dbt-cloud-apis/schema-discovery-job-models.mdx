@@ -1,30 +1,29 @@
 ---
-title: "Models object schema"
+title: "Схема объекта Models"
 sidebar_label: "Models"
 id: "discovery-schema-job-models"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
+Объект models позволяет запрашивать информацию обо всех моделях в рамках конкретного job.
 
-The models object allows you to query information about all models in a given job.
+### Аргументы
 
-### Arguments
-
-When querying for `models`, the following arguments are available.
+При выполнении запроса к `models` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="models" />
 
-Below we show some illustrative example queries and outline the schema of the models object.
+Ниже приведены примеры запросов и описание схемы объекта models.
 
-### Example queries
-The database, schema, and identifier arguments are all optional. This means that with this endpoint you can:
+### Примеры запросов
+Аргументы database, schema и identifier являются необязательными. Это означает, что с помощью данного эндпоинта вы можете:
 
-- Find a specific model by providing `<database>.<schema>.<identifier>`
-- Find all of the models in a database and/or schema by providing `<database>` and/or `<schema>`
+- Найти конкретную модель, указав `<database>.<schema>.<identifier>`
+- Найти все модели в базе данных и/или схеме, указав `<database>` и/или `<schema>`
 
-#### Find models by their database, schema, and identifier
-The example query below finds a model by its unique database, schema, and identifier.
+#### Поиск моделей по базе данных, схеме и идентификатору
+В примере ниже показан запрос, который находит модель по её уникальной базе данных, схеме и идентификатору.
 
 ```graphql
 {
@@ -36,8 +35,8 @@ The example query below finds a model by its unique database, schema, and identi
 }
 ```
 
-#### Find models by their schema
-The example query below finds all models in this schema and their respective execution times.
+#### Поиск моделей по схеме
+В примере ниже показан запрос, который находит все модели в данной схеме и их соответствующее время выполнения.
 
 ```graphql
 {
@@ -50,10 +49,9 @@ The example query below finds all models in this schema and their respective exe
 }
 ```
 
+### Поля
+Объект models предоставляет доступ к _тем же полям_, что и [узел Model](/docs/dbt-cloud-apis/discovery-schema-job-model). Разница заключается в том, что объект models возвращает список, поэтому вместо запроса полей для одной конкретной модели вы можете запросить эти параметры для всех моделей в рамках jobID, базы данных и так далее.
 
-### Fields
-The models object can access the _same fields_ as the [Model node](/docs/dbt-cloud-apis/discovery-schema-job-model). The difference is that the models object can output a list so instead of querying for fields for one specific model, you can query for those parameters for all models within a jobID, database, and so on.
-
-When querying for `models`, the following fields are available:
+При выполнении запроса к `models` доступны следующие поля:
 
 <SchemaTable nodeName="ModelNode" />

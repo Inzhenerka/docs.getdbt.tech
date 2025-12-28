@@ -1,55 +1,55 @@
 ---
-title: "Integrate VS Code with MCP"
-sidebar_label: "Integrate VS Code with MCP"
-description: "Guide to set up VS Code with dbt-mcp"
+title: "Интеграция VS Code с MCP"
+sidebar_label: "Интеграция VS Code с MCP"
+description: "Руководство по настройке VS Code для работы с dbt-mcp"
 id: "integrate-mcp-vscode"
 ---
 
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-[Microsoft Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) is a powerful and popular integrated development environment (IDE).
+[Microsoft Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) — это мощная и популярная интегрированная среда разработки (IDE).
 
-These instructions are for integrating dbt MCP and VS Code. Before starting, ensure you have:
-- Completed the [local MCP setup](/docs/dbt-ai/setup-local-mcp)
-- Installed VS Code with the latest updates
-- (For local MCP with CLI) Configured your dbt project paths
+Данные инструкции описывают интеграцию dbt MCP и VS Code. Перед началом убедитесь, что вы:
+- Завершили [локальную настройку MCP](/docs/dbt-ai/setup-local-mcp)
+- Установили VS Code с последними обновлениями
+- (Для локального MCP с CLI) Настроили пути к вашему dbt-проекту
 
-## Set up with local dbt MCP server
+## Настройка с локальным сервером dbt MCP
 
-To get started, in VS Code:
+Чтобы начать, в VS Code:
 
-1. Open the **Settings** menu and select the correct tab atop the page for your use case:
-    - **Workspace**: Configures the server in the context of your workspace
-    - **User**: Configures the server in the context of your user
+1. Откройте меню **Settings** и выберите соответствующую вкладку в верхней части страницы в зависимости от вашего сценария:
+    - **Workspace**: настраивает сервер в контексте текущего workspace
+    - **User**: настраивает сервер в контексте пользователя
     <br />
-   **Note for WSL users**: If you're using VS Code with Windows Subsystem for Linux (WSL), you'll need to configure WSL-specific settings. Run the **Preferences: Open Remote Settings** command from the **Command Palette** (F1) or select the **Remote** tab in the **Settings** editor. Local user settings are reused in WSL but can be overridden with WSL-specific settings. Configuring MCP servers in the local user settings will not work properly in a WSL environment.
+   **Примечание для пользователей WSL**: если вы используете VS Code с Windows Subsystem for Linux (WSL), необходимо настраивать параметры, специфичные для WSL. Выполните команду **Preferences: Open Remote Settings** из **Command Palette** (F1) или выберите вкладку **Remote** в редакторе **Settings**. Локальные пользовательские настройки используются и в WSL, но могут быть переопределены настройками для WSL. Настройка MCP-серверов в локальных пользовательских настройках не будет корректно работать в среде WSL.
 
-2. Select **Features** --> **Chat**
+2. Выберите **Features** --> **Chat**
 
-3. Ensure that **MCP** is **Enabled**
+3. Убедитесь, что **MCP** **Enabled**
 
   <Lightbox src="/img/mcp/vscode_mcp_enabled_image.png" width="60%" title="mcp-vscode-settings" />
 
-4. Open the command palette `Control/Command + Shift + P`, and select either: 
-     - **MCP: Open Workspace Folder MCP Configuration** &mdash; if you want to install the MCP server for this workspace
-     - **MCP: Open User Configuration** &mdash; if you want to install the MCP server for the user
+4. Откройте палитру команд `Control/Command + Shift + P` и выберите один из вариантов:
+     - **MCP: Open Workspace Folder MCP Configuration** &mdash; если вы хотите установить MCP-сервер для данного workspace
+     - **MCP: Open User Configuration** &mdash; если вы хотите установить MCP-сервер для пользователя
 
-5. Add your server configuration (`dbt`) to the provided `mcp.json` file as one of the servers:
+5. Добавьте конфигурацию сервера (`dbt`) в предоставленный файл `mcp.json` как один из серверов:
 
-    <Expandable alt_header="Local MCP with dbt platform OAuth" >
+    <Expandable alt_header="Локальный MCP с OAuth платформы dbt" >
 
 
-    Local MCP with OAuth is for users who want to use the <Constant name="dbt_platform" /> features.
+    Локальный MCP с OAuth предназначен для пользователей, которые хотят использовать возможности <Constant name="dbt_platform" />.
     
-    Choose your configuration based on your use case:
+    Выберите конфигурацию в зависимости от вашего сценария использования:
 
     <MCPExample />
 
     </Expandable>
 
-    <Expandable alt_header="Local MCP (CLI only)">
+    <Expandable alt_header="Локальный MCP (только CLI)">
 
-    For users who only want to use dbt CLI commands with <Constant name="core" /> or <Constant name="fusion" />
+    Для пользователей, которым нужны только команды dbt CLI с <Constant name="core" /> или <Constant name="fusion" />
 
     ```json
     {
@@ -66,21 +66,21 @@ To get started, in VS Code:
     }
     ```
 
-    **Finding your paths:**
-    - **DBT_PROJECT_DIR**: Full path to the folder containing your `dbt_project.yml` file
-      - macOS/Linux: Run `pwd` from your project folder.
-      - Windows: Run `cd` from your project folder in Command Prompt.
-    - **DBT_PATH**: Path to dbt executable
-      - macOS/Linux: Run `which dbt`.
-      - Windows: Run `where dbt`.
+    **Как найти пути:**
+    - **DBT_PROJECT_DIR**: полный путь к папке, содержащей файл `dbt_project.yml`
+      - macOS/Linux: выполните `pwd` из папки проекта.
+      - Windows: выполните `cd` из папки проекта в Command Prompt.
+    - **DBT_PATH**: путь к исполняемому файлу dbt
+      - macOS/Linux: выполните `which dbt`.
+      - Windows: выполните `where dbt`.
 
     </Expandable>
 
-    <Expandable alt_header="Local MCP with .env">
+    <Expandable alt_header="Локальный MCP с .env">
 
-    For advanced users who need custom environment variables or service token authentication
+    Для продвинутых пользователей, которым нужны кастомные переменные окружения или аутентификация через service token
 
-    Using the `env` field (recommended - single-file configuration):
+    Использование поля `env` (рекомендуется — конфигурация в одном файле):
 
     ```json
     {
@@ -100,7 +100,7 @@ To get started, in VS Code:
     }
     ```
 
-    Using an `.env` file (alternative - two-file configuration):
+    Использование файла `.env` (альтернатива — конфигурация в двух файлах):
 
     ```json
     {
@@ -115,29 +115,29 @@ To get started, in VS Code:
 
     </Expandable>
 
-6. You can start, stop, and configure your MCP servers by:
-      - Running the `MCP: List Servers` command from the Command Palette (Control/Command + Shift + P) and selecting the server.
-      - Utilizing the keywords inline within the `mcp.json` file.
+6. Вы можете запускать, останавливать и настраивать MCP-серверы следующими способами:
+      - Выполняя команду `MCP: List Servers` из Command Palette (Control/Command + Shift + P) и выбирая нужный сервер.
+      - Используя ключевые слова inline непосредственно в файле `mcp.json`.
 
   <Lightbox src="/img/mcp/vscode_run_server_keywords_inline.png" width="60%" title="VS Code inline management" />
 
-Now, you can access the dbt MCP server in VS Code through interfaces like GitHub Copilot.
+Теперь вы можете получать доступ к серверу dbt MCP в VS Code через такие интерфейсы, как GitHub Copilot.
 
-## Troubleshooting
+## Устранение неполадок
 
-This section contains troubleshooting steps for errors you might encounter when integrating VS Code with MCP.
+В этом разделе приведены шаги по устранению ошибок, с которыми вы можете столкнуться при интеграции VS Code с MCP.
 
-<Expandable alt_header="Cannot find `uvx` executable" >
+<Expandable alt_header="Не удаётся найти исполняемый файл `uvx`" >
 
-If you see errors like `Could not connect to MCP server dbt` or `spawn uvx ENOENT`, VS Code may be unable to find the `uvx` executable.
+Если вы видите ошибки вроде `Could not connect to MCP server dbt` или `spawn uvx ENOENT`, VS Code, возможно, не может найти исполняемый файл `uvx`.
 
-To resolve, use the full path to `uvx` in your configuration:
+Чтобы исправить это, используйте полный путь к `uvx` в конфигурации:
 
-1. Find the full path:
-   - macOS/Linux: Run `which uvx` in Terminal.
-   - Windows: Run `where uvx` in Command Prompt or PowerShell.
+1. Найдите полный путь:
+   - macOS/Linux: выполните `which uvx` в терминале.
+   - Windows: выполните `where uvx` в Command Prompt или PowerShell.
 
-2. Update your `mcp.json` to use the full path:
+2. Обновите `mcp.json`, указав полный путь:
    ```json
    {
      "servers": {
@@ -150,30 +150,30 @@ To resolve, use the full path to `uvx` in your configuration:
    }
    ```
 
-   Example on macOS with Homebrew: `"command": "/opt/homebrew/bin/uvx"`
+   Пример для macOS с Homebrew: `"command": "/opt/homebrew/bin/uvx"`
 
 </Expandable>
 
-<Expandable alt_header="Configuration not working in WSL">
+<Expandable alt_header="Конфигурация не работает в WSL">
 
-If you're using VS Code with Windows Subsystem for Linux (WSL), make sure you've configured the MCP server in the WSL-specific settings, not the local user settings. Use the **Remote** tab in the Settings editor or run **Preferences: Open Remote Settings** from the Command Palette.
-
-</Expandable>
-
-<Expandable alt_header="Server not starting" >
-
-Check the MCP server status:
-1. Run `MCP: List Servers` from the Command Palette (Control/Command + Shift + P).
-2. Look for any error messages next to the dbt server.
-3. Click on the server to see detailed logs.
-
-Common issues:
-- Missing or incorrect paths for `DBT_PROJECT_DIR` or `DBT_PATH`
-- Invalid authentication tokens
-- Missing required environment variables
+Если вы используете VS Code с Windows Subsystem for Linux (WSL), убедитесь, что MCP-сервер настроен в параметрах, специфичных для WSL, а не в локальных пользовательских настройках. Используйте вкладку **Remote** в редакторе **Settings** или выполните **Preferences: Open Remote Settings** из Command Palette.
 
 </Expandable>
 
-## Resources
+<Expandable alt_header="Сервер не запускается" >
 
-- [Microsoft VS Code MCP documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
+Проверьте статус MCP-сервера:
+1. Выполните `MCP: List Servers` из Command Palette (Control/Command + Shift + P).
+2. Посмотрите, есть ли сообщения об ошибках рядом с сервером dbt.
+3. Нажмите на сервер, чтобы посмотреть подробные логи.
+
+Распространённые проблемы:
+- Отсутствующие или некорректные пути для `DBT_PROJECT_DIR` или `DBT_PATH`
+- Неверные токены аутентификации
+- Отсутствующие обязательные переменные окружения
+
+</Expandable>
+
+## Ресурсы
+
+- [Документация Microsoft VS Code MCP](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)

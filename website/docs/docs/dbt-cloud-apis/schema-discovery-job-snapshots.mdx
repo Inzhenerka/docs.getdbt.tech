@@ -1,31 +1,31 @@
 ---
-title: "Snapshots object schema"
+title: "Схема объекта snapshots"
 sidebar_label: "Snapshots"
 id: "discovery-schema-job-snapshots"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The snapshots object allows you to query information about all snapshots in a given job.
+Объект snapshots позволяет запрашивать информацию обо всех снапшотах в рамках заданного job.
 
-### Arguments
+### Аргументы
 
-When querying for `snapshots`, the following arguments are available.
+При выполнении запроса к `snapshots` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="snapshots" />
 
-Below we show some illustrative example queries and outline the schema of the snapshots object.
+Ниже приведены несколько наглядных примеров запросов, а также описана схема объекта snapshots.
 
-### Example query
+### Пример запроса
 
-The database, schema, and identifier arguments are optional. This means that with this endpoint you can:
+Аргументы database, schema и identifier являются необязательными. Это означает, что с помощью этого эндпоинта вы можете:
 
-- Find a specific snapshot by providing `<database>.<schema>.<identifier>`
-- Find all of the snapshots in a database and/or schema by providing `<database>` and/or `<schema>`
+- Найти конкретный снапшот, указав `<database>.<schema>.<identifier>`
+- Найти все снапшоты в базе данных и/или схеме, указав `<database>` и/или `<schema>`
 
-#### Find snapshots information for a job
+#### Получение информации о снапшотах для job
 
-The example query returns information about all snapshots in this job.
+Пример запроса ниже возвращает информацию обо всех снапшотах в рамках данного job.
 
 ```graphql
 {
@@ -42,8 +42,8 @@ The example query returns information about all snapshots in this job.
 }
 ```
 
-### Fields
+### Поля
 
-When querying for `snapshots`, the following fields are available:
+При выполнении запроса к `snapshots` доступны следующие поля:
 
 <SchemaTable nodeName="SnapshotNode" />

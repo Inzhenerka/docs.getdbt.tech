@@ -1,24 +1,24 @@
 ---
-title: "Test object schema"
+title: "Схема объекта test"
 sidebar_label: "Test"
 id: "discovery-schema-job-test"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The test object allows you to query information about a particular test.
+Объект **test** позволяет запрашивать информацию о конкретном тесте.
 
-### Arguments
+### Аргументы
 
-When querying for a `test`, the following arguments are available.
+При запросе `test` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="test" />
 
-Below we show some illustrative example queries and outline the schema (all possible fields you can query) of the test object.
+Ниже приведены иллюстративные примеры запросов и описание схемы (всех возможных полей, которые можно запрашивать) объекта **test**.
 
-### Example query
+### Пример запроса
 
-The example query below outputs information about a test including the state of the test result. In order of severity, the result can be one of these: "error", "fail", "warn", or "pass".
+Пример запроса ниже выводит информацию о тесте, включая состояние результата теста. В порядке убывания серьезности результат может принимать одно из следующих значений: `"error"`, `"fail"`, `"warn"` или `"pass"`.
 
 ```graphql
 {
@@ -36,8 +36,8 @@ The example query below outputs information about a test including the state of 
 }
 ```
 
-### Fields
+### Поля
 
-When querying for a `test`, the following fields are available:
+При запросе `test` доступны следующие поля:
 
 <SchemaTable nodeName="TestNode" />

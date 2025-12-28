@@ -1,24 +1,24 @@
 ---
-title: "Model object schema"
+title: "Схема объекта model"
 sidebar_label: "Model"
 id: "discovery-schema-job-model"
 ---
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-The model object allows you to query information about a particular model in a given job.
+Объект `model` позволяет запрашивать информацию о конкретной модели в рамках заданного job.
 
-### Arguments
+### Аргументы
 
-When querying for a `model`, the following arguments are available.
+При выполнении запроса к `model` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="model" />
 
-Below we show some illustrative example queries and outline the schema (all possible fields you can query) of the model object.
+Ниже приведены наглядные примеры запросов, а также описание схемы (всех возможных полей, которые можно запрашивать) объекта `model`.
 
-### Example query for finding parent models and sources
+### Пример запроса для поиска родительских моделей и источников
 
-The example query below uses the `parentsModels` and `parentsSources` fields to fetch information about a model’s parent models and parent sources. The jobID and uniqueID fields are placeholders that you will need to replace with your own values.
+В примере ниже используются поля `parentsModels` и `parentsSources` для получения информации о родительских моделях и родительских источниках заданной модели. Поля jobID и uniqueID являются заглушками — вам нужно заменить их на собственные значения.
 
 ```graphql
 {
@@ -40,9 +40,9 @@ The example query below uses the `parentsModels` and `parentsSources` fields to 
 
 ```
 
-### Example query for model timing
+### Пример запроса для анализа времени выполнения модели
 
-The example query below could be useful if you want to understand information around execution timing on a given model (start, end, completion).
+Пример запроса ниже может быть полезен, если вам нужно разобраться с информацией о времени выполнения конкретной модели (начало, окончание, завершение).
 
 ```graphql
 {
@@ -61,9 +61,9 @@ The example query below could be useful if you want to understand information ar
 }
 ```
 
-### Example query for column-level information
+### Пример запроса для получения информации на уровне колонок
 
-You can use the following example query to understand more about the columns of a given model. This query will only work if the job has generated documentation; that is, it will work with the command `dbt docs generate`.
+Следующий пример запроса можно использовать, чтобы получить больше информации о колонках заданной модели. Этот запрос будет работать только в том случае, если job сгенерировал документацию; то есть он будет работать при использовании команды `dbt docs generate`.
 
 ```graphql
 {
@@ -84,8 +84,8 @@ You can use the following example query to understand more about the columns of 
 ```
 
 
-### Fields
+### Поля
 
-When querying for a `model`, the following fields are available:
+При выполнении запроса к `model` доступны следующие поля:
 
 <SchemaTable nodeName="ModelNode" />

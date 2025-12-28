@@ -1,53 +1,53 @@
---- 
-title: "Copilot style guide" 
-sidebar_label: Copilot style guide 
-id: copilot-styleguide 
-description: "Use the Copilot `dbt-styleguide.md` file for best practices and naming conventions in dbt projects." 
+---
+title: "Руководство по стилю Copilot"
+sidebar_label: Руководство по стилю Copilot
+id: copilot-styleguide
+description: "Используйте файл Copilot `dbt-styleguide.md` для лучших практик и соглашений об именовании в проектах dbt."
 ---
 
 <IntroText>
-This guide provides an overview of the <Constant name="copilot" /> `dbt-styleguide.md` file, outlining its structure, recommended usage, and best practices for effective implementation in your dbt projects. 
+Это руководство предоставляет обзор файла <Constant name="copilot" /> `dbt-styleguide.md`, описывая его структуру, рекомендуемое использование и лучшие практики для эффективного применения в ваших проектах dbt.
 </IntroText>
 
-The `dbt-styleguide.md` is a template for creating a style guide for dbt projects. It includes:
+`dbt-styleguide.md` — это шаблон для создания руководства по стилю для проектов dbt. Он включает в себя:
 
-- SQL style guidelines (for example, using lowercase keywords and trailing commas)
-- Model organization and naming conventions
-- Model configurations and testing practices
-- Recommendations for using pre-commit hooks to enforce style rules
+- Рекомендации по стилю SQL (например, использование ключевых слов в нижнем регистре и завершающих запятых)
+- Организацию моделей и соглашения об именовании
+- Конфигурации моделей и практики тестирования
+- Рекомендации по использованию pre-commit hooks для принудительного соблюдения правил стиля
 
-This guide helps ensure consistency and clarity in dbt projects.
+Это руководство помогает обеспечить согласованность и понятность в проектах dbt.
 
-## `dbt-styleguide.md` for Copilot
+## `dbt-styleguide.md` для Copilot
 
-Using <Constant name="copilot" /> in the <Constant name="cloud_ide" />, you can automatically generate a style guide template called `dbt-styleguide.md`. If the style guide is manually added or edited, it must also follow this naming convention. Any other file name cannot be used with <Constant name="copilot" />.
+Используя <Constant name="copilot" /> в <Constant name="cloud_ide" />, вы можете автоматически сгенерировать шаблон руководства по стилю с именем `dbt-styleguide.md`. Если руководство по стилю добавляется или редактируется вручную, оно также должно следовать этому соглашению об именовании. Любое другое имя файла не может быть использовано с <Constant name="copilot" />.
 
-Add the `dbt-styleguide.md` file to the root of your project. <Constant name="copilot" /> will use it as context for the large language model (LLM) when generating [data tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), [semantic models](/docs/build/semantic-models), and [documentation](/docs/build/documentation).
+Добавьте файл `dbt-styleguide.md` в корень вашего проекта. <Constant name="copilot" /> будет использовать его как контекст для большой языковой модели (LLM) при генерации [data tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), [semantic models](/docs/build/semantic-models) и [documentation](/docs/build/documentation).
 
-Note, by creating a `dbt-styleguide.md` for <Constant name="copilot" />, you are overriding dbt's default style guide.
+Обратите внимание: создавая `dbt-styleguide.md` для <Constant name="copilot" />, вы переопределяете руководство по стилю dbt по умолчанию.
 
-## Creating `dbt-styleguide.md` in the Studio IDE
+## Создание `dbt-styleguide.md` в Studio IDE
 
-1. Open a file in the <Constant name="cloud_ide" />.
-2. Click **<Constant name="copilot" />** in the toolbar.
-3. Select **Generate ... Style guide** from the menu.
-<Lightbox src="/img/docs/dbt-cloud/generate-styleguide.png" title="Generate styleguide in Copilot" /> 
-4. The style guide template appears in the <Constant name="cloud_ide" />. Click **Save**. 
-      `dbt-styleguide.md` is added at the root level of your project.
+1. Откройте файл в <Constant name="cloud_ide" />.
+2. Нажмите **<Constant name="copilot" />** на панели инструментов.
+3. Выберите **Generate ... Style guide** в меню.
+<Lightbox src="/img/docs/dbt-cloud/generate-styleguide.png" title="Генерация руководства по стилю в Copilot" />
+4. Шаблон руководства по стилю появится в <Constant name="cloud_ide" />. Нажмите **Save**.  
+      Файл `dbt-styleguide.md` будет добавлен на корневом уровне вашего проекта.
 
-If you haven't previously generated a style guide file, the latest version will be automatically sourced from <Constant name="dbt_platform" />.
+Если вы ранее не генерировали файл руководства по стилю, последняя версия будет автоматически получена из <Constant name="dbt_platform" />.
 
-## If `dbt-styleguide.md` already exists
+## Если `dbt-styleguide.md` уже существует
 
-If there is an existing `dbt-styleguide.md` file and you attempt to generate a new style guide, a modal appears with the following options:
+Если файл `dbt-styleguide.md` уже существует и вы попытаетесь сгенерировать новое руководство по стилю, появится модальное окно со следующими вариантами:
 
-- **Cancel** &mdash; Exit without making changes.
-- **Restore** &mdash; Revert to the latest version from <Constant name="dbt_platform" />.
-- **Edit** &mdash; Modify the existing style guide manually.
+- **Cancel** &mdash; Выйти без внесения изменений.
+- **Restore** &mdash; Вернуться к последней версии из <Constant name="dbt_platform" />.
+- **Edit** &mdash; Вручную изменить существующее руководство по стилю.
 
-<Lightbox src="/img/docs/dbt-cloud/styleguide-exists.png" title="Styleguide exists" />
+<Lightbox src="/img/docs/dbt-cloud/styleguide-exists.png" title="Руководство по стилю уже существует" />
 
-## Further reading
+## Дополнительные материалы
 
-- [About dbt Copilot](/docs/cloud/dbt-copilot)
-- [How we style our dbt projects](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
+- [О dbt Copilot](/docs/cloud/dbt-copilot)
+- [Как мы оформляем наши проекты dbt](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)

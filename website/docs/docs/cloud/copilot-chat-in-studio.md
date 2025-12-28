@@ -1,76 +1,76 @@
 ---
-title: "Copilot chat in Studio"
+title: "Чат Copilot в Studio"
 id: copilot-chat-in-studio 
-description: "Use the Copilot chat feature in the Studio to generate SQL using your input and the context of the active project." 
+description: "Используйте функцию чата Copilot в Studio для генерации SQL на основе вашего ввода и контекста активного проекта." 
 sidebar_label: Copilot chat in studio
 pagination_next: null
 pagination_prev: null
 ---
 
-# Copilot chat in Studio <Lifecycle status="Starter,Enterprise,Enterprise+" />
+# Чат Copilot в Studio <Lifecycle status="Starter,Enterprise,Enterprise+" />
 
 <IntroText>
-Use the <Constant name="copilot" /> chat feature in <Constant name="cloud_ide" /> to generate SQL using your input and the context of the active project.
+Используйте функцию чата <Constant name="copilot" /> в <Constant name="cloud_ide" /> для генерации SQL на основе вашего ввода и контекста активного проекта.
 </IntroText>
 
-<Constant name="copilot" /> chat is an interactive interface within <Constant name="cloud_ide" /> that allows users to generate SQL from natural language prompts and ask analytics-related questions. By integrating contextual understanding of your dbt project, <Constant name="copilot" /> assists in streamlining SQL development while ensuring users remain actively involved in the process. This collaborative approach helps maintain accuracy, relevance, and adherence to best practices in your organization’s analytics workflows.
+Чат <Constant name="copilot" /> — это интерактивный интерфейс внутри <Constant name="cloud_ide" />, который позволяет пользователям генерировать SQL на основе запросов на естественном языке и задавать вопросы, связанные с аналитикой. Благодаря интеграции контекстного понимания вашего проекта dbt, <Constant name="copilot" /> помогает упростить разработку SQL, при этом сохраняя активное участие пользователя в процессе. Такой совместный подход помогает поддерживать точность, релевантность и соответствие лучшим практикам в аналитических рабочих процессах вашей организации.
 
-## Prerequisites
+## Предварительные требования
 
-- Must have a [<Constant name="cloud" /> Starter, Enterprise or Enterprise+ account](https://www.getdbt.com/pricing).
-- Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
-- <Constant name="copilot" /> enabled for your account.
-    - Admins must [enable <Constant name="copilot" />](/docs/cloud/enable-dbt-copilot#enable-dbt-copilot) (and opt-in to AI features, if required) in your dbt Cloud project settings.
+- Наличие аккаунта [<Constant name="cloud" /> Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
+- Среда разработки должна находиться на поддерживаемом [release track](/docs/dbt-versions/cloud-release-tracks), чтобы получать регулярные обновления.
+- <Constant name="copilot" /> должен быть включен для вашего аккаунта.
+    - Администраторы должны [включить <Constant name="copilot" />](/docs/cloud/enable-dbt-copilot#enable-dbt-copilot) (и при необходимости дать согласие на использование AI-функций) в настройках проекта dbt Cloud.
 
-## Copilot chat overview
+## Обзор чата Copilot
 
-<Expandable alt_header="Generate SQL" >
+<Expandable alt_header="Генерация SQL" >
 
-Ask <Constant name="copilot" /> to generate SQL queries using natural language, making it faster to build or modify dbt models without manual SQL coding.
+Попросите <Constant name="copilot" /> сгенерировать SQL-запросы с использованием естественного языка, чтобы быстрее создавать или изменять модели dbt без ручного написания SQL-кода.
 
-You can describe the query or data transformation you want, and <Constant name="copilot" /> will produce the corresponding SQL code for you within the <Constant name="cloud_ide" /> environment.⁠
+Вы можете описать нужный запрос или преобразование данных, а <Constant name="copilot" /> сгенерирует соответствующий SQL-код прямо в среде <Constant name="cloud_ide" />.⁠
 
-This includes the ability to:
-- Scaffold new SQL models from scratch by describing your needs in plain English.
-- Refactor or optimize existing SQL in your models.
-- Generate complex queries, CTEs, and even automate best-practice SQL formatting, all directly in the chat or command palette UI.
+Это включает следующие возможности:
+- Создание каркаса новых SQL-моделей с нуля на основе описания на обычном языке.
+- Рефакторинг или оптимизация существующего SQL в ваших моделях.
+- Генерация сложных запросов, CTE, а также автоматизация форматирования SQL в соответствии с лучшими практиками — прямо в интерфейсе чата или палитре команд.
 
-To generate SQL queries: 
-1. Navigate to the **<Constant name="copilot" />** button in the <Constant name="cloud_ide" />
-2. Select **[*] SQL** from the menu
+Чтобы сгенерировать SQL-запросы: 
+1. Перейдите к кнопке **<Constant name="copilot" />** в <Constant name="cloud_ide" />
+2. Выберите **[*] SQL** в меню
 
-<Lightbox src="/img/docs/dbt-cloud/copilot-chat-generate-sql.png" width="70%" title="SQL option."/> 
+<Lightbox src="/img/docs/dbt-cloud/copilot-chat-generate-sql.png" width="70%" title="Опция SQL."/> 
 
 </Expandable>
 
-<Expandable alt_header="Mention a model in the project" >
+<Expandable alt_header="Упоминание модели в проекте" >
 ⁠​
-This model mention capability is designed to provide a much more project-aware experience than generic code assistants, enabling you to:
+Возможность упоминания модели разработана для того, чтобы обеспечить гораздо более глубокое понимание контекста проекта по сравнению с универсальными ассистентами для работы с кодом. Это позволяет вам:
 
-- Pose questions about specific models (For example, "Add a test for the model `stg_orders`")
+- Задавать вопросы о конкретных моделях (например, «Добавь тест для модели `stg_orders`»)
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/copilot-chat-mention-model-menu-open.png" width="75%" title="Mention model with menu open." />
+<Lightbox src="/img/docs/dbt-cloud/copilot-chat-mention-model-menu-open.png" width="75%" title="Упоминание модели с открытым меню." />
 
-<Lightbox src="/img/docs/dbt-cloud/copilot-chat-mention-model-menu-select.png" width="75%" title="Mention model after selecting from menu."/>
+<Lightbox src="/img/docs/dbt-cloud/copilot-chat-mention-model-menu-select.png" width="75%" title="Упоминание модели после выбора из меню."/>
 
 </DocCarousel>
 
 </Expandable>
 
-<Expandable alt_header="Add and replace buttons" >
+<Expandable alt_header="Кнопки Add и Replace" >
 
-Add generated code or content into your project, or replace the selected section with the <Constant name="copilot" /> suggestion, all directly from the chat interface. This lets you review and apply changes with a single click for an efficient workflow.⁠
+Добавляйте сгенерированный код или контент в проект либо заменяйте выбранный фрагмент предложением от <Constant name="copilot" /> — всё это напрямую из интерфейса чата. Это позволяет просматривать и применять изменения одним кликом, обеспечивая более эффективный рабочий процесс.⁠
 ⁠​<br />
 
-These buttons are often tracked as specific user actions in the underlying event/telemetry data, confirming they are core to the expected interaction with <Constant name="copilot" /> in <Constant name="cloud_ide" /> and related surfaces.⁠
+Эти кнопки часто отслеживаются как отдельные пользовательские действия в базовых данных событий и телеметрии, что подтверждает их ключевую роль в ожидаемом взаимодействии с <Constant name="copilot" /> в <Constant name="cloud_ide" /> и связанных интерфейсах.⁠
 ⁠​<br />
 
-The **Add** button lets you append <Constant name="copilot" />'s output, while **Replace** swaps your current code or selection with the generated suggestion, giving you precise, in-context editing control.
+Кнопка **Add** позволяет добавить вывод <Constant name="copilot" />, а **Replace** заменяет текущий код или выделенный фрагмент сгенерированным предложением, обеспечивая точный и контекстный контроль редактирования.
 
-Note, if the file is empty, you'll only see **Add** as an option, since there's nothing to replace.
+Обратите внимание: если файл пустой, будет доступна только опция **Add**, так как заменять в этом случае нечего.
 
-<Lightbox src="/img/docs/dbt-cloud/copilot-chat-add-replace.png" width="70%" title="Add and replace buttons."/> 
+<Lightbox src="/img/docs/dbt-cloud/copilot-chat-add-replace.png" width="70%" title="Кнопки Add и Replace."/> 
 
 </Expandable>
