@@ -1,32 +1,32 @@
 ---
 title: "О команде dbt debug"
 sidebar_label: "debug"
-description: "Use dbt debug to test database connections and check system setup."
-intro_text: "Use dbt debug to test database connections and check system setup."
+description: "Используйте dbt debug для проверки подключения к базе данных и проверки настройки системы."
+intro_text: "Используйте dbt debug для проверки подключения к базе данных и проверки настройки системы."
 ---
 
-`dbt debug` — это вспомогательная утилита для проверки подключения к базе данных и отображения информации для отладки, такой как корректность файла проекта, [версия dbt](/reference/dbt-jinja-functions/dbt_version) и наличие всех необходимых зависимостей (например, `git` при выполнении `dbt deps`).
+`dbt debug` — это вспомогательная утилита для тестирования подключения к базе данных и отображения информации для целей отладки, такой как корректность файла проекта, версия [dbt](/reference/dbt-jinja-functions/dbt_version) и наличие всех необходимых зависимостей (например, `git`, когда вы запускаете `dbt deps`).
 
 Команда проверяет подключение к базе данных, локальную конфигурацию и системное окружение по нескольким направлениям, помогая выявить потенциальные проблемы до запуска других команд dbt.
 
 По умолчанию `dbt debug` проверяет:
 - **Подключение к базе данных** (для настроенных profiles)
-- **Настройку dbt‑проекта** (например, валидность `dbt_project.yml`)
-- **Системное окружение** (ОС, версия Python, установленная версия dbt)
-- **Обязательные зависимости** (например, `git` для `dbt deps`)
-- **Детали адаптера** (установленные версии адаптеров и их совместимость)
+- **Настройку dbt‑проекта** (например, корректность `dbt_project.yml`)
+- **Системное окружение** (операционную систему, версию Python, установленную версию dbt)
+- **Необходимые зависимости** (например, `git` для `dbt deps`)
+- **Сведения об адаптере** (установленные версии адаптеров и их совместимость)
 
-*Примечание: не путать с [debug‑level logging](/reference/global-configs/logs#debug-level-logging) через опцию `--debug`, которая лишь увеличивает подробность логов.*
+*Примечание: не путать с [логированием уровня debug](/reference/global-configs/logs#debug-level-logging) через опцию `--debug`, которая увеличивает подробность вывода.
 
 ## Flags
 
 Большинство флагов `dbt debug` применимы к CLI <Constant name="core" />. Некоторые флаги также работают в <Constant name="cloud_cli" />, но в <Constant name="cloud_ide" /> поддерживается только `--connection`.
 
-- <Constant name="core" /> CLI: поддерживает все флаги.
+- CLI <Constant name="core" />: поддерживает все флаги.
 - <Constant name="cloud_ide" />: поддерживает только `dbt debug` и `dbt debug --connection`.
-- <Constant name="cloud_cli" />: поддерживает только `dbt debug` и `dbt debug --connection`. Также можно использовать команду [`dbt environment`](/reference/commands/dbt-environment) для взаимодействия с окружением <Constant name="cloud" />.
+- <Constant name="cloud_cli" />: поддерживает только `dbt debug` и `dbt debug --connection`. Также вы можете использовать команду [`dbt environment`](/reference/commands/dbt-environment) для взаимодействия с вашим окружением <Constant name="cloud" />. 
 
-При использовании интерфейса командной строки (CLI) `dbt debug` поддерживает следующие флаги:
+`dbt debug` поддерживает следующие флаги при использовании интерфейса командной строки (CLI):
 
 ```text
 Usage: dbt debug [OPTIONS]
@@ -37,211 +37,224 @@ Usage: dbt debug [OPTIONS]
 
 Options:
  --cache-selected-only / --no-cache-selected-only
-                В начале выполнения заполнять реляционный кэш
-                только для схем, содержащих выбранные узлы,
-                либо для всех интересующих схем.
+                At start of run, populate relational cache
+                only for schemas containing selected nodes,
+                or for all schemas of interest.
 
  -d, --debug / --no-debug    
-                Отображать debug‑логи во время выполнения dbt.
-                Полезно для отладки и создания bug‑репортов.
+                Display debug logging during dbt execution.
+                Useful for debugging and making bug reports.
 
  --defer / --no-defer      
-                Если задано, разрешать невыбранные узлы,
-                откладывая их к manifest в директории --state.
+                If set, resolve unselected nodes by
+                deferring to the manifest within the --state
+                directory.
 
  --defer-state DIRECTORY     
-                Переопределить директорию состояния для
-                deferral.
+                Override the state directory for deferral
+                only.
 
  --deprecated-favor-state TEXT  
-                Внутренний флаг для вывода из эксплуатации
-                старой переменной окружения.
+                Internal flag for deprecating old env var.
 
  -x, --fail-fast / --no-fail-fast
-                 Останавливать выполнение при первой ошибке.
+                 Stop execution on first failure.
 
  --favor-state / --no-favor-state
-                Если задано, использовать аргумент флага
-                state для разрешения невыбранных узлов,
-                даже если узел уже существует как объект
-                базы данных в текущем окружении.
+                If set, defer to the argument provided to
+                the state flag for resolving unselected
+                nodes, even if the node(s) exist as a
+                database object in the current environment.
 
  --indirect-selection [eager|cautious|buildable|empty]
-                Выбор того, какие тесты выбирать рядом с
-                выбранными ресурсами. eager — самый
-                инклюзивный, cautious — самый строгий,
-                buildable — промежуточный вариант. empty
-                не включает тесты вовсе.
+                Choose which tests to select that are
+                adjacent to selected resources. Eager is
+                most inclusive, cautious is most exclusive,
+                and buildable is in between. Empty includes
+                no tests at all.
 
  --log-cache-events / --no-log-cache-events
-                Включить подробное логирование событий
-                реляционного кэша для отладки.
+                Enable verbose logging for relational cache
+                events to help when debugging.
 
  --log-format [text|debug|json|default]
-                Задать формат логов в консоли и файле логов.
-                Используйте --log-format-file, чтобы задать
-                формат файла логов отдельно от консоли.
+                Specify the format of logging to the console
+                and the log file. Use --log-format-file to
+                configure the format for the log file
+                differently than the console.
 
  --log-format-file [text|debug|json|default]
-                Задать формат логов в файле логов, переопределяя
-                значение по умолчанию и общий --log-format.
+                Specify the format of logging to the log
+                file by overriding the default value and the
+                general --log-format setting.
 
  --log-level [debug|info|warn|error|none]
-                Задать минимальный уровень важности событий,
-                логируемых в консоль и файл логов. Используйте
-                --log-level-file, чтобы задать уровень отдельно
-                для файла логов.
+                Specify the minimum severity of events that
+                are logged to the console and the log file.
+                Use --log-level-file to configure the
+                severity for the log file differently than
+                the console.
 
  --log-level-file [debug|info|warn|error|none]
-                Задать минимальный уровень важности событий,
-                логируемых в файл логов, переопределяя значение
-                по умолчанию и общий --log-level.
+                Specify the minimum severity of events that
+                are logged to the log file by overriding the
+                default value and the general --log-level
+                setting.
 
  --log-path PATH         
-                Настроить 'log-path'. Применяется только для
-                текущего запуска. Переопределяет 'DBT_LOG_PATH',
-                если он задан.
+                Configure the 'log-path'. Only applies this
+                setting for the current run. Overrides the
+                'DBT_LOG_PATH' if it is set.
 
  --partial-parse / --no-partial-parse
-                Разрешить частичный парсинг с использованием
-                pickle‑файла в директории target. Переопределяет
-                пользовательский конфигурационный файл.
+                Allow for partial parsing by looking for and
+                writing to a pickle file in the target
+                directory. This overrides the user
+                configuration file.
 
  --populate-cache / --no-populate-cache
-                В начале выполнения использовать запросы `show`
-                или `information_schema` для заполнения
-                реляционного кэша, что может ускорить последующие
-                материализации.
+                At start of run, use `show` or
+                `information_schema` queries to populate a
+                relational cache, which can speed up
+                subsequent materializations.
 
  --print / --no-print      
-                Выводить все вызовы макроса {{ print() }}.
+                Output all {{ print() }} macro calls.
 
  --printer-width INTEGER     
-                Задать ширину вывода в терминале.
+                Sets the width of terminal output
 
  --profile TEXT         
-                Какой существующий profile загружать.
-                Переопределяет настройку в dbt_project.yml.
+                Which existing profile to load. Overrides
+                setting in dbt_project.yml.
 
  -q, --quiet / --no-quiet    
-                Подавлять все логи, кроме ошибок, в stdout.
-                Не влияет на вызовы макроса {{ print() }}.
+                Suppress all non-error logging to stdout.
+                Does not affect {{ print() }} macro calls.
 
  -r, --record-timing-info PATH  
-                При указании этой опции dbt будет выводить
-                низкоуровневую статистику времени выполнения
-                в указанный файл. Пример:
-                `--record-timing-info output.profile`
+                When this option is passed, dbt will output
+                low-level timing stats to the specified
+                file. Example: `--record-timing-info
+                output.profile`
 
  --send-anonymous-usage-stats / --no-send-anonymous-usage-stats
-                Отправлять анонимную статистику использования
-                в dbt Labs.
+                Send anonymous usage stats to dbt Labs.
 
  --state DIRECTORY        
-                Если не переопределено, использовать эту
-                директорию состояния как для сравнения
-                состояний, так и для deferral.
+                Unless overridden, use this state directory
+                for both state comparison and deferral.
 
  --static-parser / --no-static-parser
-                Использовать статический парсер.
+                Use the static parser.
 
  -t, --target TEXT        
-                Какой target загружать для данного profile.
+                Which target to load for the given profile
 
  --use-colors / --no-use-colors 
-                Указать, использовать ли цветной вывод логов
-                в консоли и файле логов. Используйте
-                --use-colors-file/--no-use-colors-file, чтобы
-                настроить файл логов отдельно.
+                Specify whether log output is colorized in
+                the console and the log file. Use --use-
+                colors-file/--no-use-colors-file to colorize
+                the log file differently than the console.
 
  --use-colors-file / --no-use-colors-file
-                Указать, использовать ли цветной вывод в файле
-                логов, переопределяя значение по умолчанию и
-                общий --use-colors/--no-use-colors.
+                Specify whether log file output is colorized
+                by overriding the default value and the
+                general --use-colors/--no-use-colors
+                setting.
 
  --use-experimental-parser / --no-use-experimental-parser
-                Включить экспериментальные возможности парсинга.
+                Enable experimental parsing features.
 
  -V, -v, --version        
-                Показать информацию о версии и выйти.
+                Show version information and exit
 
  --version-check / --no-version-check
-                Если задано, проверять, что установленная версия
-                dbt соответствует require-dbt-version из файла
-                dbt_project.yml (если указано). В противном
-                случае разрешать расхождения.
+                If set, ensure the installed dbt version
+                matches the require-dbt-version specified in
+                the dbt_project.yml file (if any).
+                Otherwise, allow them to differ.
 
  --warn-error   
-                Если dbt обычно выводит предупреждение, вместо
-                этого выбрасывать исключение. Примеры:
-                --select, который ничего не выбирает,
-                deprecations, конфигурации без связанных
-                моделей, некорректные конфигурации тестов,
-                отсутствующие sources/refs в тестах.
+                If dbt would normally warn, instead raise an
+                exception. Examples include --select that
+                selects nothing, deprecations,
+                configurations with no associated models,
+                invalid test configurations, and missing
+                sources/refs in tests.
 
  --warn-error-options WARNERROROPTIONSTYPE
-                Если dbt обычно выводит предупреждение,
-                выбрасывать исключение на основе конфигурации
-                include/exclude. Аргумент должен быть YAML‑строкой
-                с ключами 'include' или 'exclude', например:
-                '{"include": "all",
+                If dbt would normally warn, instead raise an
+                exception based on include/exclude
+                configuration. Examples include --select
+                that selects nothing, deprecations,
+                configurations with no associated models,
+                invalid test configurations, and missing
+                sources/refs in tests. This argument should
+                be a YAML string, with keys 'include' or
+                'exclude'. eg. '{"include": "all",
                 "exclude": ["NoNodesForSelectionCriteria"]}'
 
  --write-json / --no-write-json 
-                Записывать ли файлы manifest.json и
-                run_results.json в директорию target.
+                Whether or not to write the manifest.json
+                and run_results.json files to the target
+                directory
 
  --connection          
-                Проверить подключение к целевой базе данных
-                независимо от проверки зависимостей.
-                Доступно в Studio IDE и dbt Core CLI.
+                Test the connection to the target database
+                independent of dependency checks.
+                Available in Studio IDE and dbt Core CLI
 
  --config-dir          
-                Вывести системно‑зависимую команду для доступа
-                к директории, в которой текущий dbt‑проект ищет
-                файл profiles.yml, и завершить работу. При
-                использовании этого флага остальные шаги debug
-                не выполняются.
+                Print a system-specific command to access
+                the directory that the current dbt project
+                is searching for a profiles.yml. Then, exit.
+                This flag renders other debug step flags no-
+                ops.
 
  --profiles-dir PATH       
-                Директория, в которой искать файл profiles.yml.
-                Если не задано, dbt сначала ищет в текущей
-                рабочей директории, затем в HOME/.dbt/.
+                Which directory to look in for the
+                profiles.yml file. If not set, dbt will look
+                in the current working directory first, then
+                HOME/.dbt/
 
  --project-dir PATH       
-                Директория, в которой искать файл
-                dbt_project.yml. По умолчанию — текущая рабочая
-                директория и её родительские директории.
+                Which directory to look in for the
+                dbt_project.yml file. Default is the current
+                working directory and its parents.
 
  --vars YAML           
-                Передать переменные в проект. Этот аргумент
-                переопределяет переменные, определённые в
-                dbt_project.yml. Аргумент должен быть YAML‑строкой,
-                например: '{my_variable: my_value}'
+                Supply variables to the project. This
+                argument overrides variables defined in your
+                dbt_project.yml file. This argument should
+                be a YAML string, eg. '{my_variable:
+                my_value}'
 
  -h, --help           
-                Показать это сообщение и выйти.
+                Show this message and exit.
 ```
 
-Тестировать только подключение к платформе данных и пропустить другие проверки, которые выполняет `dbt debug`:
+## Example usage
+
+Проверить только подключение к платформе данных и пропустить остальные проверки, которые выполняет `dbt debug`:
 
 ```shell
 dbt debug --connection
 ```
 
-Показать настроенное местоположение файла `profiles.yml` и выйти:
+Показать настроенное расположение файла `profiles.yml` и завершить выполнение:
 
 ```text
 dbt debug --config-dir
-Чтобы просмотреть файл `profiles.yml`, выполните команду:
+To view your profiles.yml file, run:
 
 open /Users/alice/.dbt
 ```
 
-Проверьте соединение в <Constant name="cloud_ide" />:
+Проверить подключение в <Constant name="cloud_ide" />:
 
 ```text
 dbt debug --connection
 ```
 
-<Lightbox src="/img/reference/dbt-debug-ide.png" title="Проверка соединения в IDE Studio" />
+<Lightbox src="/img/reference/dbt-debug-ide.png" title="Проверка подключения в Studio IDE" />

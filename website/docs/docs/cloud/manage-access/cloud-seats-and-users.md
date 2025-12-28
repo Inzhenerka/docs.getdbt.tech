@@ -2,32 +2,32 @@
 title: "Пользователи и лицензии"
 description: "Узнайте, как администраторы dbt могут использовать лицензии и места (seats) для управления доступом в аккаунте dbt."
 id: "seats-and-users"
-sidebar: "Пользователи и лицензии"
+sidebar: "Users and licenses"
 pagination_next: "docs/cloud/manage-access/enterprise-permissions"
 pagination_prev: null
 ---
 
 import LicenseTypes from '/snippets/_cloud-license-types.md';
 
-В <Constant name="cloud" /> _лицензии_ используются для распределения пользователей в вашей учетной записи.
+В <Constant name="cloud" /> _лицензии_ используются для распределения пользователей в рамках вашего аккаунта.
 
 <LicenseTypes/>
 
-Назначенная пользователю лицензия определяет, к каким именно возможностям он может получить доступ в <Constant name="cloud" />.
+Назначенная пользователю лицензия определяет, к каким возможностям он имеет доступ в <Constant name="cloud" />.
 
-| Functionality | <div style={{width:'125px'}}>Developer or Analyst Users</div> | <div style={{width:'125px'}}>Read-Only Users</div> |<div style={{width:'125px'}}> IT Users*</div> |
+| Функциональность | <div style={{width:'125px'}}>Пользователи Developer или Analyst</div> | <div style={{width:'125px'}}>Пользователи Read-Only</div> |<div style={{width:'125px'}}> IT-пользователи*</div> |
 | ------------- | -------------- | --------------- | -------- |
-| Use the <Constant name="cloud_ide" /> | ✅ | ❌ | ❌ |
-| Use the <Constant name="cloud" /> CLI | ✅ | ❌ | ❌ |
-| Use Jobs | ✅ | ❌ | ❌ |
-| Manage Account | ✅ | ❌ | ✅ |
-| API Access | ✅ | ✅ | ❌ |
-| Use [<Constant name="explorer" />](/docs/explore/explore-projects) | ✅  | ✅ | ❌  |
-| Use [Source Freshness](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
-| Use [Docs](/docs/explore/build-and-view-your-docs) | ✅ | ✅ | ❌ |
-| Receive [Job notifications](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ | 
+| Использование <Constant name="cloud_ide" /> | ✅ | ❌ | ❌ |
+| Использование <Constant name="cloud" /> CLI | ✅ | ❌ | ❌ |
+| Использование Jobs | ✅ | ❌ | ❌ |
+| Управление аккаунтом | ✅ | ❌ | ✅ |
+| Доступ к API | ✅ | ✅ | ❌ |
+| Использование [<Constant name="explorer" />](/docs/explore/explore-projects) | ✅  | ✅ | ❌  |
+| Использование [Source Freshness](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
+| Использование [Docs](/docs/explore/build-and-view-your-docs) | ✅ | ✅ | ❌ |
+| Получение [уведомлений о Job](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ | 
 
-\*Доступно только в планах Starter, Enterprise и Enterprise+. IT‑лицензии ограничены одной лицензией на учетную запись уровня Starter или Enterprise и не учитываются при подсчете используемых лицензий.
+\*Доступно только на планах Starter, Enterprise и Enterprise+. IT‑места ограничены 1 местом на аккаунт уровня Starter или Enterprise и не учитываются в общем количестве используемых мест.
 
 ## Лицензии
 
@@ -35,74 +35,72 @@ import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 <LicenseOverrideNote />
 
-Each <Constant name="cloud" /> plan comes with a base number of Developer, IT, and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
+Каждый план <Constant name="cloud" /> включает базовое количество лицензий Developer, IT и Read-Only. Вы можете добавлять или удалять лицензии, изменяя количество пользователей в настройках аккаунта.
 
-Если у вас есть аккаунт с планом Developer и вы хотите добавить больше людей в команду, вам потребуется перейти на план Starter. Подробнее о лицензиях, доступных в каждом плане, см. в разделе [dbt Pricing Plans](https://www.getdbt.com/pricing/).
+Если у вас аккаунт с планом Developer и вы хотите добавить больше участников в команду, потребуется обновиться до плана Starter. Подробнее о лицензиях, доступных в каждом плане, см. [dbt Pricing Plans](https://www.getdbt.com/pricing/).
 
-Следующие вкладки подробно описывают шаги по изменению количества пользовательских лицензий:
+Ниже приведены вкладки с шагами по изменению количества пользовательских лицензий:
 
 <Tabs>
 
-<TabItem value="enterprise" label="Enterprise-tier plans">
+<TabItem value="enterprise" label="Планы уровня Enterprise">
 
-Если у вас план уровня Enterprise и есть соответствующие [permissions](/docs/cloud/manage-access/enterprise-permissions), вы можете добавлять или удалять лицензии, изменяя количество пользовательских мест (user seats). Обратите внимание: лицензия IT не учитывается при подсчёте использования мест.
+Если вы используете план уровня Enterprise и обладаете необходимыми [разрешениями](/docs/cloud/manage-access/enterprise-permissions), вы можете добавлять или удалять лицензии, изменяя количество пользовательских мест. Обратите внимание: IT‑лицензия не учитывается в использовании мест.
 
-- Чтобы удалить пользователя, нажмите на имя вашего аккаунта в левом меню, выберите **Account settings** и выберите **Users**.
-  - Выберите пользователя, которого хотите удалить, нажмите **Edit**, а затем **Delete**.
-  - Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с той же информацией, если удалили его по ошибке.<br />
+- Чтобы удалить пользователя, нажмите на имя аккаунта в левом меню, выберите **Account settings** и затем **Users**.
+  - Выберите пользователя, которого хотите удалить, нажмите **Edit**, затем **Delete**.
+  - Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с теми же данными, если удаление было выполнено по ошибке.<br />
 
 - Чтобы добавить пользователя, перейдите в **Account Settings** и выберите **Users**.
   - Нажмите кнопку [**Invite Users**](/docs/cloud/manage-access/invite-users).
-  - Для тонкой настройки разрешений обратитесь к [управлению доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
+  - Для более тонкой настройки разрешений см. [Role based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
 
 </TabItem>
 
-<TabItem value="starter" label="Starter plans">
+<TabItem value="starter" label="Планы Starter">
 
-Если вы используете тариф Starter и у вас есть соответствующие [permissions](/docs/cloud/manage-access/self-service-permissions), вы можете добавлять или удалять разработчиков.
+Если вы используете план Starter и обладаете необходимыми [разрешениями](/docs/cloud/manage-access/self-service-permissions), вы можете добавлять или удалять разработчиков.
 
-Подробную информацию о количестве лицензий каждого типа, включённых в тариф Starter, см. в разделе [Self-service Starter account permissions](/docs/cloud/manage-access/self-service-permissions#licenses).
+Подробнее о количестве лицензий каждого типа, включённых в план Starter, см. [Self-service Starter account permissions](/docs/cloud/manage-access/self-service-permissions#licenses).
 
 Вам потребуется внести два изменения:
 
-- Скорректировать количество developer user seats, которое управляет пользователями, приглашёнными в ваш проект <Constant name="cloud" />.  
-- Скорректировать количество developer billing seats, которое управляет числом оплачиваемых мест.
+- Изменить количество пользовательских мест разработчиков, которое управляет пользователями, приглашёнными в ваш проект <Constant name="cloud" />.
+- Изменить количество биллинговых мест разработчиков, которое определяет число оплачиваемых мест.
 
-Вы можете добавлять или удалять разработчиков, увеличивая или уменьшая количество пользователей и оплачиваемых мест в настройках вашей учётной записи:
+Вы можете добавлять или удалять разработчиков, увеличивая или уменьшая количество пользователей и оплачиваемых мест в настройках аккаунта:
 
 <Tabs>
 <TabItem value="addusers" label="Добавление пользователей">
 
 Чтобы добавить пользователя в <Constant name="cloud" />, вы должны быть владельцем аккаунта или иметь права администратора.
 
-1. В <Constant name="cloud" /> нажмите на название вашего аккаунта в левом боковом меню и выберите **Account settings**.
+1. В <Constant name="cloud" /> нажмите на имя аккаунта в левом меню и выберите **Account settings**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="75%" title="Navigate to Account settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="75%" title="Переход в Account settings" />
 
-2. В разделе **Account Settings** выберите **Billing**.  
-3. В разделе **Billing details** укажите необходимое количество developer seats и убедитесь, что вы заполнили все платёжные данные, включая раздел **Billing address**. Если оставить эти поля пустыми, вы не сможете сохранить изменения.  
+2. В **Account Settings** выберите **Billing**.
+3. В разделе **Billing details** укажите нужное количество developer‑мест и убедитесь, что заполнены все платёжные данные, включая раздел **Billing address**. Если оставить их пустыми, сохранить изменения не получится.
 4. Нажмите **Update Payment Information**, чтобы сохранить изменения.
 
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="75%" title="Navigate to Account settings -> Billing to modify billing seat count" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="75%" title="Переход в Account settings -> Billing для изменения количества биллинговых мест" />
 
-Теперь, когда вы обновили биллинг, вы можете [пригласить пользователей](/docs/cloud/manage-access/invite-users) присоединиться к вашему аккаунту dbt Cloud:
+После обновления биллинга вы можете [пригласить пользователей](/docs/cloud/manage-access/invite-users) в ваш аккаунт <Constant name="cloud" />:
 
-Теперь, когда вы обновили биллинг, вы можете [пригласить пользователей](/docs/cloud/manage-access/invite-users) присоединиться к вашему аккаунту <Constant name="cloud" />:
-
-Отличная работа! После выполнения этих шагов количество пользователей <Constant name="cloud" /> и количество пользователей, учитываемых для биллинга, теперь должны совпадать.
+Отличная работа! После выполнения этих шагов количество пользователей и количество биллинговых мест в <Constant name="cloud" /> должны совпадать.
 </TabItem>
 
 <TabItem value="deleteusers" label="Удаление пользователей">
 
-Чтобы удалить пользователя в <Constant name="cloud" />, вы должны быть владельцем аккаунта или иметь права администратора. Если у пользователя тип лицензии `developer`, его место станет доступным для другого пользователя, либо администраторы смогут уменьшить общее количество лицензий (seats).
+Чтобы удалить пользователя в <Constant name="cloud" />, вы должны быть владельцем аккаунта или иметь права администратора. Если у пользователя тип лицензии `developer`, его место станет доступным для другого пользователя или позволит администраторам уменьшить общее количество мест.
 
-1. В <Constant name="cloud" /> нажмите на имя вашего аккаунта в левом боковом меню и выберите **Account settings**.
+1. В <Constant name="cloud" /> нажмите на имя аккаунта в левом меню и выберите **Account settings**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="85%" title="Navigate to Account settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" width="85%" title="Переход в Account settings" />
 
-2. В разделе **Account settings** выберите **Users**.  
-3. Выберите пользователя, которого хотите удалить, затем нажмите **Edit**.  
-4. Нажмите **Delete** в левом нижнем углу. Затем нажмите **Confirm Delete**, чтобы немедленно удалить пользователя без дополнительных запросов пароля. Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с теми же данными, если удаление было выполнено по ошибке.
+2. В **Account settings** выберите **Users**.
+3. Выберите пользователя, которого хотите удалить, затем нажмите **Edit**.
+4. Нажмите **Delete** в левом нижнем углу. Нажмите **Confirm Delete**, чтобы немедленно удалить пользователя без дополнительных запросов пароля. Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с теми же данными, если удаление было выполнено по ошибке.
 
 <Lightbox src="/img/docs/dbt-cloud/delete_user_20221023.gif" width="75%" title="Удаление пользователя" />
 
@@ -110,9 +108,9 @@ import LicenseCount from '/snippets/_license-count.md';
 
 <LicenseCount/>
         
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="75%" title="Страница **Billing** в разделе **Account settings**" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="75%" title="Страница Billing в Account settings" />
 
-Отличная работа! После выполнения этих шагов количество пользователей <Constant name="cloud" /> и количество лицензий для биллинга теперь должны совпадать.
+Отличная работа! После выполнения этих шагов количество пользователей и количество биллинговых мест в <Constant name="cloud" /> должны совпадать.
 
 </TabItem>
 </Tabs>
@@ -122,31 +120,30 @@ import LicenseCount from '/snippets/_license-count.md';
 
 ## Управление типами лицензий
 
-Лицензии могут назначаться пользователям индивидуально или через членство в группах. Чтобы назначить лицензию через группу, вы можете вручную добавить пользователя в группу в процессе приглашения или назначить его в группу после того, как он зарегистрируется в <Constant name="cloud" />. В качестве альтернативы, при использовании [настройки SSO](/docs/cloud/manage-access/sso-overview) и [ролевой модели управления доступом](/docs/cloud/manage-access/about-user-access#role-based-access-control-) (только для Enterprise‑тарифа), пользователи могут автоматически назначаться в группы. По умолчанию новым пользователям в аккаунте назначается лицензия Developer.
+Лицензии могут назначаться пользователям индивидуально или через членство в группах. Чтобы назначить лицензию через группу, вы можете вручную добавить пользователя в группу в процессе приглашения или назначить его в группу после того, как он зарегистрируется в <Constant name="cloud" />. Кроме того, при использовании [SSO configuration](/docs/cloud/manage-access/sso-overview) и [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-) (только для планов уровня Enterprise) пользователи могут автоматически назначаться в группы. По умолчанию всем новым пользователям в аккаунте назначается лицензия Developer.
 
-### Ручная конфигурация
+### Ручная настройка
 
-Чтобы вручную назначить конкретный тип лицензии пользователю в вашей команде, перейдите на страницу **Users** в разделе **Account settings** и нажмите кнопку **Edit** рядом с пользователем, которым вы хотите управлять. На этой странице вы сможете выбрать тип лицензии и соответствующие группы для пользователя.
+Чтобы вручную назначить пользователю в вашей команде определённый тип лицензии, перейдите на страницу **Users** в **Account settings** и нажмите кнопку **Edit** у нужного пользователя. На этой странице вы можете выбрать тип лицензии и соответствующие группы для пользователя.
 
-**Примечание:** у вас должна быть доступная лицензия, которую можно выделить для пользователя. Если в вашем аккаунте нет доступных лицензий для распределения, вам потребуется добавить дополнительные лицензии в ваш план, чтобы завершить изменение лицензии.
+**Примечание:** У вас должна быть доступная лицензия для назначения пользователю. Если в аккаунте нет свободных лицензий, потребуется добавить дополнительные лицензии в ваш план, чтобы завершить изменение типа лицензии.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/license-manual.png" width="55%" title="Ручное назначение лицензий"/>
 
-### Сопоставление конфигураций <Lifecycle status="managed,managed_plus" /> 
+### Настройка через сопоставление <Lifecycle status="managed,managed_plus" /> 
 
-Если ваша учетная запись подключена к провайдеру идентификации (IdP) для [Single Sign On](/docs/cloud/manage-access/sso-overview), вы можете автоматически сопоставлять группы пользователей IdP с определенными группами в <Constant name="cloud" /> и назначать этим группам типы лицензий. Для настройки сопоставлений лицензий перейдите на страницу **Account Settings** > **Groups & Licenses** > **License Mappings**. Здесь вы можете создавать или редактировать SSO-сопоставления как для лицензий типа Read-Only, так и для Developer.
+Если ваш аккаунт подключён к провайдеру удостоверений (IdP) для [Single Sign On](/docs/cloud/manage-access/sso-overview), вы можете автоматически сопоставлять группы пользователей IdP с определёнными группами в <Constant name="cloud" /> и назначать типы лицензий этим группам. Для настройки сопоставлений лицензий перейдите в **Account Settings** > **Groups & Licenses** > **License Mappings**. Здесь вы можете создавать или редактировать SSO‑сопоставления как для лицензий Read-Only, так и для Developer.
 
-По умолчанию всем новым участникам учетной записи <Constant name="cloud" /> назначается лицензия Developer. Чтобы назначать лицензии Read-Only определенным группам пользователей, создайте новое License Mapping для типа лицензии Read-Only и укажите список имен групп IdP, разделенных запятыми, которые должны получать лицензию Read-Only в момент входа в систему.
+По умолчанию всем новым участникам аккаунта <Constant name="cloud" /> назначается лицензия Developer. Чтобы назначать лицензии Read-Only определённым группам пользователей, создайте новое сопоставление лицензий для типа Read-Only и укажите список имён групп IdP, разделённых запятыми, которые должны получать лицензию Read-Only при входе в систему.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/license-mapping.png" width="65%" title="Настройка сопоставления лицензий для групп IdP"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/license-mapping.png" width="65%" title="Настройка сопоставления лицензий с группами IdP"/>
 
 Примечания по использованию:
-- Если группы IdP пользователя совпадают **и** с маппингом лицензии Developer, **и** с маппингом лицензии Read-Only, будет назначен тип лицензии Developer.
-- Если группы IdP пользователя **не совпадают ни с одним** маппингом типа лицензии, будет назначена лицензия Developer.
-- Типы лицензий обновляются, когда пользователи входят в <Constant name="cloud" /> через Single Sign On.
-  Изменения, внесённые в маппинги типов лицензий, вступят в силу при следующем входе пользователей в <Constant name="cloud" />.
-- Маппинги типов лицензий основаны на _группах IdP_, а не на _группах <Constant name="cloud" />_, поэтому при настройке этой функции обязательно проверяйте членство в группах в вашем провайдере идентификации.
+- Если группы IdP пользователя соответствуют сопоставлениям как для лицензии Developer, так и для Read-Only, будет назначена лицензия Developer.
+- Если группы IdP пользователя не соответствуют _ни одному_ сопоставлению типов лицензий, будет назначена лицензия Developer.
+- Типы лицензий обновляются, когда пользователи входят в <Constant name="cloud" /> через Single Sign On. Изменения в сопоставлениях типов лицензий вступят в силу при следующем входе пользователей в <Constant name="cloud" />.
+- Сопоставления типов лицензий основаны на _группах IdP_, а не на _группах <Constant name="cloud" />_, поэтому при настройке этой функции обязательно проверяйте членство в группах у вашего провайдера удостоверений.
 
-## Гранулярное управление доступом
+## Гранулярные разрешения
 
-Планы <Constant name="cloud" /> уровня Enterprise поддерживают управление доступом на основе ролей для настройки детальных разрешений внутри приложения. Подробнее о разрешениях уровня Enterprise см. в разделе [access control](/docs/cloud/manage-access/about-user-access).
+Планы <Constant name="cloud" /> уровня Enterprise поддерживают ролевую модель доступа для настройки детальных разрешений внутри приложения. Подробнее о разрешениях Enterprise см. в разделе [access control](/docs/cloud/manage-access/about-user-access).

@@ -1,57 +1,57 @@
 ---
 title: "Конфигурации Redshift"
-description: "Конфигурации Redshift - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
+description: "Конфигурации Redshift — подробное руководство, которое поможет разобраться с настройками в dbt."
 id: "redshift-configs"
 tags: ['Redshift', 'dbt Fusion', 'dbt Core']
 ---
 
 <!----
 To-do:
-- использовать структуру справочного документа для этой статьи/разделить на отдельные статьи
-- подумать, стоит ли некоторые из них вынести за пределы моделей
+- use the reference doc structure for this article/split into separate articles
+- think about whether some of these should be outside of models
 --->
 
 ## Стратегии инкрементальной материализации
 
 В dbt-redshift поддерживаются следующие стратегии инкрементальной материализации:
 
-- `append` (по умолчанию, если `unique_key` не определен)
+- `append` (по умолчанию, если `unique_key` не задан)
 - `merge`
-- `delete+insert` (по умолчанию, если `unique_key` определен)
+- `delete+insert` (по умолчанию, если `unique_key` задан)
 - [`microbatch`](/docs/build/incremental-microbatch)
 
-Все эти стратегии унаследованы от dbt-postgres.
+Все эти стратегии унаследованы из dbt-postgres.
 
 ## Оптимизация производительности
 
 ### Использование sortkey и distkey
 
-Таблицы в Amazon Redshift имеют две мощные оптимизации для улучшения производительности запросов: distkeys и sortkeys. Указание этих значений в качестве конфигураций на уровне модели применяет соответствующие настройки в сгенерированном `CREATE TABLE` <Term id="ddl" />. Обратите внимание, что эти настройки не будут иметь эффекта на модели, установленные как `view` или `ephemeral`.
+Таблицы в Amazon Redshift имеют два мощных механизма оптимизации для повышения производительности запросов: distkeys и sortkeys. Указание этих значений в конфигурации модели приводит к применению соответствующих настроек в сгенерированном `CREATE TABLE` <Term id="ddl" />. Обратите внимание, что эти настройки не будут иметь эффекта для моделей с материализацией `view` или `ephemeral`.
 
-- `dist` может иметь значение `all`, `even`, `auto` или имя ключа.
-- `sort` принимает список ключей сортировки, например: `['reporting_day', 'category']`. dbt будет строить ключ сортировки в том порядке, в котором указаны поля.
-- `sort_type` может иметь значение `interleaved` или `compound`. Если настройка не указана, sort_type по умолчанию принимает значение `compound`.
+- `dist` может принимать значение `all`, `even`, `auto` или имя ключа.
+- `sort` принимает список sort key, например: `['reporting_day', 'category']`. dbt создаст sort key в том порядке, в котором указаны поля.
+- `sort_type` может иметь значение `interleaved` или `compound`. Если значение не указано, `sort_type` по умолчанию равен `compound`.
 
-При работе с ключами сортировки настоятельно рекомендуется следовать [лучшим практикам Redshift](https://docs.aws.amazon.com/prescriptive-guidance/latest/query-best-practices-redshift/best-practices-tables.html#sort-keys) по эффективности и кардинальности ключей сортировки.
+При работе с sort key настоятельно рекомендуется следовать [лучшим практикам Redshift](https://docs.aws.amazon.com/prescriptive-guidance/latest/query-best-practices-redshift/best-practices-tables.html#sort-keys), касающимся эффективности sort key и кардинальности.
 
-Ключи сортировки и распределения следует добавлять в блок `{{ config(...) }}` в файлах модели `.sql`, например:
+Sort key и dist key следует добавлять в блок `{{ config(...) }}` в `.sql`-файлах моделей, например:
 
 <File name='my_model.sql'>
 
 ```sql
--- Пример с одним ключом сортировки
+-- Example with one sort key
 {{ config(materialized='table', sort='reporting_day', dist='unique_id') }}
 
 select ...
 
 
--- Пример с несколькими ключами сортировки
+-- Example with multiple sort keys
 {{ config(materialized='table', sort=['category', 'region', 'reporting_day'], dist='received_at') }}
 
 select ...
 
 
--- Пример с чередующимися ключами сортировки
+-- Example with interleaved sort keys
 {{ config(materialized='table',
           sort_type='interleaved'
           sort=['category', 'region', 'reporting_day'],
@@ -63,18 +63,18 @@ select ...
 
 </File>
 
-Для получения дополнительной информации о distkeys и sortkeys, ознакомьтесь с документацией Amazon:
+Подробнее о distkeys и sortkeys см. в документации Amazon:
 
-- [Документация AWS » Amazon Redshift » Руководство разработчика базы данных » Проектирование таблиц » Выбор стиля распределения данных](https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html)
-- [Документация AWS » Amazon Redshift » Руководство разработчика базы данных » Проектирование таблиц » Выбор ключей сортировки](https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html)
+- [AWS Documentation » Amazon Redshift » Database Developer Guide » Designing Tables » Choosing a Data Distribution Style](https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html)
+- [AWS Documentation » Amazon Redshift » Database Developer Guide » Designing Tables » Choosing Sort Keys](https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html)
 
-## Поздние связывающие представления
+## Позднее связывание представлений (Late binding views)
 
-Redshift поддерживает <Term id="view">представления</Term>, не связанные с их зависимостями, или [поздние связывающие представления](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_VIEW.html#late-binding-views). Эта опция DDL "отвязывает" представление от данных, которые оно выбирает. На практике это означает, что если вышестоящие представления или таблицы удаляются с квалификатором каскада, позднее связывающее представление не удаляется.
+Redshift поддерживает <Term id="view">представления</Term>, не связанные жёстко со своими зависимостями, или [late binding views](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_VIEW.html#late-binding-views). Эта опция DDL «отвязывает» представление от данных, из которых оно выбирает. На практике это означает, что если вышестоящие представления или таблицы удаляются с использованием `cascade`, late-binding view при этом не будет удалено.
 
-Использование поздних связывающих представлений в производственном развертывании dbt может значительно улучшить доступность данных в хранилище, особенно для моделей, которые материализуются как поздние связывающие представления и запрашиваются конечными пользователями, так как они не будут удалены при обновлении вышестоящих моделей. Кроме того, поздние связывающие представления могут использоваться с [внешними таблицами](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_EXTERNAL_TABLE.html) через Redshift Spectrum.
+Использование late-binding views в продакшн-развёртывании dbt может значительно повысить доступность данных в хранилище, особенно для моделей, материализованных как late-binding views и используемых конечными пользователями, поскольку они не будут удаляться при обновлении вышестоящих моделей. Кроме того, late-binding views можно использовать с [external tables](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_EXTERNAL_TABLE.html) через Redshift Spectrum.
 
-Чтобы материализовать модель dbt как позднее связывающее представление, используйте опцию конфигурации `bind: false`:
+Чтобы материализовать модель dbt как late-binding view, используйте параметр конфигурации `bind: false`:
 
 <File name='my_view.sql'>
 
@@ -87,13 +87,13 @@ from source.data
 
 </File>
 
-Чтобы сделать все представления поздними связывающими, настройте ваш файл `dbt_project.yml` следующим образом:
+Чтобы сделать все представления late-binding, настройте файл `dbt_project.yml` следующим образом:
 
 <File name='dbt_project.yml'>
 
 ```yaml
 models:
-  +bind: false # Материализовать все представления как поздние связывающие
+  +bind: false # Materialize all views as late-binding
   project_name:
     ....
 ```
@@ -102,24 +102,25 @@ models:
 
 ## Материализованные представления
 
-Адаптер Redshift поддерживает [материализованные представления](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-overview.html) с следующими параметрами конфигурации:
+Адаптер Redshift поддерживает [материализованные представления](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-overview.html)
+со следующими параметрами конфигурации:
 
-| Параметр                                                                         | Тип         | Обязательный | По умолчанию                                   | Поддержка мониторинга изменений |
-|----------------------------------------------------------------------------------|-------------|--------------|------------------------------------------------|---------------------------------|
-| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>`  | нет          | `apply`                                        | н/д                             |
-| [`dist`](#using-sortkey-and-distkey)                                             | `<string>`  | нет          | `even`                                         | drop/create                     |
-| [`sort`](#using-sortkey-and-distkey)                                             | `[<string>]`| нет          | `none`                                         | drop/create                     |
-| [`sort_type`](#using-sortkey-and-distkey)                                        | `<string>`  | нет          | `auto` если нет `sort` <br />`compound` если `sort` | drop/create                     |
-| [`auto_refresh`](#auto-refresh)                                                  | `<boolean>` | нет          | `false`                                        | alter                           |
-| [`backup`](#backup)                                                              | `<string>`  | нет          | `true`                                         | н/д                             |
+| Parameter                                                                        | Type         | Required | Default                                        | Change Monitoring Support |
+|----------------------------------------------------------------------------------|--------------|----------|------------------------------------------------|---------------------------|
+| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>`   | no       | `apply`                                        | n/a                       |
+| [`dist`](#using-sortkey-and-distkey)                                             | `<string>`   | no       | `even`                                         | drop/create               |
+| [`sort`](#using-sortkey-and-distkey)                                             | `[<string>]` | no       | `none`                                         | drop/create               |
+| [`sort_type`](#using-sortkey-and-distkey)                                        | `<string>`   | no       | `auto` if no `sort` <br />`compound` if `sort` | drop/create               |
+| [`auto_refresh`](#auto-refresh)                                                  | `<boolean>`  | no       | `false`                                        | alter                     |
+| [`backup`](#backup)                                                              | `<string>`   | no       | `true`                                         | n/a                       |
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'YAML-файл проекта', value: 'project-yaml', },
-    { label: 'YAML-файл свойств', value: 'property-yaml', },
-    { label: 'Конфигурация SQL-файла', value: 'config', },
+    { label: 'Project YAML file', value: 'project-yaml', },
+    { label: 'Properties YAML file', value: 'property-yaml', },
+    { label: 'SQL file config', value: 'config', },
   ]
 }>
 
@@ -148,7 +149,6 @@ models:
 <File name='models/properties.yml'>
 
 ```yaml
-
 models:
   - name: [<model-name>]
     config:
@@ -187,43 +187,50 @@ models:
 
 </Tabs>
 
-Многие из этих параметров соответствуют их аналогам для таблиц и были связаны выше. Параметры, уникальные для материализованных представлений, это функциональность [автообновления](#auto-refresh) и [резервного копирования](#backup), которые описаны ниже.
+Многие из этих параметров соответствуют параметрам таблиц и были связаны выше.
+Параметры, уникальные для материализованных представлений, — это функции [auto-refresh](#auto-refresh) и [backup](#backup), которые описаны ниже.
 
-Узнайте больше об этих параметрах в документации Redshift [docs](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html).
+Подробнее об этих параметрах см. в документации Redshift: [docs](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html).
 
-#### Автообновление
+#### Auto-refresh
 
-| Параметр      | Тип        | Обязательный | По умолчанию | Поддержка мониторинга изменений |
-|---------------|------------|--------------|--------------|---------------------------------|
-| `auto_refresh`| `<boolean>`| нет          | `false`      | alter                           |
+| Parameter      | Type        | Required | Default | Change Monitoring Support |
+|----------------|-------------|----------|---------|---------------------------|
+| `auto_refresh` | `<boolean>` | no       | `false` | alter                     |
 
-Redshift поддерживает [автоматическую настройку обновления](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-refresh.html#materialized-view-auto-refresh) для материализованных представлений. По умолчанию материализованное представление не обновляется автоматически. dbt отслеживает этот параметр на предмет изменений и применяет их с помощью оператора `ALTER`.
+Redshift поддерживает настройку [автоматического обновления](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-refresh.html#materialized-view-auto-refresh) для материализованных представлений.
+По умолчанию материализованное представление не обновляется автоматически.
+dbt отслеживает изменения этого параметра и применяет их с помощью оператора `ALTER`.
 
-Узнайте больше о [параметрах](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html#mv_CREATE_MATERIALIZED_VIEW-parameters) в документации Redshift.
+Дополнительную информацию о [параметрах](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html#mv_CREATE_MATERIALIZED_VIEW-parameters) см. в документации Redshift.
 
-#### Резервное копирование
+#### Backup
 
-| Параметр | Тип        | Обязательный | По умолчанию | Поддержка мониторинга изменений |
-|----------|------------|--------------|--------------|---------------------------------|
-| `backup` | `<boolean>`| нет          | `true`       | н/д                             |
+| Parameter | Type        | Required | Default | Change Monitoring Support |
+|-----------|-------------|----------|---------|---------------------------|
+| `backup`  | `<boolean>` | no       | `true`  | n/a                       |
 
-Redshift поддерживает [настройку резервного копирования](https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html) кластеров на уровне объектов. Этот параметр определяет, должно ли материализованное представление быть включено в резервную копию кластера. По умолчанию материализованное представление будет включено в резервную копию во время снимка кластера. dbt не может отслеживать этот параметр, так как он не доступен для запроса в Redshift. Если значение изменится, материализованное представление должно пройти через `--full-refresh`, чтобы его установить.
+Redshift поддерживает настройку [резервного копирования](https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html) на уровне объектов кластера.
+Этот параметр определяет, должно ли материализованное представление включаться в резервные копии (snapshot) кластера.
+По умолчанию материализованное представление включается в snapshot кластера.
+dbt не может отслеживать этот параметр, так как он недоступен для запросов внутри Redshift.
+Если значение изменяется, материализованное представление необходимо пересобрать с использованием `--full-refresh`, чтобы применить настройку.
 
-Узнайте больше об этих параметрах в документации Redshift [docs](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html#mv_CREATE_MATERIALIZED_VIEW-parameters).
+Подробнее об этих параметрах см. в документации Redshift: [docs](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html#mv_CREATE_MATERIALIZED_VIEW-parameters).
 
 ### Ограничения
 
-Как и в большинстве платформ данных, существуют ограничения, связанные с материализованными представлениями. Некоторые из них, которые стоит отметить, включают:
+Как и у большинства платформ данных, у материализованных представлений есть ограничения. Некоторые из наиболее важных:
 
-- Материализованные представления не могут ссылаться на представления, временные таблицы, пользовательские функции или поздние связывающие таблицы.
-- Автообновление не может использоваться, если материализованное представление ссылается на изменяемые функции, внешние схемы или другое материализованное представление.
+- Материализованные представления не могут ссылаться на представления, временные таблицы, пользовательские функции или late-binding tables.
+- Auto-refresh нельзя использовать, если материализованное представление ссылается на изменяемые функции, внешние схемы или другое материализованное представление.
 
-Узнайте больше об ограничениях материализованных представлений в документации Redshift [docs](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html#mv_CREATE_MATERIALIZED_VIEW-limitations).
+Дополнительную информацию об ограничениях материализованных представлений см. в документации Redshift: [docs](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-create-sql-command.html#mv_CREATE_MATERIALIZED_VIEW-limitations).
 
-## Ограничения модульных тестов
+## Ограничения unit-тестов
 
-- Redshift не поддерживает [модульные тесты](/docs/build/unit-tests), если SQL в общем табличном выражении (CTE) содержит такие функции, как `LISTAGG`, `MEDIAN`, `PERCENTILE_CONT` и т. д. Эти функции должны выполняться над таблицей, созданной пользователем. dbt объединяет заданные строки так, чтобы они стали частью CTE, а Redshift этого не поддерживает.
+- Redshift не поддерживает [unit tests](/docs/build/unit-tests), если SQL в common table expression (CTE) содержит функции, такие как `LISTAGG`, `MEDIAN`, `PERCENTILE_CONT` и т.п. Эти функции должны выполняться над таблицей, созданной пользователем. dbt объединяет переданные строки так, чтобы они были частью CTE, что Redshift не поддерживает.
 
-  Чтобы в будущем поддержать такой сценарий, dbt потребовалось бы «материализовывать» входные фикстуры в виде таблиц, а не подставлять их как CTE. Если вам интересна такая функциональность, мы рекомендуем принять участие в обсуждении этого issue на GitHub: [dbt-labs/<Constant name="core" />#8499](https://github.com/dbt-labs/dbt-core/issues/8499)
+  Чтобы в будущем поддержать этот паттерн, dbt потребуется «материализовывать» входные фикстуры в виде таблиц, а не подставлять их как CTE. Если вам интересна эта функциональность, мы рекомендуем поучаствовать в обсуждении issue на GitHub: [dbt-labs/<Constant name="core" />#8499](https://github.com/dbt-labs/dbt-core/issues/8499)
 
-- Redshift не поддерживает модульные тесты, которые зависят от источников (sources) в базе данных, отличной от базы данных моделей. Подробнее см. соответствующий issue на GitHub: https://github.com/dbt-labs/dbt-redshift/issues/995
+- Redshift не поддерживает unit-тесты, которые используют источники (sources) в базе данных, отличной от базы данных моделей. Подробнее см. соответствующий issue на GitHub: https://github.com/dbt-labs/dbt-redshift/issues/995

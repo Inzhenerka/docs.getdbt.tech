@@ -2,29 +2,33 @@
 title: "Шаблон PR"
 id: "pr-template"
 ---
-## Настройка URL шаблона pull request (PR)
+## Настройка URL шаблона Pull Request (PR)
 
-Когда вы коммитите изменения в ветку в <Constant name="cloud_ide" />, <Constant name="cloud" /> может предложить пользователям открыть новый Pull Request для этих изменений кода. Чтобы включить эту функциональность, убедитесь, что на странице **Repository details** в ваших **Account Settings** настроен PR Template URL. Если это поле оставлено пустым, <Constant name="cloud_ide" /> будет предлагать пользователям сразу слить изменения напрямую в их ветку по умолчанию.
+Когда вы коммитите изменения в ветку в <Constant name="cloud_ide" />, <Constant name="cloud" /> может предложить пользователям открыть новый Pull Request для внесённых изменений кода. Чтобы включить эту функциональность, убедитесь, что URL шаблона PR настроен на странице **Repository details** в разделе **Account Settings**. Если это поле пустое, <Constant name="cloud_ide" /> будет предлагать пользователям сразу сливать изменения напрямую в их ветку по умолчанию.
 
-<Lightbox src="/img/docs/collaborate/repo-details.jpg" width="90%" title="Настройка шаблона PR на странице 'Детали репозитория'." />
+<Lightbox src="/img/docs/collaborate/repo-details.jpg" width="90%" title="Настройка шаблона PR на странице «Repository details»." />
 
-### URL шаблона PR в зависимости от провайдера git
+### URL шаблона PR в зависимости от git‑провайдера
 
-Настройка URL шаблона PR будет автоматически установлена для большинства репозиториев в зависимости от метода подключения.
+Параметр URL шаблона PR автоматически задаётся для большинства репозиториев в зависимости от способа подключения.
 
-- Если вы подключаетесь к репозиторию через встроенные интеграции с вашим git‑провайдером или с помощью метода "<Constant name="git" /> Clone" по SSH, это значение URL будет автоматически заполнено и доступно для редактирования.
-  - Для AWS CodeCommit это значение URL не заполняется автоматически и должно быть [настроено вручную](/docs/cloud/git/import-a-project-by-git-url#step-5-configure-pull-request-template-urls-optional).
-- Если вы подключаетесь через <Constant name="cloud" /> [Managed repository](/docs/cloud/git/managed-repository), этот URL задан не будет, и <Constant name="cloud_ide" /> предложит пользователям выполнить слияние изменений напрямую в их ветку по умолчанию.
+- Если вы подключаетесь к репозиторию через встроенные интеграции с вашим git‑провайдером или с помощью метода "<Constant name="git" /> Clone" по SSH, этот URL будет автоматически заполнен и доступен для редактирования.
+  - Для AWS CodeCommit этот URL не заполняется автоматически и должен быть [настроен вручную](/docs/cloud/git/import-a-project-by-git-url#step-5-configure-pull-request-template-urls-optional).
+- Если вы подключаетесь через <Constant name="cloud" /> [Managed repository](/docs/cloud/git/managed-repository), этот URL задан не будет, и <Constant name="cloud_ide" /> будет предлагать пользователям сливать изменения напрямую в ветку по умолчанию.
 
-URL шаблона PR поддерживает две переменные, которые могут быть использованы для построения строки URL. Эти переменные, `{{source}}` и `{{destination}}`, возвращают имена веток на основе состояния настроенной среды и активной ветки, открытой в IDE. Переменная `{{source}}` представляет активную ветку разработки, а переменная `{{destination}}` представляет настроенную базовую ветку для среды, например, `master`.
+URL шаблона PR поддерживает две переменные, которые можно использовать для построения строки URL.
+Эти переменные — `{{source}}` и `{{destination}}` — возвращают имена веток на основе
+настроенного Environment и активной ветки, открытой в IDE. Переменная `{{source}}`
+представляет активную ветку разработки, а переменная `{{destination}}` —
+настроенную базовую ветку для окружения, например `master`.
 
-Типичный URL для создания PR выглядит следующим образом:
+Типичный URL для создания PR выглядит так:
 
 <Tabs
   defaultValue="template"
   values={[
-    { label: 'Шаблон', value: 'template', },
-    { label: 'Отображенный', value: 'rendered', },
+    { label: 'Template', value: 'template', },
+    { label: 'Rendered', value: 'rendered', },
   ]
 }>
 <TabItem value="template">
@@ -45,14 +49,15 @@ https://github.com/dbt-labs/jaffle_shop/compare/master..my-branch
 
 ## Примеры шаблонов
 
-Ниже приведены некоторые общие шаблоны URL, но обратите внимание, что точное значение может варьироваться в зависимости от вашего настроенного git-провайдера.
+Ниже приведены некоторые распространённые шаблоны URL, однако обратите внимание, что
+конкретное значение может отличаться в зависимости от используемого git‑провайдера.
 
 ### GitHub
 ```
 https://github.com/<org>/<repo>/compare/{{destination}}..{{source}}
 ```
 
-Если вы используете Github Enterprise, ваш шаблон может выглядеть следующим образом:
+Если вы используете GitHub Enterprise, ваш шаблон может выглядеть примерно так:
 
 ```
 https://git.<mycompany>.com/<org>/<repo>/compare/{{destination}}..{{source}}
@@ -68,7 +73,7 @@ https://gitlab.com/<org>/<repo>/-/merge_requests/new?merge_request[source_branch
 https://bitbucket.org/<org>/<repo>/pull-requests/new?source={{source}}&dest={{destination}}
 ```
 
-If you're using BitBucket Server or Data Center your template may look something like:
+Если вы используете BitBucket Server или Data Center, ваш шаблон может выглядеть примерно так:
 
 ```
 https://<bitbucket-server>/projects/<proj>/repos/<repo>/pull-requests?create&sourceBranch={{source}}&targetBranch={{destination}}
