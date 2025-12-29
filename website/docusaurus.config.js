@@ -48,7 +48,7 @@ var siteSettings = {
   url: SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  trailingSlash: false,
+  trailingSlash: true,
   i18n: {
     defaultLocale: 'ru',
     locales: ['ru'],
