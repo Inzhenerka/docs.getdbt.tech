@@ -366,13 +366,6 @@ var siteSettings = {
     path.resolve("plugins/buildRSSFeeds"),
     path.resolve("plugins/buildRawMarkdownData"),
     [
-      "vercel-analytics",
-      {
-        debug: false,
-        mode: "auto",
-      },
-    ],
-    [
       "@signalwire/docusaurus-plugin-llms-txt",
       {
         generate: {
