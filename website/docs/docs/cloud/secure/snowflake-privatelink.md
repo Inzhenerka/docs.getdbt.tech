@@ -5,7 +5,7 @@ description: "Настройка AWS PrivateLink для Snowflake"
 sidebar_label: "AWS PrivateLink для Snowflake"
 ---
 
-# Configuring Snowflake PrivateLink <Lifecycle status="managed_plus" />
+# Настройка Snowflake PrivateLink <Lifecycle status="managed_plus" />
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
@@ -53,7 +53,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Create Connection in dbt
+## Создайте подключение в dbt
 
 После того как <Constant name="cloud" /> завершит настройку поддержки, вы сможете приступить к созданию новых подключений с использованием PrivateLink.
 
@@ -67,13 +67,13 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 Если для Internal Stage был настроен эндпоинт PrivateLink, ваши окружения dbt должны быть сконфигурированы так, чтобы использовать этот эндпоинт вместо значения по умолчанию, заданного для аккаунта в Snowflake.
 
-1. Obtain the Internal Stage PrivateLink endpoint DNS from dbt Support. For example, `*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com`.
-2. In the appropriate dbt project, navigate to **Orchestration** → **Environments**.
-3. In any environment that should use the dbt Internal Stage PrivateLink endpoint, set an **Extended Attribute** similar to the following:
+1. Получите DNS эндпоинта Internal Stage PrivateLink у поддержки dbt. Например, `*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com`.
+2. В нужном dbt‑проекте перейдите в **Orchestration** → **Environments**.
+3. В любом окружении, которое должно использовать эндпоинт dbt Internal Stage PrivateLink, задайте **Extended Attribute**, например так:
 ```
 s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com'
 ```
-4. Save the changes
+4. Сохраните изменения
 
 <Lightbox src="/img/docs/dbt-cloud/snowflake-internal-stage-dns.png" title="Internal Stage DNS"/>
 
@@ -82,7 +82,7 @@ s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.ama
 
 Вы можете запросить VPCE ID в службе поддержки [<Constant name="cloud" /> Support](mailto:support@getdbt.com), которые затем можно использовать для создания сетевой политики. Обратите внимание: при создании endpoint для Internal Stage VPCE ID будет отличаться от VPCE ID основного endpoint сервиса.
 
-:::note Network Policy for Snowflake Internal Stage PrivateLink
+:::note Политика сети для Snowflake Internal Stage PrivateLink
 Рекомендации по защите как сервиса Snowflake, так и Internal Stage см. в документации Snowflake по [network policies](https://docs.snowflake.com/en/user-guide/network-policies#strategies-for-protecting-both-service-and-internal-stage) и [network rules](https://docs.snowflake.com/en/user-guide/network-rules#incoming-requests).
 
 :::

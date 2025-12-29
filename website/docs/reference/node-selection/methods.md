@@ -108,20 +108,20 @@ dbt run --select "some_model"
 
 <VersionBlock firstVersion="1.11">
 
-The `file` method can be used to select a model or a function by its filename, including the file extension (`.sql`).
+Метод `file` можно использовать, чтобы выбрать модель или функцию по имени файла, включая расширение (`.sql`).
 
 ```bash
-# These are equivalent
+# Эти команды эквивалентны
 dbt run --select "file:some_model.sql"
 dbt run --select "some_model.sql"
 dbt run --select "some_model"
 
-# These are equivalent
+# Эти команды эквивалентны
 dbt build --select "file:my_function.sql"
 dbt build --select "my_function.sql"
 dbt build --select "my_function"
 
-# To build all models that use the function
+# Чтобы собрать все модели, которые используют эту функцию
 dbt build --select "my_function+"
 ```
 </VersionBlock>
@@ -234,10 +234,10 @@ dbt run --select "snowplow.*"
 Используйте метод `resource_type`, чтобы выбрать узлы определённого типа (`model`, `test`, `exposure`, `function` и т.д.). Это похоже на флаг `--resource-type`, который используется в команде [`dbt ls`](/reference/commands/list).
 
 ```bash
-dbt build --select "resource_type:exposure"    # build all resources upstream of exposures
-dbt build --select "resource_type:function"    # build all functions in your project
-dbt list --select "resource_type:test"         # list all tests in your project
-dbt list --select "resource_type:source"       # list all sources in your project
+dbt build --select "resource_type:exposure"    # собрать все ресурсы upstream от exposures
+dbt build --select "resource_type:function"    # собрать все functions в вашем проекте
+dbt list --select "resource_type:test"         # вывести список всех tests в вашем проекте
+dbt list --select "resource_type:source"       # вывести список всех sources в вашем проекте
 ```
 
 </VersionBlock>

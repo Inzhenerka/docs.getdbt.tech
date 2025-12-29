@@ -138,23 +138,23 @@ import LoadData from '/snippets/_load-data.md';
 
 1. В интерфейсе Snowflake нажмите на значок Home в левом верхнем углу. В левой боковой панели выберите **Data Products**. Затем выберите **Partner Connect**. Найдите плитку dbt, прокрутив список или выполнив поиск по dbt в строке поиска. Нажмите плитку, чтобы подключиться к dbt.
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_partner_connect_box.png" width="60%" title="Snowflake Partner Connect Box" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_partner_connect_box.png" width="60%" title="Окно Snowflake Partner Connect" />
 
     Если вы используете классическую версию интерфейса Snowflake, вы можете нажать кнопку **Partner Connect** в верхней панели аккаунта. Затем нажмите плитку dbt, чтобы открыть окно подключения.
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_partner_connect.png" title="Snowflake Classic UI - Partner Connect" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_partner_connect.png" title="Классический интерфейс Snowflake — Partner Connect" />
 
 2. Во всплывающем окне **Connect to dbt** найдите опцию **Optional Grant** и выберите базы данных **RAW** и **ANALYTICS**. Это предоставит доступ новой роли пользователя dbt к каждой выбранной базе данных. Затем нажмите **Connect**.
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_connection_box.png" title="Snowflake Classic UI - Connection Box" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_connection_box.png" title="Классический интерфейс Snowflake — окно подключения" />
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_connection_box.png" title="Snowflake New UI - Connection Box" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_connection_box.png" title="Новый интерфейс Snowflake — окно подключения" />
 
 3. Когда появится всплывающее окно, нажмите **Activate**:
 
-<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_activation_window.png" title="Snowflake Classic UI - Actviation Window" />
+<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_activation_window.png" title="Классический интерфейс Snowflake — окно активации" />
 
-<Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_activation_window.png" title="Snowflake New UI - Activation Window" />
+<Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_activation_window.png" title="Новый интерфейс Snowflake — окно активации" />
 
 4. После загрузки новой вкладки вы увидите форму. Если вы уже создали учетную запись <Constant name="cloud" />, вас попросят указать имя аккаунта. Если учетная запись еще не создана, вас попросят указать имя аккаунта и пароль.
 
@@ -162,9 +162,9 @@ import LoadData from '/snippets/_load-data.md';
 
 6. Нажмите на имя аккаунта в левом меню и выберите **Account settings**, выберите проект "Partner Connect Trial" и в таблице overview выберите **snowflake**. Нажмите **Edit** и обновите поле **Database** на `analytics`, а поле **Warehouse** на `transforming`.
 
-<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt - Snowflake Project Overview" />
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt — Обзор проекта Snowflake" />
 
-<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt - Update Database and Warehouse" />
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt — Обновление базы данных и warehouse" />
 
 </TabItem>
 <TabItem value="manual-connect" label="Подключить вручную">
@@ -175,7 +175,7 @@ import LoadData from '/snippets/_load-data.md';
 3. В разделе **Configure your development environment** откройте выпадающее меню **Connection** и выберите **Add new connection**. Это перенаправит вас в настройки конфигурации подключения.
 4. В разделе **Type** выберите **Snowflake**.
 
-    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_setup_snowflake_connection_start.png" title="dbt - Choose Snowflake Connection" />
+    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_setup_snowflake_connection_start.png" title="dbt — Выбор подключения Snowflake" />
 
 5. Введите **Settings** для Snowflake:
     * **Account** &mdash; Найдите идентификатор аккаунта, используя URL пробного аккаунта Snowflake и убрав `snowflakecomputing.com`. Порядок частей идентификатора зависит от версии Snowflake. Например, URL Classic Console может выглядеть так: `oq65696.west-us-2.azure.snowflakecomputing.com`. URL AppUI или Snowsight может выглядеть скорее так: `snowflakecomputing.com/west-us-2.azure/oq65696`. В обоих примерах идентификатор аккаунта будет: `oq65696.west-us-2.azure`. Подробнее см. [Account Identifiers](https://docs.snowflake.com/en/user-guide/admin-account-identifier.html) в документации Snowflake.
@@ -186,7 +186,7 @@ import LoadData from '/snippets/_load-data.md';
     * **Database** &mdash; `analytics`. Это сообщает dbt, что новые модели нужно создавать в базе данных analytics.
     * **Warehouse** &mdash; `transforming`. Это сообщает dbt, что нужно использовать warehouse transforming, созданный ранее.
 
-    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_account_settings.png" title="dbt - Snowflake Account Settings" />
+    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_account_settings.png" title="dbt — Настройки аккаунта Snowflake" />
 
 6. Нажмите **Save**.
 7. Настройте ваши персональные учетные данные для разработки, перейдя в **Your profile** > **Credentials**.
@@ -199,7 +199,7 @@ import LoadData from '/snippets/_load-data.md';
     * **Target name** &mdash; Оставьте значение по умолчанию.
     * **Threads** &mdash; Оставьте 4. Это количество одновременных подключений, которые <Constant name="cloud" /> будет использовать для параллельной сборки моделей.
 
-    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt - Snowflake Development Credentials" />
+    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt — Учетные данные для разработки в Snowflake" />
 
 11. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может подключиться к вашему аккаунту Snowflake.
 12. Если тест прошел успешно, нажмите **Save**, чтобы завершить настройку. Если он не прошел, возможно, нужно проверить настройки Snowflake и учетные данные.
@@ -341,7 +341,7 @@ from {{ source('stripe', 'payment') }}
 
 </File>
 
-7. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+7. Введите `dbt run` в командной строке внизу экрана. Вы должны увидеть успешный запуск и три модели.
 
 ### Добавьте бизнес-определенные сущности
 
@@ -447,7 +447,7 @@ select * from final
 
 ### О семантических моделях
 
-[Semantic models](/docs/build/semantic-models) содержат множество типов объектов (например, entities, measures и dimensions), которые позволяют MetricFlow формировать запросы для определений метрик.
+[Семантические модели](/docs/build/semantic-models) содержат множество типов объектов (например, entities, measures и dimensions), которые позволяют MetricFlow формировать запросы для определений метрик.
 
 - Каждая semantic model находится в соотношении 1:1 с dbt-моделью SQL/Python.
 - Каждая semantic model содержит (максимум) 1 primary или natural entity.

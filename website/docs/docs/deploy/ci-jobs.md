@@ -1,7 +1,7 @@
 ---
-title: "Continuous integration jobs in dbt"
+title: "Continuous integration jobs в dbt"
 sidebar_label: "CI jobs"
-description: "Learn how to create and set up CI checks to test code changes before deploying to production."
+description: "Узнайте, как создавать и настраивать CI checks для тестирования изменений кода перед деплоем в production."
 ---
 
 Вы можете настроить задания [непрерывной интеграции](/docs/deploy/continuous-integration) (CI), которые будут запускаться, когда кто‑то открывает новый pull request (PR) в вашем репозитории <Constant name="git" />. Запуская и тестируя только _изменённые_ модели, <Constant name="cloud" /> обеспечивает максимальную эффективность таких заданий и бережное использование ресурсов вашей платформы данных.
@@ -74,7 +74,7 @@ dbt Labs рекомендует создавать CI‑задания в отд
     - **Generate docs on run** &mdash; Включите этот параметр, если хотите [генерировать документацию проекта](/docs/explore/build-and-view-your-docs) при выполнении этого задания. По умолчанию он отключён, поскольку проверка генерации документации при каждом CI‑прогоне не является рекомендуемой практикой.
     - **Run source freshness** &mdash; Включите этот параметр, чтобы перед запуском CI‑задания выполнить команду `dbt source freshness`. Подробнее см. в разделе [Source freshness](/docs/deploy/source-freshness).
 
-   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-ci-job.png" width="90%" title="Example of CI Job page in the dbt UI"/>
+   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-ci-job.png" width="90%" title="Пример страницы CI Job в интерфейсе dbt"/>
 
 ### Пример CI-проверки в pull request {#example-ci-check}
 Ниже приведен пример CI-проверки в pull request на GitHub. Зеленая галочка означает, что `dbt build` и тесты завершились успешно. Если нажать на секцию <Constant name="cloud" />, вы перейдете к соответствующему CI-запуску в <Constant name="cloud" />.

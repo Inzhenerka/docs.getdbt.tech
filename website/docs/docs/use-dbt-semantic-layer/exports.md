@@ -166,8 +166,8 @@ Polling completed
 1. [Установите переменную окружения](#set-environment-variable) в <Constant name="cloud" />.
 2. [Создайте и выполните экспорт](#create-and-execute-exports) job run.
 
-### Set environment variable
-<!-- for Release Tracks -->
+### Установите переменную окружения
+<!-- для Release Tracks -->
 
 1. Нажмите **Deploy** в верхней панели навигации и выберите **Environments**.
 2. Выберите **Environment variables**.

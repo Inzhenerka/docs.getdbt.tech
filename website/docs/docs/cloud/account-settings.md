@@ -10,7 +10,7 @@ description: "Узнайте, как включить и настроить па
 
 ## Кэширование Git-репозитория <Lifecycle status="managed,managed_plus" />
 
-:::important repo caching enabled by default
+:::important Кеширование репозитория включено по умолчанию
 
 Кэширование <Constant name="git" />‑репозитория включено по умолчанию для всех новых аккаунтов Enterprise и Enterprise+, что повышает надежность за счет возможности <Constant name="cloud" /> использовать кэшированную копию репозитория, если операция клонирования завершилась неудачей.
 
@@ -45,7 +45,7 @@ description: "Узнайте, как включить и настроить па
 
 Чтобы использовать, выберите опцию **Enable partial parsing between deployment runs** в настройках вашего аккаунта.
 
-<Lightbox src="/img/docs/deploy/account-settings-partial-parsing.png" width="85%" title="Example of the Enable partial parsing between deployment runs option" />
+<Lightbox src="/img/docs/deploy/account-settings-partial-parsing.png" width="85%" title="Пример опции Enable partial parsing between deployment runs" />
 
 ## Доступ к аккаунту и включение функций
 
@@ -63,7 +63,7 @@ description: "Узнайте, как включить и настроить па
 
 После включения опция **dbt compare** становится доступной в настройках CI задания для выбора.
 
-<Lightbox src="/img/docs/deploy/account-settings-advanced-ci.png" width="85%" title="The Enable account access to Advanced CI option" />
+<Lightbox src="/img/docs/deploy/account-settings-advanced-ci.png" width="85%" title="Опция Enable account access to Advanced CI" />
 
 ### Включение dbt Catalog <Lifecycle status='self_service,managed,managed_plus' /> <Lifecycle status="preview" />
 
@@ -85,4 +85,4 @@ description: "Узнайте, как включить и настроить па
 3. Выберите **project name**.
 4. Нажмите **History**.
 
-<Lightbox src="/img/docs/deploy/project-history.png" width="85%" title="Example of the project history option. " />
+<Lightbox src="/img/docs/deploy/project-history.png" width="85%" title="Пример опции project history." />

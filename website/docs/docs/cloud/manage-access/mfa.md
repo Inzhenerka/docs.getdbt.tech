@@ -26,7 +26,7 @@ sidebar: null
 
 1. Перейдите в **Account settings** и в разделе **Your profile** нажмите **Password & Security**. Затем нажмите **Enroll** рядом с предпочтительным методом.
 
-<Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="List of available MFA enrollment methods in dbt." />
+<Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="Список доступных методов подключения MFA в dbt." />
 
 <Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="Список доступных методов регистрации MFA в dbt Cloud." />
 

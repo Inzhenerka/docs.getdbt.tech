@@ -22,11 +22,11 @@ id: "integrate-mcp-cursor"
 
 <Tabs>
 
-<TabItem value="CLI only (dbt Core and Fusion)">
+<TabItem value="Только CLI (dbt Core и Fusion)">
 
 Локальная конфигурация для пользователей, которые хотят использовать только команды dbt CLI с <Constant name="core" /> или <Constant name="fusion_engine" /> (без функций <Constant name="dbt_platform" />).
 
-[Add dbt Core or Fusion to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX1BST0pFQ1RfRElSIjoiL3BhdGgvdG8veW91ci9kYnQvcHJvamVjdCIsIkRCVF9QQVRIIjoiL3BhdGgvdG8veW91ci9kYnQvZXhlY3V0YWJsZSJ9LCJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl19)
+[Добавьте dbt Core или Fusion в Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX1BST0pFQ1RfRElSIjoiL3BhdGgvdG8veW91ci9kYnQvcHJvamVjdCIsIkRCVF9QQVRIIjoiL3BhdGgvdG8veW91ci9kYnQvZXhlY3V0YWJsZSJ9LCJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl19)
 
 После нажатия:
 1. Обновите `DBT_PROJECT_DIR`, указав полный путь к вашему dbt-проекту (папка, содержащая `dbt_project.yml`).
@@ -37,11 +37,11 @@ id: "integrate-mcp-cursor"
 
 </TabItem>
 
-<TabItem value="OAuth with dbt platform">
+<TabItem value="OAuth с платформой dbt">
 
 Настройки конфигурации для пользователей, которым требуется OAuth-аутентификация с <Constant name="dbt_platform" /> <Lifecycle status="managed, managed_plus" />
 
-- [dbt platform only](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX0hPU1QiOiJodHRwczovLzx5b3VyLWRidC1ob3N0LXdpdGgtY3VzdG9tLXN1YmRvbWFpbj4iLCJESVNBQkxFX0RCVF9DTEkiOiJ0cnVlIn0sImNvbW1hbmQiOiJ1dngiLCJhcmdzIjpbImRidC1tY3AiXX0%3D)
+- [dbt platform](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX0hPU1QiOiJodHRwczovLzx5b3VyLWRidC1ob3N0LXdpdGgtY3VzdG9tLXN1YmRvbWFpbj4iLCJESVNBQkxFX0RCVF9DTEkiOiJ0cnVlIn0sImNvbW1hbmQiOiJ1dngiLCJhcmdzIjpbImRidC1tY3AiXX0%3D)
 - [dbt platform + CLI](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX0hPU1QiOiJodHRwczovLzx5b3VyLWRidC1ob3N0LXdpdGgtY3VzdG9tLXN1YmRvbWFpbj4iLCJEQlRfUFJPSkVDVF9ESVIiOiIvcGF0aC90by9wcm9qZWN0IiwiREJUX1BBVEgiOiJwYXRoL3RvL2RidC9leGVjdXRhYmxlIn0sImNvbW1hbmQiOiJ1dngiLCJhcmdzIjpbImRidC1tY3AiXX0%3D)
 
 После нажатия:
@@ -59,7 +59,7 @@ id: "integrate-mcp-cursor"
 
 1. Нажмите на следующую ссылку при открытом Cursor:
 
-    [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl0sImVudiI6e319)
+    [Добавить в Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl0sImVudiI6e319)
 
 2. В шаблоне добавьте необходимые вам переменные окружения в секцию `env`.
 3. Сохраните конфигурацию.
@@ -68,7 +68,7 @@ id: "integrate-mcp-cursor"
 
 Если вы предпочитаете управлять переменными окружения в отдельном файле, нажмите на эту ссылку:
 
-[Add to Cursor (with .env file)](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt-mcp&config=eyJjb21tYW5kIjoidXZ4IC0tZW52LWZpbGUgPGVudi1maWxlLXBhdGg%252BIGRidC1tY3AifQ%3D%3D)
+[Добавить в Cursor (с файлом .env)](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt-mcp&config=eyJjb21tYW5kIjoidXZ4IC0tZW52LWZpbGUgPGVudi1maWxlLXBhdGg%252BIGRidC1tY3AifQ%3D%3D)
 
 Затем замените `<env-file-path>` на полный путь к вашему файлу `.env`.
 
@@ -76,7 +76,7 @@ id: "integrate-mcp-cursor"
 
 1. Нажмите на следующую ссылку приложения при открытом Cursor:
 
-    [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJ1cmwiOiJodHRwczovLzxob3N0Pi9hcGkvYWkvdjEvbWNwLyIsImhlYWRlcnMiOnsiQXV0aG9yaXphdGlvbiI6InRva2VuIDx0b2tlbj4iLCJ4LWRidC1wcm9kLWVudmlyb25tZW50LWlkIjoiPHByb2QtaWQ%252BIn19)
+    [Добавить в Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJ1cmwiOiJodHRwczovLzxob3N0Pi9hcGkvYWkvdjEvbWNwLyIsImhlYWRlcnMiOnsiQXV0aG9yaXphdGlvbiI6InRva2VuIDx0b2tlbj4iLCJ4LWRidC1wcm9kLWVudmlyb25tZW50LWlkIjoiPHByb2QtaWQ%252BIn19)
 
 2. Укажите ваш URL и заголовки, обновив **host**, **production environment ID** и **service token** в шаблоне.
 3. Сохраните конфигурацию — теперь у вас есть доступ к dbt MCP-серверу!

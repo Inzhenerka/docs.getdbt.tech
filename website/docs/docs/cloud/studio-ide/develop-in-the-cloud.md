@@ -119,7 +119,7 @@ pagination_prev: null
 
       - **Несохраненный локальный код &mdash;** браузер хранит ваш код только в локальном хранилище. В этом состоянии вам может потребоваться зафиксировать несохраненные изменения, чтобы переключить ветки или браузеры. Если вы сохранили и зафиксировали изменения, вы можете воспользоваться опцией «Change branch» даже при наличии несохраненных изменений. Однако при попытке переключить ветку без сохранения изменений появится предупреждение о потере несохраненных данных.
 
-      <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.png" width="85%" title="If you attempt to switch branches without saving changes, a warning message will appear, telling you that you will lose your changes."/>
+      <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.png" width="85%" title="Если вы попытаетесь переключить ветку без сохранения изменений, появится предупреждение о том, что вы потеряете свои изменения."/>
 
       - **Сохраненный, но не зафиксированный код &mdash;** при сохранении файла данные сохраняются в долговременном хранилище, но не синхронизируются с git. Чтобы переключить ветку с помощью опции **Change branch**, необходимо «Commit and sync» или «Revert» изменения. Переключение веток недоступно для сохраненного, но незафиксированного кода, чтобы избежать потери изменений.
       - **Committed code &mdash;** This is stored in the branch with your git provider and you can check out other (remote) branches.
@@ -128,7 +128,7 @@ pagination_prev: null
 
 ## Собирайте и документируйте ваши проекты
 
-- **Build, compile, and run projects** &mdash; You can *build*, *compile*, *run*, and *test* dbt projects using the command bar or **Build** button. Use the **Build** button to quickly build, run, or test the model you're working on. The <Constant name="cloud_ide" /> will update in real time when you run models, tests, seeds, and operations.
+- **Сборка, компиляция и запуск проектов** &mdash; Вы можете *build*, *compile*, *run* и *test* dbt‑проекты через командную строку или кнопку **Build**. Используйте кнопку **Build**, чтобы быстро собрать, запустить или протестировать модель, над которой вы работаете. <Constant name="cloud_ide" /> обновляется в реальном времени при запуске моделей, тестов, seeds и операций.
 - Если модель или тест завершается с ошибкой, <Constant name="cloud" /> упрощает просмотр и загрузку логов запусков ваших вызовов dbt для устранения проблемы.
 - Используйте [расширенный синтаксис выбора моделей dbt](/reference/node-selection/syntax), чтобы [запускать команды dbt](/reference/dbt-commands) напрямую в <Constant name="cloud" />.
 - Используйте [переменные окружения](/docs/build/environment-variables#special-environment-variables), чтобы динамически применять имя ветки <Constant name="git" />. Например, использовать имя ветки в качестве префикса для схемы разработки.

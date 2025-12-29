@@ -21,21 +21,21 @@ pagination_next: null
 Вы будете задавать количество потоков в файле `profiles.yml` (при локальной разработке с использованием dbt Core и движка dbt Fusion), в определении задания <Constant name="cloud" />, а также в учётных данных для разработки <Constant name="cloud" /> в рамках вашего профиля.
 
 <VersionBlock firstVersion="1.12">
-<!-- versioning for 1.12 so it shows up in Latest eventually we might want to firstVersion="2.0"-->
+<!-- версионирование для 1.12, чтобы оно в итоге появилось в Latest; возможно, позже мы захотим firstVersion="2.0" -->
 
-## Fusion engine thread optimization
+## Оптимизация потоков движка Fusion
 
-The <Constant name="fusion_engine" /> handles threading differently than <Constant name="core" />. The legacy `threads` setting doesn't act as a strict limit on the number of threads created. Instead, Fusion manages parallelism dynamically based on the selected warehouse.
+<Constant name="fusion_engine" /> управляет потоками иначе, чем <Constant name="core" />. Устаревшая настройка `threads` не является строгим лимитом на количество создаваемых потоков. Вместо этого Fusion динамически управляет параллелизмом в зависимости от выбранного warehouse.
 
 ### Redshift
 
-In Redshift, the `threads` setting limits the number of queries or statements that can run in parallel. This behavior is the same as <Constant name="core" />, and is important for managing Redshift's concurrency limits and query queue behavior.
+В Redshift настройка `threads` ограничивает число запросов или операторов, которые могут выполняться параллельно. Это поведение совпадает с <Constant name="core" /> и важно для управления лимитами параллельности Redshift и поведением очередей запросов.
 
-### Other warehouses
+### Другие warehouses
 
-In other warehouses, Fusion dynamically optimizes thread usage based on the DAG and warehouse concurrency properties.
+В других warehouses Fusion динамически оптимизирует использование потоков на основе DAG и свойств параллельности warehouse.
 
-For more information about Fusion's approach to parallelism, refer to [the dbt Fusion engine](/docs/fusion) page.
+Подробнее о подходе Fusion к параллелизму см. на странице [dbt Fusion engine](/docs/fusion).
 
 </VersionBlock>
 

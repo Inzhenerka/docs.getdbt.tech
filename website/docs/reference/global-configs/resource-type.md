@@ -50,32 +50,32 @@ sidebar: "resource type"
 </VersionBlock>
 
 
-## Positive vs negative filters
+## Положительные и отрицательные фильтры
 
-- `--resource-type` is a positive filter &mdash; dbt only runs the resource types selected in the command, implicitly skipping every other type.
-- `--exclude-resource-type` is a negative filter &mdash; dbt starts with the full catalog of resource types and then omits the types selected in the command. dbt runs everything _except_ those resource types. 
+- `--resource-type` — это положительный фильтр &mdash; dbt запускает только те типы ресурсов, которые указаны в команде, неявно пропуская все остальные.
+- `--exclude-resource-type` — это отрицательный фильтр &mdash; dbt начинает с полного каталога типов ресурсов и затем исключает типы, указанные в команде. dbt запускает всё, _кроме_ этих типов ресурсов.
 
-You can use both flags in a command; dbt first applies the positive filter (`--resource-type`) and then removes the types listed in the negative filter (`--exclude-resource-type`). For example:
+Вы можете использовать оба флага в одной команде: dbt сначала применяет положительный фильтр (`--resource-type`), а затем удаляет типы, перечисленные в отрицательном фильтре (`--exclude-resource-type`). Например:
 
 ```text
 dbt build --resource-type model test snapshot --exclude-resource-type snapshot
 ```
 
-Note that the list of dbt resource types is mutually exclusive and collectively exhaustive (MECE). This means that any `--resource-type` selection can also be achieved by excluding the other resource types using `--exclude-resource-type`, and vice versa.
+Обратите внимание: список типов ресурсов dbt является взаимно исключающим и вместе исчерпывающим (MECE). Это означает, что любой выбор `--resource-type` можно получить, исключив остальные типы ресурсов с помощью `--exclude-resource-type`, и наоборот.
 
-## Examples
+## Примеры
 
-Instead of targeting specific resources, use the `--resource-type` or `--exclude-resource-type` flags to target all resources of a certain type: `dbt build --resource-type RESOURCE_TYPE`, replacing `RESOURCE_TYPE` with the resource type you want to include.
+Вместо таргетинга конкретных ресурсов используйте флаги `--resource-type` или `--exclude-resource-type`, чтобы выбрать все ресурсы определенного типа: `dbt build --resource-type RESOURCE_TYPE`, заменив `RESOURCE_TYPE` на нужный тип ресурса.
 
-See the following sample commands for including or excluding resource types. Note that the `--exclude-resource-type` flag is only available in dbt version 1.8 and higher.
+Ниже приведены примеры команд для включения или исключения типов ресурсов. Обратите внимание, что флаг `--exclude-resource-type` доступен только в dbt версии 1.8 и выше.
 
-<Expandable alt_header="Include resource types">
+<Expandable alt_header="Включить типы ресурсов">
 
-### Include multiple resource types
+### Включить несколько типов ресурсов
 
-Use the following command to include multiple resource types such as data tests and models in your build process:
+Используйте следующую команду, чтобы включить несколько типов ресурсов, например data tests и models, в процессе сборки:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 dbt build --resource-type test model
@@ -83,11 +83,11 @@ dbt build --resource-type test model
 
 </File>
 
-### Include all snapshots
+### Включить все snapshots
 
-Use the following command to only include snapshots in your dbt build process:
+Используйте следующую команду, чтобы включить в процесс сборки dbt только snapshots:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 dbt build --resource-type snapshot
@@ -96,11 +96,11 @@ dbt build --resource-type snapshot
 </File>
 
 
-### Include all saved queries
+### Включить все saved queries
 
-Use the following command to only include saved queries with the `--resource-type` flag:
+Используйте следующую команду, чтобы включить только saved queries с флагом `--resource-type`:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 dbt build --resource-type saved_query
@@ -108,11 +108,11 @@ dbt build --resource-type saved_query
 
 </File>
 
-### Include all data tests
+### Включить все data tests
 
-Use the following command to only include data tests in your build process:
+Используйте следующую команду, чтобы включить в процесс сборки только data tests:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 dbt build --resource-type test
@@ -124,9 +124,9 @@ dbt build --resource-type test
 
 ### Включать все data-тесты при выполнении тестирования
 
-Use the following command to only include data tests when running tests:
+Используйте следующую команду, чтобы при запуске тестов включить только data tests:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 dbt test --resource-type test
@@ -137,13 +137,13 @@ dbt test --resource-type test
 </VersionBlock>
 
 </Expandable>
-<Expandable alt_header="Exclude resource types">
+<Expandable alt_header="Исключить типы ресурсов">
 
 ### Исключение нескольких типов ресурсов
 
 Используйте следующую команду, чтобы исключить несколько типов ресурсов, таких как data tests и models, из процесса сборки:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 dbt build --exclude-resource-type test model

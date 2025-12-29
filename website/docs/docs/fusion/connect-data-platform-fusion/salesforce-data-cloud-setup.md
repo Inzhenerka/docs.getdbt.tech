@@ -64,7 +64,7 @@ company-name:
 | `login_url` | Yes | URL для входа в экземпляр Salesforce. | [https://login.salesforce.com](https://login.salesforce.com/) |
 | `username` | Yes | Имя пользователя в экземпляре Data Cloud. | dbt_user@dbtlabs.com |
 
-<!--For username, the sample above says [Data cloud instance] but the sample here is an email-->
+<!--Для username в примере выше указано [Data cloud instance], но здесь в примере используется email-->
 
 ## Больше информации
 
