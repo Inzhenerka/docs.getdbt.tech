@@ -16,7 +16,7 @@
 exports.versions = [
   {
     version: "1.12",
-    customDisplay: "Платформа dbt (аткуальная)",
+    customDisplay: "Платформа dbt (latest)",
   },
   {
     version: "2.0",
@@ -30,7 +30,7 @@ exports.versions = [
   },
   {
     version: "1.10",
-    customDisplay: "dbt Core v1.10 (на поддержке)",
+    customDisplay: "dbt Core v1.10",
     EOLDate: "2026-06-15",
   },
 ];
