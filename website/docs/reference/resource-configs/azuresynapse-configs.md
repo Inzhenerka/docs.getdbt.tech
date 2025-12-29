@@ -3,7 +3,7 @@ title: "Конфигурации Microsoft Azure Synapse DWH"
 id: "azuresynapse-configs"
 ---
 
-Все [опции конфигурации для адаптера Microsoft SQL Server](mssql-configs) также применимы к этому адаптеру.
+Все [опции конфигурации для адаптера Microsoft SQL Server](/reference/resource-configs/mssql-configs) также применимы к этому адаптеру.
 
 Кроме того, доступны следующие опции конфигурации.
 

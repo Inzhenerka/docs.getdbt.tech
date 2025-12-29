@@ -23,7 +23,7 @@ id: "group"
 ```yml
 models:
 
-  [<resource-path>](resource-path):
+  [<resource-path>](/reference/resource-configs/resource-path):
     +group: GROUP_NAME
 
 ```
@@ -66,7 +66,7 @@ select ...
 
 ```yml
 models:
-  [<resource-path>](resource-path):
+  [<resource-path>](/reference/resource-configs/resource-path):
     +group: GROUP_NAME
 ```
 
@@ -91,7 +91,7 @@ seeds:
 
 ```yml
 snapshots:
-  [<resource-path>](resource-path):
+  [<resource-path>](/reference/resource-configs/resource-path):
     +group: GROUP_NAME
 ```
 
@@ -114,7 +114,7 @@ snapshots:
 <File name='snapshots/<filename>.sql'>
 
 ```sql
-{% snapshot [snapshot_name](snapshot_name) %}
+{% snapshot [snapshot_name](/reference/resource-configs/snapshot_name) %}
 
 {{ config(
   group='GROUP_NAME'
@@ -135,7 +135,7 @@ select ...
 
 ```yml
 data_tests:
-  [<resource-path>](resource-path):
+  [<resource-path>](/reference/resource-configs/resource-path):
     +group: GROUP_NAME
 ```
 
@@ -207,8 +207,8 @@ analyses:
 
 ```yaml
 metrics:
-  [<resource-path>](resource-path):
-    [+](plus-prefix)group: GROUP_NAME
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)group: GROUP_NAME
 ```
 
 </File>
@@ -235,8 +235,8 @@ metrics:
 
 ```yaml
 semantic-models:
-  [<resource-path>](resource-path):
-    [+](plus-prefix)group: GROUP_NAME
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)group: GROUP_NAME
 ```
 
 </File>
@@ -260,8 +260,8 @@ semantic_models:
 
 ```yaml
 saved-queries:
-  [<resource-path>](resource-path):
-    [+](plus-prefix)group: GROUP_NAME
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)group: GROUP_NAME
 ```
 
 </File>

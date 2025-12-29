@@ -77,7 +77,7 @@ snapshots:
   [<snapshot-configs>](/reference/snapshot-configs)
 
 sources:
-  [<source-configs>](source-configs)
+  [<source-configs>](/reference/source-configs)
   
 data_tests:
   [<test-configs>](/reference/data-test-configs)

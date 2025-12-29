@@ -7,7 +7,7 @@ sidebar_label: "Другие артефакты"
 
 **Создается с помощью:** [`docs generate`](/reference/commands/cmd-docs)
 
-Этот файл является каркасом [автоматически сгенерированного сайта документации dbt](/docs/explore/build-and-view-your-docs). Содержимое сайта заполняется на основе [manifest](/reference/artifacts/manifest-json) и [catalog](catalog-json).
+Этот файл является каркасом [автоматически сгенерированного сайта документации dbt](/docs/explore/build-and-view-your-docs). Содержимое сайта заполняется на основе [manifest](/reference/artifacts/manifest-json) и [catalog](/reference/artifacts/catalog-json).
 
 Примечание: исходный код для `index.json` находится в [репозитории dbt-docs](https://github.com/dbt-labs/dbt-docs). Обратитесь туда, если хотите сообщить об ошибке, предложить улучшение или внести вклад, связанный с сайтом документации.
 

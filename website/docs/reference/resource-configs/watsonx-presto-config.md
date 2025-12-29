@@ -15,7 +15,7 @@ id: "watsonx-presto-config"
 
 В экземпляре IBM watsonx.data SaaS/Software вы можете [задавать session properties](https://prestodb.io/docs/current/sql/set-session.html), чтобы изменять текущую конфигурацию для пользовательской сессии.
 
-Чтобы временно изменить session properties для конкретной dbt-модели или группы моделей, используйте [dbt hook](../../reference/resource-configs/pre-hook-post-hook). Например:
+Чтобы временно изменить session properties для конкретной dbt-модели или группы моделей, используйте [dbt hook](/reference/resource-configs/pre-hook-post-hook). Например:
 
 ```sql
 {{

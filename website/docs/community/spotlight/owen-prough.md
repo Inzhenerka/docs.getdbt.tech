@@ -26,9 +26,9 @@ hide_table_of_contents: true
 
 ## С каким лидером сообщества dbt вы себя идентифицируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Это интересный вопрос. Думаю, я больше всего идентифицирую себя с [Джошем Девлином](./josh-devlin), который, кажется, везде в Slack и очень знающий/помогающий. Я тоже хочу знать и передавать знания дальше.
+Это интересный вопрос. Думаю, я больше всего идентифицирую себя с [Джошем Девлином](/community/spotlight/josh-devlin/), который, кажется, везде в Slack и очень знающий/помогающий. Я тоже хочу знать и передавать знания дальше.
 
-Также хочу отметить [Фейт Лирхаймер](./faith-lierheimer), чьи вклады в [#roast-my-graph](https://www.getdbt.com/community/join-the-community/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_dbt-spotlight_aw&utm_content=____&utm_term=all___) всегда заставляют меня смеяться и/или плакать.
+Также хочу отметить [Фейт Лирхаймер](/community/spotlight/faith-lierheimer/), чьи вклады в [#roast-my-graph](https://www.getdbt.com/community/join-the-community/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_dbt-spotlight_aw&utm_content=____&utm_term=all___) всегда заставляют меня смеяться и/или плакать.
 
 ## Чему вы научились у членов сообщества? Чему вы надеетесь, что другие смогут научиться у вас?
 

@@ -102,7 +102,7 @@ snapshots:
 <File name='snapshots/<filename>.sql'>
 
 ```sql
-{% snapshot [snapshot_name](snapshot_name) %}
+{% snapshot [snapshot_name](/reference/resource-configs/snapshot_name) %}
 
 {{ config(
   persist_docs={"relation": true, "columns": true}

@@ -23,7 +23,7 @@ sidebar_label: "Об артефактах dbt"
 - [семантический манифест](/reference/artifacts/sl-manifest): создается всякий раз, когда ваш dbt проект анализируется
 - [манифест](/reference/artifacts/manifest-json): создается командами, которые читают и понимают ваш проект
 - [результаты выполнения](/reference/artifacts/run-results-json): создается командами, которые выполняют, компилируют или каталогизируют узлы в вашем DAG
-- [каталог](catalog-json): создается командой `docs generate`
+- [каталог](/reference/artifacts/catalog-json): создается командой `docs generate`
 - [источники](/reference/artifacts/sources-json): создается командой `source freshness`
 
 При запуске команд из [<Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation) по умолчанию загружаются все артефакты. Если вы хотите изменить это поведение, обратитесь к разделу [How to skip artifacts from being downloaded](/docs/cloud/configure-cloud-cli#how-to-skip-artifacts-from-being-downloaded).

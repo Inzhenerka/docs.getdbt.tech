@@ -66,7 +66,7 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 
 :::
 
-Пользователи и группы Azure, которые вы создадите на следующих шагах, сопоставляются с группами, созданными в <Constant name="cloud" />, на основе имени группы. Дополнительную информацию о настройке пользователей, групп и наборов разрешений в <Constant name="cloud" /> см. в документации по [enterprise permissions](enterprise-permissions).
+Пользователи и группы Azure, которые вы создадите на следующих шагах, сопоставляются с группами, созданными в <Constant name="cloud" />, на основе имени группы. Дополнительную информацию о настройке пользователей, групп и наборов разрешений в <Constant name="cloud" /> см. в документации по [enterprise permissions](/docs/cloud/manage-access/enterprise-permissions).
 
 <Constant name="dbt_platform" /> использует **User principal name** (UPN) в Microsoft Entra ID для идентификации и сопоставления пользователей, входящих в <Constant name="cloud" /> через SSO. Обычно UPN имеет формат адреса электронной почты.
 

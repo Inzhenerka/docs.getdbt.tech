@@ -100,7 +100,7 @@ snapshots:
 ```sql
 # Configuring in a SQL file is a legacy method and not recommended. Use the property file instead.
 
-{% snapshot [snapshot_name](snapshot_name) %}
+{% snapshot [snapshot_name](/reference/resource-configs/snapshot_name) %}
 
 {{ config(
   enabled=true | false

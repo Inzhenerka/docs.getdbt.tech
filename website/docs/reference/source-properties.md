@@ -27,7 +27,7 @@ sources:
 
     # требуется v1.1+
     [config](/reference/resource-properties/config):
-      [<source_config>](source-configs): <config_value>
+      [<source_config>](/reference/source-configs): <config_value>
       [freshness](/reference/resource-properties/freshness):
       # перенесено в config в v1.10
       [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>

@@ -67,10 +67,10 @@ models:
 ## Связанная документация
 Полный список всех поддерживаемых свойств и конфигураций, разбитый по типам ресурсов, можно найти здесь:
 * Модели: [properties](/reference/model-properties) и [configs](/reference/model-configs)
-* Источники: [properties](/reference/source-properties) и [configs](source-configs)
+* Источники: [properties](/reference/source-properties) и [configs](/reference/source-configs)
 * Seed-данные: [properties](/reference/seed-properties) и [configs](/reference/seed-configs)
-* Снимки (snapshots): [properties](snapshot-properties)
-* Анализы: [properties](analysis-properties)
+* Снимки (snapshots): [properties](/reference/snapshot-properties)
+* Анализы: [properties](/reference/analysis-properties)
 * Макросы: [properties](/reference/macro-properties)
 * Экспозиции (exposures): [properties](/reference/exposure-properties)
 

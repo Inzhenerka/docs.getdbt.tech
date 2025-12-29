@@ -21,7 +21,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ## Конфигурация профиля
 
-Цели Databricks Lakebase настраиваются точно так же, как и [цели Postgres](postgres-setup#profile-configuration).
+Цели Databricks Lakebase настраиваются точно так же, как и [цели Postgres](/docs/core/connect-data-platform/postgres-setup/#profile-configuration).
 
 Используйте следующие ключевые параметры для подключения к Databricks Lakebase:
 
