@@ -5,7 +5,7 @@ description: "Настройка PrivateLink для Postgres"
 sidebar_label: "AWS PrivateLink для Postgres"
 ---
 
-# Настройка AWS PrivateLink для Postgres <Lifecycle status="managed_plus" />
+# Настройка AWS PrivateLink для Postgres <Lifecycle status="managed_plus" /> {#configure-aws-privatelink-for-postgres}
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
@@ -18,9 +18,9 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <CloudProviders type='Postgres' />
 
-## Настройка интерфейсного типа PrivateLink для Postgres
+## Настройка интерфейсного типа PrivateLink для Postgres {#configuring-postgres-interface-type-privatelink}
 
-### 1. Подготовка ресурсов AWS
+### 1. Подготовка ресурсов AWS {#1-provision-aws-resources}
 
 Создание соединения Interface VPC PrivateLink требует создания нескольких ресурсов AWS в учетной записи, содержащей или подключенной к экземпляру Postgres:
 
@@ -58,7 +58,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <PrivateLinkCrossZone features={'/snippets/_privatelink-cross-zone-load-balancing.md'}/>
 
-### 2. Предоставление доступа учетной записи AWS dbt к службе конечной точки VPC
+### 2. Предоставление доступа учетной записи AWS dbt к службе конечной точки VPC {#2-grant-dbt-aws-account-access-to-the-vpc-endpoint-service}
 
 На подготовленной службе конечной точки VPC нажмите вкладку **Разрешить принципалов**. Нажмите **Разрешить принципалов**, чтобы предоставить доступ. Введите ARN корневого пользователя в соответствующей производственной учетной записи AWS и сохраните изменения.
 
@@ -66,13 +66,13 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <Lightbox src="/img/docs/dbt-cloud/privatelink-allow-principals.png" width="70%" title="Введите ARN"/>
 
-### 3. Получение имени службы конечной точки VPC
+### 3. Получение имени службы конечной точки VPC {#3-obtain-vpc-endpoint-service-name}
 
 После того как сервис VPC Endpoint Service будет создан, вы можете найти его имя в консоли AWS, перейдя в раздел **VPC** → **Endpoint Services** и выбрав соответствующий endpoint‑сервис. Вы можете скопировать значение поля service name и включить его в обращение в службу поддержки <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/privatelink-endpoint-service-name.png" width="70%" title="Получите значение поля имени службы"/>
 
-### 4. Добавьте необходимую информацию в шаблон ниже и отправьте ваш запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support):
+### 4. Добавьте необходимую информацию в шаблон ниже и отправьте ваш запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support): {#4-add-the-required-information-to-the-template-below-and-submit-your-request-to-dbt-support}
 ```
 Subject: New Multi-Tenant PrivateLink Request
 - Type: Postgres Interface-type
@@ -85,13 +85,13 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-### 5. Принятие запроса на подключение
+### 5. Принятие запроса на подключение {#5-accepting-the-connection-request}
 
 Когда вы получите уведомление о том, что ресурсы развернуты в среде <Constant name="cloud" />, вам необходимо принять подключение к endpoint (если только сервис VPC Endpoint Service не настроен на автоматическое принятие запросов на подключение). Запросы можно принять через консоль AWS, как показано ниже, либо с помощью AWS CLI.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/accept-request.png" width="80%" title="Принять запрос на подключение" />
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После того как поддержка <Constant name="cloud" /> завершит настройку, вы сможете начать создавать новые подключения с использованием PrivateLink.
 

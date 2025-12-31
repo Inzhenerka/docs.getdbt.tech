@@ -15,7 +15,7 @@ meta:
   config_page: '/reference/resource-configs-fusion/redshift-configs'
 ---
 
-# Настройка Redshift <Lifecycle status='preview' />
+# Настройка Redshift <Lifecycle status='preview' /> {#redshift-setup}
 
 Вы можете настроить адаптер Redshift, запустив `dbt init` в CLI, либо вручную создав файл `profiles.yml` и заполнив в нём поля, соответствующие выбранному типу аутентификации.
 
@@ -23,7 +23,7 @@ meta:
 - Password
 - IAM profile
 
-## Конфигурация Fusion
+## Конфигурация Fusion {#configure-fusion}
 
 При выполнении `dbt init` в CLI вам будет предложено ввести следующие поля:
 - **Host:** имя хоста вашего кластера Redshift  
@@ -36,14 +36,14 @@ meta:
 
 Далее выберите метод аутентификации и следуйте подсказкам на экране, чтобы предоставить требуемую информацию.
 
-## Поддерживаемые типы аутентификации
+## Поддерживаемые типы аутентификации {#supported-authentication-types}
 
 <Tabs>
 <TabItem value="Password">
 
 Используйте пароль пользователя Redshift для аутентификации. Также вы можете вручную указать его в открытом виде в конфигурации файла `profiles.yml`.
 
-#### Пример конфигурации с паролем
+#### Пример конфигурации с паролем {#example-password-configuration}
 
 <File name="profiles.yml">
 
@@ -75,7 +75,7 @@ default:
 - **Region:** регион AWS (например, us-east-1)  
 - **Use RA3 node type (y/n):** использовать высокопроизводительный тип узлов AWS RA3  
 
-#### Пример конфигурации с IAM profile
+#### Пример конфигурации с IAM profile {#example-password-configuration-1}
 
 <File name="profiles.yml">
 
@@ -102,6 +102,6 @@ default:
 </TabItem>
 </Tabs>
 
-## Больше информации
+## Больше информации {#more-information}
 
 Дополнительную информацию о конфигурации, специфичной для Redshift, см. в [справочном руководстве по адаптеру Redshift](/reference/resource-configs/redshift-configs).

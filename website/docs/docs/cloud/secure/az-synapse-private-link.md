@@ -14,7 +14,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <CloudProviders type='Azure Synapse' />
 
-## Настройка Azure Private Link
+## Настройка Azure Private Link {#configure-azure-private-link}
 
 В Azure Portal:
 
@@ -33,7 +33,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
     ```
 5. После того как команда поддержки подтвердит, что конечная точка создана, перейдите в workspace Azure Synapse в Azure Portal и откройте **Security** > **Private endpoint connections**. В таблице **Private endpoint connections** выделите запись с именем `dbt` и выберите **Approve**. Подтвердите в службе поддержки, что соединение одобрено, чтобы они могли проверить его и сделать доступным для использования в <Constant name="cloud" />.
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После выполнения предыдущего шага вы сможете настроить приватную конечную точку в <Constant name="cloud" />:
 

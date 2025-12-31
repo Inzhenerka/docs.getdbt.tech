@@ -10,7 +10,7 @@ description: "Узнайте о рабочих процессах непреры
 
 Вы также можете реализовать непрерывную интеграцию (continuous integration, CI) в <Constant name="cloud" />, что поможет ещё больше сократить время доставки изменений в продакшен и повысить качество кода. Подробнее см. в разделе [Непрерывная интеграция в <Constant name="cloud" />](/docs/deploy/continuous-integration).
 
-## Как работают merge jobs
+## Как работают merge jobs {#how-merge-jobs-work}
 
 Когда вы настраиваете merge jobs, dbt Cloud отслеживает уведомления от вашего [Git-провайдера](/docs/cloud/git/git-configuration-in-dbt-cloud), указывающие на то, что PR был слит. Когда dbt Cloud получает одно из этих уведомлений, оно ставит в очередь новый запуск merge job.
 

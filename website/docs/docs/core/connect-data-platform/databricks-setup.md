@@ -28,7 +28,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 - Использование Delta Lake для всех моделей по умолчанию
 - SQL макросы, оптимизированные для работы с [Photon](https://docs.databricks.com/runtime/photon.html)
 
-## Подключение к Databricks
+## Подключение к Databricks {#connecting-to-databricks}
 
 Чтобы подключиться к платформе данных с помощью dbt Core, создайте соответствующие ключи/значения _profile_ и _target_ в YAML-файле конфигурации `profiles.yml` для вашего Databricks SQL Warehouse/кластера. Этот YAML-файл dbt находится в директории `.dbt/` вашего пользовательского/домашнего каталога. Для получения дополнительной информации обратитесь к [Профили подключения](/docs/core/connect-data-platform/connection-profiles) и [profiles.yml](/docs/core/connect-data-platform/profiles.yml).
 
@@ -38,7 +38,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 ### Примеры {#examples}
 
-### Примеры {#examples}
+### Примеры {#delta-lake}
 
 Вы можете использовать аутентификацию на основе токена или аутентификацию на основе OAuth‑клиента для подключения к Databricks. Обратитесь к следующим примерам, чтобы узнать больше о том, как настроить профиль для каждого типа аутентификации.
 
@@ -153,7 +153,7 @@ your_profile_name:
 
 ## Поддерживаемая функциональность
 
-### Delta Lake
+### Delta Lake {#unity-catalog}
 
 Поддерживается большая часть функциональности <Constant name="core" />, однако некоторые возможности доступны только при использовании Delta Lake.
 

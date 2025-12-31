@@ -13,11 +13,11 @@ slug: /sql-reference/concat
 
 Это простая функция с довольно простыми случаями использования. Используйте эту страницу, чтобы понять, как использовать функцию CONCAT в вашем хранилище данных и почему аналитики используют её в своих моделях dbt.
 
-## Как использовать функцию CONCAT
+## Как использовать функцию CONCAT {#how-to-use-the-concat-function}
 
 Использование функции CONCAT довольно просто: вы передаете строки или бинарные значения, которые хотите объединить в нужном порядке, в функцию CONCAT. Вы можете передать в функцию CONCAT столько выражений, сколько захотите.
 
-### Пример функции CONCAT
+### Пример функции CONCAT {#concat-function-example}
 
 ```sql
 select
@@ -37,11 +37,11 @@ limit 3
 | 2 | Shawn | M. | Shawn M. |
 | 3 | Kathleen | P. | Kathleen P. |
 
-## Синтаксис функции CONCAT в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис функции CONCAT в Snowflake, Databricks, BigQuery и Redshift {#concat-function-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Snowflake, Databricks, Google BigQuery и Amazon Redshift поддерживают функцию CONCAT с одинаковым синтаксисом на каждой платформе. Вы также можете увидеть функцию CONCAT, представленную оператором `||` (например, `select first_name || last_name AS full_name from {{ ref('customers') }}`), который имеет ту же функциональность, что и функция CONCAT на этих платформах данных.
 
-## Сценарии использования CONCAT
+## Сценарии использования CONCAT {#concat-use-cases}
 
 Наиболее часто мы видим конкатенацию в SQL для строк, чтобы:
 

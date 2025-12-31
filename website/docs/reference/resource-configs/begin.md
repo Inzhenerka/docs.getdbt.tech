@@ -9,17 +9,17 @@ datatype: string
 
 <VersionCallout version="1.9" />
 
-## Определение
+## Определение {#definition}
 
 Установите конфигурацию `begin` в значение временной метки, с которой должны начинаться данные вашего [инкрементального microbatch‑моделя](/docs/build/incremental-microbatch) — то есть в момент, когда данные становятся релевантными для microbatch‑модели.  
 
 Вы можете настроить `begin` для [модели](/docs/build/models) в YAML-файле проекта (`dbt_project.yml`), в YAML-файле свойств или в конфигурации SQL-файла. Значение `begin` должно быть строкой, представляющей дату в формате ISO, _или_ дату и время, _или_ [относительные даты](#set-begin-to-use-relative-dates). Для более подробной информации ознакомьтесь с [примерами](#examples) в следующем разделе.
 
-## Примеры
+## Примеры {#examples}
 
 Следующие примеры устанавливают `2024-01-01 00:00:00` в качестве конфигурации `begin` для модели `user_sessions`.
 
-#### Пример в файле `dbt_project.yml`
+#### Пример в файле `dbt_project.yml` {#example-in-the-dbt_projectyml-file}
 
 <File name='dbt_project.yml'>
 
@@ -31,7 +31,7 @@ models:
 ```
 </File>
 
-#### Пример в YAML-файле свойств
+#### Пример в YAML-файле свойств {#example-in-a-property-yaml-file}
 
 <File name='models/properties.yml'>
 
@@ -44,7 +44,7 @@ models:
 
 </File>
 
-#### Пример в блоке конфигурации SQL для модели
+#### Пример в блоке конфигурации SQL для модели {#example-in-a-sql-config-block-for-a-model}
 
 <File name="models/user_sessions.sql">
 
@@ -56,7 +56,7 @@ models:
 
 </File> 
 
-#### Установка `begin` с использованием относительных дат
+#### Установка `begin` с использованием относительных дат {#set-begin-to-use-relative-dates}
 
 Чтобы настроить `begin` с использованием относительных дат, вы можете использовать переменные модулей [`modules.datetime`](/reference/dbt-jinja-functions/modules#datetime) и [`modules.pytz`](/reference/dbt-jinja-functions/modules#pytz), чтобы динамически задавать относительные временные метки, например дату вчерашнего дня или начало текущей недели.
 

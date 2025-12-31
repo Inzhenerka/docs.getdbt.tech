@@ -10,13 +10,13 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 
 [Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать с помощью объекта `exposures`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, которая содержит все возможные поля, доступные для запроса.
 
-### Аргументы
+### Аргументы {#arguments}
 
 При выполнении запроса к `exposures` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="exposures" />
 
-### Пример запроса
+### Пример запроса {#example-query}
 
 Вы можете указать `environmentId`, `first: 100` и отфильтровать по `uniqueIds` моделей, чтобы вернуть все downstream exposures (дашборды, приложения и т. д.), которые зависят от модели `customers` в пакете `marketing`, ограничив результат первыми 100 записями:
 
@@ -45,12 +45,12 @@ query {
 }
 ```
 
-### Поля
+### Поля {#fields}
 
 При выполнении запроса к `exposures` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="ExposureAppliedStateNodeConnection" />
 
-### Ключевые поля узлов
+### Ключевые поля узлов {#key-fields-from-nodes}
 
 <SchemaTable nodeName="ExposureAppliedStateNode" />

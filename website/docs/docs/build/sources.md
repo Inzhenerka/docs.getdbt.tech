@@ -6,20 +6,20 @@ id: "sources"
 search_weight: "heavy"
 ---
 
-## Связанная справочная документация
+## Связанная справочная документация {#related-reference-docs}
 * [Свойства источников](/reference/source-properties)
 * [Конфигурации источников](/reference/source-configs)
 * [Jinja‑функция `{{ source() }}`](/reference/dbt-jinja-functions/source)
 * [Команда `source freshness`](/reference/commands/source)
 
-## Использование источников
+## Использование источников {#using-sources}
 Источники позволяют задавать имена и описывать данные, которые загружаются в ваше хранилище с помощью инструментов Extract и Load. Объявив эти таблицы как источники в dbt, вы получаете возможность:
 
 - выбирать данные из исходных таблиц в ваших моделях с помощью функции [`{{ source() }}`](/reference/dbt-jinja-functions/source), что помогает определить происхождение (lineage) ваших данных
 - проверять предположения о ваших исходных данных с помощью тестов
 - рассчитывать актуальность (freshness) ваших исходных данных
 
-### Объявление источника
+### Объявление источника {#declaring-a-source}
 
 Источники определяются в файлах `.yml`, вложенных под ключом `sources:`.
 
@@ -46,7 +46,7 @@ sources:
 
 Если вы еще не знакомы с этими файлами, обязательно ознакомьтесь с [документацией по файлам properties.yml](/reference/configs-and-properties) перед продолжением.
 
-### Выборка из источника
+### Выборка из источника {#selecting-from-a-source}
 
 После того как источник был определен, его можно ссылаться из модели, используя [функцию `{{ source()}}`](/reference/dbt-jinja-functions/source).
 
@@ -85,7 +85,7 @@ left join raw.jaffle_shop.customers using (customer_id)
 
 <Lightbox src="/img/docs/building-a-dbt-project/sources-dag.png" title="Функция source сообщает dbt, что модель зависит от источника"/>
 
-### Тестирование и документирование источников
+### Тестирование и документирование источников {#testing-and-documenting-sources}
 Вы также можете:
 - Добавлять тесты данных к источникам
 - Добавлять описания к источникам, которые будут отображаться как часть вашего сайта документации
@@ -122,17 +122,17 @@ sources:
 
 Вы можете найти больше деталей о доступных свойствах для источников в [справочном разделе](/reference/source-properties).
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs}
 <FAQ path="Project/source-has-bad-name" />
 <FAQ path="Project/source-in-different-database" />
 <FAQ path="Models/source-quotes" />
 <FAQ path="Tests/testing-sources" />
 <FAQ path="Runs/running-models-downstream-of-source" />
 
-## Актуальность данных источника
+## Актуальность данных источника {#source-data-freshness}
 С помощью нескольких дополнительных конфигураций dbt может опционально фиксировать "актуальность" данных в ваших исходных таблицах. Это полезно для понимания, находятся ли ваши конвейеры данных в здоровом состоянии, и является критическим компонентом определения SLA для вашего хранилища.
 
-### Объявление актуальности источника
+### Объявление актуальности источника {#declaring-source-freshness}
 Чтобы настроить информацию об актуальности источника, добавьте блок `freshness` к вашему источнику и `loaded_at_field` к объявлению вашей таблицы:
 
 <File name='models/<filename>.yml'>
@@ -172,7 +172,7 @@ sources:
 
 Эти конфигурации применяются иерархически, поэтому значения `freshness` и `loaded_at_field`, указанные для `source`, будут применяться ко всем `tables`, определенным в этом источнике. Это полезно, когда все таблицы в источнике имеют одинаковый `loaded_at_field`, так как конфигурацию можно указать один раз в определении источника верхнего уровня.
 
-### Проверка актуальности источника
+### Проверка актуальности источника {#checking-source-freshness}
 Чтобы получить информацию об актуальности ваших источников, используйте команду `dbt source freshness` ([справочная документация](/reference/commands/source)):
 
 ```
@@ -193,7 +193,7 @@ from raw.jaffle_shop.orders
 
 <Lightbox src="/img/docs/building-a-dbt-project/snapshot-freshness.png" title="Ой! Не все так свежо, как хотелось бы!"/>
 
-### Сборка моделей на основе свежести источников
+### Сборка моделей на основе свежести источников {#build-models-based-on-source-freshness}
 
 В качестве лучшей практики мы рекомендуем использовать [freshness источников данных](/docs/build/sources#declaring-source-freshness). Это позволяет перенести настройки в файл `.yml`, где свежесть источника определяется на [уровне модели](/reference/resource-properties/freshness).
 
@@ -206,7 +206,7 @@ from raw.jaffle_shop.orders
 
 Установите [source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots) на 30 минут для проверки свежести источников, а затем настройте задание, которое будет запускаться каждый час для пересборки моделей. Такая конфигурация получает все модели и пересобирает их за один запуск, если срок свежести их источников истёк. Подробнее см. [Частота snapshot’ов свежести источников](/docs/deploy/source-freshness#source-freshness-snapshot-frequency).
 
-### Фильтр
+### Фильтр {#filter}
 
 В некоторых базах данных могут быть таблицы, для которых требуется применять фильтр по определённым колонкам, чтобы избежать полного сканирования таблицы, что может быть дорогостоящим. Чтобы выполнить проверку свежести для таких таблиц, в конфигурацию можно добавить аргумент `filter`, например: `filter: _etl_loaded_at >= date_sub(current_date(), interval 1 day)`. В приведённом выше примере итоговый запрос будет выглядеть следующим образом
 
@@ -218,7 +218,7 @@ from raw.jaffle_shop.orders
 where _etl_loaded_at >= date_sub(current_date(), interval 1 day)
 ```
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs-1}
 <FAQ path="Project/exclude-table-from-freshness" />
 <FAQ path="Snapshots/snapshotting-freshness-for-one-source" />
 <FAQ path="Project/dbt-source-freshness" />

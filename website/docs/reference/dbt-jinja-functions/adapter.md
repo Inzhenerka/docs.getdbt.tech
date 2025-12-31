@@ -24,18 +24,18 @@ description: "Обертка для внутреннего адаптера ба
 - [adapter.rename_relation](#rename_relation)
 - [adapter.quote](#quote)
 
-### Устаревшие функции адаптера
+### Устаревшие функции адаптера {#deprecated-adapter-functions}
 
 Следующие функции адаптера устарели и будут удалены в будущих версиях.
 - [adapter.get_columns_in_table](#get_columns_in_table) **(устарело)**
 - [adapter.already_exists](#already_exists) **(устарело)**
 - [adapter_macro](#adapter_macro) **(устарело)**
 
-## dispatch
+## dispatch {#dispatch}
 
 Перемещено на отдельную страницу: [dispatch](/reference/dbt-jinja-functions/dispatch)
 
-## get_missing_columns
+## get_missing_columns {#getmissingcolumns}
 __Аргументы__:
 
  * `from_relation`: Исходная [Relation](/reference/dbt-classes#relation)
@@ -61,7 +61,7 @@ __Аргументы__:
 
 </File>
 
-## expand_target_column_types
+## expand_target_column_types {#expandtargetcolumn_types}
 __Аргументы__:
 
  * `from_relation`: Исходная [Relation](/reference/dbt-classes#relation) для использования в качестве шаблона
@@ -82,7 +82,7 @@ __Аргументы__:
 
 </File>
 
-## get_relation
+## get_relation {#get_relation}
 __Аргументы__:
 
  * `database`: База данных для получения отношения
@@ -108,7 +108,7 @@ __Аргументы__:
 
 </File>
 
-## load_relation
+## load_relation {#load_relation}
 __Аргументы__:
 
  * `relation`: [Relation](/reference/dbt-classes#relation) для загрузки
@@ -132,7 +132,7 @@ __Аргументы__:
 
 </File>
 
-## get_columns_in_relation
+## get_columns_in_relation {#getcolumnsin_relation}
 __Аргументы__:
 
  * `relation`: [Relation](/reference/dbt-classes#relation) для поиска столбцов
@@ -155,7 +155,7 @@ __Аргументы__:
 
 </File>
 
-## create_schema
+## create_schema {#create_schema}
 __Аргументы__:
 
  * `relation`: Объект отношения с базой данных и схемой для создания. Любой идентификатор на отношении будет проигнорирован.
@@ -173,7 +173,7 @@ __Аргументы__:
 
 </File>
 
-## drop_schema
+## drop_schema {#drop_schema}
 __Аргументы__:
 
  * `relation`: Объект отношения с базой данных и схемой для удаления. Любой идентификатор на отношении будет проигнорирован.
@@ -191,7 +191,7 @@ __Аргументы__:
 
 </File>
 
-## drop_relation
+## drop_relation {#drop_relation}
 __Аргументы__:
 
  * `relation`: Отношение для удаления
@@ -211,7 +211,7 @@ __Аргументы__:
 
 </File>
 
-## rename_relation
+## rename_relation {#rename_relation}
 __Аргументы__:
 
  * `from_relation`: Отношение для переименования
@@ -240,7 +240,7 @@ __Аргументы__:
 
 </File>
 
-## quote
+## quote {#quote}
 __Аргументы__:
 
  * `identifier`: Строка для заключения в кавычки
@@ -259,7 +259,7 @@ select
 
 </File>
 
-## get_columns_in_table
+## get_columns_in_table {#getcolumnsin_table}
 
 :::danger Устарело
 
@@ -288,7 +288,7 @@ insert into {{ this }} ({{ dest_cols_csv }}) (
 
 </File>
 
-## already_exists
+## already_exists {#already_exists}
 
 :::danger Устарело
 
@@ -315,7 +315,7 @@ select * from {{ref('raw_table')}}
 
 </File>
 
-## adapter_macro
+## adapter_macro {#adapter_macro}
 
 :::danger Устарело
 

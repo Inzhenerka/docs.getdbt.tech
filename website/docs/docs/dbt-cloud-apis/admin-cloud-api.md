@@ -4,7 +4,7 @@ id: "admin-cloud-api"
 pagination_next: "docs/dbt-cloud-apis/discovery-api"
 ---
 
-# Административный API dbt <Lifecycle status="self_service,managed,managed_plus" />
+# Административный API dbt <Lifecycle status="self_service,managed,managed_plus" /> {#dbt-administrative-api}
 
 Административный API <Constant name="cloud" /> включён по умолчанию для тарифных планов [Enterprise и Enterprise+](https://www.getdbt.com/pricing/). Его можно использовать для того, чтобы:
 

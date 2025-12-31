@@ -19,13 +19,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к Doris/SelectDB с помощью **dbt-doris**
+## Подключение к Doris/SelectDB с помощью **dbt-doris** {#connecting-to-dorisselectdb-with-dbt-doris}
 
-### Аутентификация с использованием имени пользователя и пароля
+### Аутентификация с использованием имени пользователя и пароля {#user-password-authentication}
 
 Настройте ваш профиль dbt для использования Doris:
 
-#### Профиль подключения к Doris
+#### Профиль подключения к Doris {#doris-connection-profile}
 <File name='profiles.yml'>
 
 ```yaml
@@ -44,7 +44,7 @@ dbt-doris:
 
 </File>
 
-#### Описание полей профиля
+#### Описание полей профиля {#description-of-profile-fields}
 
 | Опция    | Описание                                                                                                                          | Обязательно? | Пример      |
 |----------|-----------------------------------------------------------------------------------------------------------------------------------|-------------|-------------|
@@ -55,7 +55,7 @@ dbt-doris:
 | username | Имя пользователя для подключения к Doris                                                                                          | Обязательно | `root`      |
 | password | Пароль для аутентификации в Doris                                                                                                 | Обязательно | `password`  |
 
-## Привилегии пользователя базы данных
+## Привилегии пользователя базы данных {#database-user-privileges}
 
 Ваш пользователь базы данных Doris/SelectDB должен иметь некоторые возможности для чтения или записи.
 Вы можете найти помощь [здесь](https://doris.apache.org/docs/admin-manual/privilege-ldap/user-privilege) с управлением привилегиями в Doris.

@@ -12,7 +12,7 @@ level: 'Advanced'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Это руководство покажет, как настроить интеграцию между заданиями <Constant name="cloud" /> и Microsoft Teams с использованием [вебхуков <Constant name="cloud" />](/docs/deploy/webhooks) и Zapier — аналогично [встроенной интеграции со Slack](/docs/deploy/job-notifications#slack-notifications).
 
@@ -24,27 +24,27 @@ level: 'Advanced'
 
 ![Скриншот сообщения в MS Teams, показывающего сводку выполнения <Constant name="cloud" />, которое завершилось с ошибкой](/img/guides/orchestration/webhooks/zapier-ms-teams/ms-teams-ui.png)
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 Для настройки интеграции вам потребуется знакомство со следующим:
 
 - [<Constant name="cloud" /> Webhooks](/docs/deploy/webhooks)
 - Zapier
 
-## Настройка соединения между Zapier и Microsoft Teams
+## Настройка соединения между Zapier и Microsoft Teams {#set-up-the-connection-between-zapier-and-microsoft-teams}
 
 * Установите [приложение Zapier в Microsoft Teams](https://appsource.microsoft.com/en-us/product/office/WA200002044) и [предоставьте Zapier доступ к вашему аккаунту](https://zapier.com/blog/how-to-automate-microsoft-teams/).
 
 **Примечание**: Чтобы получать сообщения, добавьте приложение Zapier в канал команды во время установки.
 
-## Создание нового Zap в Zapier
+## Создание нового Zap в Zapier {#create-a-new-zap-in-zapier}
 Используйте **Webhooks by Zapier** в качестве триггера и **Catch Raw Hook** в качестве события. Если вы не собираетесь [проверять подлинность вашего вебхука](/docs/deploy/webhooks#validate-a-webhook) (не рекомендуется!), то можете выбрать **Catch Hook** вместо этого.
 
 Нажмите **Continue**, затем скопируйте URL вебхука.
 
 ![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
 
-### 3. Настройте новый вебхук в dbt
+### 3. Настройте новый вебхук в dbt {#3-configure-a-new-webhook-in-dbt}
 
 См. [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения полных инструкций. Выберите либо **Run completed**, либо **Run errored**, но не оба, иначе вы получите двойные сообщения, когда выполнение завершится с ошибкой.
 
@@ -54,7 +54,7 @@ level: 'Advanced'
 
 Значения в примере тела жестко закодированы и не отражают ваш проект, но они дают Zapier правильно сформированный объект во время разработки.
 
-## Хранение секретов
+## Хранение секретов {#store-secrets}
 
 На следующем шаге вам понадобится **Webhook Secret Key** с предыдущего шага, а также <Constant name="cloud" /> [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens).
 
@@ -62,7 +62,7 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 <Snippet path="webhook_guide_zapier_secret_store" />
 
-## Добавление действия кода
+## Добавление действия кода {#add-a-code-action}
 Выберите **Code by Zapier** в качестве приложения и **Run Python** в качестве события.
 
 В области **Set up action** добавьте два элемента в **Input Data**: `raw_body` и `auth_header`. Свяжите их с полями `1. Raw Body` и `1. Headers Http Authorization` из шага **Catch Raw Hook** выше.
@@ -154,7 +154,7 @@ for step in run_data_results['run_steps']:
 output = {'outcome_message': outcome_message}
 ```
 
-## Добавление действия Microsoft Teams
+## Добавление действия Microsoft Teams {#add-the-microsoft-teams-action}
 
 Выберите **Microsoft Teams** в качестве приложения и **Send Channel Message** в качестве действия.
 
@@ -162,13 +162,13 @@ output = {'outcome_message': outcome_message}
 
 ![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов с сообщением MS Teams](/img/guides/orchestration/webhooks/zapier-ms-teams/ms-teams-zap-config.png)
 
-## Тестирование и развертывание
+## Тестирование и развертывание {#test-and-deploy}
 
 Поскольку вы прошли каждый шаг, вы должны были протестировать выводы, так что теперь вы можете попробовать отправить сообщение в ваш канал Teams.
 
 Когда вы будете довольны результатом, не забудьте убедиться, что ваши `run_id` и `account_id` больше не жестко закодированы, затем опубликуйте ваш Zap.
 
-### Другие заметки
+### Другие заметки {#other-notes}
 - Если вы отправляете сообщение в чат, а не в канал команды, вам не нужно добавлять приложение Zapier в Microsoft Teams.
 - Если вы отправляете сообщение в чат, а не в канал команды, обратите внимание, что markdown не поддерживается, и вам нужно будет удалить форматирование markdown.
 - Если вы выбрали триггер **Catch Hook** вместо **Catch Raw Hook**, вам нужно будет передать каждое необходимое свойство из вебхука в качестве входных данных вместо выполнения `json.loads()` для необработанного тела. Вам также нужно будет удалить код проверки.

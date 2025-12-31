@@ -14,7 +14,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 - Установили VS Code с последними обновлениями
 - (Для локального MCP с CLI) Настроили пути к вашему dbt-проекту
 
-## Настройка с локальным сервером dbt MCP
+## Настройка с локальным сервером dbt MCP {#set-up-with-local-dbt-mcp-server}
 
 Чтобы начать, в VS Code:
 
@@ -123,7 +123,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 Теперь вы можете получать доступ к серверу dbt MCP в VS Code через такие интерфейсы, как GitHub Copilot.
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
 В этом разделе приведены шаги по устранению ошибок, с которыми вы можете столкнуться при интеграции VS Code с MCP.
 
@@ -174,6 +174,6 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 </Expandable>
 
-## Ресурсы
+## Ресурсы {#resources}
 
 - [Документация Microsoft VS Code MCP](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)

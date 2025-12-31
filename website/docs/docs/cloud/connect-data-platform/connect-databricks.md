@@ -7,7 +7,7 @@ sidebar_label: "Подключение Databricks"
 
 Адаптер dbt-databricks поддерживается командой Databricks. Команда Databricks стремится поддерживать и улучшать адаптер со временем, поэтому вы можете быть уверены, что интегрированный опыт предоставит лучшее от dbt и лучшее от Databricks. Подключение к Databricks через dbt-spark устарело.
 
-## О адаптере dbt-databricks
+## О адаптере dbt-databricks {#about-the-dbt-databricks-adapter}
 
 dbt-databricks совместим со следующими версиями <Constant name="core" /> в <Constant name="cloud" /> с различной степенью функциональности.
 

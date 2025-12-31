@@ -3,15 +3,15 @@ title: Теперь ваша очередь
 id: 6-how-we-style-conclusion
 ---
 
-## Создайте свои стили
+## Создайте свои стили {#byo-styles}
 
 Теперь, когда вы увидели, как мы оформляем наши проекты dbt, пришло время создать свои собственные. Не стесняйтесь копировать это руководство и использовать его в качестве шаблона для вашего собственного проекта. Если вы это сделаете, нам будет интересно об этом узнать! Свяжитесь с нами на [форуме сообщества](https://discourse.getdbt.com/c/show-and-tell/22) или в [Slack](https://www.getdbt.com/community), чтобы поделиться своим руководством по стилю. Мы рекомендуем размещать ваше руководство по стилю рядом с вашим кодом, чтобы участники могли легко его соблюдать. Если вы используете GitHub, вы можете добавить руководство по стилю в вики вашего репозитория или включить его в ваш README.
 
-## Хуки pre-commit
+## Хуки pre-commit {#pre-commit-hooks}
 
 Вы можете использовать [pre-commit hooks](https://pre-commit.com/), чтобы автоматически проверять ваш код на нарушения стилевых правил (и часто исправлять их автоматически) перед коммитом. Это отличный способ убедиться, что все участники проекта придерживаются вашего style guide. Мы рекомендуем внедрять это после того, как вы утвердили и опубликовали свой style guide и привели кодовую базу в соответствие с ним. Это обеспечит соблюдение style guide во всех будущих коммитах. Отличный набор open source pre-commit hooks для dbt, созданный сообществом, вы можете найти [здесь, в проекте dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint).
 
-## dbt Project Evaluator
+## dbt Project Evaluator {#dbt-project-evaluator}
 
 [`dbt_project_evaluator`](https://github.com/dbt-labs/dbt-project-evaluator) — это пакет, который проверяет соответствие проекта [style guide и best practices dbt](/best-practices/how-we-structure/1-guide-overview). Пакет `dbt_project_evaluator` подсвечивает области dbt‑проекта, которые не соответствуют best practices dbt, и предоставляет рекомендации по улучшению проекта. Это позволяет аналитическим инженерам точно определить, в каких местах их проекты отклоняются от best practices dbt, и самостоятельно внести необходимые улучшения. Пакет `dbt_project_evaluator` охватывает следующие категории:
 
@@ -24,7 +24,7 @@ id: 6-how-we-style-conclusion
 
 Подробнее см. [Introducing the dbt_project_evaluator: Automatically evaluate your dbt project for alignment with best practices](/blog/align-with-dbt-project-evaluator).
 
-## Шаблон руководства по стилю
+## Шаблон руководства по стилю {#style-guide-template}
 
 ```markdown
 # Пример руководства по стилю dbt

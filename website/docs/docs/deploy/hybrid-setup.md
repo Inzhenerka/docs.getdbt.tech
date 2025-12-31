@@ -6,7 +6,7 @@ pagination_next: "docs/deploy/deployment-tools"
 pagination_prev: "docs/deploy/hybrid-projects"
 ---
 
-# Гибридная настройка <Lifecycle status='managed_plus'/>
+# Гибридная настройка <Lifecycle status='managed_plus'/> {#hybrid-setup}
 
 <IntroText>
 Настройте Hybrid‑проекты, чтобы загружать артефакты <Constant name="core" /> в <Constant name="cloud" /> и получить лучшую совместную работу и прозрачность.
@@ -16,7 +16,7 @@ pagination_prev: "docs/deploy/hybrid-projects"
 Hybrid‑проекты доступны в режиме публичного превью для [Enterprise‑аккаунтов <Constant name="cloud" />](https://www.getdbt.com/pricing).
 :::
 
-## Настройка гибридных проектов
+## Настройка гибридных проектов {#set-up-hybrid-projects}
 
 В Hybrid‑проекте вы используете <Constant name="core" /> локально и можете загружать артефакты этого проекта <Constant name="core" /> в <Constant name="cloud" /> для централизованной видимости, кросс‑проектных ссылок и более удобного сотрудничества.
 
@@ -78,7 +78,7 @@ Hybrid‑проекты доступны в режиме публичного п
 6. (Опционально) Чтобы обновить существующий dbt‑проект до hybrid‑проекта, перейдите в **Account settings**, выберите **Project**, нажмите **Edit** и отметьте чекбокс **Hybrid development**.
 <Lightbox src="/img/docs/deploy/hp-existing-project.jpg" width="80%" title="Hybrid‑проект для существующего проекта" />
 
-### Сгенерируйте service token и значения для загрузки артефактов
+### Сгенерируйте service token и значения для загрузки артефактов {#generate-service-token-and-artifact-upload-values}
 
 Администратор <Constant name="cloud" /> должен выполнить эти шаги, чтобы сгенерировать [service token](/docs/dbt-cloud-apis/service-tokens#enterprise-plans-using-service-account-tokens) (с правами **Job Runner** и **Job Viewer**) и скопировать значения, необходимые для настройки проекта <Constant name="core" /> для загрузки артефактов в <Constant name="cloud" />.
 
@@ -96,7 +96,7 @@ Hybrid‑проекты доступны в режиме публичного п
 
 3. Обязательно скопируйте и сохраните эти значения — они понадобятся для настройки проекта <Constant name="core" /> на следующем шаге. После создания service token получить его повторно невозможно.
 
-### Настройте dbt Core‑проект и загрузку артефактов
+### Настройте dbt Core‑проект и загрузку артефактов {#configure-dbt-core-project-and-upload-artifacts}
 
 Получив значения с предыдущего шага, вы можете подготовить проект <Constant name="core" /> к загрузке артефактов, выполнив следующие действия:
 
@@ -142,7 +142,7 @@ Hybrid‑проекты доступны в режиме публичного п
 
 6. После завершения выполнения вы должны увидеть сообщение `Artifacts uploaded successfully to artifact ingestion API: command run completed successfully`, а также запуск в <Constant name="cloud" /> в вашей production‑среде.
 
-### Просмотрите артефакты в dbt platform
+### Просмотрите артефакты в dbt platform {#review-artifacts-in-the-dbt-platform}
 
 После загрузки артефактов dbt Core в <Constant name="dbt_platform" /> и выполнения `dbt run` вы можете просмотреть запуск job с артефактами:
 
@@ -153,7 +153,7 @@ Hybrid‑проекты доступны в режиме публичного п
 
 <Lightbox src="/img/docs/deploy/hp-artifact-job.jpg" width="70%" title="Запуск job в hybrid‑проекте с импортом артефактов" />
 
-## Преимущества использования hybrid‑проектов
+## Преимущества использования hybrid‑проектов {#benefits-of-using-hybrid-projects}
 
 Теперь, когда вы интегрировали артефакты <Constant name="core" /> с проектом <Constant name="cloud" />, вы можете:
 

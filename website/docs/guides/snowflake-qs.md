@@ -9,7 +9,7 @@ hide_table_of_contents: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом руководстве быстрого старта вы узнаете, как использовать <Constant name="cloud" /> со Snowflake. В нем показано, как:
 
@@ -30,12 +30,12 @@ Snowflake также предоставляет собственный quickstar
 Также вы можете посмотреть [видео на YouTube про dbt и Snowflake](https://www.youtube.com/watch?v=kbCkwhySV_I&list=PL0QYlrC86xQm7CoOH6RS7hcgLnd3OQioG).
 :::
  
-### Предварительные требования​
+### Предварительные требования​ {#prerequisites}
 
 - У вас есть [аккаунт <Constant name="cloud" />](https://www.getdbt.com/signup/). 
 - У вас есть [trial‑аккаунт Snowflake](https://signup.snowflake.com/). При создании trial‑аккаунта обязательно выберите редакцию Snowflake **Enterprise**, чтобы у вас был доступ `ACCOUNTADMIN`. Для полноценного внедрения стоит учитывать организационные вопросы при выборе облачного провайдера. Подробнее см. [Introduction to Cloud Platforms](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms.html) в документации Snowflake. Для целей этой настройки подойдут любые облачные провайдеры и регионы — выбирайте любой удобный.
 
-### Связанные материалы
+### Связанные материалы {#related-content}
 
 - Узнайте больше с помощью [курсов dbt Learn](https://learn.getdbt.com)
 - [Как мы настраиваем Snowflake](https://blog.getdbt.com/how-we-configure-snowflake/)
@@ -44,17 +44,17 @@ Snowflake также предоставляет собственный quickstar
 - [Уведомления о job](/docs/deploy/job-notifications)
 - [Актуальность источников (Source freshness)](/docs/deploy/source-freshness)
 
-## Создание нового Snowflake worksheet 
+## Создание нового Snowflake worksheet {#create-a-new-snowflake-worksheet}
 1. Войдите в ваш trial‑аккаунт Snowflake. 
 2. В интерфейсе Snowflake нажмите **+ Create** в левом верхнем углу под логотипом Snowflake — откроется выпадающее меню. Выберите первый пункт **SQL Worksheet**. 
 
-## Загрузка данных 
+## Загрузка данных {#load-data}
 
 import LoadData from '/snippets/_load-data.md';
 
 <LoadData/>
 
-## Подключение dbt к Snowflake
+## Подключение dbt к Snowflake {#connect-dbt-to-snowflake}
 
 Существует два способа подключить <Constant name="cloud" /> к Snowflake. Первый — Partner Connect, который предоставляет упрощенную настройку и позволяет создать аккаунт <Constant name="cloud" /> прямо из вашего нового trial‑аккаунта Snowflake. Второй — создать аккаунт <Constant name="cloud" /> отдельно и настроить подключение к Snowflake вручную. Если вы хотите начать как можно быстрее, dbt Labs рекомендует использовать Partner Connect. Если же вы хотите с самого начала кастомизировать настройку и лучше разобраться в процессе конфигурации <Constant name="cloud" />, dbt Labs рекомендует ручное подключение.
 
@@ -133,12 +133,12 @@ import LoadData from '/snippets/_load-data.md';
 </TabItem>
 </Tabs>
 
-## Настройка управляемого репозитория dbt
+## Настройка управляемого репозитория dbt {#set-up-a-dbt-managed-repository}
 Если вы использовали Partner Connect, можете перейти сразу к разделу [инициализация dbt‑проекта](#initialize-your-dbt-project-and-start-developing), так как Partner Connect уже предоставляет управляемый репозиторий. В противном случае вам потребуется создать подключение к репозиторию вручную.
 
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация dbt‑проекта и начало разработки
+## Инициализация dbt‑проекта и начало разработки {#initialize-your-dbt-project-and-start-developing}
 Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
 1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске это может занять несколько минут, так как настраивается git‑подключение, клонируется репозиторий и проверяется соединение с warehouse.
@@ -171,7 +171,7 @@ grant all on future tables in database raw to role snowflake_role_name;
 
 :::
 
-## Создание первой модели
+## Создание первой модели {#build-your-first-model}
 
 В <Constant name="cloud_ide" /> есть два варианта работы с файлами:
 
@@ -246,15 +246,15 @@ select * from final
 
 Позже вы сможете подключить инструменты бизнес‑аналитики (BI) к этим представлениям и таблицам, чтобы они читали уже очищенные данные, а не сырые.
 
-## Изменение способа материализации модели
+## Изменение способа материализации модели {#change-the-way-your-model-is-materialized}
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Удаление примерных моделей
+## Удаление примерных моделей {#delete-the-example-models}
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Построение моделей поверх других моделей
+## Построение моделей поверх других моделей {#build-models-on-top-of-other-models}
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
@@ -352,7 +352,7 @@ select * from final
 <FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="По мере создания новых моделей, как лучше организовать проект? Как называть модели?" />
 
-## Построение моделей поверх источников
+## Построение моделей поверх источников {#build-models-on-top-of-sources}
 
 Источники (sources) позволяют именовать и описывать данные, загруженные в ваш warehouse инструментами извлечения и загрузки. Объявляя эти таблицы как источники в dbt, вы можете:
 - выбирать данные из source‑таблиц в моделях с помощью функции `{{ source() }}`, определяя lineage данных;

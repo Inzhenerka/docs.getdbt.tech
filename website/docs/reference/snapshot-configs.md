@@ -11,7 +11,7 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 import CourseCallout from '/snippets/_materialization-video-callout.md';
 
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 * [Снимки](/docs/build/snapshots)
 * Команда `dbt snapshot` [command](/reference/commands/snapshot)
 
@@ -21,8 +21,8 @@ url="https://learn.getdbt.com/courses/snapshots"
 course="Snapshots"
 />
 
-## Доступные конфигурации
-### Конфигурации, специфичные для snapshot’ов
+## Доступные конфигурации {#available-configurations}
+### Конфигурации, специфичные для snapshot’ов {#snapshot-specific-configurations}
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -103,7 +103,7 @@ import LegacySnapshotConfig from '/snippets/_legacy-snapshot-config.md';
 
 </Tabs>
 
-### Миграция конфигурации снимков
+### Миграция конфигурации снимков {#snapshot-configuration-migration}
 
 Последние конфигурации снапшотов, представленные в dbt Core v1.9 (такие как [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) и `hard_deletes`), лучше всего подходят для новых снапшотов. Однако вы также можете внедрить их в уже существующие снапшоты, аккуратно выполнив миграцию схемы таблицы и конфигураций, чтобы избежать несогласованностей в данных снапшота.
 
@@ -157,7 +157,7 @@ import LegacySnapshotConfig from '/snippets/_legacy-snapshot-config.md';
 Если вы используете одну из последних конфигураций, таких как `dbt_valid_to_current`, без миграции ваших данных, у вас могут быть смешанные старые и новые данные, что приведет к некорректному результату.
 :::
 
-### Общие конфигурации
+### Общие конфигурации {#general-configurations}
 
 <ConfigGeneral />
 
@@ -231,7 +231,7 @@ snapshots:
 
 </Tabs>
 
-## Настройка снимков
+## Настройка снимков {#configuring-snapshots}
 Снимки могут быть настроены несколькими способами:
 
 <VersionBlock firstVersion="1.9">
@@ -243,7 +243,7 @@ snapshots:
 
 Конфигурации снапшотов применяются иерархически в указанном выше порядке, при этом более высокие уровни имеют приоритет. Вы также можете применять [data tests](/reference/snapshot-properties) к снапшотам с помощью свойства [`tests`](/reference/resource-properties/data-tests).
 
-### Примеры
+### Примеры {#examples}
 
 <VersionBlock firstVersion="1.9">
 Следующие примеры демонстрируют, как настроить снимки с использованием файла `dbt_project.yml` и файла `.yml`.

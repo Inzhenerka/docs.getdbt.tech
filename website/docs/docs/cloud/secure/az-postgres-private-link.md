@@ -14,7 +14,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <CloudProviders type='Azure Database' />
 
-## Настройка Azure Private Link
+## Настройка Azure Private Link {#configure-azure-private-link}
 
 В Azure portal:
 
@@ -33,7 +33,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
     ```
 5. После того как команда поддержки подтвердит, что endpoint создан, перейдите к Azure Database for Postgres Flexible Server в Azure Portal и откройте **Settings** > **Networking**. В разделе **Private Endpoints** выделите вариант с именем `dbt` и выберите **Approve**. Подтвердите в Support, что соединение было одобрено, чтобы они могли проверить его и сделать доступным для использования в <Constant name="cloud" />.
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После завершения настройки в среде Azure вы сможете сконфигурировать private endpoint в <Constant name="cloud" />:
 

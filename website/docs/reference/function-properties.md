@@ -38,7 +38,7 @@ functions:
 ```
 </File>
 
-## Пример
+## Пример {#example}
 
 <File name='functions/schema.yml'>
 

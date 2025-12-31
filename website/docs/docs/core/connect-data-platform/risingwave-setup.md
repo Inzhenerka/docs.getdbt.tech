@@ -26,7 +26,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к RisingWave с помощью dbt-risingwave
+## Подключение к RisingWave с помощью dbt-risingwave {#connecting-to-risingwave-with-dbt-risingwave}
 
 Перед подключением к RisingWave убедитесь, что RisingWave установлен и запущен. Для получения дополнительной информации о том, как запустить RisingWave, см. [Руководство по быстрому старту RisingWave](https://docs.risingwave.com/get-started/quickstart).
 
@@ -65,7 +65,7 @@ default:
 dbt debug
 ```
 
-## Материализации
+## Материализации {#materializations}
 
 Модели dbt для управления преобразованиями данных в RisingWave аналогичны типичным SQL-моделям dbt. В адаптере `dbt-risingwave` мы настроили некоторые материализации, чтобы они соответствовали модели обработки потоковых данных RisingWave.
 
@@ -81,7 +81,7 @@ dbt debug
 |`table_with_connector`| Да| Создает таблицу с настройками коннектора. В RisingWave таблица с настройками коннектора аналогична источнику. Разница в том, что объект таблицы с настройками коннектора сохраняет необработанные потоковые данные в источнике, тогда как объект источника этого не делает. Чтобы использовать эту материализацию, добавьте `{{ config(materialized='table_with_connector') }}` в ваши SQL-файлы модели. Вам нужно предоставить ваше полное заявление о создании таблицы с коннектором в этой модели (см. [Примеры файлов моделей](https://docs.risingwave.com/integrations/other/dbt#example-model-files) для деталей). Поскольку таблицы dbt имеют свои собственные семантики, RisingWave использует `table_with_connector`, чтобы отличаться от таблицы dbt.|
 |`sink`| Да| Создает [приемник](https://docs.risingwave.com/sql/commands/sql-create-sink). Чтобы использовать эту материализацию, добавьте `{{ config(materialized='sink') }}` в ваши SQL-файлы. Вам нужно предоставить ваше полное заявление о создании приемника в этой модели. См. [Примеры файлов моделей](https://docs.risingwave.com/integrations/other/dbt#example-model-files) для деталей.|
 
-## Ресурсы
+## Ресурсы {#resources}
 
 - [Руководство RisingWave по использованию dbt для преобразований данных](https://docs.risingwave.com/integrations/other/dbt)
 - [Демонстрационный проект, использующий dbt для управления запросами Nexmark benchmark в RisingWave](https://github.com/risingwavelabs/dbt_rw_nexmark)

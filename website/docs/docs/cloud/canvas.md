@@ -10,7 +10,7 @@ image: /img/docs/dbt-cloud/canvas/canvas.png
 
 import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
-# О Canvas <Lifecycle status='managed,managed_plus'/> 
+# О Canvas <Lifecycle status='managed,managed_plus'/> {#about-canvas}
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
 <Constant name="visual_editor" /> помогает быстро получать доступ к данным и трансформировать их с помощью визуального интерфейса drag-and-drop, а также встроенного ИИ для генерации пользовательского кода.
@@ -29,13 +29,13 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 
-## Обратная связь
+## Обратная связь {#feedback}
 
 Обратите внимание: всегда проверяйте код и контент, сгенерированные ИИ, так как они могут содержать ошибки или некорректные результаты.
 
 Чтобы оставить обратную связь, пожалуйста, свяжитесь с вашей аккаунт-командой dbt Labs. Мы ценим ваши отзывы и предложения и используем их для улучшения <Constant name="visual_editor" />.
 
-## Ресурсы
+## Ресурсы {#resources}
 
 Узнайте больше о Canvas:
 

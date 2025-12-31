@@ -18,16 +18,16 @@ sources:
 
 </File>
 
-## Определение
+## Определение {#definition}
 Имя <Term id="table" />, как оно хранится в базе данных.
 
 Этот параметр полезен, если вы хотите использовать имя исходной таблицы, которое отличается от имени таблицы в базе данных.
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 По умолчанию dbt будет использовать параметр `name` таблицы в качестве идентификатора.
 
-## Примеры
-### Использование более простого имени для исходной таблицы, чем в базе данных
+## Примеры {#examples}
+### Использование более простого имени для исходной таблицы, чем в базе данных {#use-a-simpler-name-for-a-source-table-than-the-one-in-your-database}
 
 <File name='models/<filename>.yml'>
 
@@ -53,7 +53,7 @@ select * from {{ source('jaffle_shop', 'orders') }}
 select * from jaffle_shop.api_orders
 ```
 
-### Ссылка на шардированные таблицы как на источник в BigQuery
+### Ссылка на шардированные таблицы как на источник в BigQuery {#reference-sharded-tables-as-a-source-in-bigquery}
 
 <File name='models/<filename>.yml'>
 

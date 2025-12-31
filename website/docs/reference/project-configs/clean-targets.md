@@ -11,13 +11,13 @@ clean-targets: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 При необходимости укажите пользовательский список каталогов, которые будут удалены командой `dbt clean` [command](/reference/commands/clean). Таким образом, в этот список следует включать только каталоги, содержащие артефакты (например, скомпилированные файлы, логи, установленные пакеты).
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 Если эта конфигурация не включена в ваш файл `dbt_project.yml`, команда `clean` удалит файлы в вашем [target-path](/reference/global-configs/json-artifacts).
 
-## Примеры
+## Примеры {#examples}
 
 ### Удаление пакетов и скомпилированных файлов в рамках `dbt clean` (предпочтительно) {#remove-packages-and-compiled-files-as-part-of-dbt-clean}
 
@@ -39,7 +39,7 @@ clean-targets:
 
 Примечание: это конфигурация в [стартовом проекте](https://github.com/dbt-labs/dbt-starter-project/blob/HEAD/dbt_project.yml) dbt, который создается командой `init`.
 
-### Удаление `logs` при выполнении `dbt clean`
+### Удаление `logs` при выполнении `dbt clean` {#remove-logs-when-running-dbt-clean}
 
 <File name='dbt_project.yml'>
 

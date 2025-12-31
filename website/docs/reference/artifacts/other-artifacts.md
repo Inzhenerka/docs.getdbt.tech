@@ -3,7 +3,7 @@ title: "Другие файлы артефактов"
 sidebar_label: "Другие артефакты"
 ---
 
-### index.html
+### index.html {#indexhtml}
 
 **Создается с помощью:** [`docs generate`](/reference/commands/cmd-docs)
 
@@ -11,19 +11,19 @@ sidebar_label: "Другие артефакты"
 
 Примечание: исходный код для `index.json` находится в [репозитории dbt-docs](https://github.com/dbt-labs/dbt-docs). Обратитесь туда, если хотите сообщить об ошибке, предложить улучшение или внести вклад, связанный с сайтом документации.
 
-### partial_parse.msgpack
+### partial_parse.msgpack {#partial_parsemsgpack}
 
 **Создается с помощью:** [manifest commands](/reference/artifacts/manifest-json) + [`parse`](/reference/commands/parse)
 
 Этот файл используется для хранения сжатого представления файлов, которые dbt уже разобрал. Если у вас включен [частичный разбор](/reference/parsing#partial-parsing), dbt будет использовать этот файл для определения изменившихся файлов и избегать повторного разбора остальных.
 
-### graph.gpickle
+### graph.gpickle {#graphgpickle}
 
 **Создается с помощью:** команды, поддерживающие [выбор узлов](/reference/node-selection/syntax)
 
 Хранит сетевое представление DAG ресурсов dbt.
 
-### graph_summary.json
+### graph_summary.json {#graph_summaryjson}
 
 **Создается с помощью:** [manifest commands](/reference/artifacts/manifest-json)
 

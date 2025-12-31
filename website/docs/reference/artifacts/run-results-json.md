@@ -24,7 +24,7 @@ sidebar_label: "Результаты выполнения"
 
 Примечание: `dbt source freshness` создает другой артефакт, [`sources.json`](/reference/artifacts/sources-json), с аналогичными атрибутами.
 
-### Ключи верхнего уровня
+### Ключи верхнего уровня {#top-level-keys}
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
 - `args`: Словарь аргументов, переданных в команду CLI или метод RPC, который создал этот артефакт. Наиболее полезны `which` (команда) или `rpc_method`. Этот словарь исключает значения null и включает значения по умолчанию, если они не null. Эквивалентно [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) в контексте dbt-Jinja.
@@ -54,11 +54,11 @@ import RowsAffected from '/snippets/_run-result.md';
 
 Продолжайте искать дополнительную информацию о `логическом` состоянии узлов, используя полный объект узла в manifest.json через `unique_id`.
 
-## Примеры
+## Примеры {#examples}
 
 Вот несколько примеров и результирующий вывод в файл `run_results.json`.
 
-### Результаты компиляции модели
+### Результаты компиляции модели {#compile-model-results}
 
 Предположим, у вас есть модель, которая выглядит следующим образом:
 
@@ -105,7 +105,7 @@ dbt compile -s my_model
     }
 ```
 
-### Запуск общих тестов данных
+### Запуск общих тестов данных {#run-generic-data-tests}
 
 Используйте конфигурацию [`store_failures_as`](/reference/resource-configs/store_failures_as), чтобы сохранять отказы только для одного теста данных в базе данных:
 

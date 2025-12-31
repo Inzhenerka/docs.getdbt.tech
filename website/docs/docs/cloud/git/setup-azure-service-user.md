@@ -5,7 +5,7 @@ description: "Вы можете настроить Azure DevOps, создав п
 sidebar_label: "Настройка сервисного пользователя"
 ---
 
-## Обзор сервисного пользователя
+## Обзор сервисного пользователя {#service-user-overview}
 
 :::important
 
@@ -31,7 +31,7 @@ sidebar_label: "Настройка сервисного пользователя
 - администратор аккаунта <Constant name="cloud" />
 - администратор Azure (если среды Entra ID и Azure DevOps не связаны)
 
-## Регистрация приложения Microsoft Entra ID
+## Регистрация приложения Microsoft Entra ID {#register-a-microsoft-entra-id-app}
 
 Администратор Microsoft Entra ID должен выполнить следующие шаги:
 
@@ -52,7 +52,7 @@ sidebar_label: "Настройка сервисного пользователя
 
 <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/AD app.png" title="Регистрация приложения Microsoft Entra ID"/>
 
-## Добавление разрешений для нового приложения
+## Добавление разрешений для нового приложения {#add-permissions-to-your-new-app}
 
 Администратор Entra ID должен предоставить новому приложению доступ к Azure DevOps:
 
@@ -64,7 +64,7 @@ sidebar_label: "Настройка сервисного пользователя
 
 <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/user-impersonation.gif" title="Добавление разрешений для приложения"/>
 
-## Добавление дополнительного redirect URI
+## Добавление дополнительного redirect URI {#add-another-redirect-uri}
 
 Администратор Microsoft Entra ID должен добавить еще один redirect URI в приложение Entra ID. Этот redirect URI будет использоваться для аутентификации сервисного пользователя при headless‑действиях в средах деплоя.
 
@@ -78,7 +78,7 @@ sidebar_label: "Настройка сервисного пользователя
 
 <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/redirect-uri.gif" title="Добавление redirect URI для сервисного пользователя"/>
 
-## Создание client secret
+## Создание client secret {#create-a-client-secret}
 
 Администратор Microsoft Entra ID должен выполнить следующие шаги:
 
@@ -88,7 +88,7 @@ sidebar_label: "Настройка сервисного пользователя
 4. Задайте описание секрета и выберите срок действия. Нажмите **Add**.
 5. Скопируйте значение поля **Value** и безопасно передайте его администратору аккаунта <Constant name="cloud" />, который завершит настройку.
 
-## Подключение Azure DevOps к новому приложению
+## Подключение Azure DevOps к новому приложению {#connect-azure-devops-to-your-new-app}
 
 Администратору Azure потребуется одно из следующих разрешений как в Microsoft Entra ID, так и в Azure DevOps:
 - Azure Service Administrator
@@ -104,7 +104,7 @@ sidebar_label: "Настройка сервисного пользователя
 
 <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/connect AD to Azure DevOps.gif" title="Подключение Azure DevOps и Microsoft Entra ID"/>
 
-## Добавление приложения Microsoft Entra ID в dbt
+## Добавление приложения Microsoft Entra ID в dbt {#add-your-microsoft-entra-id-app-to-dbt}
 
 Администратор аккаунта <Constant name="cloud" /> должен выполнить следующие шаги.
 
@@ -122,7 +122,7 @@ sidebar_label: "Настройка сервисного пользователя
 
 Теперь приложение Microsoft Entra ID должно быть добавлено в ваш аккаунт <Constant name="cloud" />. Участники команды, которые хотят разрабатывать в <Constant name="cloud_ide" /> или использовать CLI <Constant name="cloud" />, могут персонально [авторизовать Azure DevOps из своего профиля](/docs/cloud/git/authenticate-azure).
 
-## Подключение сервисного пользователя
+## Подключение сервисного пользователя {#connect-a-service-user}
 
 Сервисный пользователь — это псевдо‑пользователь, который настраивается аналогично реальному пользователю‑администратору, но получает разрешения, специально ограниченные для взаимодействия сервис‑к‑сервису. Следует избегать привязки аутентификации к реальному пользователю Azure DevOps, поскольку при его уходе из организации <Constant name="cloud" /> потеряет доступ к репозиториям dbt в Azure DevOps, что приведет к сбоям production‑запусков.
 
@@ -130,7 +130,7 @@ sidebar_label: "Настройка сервисного пользователя
 <Constant name="cloud" /> обновляет аутентификацию сервисного пользователя при каждом запуске, инициированном планировщиком, API или CI. Если в аккаунте не было активных запусков более 90 дней, администратору потребуется вручную обновить аутентификацию сервисного пользователя, отключив и повторно подключив его профиль через OAuth‑процесс, описанный выше, чтобы возобновить headless‑взаимодействия, такие как настройка проектов, deployment‑запуски и CI.
 :::
 
-### Разрешения сервисного пользователя
+### Разрешения сервисного пользователя {#service-users-permissions}
 
 Аккаунт сервисного пользователя должен иметь следующие разрешения Azure DevOps для всех проектов и репозиториев, к которым требуется доступ в <Constant name="cloud" />. Ниже описано, как <Constant name="cloud" /> использует каждое из этих разрешений.
 

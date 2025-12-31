@@ -9,7 +9,7 @@ import MacroArgsNote from '/snippets/_validate-macro-args.md';
 
 Чтобы задокументировать макросы, используйте [schema file](/reference/macro-properties) и вложите конфигурации под ключом `macros:`
 
-## Пример
+## Пример {#example}
 
 <File name='macros/schema.yml'>
 
@@ -32,7 +32,7 @@ macros:
 
 <MacroArgsNote />
 
-## Документирование пользовательской материализации
+## Документирование пользовательской материализации {#document-a-custom-materialization}
 
 Когда вы создаёте [пользовательскую материализацию](/guides/create-new-materializations), dbt создаёт связанную с ней макрос с форматом, показанным ниже:
 ```

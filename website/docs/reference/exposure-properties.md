@@ -3,11 +3,11 @@ title: Свойства экспозиций
 description: "Прочтите это руководство, чтобы понять свойства экспозиций в dbt."
 ---
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 - [Использование экспозиций](/docs/build/exposures)
 - [Объявление свойств ресурсов](/reference/configs-and-properties)
 
-## Обзор
+## Обзор {#overview}
 
 import PropsCallout from '/snippets/_config-prop-callout.md';
 
@@ -48,7 +48,7 @@ exposures:
 ```
 </File>
 
-## Пример
+## Пример {#example}
 
 <File name='models/jaffle/exposures.yml'>
 
@@ -100,7 +100,7 @@ exposures:
 
 </File>
 
-#### Конфигурации на уровне проекта
+#### Конфигурации на уровне проекта {#project-level-configs}
 
 Вы можете задать конфигурации на уровне проекта для exposures в файле `dbt_project.yml` в секции `exposures:` с использованием префикса `+`. В настоящее время поддерживается только [конфигурация `enabled`](/reference/resource-configs/enabled):
 

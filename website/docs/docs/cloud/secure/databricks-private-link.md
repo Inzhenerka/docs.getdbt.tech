@@ -15,7 +15,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <CloudProviders type='Databricks'/>
 
-## Настройка Azure Private Link
+## Настройка Azure Private Link {#configure-azure-private-link}
 
 1. Перейдите в ваш рабочий процесс Azure Databricks.  
     Формат пути: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Databricks/workspaces/<workspace_name>`.
@@ -33,7 +33,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
     ```
 5. После того как команда поддержки подтвердит, что ресурсы доступны в портале Azure, перейдите в рабочее пространство Azure Databricks и откройте **Networking** > **Private Endpoint Connections**. Затем выделите вариант с именем `dbt` и нажмите **Approve**.
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После завершения настройки в среде Databricks вы сможете настроить приватный эндпоинт в <Constant name="cloud" />:
 

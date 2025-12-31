@@ -25,29 +25,29 @@ description: "Learn about dbt's deployment environment to seamlessly schedule jo
 
 Мы настоятельно рекомендуем использовать тип среды `Производственная` для окончательных, достоверных данных развертывания. Может быть только одна среда, отмеченная для окончательных производственных рабочих процессов, и мы не рекомендуем использовать `Общую` среду для этой цели.
 
-## Создание среды развертывания
+## Создание среды развертывания {#create-a-deployment-environment}
 
 Чтобы создать новое окружение развёртывания <Constant name="cloud" />, перейдите в **Deploy** → **Environments**, а затем нажмите **Create Environment**. В качестве типа окружения выберите **Deployment**. Этот вариант будет недоступен (подсвечен серым), если у вас уже есть окружение разработки.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-deploy-env.png" width="85%" title="Перейдите в Deploy -> Environments, чтобы создать среду развертывания" />
 
-### Установить как производственную среду
+### Установить как производственную среду {#set-as-production-environment}
 
 В <Constant name="cloud" /> каждый проект может иметь одну назначенную среду развертывания, которая служит его production‑средой. Эта production‑среда _критически важна_ для использования таких возможностей, как <Constant name="explorer" /> и межпроектные ссылки. Она выступает в роли источника истины о production‑состоянии проекта в <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings-1.png" width="100%" title="Установите вашу производственную среду в качестве среды по умолчанию в настройках среды"/>
 
-### Семантический слой
+### Семантический слой {#semantic-layer}
 
 Для клиентов, использующих <Constant name="semantic_layer" />, следующий раздел настроек окружения посвящён конфигурациям <Constant name="semantic_layer" />. В руководстве по настройке [The <Constant name="semantic_layer" /> setup guide](/docs/use-dbt-semantic-layer/setup-sl) приведены самые актуальные инструкции по установке и настройке.
 
 Вы также можете использовать планировщик задач dbt для [проверки ваших семантических узлов в задаче CI](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы убедиться, что изменения в коде dbt моделей не нарушают эти метрики.
 
-## Промежуточная среда
+## Промежуточная среда {#staging-environment}
 
 Используйте Staging‑окружение, чтобы предоставить разработчикам доступ к workflow развертывания и инструментам, одновременно контролируя доступ к production‑данным. Staging‑окружения позволяют добиться более тонкого управления правами доступа, подключениями к хранилищу данных и изоляцией данных — в рамках одного проекта в <Constant name="cloud" />.
 
-### Git-рабочий процесс
+### Git-рабочий процесс {#git-workflow}
 
 Вы можете подойти к этому несколькими способами, но самый простой — это настроить промежуточную среду с долгоживущей веткой (например, `staging`), аналогичной, но отдельной от основной ветки (например, `main`).
 
@@ -55,7 +55,7 @@ description: "Learn about dbt's deployment environment to seamlessly schedule jo
 
 Некоторые клиенты предпочитают подключать разработку и промежуточную среду к своей ветке `main`, а затем регулярно создавать ветки релизов (ежедневно или еженедельно), которые питаются в производственную среду.
 
-### Зачем использовать промежуточную среду
+### Зачем использовать промежуточную среду {#why-use-a-staging-environment}
 
 Основные причины использования промежуточной среды:
 1. Дополнительный уровень проверки перед развертыванием изменений в производственной среде. Вы можете развертывать, тестировать и исследовать ваши dbt модели в промежуточной среде.
@@ -87,7 +87,7 @@ sources:
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="85%" title="Исследуйте в промежуточной среде" />
 
 
-### Создание staging‑окружения
+### Создание staging‑окружения {#create-a-staging-environment}
 
 В <Constant name="cloud" /> перейдите в **Deploy** -> **Environments**, затем нажмите **Create Environment**. Выберите **Deployment** в качестве типа окружения. Эта опция будет неактивна (серой), если у вас уже есть окружение разработки.
 
@@ -98,7 +98,7 @@ sources:
 
 Мы рекомендуем, чтобы учётные данные хранилища данных принадлежали выделенному пользователю или service principal.
 
-## Подключение для развертывания
+## Подключение для развертывания {#deployment-connection}
 
 :::info Подключения к хранилищу данных
 
@@ -130,7 +130,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-connection.png" width="85%" title="Snowflake Deployment Connection Settings"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields}
 
 - **Role**: роль Snowflake  
 - **Database**: целевая база данных  
@@ -154,7 +154,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/databricks-deploy-env-deploy-connection.png" width="85%" title="Databricks Deployment Connection Settings"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-1}
 
 - **Catalog** (необязательно): [пространство имён Unity Catalog](/docs/core/connect-data-platform/databricks-setup)
 
@@ -163,7 +163,7 @@ sources:
 </WHCode>
 
 
-### Учетные данные для развертывания
+### Учетные данные для развертывания {#deployment-credentials}
 
 Этот раздел позволяет определить учётные данные, которые будут использоваться при подключении к вашему хранилищу. Методы аутентификации могут различаться в зависимости от типа хранилища и используемого уровня <Constant name="cloud" />.
 
@@ -175,7 +175,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Postgres"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-2}
 
 - **Username**: имя пользователя Postgres (скорее всего service account)
 - **Password**: пароль Postgres для указанного пользователя
@@ -187,7 +187,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Redshift"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-3}
 
 - **Username**: имя пользователя Redshift (скорее всего service account)
 - **Password**: пароль Redshift для указанного пользователя
@@ -199,7 +199,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Snowflake"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-4}
 
 - **Auth Method**: определяет способ подключения dbt к вашему warehouse
   - Один из: [**Username & Password**, **Key Pair**]
@@ -218,7 +218,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/bigquery-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Bigquery"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-5}
 
 - **Dataset**: целевой датасет
 
@@ -230,7 +230,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Spark"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-6}
 
 - **Token**: токен доступа
 - **Schema**: целевая схема
@@ -241,7 +241,7 @@ sources:
 
 <Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки deployment credentials для Databricks"/>
 
-#### Редактируемые поля
+#### Редактируемые поля {#editable-fields-7}
 
 - **Token**: токен доступа
 - **Schema**: целевая схема
@@ -250,13 +250,13 @@ sources:
 
 </WHCode>
 
-## Удаление окружения
+## Удаление окружения {#delete-an-environment}
 
 import DeleteEnvironment from '/snippets/_delete-environment.md';
 
 <DeleteEnvironment />
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 
 - [Best practices для окружений <Constant name="cloud" />](/guides/set-up-ci)
 - [Deploy jobs](/docs/deploy/deploy-jobs)

@@ -13,7 +13,7 @@ slug: /sql-reference/and
 
 Используйте эту страницу, чтобы понять, как использовать оператор AND и почему он может быть полезен в аналитической инженерии.
 
-## Как использовать оператор AND
+## Как использовать оператор AND {#how-to-use-the-and-operator}
 
 Использовать оператор AND просто, и вы обычно увидите его в предложении WHERE для соответствующей фильтрации результатов запроса, в операторах case или в объединениях, которые включают несколько полей.
 
@@ -35,7 +35,7 @@ join <table_b> on
 :::
 :::
 
-### Пример оператора SQL AND
+### Пример оператора SQL AND {#sql-and-operator-example}
 
 ```sql
 select
@@ -55,6 +55,6 @@ limit 3
 | 88 | shipped | 29 |
 | 78 | shipped | 26 |
 
-## Синтаксис оператора AND в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис оператора AND в Snowflake, Databricks, BigQuery и Redshift {#and-operator-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Snowflake, Databricks, Google BigQuery и Amazon Redshift поддерживают оператор AND с одинаковым синтаксисом на каждой платформе.

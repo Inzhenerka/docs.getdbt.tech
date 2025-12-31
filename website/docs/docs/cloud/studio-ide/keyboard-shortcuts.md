@@ -23,7 +23,7 @@ Cloud IDE предоставляет горячие клавиши, функци
 | Открыть [**Invocation History Drawer**](/docs/cloud/studio-ide/ide-user-interface#invocation-history), расположенный в нижней части IDE. | Control-backtick (или Control + `) | Control-backtick (или Ctrl + `) | 
 | Добавить блочный комментарий к выделенному коду. В SQL-файлах будет использоваться синтаксис Jinja `({# #})`, а не SQL-синтаксис `(/* */)`. | Shift-Option-A | Shift-Alt-A |
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Краткое руководство](/guides)
 - [О <Constant name="cloud" />](/docs/cloud/about-cloud/dbt-cloud-features)

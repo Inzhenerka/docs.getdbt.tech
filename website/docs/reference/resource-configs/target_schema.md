@@ -34,17 +34,17 @@ snapshots:
 
 </File>
 
-## Описание
+## Описание {#description}
 Схема, в которую dbt должен построить [снимок](/docs/build/snapshots) <Term id="table" />. Когда указан `target_schema`, снимки строятся в ту же `target_schema`, независимо от того, кто их запускает.
 
 На **BigQuery** это аналогично `dataset`.
 
-## По умолчанию
+## По умолчанию {#default}
 
 <VersionBlock firstVersion="1.9">В dbt Core v1.9+ и в релизном треке <Constant name="cloud" /> «Latest» этот параметр не является обязательным.</VersionBlock>
 
-## Примеры
-### Построение всех снимков в схеме с именем `snapshots`
+## Примеры {#examples}
+### Построение всех снимков в схеме с именем `snapshots` {#build-all-snapshots-in-a-schema-named-snapshots}
 
 <File name='dbt_project.yml'>
 

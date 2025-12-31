@@ -17,7 +17,7 @@ sidebar_label: "Об артефактах dbt"
 - выявлять исторические изменения в структуре <Term id="table" />
 - и делать многое, многое другое
 
-### Когда создаются артефакты? <Lifecycle status="self_service,managed" />
+### Когда создаются артефакты? <Lifecycle status="self_service,managed" /> {#when-are-artifacts-produced}
 
 Большинство команд dbt (и соответствующих RPC методов) создают артефакты:
 - [семантический манифест](/reference/artifacts/sl-manifest): создается всякий раз, когда ваш dbt проект анализируется
@@ -28,11 +28,11 @@ sidebar_label: "Об артефактах dbt"
 
 При запуске команд из [<Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation) по умолчанию загружаются все артефакты. Если вы хотите изменить это поведение, обратитесь к разделу [How to skip artifacts from being downloaded](/docs/cloud/configure-cloud-cli#how-to-skip-artifacts-from-being-downloaded).
 
-## Где создаются артефакты?
+## Где создаются артефакты? {#where-are-artifacts-produced}
 
 По умолчанию артефакты записываются в директорию `/target` вашего dbt проекта. Вы можете настроить расположение с помощью флага [`target-path`](/reference/global-configs/json-artifacts).
 
-## Общие метаданные
+## Общие метаданные {#common-metadata}
 
 Все артефакты, создаваемые dbt, включают словарь `metadata` с такими свойствами:
 
@@ -49,10 +49,10 @@ sidebar_label: "Об артефактах dbt"
 - `project_id`: Идентификатор проекта, хешированный из `project_name`, отправляется с анонимной статистикой использования, если она включена.
 - `user_id`: Идентификатор пользователя, по умолчанию хранится в `~/dbt/.user.yml`, отправляется с анонимной статистикой использования, если она включена.
 
-#### Примечания:
+#### Примечания: {#notes}
 
 - Структура dbt артефактов канонизирована с помощью [JSON схем](https://json-schema.org/), которые размещены на [schemas.getdbt.com](https://schemas.getdbt.com/).
 - Версии артефактов могут изменяться в любой минорной версии dbt (`v1.x.0`). Каждый артефакт версионируется независимо.
 
-## Связанные документы
+## Связанные документы {#related-docs}
 - [Другие артефакты](/reference/artifacts/other-artifacts) файлы, такие как `index.html` или `graph_summary.json`.

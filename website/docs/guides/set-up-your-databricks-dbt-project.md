@@ -12,13 +12,13 @@ level: 'Intermediate'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Databricks и dbt Labs сотрудничают, чтобы помочь командам по работе с данными мыслить как команды разработчиков программного обеспечения и быстрее предоставлять надежные данные. Адаптер dbt-databricks позволяет пользователям dbt использовать последние функции Databricks в своем dbt проекте. Сотни клиентов уже используют dbt и Databricks для создания выразительных и надежных конвейеров данных на Lakehouse, создавая активы данных, которые позволяют использовать аналитику, ML и AI в бизнесе.
 
 В этом руководстве мы обсудим, как настроить ваш dbt проект на платформе Databricks Lakehouse, чтобы он масштабировался от небольшой команды до крупной организации.
 
-## Настройка окружений Databricks
+## Настройка окружений Databricks {#configuring-the-databricks-environments}
 
 Для начала мы будем использовать **Unity Catalog** в Databricks. Без него мы не смогли бы спроектировать отдельные [окружения](/docs/environments-in-dbt) для разработки и продакшена в соответствии с нашими [лучшими практиками](/best-practices/how-we-structure/1-guide-overview). Кроме того, он позволяет нам с помощью SQL убедиться, что применены корректные настройки контроля доступа. Для работы с ним вам потребуется использовать адаптер **dbt-databricks** (а не **dbt-spark**).
 
@@ -37,7 +37,7 @@ create catalog if not exists prod;
 
 Пока вашему разработчику предоставлен доступ на запись в каталог данных dev, нет необходимости заранее создавать песочницы-схемы.
 
-## Настройка сервисных принципалов
+## Настройка сервисных принципалов {#setting-up-service-principals}
 
 Когда аналитический инженер запускает проект dbt из своего <Constant name="cloud_ide" />, совершенно нормально, что итоговые запросы выполняются от имени этого пользователя. Однако для продакшен‑запусков мы хотим, чтобы выполнение происходило от имени *service principal*. Напомним, что service principal — это безличная учётная запись, не принадлежащая конкретному человеку.
 
@@ -49,7 +49,7 @@ create catalog if not exists prod;
 2. Добавьте сервисный принципал в любые группы, членом которых он должен быть на данный момент. Более подробная информация о разрешениях содержится в нашем руководстве ["Лучшие практики Unity Catalog"](/best-practices/dbt-unity-catalog-best-practices).
 3. [Добавьте сервисный принципал в ваше рабочее пространство](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#add-a-service-principal-to-a-workspace) и примените все [необходимые права](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#add-a-service-principal-to-a-workspace-using-the-admin-console), такие как доступ к Databricks SQL и доступ к рабочему пространству.
 
-## Настройка вычислительных ресурсов Databricks
+## Настройка вычислительных ресурсов Databricks {#setting-up-databricks-compute}
 
 Когда вы запускаете проект dbt, он генерирует SQL, который может выполняться на All Purpose Clusters или SQL warehouses. Мы настоятельно рекомендуем запускать SQL, сгенерированный dbt, в Databricks SQL warehouse. Поскольку SQL warehouses оптимизированы для выполнения SQL‑запросов, вы можете снизить затраты за счёт меньшего времени работы, необходимого для выполнения запросов. Кроме того, при отладке у вас будет доступ к Query Profile.
 
@@ -67,7 +67,7 @@ create catalog if not exists prod;
 
 В этом материале мы не рассматриваем Python, но если вы хотите узнать больше, ознакомьтесь с этой [документацией](/docs/build/python-models#specific-data-platforms). В зависимости от вашей нагрузки, вы можете создать более крупный SQL Warehouse для production‑процессов и использовать меньший SQL Warehouse для разработки (если вы не используете Serverless SQL Warehouses). По мере роста проекта вам также может понадобиться применять [настройки compute на уровне отдельных моделей](/reference/resource-configs/databricks-configs#specifying-the-compute-for-models).
 
-## Настройка вашего dbt проекта
+## Настройка вашего dbt проекта {#configure-your-dbt-project}
 
 Теперь, когда компоненты Databricks настроены, мы можем настроить наш dbt проект. Это включает в себя подключение dbt к нашему SQL складу Databricks для выполнения SQL запросов и использование системы контроля версий, такой как GitHub, для хранения нашего кода трансформации.
 
@@ -75,7 +75,7 @@ create catalog if not exists prod;
 
 Если вы начинаете новый dbt проект, следуйте приведенным ниже шагам. Для более подробного процесса настройки ознакомьтесь с нашим [руководством по быстрому старту.](/guides/databricks)
 
-### Подключение dbt к Databricks
+### Подключение dbt к Databricks {#connect-dbt-to-databricks}
 
 Сначала вам нужно подключить проект dbt к Databricks, чтобы он мог отправлять инструкции по трансформации и создавать объекты в Unity Catalog. Следуйте инструкциям для [<Constant name="cloud" />](/guides/databricks?step=4) или [Core](/docs/core/connect-data-platform/databricks-setup), чтобы настроить учетные данные для подключения вашего проекта.
 
@@ -95,7 +95,7 @@ create catalog if not exists prod;
 
 Во время первого вызова `dbt run`, dbt создаст схему разработчика, если она еще не существует в каталоге dev.
 
-## Определение среды развертывания dbt
+## Определение среды развертывания dbt {#defining-your-dbt-deployment-environment}
 
 Нам нужно дать dbt способ развертывания кода вне сред разработки. Для этого мы будем использовать [окружения](https://docs.getdbt.tech/docs/collaborate/environments) dbt, чтобы определить производственные цели, с которыми будут взаимодействовать конечные пользователи.
 

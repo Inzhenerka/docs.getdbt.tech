@@ -7,13 +7,13 @@ id: delete-environment-job
 
 Чтобы удалить среду или задание в <Constant name="cloud" />, у вас должна быть лицензия `developer` (см. [license](/docs/cloud/manage-access/seats-and-users)), а также необходимые [права доступа](/docs/cloud/manage-access/about-user-access).
 
-### Удаление задания
+### Удаление задания {#delete-a-job}
 
 import DeleteJob from '/snippets/_delete-job.md';
 
 <DeleteJob/>
 
-### Удаление среды
+### Удаление среды {#delete-an-environment}
 
 import DeleteEnvironment from '/snippets/_delete-environment.md';
 

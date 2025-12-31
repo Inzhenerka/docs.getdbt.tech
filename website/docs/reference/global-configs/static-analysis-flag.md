@@ -23,6 +23,6 @@ dbt run --static-analysis unsafe
 
 </File>
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 
 Также ознакомьтесь со страницами про [`static_analysis` (resource config)](/reference/resource-configs/static-analysis) на уровне модели и [About flags](/reference/global-configs/about-global-configs) для получения дополнительных сведений.

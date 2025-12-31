@@ -27,7 +27,7 @@ pagination_prev: null
 
 Для получения информации обо всех dbt командах и их аргументах (флагах) см. [Справочник команд dbt](/reference/dbt-commands). Если вы хотите перечислить все dbt команды из командной строки, выполните `dbt --help`. Чтобы перечислить конкретные аргументы dbt команды, выполните `dbt COMMAND_NAME --help`.
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Как мы настраиваем наши компьютеры для работы над проектами dbt](https://discourse.getdbt.com/t/how-we-set-up-our-computers-for-working-on-dbt-projects/243)
 - [Синтаксис выбора моделей](/reference/node-selection/syntax)

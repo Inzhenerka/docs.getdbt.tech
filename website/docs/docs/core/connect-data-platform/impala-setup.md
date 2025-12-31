@@ -20,7 +20,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Методы подключения
+## Методы подключения {#connection-methods}
 
 dbt-impala может подключаться к кластерам Apache Impala и Cloudera Data Platform.
 
@@ -32,14 +32,14 @@ dbt-impala может подключаться к кластерам Apache Impa
 
 Механизм по умолчанию — `binary`. Чтобы использовать HTTP-транспорт, используйте булевую опцию `use_http_transport: [true / false]`.
 
-## Методы аутентификации
+## Методы аутентификации {#authentication-methods}
 
 dbt-impala поддерживает три механизма аутентификации:
 - [`insecure`](#Insecure) Без аутентификации, рекомендуется только для тестирования.
 - [`ldap`](#ldap) Аутентификация через LDAP
 - [`kerberos`](#kerberos) Аутентификация через Kerberos (GSSAPI)
 
-### Небезопасно
+### Небезопасно {#insecure}
 
 Этот метод рекомендуется только в случае, если у вас установлена локальная версия Impala и вы хотите протестировать адаптер dbt-impala.
 
@@ -60,7 +60,7 @@ your_profile_name:
 
 </File>
 
-### LDAP
+### LDAP {#ldap}
 
 LDAP позволяет вам аутентифицироваться с помощью имени пользователя и пароля, когда Impala [настроена с аутентификацией LDAP](https://impala.apache.org/docs/build/html/topics/impala_ldap.html). LDAP поддерживается через механизмы подключения Binary и HTTP.
 
@@ -91,7 +91,7 @@ your_profile_name:
 
 Примечание: при создании пользователя workload в CDP убедитесь, что у этого пользователя есть права CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если пользователю требуется выполнять операторы GRANT, см., например, (/reference/resource-configs/grants) или (/reference/project-configs/on-run-start-on-run-end) — там описано, как настроить соответствующие права GRANT. При использовании Apache Ranger разрешения на выполнение GRANT обычно настраиваются с помощью опции **“Delegate Admin”**.
 
-### Kerberos
+### Kerberos {#kerberos}
 
 Механизм аутентификации Kerberos использует GSSAPI для передачи учетных данных Kerberos, когда Impala [настроена с аутентификацией Kerberos](https://impala.apache.org/docs/build/html/topics/impala_kerberos.html).
 
@@ -124,13 +124,13 @@ your_profile_name:
 - Получите keytab с помощью kinit (kinit username@YOUR_REALM.YOUR_DOMAIN)
 - Keytab действителен в течение определенного периода, после чего вам нужно будет снова запустить kinit для обновления его действительности.
 
-### Инструментирование
+### Инструментирование {#instrumentation}
 
 По умолчанию адаптер будет отправлять события инструментирования в Cloudera, чтобы помочь улучшить функциональность и понять ошибки. Если вы хотите специально отключить это, например, в производственной среде, вы можете явно установить флаг `usage_tracking: false` в вашем файле `profiles.yml`.
 
 В связи с этим, если вы хотите отключить анонимный сбор статистики использования в dbt Labs, см. раздел [YAML Configurations: Send anonymous usage stats](/reference/global-configs/about-global-configs#send-anonymous-usage-stats) для получения дополнительной информации.
 
-### Поддерживаемая функциональность
+### Поддерживаемая функциональность {#supported-functionality}
 
 | Название | Поддерживается |
 |------|-----------|

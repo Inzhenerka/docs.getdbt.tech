@@ -7,7 +7,7 @@ id: "cmd-docs"
 
 `dbt docs` поддерживает две подкоманды: `generate` и `serve`.
 
-### dbt docs generate
+### dbt docs generate {#dbt-docs-generate}
 
 Эта команда отвечает за генерацию сайта документации вашего проекта путем:
 
@@ -59,7 +59,7 @@ dbt docs generate --empty-catalog
 dbt docs generate --static
 ```
 
-### dbt docs serve
+### dbt docs serve {#dbt-docs-serve}
 
 Эта команда запускает веб-сервер на порту 8080 для локальной подачи вашей документации и открывает сайт документации в вашем браузере по умолчанию. Веб-сервер коренится в вашей директории `target/`. Убедитесь, что вы запустили `dbt docs generate` перед `dbt docs serve`, потому что команда `generate` создает [артефакт метаданных каталога](/reference/artifacts/catalog-json), от которого зависит команда `serve`. Вы увидите сообщение об ошибке, если каталог отсутствует.
 

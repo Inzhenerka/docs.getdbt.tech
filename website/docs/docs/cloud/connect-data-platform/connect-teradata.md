@@ -5,7 +5,7 @@ description: "Настройка подключения к платформе Te
 sidebar_label: "Подключение Teradata"
 ---
 
-# Подключение Teradata <Lifecycle status="preview" />
+# Подключение Teradata <Lifecycle status="preview" /> {#connect-teradata}
 
 Ваши окружения должны находиться на поддерживаемой [ветке релизов](/docs/dbt-versions/cloud-release-tracks), чтобы использовать подключение Teradata.
 
@@ -18,7 +18,7 @@ sidebar_label: "Подключение Teradata"
 
 <Lightbox src="/img/docs/dbt-cloud/teradata-connection.png" title="Пример полей подключения Teradata." />
 
-### Учетные данные для разработки и развертывания
+### Учетные данные для разработки и развертывания {#development-and-deployment-credentials}
 
 | Поле                         | Описание                                                                                      | Тип            | Обязательно? | Пример            |
 | ---------------------------- | --------------------------------------------------------------------------------------------- | -------------- | ------------ | ----------------- |

@@ -18,7 +18,7 @@ description: "Используйте файл Copilot `dbt-styleguide.md` для
 
 Это руководство помогает обеспечить согласованность и понятность в проектах dbt.
 
-## `dbt-styleguide.md` для Copilot
+## `dbt-styleguide.md` для Copilot {#dbt-styleguidemd-for-copilot}
 
 Используя <Constant name="copilot" /> в <Constant name="cloud_ide" />, вы можете автоматически сгенерировать шаблон руководства по стилю с именем `dbt-styleguide.md`. Если руководство по стилю добавляется или редактируется вручную, оно также должно следовать этому соглашению об именовании. Любое другое имя файла не может быть использовано с <Constant name="copilot" />.
 
@@ -26,7 +26,7 @@ description: "Используйте файл Copilot `dbt-styleguide.md` для
 
 Обратите внимание: создавая `dbt-styleguide.md` для <Constant name="copilot" />, вы переопределяете руководство по стилю dbt по умолчанию.
 
-## Создание `dbt-styleguide.md` в Studio IDE
+## Создание `dbt-styleguide.md` в Studio IDE {#creating-dbt-styleguidemd-in-the-studio-ide}
 
 1. Откройте файл в <Constant name="cloud_ide" />.
 2. Нажмите **<Constant name="copilot" />** на панели инструментов.
@@ -37,7 +37,7 @@ description: "Используйте файл Copilot `dbt-styleguide.md` для
 
 Если вы ранее не генерировали файл руководства по стилю, последняя версия будет автоматически получена из <Constant name="dbt_platform" />.
 
-## Если `dbt-styleguide.md` уже существует
+## Если `dbt-styleguide.md` уже существует {#if-dbt-styleguidemd-already-exists}
 
 Если файл `dbt-styleguide.md` уже существует и вы попытаетесь сгенерировать новое руководство по стилю, появится модальное окно со следующими вариантами:
 
@@ -47,7 +47,7 @@ description: "Используйте файл Copilot `dbt-styleguide.md` для
 
 <Lightbox src="/img/docs/dbt-cloud/styleguide-exists.png" title="Руководство по стилю уже существует" />
 
-## Дополнительные материалы
+## Дополнительные материалы {#further-reading}
 
 - [О dbt Copilot](/docs/cloud/dbt-copilot)
 - [Как мы оформляем наши проекты dbt](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)

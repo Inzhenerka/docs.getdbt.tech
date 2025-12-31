@@ -32,17 +32,17 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 - [Документация для IBM Cloud и SaaS-версий](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-dbt_watsonx_spark_inst)
 - [Документация для IBM watsonx.data (Software)](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=integration-data-build-tool-adapter-spark)
 
-## Установка dbt-watsonx-spark
+## Установка dbt-watsonx-spark {#installing-dbt-watsonx-spark}
 Примечание: установка адаптера не устанавливает `<Constant name="core" />` автоматически. Это связано с тем, что версии адаптеров и `<Constant name="core" />` разделены, чтобы избежать перезаписи существующих установок `<Constant name="core" />`. Используйте следующую команду для установки:
 
 ```sh
 python -m pip install <Constant name="core" /> dbt-watsonx-spark
 ```
 
-## Настройка `dbt-watsonx-spark`
+## Настройка `dbt-watsonx-spark` {#configuring-dbt-watsonx-spark}
 Для параметров конфигурации, специфичных для IBM watsonx.data, см. [настройки IBM watsonx.data.](/reference/resource-configs/watsonx-spark-config)
 
-## Подключение к IBM watsonx.data Spark
+## Подключение к IBM watsonx.data Spark {#connecting-to-ibm-watsonxdata-spark}
 
 Чтобы подключить dbt к watsonx.data Spark, настройте профиль в файле `profiles.yml`, который находится в директории `.dbt/` вашего домашнего каталога. Ниже приведён пример конфигурации для подключения к экземплярам IBM watsonx.data SaaS и Software:
 
@@ -68,7 +68,7 @@ project_name:
 
 </File>
 
-## Параметры host
+## Параметры host {#host-parameters}
 
 Следующие поля профиля необходимы для настройки подключения к watsonx.data Spark. Для экземпляров IBM watsonx.data SaaS или Software, чтобы получить данные для профиля, нажмите **View connect details**, когда **query server** находится в статусе RUNNING в watsonx.data (как в SaaS, так и в Software). Откроется страница с параметрами подключения и конфигурацией профиля.
 Скопируйте и вставьте эти данные подключения в файл `profiles.yml`, расположенный в директории `.dbt` вашего домашнего каталога.
@@ -87,16 +87,16 @@ project_name:
 | `user`     | Required                      | Имя пользователя для экземпляра watsonx.data. Для **SaaS** используйте email в качестве имени пользователя | `username` или `user@example.com`|
 | `apikey`   | Required                      | Ваш API key. Подробнее: для [SaaS](https://www.ibm.com/docs/en/software-hub/5.1.x?topic=started-generating-api-keys), для [Software](https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui#manage-user-keys)                                                       | `API key`        |
 
-### Схемы и каталоги
+### Схемы и каталоги {#schemas-and-catalogs}
 
 При выборе каталога убедитесь, что у пользователя есть права на чтение и запись. Этот выбор не ограничивает возможность выполнения запросов к указанной или созданной схеме, а также используется как расположение по умолчанию для материализованных `tables`, `views` и `incremental`.
 
-### Проверка SSL
+### Проверка SSL {#ssl-verification}
 
 - Если экземпляр Spark использует незащищённое HTTP-подключение, установите `use_ssl` в `false`.
 - Если экземпляр использует `HTTPS`, установите значение `true`.
 
-## Дополнительные параметры
+## Дополнительные параметры {#additional-parameters}
 
 Следующие поля профиля являются необязательными. Вы можете настроить сессию экземпляра и поведение dbt для подключения.
 
@@ -107,7 +107,7 @@ project_name:
 | `connect_timeout`        | Таймаут установления соединения (в секундах).          | `5`                               |
 | `connect_retries`        | Количество попыток повторного подключения при ошибках.            | `3`                               |
 
-## Ограничения и особенности
+## Ограничения и особенности {#limitations-and-considerations}
 
 - **Поддерживается только HTTP**: нет поддержки ODBC, Thrift или сессионных подключений.
 - **Ограниченная поддержка <Constant name="cloud" />**: не полностью совместим с <Constant name="cloud" />.

@@ -5,7 +5,7 @@ description: "Настройка подключения к платформе д
 sidebar_label: "Подключение Amazon Athena"
 ---
 
-# Подключение Amazon Athena
+# Подключение Amazon Athena {#connect-amazon-athena}
 
 Ваши окружения должны находиться на поддерживаемой [версии](/docs/dbt-versions/cloud-release-tracks), чтобы использовать подключение Amazon Athena.
 
@@ -26,7 +26,7 @@ sidebar_label: "Подключение Amazon Athena"
 | Boto3 retries                 | num_boto3_retries| Количество повторных попыток для запросов boto3 (например, при удалении файлов S3 для материализованных таблиц)| Integer | Optional  | 5 |
 | Iceberg retries               | num_iceberg_retries| Количество повторных попыток выполнения iceberg commit‑запросов для исправления ICEBERG_COMMIT_ERROR        | Integer | Optional  | 0 |
 
-### Учетные данные для разработки
+### Учетные данные для разработки {#development-credentials}
 
 Введите ваши учетные данные для _разработки_ (не для развертывания) с использованием следующих полей:
 

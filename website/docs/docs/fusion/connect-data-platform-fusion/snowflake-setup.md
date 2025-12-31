@@ -15,7 +15,7 @@ meta:
   config_page: '/reference/resource-configs/snowflake-configs'
 ---
 
-# Настройка Snowflake <Lifecycle status='preview' />
+# Настройка Snowflake <Lifecycle status='preview' /> {#snowflake-setup}
 
 Вы можете настроить адаптер Snowflake, выполнив команду `dbt init` в CLI, либо вручную создав файл `profiles.yml` с полями, соответствующими выбранному типу аутентификации.
 
@@ -29,7 +29,7 @@ meta:
 [Snowflake выводит из эксплуатации вход по паролю без MFA](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). Отдельным разработчикам рекомендуется использовать MFA или SSO вместо аутентификации только по паролю. Аутентификация на основе пароля по‑прежнему поддерживается для сервисных пользователей (тип пользователя Snowflake: `LEGACY_SERVICE`).
 :::
 
-## Детали конфигурации Snowflake
+## Детали конфигурации Snowflake {#snowflake-configuration-details}
 
 Информацию, необходимую для настройки адаптера Snowflake, удобно получить через меню аккаунта Snowflake:
 1. Нажмите на свое имя в боковой панели Snowflake.  
@@ -39,7 +39,7 @@ meta:
 
 <Lightbox src="/img/fusion/connect-adapters/snowflake-account-details.png" width="60%" title="Пример config file в Snowflake." />
 
-## Конфигурация Fusion
+## Конфигурация Fusion {#configure-fusion}
 
 При выполнении `dbt init` в CLI вам будет предложено указать следующие параметры:
 
@@ -54,7 +54,7 @@ meta:
 
 Далее выберите метод аутентификации и следуйте подсказкам на экране, чтобы указать необходимую информацию.
 
-## Поддерживаемые типы аутентификации
+## Поддерживаемые типы аутентификации {#supported-authentication-types}
 
 <Tabs>
 
@@ -64,7 +64,7 @@ meta:
 
 При выборе **Password with MFA** вы будете перенаправлены на страницу входа Snowflake для ввода passkey или пароля из приложения‑аутентификатора.
 
-#### Пример конфигурации с паролем
+#### Пример конфигурации с паролем {#example-password-configuration}
 
 <File name="profiles.yml">
 
@@ -85,7 +85,7 @@ default:
 
 </File>
 
-#### Пример конфигурации с паролем и MFA
+#### Пример конфигурации с паролем и MFA {#example-password-with-mfa-configuration}
 
 <File name="profiles.yml">
 
@@ -135,7 +135,7 @@ default:
 
   После настройки ключа вам будет предложено указать passphrase, если он требуется.
 
-#### Пример конфигурации с парой ключей
+#### Пример конфигурации с парой ключей {#example-key-pair-configuration}
 
 <File name="profiles.yml">
 
@@ -167,7 +167,7 @@ Single sign-on использует браузер для аутентифика
 
 Дополнительную информацию о включении этой возможности в аккаунте Snowflake см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token).
 
-#### Пример конфигурации SSO
+#### Пример конфигурации SSO {#example-sso-configuration}
 
 <File name="profiles.yml">
 
@@ -191,6 +191,6 @@ default:
 
 </Tabs>
 
-## Больше информации
+## Больше информации {#more-information}
 
 Дополнительную информацию о настройках, специфичных для Snowflake, см. в [справочнике по конфигурации адаптера Snowflake](/reference/resource-configs/snowflake-configs).

@@ -8,21 +8,21 @@ import StateModified from '/snippets/_state-modified-compare.md';
 
 Метод выбора [`state:`](/reference/node-selection/methods#state) — это мощная функция с множеством сложностей. Ниже приведены некоторые соображения при настройке автоматизированных задач, использующих сравнение состояний.
 
-### Сиды
+### Сиды {#seeds}
 
 dbt сохраняет хэш-файл seed-файлов размером менее 1 МиБ. Если содержимое этих seed-файлов изменено, seed будет включен в `state:modified`.
 
 Если seed-файл больше 1 МиБ, dbt не может сравнить его содержимое и выдаст предупреждение. Вместо этого dbt будет использовать только путь к файлу seed для обнаружения изменений. Если путь к файлу изменился, seed будет включен в `state:modified`; если нет, то не будет.
 
-### Макросы
+### Макросы {#macros}
 
 dbt пометит как измененные все ресурсы, которые зависят от измененного макроса или от макроса, который зависит от измененного макроса.
 
-### Переменные
+### Переменные {#vars}
 
 Если модель использует `var` или `env_var` в своём определении, dbt не может определить такую зависимость (lineage) таким образом, чтобы включить модель в `state:modified` из‑за изменения значения `var` или `env_var`. При этом модель, скорее всего, будет помечена как изменённая, если изменение значения переменной приводит к другой конфигурации.
 
-### Тесты
+### Тесты {#tests}
 
 Команда `dbt test -s state:modified` будет включать как:
 - тесты, которые выбирают из нового/измененного ресурса
@@ -45,19 +45,19 @@ dbt test -s "state:modified"
 dbt run -s "state:modified"
 dbt test -s "state:modified" --exclude "test_name:relationships"
 ```
-### Перезаписывает `manifest.json`
+### Перезаписывает `manifest.json` {#overwrites-the-manifestjson}
 
 import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
 
 <Overwritesthemanifest />
 
-#### Рекомендация
+#### Рекомендация {#recommendation}
 
 import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overwriting-manifest.md'; 
 
 <Recommendationoverwritesthemanifest />
 
-### Ложные срабатывания
+### Ложные срабатывания {#false-positives}
 
 <VersionBlock firstVersion="1.9">
 
@@ -67,10 +67,10 @@ import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overw
 
 </VersionBlock>
 
-### Заключительное примечание
+### Заключительное примечание {#final-note}
 
 Сравнение состояний — сложная задача. Мы стремимся со временем обеспечить согласованность между всеми вариантами конфигурации, а также предоставить пользователям необходимый контроль, чтобы они могли надёжно возвращать все изменённые ресурсы — и только те, которые они ожидают. Если вам интересно узнать больше, ознакомьтесь с [открытыми задачами с меткой "state"](https://github.com/dbt-labs/dbt-core/issues?q=is%3Aopen+is%3Aissue+label%3Astate) в репозитории dbt.
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 - [О состоянии в dbt](/reference/node-selection/state-selection)
 - [Настройка выбора по состоянию](/reference/node-selection/configure-state)

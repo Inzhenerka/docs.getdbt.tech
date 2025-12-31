@@ -16,6 +16,6 @@ dbt может использовать артефакты из предыдущ
 
 В совокупности селектор [`state`](/reference/node-selection/methods#state) и deferral позволяют реализовать подход ["slim CI"](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci). Мы ожидаем, что в будущих релизах появятся дополнительные возможности, которые смогут использовать артефакты, передаваемые через флаг `--state`.
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 - [Настройка выбора по состоянию](/reference/node-selection/configure-state)
 - [Ограничения и нюансы сравнения состояния](/reference/node-selection/state-comparison-caveats)

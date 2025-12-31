@@ -3,11 +3,11 @@ title: "Конфигурации Starburst/Trino"
 id: "trino-configs"
 ---
 
-## Требования к кластеру
+## Требования к кластеру {#cluster-requirements}
 
 Назначенный кластер должен иметь прикрепленный каталог, в котором можно создавать, переименовывать, изменять и удалять объекты, такие как таблицы и представления. Любой пользователь, подключающийся к кластеру с помощью dbt, также должен иметь эти же разрешения для целевого каталога.
 
-## Свойства сессии
+## Свойства сессии {#session-properties}
 
 С кластерами Starburst Enterprise, Starburst Galaxy или Trino вы можете [устанавливать свойства сессии](https://trino.io/docs/current/sql/set-session.html) для изменения текущей конфигурации вашей пользовательской сессии.
 
@@ -23,13 +23,13 @@ id: "trino-configs"
 }}
 ```
 
-## Свойства коннектора
+## Свойства коннектора {#connector-properties}
 
 Вы можете использовать свойства таблиц Starburst/Trino для настройки того, как вы хотите, чтобы ваши данные были представлены.
 
 Для получения информации о поддерживаемых функциях для каждого поддерживаемого источника данных обратитесь к [Trino Connectors](https://trino.io/docs/current/connector.html) или [Starburst Catalog](https://docs.starburst.io/starburst-galaxy/catalogs/).
 
-### Каталоги Hive
+### Каталоги Hive {#hive-catalogs}
 
 Целевой каталог, использующий коннектор Hive и службу метаданных (HMS), является типичным при работе с Starburst и dbt. Следующие настройки рекомендуются для работы с dbt. Цель состоит в том, чтобы гарантировать, что dbt может выполнять часто используемые операторы `DROP` и `RENAME`.
 
@@ -38,7 +38,7 @@ hive.metastore-cache-ttl=0s
 hive.metastore-refresh-interval=5s
 ```
 
-## Конфигурация формата файла
+## Конфигурация формата файла {#file-format-configuration}
 
 При использовании коннекторов на основе файлов, таких как Hive, пользователь может настроить аспекты коннектора, такие как используемый формат, а также тип материализации.
 
@@ -56,7 +56,7 @@ hive.metastore-refresh-interval=5s
 }}
 ```
 
-## Seeds и подготовленные операторы
+## Seeds и подготовленные операторы {#seeds-and-prepared-statements}
 
 Команда [dbt seed](/docs/build/seeds) использует подготовленные операторы в [Starburst](https://docs.starburst.io/latest/sql/prepare.html)/[Trino](https://trino.io/docs/current/sql/prepare.html).
 
@@ -64,7 +64,7 @@ hive.metastore-refresh-interval=5s
 
 Большинство файлов seed содержат более одной строки, и часто тысячи строк. Это делает размер клиентского запроса таким же большим, как и количество параметров.
 
-### Ограничение длины строки заголовка в клиенте HTTP на Python
+### Ограничение длины строки заголовка в клиенте HTTP на Python {#header-line-length-limit-in-python-http-client}
 
 Вы можете столкнуться с сообщением об ошибке об ограничении длины строки заголовка, если в ваших подготовленных операторах слишком много параметров. Это связано с тем, что ограничение длины строки заголовка в HTTP-клиенте Python составляет `65536` байт.
 
@@ -88,8 +88,8 @@ hive.metastore-refresh-interval=5s
 
 Другой способ избежать ограничения длины строки заголовка — установить `prepared_statements_enabled` в `true` в вашем профиле dbt; однако это считается устаревшим поведением и может быть удалено в будущих выпусках.
 
-## Материализации
-### Таблица
+## Материализации {#materializations}
+### Таблица {#table}
 
 Адаптер `dbt-trino` поддерживает эти режимы в материализации `table` (и [полные обновления](/reference/commands/run#refresh-incremental-models) в материализации `incremental`), которые вы можете настроить с помощью `on_table_exists`:
 
@@ -134,7 +134,7 @@ models:
 TrinoUserError(type=USER_ERROR, name=NOT_SUPPORTED, message="Table rename is not yet supported by Glue service")
 ```
 
-### Представление
+### Представление {#view}
 
 Адаптер `dbt-trino` поддерживает эти режимы безопасности в материализации `view`, которые вы можете настроить с помощью `view_security`:
 - `definer`
@@ -172,7 +172,7 @@ models:
 </File>
 
 
-### Инкрементальная
+### Инкрементальная {#incremental}
 
 Использование инкрементальной модели ограничивает объем данных, которые необходимо преобразовать, что значительно сокращает время выполнения ваших преобразований. Это улучшает производительность и снижает затраты на вычисления.
 
@@ -195,7 +195,7 @@ select * from {{ ref('events') }}
 
 Вы можете решить, как модель должна быть перестроена при выполнении `full-refresh`, указав конфигурацию `on_table_exists`. Варианты такие же, как описано в [разделе материализации таблицы](/reference/resource-configs/trino-configs#table)
 
-#### стратегия append
+#### стратегия append {#append-strategy}
 
 Стратегия инкрементальной загрузки по умолчанию — `append`. `append` добавляет только новые записи на основе условия, указанного в условном блоке `is_incremental()`.
 
@@ -210,7 +210,7 @@ select * from {{ ref('events') }}
 {% endif %}
 ```
 
-#### стратегия delete+insert
+#### стратегия delete+insert {#deleteinsert-strategy}
 
 С помощью стратегии инкрементальной загрузки `delete+insert` вы можете указать dbt использовать двухэтапный инкрементальный подход. Сначала он удаляет записи, обнаруженные через настроенный блок `is_incremental()`, затем повторно вставляет их.
 
@@ -228,7 +228,7 @@ select * from {{ ref('users') }}
 {% endif %}
 ```
 
-#### стратегия merge
+#### стратегия merge {#merge-strategy}
 
 С помощью стратегии инкрементальной загрузки `merge` dbt-trino создает [оператор MERGE Trino](https://trino.io/docs/current/sql/merge.html) для `вставки` новых записей и `обновления` существующих записей на основе свойства `unique_key`.
 
@@ -250,7 +250,7 @@ select * from {{ ref('users') }}
 
 Имейте в виду, что некоторые коннекторы Trino не поддерживают `MERGE` или имеют ограниченную поддержку.
 
-#### Инкрементальная перезапись на моделях Hive
+#### Инкрементальная перезапись на моделях Hive {#incremental-overwrite-on-hive-models}
 
 Если есть [коннектор Hive](https://trino.io/docs/current/connector/hive.html), обращающийся к вашей целевой инкрементальной модели, вы можете имитировать оператор `INSERT OVERWRITE`, используя настройку `insert-existing-partitions-behavior` в конфигурации коннектора Hive в Trino:
 
@@ -293,7 +293,7 @@ trino-incremental-hive:
 }}
 ```
 
-### Материализованное представление
+### Материализованное представление {#materialized-view}
 
 Адаптер `dbt-trino` поддерживает [материализованные представления](https://trino.io/docs/current/sql/create-materialized-view.html) и обновляет их для каждого последующего `dbt run`, который вы выполняете. Для получения дополнительной информации см. [REFRESH MATERIALIZED VIEW](https://trino.io/docs/current/sql/refresh-materialized-view.html) в документации Trino.
 
@@ -336,7 +336,7 @@ models:
 ```
 </File>
 
-## Снимки
+## Снимки {#snapshots}
 
 [Снимки в dbt](/docs/build/snapshots) зависят от макроса `current_timestamp`, который по умолчанию возвращает временную метку с точностью до миллисекунд (3 цифры). Некоторые коннекторы для Trino не поддерживают такую точность временной метки (`TIMESTAMP(3) WITH TIME ZONE`), например, Iceberg.
 
@@ -351,7 +351,7 @@ models:
 ```
 </File>
 
-## Гранты
+## Гранты {#grants}
 
 Используйте [гранты](/reference/resource-configs/grants) для управления доступом к наборам данных, которые вы создаете с помощью dbt. Вы можете использовать гранты с [Starburst Enterprise](https://docs.starburst.io/latest/security/biac-overview.html), [Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/security/access-control.html) и Hive ([sql-standard](https://trino.io/docs/current/connector/hive-security.html)).
 
@@ -367,7 +367,7 @@ models:
 ```
 </File>
 
-## Контракты моделей
+## Контракты моделей {#model-contracts}
 
 Адаптер `dbt-trino` поддерживает [контракты моделей](/docs/mesh/govern/model-contracts). В настоящее время поддерживаются только [ограничения](/reference/resource-properties/constraints) с типом `not_null`.
 

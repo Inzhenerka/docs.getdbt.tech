@@ -20,14 +20,14 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Конфигурация профиля
+### Конфигурация профиля {#profile-configuration}
 
 Цели Layer Bigquery должны быть настроены с использованием следующих секций в вашем файле `profiles.yml`.
 
-#### Bigquery Authentication
+#### Bigquery Authentication {#layer-authentication}
 Вы можете использовать любой [метод аутентификации](/docs/core/connect-data-platform/bigquery-setup), поддерживаемый официальным адаптером dbt для BigQuery, поскольку Layer использует адаптер `dbt-bigquery` для подключения к вашему экземпляру BigQuery.
 
-#### Аутентификация Bigquery
+#### Аутентификация Bigquery {#bigquery-authentication}
 Вы можете использовать любой [метод аутентификации](https://docs.getdbt.tech/reference/warehouse-profiles/bigquery-setup), поддерживаемый в официальном адаптере dbt Bigquery, так как Layer использует адаптер `dbt-bigquery` для подключения к вашей инстанции Bigquery.
 
 Пример профиля:
@@ -52,7 +52,7 @@ layer-profile:
 
 </File>
 
-#### Описание полей профиля Layer Bigquery
+#### Описание полей профиля Layer Bigquery {#description-of-layer-bigquery-profile-fields}
 
 Следующие поля являются обязательными:
 
@@ -65,9 +65,9 @@ layer-profile:
 
 Остальные параметры зависят от указанного вами метода аутентификации BigQuery.
 
-## Использование
+## Использование {#usage}
 
-### AutoML
+### AutoML {#automl}
 
 Вы можете автоматически создавать передовые ML модели, используя ваши собственные dbt модели с помощью простого SQL. Чтобы обучить модель AutoML, все, что вам нужно сделать, это передать тип модели, входные данные (фичи) и целевой столбец, который вы хотите предсказать, в `layer.automl()` в вашем SQL. Layer AutoML выберет модель с наилучшей производительностью и позволит вам вызывать ее по имени модели dbt для предсказаний, как показано выше.
 
@@ -106,7 +106,7 @@ SELECT order_id,
 FROM {{ ref('training_data') }}
 ```
 
-### Предсказание
+### Предсказание {#prediction}
 
 Вы можете делать предсказания, используя любую ML модель Layer в ваших dbt моделях. Адаптер Layer dbt помогает вам оценивать ваши данные, находящиеся в вашем хранилище, в рамках вашего dbt DAG с помощью SQL.
 

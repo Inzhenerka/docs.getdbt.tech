@@ -5,11 +5,11 @@ tags: [Semantic Layer]
 sidebar_label: "Tableau"
 ---
 
-# Tableau <Lifecycle status="self_service,managed,managed_plus" />
+# Tableau <Lifecycle status="self_service,managed,managed_plus" /> {#tableau}
 
 Интеграция с Tableau позволяет использовать рабочие листы для выполнения запросов напрямую к <Constant name="semantic_layer" /> и создавать дашборды на основе доверенных данных. Она обеспечивает живое подключение к <Constant name="semantic_layer" /> через Tableau Desktop или Tableau Server.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - Вы [настроили <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) и используете dbt версии 1.6 или выше.
 - У вас должен быть [Tableau Desktop](https://www.tableau.com/en-gb/products/desktop) версии 2021.1 или выше, Tableau Server либо [Tableau Cloud](https://www.tableau.com/products/cloud-bi).
@@ -21,7 +21,7 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Установка коннектора
+## Установка коннектора {#installing-the-connector}
 
 Коннектор Tableau для <Constant name="semantic_layer" /> доступен для загрузки напрямую на [Tableau Exchange](https://exchange.tableau.com/products/1020). Коннектор поддерживается в Tableau Desktop, Tableau Server и Tableau Cloud.
 
@@ -43,7 +43,7 @@ import SLCourses from '/snippets/_sl-course.md';
 4. Подключитесь, используя Host, Environment ID и данные service‑ или personal‑token, которые предоставляет <Constant name="cloud" /> в процессе [настройки <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
    - В Tableau Server экран аутентификации может отображать поля «User» и «Password». В этом случае в поле User указывается Environment ID, а в поле Password — Service Token.
 
-## Использование интеграции
+## Использование интеграции {#using-the-integration}
 
 1. **Аутентификация** &mdash; После аутентификации система перенаправит вас на страницу источника данных.
 2. **Доступ ко всем объектам <Constant name="semantic_layer" />** &mdash; Используйте источник данных **"ALL"**, чтобы получить доступ ко всем метрикам, измерениям и сущностям, настроенным в вашем <Constant name="semantic_layer" />. Обратите внимание, что источник данных **"METRICS_AND_DIMENSIONS"** был признан устаревшим и заменён на **"ALL"**. Обязательно используйте живое подключение, так как извлечения (extracts) в настоящее время не поддерживаются.
@@ -53,11 +53,11 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Посетите [документацию Tableau](https://help.tableau.com/current/pro/desktop/en-us/gettingstarted_overview.htm), чтобы узнать больше о том, как использовать рабочие листы и панели Tableau.
 
-### Публикация из Tableau Desktop в Tableau Server
+### Публикация из Tableau Desktop в Tableau Server {#publish-from-tableau-desktop-to-tableau-server}
 
 - **Из Desktop в Server** &mdash; Как и в любом рабочем процессе Tableau, вы можете опубликовать свою рабочую книгу из Tableau Desktop в Tableau Server. Для пошаговых инструкций посетите [руководство по публикации](https://help.tableau.com/current/pro/desktop/en-us/publish_workbooks_share.htm) от Tableau.
 
-## Важные замечания
+## Важные замечания {#things-to-note}
 
 **Агрегация**<br />
 - Все метрики в интерфейсе Tableau отображаются как использующие тип агрегации «SUM», и это нельзя изменить средствами интерфейса Tableau.
@@ -74,7 +74,7 @@ import SLCourses from '/snippets/_sl-course.md';
   - _Примечание: если у вас есть сценарии использования вычисляемых полей, которые в настоящее время не поддерживаются, пожалуйста, свяжитесь с <a href="mailto:support@getdbt.com?subject=dbt Semantic Layer feedback">службой поддержки dbt</a> и опишите их, чтобы мы могли лучше понять ваши потребности._
 - При использовании сохранённых запросов, содержащих фильтры, мы автоматически применяем все фильтры, заданные в этом запросе.
 
-## Неподдерживаемая функциональность
+## Неподдерживаемая функциональность {#unsupported-functionality}
 
 Следующие возможности Tableau в настоящее время не поддерживаются. Однако <Constant name="semantic_layer" /> может поддержать часть этой функциональности в будущих версиях:
 
@@ -90,5 +90,5 @@ import SLCourses from '/snippets/_sl-course.md';
 - Выполнение соединений между таблицами, которые создаёт <Constant name="semantic_layer" />. Он сам управляет соединениями, поэтому нет необходимости соединять компоненты внутри <Constant name="semantic_layer" />. Обратите внимание: вы _можете_ соединять таблицы из <Constant name="semantic_layer" /> с таблицами вне вашей платформы данных.  
 - Интеграция с Tableau в настоящее время не отображает описательные метки, определённые в конфигурации `metrics`. Это означает, что пользовательские метки не будут видны при импорте или запросе этих метрик в Tableau.  
 
-## FAQs
+## FAQs {#faqs}
 <FAQ path="Troubleshooting/sl-alpn-error" />

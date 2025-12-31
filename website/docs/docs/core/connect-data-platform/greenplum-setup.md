@@ -22,7 +22,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Для получения дополнительной (и, скорее всего, более актуальной) информации, смотрите [README](https://github.com/markporoshin/dbt-greenplum#README.md)
 
-## Конфигурация профиля
+## Конфигурация профиля {#profile-configuration}
 
 Цели для Greenplum должны быть настроены с использованием следующей конфигурации в вашем файле `profiles.yml`.
 
@@ -51,6 +51,6 @@ company-name:
 
 </File>
 
-### Примечания
+### Примечания {#notes}
 
 Этот адаптер сильно зависит от dbt-postgres, поэтому вы можете прочитать больше о конфигурациях здесь [Настройка профиля](/docs/core/connect-data-platform/postgres-setup)

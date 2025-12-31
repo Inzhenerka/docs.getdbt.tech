@@ -32,7 +32,7 @@ meta:
 
 <h2> Подключение к {frontMatter.meta.platform_name} </h2>
 
-#### Пример profiles.yml 
+#### Пример profiles.yml {#example-profilesyml}
 Вот пример профилей dbt-extrica. Минимально необходимо указать `type`, `method`, `username`, `password`, `host`, `port`, `schema`, `catalog` и `threads`. 
 <File name='~/.dbt/profiles.yml'>
 
@@ -65,7 +65,7 @@ meta:
 ```
 </File>
 
-#### Описание полей профиля Extrica
+#### Описание полей профиля Extrica {#description-of-extrica-profile-fields}
 
 | Параметр  | Тип     | Описание                              |
 |------------|----------|------------------------------------------|

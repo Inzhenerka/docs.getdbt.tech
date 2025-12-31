@@ -23,13 +23,13 @@ macros:
 
 </File>
 
-## Определение
+## Определение {#definition}
 
 <ArgumentsShared />
 
 Для **макросов** вы можете добавить секцию `arguments` в [свойства макроса](/reference/macro-properties). Это помогает документировать макрос и понимать, какие входные параметры он ожидает.
 
-## type
+## type {#type}
 
 <VersionBlock lastVersion="1.9">
 
@@ -58,7 +58,7 @@ macros:
 
 </File>
 
-### Поддерживаемые типы
+### Поддерживаемые типы {#supported-types}
 
 Начиная с версии <Constant name="core" /> v1.10, при использовании флага [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) dbt поддерживает следующие типы аргументов макросов:
 
@@ -75,7 +75,7 @@ macros:
 
 Обратите внимание, что синтаксис типов напоминает Python, однако они используются исключительно для документации и валидации. Это не Python-типы.
 
-## Примеры
+## Примеры {#examples}
 
 
 <File name='macros/cents_to_dollars.sql'>
@@ -107,7 +107,7 @@ macros:
 
 </File>
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 
 - [Свойства макросов](/reference/macro-properties)
 - [arguments (для функций)](/reference/resource-properties/function-arguments)

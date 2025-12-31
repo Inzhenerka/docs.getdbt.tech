@@ -13,9 +13,9 @@ id: "store_failures_as"
 
 Вы можете настроить это в тех же местах, что и `store_failures`, включая одиночные тесты (.sql файлы), общие тесты (.yml файлы) и dbt_project.yml.
 
-### Примеры
+### Примеры {#examples}
 
-#### Одиночный тест
+#### Одиночный тест {#singular-test}
 
 [Singular test](/docs/build/data-tests#singular-data-tests) в файле `tests/singular/check_something.sql`
 
@@ -27,7 +27,7 @@ select 1 as id
 where 1=0
 ```
 
-#### Общий тест
+#### Общий тест {#generic-test}
 
 [Generic tests](/docs/build/data-tests#generic-data-tests) в файле `models/_models.yml`
 
@@ -45,7 +45,7 @@ models:
                 store_failures_as: ephemeral
 ```
 
-#### Уровень проекта
+#### Уровень проекта {#project-level}
 
 Конфигурация в `dbt_project.yml`
 
@@ -64,7 +64,7 @@ data_tests:
       +store_failures_as: ephemeral
 ```
 
-### "Замещение" конфигураций
+### "Замещение" конфигураций {#clobbering-configs}
 
 Как и в большинстве других конфигураций, `store_failures_as` "замещается" при иерархическом применении. Всякий раз, когда доступно более конкретное значение, оно полностью заменяет менее конкретное значение.
 

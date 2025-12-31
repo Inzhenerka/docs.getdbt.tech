@@ -5,11 +5,11 @@ tags: [Semantic Layer]
 sidebar_label: "Power BI"
 ---
 
-# Power BI <Lifecycle status="self_service,managed,managed_plus,preview" />
+# Power BI <Lifecycle status="self_service,managed,managed_plus,preview" /> {#power-bi}
 
 Интеграция с Power BI позволяет напрямую выполнять запросы к <Constant name="semantic_layer" />, что дает возможность строить дашборды в Power BI на основе доверенных, актуальных данных. Интеграция обеспечивает живое подключение к <Constant name="semantic_layer" /> через Power BI Desktop или Power BI Service.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - У вас настроен [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
 - Вы используете поддерживаемый [релизный трек <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks) или dbt версии 1.6 и выше.
@@ -22,15 +22,15 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Установка коннектора
+## Установка коннектора {#install-the-connector}
 
 Power BI коннектор для <Constant name="semantic_layer" /> состоит из пользовательского Power BI коннектора `.pqx` и ODBC-драйвера. Установите оба компонента с помощью нашего Windows-инсталлятора, следуя шагам ниже:
 
-#### 1. Загрузите и установите [`.msi`-установщик](https://github.com/dbt-labs/semantic-layer-powerbi-connector/releases/download/v1.0.0/dbt.Semantic.Layer.for.Power.BI.zip)
+#### 1. Загрузите и установите [`.msi`-установщик](https://github.com/dbt-labs/semantic-layer-powerbi-connector/releases/download/v1.0.0/dbt.Semantic.Layer.for.Power.BI.zip) {#1-download-and-install-the-msi-installer}
    - Запустите установщик и следуйте инструкциям на экране.
    - В результате ODBC-драйвер и коннектор будут установлены в Power BI Desktop.
 
-#### 2. Проверьте установку
+#### 2. Проверьте установку {#2-verify-installation}
    - Откройте **ODBC Data Sources (64-bit)** на вашем компьютере.
    - Перейдите в раздел **System DSN** и убедитесь, что зарегистрирован `dbt Labs ODBC DSN`. 
    - Перейдите в раздел **Drivers** и убедитесь, что установлен `dbt Labs ODBC Driver`.
@@ -38,29 +38,29 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Чтобы опубликованные отчеты в Power BI Service могли использовать коннектор, IT-администратор вашей организации должен установить и настроить его в On-premises Data Gateway.
 
-## Для ИТ-администраторов
+## Для ИТ-администраторов {#for-it-admins}
 
 Этот раздел предназначен для IT-администраторов, которые устанавливают ODBC-драйвер и коннектор в On-premises Data Gateway.
 
 Чтобы опубликованные отчеты могли использовать коннектор в Power BI Service, IT-администратор должен установить и настроить коннектор.
 
-#### 1. Install the ODBC driver and connector into an On-premises Data Gateway
+#### 1. Install the ODBC driver and connector into an On-premises Data Gateway {#1-install-the-odbc-driver-and-connector-into-an-on-premises-data-gateway}
    - Запустите тот же `.msi`-установщик, который используется для Power BI Desktop.
    - Установите его на машине, где размещен ваш gateway.
 
-#### 2. Copy connector file to Gateway directory
+#### 2. Copy connector file to Gateway directory {#2-copy-connector-file-to-gateway-directory}
    - Найдите файл `.pqx`: `C:\Users\<YourUser>\Documents\Power BI Desktop\Custom Connectors\dbtSemanticLayer.pqx`.
    - Скопируйте его в каталог пользовательских коннекторов Power BI On-premises Data Gateway: `C:\Windows\ServiceProfiles\PBIEgwService\Documents\Power BI Desktop\Custom Connectors`.
-#### 3. Verify installation
+#### 3. Verify installation {#3-verify-installation}
    - Выполните шаги проверки из раздела [install the connector](#3-verify-installation).
-#### 4. Enable connector in Power BI Enterprise Gateway
+#### 4. Enable connector in Power BI Enterprise Gateway {#4-enable-connector-in-power-bi-enterprise-gateway}
    - Откройте `EnterpriseGatewayConfigurator.exe`.
    - Перейдите в раздел **Connectors**. 
    - Убедитесь, что коннектор `dbt Semantic Layer` установлен и активен.
 
 Для получения дополнительной информации о настройке пользовательских коннекторов в Power BI On-premises Data Gateway обратитесь к [официальной документации Power BI](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors).
 
-## Настройка коннектора
+## Настройка коннектора {#configure-the-connector}
 
 После установки коннектора необходимо настроить учетные данные проекта, чтобы подключиться к <Constant name="semantic_layer" /> из отчета.
 
@@ -81,7 +81,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 После настройки коннектора вы можете настроить опубликованные отчеты в следующем разделе для использования этого подключения.
 
-## Настройка опубликованных отчётов
+## Настройка опубликованных отчётов {#configure-published-reports}
 
 После публикации отчета и при первом нажатии **Publish** для конкретного отчета необходимо настроить Power BI Service для использования On-premises Data Gateway вашей организации для доступа к данным из <Constant name="semantic_layer" />:
 
@@ -100,7 +100,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Теперь вы можете вернуться к опубликованному отчету в Power BI Service и убедиться, что данные загружаются корректно.
 
-## Использование коннектора
+## Использование коннектора {#use-the-connector}
 
 В этом разделе описывается, как использовать коннектор <Constant name="semantic_layer" /> в Power BI.
 
@@ -118,7 +118,7 @@ Power BI коннектор для <Constant name="semantic_layer" /> состо
 
 Это обеспечивает очень гибкие аналитические сценарии, такие как перетаскивание метрик и разрез данных по измерениям и сущностям &mdash; <Constant name="semantic_layer" /> автоматически сгенерирует корректный SQL для запроса к вашему источнику данных.
 
-## Соображения
+## Соображения {#considerations}
 
 <Expandable alt_header="Не каждый «столбец» METRICS.ALL совместим с любым другим столбцом">
 

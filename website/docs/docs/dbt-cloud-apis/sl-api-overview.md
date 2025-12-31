@@ -6,7 +6,7 @@ tags: [Семантический слой, API]
 hide_table_of_contents: true
 pagination_next: "docs/dbt-cloud-apis/sl-jdbc"
 ---
-# API семантического слоя <Lifecycle status="self_service,managed,managed_plus" />
+# API семантического слоя <Lifecycle status="self_service,managed,managed_plus" /> {#semantic-layer-apis}
  
 Быстрый рост количества инструментов в современном data-стеке помог специалистам по данным удовлетворять разнообразные потребности разных команд. Обратной стороной этого роста стала фрагментация бизнес-логики между командами, инструментами и рабочими нагрузками.<br /><br />
 

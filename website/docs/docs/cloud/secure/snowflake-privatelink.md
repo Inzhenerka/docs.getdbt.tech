@@ -5,7 +5,7 @@ description: "Настройка AWS PrivateLink для Snowflake"
 sidebar_label: "AWS PrivateLink для Snowflake"
 ---
 
-# Настройка Snowflake PrivateLink <Lifecycle status="managed_plus" />
+# Настройка Snowflake PrivateLink <Lifecycle status="managed_plus" /> {#configuring-snowflake-privatelink}
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
@@ -20,7 +20,7 @@ import SnowflakeOauthWithPL from '/snippets/_snowflake-oauth-with-pl.md';
 
 <SnowflakeOauthWithPL />
 
-## Настройка AWS PrivateLink
+## Настройка AWS PrivateLink {#configure-aws-privatelink}
 
 Чтобы настроить экземпляры Snowflake, размещенные на AWS, для [PrivateLink](https://aws.amazon.com/privatelink):
 
@@ -53,7 +53,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Создайте подключение в dbt
+## Создайте подключение в dbt {#create-connection-in-dbt}
 
 После того как <Constant name="cloud" /> завершит настройку поддержки, вы сможете приступить к созданию новых подключений с использованием PrivateLink.
 
@@ -63,7 +63,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 4. Настройте остальные детали платформы данных.
 5. Проверьте ваше подключение и сохраните его.
 
-## Настройка Internal Stage PrivateLink в <Constant name="cloud" />
+## Настройка Internal Stage PrivateLink в <Constant name="cloud" /> {#configuring-internal-stage-privatelink-in}
 
 Если для Internal Stage был настроен эндпоинт PrivateLink, ваши окружения dbt должны быть сконфигурированы так, чтобы использовать этот эндпоинт вместо значения по умолчанию, заданного для аккаунта в Snowflake.
 
@@ -77,7 +77,7 @@ s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.ama
 
 <Lightbox src="/img/docs/dbt-cloud/snowflake-internal-stage-dns.png" title="Internal Stage DNS"/>
 
-## Настройка сетевых политик
+## Настройка сетевых политик {#configuring-network-policies}
 Если в вашей организации используются [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к аккаунту Snowflake, вам потребуется добавить сетевое правило для <Constant name="cloud" />.
 
 Вы можете запросить VPCE ID в службе поддержки [<Constant name="cloud" /> Support](mailto:support@getdbt.com), которые затем можно использовать для создания сетевой политики. Обратите внимание: при создании endpoint для Internal Stage VPCE ID будет отличаться от VPCE ID основного endpoint сервиса.
@@ -87,7 +87,7 @@ s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.ama
 
 :::
 
-### Использование интерфейса
+### Использование интерфейса {#using-the-ui}
 
 Откройте интерфейс Snowflake и выполните следующие шаги:
 
@@ -106,7 +106,7 @@ s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.ama
 
 <Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink3.png" title="Обновить сетевую политику"/>
 
-### Использование SQL
+### Использование SQL {#using-sql}
 
 Для быстрой и автоматизированной настройки сетевых правил через SQL в Snowflake следующие команды позволяют создать и настроить правила доступа для dbt Cloud. Эти примеры SQL демонстрируют, как добавить сетевое правило и обновить вашу сетевую политику соответствующим образом.
 

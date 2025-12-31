@@ -5,7 +5,7 @@ description: "Настройте и визуализируйте exposures ав�
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Настройка автоматических downstream exposures в Tableau <Lifecycle status="managed,managed_plus" />
+# Настройка автоматических downstream exposures в Tableau <Lifecycle status="managed,managed_plus" /> {#set-up-automatic-exposures-in-tableau}
 
 <IntroText>
 Настройте и автоматически заполняйте downstream exposures для поддерживаемых интеграций с BI‑инструментами, такими как Tableau. Визуализируйте и оркестрируйте их с помощью <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Catalog</a> и [планировщика заданий <Constant name="cloud" />](/docs/deploy/job-scheduler), чтобы получить более полный и удобный опыт работы.
@@ -27,7 +27,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 Если вы используете Tableau Server, необходимо добавить [IP‑адреса <Constant name="cloud" /> для вашего региона](/docs/cloud/about-cloud/access-regions-ip-addresses) в allowlist.
 :::
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 Для настройки автоматических downstream exposures необходимо выполнить следующие условия:
 
@@ -38,16 +38,16 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 5. В качестве BI‑инструмента используется Tableau, и включены разрешения на работу с метаданными (или вы работаете с администратором, который может их включить). Поддерживаются Tableau Cloud или Tableau Server с включённым Metadata API.
 6. Настроен [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm), создатель которого имеет права на просмотр источников данных. PAT наследует права своего создателя, поэтому убедитесь, что пользователь Tableau, создавший токен, имеет [права Connect](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_permissions.htm).
 
-### Важные моменты
+### Важные моменты {#considerations}
 import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.md';
 
 <ConsiderationsTableau/>
 
-## Настройка downstream exposures
+## Настройка downstream exposures {#set-up-downstream-exposures}
 
 Настройте downstream exposures в [Tableau](#set-up-in-tableau) и в [<Constant name="cloud" />](#set-up-in-dbt-cloud), чтобы экстракты вашего BI‑инструмента обновлялись автоматически.
 
-### Настройка в Tableau
+### Настройка в Tableau {#set-up-in-tableau}
 
 В этом разделе описаны шаги по настройке интеграции в Tableau. Эти действия должен выполнить администратор сайта Tableau.
 
@@ -75,7 +75,7 @@ import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.m
       - Token name
       - Secret
 
-### Настройка в dbt
+### Настройка в dbt {#set-up-in-dbt}
 
 1. В <Constant name="cloud" /> перейдите на **Dashboard** проекта, в который вы хотите добавить downstream exposure, и выберите **Settings**.
 2. В разделе **Exposures** нажмите **Add integration**, чтобы добавить подключение к Tableau.
@@ -100,7 +100,7 @@ import ViewExposures from '/snippets/_auto-exposures-view.md';
 
 <ViewExposures/>
 
-## Оркестрация exposures <Lifecycle status="beta,managed,managed_plus"/>
+## Оркестрация exposures <Lifecycle status="beta,managed,managed_plus"/> {#orchestrate-exposures}
 
 [Оркестрируйте exposures](/docs/cloud-integrations/orchestrate-exposures) с помощью [планировщика заданий dbt Cloud](/docs/deploy/job-scheduler), чтобы проактивно обновлять базовые источники данных (extracts), на которых основаны ваши Tableau Workbooks.
 

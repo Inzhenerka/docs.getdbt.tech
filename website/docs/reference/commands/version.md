@@ -9,12 +9,12 @@ id: "version"
 - **<Constant name="core" />** &mdash; Возвращает установленную версию <Constant name="core" /> и версии всех установленных адаптеров.
 - **<Constant name="cloud_cli" />** &mdash; Возвращает установленную версию [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation), а для остальных значений `dbt_version` — _последнюю_ версию среды выполнения dbt в <Constant name="cloud" />.
 
-## Версионирование
+## Версионирование {#versioning}
 Чтобы узнать больше о версионировании релизов <Constant name="core" />, см. [Как <Constant name="core" /> использует семантическое версионирование](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning).
 
 При использовании [треков релизов <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), которые обеспечивают регулярные обновления dbt, значение `dbt_version` представляет версию релиза dbt в <Constant name="cloud" />. Она также следует принципам семантического версионирования и использует формат `YYYY.M.D+<suffix>`. Год, месяц и день обозначают дату сборки версии (например, `2024.10.8+996c6a8`). Суффикс предоставляет дополнительный уникальный идентификатор для каждой сборки.
 
-## Примеры использования
+## Примеры использования {#example-usages}
 
 Пример для <Constant name="core" />:
 <File name='dbt Core'>

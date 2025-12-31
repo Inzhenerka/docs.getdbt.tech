@@ -6,7 +6,7 @@ pagination_next: null
 pagination_prev: null
 ---
 
-# Поддерживаемые функции
+# Поддерживаемые функции {#supported-features}
 
 <IntroText>
 
@@ -23,20 +23,20 @@ import FusionDWH from '/snippets/_fusion-dwh.md';
 
 </VersionBlock>
 
-## Требования
+## Требования {#requirements}
 
 Чтобы использовать Fusion в вашем dbt-проекте:
 - Вы используете поддерживаемый адаптер и метод аутентификации:
   <FusionDWH /> 
 - В проекте определены только SQL-модели. Python-модели в настоящее время не поддерживаются, так как Fusion не может анализировать их для извлечения зависимостей (refs) от других моделей. <!-- [TODO: Link to dbt-fusion Python issue.] -->
 
-## Паритет с dbt Core
+## Паритет с dbt Core {#parity-with-dbt-core}
 
 Наша цель — чтобы <Constant name="fusion_engine" /> поддерживал все возможности фреймворка <Constant name="core" />, и даже больше. <Constant name="fusion" /> уже поддерживает многие возможности <Constant name="core" /> версии 1.9, и мы активно работаем над добавлением остальных.
 
 Обратите внимание, что мы удалили некоторые устаревшие функции и внедрили более строгую валидацию ошибочного кода проекта. Подробности см. в [руководстве по обновлению](/docs/dbt-versions/core-upgrade/upgrading-to-fusion).
 
-## Возможности и функциональность
+## Возможности и функциональность {#features-and-capabilities}
 <!-- таблица сравнения возможностей («Что где доступно?»)-->
 <Constant name="fusion_engine" /> (построенный на Rust) обеспечивает до 30× более высокую производительность и предлагает разные возможности в зависимости от того, где вы его используете.
 - Он лежит в основе как улучшений на уровне движка (например, более быстрая компиляция и инкрементальные сборки), так и функций на уровне редактора (таких как IntelliSense, подсказки при наведении и встроенные ошибки) через <Term id="lsp"/> в расширении dbt для VS Code.
@@ -81,7 +81,7 @@ import FusionDWH from '/snippets/_fusion-dwh.md';
 <sup>1</sup> Поддержка других возможностей <Constant name="dbt_platform" /> и <Term id="lsp"/>, таких как <Constant name="visual_editor"/>, <Constant name="semantic_layer" /> или column-level lineage, появится в ближайшее время. См. [About LSP](/docs/about-dbt-lsp) для более подробного сравнения сред разработки dbt.<br />
 <sup>2</sup> [Расширение dbt для VS Code](/docs/about-dbt-extension) можно использовать в VS Code, Cursor, Windsurf и других редакторах на базе VS Code.
 
-#### Дополнительные соображения
+#### Дополнительные соображения {#additional-considerations}
 Ниже приведены дополнительные моменты, которые стоит учитывать при использовании Fusion CLI без расширения VS Code или расширения VS Code без Fusion CLI:
 - **Fusion CLI** ([binary](/blog/dbt-fusion-engine-components))
   - Бесплатен в использовании и работает на <Constant name="fusion_engine" /> (отличается от <Constant name="core" />).
@@ -94,7 +94,7 @@ import FusionDWH from '/snippets/_fusion-dwh.md';
   - Если у вас уже есть учетная запись <Constant name="dbt_platform" /> (даже если пробный период истек), войдите с тем же email. При необходимости разблокируйте или сбросьте учетную запись.
   - Требуются файлы `profiles.yml` и `dbt_cloud.yml`.
 
-## Ограничения
+## Ограничения {#limitations}
 
 Если ваш проект использует какие-либо из функций, перечисленных в таблице ниже, вы можете использовать Fusion, но не сможете полностью перенести все рабочие нагрузки, так как у вас есть:
 - Модели, использующие специфические возможности materialization, которые могут не запускаться или не поддерживать некоторые желаемые настройки.
@@ -110,7 +110,7 @@ import FusionFeatures from '/snippets/_fusion-missing-features.md';
 
 <FusionFeatures />
 
-## Поддержка пакетов
+## Поддержка пакетов {#package-support}
 
 import FusionPackages from '/snippets/_fusion-supported-packages.md';
 

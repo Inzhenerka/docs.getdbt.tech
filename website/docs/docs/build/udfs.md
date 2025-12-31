@@ -4,7 +4,7 @@ description: "Узнайте, как добавлять пользователь
 id: "udfs"
 ---
 
-# Пользовательские функции (User-defined functions)
+# Пользовательские функции (User-defined functions) {#user-defined-functions}
 
 Пользовательские функции (UDF) позволяют определять и регистрировать собственные функции непосредственно в вашем хранилище данных. Подобно [макросам](/docs/build/jinja-macros), UDF способствуют повторному использованию кода, но в отличие от макросов они являются объектами в хранилище. Это означает, что одну и ту же логику можно использовать не только в dbt, но и в других инструментах — например, в BI-системах, ноутбуках для data science и т.д.
 
@@ -14,7 +14,7 @@ dbt создаёт, обновляет и переименовывает UDF в 
 
 Дополнительную информацию о конфигурациях и свойствах UDF см. в разделах [Function properties](/reference/function-properties) и [Function configurations](/reference/function-configs).
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 * Убедитесь, что вы используете **Latest Fusion** или **Latest** [release track](/docs/dbt-versions/cloud-release-tracks) платформы dbt либо dbt Core версии v1.11.
 * Используйте один из следующих адаптеров:
@@ -50,7 +50,7 @@ dbt создаёт, обновляет и переименовывает UDF в 
 Полный список поддерживаемых возможностей UDF см. в разделе [Limitations](#limitations) ниже.
 :::
 
-## Определение UDF в dbt
+## Определение UDF в dbt {#defining-udfs-in-dbt}
 
 В dbt можно определять UDF на SQL и Python. Python UDF в настоящее время поддерживаются в Snowflake и BigQuery при использовании <Constant name="core" />.
 
@@ -332,7 +332,7 @@ dbt создаёт, обновляет и переименовывает UDF в 
 
 После определения UDF, если вы обновите SQL‑ или Python‑файл с телом функции либо её конфигурации, изменения будут применены к UDF в хранилище при следующем запуске `build`.
 
-## Использование UDF в unit‑тестах
+## Использование UDF в unit‑тестах {#using-udfs-in-unit-tests}
 
 Вы можете использовать [unit tests](/docs/build/unit-tests) для проверки моделей, которые ссылаются на UDF. Перед запуском unit‑тестов убедитесь, что функция существует в хранилище. Чтобы гарантировать это для unit‑теста, выполните:
 
@@ -365,7 +365,7 @@ unit_tests:
 ```
 </File>
 
-## Просмотр и сборка UDF
+## Просмотр и сборка UDF {#listing-and-building-udfs}
 
 Используйте команду [`list`](/reference/commands/list#listing-functions), чтобы вывести список UDF в проекте:  
 `dbt list --select "resource_type:function"` или `dbt list --resource-type function`.
@@ -375,13 +375,13 @@ unit_tests:
 
 Подробнее о выборе UDF см. в примерах в разделе [Node selector methods](/reference/node-selection/methods#file).
 
-## Ограничения
+## Ограничения {#limitations}
 
 - Создание UDF на других языках (например, Java, JavaScript или Scala) пока не поддерживается.
 - Python UDF в настоящее время поддерживаются только в Snowflake и BigQuery. Другие хранилища пока не поддерживаются.
 - Поддержка Python UDF в <Constant name="fusion" /> пока недоступна. Актуальные обновления см. в [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements).
 - В настоящий момент поддерживаются только функции типов <Term id="scalar">scalar</Term> и <Term id="aggregate">aggregate</Term>. Подробнее см. в разделе [Supported function types](/reference/resource-configs/type#supported-function-types).
 
-## Связанные FAQ
+## Связанные FAQ {#related-faqs}
 
 <FAQ path="Project/udfs-vs-macros" />

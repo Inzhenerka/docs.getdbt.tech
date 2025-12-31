@@ -6,7 +6,7 @@ tags: [dbt Insights]
 image: /img/docs/dbt-insights/insights-chart.jpg
 ---
 
-# Доступ к интерфейсу dbt Insights <Lifecycle status="managed,managed_plus" />
+# Доступ к интерфейсу dbt Insights <Lifecycle status="managed,managed_plus" /> {#access-the-dbt-insights-interface}
 
 <IntroText>
 Узнайте, как получить доступ к <Constant name="query_page" />, запускать запросы и просматривать результаты.
@@ -22,7 +22,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 - Использовать <Constant name="copilot" /> для генерации или редактирования SQL‑запросов с помощью подсказок на естественном языке  
 - Интегрироваться с [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/explore/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [<Constant name="visual_editor" />](/docs/cloud/canvas), обеспечивая единый опыт исследования данных, написания SQL с поддержкой ИИ и совместной работы
 
-## Доступ к интерфейсу dbt Insights
+## Доступ к интерфейсу dbt Insights {#access-the-dbt-insights-interface-1}
 
 Перед тем как получить доступ к <Constant name="query_page" />, убедитесь, что выполнены [предварительные требования](/docs/explore/dbt-insights#prerequisites).
 
@@ -30,7 +30,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 2. Если ваши [developer credentials](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) ещё не настроены, <Constant name="query_page" /> предложит настроить их. Возможность выполнять запросы к данным зависит от разрешений провайдера хранилища данных и ваших developer credentials.
 3. После настройки учётных данных вы сможете писать, запускать и редактировать SQL‑запросы в редакторе <Constant name="query_page" /> для существующих моделей в вашем проекте.
 
-## Запуск запросов
+## Запуск запросов {#run-queries}
 
 Для запуска запросов в <Constant name="query_page" /> можно использовать:
 - Стандартный SQL  
@@ -40,7 +40,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 - Базовые агрегации и join‑ы  
 - Запросы <Constant name="semantic_layer" /> с использованием Jinja‑функций <Constant name="semantic_layer" />
 
-## Пример
+## Пример {#example}
 
 Рассмотрим пример, который показывает, как запускать запросы в <Constant name="query_page" />:
 
@@ -69,7 +69,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
     order by 1
     ```
 
-### Использование dbt Copilot
+### Использование dbt Copilot {#use-dbt-copilot}
 
 Чтобы упростить работу, [используйте <Constant name="copilot" />](/docs/cloud/use-dbt-copilot#build-queries) — это поможет сэкономить время и изучить другие способы анализа данных. <Constant name="copilot" /> может быстро обновить существующий запрос или сгенерировать новый на основе вашего запроса.
 
@@ -98,7 +98,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 Вы можете открыть [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="visual_editor" />](/docs/cloud/canvas) из [меню Query console](/docs/explore/navigate-dbt-insights#query-console-menu), чтобы превратить SQL в переиспользуемую модель dbt — и всё это прямо в <Constant name="cloud" />!
 :::
 
-### Просмотр результатов
+### Просмотр результатов {#view-results}
 
 Используя тот же пример, вы можете выполнить небольшой exploratory data analysis, запустив запрос и:
 
@@ -107,7 +107,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 - Экспортировать в CSV — в правом верхнем углу таблицы нажмите кнопку загрузки, чтобы выгрузить датасет.
 <Lightbox src="/img/docs/dbt-insights/insights-export-csv.png" width="95%" title="Экспорт в CSV в dbt Insights" />
 
-### Просмотр деталей
+### Просмотр деталей {#view-details}
 
 Откройте вкладку **Details**, чтобы посмотреть детали запроса:
 - **Query metadata** — заголовок и описание, сгенерированные <Constant name="copilot" />, исходный SQL и соответствующий скомпилированный SQL.
@@ -116,7 +116,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 
 <Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="Вкладка Details в dbt Insights" />
 
-### Визуализация результатов
+### Визуализация результатов {#chart-results}
 
 Визуализируйте результаты запроса, перейдя на вкладку **Chart**, где можно:
 - Выбрать тип графика с помощью иконки графика.
@@ -125,7 +125,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 
 <Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="Вкладка Chart в dbt Insights" />
 
-### История запросов
+### История запросов {#query-history}
 
 Просматривайте историю запросов и их статусы (All, Success, Error или Pending) с помощью иконки **Query history**:
 - Выберите запрос, чтобы запустить его повторно и посмотреть результаты.
@@ -136,7 +136,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="95%" title="Иконка Query history в dbt Insights" />
 
-### Использование dbt Catalog
+### Использование dbt Catalog {#use-dbt-catalog}
 
 Откройте [<Constant name="explorer" />](/docs/explore/explore-projects) напрямую в <Constant name="query_page" />, чтобы просматривать ресурсы проекта — модели, столбцы, метрики, измерения и многое другое — прямо в интерфейсе <Constant name="query_page" />.
 
@@ -150,7 +150,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights, интегрированный с dbt Catalog" />
 
-### Настройка окружения Jinja
+### Настройка окружения Jinja {#set-jinja-environment}
 
 Настройте окружение компиляции, чтобы управлять тем, как рендерятся Jinja‑функции. Эта функция:
 - Поддерживает «типизированные» окружения, помеченные как `Production`, `Staging` и/или `Development`.
@@ -160,7 +160,7 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 
 <Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Настройка окружения для Jinja‑контекста" />
 
-## Сохранение Insights
+## Сохранение Insights {#save-your-insights}
 
 Insights предоставляет удобный механизм сохранения запросов, которые вы используете чаще всего. Также есть возможность делиться сохранёнными Insights с другими пользователями dbt (и получать доступ к их сохранённым запросам). Нажмите на **иконку закладки** в запросе, чтобы добавить его в список!
 
@@ -171,14 +171,14 @@ Insights предоставляет удобный механизм сохран
 - Просматривайте детали сохранённого Insight, включая описание и дату создания, во вкладке **Overview**.
 - Просматривайте историю изменений Insight во вкладке **Version history**. Нажмите на версию, чтобы сравнить её с текущей и увидеть изменения.
 
-## Особенности и ограничения
+## Особенности и ограничения {#considerations}
 
 - <Constant name="query_page" /> использует ваши development credentials для выполнения запросов. Вы можете выполнять запросы к любым объектам в вашем хранилище данных, к которым у вас есть доступ с этими учётными данными.
 - Каждая Jinja‑функция использует [`defer --favor-state`](/reference/node-selection/defer) для разрешения Jinja.
 
 <!-- this can move to another page -->
 
-## FAQs
+## FAQs {#faqs}
 - В чём разница между <Constant name="query_page" /> и <Constant name="explorer" />?
   - Отличный вопрос! <Constant name="explorer" /> помогает понять структуру вашего dbt‑проекта, его ресурсы, lineage и метрики, предоставляя контекст для данных.
   - <Constant name="query_page" /> развивает этот контекст, позволяя писать, запускать и итеративно дорабатывать SQL‑запросы прямо в <Constant name="cloud" />. Он предназначен для ad‑hoc и исследовательской аналитики и помогает бизнес‑пользователям и аналитикам исследовать данные, задавать вопросы и эффективно сотрудничать.

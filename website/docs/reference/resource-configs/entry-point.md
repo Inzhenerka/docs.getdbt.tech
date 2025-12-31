@@ -16,7 +16,7 @@ functions:
 
 </File>
 
-## Определение
+## Определение {#definition}
 
 При создании Python UDF необходимо указать Python‑функцию, которая будет вызываться, с помощью параметра `entry_point`.
 
@@ -27,7 +27,7 @@ functions:
 | Snowflake | Преобразуется в имя `HANDLER` в `LANGUAGE PYTHON UDF` | 
 | BigQuery | Преобразуется в `entry_point` в `OPTIONS(...)` |  
 
-## Пример
+## Пример {#example}
 
 Например, если у вас есть Python UDF в файле `functions/my_function.py` со следующим кодом, где функция `main` используется в качестве точки входа:
 
@@ -73,7 +73,7 @@ functions:
 ```
 </File>
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 
 - [Пользовательские функции (UDF)](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)

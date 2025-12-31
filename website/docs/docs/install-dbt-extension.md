@@ -6,7 +6,7 @@ sidebar_label: "Настройка расширения dbt"
 image: /img/docs/extension/extension-marketplace.png
 ---
 
-# Установка расширения dbt для VS Code <Lifecycle status="preview" />
+# Установка расширения dbt для VS Code <Lifecycle status="preview" /> {#install-the-dbt-vs-code-extension}
 
 import InstallExtension from '/snippets/_install-dbt-extension.md'; 
 

@@ -15,7 +15,7 @@ meta:
   config_page: '/reference/resource-configs/bigquery-configs'
 ---
 
-# Настройка BigQuery <Lifecycle status='preview' />
+# Настройка BigQuery <Lifecycle status='preview' /> {#bigquery-setup}
 
 Вы можете настроить адаптер BigQuery, выполнив команду `dbt init` в CLI, либо вручную создав файл `profiles.yml` с полями, настроенными в соответствии с выбранным типом аутентификации.
 
@@ -23,7 +23,7 @@ meta:
 - Сервисный аккаунт (JSON-файл)
 - gcloud OAuth
 
-## Разрешения BigQuery
+## Разрешения BigQuery {#bigquery-permssions}
 
 Для чтения данных, а также создания таблиц и представлений в проекте BigQuery, учетным записям пользователей dbt требуются следующие разрешения:
 
@@ -38,7 +38,7 @@ meta:
 - Code Creator
 - colabEnterpriseUser
 
-## Конфигурация Fusion
+## Конфигурация Fusion {#configure-fusion}
 
 При выполнении `dbt init` в CLI вам будет предложено указать следующие параметры:
 - **Project ID:** идентификатор проекта GCP BigQuery
@@ -49,7 +49,7 @@ meta:
 
 Затем выберите метод аутентификации и следуйте подсказкам в интерфейсе, чтобы предоставить необходимую информацию.
 
-## Поддерживаемые типы аутентификации
+## Поддерживаемые типы аутентификации {#supported-authentication-types}
 
 <Tabs>
 
@@ -57,7 +57,7 @@ meta:
 
 При выборе метода аутентификации **Service account (JSON file)** вам будет предложено указать путь к JSON-файлу. Также вы можете вручную задать этот путь в файле `profiles.yml`.
 
-#### Пример конфигурации с JSON-файлом сервисного аккаунта
+#### Пример конфигурации с JSON-файлом сервисного аккаунта {#example-service-account-json-file-configuration}
 
 <File name="profiles.yml">
 
@@ -84,7 +84,7 @@ default:
 
 Перед выбором этого метода аутентификации необходимо сначала настроить локальный OAuth для gcloud:
 
-#### Локальная настройка OAuth через gcloud
+#### Локальная настройка OAuth через gcloud {#local-oauth-gcloud-setup}
 
 1. Убедитесь, что команда `gcloud` [установлена на вашем компьютере](https://cloud.google.com/sdk/downloads).
 2. Активируйте application-default account с помощью команды:
@@ -101,7 +101,7 @@ https://www.googleapis.com/auth/cloud-platform
 
 Откроется окно браузера, в котором вам будет предложено войти в учетную запись Google. После этого dbt будет использовать ваши OAuth-учетные данные для подключения к BigQuery.
 
-#### Пример конфигурации gcloud
+#### Пример конфигурации gcloud {#example-gcloud-configuration}
 
 <File name="profiles.yml">
 
@@ -126,6 +126,6 @@ default:
 
 </Tabs>
 
-## Дополнительная информация
+## Дополнительная информация {#more-information}
 
 Дополнительную информацию о настройках, специфичных для BigQuery, вы найдете в [справочном руководстве по адаптеру BigQuery](/reference/resource-configs/bigquery-configs).

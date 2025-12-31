@@ -22,13 +22,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-## Подключение к Starburst/Trino
+## Подключение к Starburst/Trino {#connecting-to-starbursttrino}
 
 Чтобы подключиться к платформе данных с помощью dbt Core, создайте соответствующие ключи/значения _profile_ и _target_ в YAML-файле `profiles.yml` для ваших кластеров Starburst/Trino. Этот YAML-файл dbt находится в директории `.dbt/` в вашем домашнем каталоге. Для получения дополнительной информации обратитесь к [Профили подключения](/docs/core/connect-data-platform/connection-profiles) и [profiles.yml](/docs/core/connect-data-platform/profiles.yml).
 
 Параметры для настройки подключения предназначены для кластеров Starburst Enterprise, Starburst Galaxy и Trino. Если не указано иное, под "кластером" подразумевается любой из этих продуктов.
 
-## Параметры хоста
+## Параметры хоста {#host-parameters}
 
 Следующие поля профиля всегда обязательны, за исключением `user`, который также обязателен, если вы не используете методы аутентификации `oauth`, `oauth_console`, `cert` или `jwt`.
 
@@ -40,13 +40,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 |   `port`   | `443`  | Порт для подключения к вашему кластеру. По умолчанию это 443 для кластеров с включенным TLS. |
 |   `user`   | Формат для Starburst Enterprise или Trino: <br/> <ul><li>`user.name`</li><li>`user.name@mydomain.com`</li></ul><br/>Формат для Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> | Имя пользователя (учетной записи) для входа в ваш кластер. При подключении к кластерам Starburst Galaxy вы должны включить роль пользователя в качестве суффикса к имени пользователя. |
 
-### Роли в Starburst Enterprise
+### Роли в Starburst Enterprise {#roles-in-starburst-enterprise}
 <Snippet path="connect-starburst-trino/roles-starburst-enterprise" />
 
-### Схемы и базы данных
+### Схемы и базы данных {#schemas-and-databases}
 <Snippet path="connect-starburst-trino/schema-db-fields" />
 
-## Дополнительные параметры
+## Дополнительные параметры {#additional-parameters}
 
 Следующие поля профиля являются необязательными для настройки. Они позволяют настроить сессию вашего кластера и dbt для вашего подключения.
 
@@ -61,7 +61,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `http_headers`                | `X-Trino-Client-Info: dbt-trino` | HTTP-заголовки для отправки вместе с запросами к Trino, указанные в виде YAML-словаря пар (заголовок, значение).  |
 | `http_scheme`                 | `https` или `http`                | HTTP-схема для использования в запросах к Trino (по умолчанию: `http`, или `https`, если `kerberos`, `ldap` или `jwt`) |
 
-## Параметры аутентификации
+## Параметры аутентификации {#authentication-parameters}
 
 Методы аутентификации, которые поддерживает <Constant name="core" />:
 
@@ -104,7 +104,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `impersonation_user` (необязательно) | `impersonated_tom` | Переопределите предоставленное имя пользователя. Это позволяет вам выдавать себя за другого пользователя. |
 <br/>
 
-#### Пример profiles.yml для LDAP
+#### Пример profiles.yml для LDAP {#example-profilesyml-for-ldap}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -150,7 +150,7 @@ trino:
 
 <br/>
 
-#### Пример profiles.yml для Kerberos
+#### Пример profiles.yml для Kerberos {#example-profilesyml-for-kerberos}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -188,7 +188,7 @@ trino:
 
 <br/>
 
-#### Пример profiles.yml для JWT
+#### Пример profiles.yml для JWT {#example-profilesyml-for-jwt}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -226,7 +226,7 @@ trino:
 
 <br/>
 
-#### Пример profiles.yml для сертификатов
+#### Пример profiles.yml для сертификатов {#example-profilesyml-for-certificate}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -258,7 +258,7 @@ trino:
 
 Рекомендуется установить `keyring` для кэширования токена OAuth 2.0 между несколькими вызовами dbt, выполнив `python -m pip install 'trino[external-authentication-token-cache]'`. Пакет `keyring` не устанавливается по умолчанию.
 
-#### Пример profiles.yml для OAuth
+#### Пример profiles.yml для OAuth {#example-profilesyml-for-oauth}
 
 ```yaml
 sandbox-galaxy:
@@ -287,7 +287,7 @@ sandbox-galaxy:
 
 Рекомендуется установить `keyring` для кэширования токена OAuth 2.0 между несколькими вызовами dbt, выполнив `python -m pip install 'trino[external-authentication-token-cache]'`. Пакет `keyring` не устанавливается по умолчанию.
 
-#### Пример profiles.yml для OAuth
+#### Пример profiles.yml для OAuth {#example-profilesyml-for-oauth-1}
 
 ```yaml
 sandbox-galaxy:
@@ -308,7 +308,7 @@ sandbox-galaxy:
 
 Вам не нужно настраивать аутентификацию (`method: none`), однако dbt Labs настоятельно не рекомендует использовать это в реальных приложениях. Его использование предназначено только для игрушечных целей (например, для экспериментов), таких как локальные примеры, например, запуск Trino и dbt полностью в одном контейнере Docker.
 
-#### Пример profiles.yml без аутентификации
+#### Пример profiles.yml без аутентификации {#example-profilesyml-for-no-authentication}
 
 <File name='~/.dbt/profiles.yml'>
 

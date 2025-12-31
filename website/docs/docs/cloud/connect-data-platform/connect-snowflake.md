@@ -22,11 +22,11 @@ sidebar_label: "Подключение Snowflake"
 | Database | Логическая база данных для подключения и выполнения запросов. | `analytics` |
 | Warehouse | Виртуальный склад для использования при выполнении запросов. | `transforming` |
 
-## Методы аутентификации
+## Методы аутентификации {#authentication-methods}
 
 В этом разделе описываются различные методы аутентификации для подключения <Constant name="cloud" /> к Snowflake. Учетные данные для сред развертывания (Production, Staging, General) настраиваются глобально в разделе [**Connections**](/docs/deploy/deploy-environments#deployment-connection) в **Account settings**. Отдельные пользователи настраивают свои учетные данные для разработки в разделе [**Credentials**](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) своего профиля пользователя.
 
-### Имя пользователя и пароль с MFA
+### Имя пользователя и пароль с MFA {#username-and-password-with-mfa}
 
 :::info Snowflake authentication
 
@@ -81,7 +81,7 @@ MFA в Snowflake доступна для всех [типов планов](http
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/extended-attributes-mfa.png" width="70%" title="Настройте имя пользователя и пароль MFA, а также connect_retries в настройках среды разработки." />
 
-### Ключевая пара
+### Ключевая пара {#key-pair}
 
 **Доступно в:** Development environments, Deployment environments
 
@@ -111,7 +111,7 @@ MFA в Snowflake доступна для всех [типов планов](http
 
    <Lightbox src="/img/docs/dbt-cloud/snowflake-keypair-auth.png" width="60%" title="Аутентификация Snowflake с помощью ключевой пары"/>
 
-### Snowflake OAuth
+### Snowflake OAuth {#snowflake-oauth}
 
 **Доступно в:** средах разработки, только тарифы уровня Enterprise
 
@@ -120,11 +120,11 @@ MFA в Snowflake доступна для всех [типов планов](http
 Дополнительные сведения о настройке подключения Snowflake OAuth в <Constant name="cloud" /> см. в [документации по настройке Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth).
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/database-connection-snowflake-oauth.png" width="55%" title="Настройка подключения Snowflake OAuth"/>
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, см. [Snowflake-specific configuration](/reference/resource-configs/snowflake-configs).
 
-### URL-адрес пользовательского домена
+### URL-адрес пользовательского домена {#custom-domain-url}
 
 Чтобы подключиться к Snowflake через пользовательский домен (vanity URL) вместо локатора учетной записи, используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для настройки параметра `host` с пользовательским доменом:
 
@@ -134,7 +134,7 @@ host: https://custom_domain_to_snowflake.com
 
 Эта конфигурация может конфликтовать с Snowflake OAuth при использовании с PrivateLink. Если пользователи не могут достичь серверов аутентификации Snowflake с точки зрения сети, пожалуйста, [свяжитесь с поддержкой dbt](mailto:support@getdbt.com), чтобы найти обходной путь с этой архитектурой.
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
 Если вы получаете ошибку `Could not deserialize key data` или `JWT token`, обратитесь к следующим причинам и решениям:
 

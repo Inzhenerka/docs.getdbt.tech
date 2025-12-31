@@ -5,7 +5,7 @@ description: "Узнайте, как загружать артефакты dbt C
 pagination_next: "docs/deploy/hybrid-setup"
 ---
 
-# О гибридных проектах <Lifecycle status='managed_plus'/>
+# О гибридных проектах <Lifecycle status='managed_plus'/> {#about-hybrid-projects}
 
 <IntroText>
 Гибридные проекты позволяют вашей организации использовать дополняющие друг друга рабочие процессы <Constant name="core" /> и <Constant name="cloud" /> (когда одни команды деплоят проекты в <Constant name="core" />, а другие — в <Constant name="cloud" />) и бесшовно интегрировать эти процессы за счёт автоматической загрузки [артефактов](/reference/artifacts/dbt-artifacts) <Constant name="core" /> в <Constant name="cloud" />.
@@ -21,7 +21,7 @@ pagination_next: "docs/deploy/hybrid-setup"
 - (Скоро) Новым пользователям, заинтересованным в [<Constant name="visual_editor" />](/docs/cloud/canvas), строить решения на основе dbt-моделей, уже созданных центральной командой данных в <Constant name="core" />, вместо того чтобы начинать с нуля.
 - Пользователям <Constant name="core" /> и <Constant name="cloud" /> переходить в [<Constant name="explorer" />](/docs/explore/explore-projects) и просматривать свои модели и ассеты. Для доступа к <Constant name="explorer" /> необходима [лицензия только для чтения](/docs/cloud/manage-access/seats-and-users).
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 Чтобы загружать артефакты, убедитесь, что выполнены следующие условия:
 

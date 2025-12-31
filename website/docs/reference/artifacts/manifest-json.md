@@ -13,7 +13,7 @@ import ManifestVersions from '/snippets/_manifest-versions.md';
 
 Сегодня dbt использует этот файл для наполнения [сайта документации](/docs/explore/build-and-view-your-docs), а также для выполнения [сравнения состояний](/reference/node-selection/syntax#about-node-selection). Участники сообщества используют этот файл, чтобы запускать проверки, например, сколько моделей имеют описания и тесты.
 
-### Ключи верхнего уровня
+### Ключи верхнего уровня {#top-level-keys}
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
 - `nodes`: Словарь всех анализов, моделей, семян, снимков и тестов.
@@ -29,7 +29,7 @@ import ManifestVersions from '/snippets/_manifest-versions.md';
 - `selectors`: Расширенное представление словаря [YAML `selectors`](/reference/node-selection/yaml-selectors).
 - `disabled`: Массив ресурсов с `enabled: false`.
 
-### Детали ресурсов
+### Детали ресурсов {#resource-details}
 
 Все ресурсы, вложенные в `nodes`, `sources`, `metrics`, `exposures`, `macros` и `docs`, имеют следующие базовые свойства:
 
@@ -42,7 +42,7 @@ import ManifestVersions from '/snippets/_manifest-versions.md';
 
 Каждый из них имеет несколько дополнительных свойств, связанных с его типом ресурса.
 
-### Схема JSON dbt
+### Схема JSON dbt {#dbt-json-schema}
 Вы можете обратиться к [схеме JSON dbt](https://schemas.getdbt.com/) для получения информации о описании и использовании артефактов, созданных dbt.
 
 **Примечание**: Номер версии `manifest.json` связан с (но не _равен_) вашей версии dbt, поэтому вы _должны_ использовать правильную версию `manifest.json` для вашей версии dbt. Чтобы найти правильную версию `manifest.json`, выберите версию dbt в верхней навигации (например, `v1.5`).

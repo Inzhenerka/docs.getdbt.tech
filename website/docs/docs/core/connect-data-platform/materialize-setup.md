@@ -26,7 +26,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к Materialize
+## Подключение к Materialize {#connecting-to-materialize}
 
 После того как вы создали [аккаунт Materialize](https://materialize.com/register/), адаптируйте ваш `profiles.yml` для подключения к вашей инстанции, используя следующую конфигурацию профиля:
 
@@ -53,7 +53,7 @@ materialize:
 
 </File>
 
-### Конфигурации
+### Конфигурации {#configurations}
 
 `cluster`: По умолчанию используется [кластер](https://materialize.com/docs/overview/key-concepts/#clusters) для поддержания материализованных представлений или индексов. [`default` кластер](https://materialize.com/docs/sql/show-clusters/#default-cluster) предустановлен в каждой среде, но мы рекомендуем создавать выделенные кластеры для изоляции рабочих нагрузок в вашем проекте dbt (например, `staging` и `data_mart`).
 
@@ -67,9 +67,9 @@ dbt debug
 
 Если вывод гласит "All checks passed!", вы готовы к работе! Ознакомьтесь с [руководством по dbt и Materialize](https://materialize.com/docs/guides/dbt/), чтобы узнать больше и начать работу.
 
-## Поддерживаемые функции
+## Поддерживаемые функции {#supported-features}
 
-### Материализации
+### Материализации {#materializations}
 
 Поскольку Materialize оптимизирован для преобразований потоковых данных, а ядро dbt построено вокруг пакетной обработки, адаптер `dbt-materialize` реализует несколько пользовательских типов материализации:
 
@@ -83,18 +83,18 @@ dbt debug
 `ephemeral` | ДА | Выполняет запросы с использованием <Term id="cte">CTE</Term>.
 `incremental` | НЕТ | Используйте вместо этого `materializedview` <Term id="materialization" />. Материализованные представления всегда будут возвращать актуальные результаты без ручных или настроенных обновлений. Для получения дополнительной информации ознакомьтесь с [документацией Materialize](https://materialize.com/docs/).
 
-### Индексы
+### Индексы {#indexes}
 
 Материализованные представления (`materializedview`), представления (`view`) и источники (`source`) могут иметь список [`индексов`](/reference/resource-configs/materialize-configs#indexes).
 
-### Seeds
+### Seeds {#seeds}
 
 Запуск [`dbt seed`](/reference/commands/seed) создаст статическое материализованное <Term id="view" /> из CSV-файла. Вы не сможете добавить или обновить это представление после его создания.
 
-### Тесты
+### Тесты {#tests}
 
 Запуск [`dbt test`](/reference/commands/test) с опциональным флагом `--store-failures` или конфигурацией [`store_failures`](/reference/resource-configs/store_failures) создаст материализованное представление для каждого настроенного теста, которое может отслеживать неудачи с течением времени.
 
-## Ресурсы
+## Ресурсы {#resources}
 
 - [Руководство по dbt и Materialize](https://materialize.com/docs/guides/dbt/)

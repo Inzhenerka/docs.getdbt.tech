@@ -12,7 +12,7 @@ pagination_previous: "reference/define-configs"
 
 :::info
 
-#### Файлы schema.yml
+#### Файлы schema.yml {#schemayml-files}
 
 В предыдущих версиях документации такие файлы назывались `schema.yml`. Мы отказались от этой терминологии, потому что слово `schema` в контексте баз данных имеет и другие значения, и пользователи часто думали, что файлы _обязательно_ должны называться `schema.yml`.
 
@@ -20,7 +20,7 @@ pagination_previous: "reference/define-configs"
 
 :::
 
-### Какие properties _не_ являются также configs?
+### Какие properties _не_ являются также configs? {#which-properties-are-not-also-configs}
 
 В dbt вы можете задавать конфигурации узлов (node configs) в файлах `properties.yml` — в дополнение к блокам `config()` и файлу `dbt_project.yml`. Однако существуют некоторые специальные свойства, которые можно определить **только** в `.yml`‑файлах, и которые нельзя настроить с помощью блоков `config()` или файла `dbt_project.yml`.
 

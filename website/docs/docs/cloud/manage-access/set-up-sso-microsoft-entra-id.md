@@ -5,7 +5,7 @@ id: "set-up-sso-microsoft-entra-id"
 sidebar_label: "Настройка SSO с Microsoft Entra ID"
 ---
 
-# Настройка SSO с Microsoft Entra ID <Lifecycle status="managed, managed_plus" />
+# Настройка SSO с Microsoft Entra ID <Lifecycle status="managed, managed_plus" /> {#set-up-sso-with-microsoft-entra-id}
 
 Планы уровня <Constant name="cloud" /> Enterprise поддерживают единый вход (single sign-on, SSO) через Microsoft Entra ID (ранее Azure AD). Вам понадобятся права на создание и управление новым приложением Entra ID. В настоящее время поддерживаются следующие возможности:
 
@@ -13,11 +13,11 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 * SSO, инициируемый SP  
 * Just-in-time provisioning  
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 <Constant name="cloud" /> поддерживает как однопользовательские (single-tenant), так и многопользовательские (multi-tenant) подключения SSO Microsoft Entra ID (ранее Azure AD). Для большинства Enterprise-сценариев рекомендуется использовать однопользовательский вариант при создании приложения Microsoft Entra ID.
 
-### Создание приложения
+### Создание приложения {#creating-an-application}
 
 Войдите в портал Azure вашей организации. На странице [**Microsoft Entra ID**](https://portal.azure.com/#home) необходимо выбрать соответствующий каталог, а затем зарегистрировать новое приложение.
 
@@ -58,7 +58,7 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-redirect-uri.png" title="Настройка Redirect URI"/>
 
-### Сопоставление пользователей и групп Azure &lt;-&gt; dbt
+### Сопоставление пользователей и групп Azure &lt;-&gt; dbt {#azure-dbt-user-and-group-mapping}
 
 :::important
 
@@ -70,7 +70,7 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 
 <Constant name="dbt_platform" /> использует **User principal name** (UPN) в Microsoft Entra ID для идентификации и сопоставления пользователей, входящих в <Constant name="cloud" /> через SSO. Обычно UPN имеет формат адреса электронной почты.
 
-### Добавление пользователей в Enterprise application
+### Добавление пользователей в Enterprise application {#adding-users-to-an-enterprise-application}
 
 После регистрации приложения следующим шагом является назначение пользователей. Добавьте пользователей, которые должны иметь доступ к dbt, выполнив следующие действия:
 
@@ -86,7 +86,7 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 В разделе **Properties** проверьте переключатель **User assignment required?** и убедитесь, что он соответствует вашим требованиям. Большинство клиентов предпочитают значение **Yes**, чтобы только пользователи и группы, явно назначенные в <Constant name="cloud" />, могли выполнять вход. Если установлено **No**, любой пользователь сможет получить доступ к приложению при наличии прямой ссылки, согласно [документации Microsoft Entra ID](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal#configure-an-application-to-require-user-assignment).
 :::
 
-### Настройка разрешений
+### Настройка разрешений {#configuring-permissions}
 
 13. Вернитесь в [**Default Directory**](https://portal.azure.com/#home) (или **Home**), затем в **App registration**.
 14. Выберите ваше приложение и перейдите в **API permissions**.
@@ -104,7 +104,7 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-permissions-overview.png" title="Настройка разрешений приложения" />
 
-### Создание client secret
+### Создание client secret {#creating-a-client-secret}
 
 17. В разделе **Manage** выберите **Certificates & secrets**.
 18. Нажмите **+New client secret**.
@@ -116,18 +116,18 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-secret-config.png" title="Настройка certificates & secrets" />
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-secret-saved.png" title="Сохранение client secret" />
 
-### Сбор учетных данных клиента
+### Сбор учетных данных клиента {#collect-client-credentials}
 
 23. Перейдите на страницу **Overview** регистрации приложения.
 24. Запишите значения **Application (client) ID** и **Directory (tenant) ID**, отображаемые на этой странице, и сохраните их вместе с client secret. Эти данные будут использованы на следующих шагах для завершения настройки интеграции в <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-overview.png" title="Сбор учетных данных. Сохраните их в надежном месте" />
 
-## Настройка dbt
+## Настройка dbt {#configuring-dbt}
 
 Чтобы завершить настройку, выполните следующие шаги в приложении <Constant name="cloud" />.
 
-### Указание учетных данных
+### Указание учетных данных {#supplying-credentials}
 
 25. В <Constant name="cloud" /> нажмите на имя вашей учетной записи в левом меню и выберите **Account settings**.
 26. В меню выберите **Single sign-on**.
@@ -147,7 +147,7 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 
 <Snippet path="login_url_note" />
 
-### Дополнительные параметры конфигурации
+### Дополнительные параметры конфигурации {#additional-configuration-options}
 
 В разделе **Single sign-on** также доступны дополнительные параметры конфигурации, расположенные ниже полей учетных данных.
 
@@ -155,17 +155,17 @@ sidebar_label: "Настройка SSO с Microsoft Entra ID"
 
 - **Maximum number of groups to retrieve:** Задает настраиваемый лимит количества групп, которые будут получены для пользователей. По умолчанию установлено значение 250 групп, но его можно увеличить, если пользователи состоят в большем количестве групп.
 
-## Настройка RBAC
+## Настройка RBAC {#setting-up-rbac}
 
 Теперь, когда вы завершили настройку SSO с Entra ID, следующим шагом будет настройка
 [RBAC groups](/docs/cloud/manage-access/enterprise-permissions) для завершения конфигурации управления доступом.
 
-## Советы по устранению неполадок
+## Советы по устранению неполадок {#troubleshooting-tips}
 
 Убедитесь, что доменное имя, под которым существуют учетные записи пользователей в Azure, совпадает с доменом, указанным вами в разделе [Указание учетных данных](#supplying-credentials) при настройке SSO.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-get-domain.png" title="Получение домена пользователя из Azure" />
 
-## Узнать больше
+## Узнать больше {#learn-more}
 
 <WistiaVideo id="e395rnl0cy" paddingTweak="62.25%" />

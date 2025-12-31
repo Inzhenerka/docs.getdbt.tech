@@ -4,7 +4,7 @@ sidebar_label: "Merge jobs"
 description: "Узнайте, как запускать выполнение dbt‑джоба при слиянии pull request в Git."
 ---
 
-# Merge jobs в dbt <Lifecycle status="self_service,managed" />
+# Merge jobs в dbt <Lifecycle status="self_service,managed" /> {#merge-jobs-in-dbt}
 
 Вы можете настроить merge job для реализации workflow непрерывного развертывания (continuous deployment, CD) в <Constant name="cloud" />. Merge job запускает dbt‑джоб в момент, когда кто‑то сливает Git pull request в production. Такой workflow создаёт бесшовный процесс разработки, при котором изменения в коде автоматически обновляют production‑данные. Кроме того, этот workflow можно использовать для запуска `dbt compile`, чтобы обновлять manifest окружения — это делает последующие запуски CI‑джобов более производительными.
 
@@ -14,7 +14,7 @@ description: "Узнайте, как запускать выполнение dbt
 Если у вас monorepo с несколькими dbt‑проектами, слияние одного pull request в одном из проектов приведёт к запуску джобов для всех проектов, подключённых к этому monorepo. Чтобы избежать этого, вы можете использовать отдельные target‑ветки для каждого проекта (например, `main-project-a`, `main-project-b`) и тем самым разделить CI‑триггеры.
 :::
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - У вас есть учетная запись <Constant name="cloud" />.
 - Вы настроили [подключение к вашему провайдеру <Constant name="git" />](/docs/cloud/git/git-configuration-in-dbt-cloud). Эта интеграция позволяет <Constant name="cloud" /> запускать задания от вашего имени при их триггере.
@@ -41,7 +41,7 @@ description: "Узнайте, как запускать выполнение dbt
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-create-merge-job.png" title="Пример создания merge job"/>
 
-## Проверьте push-события в Git
+## Проверьте push-события в Git {#verify-push-events-in-git}
 
 Merge-задания требуют push-событий, поэтому убедитесь, что они включены у вашего провайдера <Constant name="git" />, особенно если интеграция с <Constant name="git" /> была настроена ранее. Для новой интеграции этот шаг можно пропустить, так как push-события обычно включены по умолчанию.
 

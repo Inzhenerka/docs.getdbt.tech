@@ -6,7 +6,7 @@ pagination_next: "docs/dbt-cloud-apis/user-tokens"
 pagination_prev: null
 ---
 
-# Обзор API <Lifecycle status="self_service,managed,managed_plus" />
+# Обзор API <Lifecycle status="self_service,managed,managed_plus" /> {#apis-overview}
 
 Аккаунты на тарифах Enterprise и Enterprise+ могут выполнять запросы к API <Constant name="cloud" />.
 
@@ -18,6 +18,6 @@ pagination_prev: null
 
 Если вы хотите узнать больше о вебхуках, обратитесь к разделу [Вебхуки для ваших задач](/docs/deploy/webhooks).
 
-## Как получить доступ к API
+## Как получить доступ к API {#how-to-access-the-apis}
 
 <Constant name="cloud" /> поддерживает два типа API‑токенов: [personal access tokens](/docs/dbt-cloud-apis/user-tokens) и [service account tokens](/docs/dbt-cloud-apis/service-tokens). Запросы к API <Constant name="cloud" /> могут быть авторизованы с использованием этих токенов.

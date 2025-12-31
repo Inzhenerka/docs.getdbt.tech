@@ -33,7 +33,7 @@ id: "connect-gitlab"
 - Для планов Developer или Starter ознакомьтесь с этими [инструкциями](#for-dbt-developer-and-starter-plans).
 - Для планов Enterprise или Enterprise+ перейдите к этим [инструкциям](#for-the-dbt-enterprise-plans).
 
-## Для планов dbt Developer и Starter
+## Для планов dbt Developer и Starter {#for-dbt-developer-and-starter-plans}
 
 Прежде чем вы сможете работать с репозиториями GitLab в <Constant name="cloud" />, необходимо подключить ваш аккаунт GitLab к пользовательскому профилю. Это позволяет <Constant name="cloud" /> аутентифицировать ваши действия при взаимодействии с Git‑репозиториями. Перед подключением аккаунта обязательно ознакомьтесь с [ограничениями](#limitations) планов Team и Developer.
 
@@ -52,7 +52,7 @@ id: "connect-gitlab"
 
 После подтверждения вы будете перенаправлены обратно в <Constant name="cloud" />, где увидите, что ваш аккаунт был связан с вашим профилем.
 
-### Требования и ограничения
+### Требования и ограничения {#requirements-and-limitations}
 
 Тарифы <Constant name="cloud" /> Team и Developer используют один GitLab deploy token, который создаётся первым пользователем, подключившим репозиторий. Это означает, что:
 - Все репозитории, к которым пользователи получают доступ из <Constant name="dbt_platform" />, должны принадлежать [группе GitLab](https://docs.gitlab.com/user/group/).
@@ -61,7 +61,7 @@ id: "connect-gitlab"
 
 Для поддержки более сложных Git‑процессов и корректной работы с коммитами от нескольких пользователей рекомендуется перейти на тариф Enterprise, который предоставляет более гибкие стратегии аутентификации Git.
 
-## Для тарифов dbt Enterprise
+## Для тарифов dbt Enterprise {#for-the-dbt-enterprise-plans}
 
 Клиенты <Constant name="cloud" /> Enterprise и Enterprise+ получают дополнительное преимущество — возможность использовать собственное OAuth‑приложение GitLab в <Constant name="cloud" />. Этот уровень обеспечивает повышенную безопасность, поскольку <Constant name="cloud" /> будет:
 - Принудительно применять авторизацию пользователей через OAuth.
@@ -76,7 +76,7 @@ id: "connect-gitlab"
 
 В GitLab перейдите в настройки вашей группы и выберите **Приложения**. Здесь вы увидите форму для создания нового приложения.
 
-### Настройка OAuth‑приложения GitLab
+### Настройка OAuth‑приложения GitLab {#setting-up-a-gitlab-oauth-application}
 
 Мы рекомендуем, чтобы перед настройкой проекта в <Constant name="cloud" /> администратор аккаунта GitLab создал OAuth‑приложение в GitLab для использования в <Constant name="cloud" />.
 
@@ -99,7 +99,7 @@ id: "connect-gitlab"
 
 Если вы являетесь клиентом Business Critical, использующим [ограничения по IP](/docs/cloud/secure/ip-restrictions), убедитесь, что вы добавили соответствующие CIDR GitLab в ваши правила ограничения IP, иначе подключение к GitLab не удастся.
 
-### Добавление OAuth‑приложения GitLab в dbt
+### Добавление OAuth‑приложения GitLab в dbt {#adding-the-gitlab-oauth-application-to-dbt}
 После того как вы создали приложение GitLab, необходимо указать информацию о нём в <Constant name="cloud" />. В <Constant name="cloud" /> администраторы аккаунта должны перейти в **Account Settings**, нажать на вкладку **Integrations** и раскрыть раздел GitLab.
 
 <Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Navigation.gif" title="Navigating to the GitLab Integration in dbt"/>
@@ -122,7 +122,7 @@ id: "connect-gitlab"
 
 После того как вы примете запрос, вы будете перенаправлены обратно в <Constant name="cloud" />, и ваша интеграция будет готова к тому, чтобы разработчики вашей команды могли [выполнить персональную аутентификацию](#personally-authenticating-with-gitlab).
 
-### Персональная аутентификация с GitLab
+### Персональная аутентификация с GitLab {#personally-authenticating-with-gitlab}
 Разработчики <Constant name="cloud" /> на тарифных планах Enterprise или Enterprise+ должны каждый отдельно подключить свои профили GitLab к <Constant name="cloud" />, поскольку права чтения и записи в репозиторий dbt для каждого разработчика проверяются в <Constant name="cloud_ide" /> или CLI <Constant name="cloud" />.
 
 Чтобы подключить личную учетную запись GitLab:
@@ -139,7 +139,7 @@ id: "connect-gitlab"
 
 После подтверждения авторизации вы будете перенаправлены обратно в <Constant name="cloud" />, и там вы должны увидеть подключенную учетную запись. Теперь вы готовы начать разработку в <Constant name="cloud_ide" /> или с помощью CLI <Constant name="cloud" />.
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
 <FAQ path="Troubleshooting/gitlab-webhook"/>
 <FAQ path="Troubleshooting/error-importing-repo"/>

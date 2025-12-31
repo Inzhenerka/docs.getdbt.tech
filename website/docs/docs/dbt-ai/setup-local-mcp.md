@@ -9,16 +9,16 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 [Локальный сервер dbt MCP](https://github.com/dbt-labs/dbt-mcp) запускается на вашей машине и поддерживает <Constant name="core" />, <Constant name="fusion_engine" /> и <Constant name="cloud_cli" />. Вы можете использовать его как с учетной записью <Constant name="dbt_platform" />, так и без неё.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - [Установите uv](https://docs.astral.sh/uv/getting-started/installation/), чтобы иметь возможность запускать `dbt-mcp` и [связанные зависимости](https://github.com/dbt-labs/dbt-mcp/blob/main/pyproject.toml) в изолированном виртуальном окружении.
 - Иметь локальный проект dbt (если вы хотите использовать команды dbt CLI).
 
-## Варианты настройки
+## Варианты настройки {#setup-options}
 
 Выберите способ настройки, который лучше всего подходит под ваш рабочий процесс:
 
-### OAuth-аутентификация с dbt platform <Lifecycle status="managed, managed_plus" />
+### OAuth-аутентификация с dbt platform <Lifecycle status="managed, managed_plus" /> {#oauth-authentication-with-dbt-platform}
 
 Этот метод использует OAuth для аутентификации в вашей учетной записи <Constant name="dbt_platform" />. Это самый простой вариант настройки, который не требует ручного управления токенами или переменными окружения.
 
@@ -28,7 +28,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 :::
 
-#### Параметры конфигурации
+#### Параметры конфигурации {#configuration-options}
 
 <MCPExample />
 
@@ -38,7 +38,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 После завершения настройки OAuth перейдите к разделу [Проверка конфигурации](#optional-test-your-configuration).
 
-### Только CLI (без dbt platform)
+### Только CLI (без dbt platform) {#cli-only-no-dbt-platform}
 
 Если вы используете CLI <Constant name="core" /> или <Constant name="fusion" /> и вам не нужен доступ к возможностям <Constant name="dbt_platform" /> (Discovery API, Semantic Layer, Administrative API), вы можете настроить локальный MCP, указав только информацию о вашем проекте dbt.
 
@@ -59,7 +59,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 }
 ```
 
-#### Определение путей
+#### Определение путей {#locating-your-paths}
 
 Следуйте инструкциям для вашей ОС, чтобы определить нужные пути:
 
@@ -96,7 +96,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 После завершения этой настройки перейдите к разделу [Проверка конфигурации](#optional-test-your-configuration).
 
-### Настройка через переменные окружения
+### Настройка через переменные окружения {#environment-variable-configuration}
 
 Если вам нужно настроить несколько переменных окружения или вы предпочитаете управлять ими отдельно, вы можете использовать переменные окружения. Если вы используете только команды dbt CLI, вам не нужно указывать переменные окружения, специфичные для dbt platform, и наоборот.
 
@@ -116,7 +116,7 @@ MULTICELL_ACCOUNT_PREFIX=your-account-prefix
 
 Этот файл потребуется для интеграции с инструментами, совместимыми с MCP.
 
-## Настройки API и SQL-инструментов
+## Настройки API и SQL-инструментов {#api-and-sql-tool-settings}
 
 | Переменная окружения | Обязательна | Описание |
 | --- | --- | --- |
@@ -146,7 +146,7 @@ DBT_HOST=abc123.us1.dbt.com  # Не включайте префикс в host!
 - `DBT_HOST=us1.dbt.com`
 - `MULTICELL_ACCOUNT_PREFIX=abc123`
 
-## Настройки dbt CLI
+## Настройки dbt CLI {#dbt-cli-settings}
 
 Локальный dbt-mcp поддерживает все варианты dbt, включая <Constant name="core" /> и <Constant name="fusion_engine" />.
 
@@ -156,7 +156,7 @@ DBT_HOST=abc123.us1.dbt.com  # Не включайте префикс в host!
 | DBT_PATH | Обязательна | Полный путь к исполняемому файлу dbt (<Constant name="core" />/<Constant name="fusion" />/<Constant name="cloud_cli" />). См. следующий раздел для поиска этого пути. | macOS/Linux: `/opt/homebrew/bin/dbt`<br/>Windows: `C:/Python39/Scripts/dbt.exe` |
 | DBT_CLI_TIMEOUT | Необязательна | Количество секунд до тайм-аута выполнения команд dbt CLI агентом. | По умолчанию 60 секунд. |
 
-### Определение `DBT_PATH`
+### Определение `DBT_PATH` {#locating-your-dbt_path}
 
 Следуйте инструкциям для вашей ОС, чтобы найти `DBT_PATH`:
 
@@ -188,7 +188,7 @@ where dbt
 - dbt MCP учитывает стандартные переменные окружения и флаги для сбора статистики использования, описанные [здесь](/reference/global-configs/usage-stats).
 - `DBT_WARN_ERROR_OPTIONS='{"error": ["NoNodesForSelectionCriteria"]}'` устанавливается автоматически, чтобы MCP-сервер понимал, что при выполнении команды dbt не был выбран ни один узел. При необходимости вы можете переопределить это значение, однако оно обеспечивает более удобную работу при вызове dbt из MCP-сервера, гарантируя выбор корректных узлов.
 
-## Отключение инструментов
+## Отключение инструментов {#disabling-tools}
 
 Вы можете отключить следующий доступ к инструментам в локальном `dbt-mcp`:
 
@@ -202,7 +202,7 @@ where dbt
 | `DISABLE_DBT_CODEGEN` | `true` | Установите `false`, чтобы включить [MCP-инструменты dbt codegen](/docs/dbt-ai/about-mcp#codegen-tools) (требуется пакет dbt-codegen). |
 | `DISABLE_TOOLS` | "" | Укажите список имён инструментов, разделённых `,`, чтобы отключить конкретные инструменты. |
 
-#### Использование переменных окружения в конфигурации MCP-клиента
+#### Использование переменных окружения в конфигурации MCP-клиента {#using-environment-variables-in-your-mcp-client-configuration}
 
 Рекомендуемый способ настройки MCP-клиента — использовать поле `env` в вашем JSON-файле конфигурации. Это позволяет хранить всю конфигурацию в одном файле:
 
@@ -224,7 +224,7 @@ where dbt
 }
 ```
 
-#### Использование файла `.env`
+#### Использование файла `.env` {#using-an-env-file}
 
 Если вы предпочитаете управлять переменными окружения в отдельном файле, вы можете создать файл `.env` и сослаться на него:
 
@@ -241,7 +241,7 @@ where dbt
 
 Однако этот подход требует управления двумя файлами вместо одного.
 
-## (Необязательно) Проверка конфигурации
+## (Необязательно) Проверка конфигурации {#optional-test-your-configuration}
 
 В командной строке выполните следующее, чтобы проверить настройку:
 
@@ -259,14 +259,14 @@ uvx --env-file <path-to-.env-file> dbt-mcp
 
 Если ошибок нет, значит конфигурация настроена корректно.
 
-## Настройка MCP-клиента
+## Настройка MCP-клиента {#set-up-your-mcp-client}
 
 После завершения конфигурации следуйте соответствующему руководству по интеграции для выбранного инструмента:
 - [Claude](/docs/dbt-ai/integrate-mcp-claude)
 - [Cursor](/docs/dbt-ai/integrate-mcp-cursor)
 - [VS Code](/docs/dbt-ai/integrate-mcp-vscode)
 
-## Отладочные настройки
+## Отладочные настройки {#debug-configurations}
 
 Эти параметры позволяют настроить уровень логирования MCP-сервера для диагностики и устранения проблем.
 
@@ -276,9 +276,9 @@ uvx --env-file <path-to-.env-file> dbt-mcp
 
 Чтобы увидеть больше деталей о работе MCP-сервера и упростить отладку, вы можете временно установить уровень логирования `DEBUG`. Рекомендуется использовать его временно, чтобы избежать переполнения диска логами.
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
-#### Не удаётся найти исполняемый файл `uvx`
+#### Не удаётся найти исполняемый файл `uvx` {#cant-find-uvx-executable}
 
 Некоторые MCP-клиенты могут не находить `uvx` из JSON-конфигурации. Это приводит к ошибкам вида `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT` и подобным.
 

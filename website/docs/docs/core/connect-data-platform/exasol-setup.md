@@ -25,13 +25,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Подключение к Exasol с помощью **dbt-exasol**
+### Подключение к Exasol с помощью **dbt-exasol** {#connecting-to-exasol-with-dbt-exasol}
 
-#### Аутентификация с использованием пользователя / пароля
+#### Аутентификация с использованием пользователя / пароля {#user-password-authentication}
 
 Настройте ваш профиль dbt для использования Exasol:
 
-##### Информация о подключении к Exasol
+##### Информация о подключении к Exasol {#exasol-connection-information}
 
 <File name='profiles.yml'>
 
@@ -50,7 +50,7 @@ dbt-exasol:
 ```
 </File>
 
-#### Необязательные параметры
+#### Необязательные параметры {#optional-parameters}
 
 - **`connection_timeout`** &mdash; по умолчанию используется значение по умолчанию pyexasol
 - **`socket_timeout`** &mdash; по умолчанию используется значение по умолчанию pyexasol

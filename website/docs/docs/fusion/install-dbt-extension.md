@@ -5,7 +5,7 @@ description: "Инструкции по установке расширения 
 sidebar_label: "Установка расширения VS Code + Fusion"
 ---
 
-# Установка расширения dbt для VS Code <Lifecycle status="preview" />
+# Установка расширения dbt для VS Code <Lifecycle status="preview" /> {#install-the-dbt-vs-code-extension}
 
 import InstallExtension from '/snippets/_install-dbt-extension.md'; 
 

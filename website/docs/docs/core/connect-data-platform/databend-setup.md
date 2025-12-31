@@ -26,13 +26,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к Databend Cloud с помощью **dbt-databend-cloud**
+## Подключение к Databend Cloud с помощью **dbt-databend-cloud** {#connecting-to-databend-cloud-with-dbt-databend-cloud}
 
-### Аутентификация с использованием имени пользователя и пароля
+### Аутентификация с использованием имени пользователя и пароля {#user-password-authentication}
 
 Настройте ваш профиль dbt для использования Databend Cloud:
 
-#### Профиль подключения к Databend Cloud
+#### Профиль подключения к Databend Cloud {#databend-cloud-connection-profile}
 <File name='profiles.yml'>
 
 ```yaml
@@ -50,7 +50,7 @@ dbt-databend-cloud:
 
 </File>
 
-#### Описание полей профиля
+#### Описание полей профиля {#description-of-profile-fields}
 
 | Опция   | Описание                                              | Обязательно? | Пример             |
 |---------|-------------------------------------------------------|--------------|--------------------|
@@ -61,7 +61,7 @@ dbt-databend-cloud:
 | user    | Имя пользователя для подключения к хосту              | Обязательно  | `dbt_admin`        |
 | pass    | Пароль для аутентификации на хосте                    | Обязательно  | `awesome_password` |
 
-## Привилегии пользователя базы данных
+## Привилегии пользователя базы данных {#database-user-privileges}
 
 Ваш пользователь базы данных должен иметь некоторые возможности для чтения или записи, такие как `SELECT`, `CREATE` и так далее.
 Вы можете найти помощь [здесь](https://docs.databend.com/using-databend-cloud/warehouses/connecting-a-warehouse) с управлением привилегиями в Databend Cloud.
@@ -78,7 +78,7 @@ dbt-databend-cloud:
 | SHOW VIEW                  |
 | SUPER                      |
 
-## Поддерживаемые функции
+## Поддерживаемые функции {#supported-features}
 
 | ok |           Функция           |
 |:--:|:---------------------------:|

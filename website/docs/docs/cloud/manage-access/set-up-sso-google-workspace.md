@@ -4,7 +4,7 @@ description: "Узнайте, как администраторы dbt могут
 id: "set-up-sso-google-workspace"
 ---
 
-# Настройка SSO с Google Workspace <Lifecycle status="managed, managed_plus" />
+# Настройка SSO с Google Workspace <Lifecycle status="managed, managed_plus" /> {#set-up-sso-with-google-workspace}
 
 Тарифы <Constant name="cloud" /> уровня Enterprise поддерживают Single Sign-On (SSO) через Google GSuite. Вам потребуются права на создание и управление новым Google OAuth2-приложением, а также доступ для включения Google Admin SDK. GSuite является компонентом Google Cloud Platform (GCP), поэтому вам также понадобится учетная запись с правами управления приложением GSuite в рамках аккаунта GCP.
 
@@ -17,13 +17,13 @@ id: "set-up-sso-google-workspace"
 
 В этом руководстве описан процесс настройки аутентификации в <Constant name="cloud" /> с использованием Google GSuite.
 
-## Настройка организации GSuite в GCP
+## Настройка организации GSuite в GCP {#configuration-of-the-gsuite-organization-within-gcp}
 
 <Constant name="cloud" /> использует Client ID и Client Secret для аутентификации пользователей
 организации GSuite. Ниже приведены шаги по созданию Client ID и
 Client Secret для использования в <Constant name="cloud" />.
 
-### Создание учетных данных
+### Создание учетных данных {#creating-credentials}
 
 1. Перейдите в [API Manager](https://console.developers.google.com/projectselector/apis/credentials) в GCP
 2. Выберите существующий проект или создайте новый проект для учетных данных API
@@ -60,7 +60,7 @@ Client Secret для использования в <Constant name="cloud" />.
 8. Нажмите **Create**, чтобы создать новые учетные данные. Появится всплывающее окно
    с **Client ID** и **Client Secret**. Обязательно сохраните их — они понадобятся позже!
 
-### Включение Admin SDK
+### Включение Admin SDK {#enabling-the-admin-sdk}
 
 <Constant name="cloud" /> требует, чтобы для этого приложения был включен Admin SDK,
 чтобы запрашивать информацию о членстве в группах через API GSuite. Чтобы включить Admin SDK для
@@ -69,11 +69,11 @@ Client Secret для использования в <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/7f36f50-Screen_Shot_2019-12-03_at_10.15.01_AM.png" title="Страница 'Admin SDK'"/>
 
-## Настройка в dbt
+## Настройка в dbt {#configuration-in-dbt}
 
 Чтобы завершить настройку, выполните следующие шаги в приложении <Constant name="cloud" />.
 
-### Указание OAuth Client ID и Client Secret
+### Указание OAuth Client ID и Client Secret {#supply-your-oauth-client-id-and-client-secret}
 
 1. Перейдите на страницу **Enterprise &gt; Single Sign On** в разделе **Account settings**.
 2. Нажмите кнопку **Edit** и укажите следующие параметры SSO:
@@ -102,19 +102,19 @@ Client Secret для использования в <Constant name="cloud" />.
 
 <Snippet path="login_url_note" />
 
-## Настройка RBAC
+## Настройка RBAC {#setting-up-rbac}
 Теперь, когда вы завершили настройку SSO с GSuite, следующим шагом будет настройка
 [групп RBAC](/docs/cloud/manage-access/about-user-access#role-based-access-control-), чтобы завершить конфигурацию управления доступом.
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
-### Ошибка invalid client
+### Ошибка invalid client {#invalid-client-error}
 
 Если при авторизации через GSuite вы получаете ошибку `Error 401: invalid_client`, проверьте, что:
  - указанный Client ID совпадает со значением, созданным на странице GCP API Credentials;
  - указанные доменные имена совпадают с доменами вашего аккаунта GSuite.
 
-### Ошибки OAuth
+### Ошибки OAuth {#oauth-errors}
 
 Если проверка OAuth не завершается успешно, проверьте, что:
  - Admin SDK включен в вашем проекте GCP;
@@ -127,6 +127,6 @@ Client Secret для использования в <Constant name="cloud" />.
 попросите администратора предоставить вашему пользователю GSuite права на запрос групп либо
 попросите администратора войти в <Constant name="cloud" /> и авторизовать интеграцию с GSuite.
 
-## Узнать больше
+## Узнать больше {#learn-more}
 
 <WistiaVideo id="xzksdgiamq" paddingTweak="62.25%" />

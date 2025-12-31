@@ -24,7 +24,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-## Совместимость с Python
+## Совместимость с Python {#python-compatibility}
 
 | Версия плагина | Python 3.9 | Python 3.10 | Python 3.11 | Python 3.12 | Python 3.13 | 
 |----------------|------------|-------------|-------------|-------------|-------------|
@@ -40,7 +40,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | 1.9.x          | ✅          | ✅           | ✅           | ✅           | ❌           |
 | 1.10.x         | ✅          | ✅           | ✅           | ✅           | ✅           |
 
-## Совместимость версий зависимых пакетов dbt
+## Совместимость версий зависимых пакетов dbt {#dbt-dependent-packages-version-compatibility}
 
 | dbt-teradata | <Constant name="core" /> | dbt-teradata-util |  dbt-util      |
 |--------------|--------------------------|-------------------|---------------|
@@ -53,7 +53,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | 1.9.x        | 1.9.x                    | 1.3.0             | 1.3.0         |
 | 1.10.x       | 1.10.x                   | 1.3.0             | 1.3.0         |
 
-### Подключение к Teradata
+### Подключение к Teradata {#connecting-to-teradata}
 
 Чтобы подключиться к Teradata Vantage из dbt, вам необходимо добавить [профиль](/docs/core/connect-data-platform/connection-profiles) в файл `profiles.yml`. Профиль Teradata должен соответствовать следующему синтаксису:
 
@@ -76,7 +76,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 </File>
 
-#### Описание полей профиля Teradata
+#### Описание полей профиля Teradata {#description-of-teradata-profile-fields}
 
 Следующие поля являются обязательными:
 
@@ -130,16 +130,16 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Обратитесь к [параметрам подключения](https://github.com/Teradata/python-driver#connection-parameters) для полного описания параметров подключения.
 
-## Поддерживаемые функции
+## Поддерживаемые функции {#supported-features}
 
-### Материализации
+### Материализации {#materializations}
 
 * `view`
 * `table`
 * `ephemeral`
 * `incremental`
 
-#### Инкрементальная материализация
+#### Инкрементальная материализация {#incremental-materialization}
 Поддерживаются следующие стратегии инкрементальной материализации:
 * `append` (по умолчанию)
 * `delete+insert`
@@ -153,11 +153,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 - Чтобы узнать больше о стратегии инкрементальной материализации `valid_history`, обратитесь к [конфигурациям Teradata](/reference/resource-configs/teradata-configs).
 :::
 
-### Команды
+### Команды {#commands}
 
 Все команды dbt поддерживаются.
 
-## Поддержка контрактов моделей
+## Поддержка контрактов моделей {#support-for-model-contracts}
 Контракты моделей поддерживаются с dbt-teradata версии 1.7.1 и выше.
 Поддержка и применение ограничений в dbt-teradata:
 
@@ -171,15 +171,15 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Подробнее см. [Model contracts](/docs/mesh/govern/model-contracts).
 
-## Поддержка пакета `dbt-utils`
+## Поддержка пакета `dbt-utils` {#support-for-dbt-utils-package}
 Пакет `dbt-utils` поддерживается через пакет dbt `teradata/teradata_utils`. Пакет предоставляет слой совместимости между `dbt_utils` и `dbt-teradata`. См. пакет [teradata_utils](https://hub.getdbt.com/teradata/teradata_utils/latest/) для инструкций по установке.
 
-### Кросс-базовые макросы
+### Кросс-базовые макросы {#cross-db-macros}
 Начиная с версии 1.3, некоторые макросы были перенесены из пакета dbt [teradata-dbt-utils](https://github.com/Teradata/dbt-teradata-utils) в коннектор. Обратитесь к следующей таблице для макросов, поддерживаемых коннектором.
 
 Для использования кросс-базовых макросов пространство имен макросов teradata-utils не будет использоваться, так как кросс-базовые макросы были перенесены из teradata-utils в Dbt-Teradata.
 
-#### Совместимость
+#### Совместимость {#compatibility}
 
 |     Группа макросов   |           Название макроса   |         Статус        |                                 Комментарий                                |
 |:---------------------:|:-----------------------------:|:---------------------:|:----------------------------------------------------------------------:|
@@ -196,19 +196,19 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | Кросс-базовые макросы | generate_series               | :white_check_mark:    | предоставлен пользовательский макрос
 | Кросс-базовые макросы | date_spine                    | :white_check_mark:    | не требуется настройка
 
-#### Примеры для кросс-базовых макросов
-  ##### <a name="replace"></a>replace
+#### Примеры для кросс-базовых макросов {#examples-for-cross-db-macros}
+  ##### <a name="replace"></a>replace {#replace}
   \{\{ dbt.replace("string_text_column", "old_chars", "new_chars") \}\}
   \{\{ replace('abcgef', 'g', 'd') \}\}
 
-  ##### <a name="date_trunc"></a>date_trunc
+  ##### <a name="date_trunc"></a>date_trunc {#date_trunc}
   \{\{ dbt.date_trunc("date_part", "date") \}\}
   \{\{ dbt.date_trunc("DD", "'2018-01-05 12:00:00'") \}\}
 
-  ##### <a name="datediff"></a>datediff
+  ##### <a name="datediff"></a>datediff {#datediff}
   Макрос `datediff` в teradata поддерживает разницу между датами. Разница между временными метками не поддерживается.
 
-  ##### <a name="hash"></a>hash
+  ##### <a name="hash"></a>hash {#hash}
 
 Макрос `Hash` требует реализации функции `md5`. Teradata не поддерживает `md5` нативно. Вам необходимо установить пользовательскую функцию (User Defined Function, UDF) и при необходимости указать переменную `md5_udf` ([variable](/docs/build/project-variables)).
 
@@ -237,7 +237,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
     md5_udf: Custom_database_name.hash_method_function
   ```
  
-  ##### <a name="last_day"></a>last_day
+  ##### <a name="last_day"></a>last_day {#last_day}
 
   `last_day` в `teradata_utils`, в отличие от соответствующего макроса в `dbt_utils`, не поддерживает `quarter` в качестве части даты.
 
@@ -245,9 +245,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 dbt-teradata версии 1.8.0 и более поздние версии поддерживают модульные тесты, позволяя вам проверять SQL-модели и логику с небольшим набором статических входных данных перед переходом в производство. Эта функция улучшает разработку, ориентированную на тестирование, и повышает эффективность разработчика и надежность кода. Узнайте больше о модульных тестах dbt [здесь](/docs/build/unit-tests).
 
 
-## Ограничения
+## Ограничения {#limitations}
 
-### Browser authentication
+### Browser authentication {#browser-authentication}
 
 * При запуске задания dbt с параметром `logmech`, установленным в значение `"browser"`, начальная аутентификация открывает окно браузера, в котором необходимо ввести имя пользователя и пароль.
 * После завершения аутентификации это окно остаётся открытым, и вам нужно вручную переключиться обратно в консоль dbt.
@@ -256,7 +256,7 @@ dbt-teradata версии 1.8.0 и более поздние версии под
 * Такое поведение является стандартной функциональностью драйвера `teradatasql` и на данный момент не может быть изменено.
 * Чтобы избежать истечения срока действия сессии и необходимости повторного ввода учётных данных, убедитесь, что окно браузера для аутентификации остаётся открытым до завершения выполнения задания.
 
-### Transaction mode
+### Transaction mode {#transaction-mode}
 
 В dbt-teradata теперь поддерживаются оба режима транзакций — **ANSI** и **TERA**. Поддержка режима TERA была добавлена в dbt-teradata версии 1.7.1 и на данный момент является первоначальной реализацией.
 
@@ -264,10 +264,10 @@ dbt-teradata версии 1.8.0 и более поздние версии под
 Это начальная реализация режима транзакции TERA и она может не поддерживать некоторые случаи использования. Мы настоятельно рекомендуем проверять все записи или преобразования, используя этот режим, чтобы избежать неожиданных проблем или ошибок.
 :::
 
-## Благодарности
+## Благодарности {#credits}
 
 Адаптер был изначально создан [Дугом Битти](https://github.com/dbeatty10). Teradata взяла на себя адаптер в январе 2022 года. Мы благодарны Дугу за создание проекта и ускорение интеграции dbt + Teradata.
 
-## Лицензия
+## Лицензия {#license}
 
 Адаптер распространяется по лицензии Apache-2.0. Ознакомьтесь с [условиями лицензии](https://github.com/dbt-labs/dbt-core/blob/main/License.md), чтобы понять такие аспекты, как создание производных работ и модель поддержки.

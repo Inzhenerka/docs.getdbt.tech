@@ -4,12 +4,12 @@ id: "connect-azure-devops"
 pagination_next: "docs/cloud/git/setup-service-principal"
 ---
 
-# Подключение к Azure DevOps <Lifecycle status="managed,managed_plus" />
+# Подключение к Azure DevOps <Lifecycle status="managed,managed_plus" /> {#connect-to-azure-devops}
 
 <Snippet path="available-enterprise-tier-only" />
 
 
-## Об Azure DevOps и dbt
+## Об Azure DevOps и dbt {#about-azure-devops-and-dbt}
 
 Подключите ваш облачный аккаунт Azure DevOps в <Constant name="cloud" />, чтобы получить доступ к новым возможностям продукта:
 

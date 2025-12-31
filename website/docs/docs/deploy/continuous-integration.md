@@ -17,7 +17,7 @@ pagination_next: "docs/deploy/advanced-ci"
 - Сократить время, необходимое для внедрения изменений в код в производственную среду, благодаря автоматизации сборки и тестирования, что приводит к лучшим бизнес-результатам.
 - Позволить организациям вносить изменения в код стандартизированным и управляемым образом, который обеспечивает качество кода без ущерба для скорости.
 
-## Как работает CI
+## Как работает CI {#how-ci-works}
 
 Когда вы [настраиваете CI jobs](/docs/deploy/ci-jobs#set-up-ci-jobs), <Constant name="cloud" /> ожидает уведомление от вашего провайдера <Constant name="git" /> о том, что был открыт новый PR или в существующий PR были добавлены новые коммиты. Когда <Constant name="cloud" /> получает такое уведомление, он ставит в очередь новый запуск CI job.
 
@@ -33,7 +33,7 @@ import GitProvidersCI from '/snippets/_git-providers-supporting-ci.md';
 
 <GitProvidersCI />
 
-## Различия между CI задачами и другими задачами развертывания
+## Различия между CI задачами и другими задачами развертывания {#differences-between-ci-jobs-and-other-deployment-jobs}
 
 Планировщик [<Constant name="cloud" />](/docs/deploy/job-scheduler) выполняет CI‑задачи иначе, чем другие задачи деплоя, по следующим важным причинам:
 
@@ -42,7 +42,7 @@ import GitProvidersCI from '/snippets/_git-providers-supporting-ci.md';
 - [**Использование run slot**](#run-slot-treatment) &mdash; CI‑запуски не занимают run slot.
 - [**SQL‑линтинг**](#sql-linting) &mdash; При включении автоматически выполняет линтинг всех SQL‑файлов в вашем проекте как шаг запуска перед сборкой CI‑задачи.
 
-### Параллельные CI‑проверки <Lifecycle status="self_service,managed,managed_plus" />
+### Параллельные CI‑проверки <Lifecycle status="self_service,managed,managed_plus" /> {#concurrent-ci-checks}
 
 Когда несколько участников команды работают над одним и тем же dbt‑проектом и создают pull request’ы в одном репозитории dbt, будет запускаться одна и та же CI‑задача. Поскольку каждый запуск выполняет сборку в выделенной временной схеме, привязанной к конкретному pull request’у, <Constant name="cloud" /> может безопасно выполнять CI‑запуски _параллельно_, а не _последовательно_ (в отличие от deployment‑задач <Constant name="cloud" />). Так как нет необходимости ждать завершения одного CI‑запуска перед началом другого, параллельные CI‑проверки позволяют всей команде быстрее тестировать и интегрировать dbt‑код.
 
@@ -52,17 +52,17 @@ import GitProvidersCI from '/snippets/_git-providers-supporting-ci.md';
 - CI-запуски с _одинаковым_ номером PR и _разными_ commit SHA выполняются последовательно, потому что они собираются в одну и ту же схему. <Constant name="cloud" /> запустит сборку для последнего коммита и отменит все более старые, устаревшие коммиты. Подробности см. в разделе [Smart cancellation of stale builds](#smart-cancellation).  
 - CI-запуски с одинаковым номером PR и одинаковым commit SHA, запущенные из разных проектов <Constant name="cloud" />, будут выполнять задания параллельно. Такая ситуация возможна, если два CI-задания настроены в разных проектах <Constant name="cloud" />, которые используют один и тот же репозиторий dbt.
 
-### Умная отмена устаревших сборок <Lifecycle status="self_service,managed,managed_plus" />
+### Умная отмена устаревших сборок <Lifecycle status="self_service,managed,managed_plus" /> {#smart-cancellation-of-stale-builds}
 
 Когда вы отправляете новый коммит в PR, <Constant name="cloud" /> ставит в очередь новый CI-запуск для последнего коммита и отменяет любой CI-запуск, который стал (к этому моменту) устаревшим и всё ещё выполняется. Это может происходить, если вы отправляете новые коммиты, пока предыдущая CI-сборка ещё находится в процессе выполнения и не завершилась. Отменяя такие запуски безопасным и контролируемым образом, <Constant name="cloud" /> помогает повысить продуктивность и сократить затраты на платформу данных за счёт уменьшения числа бесполезных CI-запусков.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-smart-cancel-job.png" width="70%" title="Пример автоматически отмененного запуска"/>
 
-### Обработка run slot <Lifecycle status="self_service,managed,managed_plus" />
+### Обработка run slot <Lifecycle status="self_service,managed,managed_plus" /> {#run-slot-treatment}
 
 CI запуски не занимают слоты запуска. Это гарантирует, что проверка CI никогда не заблокирует производственный запуск.
 
-### SQL‑линтинг <Lifecycle status="self_service,managed,managed_plus" />
+### SQL‑линтинг <Lifecycle status="self_service,managed,managed_plus" /> {#sql-linting}
 
 Доступно для [треков релизов <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks) и аккаунтов <Constant name="cloud" /> уровней Starter или Enterprise.
 
@@ -72,7 +72,7 @@ CI запуски не занимают слоты запуска. Это гар
 
 Если линтер обнаруживает ошибки, вы можете указать, должен ли dbt остановить выполнение задачи при ошибке или продолжить выполнение при ошибке. При отказе от задач это помогает снизить затраты на вычисления, избегая сборок для pull requests, которые не соответствуют вашему CI проверке качества SQL кода.
 
-#### Чтобы настроить линтинг SQLFluff:
+#### Чтобы настроить линтинг SQLFluff: {#to-configure-sqlfluff-linting}
 Вы можете при необходимости настроить правила линтинга SQLFluff, чтобы переопределить поведение линтинга по умолчанию.
 
 - Используйте [файлы конфигурации SQLFluff](https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html#configuration-files), чтобы переопределить поведение линтера по умолчанию в dbt.

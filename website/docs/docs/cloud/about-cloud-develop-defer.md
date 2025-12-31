@@ -25,7 +25,7 @@ pagination_next: "docs/about-dbt-extension"
 
 Если вам требуется дополнительный контроль над production-данными, создайте [Staging environment](/docs/deploy/deploy-environments#staging-environment), и dbt будет использовать его, а не Production-окружение, для разрешения функций `{{ ref() }}`.
 
-## Необходимая настройка
+## Необходимая настройка {#required-setup}
 
 - Необходимо выбрать флажок **[Production environment](/docs/deploy/deploy-environments#set-as-production-environment)** на странице **Environment Settings**.  
   - Это можно сделать только для одного deployment-окружения в рамках проекта <Constant name="cloud" />.
@@ -33,7 +33,7 @@ pagination_next: "docs/about-dbt-extension"
 
 При использовании defer выполняется сравнение артефактов из самого последнего успешного production job, за исключением CI job.
 
-### Defer в dbt IDE
+### Defer в dbt IDE {#defer-in-the-dbt-ide}
 
 Чтобы использовать defer в <Constant name="cloud_ide" />, у вас должны быть production-артефакты, сгенерированные deploy job. <Constant name="cloud" /> сначала проверит наличие этих артефактов в Staging-окружении (если оно существует), и только затем — в Production-окружении. 
 
@@ -48,7 +48,7 @@ pagination_next: "docs/about-dbt-extension"
 
 <Lightbox src="/img/docs/dbt-cloud/defer-toggle.png" width="100%" title="Выберите переключатель 'Defer to production' в правом нижнем углу командной панели, чтобы включить defer в Studio IDE." />
 
-### Defer в dbt CLI
+### Defer в dbt CLI {#defer-in-dbt-cli}
 
 Одно из ключевых отличий использования `--defer` в <Constant name="cloud_cli" /> по сравнению с <Constant name="cloud_ide" /> заключается в том, что `--defer` *автоматически* включён в <Constant name="cloud_cli" /> для всех запусков при сравнении с production-артефактами. Вы можете отключить его с помощью флага `--no-defer`.
 

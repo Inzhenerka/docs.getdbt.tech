@@ -23,7 +23,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 - [Snowflake SSO with Private Connectivity](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview#label-sso-private-connectivity)
 :::
 
-## Настройка Azure Private Link
+## Настройка Azure Private Link {#configure-azure-private-link}
 
 Чтобы настроить экземпляры Snowflake, размещённые в Azure, для использования [Private Link](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview):
 
@@ -62,10 +62,10 @@ SELECT SYSTEMS$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESO
 
 ```
 
-## Настройка Network Policies
+## Настройка Network Policies {#configuring-network-policies}
 Если в вашей организации используются [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к учетной записи Snowflake, вам потребуется добавить сетевое правило для <Constant name="cloud" />. 
 
-### Поиск Azure Link ID endpoint’а
+### Поиск Azure Link ID endpoint’а {#find-the-endpoint-azure-link-id}
 
 Snowflake позволяет определить Azure Link ID настроенных endpoint’ов, выполнив соответствующую команду. Следующий запрос можно использовать для более точного выделения значения Link ID и связанного с ним имени ресурса endpoint’а:
 
@@ -82,7 +82,7 @@ from
 
 ```
 
-### Использование UI
+### Использование UI {#using-the-ui}
 
 Откройте UI Snowflake и выполните следующие шаги:
 1. Перейдите на вкладку **Security**.
@@ -102,7 +102,7 @@ from
 
 <Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink3.png" title="Обновление Network Policy"/>
 
-### Использование SQL
+### Использование SQL {#using-sql}
 
 Для быстрой и автоматизированной настройки сетевых правил через SQL в Snowflake следующие команды позволяют создать и настроить правила доступа для <Constant name="cloud" />. Эти SQL-примеры демонстрируют, как добавить сетевое правило и обновить Network Policy.
 

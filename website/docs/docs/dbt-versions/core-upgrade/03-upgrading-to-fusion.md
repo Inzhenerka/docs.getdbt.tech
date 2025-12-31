@@ -15,7 +15,7 @@ import AboutFusion from '/snippets/_about-fusion.md';
 
 <AboutFusion />
 
-## Что нужно знать перед обновлением
+## Что нужно знать перед обновлением {#what-to-know-before-upgrading}
 
 <Constant name="core" /> и dbt Fusion используют единый языковой спецификатор — код вашего проекта. dbt Labs стремится обеспечить функциональное соответствие (<i>feature parity</i>) с <Constant name="core" /> везде, где это возможно.
 
@@ -27,30 +27,30 @@ import AboutFusion from '/snippets/_about-fusion.md';
 
 <FusionUpgradeSteps />
 
-### Поддерживаемые адаптеры
+### Поддерживаемые адаптеры {#supported-adapters}
 
 В движке dbt Fusion поддерживаются следующие адаптеры:
 
 <FusionAdapters />
 
-### Чистый лист
+### Чистый лист {#a-clean-slate}
 
 dbt Labs делает ставку на дальнейшее развитие Fusion, и поэтому он не поддерживает никакую устаревшую функциональность:
 
 - Все [предупреждения об устаревании](/reference/deprecations) должны быть устранены до обновления на новый движок. Это включает как исторические устаревания, так и [новые, добавленные в dbt Core v1.10](/docs/dbt-versions/core-upgrade/upgrading-to-v1.10#deprecation-warnings).
 - Все [флаги изменения поведения](/reference/global-configs/behavior-changes#behaviors) будут удалены (как правило, включены по умолчанию). Вы больше не сможете отключать их с помощью `flags:` в `dbt_project.yml`.
 
-### Пакеты экосистемы
+### Пакеты экосистемы {#ecosystem-packages}
 
 Самые популярные пакеты от `dbt-labs` (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) уже совместимы с Fusion. Внешние пакеты, опубликованные организациями вне dbt, могут использовать устаревший код или несовместимые возможности, из-за чего они не будут корректно парситься новым движком Fusion. Мы работаем с мейнтейнерами таких пакетов, чтобы обеспечить их доступность для Fusion. Пакеты, которым требуется обновление до новой версии для совместимости с Fusion, будут задокументированы в этом руководстве по обновлению.
 
-### Изменения в функциональности
+### Изменения в функциональности {#changed-functionality}
 
 При разработке движка Fusion появились возможности улучшить фреймворк dbt: раньше обнаруживать ошибки (когда это возможно), исправить баги, оптимизировать порядок выполнения и убрать флаги, которые больше не актуальны. В результате появилось несколько конкретных и достаточно тонких изменений в существующем поведении.
 
 При обновлении до Fusion следует ожидать следующих изменений.
 
-#### Вывод relations на этапе parse теперь печатает полное квалифицированное имя, а не пустую строку
+#### Вывод relations на этапе parse теперь печатает полное квалифицированное имя, а не пустую строку {#parse-time-printing-of-relations-will-print-out-the-full-qualified-name-instead-of-an-empty-string}
 
 В dbt Core v1 при выводе результата `get_relation()` вывод Jinja на этапе parse печатал `None` (неопределённый объект приводился к строке `"None"`).
 
@@ -90,7 +90,7 @@ relation: my_db.my_schema.my_table
 relation_via_api: my_db.my_schema.my_table
 ```
 
-#### Устаревшие флаги
+#### Устаревшие флаги {#deprecated-flags}
 
 Некоторые исторические флаги dbt Core v1 больше не выполняют никаких действий в Fusion. Если вы передадите их в команду dbt при использовании Fusion, команда не завершится ошибкой, но сам флаг будет проигнорирован (с соответствующим предупреждением).
 
@@ -124,7 +124,7 @@ relation_via_api: my_db.my_schema.my_table
 | `--inject-ephemeral-ctes` / `--no-inject-ephemeral-ctes` | |
 | [`--partial-parse` / `--no-partial-parse`](/reference/parsing#partial-parsing) | Действия не требуются |
 
-#### Конфликтующие версии пакетов теперь приводят к ошибке
+#### Конфликтующие версии пакетов теперь приводят к ошибке {#conflicting-package-versions-when-a-local-package-depends-on-a-hub-package-which-the-root-package-also-wants-will-error}
 
 Если локальный пакет зависит от пакета из хаба, который также требуется корневому пакету, `dbt deps` в dbt Core v1 не разрешает конфликт версий и устанавливает версию, указанную корневым проектом.
 
@@ -134,7 +134,7 @@ relation_via_api: my_db.my_schema.my_table
 error: dbt8999: Cannot combine non-exact versions: =0.8.3 and =1.1.1
 ```
 
-#### Parse завершается ошибкой при вызове несуществующих макросов и методов адаптера
+#### Parse завершается ошибкой при вызове несуществующих макросов и методов адаптера {#parse-will-fail-on-nonexistent-macro-invocations-and-adapter-methods}
 
 Если вы вызываете несуществующий макрос:
 
@@ -156,7 +156,7 @@ from app_data.payments
 
 В Fusion ошибка будет выброшена уже на этапе `parse`.
 
-#### Parse завершается ошибкой при отсутствии generic test
+#### Parse завершается ошибкой при отсутствии generic test {#parse-will-fail-on-missing-generic-test}
 
 Если в проекте определён несуществующий generic test:
 
@@ -171,7 +171,7 @@ models:
 
 В Fusion ошибка возникает уже во время `parse`.
 
-#### Parse завершается ошибкой при отсутствии переменной
+#### Parse завершается ошибкой при отсутствии переменной {#parse-will-fail-on-missing-variable}
 
 Если в проекте используется неопределённая переменная:
 
@@ -183,7 +183,7 @@ select {{ var('does_not_exist') }} as my_column
 
 В Fusion ошибка возникает уже во время `parse`.
 
-#### Более строгая проверка дублирующихся docs blocks
+#### Более строгая проверка дублирующихся docs blocks {#stricter-evaluation-of-duplicate-docs-blocks}
 
 В старых версиях <Constant name="core" /> можно было создать ситуацию с дублирующимися [docs blocks](/docs/build/documentation#using-docs-blocks). Например, два пакета могли содержать идентичные docs blocks, на которые ссылались по неквалифицированному имени. В таком случае <Constant name="core" /> использовал любой из них без предупреждений и ошибок.
 
@@ -195,7 +195,7 @@ dbt found two docs with the same name: 'docs_block_title in files: 'models/crm/_
 
 Чтобы устранить ошибку, переименуйте дублирующиеся docs blocks.
 
-#### Прекращение поддержки устаревших версий manifest
+#### Прекращение поддержки устаревших версий manifest {#end-of-support-for-legacy-manifest-versions}
 
 Fusion больше не может работать с версиями dbt-core ниже 1.8, если вы:
 - гибридный клиент, использующий Fusion и старую (до v1.8) версию dbt Core;
@@ -203,7 +203,7 @@ Fusion больше не может работать с версиями dbt-cor
 
 Fusion не может работать со старым manifest, который используется, например, для deferral при сравнении `state:modified`.
 
-#### `dbt clean` больше не удаляет файлы в resource paths и за пределами директории проекта
+#### `dbt clean` больше не удаляет файлы в resource paths и за пределами директории проекта {#dbt-clean-will-not-delete-any-files-in-configured-resource-paths-or-files-outside-the-project-directory}
 
 В dbt Core v1 команда `dbt clean` удаляет:
 - файлы за пределами директории проекта, если `clean-targets` настроен с абсолютным путём или относительным путём, содержащим `../` (существует opt-in настройка для отключения этого поведения — `--clean-project-files-only` / `--no-clean-project-files-only`);
@@ -211,25 +211,25 @@ Fusion не может работать со старым manifest, которы
 
 В Fusion `dbt clean` не будет удалять файлы ни в настроенных resource paths, ни за пределами директории проекта.
 
-#### Все unit tests выполняются первыми в `dbt build`
+#### Все unit tests выполняются первыми в `dbt build` {#all-unit-tests-are-run-first-in-dbt-build}
 
 В dbt Core v1 прямые родители модели, для которой запускаются unit tests, должны были существовать в хранилище данных, чтобы получить информацию об именах и типах колонок. `dbt build` выполнял unit tests (и их зависимые модели) _в порядке lineage_.
 
 В Fusion `dbt build` сначала выполняет _все_ unit tests, а затем строит остальной DAG, благодаря встроенному знанию имён и типов колонок.
 
-#### Настройка `--threads`
+#### Настройка `--threads` {#configuring-threads}
 
 По умолчанию dbt Core запускается с `--threads 1`. Вы можете увеличить это значение, чтобы выполнять больше узлов параллельно на удалённой платформе данных — вплоть до максимального параллелизма, разрешённого DAG.
 
 В Fusion, если `--threads` не задан или задан как `--threads 0`, dbt использует значение по умолчанию для максимального числа потоков, определённое для конкретного адаптера. Некоторые платформы данных способны обрабатывать больше параллельных соединений, чем другие. Если пользователь явно задал `--threads` (через CLI или `profiles.yml`), Fusion будет использовать это значение.
 
-#### Продолжение компиляции несвязанных узлов после ошибки
+#### Продолжение компиляции несвязанных узлов после ошибки {#continue-to-compile-unrelated-nodes-after-hitting-a-compile-error}
 
 В dbt Core, как только `compile` сталкивается с ошибкой при компиляции одной из моделей, процесс останавливается и больше ничего не компилируется.
 
 В Fusion, если `compile` сталкивается с ошибкой, узлы ниже по графу от упавшего будут пропущены, но компиляция остальной части DAG продолжится (параллельно, в пределах настроенного или оптимального числа потоков).
 
-#### Seeds с лишними запятыми больше не создают дополнительные колонки
+#### Seeds с лишними запятыми больше не создают дополнительные колонки {#seeds-with-extra-commas-dont-result-in-extra-columns}
 
 В dbt Core v1, если в seed-файле присутствует лишняя запятая, dbt создаёт дополнительную пустую колонку.
 
@@ -258,7 +258,7 @@ Fusion не будет создавать эту дополнительную к
 | cat    |  
 | bear   |  
 
-#### Перенос standalone anchors под ключ `anchors:`
+#### Перенос standalone anchors под ключ `anchors:` {#move-standalone-anchors-under-anchors-key}
 
 В рамках процесса уточнения языка описания dbt любые неожиданные ключи верхнего уровня в YAML-файлах теперь приводят к ошибкам. Частый источник таких ключей — standalone anchors, определённые на верхнем уровне YAML-файла. Для этого случая добавлен новый верхнеуровневый ключ `anchors:`, который служит контейнером для переиспользуемых конфигурационных блоков.
 
@@ -318,7 +318,7 @@ models:
 
 Этот перенос требуется только для фрагментов, определённых вне основной структуры YAML. Подробнее о новом ключе см. в разделе [anchors](/reference/resource-properties/anchors).
 
-#### Алгебраические операции в Jinja-макросах
+#### Алгебраические операции в Jinja-макросах {#algebraic-operations-in-jinja-macros}
 
 В <Constant name="core" /> можно использовать алгебраические операции в возвращаемом значении Jinja-макроса:
 
@@ -346,7 +346,7 @@ return('xyzabc')
 {% endmacro %}
 ```
 
-### Доступ к пользовательским конфигурациям в meta
+### Доступ к пользовательским конфигурациям в meta {#accessing-custom-configurations-in-meta}
 
 Методы `config.get()` и `config.require()` не возвращают значения из словаря `meta`. Если вы пытаетесь получить ключ, который существует только в `meta`, dbt выдаёт предупреждение:
 
@@ -372,7 +372,7 @@ or config.meta_require('my_key') instead.
 
 Подробнее см. [config.meta_get()](/reference/dbt-jinja-functions/config#configmeta_get) и [config.meta_require()](/reference/dbt-jinja-functions/config#configmeta_require).
 
-### Поддержка пакетов
+### Поддержка пакетов {#package-support}
 
 import FusionPackages from '/snippets/_fusion-supported-packages.md';
 

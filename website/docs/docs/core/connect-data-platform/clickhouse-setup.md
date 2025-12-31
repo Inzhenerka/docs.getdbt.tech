@@ -21,7 +21,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к ClickHouse
+## Подключение к ClickHouse {#connecting-to-clickhouse}
 
 Чтобы подключиться к ClickHouse из dbt, вам необходимо добавить [профиль](/docs/core/connect-data-platform/connection-profiles)
 в файл конфигурации `profiles.yml`. Используйте эталонную конфигурацию ниже, чтобы настроить профиль ClickHouse:
@@ -48,7 +48,7 @@ clickhouse-service:
 Полный список параметров конфигурации см. в [документации ClickHouse](https://clickhouse.com/docs/integrations/dbt).
 </File>
 
-### Создание проекта dbt
+### Создание проекта dbt {#create-a-dbt-project}
 
 Теперь вы можете использовать этот профиль в одном из существующих проектов или создать новый с помощью команды:
 
@@ -62,13 +62,13 @@ dbt init project_name
 profile: 'clickhouse-service'
 ```
 
-### Проверка подключения
+### Проверка подключения {#test-connection}
 
 Выполните команду `dbt debug` с помощью CLI, чтобы убедиться, что dbt может подключиться к ClickHouse. Убедитесь, что в выводе есть строка `Connection test: [OK connection ok]`, которая означает успешное подключение.
 
-## Поддерживаемые возможности
+## Поддерживаемые возможности {#supported-features}
 
-### Возможности dbt
+### Возможности dbt {#dbt-features}
 
 Type | Supported? | Details
 -----|------------|----------------
@@ -80,7 +80,7 @@ Sources | YES |
 Snapshots | YES | 
 Tests | YES | 
 
-### Материализации
+### Материализации {#materializations}
 
 Type | Supported? | Details
 -----|------------|----------------
@@ -96,11 +96,11 @@ Dictionary materialization | YES, Experimental | Создаёт [dictionary](htt
 
 **Примечание**: Возможности, разработанные сообществом, помечены как experimental. Несмотря на этот статус, многие из них, например materialized views, широко используются и успешно применяются в продакшене.
 
-## Документация
+## Документация {#documentation}
 
 Подробнее об использовании адаптера `dbt-clickhouse` для управления моделями данных см. в [документации ClickHouse](https://clickhouse.com/docs/integrations/dbt).
 
-## Вклад в проект
+## Вклад в проект {#contributing}
 
 Мы приветствуем вклад сообщества в развитие адаптера `dbt-ClickHouse`. Будь то исправление ошибки, добавление новой возможности или улучшение документации — любая помощь будет очень полезна!
 

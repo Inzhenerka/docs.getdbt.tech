@@ -18,7 +18,7 @@ description: "Методы и переменные контекста, дост�
 - [builtins](/reference/dbt-jinja-functions/builtins)
 - [dbt_version](/reference/dbt-jinja-functions/dbt_version)
 
-### Пример конфигурации
+### Пример конфигурации {#example-configuration}
 
 <File name='dbt_project.yml'>
 

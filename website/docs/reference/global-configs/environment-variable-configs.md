@@ -19,7 +19,7 @@ dbt run
 
 Для получения более подробной информации ознакомьтесь с нашей страницей [environment variables page](/docs/build/environment-variables).
 
-## Приоритет конфигурации
+## Приоритет конфигурации {#config-precedence}
 
 import SettingFlags from '/snippets/_setting-flags.md';
 

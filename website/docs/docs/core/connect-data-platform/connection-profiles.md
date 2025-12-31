@@ -8,6 +8,6 @@ import ConnectionProfiles from '/snippets/_connection-profiles.md';
 
 <ConnectionProfiles />
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [О файле `profiles.yml`](/docs/core/connect-data-platform/profiles.yml)

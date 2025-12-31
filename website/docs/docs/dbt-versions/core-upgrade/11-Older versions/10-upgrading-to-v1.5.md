@@ -10,18 +10,18 @@ displayed_sidebar: "docs"
 1. [**Управление моделями**](/docs/mesh/govern/about-model-governance) — доступ, контракты, версии — первая фаза [развёртываний с несколькими проектами](https://github.com/dbt-labs/dbt-core/discussions/6725)
 2. Python-точка входа для [**программных вызовов**](/reference/programmatic-invocations), функционально эквивалентная CLI
 
-## Ресурсы
+## Ресурсы {#resources}
 
 - [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/CHANGELOG.md)
 - [Руководство по установке CLI <Constant name="core" />](/docs/core/installation-overview)
 - [Руководство по обновлению в Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 - [График выпусков](https://github.com/dbt-labs/dbt-core/issues/6715)
 
-## Что нужно знать перед обновлением
+## Что нужно знать перед обновлением {#what-to-know-before-upgrading}
 
 dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x, за исключением изменений, явно упомянутых ниже. Если вы столкнетесь с ошибкой при обновлении, пожалуйста, сообщите нам, [создав проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### Изменения в поведении
+### Изменения в поведении {#behavior-changes}
 
 :::info Почему изменения в предыдущем поведении?
 
@@ -114,7 +114,7 @@ models:
 
 Аналогично, если в вашем проекте макрос `ref` был переопределён с собственной логикой, вам необходимо обновить логику в этом макросе, как описано [здесь](/reference/dbt-jinja-functions/builtins).
 
-### Для потребителей артефактов dbt (метаданные)
+### Для потребителей артефактов dbt (метаданные) {#for-consumers-of-dbt-artifacts-metadata}
 
 Версия схемы [manifest](/reference/artifacts/manifest-json) будет обновлена до `v9`. Конкретные изменения:
 - Добавление `groups` в качестве ключа верхнего уровня
@@ -123,17 +123,17 @@ models:
 - Добавление `group` и `contract` в качестве конфигураций узла
 - Для поддержки версий моделей тип `refs` изменен с `List[List[str]]` на `List[RefArgs]`, с вложенными ключами `name: str`, `package: Optional[str] = None`, и `version: Union[str, float, NoneType] = None)`.
 
-### Для разработчиков адаптеров плагинов
+### Для разработчиков адаптеров плагинов {#for-maintainers-of-adapter-plugins}
 
 Для получения более подробной информации и для вопросов, пожалуйста, прочитайте и прокомментируйте обсуждение на GitHub: [dbt-labs/dbt-core#7213](https://github.com/dbt-labs/dbt-core/discussions/7213).
 
-## Новая и измененная документация
+## Новая и измененная документация {#new-and-changed-documentation}
 
-### Управление моделями
+### Управление моделями {#model-governance}
 
 Первая фаза поддержки развертываний dbt в масштабе — для нескольких проектов с четко определённой ответственностью и границами интерфейсов. [Подробнее о governance моделей](/docs/mesh/govern/about-model-governance). Всё это является новым функционалом версии v1.5.
 
-### Обновленный CLI
+### Обновленный CLI {#revamped-cli}
 
 Компилируйте и просматривайте модели dbt и `--inline` dbt-SQL запросы в CLI, используя:
 - [`dbt compile`](/reference/commands/compile)
@@ -148,7 +148,7 @@ dbt ls --select "tag:team_*"
 
 Запустите `dbt --help`, чтобы увидеть новую и улучшенную справочную документацию :)
 
-### Коротко о главном
+### Коротко о главном {#quick-hits}
 - Верхнеуровневый ключ [`version: 2`](/reference/project-configs/version) теперь **необязателен** во всех YAML-файлах. Также верхнеуровневые ключи [`config-version: 2`](/reference/project-configs/config-version) и `version:` теперь необязательны в файлах `dbt_project.yml`.
 - [События и логирование](/reference/events-logging): в словарь `node_info` добавлено поле `node_relation` (`database`, `schema`, `identifier`), доступное в событиях, относящихся к конкретным узлам
 - Поддержка задания `--project-dir` через переменную окружения: [`DBT_PROJECT_DIR`](/reference/dbt_project.yml)

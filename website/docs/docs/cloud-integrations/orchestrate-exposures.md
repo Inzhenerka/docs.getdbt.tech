@@ -5,7 +5,7 @@ description: "Используйте dbt, чтобы проактивно обн
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Оркестрация downstream exposures <Lifecycle status="managed,managed_plus,beta" />
+# Оркестрация downstream exposures <Lifecycle status="managed,managed_plus,beta" /> {#orchestrate-downstream-exposures}
 
 <IntroText>
 
@@ -34,7 +34,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 | Use case | Помогает пользователям понять, как используются модели, и снижает количество инцидентов. | Оптимизирует своевременность и снижает затраты за счёт запуска моделей только при необходимости. |
 </Expandable>
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 Чтобы оркестрировать downstream exposures, необходимо выполнить следующие условия:
 
@@ -47,7 +47,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
    - администратором Tableau Server или Tableau Site;
    - владельцем data source или project leader.
 
-## Оркестрация downstream exposures
+## Оркестрация downstream exposures {#orchestrate-downstream-exposures-1}
 
 Чтобы оркестрировать downstream exposures и видеть, как обновление происходит автоматически во время запланированных dbt jobs:
 

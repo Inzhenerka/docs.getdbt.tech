@@ -14,7 +14,7 @@ sidebar: "Databricks"
 | [`use_managed_iceberg`](#use-managed-iceberg) | 1.11.0 | 1.12.0 | Активен |
 | [`use_replace_on_for_insert_overwrite`](#use-replace-on-for-insert_overwrite-strategy) | 1.11.0 | 1.12.0 | Активен, по умолчанию `True` |
 
-## Используйте information schema для столбцов
+## Используйте information schema для столбцов {#use-information-schema-for-columns}
 
 :::caution Удалён в v1.11.0
 
@@ -24,7 +24,7 @@ sidebar: "Databricks"
 
 :::
 
-### Устаревшая документация
+### Устаревшая документация {#legacy-documentation}
 _Применимо к версиям dbt-databricks v1.11 и ниже_
 
 Флаг `use_info_schema_for_columns` по умолчанию имел значение `False` в версиях 1.9 и 1.10.
@@ -38,7 +38,7 @@ _Применимо к версиям dbt-databricks v1.11 и ниже_
 
 :::
 
-## Используйте папку пользователя для блокнотов моделей Python
+## Используйте папку пользователя для блокнотов моделей Python {#use-users-folder-for-python-model-notebooks}
 
 :::info Значение по умолчанию изменено в v1.11.0
 
@@ -60,7 +60,7 @@ flags:
   use_user_folder_for_python: false
 ```
 
-## Используйте реструктурированные материализации
+## Используйте реструктурированные материализации {#use-restructured-materializations}
 
 Флаг `use_materialization_v2` по умолчанию имеет значение `False` и используется для защиты значительных переработок базовых materialization в `dbt-databricks`, пока они находятся на экспериментальной стадии.
 
@@ -72,11 +72,11 @@ flags:
 
 В версии v1.11.0 этот флаг по-прежнему остаётся выключенным по умолчанию. На основании отзывов о недостатке атомарности (обновлений «всё или ничего») в новой materialization мы не будем включать его автоматически. Вместо этого мы будем искать другие способы получить те же преимущества без потери атомарности.
 
-### Изменения в materialization Seed
+### Изменения в materialization Seed {#changes-to-the-seed-materialization}
 
 Materialization для seeds должна иметь минимальные отличия между старой и новой реализациями, так как основное изменение заключается в удалении вызовов методов, которые не поддерживаются Databricks, например операций с транзакциями.
 
-### Изменения в materialization View
+### Изменения в materialization View {#changes-to-the-view-materialization}
 
 При установленном в `True` флаге `use_materialization_v2` доступны два параметра конфигурации модели, которые позволяют настраивать поведение materialization для view, если в целевом месте уже существует relation.
 
@@ -136,7 +136,7 @@ Materialization для seeds должна иметь минимальные от
 
 :::
 
-### Изменения в materialization Table
+### Изменения в materialization Table {#changes-to-the-table-materialization}
 
 :::caution Этот флаг может увеличить затраты на хранение таблиц.
 
@@ -151,7 +151,7 @@ Materialization для seeds должна иметь минимальные от
 
 Кроме того, это изменение позволяет поддерживать другие возможности на уровне колонок — например, column-level masks — которые несовместимы со вставкой данных во время создания таблицы. Хотя эти функции не включены в версию 1.10.0, теперь их можно добавить в будущих релизах.
 
-#### Constraints
+#### Constraints {#constraints}
 
 В течение нескольких релизов dbt-databricks поддерживал как реализацию [constraints](/reference/resource-properties/constraints) в dbt, так и собственную, более раннюю альтернативу под названием `persist_constraints`. С флагом `use_materialization_v2` мы начинаем постепенно выводить `persist_constraints` из использования и полностью переходим на нативную поддержку ограничений в dbt.
 
@@ -161,7 +161,7 @@ Materialization для seeds должна иметь минимальные от
 
 Как и в случае с view, вы можете выбирать между производительностью и безопасностью с помощью флага [`use_safer_relation_operations`](#use_safer_relation_operations). Независимо от выбранной настройки, новый подход к materialization гарантирует, что данные, нарушающие ограничения, не попадут в целевую таблицу.
 
-#### `use_safer_relation_operations`
+#### `use_safer_relation_operations` {#usesaferrelation_operations}
 
 При использовании этой конфигурации для таблиц сначала создаётся staging-таблица. После успешной вставки данных она переименовывается и заменяет целевую materialization. Поскольку Databricks не поддерживает откаты, это более безопасный подход: если ошибка произойдёт до переименования, исходная таблица останется нетронутой. Это даёт время на отладку без риска нарушить работу downstream-зависимостей.
 
@@ -174,7 +174,7 @@ Materialization для seeds должна иметь минимальные от
 
 :::
 
-### Изменения в materialization Incremental
+### Изменения в materialization Incremental {#changes-to-the-incremental-materialization}
 
 Все изменения, описанные в разделе [Table materialization](#changes-to-the-table-materialization), также применимы к incremental materialization.
 
@@ -199,11 +199,11 @@ models:
 
 </File>
 
-## Используйте управляемый Iceberg
+## Используйте управляемый Iceberg {#use-managed-iceberg}
 
 При установке `table_format` в `iceberg` флаг `use_managed_iceberg` определяет, как будет создана таблица. По умолчанию этот флаг равен `False`, и dbt создаёт таблицу в формате [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability). При установке в `True` dbt создаёт [managed Iceberg](https://docs.databricks.com/aws/en/tables/managed) таблицу.
 
-## Используйте `replace on` для стратегии `insert_overwrite`
+## Используйте `replace on` для стратегии `insert_overwrite` {#use-replace-on-for-insert_overwrite-strategy}
 
 Флаг `use_replace_on_for_insert_overwrite` актуален только при использовании incremental-моделей со стратегией `insert_overwrite` в SQL warehouses. По умолчанию флаг равен `True`, и используется синтаксис [`insert into ... replace on`](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) для выполнения динамической перезаписи партиций или кластеров — это то же поведение, что и в cluster computes. Если флаг установлен в `False`, `insert_overwrite` будет очищать всю таблицу при использовании SQL warehouses. Для cluster computes этот флаг не имеет значения, поскольку поведение `insert_overwrite` там всегда было динамической перезаписью партиций или кластеров.
 

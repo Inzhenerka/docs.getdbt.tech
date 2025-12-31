@@ -43,7 +43,7 @@ meta:
 
 <p>Для получения дополнительной информации см. GitHub-репозиторий: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
 
-## Подключение к YDB
+## Подключение к YDB {#connecting-to-ydb}
 
 Чтобы подключиться к YDB из dbt, вам необходимо добавить [профиль](/docs/core/connect-data-platform/connection-profiles) в файл `profiles.yml`. Профиль YDB должен соответствовать следующему синтаксису:
 
@@ -76,7 +76,7 @@ profile-name:
 
 </File>
 
-### Все параметры конфигурации
+### Все параметры конфигурации {#all-configurations}
 
 | Config | Required? | Default | Description |
 | ------ | --------- | ------- | ----------- |

@@ -11,24 +11,24 @@ hide_table_of_contents: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Когда вы используете <Constant name="core" /> для работы с dbt, вы будете редактировать файлы локально с помощью редактора кода и запускать проекты через интерфейс командной строки (CLI).
 
 Если вы хотите редактировать файлы и запускать проекты с использованием веб‑ориентированной интегрированной среды разработки dbt (<Constant name="cloud_ide" />), обратитесь к [кратким руководствам <Constant name="cloud" />](/guides). Вы также можете разрабатывать и выполнять команды dbt с помощью [CLI <Constant name="cloud" />](/docs/cloud/cloud-cli-installation) &mdash; командной строки, работающей на базе <Constant name="cloud" />.
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 * Чтобы использовать dbt Core, важно знать основы работы с Терминалом. В частности, вы должны понимать, как работают команды `cd`, `ls` и `pwd`, чтобы легко перемещаться по структуре каталогов на вашем компьютере.
 * Установите <Constant name="core" /> с помощью [инструкций по установке](/docs/core/installation-overview) для вашей операционной системы.
 * Выполните соответствующие шаги по настройке и загрузке данных в разделе Quickstart для серии <Constant name="cloud" />. Например, для BigQuery выполните шаги [Setting up (in BigQuery)](/guides/bigquery?step=2) и [Loading data (BigQuery)](/guides/bigquery?step=3).
 * [Создайте аккаунт GitHub](https://github.com/join), если у вас его ещё нет.
 
-### Создание стартового проекта
+### Создание стартового проекта {#create-a-starter-project}
 
 После настройки BigQuery для работы с dbt вы готовы создать стартовый проект с примерами моделей, прежде чем создавать собственные модели.
 
-## Создание репозитория
+## Создание репозитория {#create-a-repository}
 
 В следующих шагах в качестве <Constant name="git" />‑провайдера для этого руководства используется [GitHub](https://github.com/), но вы можете использовать любой <Constant name="git" />‑провайдер. Предполагается, что вы уже [создали аккаунт GitHub](https://github.com/join).
 
@@ -41,7 +41,7 @@ hide_table_of_contents: true
 4. Нажмите **Create repository**.
 5. Сохраните команды из раздела «…or create a new repository on the command line», чтобы использовать их позже в шаге [Commit your changes](/guides/manual-install?step=6).
 
-## Создание проекта
+## Создание проекта {#create-a-project}
 
 Узнайте, как использовать серию команд в командной строке Терминала для создания вашего проекта. dbt Core включает команду `init`, которая помогает создать каркас проекта dbt.
 
@@ -98,7 +98,7 @@ models:
 
 </File>
 
-## Подключение к BigQuery
+## Подключение к BigQuery {#connect-to-bigquery}
 
 При локальной разработке dbt подключается к вашему <Term id="data-warehouse" /> с использованием [профиля](/docs/core/connect-data-platform/connection-profiles), который является YAML файлом со всеми деталями подключения к вашему хранилищу.
 
@@ -137,7 +137,7 @@ $ dbt debug
 <Lightbox src="/img/successful-dbt-debug.png" title="Успешная команда dbt debug" />
 </div>
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Warehouse/sample-profiles" alt_header="Моя команда данных использует другое хранилище данных. Как должен выглядеть мой файл profiles.yml для моего хранилища?" />
 <FAQ path="Project/separate-profile" />
@@ -145,7 +145,7 @@ $ dbt debug
 <FAQ path="Environments/target-names" />
 <FAQ path="Environments/profile-env-vars" />
 
-## Выполнение вашего первого dbt run
+## Выполнение вашего первого dbt run {#perform-your-first-dbt-run}
 
 Наш пример проекта содержит некоторые примерные модели. Мы проверим, можем ли мы их запустить, чтобы убедиться, что все в порядке.
 
@@ -161,7 +161,7 @@ dbt run
 <Lightbox src="/img/successful-dbt-run.png" title="Успешная команда dbt run" />
 </div>
 
-## Зафиксируйте ваши изменения
+## Зафиксируйте ваши изменения {#commit-your-changes}
 
 Зафиксируйте ваши изменения, чтобы репозиторий содержал последний код.
 
@@ -178,12 +178,12 @@ git push -u origin main
 
 2. Вернитесь в ваш репозиторий GitHub, чтобы убедиться, что ваши новые файлы были добавлены.
 
-### Создайте ваши первые модели
+### Создайте ваши первые модели {#build-your-first-models}
 
 Теперь, когда вы настроили ваш примерный проект, вы можете перейти к интересной части — [созданию моделей](/docs/build/sql-models)!
 В следующих шагах вы возьмете пример запроса и превратите его в модель в вашем проекте dbt.
 
-## Переключитесь на новую ветку git
+## Переключитесь на новую ветку git {#checkout-a-new-git-branch}
 
 Переключитесь на новую ветку git, чтобы работать над новым кодом:
 
@@ -194,7 +194,7 @@ $ git checkout -b add-customers-model
 >  Switched to a new branch `add-customer-model`
 ```
 
-## Создайте вашу первую модель
+## Создайте вашу первую модель {#build-your-first-model}
 
 1. Откройте ваш проект в вашем любимом текстовом редакторе.
 2. Создайте новый SQL файл в директории `models`, названный `models/customers.sql`.
@@ -209,7 +209,7 @@ $ git checkout -b add-customers-model
 
 Когда вы вернетесь в консоль BigQuery, вы можете выполнить `select` из этой модели.
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs-1}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -217,15 +217,15 @@ $ git checkout -b add-customers-model
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Измените способ материализации вашей модели
+## Измените способ материализации вашей модели {#change-the-way-your-model-is-materialized}
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Удалите примерные модели
+## Удалите примерные модели {#delete-the-example-models}
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Постройте модели на основе других моделей
+## Постройте модели на основе других моделей {#build-models-on-top-of-other-models}
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
@@ -424,7 +424,7 @@ select * from final
 <FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="Как я должен организовать свой проект по мере создания большего количества моделей? Как я должен называть свои модели?" />
 
-### Следующие шаги
+### Следующие шаги {#next-steps}
 
 <Snippet path="tutorial-next-steps-1st-model" />
 
@@ -433,26 +433,26 @@ select * from final
 * Директорию `target`, чтобы увидеть весь скомпилированный SQL. Директория `run` показывает операторы create или replace table, которые выполняются, это операторы select, обернутые в правильный DDL.
 * Файл `logs`, чтобы увидеть, как dbt Core регистрирует все действия, происходящие в вашем проекте. Он показывает операторы select, которые выполняются, и python логирование, происходящее при выполнении dbt.
 
-## Добавьте тесты к вашим моделям
+## Добавьте тесты к вашим моделям {#add-tests-to-your-models}
 
 <Snippet path="tutorial-add-tests-to-models" />
 
-## Документируйте ваши модели
+## Документируйте ваши модели {#document-your-models}
 
 <Snippet path="tutorial-document-your-models" />
 
 3. Выполните команду `dbt docs serve`, чтобы запустить документацию на локальном веб-сайте.
 
-#### Часто задаваемые вопросы
+#### Часто задаваемые вопросы {#faqs-2}
 
 <FAQ path="Docs/long-descriptions" />
 <FAQ path="Docs/sharing-documentation" />
 
-#### Следующие шаги
+#### Следующие шаги {#next-steps-1}
 
 <Snippet path="tutorial-next-steps-tests" />
 
-## Зафиксируйте обновленные изменения
+## Зафиксируйте обновленные изменения {#commit-updated-changes}
 
 Вам нужно зафиксировать изменения, которые вы внесли в проект, чтобы репозиторий содержал ваш последний код.
 
@@ -461,7 +461,7 @@ select * from final
 3. Отправьте ваши изменения в ваш репозиторий: `git push`
 4. Перейдите в ваш репозиторий и откройте pull request, чтобы объединить код в вашу основную ветку.
 
-## Запланируйте задание
+## Запланируйте задание {#schedule-a-job}
 
 Мы рекомендуем использовать <Constant name="cloud" /> как самый простой и надёжный способ [развёртывания заданий](/docs/deploy/deployments) и автоматизации вашего dbt‑проекта в продакшене.
 

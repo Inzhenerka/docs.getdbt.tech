@@ -12,10 +12,10 @@ analysis-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 Укажите пользовательский список директорий, где находятся [аналитические файлы](/docs/build/analyses).
 
-## По умолчанию
+## По умолчанию {#default}
 Если не указать эту конфигурацию, dbt не будет компилировать файлы `.sql` как аналитические.
 
 Однако, команда [`dbt init`](/reference/commands/init) заполняет это значение как `analyses` ([источник](https://github.com/dbt-labs/dbt-starter-project/blob/HEAD/dbt_project.yml#L15)).
@@ -39,8 +39,8 @@ absolute="/Users/username/project/analyses"
     analysis-paths: ["/Users/username/project/analyses"]
     ```
 
-## Примеры
-### Использование поддиректории с именем `analyses`
+## Примеры {#examples}
+### Использование поддиректории с именем `analyses` {#use-a-subdirectory-named-analyses}
 Это значение заполняется командой [`dbt init`](/reference/commands/init).
 
 <File name='dbt_project.yml'>
@@ -51,7 +51,7 @@ analysis-paths: ["analyses"]
 
 </File>
 
-### Использование поддиректории с именем `custom_analyses`
+### Использование поддиректории с именем `custom_analyses` {#use-a-subdirectory-named-custom_analyses}
 
 <File name='dbt_project.yml'>
 

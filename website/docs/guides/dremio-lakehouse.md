@@ -13,11 +13,11 @@ level: 'Intermediate'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Это руководство покажет, как построить data lakehouse с использованием <Constant name="core" /> версии 1.5 или новее и Dremio Cloud. Вы сможете упростить и оптимизировать свою инфраструктуру данных с помощью надежного фреймворка трансформаций dbt и открытого, простого в использовании lakehouse от Dremio. Интегрированное решение позволяет компаниям создать прочную основу для данных и аналитики, поддерживать self-service аналитику и улучшать бизнес-инсайты, одновременно упрощая операционную деятельность за счёт устранения необходимости писать сложные конвейеры Extract, Transform, and Load (ETL).
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 * У вас должна быть учетная запись [Dremio Cloud](https://docs.dremio.com/cloud/).
 * У вас должен быть установлен Python 3.
@@ -25,7 +25,7 @@ level: 'Intermediate'
 * У вас должен быть установлен и настроен адаптер Dremio версии 1.5.0 или новее для Dremio Cloud ([см. инструкцию](/docs/core/connect-data-platform/dremio-setup)).
 * У вас должны быть базовые практические знания <Constant name="git" /> и интерфейса командной строки (CLI).
 
-## Проверка вашей среды
+## Проверка вашей среды {#validate-your-environment}
 
 Проверьте вашу среду, запустив следующие команды в вашем CLI и проверив результаты:
 
@@ -52,7 +52,7 @@ Plugins:
 
 ```
 
-## Начало работы
+## Начало работы {#getting-started}
 
 1. Склонируйте пример проекта Dremio <Constant name="core" /> из [репозитория GitHub](https://github.com/dremio-brock/DremioDBTSample/tree/master/dremioSamples).
 
@@ -82,7 +82,7 @@ def quoted_by_component(self, identifier, componentName):
 
 Вам нужно обновить этот шаблон, потому что плагин не поддерживает имена схем в Dremio, содержащие точки и пробелы.
 
-## Создание вашего конвейера
+## Создание вашего конвейера {#build-your-pipeline}
 
 1. Создайте файл `profiles.yml` в пути `$HOME/.dbt/profiles.yml` и добавьте следующие конфигурации:
 
@@ -146,7 +146,7 @@ dremioSamples:
 
 <Lightbox src="/img/guides/dremio/dremio-cloned-repo.png" title="Клонированный репозиторий в IDE"/>
 
-## О schema.yml
+## О schema.yml {#about-the-schemayml}
 
 Файл `schema.yml` определяет источники и модели Dremio, которые будут использоваться, и какие модели данных находятся в области действия. В примере проекта этого руководства есть два источника данных:
 
@@ -159,7 +159,7 @@ dremioSamples:
 
 <Lightbox src="/img/guides/dremio/dremio-nyc-weather.png" title="Расположение NYC-weather.csv в Dremio Cloud"/>
 
-## О моделях
+## О моделях {#about-the-models}
 
 **Preparation** &mdash; `preparation_trips.sql` и `preparation_weather.sql` создают представления на основе данных о поездках и погоде.
 
@@ -167,7 +167,7 @@ dremioSamples:
 
 **Application** &mdash; `application_nyc_trips_with_weather.sql` объединяет вывод из бизнес-модели. Это то, что будут использовать ваши бизнес-пользователи.
 
-## Вывод задачи
+## Вывод задачи {#the-job-output}
 
 Когда вы запускаете задачу dbt, она создаст папку пространства **dev**, в которой будут находиться все созданные данные. Это то, что вы увидите в интерфейсе Dremio Cloud. Пространства в Dremio — это способ организации данных, которые соответствуют бизнес-единицам или продуктам данных.
 
@@ -177,7 +177,7 @@ dremioSamples:
 
 <Lightbox src="/img/guides/dremio/dremio-dev-application.png" title="Вывод трансформации папки Application"/>
 
-## Запрос данных
+## Запрос данных {#query-the-data}
 
 Теперь, когда вы запустили задачу и завершили трансформацию, пришло время запросить ваши данные. Нажмите на представление `nyc_trips_with_weather`. Это приведет вас на страницу SQL Runner. Нажмите **Show SQL Pane** в верхнем правом углу страницы.
 

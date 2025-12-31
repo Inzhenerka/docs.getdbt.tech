@@ -15,7 +15,7 @@ SQL HAVING — это одна из тех мелочей, которые сде
 
 На этой странице мы рассмотрим, как использовать HAVING, когда его следует использовать, и обсудим поддержку этого предложения в различных хранилищах данных.
 
-## Как использовать предложение HAVING в SQL
+## Как использовать предложение HAVING в SQL {#how-to-use-the-having-clause-in-sql}
 
 Предложение HAVING по сути требует одного: агрегатного поля для оценки. Поскольку HAVING технически является булевым, он будет возвращать строки, которые выполняются как истинные, аналогично предложению WHERE.
 
@@ -32,7 +32,7 @@ having condition
 
 Этот пример синтаксиса выглядит немного непонятно без реальных полей, поэтому давайте рассмотрим практический пример использования HAVING.
 
-### Пример использования SQL HAVING
+### Пример использования SQL HAVING {#sql-having-example}
 
 <Tabs
   defaultValue="having"
@@ -84,6 +84,6 @@ where num_orders > 1
 
 Запрос выше, использующий <Term id="cte" />, использует больше строк по сравнению с более простым запросом с использованием HAVING, но даст тот же результат.
 
-## Синтаксис предложения SQL HAVING в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис предложения SQL HAVING в Snowflake, Databricks, BigQuery и Redshift {#sql-having-clause-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 [Snowflake](https://docs.snowflake.com/en/sql-reference/constructs/having.html), [Databricks](https://docs.databricks.com/sql/language-manual/sql-ref-syntax-qry-select-having.html), [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#having_clause) и [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_HAVING_clause.html) все поддерживают предложение HAVING, и синтаксис для использования HAVING одинаков во всех этих хранилищах данных.

@@ -32,7 +32,7 @@ hide_table_of_contents: true
 
 Некоторые возможности доступны только в рамках [определённых тарифных планов](https://www.getdbt.com/pricing/).
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 
 - [Тарифные планы и цены <Constant name="cloud" />](https://www.getdbt.com/pricing/)
 - [Руководства по быстрому старту](/docs/get-started-dbt)

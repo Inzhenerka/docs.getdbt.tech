@@ -5,7 +5,7 @@ id: "oracle-configs"
 
 <VersionBlock firstVersion="1.3.2">
 
-## Использование подсказки `parallel`
+## Использование подсказки `parallel` {#use-parallel-hint}
 
 Материализация таблицы поддерживает указание количества параллельных выполнений, как показано ниже
 
@@ -16,11 +16,11 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-## Использование `table_compression_clause`
+## Использование `table_compression_clause` {#use-tablecompressionclause}
 
 Материализация таблицы поддерживает различные компрессионные клаузы, как показано ниже
 
-### Расширенное сжатие строк
+### Расширенное сжатие строк {#advanced-row-compression}
 
 При включенном расширенном сжатии база данных Oracle поддерживает сжатие во время всех типов операций манипуляции данными, включая обычные DML, такие как INSERT и UPDATE. `ROW STORE COMPRESS ADVANCED` рекомендуется в системах OLTP.
 
@@ -31,9 +31,9 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-### Гибридное колонное сжатие
+### Гибридное колонное сжатие {#hybrid-columnar-compression}
 
-#### Запросы
+#### Запросы {#querying}
 
 `COLUMN STORE COMPRESS FOR QUERY` полезно в средах хранилищ данных. Допустимые значения — `HIGH` или `LOW`, при этом `HIGH` обеспечивает более высокий коэффициент сжатия. По умолчанию используется `HIGH`.
 
@@ -51,7 +51,7 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-#### Архивирование
+#### Архивирование {#archival}
 
 `COLUMN STORE COMPRESS FOR ARCHIVE` поддерживает более высокий коэффициент сжатия, чем `COLUMN STORE COMPRESS FOR QUERY`, и полезно для архивирования. Допустимые значения — `HIGH` или `LOW`, при этом `HIGH` обеспечивает самый высокий коэффициент сжатия. По умолчанию используется `LOW`.
 
@@ -69,7 +69,7 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-## Партиционирование
+## Партиционирование {#partitioning}
 
 Конфигурация материализации таблицы и инкрементальной материализации поддерживает добавление партиционной клаузулы:
 
@@ -86,7 +86,7 @@ SELECT *
 FROM {{ source('sh_database', 'sales') }}
 ```
 
-## Информация о сессии в `v$session`
+## Информация о сессии в `v$session` {#session-info-in-vsession}
 
 Пользовательская информация о сессии может быть указана в `session_info` в `profile.yml`
 

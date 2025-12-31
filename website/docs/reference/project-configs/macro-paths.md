@@ -12,10 +12,10 @@ macro-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 При необходимости укажите пользовательский список директорий, в которых находятся [макросы](/docs/build/jinja-macros#macros). Обратите внимание, что вы не можете размещать модели и макросы в одной и той же директории.
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 По умолчанию dbt будет искать макросы в директории с именем `macros`. Например, `macro-paths: ["macros"]`.
 
 import RelativePath from '/snippets/_relative-path.md';
@@ -37,8 +37,8 @@ absolute="/Users/username/project/macros"
     macro-paths: ["/Users/username/project/macros"]
     ```
 
-## Примеры
-### Использование поддиректории с именем `custom_macros` вместо `macros`
+## Примеры {#examples}
+### Использование поддиректории с именем `custom_macros` вместо `macros` {#use-a-subdirectory-named-custom_macros-instead-of-macros}
 
 <File name='dbt_project.yml'>
 

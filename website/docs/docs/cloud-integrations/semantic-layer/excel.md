@@ -6,11 +6,11 @@ tags: [Semantic Layer]
 sidebar_label: "Microsoft Excel"
 ---
 
-# Microsoft Excel <Lifecycle status="self_service,managed,managed_plus" />
+# Microsoft Excel <Lifecycle status="self_service,managed,managed_plus" /> {#microsoft-excel}
 
 <Constant name="semantic_layer" /> предоставляет бесшовную интеграцию с Excel Online и Excel Desktop через пользовательское меню. Это дополнение позволяет создавать запросы к <Constant name="semantic_layer" /> и получать данные по вашим метрикам напрямую в Excel.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - У вас [настроен <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl), и вы используете dbt версии 1.6 или выше.
 - Вам нужна учетная запись Microsoft Excel с возможностью устанавливать надстройки.
@@ -24,7 +24,7 @@ sidebar_label: "Microsoft Excel"
 
 :::
 
-## Установка аддона
+## Установка аддона {#installing-the-add-on}
 
 Интеграцию Microsoft Excel для <Constant name="semantic_layer" /> можно скачать напрямую из [Microsoft AppSource](https://appsource.microsoft.com/en-us/product/office/WA200007100?tab=Overview). Вы можете установить это дополнение как для [Excel Desktop](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationId=4132ecd1-425d-982d-efb4-de94ebc83f26), так и для [Excel Online](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationid=4132ecd1-425d-982d-efb4-de94ebc83f26&isWac=True).
 
@@ -44,5 +44,5 @@ bullet_3="Обратите внимание, что в настоящее вре
 queryBuilder="/img/docs/dbt-cloud/semantic-layer/query-builder.png"
 />
 
-## Часто задаваемые вопросы
+## Часто задаваемые вопросы {#faqs}
 <FAQ path="Troubleshooting/sl-alpn-error" />

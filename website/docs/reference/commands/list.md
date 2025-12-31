@@ -7,7 +7,7 @@ id: "list"
 
 Команда `dbt ls` перечисляет ресурсы в вашем проекте dbt. Она принимает аргументы селектора, которые аналогичны тем, что предоставляются в [dbt run](/reference/commands/run). `dbt list` является псевдонимом для `dbt ls`. Хотя `dbt ls` будет читать ваш [профиль подключения](/docs/core/connect-data-platform/connection-profiles) для разрешения логики, специфичной для [`target`](/reference/dbt-jinja-functions/target), эта команда не будет подключаться к вашей базе данных или выполнять какие-либо запросы.
 
-### Использование
+### Использование {#usage}
 ```
 dbt ls
      [--resource-type {model,semantic_model,source,seed,snapshot,metric,test,exposure,analysis,function,default,all}]
@@ -32,7 +32,7 @@ dbt ls
 
 Обратите внимание, что команда `dbt ls` не включает модели, которые отключены, или тесты схем, которые зависят от отключенных моделей. Все возвращаемые ресурсы будут иметь значение `config.enabled` равное `true`.
 
-### Примеры использования
+### Примеры использования {#example-usage}
 
 В следующих примерах показано, как использовать команду `dbt ls` для вывода списка ресурсов в вашем проекте.
 
@@ -45,7 +45,7 @@ dbt ls
   - [Перечень семантических моделей](#listing-semantic-models)
   - [Перечень функций](#listing-functions)
 
-#### Список моделей по пакету
+#### Список моделей по пакету {#listing-models-by-package}
 
 ```bash
 dbt ls --select snowplow.*
@@ -57,7 +57,7 @@ snowplow.snowplow_sessions
 ...
 ```
 
-#### Перечисление тестов по имени тега
+#### Перечисление тестов по имени тега {#listing-tests-by-tag-name}
 
 ```bash
 dbt ls --select tag:nightly --resource-type test
@@ -68,7 +68,7 @@ my_project.schema_test.unique_products_product_id
 ...
 ```
 
-#### Перечисление схемных тестов инкрементальных моделей
+#### Перечисление схемных тестов инкрементальных моделей {#listing-schema-tests-of-incremental-models}
 
 ```bash
 dbt ls --select config.materialized:incremental,test_type:schema
@@ -76,7 +76,7 @@ model.my_project.logs_parsed
 model.my_project.events_categorized
 ```
 
-#### Вывод списка в формате JSON
+#### Вывод списка в формате JSON {#listing-json-output}
 
 ```bash
 dbt ls --select snowplow.* --output json
@@ -85,7 +85,7 @@ dbt ls --select snowplow.* --output json
 ...
 ```
 
-#### Вывод JSON с пользовательским набором ключей    
+#### Вывод JSON с пользовательским набором ключей {#listing-json-output-with-custom-keys}
 
 ```bash
 dbt ls --select snowplow.* --output json --output-keys "name resource_type description"
@@ -94,14 +94,14 @@ dbt ls --select snowplow.* --output json --output-keys "name resource_type descr
 ...
 ```
 
-#### Вывод семантических моделей
+#### Вывод семантических моделей {#listing-semantic-models}
 
 Вывести все ресурсы, находящиеся выше по графу зависимостей относительно семантической модели `orders`:
 ```bash
 dbt ls -s +semantic_model:orders
 ```
 
-#### Вывод путей к файлам
+#### Вывод путей к файлам {#listing-file-paths}
 ```bash
 dbt ls --select snowplow.* --output path
 models/base/snowplow_base_events.sql
@@ -110,7 +110,7 @@ models/identification/snowplow_id_map.sql
 ...
 ```
 
-#### Вывод функций
+#### Вывод функций {#listing-functions}
 
 Перечисление всех функций в вашем проекте:
 

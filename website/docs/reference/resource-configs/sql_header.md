@@ -96,19 +96,19 @@ snapshots:
 </Tabs>
 
 
-## Определение
+## Определение {#definition}
 Необязательная конфигурация для вставки SQL выше операторов `create table as` и `create view as`, которые dbt выполняет при построении моделей и снимков.
 
 `sql_header` можно задать с помощью конфигурации или вызовом макроса `set_sql_header` (пример ниже).
 
-## Сравнение с pre-hooks
+## Сравнение с pre-hooks {#comparison-to-pre-hooks}
 [Pre-hooks](/reference/resource-configs/pre-hook-post-hook) также предоставляют возможность выполнить SQL перед созданием модели, как _предшествующий_ запрос. В сравнении, SQL в `sql_header` выполняется в том же _запросе_, что и оператор `create table|view as`.
 
 В результате это делает его более полезным для [параметров сессии Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html) и [временных UDF в BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions#sql-udf-examples).
 
-## Примеры
+## Примеры {#examples}
 
-### Установка параметров сессии Snowflake для конкретной модели
+### Установка параметров сессии Snowflake для конкретной модели {#set-snowflake-session-parameters-for-a-particular-model}
 Это использует синтаксис блока конфигурации:
 <File name='models/my_model.sql'>
 
@@ -122,7 +122,7 @@ select * from {{ ref('other_model') }}
 
 </File>
 
-### Установка параметров сессии Snowflake для всех моделей
+### Установка параметров сессии Snowflake для всех моделей {#set-snowflake-session-parameters-for-all-models}
 
 <File name='dbt_project.yml'>
 
@@ -135,7 +135,7 @@ models:
 
 </File>
 
-### Создание временной UDF в BigQuery
+### Создание временной UDF в BigQuery {#create-a-bigquery-temporary-udf}
 
 Этот пример вызывает макрос `set_sql_header`. Этот макрос является удобной оберткой, которую вы можете использовать, если у вас есть многострочное SQL-выражение для вставки. В этом случае вам не нужно использовать ключ конфигурации `sql_header`.
 

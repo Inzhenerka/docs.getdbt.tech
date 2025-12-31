@@ -3,11 +3,11 @@ title: "Свойства источников"
 description: "Узнайте, как использовать свойства источников в dbt."
 ---
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 - [Использование источников](/docs/build/sources)
 - [Объявление свойств ресурсов](/reference/configs-and-properties)
 
-## Обзор
+## Обзор {#overview}
 
 import PropsCallout from '/snippets/_config-prop-callout.md';
 
@@ -94,7 +94,7 @@ sources:
 
 </File>
 
-## Пример
+## Пример {#example}
 
 <File name='models/<filename>.yml'>
 

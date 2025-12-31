@@ -59,7 +59,7 @@ sources:
 </TabItem>
 </Tabs>
 
-## Определение
+## Определение {#definition}
 Блок свежести используется для определения допустимого времени между самой последней записью и текущим моментом, чтобы <Term id="table" /> считалась "свежей".
 
 В блоке `freshness` можно указать один или оба параметра `warn_after` и `error_after`. Если ни один из них не указан, dbt не будет рассчитывать снимки свежести для таблиц в этом источнике.
@@ -90,7 +90,7 @@ sources:
 
 В state-aware orchestration dbt по умолчанию использует метаданные хранилища данных, чтобы проверять, являются ли источники (или вышестоящие модели в случае Mesh) свежими. Подробнее о том, как свежесть используется в state-aware orchestration, см. раздел [Advanced configurations](/docs/deploy/state-aware-setup#advanced-configurations).
 
-## loaded_at_field
+## loaded_at_field {#loadedatfield}
 
 Необязателен для адаптеров, которые поддерживают получение свежести из метаданных таблиц хранилища, в противном случае требуется.
 <br/><br/>Имя столбца (или выражение), которое возвращает временную метку, указывающую на свежесть.
@@ -113,7 +113,7 @@ loaded_at_field: "convert_timezone('Australia/Sydney', 'UTC', created_at_local)"
 
 <VersionBlock firstVersion="1.10">
 
-## loaded_at_query
+## loaded_at_query {#loadedatquery}
 
 Укажите пользовательский SQL для генерации временной метки `maxLoadedAt` на источнике (а не через метаданные хранилища или конфигурацию `loaded_at_field`). Обратите внимание, что `loaded_at_query` не следует использовать, если определён `loaded_at_field`.
 
@@ -163,17 +163,17 @@ sources:
 
 </VersionBlock>
 
-## count
+## count {#count}
 (Обязательный)
 
 Положительное целое число, указывающее количество периодов, в течение которых источник данных все еще считается "свежим".
 
-## period
+## period {#period}
 (Обязательный)
 
 Период времени, используемый в расчете свежести. Один из `minute`, `hour` или `day`.
 
-## filter
+## filter {#filter}
 (необязательный)
 
 Добавьте условие where к запросу, выполняемому `dbt source freshness`, чтобы ограничить объем обрабатываемых данных.
@@ -184,9 +184,9 @@ sources:
 - Вы используете BigQuery, и ваши таблицы источников являются [разделенными таблицами](https://cloud.google.com/bigquery/docs/partitioned-tables).
 - Вы используете Snowflake, Databricks или Spark с большими таблицами, и это приводит к улучшению производительности.
 
-## Примеры
+## Примеры {#examples}
 
-### Полный пример
+### Полный пример {#complete-example}
 <File name='models/<filename>.yml'>
 
 ```yaml

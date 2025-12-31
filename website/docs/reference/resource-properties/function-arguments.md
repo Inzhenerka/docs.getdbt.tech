@@ -22,19 +22,19 @@ functions:
 
 </File>
 
-## Определение
+## Определение {#definition}
 
 <ArgumentsShared />
 
 Для **functions** вы можете добавить свойство `arguments` к [свойствам функции](/reference/function-properties). Оно определяет параметры пользовательских функций (UDF) в вашем хранилище данных. Поле `data_type` для аргументов функции зависит от конкретного хранилища (например, `STRING`, `VARCHAR`, `INTEGER`) и должно соответствовать типам данных, поддерживаемым вашей платформой данных.
 
-## Свойства
+## Свойства {#properties}
 
-### name
+### name {#name}
 
 Имя аргумента. Это обязательное поле, если указано свойство `arguments`.
 
-### data_type
+### data_type {#data_type}
 
 Тип данных, который ожидает хранилище для данного параметра. Это обязательное поле, если указано свойство `arguments`, и оно должно соответствовать типам данных, поддерживаемым вашей конкретной платформой данных.
 
@@ -51,11 +51,11 @@ functions:
 
 :::
 
-### description
+### description {#description}
 
 Необязательная строка в формате markdown, описывающая аргумент. Полезно для целей документации.
 
-### default_value
+### default_value {#default_value}
 
 Используйте свойство `default_value`, чтобы сделать аргумент функции необязательным.
 
@@ -97,9 +97,9 @@ sum_2_values(5, 10)            # val1 = 5, val2 = 10
 sum_2_values()                 # ❌ ошибка: val1 является обязательным и должен быть передан
 ```
 
-## Примеры
+## Примеры {#examples}
 
-### Простые аргументы функций
+### Простые аргументы функций {#simple-function-arguments}
 
 <File name='functions/schema.yml'>
 
@@ -117,7 +117,7 @@ functions:
 
 </File>
 
-### Сложные типы данных
+### Сложные типы данных {#complex-data-types}
 
 <File name='functions/schema.yml'>
 
@@ -139,7 +139,7 @@ functions:
 
 </File>
 
-### Типы данных Array (пример для BigQuery)
+### Типы данных Array (пример для BigQuery) {#array-data-types-bigquery-example}
 
 <File name='functions/schema.yml'>
 
@@ -158,7 +158,7 @@ functions:
 
 </File>
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 
 - [Свойства функций](/reference/function-properties)
 - [Конфигурации функций](/reference/function-configs)

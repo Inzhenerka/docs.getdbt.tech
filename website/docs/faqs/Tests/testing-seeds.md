@@ -8,7 +8,7 @@ id: testing-seeds
 
 Чтобы тестировать и документировать seeds, используйте [файл схемы](/reference/configs-and-properties) и разместите конфигурации под ключом `seeds:`
 
-## Пример
+## Пример {#example}
 
 <File name='seeds/schema.yml'>
 

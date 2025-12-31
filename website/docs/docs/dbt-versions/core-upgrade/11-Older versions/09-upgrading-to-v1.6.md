@@ -11,18 +11,18 @@ displayed_sidebar: "docs"
 2. Перезапуск семантического слоя: интеграция <Constant name="core" /> и [MetricFlow](/docs/build/about-metricflow)
 3. Механизмы для поддержки зрелых развертываний в масштабе (`dbt clone` и `dbt retry`)
 
-## Ресурсы
+## Ресурсы {#resources}
 
 - [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.6.latest/CHANGELOG.md)
 - [Руководство по установке <Constant name="core" />](/docs/core/installation-overview)
 - [Руководство по обновлению Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 - [График релизов](https://github.com/dbt-labs/dbt-core/issues/7481)
 
-## Что нужно знать перед обновлением
+## Что нужно знать перед обновлением {#what-to-know-before-upgrading}
 
 dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x, за исключением изменений, явно указанных ниже. Если вы столкнетесь с ошибкой при обновлении, пожалуйста, сообщите нам, [создав проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### Изменения в поведении
+### Изменения в поведении {#behavior-changes}
 
 :::info Требуется действие, если ваш проект определяет `metrics`
 
@@ -37,7 +37,7 @@ dbt Labs стремится обеспечить обратную совмест
 - Версия схемы manifest теперь — v10.
 - dbt Labs прекращает поддержку установки <Constant name="core" /> и адаптеров через Homebrew. Подробнее см. [обсуждение](https://github.com/dbt-labs/dbt-core/discussions/8277).
 
-### Для потребителей артефактов dbt (метаданные)
+### Для потребителей артефактов dbt (метаданные) {#for-consumers-of-dbt-artifacts-metadata}
 
 Версия схемы [манифеста](/reference/artifacts/manifest-json) обновлена до `v10`. Конкретные изменения:
 - Добавление `semantic_models` и изменения в атрибутах `metrics`
@@ -46,17 +46,17 @@ dbt Labs стремится обеспечить обратную совмест
 - Небольшие изменения типов в `contracts` и `constraints`
 - Манифест `metadata` включает `project_name`
 
-### Для разработчиков плагинов адаптеров
+### Для разработчиков плагинов адаптеров {#for-maintainers-of-adapter-plugins}
 
 Для получения более подробной информации и возможности задать вопросы, пожалуйста, ознакомьтесь с обсуждением и оставьте комментарий в GH: [dbt-labs/<Constant name="core" />#7958](https://github.com/dbt-labs/dbt-core/discussions/7958).
 
-## Новая и измененная документация
+## Новая и измененная документация {#new-and-changed-documentation}
 
-### MetricFlow
+### MetricFlow {#metricflow}
 
 - [**Создавайте свои метрики**](/docs/build/build-metrics-intro) с помощью MetricFlow — ключевого компонента <Constant name="semantic_layer" />. Вы можете определять метрики и строить семантические модели с помощью MetricFlow, доступного в командной строке (CLI) для <Constant name="core" /> версии v1.6 beta и выше.
 
-### Материализованные представления
+### Материализованные представления {#materialized-views}
 
 Поддерживается на:
 - [Postgres](/reference/resource-configs/postgres-configs#materialized-view)
@@ -65,13 +65,13 @@ dbt Labs стремится обеспечить обратную совмест
 - [Databricks](/reference/resource-configs/databricks-configs#materialized-views-and-streaming-tables)
 
 
-### Новые команды для зрелого развертывания
+### Новые команды для зрелого развертывания {#new-commands-for-mature-deployment}
 
 [`dbt retry`](/reference/commands/retry) выполняет ранее запущенную команду с точки сбоя. Перестройте только те узлы, которые завершились ошибкой или были пропущены в предыдущем запуске/сборке/тесте, вместо того чтобы начинать с нуля.
 
 [`dbt clone`](/reference/commands/clone) использует функциональность каждой платформы данных для создания легковесных копий моделей dbt из одной среды в другую. Полезно при быстром развертывании новой среды разработки или продвижении конкретных моделей из промежуточной среды в производственную.
 
-### Многопроектное сотрудничество
+### Многопроектное сотрудничество {#multi-project-collaboration}
 
 [**Дата устаревания**](/reference/resource-properties/deprecation_date): Модели могут объявлять дату устаревания, которая будет предупреждать производителей моделей и потребителей ниже по потоку. Это позволяет установить четкие окна миграции для версионных моделей и предоставляет механизм для удаления незрелых или малоиспользуемых моделей, помогая избежать разрастания проекта.
 
@@ -86,7 +86,7 @@ dbt Labs стремится обеспечить обратную совмест
 :::
 :::
 
-### Устаревший функционал
+### Устаревший функционал {#deprecated-functionality}
 
 Возможность для установленных пакетов переопределять встроенные материализации без явного согласия пользователя устаревает.
 
@@ -100,7 +100,7 @@ dbt Labs стремится обеспечить обратную совмест
   {% endmaterialization %}
   ```
 
-### Быстрые изменения
+### Быстрые изменения {#quick-hits}
 
 - [`state:unmodified` и `state:old`](/reference/node-selection/methods#state) для [MECE](https://en.wikipedia.org/wiki/MECE_principle) выборки по состоянию
 - [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) включает полную `invocation_command` как строку

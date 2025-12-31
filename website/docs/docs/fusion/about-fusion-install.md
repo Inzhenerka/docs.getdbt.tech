@@ -4,7 +4,7 @@ description: "Установите движок Fusion локально, что�
 id: about-fusion-install
 ---
 
-# О локальной установке Fusion <Lifecycle status="preview" />
+# О локальной установке Fusion <Lifecycle status="preview" /> {#about-fusion-local-installation}
 import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md'
 import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 
@@ -12,7 +12,7 @@ import FusionPrereqs from '/snippets/_fusion-prereqs.md';
 
 <FusionPrereqs />
 
-## Начало работы
+## Начало работы {#getting-started}
 
 Если вы готовы начать, выберите один из вариантов ниже. Чтобы узнать больше о том, какой инструмент лучше всего подходит именно вам, см. страницу [Fusion availability](/docs/fusion/fusion-availability).
 

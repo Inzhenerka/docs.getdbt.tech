@@ -13,14 +13,14 @@ pagination_next: null
 - Более быстрые и экономичные сборки.
 - Поддержка <Constant name="mesh" /> ([cross-project ref](/docs/mesh/govern/project-dependencies)) и многое другое.
 
-## Предварительные условия
+## Предварительные условия {#prerequisites}
 
 - Вам необходимо настроить проект в <Constant name="cloud" />.
   - **Примечание** &mdash; Если вы используете <Constant name="cloud_cli" />, вы можете подключиться к вашей [платформе данных](/docs/cloud/connect-data-platform/about-connections) напрямую в интерфейсе <Constant name="cloud" /> и вам не потребуется файл [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml).
 - Для этого проекта у вас должны быть настроены ваши [учётные данные для персональной разработки](/docs/dbt-cloud-environments#set-developer-credentials). CLI <Constant name="cloud" /> будет использовать эти учётные данные, безопасно хранящиеся в <Constant name="cloud" />, для взаимодействия с вашей платформой данных.
 - Вы должны использовать dbt версии 1.5 или выше. Инструкции по обновлению см. в разделе [версии <Constant name="cloud" />](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
 
-## Настройка dbt CLI
+## Настройка dbt CLI {#configure-the-dbt-cli}
 
 После установки <Constant name="cloud_cli" /> необходимо настроить его для подключения к проекту в <Constant name="cloud" />.
 
@@ -98,7 +98,7 @@ pagination_next: null
 
 С вашим репозиторием, клонированным заново, вы можете добавлять, редактировать и синхронизировать файлы с вашим репозиторием.
 
-## Установка переменных окружения
+## Установка переменных окружения {#set-environment-variables}
 
 Чтобы задать переменные окружения в CLI <Constant name="cloud" /> для вашего dbt‑проекта:
 
@@ -107,7 +107,7 @@ pagination_next: null
 3. Нажмите на свой проект и прокрутите страницу до раздела **Environment variables**.
 4. Нажмите **Edit** в правом нижнем углу и задайте пользовательские переменные окружения.
 
-## Использование dbt CLI
+## Использование dbt CLI {#use-the-dbt-cli}
 
 <Constant name="cloud_cli" /> использует тот же набор [dbt commands](/reference/dbt-commands) и [MetricFlow commands](/docs/build/metricflow-commands), что и dbt Core, для выполнения переданных вами команд. Например, вы можете использовать команду [`dbt environment`](/reference/commands/dbt-environment), чтобы просмотреть детали конфигурации вашего <Constant name="cloud" />. С помощью <Constant name="cloud_cli" /> вы можете:
 
@@ -122,7 +122,7 @@ pagination_next: null
 - `dbt run --help`: Показывает доступные флаги для команды `run`
 :::
  
-## Проверка SQL-файлов (linting)
+## Проверка SQL-файлов (linting) {#lint-sql-files}
 
 Из CLI <Constant name="cloud" /> вы можете вызвать [SQLFluff](https://sqlfluff.com/) — модульный и настраиваемый SQL-линтер, который предупреждает о сложных функциях, проблемах с синтаксисом, форматированием и ошибках компиляции. Многие из тех же флагов, которые можно передать в SQLFluff напрямую, также доступны при использовании CLI <Constant name="cloud" />.
 
@@ -142,7 +142,7 @@ dbt sqlfluff lint [PATHS]... [flags]
 
 Чтобы показать подробную информацию о всех поддерживаемых dbt командах и флагах, выполните команду `dbt sqlfluff -h`. 
 
-#### Соображения
+#### Соображения {#considerations}
 
 При запуске `dbt sqlfluff` из <Constant name="cloud_cli" /> важно учитывать следующие особенности поведения:
 
@@ -150,13 +150,13 @@ dbt sqlfluff lint [PATHS]... [flags]
 - Для рабочих процессов непрерывной интеграции/непрерывной разработки (CI/CD) ваш проект должен иметь файл `dbt_cloud.yml`, и вы успешно выполнили команды из этого проекта dbt.
 - Команда SQLFluff вернет код выхода 0, если она выполнена с любыми нарушениями в файлах. Это поведение dbt отличается от поведения SQLFluff, где нарушение линтинга возвращает ненулевой код выхода. dbt Labs планирует решить эту проблему в следующем выпуске.
 
-## Важные моменты
+## Важные моменты {#considerations-1}
 
 import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
 <CloudCliRelativePath />
 
-## Часто задаваемые вопросы (FAQ)
+## Часто задаваемые вопросы (FAQ) {#faqs}
 
 import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 

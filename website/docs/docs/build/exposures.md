@@ -12,7 +12,7 @@ Exposures можно определить двумя способами:
 - **Вручную** — объявляются [явно](/docs/build/exposures#declaring-an-exposure) в YAML-файлах вашего проекта.
 - **Автоматически** — <Constant name="cloud" /> автоматически [создаёт и визуализирует downstream exposures](/docs/cloud-integrations/downstream-exposures) для поддерживаемых интеграций, устраняя необходимость в ручном описании YAML. Эти downstream exposures хранятся в системе метаданных dbt, отображаются в [<Constant name="explorer" />](/docs/explore/explore-projects) и ведут себя так же, как и вручную объявленные exposures. Однако они не существуют в виде YAML-файлов.
 
-### Объявление exposure
+### Объявление exposure {#declaring-an-exposure}
 
 Экспозиции определяются в файлах `.yml`, вложенных под ключом `exposures:`.
 
@@ -45,7 +45,7 @@ exposures:
 
 </File>
 
-### Доступные свойства
+### Доступные свойства {#available-properties}
 
 _Обязательные:_
 - **name**: уникальное имя экспозиции, написанное в [snake case](https://en.wikipedia.org/wiki/Snake_case)
@@ -67,7 +67,7 @@ _Общие свойства (необязательные)_
 - [**meta**](/reference/resource-configs/meta)
 - [**enabled**](/reference/resource-configs/enabled) &mdash; Это свойство можно задать на уровне exposure или на уровне проекта в файле [`dbt_project.yml`](/reference/dbt_project.yml).
 
-### Ссылки на экспозиции
+### Ссылки на экспозиции {#referencing-exposures}
 
 После определения экспозиции вы можете выполнять команды, ссылаясь на нее:
 ```
@@ -81,7 +81,7 @@ dbt test -s +exposure:weekly_jaffle_report
 <Lightbox src="/img/docs/building-a-dbt-project/dbt-explorer-exposures.jpg" title="Exposures имеют отдельный раздел во вкладке 'Resources' в dbt Catalog, где перечислены все exposure в вашем проекте."/>
 <Lightbox src="/img/docs/building-a-dbt-project/dag-exposures.png" title="Exposures отображаются как узлы в DAG dbt Catalog. Внутри узла показывается оранжевый индикатор 'EXP'."/>
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Свойства Exposure](/reference/exposure-properties)
 - [Метод выбора `exposure:`](/reference/node-selection/methods#exposure)

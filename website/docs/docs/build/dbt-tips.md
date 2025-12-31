@@ -14,7 +14,7 @@ pagination_next: null
 
 Если вы разрабатываете в <Constant name="cloud_ide" />, вы можете обратиться к странице [горячих клавиш](/docs/cloud/studio-ide/keyboard-shortcuts), чтобы сделать разработку более продуктивной и удобной для всех.
 
-## Советы по YAML
+## Советы по YAML {#yaml-tips}
 
 В этом разделе поясняется, где именно вы можете использовать [Jinja](/docs/build/jinja-macros), а также вкладывать [vars](/reference/dbt-jinja-functions/var) и [`env_var`](/reference/dbt-jinja-functions/env_var) в ваших YAML-файлах.
 
@@ -25,7 +25,7 @@ pagination_next: null
 
 Для получения дополнительной информации ознакомьтесь с [документацией по контексту <Constant name="core" />](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/context/README.md).
 
-## Советы по пакетам
+## Советы по пакетам {#package-tips}
 
 Используйте эти пакеты dbt, чтобы упростить и ускорить ваш рабочий процесс:
 
@@ -39,7 +39,7 @@ pagination_next: null
 | [`dbt_artifacts`](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest) | Пакет сохраняет информацию о запусках dbt непосредственно в вашей платформе данных, что позволяет отслеживать производительность моделей с течением времени. |
 | [`dbt_meta_testing`](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest) | Этот пакет проверяет, достаточно ли ваш dbt-проект покрыт тестами и документацией. |
 
-## Продвинутые советы и техники
+## Продвинутые советы и техники {#advanced-tips-and-techniques}
 
 - Используйте структуру папок как основной способ селекции моделей. Команда `dbt build --select marts.marketing` проще и надежнее, чем использование тегов для каждой модели.
 - Рассматривайте джобы с точки зрения частоты сборки и SLA. Запускайте вместе модели с почасовой, ежедневной или еженедельной периодичностью.
@@ -59,7 +59,7 @@ pagination_next: null
 - Используйте [seeds](/docs/build/seeds) для создания справочных таблиц вручную, например соответствий ZIP-кодов штатам или UTM-меток маркетинга кампаниям. Команда `dbt seed` загрузит CSV-файлы в ваше хранилище данных и сделает их доступными для использования через `ref` в моделях.
 - Используйте [target.name](/docs/build/custom-schemas#an-alternative-pattern-for-generating-schema-names), чтобы ветвить логику в зависимости от используемого окружения. Например, при разработке собирать все в одной схеме, а в продакшене — использовать несколько схем.
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Руководство по быстрому старту](/guides)
 - [О <Constant name="cloud" />](/docs/cloud/about-cloud/dbt-cloud-features)

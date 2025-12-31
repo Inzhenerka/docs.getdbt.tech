@@ -5,7 +5,7 @@ description: "Настройка GCP Private Service Connect для Snowflake"
 sidebar_label: "GCP Private Service Connect для Snowflake"
 ---
 
-# Настройка Snowflake Private Service Connect <Lifecycle status="managed_plus" />
+# Настройка Snowflake Private Service Connect <Lifecycle status="managed_plus" /> {#configuring-snowflake-private-service-connect}
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
@@ -22,7 +22,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 :::
 
-## Настройка GCP Private Service Connect
+## Настройка GCP Private Service Connect {#configure-gcp-private-service-connect}
 
 Проект dbt Labs в GCP заранее авторизован для подключения к аккаунтам Snowflake. 
 
@@ -46,7 +46,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После того как служба поддержки <Constant name="cloud" /> завершит настройку, вы сможете начать создавать новые подключения с использованием PrivateLink. 
 
@@ -56,13 +56,13 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 4. Настройте остальные параметры платформы данных.
 5. Протестируйте подключение и сохраните его.
 
-## Настройка сетевых политик
+## Настройка сетевых политик {#configuring-network-policies}
 
 Если в вашей организации используются [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к аккаунту Snowflake, вам потребуется добавить сетевое правило для <Constant name="cloud" />. 
 
 Вы можете запросить диапазон CIDR у [службы поддержки <Constant name="cloud" />](mailto:support@getdbt.com), который затем можно использовать для создания сетевой политики. 
 
-### Использование UI
+### Использование UI {#using-the-ui}
 
 Откройте интерфейс Snowflake и выполните следующие шаги:
 1. Перейдите на вкладку **Security**.
@@ -76,7 +76,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 9. На вкладке **Network Policy** отредактируйте политику, в которую вы хотите добавить правило. Это может быть политика уровня аккаунта или политика, предназначенная для пользователей, подключающихся из <Constant name="cloud" />.
 10. Добавьте новое правило в список разрешённых и нажмите **Update Network Policy**.
 
-### Использование SQL
+### Использование SQL {#using-sql}
 
 Для быстрого и автоматизированного создания сетевых правил в Snowflake с помощью SQL можно использовать следующие команды. Эти примеры SQL демонстрируют, как добавить сетевое правило и соответствующим образом обновить сетевую политику для <Constant name="cloud" />.
 

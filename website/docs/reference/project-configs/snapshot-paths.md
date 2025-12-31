@@ -11,7 +11,7 @@ snapshot-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 
 При необходимости укажите пользовательский список директорий, где находятся [снимки](/docs/build/snapshots).
 
@@ -19,7 +19,7 @@ snapshot-paths: [directorypath]
 В <Constant name="core" /> v1.9+ вы можете размещать снапшоты вместе с моделями, если они [определены с использованием последнего синтаксиса YAML](/docs/build/snapshots). 
 </VersionBlock>
 
-## По умолчанию
+## По умолчанию {#default}
 По умолчанию dbt будет искать снимки в директории `snapshots`. Например, `snapshot-paths: ["snapshots"]`.
 
 import RelativePath from '/snippets/_relative-path.md';
@@ -41,8 +41,8 @@ absolute="/Users/username/project/snapshots"
     snapshot-paths: ["/Users/username/project/snapshots"]
     ```
 
-## Примеры
-### Использование поддиректории с именем `archives` вместо `snapshots`
+## Примеры {#examples}
+### Использование поддиректории с именем `archives` вместо `snapshots` {#use-a-subdirectory-named-archives-instead-of-snapshots}
 
 <File name='dbt_project.yml'>
 

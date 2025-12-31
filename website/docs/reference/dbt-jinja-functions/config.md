@@ -26,7 +26,7 @@ description: "Прочтите это руководство, чтобы пон�
 
 Просмотрите [Конфигурации моделей](/reference/model-configs) для примеров и дополнительной информации о допустимых аргументах.
 
-## config.get
+## config.get {#configget}
 __Аргументы__:
 
  * `name`: Имя конфигурационной переменной (обязательно)
@@ -60,7 +60,7 @@ __Аргументы__:
   ...
 ```
 
-## config.require
+## config.require {#configrequire}
 __Аргументы__:
 
  * `name`: Имя конфигурационной переменной (обязательно)
@@ -77,7 +77,7 @@ __Аргументы__:
   {%- set unique_key = config.require('unique_key') -%}
   ...
 ```
-## config.meta_get
+## config.meta_get {#configmeta_get}
 
 <VersionBlock lastVersion="1.10">
 
@@ -116,7 +116,7 @@ models:
         custom_setting: "my_value"
 ```
 
-## config.meta_require
+## config.meta_require {#configmeta_require}
 
 <VersionBlock lastVersion="1.10">
 

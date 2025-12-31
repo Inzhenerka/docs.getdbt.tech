@@ -9,8 +9,8 @@ import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
 
-## Доступные конфигурации
-### Конфигурации, специфичные для seed
+## Доступные конфигурации {#available-configurations}
+### Конфигурации, специфичные для seed {#seed-specific-configurations}
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -61,7 +61,7 @@ seeds:
 
 </Tabs>
 
-### Общие конфигурации
+### Общие конфигурации {#general-configurations}
 
 <ConfigGeneral />
 
@@ -135,13 +135,13 @@ seeds:
 </TabItem>
 </Tabs>
 
-## Конфигурирование seed
+## Конфигурирование seed {#configuring-seeds}
 Seed можно настроить только из YAML-файлов, либо в `dbt_project.yml`, либо в YAML-свойствах отдельного seed. Невозможно настроить seed из его CSV-файла.
 
 Конфигурации seed, как и конфигурации моделей, применяются иерархически — конфигурации, примененные к подкаталогу `marketing`, будут иметь приоритет над конфигурациями, примененными ко всему проекту `jaffle_shop`, а конфигурации, определенные в свойствах конкретного seed, будут переопределять конфигурации, определенные в `dbt_project.yml`.
 
-### Примеры
-#### Применение конфигурации `schema` ко всем seed
+### Примеры {#examples}
+#### Применение конфигурации `schema` ко всем seed {#apply-the-schema-configuration-to-all-seeds}
 Чтобы применить конфигурацию ко всем seed, включая те, что находятся в установленных [пакетах](/docs/build/packages), вложите конфигурацию непосредственно под ключ `seeds`:
 
 <File name='dbt_project.yml'>
@@ -155,7 +155,7 @@ seeds:
 </File>
 
 
-#### Применение конфигурации `schema` ко всем seed в вашем проекте
+#### Применение конфигурации `schema` ко всем seed в вашем проекте {#apply-the-schema-configuration-to-all-seeds-in-your-project}
 Чтобы применить конфигурацию ко всем seed только в вашем проекте (т.е. _исключая_ любые seed в установленных пакетах), укажите [имя вашего проекта](/reference/project-configs/name.md) как часть пути к ресурсу.
 
 Для проекта с именем `jaffle_shop`:
@@ -173,7 +173,7 @@ seeds:
 
 Аналогично, вы можете использовать имя установленного пакета для настройки seed в этом пакете.
 
-#### Применение конфигурации `schema` только к одному seed
+#### Применение конфигурации `schema` только к одному seed {#apply-the-schema-configuration-to-one-seed-only}
 Чтобы применить конфигурацию только к одному seed, укажите полный путь к ресурсу (включая имя проекта и подкаталоги).
 
 <File name='seeds/marketing/properties.yml'>
@@ -203,7 +203,7 @@ seeds:
 </File>
 
 
-## Пример конфигурации seed
+## Пример конфигурации seed {#example-seed-configuration}
 Ниже приведен пример допустимой конфигурации seed для проекта с:
 * `name: jaffle_shop`
 * Файлом seed в `seeds/country_codes.csv`, и

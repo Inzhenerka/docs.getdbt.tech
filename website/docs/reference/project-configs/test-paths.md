@@ -11,11 +11,11 @@ test-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 
 При необходимости укажите пользовательский список директорий, где находятся [единичные тесты](/docs/build/data-tests#singular-data-tests) и [пользовательские общие тесты](/docs/build/data-tests#generic-data-tests).
 
-## По умолчанию
+## По умолчанию {#default}
 Если не указывать эту настройку, dbt будет искать тесты в директории `tests`, то есть `test-paths: ["tests"]`. В частности, он будет искать файлы `.sql`, содержащие:
 - Определения общих тестов в поддиректории `tests/generic`
 - Единичные тесты (все остальные файлы)
@@ -39,8 +39,8 @@ absolute="/Users/username/project/test"
     test-paths: ["/Users/username/project/test"]
     ```
 
-## Примеры
-### Используйте поддиректорию с именем `custom_tests` вместо `tests` для тестов данных
+## Примеры {#examples}
+### Используйте поддиректорию с именем `custom_tests` вместо `tests` для тестов данных {#use-a-subdirectory-named-custom_tests-instead-of-tests-for-data-tests}
 
 <File name='dbt_project.yml'>
 

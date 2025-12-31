@@ -26,7 +26,7 @@ sidebar_label: "Исправление устареваний"
 9. Нажмите **Commit and sync** в левом верхнем углу <Constant name="cloud_ide" />, чтобы закоммитить эти изменения в репозиторий проекта.
 10. Теперь вы готовы включить Fusion, если вы [соответствуете требованиям](/docs/fusion/supported-features#requirements)!
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Руководство по быстрому старту](/guides)
 - [О <Constant name="cloud" />](/docs/cloud/about-cloud/dbt-cloud-features)

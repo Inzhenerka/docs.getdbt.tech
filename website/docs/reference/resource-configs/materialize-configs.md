@@ -4,9 +4,9 @@ description: "Конфигурации материализации - прочт
 id: "materialize-configs"
 ---
 
-## Оптимизация производительности
+## Оптимизация производительности {#performance-optimizations}
 
-### Кластеры
+### Кластеры {#clusters}
 
 Включите конфигурацию [кластеров](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
 
@@ -33,11 +33,11 @@ models:
 
 </File>
 
-### Инкрементальные модели: Материализованные представления
+### Инкрементальные модели: Материализованные представления {#incremental-models-materialized-views}
 
 Materialize, в своей основе, является базой данных реального времени, которая обеспечивает инкрементальные обновления представлений без ущерба для задержки или корректности. Используйте [материализованные представления](https://materialize.com/docs/overview/key-concepts/#materialized-views) для вычисления и инкрементального обновления результатов вашего запроса.
 
-### Индексы
+### Индексы {#indexes}
 
 Включите дополнительную конфигурацию для [индексов](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
 
@@ -73,7 +73,7 @@ select ...
 
 </File>
 
-### Тесты данных
+### Тесты данных {#data-tests}
 
 <File name='dbt_project.yml'>
 

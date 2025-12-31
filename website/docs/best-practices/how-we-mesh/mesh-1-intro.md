@@ -4,7 +4,7 @@ description: Начало работы с паттернами dbt Mesh
 hoverSnippet: Узнайте, как начать работу с dbt Mesh
 ---
 
-## Что такое dbt Mesh?
+## Что такое dbt Mesh? {#what-is-dbt-mesh}
 
 import Mesh from '/snippets/_what-is-mesh.md';
 
@@ -16,7 +16,7 @@ import Mesh from '/snippets/_what-is-mesh.md';
 
 Для получения дополнительной информации обратитесь к [<Constant name="mesh" /> FAQs](/best-practices/how-we-mesh/mesh-5-faqs).
 
-## Цели обучения
+## Цели обучения {#learning-goals}
 
 - Понять **назначение и компромиссы** построения много-проектной архитектуры.
 - Сформировать интуитивное понимание различных **паттернов <Constant name="mesh" />** и того, как спроектировать много-проектную архитектуру для вашей организации.

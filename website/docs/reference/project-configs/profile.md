@@ -10,15 +10,15 @@ profile: string
 
 </File>
 
-## Определение
+## Определение {#definition}
 Профиль, который ваш проект dbt должен использовать для подключения к вашему <Term id="data-warehouse" />.
 * Если вы разрабатываете в <Constant name="cloud" />: эта конфигурация не применяется.
 * Если вы разрабатываете локально: эта конфигурация обязательна, если только не используется опция командной строки, такая как [`--profile`](/docs/core/connect-data-platform/connection-profiles#overriding-profiles-and-targets). Флаг `--profile` переопределяет профиль, заданный в `dbt_project.yml`.
 
-## Связанные руководства
+## Связанные руководства {#related-guides}
 * [Подключение к вашему хранилищу данных с использованием командной строки](/docs/core/connect-data-platform/connection-profiles#connecting-to-your-warehouse-using-the-command-line)
 
-## Рекомендация
+## Рекомендация {#recommendation}
 Часто в организации есть только одно <Term id="data-warehouse" />, поэтому разумно использовать название вашей организации в качестве имени профиля, в формате `snake_case`. Например:
 * `profile: acme`
 * `profile: jaffle_shop`

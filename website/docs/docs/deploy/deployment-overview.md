@@ -30,7 +30,7 @@ pagination_prev: null
 
 Узнайте, как использовать возможности <Constant name="cloud" />, чтобы помочь вашей команде проще и быстрее поставлять в продакшен качественные данные.
 
-## Развертывание с помощью dbt
+## Развертывание с помощью dbt {#deploy-with-dbt}
 
 <div className="grid--3-col">
 
@@ -72,7 +72,7 @@ pagination_prev: null
 
 </div> <br />
 
-## Мониторинг задач и оповещений
+## Мониторинг задач и оповещений {#monitor-jobs-and-alerts}
 
 <div className="grid--3-col">
 
@@ -126,9 +126,9 @@ pagination_prev: null
 
 </div> <br />
 
-## Связанные документы
+## Связанные документы {#hybrid-projects}
 
-## Гибридные проекты <Lifecycle status="managed" /> <Lifecycle status="Preview"/>
+## Гибридные проекты <Lifecycle status="managed" /> <Lifecycle status="Preview"/> {#run-dbt-in-production}
 
 <div className="grid--3-col">
 
@@ -156,7 +156,7 @@ pagination_prev: null
 
 </DocCarousel>
 
-## Run dbt in production
+## Run dbt in production {#related-docs}
 
 If you want to run dbt jobs on a schedule, you can use tools such as <Constant name="cloud" />, Airflow, Prefect, Dagster, automation server, or Cron.-->
 

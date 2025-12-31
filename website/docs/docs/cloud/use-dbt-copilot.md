@@ -8,7 +8,7 @@ import CopilotResources from '/snippets/_use-copilot-resources.md';
 import CopilotEditCode from '/snippets/_use-copilot-edit-code.md';
 import CopilotVE from '/snippets/_use-copilot-ve.md';
 
-# Использование dbt Copilot <Lifecycle status="self_service,managed,managed_plus" />
+# Использование dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> {#use-dbt-copilot}
 
 <IntroText>
 Используйте <Constant name="copilot" />, чтобы генерировать документацию, тесты, семантические модели и код с нуля, сохраняя при этом возможность изменять или исправлять сгенерированный код.
@@ -26,21 +26,21 @@ import CopilotVE from '/snippets/_use-copilot-ve.md';
 Рекомендуем ознакомиться с нашим [on-demand курсом dbt Copilot](https://learn.getdbt.com/learn/course/dbt-copilot/welcome-to-dbt-copilot/welcome-5-mins), чтобы узнать, как использовать <Constant name="copilot" /> для генерации ресурсов и не только.
 :::
 
-## Генерация ресурсов
+## Генерация ресурсов {#generate-resources}
 
 <CopilotResources/>
 
-## Генерация и редактирование SQL inline
+## Генерация и редактирование SQL inline {#generate-and-edit-sql-inline}
 
 <CopilotEditCode/>
 
-## Создание визуальных моделей
+## Создание визуальных моделей {#build-visual-models}
 
 <Constant name="copilot" /> бесшовно интегрируется с [<Constant name="visual_editor" />](/docs/cloud/canvas) — интерфейсом drag-and-drop, который помогает создавать визуальные модели с использованием запросов на естественном языке. Перед началом убедитесь, что у вас есть [доступ к <Constant name="visual_editor" />](/docs/cloud/use-canvas#access-canvas).
 
 <CopilotVE/>
 
-## Создание запросов
+## Создание запросов {#build-queries}
 
 Используйте <Constant name="copilot" /> для построения запросов в [<Constant name="query_page" />](/docs/explore/dbt-insights) с помощью запросов на естественном языке, чтобы удобно исследовать и выполнять запросы к данным через интуитивный интерфейс с богатым контекстом. Перед началом убедитесь, что у вас есть [доступ к <Constant name="query_page" />](/docs/explore/access-dbt-insights).
 
@@ -58,7 +58,7 @@ import CopilotVE from '/snippets/_use-copilot-ve.md';
 
 <Lightbox src="/img/docs/dbt-insights/insights-copilot.gif" width="95%" title="dbt Copilot в dbt Insights" />
 
-## Анализ данных с агентом Analyst <Lifecycle status='private_beta' />
+## Анализ данных с агентом Analyst <Lifecycle status='private_beta' /> {#analyze-data-with-the-analyst-agent}
 
 Используйте dbt <Constant name="copilot" /> для анализа данных и получения контекстуализированных результатов в реальном времени, задавая вопросы на естественном языке агенту Analyst на странице [<Constant name="query_page" />](/docs/explore/dbt-insights). Чтобы запросить доступ к агенту Analyst, [запишитесь в список ожидания](https://www.getdbt.com/product/dbt-agents#dbt-Agents-signup).
 

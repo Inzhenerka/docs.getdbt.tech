@@ -8,7 +8,7 @@ pagination_prev: "docs/explore/model-query-history"
 pagination_next: "docs/explore/navigate-dbt-insights"
 ---
 
-# О dbt Insights <Lifecycle status="managed,managed_plus" />
+# О dbt Insights <Lifecycle status="managed,managed_plus" /> {#about-dbt-insights}
 
 <IntroText>
 Узнайте, как выполнять запросы к данным с помощью <Constant name="query_page" /> и просматривать документацию в <Constant name="explorer" />.
@@ -20,7 +20,7 @@ pagination_next: "docs/explore/navigate-dbt-insights"
 
 <Lightbox src="/img/docs/dbt-insights/insights-main.gif" title="Обзор dbt Insights и его возможностей" />
 
-## Ключевые преимущества
+## Ключевые преимущества {#key-benefits}
 
 Ключевые преимущества:
 - Быстрое написание, выполнение и итерация SQL‑запросов с помощью таких инструментов, как подсветка синтаксиса, редакторы с вкладками и история запросов.
@@ -32,7 +32,7 @@ pagination_next: "docs/explore/navigate-dbt-insights"
 - Аналитики могут быстро составлять запросы для анализа показателей продаж по регионам и просматривать результаты.
 - Все пользователи получают насыщенный опыт работы, основанный на сквозных возможностях исследования данных в <Constant name="explorer" />.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - Использование тарифного плана <Constant name="cloud" /> уровня [Enterprise](https://www.getdbt.com/pricing) &mdash; [запишитесь на демо](https://www.getdbt.com/contact), чтобы узнать больше о <Constant name="query_page" />.
 - Доступно для всех конфигураций [tenant](/docs/cloud/about-cloud/tenancy).

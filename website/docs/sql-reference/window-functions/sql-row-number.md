@@ -15,7 +15,7 @@ slug: /sql-reference/row-number
 
 В отличие от функций [RANK](/sql-reference/rank) и DENSE_RANK, ROW_NUMBER является недетерминированной, что означает, что *уникальный* номер присваивается произвольно для строк с дублирующимися значениями.
 
-## Как использовать функцию ROW_NUMBER
+## Как использовать функцию ROW_NUMBER {#how-to-use-the-row_number-function}
 
 Функция ROW_NUMBER имеет довольно простой синтаксис с необязательным полем разделения и поддержкой настройки порядка:
 
@@ -28,7 +28,7 @@ slug: /sql-reference/row-number
 
 Давайте рассмотрим практический пример использования функции ROW_NUMBER ниже.
 
-### Пример функции ROW_NUMBER
+### Пример функции ROW_NUMBER {#row_number-function-example}
 
 ```sql
 select
@@ -53,7 +53,7 @@ order by 1
 
 Поскольку ROW_NUMBER является недетерминированной, заказы для клиента с одинаковым `order_date` будут иметь уникальные значения `row_n` (в отличие от использования функций RANK или DENSE_RANK).
 
-## Синтаксис ROW_NUMBER в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис ROW_NUMBER в Snowflake, Databricks, BigQuery и Redshift {#row_number-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Большинство современных хранилищ данных поддерживают ROW_NUMBER и другие аналогичные функции ранжирования; синтаксис также одинаков для всех них. Используйте таблицу ниже, чтобы узнать больше о документации для функции ROW_NUMBER в вашем хранилище данных.
 
@@ -64,7 +64,7 @@ order by 1
 | [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_WF_ROW_NUMBER.html) | ✅ |
 | [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#row_number) | ✅ |
 
-## Примеры использования функции ROW_NUMBER
+## Примеры использования функции ROW_NUMBER {#row_number-function-use-cases}
 
 Чаще всего мы видим использование функции ROW_NUMBER в работе с данными для:
 

@@ -10,13 +10,13 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 
 В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `resources`. Обратитесь к разделу [Fields](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
 
-### Аргументы
+### Аргументы {#arguments}
 
 При выполнении запроса к `resources` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="resources" />
 
-### Пример запроса
+### Пример запроса {#example-query}
 
 Вы можете указать `environmentId`, отфильтровать ресурсы по типу `"Model"` и ограничить выборку первыми 100 результатами, чтобы получить подробную информацию о первых 100 ресурсах-моделях в этом окружении, включая их метаданные, теги и расположение файлов:
 
@@ -52,12 +52,12 @@ query {
 }
 ```
 
-### Fields
+### Fields {#fields}
 
 При выполнении запроса к `resources` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="EnvironmentAppliedNodeConnection" />
 
-### Ключевые поля узлов
+### Ключевые поля узлов {#key-fields-from-nodes}
 
 <SchemaTable nodeName="EnvironmentAppliedNode" />

@@ -57,7 +57,7 @@ metrics:
 :::
 -->
 
-## Пример простых метрик
+## Пример простых метрик {#simple-metrics-example}
 
 ```yaml
   metrics: 
@@ -83,5 +83,5 @@ metrics:
         {{Dimension('customer__order_total_dim')}} >= 20
 ```
 
-## Связанные документы
+## Связанные документы {#related-docs}
 - [Заполнение значений null для простых, производных или относительных метрик](/docs/build/fill-nulls-advanced)

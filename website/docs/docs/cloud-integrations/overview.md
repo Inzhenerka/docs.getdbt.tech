@@ -8,7 +8,7 @@ hide_table_of_contents: true
 
 Многие приложения для работы с данными интегрируются с <Constant name="cloud" />, что позволяет использовать возможности dbt для самых разных сценариев и рабочих процессов.
 
-## Интеграции с dbt
+## Интеграции с dbt {#integrations-with-dbt}
 
 <div className="grid--3-col">
 

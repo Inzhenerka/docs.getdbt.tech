@@ -76,14 +76,14 @@ snapshots:
 
 </Tabs>
 
-## Описание
+## Описание {#description}
 Стратегия снимка, которую dbt должен использовать для обнаружения изменений записей. Прочтите руководство по [снимкам](/docs/build/snapshots#detecting-row-changes), чтобы понять различия между двумя стратегиями.
 
-## По умолчанию
+## По умолчанию {#default}
 Это **обязательная конфигурация**. Значение по умолчанию отсутствует.
 
-## Примеры
-### Использование стратегии timestamp
+## Примеры {#examples}
+### Использование стратегии timestamp {#use-the-timestamp-strategy}
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/timestamp_example.yml'>
@@ -104,7 +104,7 @@ snapshots:
 </VersionBlock>
 
 
-### Использование стратегии check
+### Использование стратегии check {#use-the-check-strategy}
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/check_example.yml'>
@@ -125,7 +125,7 @@ snapshots:
 </File>
 </VersionBlock>
 
-### Продвинуто: определение и использование собственной стратегии snapshot
+### Продвинуто: определение и использование собственной стратегии snapshot {#advanced-define-and-use-custom-snapshot-strategy}
 
 Под капотом стратегии snapshot реализованы в виде макросов с именами вида `snapshot_<strategy>_strategy`.
 

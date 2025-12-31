@@ -15,7 +15,7 @@ slug: /sql-reference/case
 
 На этой странице мы разберем, как использовать операторы SQL CASE и продемонстрируем, почему они ценны для современных команд, работающих с данными.
 
-## Как использовать операторы SQL CASE
+## Как использовать операторы SQL CASE {#how-to-use-the-sql-case-statements}
 
 Операторы CASE WHEN создаются в [операторах SELECT](/sql-reference/select) вместе с другими полями, которые вы выбираете. Общий синтаксис для операторов SQL CASE WHEN следующий:
 
@@ -37,7 +37,7 @@ end as <новое_имя_поля>
 
 Давайте рассмотрим практический пример использования оператора CASE.
 
-### Пример SQL CASE WHEN
+### Пример SQL CASE WHEN {#sql-case-when-example}
 
 ```sql
 select
@@ -60,11 +60,11 @@ from {{ ref('orders') }}
 | 4 | 25 | high |
 | 5 | 17 | medium |
 
-## Синтаксис SQL CASE WHEN в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис SQL CASE WHEN в Snowflake, Databricks, BigQuery и Redshift {#sql-case-when-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Поскольку это основа SQL, большинство, если не все, современные хранилища данных поддерживают возможность добавления операторов CASE WHEN в свои запросы. Snowflake, Databricks, Google BigQuery и Amazon Redshift поддерживают операторы CASE и имеют одинаковый синтаксис для них.
 
-## Примеры использования CASE WHEN
+## Примеры использования CASE WHEN {#case-when-use-cases}
 
 Примеры использования операторов CASE в моделях dbt и временных запросах практически бесконечны; в результате мы не будем (и не сможем) создавать исчерпывающий список мест, где вы можете встретить операторы CASE.
 

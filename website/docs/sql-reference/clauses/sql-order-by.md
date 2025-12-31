@@ -11,7 +11,7 @@ slug: /sql-reference/order-by
 
 Клаузула ORDER BY позволяет указать порядок строк в результате запроса. На практике вы используете ORDER BY, чтобы указать, по какому полю(ям) вы хотите упорядочить данные и в каком порядке (по возрастанию или убыванию). Это полезно при проведении разовых анализов и для создания соответствующих значений столбцов для разделенных строк в оконных функциях.
 
-## Как использовать SQL ORDER BY
+## Как использовать SQL ORDER BY {#how-to-use-the-sql-order-by-clause}
 
 Клаузулы ORDER BY имеют множество применений в аналитической работе, но чаще всего их используют для:
 - Упорядочивания результата запроса или подзапроса по столбцу или группе столбцов
@@ -30,7 +30,7 @@ order by <field(s)> <asc/desc> -- идет после FROM, WHERE и GROUP BY
 
 Давайте рассмотрим практический пример использования ORDER BY.
 
-### Пример ORDER BY
+### Пример ORDER BY {#order-by-example}
 
 ```sql
 select
@@ -50,11 +50,11 @@ order by 1 desc
 | 2018-02-01 | 15 |
 | 2018-01-01 | 17 |
 
-## Синтаксис SQL ORDER BY в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис SQL ORDER BY в Snowflake, Databricks, BigQuery и Redshift {#sql-order-by-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Поскольку ORDER BY является основой SQL, все хранилища данных, включая Snowflake, Databricks, Google BigQuery и Amazon Redshift, поддерживают возможность добавления клаузул ORDER BY в запросы и оконные функции.
 
-## Примеры использования ORDER BY
+## Примеры использования ORDER BY {#order-by-use-cases}
 
 Мы чаще всего используем предложение ORDER BY в работе с данными для следующих задач:
 - Анализ данных как на этапе первичного исследования сырых источников, так и при выполнении ad hoc‑запросов к [витринным датасетам](/best-practices/how-we-structure/4-marts)

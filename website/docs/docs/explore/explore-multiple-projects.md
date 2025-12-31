@@ -33,7 +33,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/cross-project-child.png" width="100%" height="100" title="Просмотр нижестоящего (дочернего) проекта, который импортирует и ссылается на публичные модели из вышестоящего (родительского) проекта."/>
 
-## Исследование графа родословной на уровне проектов
+## Исследование графа родословной на уровне проектов {#explore-the-project-level-lineage-graph}
 
 Для кросс‑проектного взаимодействия вы можете работать с DAG всеми теми же способами, которые описаны в разделе [Explore your project's lineage](/docs/explore/explore-projects#project-lineage), а также дополнительно взаимодействовать с ним на уровне проекта и просматривать его детали.
 

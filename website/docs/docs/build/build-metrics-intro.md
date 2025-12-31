@@ -65,7 +65,7 @@ MetricFlow позволяет вам:
 
 </div> <br />
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Краткое руководство по началу работы с <Constant name="semantic_layer" />](/guides/sl-snowflake-qs)
 - [<Constant name="semantic_layer" />: что дальше](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/) — блог

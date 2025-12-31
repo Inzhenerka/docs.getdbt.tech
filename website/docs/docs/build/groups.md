@@ -10,13 +10,13 @@ keywords:
 
 Члены группы могут включать модели, тесты, seeds, snapshots, анализы и метрики. (Не включены: источники и экспозиции.) Каждый узел может принадлежать только одной группе.
 
-### Объявление группы
+### Объявление группы {#declaring-a-group}
 
 import DefineGroups from '/snippets/_define-groups.md';
 
 <DefineGroups />
 
-#### Централизованное определение группы
+#### Централизованное определение группы {#centrally-defining-a-group}
 
 Чтобы централизованно определить группу в вашем проекте, есть два варианта:
 
@@ -28,7 +28,7 @@ import DefineGroups from '/snippets/_define-groups.md';
   ```
 
 
-### Добавление модели в группу
+### Добавление модели в группу {#adding-a-model-to-a-group}
 
 Используйте конфигурацию `group`, чтобы добавить одну или несколько моделей в группу.
 
@@ -79,7 +79,7 @@ select ...
 
 </Tabs>
 
-### Ссылка на модель в группе
+### Ссылка на модель в группе {#referencing-a-model-in-a-group}
 
 По умолчанию все модели в группе имеют модификатор доступа `protected`. Это означает, что они могут быть использованы в качестве ссылки для последующих ресурсов в _любой_ группе в том же проекте, используя функцию [`ref`](/reference/dbt-jinja-functions/ref). Если свойство `access` сгруппированной модели установлено как `private`, только ресурсы внутри её группы могут ссылаться на неё.
 
@@ -114,7 +114,7 @@ dbt.exceptions.DbtReferenceError: Parsing Error
   which is not allowed because the referenced node is private to the finance group.
 ```
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 * [Доступ к моделям](/docs/mesh/govern/model-access#groups)
 * [Конфигурация групп](/reference/resource-configs/group)

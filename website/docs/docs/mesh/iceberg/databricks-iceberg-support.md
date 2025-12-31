@@ -26,7 +26,7 @@ Databricks построен на базе [Delta Lake](https://docs.databricks.c
 
 В настоящее время новые возможности Databricks managed Iceberg tables, находящиеся в статусе Private Preview, не поддерживаются.
 
-## Конфигурации интеграции dbt Catalog для Databricks
+## Конфигурации интеграции dbt Catalog для Databricks {#dbt-catalog-integration-configurations-for-databricks}
 
 В таблице ниже перечислены поля конфигурации, необходимые для настройки интеграции каталога для [Iceberg-совместимых таблиц в Databricks](https://docs.databricks.com/aws/en/delta/uniform).
 
@@ -37,11 +37,11 @@ Databricks построен на базе [Delta Lake](https://docs.databricks.c
 | table_format | Формат таблиц, создаваемых моделями dbt. | Optional | Автоматически устанавливается в `iceberg` для `catalog_type=unity` и в `default` для `hive_metastore`. |
 | file_format | Формат файлов, используемый для результатов моделей dbt. | Optional | По умолчанию `delta`, если не переопределён на уровне аккаунта Databricks. |
 
-#### Примечание
+#### Примечание {#note}
 
 В Databricks, если у модели в конфигурации указано `catalog_name=<>`, имя каталога становится частью FQN модели. Например, если каталог называется `my_database`, модель с `catalog_name='my_database'` будет материализована как `my_database.<schema>.<model>`.
 
-### Настройте интеграцию каталога для управляемых таблиц Iceberg
+### Настройте интеграцию каталога для управляемых таблиц Iceberg {#configure-catalog-integration-for-managed-iceberg-tables}
 
 1. Создайте файл `catalogs.yml` в корне проекта dbt (на одном уровне с `dbt_project.yml`).  
 <br />Пример использования Unity Catalog в качестве каталога:

@@ -12,7 +12,7 @@ recently_updated: true
 <div style={{maxWidth: '900px'}}>
 import FusionDWH from '/snippets/_fusion-dwh.md';
 
-## Введение
+## Введение {#introduction}
 
 import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
@@ -25,7 +25,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 - Установленное и подключённое расширение dbt для VS Code  
 - Возможность просматривать данные, компилировать и запускать dbt‑команды прямо из IDE  
 
-### О движке dbt Fusion
+### О движке dbt Fusion {#about-the-dbt-fusion-engine}
 
 <Constant name="fusion" /> и предоставляемые им возможности доступны в нескольких средах:
 
@@ -37,7 +37,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 Подробнее о том, какой инструмент лучше подойдёт именно вам, читайте на странице [Fusion availability](/docs/fusion/fusion-availability). А чтобы узнать больше о самом <Constant name="fusion_engine" /> и принципах его работы, ознакомьтесь с разделом [о движке dbt Fusion](/docs/fusion/about-fusion).
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 Чтобы получить максимум от этого руководства, вам потребуется:
 
@@ -48,7 +48,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 - Установленный [Visual Studio Code](https://code.visualstudio.com/). Редактор [Cursor](https://www.cursor.com/en) также подойдёт, но в инструкциях ниже используется VS Code.
 - Права администратора или возможность устанавливать программное обеспечение на машине.  
 
-### Чему вы научитесь
+### Чему вы научитесь {#what-youll-learn}
 
 Следуя этому руководству, вы:
 - Настроите полностью рабочее окружение dbt с функционирующим проектом  
@@ -58,7 +58,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 
 Дополнительные материалы доступны в виде качественных [курсов и воркшопов dbt Learn](https://learn.getdbt.com/).  
 
-## Установка
+## Установка {#installation}
 
 Можно подумать, что <Constant name="fusion_engine" /> и расширение dbt — это два отдельных продукта, но на самом деле они образуют мощную связку, раскрывающую весь потенциал dbt. <Constant name="fusion_engine" /> — это, по сути, двигатель. Расширение dbt и VS Code — это шасси, и вместе они образуют мощный инструмент для трансформации данных.
 
@@ -96,7 +96,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 </TabItem>
 </Tabs>
 
-### Проверка установки <Constant name="fusion_engine" />
+### Проверка установки <Constant name="fusion_engine" /> {#verify-the-installation}
 
 1. После установки откройте новое окно командной строки и проверьте, что <Constant name="fusion" /> установлен корректно, запросив версию:
     ```bash
@@ -110,7 +110,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 Вы можете запускать эти команды с помощью `dbt` или использовать `dbtf` как однозначный алиас для <Constant name="fusion" />, если на машине установлен другой dbt CLI.
 :::
 
-### Установка расширения dbt для VS Code
+### Установка расширения dbt для VS Code {#install-the-dbt-vs-code-extension}
 
 Расширение dbt для VS Code доступно в [Visual Studio extension marketplace](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt). Его можно установить прямо из редактора:
 
@@ -122,7 +122,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 5. Убедитесь, что расширение установлено: в строке состояния должен появиться индикатор **dbt Extension**.
     <Lightbox src="/img/docs/extension/extension-lsp-download.png" width="60%" title="Проверьте установку в строке состояния."/>
 
-## Инициализация проекта Jaffle Shop
+## Инициализация проекта Jaffle Shop {#initialize-the-jaffle-shop-project}
 
 Теперь создадим ваш первый dbt‑проект на базе <Constant name="fusion" />!
 
@@ -151,7 +151,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 - Создание, сборка и тестирование моделей
 - Проверка того, что окружение dbt полностью работоспособно
 
-## Изучение возможностей с расширением dbt для VS Code
+## Изучение возможностей с расширением dbt для VS Code {#explore-with-the-dbt-vs-code-extension}
 
 Расширение dbt для VS Code компилирует и собирает проект с помощью <Constant name="fusion_engine" /> — сверхбыстрой, полностью переработанной реализации dbt.
 
@@ -186,7 +186,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 - [Использование понимания SQL](#use-the-power-of-sql-understanding)
 - [Ускорение стандартных dbt‑команд](#speed-up-common-dbt-commands)
 
-#### Просмотр данных и кода
+#### Просмотр данных и кода {#preview-data-and-code}
 
 Получайте полезные инсайты о трансформации данных на каждом этапе разработки.  
 Вы можете быстро просматривать результаты моделей и структуру данных прямо из кода. Это помогает поэтапно проверять корректность логики.
@@ -199,7 +199,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
     <Lightbox src="/img/docs/extension/compile-file-icon.png" width="50%" title="Иконка Compile File."/>
     <Lightbox src="/img/docs/extension/compile-file.png" width="80%" title="Результаты Compile File."/>
 
-#### Навигация по проекту с помощью lineage‑инструментов
+#### Навигация по проекту с помощью lineage‑инструментов {#navigate-your-project-with-lineage-tools}
 
 Понимание того, откуда пришли данные, почти так же важно, как и понимание того, куда они идут. Инструменты lineage позволяют визуализировать зависимости между моделями и на уровне отдельных колонок, углубляя понимание структуры проекта.
 
@@ -208,7 +208,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 1. Откройте меню **View**, выберите **Command Palette** и введите `dbt: Show Column Lineage`, чтобы увидеть lineage на уровне колонок во вкладке **Lineage**.
     <Lightbox src="/img/docs/extension/show-cll.png" width="80%" title="Показ lineage на уровне колонок."/>
 
-#### Использование понимания SQL
+#### Использование понимания SQL {#use-the-power-of-sql-understanding}
 
 Пишите код умнее, а не сложнее. Автодополнение и контекстные подсказки помогают избегать ошибок и быстрее создавать корректный SQL.
 
@@ -217,7 +217,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 1. Наведите курсор на `*`, чтобы увидеть список выбираемых колонок и их типы данных.
     <Lightbox src="/img/docs/extension/hover-star.png" width="80%" title="Наведение на * для просмотра имён колонок и типов данных."/>
 
-#### Ускорение стандартных dbt‑команд
+#### Ускорение стандартных dbt‑команд {#speed-up-common-dbt-commands}
 
 Тестирование, тестирование… микрофон включён? Да — и он готов выполнять ваши команды с молниеносной скоростью! Когда нужно проверить код с помощью различных dbt‑команд:
 
@@ -232,7 +232,7 @@ import FusionLifecycle from '/snippets/_fusion-lifecycle-callout.md';
 Это только начало. Возможностей уже много, и впереди — ещё больше. Обязательно изучите наши материалы, чтобы узнать всё о <Constant name="fusion_engine" /> и расширении dbt для VS Code!
 </ConfettiTrigger>
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
 import FusionTroubleshooting from '/snippets/_fusion-troubleshooting.md';
 

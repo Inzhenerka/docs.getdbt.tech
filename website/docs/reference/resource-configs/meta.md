@@ -411,13 +411,13 @@ saved_queries:
 </TabItem>
 </Tabs>
 
-## Определение
+## Определение {#definition}
 Поле `meta` можно использовать для задания метаданных ресурса и оно принимает любые пары «ключ-значение». Эти метаданные компилируются в файл `manifest.json`, который генерируется dbt, и отображаются в автоматически сгенерированной документации.
 
 В зависимости от ресурса, который вы настраиваете, `meta` может быть доступно в свойстве `config` и/или в качестве ключа верхнего уровня. (Для обратной совместимости `meta` часто (но не всегда) поддерживается в качестве ключа верхнего уровня, хотя без возможностей наследования конфигурации.)
 
 
-## Примеры
+## Примеры {#examples}
 Чтобы показать, как использовать конфигурацию `meta`, приведём несколько примеров:
 
 <!-- no toc -->
@@ -431,7 +431,7 @@ saved_queries:
   - [Доступ к значениям meta в Python-моделях](#access-meta-values-in-python-models)
 
 
-### Назначить владельца модели
+### Назначить владельца модели {#designate-a-model-owner}
 Дополнительно можно указать уровень зрелости модели, используя ключ `model_maturity:`.
 
 <File name='models/schema.yml'>
@@ -450,7 +450,7 @@ models:
 </File>
 
 
-### Назначение столбца источника как содержащего PII
+### Назначение столбца источника как содержащего PII {#designate-a-source-column-as-containing-pii}
 
 <File name='models/schema.yml'>
 
@@ -475,7 +475,7 @@ models:
 
 </File>
 
-### Настройка одного атрибута meta для всех сидов
+### Настройка одного атрибута meta для всех сидов {#configure-one-meta-attribute-for-all-seeds}
 
 <File name='dbt_project.yml'>
 
@@ -487,7 +487,7 @@ seeds:
 
 </File>
 
-### Переопределение одного атрибута meta для одной модели
+### Переопределение одного атрибута meta для одной модели {#override-one-meta-attribute-for-a-single-model}
 
 <File name='models/my_model.sql'>
 
@@ -501,7 +501,7 @@ select 1 as id
 
 </File><br />
 
-### Назначение владельца и favorite_color в dbt_project.yml как свойства конфигурации
+### Назначение владельца и favorite_color в dbt_project.yml как свойства конфигурации {#assign-owner-and-favoritecolor-in-the-dbtprojectyml-as-a-config-property}
 
 <File name='dbt_project.yml'>
 
@@ -515,7 +515,7 @@ models:
 
 </File>
 
-### Назначение meta для семантической модели
+### Назначение meta для семантической модели {#assign-meta-to-semantic-model}
 
 Следующий пример показывает, как назначить значение `meta` для [семантической модели](/docs/build/semantic-models) в файлах `semantic_model.yml` и `dbt_project.yml`:
 
@@ -548,7 +548,7 @@ semantic-models:
 </TabItem>
 </Tabs>
 
-### Назначение meta для измерений, метрик и сущностей
+### Назначение meta для измерений, метрик и сущностей {#assign-meta-to-dimensions-measures-entities}
 
 <VersionBlock firstVersion="1.9">
 
@@ -612,7 +612,7 @@ semantic-models:
 </Tabs>
 </VersionBlock>
 
-### Доступ к значениям meta в Python-моделях
+### Доступ к значениям meta в Python-моделях {#access-meta-values-in-python-models}
 
 Чтобы получить доступ к пользовательским значениям `meta` в [Python-моделях](/docs/build/python-models), сначала извлеките объект `meta` с помощью метода `dbt.config.get()`, а затем обращайтесь к нужным пользовательским значениям.
 

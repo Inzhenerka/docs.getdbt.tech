@@ -16,7 +16,7 @@ functions:
 
 </File>
 
-## Определение
+## Определение {#definition}
 
 import VolatilityDefinition from '/snippets/_volatility-definition.md';
 
@@ -30,7 +30,7 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 
 <Volatility />
 
-## Поддерживаемые типы volatility
+## Поддерживаемые типы volatility {#supported-volatility-types}
 
 В dbt для конфигурации `volatility` можно использовать следующие значения:
 
@@ -40,7 +40,7 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 | `stable` | Возвращает одно и то же значение в рамках одного выполнения запроса, но может изменяться между выполнениями. Поддерживается не всеми хранилищами. Подробнее см. [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords). | `now()` &mdash; Возвращает текущее время на момент начала запроса; остаётся постоянным в рамках одного запроса, но отличается между запусками. |
 | `non-deterministic` | Может возвращать разные результаты для одинаковых входных данных. Хранилища не должны кэшировать или переупорядочивать вычисления, предполагая стабильный результат. | `first()` &mdash; Может возвращать разные строки в зависимости от плана запроса или порядка данных. <br></br>`random()` &mdash; Генерирует случайное число, которое меняется при каждом вызове, даже при одинаковых входных данных. |
 
-## Пример
+## Пример {#example}
 
 В этом примере используется volatility `deterministic` для функции `is_positive_int`:
 
@@ -60,7 +60,7 @@ functions:
 ```
 </File>
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 
 - [Пользовательские функции (UDF)](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)

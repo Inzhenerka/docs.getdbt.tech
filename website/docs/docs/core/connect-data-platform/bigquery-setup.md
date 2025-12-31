@@ -21,13 +21,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Обязательные разрешения
+## Обязательные разрешения {#required-permissions}
 
 import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 <BigQueryPerms />
 
-## Методы аутентификации
+## Методы аутентификации {#authentication-methods}
 
 Цели BigQuery могут быть указаны с использованием одного из четырех методов:
 
@@ -40,7 +40,7 @@ import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 Цели BigQuery должны быть настроены с использованием следующей конфигурации в вашем файле `profiles.yml`. Также вы можете указать ряд [дополнительных конфигураций](#optional-configurations).
 
-### OAuth через gcloud
+### OAuth через gcloud {#oauth-via-gcloud}
 
 Этот метод подключения требует [локального OAuth через `gcloud`](#local-oauth-gcloud-setup).
 
@@ -67,11 +67,11 @@ my-bigquery-db:
 
 Если вы не указываете `project`/`database` и используете метод `oauth`, dbt будет использовать проект по умолчанию, связанный с вашим пользователем, как определено в `gcloud config set`.
 
-### На основе OAuth токена
+### На основе OAuth токена {#oauth-token-based}
 
 См. [документацию](https://developers.google.com/identity/protocols/oauth2) о использовании OAuth 2.0 для доступа к Google API.
 
-#### Токен обновления
+#### Токен обновления {#refresh-token}
 
 Используя токен обновления и информацию о клиенте, dbt будет создавать новые токены доступа по мере необходимости.
 
@@ -96,7 +96,7 @@ my-bigquery-db:
 
 </File>
 
-#### Временный токен
+#### Временный токен {#temporary-token}
 
 dbt будет использовать одноразовый токен доступа без дополнительных вопросов. Этот подход имеет смысл, если у вас есть внешний процесс развертывания, который может создавать новые токены доступа и обновлять файл профиля соответствующим образом.
 
@@ -118,7 +118,7 @@ my-bigquery-db:
 
 </File>
 
-### Файл учетной записи службы
+### Файл учетной записи службы {#service-account-file}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -138,7 +138,7 @@ my-bigquery-db:
 
 </File>
 
-### JSON учетной записи службы
+### JSON учетной записи службы {#service-account-json}
 
 :::caution Примечание
 
@@ -177,9 +177,9 @@ my-bigquery-db:
 
 </File>
 
-## Дополнительные конфигурации
+## Дополнительные конфигурации {#optional-configurations}
 
-### Приоритет
+### Приоритет {#priority}
 
 `priority` для заданий BigQuery, которые выполняет dbt, можно настроить с помощью конфигурации `priority` в вашем профиле BigQuery. Поле `priority` может быть установлено в одно из значений: `batch` или `interactive`. Для получения дополнительной информации о приоритете запросов обратитесь к [документации BigQuery](https://cloud.google.com/bigquery/docs/running-queries).
 
@@ -195,7 +195,7 @@ my-profile:
       priority: interactive
 ```
 
-### Тайм-ауты и повторные попытки
+### Тайм-ауты и повторные попытки {#timeouts-and-retries}
 
 Плагин `dbt-bigquery` использует клиентскую библиотеку BigQuery на Python для отправки запросов. Каждый запрос требует двух шагов:
 1. Создание задания: Отправка задания запроса в BigQuery и получение его идентификатора.
@@ -203,7 +203,7 @@ my-profile:
 
 Некоторые запросы неизбежно терпят неудачу на разных этапах процесса. Чтобы справиться с этими случаями, dbt поддерживает <Term id="grain">тонкую настройку</Term> конфигурации для тайм-аутов и повторных попыток запросов.
 
-#### job_execution_timeout_seconds
+#### job_execution_timeout_seconds {#jobexecutiontimeout_seconds}
 
 Используйте конфигурацию `job_execution_timeout_seconds`, чтобы установить количество секунд, в течение которых dbt должен ожидать завершения запросов после их успешной отправки. Из четырех конфигураций, управляющих тайм-аутами и повторными попытками, эта является наиболее часто используемой.
 
@@ -245,7 +245,7 @@ import JobTimeout from '/snippets/_bigquery-timeout.md';
 
 <JobTimeout />
 
-#### job_creation_timeout_seconds
+#### job_creation_timeout_seconds {#jobcreationtimeout_seconds}
 
 Также возможно, что задание запроса не удастся отправить с самого начала. Вы можете настроить максимальный тайм-аут для шага создания задания, настроив `job_creation_timeout_seconds`. По умолчанию тайм-аут не установлен.
 
@@ -256,7 +256,7 @@ import JobTimeout2 from '/snippets/_bigquery-timeout.md';
 <JobTimeout2 />
 
 
-#### job_retries
+#### job_retries {#job_retries}
 
 Клиент Python для BigQuery от Google имеет встроенную поддержку повторных попыток выполнения заданий запросов, которые истекли по времени, или запросов, которые столкнулись с временными ошибками и, вероятно, будут успешными при повторном запуске. Вы можете настроить максимальное количество повторных попыток, настроив `job_retries`.
 
@@ -268,7 +268,7 @@ import JobTimeout2 from '/snippets/_bigquery-timeout.md';
 
 Значение по умолчанию равно 1, что означает, что dbt повторит неудачные запросы ровно один раз. Вы можете установить конфигурацию в 0, чтобы полностью отключить повторные попытки.
 
-#### job_retry_deadline_seconds
+#### job_retry_deadline_seconds {#jobretrydeadline_seconds}
 
 После того как задание запроса истекло по времени или столкнулось с временной ошибкой, dbt будет ждать одну секунду перед повторной попыткой выполнения того же запроса. В случаях, когда запросы постоянно истекают по времени, это может привести к длительному ожиданию. Вы можете установить конфигурацию `job_retry_deadline_seconds`, чтобы установить общее количество секунд, в течение которых вы готовы ждать ("дедлайн") при повторной попытке выполнения того же запроса. Если dbt достигнет дедлайна, он прекратит попытки и вернет ошибку.
 
@@ -294,9 +294,9 @@ my-profile:
 
 </File>
 
-### Расположение наборов данных
+### Расположение наборов данных {#dataset-locations}
 
-### Расположение датасетов
+### Расположение датасетов {#maximum-bytes-billed}
 
 Расположение датасетов BigQuery можно настроить с помощью параметра `location` в профиле BigQuery.
 Значение `location` может быть либо мульти-региональным (например, `EU`, `US`), либо региональным (например, `us-west2`), как это описано в [документации BigQuery](https://cloud.google.com/bigquery/docs/locations).
@@ -314,7 +314,7 @@ my-profile:
       location: US # Опционально, одно из US или EU, или региональное местоположение
 ```
 
-### Максимальное количество байт для выставления счетов
+### Максимальное количество байт для выставления счетов {#oauth-20-scopes-for-google-apis}
 
 Когда значение `maximum_bytes_billed` настроено для профиля BigQuery,
 запросы, выполняемые dbt, будут завершаться с ошибкой, если они превышают установленный порог максимального количества байт.
@@ -342,7 +342,7 @@ my-profile:
   скомпилированный SQL в target/run/bq_project/models/debug_table.sql
 ```
 
-### OAuth 2.0 области для Google API
+### OAuth 2.0 области для Google API {#service-account-impersonation}
 
 По умолчанию, коннектор BigQuery запрашивает три области OAuth, а именно `https://www.googleapis.com/auth/bigquery`, `https://www.googleapis.com/auth/cloud-platform` и `https://www.googleapis.com/auth/drive`. Эти области были изначально добавлены для предоставления доступа к моделям, которые читают из Google Sheets. Однако в некоторых случаях пользователю может потребоваться настроить области по умолчанию (например, чтобы сократить их до минимально необходимого набора). Используя конфигурацию профиля `scopes`, вы можете настроить свои собственные области OAuth для dbt. Пример:
 
@@ -359,7 +359,7 @@ my-profile:
         - https://www.googleapis.com/auth/bigquery
 ```
 
-### Имитация учетной записи службы
+### Имитация учетной записи службы {#execution-project}
 
 Эта функция позволяет пользователям, аутентифицирующимся через локальный OAuth, получать доступ к ресурсам BigQuery на основе разрешений учетной записи службы.
 
@@ -380,7 +380,7 @@ my-profile:
 <FAQ path="Warehouse/bq-impersonate-service-account-why" />
 <FAQ path="Warehouse/bq-impersonate-service-account-setup" />
 
-### Проект выполнения
+### Проект выполнения {#quota-project}
 
 По умолчанию dbt будет использовать указанный `project`/`database` как:
 1. Место для материализации ресурсов (моделей, семян, снимков и т.д.), если они не указывают пользовательскую конфигурацию `project`/`database`
@@ -400,7 +400,7 @@ my-profile:
       execution_project: buck-stops-here-456
 ```
 
-### Проект квот
+### Проект квот {#running-python-models-on-bigquery-dataframes}
 
 По умолчанию dbt использует значение `quota_project_id`, указанное в учётных данных аккаунта, с помощью которого вы аутентифицируетесь в BigQuery.
 
@@ -422,7 +422,7 @@ my-profile:
       quota_project: my-bq-quota-project
 ```
 
-### Запуск моделей Python в DataFrames BigQuery
+### Запуск моделей Python в DataFrames BigQuery {#running-python-models-on-dataproc}
 
 Для запуска Python-моделей dbt в GCP dbt использует BigQuery DataFrames, которые выполняются напрямую на вычислительных ресурсах BigQuery, используя масштабируемость и производительность BigQuery.
 
@@ -501,7 +501,7 @@ my-profile:
 
 Для полного списка возможных полей конфигурации, которые могут быть переданы в `dataproc_batch`, обратитесь к документации [Dataproc Serverless Batch](https://cloud.google.com/dataproc-serverless/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.Batch).
 
-## Необходимые разрешения
+## Необходимые разрешения {#local-oauth-gcloud-setup}
 
 
 Чтобы подключиться к BigQuery с использованием метода `oauth`, выполните следующие шаги:

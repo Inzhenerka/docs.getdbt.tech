@@ -19,7 +19,7 @@ pagination_prev: null
 При разработке в интерфейсе командной строки (CLI) или в облачной интегрированной среде разработки (<Constant name="cloud_ide" />) вы можете напрямую использовать <Constant name="git" /> для управления версиями кода. Чтобы использовать контроль версий, убедитесь, что вы подключены к репозиторию <Constant name="git" /> в CLI или в Cloud <Constant name="cloud_ide" />. 
 
 
-## Связанные документы
+## Связанные документы {#related-docs}
 - [Основы контроля версий](/docs/cloud/git/version-control-basics)
 - [Конфликты слияния](/docs/cloud/git/merge-conflicts) 
 - [Подключение к GitHub](/docs/cloud/git/connect-github)

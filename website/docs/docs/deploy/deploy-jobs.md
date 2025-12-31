@@ -16,7 +16,7 @@ tags: [scheduler]
 Вы можете создать deploy job и настроить его запуск по [расписанию по дням и времени](#schedule-days), задать [кастомное cron-расписание](#cron-schedule) или [запускать job после завершения другой job](#trigger-on-job-completion).
 
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - У вас должна быть [учетная запись <Constant name="cloud" />](https://www.getdbt.com/signup/) и лицензия [Developer seat](/docs/cloud/manage-access/seats-and-users).
     - Для функции [Trigger on job completion](#trigger-on-job-completion) ваш аккаунт <Constant name="cloud" /> должен быть на тарифе [Starter или Enterprise-tier](https://www.getdbt.com/pricing/).
@@ -61,7 +61,7 @@ tags: [scheduler]
 
     <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/deploy-job-adv-settings.png" width="90%" title="Пример Advanced Settings на странице Deploy Job"/>
 
-### Расписание по дням
+### Расписание по дням {#schedule-days}
 
 Чтобы задать расписание job, включите опцию **Run on schedule**, выберите нужные дни недели и укажите часы или интервалы.
 
@@ -82,7 +82,7 @@ tags: [scheduler]
 
 :::
 
-### Cron schedule
+### Cron schedule {#cron-schedule}
 
 Чтобы полностью кастомизировать расписание job, выберите опцию **Cron schedule** и используйте cron‑синтаксис. В этом синтаксисе можно указать минуту, час, день месяца, месяц и день недели, что позволяет задавать сложные расписания (например запуск job в первый понедельник каждого месяца).
 
@@ -113,7 +113,7 @@ tags: [scheduler]
 - `0 7 L * 5`: В 07:00 AM, в последний день месяца и в пятницу.
 - `30 14 L * *`: В 02:30 PM, в последний день месяца.
 
-### Триггер по завершению job  <Lifecycle status="self_service,managed,managed_plus" />
+### Триггер по завершению job  <Lifecycle status="self_service,managed,managed_plus" /> {#trigger-on-job-completion}
 Чтобы _связывать_ deploy jobs в цепочку:
 1. В разделе **Triggers** включите опцию **Run when another job finishes**.
 2. Выберите проект, в котором находится deploy job, после завершения которой вы хотите запускать вашу job.
@@ -127,7 +127,7 @@ tags: [scheduler]
 
 Если запуск вашей job был триггернут другой job, ссылку на upstream job можно найти в [разделе деталей запуска](/docs/deploy/run-visibility#job-run-details).
 
-## Удаление job
+## Удаление job {#delete-a-job}
 
 import DeleteJob from '/snippets/_delete-job.md';
 
@@ -137,7 +137,7 @@ import JobMonitoring from '/snippets/_in-progress-top-jobs.md';
 
 <JobMonitoring />
 
-## История настроек job
+## История настроек job {#job-settings-history}
 
 Вы можете просматривать историю изменений настроек job за последние 90 дней.
 
@@ -149,7 +149,7 @@ import JobMonitoring from '/snippets/_in-progress-top-jobs.md';
 
 <Lightbox src="/img/docs/deploy/job-history.png" width="100%" title="Пример истории настроек job."/>
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 
 - [Artifacts](/docs/deploy/artifacts)
 - [Continuous integration (CI) jobs](/docs/deploy/ci-jobs)

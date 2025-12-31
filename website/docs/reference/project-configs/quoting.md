@@ -18,7 +18,7 @@ quoting:
 
 </File>
 
-## Definition
+## Definition {#definition}
 
 При желании вы можете включить квотирование (quoting) в проекте dbt, чтобы управлять тем, будет ли dbt оборачивать имена баз данных, схем или идентификаторов в кавычки при генерации SQL. dbt использует эту настройку в следующих случаях:
 
@@ -31,7 +31,7 @@ quoting:
 
 :::
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 
 Значения по умолчанию зависят от базы данных.
 <Tabs
@@ -83,7 +83,7 @@ quoting:
 
 </Tabs>
 
-## Примеры
+## Примеры {#examples}
 
 Установите quoting в значение `false` для проекта:
 <File name='dbt_project.yml'>
@@ -106,9 +106,9 @@ create table analytics.dbt_alice.dim_customers
 </File>
 
 
-## Рекомендации
+## Рекомендации {#recommendations}
 
-### Snowflake
+### Snowflake {#snowflake}
 
 Если вы используете Snowflake, мы рекомендуем:
 
@@ -131,7 +131,7 @@ create table analytics.dbt_alice.dim_customers
 Если исходная таблица Snowflake использует экранированные (quoted) идентификаторы базы данных, схемы или таблицы, вы можете настроить это в файле `source.yml`. Подробнее см. в разделе [configuring quoting](/reference/resource-properties/quoting).
 :::
 
-#### Пояснение
+#### Пояснение {#explanation}
 
 dbt по умолчанию пропускает quoting в Snowflake, чтобы имена моделей в нижнем регистре корректно использовались в downstream-запросах и BI-инструментах без необходимости думать о регистре или кавычках.
 
@@ -183,6 +183,6 @@ select * from analytics.orders;
 
 
 
-### Другие хранилища
+### Другие хранилища {#other-warehouses}
 
 Оставьте значения по умолчанию для вашего хранилища.

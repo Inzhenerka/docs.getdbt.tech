@@ -4,7 +4,7 @@ sidebar_label: "Рекомендации по проекту"
 description: "dbt Catalog предоставляет рекомендации, которые помогут вам повысить качество вашего dbt‑проекта."
 ---
 
-# Рекомендации по проекту <Lifecycle status="managed,managed_plus" />
+# Рекомендации по проекту <Lifecycle status="managed,managed_plus" /> {#project-recommendations}
  
 <Constant name="explorer" /> предоставляет рекомендации по вашему проекту на основе пакета `dbt_project_evaluator` из [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/), используя метаданные из [Discovery API](/docs/dbt-cloud-apis/discovery-api). 
 
@@ -16,7 +16,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-## Страница рекомендаций
+## Страница рекомендаций {#recommendations-page}
 Обзорная страница рекомендаций включает два основных показателя, измеряющих покрытие тестами и документацией моделей в вашем проекте.
 
 - **Покрытие моделей тестами** &mdash; Процент моделей в вашем проекте (модели, не входящие в пакеты и не импортированные через <Constant name="mesh" />), для которых настроен хотя бы один dbt‑тест.
@@ -24,7 +24,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-overview.png" width="100%" title="Пример обзорной страницы рекомендаций с метриками проекта и рекомендациями для всех ресурсов в проекте"/>
 
-## Список правил
+## Список правил {#list-of-rules}
 Следующая таблица перечисляет правила, которые в настоящее время определены в пакете `dbt_project_evaluator` [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/).
 
 | Категория | Название | Описание | Ссылка на документацию пакета |
@@ -42,7 +42,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 | Документация | Недокументированные исходные таблицы | Исходные таблицы без описаний | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-source-tables) |
 | Управление | Публичная модель без контракта | Модели с публичным доступом, которые не имеют контракта модели для обеспечения типов данных | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/governance/#public-models-without-contracts) |
 
-## Вкладка рекомендаций
+## Вкладка рекомендаций {#the-recommendations-tab}
 
 ## Вкладка Recommendations
 

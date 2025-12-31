@@ -6,13 +6,13 @@ id: "source"
 
 Команда `dbt source` предоставляет подкоманды, которые полезны при работе с исходными данными. Эта команда включает одну подкоманду — `dbt source freshness`.
 
-### dbt source freshness
+### dbt source freshness {#dbt-source-freshness}
 
 Если ваш проект dbt [настроен с источниками](/docs/build/sources), то команда `dbt source freshness` выполнит запрос ко всем определенным исходным таблицам, определяя "свежесть" этих таблиц. Если таблицы устарели (на основе конфигурации `freshness`, указанной для ваших источников), то dbt сообщит предупреждение или ошибку соответственно. Если исходная <Term id="table" /> находится в устаревшем состоянии, то dbt завершится с ненулевым кодом выхода.
 
 Вы также можете использовать [команды source freshness](/reference/commands/source#source-freshness-commands), чтобы убедиться, что получаемые данные являются актуальными, а не старыми или устаревшими.
 
-### Настройка source freshness
+### Настройка source freshness {#configure-source-freshness}
 
 В примере ниже показано, как настроить source freshness в dbt. Подробнее см. в разделе [Declaring source freshness](/docs/build/sources#declaring-source-freshness).
 
@@ -53,7 +53,7 @@ sources:
 
 Вы также можете настроить source freshness в разделе **Execution settings** на странице **Settings** вашего задания в <Constant name="cloud" />. Подробнее см. в разделе [Enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
 
-### Команды source freshness
+### Команды source freshness {#source-freshness-commands}
 
 Команды source freshness гарантируют, что вы получаете максимально актуальную, релевантную и точную информацию.
 
@@ -65,7 +65,7 @@ sources:
 |[`dbt source freshness --output target/source_freshness.json`](/reference/commands/source#configuring-source-freshness-output)|Выводит информацию о «freshness» в другой путь.|
 |[`dbt source freshness --select "source:source_name"`](/reference/commands/source#specifying-sources-to-snapshot)|Проверяет «freshness» для конкретных источников.|
 
-### Указание источников для snapshot
+### Указание источников для snapshot {#specifying-sources-to-snapshot}
 
 По умолчанию `dbt source freshness` будет вычислять информацию о свежести для всех источников в вашем проекте. Чтобы сделать снимок свежести для подмножества этих источников, используйте флаг `--select`.
 
@@ -77,7 +77,7 @@ $ dbt source freshness --select "source:snowplow"
 $ dbt source freshness --select "source:snowplow.event"
 ```
 
-### Настройка вывода свежести источников
+### Настройка вывода свежести источников {#configuring-source-freshness-output}
 
 Когда `dbt source freshness` завершится, файл <Term id="json" /> с информацией о свежести ваших источников будет сохранен в `target/sources.json`. Пример `sources.json` будет выглядеть следующим образом:
 
@@ -119,7 +119,7 @@ $ dbt source freshness --select "source:snowplow.event"
 $ dbt source freshness --output target/source_freshness.json
 ```
 
-### Использование свежести источников
+### Использование свежести источников {#using-source-freshness}
 
 Снимки свежести источников могут быть использованы для понимания:
 

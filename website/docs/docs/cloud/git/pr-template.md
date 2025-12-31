@@ -2,13 +2,13 @@
 title: "Шаблон PR"
 id: "pr-template"
 ---
-## Настройка URL шаблона Pull Request (PR)
+## Настройка URL шаблона Pull Request (PR) {#configure-pull-request-pr-template-urls}
 
 Когда вы коммитите изменения в ветку в <Constant name="cloud_ide" />, <Constant name="cloud" /> может предложить пользователям открыть новый Pull Request для внесённых изменений кода. Чтобы включить эту функциональность, убедитесь, что URL шаблона PR настроен на странице **Repository details** в разделе **Account Settings**. Если это поле пустое, <Constant name="cloud_ide" /> будет предлагать пользователям сразу сливать изменения напрямую в их ветку по умолчанию.
 
 <Lightbox src="/img/docs/collaborate/repo-details.jpg" width="90%" title="Настройка шаблона PR на странице «Repository details»." />
 
-### URL шаблона PR в зависимости от git‑провайдера
+### URL шаблона PR в зависимости от git‑провайдера {#pr-template-url-by-git-provider}
 
 Параметр URL шаблона PR автоматически задаётся для большинства репозиториев в зависимости от способа подключения.
 
@@ -47,12 +47,12 @@ https://github.com/dbt-labs/jaffle_shop/compare/master..my-branch
 </TabItem>
 </Tabs>
 
-## Примеры шаблонов
+## Примеры шаблонов {#example-templates}
 
 Ниже приведены некоторые распространённые шаблоны URL, однако обратите внимание, что
 конкретное значение может отличаться в зависимости от используемого git‑провайдера.
 
-### GitHub
+### GitHub {#github}
 ```
 https://github.com/<org>/<repo>/compare/{{destination}}..{{source}}
 ```
@@ -63,12 +63,12 @@ https://github.com/<org>/<repo>/compare/{{destination}}..{{source}}
 https://git.<mycompany>.com/<org>/<repo>/compare/{{destination}}..{{source}}
 ```
 
-### GitLab
+### GitLab {#gitlab}
 ```
 https://gitlab.com/<org>/<repo>/-/merge_requests/new?merge_request[source_branch]={{source}}&merge_request[target_branch]={{destination}}
 ```
 
-### BitBucket
+### BitBucket {#bitbucket}
 ```
 https://bitbucket.org/<org>/<repo>/pull-requests/new?source={{source}}&dest={{destination}}
 ```
@@ -79,12 +79,12 @@ https://bitbucket.org/<org>/<repo>/pull-requests/new?source={{source}}&dest={{de
 https://<bitbucket-server>/projects/<proj>/repos/<repo>/pull-requests?create&sourceBranch={{source}}&targetBranch={{destination}}
 ```
 
-### AWS CodeCommit
+### AWS CodeCommit {#aws-codecommit}
 ```
 https://console.aws.amazon.com/codesuite/codecommit/repositories/<repo>/pull-requests/new/refs/heads/{{destination}}/.../refs/heads/{{source}}
 ```
 
-### Azure DevOps
+### Azure DevOps {#azure-devops}
 ```
 https://dev.azure.com/<org>/<project>/_git/<repo>/pullrequestcreate?sourceRef={{source}}&targetRef={{destination}}
 ```

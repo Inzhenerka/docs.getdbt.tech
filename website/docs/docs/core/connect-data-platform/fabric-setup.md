@@ -26,7 +26,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 На Debian/Ubuntu убедитесь, что у вас есть заголовочные файлы ODBC перед установкой
 
@@ -37,7 +37,7 @@ sudo apt install unixodbc-dev
 Скачайте и установите [Microsoft ODBC Driver 18 для SQL Server](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15).
 Если у вас уже установлен ODBC Driver 17, то он также подойдет.
 
-#### Поддерживаемые конфигурации
+#### Поддерживаемые конфигурации {#supported-configurations}
 
 * Адаптер протестирован с Microsoft Fabric Data Warehouse (также называемыми warehouses).
 * Мы тестируем все комбинации с Microsoft ODBC Driver 17 и Microsoft ODBC Driver 18.
@@ -45,10 +45,10 @@ sudo apt install unixodbc-dev
 
 Поддержка адаптера не ограничивается матрицей вышеуказанных конфигураций. Если вы заметите проблему с любой другой конфигурацией, дайте нам знать, открыв проблему на [GitHub](https://github.com/microsoft/dbt-fabric).
 
-##### Неподдерживаемые конфигурации
+##### Неподдерживаемые конфигурации {#unsupported-configurations}
 Конечные точки SQL analytics доступны только для чтения и поэтому не подходят для рабочих нагрузок трансформации, используйте вместо этого Warehouse.
 
-## Методы аутентификации и конфигурация профиля
+## Методы аутентификации и конфигурация профиля {#authentication-methods-profile-configuration}
 
 :::info Supported authentication methods
 
@@ -61,7 +61,7 @@ Microsoft Fabric поддерживает два типа аутентифика
 
 :::
 
-### Common configuration
+### Common configuration {#common-configuration}
 
 Для всех методов аутентификации обратитесь к следующим параметрам конфигурации, которые можно задать в вашем файле `profiles.yml`.
 Полная справка по всем параметрам доступна [в конце этой страницы](#reference-of-all-connection-options).
@@ -80,7 +80,7 @@ Microsoft Fabric поддерживает два типа аутентифика
 | `encrypt` | Шифровать ли соединение с сервером. По умолчанию `true`. Подробнее о [шифровании соединения](#connection-encryption). | Необязательный |  Не применимо  |
 | `trust_cert` | Доверять ли сертификату сервера. По умолчанию `false`. Подробнее о [шифровании соединения](#connection-encryption).| Необязательный |  Не применимо  |
 
-### Шифрование соединения
+### Шифрование соединения {#connection-encryption}
 
 Microsoft внесла несколько изменений в выпуске ODBC Driver 18, которые влияют на то, как настраивается шифрование соединения.
 Чтобы учесть эти изменения, начиная с dbt-sqlserver 1.2.0 или новее, значения по умолчанию для `encrypt` и `trust_cert` изменились.
@@ -91,11 +91,11 @@ Microsoft внесла несколько изменений в выпуске O
 
 Более подробная информация о том, как эти значения влияют на ваше соединение и как они используются в разных версиях ODBC-драйвера, доступна в [документации Microsoft](https://learn.microsoft.com/en-us/sql/connect/odbc/dsn-connection-string-attribute?view=sql-server-ver16#encrypt).
 
-### Стандартная аутентификация SQL Server
+### Стандартная аутентификация SQL Server {#standard-sql-server-authentication}
 
 SQL Server и аутентификация Windows не поддерживаются в Microsoft Fabric Data Warehouse.
 
-### Аутентификация Microsoft Entra ID
+### Аутентификация Microsoft Entra ID {#microsoft-entra-id-authentication}
 
 Аутентификация Microsoft Entra ID (ранее Azure AD) является механизмом аутентификации по умолчанию в Microsoft Fabric Data Warehouse.
 
@@ -262,7 +262,7 @@ your_profile_name:
 
 </Tabs>
 
-#### Дополнительные опции для Microsoft Entra ID на Windows
+#### Дополнительные опции для Microsoft Entra ID на Windows {#additional-options-for-microsoft-entra-id-on-windows}
 
 На системах Windows также доступны следующие дополнительные методы аутентификации для Azure SQL:
 
@@ -329,13 +329,13 @@ your_profile_name:
 
 </Tabs>
 
-### Автоматическое предоставление Microsoft Entra ID для грантов
+### Автоматическое предоставление Microsoft Entra ID для грантов {#automatic-microsoft-entra-id-principal-provisioning-for-grants}
 
 Обратите внимание, что автоматическое назначение принципалов Microsoft Entra ID в настоящее время не поддерживается Microsoft Fabric Data Warehouse. Несмотря на то что в dbt можно использовать блок конфигурации [`grants`](/reference/resource-configs/grants) для автоматической выдачи и отзыва прав доступа на ваши модели для пользователей или групп, хранилище данных на данный момент не поддерживает эту возможность.
 
 Вам нужно добавить сервисный принципал или идентичность Microsoft Entra в рабочее пространство Fabric в качестве администратора.
 
-### Авторизация схемы
+### Авторизация схемы {#schema-authorization}
 
 Вы можете опционально указать принципала, который должен владеть всеми схемами, создаваемыми dbt. Это затем используется в операторе `CREATE SCHEMA` следующим образом:
 
@@ -345,7 +345,7 @@ CREATE SCHEMA [schema_name] AUTHORIZATION [schema_authorization]
 
 Распространенный случай использования — это использование, когда вы аутентифицируетесь с принципалом, у которого есть разрешения на основе группы, такой как группа Microsoft Entra ID. Когда этот принципал создает схему, сервер сначала попытается создать индивидуальный логин для этого принципала, а затем связать схему с этим принципалом. Если бы вы использовали Microsoft Entra ID в этом случае, то это бы не удалось, так как Azure SQL не может автоматически создавать логины для индивидуальных участников группы AD.
 
-### Справочник по всем параметрам подключения
+### Справочник по всем параметрам подключения {#reference-of-all-connection-options}
 
 | Параметр конфигурации   | Описание                                                                                                                                        | Обязательный           | Значение по умолчанию |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------- |

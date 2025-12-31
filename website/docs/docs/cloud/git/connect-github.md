@@ -11,7 +11,7 @@ sidebar_label: "Подключение к GitHub"
 - Клонирование репозиториев с использованием HTTPS вместо SSH.
 - Запуск сборок [Continuous integration](/docs/deploy/continuous-integration) (CI) при открытии pull request в GitHub.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - Для On-Premises-развертывания GitHub используйте инструкцию [импорт проекта по git URL](/docs/cloud/git/import-a-project-by-git-url) для настройки подключения. Некоторые возможности git в этом случае [ограничены](/docs/cloud/git/import-a-project-by-git-url#limited-integration).
   * **Примечание** &mdash; учетные записи [Single tenant](/docs/cloud/about-cloud/tenancy#single-tenant) предлагают расширенные возможности подключения для интеграции с On-Premises-развертыванием GitHub с использованием нативной интеграции. Такая интеграция позволяет использовать все функции, включая запуск CI-сборок. Инфраструктурная команда dbt Labs будет координировать работу с вами, чтобы убедиться, что все дополнительные требования к сетевой конфигурации выполнены. Для обсуждения деталей свяжитесь со службой поддержки dbt Labs или с вашей командой по работе с учетной записью <Constant name="cloud" />.
@@ -23,7 +23,7 @@ sidebar_label: "Подключение к GitHub"
 При указании репозитория GitHub в <Constant name="dbt_platform" /> через UI, API или Terraform provider имя репозитория должно **точно** соответствовать регистру символов, используемому в URL GitHub, иначе возможны ошибки клонирования или сбои выполнения задач. Например, если URL вашего репозитория — `github.com/my-org/MyRepo`, необходимо указывать имя `MyRepo`, а не `myrepo`.
 :::
 
-## Установка dbt в вашу учетную запись GitHub
+## Установка dbt в вашу учетную запись GitHub {#installing-dbt-in-your-github-account}
 
 Вы можете подключить свою учетную запись <Constant name="cloud" /> к GitHub, установив приложение <Constant name="cloud" /> в вашей организации GitHub и предоставив доступ к нужным репозиториям.  
 Чтобы подключить учетную запись <Constant name="cloud" /> к GitHub:
@@ -54,13 +54,13 @@ sidebar_label: "Подключение к GitHub"
 7. После предоставления доступа вы будете перенаправлены обратно в <Constant name="cloud" />, где увидите успешное подключение учетной записи. Теперь вы аутентифицированы персонально.
 8. Попросите членов вашей команды индивидуально пройти аутентификацию, подключив свои [персональные профили GitHub](#authenticate-your-personal-github-account).
 
-## Ограничение доступа к репозиториям в GitHub
+## Ограничение доступа к репозиториям в GitHub {#limiting-repository-access-in-github}
 
 Если вы являетесь владельцем организации GitHub, вы также можете настроить приложение GitHub для <Constant name="cloud" /> так, чтобы оно имело доступ только к выбранным репозиториям. Эта настройка выполняется в GitHub, однако в <Constant name="cloud" /> мы предоставляем удобную ссылку для начала процесса.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/configure-github.png" title="Настройка приложения dbt"/>
 
-## Аутентификация вашей персональной учетной записи GitHub
+## Аутентификация вашей персональной учетной записи GitHub {#authenticate-your-personal-github-account}
 
 После того как администратор <Constant name="cloud" /> [настроит подключение](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) к учетной записи GitHub вашей организации, вам необходимо пройти аутентификацию с использованием персональной учетной записи. Вы должны подключить свой персональный профиль GitHub к <Constant name="cloud" />, чтобы использовать [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [CLI](/docs/cloud/cloud-cli-installation), а также для проверки прав на чтение и запись в репозитории.
 
@@ -88,6 +88,6 @@ sidebar_label: "Подключение к GitHub"
 
 Теперь вы можете использовать <Constant name="cloud_ide" /> или CLI <Constant name="cloud" />.
 
-## FAQs
+## FAQs {#faqs}
 <FAQ path="Git/gitignore"/>
 <FAQ path="Git/git-migration"/>

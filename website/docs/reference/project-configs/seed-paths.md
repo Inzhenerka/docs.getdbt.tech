@@ -11,10 +11,10 @@ seed-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 Позволяет опционально указать пользовательский список директорий, в которых находятся файлы [seed](/docs/build/seeds).
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 
 По умолчанию dbt ожидает, что seeds будут располагаться в директории `seeds`. Например, `seed-paths: ["seeds"]`.
 
@@ -37,8 +37,8 @@ absolute="/Users/username/project/seed"
     seed-paths: ["/Users/username/project/seed"]
     ```
 
-## Примеры
-### Использовать директорию с именем `custom_seeds` вместо `seeds`
+## Примеры {#examples}
+### Использовать директорию с именем `custom_seeds` вместо `seeds` {#use-a-directory-named-custom_seeds-instead-of-seeds}
 
 <File name='dbt_project.yml'>
 
@@ -48,7 +48,7 @@ seed-paths: ["custom_seeds"]
 
 </File>
 
-### Хранить модели и seeds вместе в директории `models`
+### Хранить модели и seeds вместе в директории `models` {#co-locate-your-models-and-seeds-in-the-models-directory}
 Примечание: это работает, потому что dbt ищет разные типы файлов для seeds (`.csv`) и моделей (`.sql`).
 
 <File name='dbt_project.yml'>
@@ -60,7 +60,7 @@ model-paths: ["models"]
 
 </File>
 
-### Разделить seeds на две директории
+### Разделить seeds на две директории {#split-your-seeds-across-two-directories}
 Примечание: мы рекомендуем вместо этого использовать две поддиректории внутри директории `seeds/`, чтобы добиться аналогичного эффекта.
 
 <File name='dbt_project.yml'>

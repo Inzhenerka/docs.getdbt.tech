@@ -15,7 +15,7 @@ meta:
   config_page: '/reference/resource-configs/databricks-configs'
 --- 
 
-# Настройка Databricks <Lifecycle status='preview' />
+# Настройка Databricks <Lifecycle status='preview' /> {#databricks-setup}
 
 Вы можете настроить адаптер Databricks, запустив `dbt init` в CLI, либо вручную создав файл `profiles.yml` и указав в нём поля, соответствующие выбранному типу аутентификации.
 
@@ -24,7 +24,7 @@ meta:
 - Service Principal token (для сервисных пользователей)
 - OAuth
 
-## Детали конфигурации Databricks
+## Детали конфигурации Databricks {#databricks-configuration-details}
 
 Адаптер <Constant name="fusion_engine" /> `dbt-databricks` — это единственный поддерживаемый способ подключения к Databricks.
 
@@ -32,7 +32,7 @@ meta:
 
 Дополнительную информацию о получении учётных данных для настройки профиля см. в [документации Databricks](https://docs.databricks.com/dev-tools/dbt.html#).
 
-## Настройка Fusion
+## Настройка Fusion {#configure-fusion}
 
 При выполнении `dbt init` в CLI вам будет предложено указать следующие поля:
 
@@ -45,7 +45,7 @@ meta:
 
 Далее выберите метод аутентификации и следуйте инструкциям на экране, чтобы предоставить требуемую информацию.
 
-## Поддерживаемые типы аутентификации
+## Поддерживаемые типы аутентификации {#supported-authentication-types}
 
 <Tabs>
 
@@ -53,7 +53,7 @@ meta:
 
 Введите ваш personal access token (PAT) для среды Databricks. Подробнее о получении PAT см. в [документации Databricks](https://docs.databricks.com/aws/en/dev-tools/auth/pat). Databricks считает этот механизм устаревшим, поэтому рекомендуется использовать OAuth вместо PAT.
 
-#### Пример конфигурации с personal access token
+#### Пример конфигурации с personal access token {#example-personal-access-token-configuration}
 
 <File name="profiles.yml">
 
@@ -80,7 +80,7 @@ default:
 
 Введите Service Principal token для среды Databricks. Подробнее о получении Service Principal token см. в [документации Databricks](https://docs.databricks.com/aws/en/admin/users-groups/service-principals).
 
-#### Пример конфигурации с Service Principal token
+#### Пример конфигурации с Service Principal token {#example-service-principal-token-configuration}
 
 <File name="profiles.yml">
 
@@ -107,7 +107,7 @@ default:
 
 При выборе OAuth будет создано подключение к вашей среде Databricks и автоматически открыт веб-браузер для завершения аутентификации. Пользователям потребуется проходить повторную аутентификацию при запуске каждой новой сессии dbt.
 
-#### Пример конфигурации OAuth
+#### Пример конфигурации OAuth {#example-oauth-configuration}
 
 <File name="profiles.yml">
 
@@ -130,6 +130,6 @@ default:
 
 </Tabs>
 
-## Дополнительная информация
+## Дополнительная информация {#more-information}
 
 Конфигурационные параметры, специфичные для Databricks, см. в [справочнике по адаптеру Databricks](/reference/resource-configs/databricks-configs).

@@ -6,7 +6,7 @@ hide_table_of_contents: true #Для таблиц на этой странице
 pagination_next: null
 ---
 
-# Корпоративные разрешения <Lifecycle status="managed,managed_plus" />
+# Корпоративные разрешения <Lifecycle status="managed,managed_plus" /> {#enterprise-permissions}
 
 import Permissions from '/snippets/_enterprise-permissions-table.md';
 import SetUpPages from '/snippets/_available-enterprise-only.md';
@@ -15,7 +15,7 @@ import SetUpPages from '/snippets/_available-enterprise-only.md';
 
 Планы <Constant name="cloud" /> Enterprise и Enterprise+ поддерживают ряд готовых наборов разрешений, которые помогают управлять контролем доступа в рамках аккаунта <Constant name="cloud" />. Подробнее см. документацию по [контролю доступа](/docs/cloud/manage-access/about-user-access), где описана ролевая модель управления доступом (RBAC).
 
-## Наборы разрешений
+## Наборы разрешений {#permission-sets}
 
 Следующие наборы разрешений доступны для назначения во всех аккаунтах <Constant name="cloud" /> уровня Enterprise. Их можно назначать группам <Constant name="cloud" />, а затем — пользователям. Одна группа <Constant name="cloud" /> может быть связана с несколькими наборами разрешений. Приоритет имеют назначения с более широким доступом.
 
@@ -263,7 +263,7 @@ import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 <Permissions feature={'/snippets/_enterprise-permissions-table.md'} />
 
-## Дополнительные ресурсы
+## Дополнительные ресурсы {#additional-resources}
 
 - [Предоставление доступа пользователям](/docs/cloud/manage-access/about-user-access#grant-access)
 - [Ролевой контроль доступа](/docs/cloud/manage-access/about-user-access#role-based-access-control-)

@@ -78,7 +78,7 @@ models:
 
 После того как вы определите `access`, перезапустите производственное задание, чтобы применить изменения.
 
-## Определение
+## Определение {#definition}
 Уровень доступа модели, для которой вы объявляете свойства.
 
 Некоторые модели (не все) предназначены для использования через функцию [ref](/reference/dbt-jinja-functions/ref) в разных [группах](/docs/build/groups).
@@ -99,11 +99,11 @@ dbt.exceptions.DbtReferenceError: Parsing Error
   which is not allowed because the referenced node is private to the finance group.
 ```
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 
 По умолчанию все модели "защищены". Это означает, что другие модели в том же проекте могут ссылаться на них.
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 * [Доступ к моделям](/docs/mesh/govern/model-access#groups)
 * [Конфигурация групп](/reference/resource-configs/group)

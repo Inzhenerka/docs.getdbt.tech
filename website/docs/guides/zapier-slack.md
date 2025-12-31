@@ -11,7 +11,7 @@ level: 'Advanced'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Это руководство покажет, как настроить интеграцию между заданиями <Constant name="cloud" /> и Slack с использованием [вебхуков <Constant name="cloud" />](/docs/deploy/webhooks) и Zapier. Оно дополняет нативную [интеграцию со Slack](/docs/deploy/job-notifications#slack-notifications), добавляя в тред подробные сообщения об ошибках для моделей и тестов.
 
@@ -26,19 +26,19 @@ level: 'Advanced'
 
 ![Скриншот сообщения в Slack с кратким резюме выполнения задания <Constant name="cloud" />, завершившегося с ошибкой](/img/guides/orchestration/webhooks/zapier-slack/slack-thread-example.png)
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 Чтобы настроить интеграцию, у вас должен быть опыт работы с:
 - [<Constant name="cloud" /> webhooks](/docs/deploy/webhooks)
 - Zapier
 
-## Создание нового Zap в Zapier
+## Создание нового Zap в Zapier {#create-a-new-zap-in-zapier}
 1. Используйте **Webhooks by Zapier** в качестве триггера и **Catch Raw Hook** в качестве события. Если вы не собираетесь [проверять подлинность вашего вебхука](/docs/deploy/webhooks#validate-a-webhook) (не рекомендуется!), вы можете выбрать **Catch Hook** вместо этого.
 2. Нажмите **Continue**, затем скопируйте URL вебхука.
 
 ![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
 
-## Настройка нового вебхука в dbt
+## Настройка нового вебхука в dbt {#configure-a-new-webhook-in-dbt}
 
 Полные инструкции см. в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed**. В качестве альтернативы можно выбрать **Run errored**, но в этом случае нужно учитывать, что необходимые метаданные [могут быть недоступны сразу](/docs/deploy/webhooks#completed-errored-event-difference).
 
@@ -48,7 +48,7 @@ level: 'Advanced'
 
 Значения в образце тела жестко закодированы и не отражают ваш проект, но они дают Zapier правильно сформированный объект во время разработки.
 
-## Хранение секретов  
+## Хранение секретов {#store-secrets}
 На следующем шаге вам понадобится Webhook Secret Key из предыдущего шага, а также <Constant name="cloud" /> [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens).
 
 Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Это предотвращает отображение ваших ключей в виде открытого текста в коде Zap. Вы можете получать к ним доступ с помощью утилиты [StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
@@ -57,7 +57,7 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 <Snippet path="webhook_guide_zapier_secret_store" />
 
-## Добавление действия кода
+## Добавление действия кода {#add-a-code-action}
 Выберите **Code by Zapier** в качестве приложения и **Run Python** в качестве события.
 
 В разделе **Set up action** добавьте два элемента в **Input Data**: `raw_body` и `auth_header`. Свяжите их с полями `1. Raw Body` и `1. Headers Http Authorization` из предыдущего шага **Catch Raw Hook**.
@@ -162,7 +162,7 @@ send_error_thread = len(threaded_errors_post) > 0
 output = {'step_summary_post': step_summary_post, 'send_error_thread': send_error_thread, 'threaded_errors_post': threaded_errors_post}
 ```
 
-## Добавление действий Slack в Zapier
+## Добавление действий Slack в Zapier {#add-slack-actions-in-zapier}
 Выберите **Slack** в качестве приложения и **Send Channel Message** в качестве действия.
 
 В разделе **Action** выберите, в какой **Channel** отправить сообщение. Установите поле **Message Text** на **2. Step Summary Post** из вывода Run Python в Code by Zapier.
@@ -179,22 +179,22 @@ output = {'step_summary_post': step_summary_post, 'send_error_thread': send_erro
 
 ![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов с сообщением Slack](/img/guides/orchestration/webhooks/zapier-slack/thread-slack-config.png)
 
-## Тестирование и развертывание
+## Тестирование и развертывание {#test-and-deploy}
 
 Когда вы закончите тестирование вашего Zap, убедитесь, что ваши `run_id` и `account_id` больше не жестко закодированы в шаге кода, затем опубликуйте ваш Zap.
 
-## В качестве альтернативы используйте сообщение Slack от приложения dbt для запуска Zapier
+## В качестве альтернативы используйте сообщение Slack от приложения dbt для запуска Zapier {#alternately-use-a-dbt-app-slack-message-to-trigger-zapier}
 
 Вместо использования вебхука в качестве триггера вы можете оставить установленное приложение <Constant name="cloud" /> в вашем рабочем пространстве Slack и использовать сообщения, которые оно публикует в вашем канале, как триггер. В этом случае можно пропустить проверку вебхука, и вам потребуется только загрузить контекст из треда.
 
-### 1. Создание нового Zap в Zapier
+### 1. Создание нового Zap в Zapier {#1-create-a-new-zap-in-zapier}
 Используйте **Slack** в качестве инициирующего приложения и **New Message Posted to Channel** в качестве триггера. В разделе **Trigger** выберите канал, в который отправляются ваши оповещения Slack, и установите **Trigger for Bot Messages?** на **Yes**.
 
 ![Скриншот интерфейса Zapier, показывающий правильно настроенный шаг триггера сообщения](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-config.png)
 
 Протестируйте ваш Zap, чтобы найти пример записи. Возможно, вам придется загрузить дополнительные образцы, пока вы не получите тот, который относится к сбойному заданию, в зависимости от того, публикуете ли вы все события заданий в Slack или нет.
 
-### 2. Добавление шага фильтрации
+### 2. Добавление шага фильтрации {#2-add-a-filter-step}
 Добавьте шаг **Filter** с следующими условиями:
 - **1. Текст содержит failed on Job**
 - **1. User Is Bot равно true**
@@ -202,19 +202,19 @@ output = {'step_summary_post': step_summary_post, 'send_error_thread': send_erro
 
 ![Скриншот интерфейса Zapier, показывающий правильно настроенный шаг фильтрации](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-filter.png)
 
-### 3. Извлечение ID выполнения
+### 3. Извлечение ID выполнения {#3-extract-the-run-id}
 Добавьте шаг **Format** с **Event** **Text** и действием **Extract Number**. Для **Input** выберите **1. Text**.
 
 ![Скриншот интерфейса Zapier, показывающий шаг преобразования, настроенный для извлечения числа из свойства Text сообщения Slack](/img/guides/orchestration/webhooks/zapier-slack/extract-number.png)
 
 Протестируйте ваш шаг и убедитесь, что ID выполнения был правильно извлечен.
 
-### 4. Добавьте задержку
+### 4. Добавьте задержку {#4-add-a-delay}
 Иногда <Constant name="cloud" /> отправляет сообщение о неудачном запуске раньше, чем артефакты этого запуска становятся доступными через API. По этой причине рекомендуется добавить небольшую задержку, чтобы повысить вероятность того, что данные уже будут доступны. На некоторых тарифах Zapier автоматически повторяет задание, завершившееся с ошибкой 404, однако период ожидания перед повтором у него больше, чем обычно требуется, поэтому контекст будет отсутствовать в вашем треде дольше.
 
 Обычно достаточно задержки в одну минуту.
 
-### 5. Хранение секретов
+### 5. Хранение секретов {#5-store-secrets}
 На следующем шаге вам понадобится либо <Constant name="cloud" /> [персональный токен доступа](/docs/dbt-cloud-apis/user-tokens), либо [токен сервисного аккаунта](/docs/dbt-cloud-apis/service-tokens).
 
 Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Это предотвращает отображение ваших ключей в виде открытого текста в коде Zap. Вы можете получить к ним доступ с помощью [утилиты StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
@@ -223,10 +223,10 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 Это руководство использует краткосрочное действие кода для хранения секретов, но вы также можете использовать инструмент, такой как Postman, для взаимодействия с [REST API](https://store.zapier.com/) или создать отдельный Zap и вызвать [Set Value Action](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
 
-#### a. Создание подключения Storage by Zapier
+#### a. Создание подключения Storage by Zapier {#a-create-a-storage-by-zapier-connection}
 Если у вас его еще нет, перейдите на [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) и создайте новое подключение. Запомните сгенерированный UUID секрет для дальнейшего использования.
 
-#### b. Добавление временного шага кода
+#### b. Добавление временного шага кода {#b-add-a-temporary-code-step}
 Выберите **Run Python** в качестве события. Запустите следующий код:
 ```python
 store = StoreClient('abc123')  # замените на ваш UUID secret
@@ -235,7 +235,7 @@ store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123')  # замените на ваш A
 
 Протестируйте шаг. Вы можете удалить это действие, когда тест пройдет успешно. Ключ останется сохраненным, пока к нему обращаются хотя бы раз в три месяца.
 
-### 6. Добавление действия кода
+### 6. Добавление действия кода {#6-add-a-code-action}
 
 Выберите **Code by Zapier** в качестве приложения и **Run Python** в качестве события.
 
@@ -302,7 +302,7 @@ for step in results['run_steps']:
 
 output = {'threaded_errors_post': threaded_errors_post}
 ```
-### 7. Добавление действия Slack в Zapier
+### 7. Добавление действия Slack в Zapier {#7-add-slack-action-in-zapier}
 
 Добавьте действие **Send Channel Message in Slack**. В разделе **Action** установите канал на **1. Channel Id**, который является каналом, в который было отправлено инициирующее сообщение.
 
@@ -310,7 +310,7 @@ output = {'threaded_errors_post': threaded_errors_post}
 
 ![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов с сообщением Slack](/img/guides/orchestration/webhooks/zapier-slack/thread-slack-config-alternate.png)
 
-### 8. Тестирование и развертывание
+### 8. Тестирование и развертывание {#8-test-and-deploy}
 
 Когда вы закончите тестирование вашего Zap, опубликуйте его.
 

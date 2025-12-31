@@ -9,7 +9,7 @@ tags: ['dbt platform','Quickstart']
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с [Azure Synapse Analytics](https://azure.microsoft.com/en-us/products/synapse-analytics/). Руководство покажет, как:
 
@@ -20,17 +20,17 @@ tags: ['dbt platform','Quickstart']
 - Задокументировать ваши модели.
 - Запланировать выполнение задания.
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 - У вас есть аккаунт [dbt Cloud](https://www.getdbt.com/signup/).
 - У вас есть аккаунт Azure Synapse Analytics. Для бесплатной пробной версии обратитесь к [Synapse Analytics](https://azure.microsoft.com/en-us/free/synapse-analytics/) в документации Microsoft.
 - Как администратор Microsoft, вы включили аутентификацию с использованием служебного принципала. Вы должны добавить служебный принципал в рабочее пространство Synapse с правами Участника (рекомендуется) или Администратора. Для получения подробной информации обратитесь к [Создание служебного принципала с использованием портала Azure](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) в документации Microsoft. dbt Cloud нужны эти учетные данные для подключения к Azure Synapse Analytics.
 
-### Предварительные требования
+### Предварительные требования {#related-content}
 - У вас есть учетная запись [<Constant name="cloud" />](https://www.getdbt.com/signup/).
 - У вас есть учетная запись Azure Synapse Analytics. Для получения бесплатной пробной версии см. [Synapse Analytics](https://azure.microsoft.com/en-us/free/synapse-analytics/) в документации Microsoft.
 - Как администратор Microsoft, вы включили аутентификацию с использованием service principal. Необходимо добавить service principal в рабочую область Synapse с набором разрешений Member (рекомендуется) или Admin. Подробнее см. в разделе [Create a service principal using the Azure portal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) в документации Microsoft. <Constant name="cloud" /> использует эти учетные данные аутентификации для подключения к Azure Synapse Analytics.
 
-## Загрузка данных в Azure Synapse Analytics
+## Загрузка данных в Azure Synapse Analytics {#load-data-into-your-azure-synapse-analytics}
 
 1. Войдите в свой [аккаунт Azure portal](https://portal.azure.com/#home).  
 1. На главной странице выберите плитку **SQL databases**.
@@ -85,7 +85,7 @@ tags: ['dbt platform','Quickstart']
 
     <Lightbox src="/img/quickstarts/dbt-cloud/example-load-data-azure-syn-analytics.png" width="80%" title="Пример загрузки данных" />
 
-## Подключение dbt к Azure Synapse Analytics
+## Подключение dbt к Azure Synapse Analytics {#connect-dbt-to-azure-synapse-analytics}
 
 1. Создайте новый проект в <Constant name="cloud" />. В левом боковом меню нажмите на имя своей учетной записи, выберите **Account settings** и нажмите **+ New Project**.
 2. Введите имя проекта и нажмите **Continue**.
@@ -102,10 +102,10 @@ tags: ['dbt platform','Quickstart']
 6. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему аккаунту Azure Synapse Analytics.
 7. После успешного теста нажмите **Next**. Если тест не прошел, возможно, потребуется проверить настройки Microsoft service principal.
 
-## Настройка управляемого репозитория dbt
+## Настройка управляемого репозитория dbt {#set-up-a-dbt-managed-repository}
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация проекта dbt и начало разработки
+## Инициализация проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
 Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
 1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске это может занять несколько минут, так как устанавливается соединение с git, клонируется репозиторий и проверяется подключение к хранилищу данных.
@@ -114,7 +114,7 @@ tags: ['dbt platform','Quickstart']
 4. Теперь вы можете напрямую выполнять запросы к вашему хранилищу данных и запускать `dbt run`. Можете попробовать прямо сейчас:
     - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Создание вашей первой модели
+## Создание вашей первой модели {#build-your-first-model}
 1. В разделе **Version Control** слева нажмите **Create branch**. Вы можете назвать её `add-customers-model`. Вам нужно создать новую ветку, так как основная ветка установлена в режиме только для чтения.
 1. Нажмите на меню с тремя точками (**...**) рядом с директорией `models`, затем выберите **Create file**.  
 1. Назовите файл `customers.sql`, затем нажмите **Create**.
@@ -181,7 +181,7 @@ tags: ['dbt platform','Quickstart']
 
 Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### Часто задаваемые вопросы
+#### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -189,15 +189,15 @@ tags: ['dbt platform','Quickstart']
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации вашей модели
+## Изменение способа материализации вашей модели {#change-the-way-your-model-is-materialized}
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Удаление примерных моделей
+## Удаление примерных моделей {#delete-the-example-models}
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Создание моделей на основе других моделей
+## Создание моделей на основе других моделей {#build-models-on-top-of-other-models}
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 

@@ -9,7 +9,7 @@ intro_text: "Develop dbt projects using the dbt platform, a faster and more reli
 
 Вы можете разрабатывать прямо в браузере, используя интерфейс командной строки (CLI) на базе <Constant name="cloud" />, интегрированную среду разработки (<Constant name="cloud_ide" />) или <Constant name="visual_editor" />.
 
-## Начало работы
+## Начало работы {#getting-started}
 
 Чтобы начать, вам понадобится учетная запись [<Constant name="cloud" />](https://www.getdbt.com/signup) и лицензия разработчика. Для более подробного руководства по разработке в dbt обратитесь к [руководствам по быстрому началу](/docs/get-started-dbt).
 

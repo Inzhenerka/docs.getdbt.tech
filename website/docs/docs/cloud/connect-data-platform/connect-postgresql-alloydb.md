@@ -19,7 +19,7 @@ sidebar_label: "Подключение PostgreSQL, Lakebase и AlloyDB"
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-connection.png" width="70%" title="Настройка подключения Postgres"/>
 
-### Параметры аутентификации
+### Параметры аутентификации {#authentication-parameters}
 
 Для аутентификации пользователи <Constant name="cloud" /> могут использовать **имя пользователя и пароль базы данных** для Postgres и Postgres-совместимых баз данных. Подробнее о поддерживаемых возможностях, ограничениях и полезных рекомендациях см. на странице настройки конкретной базы данных.
 
@@ -30,17 +30,17 @@ sidebar_label: "Подключение PostgreSQL, Lakebase и AlloyDB"
 | `user`   | Имя пользователя учетной записи для входа в кластер | myuser |
 | `password`  | Пароль для аутентификации | _password1! |
 
-### Подключение через SSH-туннель
+### Подключение через SSH-туннель {#connecting-via-an-ssh-tunnel}
 
 import BastionServer from '/snippets/_bastion-server.md';
 
 <BastionServer postgresalloydb='Postgres or AlloyDB' postgres='Postgres' />
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 Чтобы предоставить пользователям или ролям разрешения на уровне базы данных (права доступа и привилегии), обратитесь к странице [Postgres permissions](/reference/database-permissions/postgres-permissions).
 
-## FAQs
+## FAQs {#faqs}
 
 <DetailsToggle alt_header="Ошибка базы данных — не удалось подключиться к серверу: Connection timed out">
 При настройке подключения к базе данных через SSH-туннель необходимы следующие компоненты:

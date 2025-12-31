@@ -18,7 +18,7 @@ intro_text: "Используйте dbt debug для проверки подкл
 
 *Примечание: не путать с [логированием уровня debug](/reference/global-configs/logs#debug-level-logging) через опцию `--debug`, которая увеличивает подробность вывода.
 
-## Flags
+## Flags {#flags}
 
 Большинство флагов `dbt debug` применимы к CLI <Constant name="core" />. Некоторые флаги также работают в <Constant name="cloud_cli" />, но в <Constant name="cloud_ide" /> поддерживается только `--connection`.
 
@@ -234,7 +234,7 @@ Options:
                 Show this message and exit.
 ```
 
-## Example usage
+## Example usage {#example-usage}
 
 Проверить только подключение к платформе данных и пропустить остальные проверки, которые выполняет `dbt debug`:
 

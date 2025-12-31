@@ -23,15 +23,15 @@ pagination_next: null
 <VersionBlock firstVersion="1.12">
 <!-- версионирование для 1.12, чтобы оно в итоге появилось в Latest; возможно, позже мы захотим firstVersion="2.0" -->
 
-## Оптимизация потоков движка Fusion
+## Оптимизация потоков движка Fusion {#fusion-engine-thread-optimization}
 
 <Constant name="fusion_engine" /> управляет потоками иначе, чем <Constant name="core" />. Устаревшая настройка `threads` не является строгим лимитом на количество создаваемых потоков. Вместо этого Fusion динамически управляет параллелизмом в зависимости от выбранного warehouse.
 
-### Redshift
+### Redshift {#redshift}
 
 В Redshift настройка `threads` ограничивает число запросов или операторов, которые могут выполняться параллельно. Это поведение совпадает с <Constant name="core" /> и важно для управления лимитами параллельности Redshift и поведением очередей запросов.
 
-### Другие warehouses
+### Другие warehouses {#other-warehouses}
 
 В других warehouses Fusion динамически оптимизирует использование потоков на основе DAG и свойств параллельности warehouse.
 
@@ -39,6 +39,6 @@ pagination_next: null
 
 </VersionBlock>
 
-## Связанные документы
+## Связанные документы {#related-docs}
 - [О файле profiles.yml](/docs/core/connect-data-platform/profiles.yml)
 - [Планировщик заданий <Constant name="cloud" />](/docs/deploy/job-scheduler)

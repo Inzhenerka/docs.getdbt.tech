@@ -5,13 +5,13 @@ sidebar: "SSO Auth0 Migration"
 description: "Необходимые действия для миграции на Auth0 для сервисов единого входа (SSO) в dbt."
 ---
 
-# Миграция на Auth0 для SSO <Lifecycle status="managed,managed_plus" />
+# Миграция на Auth0 для SSO <Lifecycle status="managed,managed_plus" /> {#migrating-to-auth0-for-sso}
 
 dbt Labs сотрудничает с Auth0, чтобы предоставить расширенные возможности для единого входа (SSO) в <Constant name="cloud" />. Auth0 — это платформа управления идентификацией и доступом (IAM) с расширенными функциями безопасности, которая будет использоваться в <Constant name="cloud" />. Эти изменения потребуют определённых действий со стороны клиентов, у которых SSO уже настроен в <Constant name="cloud" />, и в этом руководстве описаны необходимые шаги для каждого окружения.
 
 Если вы ещё не настроили SSO в <Constant name="cloud" />, вместо этого обратитесь к нашим руководствам по настройке единого входа для [SAML](/docs/cloud/manage-access/set-up-sso-saml-2.0), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Google Workspace](/docs/cloud/manage-access/set-up-sso-google-workspace) или [Microsoft Entra ID (formerly Azure AD)](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id).
 
-## Начало миграции
+## Начало миграции {#start-the-migration}
 
 Функция миграции Auth0 постепенно становится доступной для клиентов, у которых уже включены возможности SSO. Когда опция миграции будет включена для вашей учетной записи, вы увидите **SSO Update Required** в правой части верхнего меню, рядом с иконкой настроек.
 
@@ -31,11 +31,11 @@ dbt Labs сотрудничает с Auth0, чтобы предоставить 
 
 После того как вы выберете начало процесса миграции, дальнейшие шаги будут зависеть от настроенного провайдера идентификации. Вы можете сразу перейти к разделу, который соответствует вашей среде. Эти шаги применимы только для клиентов, проходящих миграцию; для новых конфигураций используются существующие [инструкции по настройке](/docs/cloud/manage-access/sso-overview).
 
-## SAML 2.0
+## SAML 2.0 {#saml-20}
 
 Пользователи SAML 2.0 должны обновить несколько полей в конфигурации приложения SSO, чтобы они соответствовали новому URL и URI Auth0. Вы можете сделать это, отредактировав существующие настройки приложения SSO или создав новое для учета настроек Auth0. Один подход не является априори лучше другого, поэтому вы можете выбрать тот, который лучше всего подходит для вашей организации.
 
-### SAML 2.0 и Okta
+### SAML 2.0 и Okta {#saml-20-and-okta}
 
 Поля Okta, которые будут обновлены:
 - Single sign-on URL &mdash; `https://<YOUR_AUTH0_URI>/login/callback?connection=<SLUG>`
@@ -57,7 +57,7 @@ dbt Labs сотрудничает с Auth0, чтобы предоставить 
 
 4. Сохраните настройки и протестируйте новую конфигурацию, используя URL для входа SSO, предоставленный на странице настроек.
 
-### SAML 2.0 and Entra ID
+### SAML 2.0 and Entra ID {#saml-20-and-entra-id}
 
 Поля Entra ID, которые будут обновлены:
 - Single sign-on URL &mdash; `https://<YOUR_AUTH0_URI>/login/callback?connection=<SLUG>`
@@ -83,7 +83,7 @@ dbt Labs сотрудничает с Auth0, чтобы предоставить 
 
 4. Сохраните настройки и протестируйте новую конфигурацию, используя URL входа SSO, указанный на странице настроек.
 
-## Microsoft Entra ID
+## Microsoft Entra ID {#microsoft-entra-id}
 
 Microsoft Entra ID admins using OpenID Connect (ODIC) will need to make a slight adjustment to the existing authentication app in the Azure portal. This migration does not require that the entire app be deleted or recreated; you can edit the existing app. Start by opening the Azure portal and navigating to the Microsoft Entra ID overview.
 
@@ -110,7 +110,7 @@ Microsoft Entra ID admins using OpenID Connect (ODIC) will need to make a slight
 :::
 
 
-## Google Workspace
+## Google Workspace {#google-workspace}
 
 Администраторам Google Workspace, обновляющим свои SSO API с URL Auth0, не придется делать много, если это существующая настройка. Это можно сделать как новый проект или отредактировав существующую настройку SSO. Дополнительные области не требуются, так как это миграция из существующей настройки. Все области были определены во время первоначальной конфигурации.
 

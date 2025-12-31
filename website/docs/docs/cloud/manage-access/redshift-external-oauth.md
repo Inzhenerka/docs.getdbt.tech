@@ -7,13 +7,13 @@ pagination_next: null
 pagination_prev: null
 ---
 
-# Настройка внешнего OAuth с Redshift <Lifecycle status="managed, managed_plus" />
+# Настройка внешнего OAuth с Redshift <Lifecycle status="managed, managed_plus" /> {#set-up-external-oauth-with-redshift}
 
 import AboutExternal from '/snippets/_about-external-oauth.md';
 
 <AboutExternal/>
 
-## Начало работы
+## Начало работы {#getting-started}
 
 Процесс настройки внешнего OAuth потребует некоторого взаимодействия между вашими аккаунтами <Constant name="cloud" />, IdP и хранилища данных. Чтобы ускорить процесс конфигурации, рекомендуется держать их открытыми в нескольких вкладках браузера:
 
@@ -28,7 +28,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 Убедитесь, что ваши администраторы Amazon завершили интеграцию [Amazon Identity Center](https://aws.amazon.com/blogs/big-data/integrate-identity-provider-idp-with-amazon-redshift-query-editor-v2-and-sql-client-using-aws-iam-identity-center-for-seamless-single-sign-on/) с Okta или Entra ID.
 
-## Конфигурация провайдера идентификации
+## Конфигурация провайдера идентификации {#identity-provider-configuration}
 
 Выберите поддерживаемого провайдера идентификации (IdP), чтобы получить инструкции по настройке внешнего OAuth в его среде и завершению интеграции в <Constant name="cloud" />:
 
@@ -36,7 +36,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 <TabItem value="Okta">
 
-### 1. Инициализация настроек dbt
+### 1. Инициализация настроек dbt {#1-initialize-the-dbt-settings}
 
 1. В вашем аккаунте <Constant name="cloud" /> перейдите в **Account settings** —> **Integrations**.
 2. Прокрутите страницу до раздела **Custom integrations** и нажмите **Add integrations**.
@@ -44,7 +44,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 <Lightbox src="/img/docs/dbt-cloud/callback-uri.png" width="60%" title="Скопируйте callback URI в нижней части страницы интеграции в dbt." />
 
-### 2. Создание приложения Okta
+### 2. Создание приложения Okta {#2-create-the-okta-app}
 
 1. В панели управления Okta раскройте раздел **Applications** и нажмите **Applications**. Затем нажмите кнопку **Create app integration**.
 2. Выберите **OIDC** в качестве метода входа и **Web applications** в качестве типа приложения. Нажмите **Next**.
@@ -59,7 +59,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 6. Сохраните конфигурацию приложения. Вы вернетесь к нему позже, а пока переходите к следующим шагам.
 
-### 3. Создание Okta API
+### 3. Создание Okta API {#3-create-the-okta-api}
 
 1. Раскройте раздел **Security** и выберите **API** в боковом меню Okta.
 2. На экране API нажмите **Add authorization server**. Задайте имя authorization server (подойдет псевдоним вашего аккаунта хранилища данных). В поле **Audience** скопируйте и вставьте URL входа в хранилище данных. Добавьте описание и нажмите **Save**.
@@ -90,13 +90,13 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 8. Вернитесь на вкладку **Settings** и оставьте ее открытой в браузере — часть информации понадобится позже.
 
-### 4. Создание настроек OAuth в хранилище данных
+### 4. Создание настроек OAuth в хранилище данных {#4-create-the-oauth-settings-in-the-data-warehouse}
 
 Убедитесь, что администраторы Amazon завершили интеграцию Identity Center с Okta.
 
 Настройте приложение Okta и API в соответствии с конфигурацией Amazon.
 
-### 5. Настройка интеграции в dbt
+### 5. Настройка интеграции в dbt {#5-configuring-the-integration-in-dbt}
 
 1. Вернитесь на страницу <Constant name="cloud" /> **Account settings** —> **Integrations**, открытую в начале. Теперь заполните все поля.
    1. `Integration name`: Укажите описательное имя интеграции, включающее информацию об окружении Okta, чтобы будущим пользователям не приходилось догадываться о ее назначении.
@@ -107,7 +107,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 2. Нажмите **Save**, чтобы сохранить конфигурацию.
 
-### 6. Создание нового подключения в dbt
+### 6. Создание нового подключения в dbt {#6-create-a-new-connection-in-dbt}
 
 1. Перейдите в **Account settings** и выберите **Connections** в меню. Нажмите **New connection**.
 2. Настройте `Account`, `Database` и `Warehouse` как обычно, а в поле `OAuth method` выберите созданный вами внешний OAuth.
@@ -124,17 +124,17 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 <TabItem value="Entra ID">
 
-### 1. Инициализация настроек dbt
+### 1. Инициализация настроек dbt {#1-initialize-the-dbt-settings-1}
 
 1. В вашем аккаунте <Constant name="cloud" /> перейдите в **Account settings** —> **Integrations**.
 2. Прокрутите страницу до **Custom integrations** и нажмите **Add integrations**.
 3. Оставьте это окно открытым. Установите **Integration type** в значение Entra ID и обратите внимание на **Redirect URI** внизу страницы. Скопируйте его для использования на следующих шагах.
 
-### 2. Создание приложений Entra ID
+### 2. Создание приложений Entra ID {#2-create-the-entra-id-apps}
 
 В портале Azure необходимо создать два приложения: resource server и client app.
 
-#### Создание resource server
+#### Создание resource server {#create-a-resource-server}
 
 В вашем аккаунте Entra ID: 
 
@@ -156,7 +156,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
     4. Убедитесь, что **State** установлено в **Enabled**.
     5. Нажмите **Add scope**.
 
-#### Создание client app
+#### Создание client app {#create-a-client-app}
 
 1. На странице **App registration** нажмите **New registration**.
     1. Задайте имя, однозначно идентифицирующее приложение как client app.
@@ -175,7 +175,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 7. Сразу запишите значение `value` для дальнейшего использования.
    - **Примечание:** Entra ID больше не покажет это значение после ухода с данной страницы.
 
-### 3. Настройка интеграции в dbt
+### 3. Настройка интеграции в dbt {#3-configuring-the-integration-in-dbt}
 
 1. Вернитесь на страницу <Constant name="cloud" /> **Account settings** —> **Integrations**, открытую в начале. Здесь потребуется некоторое переключение между аккаунтом Entra ID и <Constant name="cloud" />.
 2. `Integration name`: Укажите описательное имя интеграции с информацией об окружении Entra ID.
@@ -188,7 +188,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 </Tabs>
 
-## Настройка Trusted Token Issuer в IAM IdC
+## Настройка Trusted Token Issuer в IAM IdC {#configure-the-trusted-token-issuer-in-iam-idc}
 
 *Trusted token issuer* генерирует access token, который используется для идентификации пользователя, а затем аутентифицирует его. Это позволяет сервисам за пределами экосистемы AWS, таким как платформа dbt, подключаться к IAM IdC (и Redshift), используя access tokens, полученные или сгенерированные внешним IdP (Entra ID или Okta).
 
@@ -206,7 +206,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
          - Subject
          - Other — по нашему опыту, при использовании этого варианта с UPN значение `upn` совпадало с `Email`.
 
-## Настройка приложения Redshift IdC для использования TTI
+## Настройка приложения Redshift IdC для использования TTI {#configure-redshift-idc-application-to-utilize-tti}
 
 Для начала в консоли Amazon Redshift выберите **IAM Identity Center connection**.
 
@@ -218,7 +218,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 4. Отметьте checkbox для **Trusted token issuer**, созданного на предыдущем шаге.
 5. Введите значение aud claim в разделе **Configure selected trusted token issuers**. **Это должно быть значение Application ID URI, которое вы указали для интеграции в платформе dbt.**
 
-## Завершение настройки dbt
+## Завершение настройки dbt {#finalizing-the-dbt-configuration}
 
 Если у вас уже есть подключение, убедитесь, что в нем выбран метод аутентификации **External OAuth**, и выберите интеграцию, созданную ранее. В противном случае создайте новое подключение Redshift, обязательно указав значения для:
 - **Server Hostname**
@@ -229,6 +229,6 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 После того как подключение назначено среде разработки, вы можете настроить учетные данные пользователя для этой среды в разделе `Account Settings > Your Profile > Credentials > <Your Project Name>`. Установите метод аутентификации `External OAuth`, при необходимости задайте `schema` и другие поля и сохраните учетные данные. После этого вы сможете нажать кнопку `Connect to Redshift`.
 
-### Проверка подключения в Studio
+### Проверка подключения в Studio {#verify-connection-in-studio}
 
 После инициализации сессии разработки вы можете проверить подключение к Redshift с использованием внешнего OAuth, выполнив команду `dbt debug`.

@@ -23,11 +23,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Для получения другой информации, включая поддержку функций Firebolt, см. [GitHub README](https://github.com/firebolt-db/dbt-firebolt/blob/main/README.md) и [changelog](https://github.com/firebolt-db/dbt-firebolt/blob/main/CHANGELOG.md).
 
-## Подключение к Firebolt
+## Подключение к Firebolt {#connecting-to-firebolt}
 
 Для получения дополнительной информации, включая поддержку возможностей Firebolt, см. [README в GitHub](https://github.com/firebolt-db/dbt-firebolt/blob/main/README.md) и [changelog](https://github.com/firebolt-db/dbt-firebolt/blob/main/CHANGELOG.md).
 
-## Подключение к Firebolt
+## Подключение к Firebolt {#supporting-concurrent-development}
 
 Чтобы подключиться к Firebolt из dbt, необходимо добавить [профиль](/docs/core/connect-data-platform/connection-profiles) в файл `profiles.yml`. Профиль Firebolt соответствует следующему синтаксису:
 

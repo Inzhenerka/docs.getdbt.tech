@@ -9,7 +9,7 @@ tags: ['Redshift', 'dbt platform','Quickstart']
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с Redshift. В нём показано, как:
 
@@ -25,12 +25,12 @@ tags: ['Redshift', 'dbt platform','Quickstart']
 Если вам интересен формат обучения с видео, посмотрите бесплатный курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 :::
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - У вас есть [<Constant name="cloud" /> account](https://www.getdbt.com/signup/).
 - У вас есть учетная запись AWS с правами на выполнение шаблона CloudFormation для создания необходимых ролей и кластера Redshift.
 
-### Связанные материалы
+### Связанные материалы {#related-content}
 
 - Узнайте больше с [курсами dbt Learn](https://learn.getdbt.com)
 - [CI задания](/docs/deploy/continuous-integration)
@@ -38,7 +38,7 @@ tags: ['Redshift', 'dbt platform','Quickstart']
 - [Уведомления о заданиях](/docs/deploy/job-notifications)
 - [Актуальность источников](/docs/deploy/source-freshness)
 
-## Создание кластера Redshift
+## Создание кластера Redshift {#create-a-redshift-cluster}
 1. Войдите в свой [аккаунт AWS](https://signin.aws.amazon.com/console) как корневой пользователь или пользователь IAM в зависимости от вашего уровня доступа.
 2. Используйте шаблон CloudFormation для быстрого создания кластера Redshift. Шаблон CloudFormation — это файл конфигурации, который автоматически создает необходимые ресурсы в AWS. [Запустите стек CloudFormation](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=dbt-workshop&templateURL=https://tpch-sample-data.s3.amazonaws.com/create-dbtworkshop-infr) и вы можете обратиться к [JSON файлу create-dbtworkshop-infr](https://github.com/aws-samples/aws-modernization-with-dbtlabs/blob/main/resources/cloudformation/create-dbtworkshop-infr) для получения более подробной информации о шаблоне.
 
@@ -74,7 +74,7 @@ tags: ['Redshift', 'dbt platform','Quickstart']
 
 9. Нажмите **Create connection**.
 
-## Загрузка данных
+## Загрузка данных {#load-data}
 
 Теперь мы загрузим наши примерные данные в S3 bucket, который создал наш шаблон CloudFormation. S3 buckets — это простой и недорогой способ хранения данных вне Redshift.
 
@@ -166,7 +166,7 @@ tags: ['Redshift', 'dbt platform','Quickstart']
     select * from stripe.payment;
     ```
 
-## Подключение dbt к Redshift
+## Подключение dbt к Redshift {#connect-dbt-to-redshift}
 
 1. Создайте новый проект в [<Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses). Перейдите в **Account settings** (нажав на имя вашей учетной записи в левом боковом меню) и нажмите **+ New Project**.
 2. Введите имя проекта и нажмите **Continue**.
@@ -201,10 +201,10 @@ tags: ['Redshift', 'dbt platform','Quickstart']
 11. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему кластеру Redshift.
 12. Если тест прошел успешно, нажмите **Save**, чтобы завершить настройку. Если тест не удался, проверьте настройки Redshift и учетные данные.
 
-## Настройка репозитория под управлением dbt
+## Настройка репозитория под управлением dbt {#set-up-a-dbt-managed-repository}
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация проекта dbt и начало разработки
+## Инициализация проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
 Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
 1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске может потребоваться несколько минут, пока проект подготавливается: устанавливается соединение с git, клонируется репозиторий и проверяется подключение к хранилищу данных.
@@ -217,7 +217,7 @@ tags: ['Redshift', 'dbt platform','Quickstart']
         ```
     - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Создание вашей первой модели
+## Создание вашей первой модели {#build-your-first-model}
 
 У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
@@ -292,7 +292,7 @@ select * from final
 
 Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не необработанные данные в вашем инструменте BI.
 
-#### Часто задаваемые вопросы
+#### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -300,15 +300,15 @@ select * from final
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации вашей модели
+## Изменение способа материализации вашей модели {#change-the-way-your-model-is-materialized}
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Удаление примерных моделей
+## Удаление примерных моделей {#delete-the-example-models}
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Построение моделей на основе других моделей
+## Построение моделей на основе других моделей {#build-models-on-top-of-other-models}
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 

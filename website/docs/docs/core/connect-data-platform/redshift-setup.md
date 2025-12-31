@@ -22,7 +22,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Конфигурации
+## Конфигурации {#configurations}
 
 | Поле профиля | Пример | Описание |
 | ------------- | ------- | ------------ |
@@ -47,7 +47,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Для настройки параметров `tcp_keepalive` рекомендуем ознакомиться с [документацией Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/troubleshooting-connections.html), чтобы подобрать конфигурацию, оптимально подходящую для вашего случая.
 
-## Параметры аутентификации
+## Параметры аутентификации {#authentication-parameters}
 
 Методы аутентификации, которые поддерживает dbt Core на Redshift, включают:
 
@@ -74,7 +74,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <br/>
 
-#### Пример profiles.yml для аутентификации базы данных
+#### Пример profiles.yml для аутентификации базы данных {#example-profilesyml-for-database-authentication}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -124,7 +124,7 @@ company-name:
 
 <br/>
 
-#### Пример profiles.yml для IAM
+#### Пример profiles.yml для IAM {#example-profilesyml-for-iam}
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -159,7 +159,7 @@ company-name:
 
 </File>
 
-#### Указание профиля IAM
+#### Указание профиля IAM {#specifying-an-iam-profile}
 
 Когда установлена конфигурация `iam_profile`, dbt будет использовать указанный профиль из вашего файла `~/.aws/config` вместо использования имени профиля `default`.
 
@@ -167,9 +167,9 @@ company-name:
 
 </Tabs>
 
-## Примечания к Redshift
+## Примечания к Redshift {#redshift-notes}
 
-### Изменение `sslmode`
+### Изменение `sslmode` {#sslmode-change}
 
 До dbt-redshift 1.5 в качестве драйвера использовался `psycopg2`. `psycopg2` принимает `disable`, `prefer`, `allow`, `require`, `verify-ca`, `verify-full` в качестве допустимых значений для `sslmode` и не имеет параметра `ssl`, как указано в документации PostgreSQL [doc](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING:~:text=%2Dencrypted%20connection.-,sslmode,-This%20option%20determines).
 
@@ -192,7 +192,7 @@ verify-full | Соединение будет установлено с испо
 
 Для получения более подробной информации об изменениях sslmode, наших дизайнерских решениях и обоснованиях &mdash; пожалуйста, обратитесь к [PR, касающемуся этого изменения](https://github.com/dbt-labs/dbt-redshift/pull/439).
 
-### Параметр `autocommit`
+### Параметр `autocommit` {#autocommit-parameter}
 
 [Режим автокоммита](https://www.psycopg.org/docs/connection.html#connection.autocommit) полезен для выполнения команд, которые выполняются вне транзакции. Объекты соединения, используемые в Python, должны иметь `autocommit = True` для выполнения операций, таких как `CREATE DATABASE` и `VACUUM`. По умолчанию `autocommit` отключен в `redshift_connector`, но мы изменили это значение по умолчанию на `True`, чтобы гарантировать успешное выполнение определенных макросов в вашем проекте dbt.
 
@@ -223,16 +223,16 @@ profile-to-my-RS-target:
 
 Чтобы запустить определенные макросы с автокоммитом, загрузите профиль с автокоммитом, используя флаг `--profile`. Для получения дополнительной информации, пожалуйста, обратитесь к этому [PR](https://github.com/dbt-labs/dbt-redshift/pull/475/files).
 
-### Устаревшие параметры `profile` в 1.5
+### Устаревшие параметры `profile` в 1.5 {#deprecated-profile-parameters-in-15}
 
 - `iam_duration_seconds`
 
 - `keepalives_idle`
 
-### Ключи `sort` и `dist`
+### Ключи `sort` и `dist` {#sort-and-dist-keys}
 
 Где это возможно, dbt позволяет использовать ключи `sort` и `dist`. См. раздел о [специфических конфигурациях Redshift](/reference/resource-configs/redshift-configs).
 
-#### Повторные попытки
+#### Повторные попытки {#retries}
 
 Если `dbt-redshift` сталкивается с операционной ошибкой или истечением времени ожидания при открытии нового соединения, он будет повторять попытку до количества раз, указанного в `retries`. Если установлено 2+ повторных попыток, dbt будет ждать 1 секунду перед повторной попыткой. Значение по умолчанию — 1 повторная попытка. Если установлено значение 0, dbt не будет повторять попытки вообще.

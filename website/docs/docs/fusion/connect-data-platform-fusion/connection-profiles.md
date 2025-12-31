@@ -8,6 +8,6 @@ import ConnectionProfiles from '/snippets/_connection-profiles.md';
 
 <ConnectionProfiles />
 
-## Связанная документация
+## Связанная документация {#related-docs}
 
 - [О `profiles.yml`](/docs/fusion/connect-data-platform-fusion/profiles.yml)

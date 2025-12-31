@@ -20,7 +20,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Настройка режима драйвера Python
+### Настройка режима драйвера Python {#configure-the-python-driver-mode}
 
 [python-oracledb](https://oracle.github.io/python-oracledb/) делает установку библиотек Oracle Client необязательной.
 Этот драйвер поддерживает 2 режима:
@@ -58,7 +58,7 @@ defaultValue="thin"
   export ORA_PYTHON_DRIVER_TYPE=thick
   ```
 
-### Установка библиотек Oracle Instant Client
+### Установка библиотек Oracle Instant Client {#install-oracle-instant-client-libraries}
 
 В толстом режиме вам понадобятся установленные [библиотеки Oracle Instant Client](https://www.oracle.com/database/technologies/instant-client.html). Они обеспечивают необходимую сетевую связь, позволяя dbt-oracle получить доступ к экземпляру базы данных Oracle.
 
@@ -148,7 +148,7 @@ sudo ldconfig
 </TabItem>
 </Tabs>
 
-## Настройка кошелька для Oracle Autonomous Database (ADB-S) в облаке
+## Настройка кошелька для Oracle Autonomous Database (ADB-S) в облаке {#configure-wallet-for-oracle-autonomous-database-adb-s-in-cloud}
 
 dbt может подключаться к Oracle Autonomous Database (ADB-S) в Oracle Cloud, используя либо TLS (Transport Layer Security), либо взаимный TLS (mTLS). TLS и mTLS обеспечивают повышенную безопасность для аутентификации и шифрования.
 Имя пользователя и пароль базы данных по-прежнему требуются для подключений dbt, которые можно настроить, как объясняется в следующем разделе [Подключение к базе данных Oracle](#connecting-to-oracle-database).
@@ -175,7 +175,7 @@ dbt может подключаться к Oracle Autonomous Database (ADB-S) в
 
 Для взаимных TLS-соединений необходимо скачать кошелек из консоли OCI и настроить драйвер Python для его использования.
 
-#### Установка кошелька и файлов конфигурации сети
+#### Установка кошелька и файлов конфигурации сети {#install-the-wallet-and-network-configuration-files}
 
 Из консоли Oracle Cloud для базы данных скачайте zip-файл кошелька, используя кнопку `DB Connection`. Zip-файл содержит кошелек и файлы конфигурации сети.
 
@@ -240,9 +240,9 @@ SSL_SERVER_DN_MATCH=yes
 </TabItem>
 </Tabs>
 
-## Подключение к базе данных Oracle
+## Подключение к базе данных Oracle {#connecting-to-oracle-database}
 
-## Подключение к базе данных Oracle
+## Подключение к базе данных Oracle {#python-models-using-oracle-autonomous-database-adb-s}
 
 Определите следующие обязательные параметры в виде переменных окружения и используйте их в профиле подключения с помощью Jinja-функции [env_var](/reference/dbt-jinja-functions/env_var). При необходимости вы также можете задать их напрямую в файле `profiles.yml`, однако это не рекомендуется.
 
@@ -393,7 +393,7 @@ dbt_test:
 С версии `dbt-oracle==1.8` мы обнаруживаем, что ключ `database` отсутствует в `profile.yml`, и выдаем предупреждение о необходимости его добавления для генерации каталога. Сообщение предупреждения также показывает имя базы данных, которое ожидает dbt-oracle. Таким образом, пользователям не нужно беспокоиться о том, "какое" имя базы данных и "как" его получить.
 :::
 
-### Конфигурация кавычек
+### Конфигурация кавычек {#features}
 
 Конфигурация кавычек по умолчанию, используемая dbt-oracle, показана ниже:
 
@@ -409,7 +409,7 @@ quoting:
 
 Это рекомендуется и работает в большинстве случаев.
 
-### Ошибка приблизительного совпадения отношения
+### Ошибка приблизительного совпадения отношения {#setup}
 
 Часто пользователи жалуются на ошибку приблизительного совпадения отношения, как показано ниже:
 
@@ -442,7 +442,7 @@ quoting:
 ```
 </File>
 
-## Модели Python, использующие Oracle Autonomous Database (ADB-S)
+## Модели Python, использующие Oracle Autonomous Database (ADB-S) {#supported-features}
 
 Пользователи Oracle's Autonomous Database Serverless (ADB-S) могут запускать модели dbt-py, используя Oracle Machine Learning (OML4PY), который доступен без дополнительной настройки.
 
@@ -628,7 +628,7 @@ def model(dbt, session):
     return promotion_cost
 ```
 
-## Поддерживаемые функции
+## Поддерживаемые функции {#not-supported-features}
 
 - Табличная материализация
 - Материализация представлений

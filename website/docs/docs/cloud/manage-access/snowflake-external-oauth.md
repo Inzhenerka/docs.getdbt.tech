@@ -7,7 +7,7 @@ pagination_next: null
 pagination_prev: null
 ---
 
-# Настройка внешнего OAuth с Snowflake <Lifecycle status="managed, managed_plus" />
+# Настройка внешнего OAuth с Snowflake <Lifecycle status="managed, managed_plus" /> {#set-up-external-oauth-with-snowflake}
 
 import AboutExternal from '/snippets/_about-external-oauth.md';
 
@@ -26,13 +26,13 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 **Хранилище данных:**
 - **Snowflake:** Откройте worksheet в учетной записи, у которой есть права на [создание security integration](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration).
 
-### Команды Snowflake
+### Команды Snowflake {#1-initialize-the-dbt-settings}
 
 :::info Требуется совпадение имени пользователя Snowflake и IdP
 Убедитесь, что имя пользователя / адрес электронной почты, указанные администратором IdP, совпадают с именем пользователя в учетных данных Snowflake. Если адрес электронной почты, используемый при настройке <Constant name="cloud" />, отличается от адреса электронной почты в Snowflake, соединение не будет установлено или могут возникнуть проблемы.
 :::
 
-## Конфигурации хранилища данных
+## Конфигурации хранилища данных {#faqs}
 
 Ниже приведён шаблон для создания OAuth‑конфигураций в среде Snowflake:
 

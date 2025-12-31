@@ -9,7 +9,7 @@ hide_table_of_contents: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 <Constant name="mesh" /> — это фреймворк, который помогает организациям эффективно масштабировать команды и данные. Он продвигает лучшие практики управления (governance) и разбивает крупные проекты на управляемые части &mdash; что ускоряет разработку аналитики. <Constant name="mesh" /> доступен для аккаунтов [<Constant name="cloud" /> Enterprise](https://www.getdbt.com/).
 
@@ -28,13 +28,13 @@ hide_table_of_contents: true
 Также вы можете посмотреть [видео на YouTube про dbt и Snowflake](https://www.youtube.com/watch?v=kbCkwhySV_I&list=PL0QYlrC86xQm7CoOH6RS7hcgLnd3OQioG).
 :::
 
-### Связанные материалы:
+### Связанные материалы: {#related-content}
 - [Концепции data mesh: что это и как начать](https://www.getdbt.com/blog/data-mesh-concepts-what-it-is-and-how-to-get-started)
 - [Как выбрать структуру для вашего <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-3-structures)
 - [Руководство по лучшим практикам <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-4-implementation)
 - [Часто задаваемые вопросы по <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-5-faqs)
 
-## Предварительные требования​
+## Предварительные требования​ {#prerequisites}
 
 Чтобы использовать <Constant name="mesh" />, необходимо следующее:
 
@@ -50,7 +50,7 @@ hide_table_of_contents: true
 
 Также предполагается, что у вас уже есть опыт работы с dbt или базовые знания. Если вы только начинаете, сначала пройдите курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 
-## Создание и настройка двух проектов
+## Создание и настройка двух проектов {#create-and-configure-two-projects}
 
 В этом разделе вы создадите два новых пустых проекта в <Constant name="cloud" />, которые будут использоваться как базовый и downstream‑проекты:
 
@@ -94,7 +94,7 @@ hide_table_of_contents: true
 </DocCarousel>
 
 
-### Создание production‑окружения
+### Создание production‑окружения {#create-a-production-environment}
 В <Constant name="cloud" /> каждый проект может иметь одно deployment‑окружение, назначенное как “Production”. Для каждого проекта, который вы хотите объединить в mesh, необходимо настроить ["Production" или "Staging" deployment‑окружение](/docs/deploy/deploy-environments). Это позволит использовать <Constant name="explorer" /> на [последующих шагах](/guides/mesh-qs?step=5#create-and-run-a-dbt-cloud-job) данного руководства.
 
 Чтобы настроить production‑окружение:
@@ -109,7 +109,7 @@ hide_table_of_contents: true
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings-1.png" width="100%" title="Назначьте production‑окружение окружением по умолчанию в настройках Environment Settings"/>
 
 
-## Настройка базового проекта
+## Настройка базового проекта {#set-up-a-foundational-project}
 
 Этот upstream‑проект — место, где вы создаете ключевые дата‑ассеты. Он будет содержать исходные источники данных, staging‑модели и основную бизнес‑логику.
 
@@ -125,7 +125,7 @@ hide_table_of_contents: true
 6. В **File <Constant name="explorer" />** наведите курсор на директорию проекта, нажмите **...** и выберите **Create file**.
 7. Создайте две новые папки: `models/staging` и `models/core`.
 
-### Staging‑слой
+### Staging‑слой {#staging-layer}
 Теперь, когда базовый проект настроен, начнем создавать дата‑ассеты. Настройте staging‑слой следующим образом:
 
 1. Создайте новый YAML‑файл свойств `models/staging/sources.yml`.
@@ -231,7 +231,7 @@ select * from final
 - Успешно выполнить [deployment‑задание](/docs/deploy/deploy-jobs)
   - Обратите внимание: включите переключатель **Generate docs on run** для этого задания, чтобы обновить <Constant name="explorer" />. После выполнения вы сможете открыть Explore в верхнем меню и увидеть lineage, тесты и документацию.
 
-## Определение публичной модели и запуск первого задания
+## Определение публичной модели и запуск первого задания {#define-a-public-model-and-run-first-job}
 
 В предыдущем разделе вы подготовили базовые строительные блоки, теперь интегрируем <Constant name="mesh" />.
 
@@ -295,7 +295,7 @@ models:
 3. Перейдите в **Version control** и нажмите **Commit and Sync**, чтобы закоммитить изменения.
 4. Слейте изменения в основную или production‑ветку.
 
-### Создание и запуск dbt‑задания
+### Создание и запуск dbt‑задания {#create-and-run-a-dbt-job}
 
 Прежде чем downstream‑команда сможет использовать ассеты из этого базового проекта, необходимо [создать production‑окружение](/guides/mesh-qs?step=3#create-a-production-environment) и успешно выполнить [deployment‑задание](/docs/deploy/deploy-jobs).
 
@@ -312,7 +312,7 @@ models:
 
 Подробнее о том, как <Constant name="cloud" /> использует метаданные из Staging‑окружения для разрешения ссылок в downstream‑проектах, читайте в разделе [Staging with downstream dependencies](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
 
-## Ссылка на публичную модель в downstream‑проекте
+## Ссылка на публичную модель в downstream‑проекте {#reference-a-public-model-in-your-downstream-project}
 
 В этом разделе вы настроите downstream‑проект “Jaffle | Finance” и выполните [межпроектную ссылку](/docs/mesh/govern/project-dependencies) на модель `fct_orders` из базового проекта. Перейдите на страницу **Develop**, чтобы настроить проект:
 
@@ -339,7 +339,7 @@ projects:
 
 </File>
 
-### Staging‑слой
+### Staging‑слой {#staging-layer-1}
 
 Теперь, когда базовый проект настроен, начнем создавать дата‑ассеты. Настройте staging‑слой следующим образом:
 
@@ -385,7 +385,7 @@ select * from final
 
 </File>
 
-### Ссылка на публичную модель
+### Ссылка на публичную модель {#reference-the-public-model}
 
 Теперь вы готовы добавить модель, которая анализирует, как типы платежей меняются на протяжении пути клиента. Это помогает определить, уменьшается ли использование купонных подарочных карт при повторных покупках, как ожидает маркетинговая команда, или остается стабильным.
 
@@ -436,14 +436,14 @@ select * from final
 4. Вы также можете увидеть эту связь во вкладке **Lineage** в реальном времени.
 <Lightbox src="/img/guides/dbt-mesh/cross_proj_ref_lineage.png" title="Lineage межпроектного ref" />
 
-## Добавление версий моделей и контрактов
+## Добавление версий моделей и контрактов {#add-model-versions-and-contracts}
 
 Как повысить устойчивость и добавить защитные механизмы в таких межпроектных связях? Вы можете заимствовать лучшие практики из разработки ПО:
 
 1. Определение контрактов моделей &mdash; настройте [model contracts](/docs/mesh/govern/model-contracts) в dbt, чтобы задать набор гарантий, описывающих структуру модели. При сборке dbt проверяет, что результат соответствует контракту; если нет — сборка завершается ошибкой.
 2. Определение версий моделей &mdash; используйте [model versions](/docs/mesh/govern/model-versions) для управления обновлениями и систематической обработки breaking‑changes.
 
-### Настройка контрактов моделей
+### Настройка контрактов моделей {#set-up-model-contracts}
 Как часть команды Data Analytics, вы можете захотеть обеспечить надежность модели `fct_orders` для downstream‑пользователей, таких как команда Finance.
 
 1. Перейдите к `models/core/core.yml` и в описании модели `fct_orders` перед разделом `columns:` добавьте контракт данных:
@@ -465,7 +465,7 @@ models:
    - При нарушении контракта сборка завершится ошибкой, что видно в истории командной строки.
     <Lightbox src="/img/guides/dbt-mesh/break_contract.png" title="Контракт данных нарушен, сборка dbt завершилась ошибкой." />
 
-### Настройка версий моделей
+### Настройка версий моделей {#set-up-model-versions}
 В этом разделе вы настроите версии моделей: команда Data Analytics обновляет модель `fct_orders`, сохраняя обратную совместимость и уведомляя downstream‑команду Finance о миграции.
 
 1. Переименуйте существующий файл модели `models/core/fct_orders.sql` в `models/core/fct_orders_v1.sql`.
@@ -557,7 +557,7 @@ select * from {{ ref('fct_orders', v=2) }}
 select * from {{ ref('fct_orders') }}
 ```
 
-## Добавление dbt‑задания в downstream‑проект
+## Добавление dbt‑задания в downstream‑проект {#add-a-dbt-job-in-the-downstream-project}
 Перед продолжением убедитесь, что вы закоммитили и смержили изменения в обоих проектах — “Jaffle | Data Analytics” и “Jaffle | Finance”.
 
 Участник команды Finance хочет запланировать задание <Constant name="cloud" /> для анализа пути клиента по платежам сразу после обновления пайплайнов командой аналитики.
@@ -574,7 +574,7 @@ select * from {{ ref('fct_orders') }}
 
 Это упрощает синхронизацию с upstream‑таблицами и устраняет необходимость в более сложной оркестрации, например, координации заданий между проектами через внешний оркестратор.
 
-## Просмотр предупреждения о выводе версии из эксплуатации
+## Просмотр предупреждения о выводе версии из эксплуатации {#view-deprecation-warning}
 
 Чтобы узнать, сколько времени у команды Finance есть на миграцию с `fct_orders_v1` на `fct_orders_v2`, выполните следующие шаги:
 
@@ -622,13 +622,13 @@ select * from final
 
 <Lightbox src="/img/guides/dbt-mesh/deprecation_date_warning.png" title="Модель отображает предупреждение о дате вывода версии из эксплуатации." />
 
-## Просмотр lineage с помощью dbt Catalog
+## Просмотр lineage с помощью dbt Catalog {#view-lineage-with-dbt-catalog}
 
 Используйте [<Constant name="explorer" />](/docs/explore/explore-projects), чтобы просмотреть lineage между проектами в <Constant name="cloud" />. Перейдите на страницу **Explore** каждого проекта &mdash; теперь вы увидите [lineage, непрерывно связанный между проектами](/docs/explore/explore-multiple-projects).
 
 <Lightbox src="/img/guides/dbt-mesh/jaffle_da_final_lineage.png" width="85%" title="Просмотр lineage проекта 'Jaffle | Data Analytics' в dbt Catalog" />
 
-## Что дальше
+## Что дальше {#whats-next}
 
 <ConfettiTrigger>
 

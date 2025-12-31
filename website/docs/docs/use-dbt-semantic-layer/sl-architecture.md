@@ -13,7 +13,7 @@ tags: [Semantic Layer]
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-architecture.jpg" width="85%" title="Диаграмма демонстрирует, как данные проходят через ваш пайплайн с использованием dbt Semantic Layer и какие инструменты интеграции он поддерживает."/>
 </DocCarousel>
 
-## Компоненты
+## Компоненты {#components}
 
 <Constant name="semantic_layer" /> включает следующие компоненты:
 
@@ -38,5 +38,5 @@ tags: [Semantic Layer]
 | Подключение к интеграциям с другими системами (Tableau, Hex, Mode, Google Sheets и т.д.) | ❌ | ✅ |
 | Создание и выполнение экспортов для сохранения запросов метрик в виде таблиц на вашей платформе данных. | ❌ | ✅ |
 
-## Связанные материалы
+## Связанные материалы {#feature-comparison}
 - [<Constant name="semantic_layer" /> FAQs](/docs/use-dbt-semantic-layer/sl-faqs)

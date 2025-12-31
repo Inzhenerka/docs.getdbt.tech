@@ -8,7 +8,7 @@ description: "Узнайте, как включить и настроить па
 
 <Lightbox src="/img/docs/dbt-cloud/example-sidebar-account-settings.png" title="Пример настроек аккаунта из боковой панели" />
 
-## Кэширование Git-репозитория <Lifecycle status="managed,managed_plus" />
+## Кэширование Git-репозитория <Lifecycle status="managed,managed_plus" /> {#git-repository-caching}
 
 :::important Кеширование репозитория включено по умолчанию
 
@@ -35,7 +35,7 @@ description: "Узнайте, как включить и настроить па
 
 <Lightbox src="/img/docs/deploy/account-settings-repository-caching.png" width="85%" title="Пример опции Enable repository caching" />
 
-## Частичный парсинг
+## Частичный парсинг {#partial-parsing}
 
 В начале каждого вызова dbt читает все файлы в вашем проекте, извлекает информацию и создает внутренний манифест, содержащий каждый объект (модель, источник, макрос и так далее). Среди прочего, он использует вызовы макросов `ref()`, `source()` и `config()` внутри моделей для установки свойств, определения зависимостей и построения DAG вашего проекта. Когда dbt завершает парсинг вашего проекта, он сохраняет внутренний манифест в файле под названием `partial_parse.msgpack`.
 
@@ -47,15 +47,15 @@ description: "Узнайте, как включить и настроить па
 
 <Lightbox src="/img/docs/deploy/account-settings-partial-parsing.png" width="85%" title="Пример опции Enable partial parsing between deployment runs" />
 
-## Доступ к аккаунту и включение функций
+## Доступ к аккаунту и включение функций {#account-access-and-enablement}
 
-### Включение dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
+### Включение dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> {#enabling-dbt-copilot}
 
 [<Constant name="copilot" />](/docs/cloud/dbt-copilot) — это AI‑ассистент, полностью интегрированный в работу с dbt и предназначенный для ускорения аналитических рабочих процессов.
 
 Чтобы использовать эту функцию, администратор вашего аккаунта <Constant name="cloud" /> должен включить <Constant name="copilot" /> на уровне аккаунта, выбрав опцию **Enable account access to dbt Copilot features** в настройках аккаунта. Подробнее см. в разделе [Enable dbt Copilot](/docs/cloud/enable-dbt-copilot).
 
-### Включение функций Advanced CI <Lifecycle status="managed,managed_plus" />
+### Включение функций Advanced CI <Lifecycle status="managed,managed_plus" /> {#enabling-advanced-ci-features}
 
 Функции [Advanced CI](/docs/deploy/advanced-ci), такие как [compare changes](/docs/deploy/advanced-ci#compare-changes), позволяют участникам аккаунта <Constant name="cloud" /> просматривать подробную информацию об изменениях между продакшн‑окружением и pull request.
 
@@ -65,7 +65,7 @@ description: "Узнайте, как включить и настроить па
 
 <Lightbox src="/img/docs/deploy/account-settings-advanced-ci.png" width="85%" title="Опция Enable account access to Advanced CI" />
 
-### Включение dbt Catalog <Lifecycle status='self_service,managed,managed_plus' /> <Lifecycle status="preview" />
+### Включение dbt Catalog <Lifecycle status='self_service,managed,managed_plus' /> <Lifecycle status="preview" /> {#enabling-dbt-catalog}
 
 [<Constant name="explorer" />](/docs/explore/explore-projects) позволяет просматривать ресурсы вашего проекта (например, модели, тесты и метрики), их lineage, а также использование моделей, чтобы лучше понимать текущее состояние продакшена вашего проекта.
 
@@ -75,7 +75,7 @@ description: "Узнайте, как включить и настроить па
 
 Для использования загрузки внешних метаданных вы должны быть [администратором аккаунта](/docs/cloud/manage-access/enterprise-permissions#account-admin) с правами на редактирование подключений. Включите <Constant name="explorer" /> в своей учетной записи, выбрав опцию **Ingest external metadata in dbt Catalog (formerly dbt Explorer)** в настройках аккаунта. Подробнее см. [Enable external metadata ingestion](/docs/explore/external-metadata-ingestion#enable-external-metadata-ingestion).
 
-## История настроек проекта
+## История настроек проекта {#project-settings-history}
 
 Вы можете просматривать историю изменений настроек проекта за последние 90 дней.
 

@@ -25,6 +25,6 @@ import LicenseCount from '/snippets/_license-count.md';
 
 <Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.png" width="85%" title="Перейдите в Account settings → Users, чтобы изменить пользователей dbt" />
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [<Constant name="cloud" /> лицензии](/docs/cloud/manage-access/seats-and-users#licenses)

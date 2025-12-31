@@ -4,7 +4,7 @@ id: "service-tokens"
 description: "Service account tokens help you define permissions for securing access to your dbt account and its projects."
 ---
 
-# Токены служебных учетных записей <Lifecycle status="self_service,managed,managed_plus" />
+# Токены служебных учетных записей <Lifecycle status="self_service,managed,managed_plus" /> {#service-account-tokens}
 
 Токены сервисных аккаунтов позволяют безопасно аутентифицироваться при работе с API <Constant name="cloud" />, назначая каждому токену узкий набор разрешений. Это обеспечивает более точное управление доступом к API. Хотя по своей сути они похожи на [personal access tokens](/docs/dbt-cloud-apis/user-tokens), токены сервисных аккаунтов принадлежат аккаунту, а не конкретному пользователю.
 
@@ -16,7 +16,7 @@ description: "Service account tokens help you define permissions for securing ac
 
 Вы можете назначить столько наборов разрешений, сколько необходимо, одному токену. Для получения дополнительной информации о наборах разрешений см. "[Корпоративные разрешения](/docs/cloud/manage-access/enterprise-permissions)."
 
-## Генерация токенов сервисных аккаунтов
+## Генерация токенов сервисных аккаунтов {#generate-service-account-tokens}
 
 Вы можете создавать сервисные токены, если у вас есть лицензия Developer [license](/docs/cloud/manage-access/seats-and-users) и права администратора аккаунта [permissions](/docs/cloud/manage-access/about-user-access#permission-sets). Чтобы создать сервисный токен в <Constant name="cloud" />, выполните следующие шаги:
 
@@ -25,11 +25,11 @@ description: "Service account tokens help you define permissions for securing ac
 3. Нажмите кнопку **+ New Token**, чтобы сгенерировать новый токен.
 4. После генерации токена вы больше не сможете просмотреть его повторно, поэтому обязательно сохраните его в безопасном месте.
 
-## Разрешения для токенов сервисных аккаунтов
+## Разрешения для токенов сервисных аккаунтов {#permissions-for-service-account-tokens}
 
 Вы можете назначать токенам сервисных аккаунтов любой набор разрешений, доступный в <Constant name="cloud" />. При назначении набора разрешений токену вы также сможете выбрать, будут ли эти разрешения предоставлены для всех проектов в аккаунте или только для конкретных проектов.
 
-### Планы для команд, использующие токены сервисных аккаунтов
+### Планы для команд, использующие токены сервисных аккаунтов {#team-plans-using-service-account-tokens}
 
 Следующие разрешения могут быть назначены токену сервисного аккаунта в плане для команд. Обратитесь к [Корпоративным разрешениям](/docs/cloud/manage-access/enterprise-permissions) для получения дополнительной информации об этих ролях.
 
@@ -41,7 +41,7 @@ description: "Service account tokens help you define permissions for securing ac
 - Read-only
 - <Constant name="semantic_layer" /> Only
 
-### Корпоративные планы, использующие токены сервисных аккаунтов
+### Корпоративные планы, использующие токены сервисных аккаунтов {#enterprise-plans-using-service-account-tokens}
 
 Обратитесь к [Корпоративным разрешениям](/docs/cloud/manage-access/enterprise-permissions) для получения дополнительной информации об этих ролях.
 
@@ -63,7 +63,7 @@ description: "Service account tokens help you define permissions for securing ac
 - Stakeholder
 - Team Admin
 
-## Обновление сервисных токенов
+## Обновление сервисных токенов {#service-token-update}
 
 18 июля 2023 года dbt Labs изменила способ генерации и проверки токенов, чтобы повысить производительность. Эти улучшения применяются только к токенам, созданным после 18 июля 2023 года.
 
@@ -77,5 +77,5 @@ description: "Service account tokens help you define permissions for securing ac
 4. Скопируйте новый токен и замените им старый во всех ваших системах. Сохраните токен в безопасном месте, так как после закрытия экрана создания он больше не будет доступен.
 5. Удалите старый токен в <Constant name="cloud" />, нажав на **иконку корзины**. _Выполняйте это действие только после того, как новый токен будет установлен, чтобы избежать перебоев в работе сервиса_.
 
-## Часто задаваемые вопросы
+## Часто задаваемые вопросы {#faqs}
 <FAQ path="Troubleshooting/ip-restrictions" />

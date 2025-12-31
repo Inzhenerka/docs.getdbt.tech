@@ -10,7 +10,7 @@ import VersionsCallout from '/snippets/_model-version-callout.md';
 
 В dbt проектах существуют два различных типа тегов `version`. Это поле имеет разное значение в зависимости от его расположения.
 
-## Версии в `dbt_project.yml`
+## Версии в `dbt_project.yml` {#dbt_projectyml-versions}
 
 Тег версии в файле `dbt_project` представляет версию вашего dbt проекта.
 
@@ -28,7 +28,7 @@ version: version
 
 </File>
 
-## Версии файлов свойств `.yml`
+## Версии файлов свойств `.yml` {#yml-property-file-versions}
 
 Тег версии в файле свойств `.yml` предоставляет управляющий тег, который информирует, как dbt обрабатывает файлы свойств.
 
@@ -75,6 +75,6 @@ models:
 
 </Tabs>
 
-## ЧАВО
+## ЧАВО {#faqs}
 
 <FAQ path="Project/why-version-2" />

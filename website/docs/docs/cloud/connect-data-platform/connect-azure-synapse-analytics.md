@@ -4,15 +4,15 @@ description: "Настройка подключения Azure Synapse Analytics.
 sidebar_label: "Подключение Azure Synapse Analytics"
 ---
 
-# Подключение Azure Synapse Analytics
+# Подключение Azure Synapse Analytics {#connect-azure-synapse-analytics}
 
-## Поддерживаемые методы аутентификации
+## Поддерживаемые методы аутентификации {#supported-authentication-methods}
 Поддерживаемые методы аутентификации:
 - Сервисный принципал Microsoft Entra ID
 - Пароль Active Directory
 - Аутентификация SQL сервера
 
-### Сервисный принципал Microsoft Entra ID
+### Сервисный принципал Microsoft Entra ID {#microsoft-entra-id-service-principal}
 Ниже приведены необходимые поля для настройки подключения к Azure Synapse Analytics с использованием аутентификации сервисного принципала Microsoft Entra ID.
 
 | Поле | Описание |
@@ -25,7 +25,7 @@ sidebar_label: "Подключение Azure Synapse Analytics"
 | **Client ID** | **application (client) ID id** сервисного принципала. |
 | **Client secret** | **client secret** сервисного принципала (не **client secret id**). |  
 
-### Пароль Active Directory
+### Пароль Active Directory {#active-directory-password}
 
 Ниже приведены необходимые поля для настройки подключения к Azure Synapse Analytics с использованием аутентификации по паролю Active Directory.
 
@@ -38,7 +38,7 @@ sidebar_label: "Подключение Azure Synapse Analytics"
 | **User** | Имя пользователя AD. |
 | **Password** | Пароль имени пользователя AD. |
 
-### Аутентификация SQL сервера
+### Аутентификация SQL сервера {#sql-server-authentication}
 
 Ниже приведены необходимые поля для настройки подключения к Azure Synapse Analytics с использованием аутентификации SQL сервера.
 
@@ -51,7 +51,7 @@ sidebar_label: "Подключение Azure Synapse Analytics"
 | **User** | Имя пользователя. |
 | **Password** | Пароль имени пользователя. |
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 ## Конфигурация
 

@@ -13,7 +13,7 @@ level: 'Intermediate'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Переход от <Constant name="core" /> к <Constant name="cloud" /> упрощает рабочие процессы аналитической инженерии, позволяя командам разрабатывать, тестировать, развёртывать и исследовать аналитические продукты с помощью одного полностью управляемого программного сервиса.
 
@@ -37,7 +37,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 </Expandable>
 
-## Чему вы научитесь
+## Чему вы научитесь {#what-youll-learn}
 
 Это руководство описывает шаги, которые необходимо выполнить для перехода с <Constant name="core" /> на <Constant name="cloud" />, а также выделяет необходимые технические изменения:
 
@@ -50,17 +50,17 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - [Конфигурация моделей](/guides/core-to-cloud-1?step=10): Получите представление о проверке и запуске моделей в <Constant name="cloud" />, используя либо <Constant name="cloud_ide" />, либо CLI <Constant name="cloud" />.
 - [Что дальше?](/guides/core-to-cloud-1?step=11): Содержит краткое изложение ключевых выводов и описание того, чего ожидать в следующих руководствах.
 
-### Связанные материалы
+### Связанные материалы {#related-docs}
 - [Изучайте <Constant name="cloud" />](https://learn.getdbt.com) — обучение по видео по запросу.
 - Запишитесь на [демонстрации с экспертами](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите практические инсайты.
 - Работайте с командой [Professional Services от dbt Labs](https://www.getdbt.com/dbt-labs/services), чтобы поддержать вашу организацию данных и процесс миграции.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - У вас уже есть проект <Constant name="core" />, подключённый к репозиторию <Constant name="git" /> и платформе данных, поддерживаемой в [<Constant name="cloud" />](/docs/cloud/connect-data-platform/about-connections).
 - У вас есть учётная запись <Constant name="cloud" />. **[Нет учётной записи? Начните бесплатный пробный период уже сегодня](https://www.getdbt.com/signup)**!
 
-## Настройка аккаунта
+## Настройка аккаунта {#account-setup}
 
 В этом разделе описаны шаги по настройке вашей учетной записи <Constant name="cloud" /> и ее конфигурации для вашей команды.
 
@@ -71,14 +71,14 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 3. Настройте [Single Sign-On (SSO)](/docs/cloud/manage-access/sso-overview) или [Role-based access control (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) для удобного и безопасного доступа. <Lifecycle status="managed,managed_plus" />
    - Это устраняет необходимость хранить пароли и секретные переменные окружения локально.
 
-### Дополнительная конфигурация
+### Дополнительная конфигурация {#additional-configuration}
 Изучите эти дополнительные конфигурации для улучшения производительности и надежности:
 
 1. В **Настройках аккаунта** включите [частичный парсинг](/docs/cloud/account-settings#partial-parsing), чтобы перепарсить только измененные файлы, экономя время.
 
 2. В разделе **Account settings** включите [Git repo caching](/docs/cloud/account-settings#git-repository-caching) для повышения надежности заданий и защиты от сбоев сторонних сервисов. <Lifecycle status="managed,managed_plus" />
 
-## Настройка платформы данных
+## Настройка платформы данных {#data-platform-setup}
 
 В этом разделе описываются ключевые моменты и подходы к подключению вашей платформы данных к <Constant name="cloud" />.
 
@@ -98,13 +98,13 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 2. Вы можете проверить ваши подключения к платформе данных, нажав кнопку **Тестировать подключение** в настройках ваших учетных данных для развертывания и разработки.
 
-### Дополнительная конфигурация
+### Дополнительная конфигурация {#additional-configuration-1}
 
 Изучите эти дополнительные конфигурации для дальнейшей оптимизации настройки вашей платформы данных:
 
 1. Используйте [OAuth connections](/docs/cloud/manage-access/set-up-snowflake-oauth), которые обеспечивают безопасную аутентификацию с использованием SSO вашей платформы данных. <Lifecycle status="managed,managed_plus" />
 
-## Настройка Git
+## Настройка Git {#git-setup}
 
 Ваш существующий исходный код проекта dbt должен храниться в репозитории <Constant name="git" />. В этом разделе вы подключите исходный код существующего проекта dbt из <Constant name="git" /> к <Constant name="cloud" />.
 
@@ -116,7 +116,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
      Этот способ предпочтителен благодаря своей простоте, функциям безопасности (включая безопасную авторизацию OAuth и автоматизированные процессы, такие как CI-сборки при pull request), а также общей удобству использования.
    - [Импортировать репозиторий <Constant name="git" />](/docs/cloud/git/import-a-project-by-git-url) из любого допустимого <Constant name="git" /> URL, который указывает на проект dbt.
 
-## Настройка разработчика
+## Настройка разработчика {#developer-setup}
 
 В этом разделе описываются конфигурации для разработки, которые понадобятся вам для проекта <Constant name="cloud" />. В рамках раздела рассматриваются следующие категории:
 
@@ -125,7 +125,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - [Дополнительная конфигурация](/guides/core-to-cloud-1?step=7#additional-configuration-2)
 - [Команды <Constant name="cloud" />](/guides/core-to-cloud-1?step=7#dbt-cloud-commands)
 
-### Окружения dbt
+### Окружения dbt {#dbt-environments}
 
 Наиболее распространенные среды данных — это производственная, промежуточная и среда разработки. Способ, которым dbt Core управляет [средами](/docs/environments-in-dbt), заключается в использовании `target`, которые представляют собой различные наборы деталей подключения. 
 
@@ -136,7 +136,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - Добавления атрибутов `profiles.yml` в настройки окружений <Constant name="cloud" /> с помощью [Extended Attributes](/docs/dbt-cloud-environments#extended-attributes).
 - Использования [кэширования Git‑репозиториев](/docs/cloud/account-settings#git-repository-caching) для защиты от сбоев сторонних сервисов, ошибок аутентификации Git и других проблем. <Lifecycle status="managed,managed_plus" />
 
-### Начальные шаги настройки
+### Начальные шаги настройки {#initial-setup-steps}
 1. **Настройка окружения разработки** &mdash; Создайте окружение [development](/docs/dbt-cloud-environments#create-a-development-environment) и [учётные данные для разработки](/docs/cloud/studio-ide/develop-in-studio#access-the-cloud-ide). Это необходимо, чтобы получить доступ к вашему dbt‑проекту и начать разработку.
 
 2. **Версия dbt Core** &mdash; В вашем окружении <Constant name="cloud" /> выберите [release track](/docs/dbt-versions/cloud-release-tracks) для регулярных обновлений версии dbt. Если ваша команда планирует использовать и dbt Core, и <Constant name="cloud" /> для разработки или деплоя dbt‑проекта, вы можете выполнить команду `dbt --version` в командной строке, чтобы узнать, какую версию dbt Core вы используете.
@@ -148,15 +148,15 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 4. **Инструменты разработки** &mdash; Настройте рабочее пространство для разработки с помощью [CLI <Constant name="cloud" />](/docs/cloud/cloud-cli-installation) (интерфейс командной строки или редактор кода) или [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) (в браузере), чтобы писать код dbt, тестировать, запускать и версионировать его в удобном для вас инструменте.
    - Если ранее у вас был установлен <Constant name="core" />, в документации по [установке CLI <Constant name="cloud" />](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli) есть дополнительная информация о том, как установить CLI <Constant name="cloud" />, создать алиасы или удалить <Constant name="core" /> для более плавного перехода.
 
-### Дополнительная конфигурация
+### Дополнительная конфигурация {#additional-configuration-2}
 Изучите эти дополнительные конфигурации для дальнейшей оптимизации вашей настройки разработчика:
 
 1. **Кастомные имена целей** &mdash; Использование [`custom target.names`](/docs/build/custom-target-names) в ваших проектах dbt помогает идентифицировать различные среды (например, разработка, промежуточная и производственная). Хотя вы можете указать значения `custom target.name` в ваших учетных данных разработчика или настройке оркестрации, мы рекомендуем использовать [переменные окружения](/docs/build/environment-variables) как предпочтительный метод. Они предлагают более ясный способ управления различными средами и лучше поддерживаются функцией частичного парсинга dbt, в отличие от использования логики [`{{ target }}`](/reference/dbt-jinja-functions/target), которая предназначена для определения подключения к хранилищу данных.
 
-### Команды dbt
+### Команды dbt {#dbt-commands}
 1. Ознакомьтесь с [командами dbt](/reference/dbt-commands), которые поддерживаются для разработки в <Constant name="cloud" />. Например, `dbt init` не требуется в <Constant name="cloud" />, так как вы можете создать новый проект напрямую в <Constant name="cloud" />.
 
-## Переменные окружения
+## Переменные окружения {#environment-variables}
 В этом разделе объясняется, как настраивать и управлять переменными окружения <Constant name="cloud" /> для вашего проекта. Рассматриваются следующие категории:
 - [Переменные окружения в <Constant name="cloud" />](/guides/core-to-cloud-1?step=7#environment-variables-in-dbt-cloud)
 - [Порядок приоритета переменных окружения <Constant name="cloud" />](/guides/core-to-cloud-1?step=7#dbt-cloud-environment-variables-order-of-precedence)
@@ -166,14 +166,14 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 В dbt Core переменные окружения или функция [`env_var`](/reference/dbt-jinja-functions/env_var) определяются вручную разработчиком или в внешнем приложении, выполняющем dbt.
 
-### Переменные окружения в dbt
+### Переменные окружения в dbt {#environment-variables-in-dbt}
   - Переменные окружения <Constant name="cloud" /> должны иметь префикс `DBT_` (включая `DBT_ENV_CUSTOM_ENV_` или `DBT_ENV_SECRET`).
   - Если ваши переменные окружения <Constant name="core" /> не следуют этому соглашению об именовании, выполните [«find and replace»](/docs/cloud/studio-ide/develop-in-studio#dbt-cloud-ide-features) в вашем проекте, чтобы убедиться, что все ссылки на эти переменные окружения используют корректные соглашения об именовании.
 - <Constant name="cloud" /> обеспечивает защиту переменных окружения, которые позволяют более гибко настраивать подключения к хранилищам данных или интеграции с git‑провайдерами, предлагая дополнительные меры для чувствительных значений — например, использование префикса `DBT_ENV_SECRET` для сокрытия таких ключей в логах и пользовательском интерфейсе.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/project-environment-view.png" title="Установка значений на уровне проекта и среды"/>
 
-### Порядок приоритета переменных окружения dbt
+### Порядок приоритета переменных окружения dbt {#dbt-environment-variables-order-of-precedence}
 Переменные окружения в <Constant name="cloud" /> управляются с помощью четкого [порядка приоритета](/docs/build/environment-variables#setting-and-overriding-environment-variables), который позволяет пользователям задавать значения на четырех уровнях (от высшего к низшему приоритету):
    - Уровень задания (job override) или в <Constant name="cloud_ide" /> для отдельного разработчика (personal override). _Наивысший приоритет_
    - Уровень окружения, который может быть переопределен уровнем задания или персональным переопределением.
@@ -182,13 +182,13 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
   
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/env-var-precdence.png" title="Порядок приоритета переменных окружения"/>
 
-### Настройка переменных окружения в dbt
+### Настройка переменных окружения в dbt {#set-environment-variables-in-dbt}
 
 - Чтобы установить эти переменные для всего проекта или конкретных сред, перейдите в **Развертывание** > **Среды** > вкладка **Переменные окружения**.
 - Чтобы установить эти переменные на уровне задания, перейдите в **Развертывание** > **Задания** > **Выберите ваше задание** > **Настройки** > **Расширенные настройки**.
 - Чтобы установить эти переменные на уровне личного переопределения, перейдите в **Настройки профиля** > **Учетные данные** > **Выберите ваш проект** > **Переменные окружения**.
 
-## Настройка оркестрации
+## Настройка оркестрации {#orchestration-setup}
 
 В этом разделе описываются соображения и методы настройки сред и заданий <Constant name="cloud" /> для оркестрации. В рамках раздела рассматриваются следующие категории:
 
@@ -197,17 +197,17 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - [Дополнительная конфигурация](/guides/core-to-cloud-1?step=8#additional-configuration-3)
 - [Настройка CI/CD](/guides/core-to-cloud-1?step=8#cicd-setup)
 
-### Среды dbt
+### Среды dbt {#dbt-environments-1}
 Чтобы использовать [планировщик заданий <Constant name="cloud" />](/docs/deploy/job-scheduler), настройте одну среду как продакшн‑среду. Это будет среда [deployment](/docs/deploy/deploy-environments). Вы можете создать несколько сред для разных этапов конвейера развертывания, например для разработки, staging/QA и production.
 
-### Начальные шаги настройки
+### Начальные шаги настройки {#initial-setup-steps-1}
 1. **Версия <Constant name="core" />** &mdash; В настройках среды сконфигурируйте <Constant name="cloud" /> с той же версией <Constant name="core" />.
    - После завершения полной миграции мы рекомендуем перевести ваши среды на [release tracks](/docs/dbt-versions/cloud-release-tracks), чтобы всегда получать самые новые возможности и улучшения. Это нужно сделать только один раз.
 
 2. **Настройка заданий** &mdash; [Создайте задания](/docs/deploy/deploy-jobs#create-and-schedule-jobs) для плановых или событийных dbt‑задач. Вы можете использовать выполнение по cron, ручной запуск, запуск по pull request или триггер по завершении другого задания.
    - Обратите внимание, что помимо [заданий в <Constant name="cloud" />](/docs/deploy/jobs) существуют и другие способы планирования и запуска dbt‑задач с помощью сторонних инструментов. Подробнее см. в разделе [Интеграция с другими инструментами](/docs/deploy/deployment-tools).
 
-### Дополнительная конфигурация
+### Дополнительная конфигурация {#additional-configuration-3}
 Изучите следующие дополнительные настройки, чтобы ещё больше оптимизировать оркестрацию в <Constant name="cloud" />:
 
 1. **Пользовательские имена target** &mdash; Используйте переменные окружения, чтобы задать `custom target.name` для каждого [соответствующего задания <Constant name="cloud" />](/docs/build/custom-target-names) на уровне среды.
@@ -222,7 +222,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 6. **<Constant name="explorer" />** — Если вы используете [<Constant name="explorer" />](/docs/explore/explore-projects) и запускаете production‑джобы с помощью внешнего оркестратора, убедитесь, что ваши production‑джобы выполняют `dbt run` или `dbt build`, чтобы обновлять и просматривать модели и их [metadata](/docs/explore/explore-projects#generate-metadata) в <Constant name="explorer" />. Запуск одного лишь `dbt compile` не обновляет метаданные моделей. Кроме того, такие возможности, как lineage на уровне колонок, также требуют наличия метаданных каталога, которые создаются при выполнении `dbt docs generate`. <Lifecycle status="self_service,managed" />
 
-### Настройка CI/CD
+### Настройка CI/CD {#cicd-setup}
 
 Создание собственного решения для эффективной проверки кода при открытии pull request — это сложно. С помощью <Constant name="cloud" /> вы можете включить [continuous integration / continuous deployment (CI/CD)](/docs/deploy/continuous-integration) и настроить <Constant name="cloud" /> так, чтобы он запускал ваши dbt‑проекты во временной схеме при появлении новых коммитов в открытых pull request.
 
@@ -234,7 +234,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 2. Создайте [CI/CD‑задачу](/docs/deploy/ci-jobs), чтобы автоматизировать проверки качества перед развертыванием кода в продакшене.
 3. Запускайте ваши задачи в продакшен‑окружении, чтобы полностью реализовать CI/CD. В дальнейшем pull request’ы также будут использовать результаты последних продакшен‑запусков для сравнения.
 
-## Разработка и исследование моделей
+## Разработка и исследование моделей {#model-development-and-discovery}
 
 В этом разделе вы сможете проверить, корректно ли ваши модели **запускаются** или **компилируются** в выбранном вами инструменте для разработки: [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation).
 
@@ -246,7 +246,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 2. После того как ваша первая задача успешно отработает в production‑окружении, используйте [<Constant name="explorer" />](/docs/explore/explore-projects), чтобы просмотреть [resources](/docs/build/projects) вашего проекта (такие как модели, тесты и метрики) и их <Term id="data-lineage" />, чтобы лучше понять текущее состояние проекта в production. <Lifecycle status="self_service,managed" />
 
-## Что дальше?
+## Что дальше? {#whats-next}
 
 <ConfettiTrigger>
 
@@ -263,7 +263,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 <CoretoCloudTable/>
 
-### Связанные материалы
+### Связанные материалы {#related-docs-1}
 - Видеокурсы [Learn <Constant name="cloud" />](https://learn.getdbt.com) для обучения по запросу.
 - Запишитесь на [демонстрации под руководством экспертов](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите практические инсайты.
 - Работайте с командой [Professional Services от dbt Labs](https://www.getdbt.com/dbt-labs/services), чтобы получить поддержку для вашей организации данных и миграции.

@@ -11,15 +11,15 @@ id: account-specific-features
 
 В этом документе представлен подробный обзор функций, зависящих от типа аккаунта, в <Constant name="cloud" /> в разрезе тарифных планов.
 
-## Copilot
+## Copilot {#copilot}
 
 [<Constant name="copilot" />](/docs/cloud/dbt-copilot) — это AI‑ассистент, предназначенный для ускорения процесса разработки и помощи командам в создании качественных дата‑решений.
 
 <Constant name="copilot" /> доступен всем пользователям <Constant name="cloud" />, однако ограничения зависят от выбранного тарифного плана. Подробности см. на странице [dbt Cloud pricing](https://www.getdbt.com/pricing).
 
-## Возможности Copilot
+## Возможности Copilot {#copilot-features}
 
-### Codegen <Lifecycle status="Starter, Enterprise, Enterprise+"/>
+### Codegen <Lifecycle status="Starter, Enterprise, Enterprise+"/> {#codegen}
 
 <Constant name="copilot" /> codegen — это возможности генерации кода, предоставляемые <Constant name="copilot" />, AI‑ассистентом, встроенным в <Constant name="cloud" />. Эта функция позволяет генерировать SQL‑код, документацию, тесты и семантические модели напрямую из запросов на естественном языке, помогая автоматизировать и ускорить типовые рабочие процессы аналитической инженерии.
 
@@ -34,7 +34,7 @@ id: account-specific-features
 
 <Constant name="copilot" /> codegen доступен в <Constant name="cloud_ide" />, <Constant name="visual_editor" /> и (в ближайшее время) в <Constant name="query_page" />, что позволяет генерировать и редактировать код напрямую в этих интерфейсах.
 
-### Использование собственного ключа (BYOK) <Lifecycle status="Enterprise, Enterprise+"/>
+### Использование собственного ключа (BYOK) <Lifecycle status="Enterprise, Enterprise+"/> {#bring-your-own-key-byok}
 
 BYOK позволяет пользователям предоставлять и управлять собственными ключами шифрования или API‑ключами вместо использования ключей, управляемых вендором или третьей стороной. Это даёт организациям больший контроль над безопасностью данных, соответствием требованиям и контрактами.
 
@@ -62,7 +62,7 @@ BYOK означает, что пользователи могут подключ
 
 Обратите внимание, что BYOK отличается от bring your own cloud (BYOC). BYOK относится к управлению ключами или учётными данными, тогда как BYOC — к запуску программных нагрузок в собственной облачной среде.
 
-### Естественный язык в Canvas <Lifecycle status="Enterprise, Enterprise+"/>
+### Естественный язык в Canvas <Lifecycle status="Enterprise, Enterprise+"/> {#natural-language-in-canvas}
 
 Natural language в <Constant name="visual_editor" /> — это возможность визуально строить модели данных в <Constant name="visual_editor" /> с помощью запросов на естественном языке, используя GenAI (<Constant name="copilot" />). Вы описываете, что хотите создать или преобразовать, а инструмент генерирует соответствующий SQL и шаги трансформации. Знание SQL при этом не требуется. Функция ориентирована на менее технических пользователей или тех, кто предпочитает визуальный или диалоговый интерфейс ручному написанию SQL.
 
@@ -72,11 +72,11 @@ Natural language позволяет напрямую переводить биз
 
 Этот подход особенно ценен для аналитиков и бизнес‑пользователей, позволяя более широкому кругу участников вовлекаться в задачи трансформации данных без потери таких преимуществ dbt, как управление, воспроизводимость и процессы code review.
 
-## Canvas <Lifecycle status="Enterprise, Enterprise+"/>
+## Canvas <Lifecycle status="Enterprise, Enterprise+"/> {#canvas}
 
 <Constant name="visual_editor" /> обеспечивает эффективный доступ к данным и их трансформацию через визуальный интерфейс, объединяя преимущества кодо‑ориентированной разработки с AI‑ассистированной генерацией кода для гибкого и цельного опыта.
 
-## dbt Insights <Lifecycle status="Enterprise, Enterprise+"/>
+## dbt Insights <Lifecycle status="Enterprise, Enterprise+"/> {#dbt-insights}
 
 <Constant name="query_page" /> — это интерактивная функция в <Constant name="cloud" />, предназначенная для написания, выполнения и анализа SQL‑запросов в удобном интерфейсе. Она объединяет выполнение SQL‑запросов, визуализацию результатов и интеграцию с метаданными и документацией dbt в одном месте.
 
@@ -90,40 +90,40 @@ Natural language позволяет напрямую переводить биз
 
 Хотя <Constant name="query_page" /> поддерживает простые визуализации и обмен запросами, он не предназначен для замены BI‑инструментов для отчётности или дашбордов. Основной фокус — быстрый ad hoc анализ и получение инсайтов. Интеграции позволяют при необходимости передавать запросы в downstream BI‑инструменты.
 
-## Кросс-платформенный dbt Mesh <Lifecycle status="Enterprise, Enterprise+"/>
+## Кросс-платформенный dbt Mesh <Lifecycle status="Enterprise, Enterprise+"/> {#dbt-mesh-cross-platform}
 
 dbt Mesh cross‑platform (иногда называемый «cross‑platform Mesh» или «cross‑platform dbt Mesh») — это возможность dbt Mesh, которая позволяет ссылаться на модели и делиться lineage между несколькими dbt‑проектами, даже если эти проекты используют разные платформы хранилищ данных.
 
-## SCIM <Lifecycle status="Enterprise, Enterprise+"/>
+## SCIM <Lifecycle status="Enterprise, Enterprise+"/> {#scim}
 
 SCIM (System for Cross‑Domain Identity Management) автоматизирует управление пользователями и группами, повышая безопасность и упрощая административные задачи. Он обеспечивает автоматическое создание, удаление и обновление профилей пользователей в <Constant name="cloud" />, преимущественно с использованием Okta в качестве провайдера идентификации.
 
-## Гибридные проекты <Lifecycle status="Enterprise, Enterprise+"/>
+## Гибридные проекты <Lifecycle status="Enterprise, Enterprise+"/> {#hybrid-projects}
 
 Hybrid projects — это конфигурация, при которой <Constant name="core" /> и <Constant name="cloud" /> используются в рамках одной организации, часто с общей кодовой базой или платформой данных. Такой подход позволяет разным командам или участникам работать в наиболее удобной для них среде, при этом используя общие ассеты и централизованные метаданные.
 
-## Enterprise security <Lifecycle status="Enterprise+"/>
+## Enterprise security <Lifecycle status="Enterprise+"/> {#enterprise-security}
 
 Enterprise security включает расширенные возможности управления сетевым доступом и правами пользователей, предназначенные для защиты чувствительных данных. Две широко используемые функции в этой области — PrivateLink и IP allowlisting.
 
-### PrivateLink
+### PrivateLink {#privatelink}
 
 PrivateLink обеспечивает безопасное и приватное соединение между средами вашей организации (например, базами данных, системами контроля версий или хранилищами данных) и <Constant name="cloud" />. Такой подход гарантирует, что трафик остаётся внутри сети AWS и не выходит в публичный интернет.
 
-### IP allowlist
+### IP allowlist {#ip-allowlist}
 
 Ограничения по IP (IP allowlist/blocklist) позволяют организациям контролировать, с каких IP‑адресов возможен доступ к аккаунту <Constant name="cloud" />.
 
-## Проекты и слоты выполнения
+## Проекты и слоты выполнения {#projects-and-run-slots}
 
 Количество доступных проектов и run slots для вашей организации зависит от выбранного тарифного плана. Подробную информацию см. на нашей [странице с ценами](https://www.getdbt.com/pricing).
 
-## Обновление тарифного плана
+## Обновление тарифного плана {#upgrade-plan}
 
 <Constant name="cloud" /> предлагает несколько тарифных планов с различным набором функций для удовлетворения потребностей организаций разного масштаба.
 
 Информацию о типах планов и процессе обновления тарифа см. в документе [How to upgrade a dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions).
 
-## Связанные материалы
+## Связанные материалы {#related-content}
 
 - [Биллинг](/docs/cloud/billing)

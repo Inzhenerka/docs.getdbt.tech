@@ -21,7 +21,7 @@ id: uniqueness-two-columns
 
 Вот некоторые подходы:
 
-#### 1. Создать уникальный ключ в модели и протестировать его
+#### 1. Создать уникальный ключ в модели и протестировать его {#1-create-a-unique-key-in-the-model-and-test-that}
 
 <File name='models/orders.sql'>
 
@@ -51,7 +51,7 @@ models:
 
 </File>
 
-#### 2. Протестировать выражение
+#### 2. Протестировать выражение {#2-test-an-expression}
 
 <File name='models/orders.yml'>
 
@@ -68,7 +68,7 @@ models:
 
 </File>
 
-#### 3. Использовать тест `dbt_utils.unique_combination_of_columns`
+#### 3. Использовать тест `dbt_utils.unique_combination_of_columns` {#3-use-the-dbtutilsuniquecombinationofcolumns-test}
 
 Это особенно полезно для больших наборов данных, так как он более производителен. Ознакомьтесь с документацией по [пакетам](/docs/build/packages) для получения дополнительной информации.
 

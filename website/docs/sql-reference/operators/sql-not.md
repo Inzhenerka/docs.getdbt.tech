@@ -15,7 +15,7 @@ slug: /sql-reference/not
 
 На этой странице мы углубимся в то, как использовать оператор NOT, продемонстрируем пример и разберем потенциальные случаи использования.
 
-## Как использовать оператор SQL NOT
+## Как использовать оператор SQL NOT {#how-to-use-the-sql-not-operator}
 
 Булевый оператор NOT похож на прилагательное — его часто ставят перед другим оператором, таким как [BETWEEN](/sql-reference/between), [LIKE](/sql-reference/like)/[ILIKE](/sql-reference/ilike), IS и [IN](/sql-reference/in), чтобы вернуть строки, которые не соответствуют указанным критериям. Ниже приведен пример использования NOT перед оператором LIKE:
 
@@ -29,7 +29,7 @@ slug: /sql-reference/not
 
 Давайте углубимся в практический пример использования оператора NOT.
 
-### Пример SQL NOT
+### Пример SQL NOT {#sql-not-example}
 
 ```sql
 select
@@ -49,10 +49,10 @@ where payment_method not like '%card'
 | 5 | 5 | bank_transfer |
 | 10 | 9 | bank_transfer |
 
-## Синтаксис SQL NOT в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис SQL NOT в Snowflake, Databricks, BigQuery и Redshift {#sql-not-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 [Snowflake](https://docs.snowflake.com/en/sql-reference/operators-logical.html), [Databricks](https://docs.databricks.com/sql/language-manual/functions/not.html), [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators) и [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_logical_condition.html) поддерживают оператор NOT, но могут не поддерживать все вторичные операторы, которые вы обычно используете в паре с оператором NOT. Например, `where <field_name> not ilike <pattern>` является допустимым в Snowflake, Databricks и Redshift, но оператор ILIKE не поддерживается в BigQuery, поэтому этот пример не будет действителен во всех хранилищах данных.
 
-## Примеры использования оператора NOT
+## Примеры использования оператора NOT {#not-operator-example-use-cases}
 
 Вероятно, существует множество сценариев, в которых вам может понадобиться использовать операторы `NOT` в `WHERE`-условиях или `CASE`-выражениях. Однако на практике мы чаще всего видим использование `NOT` для исключения `NULL`-значений или строк, помеченных как удалённые с помощью булевых флагов, в исходных данных в [staging models](/best-practices/how-we-structure/2-staging). Удаление таких ненужных строк потенциально может повысить производительность последующих [intermediate](/best-practices/how-we-structure/3-intermediate) и [mart models](/best-practices/how-we-structure/4-marts).

@@ -5,7 +5,7 @@ description: "Настройка подключения PrivateLink между d
 sidebar_label: "PrivateLink для VCS"
 ---
 
-# Настройка PrivateLink для самостоятельно размещённого облачного VCS <Lifecycle status="managed_plus" />
+# Настройка PrivateLink для самостоятельно размещённого облачного VCS <Lifecycle status="managed_plus" /> {#configuring-privatelink-for-self-hosted-cloud-vcs}
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
@@ -17,17 +17,17 @@ AWS PrivateLink обеспечивает приватное подключени
 
 Вы узнаете, на высоком уровне, какие ресурсы необходимы для реализации этого решения. Облачные среды и процессы развертывания сильно различаются, поэтому информация из этого руководства может потребовать адаптации под ваши требования.
 
-## Обзор соединения PrivateLink
+## Обзор соединения PrivateLink {#privatelink-connection-overview}
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/privatelink-vcs-architecture.png" width="80%" title="Обзор архитектуры dbt и AWS PrivateLink для VCS на высоком уровне" />
 
-### Необходимые ресурсы для создания соединения
+### Необходимые ресурсы для создания соединения {#required-resources-for-creating-a-connection}
 
 Создание соединения Interface VPC PrivateLink требует создания нескольких ресурсов AWS в вашем аккаунте AWS и частной сети, содержащей самоуправляемый экземпляр VCS. Вы несете ответственность за развертывание и обслуживание этих ресурсов. После развертывания информация о соединении и разрешения передаются в dbt Labs для завершения соединения, что позволяет прямое частное подключение VPC к VPC.
 
 Этот подход отличается от других и не требует настраивать VPC peering между вашими аккаунтами AWS и <Constant name="cloud" />.
 
-### 1. Развертывание ресурсов AWS
+### 1. Развертывание ресурсов AWS {#1-provision-aws-resources}
 
 Создание соединения Interface VPC PrivateLink требует создания нескольких ресурсов AWS в аккаунте, содержащем или подключенном к вашему самоуправляемому облачному VCS. Эти ресурсы могут быть созданы через AWS Console, AWS CLI или Infrastructure-as-Code, такие как [Terraform](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) или [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
 
@@ -56,7 +56,7 @@ AWS PrivateLink обеспечивает приватное подключени
 
 <PrivateLinkCrossZone features={'/snippets/_privatelink-cross-zone-load-balancing.md'}/>
 
-### 2. Предоставление доступа аккаунту AWS dbt к VPC Endpoint Service
+### 2. Предоставление доступа аккаунту AWS dbt к VPC Endpoint Service {#2-grant-dbt-aws-account-access-to-the-vpc-endpoint-service}
 
 После развертывания этих ресурсов необходимо предоставить доступ аккаунту AWS dbt Labs для создания VPC Endpoint в нашей VPC. На развернутом VPC Endpoint Service нажмите вкладку **Allow principals**. Нажмите **Allow principals**, чтобы предоставить доступ. Введите ARN следующей роли IAM в соответствующем производственном аккаунте AWS и сохраните изменения ([подробности](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#add-remove-permissions)).
 
@@ -64,7 +64,7 @@ AWS PrivateLink обеспечивает приватное подключени
 
  <Lightbox src="/img/docs/dbt-cloud/privatelink-allow-principals.png" width="70%" title="Введите ARN"/>
 
-### 3. Получение имени VPC Endpoint Service
+### 3. Получение имени VPC Endpoint Service {#3-obtain-vpc-endpoint-service-name}
 
 После того как **VPC Endpoint Service** будет создан и настроен, найдите имя сервиса в консоли AWS, перейдя в раздел **VPC** → **Endpoint Services** и выбрав соответствующий endpoint service. Скопируйте значение поля **service name** и укажите его в обращении в службу поддержки <Constant name="cloud" />.
 
@@ -78,7 +78,7 @@ AWS PrivateLink обеспечивает приватное подключени
 
 :::
 
-### 4. Добавьте необходимую информацию в шаблон ниже и отправьте запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support):
+### 4. Добавьте необходимую информацию в шаблон ниже и отправьте запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support): {#4-add-the-required-information-to-the-template-below-and-submit-your-request-to-dbt-support}
 ```
 Subject: New Multi-Tenant PrivateLink Request
 - Type: VCS Interface-type
@@ -94,7 +94,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-### 5. Принятие запроса на соединение
+### 5. Принятие запроса на соединение {#5-accepting-the-connection-request}
 
 Когда вы получите уведомление о том, что ресурсы развернуты в среде <Constant name="cloud" />, вам необходимо принять подключение к endpoint (если только VPC Endpoint Service не настроен на автоматическое принятие запросов на подключение). Запросы можно принять через консоль AWS, как показано ниже, или с помощью AWS CLI.
 
@@ -102,7 +102,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 После того как вы примете запрос на подключение к endpoint, вы сможете использовать PrivateLink endpoint в <Constant name="cloud" />.
 
-## Настройка в dbt
+## Настройка в dbt {#configure-in-dbt}
 
 После того как dbt подтвердит, что интеграция PrivateLink завершена, вы можете использовать ее в новой или существующей конфигурации git.
 

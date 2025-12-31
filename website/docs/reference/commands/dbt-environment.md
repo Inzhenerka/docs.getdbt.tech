@@ -11,7 +11,7 @@ id: dbt-environment
 
 В этом руководстве перечислены все команды и опции, которые можно использовать с `dbt environment` в [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation). Чтобы воспользоваться ими, добавьте команду или опцию в таком виде: `dbt environment [command]` или используйте сокращённый вариант `dbt env [command]`.
 
-### dbt environment show
+### dbt environment show {#dbt-environment-show}
 
 Команда `show` — предназначена для просмотра сведений о вашей локальной конфигурации и конфигурации <Constant name="cloud" />. Чтобы выполнить команду с помощью <Constant name="cloud_cli" />, введите одну из следующих команд, включая сокращённый вариант:
 
@@ -62,7 +62,7 @@ OS info                        darwin arm64
 
 Обратите внимание, что `<Constant name="cloud" />` не вернёт никаких значений, являющихся секретными ключами, и вернёт `'NA'` для любого поля, которое не настроено.
 
-### Флаги dbt environment
+### Флаги dbt environment {#dbt-environment-flags}
 
 Используйте следующие флаги (или опции) с командой `dbt environment`:
 

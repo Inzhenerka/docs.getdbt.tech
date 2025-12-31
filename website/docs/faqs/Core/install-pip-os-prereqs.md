@@ -8,7 +8,7 @@ id: install-pip-os-prereqs.md
 
 Ваша операционная система может потребовать предварительной настройки перед установкой <Constant name="core" /> с помощью pip. После загрузки и установки всех зависимостей, специфичных для вашей среды разработки, вы можете перейти к [установке <Constant name="core" /> через pip](/docs/core/pip-install).
 
-### CentOS
+### CentOS {#centos}
 
 Для успешной установки и запуска <Constant name="core" /> в CentOS требуется Python и некоторые другие зависимости.
 
@@ -21,7 +21,7 @@ sudo yum install redhat-rpm-config gcc libffi-devel \
 
 ```
 
-### MacOS
+### MacOS {#macos}
 
 Для macOS требуется Python версии 3.8 или выше, чтобы успешно установить и запустить <Constant name="core" />.
 
@@ -37,7 +37,7 @@ python --version
 
 Если ваш компьютер работает на архитектуре Apple M1, мы рекомендуем установить dbt через [Rosetta](https://support.apple.com/en-us/HT211861). Это необходимо для некоторых зависимостей, которые поддерживаются только на процессорах Intel.
 
-### Ubuntu/Debian
+### Ubuntu/Debian {#ubuntudebian}
 
 Для успешной установки и запуска <Constant name="core" /> в Ubuntu требуются Python и другие зависимости.
 
@@ -52,7 +52,7 @@ pip install cryptography~=3.4
 
 ```
 
-### Windows
+### Windows {#windows}
 
 Для успешной установки и работы <Constant name="core" /> в Windows требуются Python и git.
 

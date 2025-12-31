@@ -3,15 +3,15 @@ title: "Конфигурации SingleStore"
 id: "singlestore-configs"
 ---
 
-## Стратегии материализации инкрементальных моделей
+## Стратегии материализации инкрементальных моделей {#incremental-materialization-strategies}
 [Конфигурация `incremental_strategy`](/docs/build/incremental-models#about-incremental_strategy) управляет тем, как dbt строит инкрементальные модели. В настоящее время SingleStoreDB поддерживает только конфигурацию `delete+insert`.
 
 Инкрементальная стратегия `delete+insert` направляет dbt следовать двухэтапному инкрементальному подходу. Сначала она идентифицирует и удаляет записи, отмеченные в блоке `is_incremental()`. Затем эти записи повторно вставляются.
 
-## Оптимизация производительности
+## Оптимизация производительности {#performance-optimizations}
 [Документация по проектированию физической схемы базы данных SingleStore](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design.html) будет полезна, если вы хотите использовать определенные опции (описанные ниже) в вашем проекте dbt.
 
-### Тип хранения
+### Тип хранения {#storage-type}
 SingleStore поддерживает два типа хранения: **In-Memory Rowstore** и **Disk-based Columnstore** (по умолчанию используется последний). Подробности смотрите в [документации](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design/choosing-a-table-storage-type.html). Адаптер dbt-singlestore позволяет указать, на каком типе хранения будет основываться материализация вашей таблицы, используя параметр конфигурации `storage_type`.
 
 <File name='rowstore_model.sql'>
@@ -24,7 +24,7 @@ select ...
 
 </File>
 
-### Ключи
+### Ключи {#keys}
 
 Таблицы SingleStore [шардированы](https://docs.singlestore.com/managed-service/en/getting-started-with-managed-service/about-managed-service/sharding.html) и могут быть созданы с различными определениями столбцов. Адаптер dbt-singlestore поддерживает следующие опции, каждая из которых принимает `column_list` (список имен столбцов) в качестве значения опции. Пожалуйста, обратитесь к [Создание таблицы Columnstore](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/procedures-for-physical-database-schema-design/creating-a-columnstore-table.html) для получения дополнительной информации о различных типах ключей в SingleStore.
 - `primary_key` (переводится как `PRIMARY KEY (column_list)`)
@@ -63,7 +63,7 @@ select ...
 
 </File>
 
-### Индексы
+### Индексы {#indexes}
 Аналогично адаптеру Postgres, модели таблиц, инкрементальные модели, seeds и snapshots могут иметь список определенных `indexes`. Каждый индекс может иметь следующие компоненты:
 - `columns` (список, обязательный): один или несколько столбцов, по которым определяется индекс
 - `unique` (логический, необязательный): должен ли индекс быть объявлен уникальным
@@ -87,7 +87,7 @@ select ...
 
 </File>
 
-### Другие опции
+### Другие опции {#other-options}
 
 Вы можете указать набор символов и сортировку для таблицы, используя опции `charset` и/или `collation`. Поддерживаемые значения для `charset` — `binary`, `utf8` и `utf8mb4`. Поддерживаемые значения для `collation` можно увидеть в выводе SQL-запроса `SHOW COLLATION`. Значения сортировки по умолчанию для соответствующих наборов символов — `binary`, `utf8_general_ci` и `utf8mb4_general_ci`.
 
@@ -106,7 +106,7 @@ select ...
 
 </File>
 
-## Контракты моделей
+## Контракты моделей {#model-contracts}
 
 Начиная с версии 1.5, адаптер `dbt-singlestore` поддерживает контракты моделей.
 
@@ -120,15 +120,15 @@ select ...
 
 Учтите следующие ограничения при использовании контрактов с адаптером `dbt-singlestore`:
 
-### Определения моделей и столбцов:
+### Определения моделей и столбцов: {#model-and-column-definitions}
    - Ограничение `unique` может быть установлено только на уровне модели. Поэтому не устанавливайте его на уровне столбца.
    - Повторяющиеся ограничения вызовут ошибку. Например, установка `primary_key` как в настройках столбца, так и в настройках модели вызовет ошибку.
 
-### Перезапись настроек:
+### Перезапись настроек: {#overwriting-settings}
 
 Настройка контракта переопределяет настройку конфигурации. Например, если вы определяете `primary_key` или `unique_table_key` в конфигурации, а затем также устанавливаете его в контракте, настройка контракта заменяет настройку конфигурации.
 
-### Работа с константами:
+### Работа с константами: {#working-with-constants}
 
 <File name='dim_customers.yml'>
 
@@ -174,7 +174,7 @@ select
 
 </File>
 
-### Ошибочные типы данных
+### Ошибочные типы данных {#misleading-datatypes}
 
 Использование `контрактов моделей` гарантирует, что вы случайно не добавите данные неправильного типа в столбец. Например, если вы ожидаете число в столбце, но случайно указываете текст для добавления, контракт модели поймает это и вернет ошибку.
 

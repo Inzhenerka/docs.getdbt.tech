@@ -12,7 +12,7 @@ level: 'Advanced'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Это руководство научит вас, как создать и разместить простой Python‑приложение, которое будет отслеживать задания <Constant name="cloud" /> и создавать оповещения PagerDuty при сбоях. Для этого, когда задание <Constant name="cloud" /> завершается, приложение будет:
 
@@ -25,7 +25,7 @@ level: 'Advanced'
 
 Вы также можете использовать альтернативные инструменты, например [AWS Lambda](https://ademoverflow.com/en/posts/tutorial-fastapi-aws-lambda-serverless/) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 Это руководство предполагает, что вы уже знакомы со следующим:
 
@@ -34,12 +34,12 @@ level: 'Advanced'
 - Развёртывание кода в serverless‑среде выполнения, такой как fly.io или AWS Lambda
 
 
-## Клонирование репозитория `dbt-cloud-webhooks-pagerduty`
+## Клонирование репозитория `dbt-cloud-webhooks-pagerduty` {#clone-the-dbt-cloud-webhooks-pagerduty-repo}
 
 [Этот репозиторий](https://github.com/dpguthrie/dbt-cloud-webhooks-pagerduty) содержит пример кода для проверки вебхука и создания событий в PagerDuty.
 
 
-## Установка `flyctl` и регистрация на fly.io
+## Установка `flyctl` и регистрация на fly.io {#install-flyctl-and-sign-up-for-flyio}
 
 Следуйте инструкциям для вашей операционной системы в [документации fly.io](https://fly.io/docs/hands-on/install-flyctl/), затем выполните следующие команды в командной строке:
 
@@ -59,7 +59,7 @@ flyctl auth signup
 flyctl auth login
 ```
 
-## Запуск вашего приложения на fly.io
+## Запуск вашего приложения на fly.io {#launch-your-flyio-app}
 Запуск вашего приложения публикует его в интернете и делает его готовым к обработке событий вебхуков:
 ```shell
 flyctl launch
@@ -100,12 +100,12 @@ Wrote config file fly.toml<br/>
 </code>
 </details>
 
-## Создание интеграционного приложения PagerDuty
+## Создание интеграционного приложения PagerDuty {#create-a-pagerduty-integration-application}
 См. [руководство PagerDuty](https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTgw-events-api-v2-overview#getting-started) для получения полных инструкций.
 
 Запомните ключ интеграции для дальнейшего использования.
 
-## Настройка нового вебхука в dbt
+## Настройка нового вебхука в dbt {#configure-a-new-webhook-in-dbt}
 См. [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription) для получения подробных инструкций. В качестве события укажите **Run completed**.
 
 Установите URL вебхука на имя хоста, которое вы создали ранее (`APP_NAME.fly.dev`).
@@ -114,7 +114,7 @@ Wrote config file fly.toml<br/>
 
 *Не тестируйте конечную точку*; это не сработает, пока вы не сохраните ключи аутентификации (следующий шаг).
 
-## Хранение секретов
+## Хранение секретов {#store-secrets}
 Приложению необходимо задать три секрета со следующими именами:
 - `DBT_CLOUD_SERVICE_TOKEN`: [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens) для <Constant name="cloud" />, с как минимум разрешением `Metdata Only`.
 - `DBT_CLOUD_AUTH_TOKEN`: Secret Key для вебхука <Constant name="cloud" />, который вы создали ранее.
@@ -125,7 +125,7 @@ Wrote config file fly.toml<br/>
 flyctl secrets set DBT_CLOUD_SERVICE_TOKEN=abc123 DBT_CLOUD_AUTH_TOKEN=def456 PD_ROUTING_KEY=ghi789
 ```
 
-## Развертывание вашего приложения
+## Развертывание вашего приложения {#deploy-your-app}
 
 После того как вы зададите свои секреты, fly.io выполнит повторное развертывание вашего приложения. Когда оно успешно завершится, вернитесь в настройки вебхука <Constant name="cloud" /> и нажмите **Test Endpoint**.
 

@@ -12,14 +12,14 @@ level: 'Advanced'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Это руководство покажет вам, как обновлять рабочую книгу Tableau, использующую [extracts](https://help.tableau.com/current/pro/desktop/en-us/extracting_data.htm), после того как задание <Constant name="cloud" /> успешно завершилось и появились свежие данные. Интеграция будет:
 
  - Получать уведомление вебхука в Zapier
  - Запускать обновление рабочей книги Tableau
 
-### Предварительные условия
+### Предварительные условия {#prerequisites}
 
 Для настройки интеграции вам необходимо быть знакомым с:
 
@@ -29,17 +29,17 @@ level: 'Advanced'
 - [Версией](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm#rest_api_versioning) REST API Tableau, совместимой с вашим сервером
 
 
-## Получение учетных данных для аутентификации от Tableau
+## Получение учетных данных для аутентификации от Tableau {#obtain-authentication-credentials-from-tableau}
 Чтобы аутентифицироваться с помощью API Tableau, получите [Персональный токен доступа](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) от вашего экземпляра Tableau Server/Cloud. Кроме того, убедитесь, что ваша рабочая книга Tableau использует источники данных, которые позволяют доступ для обновления, что обычно устанавливается при публикации.
 
-## Создание нового Zap в Zapier
+## Создание нового Zap в Zapier {#create-a-new-zap-in-zapier}
 Чтобы запустить действие при доставке вебхука в Zapier, вам нужно создать новый Zap с **Webhooks by Zapier** в качестве Триггера и **Catch Raw Hook** в качестве События. Однако, если вы решите не [проверять подлинность вашего вебхука](/docs/deploy/webhooks#validate-a-webhook), что не рекомендуется, вы можете выбрать **Catch Hook** вместо этого.
 
 Нажмите **Continue**, затем скопируйте URL вебхука.
 
 ![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
 
-## Настройка нового webhook в dbt
+## Настройка нового webhook в dbt {#configure-a-new-webhook-in-dbt}
 Чтобы настроить подписку на webhook для <Constant name="cloud" />, следуйте инструкциям в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed** и измените список **Jobs**, оставив только те задания, которые должны запускать обновление отчета.
 
 Не забудьте сохранить Webhook Secret Key — он понадобится позже. Вставьте webhook URL, полученный из Zapier на шаге 2, в поле **Endpoint** и протестируйте endpoint.
@@ -48,7 +48,7 @@ level: 'Advanced'
 
 Значения в примере тела захардкожены и не отражают ваш проект, но они дают Zapier объект корректной структуры (shape) во время разработки.
 
-## Хранение секретов
+## Хранение секретов {#store-secrets}
 На следующем шаге вам понадобятся секретный ключ вебхука из предыдущего шага и ваши учетные данные для аутентификации Tableau. В частности, вам понадобятся URL вашего сервера/сайта Tableau, имя сервера/сайта, имя PAT и секрет PAT.
 
 Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps), что предотвращает отображение ваших ключей в открытом виде в коде Zap. Вы сможете получить к ним доступ через [утилиту StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
@@ -57,11 +57,11 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 Это руководство использует краткосрочное действие кода для хранения секретов, но вы также можете использовать инструмент, такой как Postman, для взаимодействия с [REST API](https://store.zapier.com/) или создать отдельный Zap и вызвать [Set Value Action](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
 
-### a. Создание подключения Storage by Zapier
+### a. Создание подключения Storage by Zapier {#a-create-a-storage-by-zapier-connection}
 
 Создайте новое подключение на https://zapier.com/app/connections/storage, если у вас его еще нет, и запомните сгенерированный секрет UUID для последующего использования.
 
-### b. Добавление временного шага кода
+### b. Добавление временного шага кода {#b-add-a-temporary-code-step}
 
 Выберите **Run Python** в качестве События и введите следующий код:
 
@@ -76,7 +76,7 @@ store.set('TABLEAU_API_TOKEN_SECRET', 'abc123') #replace with your Tableau API S
 
 Протестируйте шаг, чтобы выполнить код. Вы можете удалить это действие, когда тест пройдет успешно. Ключи останутся сохраненными, если к ним будет доступ хотя бы раз в три месяца.
 
-## Добавление действия кода
+## Добавление действия кода {#add-a-code-action}
 Выберите **Code by Zapier** в качестве Приложения и **Run Python** в качестве События.
 
 В области **Set up action** добавьте два элемента в **Input Data**: `raw_body` и `auth_header`. Свяжите их с полями `1. Raw Body` и `1. Headers Http Authorization` из шага **Catch Raw Hook** выше.
@@ -169,7 +169,7 @@ if hook_data['runStatus'] == "Success":
     return {"message": "Обновление рабочей книги поставлено в очередь"}
 ```
 
-## Тестирование и развертывание
+## Тестирование и развертывание {#test-and-deploy}
 Чтобы внести изменения в ваш код, вы можете изменить его и протестировать снова. Когда вы будете довольны результатом, вы можете опубликовать ваш Zap.
 
 </div>

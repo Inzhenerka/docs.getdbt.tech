@@ -7,7 +7,7 @@ import ProfilesYml from '/snippets/_profiles.yml.md';
 
 <ProfilesYml />
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Установка движка dbt Fusion](/docs/fusion/about-fusion-install)
 - [Профили подключения](/docs/fusion/connect-data-platform-fusion/connection-profiles)

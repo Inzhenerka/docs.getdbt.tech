@@ -24,7 +24,7 @@ meta:
 
 Адаптер `dbt-salesforce` доступен через CLI <Constant name="fusion_engine" />. Чтобы получить доступ к адаптеру, [установите dbt Fusion](/docs/fusion/about-fusion-install). В качестве интерфейса для разработки рекомендуется использовать [расширение VS Code](/docs/fusion/install-dbt-extension). Поддержка <Constant name="dbt_platform" /> появится в ближайшее время.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 Перед тем как подключить dbt к Salesforce Data Cloud, вам потребуется следующее:
 
@@ -36,7 +36,7 @@ meta:
 - [Приватный ключ и файл `server.key`](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm)
 - Пользователь с разрешением `Data Cloud Admin`
 
-## Конфигурация Fusion
+## Конфигурация Fusion {#configure-fusion}
 
 Чтобы подключить dbt к Salesforce Data Cloud, настройте файл `profiles.yml`. Используйте следующую конфигурацию:
 
@@ -66,6 +66,6 @@ company-name:
 
 <!--Для username в примере выше указано [Data cloud instance], но здесь в примере используется email-->
 
-## Больше информации
+## Больше информации {#more-information}
 
 Дополнительную информацию о конфигурации, специфичной для Salesforce, см. в [справочнике по настройкам адаптера Salesforce](/reference/resource-configs/data-cloud-configs).

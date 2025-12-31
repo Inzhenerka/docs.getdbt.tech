@@ -24,7 +24,7 @@ dbt Labs не рекомендует использовать управляем
 6. Нажмите **Create**.
    <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/managed-repo.png" title="Добавление управляемого репозитория"/>
 
-## Загрузка управляемого репозитория
+## Загрузка управляемого репозитория {#download-managed-repository}
 
 Чтобы скачать копию вашего управляемого репозитория из <Constant name="cloud" /> на локальный компьютер:
 

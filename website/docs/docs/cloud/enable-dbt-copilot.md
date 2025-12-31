@@ -4,7 +4,7 @@ sidebar_label: "Включение dbt Copilot"
 description: "Включение dbt Copilot — AI‑ассистента в dbt, который ускоряет разработку."
 ---
 
-# Включение dbt Copilot <Lifecycle status="self_service,managed,managed_plus" />
+# Включение dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> {#enable-dbt-copilot}
 
 <IntroText>
 Включите <Constant name="copilot" />, AI‑ассистента, в <Constant name="cloud" />, чтобы ускорить разработку и сосредоточиться на создании качественных данных.
@@ -12,7 +12,7 @@ description: "Включение dbt Copilot — AI‑ассистента в db
 
 На этой странице объясняется, как включить <Constant name="copilot" /> в <Constant name="cloud" />, чтобы ускорить разработку и дать вам возможность сосредоточиться на предоставлении качественных данных.
 
-## Предварительные условия
+## Предварительные условия {#prerequisites}
 
 - Доступно только в <Constant name="dbt_platform" />.
 - Необходимо иметь аккаунт [<Constant name="cloud" /> Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
@@ -22,7 +22,7 @@ description: "Включение dbt Copilot — AI‑ассистента в db
   - При использовании [BYOK](#bringing-your-own-openai-api-key-byok) убедитесь, что включены последние модели генерации текста, а также модель `text-embedding-3-small`.
 - Включите AI‑функции, следуя шагам в следующем разделе в **Account settings**.
 
-## Включение dbt Copilot
+## Включение dbt Copilot {#enable-dbt-copilot-1}
 
 Чтобы подключить <Constant name="copilot" />, администратор <Constant name="cloud" /> может выполнить следующие шаги:
 
@@ -36,7 +36,7 @@ description: "Включение dbt Copilot — AI‑ассистента в db
 
 <Lightbox src="/img/docs/deploy/example-account-settings.png" width="90%" title="Пример опции «Enable account access to dbt Copilot features» в настройках аккаунта" />
 
-## Использование собственного OpenAI API key (BYOK) <Lifecycle status="managed_plus,managed" /> 
+## Использование собственного OpenAI API key (BYOK) <Lifecycle status="managed_plus,managed" /> {#bringing-your-own-openai-api-key-byok}
 
 После включения AI‑функций вы можете указать OpenAI API key вашей организации. В этом случае <Constant name="cloud" /> будет использовать ваш аккаунт OpenAI и соответствующие условия для работы <Constant name="copilot" />. Это приведёт к начислению платежей вашей организации со стороны OpenAI за запросы, выполняемые <Constant name="copilot" />.
 
@@ -45,7 +45,7 @@ description: "Включение dbt Copilot — AI‑ассистента в db
 - собственного OpenAI API key
 - Azure OpenAI
 
-## AI‑интеграции
+## AI‑интеграции {#ai-integrations}
 
 После того как AI‑функции были [включены](/docs/cloud/enable-dbt-copilot#enable-dbt-copilot), вы можете использовать AI‑интеграцию от dbt Labs или подключить собственного провайдера для поддержки AI‑возможностей <Constant name="cloud" />, таких как [<Constant name="copilot" />](/docs/cloud/dbt-copilot) и [Ask dbt](/docs/cloud-integrations/snowflake-native-app).
 
@@ -86,7 +86,7 @@ description: "Включение dbt Copilot — AI‑ассистента в db
     - [С использованием Target URI](#from-a-target-uri)
     - [Путём ручного ввода учётных данных](#manually-providing-the-credentials)
 
-  #### Из целевого URI
+  #### Из целевого URI {#from-a-target-uri}
 
   1. Найдите URI вашего развёртывания Azure OpenAI на странице сведений о развёртывании в Azure.
   2. В разделе **Azure OpenAI** в <Constant name="cloud" /> выберите вкладку **From Target URI**.
@@ -96,7 +96,7 @@ description: "Включение dbt Copilot — AI‑ассистента в db
   6. Нажмите **Save**.
   <Lightbox src="/img/docs/dbt-cloud/account-integration-azure-target.png" width="85%" title="Пример раздела интеграции Azure OpenAI" />
 
-  #### Ручной ввод учётных данных
+  #### Ручной ввод учётных данных {#manually-providing-the-credentials}
 
   1. Найдите конфигурацию Azure OpenAI на странице сведений о развёртывании в Azure.
   2. В разделе **Azure OpenAI** в <Constant name="cloud" /> выберите вкладку **Manual Input**.

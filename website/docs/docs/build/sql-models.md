@@ -4,13 +4,13 @@ description: "SQL-модели — это строительные блоки в
 id: "sql-models"
 ---
 
-## Связанные справочные документы
+## Связанные справочные документы {#related-reference-docs}
 * [Конфигурации моделей](/reference/model-configs)
 * [Свойства моделей](/reference/model-properties)
 * [Команда `run`](/reference/commands/run)
 * [Функция `ref`](/reference/dbt-jinja-functions/ref)
 
-## Начало работы
+## Начало работы {#getting-started}
 
 :::info Создание ваших первых моделей
 
@@ -104,14 +104,14 @@ create view dbt_alice.customers as (
 
 Вы можете использовать _конфигурации_, чтобы изменить любое из этих поведений — об этом позже.
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs}
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Models/create-a-schema" />
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 <FAQ path="Models/sql-dialect" />
 
-## Настройка моделей
+## Настройка моделей {#configuring-models}
 Конфигурации — это «настройки моделей», которые вы можете задавать в файле `dbt_project.yml`, а также непосредственно в файле модели с помощью блока `config`. Примеры таких конфигураций включают:
 
 * Изменение <Term id="materialization" /> используемого моделью &mdash; [материализация](/docs/build/materializations) определяет SQL, который dbt использует для создания модели в вашем хранилище данных.
@@ -168,12 +168,12 @@ with customer_orders as ...
 
 Вы можете узнать больше о конфигурациях в [справочной документации](/reference/model-configs).
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs-1}
 <FAQ path="Models/available-materializations" />
 <FAQ path="Models/available-configurations" />
 
 
-## Построение зависимостей между моделями
+## Построение зависимостей между моделями {#building-dependencies-between-models}
 Вы можете строить зависимости между моделями, используя функцию [`ref`](/reference/dbt-jinja-functions/ref) вместо имен таблиц в запросе. Используйте имя другой модели в качестве аргумента для `ref`.
 
 <Tabs
@@ -271,11 +271,11 @@ dbt использует функцию `ref` для:
 
 Кроме того, функция `ref` поощряет вас писать модульные преобразования, чтобы вы могли повторно использовать модели и уменьшить повторяющийся код.
 
-## Тестирование и документирование моделей
+## Тестирование и документирование моделей {#testing-and-documenting-models}
 
 Вы также можете документировать и тестировать модели &mdash; перейдите к разделу о [тестировании](/docs/build/data-tests) и [документировании](/docs/build/documentation) для получения дополнительной информации.
 
-## Дополнительные часто задаваемые вопросы
+## Дополнительные часто задаваемые вопросы {#additional-faqs}
 <FAQ path="Project/example-projects" alt_header="Есть ли примеры dbt моделей?" />
 <FAQ path="Models/configurable-model-path" />
 <FAQ path="Models/model-custom-schemas" />

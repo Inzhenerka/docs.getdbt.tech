@@ -7,7 +7,7 @@ unlisted: true
 
 ---
 
-# Настройка dbt Snowflake Native App <Lifecycle status='preview' />
+# Настройка dbt Snowflake Native App <Lifecycle status='preview' /> {#set-up-the-dbt-snowflake-native-app}
 
 [dbt Snowflake Native App](/docs/cloud-integrations/snowflake-native-app) включает следующие возможности непосредственно в интерфейсе Snowflake: <Constant name="explorer" />, чат-бот **Ask dbt**, а также функции наблюдаемости оркестрации из <Constant name="cloud" />.
 
@@ -23,10 +23,10 @@ unlisted: true
 
 Порядок шагов немного отличается, если вы приобрели публичный листинг Native App: в этом случае вы начинаете с покупки Native App, выполнения предварительных требований, а затем последовательно выполняете оставшиеся шаги.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 Ниже приведены предварительные требования для <Constant name="cloud" /> и Snowflake.
 
-### dbt
+### dbt {#dbt}
 
 - У вас должен быть аккаунт <Constant name="cloud" /> на тарифе уровня Enterprise, размещённый в регионе AWS или Azure. Если у вас его ещё нет, пожалуйста, [свяжитесь с нами](mailto:sales_snowflake_marketplace@dbtlabs.com), чтобы начать.
     - В настоящее время <Constant name="semantic_layer" /> недоступен для Azure ST-инстансов, и чат-бот **Ask dbt** не будет работать в dbt Snowflake Native App без него.
@@ -35,14 +35,14 @@ unlisted: true
 - У вас должна быть настроена [production deployment environment](/docs/deploy/deploy-environments#set-as-production-environment).
     - В этом окружении должен быть как минимум один успешный запуск job, включающий шаг `docs generate`.
 
-### Snowflake
+### Snowflake {#snowflake}
 
 - У вас есть доступ **ACCOUNTADMIN** в Snowflake.
 - Ваш аккаунт Snowflake должен иметь доступ к интеграции Native App/SPCS и конфигурациям NA/SPCS (публичный превью планируется в конце июня). Если вы не уверены, уточните у вашего аккаунт-менеджера Snowflake.
 - Аккаунт Snowflake должен находиться в регионе AWS. Azure в настоящее время не поддерживается для интеграции Native App/SPCS.
 - У вас должен быть доступ к Snowflake Cortex через ваши права в Snowflake, и [Snowflake Cortex должен быть доступен в вашем регионе](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#availability). Без этого Ask dbt работать не будет.
 
-## Настройка конфигурации для Ask dbt
+## Настройка конфигурации для Ask dbt {#set-up-the-configuration-for-ask-dbt}
 
 Настройте <Constant name="cloud" /> и Snowflake Cortex для работы чат-бота **Ask dbt**.
 
@@ -69,7 +69,7 @@ unlisted: true
 
     Обязательно замените `SNOWFLAKE.CORTEX_USER`, `DEPLOYMENT_USER` и `SL_USER` на соответствующие значения для вашей среды.
 
-## Настройка dbt
+## Настройка dbt {#configure-dbt}
 Соберите следующую информацию из <Constant name="cloud" /> для настройки приложения.
 
 1. В левой панели навигации нажмите на имя вашего аккаунта. Затем выберите **Account settings** и перейдите в **API tokens > Service tokens**. Создайте service token с доступом ко всем проектам, которые вы хотите использовать в dbt Snowflake Native App. Назначьте следующие наборы прав:
@@ -88,7 +88,7 @@ unlisted: true
     - **Account ID** — числовая строка, представляющая ваш аккаунт <Constant name="cloud" />.
     - **Access URL** — если у вас мультиарендный аккаунт в Северной Америке, используйте `cloud.getdbt.com` в качестве access URL. Для всех остальных регионов см. раздел [Access, Regions, & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) и найдите нужный access URL в таблице.
 
-## Установка dbt Snowflake Native App
+## Установка dbt Snowflake Native App {#install-the-dbt-snowflake-native-app}
 1. Перейдите к листингу dbt Snowflake Native App:
     - **Private listing** (рекомендуется) — используйте ссылку из письма, отправленного вам.
     - **Public listing** — перейдите в [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3).
@@ -97,7 +97,7 @@ unlisted: true
     Появится сообщение с предложением изменить приложение и предоставить доступ к warehouse для установки. dbt Labs настоятельно рекомендует не изменять имя приложения, если в этом нет необходимости.
 1. После успешной установки dbt Snowflake Native App нажмите **Configure** в модальном окне.
 
-## Настройка dbt Snowflake Native App
+## Настройка dbt Snowflake Native App {#configure-the-dbt-snowflake-native-app}
 
 1. На странице **Activate dbt** нажмите **Grant** в **Step 1: Grant Account Privileges**.
 1. После успешного предоставления прав нажмите **Review** в **Step 2: Allow Connections**.
@@ -113,7 +113,7 @@ unlisted: true
 
     <Lightbox src="/img/docs/cloud-integrations/example-dbt-snowflake-native-app.png" title="Пример dbt Snowflake Native App"/>
 
-## Проверка успешной установки приложения
+## Проверка успешной установки приложения {#verify-the-app-installed-successfully}
 
 Чтобы убедиться, что приложение установлено корректно, выберите любой из следующих пунктов в боковом меню:
 
@@ -125,12 +125,12 @@ unlisted: true
 
 <Lightbox src="/img/docs/cloud-integrations/example-ask-dbt-native-app.png" title="Пример чат-бота Ask dbt"/>
 
-## Подключение новых пользователей
+## Подключение новых пользователей {#onboard-new-users}
 1. В боковом меню Snowflake выберите **Data Products > Apps**. Выберите **dbt** из списка, чтобы открыть страницу конфигурации приложения. Затем нажмите **Manage access** (в правом верхнем углу), чтобы подключить новых пользователей к приложению. Назначьте роль **APP_USER** тем ролям, которым нужен доступ к приложению без возможности редактировать конфигурации. Назначьте **APP_ADMIN** ролям, которые должны иметь возможность редактировать или удалять конфигурации.
 
 1. Новые пользователи могут получить доступ к приложению либо по URL Snowflake app, который был им предоставлен, либо нажав **Launch app** на странице конфигурации приложения.
 
-## FAQs
+## FAQs {#faqs}
 
 <Expandable alt_header="Не удаётся установить dbt Snowflake Native App из Snowflake Marketplace" >
 

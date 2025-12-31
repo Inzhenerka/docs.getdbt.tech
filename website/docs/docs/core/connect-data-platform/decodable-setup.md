@@ -25,13 +25,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к Decodable с помощью **dbt-decodable**
+## Подключение к Decodable с помощью **dbt-decodable** {#connecting-to-decodable-with-dbt-decodable}
 Выполните следующие шаги для подключения к Decodable с помощью dbt.
 
-### Предварительные условия
+### Предварительные условия {#prerequisites}
 Для правильного подключения к Decodable у вас должен быть установлен Decodable CLI, и вы должны хотя бы раз войти в Decodable с его помощью. См. <a href="https://docs.decodable.co/docs/setup#install-the-cli-command-line-interface">Установка Decodable CLI</a> для получения дополнительной информации.
 
-### Шаги
+### Шаги {#steps}
 Чтобы подключиться к Decodable с помощью dbt, вам нужно добавить профиль Decodable в ваш файл `profiles.yml`. Профиль Decodable имеет следующие поля.
 
 <File name='~/.dbt/profiles.yml'>
@@ -55,7 +55,7 @@ dbt-decodable:
 
 </File>
 
-#### Описание полей профиля
+#### Описание полей профиля {#description-of-profile-fields}
 
 | Опция   | Описание                                          | Обязательно? | Пример             |
 |----------|------------------------------------------------------|-----------|---------------------|
@@ -70,7 +70,7 @@ dbt-decodable:
 | local_namespace  | Укажите префикс, который будет добавлен ко всем создаваемым на Decodable сущностям. По умолчанию `none`, что означает, что префикс не добавляется.    | Необязательно  | `none`         |
 
 
-## Поддерживаемые функции
+## Поддерживаемые функции {#supported-features}
 
 | Название | Поддерживается | Примечания |
 |---|---|---|
@@ -84,7 +84,7 @@ dbt-decodable:
 | Генерация документации | Нет | Для получения информации о ваших моделях проверьте ваш аккаунт Decodable.  |
 | Снимки | Нет | Снимки и команда `dbt snapshot` не поддерживаются.  |
 
-## Дополнительные операции 
+## Дополнительные операции {#additional-operations}
 
 `dbt-decodable` предоставляет набор команд для управления ресурсами проекта на Decodable. Эти команды можно выполнить с помощью `dbt run-operation {name} --args {args}`.
 

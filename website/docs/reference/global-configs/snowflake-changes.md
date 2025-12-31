@@ -4,7 +4,7 @@ id: "snowflake-changes"
 sidebar: "Snowflake"
 ---
 
-## Флаг `enable_truthy_nulls_equals_macro`
+## Флаг `enable_truthy_nulls_equals_macro` {#the-enabletruthynullsequalsmacro-flag}
 
 Флаг `enable_truthy_nulls_equals_macro` по умолчанию установлен в `False`. Установка его значения в `True` в файле `dbt_project.yml` включает null-safe сравнение в макросе dbt `equals`, который используется в materialization типа incremental и snapshot.
 

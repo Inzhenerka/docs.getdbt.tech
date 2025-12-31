@@ -5,7 +5,7 @@ description: "Настройка PrivateLink для Redshift"
 sidebar_label: "AWS PrivateLink для Redshift"
 ---
 
-# Настройка AWS PrivateLink для Redshift <Lifecycle status="managed_plus" />
+# Настройка AWS PrivateLink для Redshift <Lifecycle status="managed_plus" /> {#configure-aws-privatelink-for-redshift}
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkTroubleshooting from '/snippets/_privatelink-troubleshooting.md';
@@ -22,7 +22,7 @@ AWS предоставляет два различных способа созд
 
 <CloudProviders type='Redshift' />
 
-## Настройка Redshift-managed PrivateLink
+## Настройка Redshift-managed PrivateLink {#configuring-redshift-managed-privatelink}
 
 1. Найдите раздел **Granted accounts** в настройках Redshift
    - **Standard Redshift**
@@ -68,9 +68,9 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Настройка интерфейсного PrivateLink для Redshift
+## Настройка интерфейсного PrivateLink для Redshift {#configuring-redshift-interface-type-privatelink}
 
-### 1. Подготовка ресурсов AWS
+### 1. Подготовка ресурсов AWS {#1-provision-aws-resources}
 
 Создание интерфейсного VPC PrivateLink соединения требует создания нескольких ресурсов AWS в учетной записи, содержащей кластер Redshift:
 
@@ -106,7 +106,7 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkCrossZone features={'/snippets/_privatelink-cross-zone-load-balancing.md'}/>
 
-### 2. Предоставление доступа учетной записи AWS dbt к VPC Endpoint Service
+### 2. Предоставление доступа учетной записи AWS dbt к VPC Endpoint Service {#2-grant-dbt-aws-account-access-to-the-vpc-endpoint-service}
 
 На подготовленном VPC Endpoint Service нажмите вкладку **Allow principals**. Нажмите **Allow principals**, чтобы предоставить доступ. Введите ARN корневого пользователя в соответствующей производственной учетной записи AWS и сохраните изменения.
 
@@ -114,13 +114,13 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <Lightbox src="/img/docs/dbt-cloud/privatelink-allow-principals.png" title="Введите ARN"/>
 
-### 3. Получение имени VPC Endpoint Service
+### 3. Получение имени VPC Endpoint Service {#3-obtain-vpc-endpoint-service-name}
 
 После того как VPC Endpoint Service будет создан, вы можете найти имя сервиса в консоли AWS, перейдя в раздел **VPC** → **Endpoint Services** и выбрав соответствующий endpoint service. Вы можете скопировать значение поля *service name* и включить его в ваше обращение в службу поддержки <Constant name="cloud" />.
 
 <Lightbox src="/img/docs/dbt-cloud/privatelink-endpoint-service-name.png" title="Получить значение поля имени сервиса"/>
 
-### 4. Добавьте необходимую информацию в шаблон ниже и отправьте запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support):
+### 4. Добавьте необходимую информацию в шаблон ниже и отправьте запрос в [dbt Support](/community/resources/getting-help#dbt-cloud-support): {#4-add-the-required-information-to-the-template-below-and-submit-your-request-to-dbt-support}
 
 ```
 Subject: New Multi-Tenant PrivateLink Request
@@ -132,7 +132,7 @@ Subject: New Multi-Tenant PrivateLink Request
 
 <PrivateLinkSLA />
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После того как поддержка <Constant name="cloud" /> завершит настройку, вы сможете начать создавать новые подключения с использованием PrivateLink.
 

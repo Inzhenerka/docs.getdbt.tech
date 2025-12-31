@@ -26,7 +26,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Подключение к Rockset с помощью **dbt-rockset**
+## Подключение к Rockset с помощью **dbt-rockset** {#connecting-to-rockset-with-dbt-rockset}
 
 Профиль dbt для Rockset очень прост и содержит следующие поля:
 
@@ -45,7 +45,7 @@ rockset:
 
 </File>
 
-### Материализации
+### Материализации {#materializations}
 
 Тип | Поддерживается? | Подробности
 -----|----------------|----------------
@@ -54,7 +54,7 @@ table | ДА | Создает [коллекцию](https://rockset.com/docs/coll
 ephemeral | ДА | Выполняет запросы с использованием CTE.
 incremental | ДА | Создает [коллекцию](https://rockset.com/docs/collections/#gatsby-focus-wrapper), если она не существует, и затем записывает в нее результаты.
 
-## Предостережения
+## Предостережения {#caveats}
 1. `unique_key` не поддерживается с incremental, если только он не установлен в [_id](https://rockset.com/docs/special-fields/#the-_id-field), который в любом случае действует как естественный `unique_key` в Rockset.
 2. <Term id="materialization" /> `table` работает медленнее в Rockset, чем в большинстве других систем, из-за архитектуры Rockset как базы данных с низкой задержкой и в реальном времени. Создание новых коллекций требует выделения горячего хранилища для индексации и обслуживания свежих данных, что занимает около минуты.
 3. Запросы Rockset имеют тайм-аут в две минуты. Любая модель, которая выполняет запрос, занимающий более двух минут, завершится с ошибкой.

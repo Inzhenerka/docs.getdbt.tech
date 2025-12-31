@@ -12,7 +12,7 @@ description: "Используйте эти методы контекста дл
 - [env_var](/reference/dbt-jinja-functions/env_var)
 - [var](/reference/dbt-jinja-functions/var) (_Примечание: доступны только переменные, определенные с помощью `--vars`_)
 
-### Пример использования
+### Пример использования {#example-usage}
 
 <File name="~/.dbt/profiles.yml">
 

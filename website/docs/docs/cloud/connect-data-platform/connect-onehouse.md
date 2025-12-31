@@ -13,23 +13,23 @@ pagination_next: null
 Подключайтесь к Onehouse SQL Cluster с помощью адаптера [dbt-spark](/docs/cloud/connect-data-platform/connect-apache-spark).**
 :::
 
-## Требования
+## Требования {#requirements}
 
 * Для <Constant name="cloud" /> убедитесь, что ваш Onehouse SQL endpoint доступен через внешний DNS/IP, и выполнена настройка whitelisting IP-адресов <Constant name="cloud" />.
 
-## Что работает 
+## Что работает {#what-works}
 
 * Все команды dbt, включая: `dbt clean`, `dbt compile`, `dbt debug`, `dbt seed` и `dbt run`.
 * Материализации dbt: `table` и `incremental`
 * Типы таблиц Apache Hudi: Merge on Read (MoR) и Copy on Write (CoW). Для изменяемых (mutable) нагрузок рекомендуется использовать MoR.
 
-## Ограничения
+## Ограничения {#limitations}
 
 * Представления (views) не поддерживаются
 * Для `dbt seed` существуют ограничения по количеству строк / записей.
 * `dbt seed` поддерживает только таблицы Copy on Write.
 
-## Подключение dbt
+## Подключение dbt {#dbt-connection}
 
 При создании подключения **Apache Spark** с использованием метода Thrift заполните следующие поля:
 
@@ -48,7 +48,7 @@ pagination_next: null
 
 <Lightbox src="/img/onehouse/onehouse-dbt.png" width="70%" title="Конфигурация Onehouse"/>
 
-## проект dbt
+## проект dbt {#dbt-project}
 
 Мы рекомендуем задать конфигурации по умолчанию в dbt_project.yml, чтобы адаптер выполнялся с SQL, совместимым с Onehouse.
 

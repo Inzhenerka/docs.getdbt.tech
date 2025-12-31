@@ -7,7 +7,7 @@ pagination_next: null
 pagination_prev: null
 ---
 
-# Чат Copilot в Studio <Lifecycle status="Starter,Enterprise,Enterprise+" />
+# Чат Copilot в Studio <Lifecycle status="Starter,Enterprise,Enterprise+" /> {#copilot-chat-in-studio}
 
 <IntroText>
 Используйте функцию чата <Constant name="copilot" /> в <Constant name="cloud_ide" /> для генерации SQL на основе вашего ввода и контекста активного проекта.
@@ -15,14 +15,14 @@ pagination_prev: null
 
 Чат <Constant name="copilot" /> — это интерактивный интерфейс внутри <Constant name="cloud_ide" />, который позволяет пользователям генерировать SQL на основе запросов на естественном языке и задавать вопросы, связанные с аналитикой. Благодаря интеграции контекстного понимания вашего проекта dbt, <Constant name="copilot" /> помогает упростить разработку SQL, при этом сохраняя активное участие пользователя в процессе. Такой совместный подход помогает поддерживать точность, релевантность и соответствие лучшим практикам в аналитических рабочих процессах вашей организации.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - Наличие аккаунта [<Constant name="cloud" /> Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
 - Среда разработки должна находиться на поддерживаемом [release track](/docs/dbt-versions/cloud-release-tracks), чтобы получать регулярные обновления.
 - <Constant name="copilot" /> должен быть включен для вашего аккаунта.
     - Администраторы должны [включить <Constant name="copilot" />](/docs/cloud/enable-dbt-copilot#enable-dbt-copilot) (и при необходимости дать согласие на использование AI-функций) в настройках проекта dbt Cloud.
 
-## Обзор чата Copilot
+## Обзор чата Copilot {#copilot-chat-overview}
 
 <Expandable alt_header="Генерация SQL" >
 

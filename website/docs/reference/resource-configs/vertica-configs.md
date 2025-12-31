@@ -2,13 +2,13 @@
 title: "Конфигурации Vertica"
 id: "vertica-configs"
 ---
-## Конфигурация инкрементальных моделей
+## Конфигурация инкрементальных моделей {#configuration-of-incremental-models}
 
-### Использование параметра конфигурации on_schema_change
+### Использование параметра конфигурации on_schema_change {#using-the-onschemachange-config-parameter}
 
 Вы можете использовать параметр `on_schema_change` со значениями `ignore`, `fail` и `append_new_columns`. Значение `sync_all_columns` в настоящее время не поддерживается.
 
-#### Конфигурация параметра `ignore` (по умолчанию)
+#### Конфигурация параметра `ignore` (по умолчанию) {#configuring-the-ignore-default-parameter}
 
 <Tabs
   defaultValue="source"
@@ -51,7 +51,7 @@ id: "vertica-configs"
 </Tabs>
 
 
-#### Конфигурация параметра `fail`
+#### Конфигурация параметра `fail` {#configuring-the-fail-parameter}
 
 <Tabs
   defaultValue="source"
@@ -99,7 +99,7 @@ id: "vertica-configs"
 </Tabs>
 
 
-#### Конфигурация параметра `append_new_columns`
+#### Конфигурация параметра `append_new_columns` {#configuring-the-appendnewcolumns-parameter}
 
 <Tabs
   defaultValue="source"
@@ -146,7 +146,7 @@ id: "vertica-configs"
 </TabItem>
 </Tabs>
 
-### Использование параметра конфигурации `incremental_strategy`
+### Использование параметра конфигурации `incremental_strategy` {#using-the-incremental_strategy-config-parameter}
 
 **Стратегия `append` (по умолчанию)**:
 
@@ -266,7 +266,7 @@ id: "vertica-configs"
 
 
 
-###### Использование параметра конфигурации `merge_update_columns`
+###### Использование параметра конфигурации `merge_update_columns` {#using-the-mergeupdatecolumns-config-parameter}
 
 Параметр конфигурации `merge_update_columns` передается для обновления только указанных столбцов и принимает список столбцов таблицы.
 
@@ -460,7 +460,7 @@ id: "vertica-configs"
 
 
 
-## Опции оптимизации для материализации таблиц
+## Опции оптимизации для материализации таблиц {#optimization-options-for-table-materialization}
 
 Существует множество оптимизаций, которые можно использовать при материализации моделей в виде таблиц. Каждый параметр конфигурации применяет специфичное для Vertica предложение в сгенерированном DDL `CREATE TABLE`. 
 
@@ -468,11 +468,11 @@ id: "vertica-configs"
 
 Вы можете настроить эти оптимизации в своем SQL-файле модели, как описано в примерах ниже: 
 
- ### Конфигурация предложения `ORDER BY`
+ ### Конфигурация предложения `ORDER BY` {#configuring-the-order-by-clause}
 
  Чтобы использовать предложение `ORDER BY` в операторе `CREATE TABLE`, используйте параметр конфигурации `order_by` в вашей модели. 
 
- #### Использование параметра конфигурации `order_by`
+ #### Использование параметра конфигурации `order_by` {#using-the-order_by-config-parameter}
 
 <Tabs
   defaultValue="source"
@@ -512,14 +512,14 @@ id: "vertica-configs"
 </TabItem>
 </Tabs>
 
-### Конфигурация предложения `SEGMENTED BY`
+### Конфигурация предложения `SEGMENTED BY` {#configuring-the-segmented-by-clause}
 
 Чтобы использовать предложение `SEGMENTED BY` в операторе `CREATE TABLE`, используйте параметры конфигурации `segmented_by_string` или `segmented_by_all_nodes` в вашей модели. По умолчанию для сегментации таблиц используется ALL NODES, поэтому предложение ALL NODES в SQL-операторе будет добавлено при использовании параметра конфигурации `segmented_by_string`. Вы можете отключить ALL NODES, используя параметр `no_segmentation`.
 
 Чтобы узнать больше о предложении segmented by, ознакомьтесь [здесь](https://www.vertica.com/docs/12.0.x/HTML/Content/Authoring/SQLReferenceManual/Statements/hash-segmentation-clause.htm).
 
 
-#### Использование параметра конфигурации `segmented_by_string`
+#### Использование параметра конфигурации `segmented_by_string` {#using-the-segmentedbystring-config-parameter}
 
 Параметр конфигурации `segmented_by_string` может использоваться для сегментации данных проекции с использованием SQL-выражения, такого как хеш-сегментация.
 
@@ -567,7 +567,7 @@ id: "vertica-configs"
 </TabItem>
 </Tabs>
 
-#### Использование параметра конфигурации `segmented_by_all_nodes`
+#### Использование параметра конфигурации `segmented_by_all_nodes` {#using-the-segmentedbyall_nodes-config-parameter}
 
 Параметр конфигурации `segmented_by_all_nodes` может использоваться для сегментации данных проекции для распределения по всем узлам кластера.
 
@@ -616,11 +616,11 @@ id: "vertica-configs"
 </TabItem>
 </Tabs>
 
-### Конфигурация предложения UNSEGMENTED ALL NODES
+### Конфигурация предложения UNSEGMENTED ALL NODES {#configuring-the-unsegmented-all-nodes-clause}
 
 Чтобы использовать предложение `UNSEGMENTED ALL NODES` в операторе `CREATE TABLE`, используйте параметр конфигурации `no_segmentation` в вашей модели.
 
-#### Использование параметра конфигурации `no_segmentation`
+#### Использование параметра конфигурации `no_segmentation` {#using-the-no_segmentation-config-parameter}
 
 
 <Tabs
@@ -669,13 +669,13 @@ id: "vertica-configs"
 </Tabs>
 
 
-### Конфигурация предложения `PARTITION BY`
+### Конфигурация предложения `PARTITION BY` {#configuring-the-partition-by-clause}
 
 Чтобы использовать предложение `PARTITION BY` в операторе `CREATE TABLE`, используйте параметры конфигурации `partition_by_string`, `partition_by_active_count` или `partition_by_group_by_string` в вашей модели. 
 
 Чтобы узнать больше о предложении partition by, ознакомьтесь [здесь](https://www.vertica.com/docs/9.2.x/HTML/Content/Authoring/SQLReferenceManual/Statements/partition-clause.htm)
 
-#### Использование параметра конфигурации `partition_by_string`
+#### Использование параметра конфигурации `partition_by_string` {#using-the-partitionbystring-config-parameter}
 
 `partition_by_string` (необязательный) принимает строковое значение любого одного конкретного `column_name`, на основе которого происходит разбиение данных таблицы на разделы.
 
@@ -722,7 +722,7 @@ id: "vertica-configs"
 </TabItem>
 </Tabs>
 
-#### Использование параметра конфигурации `partition_by_active_count`
+#### Использование параметра конфигурации `partition_by_active_count` {#using-the-partitionbyactive_count-config-parameter}
 
 `partition_by_active_count` (необязательный) указывает, сколько разделов активно для этой таблицы. Он принимает целочисленное значение.
 
@@ -787,7 +787,7 @@ id: "vertica-configs"
 </TabItem>
 </Tabs>
 
-#### Использование параметра конфигурации `partition_by_group_by_string`
+#### Использование параметра конфигурации `partition_by_group_by_string` {#using-the-partitionbygroupbystring-config-parameter}
 
 Параметр `partition_by_group_by_string` (необязательный) принимает строку, в которой пользователь должен указать каждую группу случаев в виде одной строки.
 
@@ -847,7 +847,7 @@ select * from public.customer_dimension
 </TabItem>
 </Tabs>
 
-### Конфигурация предложения KSAFE
+### Конфигурация предложения KSAFE {#configuring-the-ksafe-clause}
 
 Чтобы использовать предложение `KSAFE` в операторе `CREATE TABLE`, используйте параметр конфигурации `ksafe` в вашей модели.
 

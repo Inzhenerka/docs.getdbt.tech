@@ -5,11 +5,11 @@ tags: [Semantic Layer]
 sidebar_label: "Google Sheets"
 ---
 
-# Google Sheets <Lifecycle status="self_service,managed,managed_plus" />
+# Google Sheets <Lifecycle status="self_service,managed,managed_plus" /> {#google-sheets}
 
 <Constant name="semantic_layer" /> предоставляет бесшовную интеграцию с Google Sheets через настраиваемое меню. Этот аддон позволяет вам создавать запросы <Constant name="semantic_layer" /> и получать данные по вашим метрикам непосредственно внутри Google Sheets.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - Вы [настроили <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) и используете dbt версии 1.6 или выше.
 - Вам необходима учетная запись Google с доступом к Google Sheets и возможностью устанавливать надстройки Google.
@@ -23,7 +23,7 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Установка дополнения
+## Установка дополнения {#installing-the-add-on}
 
 1. Перейдите на страницу [<Constant name="semantic_layer" /> for Sheets App](https://gsuite.google.com/marketplace/app/foo/392263010968), чтобы установить надстройку. Также вы можете найти её прямо в Google Sheets, открыв [**Extensions -> Add-on -> Get add-ons**](https://support.google.com/docs/answer/2942256?hl=en&co=GENIE.Platform%3DDesktop&oco=0#zippy=%2Cinstall-add-ons%2Cinstall-an-add-on) и выполнив поиск там.
 2. После установки откройте меню **Extensions** и выберите **<Constant name="semantic_layer" /> for Sheets**. В правой части экрана откроется пользовательское меню.
@@ -65,7 +65,7 @@ PrivateSelections="Вы также можете сделать эти выбор
 - **Public selections** — ваши параметры будут доступны в меню всем пользователям листа.
 - **Private selections** — ваши параметры будут видны только вам. Обратите внимание: любой пользователь, добавленный к листу, всё равно сможет видеть данные из этих приватных выборок, но не сможет взаимодействовать с выборкой через меню или пользоваться автоматическим обновлением.
 
-### Обновление выборок
+### Обновление выборок {#refreshing-selections}
 
 Вы можете настроить автоматическое обновление сохранённых выборок каждый раз при загрузке аддона. Для этого при создании сохранённой выборки выберите **Refresh on Load**. Когда вы откроете аддон и у вас будут сохранённые выборки с включённым обновлением, в обновляющихся ячейках вы увидите сообщение «Loading...».
 
@@ -77,7 +77,7 @@ PrivateSelections="Вы также можете сделать эти выбор
 - Saved queries, описанные в следующем разделе, — это определённые в коде наборы данных, которые вы создаёте в своём проекте dbt и которые можно удобно использовать для построения выборок. Вы также можете использовать результаты saved query для создания saved selection.
 :::
 
-## Использование saved queries
+## Использование saved queries {#using-saved-queries}
 
 Используйте <a href="/docs/build/saved-queries">saved queries</a>, работающие на базе MetricFlow, чтобы быстро получать результаты из заранее определённых наборов данных. Чтобы получить доступ к saved queries в вашей интеграции:
 
@@ -91,5 +91,5 @@ PrivateSelections="Вы также можете сделать эти выбор
 
 Использование и передача <Constant name="semantic_layer" /> для Sheets, а также передача информации, полученной из Google APIs, в другие приложения осуществляется в соответствии с [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), включая требования Limited Use.
 
-## FAQs
+## FAQs {#faqs}
 <FAQ path="Troubleshooting/sl-alpn-error" />

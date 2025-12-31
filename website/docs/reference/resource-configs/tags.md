@@ -102,7 +102,7 @@ models:
 </Tabs>
 Обратите внимание, что для обратной совместимости `tags` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
 
-## Определение
+## Определение {#definition}
 Примените тег (или список тегов) к ресурсу.
 
 Эти теги можно использовать как часть [синтаксиса выбора ресурсов](/reference/node-selection/syntax) при выполнении следующих команд:
@@ -112,7 +112,7 @@ models:
 - `dbt snapshot --select tag:my_tag` &mdash; Создаёт snapshot для всех ресурсов, помеченных указанным тегом.
 - `dbt test --select tag:my_tag` &mdash; Косвенно запускает все тесты, связанные с моделями, которые помечены этим тегом.
 
-#### Использование тегов с оператором `+`
+#### Использование тегов с оператором `+` {#using-tags-with-the-operator}
 Вы можете использовать [оператор `+`](/reference/node-selection/graph-operators#the-plus-operator), чтобы включать восходящие или нисходящие зависимости при выборе по `tag`:
 - `dbt run --select tag:my_tag+` &mdash; Запускает модели, помеченные `my_tag`, и все их нисходящие зависимости.
 - `dbt run --select +tag:my_tag` &mdash; Запускает модели, помеченные `my_tag`, и все их восходящие зависимости.
@@ -130,11 +130,11 @@ models:
 Подробнее см. в разделе [примечания по использованию](#usage-notes).
 :::
 
-## Примеры
+## Примеры {#examples}
 
 Следующие примеры показывают, как применять теги к ресурсам в вашем проекте. Вы можете настраивать теги в файлах `dbt_project.yml`, `schema.yml` или в SQL-файлах.
 
-### Использование тегов для запуска частей проекта
+### Использование тегов для запуска частей проекта {#use-tags-to-run-parts-of-your-project}
 
 Применяйте теги в `dbt_project.yml` как одиночное значение или как строку. В следующем примере одна из моделей — модель `jaffle_shop` — помечена тегом `contains_pii`.
 
@@ -163,7 +163,7 @@ models:
 </File>
 
 
-### Apply tags to models
+### Apply tags to models {#apply-tags-to-models}
 
 This section demonstrates applying tags to models in the `dbt_project.yml`, `schema.yml`, and SQL files. 
 
@@ -224,7 +224,7 @@ select ...
   dbt run --select tag:daily --exclude tag:hourly
 ```
 
-### Примените теги к семенам
+### Примените теги к семенам {#apply-tags-to-seeds}
 
 <File name='dbt_project.yml'>
 
@@ -250,7 +250,7 @@ seeds:
 
 </File>
 
-### Применение тегов к сохранённым запросам
+### Применение тегов к сохранённым запросам {#apply-tags-to-saved-queries}
 
 В следующем примере показано, как применить тег к сохранённому запросу в файле `dbt_project.yml`. В результате сохранённый запрос будет помечен тегом `order_metrics`.
 
@@ -295,9 +295,9 @@ saved_queries:
   dbt build --select tag:order_metrics tag:hourly
 ```
 
-## Примечания по использованию
+## Примечания по использованию {#usage-notes}
 
-### Теги должны быть строками
+### Теги должны быть строками {#tags-must-be-strings}
 
 Каждый отдельный тег должен быть строковым значением (например, `marketing` или `daily`).
 
@@ -324,7 +324,7 @@ sources:
 Field config.tags: {'my_tag': 'my_value'} is not valid for source (ecom)
 ```
 
-### Теги являются аддитивными
+### Теги являются аддитивными {#tags-are-additive}
 
 Теги накапливаются и применяются иерархически. [Пример выше](/reference/resource-configs/tags#use-tags-to-run-parts-of-your-project) приведёт к следующему результату:
 
@@ -335,7 +335,7 @@ Field config.tags: {'my_tag': 'my_value'} is not valid for source (ecom)
 | models/marts/dim_customers.sql   | `contains_pii`, `hourly`, `published` |
 | models/metrics/daily_metrics.sql | `contains_pii`, `daily`, `published`  |
 
-### Другие типы ресурсов
+### Другие типы ресурсов {#other-resource-types}
 
 Теги также можно применять к [sources](/docs/build/sources), [exposures](/docs/build/exposures) и даже к _отдельным столбцам_ ресурса.  
 Эти ресурсы пока не поддерживают свойство `config`, поэтому теги нужно указывать как ключ верхнего уровня.

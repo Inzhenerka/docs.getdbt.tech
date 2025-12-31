@@ -25,7 +25,7 @@ import CloudEnvInfo from '/snippets/_cloud-environments-info.md';
 
 <CloudEnvInfo setup={'/snippets/_cloud-environments-info.md'} />
 
-## Создание окружения разработки
+## Создание окружения разработки {#create-a-development-environment}
 
 Чтобы создать новое окружение разработки <Constant name="cloud" />:
 
@@ -35,13 +35,13 @@ import CloudEnvInfo from '/snippets/_cloud-environments-info.md';
 4. Заполните поля в разделах **General Settings** и **Development Credentials**
 5. Нажмите **Save**, чтобы создать окружение
 
-### Настройка учетных данных разработчика
+### Настройка учетных данных разработчика {#set-developer-credentials}
 
 Для использования dbt <Constant name="cloud_ide" /> или <Constant name="cloud_cli" /> каждому разработчику необходимо настроить [персональные учетные данные для разработки](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) для подключения к хранилищу данных в разделе **Profile Settings**. Это позволяет задавать отдельные целевые параметры и поддерживать индивидуальные учетные данные для подключения к вашему хранилищу данных.
 
 <Lightbox src="/img/docs/dbt-cloud/refresh-ide/new-development-environment-fields.png" width="85%" height="200" title="Создание окружения разработки" />
 
-## Окружение деплоя
+## Окружение деплоя {#deployment-environment}
 
 Окружения деплоя в <Constant name="cloud" /> необходимы для выполнения запланированных заданий и использования других возможностей (например, разных рабочих пространств для разных задач). В рамках одного проекта <Constant name="cloud" /> вы можете иметь множество окружений, что позволяет настраивать каждое пространство под разные цели (например, для экспериментов или тестирования).
 
@@ -49,7 +49,7 @@ import CloudEnvInfo from '/snippets/_cloud-environments-info.md';
 
 Чтобы узнать больше об окружениях деплоя <Constant name="cloud" /> и их настройке, ознакомьтесь со страницей [Deployment environments](/docs/deploy/deploy-environments). Также рекомендуем прочитать руководство по лучшим практикам — [<Constant name="cloud" /> environment best practices](/guides/set-up-ci).
 
-## Удаление окружения
+## Удаление окружения {#delete-an-environment}
 
 import DeleteEnvironment from '/snippets/_delete-environment.md';
 
@@ -59,7 +59,7 @@ import JobMonitoring from '/snippets/_in-progress-top-jobs.md';
 
 <JobMonitoring />
 
-## История настроек окружения
+## История настроек окружения {#environment-settings-history}
 
 Вы можете просматривать историю изменений настроек окружения за последние 90 дней.
 

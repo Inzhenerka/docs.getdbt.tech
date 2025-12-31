@@ -4,7 +4,7 @@ id: "databricks-configs"
 tags: ['Databricks', 'dbt Fusion', 'dbt Core']
 ---
 
-## Конфигурация таблиц
+## Конфигурация таблиц {#configuring-tables}
 
 При материализации модели как `table`, вы можете включить несколько дополнительных конфигураций, специфичных для плагина dbt-databricks, в дополнение к стандартным [конфигурациям моделей](/reference/model-configs).
 
@@ -37,7 +37,7 @@ dbt-databricks v1.9 добавляет поддержку конфигураци
 В dbt-databricks v1.10 появилось несколько новых вариантов конфигурации моделей, доступных при включённом флаге `use_materialization_v2`.
 Подробнее см. [документацию по флагам поведения Databricks](/reference/global-configs/databricks-changes).
 
-### Методы отправки Python
+### Методы отправки Python {#python-submission-methods}
 _Доступно в версиях 1.9 и выше_
 
 В dbt-databricks v1.9 (попробуйте уже сейчас в [треке релизов <Constant name="cloud" /> «Latest»](/docs/dbt-versions/cloud-release-tracks)) вы можете использовать следующие четыре варианта для `submission_method`:
@@ -136,7 +136,7 @@ models:
 </File>
 
 
-## Настройка колонок
+## Настройка колонок {#configuring-columns}
 _Доступно в версиях 1.10 и выше_
 
 При материализации моделей различных типов вы можете указывать несколько необязательных конфигураций на уровне колонок, которые специфичны для плагина dbt-databricks, в дополнение к стандартным [настройкам колонок](/reference/resource-properties/columns). Поддержка тегов колонок и масок колонок была добавлена в dbt-databricks версии 1.10.4.
@@ -172,7 +172,7 @@ models:
 
 </File>
 
-## Инкрементальные модели
+## Инкрементальные модели {#incremental-models}
 _Доступно в версиях 1.9 и выше_
 
 :::caution Ломающее изменение в v1.11.0
@@ -204,7 +204,7 @@ _Доступно в версиях 1.9 и выше_
  
 Каждая из этих стратегий имеет свои плюсы и минусы, которые мы обсудим ниже. Как и в случае любой конфигурации модели, `incremental_strategy` может быть указана в `dbt_project.yml` или в блоке `config()` файла модели.
 
-### Стратегия `append`
+### Стратегия `append` {#the-append-strategy}
 
 Следуя стратегии `append`, dbt выполнит оператор `insert into` со всеми новыми данными. Привлекательность этой стратегии заключается в том, что она проста и функциональна на всех платформах, типах файлов, методах подключения и версиях Apache Spark. Однако эта стратегия _не может_ обновлять, перезаписывать или удалять существующие данные, поэтому она, вероятно, будет вставлять дублирующиеся записи для многих источников данных.
 
@@ -255,7 +255,7 @@ insert into table analytics.databricks_incremental
 </TabItem>
 </Tabs>
 
-### Стратегия `insert_overwrite`
+### Стратегия `insert_overwrite` {#the-insert_overwrite-strategy}
 
 Стратегия `insert_overwrite` обновляет данные в таблице, **заменяя существующие записи**, а не просто добавляя новые. Эта стратегия наиболее эффективна, когда она указана вместе с параметром `partition_by` или `liquid_clustered_by` в конфигурации модели — это помогает определить конкретные партиции или кластеры, на которые влияет ваш запрос. dbt выполнит [атомарный оператор `insert into ... replace on`](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on), который динамически заменяет все партиции или кластеры, затронутые запросом, вместо перестроения всей таблицы целиком.
 
@@ -347,7 +347,7 @@ insert overwrite table analytics.databricks_incremental
 </TabItem>
 </Tabs>
 
-### Стратегия `merge`
+### Стратегия `merge` {#the-merge-strategy}
 
 Инкрементальная стратегия `merge` требует:
 - `file_format: delta или hudi`
@@ -548,7 +548,7 @@ when not matched by source
 </TabItem>
 </Tabs>
 
-### Стратегия `replace_where`
+### Стратегия `replace_where` {#the-replace_where-strategy}
 
 Инкрементальная стратегия `replace_where` требует:
 - `file_format: delta`
@@ -637,7 +637,7 @@ insert into analytics.replace_where_incremental
 </TabItem>
 </Tabs>
 
-### Стратегия `delete+insert`
+### Стратегия `delete+insert` {#the-deleteinsert-strategy}
  
 _Доступно в версиях 1.11 или выше_
 
@@ -775,7 +775,7 @@ where date_day >= date_add(current_date, -1)
 </Tabs>
 
 
-### Стратегия `microbatch`
+### Стратегия `microbatch` {#the-microbatch-strategy}
 
 _Доступно в версиях 1.9 и выше_
 
@@ -850,7 +850,7 @@ insert into analytics.replace_where_incremental
 </TabItem>
 </Tabs>
 
-## Python model configuration
+## Python model configuration {#python-model-configuration}
 
 Адаптер Databricks поддерживает Python-модели. Databricks использует PySpark в качестве фреймворка обработки для этих моделей.
 
@@ -899,7 +899,7 @@ models:
 - [Синтаксис PySpark DataFrame](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 - [Databricks: Введение в DataFrames — Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
  
-## Выбор вычислительных ресурсов для каждой модели
+## Выбор вычислительных ресурсов для каждой модели {#selecting-compute-per-model}
 
 Начиная с версии 1.7.2, вы можете назначать, какой вычислительный ресурс использовать для каждой модели.
 Для SQL-моделей вы можете выбрать SQL Warehouse (безсерверный или предоставленный) или кластер общего назначения.
@@ -984,7 +984,7 @@ compute:
 
 ```
 
-### Указание вычислительных ресурсов для моделей
+### Указание вычислительных ресурсов для моделей {#specifying-the-compute-for-models}
 
 Как и многие другие параметры конфигурации, вычислительные ресурсы (compute) для модели можно указать несколькими способами, используя `databricks_compute`.
 В файле `dbt_project.yml` выбранный compute можно задать сразу для всех моделей в определённом каталоге:
@@ -1058,7 +1058,7 @@ select * from {{ ref('seed') }}
 Адаптер Databricks ... использует вычислительный ресурс <имя вычислительного ресурса>.
 ```
 
-### Указание вычислительных ресурсов для моделей Python
+### Указание вычислительных ресурсов для моделей Python {#specifying-compute-for-python-models}
 
 Материализация python‑модели требует выполнения как SQL, так и Python‑кода.  
 В частности, если ваша python‑модель является инкрементальной, текущий шаблон выполнения предполагает запуск Python для создания staging‑таблицы, которая затем объединяется (merge) с целевой таблицей с помощью SQL.
@@ -1085,7 +1085,7 @@ def model(dbt, session):
 
 Если ваш вычислительный ресурс по умолчанию является SQL-складом, вам нужно будет указать http_path кластера общего назначения таким образом.
 
-## Сохранение описаний моделей
+## Сохранение описаний моделей {#persisting-model-descriptions}
 
 Поддерживается сохранение документации на уровне relation. Для получения дополнительной информации о настройке сохранения документации см. [документацию](/reference/resource-configs/persist_docs).
 
@@ -1094,7 +1094,7 @@ def model(dbt, session):
 или `show table extended in [database] like '*'`.
 
 
-## Конфигурации формата файлов по умолчанию
+## Конфигурации формата файлов по умолчанию {#default-file-format-configurations}
 
 Чтобы получить доступ к расширенным функциям инкрементальных стратегий, таким как 
 [снимки](/reference/commands/snapshot) и инкрементальная стратегия `merge`, вы захотите
@@ -1119,7 +1119,7 @@ snapshots:
 </File>
 
 
-## Материализованные представления и стриминговые таблицы
+## Материализованные представления и стриминговые таблицы {#materialized-views-and-streaming-tables}
 
 [Материализованные представления](https://docs.databricks.com/en/sql/user/materialized-views.html) и [потоковые таблицы](https://docs.databricks.com/en/sql/load-data-streaming-table.html) являются альтернативами инкрементальным таблицам, которые поддерживаются [Delta Live Tables](https://docs.databricks.com/en/delta-live-tables/index.html).
 См. [Что такое Delta Live Tables?](https://docs.databricks.com/en/delta-live-tables/index.html#what-are-delta-live-tables-datasets) для получения дополнительной информации и примеров использования.
@@ -1182,19 +1182,19 @@ select * from {{ ref('my_seed') }}
 
 </File>
 
-### Подробности конфигурации
+### Подробности конфигурации {#configuration-details}
 
-#### partition_by
+#### partition_by {#partition_by}
 `partition_by` работает так же, как для представлений и таблиц, т.е. может быть одним столбцом или массивом столбцов для разделения.
 
-#### liquid_clustered_by
+#### liquid_clustered_by {#liquidclusteredby}
 _Доступно в версиях 1.11 или выше_
 
 `liquid_clustered_by` включает [liquid clustering](https://docs.databricks.com/en/delta/clustering.html) для материализованных представлений и стриминговых таблиц. Liquid clustering оптимизирует производительность запросов за счёт совместного размещения похожих данных в одних и тех же файлах, что особенно полезно для запросов с селективными фильтрами по кластеризованным столбцам.
 
 **Примечание:** Нельзя использовать `partition_by` и `liquid_clustered_by` одновременно в одной материализации, так как Databricks не позволяет комбинировать эти возможности.
 
-#### databricks_tags
+#### databricks_tags {#databricks_tags}
 _Доступно в версиях 1.11 или выше_
 
 `databricks_tags` позволяет применять [теги Unity Catalog](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html) к вашим материализованным представлениям и стриминговым таблицам для управления данными и их организации. Теги представляют собой пары ключ-значение и могут использоваться для классификации данных, политик контроля доступа и управления метаданными.
@@ -1208,29 +1208,29 @@ _Доступно в версиях 1.11 или выше_
 
 Теги применяются с помощью операторов `ALTER` после создания материализации. После применения теги нельзя удалить через изменения конфигурации dbt-databricks. Для удаления тегов необходимо использовать Databricks напрямую или post-hook.
 
-#### description
+#### description {#description}
 Как и в случае представлений и таблиц, добавление `description` в вашу конфигурацию приведет к добавлению комментария на уровне таблицы в вашу материализацию.
 
-#### tblproperties
+#### tblproperties {#tblproperties}
 `tblproperties` работает так же, как для представлений и таблиц, с важным исключением: адаптер поддерживает список ключей, которые устанавливаются Databricks при создании материализованного представления или потоковой таблицы, которые игнорируются для определения изменений конфигурации.
 
-#### schedule
+#### schedule {#schedule}
 Используйте это для установки расписания обновления для модели. Если вы используете ключ `schedule`, ключ `cron` обязателен в связанном словаре, но `time_zone_value` является необязательным (см. пример выше). Значение `cron` должно быть отформатировано, как это задокументировано Databricks.
 Если расписание установлено на материализации в Databricks, а ваш проект dbt не указывает расписание для него (когда `on_configuration_change` установлено в `apply`), расписание обновления будет установлено на ручное при следующем запуске проекта.
 Даже когда расписания установлены, dbt будет запрашивать, чтобы материализация обновлялась вручную при запуске.
 
-#### query
+#### query {#query}
 Для материализованных представлений, если скомпилированный запрос для модели отличается от запроса в базе данных, мы примем действие, указанное в `on_configuration_change`.
 Изменения в запросе в настоящее время не обнаруживаются для потоковых таблиц; см. следующий раздел для подробностей.
 
-### on_configuration_change 
+### on_configuration_change {#onconfigurationchange}
 `on_configuration_change` поддерживается для материализованных представлений и потоковых таблиц, хотя две материализации обрабатывают это по-разному.
 
-#### Материализованные представления
+#### Материализованные представления {#materialized-views}
 В настоящее время единственное изменение, которое можно применить без воссоздания материализованного представления в Databricks, - это обновление расписания.
 Это связано с ограничениями в SQL API Databricks.
 
-#### Streaming Tables
+#### Streaming Tables {#streaming-tables}
 Для стриминговых таблиц в настоящее время **только изменения в партиционировании** требуют, чтобы таблица была удалена и создана заново.  
 Для любых других поддерживаемых изменений конфигурации мы используем `CREATE OR REFRESH` (а также оператор `ALTER` для изменений расписания), чтобы применить эти изменения.
 
@@ -1238,7 +1238,7 @@ _Доступно в версиях 1.11 или выше_
 
 Если исходные данные всё ещё доступны, запуск с флагом `--full-refresh` повторно обработает доступные данные с использованием обновлённого текущего запроса.
 
-## Setting table properties
+## Setting table properties {#setting-table-properties}
 [Table properties](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html) можно задавать в конфигурации таблиц или представлений с помощью параметра `tblproperties`:
 
 <File name='with_table_properties.sql'>

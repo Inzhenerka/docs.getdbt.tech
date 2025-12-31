@@ -4,7 +4,7 @@ id: "cache"
 sidebar: "Cache"
 ---
 
-### Заполнение кэша
+### Заполнение кэша {#cache-population}
 
 В начале выполнения dbt кэширует метаданные обо всех объектах во всех схемах, где могут быть материализованы ресурсы (такие как модели). По умолчанию dbt заполняет реляционный кэш информацией обо всех схемах, связанных с проектом.
 
@@ -23,7 +23,7 @@ dbt compile --no-populate-cache --select my_model_name
 dbt run --cache-selected-only --select salesforce
 ```
 
-### Логирование событий реляционного кэша
+### Логирование событий реляционного кэша {#logging-relational-cache-events}
 
 import LogLevel from '/snippets/_log-relational-cache.md';
 

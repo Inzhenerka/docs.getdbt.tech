@@ -13,7 +13,7 @@ displayed_sidebar: "docs"
 - [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
 - [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
 
-## Что нужно знать перед обновлением
+## Что нужно знать перед обновлением {#resources}
 
 Начиная с 2024 года, <Constant name="cloud" /> предоставляет функциональность новых версий <Constant name="core" /> через [release tracks](/docs/dbt-versions/cloud-release-tracks) с автоматическими обновлениями. Если вы выбрали трек выпуска **"Latest"** в <Constant name="cloud" />, у вас уже есть доступ ко всем возможностям, исправлениям и другой функциональности, которые включены в <Constant name="core" /> v1.9. Если вы выбрали трек выпуска **"Compatible"**, вы получите доступ в следующем ежемесячном выпуске **"Compatible"** после финального релиза <Constant name="core" /> v1.9.
 
@@ -25,11 +25,11 @@ displayed_sidebar: "docs"
 python3 -m pip install dbt-core dbt-snowflake
 ```
 
-## Новые и измененные функции и функциональность
+## Новые и измененные функции и функциональность {#what-to-know-before-upgrading}
 
 Новые функции и функциональность в dbt v1.9.
 
-### `incremental_strategy` с микропакетами
+### `incremental_strategy` с микропакетами {#microbatch-incremental_strategy}
 
 :::info
 
@@ -75,22 +75,22 @@ python3 -m pip install dbt-core dbt-snowflake
 
 Узнайте больше о [мета-полях снимков](/docs/build/snapshots#snapshot-meta-fields).
 
-### Некоторые `properties` были перемещены в `configs`
+### Некоторые `properties` были перемещены в `configs` {#snapshots-improvements}
 
 Следующие `properties` были перемещены в `configs` в [Core v1.10](/docs/dbt-versions/core-upgrade/upgrading-to-v1.10) и портированы обратно в Core v1.9:
 - [`freshness`](/reference/resource-properties/freshness) для sources
 - [`meta`](/reference/resource-configs/meta) внутри `columns`
 - [`tags`](/reference/resource-configs/tags) внутри `columns`
 
-### Улучшения `state:modified`
+### Улучшения `state:modified` {#some-properties-moved-to-configs}
 
-### Улучшения `state:modified`
+### Улучшения `state:modified` {#statemodified-improvements}
 
 Мы внесли улучшения в поведение `state:modified`, чтобы помочь снизить риск ложных срабатываний и пропусков. Узнайте больше о [флаге поведения `state:modified`](#managing-changes-to-legacy-behaviors), который разблокирует это улучшение:
 
 - Добавлены улучшения, зависящие от среды, для сред, где логика намеренно отличается (например, материализация в виде таблицы в `prod`, но в виде `view` в dev).
 
-### Управление изменениями в устаревших поведениях
+### Управление изменениями в устаревших поведениях {#managing-changes-to-legacy-behaviors}
 
 dbt Core v1.9 имеет несколько новых флагов для [управления изменениями в устаревших поведениях](/reference/global-configs/behavior-changes). Вы можете включить недавно введенные изменения (отключены по умолчанию) или отключить зрелые изменения (включены по умолчанию), установив значения `True` / `False` соответственно для `flags` в `dbt_project.yml`.
 
@@ -103,27 +103,27 @@ dbt Core v1.9 имеет несколько новых флагов для [уп
 - (Введено, отключено по умолчанию) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-changes#cumulative-metrics). Если флаг установлен в `True`, пользователи получат ошибку вместо предупреждения, если они неправильно форматируют кумулятивные метрики, используя новое вложение [`cumulative_type_params`](/docs/build/cumulative#parameters).
 - (Введено, отключено по умолчанию) [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy). Установите в `True`, если вы используете пользовательский макрос микропакетов для включения пакетного выполнения. Если у вас нет пользовательского макроса микропакетов, вам не нужно устанавливать этот флаг, так как dbt автоматически обработает микропакетирование для любой модели, использующей стратегию микропакетов.
 
-## Специфические для адаптеров функции и функциональность
+## Специфические для адаптеров функции и функциональность {#adapter-specific-features-and-functionalities}
 
-### Redshift
+### Redshift {#redshift}
 
 - Поддержка аутентификации через IAM Role
 
-### Snowflake
+### Snowflake {#snowflake}
 
 - **Iceberg Table Format** — Поддержка будет доступна для трёх стандартных materializations «из коробки»: `table`, `incremental`, `dynamic tables`.
 - **Breaking change** — При обновлении с dbt 1.8 до 1.9 значение `{{ target.account }}` теперь заменяет подчёркивания на дефисы. Например, если `target.account` задан как `sample_company`, то скомпилированный код теперь будет генерировать `sample-company`. Подробнее см. [issue в репозитории `dbt-snowflake`](https://github.com/dbt-labs/dbt-snowflake/issues/1286).
 
-### Bigquery
+### Bigquery {#bigquery}
 
 - Возможность отмены выполняющихся запросов при прерывании клавиатурой
 - Автоматическое удаление промежуточных таблиц, созданных инкрементальными моделями, для экономии ресурсов
 
-### Spark
+### Spark {#spark}
 
 - Поддержка переопределения строки подключения драйвера ODBC, что теперь позволяет вам предоставлять пользовательские подключения
 
-## Быстрые изменения
+## Быстрые изменения {#quick-hits}
 
 Мы также внесли некоторые улучшения в качество жизни в Core 1.9, позволяя вам:
 

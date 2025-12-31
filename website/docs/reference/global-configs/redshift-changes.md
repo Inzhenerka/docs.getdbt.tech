@@ -4,7 +4,7 @@ id: "redshift-changes"
 sidebar: "Redshift"
 ---
 
-## Флаг `restrict_direct_pg_catalog_access`
+## Флаг `restrict_direct_pg_catalog_access` {#the-restrictdirectpgcatalogaccess-flag}
 
 Изначально адаптер `dbt-redshift` был построен на основе адаптера `dbt-postgres` и использовал таблицы Postgres для доступа к метаданным. Когда этот флаг включен, адаптер использует API Redshift (через Python-клиент), если он доступен, или выполняет запросы к таблицам `information_schema` Redshift вместо использования таблиц `pg_`.
 

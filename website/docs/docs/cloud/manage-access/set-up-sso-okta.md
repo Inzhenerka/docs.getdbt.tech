@@ -3,7 +3,7 @@ title: "Настройка SSO с Okta"
 id: "set-up-sso-okta"
 ---
 
-# Настройка SSO с Okta <Lifecycle status="managed, managed_plus" />
+# Настройка SSO с Okta <Lifecycle status="managed, managed_plus" /> {#set-up-sso-with-okta}
 
 Тарифы уровня Enterprise в <Constant name="cloud" /> поддерживают единый вход (Single Sign-On) через Okta (с использованием SAML). В настоящее время поддерживаются следующие возможности:
 
@@ -13,9 +13,9 @@ id: "set-up-sso-okta"
 
 В этом руководстве описан процесс настройки аутентификации в <Constant name="cloud" /> с помощью Okta.
 
-## Конфигурация в Okta
+## Конфигурация в Okta {#configuration-in-okta}
 
-### Создание нового приложения
+### Создание нового приложения {#create-a-new-application}
 
 Примечание: для выполнения шагов этого руководства вам понадобится доступ администратора к вашей организации Okta.
 
@@ -39,7 +39,7 @@ id: "set-up-sso-okta"
     title="Настройка нового приложения"
 />
 
-### Настройка приложения Okta
+### Настройка приложения Okta {#configure-the-okta-application}
 
 На странице **General Settings** укажите следующие данные:
 
@@ -55,7 +55,7 @@ id: "set-up-sso-okta"
     title="Настройка общих параметров приложения"
 />
 
-### Настройка SAML
+### Настройка SAML {#configure-saml-settings}
 
 Страница SAML Settings определяет, как Okta и <Constant name="cloud" /> обмениваются данными. Вам нужно использовать [подходящий Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и тарифного плана.
 
@@ -110,7 +110,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 Нажмите **Next**, чтобы продолжить.
 
-### Завершение настройки в Okta
+### Завершение настройки в Okta {#finish-okta-setup}
 
 Выберите *I'm an Okta customer adding an internal app* и затем *This is an
 internal app that we have created*. Нажмите **Finish**, чтобы завершить настройку
@@ -122,7 +122,7 @@ internal app that we have created*. Нажмите **Finish**, чтобы зав
     title="Завершение настройки в Okta"
 />
 
-### Просмотр инструкций по настройке
+### Просмотр инструкций по настройке {#view-setup-instructions}
 
 На следующей странице нажмите **View Setup Instructions**. В дальнейших шагах
 вы будете использовать эти значения в настройках учетной записи <Constant name="cloud" />, чтобы завершить интеграцию между Okta и <Constant name="cloud" />.
@@ -139,11 +139,11 @@ internal app that we have created*. Нажмите **Finish**, чтобы зав
     title="Инструкции по настройке приложения"
 />
 
-## Конфигурация в dbt
+## Конфигурация в dbt {#configuration-in-dbt}
 
 Чтобы завершить настройку, выполните следующие шаги в <Constant name="cloud" />.
 
-### Указание учетных данных
+### Указание учетных данных {#supplying-credentials}
 
 Сначала перейдите на страницу **Enterprise &gt; Single Sign On** в разделе Account
 Settings. Затем нажмите кнопку **Edit** и укажите следующие параметры SSO:
@@ -170,10 +170,10 @@ Settings. Затем нажмите кнопку **Edit** и укажите сл
 <Snippet path="login_url_note" />
 
 
-## Настройка RBAC
+## Настройка RBAC {#setting-up-rbac}
 Теперь, когда вы завершили настройку SSO с Okta, следующим шагом будет настройка
 [групп RBAC](/docs/cloud/manage-access/about-user-access#role-based-access-control-), чтобы завершить конфигурацию управления доступом.
 
-## Узнать больше
+## Узнать больше {#learn-more}
 
 <WistiaVideo id="xtmk0rrk5k" paddingTweak="62.25%" />

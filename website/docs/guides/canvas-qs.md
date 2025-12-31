@@ -12,7 +12,7 @@ recently_updated: true
 
 import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
-## Введение
+## Введение {#introduction}
 
 <Constant name="visual_editor" /> предлагает быстрый и наглядный способ создания аналитических моделей — опыт в analytics engineering не требуется! В этом руководстве вы узнаете:
 
@@ -30,7 +30,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-## Доступ к Canvas
+## Доступ к Canvas {#access-canvas}
 
 Чтобы открыть <Constant name="visual_editor" />:
 
@@ -39,7 +39,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 <Lightbox src="/img/docs/dbt-cloud/canvas/canvas-create-new-model.png" width="90%" title="Создание новой модели с landing page Canvas."/>
 
-## Навигация по интерфейсу
+## Навигация по интерфейсу {#navigating-the-interface}
 
 <Constant name="visual_editor" /> состоит из набора меню, которые активируются кликом по иконкам по периметру рабочей области canvas. Когда ни одно меню не активно, рабочая область выглядит следующим образом:
 
@@ -65,7 +65,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
     - Масштабирование к выбранному элементу (выбранный оператор будет приближен и центрирован, даже если он вне экрана)
     - Автоматическая раскладка тайлов операторов  
 
-## Создание модели
+## Создание модели {#create-a-model}
 
 В этом разделе вы создадите модель с использованием операторов и примерных данных из проекта [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop). В результате вы построите базовую модель, которая трансформирует два набора данных и формирует представление повторных покупок клиентов — полезно, например, при рассмотрении программы лояльности.
 
@@ -102,7 +102,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 </details>
 
-### Создание модели из уже существующих моделей
+### Создание модели из уже существующих моделей {#create-your-model-from-pre-existing-models}
 
 Чтобы начать:
 
@@ -126,7 +126,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-### Создание join
+### Создание join {#create-a-join}
 
 1. В меню **Operators** выберите **Transform** и перетащите оператор **Join** на canvas справа от source-моделей.
 
@@ -153,11 +153,11 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-## Улучшение модели
+## Улучшение модели {#enhance-your-model}
 
 Базовая модель в <Constant name="visual_editor" /> уже готова: она успешно объединяет две input-модели. Теперь вы хотите дополнительно преобразовать данные, чтобы получить список клиентов, которые покупают одни и те же товары повторно — например, для анализа программы лояльности.
 
-### Агрегация данных
+### Агрегация данных {#aggregate-data}
 
 Существует несколько способов трансформации данных: пользовательские формулы, фильтры, union. Для простоты добавьте оператор агрегации, чтобы определить, какие клиенты чаще всего покупают повторяющиеся продукты.
 
@@ -180,7 +180,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-### Добавим порядок
+### Добавим порядок {#add-some-order}
 
 Данных много: десятки клиентов и сотни продуктов. Отсортируйте их так, чтобы клиенты шли по возрастанию `CUSTOMER_ID`, а продукты — по убыванию количества покупок.
 
@@ -198,7 +198,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-## Настройка output-модели
+## Настройка output-модели {#configure-your-output-model}
 
 Теперь, когда модель готова, нужно настроить имя и расположение output-модели:
 
@@ -218,7 +218,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-## Запуск и публикация модели
+## Запуск и публикация модели {#run-and-share-your-model}
 
 Теперь, когда модель готова и даёт нужные данные, пора запустить её и отправить изменения в репозиторий <Constant name="git" />. Перед запуском учтите несколько моментов:
 
@@ -226,7 +226,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 - Когда модель понадобится в downstream-инструментах, вы можете выполнить run, чтобы материализовать её в development-схеме хранилища данных.
 - Когда модель готова к production и использованию другими пользователями или оркестрацией, закоммитьте её и откройте pull request.
 
-### Run
+### Run {#run}
 
 Чтобы запустить модель, просто нажмите большую кнопку **Run**. В <Constant name="visual_editor" /> нет командной строки и необходимости запоминать команды — есть только **Run**. Нажмите её, и результаты появятся в панели **Runs and previews**.
 
@@ -242,7 +242,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 :::
 
-### Коммит Git
+### Коммит Git {#git-commit}
 
 Модели, созданные в <Constant name="visual_editor" />, являются частью вашего общего dbt-проекта. Они автоматически сохраняются в папке `visual_editor` внутри директории `/models`. Вам не нужно настраивать пути или директории вручную.
 

@@ -25,7 +25,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Конфигурации
+## Конфигурации {#configurations}
 
 Базовый `profile.yml` для подключения к MindsDB:
 

@@ -11,13 +11,13 @@ id: "custom-databases"
 
 :::
 
-## Настройка пользовательских баз данных
+## Настройка пользовательских баз данных {#configuring-custom-databases}
 
 Логическая база данных, в которую строятся модели dbt, может быть настроена с помощью конфигурации модели `database`. Если эта конфигурация не указана для модели, то dbt будет использовать базу данных, настроенную в активной цели из вашего файла `profiles.yml`. Если конфигурация `database` *указана* для модели, то dbt построит модель в указанной базе данных.
 
 Конфигурация `database` может быть указана для групп моделей в файле `dbt_project.yml` или для отдельных моделей в SQL-файлах моделей.
 
-### Настройка переопределений базы данных в `dbt_project.yml`:
+### Настройка переопределений базы данных в `dbt_project.yml`: {#configuring-database-overrides-in-dbt_projectyml}
 
 Эта конфигурация изменяет все модели в проекте `jaffle_shop`, чтобы они строились в базе данных под названием `jaffle_shop`.
 
@@ -36,7 +36,7 @@ models:
 
 </File>
 
-### Настройка переопределений базы данных в файле модели
+### Настройка переопределений базы данных в файле модели {#configuring-database-overrides-in-a-model-file}
 
 Эта конфигурация изменяет конкретную модель, чтобы она строилась в базе данных под названием `jaffle_shop`.
 
@@ -51,7 +51,7 @@ select * from ...
 
 </File>
 
-### generate_database_name
+### generate_database_name {#generatedatabasename}
 
 Имя базы данных, генерируемое для модели, контролируется макросом под названием `generate_database_name`. Этот макрос может быть переопределен в проекте dbt для изменения способа генерации имен баз данных для моделей. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration).
 
@@ -88,17 +88,17 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
-### Управление различными поведениями в пакетах
+### Управление различными поведениями в пакетах {#managing-different-behaviors-across-packages}
 
 См. документацию по макросу `dispatch`: ["Управление различными глобальными переопределениями в пакетах"](/reference/dbt-jinja-functions/dispatch)
 
-## Соображения
+## Соображения {#considerations}
 
-### BigQuery
+### BigQuery {#bigquery}
 
 Когда dbt открывает соединение с BigQuery, он делает это, используя `project_id`, указанный в активном таргете в файле `profiles.yml`. Именно на этот `project_id` будут выставляться счета за запросы, выполняемые в рамках запуска dbt, даже если некоторые модели настроены так, чтобы создаваться в других проектах.
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Настройка database, schema и alias для dbt‑моделей](/guides/customize-schema-alias?step=1) — о том, как настраивать database, schema и alias для моделей dbt  
 - [Custom schema](/docs/build/custom-schemas) — о том, как настраивать schema для моделей dbt  

@@ -19,7 +19,7 @@ sidebar_label: "Подключение Redshift"
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-connection.png" width="70%" title="Настройка подключения к Redshift"/>
 
-### Параметры аутентификации
+### Параметры аутентификации {#authentication-parameters}
 
 Ниже приведены поддерживаемые способы аутентификации для Redshift:
 
@@ -47,7 +47,7 @@ sidebar_label: "Подключение Redshift"
 
 <br/>
 
-#### Пример Extended Attributes для IAM User в Redshift Serverless
+#### Пример Extended Attributes для IAM User в Redshift Serverless {#example-extended-attributes-for-iam-user-on-redshift-serverless}
 
 Чтобы не вставлять секреты напрямую в extended attributes, используйте [переменные окружения](/docs/build/environment-variables#handling-secrets):
 
@@ -65,19 +65,19 @@ secret_access_key: '{{ env_var(''DBT_ENV_SECRET_ACCESS_KEY'') }}'
 
 И `DBT_ENV_ACCESS_KEY_ID`, и `DBT_ENV_SECRET_ACCESS_KEY` должны быть [заданы](/docs/build/environment-variables) для каждой среды, использующей extended attributes таким образом.
 
-### Подключение через SSH-туннель
+### Подключение через SSH-туннель {#connecting-via-an-ssh-tunnel}
 
 import BastionServer from '/snippets/_bastion-server.md';
 
 <BastionServer redshift='Redshift' />
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 Чтобы оптимизировать производительность с помощью платформо-специфичных настроек в <Constant name="cloud" />, см. [настройки, специфичные для Redshift](/reference/resource-configs/redshift-configs).
 
 Чтобы выдать пользователям или ролям права доступа к базе данных (права и привилегии), см. страницу [Redshift permissions](/reference/database-permissions/redshift-permissions).
 
-## FAQs
+## FAQs {#faqs}
 
 <DetailsToggle alt_header="Ошибка базы данных - не удалось подключиться к серверу: время ожидания подключения истекло">
 При настройке подключения к базе данных через SSH-туннель требуются следующие компоненты:

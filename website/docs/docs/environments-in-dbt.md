@@ -31,7 +31,7 @@ pagination_next: null
 
 </div> <br />
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Лучшие практики работы со средами в <Constant name="cloud" />](/guides/set-up-ci)
 - [Среды развертывания](/docs/deploy/deploy-environments)

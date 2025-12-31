@@ -5,7 +5,7 @@ id: "set-up-sso-saml-2.0"
 
 import LoginSlug from '/snippets/_login-slug.md';
 
-# Настройка SSO с помощью SAML 2.0 <Lifecycle status="managed, managed_plus" />
+# Настройка SSO с помощью SAML 2.0 <Lifecycle status="managed, managed_plus" /> {#set-up-sso-with-saml-20}
 
 Тарифные планы уровня Enterprise в <Constant name="cloud" /> поддерживают единый вход (SSO) для любого провайдера идентификации (IdP), совместимого с SAML 2.0.
 В настоящее время поддерживаются следующие возможности:
@@ -16,19 +16,19 @@ import LoginSlug from '/snippets/_login-slug.md';
 В этом документе описаны шаги по интеграции <Constant name="cloud" /> с провайдером идентификации
 для настройки единого входа (Single Sign-On) и [управления доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control).
 
-## URI Auth0
+## URI Auth0 {#auth0-uris}
 
 <Snippet path="auth0-uri" />
 
-## Универсальные интеграции SAML 2.0
+## Универсальные интеграции SAML 2.0 {#generic-saml-20-integrations}
 
 Если ваш SAML‑провайдер идентификации — Okta, Google, Azure или OneLogin, перейдите к соответствующему разделу ниже на этой странице. Для всех остальных SAML‑совместимых провайдеров идентификации вы можете использовать инструкции из этого раздела для их настройки.
 
-### Настройка провайдера идентификации
+### Настройка провайдера идентификации {#configure-your-identity-provider}
 
 Для настройки провайдера идентификации вам потребуется доступ администратора к вашему SAML 2.0‑совместимому IdP. Эти инструкции можно использовать с любым провайдером идентификации, поддерживающим SAML 2.0.
 
-### Создание приложения
+### Создание приложения {#creating-the-application}
 
 1. Войдите в ваш SAML 2.0 провайдер идентификации и создайте новое приложение.
 2. При появлении запроса настройте приложение со следующими параметрами:
@@ -37,7 +37,7 @@ import LoginSlug from '/snippets/_login-slug.md';
    - **App name:** <Constant name="cloud" />
    - **App logo (optional):** при необходимости вы можете [загрузить логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа приложения.
 
-#### Настройка приложения
+#### Настройка приложения {#configuring-the-application}
 
 <Snippet path="access_url" />
 
@@ -75,7 +75,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 `DBT_CLOUD_...`, вы можете применить фильтр вида `Starts With: DBT_CLOUD_`.
 :::
 
-### Сбор секретов интеграции
+### Сбор секретов интеграции {#collect-integration-secrets}
 
 После подтверждения настроек IdP должен отобразить следующие значения для новой
 интеграции SAML 2.0. Сохраните их в безопасном месте, так как они понадобятся
@@ -107,12 +107,12 @@ import LoginSlug from '/snippets/_login-slug.md';
       </Expandable>
       <!-- vale on -->
 
-### Завершение настройки
+### Завершение настройки {#finish-setup}
 
 После создания приложения следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup),
 чтобы завершить интеграцию.
 
-## Интеграция с Okta
+## Интеграция с Okta {#okta-integration}
 Используйте инструкции из этого раздела для настройки Okta в качестве провайдера идентификации.
 
 1. Войдите в свою учетную запись Okta. В административной панели создайте новое приложение.
@@ -135,7 +135,7 @@ import LoginSlug from '/snippets/_login-slug.md';
     title="Настройка нового приложения"
 />
 
-### Настройка приложения Okta
+### Настройка приложения Okta {#configure-the-okta-application}
 
 <Snippet path="access_url" />
 
@@ -155,7 +155,7 @@ import LoginSlug from '/snippets/_login-slug.md';
     title="Настройка общих параметров приложения"
 />
 
-### Настройка параметров SAML
+### Настройка параметров SAML {#configure-saml-settings}
 
 1. На странице **SAML Settings** укажите следующие значения:
 
@@ -200,7 +200,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 5. Нажмите **Next**, чтобы продолжить.
 
-### Завершение настройки Okta
+### Завершение настройки Okta {#finish-okta-setup}
 
 1. Выберите *I'm an Okta customer adding an internal app*.
 2. Выберите *This is an internal app that we have created*.
@@ -213,7 +213,7 @@ import LoginSlug from '/snippets/_login-slug.md';
     title="Завершение настройки в Okta"
 />
 
-### Просмотр инструкций по настройке
+### Просмотр инструкций по настройке {#view-setup-instructions}
 
 1. На следующей странице нажмите **View Setup Instructions**.
 2. На следующих шагах вы будете использовать эти значения в настройках учетной записи <Constant name="cloud" /> для завершения
@@ -234,11 +234,11 @@ import LoginSlug from '/snippets/_login-slug.md';
 3. После создания приложения Okta следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup),
 чтобы завершить интеграцию.
 
-## Интеграция с Google
+## Интеграция с Google {#google-integration}
 
 Используйте этот раздел, если вы настраиваете Google в качестве провайдера идентификации.
 
-### Настройка приложения Google
+### Настройка приложения Google {#configure-the-google-application}
 
 <Snippet path="access_url" />
 
@@ -253,7 +253,7 @@ import LoginSlug from '/snippets/_login-slug.md';
     - Загрузите логотип приложения (optional)
     - Нажмите **Continue**.
 
-### Настройка параметров SAML
+### Настройка параметров SAML {#configure-saml-settings-1}
 
 1. Перейдите на страницу **Google Identity Provider details**.
 2. Загрузите **IDP metadata**.
@@ -284,7 +284,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 10. Нажмите **Finish**, чтобы продолжить.
 
-### Завершение настройки Google
+### Завершение настройки Google {#finish-google-setup}
 
 1. На главной странице консоли администратора перейдите в **Apps**, затем нажмите **Web and mobile apps**.
 2. Выберите ваше SAML‑приложение.
@@ -294,15 +294,15 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 **Примечание:** изменения обычно вступают в силу в течение нескольких минут, но в некоторых случаях могут занять до 24 часов.
 
-### Завершение настройки
+### Завершение настройки {#finish-setup-1}
 
 После создания приложения Google следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup)
 
-## Интеграция с Microsoft Entra ID (ранее Azure AD)
+## Интеграция с Microsoft Entra ID (ранее Azure AD) {#microsoft-entra-id-formerly-azure-ad-integration}
 
 Если вы используете Microsoft Entra ID (ранее Azure AD), приведенные ниже инструкции помогут настроить его в качестве провайдера идентификации.
 
-### Создание корпоративного приложения Microsoft Entra ID
+### Создание корпоративного приложения Microsoft Entra ID {#create-a-microsoft-entra-id-enterprise-application}
 
 <Snippet path="access_url" />
 
@@ -339,7 +339,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 14. Нажмите **Save** в верхней части формы.
 
-### Создание параметров SAML
+### Создание параметров SAML {#creating-saml-settings}
 
 На странице Set up Single Sign-On with SAML:
 
@@ -363,7 +363,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 **Примечание:** имейте в виду, что Group ID в Entra ID сопоставляется с GUID группы. Для корректной работы сопоставлений он должен быть указан в нижнем регистре. Поле Source Attribute также может быть установлено в другое значение по вашему усмотрению.
 
-### Завершение настройки
+### Завершение настройки {#finish-setup-2}
 
 9. После создания приложения Azure следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup), чтобы завершить интеграцию. Названия полей в <Constant name="cloud" /> отличаются от названий в приложении Entra ID. Соответствие выглядит следующим образом:
 
@@ -372,13 +372,13 @@ import LoginSlug from '/snippets/_login-slug.md';
    | **Identity Provider SSO URL** | Login URL |
    | **Identity Provider Issuer** | Microsoft Entra Identifier |
 
-## Интеграция с OneLogin
+## Интеграция с OneLogin {#onelogin-integration}
 
 Используйте этот раздел, если вы настраиваете OneLogin в качестве провайдера идентификации.
 
 Для настройки OneLogin вам потребуется доступ **Administrator**.
 
-### Настройка приложения OneLogin
+### Настройка приложения OneLogin {#configure-the-onelogin-application}
 
 <Snippet path="access_url" />
 
@@ -391,7 +391,7 @@ import LoginSlug from '/snippets/_login-slug.md';
    - **App name:** <Constant name="cloud" />
    - **App logo (optional):** при необходимости вы можете [загрузить логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа приложения.
 
-### Настройка параметров SAML
+### Настройка параметров SAML {#configure-saml-settings-2}
 
 3. На вкладке **Configuration** укажите следующие значения:
 
@@ -420,7 +420,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 | ---- | ----------- | ----- | ----------- |
 421 | | groups | Не указано | Набор групп, которые будут использоваться в вашей организации | Группы, к которым принадлежит пользователь в IdP |
 
-### Сбор секретов интеграции
+### Сбор секретов интеграции {#collect-integration-secrets-1}
 
 5. После подтверждения настроек перейдите на вкладку **SSO**. OneLogin отобразит следующие значения для
 новой интеграции. Сохраните их в безопасном месте, так как они понадобятся для завершения настройки в <Constant name="cloud" />.
@@ -451,14 +451,14 @@ import LoginSlug from '/snippets/_login-slug.md';
       </Expandable>
       <!-- vale on -->
 
-### Завершение настройки
+### Завершение настройки {#finish-setup-3}
 
 6. После создания приложения OneLogin следуйте инструкциям в разделе [Настройка <Constant name="cloud" />](#dbt-cloud-setup),
 чтобы завершить интеграцию.
 
-## Настройка dbt
+## Настройка dbt {#dbt-setup}
 
-### Передача значений IdP в dbt
+### Передача значений IdP в dbt {#providing-idp-values-to-dbt}
 
 Чтобы завершить настройку, выполните следующие шаги в <Constant name="cloud" />:
 
@@ -479,7 +479,7 @@ import LoginSlug from '/snippets/_login-slug.md';
 4. Нажмите **Save**, чтобы завершить настройку интеграции SAML 2.0.
 5. После завершения настройки вы можете перейти по URL, сгенерированному для _slug_ вашей учетной записи, чтобы протестировать вход через провайдера идентификации. Кроме того, пользователи, добавленные в SAML 2.0 приложение, смогут входить в <Constant name="cloud" /> напрямую из IdP.
 
-### Дополнительные параметры конфигурации
+### Дополнительные параметры конфигурации {#additional-configuration-options}
 
 В разделе **Single sign-on** также доступны дополнительные параметры конфигурации, расположенные ниже полей с учетными данными.
 
@@ -489,6 +489,6 @@ import LoginSlug from '/snippets/_login-slug.md';
 
 <Snippet path="login_url_note" />
 
-### Настройка RBAC
+### Настройка RBAC {#setting-up-rbac}
 
 После настройки провайдера идентификации вы сможете настроить [управление доступом на основе ролей](/docs/cloud/manage-access/enterprise-permissions) для своей учетной записи.

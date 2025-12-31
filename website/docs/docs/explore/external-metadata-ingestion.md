@@ -4,7 +4,7 @@ sidebar_label: "Импорт внешних метаданных"
 description: "Подключайтесь напрямую к вашему хранилищу данных, чтобы видеть таблицы, представления и другие ресурсы, которые не определены в dbt, с помощью dbt Catalog."
 ---
 
-# Инджестинг внешних метаданных <Lifecycle status="managed,managed_plus" /> <Lifecycle status="preview" />
+# Инджестинг внешних метаданных <Lifecycle status="managed,managed_plus" /> <Lifecycle status="preview" /> {#external-metadata-ingestion}
 
 <IntroText>
 
@@ -20,7 +20,7 @@ description: "Подключайтесь напрямую к вашему хра
 
 Эти учетные данные настраиваются отдельно от учетных данных окружений dbt и имеют область действия на уровне аккаунта, а не проекта.
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 
 - Наличие аккаунта <Constant name="cloud" /> на тарифе [Enterprise или Enterprise+](https://www.getdbt.com/pricing).
 - Вы должны быть [администратором аккаунта с соответствующими правами](/docs/cloud/manage-access/enterprise-permissions#account-admin), чтобы редактировать подключения.
@@ -29,15 +29,15 @@ description: "Подключайтесь напрямую к вашему хра
 - В качестве платформы данных используется Snowflake.
 - Следите за обновлениями! В ближайшем будущем планируется поддержка других адаптеров.
 
-## Инструкции по настройке
+## Инструкции по настройке {#configuration-instructions}
 
-### Включение инджестинга внешних метаданных
+### Включение инджестинга внешних метаданных {#enable-external-metadata-ingestion}
 
 1. Нажмите на имя аккаунта внизу левого меню и выберите **[Account settings](/docs/cloud/account-settings)**.
 2. В разделе Account information перейдите в **Settings** и нажмите **Edit** в правом верхнем углу страницы.
 3. Выберите опцию **Ingest external metadata in dbt <Constant name="explorer" /> (formerly dbt Explorer)** (если она еще не включена).
 
-### Настройка подключения к хранилищу
+### Настройка подключения к хранилищу {#configure-the-warehouse-connection}
 
 1. Перейдите в **Account settings**.
 2. В левой панели выберите **Connections**.
@@ -56,7 +56,7 @@ description: "Подключайтесь напрямую к вашему хра
         - Пример: `DIM` соответствует `DIM_ORDERS` и `DIMENSION_TABLE` (базовое совпадение «содержит»).
         - Поддерживаются подстановочные символы. Например: `DIM*` соответствует `DIM_ORDERS` и `DIM_PRODUCTS`.
 
-## Требуемые учетные данные
+## Требуемые учетные данные {#required-credentials}
 
 В этом разделе настраивается базовый доступ dbt к Snowflake. Создается роль (`dbt_metadata_role`) с минимально необходимыми правами и пользователь (`dbt_metadata_user`), предназначенный исключительно для доступа dbt к метаданным. Это обеспечивает четкое и контролируемое разделение доступа, позволяя dbt читать метаданные без предоставления более широких прав. Такая настройка гарантирует, что dbt может читать метаданные для профилирования, документации и lineage, не имея возможности изменять данные или управлять ресурсами.
 
@@ -92,7 +92,7 @@ GRANT ROLE dbt_metadata_role TO USER dbt_metadata_user;
 
 Примечание: используйте сервисные учетные записи только для чтения, чтобы соблюдать принцип минимальных привилегий и улучшить аудит.
 
-## Назначение прав доступа к метаданным
+## Назначение прав доступа к метаданным {#assign-metadata-access-privileges}
 
 В этом разделе описаны минимально необходимые привилегии для чтения метаданных из каждой требуемой базы данных Snowflake. Они обеспечивают доступ к схемам, таблицам, представлениям и информации о lineage, позволяя dbt профилировать и документировать данные, при этом предотвращая любые изменения.
 
@@ -129,7 +129,7 @@ GRANT MONITOR ON ALL DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_
 GRANT MONITOR ON FUTURE DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE dbt_metadata_role;
 ```
 
-## Предоставление доступа к метаданным Snowflake
+## Предоставление доступа к метаданным Snowflake {#grant-access-to-snowflake-metadata}
 
 На этом шаге роли dbt (`dbt_metadata_role`) предоставляется доступ к системной базе данных Snowflake, что позволяет читать статистику использования, историю запросов и информацию о lineage, необходимую для комплексного анализа метаданных.
 
@@ -139,7 +139,7 @@ GRANT MONITOR ON FUTURE DYNAMIC TABLES IN DATABASE IDENTIFIER($db_var) TO ROLE d
 GRANT IMPORTED PRIVILEGES ON DATABASE SNOWFLAKE TO ROLE dbt_metadata_role;
 ```
 
-## Важные соображения
+## Важные соображения {#important-considerations}
 
 Ниже приведены лучшие практики для ingestion внешних метаданных, направленные на обеспечение стабильной, надежной и масштабируемой интеграции метаданных из сторонних систем.
 

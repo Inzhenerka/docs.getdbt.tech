@@ -9,11 +9,11 @@ hide_table_of_contents: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом руководстве объясняется, как настроить time spine, используя в качестве примера проект [<Constant name="semantic_layer" /> Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template).
 
-### Что такое модель time spine?
+### Что такое модель time spine? {#what-is-a-time-spine-model}
 
 [Time spine](/docs/build/metricflow-time-spine) — это ключевой компонент для временных join-ов и агрегаций в MetricFlow, движке, который лежит в основе <Constant name="semantic_layer" />.
 
@@ -24,13 +24,13 @@ hide_table_of_contents: true
 
 После того как time spine готов, его нужно описать в YAML, чтобы MetricFlow знал, как его использовать. В этом руководстве показано, как сделать и то, и другое.
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 Перед началом убедитесь, что у вас есть:
 
 - настроенный dbt‑проект. Если его нет, воспользуйтесь [quickstart‑руководством по <Constant name="semantic_layer" />](/guides/sl-snowflake-qs?step=1) или одним из [quickstart‑руководств <Constant name="cloud" />](/guides?tags=Quickstart).
 
-## Добавление SQL‑модели time spine
+## Добавление SQL‑модели time spine {#add-a-time-spine-sql-model}
 
 Начнём с предположения, что вы создаёте time spine с нуля. Если у вас уже есть dbt‑проект и собственная time spine (например, модель типа `dim_date`), этот шаг можно пропустить и сразу перейти к разделу [Использование существующей модели dim_date](/guides/mf-time-spine#using-an-existing-dim-date-model).
 
@@ -84,7 +84,7 @@ Time spine — это dbt‑модель, которая генерирует п
 4. Если вы работаете в <Constant name="cloud_ide" />, вы можете посмотреть результат, нажав кнопку **Preview**:
    <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
 
-## Добавление YAML‑конфигурации для time spine
+## Добавление YAML‑конфигурации для time spine {#add-yaml-configuration-for-the-time-spine}
 
 Теперь, когда SQL‑файл создан, нужно описать его в YAML, чтобы MetricFlow смог распознать и использовать модель.
 
@@ -111,7 +111,7 @@ Time spine — это dbt‑модель, которая генерирует п
 - определяет `date_day` как базовую колонку для дневной гранулярности;
 - настраивает свойства `time_spine`, чтобы MetricFlow мог использовать модель.
 
-### Использование существующей модели dim_date
+### Использование существующей модели dim_date {#using-an-existing-dim_date-model}
 
 Этот необязательный подход позволяет переиспользовать уже существующую модель и не создавать новую. Если вы создали time spine с нуля, этот раздел можно пропустить.
 
@@ -140,7 +140,7 @@ Time spine — это dbt‑модель, которая генерирует п
 
 Эта YAML‑конфигурация настраивает свойство `time_spine`, чтобы MetricFlow мог использовать модель.
 
-## Запуск и проверка time spine
+## Запуск и проверка time spine {#run-and-preview-the-time-spine}
 
 Если вы ещё не запускали созданный time spine, сделайте это сейчас. Если модель уже была выполнена, этот шаг можно пропустить.
 
@@ -170,14 +170,14 @@ Time spine — это dbt‑модель, которая генерирует п
 
 5. Проверьте, что данные корректны и соответствуют ожиданиям.
 
-## Добавление дополнительных гранулярностей
+## Добавление дополнительных гранулярностей {#add-additional-granularities}
 
 Этот раздел необязательный и показывает, как добавить дополнительные гранулярности в time spine:
 
 - [Годовая](#yearly-time-spine)
 - [Пользовательские календари](#custom-calendars)
 
-### Годовая time spine
+### Годовая time spine {#yearly-time-spine}
 
 Чтобы поддерживать несколько гранулярностей (например, почасовую, месячную, годовую), создайте дополнительные модели time spine и настройте их в YAML.
 
@@ -256,7 +256,7 @@ Time spine — это dbt‑модель, которая генерирует п
 - создать месячный time spine: скопируйте дневную модель, измените её так, чтобы она генерировала одну строку на месяц, и добавьте в YAML `granularity: month`.
 :::
 
-### Пользовательские календари
+### Пользовательские календари {#custom-calendars}
 
 Для поддержки пользовательских календарей (фискальные годы, фискальные кварталы и т. д.) создайте дополнительный time spine и настройте его в YAML. Эта возможность доступна в <Constant name="cloud" /> на [Latest release track](/docs/dbt-versions/cloud-release-tracks) или в [<Constant name="core" /> версии 1.9 и выше](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
@@ -341,7 +341,7 @@ Time spine — это dbt‑модель, которая генерирует п
 
    <Lightbox src="/img/mf-guide-fiscal-preview.png" title="Validate the custom calendar metrics and time spine output in the Studio IDE" />
 
-## Что дальше
+## Что дальше {#whats-next}
 
 <ConfettiTrigger>
 

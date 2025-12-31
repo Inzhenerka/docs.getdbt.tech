@@ -25,14 +25,14 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 [Model contracts](/docs/mesh/govern/model-contracts) не поддерживаются.
 :::
 
-## Предварительные условия для Dremio Cloud
+## Предварительные условия для Dremio Cloud {#prerequisites-for-dremio-cloud}
 Перед подключением проекта к Dremio Cloud выполните следующие предварительные шаги:
 * Убедитесь, что у вас есть ID проекта Sonar, который вы хотите использовать. См. [Получение ID проекта](https://docs.dremio.com/cloud/cloud-entities/projects/#obtaining-the-id-of-a-project).
 * Убедитесь, что у вас есть персональный токен доступа (PAT) для аутентификации в Dremio Cloud. См. [Создание токена](https://docs.dremio.com/cloud/security/authentication/personal-access-token/#creating-a-token).
 * Убедитесь, что на системе, на которой вы запускаете dbt, установлена версия Python 3.9.x или более поздняя.
 
 
-## Предварительные условия для Dremio Software
+## Предварительные условия для Dremio Software {#prerequisites-for-dremio-software}
 
 * Убедитесь, что вы используете версию 22.0 или более позднюю.
 * Убедитесь, что на системе, на которой вы запускаете dbt, установлена версия Python 3.9.x или более поздняя.
@@ -40,7 +40,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 * Если вы хотите использовать TLS для защиты соединения между dbt и Dremio Software, настройте полное шифрование сетевого трафика (full wire encryption) в вашем кластере Dremio. Инструкции см. в разделе <a target="_blank" rel="noopener noreferrer" href="https://docs.dremio.com/software/deployment/wire-encryption-config/">Configuring Wire Encryption</a>.
 
 
-## Инициализация проекта
+## Инициализация проекта {#initializing-a-project}
 
 1. Выполните команду `dbt init <project_name>`.
 2. Выберите `dremio` в качестве используемой базы данных.
@@ -51,7 +51,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Далее настройте профиль для вашего проекта.
 
-## Профили
+## Профили {#profiles}
 
 Когда вы инициализируете проект, вы создаете один из этих трех профилей. Вы должны настроить его перед попыткой подключения к Dremio Cloud или Dremio Software.
 
@@ -140,7 +140,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 </TabItem>
 </Tabs>
 
-## Общие конфигурации для профилей Dremio Cloud и Dremio Software
+## Общие конфигурации для профилей Dremio Cloud и Dremio Software {#configurations-common-to-profiles-for-dremio-cloud-and-dremio-software}
 
 | Конфигурация | Обязательна? | Значение по умолчанию | Описание |
 | --- | --- | --- | --- |
@@ -151,7 +151,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `dremio_space` | Нет | `@\<username>` | Значение пространства Dremio, в котором создаются представления. Псевдоним dbt — `database`. Это значение соответствует имени в этом месте в разделе **Spaces** на странице Datasets в Dremio:  ![dbt spaces](/img/reference/dremio-setup/dbt-Spaces.png) |
 | `dremio_space_folder` | Нет | `no_schema` | Папка в пространстве Dremio, в которой создаются представления. По умолчанию это верхний уровень в пространстве. Псевдоним dbt — `schema`. Вложенные папки разделяются точками. Это значение соответствует пути в этом месте на странице Datasets в Dremio, которое в следующем изображении называется `Folder1.Folder2`:  ![Folder1.Folder2](/img/reference/dremio-setup/dbt-SpacesPath.png) |
 
-### Конфигурации в профилях для Dremio Cloud
+### Конфигурации в профилях для Dremio Cloud {#configurations-in-profiles-for-dremio-cloud}
 
 | Конфигурация | Обязательна? | Значение по умолчанию | Описание |
 | --- | --- | --- | --- |
@@ -161,7 +161,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | `cloud_project_id` | Да | Нет | ID проекта Sonar, в котором выполняются преобразования. | 
 | `use_ssl` | Да | `true` | Значение должно быть `true`. |
     
-### Конфигурации в профилях для Dremio Software
+### Конфигурации в профилях для Dremio Software {#configurations-in-profiles-for-dremio-software}
 | Конфигурация | Обязательна? | Значение по умолчанию | Описание | 
 | ---  | ---  | ---  | ---  | 
 | `software_host` | Yes | None | Имя хоста или IP-адрес координаторного узла кластера Dremio. | 

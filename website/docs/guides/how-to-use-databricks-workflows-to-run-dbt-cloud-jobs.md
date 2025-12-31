@@ -13,7 +13,7 @@ level: 'Intermediate'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 Использование рабочих процессов Databricks для вызова API заданий <Constant name="cloud" /> может быть полезно по нескольким причинам:
 
@@ -22,7 +22,7 @@ level: 'Intermediate'
 3. [**Разделение ответственности &mdash;**](https://en.wikipedia.org/wiki/Separation_of_concerns) Подробные логи заданий dbt в среде <Constant name="cloud" /> позволяют добиться большей модульности и более эффективной отладки. Это упрощает быструю изоляцию ошибок, при этом сохраняя возможность видеть общий статус выполнения в Databricks.
 4. **Пользовательский запуск заданий &mdash;** Используйте рабочий процесс Databricks для запуска заданий <Constant name="cloud" /> на основе пользовательских условий или логики, которые не поддерживаются нативно механизмом планирования <Constant name="cloud" />. Это дает больше гибкости в том, когда и как запускаются ваши задания <Constant name="cloud" />.
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - Активная учетная запись [Enterprise или Enterprise+ <Constant name="cloud" />](https://www.getdbt.com/pricing/)
 - У вас должна быть настроена и существующая [задача деплоя <Constant name="cloud" />](/docs/deploy/deploy-jobs)
@@ -30,7 +30,7 @@ level: 'Intermediate'
 - [Databricks CLI](https://docs.databricks.com/dev-tools/cli/index.html)
   - **Примечание**: Вам нужно только настроить аутентификацию. Как только вы настроите Host и Token и сможете выполнить `databricks workspace ls /Users/<someone@example.com>`, вы можете продолжить выполнение этого руководства.
 
-## Настройка области секретов Databricks
+## Настройка области секретов Databricks {#set-up-a-databricks-secret-scope}
 
 1. Получите **[personal access token](/docs/dbt-cloud-apis/user-tokens)** или **[Service account token](/docs/dbt-cloud-apis/service-tokens#generating-service-account-tokens)** в <Constant name="cloud" />.
 2. Настройте **Databricks secret scope**, который используется для безопасного хранения вашего API‑ключа <Constant name="cloud" />.
@@ -47,7 +47,7 @@ databricks secrets put --scope  <YOUR_SECRET_SCOPE> --key  <YOUR_SECRET_KEY> --s
 
 5. Замените **`<YOUR_DBT_CLOUD_API_KEY>`** на фактическое значение API‑ключа, который вы скопировали из <Constant name="cloud" /> на шаге 1.
 
-## Создание Python-ноутбука в Databricks
+## Создание Python-ноутбука в Databricks {#create-a-databricks-python-notebook}
 
 1. [Создайте **Python-ноутбук в Databricks**](https://docs.databricks.com/notebooks/notebooks-manage.html), который выполняет Python-скрипт, вызывающий API заданий dbt Cloud.
 
@@ -163,7 +163,7 @@ DbtJobRunStatus.SUCCESS
 
 Вы можете при необходимости отменить задание в <Constant name="cloud" />.
 
-## Настройка рабочих процессов для запуска dbt jobs
+## Настройка рабочих процессов для запуска dbt jobs {#configure-the-workflows-to-run-the-dbt-jobs}
 
 Вы можете настроить рабочие процессы непосредственно из ноутбука ИЛИ добавив этот ноутбук в один из ваших существующих рабочих процессов:
 

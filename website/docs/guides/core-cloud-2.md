@@ -10,7 +10,7 @@ keywords: ['dbt Core','dbt platform','Migration', 'Move dbt', 'Migrate dbt']
 level: 'Intermediate'
 ---
 
-## Введение
+## Введение {#introduction}
 Переход с <Constant name="core" /> на <Constant name="cloud" /> упрощает workflows в analytics engineering, позволяя командам разрабатывать, тестировать, деплоить и исследовать data products в рамках единого полностью управляемого сервиса.
 
 Изучите нашу серию руководств из трех частей о переходе с <Constant name="core" /> на <Constant name="cloud" />. Серия идеально подходит пользователям, которые хотят упростить процессы и усилить аналитику:
@@ -33,7 +33,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 </Expandable>
 
-## Чему вы научитесь
+## Чему вы научитесь {#what-youll-learn}
 Сегодня тысячи компаний с командами данных от 2 до 2 000 человек полагаются на <Constant name="cloud" />, чтобы ускорять работу с данными, усиливать коллаборацию и завоевывать доверие бизнеса. Понимание того, что нужно сделать для перехода между <Constant name="cloud" /> и текущим deployment на Core, поможет вам выстроить стратегию и план миграции.
 
 В руководстве описаны следующие шаги:
@@ -46,7 +46,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - [Итоги](/guides/core-cloud-2?step=8): краткое резюме ключевых выводов и того, чему вы научились в этом руководстве.
 - [Что дальше?](/guides/core-cloud-2?step=9): что ожидать в следующих руководствах.
 
-## Важные аспекты
+## Важные аспекты {#considerations}
 
 Если ваша команда сегодня использует <Constant name="core" />, вы могли открыть это руководство, потому что:
 - вы осознали нагрузку по поддержке такого deployment;
@@ -73,7 +73,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 Если вы разворачивали <Constant name="core" /> самостоятельно, у вас, вероятно, сложились другие ответы.
 
-## Спланируйте переход
+## Спланируйте переход {#plan-your-move}
 
 Планируя переход, оцените ваш workflow и структуру команды, чтобы обеспечить плавный процесс. Ниже — ключевые моменты, которые стоит учесть:
 
@@ -131,7 +131,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 </Expandable>
 
-## Переход на dbt
+## Переход на dbt {#move-to-dbt}
 
 Это руководство — ваш roadmap для продумывания стратегий миграции и того, как может выглядеть переход с <Constant name="core" /> на <Constant name="cloud" />.
 
@@ -140,7 +140,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 Для более детального сравнения <Constant name="core" /> и <Constant name="cloud" /> см. [How <Constant name="cloud" /> compares with <Constant name="core" />](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud).
 
-## Тестирование и валидация
+## Тестирование и валидация {#test-and-validate}
 
 После [закладки основ в <Constant name="cloud" />](/guides/core-to-cloud-1?step=1) важно провалидировать миграцию, чтобы обеспечить корректную работу и целостность данных:
 
@@ -149,7 +149,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - **Точное тестирование:** используйте [unit testing](/docs/build/unit-tests), чтобы валидировать логику SQL‑моделей на небольшом наборе статических входных данных *до* материализации полной модели в production.
 - **Доступы и права**: пересмотрите и при необходимости скорректируйте [access controls и permissions](/docs/cloud/manage-access/about-user-access) в <Constant name="cloud" />, чтобы соблюдать требования безопасности и защищать данные.
 
-## Переход и обучение
+## Переход и обучение {#transition-and-training}
 
 Когда вы убедились, что оркестрация и CI/CD в <Constant name="cloud" /> работают как ожидается, следует поставить на паузу текущий orchestration tool и остановить или обновить текущий CI/CD процесс. Это не относится к случаям, когда вы продолжаете использовать внешний оркестратор (например Airflow) и заменили выполнение `dbt-core` на выполнение через <Constant name="cloud" /> (через [API](/docs/dbt-cloud-apis/overview)).
 
@@ -161,7 +161,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - **Уведомления и логи:** получайте мгновенные [уведомления](/docs/deploy/monitor-jobs) о падениях jobs со ссылками на детали job. Используйте подробные логи всех запусков для диагностики.
 - **CI/CD:** используйте функцию [CI/CD](/docs/deploy/ci-jobs) в <Constant name="cloud" />, чтобы запускать dbt‑проект во временной схеме каждый раз, когда новые коммиты пушатся в открытые pull requests. Это помогает ловить ошибки до деплоя в production.
 
-### После перехода
+### После перехода {#beyond-your-move}
 
 Теперь, когда вы выбрали <Constant name="cloud" /> как платформу, у вас открываются возможности для упрощения коллаборации, повышения эффективности workflow и использования мощных [возможностей](/docs/cloud/about-cloud/dbt-cloud-features) для команд analytics engineering. Вот дополнительные возможности, которые помогут раскрыть потенциал <Constant name="cloud" />:
 
@@ -171,14 +171,14 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 - **dbt Semantic Layer:** [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) позволяет определять универсальные метрики поверх ваших моделей, а затем выполнять запросы к ним в [BI‑инструменте](/docs/cloud-integrations/avail-sl-integrations). Это устраняет проблему несовпадающих метрик — появляется централизованный способ определять метрики и создавать видимость на каждом этапе data flow. <Lifecycle status="self_service,managed" />
 - **dbt Mesh:** используйте [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro), чтобы шарить data models внутри организации, позволяя командам данных сотрудничать над общими моделями и переиспользовать работу других команд. <Lifecycle status="managed,managed_plus" />
 
-### Дополнительная помощь
+### Дополнительная помощь {#additional-help}
 
 - **Курсы dbt Learn**: получите доступ к бесплатным видео‑курсам [Learn <Constant name="cloud" />](https://learn.getdbt.com) для обучения в удобном темпе.
 - **dbt Community:** присоединяйтесь к [dbt Community](https://community.getdbt.com/), чтобы общаться с другими пользователями dbt, задавать вопросы и делиться best practices.
 - **Команда поддержки dbt:** наша [команда поддержки dbt](/docs/dbt-support) всегда готова помочь с проблемами <Constant name="cloud" />. Создайте тикет поддержки в <Constant name="cloud" />, и мы поможем!
 - **Account management:** для Enterprise‑аккаунтов доступна команда account management, которая помогает с troubleshooting и поддержкой управления аккаунтом. [Book a demo](https://www.getdbt.com/contact), чтобы узнать больше. <Lifecycle status="managed,managed_plus" />
 
-## Итоги
+## Итоги {#summary}
 
 Это руководство должно было дать вам понимание и рамку для перехода с <Constant name="core" /> на <Constant name="cloud" />. Оно охватило следующие ключевые области:
 
@@ -192,7 +192,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 - **Переход и обучение**: полезные рекомендации по переходу, обучению и онбордингу команды. Используйте возможности <Constant name="cloud" /> — от инструментов разработки (<Constant name="cloud" /> CLI и <Constant name="cloud_ide" />) до продвинутых функций, таких как <Constant name="explorer" />, <Constant name="semantic_layer" /> и <Constant name="mesh" />.
 
-## Что дальше?
+## Что дальше? {#whats-next}
 
 <ConfettiTrigger>
 
@@ -203,7 +203,7 @@ import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 <CoretoCloudTable/>
 
-### Связанные материалы
+### Связанные материалы {#related-content}
 - Курсы [Learn <Constant name="cloud" />](https://learn.getdbt.com)
 - Запишитесь на [демо от экспертов](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите инсайты
 - Работайте с командой [Professional Services dbt Labs](https://www.getdbt.com/dbt-labs/services), чтобы поддержать миграцию и развитие вашей data организации.

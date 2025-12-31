@@ -6,7 +6,7 @@ datatype: column_name
 sidebar_label: invalidate_hard_deletes
 ---
 
-# invalidate_hard_deletes <Lifecycle status="legacy" />
+# invalidate_hard_deletes <Lifecycle status="legacy" /> {#invalidateharddeletes}
 
 <IntroText>
 
@@ -50,13 +50,13 @@ snapshots:
 
 </File>
 
-## Описание
+## Описание {#description}
 Функция, включаемая по желанию, для аннулирования жёстко удалённых записей при создании снимков запроса.
 
-## По умолчанию
+## По умолчанию {#default}
 По умолчанию функция отключена.
 
-## Пример
+## Пример {#example}
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/orders.yml'>

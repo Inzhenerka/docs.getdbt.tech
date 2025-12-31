@@ -8,13 +8,13 @@ datatype: int
 ---
 
 <VersionCallout version="1.9" />
-## Определение
+## Определение {#definition}
 
 Настройте окно `lookback`, чтобы повторно обрабатывать дополнительные батчи во время запусков [microbatch incremental model](/docs/build/incremental-microbatch). Модель обрабатывает X батчей вплоть до последней закладки (последней успешно обработанной точки данных), чтобы захватить записи, поступившие с задержкой.
 
 Установите параметр `lookback` в целое число, большее или равное нулю. Значение по умолчанию — `1`. Вы можете настроить `lookback` для [microbatch incremental model](/docs/build/incremental-microbatch) в YAML-файле проекта (`dbt_project.yml`), YAML-файле свойств (`models/properties.yml`) или в конфигурации SQL-файла.
 
-## Примеры
+## Примеры {#examples}
 
 Следующие примеры устанавливают `2` в качестве конфигурации `lookback` для модели `user_sessions`.
 

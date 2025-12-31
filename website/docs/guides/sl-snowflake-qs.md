@@ -21,7 +21,7 @@ import ConnectQueryAPI from '/snippets/_sl-connect-and-query-api.md';
 import RunProdJob from '/snippets/_sl-run-prod-job.md';
 import SlSetUp from '/snippets/_new-sl-setup.md'; 
 
-## Введение
+## Введение {#introduction}
 
 [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl), работающий на базе [MetricFlow](/docs/build/about-metricflow), упрощает настройку ключевых бизнес-метрик. Он централизует определения, помогает избегать дублирования кода и обеспечивает простой доступ к метрикам в downstream-инструментах. MetricFlow упрощает управление метриками компании, позволяя определять метрики в вашем dbt-проекте и выполнять к ним запросы в <Constant name="cloud" /> с помощью [команд MetricFlow](/docs/build/metricflow-commands).
 
@@ -33,7 +33,7 @@ import SLCourses from '/snippets/_sl-course.md';
 
 Если вы используете другую платформу данных, вы также можете следовать этому руководству — но потребуется адаптировать настройку под конкретную платформу. Подробнее см. в разделе [для пользователей на других платформах](#for-users-on-different-data-platforms).
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - Для всех деплоев вам нужна учетная запись [<Constant name="cloud" />](https://www.getdbt.com/signup/) уровня Trial, Starter или Enterprise.
 - Убедитесь, что у вас корректная [лицензия <Constant name="cloud" />](/docs/cloud/manage-access/seats-and-users) и [права доступа](/docs/cloud/manage-access/enterprise-permissions) согласно вашему тарифу:
@@ -52,7 +52,7 @@ import SLCourses from '/snippets/_sl-course.md';
 - Базовое понимание SQL и dbt. Например, вы уже использовали dbt или прошли курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 
 
-### Для пользователей других платформ данных
+### Для пользователей других платформ данных {#for-users-on-different-data-platforms}
 
 Если вы используете платформу данных, отличную от Snowflake, это руководство также применимо. Вы можете адаптировать настройку под свою платформу, следуя инструкциям по созданию учетной записи и загрузке данных, приведенным во вкладках ниже для каждой конкретной платформы.
 
@@ -113,13 +113,13 @@ import SLCourses from '/snippets/_sl-course.md';
 
 </Tabs>
 
-## Создайте новый worksheet в Snowflake и настройте окружение
+## Создайте новый worksheet в Snowflake и настройте окружение {#create-new-snowflake-worksheet-and-set-up-environment}
 
 1. Войдите в свой [пробный аккаунт Snowflake](https://signup.snowflake.com).
 2. В пользовательском интерфейсе Snowflake (UI) нажмите **+ Worksheet** в правом верхнем углу.
 3. Выберите **SQL Worksheet**, чтобы создать новый рабочий лист.
 
-### Настройка и загрузка данных в Snowflake
+### Настройка и загрузка данных в Snowflake {#set-up-and-load-data-into-snowflake}
 
 import LoadData from '/snippets/_load-data.md';
 
@@ -127,7 +127,7 @@ import LoadData from '/snippets/_load-data.md';
 
   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-snowflake-confirm.jpg" width="90%" title="Изображение показывает вывод подтверждения Snowflake, когда данные загружены правильно в редакторе." />
 
-## Подключение dbt к Snowflake
+## Подключение dbt к Snowflake {#connect-dbt-to-snowflake}
 
 Есть два способа подключить <Constant name="cloud" /> к Snowflake. Первый — Partner Connect, который обеспечивает упрощенную настройку и позволяет создать учетную запись <Constant name="cloud" /> прямо из вашего нового пробного аккаунта Snowflake. Второй — создать учетную запись <Constant name="cloud" /> отдельно и настроить подключение к Snowflake самостоятельно (ручное подключение). Если вы хотите начать как можно быстрее, dbt Labs рекомендует использовать Partner Connect. Если вы хотите с самого начала кастомизировать настройку и лучше познакомиться с процессом настройки <Constant name="cloud" />, dbt Labs рекомендует подключаться вручную.
 
@@ -207,16 +207,16 @@ import LoadData from '/snippets/_load-data.md';
 </TabItem>
 </Tabs>
 
-## Настройка dbt‑проекта
+## Настройка dbt‑проекта {#set-up-dbt-project}
 
 В этом разделе вы настроите управляемый репозиторий <Constant name="cloud" /> и инициализируете dbt‑проект, чтобы начать разработку.
 
-### Настройка управляемого репозитория dbt
+### Настройка управляемого репозитория dbt {#set-up-a-dbt-managed-repository}
 Если вы использовали Partner Connect, можете перейти сразу к разделу [инициализация dbt‑проекта](#initialize-your-dbt-project-and-start-developing), так как Partner Connect автоматически предоставляет вам [managed repository](/docs/cloud/git/managed-repository). В противном случае вам потребуется создать подключение к репозиторию самостоятельно.
 
 <Snippet path="tutorial-managed-repo" />
 
-### Инициализируйте ваш dbt-проект
+### Инициализируйте ваш dbt-проект {#initialize-your-dbt-project}
 В этом руководстве предполагается, что вы используете [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) для разработки dbt-проекта, определения метрик, а также для запросов и предпросмотра метрик с помощью [команд MetricFlow](/docs/build/metricflow-commands).
 
 Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" /> через <Constant name="cloud_ide" />:
@@ -232,10 +232,10 @@ import LoadData from '/snippets/_load-data.md';
       ```
     - В командной строке внизу введите `dbt run` и нажмите Enter. Вы должны увидеть сообщение, что `dbt run` завершился успешно.
 
-## Сборка dbt-проекта
+## Сборка dbt-проекта {#build-your-dbt-project}
 Следующий шаг — собрать ваш проект. Это включает добавление sources, staging-моделей, бизнес-определенных сущностей и пакетов в проект.
 
-### Добавьте источники
+### Добавьте источники {#add-sources}
 
 [Sources](/docs/build/sources) в dbt — это таблицы с сырыми данными, которые вы будете преобразовывать. Организуя определения sources, вы документируете происхождение данных. Это также делает проект и трансформации более надежными, структурированными и понятными.
 
@@ -286,7 +286,7 @@ sources:
 ```
 </File>
 
-### Добавьте staging-модели
+### Добавьте staging-модели {#add-staging-models}
 [Staging models](/best-practices/how-we-structure/2-staging) — это первый шаг трансформации в dbt. Они очищают и подготавливают сырые данные, чтобы они были готовы для более сложных трансформаций и аналитики. Следуйте этим шагам, чтобы добавить staging-модели в ваш проект.
 
 1. В подкаталоге `jaffle_shop` создайте файл `stg_customers.sql`. Либо вы можете использовать кнопку **Generate model**, чтобы создать отдельный файл модели для каждого source.
@@ -343,7 +343,7 @@ from {{ source('stripe', 'payment') }}
 
 7. Введите `dbt run` в командной строке внизу экрана. Вы должны увидеть успешный запуск и три модели.
 
-### Добавьте бизнес-определенные сущности
+### Добавьте бизнес-определенные сущности {#add-business-defined-entities}
 
 Этот этап включает создание [моделей, которые служат entity layer (слоем сущностей) или concept layer (концептуальным слоем) вашего dbt-проекта](/best-practices/how-we-structure/4-marts), подготавливая данные для отчетности и анализа. Также он включает добавление [пакетов](/docs/build/packages) и [time spine MetricFlow](/docs/build/metricflow-time-spine), которые расширяют функциональность dbt.
 
@@ -440,12 +440,12 @@ select * from final
 
 6. Введите `dbt run` в командной строке внизу экрана. Вы должны увидеть сообщение об успешном выполнении, а в деталях запуска — что dbt успешно собрал ваши модели.
 
-## Создайте семантические модели
+## Создайте семантические модели {#create-semantic-models}
 
 В этом разделе вы узнаете о [semantic model](/guides/sl-snowflake-qs?step=6#about-semantic-models), [их компонентах](/guides/sl-snowflake-qs?step=6#semantic-model-components) и [о том, как настроить time spine](/guides/sl-snowflake-qs?step=6#configure-a-time-spine).
 
 
-### О семантических моделях
+### О семантических моделях {#about-semantic-models}
 
 [Семантические модели](/docs/build/semantic-models) содержат множество типов объектов (например, entities, measures и dimensions), которые позволяют MetricFlow формировать запросы для определений метрик.
 
@@ -478,7 +478,7 @@ semantic_models:
 
 </File>
 
-### Компоненты семантической модели
+### Компоненты семантической модели {#semantic-model-components}
 
 В следующих разделах более подробно объясняются [dimensions](/docs/build/dimensions), [entities](/docs/build/entities) и [measures](/docs/build/measures), а также показано, какую роль каждый из них играет в семантических моделях.
 
@@ -487,7 +487,7 @@ semantic_models:
 - [Measures](#measures) вычисляют показатели по данным, предоставляя ценные инсайты через агрегации.
 
 
-### Сущности
+### Сущности {#entities}
 
 [Сущности](/docs/build/semantic-models#entities) — это понятия реального бизнеса, которые служат основой вашей семантической модели. В наших semantic models это будут ID-колонки (например, `order_id`). Они будут выступать ключами для join с другими semantic models.
 
@@ -514,7 +514,7 @@ semantic_models:
 
 </File>
 
-### Измерения
+### Измерения {#dimensions}
 
 [Измерения](/docs/build/semantic-models#entities) — это способ группировать или фильтровать информацию по категориям или по времени.
 
@@ -546,7 +546,7 @@ semantic_models:
 
 </File>
 
-### Меры
+### Меры {#measures}
 
 [Measures](/docs/build/semantic-models#measures) — это агрегации, выполняемые над колонками в вашей модели. Часто вы будете использовать их как конечные метрики. Measures также могут служить строительными блоками для более сложных метрик.
 
@@ -597,17 +597,17 @@ semantic_models:
 
 </File>
 
-### Настройте time spine
+### Настройте time spine {#configure-a-time-spine}
 
 Чтобы обеспечить точные агрегации по времени, необходимо настроить [time spine](/docs/build/metricflow-time-spine). Time spine позволяет корректно рассчитывать метрики на разных временных гранулярностях.
 
 Следуйте руководству [MetricFlow time spine guide](/guides/mf-time-spine?step=1) с полными пошаговыми инструкциями по созданию и настройке модели time spine. В этом руководстве приведены актуальные best practices и исключены устаревшие конфигурации.
 
-## Определите метрики и добавьте вторую семантическую модель
+## Определите метрики и добавьте вторую семантическую модель {#define-metrics-and-add-a-second-semantic-model}
 
 В этом разделе вы [определите метрики](#define-metrics) и [добавите в проект вторую семантическую модель](#add-second-semantic-model-to-your-project).
 
-### Определите метрики
+### Определите метрики {#define-metrics}
 
 [Метрики](/docs/build/metrics-overview) — это язык, на котором говорят бизнес-пользователи, и способ измерять эффективность бизнеса. Метрика — это агрегация над колонкой в вашем warehouse, которую вы обогащаете измерениями (dimensional cuts).
 
@@ -727,7 +727,7 @@ metrics:
 
 </File>
 
-### Добавьте в проект вторую семантическую модель
+### Добавьте в проект вторую семантическую модель {#add-second-semantic-model-to-your-project}
 
 Отлично — вы успешно создали свою первую семантическую модель! В ней есть все необходимые элементы: entities, dimensions, measures и metrics.
 
@@ -791,7 +791,7 @@ metrics:
 
 Эта семантическая модель использует простые метрики, чтобы сфокусироваться на метриках клиентов, и делает акцент на клиентских измерениях, таких как имя, тип и даты заказов. Она позволяет детально анализировать поведение клиентов, lifetime value и паттерны заказов.
 
-## Тестируйте и запрашивайте метрики
+## Тестируйте и запрашивайте метрики {#test-and-query-metrics}
 
 <!-- Приведенные ниже snippets (или reusables) можно найти в репозитории документации по следующим путям:
 
@@ -800,7 +800,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-te
 
 <TestQuery />
 
-## Запустите production job
+## Запустите production job {#run-a-production-job}
 
 <!-- Приведенные ниже snippets (или reusables) можно найти в репозитории документации по следующим путям:
 
@@ -810,7 +810,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-ru
 <RunProdJob/>
 
 
-## Администрирование Semantic Layer
+## Администрирование Semantic Layer {#administer-the-semantic-layer}
 
 В этом разделе вы узнаете, как добавить учетные данные и создать service tokens, чтобы начать выполнять запросы к dbt <Constant name="semantic_layer" />. Раздел охватывает следующие темы:
 
@@ -827,7 +827,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_new-s
 
 <SlSetUp/>
 
-## Запросы к Semantic Layer
+## Запросы к Semantic Layer {#query-the-semantic-layer}
 
 Эта страница подскажет, как подключиться и использовать следующие интеграции для выполнения запросов к вашим метрикам:
 
@@ -839,7 +839,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_new-s
 
 Выполняйте запросы к метрикам и через другие инструменты, такие как [first-class integrations](/docs/cloud-integrations/avail-sl-integrations), [API <Constant name="semantic_layer" />](/docs/dbt-cloud-apis/sl-api-overview) и [exports](/docs/use-dbt-semantic-layer/exports), чтобы публиковать таблицы метрик и измерений в вашей платформе данных и создавать кастомные интеграции.
 
- ### Подключение и запросы через Google Sheets
+ ### Подключение и запросы через Google Sheets {#connect-and-query-with-google-sheets}
 
 <!-- Приведенный ниже snippet для gsheets (или reusables) можно найти в репозитории документации по следующему пути:
 
@@ -848,7 +848,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-co
 
 <ConnectQueryAPI/>
 
-### Подключение и запросы через Hex
+### Подключение и запросы через Hex {#connect-and-query-with-hex}
 В этом разделе описано, как использовать интеграцию Hex для запросов к вашим метрикам через Hex. Выберите подходящую вкладку в зависимости от способа подключения:
 
 <Tabs>
@@ -914,7 +914,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_sl-co
 </TabItem>
 </Tabs>
 
-### Подключение и запросы через Sigma
+### Подключение и запросы через Sigma {#connect-and-query-with-sigma}
 В этом разделе показано, как использовать интеграцию Sigma для запросов к вашим метрикам через Sigma. Если у вас уже есть аккаунт Sigma, просто войдите и перейдите к шагу 6. В противном случае вы будете использовать аккаунт Sigma, который создадите через Snowflake Partner Connect.
 
 1. Вернитесь в ваш аккаунт Snowflake. В интерфейсе Snowflake нажмите на значок Home в левом верхнем углу. В левой боковой панели выберите **Data Products**. Затем выберите **Partner Connect**. Найдите плитку Sigma, прокрутив список или выполнив поиск по Sigma в строке поиска. Нажмите плитку, чтобы подключиться к Sigma.
@@ -962,7 +962,7 @@ select * from
 ) }}
 ```
 
-## Что дальше
+## Что дальше {#whats-next}
 
 <ConfettiTrigger>
 

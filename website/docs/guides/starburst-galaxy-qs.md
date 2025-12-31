@@ -9,7 +9,7 @@ tags: ['dbt platform','Quickstart']
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом руководстве по быстрому старту вы узнаете, как использовать <Constant name="cloud" /> вместе с [Starburst Galaxy](https://www.starburst.io/platform/starburst-galaxy/). Руководство покажет вам, как:
 
@@ -29,7 +29,7 @@ tags: ['dbt platform','Quickstart']
 Также вы можете посмотреть видео на YouTube [Build Better Data Pipelines with dbt and Starburst](https://www.youtube.com/watch?v=tfWm4dWgwRg), подготовленное компанией Starburst Data, Inc.
 :::
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - У вас есть [multi-tenant](/docs/cloud/about-cloud/access-regions-ip-addresses)‑развертывание в [<Constant name="cloud" />](https://www.getdbt.com/signup/). Подробнее см. [Tenancy](/docs/cloud/about-cloud/tenancy).
 - У вас есть [учетная запись Starburst Galaxy](https://www.starburst.io/platform/starburst-galaxy/). Если нет, вы можете начать с бесплатного пробного периода. Дополнительные сведения по первоначальной настройке см. в [руководстве по началу работы](https://docs.starburst.io/starburst-galaxy/get-started.html) в документации Starburst Galaxy.
@@ -38,7 +38,7 @@ tags: ['dbt platform','Quickstart']
     - [Инструкции по AWS access key и secret key](https://docs.starburst.io/starburst-galaxy/security/external-aws.html#aws-access-and-secret-key)
     - [Cross account IAM role](https://docs.starburst.io/starburst-galaxy/security/external-aws.html#role)
 
-### Связанные материалы
+### Связанные материалы {#related-content}
 
 - [Курсы dbt Learn](https://learn.getdbt.com)
 - [CI‑задание <Constant name="cloud" />](/docs/deploy/continuous-integration)
@@ -120,7 +120,7 @@ tags: ['dbt platform','Quickstart']
 
     <Lightbox src="/img/quickstarts/dbt-cloud/add-privilege.png" title="Добавление привилегии для роли accountadmin" />
 
-## Создание таблиц в Starburst Galaxy
+## Создание таблиц в Starburst Galaxy {#create-tables-with-starburst-galaxy}
 
 Чтобы выполнять запросы к данным Jaffle Shop через Starburst Galaxy, необходимо создать таблицы на основе данных, которые вы [загрузили в бакет S3](#load-data-to-s3). Это можно сделать (как и выполнить любой SQL‑запрос) из [редактора запросов](https://docs.starburst.io/starburst-galaxy/query/query-editor.html).
 
@@ -198,7 +198,7 @@ tags: ['dbt platform','Quickstart']
     select * from jaffle_shop.stripe_payments;
     ```
 
-## Подключение dbt к Starburst Galaxy
+## Подключение dbt к Starburst Galaxy {#connect-dbt-to-starburst-galaxy}
 
 1. Убедитесь, что вы вошли в [Starburst Galaxy](https://galaxy.starburst.io/login).
 2. Если вы еще этого не сделали, установите роль учетной записи accountadmin. Нажмите на адрес электронной почты в правом верхнем углу, выберите **Switch role** и укажите **accountadmin**.
@@ -221,11 +221,11 @@ tags: ['dbt platform','Quickstart']
 11. Нажмите **Test Connection**, чтобы проверить доступ <Constant name="cloud" /> к кластеру Starburst Galaxy.
 12. Если тест успешен, нажмите **Next**. Если нет — проверьте настройки и учетные данные.
 
-## Настройка репозитория, управляемого dbt
+## Настройка репозитория, управляемого dbt {#set-up-a-dbt-managed-repository}
 
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация dbt‑проекта и начало разработки
+## Инициализация dbt‑проекта и начало разработки {#initialize-your-dbt-project-and-start-developing}
 
 Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
@@ -239,7 +239,7 @@ tags: ['dbt platform','Quickstart']
         ```
     - В командной строке внизу выполните `dbt run`. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Создание первой модели
+## Создание первой модели {#build-your-first-model}
 
 У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
@@ -308,7 +308,7 @@ select * from final
 
 Позже вы сможете подключить BI‑инструменты к этим представлениям и таблицам, чтобы они читали уже очищенные данные.
 
-#### FAQs
+#### FAQs {#faqs}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -316,15 +316,15 @@ select * from final
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации модели
+## Изменение способа материализации модели {#change-the-way-your-model-is-materialized}
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Удаление примеров моделей
+## Удаление примеров моделей {#delete-the-example-models}
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Построение моделей поверх других моделей
+## Построение моделей поверх других моделей {#build-models-on-top-of-other-models}
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
@@ -428,7 +428,7 @@ select * from final
 
 <Snippet path="quickstarts/schedule-a-job" />
 
-## Подключение к нескольким источникам данных
+## Подключение к нескольким источникам данных {#connect-to-multiple-data-sources}
 
 Этот быстрый старт посвящен использованию <Constant name="cloud" /> для запуска моделей поверх data lake (S3) с помощью Starburst Galaxy в качестве движка запросов. В реальных сценариях данные обычно распределены по нескольким источникам и хранятся в разных форматах. С помощью Starburst Galaxy, Starburst Enterprise и Trino вы можете запускать модели над любыми данными, независимо от места их хранения.
 

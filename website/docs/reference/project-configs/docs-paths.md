@@ -12,10 +12,10 @@ docs-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 При необходимости укажите пользовательский список директорий, где расположены [блоки документации](/docs/build/documentation#docs-blocks).
 
-## Значение по умолчанию
+## Значение по умолчанию {#default}
 
 <VersionBlock firstVersion="1.9">
 
@@ -42,7 +42,7 @@ absolute="/Users/username/project/docs"
     docs-paths: ["/Users/username/project/docs"]
     ```
 
-## Пример
+## Пример {#example}
 
 Используйте поддиректорию с именем `docs` для блоков документации:
 

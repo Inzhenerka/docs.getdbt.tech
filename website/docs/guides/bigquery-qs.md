@@ -9,7 +9,7 @@ tags: ['BigQuery', 'Platform', 'Quickstart']
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с BigQuery. В нём показано, как:
 
@@ -25,13 +25,13 @@ tags: ['BigQuery', 'Platform', 'Quickstart']
 Вы можете бесплатно ознакомиться с [Основами dbt](https://learn.getdbt.com/courses/dbt-fundamentals), если вас интересует обучение с видео.
 :::
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - У вас есть [<Constant name="cloud" /> аккаунт](https://www.getdbt.com/signup/).  
 - У вас есть [аккаунт Google](https://support.google.com/accounts/answer/27441?hl=en).  
 - Для настройки BigQuery вы можете использовать личный или рабочий аккаунт через [Google Cloud Platform (GCP)](https://cloud.google.com/free).
 
-### Связанные материалы
+### Связанные материалы {#related-content}
 
 - Узнайте больше с [курсами dbt Learn](https://learn.getdbt.com)
 - [CI задания](/docs/deploy/continuous-integration)
@@ -39,12 +39,12 @@ tags: ['BigQuery', 'Platform', 'Quickstart']
 - [Уведомления о заданиях](/docs/deploy/job-notifications)
 - [Актуальность источников](/docs/deploy/source-freshness)
 
-## Создание нового проекта GCP
+## Создание нового проекта GCP {#create-a-new-gcp-project}
 
 1. Перейдите в [Консоль BigQuery](https://console.cloud.google.com/bigquery) после входа в ваш аккаунт Google. Если у вас несколько аккаунтов Google, убедитесь, что вы используете правильный.
 2. Создайте новый проект на [странице управления ресурсами](https://console.cloud.google.com/projectcreate?previousPage=%2Fcloud-resource-manager%3Fwalkthrough_id%3Dresource-manager--create-project%26project%3D%26folder%3D%26organizationId%3D%23step_index%3D1&walkthrough_id=resource-manager--create-project). Для получения дополнительной информации обратитесь к [Создание проекта](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) в документации Google Cloud. GCP автоматически заполняет поле имени проекта для вас. Вы можете изменить его на более описательное для вашего использования. Например, `dbt Learn - BigQuery Setup`.
 
-## Создание наборов данных BigQuery
+## Создание наборов данных BigQuery {#create-bigquery-datasets}
 
 1. В [Консоли BigQuery](https://console.cloud.google.com/bigquery) нажмите **Редактор**. Убедитесь, что выбран ваш недавно созданный проект, который доступен в верхней части страницы.
 1. Убедитесь, что вы можете выполнять SQL-запросы. Скопируйте и вставьте эти запросы в редактор запросов:
@@ -82,7 +82,7 @@ tags: ['BigQuery', 'Platform', 'Quickstart']
     - Нажмите **Готово**
 3. Создайте ключ учетной записи службы для вашего нового проекта на [странице учетных записей службы](https://console.cloud.google.com/iam-admin/serviceaccounts?walkthrough_id=iam--create-service-account-keys&start_index=1#step_index=1). Для получения дополнительной информации обратитесь к [Создание ключа учетной записи службы](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating) в документации Google Cloud. При загрузке файла JSON убедитесь, что используете имя файла, которое вы легко запомните. Например, `dbt-user-creds.json`. По соображениям безопасности dbt Labs рекомендует защищать этот файл JSON так же, как вы защищаете свои учетные данные; например, не добавляйте файл JSON в ваше программное обеспечение для управления версиями.
 
-## Подключение dbt к BigQuery​
+## Подключение dbt к BigQuery​ {#connect-dbt-to-bigquery}
 1. Создайте новый проект в [<Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses). Перейдите в **Account settings** (кликнув по имени вашего аккаунта в левом меню) и нажмите **+ New project**.
 2. Введите имя проекта и нажмите **Continue**.
 3. В качестве хранилища данных выберите **BigQuery**, затем нажмите **Next**, чтобы настроить подключение.
@@ -92,13 +92,13 @@ tags: ['BigQuery', 'Platform', 'Quickstart']
 7. Нажмите **Test Connection**. Это проверит, что <Constant name="cloud" /> имеет доступ к вашему аккаунту BigQuery.
 8. Если тест прошёл успешно, нажмите **Next**. Если тест не удался, возможно, потребуется вернуться назад и заново сгенерировать учётные данные BigQuery.
 
-## Настройка репозитория под управлением dbt
+## Настройка репозитория под управлением dbt {#set-up-a-dbt-managed-repository}
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация вашего проекта dbt и начало разработки
+## Инициализация вашего проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
 Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
 
-## Инициализируйте ваш dbt‑проект и начните разработку
+## Инициализируйте ваш dbt‑проект и начните разработку {#build-your-first-model}
 
 Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
@@ -112,7 +112,7 @@ tags: ['BigQuery', 'Platform', 'Quickstart']
         ```
     - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Создание вашей первой модели
+## Создание вашей первой модели {#change-the-way-your-model-is-materialized}
 
 У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
@@ -187,7 +187,7 @@ select * from final
 
 Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### Часто задаваемые вопросы
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />

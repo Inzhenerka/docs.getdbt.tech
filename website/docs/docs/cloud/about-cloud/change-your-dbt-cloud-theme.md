@@ -6,7 +6,7 @@ sidebar_label: Смените тему dbt
 image: /img/docs/dbt-cloud/using-dbt-cloud/light-vs-dark.png
 ---
 
-# Смените тему dbt
+# Смените тему dbt {#change-your-dbt-theme}
 
 <Constant name="cloud" /> поддерживает **Light mode** (по умолчанию), **Dark mode** и **System mode** (использует системную тему вашего браузера — светлую или тёмную). Эти настройки доступны в разделе **Theme** вашего пользовательского профиля и поддерживаются во всех [планах](https://www.getdbt.com/pricing).
 
@@ -16,7 +16,7 @@ image: /img/docs/dbt-cloud/using-dbt-cloud/light-vs-dark.png
 
 Выбор темы применяется ко всем разделам <Constant name="cloud" />, включая [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio), [<Constant name="explorer" />](/docs/explore/explore-projects), [environments](/docs/environments-in-dbt), [jobs](/docs/deploy/jobs) и другие. Подробнее о настройке тем читайте в разделе [Смена тем в <Constant name="cloud" />](/docs/cloud/about-cloud/change-your-dbt-cloud-theme#change-themes-in-dbt-cloud).
 
-## Смена тем в dbt
+## Смена тем в dbt {#change-themes-in-dbt}
 
 Чтобы включить тёмную тему в интерфейсе <Constant name="cloud" />, выполните следующие шаги:
 

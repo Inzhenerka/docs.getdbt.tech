@@ -3,7 +3,7 @@ title: "Конфигурация IBM watsonx.data Spark"
 id: "watsonx-spark-config"
 ---
 
-## Требования к инстансу
+## Требования к инстансу {#instance-requirements}
 
 Для использования IBM watsonx.data Spark с адаптером `dbt-watsonx-spark` необходимо убедиться, что инстанс имеет подключённый каталог, который поддерживает создание, переименование, изменение и удаление объектов, таких как таблицы и представления. Пользователь, подключающийся к инстансу через адаптер `dbt-watsonx-spark`, должен обладать необходимыми правами доступа к целевому каталогу.
 
@@ -12,7 +12,7 @@ id: "watsonx-spark-config"
 - Документация watsonx.data SaaS: [IBM watsonx.data SaaS Guide](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-getting-started)
 
 
-## Свойства сессии
+## Свойства сессии {#session-properties}
 
 В инстансах IBM watsonx.data SaaS/Software можно [задавать свойства сессии](https://sparkdb.io/docs/current/sql/set-session.html), чтобы изменять текущую конфигурацию для пользовательской сессии.
 
@@ -26,7 +26,7 @@ id: "watsonx-spark-config"
 }}
 ```
 
-## Свойства коннекторов
+## Свойства коннекторов {#connector-properties}
 
 IBM watsonx.data SaaS/Software поддерживает различные Spark-специфичные свойства коннекторов, которые позволяют управлять представлением данных, производительностью выполнения и форматом хранения.
 
@@ -35,7 +35,7 @@ IBM watsonx.data SaaS/Software поддерживает различные Spark
 - [Каталог watsonx.data SaaS](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-reg_database)
 - [Каталог watsonx.data Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=components-adding-data-source)
 
-### Дополнительная конфигурация
+### Дополнительная конфигурация {#additional-configuration}
 
 Адаптер `dbt-watsonx-spark` позволяет задавать дополнительные параметры конфигурации в профиле каталога:
 
@@ -64,7 +64,7 @@ project_name:
 
 ---
 
-### Конфигурация форматов файлов
+### Конфигурация форматов файлов {#file-format-configuration}
 
 Поддерживаемые форматы файлов зависят от типа каталога:
 
@@ -88,34 +88,34 @@ project_name:
 
 **Дополнительную информацию** см. в [документации.](https://spark.apache.org/docs/3.5.3/sql-ref-syntax.html#sql-syntax)
 
-## Seeds и подготовленные выражения (prepared statements)
+## Seeds и подготовленные выражения (prepared statements) {#seeds-and-prepared-statements}
 
 Вы можете настраивать типы данных столбцов либо в файле `dbt_project.yml`, либо в property-файлах, в зависимости от поддерживаемых dbt возможностей. Подробнее о конфигурации seed-данных и лучших практиках см. в [документации по настройке dbt seeds](/reference/seed-configs).
 
 
-## Материализации
+## Материализации {#materializations}
 
 Адаптер `dbt-watsonx-spark` поддерживает материализацию таблиц, позволяя управлять тем, как данные хранятся и запрашиваются в watsonx.data Spark.
 
 Дополнительную информацию о настройке материализаций см. в [документации по материализациям dbt](/reference/resource-configs/materialized).
 
-### Таблицы
+### Таблицы {#table}
 
 Адаптер `dbt-watsonx-spark` позволяет создавать и обновлять таблицы с помощью материализации `table`, что упрощает работу с данными в watsonx.data Spark.
 
-### Представления
+### Представления {#view}
 
 Если материализация явно не указана, адаптер по умолчанию автоматически создаёт представления (views).
 
-### Инкрементальные таблицы
+### Инкрементальные таблицы {#incremental}
 
 Инкрементальная материализация поддерживается, но требует дополнительной настройки секционирования и оптимизации производительности.
 
-#### Рекомендации
+#### Рекомендации {#recommendations}
 - **Проверьте права доступа:** убедитесь, что в каталоге или схеме включены необходимые права для создания таблиц.
 - **Изучите документацию коннектора:** ознакомьтесь с разделом watsonx.data Spark [data ingestion in watsonx.data](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=data-overview-ingestion), чтобы убедиться, что он поддерживает создание и изменение таблиц.
 
-## Неподдерживаемые возможности
+## Неподдерживаемые возможности {#unsupported-features}
 
 Несмотря на широкие возможности, адаптер `dbt-watsonx-spark` имеет ряд ограничений:
 

@@ -22,7 +22,7 @@ snapshots:
 </VersionBlock>
 
 
-## Описание
+## Описание {#description}
 
 Имя снимка, которое используется при выборе из снимка с помощью функции [`ref`](/reference/dbt-jinja-functions/ref).
 
@@ -30,8 +30,8 @@ snapshots:
 
 Имя не обязательно должно совпадать с именем файла. В результате имена файлов снимков не обязательно должны быть уникальными.
 
-## Примеры
-### Назовите снимок `order_snapshot`
+## Примеры {#examples}
+### Назовите снимок `order_snapshot` {#name-a-snapshot-order_snapshot}
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/order_snapshot.yml'>

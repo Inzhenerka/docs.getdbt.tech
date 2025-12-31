@@ -7,11 +7,11 @@ keywords: [dbt, API, dbt Semantic Layer, python, sdk]
 sidebar_label: "Python SDK"
 ---
 
-# Python SDK <Lifecycle status="self_service,managed,managed_plus" />
+# Python SDK <Lifecycle status="self_service,managed,managed_plus" /> {#python-sdk}
 
 [`dbt-sl-sdk` Python software development kit](https://github.com/dbt-labs/semantic-layer-sdk-python) (SDK) — это Python‑библиотека, которая предоставляет удобный доступ к dbt Semantic Layer из Python. Она позволяет разработчикам взаимодействовать с API dbt Semantic Layer и запрашивать метрики и измерения (dimensions) в downstream‑инструментах.
 
-## Установка
+## Установка {#installation}
 
 Для установки Python SDK вам нужно указать дополнительные зависимости в зависимости от того, хотите ли вы использовать его синхронно, с поддержкой [requests](https://github.com/psf/requests/), или асинхронно ([asyncio](https://docs.python.org/3/library/asyncio.html) с поддержкой [aiohttp](https://github.com/aio-libs/aiohttp/)).
 
@@ -48,7 +48,7 @@ pip install "dbt-sl-sdk[sync]"
 </TabItem>
 </Tabs>
 
-## Использование
+## Использование {#usage}
 Чтобы выполнять операции с API <Constant name="semantic_layer" />, необходимо создать (инициализировать) экземпляр `SemanticLayerClient`, указав ваши конкретные [параметры подключения к API](/docs/dbt-cloud-apis/sl-api-overview):
 
 ```python
@@ -77,7 +77,7 @@ main()
 
 Мы рекомендуем создавать сессию на уровне всего приложения и повторно использовать ту же сессию в течение всего приложения для оптимальной производительности. Создание сессии для каждого запроса не рекомендуется и неэффективно.
 
-### Использование asyncio
+### Использование asyncio {#asyncio-usage}
 Если вы используете asyncio, импортируйте `AsyncSemanticLayerClient` из `dbtsl.asyncio`. API `SemanticLayerClient` и `AsyncSemanticLayerClient` идентичны, но асинхронная версия имеет асинхронные методы, которые нужно `await`.
 
 ```python
@@ -103,7 +103,7 @@ asyncio.run(main())
 
 ```
 
-### Ленивaя загрузка для больших полей
+### Ленивaя загрузка для больших полей {#lazy-loading-for-large-fields}
 
 По умолчанию Python SDK жадно загружает вложенные списки объектов, такие как `dimensions`, `entities` и `measures`, для каждого объекта `Metric` &mdash; даже если они вам не нужны. В большинстве случаев это удобно, но в крупных проектах может приводить к более медленным ответам из‑за большого объёма возвращаемых данных.
 
@@ -175,7 +175,7 @@ if __name__ == "__main__":
 
 Подробнее см. в [примере с ленивой загрузкой](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/list_metrics_lazy_sync.py).
 
-## Интеграция с библиотеками для работы с датафреймами
+## Интеграция с библиотеками для работы с датафреймами {#integrate-with-dataframe-libraries}
 
 Python SDK возвращает все данные запросов в виде таблиц [pyarrow](https://arrow.apache.org/docs/python/index.html).
 
@@ -183,7 +183,7 @@ Python SDK возвращает все данные запросов в виде
 
 Чтобы использовать данные с такими библиотеками, как Polars или Pandas, вручную преобразуйте данные в нужный формат. Например:
 
-#### Если вы используете pandas
+#### Если вы используете pandas {#if-youre-using-pandas}
 
 ```python
 # ... инициализация клиента
@@ -193,7 +193,7 @@ pandas_df = arrow_table.to_pandas()
 
 ```
 
-#### Если вы используете polars
+#### Если вы используете polars {#if-youre-using-polars}
 
 ```python
 import polars as pl
@@ -204,14 +204,14 @@ arrow_table = client.query(...)
 polars_df = pl.from_arrow(arrow_table)
 ```
 
-## Примеры использования
+## Примеры использования {#usage-examples}
 Для дополнительных примеров использования ознакомьтесь с [примерами использования](https://github.com/dbt-labs/semantic-layer-sdk-python/tree/main/examples), некоторые из которых включают:
 
 - [Получение значений измерений синхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_dimension_values_sync.py)
 - Получение метрик [асинхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_metric_async.py) и [синхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_metric_sync.py)
 - [Список сохраненных запросов асинхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/list_saved_queries_async.py)
 
-## Отключение телеметрии
+## Отключение телеметрии {#disable-telemetry}
 По умолчанию, Python SDK отправляет некоторую [информацию о платформе](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/dbtsl/env.py) в dbt Labs. Чтобы отказаться от этого, установите атрибут `PLATFORM.anonymous` в `True`:
 
 ```python
@@ -221,5 +221,5 @@ PLATFORM.anonymous = True
 # ... инициализация клиента
 ```
 
-## Вклад
+## Вклад {#contribute}
 Чтобы внести вклад в этот проект, ознакомьтесь с нашими [руководствами по вкладу](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/CONTRIBUTING.md) и откройте GitHub [issue](https://github.com/dbt-labs/semantic-layer-sdk-python/issues) или [pull request](https://github.com/dbt-labs/semantic-layer-sdk-python/pulls).

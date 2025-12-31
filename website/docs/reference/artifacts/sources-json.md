@@ -9,7 +9,7 @@ sidebar_label: "Источники"
 
 Этот файл содержит информацию об [источниках с проверками свежести](/docs/build/sources#checking-source-freshness). В настоящее время <Constant name="cloud" /> использует этот файл для работы своей [визуализации свежести источников данных](/docs/build/sources#source-data-freshness).
 
-### Ключи верхнего уровня
+### Ключи верхнего уровня {#top-level-keys}
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
 - `elapsed_time`: Общее время выполнения в секундах.

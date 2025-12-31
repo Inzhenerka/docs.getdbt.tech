@@ -59,11 +59,11 @@ snapshots:
 
 </File>
 
-## Описание
+## Описание {#description}
 
 Чтобы привести имена колонок в соответствие с соглашениями об именовании, принятыми в организации, можно использовать конфигурацию `snapshot_meta_column_names`. Она позволяет настраивать имена [метаданных колонок](/docs/build/snapshots#snapshot-meta-fields) внутри каждого snapshot.
 
-## Значения по умолчанию
+## Значения по умолчанию {#default}
 
 По умолчанию snapshots в dbt используют следующие имена колонок для отслеживания истории изменений с помощью записей [медленно изменяющегося измерения типа 2](https://en.wikipedia.org/wiki/Slowly_changing_dimension#Type_2:_add_new_row):
 
@@ -83,7 +83,7 @@ snapshots:
 
 :::
 
-## Как вычисляется [`dbt_scd_id`](/reference/resource-configs/snapshot_meta_column_names#default)
+## Как вычисляется [`dbt_scd_id`](/reference/resource-configs/snapshot_meta_column_names#default) {#how-dbtscdid-is-calculated}
 
 `dbt_scd_id` — это уникальный идентификатор, генерируемый для каждой строки snapshot. dbt использует его для определения изменений в исходных записях и управления версионированием в snapshot на основе медленно изменяющихся измерений (SCD).
 
@@ -108,7 +108,7 @@ md5(
 
 Если вы не хотите использовать `md5`, можно переопределить [dispatched macro](https://github.com/dbt-labs/dbt-adapters/blob/4b3966efc50b1d013907a88bee4ab8ebd022d17a/dbt-adapters/src/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L42-L47).
 
-## Пример
+## Пример {#example}
 
 <File name='snapshots/schema.yml'>
 

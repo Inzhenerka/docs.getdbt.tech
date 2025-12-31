@@ -11,13 +11,13 @@ id: invocation
 
 Команда `dbt invocation` отображает **только активные invocation**. Если в данный момент ни одна сессия не запущена, список будет пустым. Завершённые сессии в вывод не включаются.
 
-## Использование
+## Использование {#usage}
 
 На этой странице перечислены команды и флаги, которые можно использовать с `dbt invocation`. Для их применения добавьте команду или опцию в таком виде: `dbt invocation [command]`.
 
 Доступные флаги в интерфейсе командной строки (CLI): [`help`](#dbt-invocation-help) и [`list`](#dbt-invocation-list).
 
-### dbt invocation help
+### dbt invocation help {#dbt-invocation-help}
 
 Команда `help` выводит справочную информацию по команде `invocation` в CLI, включая список доступных флагов.
 
@@ -55,7 +55,7 @@ Global Flags:
 Use "dbt invocation [command] --help" for more information about a command.
 ```
 
-### dbt invocation list
+### dbt invocation list {#dbt-invocation-list}
 
 Команда `list` предоставляет список активных invocation в вашем <Constant name="cloud_cli" />. Если выполняется длительная сессия, вы можете запустить эту команду в отдельном окне терминала, чтобы просмотреть активную сессию и упростить отладку проблемы.
 
@@ -84,7 +84,7 @@ Active Invocations:
 
 :::
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 
 - [Установка <Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation)
 - [Устранение ошибки 'Session occupied' в <Constant name="cloud" /> CLI](/faqs/Troubleshooting/long-sessions-cloud-cli)

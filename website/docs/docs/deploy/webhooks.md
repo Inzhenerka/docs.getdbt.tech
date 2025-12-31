@@ -4,7 +4,7 @@ sidebar_label: "Вебхуки"
 description: "Получайте уведомления в реальном времени о ваших задачах dbt с помощью вебхуков."
 ---
 
-# Вебхуки для ваших заданий <Lifecycle status="self_service,managed,managed_plus" />
+# Вебхуки для ваших заданий <Lifecycle status="self_service,managed,managed_plus" /> {#webhooks-for-your-jobs}
 
 С помощью <Constant name="cloud" /> вы можете создавать исходящие вебхуки для отправки событий (уведомлений) о ваших dbt jobs в другие системы. Эти системы могут принимать (подписываться на) такие события, чтобы дальше автоматизировать ваши рабочие процессы или запускать настроенные вами сценарии автоматизации.
 
@@ -28,7 +28,7 @@ Webhook в <Constant name="cloud" /> имеет тайм-аут 10 секунд.
 Вы также можете ознакомиться с бесплатным [курсом Основы dbt](https://learn.getdbt.com/courses/dbt-fundamentals).
 :::
 
-## Предварительные требования
+## Предварительные требования {#prerequisites}
 - У вас есть учетная запись <Constant name="cloud" />, работающая на тарифном плане [Starter или Enterprise-tier](https://www.getdbt.com/pricing/).
 - Для доступа `write` к вебхукам:
     - **Тарифные планы Enterprise-tier** &mdash; Наборы разрешений одинаковы как для API service tokens, так и для интерфейса <Constant name="cloud" />. Вы или API service token должны иметь набор разрешений Account Admin, Admin или Developer ([permission set](/docs/cloud/manage-access/enterprise-permissions)).
@@ -66,7 +66,7 @@ Webhook в <Constant name="cloud" /> имеет тайм-аут 10 секунд.
 
 Если ваша интеграция не зависит от дополнительных данных или если улучшенная производительность доставки более важна для вас, используйте `job.run.errored` и настройте вашу интеграцию для обработки вызовов API, которые могут не возвращать данные в течение короткого времени вначале.
 
-## Проверка вебхука
+## Проверка вебхука {#validate-a-webhook}
 
 Вы можете использовать секретный токен, предоставленный dbt Cloud, чтобы проверить, что вебхуки, полученные вашей конечной точкой, действительно были отправлены dbt Cloud. Официальные вебхуки будут включать заголовок `Authorization`, который содержит SHA256-хэш тела запроса и использует секретный токен в качестве ключа.
 
@@ -87,10 +87,10 @@ return signature == auth_header
 curl -H 'Authorization: 123' -X POST https://<your-webhook-endpoint>
 ```
 
-## Инспекция HTTP-запросов
+## Инспекция HTTP-запросов {#inspect-http-requests}
 При работе с вебхуками рекомендуется использовать такие инструменты, как [RequestBin](https://requestbin.com/) и [Requestly](https://requestly.io/). Эти инструменты позволяют инспектировать ваши HTML-запросы, полезные нагрузки ответов и заголовки ответов, чтобы вы могли отлаживать и тестировать вебхуки перед их интеграцией в ваши системы.
 
-## Примеры JSON-пакетов
+## Примеры JSON-пакетов {#examples-of-json-payloads}
 
 Пример пакета вебхука для запуска, который начался:
 
@@ -185,21 +185,21 @@ curl -H 'Authorization: 123' -X POST https://<your-webhook-endpoint>
 <Constant name="cloud" /> размещён в нескольких регионах по всему миру, и для каждого региона используется свой URL доступа. Пользователи тарифных планов Enterprise могут выбрать размещение своей учетной записи в любом из этих регионов. Полный список доступных URL доступа <Constant name="cloud" /> см. в разделе [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).  
 :::
 
-### Список всех подписок на вебхуки
+### Список всех подписок на вебхуки {#list-all-webhook-subscriptions}
 Отображает список всех вебхуков, доступных для конкретной учетной записи <Constant name="cloud" />.
 
-#### Запрос
+#### Запрос {#request}
 ```shell
 GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptions
 ```
 
-#### Параметры пути
+#### Параметры пути {#path-parameters}
 | Имя | Описание |
 |------------|--------------------------------------|
 | `your access URL` | URL для входа в вашу учётную запись <Constant name="cloud" />. |
 | `account_id` | Учётная запись <Constant name="cloud" />, с которой связаны вебхуки. |
 
-#### Пример ответа
+#### Пример ответа {#response-sample}
 ```json
 {
     "data": [
@@ -258,7 +258,7 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Схема ответа
+#### Схема ответа {#response-schema}
 | Имя | Описание | Возможные значения |
 | --- | --- | --- |
 | `data` | Список доступных вебхуков для указанного ID аккаунта <Constant name="cloud" />. |  |
@@ -276,21 +276,21 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 | `dispatched_at` | Временная метка момента, когда вебхук в последний раз был отправлен на указанный URL эндпоинта. |  |
 | `account_id` | ID аккаунта <Constant name="cloud" />. |  |
 
-### Получение подробной информации о вебхуке
+### Получение подробной информации о вебхуке {#get-details-about-a-webhook}
 Получите подробную информацию о конкретном вебхуке.
 
-#### Запрос
+#### Запрос {#request-1}
 ```shell
 GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}
 ```
-#### Параметры пути
+#### Параметры пути {#path-parameters-1}
 | Имя | Описание |
 |------------|--------------------------------------|
 | `your access URL` | URL для входа в вашу учетную запись <Constant name="cloud" />. |
 | `account_id` | Учетная запись <Constant name="cloud" />, с которой связан вебхук. |
 | `webhook_id` | Вебхук, по которому требуется получить подробную информацию. |
 
-#### Пример ответа
+#### Пример ответа {#response-sample-1}
 ```json
 {
     "data": {
@@ -316,7 +316,7 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Схема ответа
+#### Схема ответа {#response-schema-1}
 | Имя | Описание | Возможные значения |
 | --- | --- | --- |
 | `id` | Идентификатор вебхука. |  |
@@ -333,10 +333,10 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 | `job_ids` | Конкретные задания, для которых настроено срабатывание вебхука. Если список пуст, вебхук будет срабатывать для всех заданий в вашем аккаунте; по умолчанию <Constant name="cloud" /> настраивает вебхуки на уровне аккаунта. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
 | `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [кодом статуса HTTP-ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук ни разу не срабатывал. |
 
-### Создание новой подписки на вебхук
+### Создание новой подписки на вебхук {#create-a-new-webhook-subscription}
 Создайте новый исходящий вебхук и укажите URL-адрес конечной точки, который будет подписываться (слушать) на события вебхука.
 
-#### Пример запроса
+#### Пример запроса {#request-sample}
 
 ```shell
 POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptions
@@ -358,13 +358,13 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 }
 ```
 
-#### Параметры пути
+#### Параметры пути {#path-parameters-2}
 | Имя | Описание |
 | --- | --- |
 | `your access URL` | URL для входа в ваш аккаунт <Constant name="cloud" />. |
 | `account_id` | Аккаунт <Constant name="cloud" />, с которым связан вебхук. |
 
-#### Параметры запроса
+#### Параметры запроса {#request-parameters}
 | Имя | Описание | Возможные значения |
 | --- | --- | --- |
 | `event_types` | Укажите событие, при котором должен срабатывать этот webhook. Вы можете подписаться более чем на одно событие. | Одно или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
@@ -374,7 +374,7 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 | `description` | Укажите описание вашего webhook. |  |
 | `job_ids` | Укажите конкретные задания, для которых должен срабатывать webhook, либо оставьте этот параметр пустым списком. Если передан пустой список, webhook будет настроен на срабатывание для всех заданий в вашем аккаунте; по умолчанию <Constant name="cloud" /> настраивает webhooks на уровне аккаунта. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
 
-#### Пример ответа
+#### Пример ответа {#response-sample-2}
 ```json
 {
     "data": {
@@ -403,7 +403,7 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 }
 ```
 
-#### Схема ответа
+#### Схема ответа {#response-schema-2}
 | Имя | Описание | Возможные значения |
 | --- | --- | --- |
 | `id` | Идентификатор вебхука. |  |
@@ -420,10 +420,10 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 | `account_id` | Идентификатор аккаунта <Constant name="cloud" />. |  |
 | `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [кодом статуса HTTP-ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук ни разу не срабатывал. |
 
-### Обновление вебхука
+### Обновление вебхука {#update-a-webhook}
 Обновите детали конфигурации для конкретного вебхука.
 
-#### Пример запроса
+#### Пример запроса {#request-sample-1}
 ```shell
 PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}
 ```
@@ -444,14 +444,14 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Параметры пути
+#### Параметры пути {#path-parameters-3}
 | Имя | Описание |
 |------------|--------------------------------------|
 | `your access URL` | URL для входа в ваш аккаунт <Constant name="cloud" />. |
 | `account_id` | Аккаунт <Constant name="cloud" />, с которым связан webhook. |
 | `webhook_id` | Webhook, который вы хотите обновить. |
 
-#### Параметры запроса
+#### Параметры запроса {#request-parameters-1}
 | Имя | Описание | Возможные значения |
 |------|-------------|-----------------|
 | `event_types` | Обновите тип события, на которое будет срабатывать вебхук. Можно подписаться более чем на одно событие. | Один или несколько из следующих вариантов: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
@@ -461,7 +461,7 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 | `description` | Обновите описание вебхука. |  |
 | `job_ids` | Измените, для каких заданий должен срабатывать вебхук. Также можно использовать пустой список, чтобы он срабатывал для всех заданий в вашей учетной записи. | Один из следующих вариантов: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
 
-#### Пример ответа
+#### Пример ответа {#response-sample-3}
 ```json
 {
     "data": {
@@ -488,7 +488,7 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Схема ответа
+#### Схема ответа {#response-schema-3}
 | Имя | Описание | Возможные значения |
 | --- | --- | --- |
 | `id` | Идентификатор вебхука. |  |
@@ -504,22 +504,22 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 | `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [HTTP-кодом ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук ни разу не срабатывал. |
 | `account_id` | Идентификатор аккаунта <Constant name="cloud" />. |  |
 
-### Тестирование вебхука
+### Тестирование вебхука {#test-a-webhook}
 Протестируйте конкретный вебхук.
 
-#### Запрос
+#### Запрос {#request-2}
 ```shell
 GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}/test
 ```
 
-#### Параметры пути
+#### Параметры пути {#path-parameters-4}
 | Имя | Описание |
 |------------|--------------------------------------|
 | `your access URL` | URL для входа в вашу учетную запись <Constant name="cloud" />. |
 | `account_id` | Учетная запись <Constant name="cloud" />, с которой связан вебхук. |
 | `webhook_id` | Вебхук, который вы хотите протестировать. |
 
-#### Пример ответа
+#### Пример ответа {#response-sample-4}
 ```json
 {
     "data": {
@@ -532,22 +532,22 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-### Удаление вебхука
+### Удаление вебхука {#delete-a-webhook}
 Удалите конкретный вебхук.
 
-#### Запрос
+#### Запрос {#request-3}
 ```shell
 DELETE https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}
 ```
 
-#### Параметры пути
+#### Параметры пути {#path-parameters-5}
 | Имя | Описание |
 |------------|--------------------------------------|
 | `your access URL` | URL для входа в вашу учетную запись <Constant name="cloud" />. |
 | `account_id` | Учетная запись <Constant name="cloud" />, с которой связан webhook. |
 | `webhook_id` | Webhook, который вы хотите удалить. |
 
-#### Пример ответа
+#### Пример ответа {#response-sample-5}
 
 ```json
 {
@@ -561,11 +561,11 @@ DELETE https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscript
 }
 ```
 
-## Связанная документация
+## Связанная документация {#related-docs}
 - [CI в <Constant name="cloud" />](/docs/deploy/continuous-integration)
 - [Использование вебхуков <Constant name="cloud" /> с другими SaaS‑приложениями](/guides?tags=Webhooks)
 
-## Устранение неполадок
+## Устранение неполадок {#troubleshooting}
 
 Если ваша целевая система не получает вебхуки <Constant name="cloud" />, убедитесь, что она поддерживает заголовки Authorization. Вебхуки <Constant name="cloud" /> отправляют заголовок Authorization, и если ваш endpoint не умеет его обрабатывать, он может быть несовместим. Такие сервисы, как Azure Logic Apps и Power Automate, могут не принимать заголовки Authorization, поэтому они не будут работать с вебхуками <Constant name="cloud" />. Вы можете проверить, поддерживает ли ваш endpoint такие заголовки, отправив запрос с помощью curl с заголовком Authorization, например так:
 

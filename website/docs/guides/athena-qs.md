@@ -9,7 +9,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с Amazon Athena. В нём показано, как:
 
@@ -26,13 +26,13 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 Вы можете бесплатно ознакомиться с [Основами dbt](https://learn.getdbt.com/courses/dbt-fundamentals), если вас интересует обучение с видео.
 :::
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - У вас есть [<Constant name="cloud" /> аккаунт](https://www.getdbt.com/signup/).  
 - У вас есть [аккаунт AWS](https://aws.amazon.com/).  
 - У вас настроен [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/getting-started.html).
 
-### Связанные материалы
+### Связанные материалы {#related-content}
 
 - Узнайте больше с [курсами dbt Learn](https://learn.getdbt.com)
 - [CI задания](/docs/deploy/continuous-integration)
@@ -40,7 +40,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 - [Уведомления о заданиях](/docs/deploy/job-notifications)
 - [Актуальность источников](/docs/deploy/source-freshness)
 
-## Начало работы
+## Начало работы {#getting-started}
 
 Для следующего руководства вы можете использовать существующий S3 bucket или [создать новый](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html).
 
@@ -49,7 +49,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 - [jaffle_shop_orders.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_orders.csv)
 - [stripe_payments.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/stripe_payments.csv)
 
-## Настройка Amazon Athena
+## Настройка Amazon Athena {#configure-amazon-athena}
 
 1. Войдите в свой аккаунт AWS и перейдите в **консоль Athena**.
     - Если вы впервые в консоли Athena (в вашем текущем регионе AWS), нажмите **Explore the query editor**, чтобы открыть редактор запросов. В противном случае Athena автоматически откроется в редакторе запросов.
@@ -64,13 +64,13 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
     2. Создайте glue crawler для воссоздания данных как внешних таблиц (рекомендуется).
 1. После создания таблиц вы сможете выполнять `SELECT` из них.
 
-## Настройка доступа к Athena
+## Настройка доступа к Athena {#set-up-security-access-to-athena}
 
 Чтобы настроить доступ к Athena, определите, какой метод доступа вы хотите использовать:
 * Получите `aws_access_key_id` и `aws_secret_access_key` (рекомендуется)
 * Получите файл **AWS credentials**.
 
-### AWS access key (рекомендуется)
+### AWS access key (рекомендуется) {#aws-access-key-recommended}
 
 Чтобы получить `aws_access_key_id` и `aws_secret_access_key`:
 
@@ -84,7 +84,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 Сохраните `aws_access_key_id` и `aws_secret_access_key` для следующего шага.
 
-### Файл AWS credentials
+### Файл AWS credentials {#aws-credentials-file}
 
 Чтобы получить файл AWS credentials:
 1. Следуйте инструкциям по [настройке файла credentials](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html) с использованием AWS CLI
@@ -94,7 +94,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 Извлеките `aws_access_key_id` и `aws_secret_access_key` из файла `~/.aws/credentials` для следующего шага.
 
-## Настройка подключения в dbt
+## Настройка подключения в dbt {#configure-the-connection-in-dbt}
 
 Чтобы настроить подключение к Athena в <Constant name="cloud" />:
 
@@ -106,7 +106,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
     1. **AWS S3 staging directory** &mdash; Укажите S3‑бакет, созданный на предыдущих шагах.
 1. Нажмите **Save**
 
-### Настройка вашей среды
+### Настройка вашей среды {#configure-your-environment}
 
 Чтобы настроить учетные данные Athena в вашей среде:
 1. Нажмите **Deploy** в левом меню и выберите **Environments**.
@@ -118,10 +118,10 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 Повторите этот процесс, чтобы создать [среду разработки](/docs/dbt-cloud-environments#types-of-environments).
 
-## Настройка репозитория под управлением dbt
+## Настройка репозитория под управлением dbt {#set-up-a-dbt-managed-repository}
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация вашего проекта dbt и начало разработки
+## Инициализация вашего проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
 
 Теперь, когда у вас настроен репозиторий, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
 
@@ -135,7 +135,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
         ```
     - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Создание вашей первой модели
+## Создание вашей первой модели {#build-your-first-model}
 
 У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
 
@@ -210,7 +210,7 @@ select * from final
 
 Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### Часто задаваемые вопросы
+#### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -218,15 +218,15 @@ select * from final
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации вашей модели
+## Изменение способа материализации вашей модели {#change-the-way-your-model-is-materialized}
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Удаление примерных моделей
+## Удаление примерных моделей {#delete-the-example-models}
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Построение моделей на основе других моделей
+## Построение моделей на основе других моделей {#build-models-on-top-of-other-models}
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 

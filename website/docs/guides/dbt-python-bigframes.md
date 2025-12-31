@@ -13,7 +13,7 @@ level: 'Intermediate'
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение
+## Введение {#introduction}
 
 В этом руководстве вы узнаете, как настроить dbt для работы с BigQuery DataFrames (BigFrames):
 
@@ -24,7 +24,7 @@ level: 'Intermediate'
 
 BigQuery DataFrames — это open source Python‑пакет, который транслирует код pandas и scikit‑learn в масштабируемый SQL для BigQuery. Адаптер dbt-bigquery использует сервис BigQuery Studio Notebook Executor Service для выполнения клиентского Python‑кода.
 
-### Предварительные требования
+### Предварительные требования {#prerequisites}
 
 - Аккаунт [Google Cloud](https://cloud.google.com/free)  
 - Аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/)  
@@ -33,7 +33,7 @@ BigQuery DataFrames — это open source Python‑пакет, который �
 
 Во время настройки вам потребуется выбрать адаптер **BigQuery (Legacy)** и указать значения для **Google Cloud Storage Bucket** и **Dataproc Region** в <Constant name="dbt_platform"/>. Подробности см. в разделе [Configure BigQuery in dbt platform](/guides/dbt-python-bigframes?step=2#configure-bigquery-in-dbt-platform).
 
-### Что вы создадите
+### Что вы создадите {#what-youll-build}
 
 В этом руководстве вы создадите решение из двух частей:
 
@@ -48,7 +48,7 @@ BigQuery DataFrames — это open source Python‑пакет, который �
 
 **Рисунок 1** — Реализация метода отправки BigFrames для Python‑моделей dbt
 
-## Настройте Google Cloud
+## Настройте Google Cloud {#configure-google-cloud}
 
 Метод отправки BigFrames в dbt поддерживает как service account, так и OAuth‑аутентификацию. В следующих шагах будет использоваться service account.
 
@@ -114,7 +114,7 @@ BigQuery DataFrames — это open source Python‑пакет, который �
    gcloud storage buckets add-iam-policy-binding gs://${GOOGLE_CLOUD_PROJECT}-bucket --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/storage.admin
    ```
 
-### Настройте BigQuery в dbt platform
+### Настройте BigQuery в dbt platform {#configure-bigquery-in-the-dbt-platform}
 
 Чтобы настроить подключение BigQuery DataFrames в <Constant name="dbt_platform"/>, выполните следующие шаги:
 
@@ -132,7 +132,7 @@ BigQuery DataFrames — это open source Python‑пакет, который �
 
 <Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="80%" title="Настройте BigQuery в dbt platform"/>
 
-## Создайте, настройте и выполните ваши Python‑модели
+## Создайте, настройте и выполните ваши Python‑модели {#create-configure-and-execute-your-python-models}
 
 1. В вашем dbt‑проекте создайте SQL‑модель в каталоге `models` с расширением `.sql`. Назовите файл `my_sql_model.sql`.
 2. Скопируйте в файл следующий SQL‑код:

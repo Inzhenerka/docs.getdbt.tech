@@ -10,13 +10,13 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 
 В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `seeds`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
 
-### Аргументы
+### Аргументы {#arguments}
 
 При выполнении запроса `seeds` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="seeds" />
 
-### Пример запроса
+### Пример запроса {#example-query}
 
 Вы можете указать `environmentId`, отфильтровать по базе данных и ограничить результат первыми 100 записями, чтобы получить информацию о первых 100 seed‑файлах в базе данных `analytics`, включая их метаданные и расположение файлов:
 
@@ -48,12 +48,12 @@ query ($environmentId: BigInt!, $first: Int!, $filter: GenericMaterializedFilter
 }
 ```
 
-### Поля
+### Поля {#fields}
 
 При выполнении запроса `seeds` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="SeedAppliedStateNodeConnection" />
 
-### Ключевые поля узлов
+### Ключевые поля узлов {#key-fields-from-nodes}
 
 <SchemaTable nodeName="SeedAppliedStateNode" />

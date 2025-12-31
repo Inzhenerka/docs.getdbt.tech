@@ -32,7 +32,7 @@ pagination_prev: null
 
 Эти инструкции по подключению описывают базовые поля, необходимые для настройки соединения с платформой данных в <Constant name="cloud" />. Более подробные руководства, включающие демонстрационные данные проекта, см. в наших [Quickstart guides](/guides).
 
-### Поддерживаемые методы аутентификации
+### Поддерживаемые методы аутентификации {#supported-authentication-methods}
 
 В следующих таблицах показано, какие типы аутентификации поддерживаются для каждого подключения, доступного в <Constant name="dbt_platform" />:
 
@@ -54,7 +54,7 @@ import AuthTypesFusion from '/snippets/_dbt_connection_support_fusion.md';
 
 </Tabs>
 
-## Управление подключениями
+## Управление подключениями {#connection-management}
 
 Подключения к хранилищам данных — это ресурс уровня аккаунта. Вы можете найти их в разделе **Account settings** > **Connections**.
 
@@ -64,7 +64,7 @@ import AuthTypesFusion from '/snippets/_dbt_connection_support_fusion.md';
 
 Как показано на изображении, проект с 2 средами может использовать от 1 до 2 различных подключений. Если вы хотите отделить вашу производственную среду от непроизводственной, назначьте несколько подключений одному проекту.
 
-### Миграция с подключений уровня проекта на подключения уровня аккаунта
+### Миграция с подключений уровня проекта на подключения уровня аккаунта {#migration-from-project-level-connections-to-account-level-connections}
 
 Внедрение подключений уровня аккаунта не потребует никаких перерывов в работе ваших текущих сценариев использования (<Constant name="cloud_ide" />, CLI, jobs и так далее).
 
@@ -106,7 +106,7 @@ import AuthTypesFusion from '/snippets/_dbt_connection_support_fusion.md';
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connections-post-rollout-5.png" width="60%" title="Подключения нормализованы"/>
 
-## Ограничения по IP
+## Ограничения по IP {#ip-restrictions}
 
 <Constant name="cloud" /> всегда будет подключаться к вашей платформе данных с IP-адресов, указанных на странице [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).
 

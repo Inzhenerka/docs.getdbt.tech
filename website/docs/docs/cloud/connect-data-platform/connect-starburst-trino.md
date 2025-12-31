@@ -15,14 +15,14 @@ sidebar_label: "Подключение Starburst или Trino"
 | **Database** | Имя каталога в вашем кластере. | `example_catalog` |
 | **Schema** | Имя схемы, существующей в указанном каталоге. | `example_schema` |
 
-## Роли в Starburst Enterprise
+## Роли в Starburst Enterprise {#roles-in-starburst-enterprise}
 
 <Snippet path="connect-starburst-trino/roles-starburst-enterprise" />
 
-## Каталоги и схемы
+## Каталоги и схемы {#catalogs-and-schemas}
 
 <Snippet path="connect-starburst-trino/schema-db-fields" />
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных, в <Constant name="cloud" />, см. [конфигурацию, специфичную для Starburst/Trino](/reference/resource-configs/trino-configs).

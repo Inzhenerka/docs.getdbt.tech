@@ -7,7 +7,7 @@ pagination_next: "docs/install-dbt-extension"
 image: /img/docs/extension/extension-features.png
 ---
 
-# Возможности расширения dbt для VS Code <Lifecycle status="preview" />
+# Возможности расширения dbt для VS Code <Lifecycle status="preview" /> {#dbt-vs-code-extension-features}
 
 Расширение dbt для VS Code работает на базе быстрого и мощного движка dbt Fusion и динамического Language Server Protocol (<Term id="lsp"/>), который обеспечивает более удобные рабочие процессы, ускоренную разработку и простую навигацию по проекту.
 
@@ -25,7 +25,7 @@ image: /img/docs/extension/extension-features.png
 - **[Просмотр скомпилированного кода](#view-compiled-code):** Просмотр SQL-кода, который будут строить ваши модели, в реальном времени — рядом с dbt-кодом.
 - **[Гибкая сборка](#build-flexibly):** Использование палитры команд для сборки моделей с применением сложных селекторов.
 
-### Живое обнаружение ошибок
+### Живое обнаружение ошибок {#live-error-detection}
 
 Автоматически валидирует SQL-код, обнаруживая ошибки и отображая предупреждения без обращения к хранилищу.
 
@@ -41,7 +41,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/live-error-detection.mp4" type="video/webm" />
 </video>
 
-### Молниеносное время парсинга
+### Молниеносное время парсинга {#lightning-fast-parse-times}
 
 Парсинг даже самых крупных проектов выполняется до 30 раз быстрее, чем с dbt Core.
 
@@ -49,7 +49,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/zoomzoom.mp4" type="video/webm" />
 </video>
 
-### Мощный IntelliSense
+### Мощный IntelliSense {#powerful-intellisense}
 
 Автодополнение SQL-функций, имён моделей, макросов и другого.
 
@@ -59,7 +59,7 @@ image: /img/docs/extension/extension-features.png
 
 <Lightbox src="/img/docs/extension/vsce-intellisense.gif" width="100%" title="Example of the VS Code extension IntelliSense"/>
 
-### Мгновенный рефакторинг
+### Мгновенный рефакторинг {#instant-refactoring}
 
 Переименование моделей:
  - Щёлкните правой кнопкой мыши по файлу в дереве файлов и выберите **Rename**.
@@ -79,7 +79,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/refactor.mp4" type="video/webm" />
 </video>
 
-### Переход к определению и ссылкам
+### Переход к определению и ссылкам {#go-to-definition-and-reference}
 
 Переход к определению любого `ref`, макроса, модели или колонки одним кликом. Особенно полезно в крупных проектах с большим количеством моделей и макросов. Определения из установленных пакетов не поддерживаются.
 
@@ -92,7 +92,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/go-to-definition.mp4" type="video/webm" />
 </video>
 
-### Подсказки при наведении
+### Подсказки при наведении {#hover-insights}
 
 Просматривайте контекст таблиц, колонок и функций, не покидая редактор. Просто наведите курсор на любой SQL-элемент, чтобы увидеть такие детали, как имена колонок и типы данных.
 
@@ -104,7 +104,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/hover-insights.mp4" type="video/webm" />
 </video>
 
-### Живой предпросмотр моделей и CTE
+### Живой предпросмотр моделей и CTE {#live-preview-for-models-and-ctes}
 
 Предпросмотр результата CTE или всей модели прямо внутри редактора для более быстрой проверки и отладки.
 
@@ -119,7 +119,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/preview-cte.mp4" type="video/webm" />
 </video>
 
-### Насыщенный lineage в контексте
+### Насыщенный lineage в контексте {#rich-lineage-in-context}
 
 Просматривайте lineage на уровне таблиц или колонок прямо в процессе разработки — без переключения контекста и потери фокуса.
 
@@ -146,7 +146,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/lineage.mp4" type="video/webm" />
 </video>
 
-### Просмотр скомпилированного кода
+### Просмотр скомпилированного кода {#view-compiled-code}
 
 Просматривайте SQL-код, который будут строить ваши модели, в реальном времени — рядом с dbt-кодом.
 
@@ -160,7 +160,7 @@ image: /img/docs/extension/extension-features.png
   <source src="/img/docs/extension/compiled-code.mp4" type="video/webm" />
 </video>
 
-### Гибкая сборка
+### Гибкая сборка {#build-flexibly}
 
 Используйте палитру команд для быстрой сборки моделей с применением сложных селекторов.
 

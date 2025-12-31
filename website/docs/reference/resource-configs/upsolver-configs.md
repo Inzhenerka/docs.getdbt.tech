@@ -4,7 +4,7 @@ id: "upsolver-configs"
 description: "Конфигурации Upsolver - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 ---
 
-## Поддерживаемая функциональность Upsolver SQLake
+## Поддерживаемая функциональность Upsolver SQLake {#supported-upsolver-sqlake-functionality}
 
 | КОМАНДА | СОСТОЯНИЕ | МАТЕРИАЛИЗОВАНО |
 | ------ | ------ | ------ |
@@ -16,7 +16,7 @@ description: "Конфигурации Upsolver - Прочтите это под
 | SQL материализованные представления | поддерживается | materializedview |
 | Ожидания | поддерживается | incremental |
 
-## Материализация конфигураций
+## Материализация конфигураций {#configs-materialization}
 
 | Конфигурация | Обязательно | Материализация | Описание | Пример |
 | ------ | --------- | --------------- | ---------- | ------- |
@@ -37,7 +37,7 @@ description: "Конфигурации Upsolver - Прочтите это под
 | sync | Нет | incremental/materializedview | Логическая опция для определения, синхронизировано ли задание или нет. По умолчанию: False | sync=True |
 | options | Нет | incremental/materializedview | Словарь опций задания | options=\{ 'START_FROM': 'BEGINNING', 'ADD_MISSING_COLUMNS': True \} |
 
-## SQL соединение
+## SQL соединение {#sql-connection}
 
 Соединения используются для предоставления Upsolver правильных учетных данных для загрузки ваших данных в SQLake, а также для записи преобразованных данных в различные сервисы. Подробнее о ["Upsolver SQL соединениях"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-connections)
 В dbt модель соединения - это модель с materialized='connection'
@@ -53,7 +53,7 @@ description: "Конфигурации Upsolver - Прочтите это под
 
 Запуск этой модели скомпилирует SQL CREATE CONNECTION (или ALTER CONNECTION, если существует) и отправит его в движок Upsolver. Имя соединения будет именем модели.
 
-## SQL копирование задания
+## SQL копирование задания {#sql-copy-job}
 
 Задание COPY FROM позволяет копировать ваши данные из заданного источника в таблицу, созданную в соединении метахранилища. Эта таблица затем служит вашей промежуточной таблицей и может использоваться с заданиями трансформации SQLake для записи в различные целевые местоположения. Подробнее о ["Upsolver SQL copy-from"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/copy-from)
 
@@ -74,7 +74,7 @@ SELECT * FROM {{ ref(<model>) }}
 
 Запуск этой модели скомпилирует SQL CREATE TABLE для типа цели Data lake (или ALTER TABLE, если существует) и SQL CREATE COPY JOB (или ALTER COPY JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя задания будет именем модели плюс '_job'
 
-## SQL вставка задания
+## SQL вставка задания {#sql-insert-job}
 
 Задание INSERT определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет его в назначенную цель. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в задании. Подробнее о ["Upsolver SQL insert"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/insert).
 
@@ -100,7 +100,7 @@ HAVING COUNT(DISTINCT orderid::string) ...
 
 Запуск этой модели скомпилирует SQL CREATE TABLE для типа цели Data lake (или ALTER TABLE, если существует) и SQL CREATE INSERT JOB (или ALTER INSERT JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя задания будет именем модели плюс '_job'
 
-## SQL слияние задания
+## SQL слияние задания {#sql-merge-job}
 
 Задание MERGE определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет, заменяет или удаляет данные из назначенной цели на основе определения задания. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в задании. Подробнее о ["Upsolver SQL merge"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/merge).
 
@@ -126,7 +126,7 @@ HAVING COUNT ...
 
 Запуск этой модели скомпилирует SQL CREATE TABLE для типа цели Data lake (или ALTER TABLE, если существует) и SQL CREATE MERGE JOB (или ALTER MERGE JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя задания будет именем модели плюс '_job'
 
-## SQL материализованные представления
+## SQL материализованные представления {#sql-materialized-views}
 
 При преобразовании данных вы можете обнаружить, что вам нужны данные из нескольких исходных таблиц для достижения желаемого результата.
 В таком случае вы можете создать материализованное представление из одной таблицы SQLake, чтобы объединить его с другой таблицей (которая в этом случае считается основной таблицей). Подробнее о ["Upsolver SQL материализованные представления"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/sql-materialized-views).
@@ -147,7 +147,7 @@ GROUP BY ...
 
 Запуск этой модели скомпилирует SQL CREATE MATERIALIZED VIEW (или ALTER MATERIALIZED VIEW, если существует) и отправит его в движок Upsolver. Имя materializedview будет именем модели.
 
-## Ожидания/ограничения
+## Ожидания/ограничения {#expectationsconstraints}
 
 Условия качества данных могут быть добавлены в ваше задание, чтобы удалить строку или вызвать предупреждение, когда столбец нарушает предопределенное условие.
 
@@ -188,11 +188,11 @@ models:
             name: <constraint_name>
 ```
 
-## Примеры проектов
+## Примеры проектов {#projects-examples}
 
 > ссылка на примеры проектов: [github.com/dbt-upsolver/examples/](https://github.com/Upsolver/dbt-upsolver/tree/main/examples)
 
-## Опции соединения
+## Опции соединения {#connection-options}
 
 | Опция | Хранилище | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
@@ -267,7 +267,7 @@ models:
 | password | mssql | Да | Нет | 'password': `'<password>'` |
 | comment | mssql | Да | Да | 'comment': `'<comment>'` |
 
-## Опции цели
+## Опции цели {#target-options}
 
 | Опция | Хранилище | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
@@ -292,7 +292,7 @@ models:
 | create_table_if_missing | snowflake | Нет | Да | 'create_table_if_missing': True/False} |
 | run_interval | snowflake | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
 
-## Опции трансформации
+## Опции трансформации {#transformation-options}
 
 | Опция | Хранилище | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
@@ -366,7 +366,7 @@ models:
 | run_parallelism | postgres | Да | Да | 'run_parallelism': `<integer>` |
 | comment | postgres | Да | Да | 'comment': `'<comment>'` |
 
-## Опции копирования
+## Опции копирования {#copy-options}
 
 | Опция | Хранилище | Категория | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| ---------- | -------- | -------- | -------- | ------------- |

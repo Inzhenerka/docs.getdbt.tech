@@ -9,11 +9,11 @@ datatype: hour | day | month | year
 
 <VersionCallout version="1.9" />
 
-## Определение
+## Определение {#definition}
 
 Параметр конфигурации `batch_size` определяет размер батчей при запуске [microbatch incremental model](/docs/build/incremental-microbatch). Допустимые значения: `hour`, `day`, `month` или `year`. Вы можете настроить `batch_size` для [модели](/docs/build/models) в YAML-файле проекта (`dbt_project.yml`), в YAML-файле свойств (properties), либо в блоке `config`.
 
-## Примеры
+## Примеры {#examples}
 
 Следующие примеры устанавливают `day` в качестве `batch_size` для модели `user_sessions`.
 

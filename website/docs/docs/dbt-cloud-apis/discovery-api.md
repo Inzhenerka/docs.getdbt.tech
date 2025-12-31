@@ -3,7 +3,7 @@ title: "О Discovery API"
 pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 ---
 
-# О Discovery API <Lifecycle status="self_service,managed,managed_plus" />
+# О Discovery API <Lifecycle status="self_service,managed,managed_plus" /> {#about-the-discovery-api}
 
 Каждый раз, когда <Constant name="cloud" /> запускает проект, он генерирует и сохраняет информацию о проекте. Эти метаданные включают сведения о моделях, источниках и других узлах проекта, а также результаты их выполнения. С помощью Discovery API в <Constant name="cloud" /> вы можете запрашивать эту обширную информацию, чтобы лучше понимать ваш <Term id="dag">DAG</Term> и данные, которые он производит.
 
@@ -20,7 +20,7 @@ pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 
 <Snippet path="metadata-api-prerequisites" />
 
-## Для чего можно использовать Discovery API
+## Для чего можно использовать Discovery API {#what-you-can-use-the-discovery-api-for}
 
 Нажмите на следующие вкладки, чтобы узнать больше о случаях использования API, анализе, который вы можете провести, и результатах, которых вы можете достичь, интегрировав его.
 
@@ -72,7 +72,7 @@ pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 
 </Tabs>
 
-## Типы состояния проекта
+## Типы состояния проекта {#types-of-project-state}
 
 Вы можете выполнять запросы к этим двум типам [состояния проекта](/docs/dbt-cloud-apis/project-state) на уровне окружения:
 
@@ -81,7 +81,7 @@ pagination_next: "docs/dbt-cloud-apis/discovery-use-cases-and-examples"
 
 Эти состояния позволяют вам легко изучать разницу между определением модели и ее примененным состоянием, чтобы вы могли получить ответы на такие вопросы, как: была ли выполнена модель? или выполнение не удалось? Примененные модели существуют как таблица/представление в платформе данных после их последнего успешного выполнения.
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Случаи использования и примеры для Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples)
 - [Запрос Discovery API](/docs/dbt-cloud-apis/discovery-querying)

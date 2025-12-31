@@ -15,7 +15,7 @@ slug: /sql-reference/from
 
 В проекте dbt SQL‑модель dbt технически представляет собой единичный оператор SELECT (часто построенный с использованием <Term id="cte">CTEs</Term> или <Term id="subquery">subqueries</Term>), который использует [reference](/reference/dbt-jinja-functions/ref) на вышестоящую модель данных или таблицу в выражении FROM.
 
-## Как использовать операторы SQL FROM
+## Как использовать операторы SQL FROM {#how-to-use-sql-from-statements}
 
 Любой запрос начинается с простого оператора SELECT и завершается оператором FROM:
 
@@ -44,6 +44,6 @@ limit 3
 
 Если вы выбираете из нескольких таблиц или моделей, то вам понадобятся объединения или соединения, чтобы объединить несколько таблиц таким образом, который имеет смысл для ваших данных.
 
-## Синтаксис оператора FROM в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис оператора FROM в Snowflake, Databricks, BigQuery и Redshift {#from-statement-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Так же как скромный оператор SELECT является основой SQL, которая не изменяется хранилищами данных, синтаксис FROM не варьируется в них. В результате написание фактического оператора `select…from` в Snowflake, Databricks, Google BigQuery и Amazon Redshift будет выглядеть одинаково.

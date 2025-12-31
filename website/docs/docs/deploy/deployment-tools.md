@@ -9,7 +9,7 @@ pagination_next: null
 
 Создавайте и устанавливайте эти инструменты, чтобы автоматизировать ваши data‑workflow, запускать dbt‑задачи (в том числе размещённые в <Constant name="cloud" />) и получать удобный, не требующий лишних усилий опыт, экономя время и повышая эффективность.
 
-## Airflow
+## Airflow {#airflow}
 
 Если ваша организация использует [Airflow](https://airflow.apache.org/), существует несколько способов запуска dbt задач, включая:
 
@@ -33,11 +33,11 @@ pagination_next: null
 
 Для получения более подробной информации о каждом из этих методов, включая примеры реализации, ознакомьтесь с [этим руководством](https://docs.astronomer.io/learn/airflow-dbt-cloud).
 
-## Серверы автоматизации
+## Серверы автоматизации {#automation-servers}
 
 Серверы автоматизации (такие как CodeDeploy, GitLab CI/CD ([видео](https://youtu.be/-XBIIY2pFpc?t=1301)), Bamboo и Jenkins) могут использоваться для планирования bash команд для dbt. Они также предоставляют интерфейс для просмотра логов в командной строке и интеграции с вашим git-репозиторием.
 
-## Azure Data Factory
+## Azure Data Factory {#azure-data-factory}
 
 Интегрируйте <Constant name="cloud" /> и [Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/) (ADF), чтобы обеспечить плавный процесс работы с данными — от их загрузки до трансформации. Вы можете автоматически запускать задания <Constant name="cloud" /> после завершения задач по загрузке данных, используя [dbt API](/docs/dbt-cloud-apis/overview) в ADF.
 
@@ -57,25 +57,25 @@ pagination_next: null
 5. Запустите пайплайн в ADF, чтобы стартовать задание <Constant name="cloud" />, и отслеживайте статус выполнения задания <Constant name="cloud" /> в ADF.
 6. В <Constant name="cloud" /> вы можете проверить статус задания и посмотреть, каким образом оно было запущено.
 
-## Cron
+## Cron {#cron}
 
 Cron — это неплохой способ планирования bash команд. Однако, хотя это может показаться простым способом планирования задачи, написание кода для учета всех дополнительных функций, связанных с производственным развертыванием, часто делает этот путь более сложным по сравнению с другими вариантами, перечисленными здесь.
 
-## Dagster
+## Dagster {#dagster}
 
 Если в вашей организации используется [Dagster](https://dagster.io/), вы можете применять библиотеку [dagster_dbt](https://docs.dagster.io/_apidocs/libraries/dagster-dbt) для интеграции команд dbt в ваши пайплайны. Эта библиотека поддерживает выполнение dbt через <Constant name="cloud" /> или <Constant name="core" />. Запуск dbt из Dagster автоматически агрегирует метаданные о запусках dbt. Подробнее см. в [примере пайплайна](https://dagster.io/blog/dagster-dbt).
 
-## Рабочие процессы Databricks
+## Рабочие процессы Databricks {#databricks-workflows}
 
 Используйте Databricks Workflows для вызова API заданий <Constant name="cloud" />, что дает несколько преимуществ: интеграцию с другими ETL‑процессами, использование возможностей заданий <Constant name="cloud" />, разделение ответственности, а также возможность пользовательского запуска заданий на основе собственных условий или логики. Эти преимущества обеспечивают большую модульность, более эффективную отладку и гибкость при планировании заданий <Constant name="cloud" />.
 
 Дополнительную информацию см. в руководстве [Databricks workflows and <Constant name="cloud" /> jobs](/guides/how-to-use-databricks-workflows-to-run-dbt-cloud-jobs).
 
-## Kestra
+## Kestra {#kestra}
 
 Если в вашей организации используется [Kestra](http://kestra.io/), вы можете воспользоваться [dbt plugin](https://kestra.io/plugins/plugin-dbt) для оркестрации заданий <Constant name="cloud" /> и <Constant name="core" />. Пользовательский интерфейс (UI) Kestra содержит встроенные [Blueprints](https://kestra.io/docs/user-interface-guide/blueprints) — готовые к использованию рабочие процессы. Перейдите на страницу Blueprints в левом навигационном меню и [выберите тег dbt](https://demo.kestra.io/ui/blueprints/community?selectedTag=36), чтобы найти несколько примеров планирования команд <Constant name="core" /> и заданий <Constant name="cloud" /> в составе ваших конвейеров данных. После каждого запланированного или ad‑hoc выполнения workflow вкладка Outputs в UI Kestra позволяет скачать и просмотреть все артефакты сборки dbt. Представления Gantt и Topology дополнительно визуализируют метаданные, чтобы показать зависимости и время выполнения ваших моделей и тестов dbt. Задача <Constant name="cloud" /> предоставляет удобные ссылки для быстрого перехода между интерфейсами Kestra и <Constant name="cloud" />.
 
-## Orchestra
+## Orchestra {#orchestra}
 
 Если в вашей организации используется [Orchestra](https://getorchestra.io), вы можете запускать задания dbt с помощью API <Constant name="cloud" />. Создайте API‑токен в своей учетной записи <Constant name="cloud" /> и используйте его для аутентификации Orchestra в [Orchestra Portal](https://app.getorchestra.io). Подробности см. в [документации Orchestra по <Constant name="cloud" />](https://orchestra-1.gitbook.io/orchestra-portal/integrations/transformation/dbt-cloud).
 
@@ -89,7 +89,7 @@ Orchestra автоматически собирает метаданные из 
 
 <Lightbox src="/img/docs/running-a-dbt-project/orchestra_lineage_dbt_cloud.png" title="Пример просмотра родословной для задач dbt в Orchestra"/>
 
-## Prefect
+## Prefect {#prefect}
 
 Если в вашей организации используется [Prefect](https://www.prefect.io/), то способ запуска заданий будет зависеть от версии dbt, которую вы используете, а также от того, оркестрируете ли вы задания <Constant name="cloud" /> или <Constant name="core" />. Ниже приведены различные возможные варианты:
 
@@ -97,7 +97,7 @@ Orchestra автоматически собирает метаданные из 
 
 <Lightbox src="/img/docs/running-a-dbt-project/prefect_dag_dbt_cloud.jpg" width="75%" title="Prefect DAG с использованием потока выполнения задачи dbt Cloud"/> 
 
-### Prefect 2
+### Prefect 2 {#prefect-2}
 
 <Tabs>
 
@@ -118,7 +118,7 @@ Orchestra автоматически собирает метаданные из 
 </TabItem>
 </Tabs>
 
-### Prefect 1
+### Prefect 1 {#prefect-1}
 
 <Tabs>
 
@@ -138,7 +138,7 @@ Orchestra автоматически собирает метаданные из 
 </TabItem>
 </Tabs>
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 ## Связанные материалы
 

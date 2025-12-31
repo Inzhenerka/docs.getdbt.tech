@@ -13,7 +13,7 @@ slug: /sql-reference/any-all
 
 Используйте эту страницу, чтобы лучше понять, как использовать операторы ANY и ALL, случаи их применения и какие хранилища данных их поддерживают.
 
-## Как использовать операторы SQL ANY и ALL
+## Как использовать операторы SQL ANY и ALL {#how-to-use-the-sql-any-and-all-operators}
 
 Операторы ANY и ALL имеют очень простой синтаксис и часто используются с оператором LIKE/ILIKE или <Term id="subquery" />:
 
@@ -27,7 +27,7 @@ slug: /sql-reference/any-all
 
 Давайте теперь рассмотрим практический пример использования оператора ANY.
 
-### Пример SQL ANY
+### Пример SQL ANY {#sql-any-example}
 
 ```sql
 select
@@ -47,7 +47,7 @@ where status like any ('return%', 'ship%')
 
 Поскольку LIKE чувствителен к регистру, он не вернет результаты в этом запросе для заказов, статус которых, например, `RETURNED` или `SHIPPED`. Если в ваших данных есть смесь строк в верхнем и нижнем регистре, рассмотрите возможность стандартизации регистра строк с помощью функций [UPPER](/sql-reference/upper) и [LOWER](/sql-reference/lower) или используйте более гибкий оператор ILIKE.
 
-## Синтаксис ANY и ALL в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис ANY и ALL в Snowflake, Databricks, BigQuery и Redshift {#any-and-all-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Snowflake и Databricks поддерживают возможность использования ANY в операторе LIKE. Однако Amazon Redshift и Google BigQuery не поддерживают использование ANY в операторах LIKE или ILIKE. Используйте таблицу ниже, чтобы узнать больше о документации для оператора ANY в вашем хранилище данных.
 

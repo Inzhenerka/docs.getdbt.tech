@@ -13,7 +13,7 @@ slug: /sql-reference/between
 
 На этой странице мы рассмотрим, как использовать условие SQL BETWEEN и объясним, почему оно может быть полезно для вас.
 
-## Как использовать условие SQL BETWEEN
+## Как использовать условие SQL BETWEEN {#how-to-use-the-sql-between-condition}
 
 Условие BETWEEN имеет простой синтаксис и должно быть указано в предложении WHERE:
 
@@ -23,7 +23,7 @@ slug: /sql-reference/between
 
 Давайте рассмотрим практический пример использования условия BETWEEN ниже.
 
-### Пример SQL BETWEEN
+### Пример SQL BETWEEN {#sql-between-example}
 
 ```sql
 select
@@ -49,7 +49,7 @@ where order_date between '2018-01-01' and '2018-01-31'
 
 Вы также можете увидеть использование оператора NOT перед BETWEEN для исключения строк, попадающих в указанные диапазоны.
 
-## Синтаксис BETWEEN в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис BETWEEN в Snowflake, Databricks, BigQuery и Redshift {#between-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 Большинство современных хранилищ данных поддерживают условие BETWEEN; синтаксис также одинаков для всех них. Если ваше хранилище данных не поддерживает условие BETWEEN, рассмотрите возможность использования операторов >/=, как в примере выше.
 
@@ -62,7 +62,7 @@ where order_date between '2018-01-01' and '2018-01-31'
 | Amazon Redshift | ✅ |
 | Google BigQuery | ✅ |
 
-## Примеры использования условия SQL BETWEEN
+## Примеры использования условия SQL BETWEEN {#sql-between-condition-use-cases}
 
 Чаще всего условие BETWEEN используется в работе с данными для:
 - Фильтрации результатов запроса в указанный диапазон дат

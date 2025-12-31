@@ -31,7 +31,7 @@ dbt clone --state path/to/artifacts --full-refresh
 dbt clone --state path/to/artifacts --threads 50
 ```
 
-### Когда использовать `dbt clone` вместо [deferral](/reference/node-selection/defer)?
+### Когда использовать `dbt clone` вместо [deferral](/reference/node-selection/defer)? {#when-to-use-dbt-clone-instead-of-deferral}
 
 В отличие от deferral, `dbt clone` требует некоторого объёма вычислений и создания дополнительных объектов в вашем хранилище данных. Во многих случаях deferral является более дешёвой и простой альтернативой `dbt clone`. Однако `dbt clone` покрывает дополнительные сценарии использования, где deferral может быть невозможен.
 
@@ -39,7 +39,7 @@ dbt clone --state path/to/artifacts --threads 50
 
 В качестве другого примера, вы можете выполнить `clone` изменённых инкрементальных моделей как первый шаг CI-задачи в <Constant name="cloud" />, чтобы избежать дорогостоящих `full-refresh` сборок для хранилищ, поддерживающих zero-copy клонирование.
 
-## Клонирование в dbt
+## Клонирование в dbt {#cloning-in-dbt}
 
 Вы можете клонировать ноды между состояниями в <Constant name="cloud" /> с помощью команды `dbt clone`. Она доступна в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) и опирается на функциональность [`--defer`](/reference/node-selection/defer). Подробнее о defer в <Constant name="cloud" /> читайте в разделе [Using defer in <Constant name="cloud" />](/docs/cloud/about-cloud-develop-defer).
 

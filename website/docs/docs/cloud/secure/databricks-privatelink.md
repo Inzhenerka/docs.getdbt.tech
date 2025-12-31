@@ -6,7 +6,7 @@ sidebar_label: "AWS PrivateLink для Databricks"
 pagination_next: null
 ---
 
-# Настройка Databricks PrivateLink <Lifecycle status="managed_plus" />
+# Настройка Databricks PrivateLink <Lifecycle status="managed_plus" /> {#configuring-databricks-privatelink}
 
 import SetUpPages from '/snippets/_available-tiers-private-connection.md';
 import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
@@ -18,7 +18,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <CloudProviders type='Databricks'/>
 
-## Настройка AWS PrivateLink
+## Настройка AWS PrivateLink {#configure-aws-privatelink}
 
 1. Найдите ваше [имя экземпляра Databricks](https://docs.databricks.com/en/workspace/workspace-details.html#workspace-instance-names-urls-and-ids)
     - Пример: `cust-success.cloud.databricks.com`
@@ -45,7 +45,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
     :::
 
-## Создание подключения в dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
 После того как вы завершили настройку в окружении Databricks, вы сможете сконфигурировать приватный endpoint в <Constant name="cloud" />:
 

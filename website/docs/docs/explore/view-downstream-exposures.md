@@ -7,7 +7,7 @@ pagination_next:  "docs/explore/data-tile"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 
-# Визуализируйте downstream exposures <Lifecycle status="managed,managed_plus" />
+# Визуализируйте downstream exposures <Lifecycle status="managed,managed_plus" /> {#visualize-downstream-exposures}
 
 <IntroText>
 Downstream exposures нативно интегрируются с Tableau (поддержка Power BI скоро появится) и автоматически генерируют downstream lineage в <Constant name="explorer" />, обеспечивая более насыщенный и наглядный опыт.
@@ -23,7 +23,7 @@ Downstream exposures нативно интегрируются с Tableau (по�
 
 Чтобы настроить автоматическую конфигурацию downstream exposures из дашбордов Tableau, ознакомиться с предварительными требованиями и получить дополнительную информацию, см. [Configure downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau).
 
-### Поддерживаемые планы
+### Поддерживаемые планы {#supported-plans}
 
 Downstream exposures доступны во всех планах уровня Enterprise для <Constant name="cloud" /> ([подробнее о тарифах](https://www.getdbt.com/pricing/)). В настоящее время можно подключить только один сайт Tableau на одном и том же сервере.
 

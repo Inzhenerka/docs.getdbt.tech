@@ -50,7 +50,7 @@ sidebar: "resource type"
 </VersionBlock>
 
 
-## Положительные и отрицательные фильтры
+## Положительные и отрицательные фильтры {#positive-vs-negative-filters}
 
 - `--resource-type` — это положительный фильтр &mdash; dbt запускает только те типы ресурсов, которые указаны в команде, неявно пропуская все остальные.
 - `--exclude-resource-type` — это отрицательный фильтр &mdash; dbt начинает с полного каталога типов ресурсов и затем исключает типы, указанные в команде. dbt запускает всё, _кроме_ этих типов ресурсов.
@@ -63,7 +63,7 @@ dbt build --resource-type model test snapshot --exclude-resource-type snapshot
 
 Обратите внимание: список типов ресурсов dbt является взаимно исключающим и вместе исчерпывающим (MECE). Это означает, что любой выбор `--resource-type` можно получить, исключив остальные типы ресурсов с помощью `--exclude-resource-type`, и наоборот.
 
-## Примеры
+## Примеры {#examples}
 
 Вместо таргетинга конкретных ресурсов используйте флаги `--resource-type` или `--exclude-resource-type`, чтобы выбрать все ресурсы определенного типа: `dbt build --resource-type RESOURCE_TYPE`, заменив `RESOURCE_TYPE` на нужный тип ресурса.
 
@@ -71,7 +71,7 @@ dbt build --resource-type model test snapshot --exclude-resource-type snapshot
 
 <Expandable alt_header="Включить типы ресурсов">
 
-### Включить несколько типов ресурсов
+### Включить несколько типов ресурсов {#include-multiple-resource-types}
 
 Используйте следующую команду, чтобы включить несколько типов ресурсов, например data tests и models, в процессе сборки:
 
@@ -83,7 +83,7 @@ dbt build --resource-type test model
 
 </File>
 
-### Включить все snapshots
+### Включить все snapshots {#include-all-snapshots}
 
 Используйте следующую команду, чтобы включить в процесс сборки dbt только snapshots:
 
@@ -96,7 +96,7 @@ dbt build --resource-type snapshot
 </File>
 
 
-### Включить все saved queries
+### Включить все saved queries {#include-all-saved-queries}
 
 Используйте следующую команду, чтобы включить только saved queries с флагом `--resource-type`:
 
@@ -108,7 +108,7 @@ dbt build --resource-type saved_query
 
 </File>
 
-### Включить все data tests
+### Включить все data tests {#include-all-data-tests}
 
 Используйте следующую команду, чтобы включить в процесс сборки только data tests:
 
@@ -122,7 +122,7 @@ dbt build --resource-type test
 
 <VersionBlock firstVersion="1.9">
 
-### Включать все data-тесты при выполнении тестирования
+### Включать все data-тесты при выполнении тестирования {#include-all-data-tests-during-testing}
 
 Используйте следующую команду, чтобы при запуске тестов включить только data tests:
 
@@ -139,7 +139,7 @@ dbt test --resource-type test
 </Expandable>
 <Expandable alt_header="Исключить типы ресурсов">
 
-### Исключение нескольких типов ресурсов
+### Исключение нескольких типов ресурсов {#exclude-multiple-resource-types}
 
 Используйте следующую команду, чтобы исключить несколько типов ресурсов, таких как data tests и models, из процесса сборки:
 
@@ -151,7 +151,7 @@ dbt build --exclude-resource-type test model
 
 </File>
 
-### Исключение всех unit-тестов
+### Исключение всех unit-тестов {#exclude-all-unit-tests}
 
 Используйте следующую команду, чтобы исключить unit-тесты из процесса сборки dbt.
 
@@ -165,7 +165,7 @@ dbt build --exclude-resource-type unit_test
 
 <VersionBlock firstVersion="1.9">
 
-### Исключение всех unit-тестов при запуске тестов
+### Исключение всех unit-тестов при запуске тестов {#exclude-all-unit-tests-during-testing}
 
 Используйте следующую команду, чтобы исключить unit-тесты при выполнении тестов:
 

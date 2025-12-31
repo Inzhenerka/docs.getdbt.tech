@@ -122,7 +122,7 @@ pagination_prev: null
 
 *Эти возможности доступны на [выбранных тарифных планах](https://www.getdbt.com/pricing/).*
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [Тарифные планы и цены <Constant name="cloud" />](https://www.getdbt.com/pricing/)
 - [Руководства по быстрому старту](/docs/get-started-dbt)

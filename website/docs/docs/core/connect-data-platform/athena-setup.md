@@ -27,7 +27,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 :::
 
-## Подключение к Athena с помощью dbt-athena
+## Подключение к Athena с помощью dbt-athena {#connecting-to-athena-with-dbt-athena}
 
 Этот плагин не принимает учетные данные напрямую. Вместо этого [учетные данные определяются автоматически](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) на основе соглашений AWS CLI/boto3 и сохраненной информации для входа. Вы можете настроить имя профиля AWS, которое будет использоваться, через aws_profile_name. Ознакомьтесь с конфигурацией профиля dbt ниже для получения подробной информации.
 
@@ -52,7 +52,7 @@ default:
 
 </File>
 
-### Пример конфигурации
+### Пример конфигурации {#example-config}
 
 <File name='profiles.yml'>
 

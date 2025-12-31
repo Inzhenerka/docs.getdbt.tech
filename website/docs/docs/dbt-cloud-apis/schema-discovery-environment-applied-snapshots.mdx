@@ -10,13 +10,13 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 
 [Пример запроса](#example-query) демонстрирует некоторые поля, которые можно запрашивать с помощью объекта `snapshots`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запросов.
 
-### Аргументы
+### Аргументы {#arguments}
 
 При выполнении запросов к `snapshots` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="snapshots" />
 
-### Пример запроса
+### Пример запроса {#example-query}
 
 Вы можете указать `environmentId`, отфильтровать по базе данных и ограничить выборку первыми 100 записями, чтобы получить первые 100 snapshots в базе данных `analytics`, включая информацию об их производительности выполнения и статусе:
 
@@ -51,12 +51,12 @@ query {
 }
 ```
 
-### Поля
+### Поля {#fields}
 
 При выполнении запросов к `snapshots` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="SnapshotAppliedStateNodeConnection" />
 
-### Ключевые поля узлов
+### Ключевые поля узлов {#key-fields-from-nodes}
 
 <SchemaTable nodeName="SnapshotAppliedStateNode" />

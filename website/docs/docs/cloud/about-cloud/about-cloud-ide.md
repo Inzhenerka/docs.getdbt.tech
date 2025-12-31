@@ -24,7 +24,7 @@ sidebar_label: О dbt Studio IDE
 
 Для получения дополнительной информации прочитайте полное [руководство по Cloud <Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
 
-## Связанные документы
+## Связанные документы {#related-docs}
 
 - [<Constant name="cloud_ide" /> пользовательский интерфейс](/docs/cloud/studio-ide/ide-user-interface)
 - [Сочетания клавиш](/docs/cloud/studio-ide/keyboard-shortcuts)

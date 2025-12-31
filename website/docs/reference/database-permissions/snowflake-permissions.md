@@ -4,7 +4,7 @@ title: "Разрешения в Snowflake"
 
 В Snowflake разрешения используются для управления тем, кто может выполнять определенные действия с различными объектами базы данных. Используйте SQL-операторы для управления разрешениями в базе данных Snowflake.
 
-## Настройка учетной записи Snowflake
+## Настройка учетной записи Snowflake {#set-up-snowflake-account}
 
 В этом разделе объясняется, как настроить разрешения и роли в Snowflake. В Snowflake вы выполняете эти действия с помощью SQL-команд и настраиваете ваш хранилище данных и контроль доступа в экосистеме Snowflake.
 
@@ -132,7 +132,7 @@ grant select on all views in database analytics to role reporter;
 
 Для более подробного обсуждения и информации о предыдущих версиях, обратитесь к [этой статье на Discourse](https://discourse.getdbt.com/t/setting-up-snowflake-the-exact-grant-statements-we-run/439).
 
-## Пример разрешений в Snowflake
+## Пример разрешений в Snowflake {#example-snowflake-permissions}
 
 Следующий пример предоставляет вам SQL-операторы, которые вы можете использовать для управления разрешениями.
 

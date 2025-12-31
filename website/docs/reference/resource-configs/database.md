@@ -102,7 +102,7 @@ data_tests:
 </TabItem>
 </Tabs>
 
-## Определение
+## Определение {#definition}
 
 При необходимости укажите пользовательскую базу данных для [модели](/docs/build/sql-models), [сида](/docs/build/seeds) или [теста данных](/docs/build/data-tests). (Чтобы указать базу данных для [снапшота](/docs/build/snapshots), используйте [`target_database` config](/reference/resource-configs/target_database)).
 
@@ -114,5 +114,5 @@ data_tests:
 
 Чтобы узнать больше о том, как изменить способ генерации `database` для отношения в dbt, прочитайте [Использование пользовательских баз данных](/docs/build/custom-databases).
 
-## Информация, специфичная для хранилища
+## Информация, специфичная для хранилища {#warehouse-specific-information}
 * BigQuery: `project` и `database` взаимозаменяемы.

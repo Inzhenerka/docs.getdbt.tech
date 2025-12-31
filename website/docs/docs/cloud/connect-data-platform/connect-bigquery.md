@@ -5,13 +5,13 @@ description: "Настройка подключения BigQuery."
 sidebar_label: "Подключение BigQuery"
 ---
 
-## Необходимые разрешения
+## Необходимые разрешения {#required-permissions}
 
 import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 <BigQueryPerms />
 
-## Аутентификация
+## Аутентификация {#authentication}
 
 <Constant name="cloud" /> поддерживает различные методы аутентификации в зависимости от вашего окружения и типа плана:
 
@@ -31,7 +31,7 @@ import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 Все новые подключения должны использовать вариант **BigQuery**, так как **BigQuery (Legacy)** будет выведен из эксплуатации. Чтобы обновить существующие подключения и учетные данные в окружении и перейти на новый вариант BigQuery, сначала используйте [API](/docs/dbt-cloud-apis/admin-cloud-api) для удаления текущих конфигураций. 
 
-### JSON keyfile
+### JSON keyfile {#json-keyfile}
 
 :::info Загрузка JSON ключевого файла учетной записи службы
 
@@ -66,14 +66,14 @@ import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/bigquery-connection.png" title="A valid BigQuery connection"/>
 
-### BigQuery OAuth
+### BigQuery OAuth {#bigquery-oauth}
 **Доступно в:** средах разработки, только в планах Enterprise
 
 Метод аутентификации OAuth позволяет <Constant name="cloud" /> выполнять запросы от имени пользователя BigQuery или рабочей нагрузки, не сохраняя ключевой файл сервисного аккаунта BigQuery в <Constant name="cloud" />. При этом JSON всё равно должен быть предоставлен, либо соответствующие поля должны быть заполнены вручную, чтобы завершить настройку в dbt Cloud. Эти значения не обязательно должны быть реальными для работы данного обходного механизма (например, можно указать `N/A`). Подробнее о первоначальной настройке подключения BigQuery OAuth в <Constant name="cloud" /> см. в документации по [настройке BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
 
 Если вы являетесь конечным пользователем и в вашей организации настроен BigQuery OAuth, вы можете связать проект со своей личной учетной записью BigQuery в разделе Profile в <Constant name="cloud" />.
 
-### Федерация удостоверений рабочей нагрузки BigQuery <Lifecycle status="managed, preview" />
+### Федерация удостоверений рабочей нагрузки BigQuery <Lifecycle status="managed, preview" /> {#bigquery-workload-identity-federation}
 
 :::note
 
@@ -85,11 +85,11 @@ import BigQueryPerms from '/snippets/_bigquery-permissions.md';
 
 Метод аутентификации BigQuery WIF позволяет <Constant name="cloud" /> выполнять запросы в средах развертывания от имени сервисного аккаунта без настройки ключевого файла сервисного аккаунта BigQuery в <Constant name="cloud" />. Подробнее о первоначальной настройке подключения BigQuery WIF в <Constant name="cloud" /> см. в документации по [настройке BigQuery](/docs/cloud/manage-access/set-up-bigquery-oauth#Set-up-bigquery-workload-identity-federation) WIF.
 
-## Конфигурация
+## Конфигурация {#configuration}
 
 Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, обратитесь к разделу [BigQuery-specific configuration](/reference/resource-configs/bigquery-configs).
 
-### Необязательные конфигурации
+### Необязательные конфигурации {#optional-configurations}
 
 В BigQuery необязательные конфигурации позволяют настроить параметры для таких задач, как приоритет запросов, местоположение набора данных, время ожидания выполнения задания и многое другое. Эти опции дают вам больший контроль над тем, как BigQuery работает за кулисами, чтобы соответствовать вашим требованиям.
 
@@ -184,7 +184,7 @@ import JobTimeout from '/snippets/_bigquery-timeout.md';
 
 </Expandable>
 
-#### Запуск моделей dbt на Python в Google Cloud Platform
+#### Запуск моделей dbt на Python в Google Cloud Platform {#run-dbt-python-models-on-google-cloud-platform}
 
 import BigQueryDataproc from '/snippets/_bigquery-dataproc.md';
 
@@ -224,7 +224,7 @@ import BigQueryDataproc from '/snippets/_bigquery-dataproc.md';
 
 </Expandable>
 
-### Подключения и управление учетными данными на уровне аккаунта
+### Подключения и управление учетными данными на уровне аккаунта {#account-level-connections-and-credential-management}
 
 Вы можете повторно использовать подключения в нескольких проектах с помощью [глобальных подключений](/docs/cloud/connect-data-platform/about-connections#migration-from-project-level-connections-to-account-level-connections). Подключения привязаны на уровне среды (ранее на уровне проекта), поэтому вы можете использовать несколько подключений внутри одного проекта (для управления разработкой, тестированием, производством и т.д.).
 

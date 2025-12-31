@@ -7,7 +7,7 @@ pagination_next: null
 pagination_prev: "docs/cloud/manage-access/about-user-access"
 ---
 
-# Журнал аудита dbt <Lifecycle status="managed,managed_plus" />
+# Журнал аудита dbt <Lifecycle status="managed,managed_plus" /> {#dbt-audit-log}
 
 Чтобы просматривать действия, выполняемые пользователями в вашей организации, dbt предоставляет журналы аудита пользовательских и системных событий в режиме реального времени. Журнал аудита обновляется по мере возникновения событий и включает такие сведения, как кто выполнил действие, какое именно действие было выполнено и когда это произошло. Эти данные можно использовать для устранения проблем с доступом, проведения аудитов безопасности или анализа отдельных событий.
 
@@ -20,11 +20,11 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 
 Обратите внимание, что срок хранения событий в журнале аудита составляет не менее 12 месяцев.
 
-## Доступ к журналу аудита
+## Доступ к журналу аудита {#accessing-the-audit-log}
 
 Чтобы открыть журнал аудита, нажмите на имя вашей учетной записи в левом меню и выберите **Account settings**. Затем нажмите **Audit log** в левой боковой панели.
 
-## Понимание журнала аудита
+## Понимание журнала аудита {#understanding-the-audit-log}
 
 На странице журнала аудита отображается список различных событий и связанных с ними данных. Для каждого события в dbt показывается следующая информация:
 
@@ -32,7 +32,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 * **Agent**: пользователь, который инициировал это действие/событие
 * **Timestamp**: локальное время, когда произошло событие
 
-### Детали события
+### Детали события {#event-details}
 
 Нажмите на карточку события, чтобы просмотреть подробную информацию о действии, которое привело к его возникновению. В этом представлении отображаются важные детали, включая время и тип события. Например, если кто-то изменил настройки задания, вы можете использовать детали события, чтобы увидеть, какое именно задание было изменено (тип события: `job_definition.Changed`), кем (инициатор события: `actor`) и когда (время срабатывания: `created_at_utc`). Список типов событий и их описания см. в разделе [События в журнале аудита](#audit-log-events).
 
@@ -53,11 +53,11 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | service              | Сервис, который выполнил действие                                            |
 | source               | Источник события — UI <Constant name="cloud" /> или API                     |
 
-## События журнала аудита
+## События журнала аудита {#audit-log-events}
 
 Журнал аудита поддерживает различные события для разных объектов в <Constant name="cloud" />. Здесь вы найдете события, связанные с аутентификацией, окружениями, заданиями, сервисными токенами, группами, пользователями, проектами, правами доступа, лицензиями, подключениями, репозиториями и учетными данными.
 
-### Authentication
+### Authentication {#authentication}
 
 | Event Name                 | Event Type                     | Description                                            |
 | -------------------------- | ------------------------------ | ------------------------------------------------------ |
@@ -66,7 +66,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | SSO Login Failed           | login.sso.failed               | Неудачная попытка входа пользователя через SSO         |
 | SSO Login Succeeded        | login.sso.succeeded            | Пользователь успешно вошел через SSO                   |
 
-### Environment
+### Environment {#environment}
 
 | Event Name          | Event Type          | Description                          |
 | ------------------- | ------------------- | ------------------------------------ |
@@ -74,7 +74,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Environment Changed | environment.changed | Изменены настройки окружения         |
 | Environment Removed | environment.removed | Окружение успешно удалено            |
 
-### Jobs
+### Jobs {#jobs}
 
 | Event Name  | Event Type             | Description                  |
 | ----------- | ---------------------- | ---------------------------- |
@@ -82,14 +82,14 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Job Changed | job_definition.changed | Изменены настройки задания   |
 | Job Removed | job_definition.removed | Определение задания удалено  |
 
-### Service Token
+### Service Token {#service-token}
 
 | Event Name            | Event Type            | Description                                      |
 | --------------------- | --------------------- | ------------------------------------------------ |
 | Service Token Created | service_token.created | Новый Service Token успешно создан               |
 | Service Token Revoked | service_token.revoked | Service Token был отозван                        |
 
-### Group
+### Group {#group}
 
 | Event Name    | Event Type    | Description                          |
 | ------------- | ------------- | ------------------------------------ |
@@ -97,7 +97,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Group Changed | group.changed | Изменены настройки группы            |
 | Group Removed | group.removed | Группа успешно удалена               |
 
-### User
+### User {#user}
 
 | Event Name                   | Event Type                | Description                                                  |
 | ---------------------------- | ------------------------- | ------------------------------------------------------------ |
@@ -112,7 +112,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Verification Email Confirmed | user.jit.email.confirmed  | Пользователь подтвердил адрес электронной почты              |
 | Verification Email Sent      | user.jit.email.sent       | Письмо для подтверждения email отправлено пользователю, созданному через JIT |
 
-### Project
+### Project {#project}
 
 | Event Name      | Event Type      | Description                    |
 | --------------- | --------------- | ------------------------------ |
@@ -120,14 +120,14 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Project Changed | project.changed | Изменены настройки проекта     |
 | Project Removed | project.removed | Проект удален                  |
 
-### Permissions
+### Permissions {#permissions}
 
 | Event Name              | Event Type         | Description                         |
 | ----------------------- | ------------------ | ----------------------------------- |
 | User Permission Added   | permission.added   | Добавлены новые права пользователя  |
 | User Permission Removed | permission.removed | Права пользователя удалены          |
 
-### License
+### License {#license}
 
 | Event Name              | Event Type           | Description                                         |
 | ----------------------- | -------------------- | --------------------------------------------------- |
@@ -135,7 +135,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | License Mapping Changed | license_map.changed  | Изменены настройки сопоставления лицензии           |
 | License Mapping Removed | license_map.removed  | Сопоставление лицензии удалено                      |
 
-### Connection
+### Connection {#connection}
 
 | Event Name         | Event Type         | Description                                      |
 | ------------------ | ------------------ | ------------------------------------------------ |
@@ -143,7 +143,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Connection Changed | connection.changed | Изменены настройки подключения к хранилищу данных |
 | Connection Removed | connection.removed | Подключение к хранилищу данных удалено           |
 
-### Repository
+### Repository {#repository}
 
 | Event Name         | Event Type         | Description                         |
 | ------------------ | ------------------ | ----------------------------------- |
@@ -151,7 +151,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Repository Changed | repository.changed | Изменены настройки репозитория      |
 | Repository Removed | repository.removed | Репозиторий удален                  |
 
-### Credentials
+### Credentials {#credentials}
 
 | Event Name                       | Event Type          | Description                                 |
 | -------------------------------- | ------------------- | ------------------------------------------- |
@@ -159,13 +159,13 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Credentials Changed in Project   | credentials.changed | Учетные данные изменены в проекте           |
 | Credentials Removed from Project | credentials.removed | Учетные данные удалены из проекта           |
 
-### Git integration
+### Git integration {#git-integration}
 
 | Event Name                | Event Type                 | Description                                      |
 | ------------------------- | -------------------------- | ------------------------------------------------ |
 | GitLab Application Changed| gitlab_application.changed | Изменена конфигурация GitLab в <Constant name="cloud" /> |
 
-### Webhooks
+### Webhooks {#webhooks}
 
 | Event Name                    | Event Type                   | Description                                         |
 | ----------------------------- | ---------------------------- | --------------------------------------------------- |
@@ -173,7 +173,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Webhook Subscriptions Changed | webhook_subscription.changed | Изменена существующая конфигурация webhook         |
 | Webhook Subscriptions Removed | webhook_subscription.removed | Существующий webhook удален                         |
 
-### Semantic Layer
+### Semantic Layer {#semantic-layer}
 
 | Event Name                            | Event Type                          | Description                                                                 |
 | ------------------------------------ | ----------------------------------- | --------------------------------------------------------------------------- |
@@ -184,21 +184,21 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Semantic Layer Credentials Changed    | semantic_layer_credentials.changed  | Изменены учетные данные <Constant name="semantic_layer" />. Не вызывает semantic_layer_config.changed |
 | Semantic Layer Credentials Removed    | semantic_layer_credentials.removed  | Учетные данные <Constant name="semantic_layer" /> удалены                   |
 
-### Extended attributes
+### Extended attributes {#extended-attributes}
 
 | Event Name                 | Event Type                  | Description                                      |
 | -------------------------- | --------------------------- | ------------------------------------------------ |
 | Extended Attribute Added   | extended_attributes.added   | Расширенный атрибут добавлен в проект            |
 | Extended Attribute Changed | extended_attributes.changed | Расширенный атрибут изменен или удален           |
 
-### Account-scoped personal access token
+### Account-scoped personal access token {#account-scoped-personal-access-token}
 
 | Event Name                                   | Event Type                 | Description                                     |
 | -------------------------------------------- | -------------------------- | ----------------------------------------------- |
 | Account Scoped Personal Access Token Created | account_scoped_pat.created | Создан PAT с областью действия на уровне аккаунта |
 | Account Scoped Personal Access Token Deleted | account_scoped_pat.deleted | PAT с областью действия на уровне аккаунта удален |
 
-### IP restrictions
+### IP restrictions {#ip-restrictions}
 
 | Event Name                   | Event Type                   | Description                                         |
 | ---------------------------- | ---------------------------- | --------------------------------------------------- |
@@ -207,7 +207,7 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | IP Restrictions Rule Changed | ip_restrictions.rule.changed | Отредактировано правило IP-ограничений              |
 | IP Restrictions Rule Removed | ip_restrictions.rule.removed | Правило IP-ограничений удалено                      |
 
-### SCIM
+### SCIM {#scim}
 
 | Event Name       | Event Type                          | Description                                      |
 | ---------------- | ----------------------------------- | ------------------------------------------------ |
@@ -218,13 +218,13 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 | Group Update     | v1.events.user_group_user.Changed   | Состав группы обновлен сервисом SCIM             |
 | Group Removal    | v1.events.user_group.Removed        | Группа удалена сервисом SCIM                     |
 
-## Поиск в журнале аудита
+## Поиск в журнале аудита {#searching-the-audit-log}
 
 Вы можете выполнять поиск в журнале аудита, чтобы найти конкретное событие или исполнителя. Поиск ограничен событиями, перечисленными в разделе [Events in audit log](#events-in-audit-log). Журнал аудита успешно отображает исторические события за последние 90 дней. Вы можете искать по исполнителю или событию с помощью строки поиска, а затем сузить результаты, используя временной диапазон.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-search.png" width="95%" title="Использование строки поиска для поиска данных в журнале аудита"/>
 
-## Экспорт журналов
+## Экспорт журналов {#exporting-logs}
 
 Вы можете использовать журнал аудита для экспорта всех исторических результатов аудита в целях безопасности, соответствия требованиям и анализа. События в журнале аудита хранятся не менее 12 месяцев.
 

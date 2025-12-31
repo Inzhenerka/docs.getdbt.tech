@@ -13,7 +13,7 @@ slug: /sql-reference/array-agg
 
 Чтобы создать массив из нескольких значений данных в SQL, вы, вероятно, воспользуетесь функцией ARRAY_AGG (сокращение от *агрегация массива*), которая помещает значения вашего входного столбца в массив.
 
-## Как использовать SQL ARRAY_AGG
+## Как использовать SQL ARRAY_AGG {#how-to-use-sql-array_agg}
 
 Функция ARRAY_AGG имеет следующий синтаксис:
 
@@ -28,7 +28,7 @@ slug: /sql-reference/array-agg
 
 Давайте углубимся в практический пример использования функции ARRAY_AGG.
 
-### Пример SQL ARRAY_AGG
+### Пример SQL ARRAY_AGG {#sql-array_agg-example}
 
 ```sql
 select
@@ -50,11 +50,11 @@ order by 1
 
 Смотрим на результаты запроса — это имеет смысл! Мы ожидаем, что у новых заказов, вероятно, не будет возвратов, а у старых заказов возвраты будут завершены.
 
-## Синтаксис SQL ARRAY_AGG в Snowflake, Databricks, BigQuery и Redshift
+## Синтаксис SQL ARRAY_AGG в Snowflake, Databricks, BigQuery и Redshift {#sql-array_agg-syntax-in-snowflake-databricks-bigquery-and-redshift}
 
 [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/array_agg.html), [Databricks](https://docs.databricks.com/sql/language-manual/functions/array_agg.html) и [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg) поддерживают функцию ARRAY_AGG. Однако Redshift поддерживает встроенную функцию [LISTAGG](https://docs.aws.amazon.com/redshift/latest/dg/r_LISTAGG.html), которая может выполнять аналогичную функцию ARRAY_AGG. Основное отличие заключается в том, что LISTAGG позволяет явно выбрать разделитель для разделения списка, тогда как массивы по умолчанию разделяются запятыми.
 
-## Примеры использования ARRAY_AGG
+## Примеры использования ARRAY_AGG {#array_agg-use-cases}
 
 Существует слишком много примеров использования функции ARRAY_AGG в ваших моделях dbt, чтобы перечислить их все, но очень вероятно, что ARRAY_AGG используется на более поздних этапах в вашем <Term id="dag" />, так как вы, вероятно, не хотите, чтобы ваши данные были так сильно упакованы на более ранних этапах DAG для улучшения модульности и <Term id="dry">сухости</Term>. Несколько примеров использования ARRAY_AGG на более поздних этапах:
 

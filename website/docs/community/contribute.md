@@ -5,7 +5,7 @@ id: contribute
 
 <section className="community-home">
 
-## Хотите принять участие? Начните здесь
+## Хотите принять участие? Начните здесь {#want-to-get-involved-start-here}
 
 Сообщество dbt появилось раньше, чем dbt Labs как организация, и восходит к тем временам, когда небольшая аналитическая консалтинговая компания из нескольких [раздраженных аналитиков данных](<https://www.hashpath.com/2020/12/an-analytics-engineer-is-really-just-a-pissed-off-data-analyst/#:~:text=Often%20times%2C%20an%20analytics%20engineer,necessity%20(and%20genius%20branding).>) начала собирать вместе проект с открытым исходным кодом, вокруг которого сформировалось сообщество, изменившее подход к использованию данных в мире.
 

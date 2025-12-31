@@ -6,7 +6,7 @@ pagination_next: "docs/cloud/enable-dbt-copilot"
 keywords: ["dbt Copilot", "dbt", "AI", "AI-powered", "dbt"]
 ---
 
-# О dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
+# О dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> {#about-dbt-copilot}
 
 <IntroText>
 <Constant name="copilot" /> — это мощный AI‑ассистент, полностью интегрированный в работу с <Constant name="cloud" /> и предназначенный для ускорения ваших аналитических процессов.
@@ -23,7 +23,7 @@ keywords: ["dbt Copilot", "dbt", "AI", "AI-powered", "dbt"]
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Пример использования dbt Copilot для генерации документации в IDE" />
 
-## Как работает dbt Copilot
+## Как работает dbt Copilot {#how-dbt-copilot-works}
 
 <Constant name="copilot" /> повышает эффективность за счёт автоматизации повторяющихся задач, одновременно обеспечивая конфиденциальность и безопасность данных. Он работает следующим образом:
 

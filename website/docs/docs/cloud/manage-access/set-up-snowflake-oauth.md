@@ -4,7 +4,7 @@ description: "Learn how dbt administrators can use Snowflake OAuth to control ac
 id: "set-up-snowflake-oauth"
 ---
 
-# Настройка Snowflake OAuth <Lifecycle status="managed, managed_plus" />
+# Настройка Snowflake OAuth <Lifecycle status="managed, managed_plus" /> {#set-up-snowflake-oauth}
 
 :::info Миграция на статические поддомены
 
@@ -27,7 +27,7 @@ import SnowflakeOauthWithPL from '/snippets/_snowflake-oauth-with-pl.md';
 
 Чтобы использовать Snowflake в <Constant name="cloud_ide" />, все разработчики должны [пройти аутентификацию в Snowflake](#authorize-developer-credentials) в своих профильных учетных данных.
 
-### Найдите значение перенаправления URI
+### Найдите значение перенаправления URI {#locate-the-redirect-uri-value}
 
 Чтобы начать, скопируйте redirect URI подключения из <Constant name="cloud" />:
 
@@ -42,7 +42,7 @@ import SnowflakeOauthWithPL from '/snippets/_snowflake-oauth-with-pl.md';
 	alt="Поля OAuth method и Redirect URI для подключения Snowflake в dbt." />
 />
 
-### Создайте интеграцию безопасности
+### Создайте интеграцию безопасности {#create-a-security-integration}
 
 В Snowflake выполните запрос для создания интеграции безопасности. Полную документацию по созданию интеграции безопасности для пользовательских клиентов можно найти [здесь](https://docs.snowflake.net/manuals/sql-reference/sql/create-security-integration.html#syntax).
 
@@ -80,7 +80,7 @@ CREATE OR REPLACE SECURITY INTEGRATION DBT_CLOUD
 
 Дополнительные параметры конфигурации могут быть указаны для интеграции безопасности по мере необходимости.
 
-### Настройка подключения в dbt
+### Настройка подключения в dbt {#configure-a-connection-in-dbt}
 
 Администратор базы данных отвечает за создание подключения к Snowflake в <Constant name="cloud" />. Это подключение настраивается с использованием Snowflake Client ID и Client Secret. Эти значения можно определить, выполнив следующий запрос в Snowflake:
 
@@ -106,11 +106,11 @@ from
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/database-connection-snowflake-oauth.png" title="Настройка учетных данных Snowflake OAuth в dbt" />
 
-### Авторизация учетных данных разработчика
+### Авторизация учетных данных разработчика {#authorize-developer-credentials}
 
 После включения Snowflake SSO пользователи проекта смогут настроить свои учетные данные в своих профилях. Нажав кнопку **"Connect to Snowflake Account"**, пользователи будут перенаправлены в Snowflake для авторизации через настроенного SSO‑провайдера, а затем обратно в <Constant name="cloud" /> для завершения процесса настройки. После этого пользователи смогут использовать <Constant name="cloud_ide" /> со своими учетными данными для разработки.
 
-### Диаграмма потока SSO OAuth
+### Диаграмма потока SSO OAuth {#sso-oauth-flow-diagram}
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/84427818-841b3680-abf3-11ea-8faf-693d4a39cffb.png" title="Диаграмма потока SSO OAuth" />
 
@@ -118,10 +118,10 @@ from
 
 **ПРИМЕЧАНИЕ**: Срок действия refresh token определяется параметром `OAUTH_REFRESH_TOKEN_VALIDITY`, указанным в операторе `create security integration`. Когда refresh token пользователя истекает, пользователю необходимо повторно авторизоваться в Snowflake, чтобы продолжить работу в <Constant name="cloud" />.
 
-### Настройка нескольких проектов dbt с Snowflake OAuth
+### Настройка нескольких проектов dbt с Snowflake OAuth {#setting-up-multiple-dbt-projects-with-snowflake-0auth}
 Если вы планируете использовать один и тот же аккаунт Snowflake для нескольких проектов <Constant name="cloud" />, вы можете применять одну и ту же security integration для всех проектов.
 
-## Миграция поддомена
+## Миграция поддомена {#subdomain-migration}
 
 Если вы используете [мультиарендный аккаунт](/docs/cloud/about-cloud/access-regions-ip-addresses) и вас переводят на статический поддомен, возможно, потребуется выполнить дополнительные действия в вашем аккаунте Snowflake, чтобы избежать сбоев в работе сервиса.
 
@@ -130,7 +130,7 @@ Snowflake ограничивает каждую security integration (`CREATE SE
 - **Настроить дополнительную security integration:** В вашем аккаунте Snowflake будет одна integration с исходным URL (например, `cloud.getdbt.com/complete/snowflake`) в качестве redirect URI, и вторая — с новым статическим поддоменом. Полный список исходных доменов для вашего региона (помечены как “multi-tenant” в таблице) см. на странице [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).
 - **Использовать одну security integration:** Создайте одну integration с новым статическим поддоменом в качестве redirect URI. В этом случае вам потребуется заново создать все ваши [существующие подключения](/docs/cloud/connect-data-platform/about-connections#connection-management).
 
-### Устранение неполадок
+### Устранение неполадок {#troubleshooting}
 
 <Expandable alt_header="Недопустимый запрос согласия">
 
@@ -172,7 +172,7 @@ OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
 Полный пример запроса см. в разделе [Create a security integration](#create-a-security-integration).
 </Expandable>
 
-## Узнать больше
+## Узнать больше {#learn-more}
 
 <WistiaVideo id="2ynprkkijp" paddingTweak="62.25%" />
 ```

@@ -10,8 +10,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 <VersionCallout version="1.11" /> 
 
-## Доступные конфигурации
-### Конфигурации, специфичные для функций
+## Доступные конфигурации {#available-configurations}
+### Конфигурации, специфичные для функций {#function-specific-configurations}
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -68,7 +68,7 @@ functions:
 
 </Tabs>
 
-### Общие конфигурации
+### Общие конфигурации {#general-configurations}
 
 <ConfigGeneral />
 
@@ -130,15 +130,15 @@ functions:
 </Tabs>
 
 
-## Настройка функций
+## Настройка функций {#configuring-functions}
 Функции настраиваются в YAML-файлах — либо в `dbt_project.yml`, либо в индивидуальном properties YAML файле конкретной функции. Тело функции при этом определяется в SQL-файле, расположенном в директории `functions/`.
 
 Конфигурации функций, как и конфигурации моделей, применяются иерархически. Подробнее см. в разделе [наследование конфигураций](/reference/define-configs#config-inheritance). 
 
 Функции используют те же макросы генерации имён, что и модели: [`generate_database_name`](/docs/build/custom-databases), [`generate_schema_name`](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name) и [`generate_alias_name`](/docs/build/custom-aliases).
 
-### Примеры
-#### Применение конфигурации `schema` ко всем функциям
+### Примеры {#examples}
+#### Применение конфигурации `schema` ко всем функциям {#apply-the-schema-configuration-to-all-functions}
 Чтобы применить конфигурацию ко всем функциям, включая функции из любых установленных [пакетов](/docs/build/packages), вложите конфигурацию непосредственно под ключ `functions`:
 
 <File name='dbt_project.yml'>
@@ -152,7 +152,7 @@ functions:
 </File>
 
 
-#### Применение конфигурации `schema` ко всем функциям в вашем проекте
+#### Применение конфигурации `schema` ко всем функциям в вашем проекте {#apply-the-schema-configuration-to-all-functions-in-your-project}
 Чтобы применить конфигурацию только к функциям вашего проекта (то есть _исключая_ функции из установленных пакетов), укажите [имя проекта](/reference/project-configs/name.md) как часть пути ресурса.
 
 Для проекта с именем `jaffle_shop`:
@@ -170,7 +170,7 @@ functions:
 
 Аналогичным образом можно использовать имя установленного пакета, чтобы настраивать функции в этом пакете.
 
-#### Применение конфигурации `schema` только к одной функции
+#### Применение конфигурации `schema` только к одной функции {#apply-the-schema-configuration-to-one-function-only}
 
 Чтобы применить конфигурацию только к одной функции в properties файле, укажите её в блоке `config` этой функции:
 
@@ -200,7 +200,7 @@ functions:
 </File>
 
 
-## Пример конфигурации функций
+## Пример конфигурации функций {#example-function-configuration}
 
 Следующий пример показывает, как настроить функции в проекте с именем `jaffle_shop`, в котором есть два файла функций:
 - `functions/is_positive_int.sql`

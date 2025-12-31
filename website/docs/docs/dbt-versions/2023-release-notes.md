@@ -9,7 +9,7 @@ pagination_prev: null
 
 Архивные примечания к релизам для <Constant name="cloud" /> за 2023 год
 
-## Декабрь 2023
+## Декабрь 2023 {#december-2023}
 
 - <Expandable alt_header='Обновления семантического слоя'>
 
@@ -76,7 +76,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Ноябрь 2023
+## Ноябрь 2023 {#november-2023}
 
 - <Expandable alt_header='Новые возможности и изменения интерфейса в dbt Catalog'>
 
@@ -116,7 +116,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Октябрь 2023
+## Октябрь 2023 {#october-2023}
 
 - <Expandable alt_header='API dbt Cloud'>
 
@@ -242,7 +242,7 @@ pagination_prev: null
 
   </Expandable>
 
-## September 2023
+## September 2023 {#september-2023}
 
 - <Expandable alt_header='Обновления CI'>
 
@@ -341,7 +341,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Август 2023
+## Август 2023 {#august-2023}
 
 - <Expandable alt_header='Deprecation of endpoints in the Discovery API'>
 
@@ -493,7 +493,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Июль 2023
+## Июль 2023 {#july-2023}
 
 - <Expandable alt_header='Более быстрые запуски и неограниченная параллельность заданий для аккаунтов Enterprise'>
 
@@ -529,7 +529,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Июнь 2023
+## Июнь 2023 {#june-2023}
 
 - <Expandable alt_header='Линтинг и форматирование'>
 
@@ -614,7 +614,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Май 2023
+## Май 2023 {#may-2023}
 
 - <Expandable alt_header='dbt Cloud IDE'>
 
@@ -745,7 +745,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Апрель 2023
+## Апрель 2023 {#april-2023}
 
 - <Expandable alt_header='dbt Cloud IDE'>
 
@@ -858,7 +858,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Март 2023
+## Март 2023 {#march-2023}
 
 - <Expandable alt_header='Устаревание dbt v1.0'>
 
@@ -932,7 +932,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Февраль 2023
+## Февраль 2023 {#feb-2023}
 
 - <Expandable alt_header='Отключение частичного разбора в командах заданий'>
 
@@ -980,7 +980,7 @@ pagination_prev: null
 
   </Expandable>
 
-## Январь 2023
+## Январь 2023 {#january-2023}
 
 - <Expandable alt_header='dbt Cloud IDE'>
 

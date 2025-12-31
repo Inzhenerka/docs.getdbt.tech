@@ -18,10 +18,10 @@ pagination_next: "docs/cloud/configure-cloud-cli"
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-cli-overview.jpg" title="Диаграмма, показывающая, как dbt CLI работает с инфраструктурой dbt для запуска команд dbt из локальной командной строки." />
 
-## Предварительные требования 
+## Предварительные требования {#prerequisites}
 CLI для <Constant name="cloud" /> доступен во всех [регионах развертывания](/docs/cloud/about-cloud/access-regions-ip-addresses) и поддерживается как для мультиарендных, так и для одноарендных аккаунтов.
 
-## Установка dbt CLI
+## Установка dbt CLI {#install-dbt-cli}
 
 Вы можете установить CLI для <Constant name="cloud" /> из командной строки, используя один из следующих способов.
 

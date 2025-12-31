@@ -19,7 +19,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Конфигурация профиля
+## Конфигурация профиля {#profile-configuration}
 
 Цели Databricks Lakebase настраиваются точно так же, как и [цели Postgres](/docs/core/connect-data-platform/postgres-setup/#profile-configuration).
 

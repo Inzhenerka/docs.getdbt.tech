@@ -14,11 +14,11 @@ title: "Устаревшие функции"
 
 Во время выполнения dbt генерирует различные категории [событий](/reference/events-logging), одна из которых — _deprecations_ (устаревания). Устаревания — это особый тип предупреждений, который сообщает о проблемах в частях вашего проекта, способных привести к ломающим изменениям в будущих версиях dbt. Несмотря на то что сейчас это всего лишь предупреждения, крайне важно устранять их, чтобы в дальнейшем работать безопаснее, получать более точную обратную связь и быть уверенными в обновлениях.
 
-## Определение предупреждений об устаревании
+## Определение предупреждений об устаревании {#identify-deprecation-warnings}
 
 Поиск устареваний в стандартных логах может быть сложной задачей. Однако выявление таких предупреждений — первый шаг к их устранению. Существует несколько способов быстро найти устаревания и автоматически исправить некоторые из них.
 
-### dbt CLI
+### dbt CLI {#dbt-cli}
 
 Чтобы просмотреть устаревания через CLI, выполните команду:
 
@@ -34,7 +34,7 @@ Summary of encountered deprecations:
 - MFTimespineWithoutYamlConfigurationDeprecation: 1 occurrence
 ```
 
-### Платформа dbt
+### Платформа dbt {#the-dbt-platform}
 
 Если вы используете <Constant name="cloud" />, вы можете просматривать предупреждения об устаревании в разделе **Dashboard** вашего аккаунта.
 
@@ -44,21 +44,21 @@ Summary of encountered deprecations:
 
 <Lightbox src="/img/docs/dbt-cloud/deprecation-list.png" title="Предупреждения об устаревании в логах." />
 
-### Автоматическое исправление
+### Автоматическое исправление {#automatic-remediation}
 
 Некоторые устаревания можно исправить автоматически с помощью скрипта. Подробнее об этом читайте в [посте блога dbt](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine#:~:text=2.%20Resolve%20deprecation%20warnings). Вы можете [скачать скрипт](https://github.com/dbt-labs/dbt-autofix) и следовать инструкциям по установке.
 
 **Скоро**: в IDE появится интерфейс для запуска этого же скрипта и устранения предупреждений об устаревании в <Constant name="cloud" />.
 
-## Список предупреждений об устаревании
+## Список предупреждений об устаревании {#list-of-deprecation-warnings}
 
 Ниже приведены предупреждения об устаревании, существующие в dbt на текущий момент, а также версии, в которых они появились впервые.
 
-### ArgumentsPropertyInGenericTestDeprecation
+### ArgumentsPropertyInGenericTestDeprecation {#argumentspropertyingenerictestdeprecation}
 
 dbt объявил устаревшей возможность указывать пользовательское свойство верхнего уровня с именем `arguments` в generic-тестах. Это предупреждение возникает только в том случае, если флаг поведения `require_generic_test_arguments_property` установлен в `False`.
 
-#### Устранение ArgumentsPropertyInGenericTestDeprecation
+#### Устранение ArgumentsPropertyInGenericTestDeprecation {#argumentspropertyingenerictestdeprecation-warning-resolution}
 
 Ранее в пользовательских generic-тестах могло использоваться свойство `arguments`:
 
@@ -107,7 +107,7 @@ models:
 
 </File>
 
-### ConfigDataPathDeprecation
+### ConfigDataPathDeprecation {#configdatapathdeprecation}
 
 В [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) параметр `data-paths` был переименован в [seed-paths](/reference/project-configs/model-paths). Получение этого предупреждения означает, что в вашем `dbt_project.yml` всё ещё используется `data-paths`.
 
@@ -121,11 +121,11 @@ The `data-paths` config has been renamed to `seed-paths`. Please update your
 ```
 </File>
 
-#### Как устранить предупреждение ConfigDataPathDeprecation
+#### Как устранить предупреждение ConfigDataPathDeprecation {#configdatapathdeprecation-warning-resolution}
 
 Замените `data-paths` на `seed-paths` в файле `dbt_project.yml`.
 
-### ConfigLogPathDeprecation
+### ConfigLogPathDeprecation {#configlogpathdeprecation}
 
 Начиная с [dbt v1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5), указание `log-path` в `dbt_project.yml` было признано устаревшим. Получение этого предупреждения об устаревании означает, что `log-path` всё ещё указан в вашем `dbt_project.yml` и не установлен в значение по умолчанию `logs`.
 
@@ -141,12 +141,12 @@ env var instead.
 ```
 </File>
 
-#### Как устранить предупреждение ConfigLogPathDeprecation
+#### Как устранить предупреждение ConfigLogPathDeprecation {#configlogpathdeprecation-warning-resolution}
 
 Удалите `log-path` из `dbt_project.yml` и задайте его либо через CLI‑флаг `--log-path`, либо через переменную окружения `DBT_LOG_PATH`, [как описано здесь](/reference/global-configs/logs#log-and-target-paths).
 
 
-### ConfigSourcePathDeprecation
+### ConfigSourcePathDeprecation {#configsourcepathdeprecation}
 
 Начиная с [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0), `source-paths` было переименовано в [model-paths](/reference/project-configs/model-paths). Получение этого предупреждения об устаревании означает, что `source-paths` всё ещё используется в `dbt_project.yml` вашего проекта.
 
@@ -161,11 +161,11 @@ The `source-paths` config has been renamed to `model-paths`. Please update your
 ```
 </File>
 
-#### Как устранить предупреждение ConfigSourcePathDeprecation
+#### Как устранить предупреждение ConfigSourcePathDeprecation {#configsourcepathdeprecation-warning-resolution}
 
 Замените `source-paths` на `model-paths` в `dbt_project.yml`.
 
-### ConfigTargetPathDeprecation
+### ConfigTargetPathDeprecation {#configtargetpathdeprecation}
 
 Начиная с [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5), указание `target-path` в `dbt_project.yml` было признано устаревшим. Получение этого предупреждения об устаревании означает, что `target-path` всё ещё указан в вашем `dbt_project.yml` и не установлен в значение по умолчанию `target`.
 
@@ -181,11 +181,11 @@ DBT_TARGET_PATH env var instead.
 ```
 </File>
 
-#### Как устранить предупреждение ConfigTargetPathDeprecation
+#### Как устранить предупреждение ConfigTargetPathDeprecation {#configtargetpathdeprecation-warning-resolution}
 
 Удалите `target-path` из `dbt_project.yml` и задайте его либо через CLI‑флаг `--target-path`, либо через переменную окружения [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
 
-### CustomKeyInConfigDeprecation
+### CustomKeyInConfigDeprecation {#customkeyinconfigdeprecation}
 
 Это предупреждение возникает, когда вы используете пользовательские (custom) ключи конфигурации, которые dbt не распознаёт как часть официальной спецификации конфигураций. Это относится к конфигурационным блокам как в SQL-, так и в YAML‑файлах.
 
@@ -198,7 +198,7 @@ models:
       custom_config_key: value
 ```
 
-#### Как устранить предупреждение CustomKeyInConfigDeprecation
+#### Как устранить предупреждение CustomKeyInConfigDeprecation {#customkeyinconfigdeprecation-warning-resolution}
 
 Поместите пользовательские ключи под `meta` и убедитесь, что `meta` вложен под `config` (аналогично [`PropertyMovedToConfigDeprecation`](#propertymovedtoconfigdeprecation)). Например:
 
@@ -210,7 +210,7 @@ models:
         custom_config_key: value
 ```
 
-### CustomKeyInObjectDeprecation
+### CustomKeyInObjectDeprecation {#customkeyinobjectdeprecation}
 
 Это предупреждение отображается, когда вы указываете конфигурацию, которую dbt не распознаёт как часть официальной спецификации конфигов. Это могут быть custom configs или определение `meta` как ключей верхнего уровня в списке `columns`.
 
@@ -222,7 +222,7 @@ import DeprecationWarnings4 from '/snippets/_deprecation-warnings.md';
 
 <DeprecationWarnings4 />
 
-#### Как устранить предупреждение CustomKeyInObjectDeprecation
+#### Как устранить предупреждение CustomKeyInObjectDeprecation {#customkeyinobjectdeprecation-warning-resolution}
 
 Поместите пользовательские конфигурации под `meta` и убедитесь, что `meta` вложен под `config` (аналогично [`PropertyMovedToConfigDeprecation`](#propertymovedtoconfigdeprecation)).
 
@@ -269,16 +269,16 @@ models:
 ```
 
 
-### CustomOutputPathInSourceFreshnessDeprecation
+### CustomOutputPathInSourceFreshnessDeprecation {#customoutputpathinsourcefreshnessdeprecation}
 
 dbt признал устаревшим флаг `--output` (или `-o`) для переопределения пути, куда записываются результаты source freshness вместо назначения файла `sources.json`.
 
-#### Как устранить предупреждение CustomOutputPathInSourceFreshnessDeprecation
+#### Как устранить предупреждение CustomOutputPathInSourceFreshnessDeprecation {#customoutputpathinsourcefreshnessdeprecation-warning-resolution}
 
 Уберите флаг `--output` или `-o` и связанную с ним конфигурацию пути из любых job, которые запускают команды dbt source freshness.
 Альтернативы для изменения расположения только результатов source freshness нет. Однако вы по‑прежнему можете использовать `--target-path`, чтобы записывать _все_ артефакты шага в кастомное место.
 
-### CustomTopLevelKeyDeprecation
+### CustomTopLevelKeyDeprecation {#customtoplevelkeydeprecation}
 
 Это предупреждение информирует пользователей о том, что они используют пользовательские ключи верхнего уровня в YAML‑файлах, которые не поддерживаются dbt.
 
@@ -286,7 +286,7 @@ import DeprecationWarnings from '/snippets/_deprecation-warnings.md';
 
 <DeprecationWarnings />
 
-#### Как устранить предупреждение CustomTopLevelKeyDeprecation
+#### Как устранить предупреждение CustomTopLevelKeyDeprecation {#customtoplevelkeydeprecation-warning-resolution}
 
 Переместите пользовательские ключи верхнего уровня в ваших YAML‑файлах под `config.meta`.
 
@@ -332,17 +332,17 @@ config:
 
 </File>
 
-### DuplicateNameDistinctNodeTypesDeprecation
+### DuplicateNameDistinctNodeTypesDeprecation {#duplicatenamedistinctnodetypesdeprecation}
 
 dbt выдаёт это предупреждение, когда два неверсионированных ресурса в одном пакете имеют одно и то же имя (например, model и seed, оба с именем `sales`), а флаг `require_unique_project_resource_names` установлен в `False`. Раньше dbt не всегда обнаруживал такие конфликты имён, из‑за чего дублирующиеся имена иногда могли указывать не на тот ресурс.
 
 Когда флаг `require_unique_project_resource_names` установлен в `True`, dbt выбрасывает ошибку `DuplicateResourceNameError`. Подробнее см. [Unique project resource names](/reference/global-configs/behavior-changes#unique-project-resource-names).
 
-#### Как устранить предупреждение DuplicateNameDistinctNodeTypesDeprecation
+#### Как устранить предупреждение DuplicateNameDistinctNodeTypesDeprecation {#duplicatenamedistinctnodetypesdeprecation-warning-resolution}
 
 Переименуйте один из конфликтующих ресурсов, чтобы все имена были уникальными.
 
-### DuplicateYAMLKeysDeprecation
+### DuplicateYAMLKeysDeprecation {#duplicateyamlkeysdeprecation}
 
 Это предупреждение возникает, когда в `profiles.yml` существуют два одинаковых ключа.
 
@@ -366,21 +366,21 @@ my_profile: # dbt would use this profile key
 
 Обратите внимание: в одной из будущих версий dbt перестанет поддерживать дублирующиеся ключи с «тихим» перезаписыванием.
 
-#### Как устранить предупреждение DuplicateYAMLKeysDeprecation
+#### Как устранить предупреждение DuplicateYAMLKeysDeprecation {#duplicateyamlkeysdeprecation-warning-resolution}
 
 Удалите дублирующиеся ключи из файла `profiles.yml`.
 
-### EnvironmentVariableNamespaceDeprecation
+### EnvironmentVariableNamespaceDeprecation {#environmentvariablenamespacedeprecation}
 
 Это предупреждение возникает, когда вы используете переменные окружения, которые конфликтуют с зарезервированным пространством имён dbt `DBT_ENGINE`. Ранее и внутренние переменные dbt, и пользовательские переменные использовали префикс `DBT_`. Если переменная окружения, определённая в dbt, сталкивается с пользовательской переменной окружения, проект может сломаться.
 
 Теперь все новые переменные окружения dbt имеют префикс `DBT_ENGINE`, чтобы предотвратить конфликты имён и минимизировать неудобства для пользователей.
 
-#### EnvironmentVariableNamespaceDeprecation
+#### EnvironmentVariableNamespaceDeprecation {#environmentvariablenamespacedeprecation-1}
 
 Проверьте ваши пользовательские переменные окружения и убедитесь, что они не конфликтуют с зарезервированным пространством имён dbt `DBT_ENGINE`.
 
-### ExposureNameDeprecation
+### ExposureNameDeprecation {#exposurenamedeprecation}
 
 Начиная с [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation), dbt начал разрешать только буквы, цифры и подчёркивания в свойстве `name` у [exposures](/reference/exposure-properties).
 
@@ -398,20 +398,20 @@ dbt-core.
 ```
 </File>
 
-#### Как устранить предупреждение ExposureNameDeprecation
+#### Как устранить предупреждение ExposureNameDeprecation {#exposurenamedeprecation-warning-resolution}
 
 Убедитесь, что имена ваших exposures содержат только буквы, цифры и подчёркивания. Более человекочитаемое имя можно указать в свойстве [`label`](/reference/exposure-properties#overview) у exposures.
 
-### GenericJSONSchemaValidationDeprecation
+### GenericJSONSchemaValidationDeprecation {#genericjsonschemavalidationdeprecation}
 
 
 Этот тип устаревания — «универсальный» (catch-all) / запасной вариант. dbt пытается обрабатывать все ошибки валидации JSON Schema через конкретные типы deprecation events, но возможно, мы что-то упустили. «Упустить что-то» означает, что либо dbt не обработал конкретный случай через deprecation event, _либо_ JSON Schema некорректна в каком-то месте.
 
-#### Как устранить предупреждение GenericJSONSchemaValidationDeprecation
+#### Как устранить предупреждение GenericJSONSchemaValidationDeprecation {#genericjsonschemavalidationdeprecation-warning-resolution}
 
 Если вы видите это предупреждение, к сожалению, сейчас вы мало что можете сделать, но мы продолжаем работать над тем, чтобы уменьшить количество таких случаев. Если вам нужна помощь с конкретным случаем, пожалуйста, [обратитесь в поддержку](mailto:support@getdbt.com) (доступно для клиентов dbt platform в облаке) или в [community Slack](https://www.getdbt.com/community) (для пользователей dbt Core).
 
-### MFCumulativeTypeParamsDeprecation
+### MFCumulativeTypeParamsDeprecation {#mfcumulativetypeparamsdeprecation}
 
 Начиная с dbt [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9), прямое указание `window` и `time_to_grain` в `type_params` у [metric](/reference/global-configs/behavior-changes#cumulative-metrics) стало устаревшим.
 
@@ -428,11 +428,11 @@ https://docs.getdbt.tech/reference/global-configs/behavior-changes.
 ```
 </File>
 
-#### Как устранить предупреждение MFCumulativeTypeParamsDeprecation
+#### Как устранить предупреждение MFCumulativeTypeParamsDeprecation {#mfcumulativetypeparamsdeprecation-warning-resolution}
 
 Переместите `window` и `time_to_grain` под свойство `cumulative_type_params` внутри `type_params` у соответствующей metric.
 
-### MFTimespineWithoutYamlConfigurationDeprecation
+### MFTimespineWithoutYamlConfigurationDeprecation {#mftimespinewithoutyamlconfigurationdeprecation}
 
 До dbt v1.9 конфигурация time spine для MetricFlow хранилась в файле `metricflow_time_spine.sql`. В [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) dbt представил [YAML‑определение timespine](/docs/build/metricflow-time-spine#configuring-time-spine-in-yaml) для MetricFlow, и затем было решено, что дальше это будет стандартом. Если вы видите это предупреждение об устаревании, значит у вас нет YAML‑определения timespine для MetricFlow.
 
@@ -449,18 +449,18 @@ https://docs.getdbt.tech/reference/global-configs/behavior-changes
 ```
 </File>
 
-#### Как устранить предупреждение MFTimespineWithoutYamlConfigurationDeprecation
+#### Как устранить предупреждение MFTimespineWithoutYamlConfigurationDeprecation {#mftimespinewithoutyamlconfigurationdeprecation-warning-resolution}
 
 Определите timespine для MetricFlow в [YAML](/docs/build/metricflow-time-spine#creating-a-time-spine-table).
 
-### MissingArgumentsPropertyInGenericTestDeprecation
+### MissingArgumentsPropertyInGenericTestDeprecation {#missingargumentspropertyingenerictestdeprecation}
 
 dbt признал устаревшим указание именованных аргументов (keyword arguments) как свойств в пользовательских generic data tests или в data tests, которые используют [альтернативный формат `test_name`](/docs/reference/resource-properties/data-tests.md#alternative-format-for-defining-tests). Вместо этого аргументы тестов следует указывать под новым свойством `arguments`.
 
 Это предупреждение об устаревании появляется только когда флаг поведения `require_generic_test_arguments_property` установлен в `True`.
 
 
-#### Как устранить предупреждение MissingArgumentsPropertyInGenericTestDeprecation
+#### Как устранить предупреждение MissingArgumentsPropertyInGenericTestDeprecation {#missingargumentspropertyingenerictestdeprecation-warning-resolution}
 
 Если ранее вы задавали аргументы как свойства верхнего уровня в пользовательских generic tests:
 
@@ -526,7 +526,7 @@ models:
 
 </File>
 
-### MissingPlusPrefixDeprecation
+### MissingPlusPrefixDeprecation {#missingplusprefixdeprecation}
 
 import MissingPrefix from '/snippets/_missing-prefix.md';
 
@@ -546,7 +546,7 @@ import DeprecationWarnings2 from '/snippets/_deprecation-warnings.md';
 
 <DeprecationWarnings2 />
 
-#### Как устранить предупреждение MissingPlusPrefixDeprecation
+#### Как устранить предупреждение MissingPlusPrefixDeprecation {#missingplusprefixdeprecation-warning-resolution}
 
 Если ранее вы задавали одну из затронутых конфигураций без префикса `+`, например `materialized`:
 
@@ -572,15 +572,15 @@ models:
 
 </File>
 
-### ModelParamUsageDeprecation
+### ModelParamUsageDeprecation {#modelparamusagedeprecation}
 
 Флаг `--models` / `--model` / `-m` был переименован в `--select` / `--s` ещё в dbt Core v0.21 (октябрь 2021). «Тихое» пропускание этого флага означает игнорирование критериев выбора в вашей команде, из‑за чего может собраться весь DAG, хотя вы хотели выбрать только небольшой поднабор. Поэтому флаг `--models` / `--model` / `-m` будет выдавать предупреждение в dbt Core v1.10 и ошибку в Fusion. Пожалуйста, обновите определения ваших job соответствующим образом.
 
-#### Как устранить предупреждение ModelParamUsageDeprecation
+#### Как устранить предупреждение ModelParamUsageDeprecation {#modelparamusagedeprecation-warning-resolution}
 
 Обновите определения job: уберите флаг `--models` / `--model` / `-m` и замените его на `--select` / `--s`.
 
-### ModulesItertoolsUsageDeprecation
+### ModulesItertoolsUsageDeprecation {#modulesitertoolsusagedeprecation}
 
 dbt признал устаревшим использование `modules.itertools` в Jinja.
 
@@ -595,7 +595,7 @@ instead.
 </File>
 
 
-#### Как устранить предупреждение ModulesItertoolsUsageDeprecation
+#### Как устранить предупреждение ModulesItertoolsUsageDeprecation {#modulesitertoolsusagedeprecation-warning-resolution}
 
 Если вы сейчас используете функции из модуля `itertools` в Jinja SQL‑шаблонах, вместо этого используйте доступные встроенные [функции dbt](/reference/dbt-jinja-functions) и [методы Jinja](/docs/build/jinja-macros).
 
@@ -648,7 +648,7 @@ instead.
 
 </File>
 
-### PackageInstallPathDeprecation
+### PackageInstallPathDeprecation {#packageinstallpathdeprecation}
 
 Расположение по умолчанию, куда устанавливаются пакеты при запуске `dbt deps`, было изменено с `dbt_modules` на `dbt_packages`. Во время выполнения `dbt clean` dbt обнаружил, что `dbt_modules` указан в свойстве [clean-targets](/reference/project-configs/clean-targets) в `dbt_project.yml`, хотя `dbt_modules` не является значением [`packages-install-path`](/reference/project-configs/packages-install-path).
 
@@ -664,17 +664,17 @@ If you'd like to keep the current value.
 ```
 </File>
 
-#### Как устранить предупреждение PackageInstallPathDeprecation
+#### Как устранить предупреждение PackageInstallPathDeprecation {#packageinstallpathdeprecation-warning-resolution}
 
 Рекомендуемые подходы:
 1. Замените `dbt_modules` на `dbt_packages` в спецификации `clean-targets` (и в `.gitignore`).
 2. Установите `packages-install-path: dbt_modules`, если вы хотите продолжать устанавливать пакеты в `dbt_modules`.
 
-### PackageMaterializationOverrideDeprecation
+### PackageMaterializationOverrideDeprecation {#packagematerializationoverridedeprecation}
 
 Устаревает поведение, при котором установленные пакеты могли переопределять встроенные материализации без явного подтверждения (opt-in) с вашей стороны. Установка флага [`require_explicit_package_overrides_for_builtin_materializations`](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) в `false` в `dbt_project.yml` позволяла пакетам, совпадающим по имени со встроенной материализацией, продолжать участвовать в порядке поиска и разрешения.
 
-#### Как устранить предупреждение PackageMaterializationOverrideDeprecation
+#### Как устранить предупреждение PackageMaterializationOverrideDeprecation {#packagematerializationoverridedeprecation-warning-resolution}
 
 Явно переопределите встроенные материализации в пользу материализации, определённой в пакете: переимплементируйте встроенную материализацию в вашем корневом проекте и оберните реализацию из пакета.
 
@@ -690,7 +690,7 @@ If you'd like to keep the current value.
 
 После того как вы добавите override для вашего пакета, удалите флаг `require_explicit_package_overrides_for_builtin_materializations: false` из `dbt_project.yml`, чтобы устранить предупреждение.
 
-### PackageRedirectDeprecation
+### PackageRedirectDeprecation {#packageredirectdeprecation}
 
 Это предупреждение об устаревании означает, что пакет, который сейчас используется в вашем проекте и указан в `packages.yml`, был переименован. Обычно это происходит, когда меняется владелец пакета или его область применения. Вероятно, пакет, на который сейчас ссылается ваш `packages.yml`, больше не поддерживается активно (поскольку разработка переехала на новое имя пакета), и в какой‑то момент пакет со старым именем перестанет работать с dbt.
 
@@ -703,11 +703,11 @@ The `fishtown-analytics/dbt_utils` package is deprecated in favor of
 ```
 </File>
 
-#### Как устранить предупреждение PackageRedirectDeprecation
+#### Как устранить предупреждение PackageRedirectDeprecation {#packageredirectdeprecation-warning-resolution}
 
 Начните ссылаться на новый пакет в `packages.yml` вместо старого пакета.
 
-### ProjectFlagsMovedDeprecation
+### ProjectFlagsMovedDeprecation {#projectflagsmoveddeprecation}
 
 Свойство `config`, которое можно было настраивать в `profiles.yml`, было признано устаревшим в пользу `flags` в `dbt_project.yaml`. Если вы видите это предупреждение об устаревании, значит dbt обнаружил свойство `config` в вашем `profiles.yml`.
 
@@ -720,11 +720,11 @@ User config should be moved from the 'config' key in profiles.yml to the 'flags'
 ```
 </File>
 
-#### Как устранить предупреждение ProjectFlagsMovedDeprecation
+#### Как устранить предупреждение ProjectFlagsMovedDeprecation {#projectflagsmoveddeprecation-warning-resolution}
 
 Удалите `config` из `profiles.yml`. Перенесите любые прежние настройки [`config`](/reference/global-configs/about-global-configs) из `profiles.yml` в `flags` в `dbt_project.yml`.
 
-### PropertyMovedToConfigDeprecation
+### PropertyMovedToConfigDeprecation {#propertymovedtoconfigdeprecation}
 
 Некоторые исторические properties полностью переходят в configs.
 
@@ -732,7 +732,7 @@ User config should be moved from the 'config' key in profiles.yml to the 'flags'
 
 Перевод некоторых properties в configs полезен тем, что вы можете задавать их сразу для многих ресурсов в `dbt_project.yml` (дефолты на уровне проекта/папок). Подробнее о разнице между properties и configs — [здесь](/reference/configs-and-properties).
 
-#### Как устранить предупреждение PropertyMovedToConfigDeprecation
+#### Как устранить предупреждение PropertyMovedToConfigDeprecation {#propertymovedtoconfigdeprecation-warning-resolution}
 
 Если ранее вы задавали одно из затронутых properties, например `freshness`:
 
@@ -765,7 +765,7 @@ sources:
 
 ```
 
-### ResourceNamesWithSpacesDeprecation
+### ResourceNamesWithSpacesDeprecation {#resourcenameswithspacesdeprecation}
 
 Начиная с [dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#managing-changes-to-legacy-behaviors), использование пробелов в именах ресурсов было признано устаревшим. Если вы получаете это предупреждение об устаревании, значит dbt обнаружил имя ресурса с пробелом.
 
@@ -777,11 +777,11 @@ sources:
 ```
 </File>
 
-#### Как устранить предупреждение ResourceNamesWithSpacesDeprecation
+#### Как устранить предупреждение ResourceNamesWithSpacesDeprecation {#resourcenameswithspacesdeprecation-warning-resolution}
 
 Переименуйте ресурс-нарушитель, чтобы в его имени больше не было пробела.
 
-### SourceFreshnessProjectHooksNotRun
+### SourceFreshnessProjectHooksNotRun {#sourcefreshnessprojecthooksnotrun}
 
 Если вы видите это, значит флаг поведения `source_freshness_run_project_hooks` установлен в `false`, и при этом определён `on-run-start` или `on-run-end` ([документация](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness)). Ранее project hooks не выполнялись для sources при запуске `dbt source freshness`.
 
@@ -795,11 +795,11 @@ information: https://docs.getdbt.tech/reference/global-configs/legacy-behaviors
 ```
 </File>
 
-#### Как устранить предупреждение SourceFreshnessProjectHooksNotRun
+#### Как устранить предупреждение SourceFreshnessProjectHooksNotRun {#sourcefreshnessprojecthooksnotrun-warning-resolution}
 
 Установите `source_freshness_run_project_hooks` в `true`. Инструкции о том, как пропускать project hooks при вызове `dbt source freshness`, см. в [документации по изменениям поведения](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness).
 
-### SourceOverrideDeprecation
+### SourceOverrideDeprecation {#sourceoverridedeprecation}
 
 Свойство `overrides` для sources признано устаревшим.
 
@@ -807,11 +807,11 @@ import DeprecationWarnings3 from '/snippets/_deprecation-warnings.md';
 
 <DeprecationWarnings3 />
 
-#### Как устранить предупреждение SourceOverrideDeprecation
+#### Как устранить предупреждение SourceOverrideDeprecation {#sourceoverridedeprecation-warning-resolution}
 
 Удалите свойство `overrides` и вместо этого [включайте или отключайте source](/reference/source-configs.md#configuring-sources) из пакета.
 
-### UnexpectedJinjaBlockDeprecation
+### UnexpectedJinjaBlockDeprecation {#unexpectedjinjablockdeprecation}
 
 Если у вас есть неожиданный Jinja‑блок — «сиротский» Jinja‑блок или Jinja‑блок вне контекста макроса — вы получите предупреждение, и в будущей версии dbt перестанет поддерживать неожиданные Jinja‑блоки. Ранее такие Jinja‑блоки «тихо» игнорировались.
 
@@ -828,15 +828,15 @@ hello!
 ```
 </File>
 
-#### Как устранить предупреждение UnexpectedJinjaBlockDeprecation
+#### Как устранить предупреждение UnexpectedJinjaBlockDeprecation {#unexpectedjinjablockdeprecation-warning-resolution}
 
 Удалите неожиданные Jinja‑блоки.
 
-### WEOIncludeExcludeDeprecation
+### WEOIncludeExcludeDeprecation {#weoincludeexcludedeprecation}
 
 Опции `include` и `exclude` для `warn_error_options` признаны устаревшими и заменены на `error` и `warn` соответственно.
 
-#### Как устранить предупреждение WEOIncludeExcludeDeprecation
+#### Как устранить предупреждение WEOIncludeExcludeDeprecation {#weoincludeexcludedeprecation-warning-resolution}
 
 Везде, где настроен `warn_error_options`, замените:
 - `include` на `error`

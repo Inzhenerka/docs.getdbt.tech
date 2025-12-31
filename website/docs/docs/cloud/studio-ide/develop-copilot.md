@@ -4,7 +4,7 @@ sidebar_label: "Разработка с dbt Copilot"
 description: "Используйте dbt Copilot для генерации документации, тестов, семантических моделей и SQL-кода с нуля, получая гибкость в изменении или исправлении сгенерированного кода." 
 ---
 
-# Разработка с dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> 
+# Разработка с dbt Copilot <Lifecycle status="self_service,managed,managed_plus" /> {#develop-with-dbt-copilot}
 
 <IntroText>
 
@@ -16,10 +16,10 @@ description: "Используйте dbt Copilot для генерации до�
 import CopilotResources from '/snippets/_use-copilot-resources.md';
 import CopilotEditCode from '/snippets/_use-copilot-edit-code.md';
 
-## Генерация ресурсов
+## Генерация ресурсов {#generate-resources}
 
 <CopilotResources/>
 
-## Генерация и редактирование кода
+## Генерация и редактирование кода {#generate-and-edit-code}
 
 <CopilotEditCode/>

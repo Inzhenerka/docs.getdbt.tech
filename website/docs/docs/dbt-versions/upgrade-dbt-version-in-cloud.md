@@ -8,13 +8,13 @@ import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
 
 В <Constant name="cloud" /> и [jobs](/docs/deploy/jobs), и [environments](/docs/dbt-cloud-environments) настраиваются для использования определённой версии <Constant name="core" />. Эту версию можно обновить в любой момент.
 
-## Окружения
+## Окружения {#environments}
 
 Перейдите на страницу настроек окружения и нажмите **Edit**. В выпадающем списке **dbt version** выберите нужный вариант. Вы можете выбрать [release track](#release-tracks), чтобы получать регулярные обновления (рекомендуется), либо устаревшую версию <Constant name="core" />. Перед тем как покинуть страницу, обязательно сохраните изменения.
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Example environment settings in dbt"/>
 
-### Трассы релизов
+### Трассы релизов {#release-tracks}
 
 Начиная с 2024 года, ваш проект будет автоматически обновляться с выбранной вами периодичностью:
 
@@ -29,7 +29,7 @@ import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
 - `compatible` (доступно для планов Starter, Enterprise, Enterprise+)
 - `extended` (доступно для всех планов Enterprise)
 
-### Переопределение версии dbt
+### Переопределение версии dbt {#override-dbt-version}
 
 Настройте свой проект так, чтобы он использовал версию dbt, отличную от той, которая настроена в вашей [среде разработки](/docs/dbt-cloud-environments#types-of-environments). Это _переопределение_ влияет только на вашу учетную запись пользователя и не затрагивает других. Используйте этот подход, чтобы безопасно протестировать новые возможности dbt перед обновлением версии dbt для проектов.
 
@@ -45,7 +45,7 @@ import FusionUpgradeSteps from '/snippets/_fusion-upgrade-steps.md';
 5. (Необязательно) Убедитесь, что <Constant name="cloud" /> будет использовать заданное вами переопределение для сборки проекта, выполнив команду `dbt build` в командной строке <Constant name="cloud_ide" />. Разверните раздел **System Logs** и найдите первую строку вывода. Она должна начинаться с `Running with dbt=` и содержать версию dbt, которую использует <Constant name="cloud" />. <br /><br />
    Для пользователей на release track в выводе будет отображаться `Running dbt...` вместо конкретной версии. Это отражает гибкость и непрерывные автоматические обновления, которые предоставляет функциональность release track.
 
-## dbt Fusion engine <Lifecycle status="private_preview" />
+## dbt Fusion engine <Lifecycle status="private_preview" /> {#dbt-fusion-engine}
 
 dbt Labs представила новый [<Constant name="fusion_engine" />](/docs/fusion) — полностью переработанную с нуля версию dbt. В настоящее время он доступен в режиме private preview на платформе dbt. Подходящие клиенты могут обновлять окружения до Fusion, используя те же рабочие процессы, что и для v1.x, но обратите внимание на следующее:
 - Если вы не видите release track `Latest Fusion` в списке доступных, уточните у своей команды по работе с аккаунтом dbt Labs, доступна ли вам эта возможность.
@@ -56,20 +56,20 @@ dbt Labs представила новый [<Constant name="fusion_engine" />](/
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-fusion.png" width="90%" title="Upgrade to the Fusion engine in your environment settings." />
 
-### Обновление окружений до Fusion <Lifecycle status="private_preview" />
+### Обновление окружений до Fusion <Lifecycle status="private_preview" /> {#upgrading-environments-to-fusion}
 
 Когда вы будете готовы обновить свой проект (или проекты) до <Constant name="fusion_engine" />, в интерфейсе платформы dbt доступны инструменты, которые помогут начать работу. Ассистент обновления <Constant name="fusion" /> проведёт вас через процесс подготовки и обновления проектов.
 
   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/fusion-upgrade-gui.png" width="60%" title="The Fusion upgrade assistant."/>
 
-#### Предварительные требования
+#### Предварительные требования {#prerequisites}
 
 Чтобы воспользоваться ассистентом обновления, необходимо выполнить следующие условия:
 - Ваш проект dbt должен быть обновлён до release track `Latest`.
 - У вас должна быть лицензия `developer`.
 - Для вашего аккаунта должна быть включена бета-функция <Constant name="Fusion" />. За дополнительной информацией обратитесь к вашему аккаунт-менеджеру.
 
-#### Назначение доступа к обновлению
+#### Назначение доступа к обновлению {#assign-access-to-upgrade}
 
 По умолчанию все пользователи могут просматривать рабочие процессы обновления <Constant name="fusion" />. Доступные им действия будут ограничены назначенными разрешениями и доступом к окружениям. Вы можете более точно настроить доступ к обновлению с помощью комбинации новой настройки аккаунта и набора разрешений `Fusion admin`.
 
@@ -91,7 +91,7 @@ dbt Labs представила новый [<Constant name="fusion_engine" />](/
 
 Рабочие процессы обновления <Constant name="fusion" /> помогают выявить области проекта, которые требуют изменений, и предоставляют инструменты для ручного исправления и автоматического устранения ошибок.
 
-#### Обновление окружения разработки
+#### Обновление окружения разработки {#upgrade-your-development-environment}
 
 Чтобы начать процесс обновления до <Constant name="fusion" /> с помощью ассистента:
 1. На главной странице проекта или в боковом меню нажмите кнопку **Start Fusion upgrade** или **Get started**. Вы будете перенаправлены в <Constant name="cloud_ide" />.
@@ -108,7 +108,7 @@ dbt Labs представила новый [<Constant name="fusion_engine" />](/
 
 <FusionUpgradeSteps />
 
-## Задания
+## Задания {#jobs}
 
 Каждая задача в <Constant name="cloud" /> может быть настроена так, чтобы наследовать параметры из окружения, к которому она относится.
 
@@ -116,7 +116,7 @@ dbt Labs представила новый [<Constant name="fusion_engine" />](/
 
 Пример задания, показанный на скриншоте выше, принадлежит окружению "Prod". Оно наследует версию dbt из своего окружения, как показано в выборе **Inherited from ENVIRONMENT_NAME (DBT_VERSION)**. Вы также можете вручную переопределить версию dbt для конкретного задания, выбрав другую опцию из выпадающего меню.
 
-## Поддерживаемые версии
+## Поддерживаемые версии {#supported-versions}
 
 dbt Labs всегда поощряла пользователей обновлять версии dbt Core каждый раз, когда выходит новая минорная версия. В декабре 2021 года мы выпустили первую мажорную версию dbt — `dbt 1.0`. Одновременно с этим релизом мы обновили нашу политику поддержки версий dbt Core в <Constant name="dbt_platform" />.
 
@@ -140,11 +140,11 @@ dbt Labs всегда поощряла пользователей обновля
 
 Чтобы узнать больше о поддержке версий и будущих релизах, см. [Understanding <Constant name="core" /> versions](/docs/dbt-versions/core).
 
-### Нужна помощь с обновлением?
+### Нужна помощь с обновлением? {#need-help-upgrading}
 
 Если вам нужен дополнительный совет о том, как обновить ваши проекты dbt, ознакомьтесь с нашими [руководствами по миграции](/docs/dbt-versions/core-upgrade/) и нашей [страницей вопросов и ответов по обновлению](/docs/dbt-versions/upgrade-dbt-version-in-cloud#upgrading-legacy-versions-under-10).
 
-### Тестирование изменений перед обновлением
+### Тестирование изменений перед обновлением {#testing-your-changes-before-upgrading}
 
 Как только вы поймёте, какие изменения в коде вам нужно внести, можно приступать к их реализации. Мы рекомендуем:
 

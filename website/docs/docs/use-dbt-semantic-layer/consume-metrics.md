@@ -6,19 +6,19 @@ tags: [Semantic Layer]
 pagination_next: "docs/use-dbt-semantic-layer/sl-faqs"
 ---
 
-# Использование метрик из вашего Semantic Layer <Lifecycle status="self_service,managed,managed_plus" />
+# Использование метрик из вашего Semantic Layer <Lifecycle status="self_service,managed,managed_plus" /> {#consume-metrics-from-your-semantic-layer}
 
 После [развертывания](/docs/use-dbt-semantic-layer/deploy-sl) вашего <Constant name="semantic_layer" /> следующим важным (и интересным!) шагом становится выполнение запросов и использование метрик, которые вы определили. На этой странице собраны ссылки на ключевые ресурсы, которые помогут вам разобраться с процессом потребления метрик через различные интеграции, API и инструменты, используя разные [синтаксисы запросов](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata).
 
 Когда ваш <Constant name="semantic_layer" /> развернут, вы можете начать запрашивать метрики с помощью различных инструментов и API. Ниже приведены основные ресурсы, с которых стоит начать:
 
-### Доступные интеграции
+### Доступные интеграции {#available-integrations}
 
 Интегрируйте <Constant name="semantic_layer" /> с различными инструментами бизнес-аналитики (BI) и платформами данных, чтобы выполнять запросы к метрикам напрямую в рамках уже существующих рабочих процессов. Ознакомьтесь со следующими интеграциями:
 
 - [Available integrations](/docs/cloud-integrations/avail-sl-integrations) &mdash; Ознакомьтесь с широким списком партнёров, таких как Tableau, Google Sheets, Microsoft Excel и другие, где вы можете запрашивать свои метрики напрямую из <Constant name="semantic_layer" />.
 
-### Запросы с помощью API
+### Запросы с помощью API {#query-with-apis}
 
 Чтобы использовать все возможности <Constant name="semantic_layer" />, вы можете применять API <Constant name="semantic_layer" /> для программного запроса метрик:
 
@@ -27,12 +27,12 @@ pagination_next: "docs/use-dbt-semantic-layer/sl-faqs"
   - [Синтаксис запросов GraphQL API](/docs/dbt-cloud-apis/sl-graphql#querying) &mdash; Изучите синтаксис запросов метрик через GraphQL API, включая примеры и подробные инструкции.
   - [Python SDK](/docs/dbt-cloud-apis/sl-python#usage-examples) &mdash; Используйте библиотеку Python SDK для программного запроса метрик с помощью Python.
   
-### Запросы в процессе разработки
+### Запросы в процессе разработки {#query-during-development}
 
 Для разработчиков, работающих в экосистеме dbt, важно понимать, как запрашивать метрики в процессе разработки с использованием команд MetricFlow:
 - [Команды MetricFlow](/docs/build/metricflow-commands) &mdash; Узнайте, как использовать команды MetricFlow для прямого запроса метрик в процессе разработки, чтобы убедиться, что ваши метрики правильно определены и работают как ожидается.
 
-## Следующие шаги
+## Следующие шаги {#next-steps}
 
 После того как вы освоите основы запроса метрик, рассмотрите возможность оптимизации вашей настройки и обеспечения целостности ваших определений метрик:
 

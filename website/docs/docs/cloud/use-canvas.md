@@ -10,13 +10,13 @@ image: /img/docs/dbt-cloud/canvas/canvas.png
 
 import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
-# Редактирование и создание dbt-моделей <Lifecycle status='managed, managed_plus'/> 
+# Редактирование и создание dbt-моделей <Lifecycle status='managed, managed_plus'/> {#edit-and-create-dbt-models}
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
 Получите доступ и используйте <Constant name="visual_editor" /> для создания или редактирования dbt-моделей с помощью визуального интерфейса drag-and-drop. Используйте встроенный ИИ для генерации пользовательского кода в процессе разработки.
 </p>
 
-## Доступ к Canvas
+## Доступ к Canvas {#access-canvas}
 
 Перед тем как открыть редактор, у вас уже должен быть настроен проект <Constant name="cloud" />. Это включает репозиторий <Constant name="git" />, подключение к платформе данных, окружения и учетные данные разработчика. Если у вас этого еще нет, обратитесь к администратору <Constant name="cloud" />.
 
@@ -24,7 +24,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 
-## Создание модели
+## Создание модели {#create-a-model}
 
 Чтобы создать SQL-модель dbt, нажмите **Create a new model** и выполните следующие шаги. Обратите внимание, что вы не можете создавать source-модели в <Constant name="visual_editor" />. Это связано с тем, что источники должны быть уже созданы в production-запуске.
 
@@ -38,13 +38,13 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 5. Продолжайте строить вашу dbt-модель и обязательно проверяйте результат с помощью вкладки **Output**.
 
 <!-- 
-### Конфигурация узлов
+### Конфигурация узлов {#configure-nodes}
 - Встроенный генератор кода на базе ИИ
 
-### Просмотр результатов
+### Просмотр результатов {#view-output}
 -->
 
-## Редактирование существующей модели
+## Редактирование существующей модели {#edit-an-existing-model}
 Чтобы отредактировать существующую модель: 
 1. Перейдите в рабочее пространство <Constant name="visual_editor" />.
 2. Нажмите **+Add** в верхней навигационной панели.
@@ -54,7 +54,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 <Lightbox src="/img/docs/dbt-cloud/canvas/edit-model.png" width="90%" title="Редактирование модели с помощью кнопки «Edit a model»." />
 
-## Загрузка данных в Canvas
+## Загрузка данных в Canvas {#upload-data-to-canvas}
 
 Вы можете загрузить CSV-файл с исходными данными для создания модели напрямую из <Constant name="visual_editor" />:
 
@@ -66,13 +66,13 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 В окне Canvas будет создан оператор источника и базовая SQL-модель, которую вы сможете настроить. Теперь вы можете работать с этими данными как в <Constant name="visual_editor" />, так и в <Constant name="cloud_ide" />.
 
-## Тестирование и документация
+## Тестирование и документация {#test-and-document}
 
 Тестирование и документирование моделей — важная часть процесса разработки.  
 
 Следите за обновлениями! Совсем скоро вы сможете тестировать и документировать свои dbt-модели прямо в <Constant name="visual_editor" />. Это поможет поддерживать высокое качество данных и прозрачность в том, как именно должны использоваться ваши модели. 
 
 <!-- оставляем этот раздел на случай, если позже понадобится что-то добавить
-## Ограничения
+## Ограничения {#limitations}
 Есть ли здесь ограничения?
 -->

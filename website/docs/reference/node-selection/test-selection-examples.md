@@ -15,7 +15,7 @@ import IndirSelect from '/snippets/_indirect-selection-definitions.md';
 
 Выбор тестов — мощный механизм, и мы понимаем, что он может быть непростым для понимания. Поэтому ниже мы привели большое количество примеров.
 
-### Прямой выбор (Direct selection)
+### Прямой выбор (Direct selection) {#direct-selection}
 
 Запуск только generic-тестов:
 
@@ -31,14 +31,14 @@ dbt test --select "test_type:singular"
 
 В обоих случаях `test_type` проверяет свойство самого теста. Это примеры **прямого** выбора тестов.
 
-### Косвенный выбор (Indirect selection)
+### Косвенный выбор (Indirect selection) {#indirect-selection}
 
 <IndirSelect features={'/snippets/indirect-selection-definitions.md'}/>
 
 <!--вкладки для жадного режима, осторожного режима, пустого и режима сборки -->
 <!--Вкладки для 1.5+ -->
 
-### Примеры косвенного выбора
+### Примеры косвенного выбора {#indirect-selection-examples}
 
 Чтобы наглядно представить работу этих режимов, предположим, что у вас есть `model_a`, `model_b` и `model_c` и связанные с ними data tests. Ниже показано, какие тесты будут выполнены при запуске `dbt build` с различными режимами косвенного выбора:
 
@@ -105,7 +105,7 @@ dbt build --select "orders" --indirect-selection=empty
 
 <!--End of tabs for eager mode, cautious mode, buildable mode, and empty mode -->
 
-### Примеры синтаксиса выбора тестов
+### Примеры синтаксиса выбора тестов {#test-selection-syntax-examples}
 
 Параметр `indirect_selection` также можно задать в [yaml-селекторе](/reference/node-selection/yaml-selectors#indirect-selection).
 
@@ -154,7 +154,7 @@ dbt test --select "source:jaffle_shop.customers"
 dbt test --exclude "source:*"
 ```
 
-### Более сложный выбор
+### Более сложный выбор {#more-complex-selection}
 
 Комбинируя прямой и косвенный выбор, можно добиться одного и того же результата разными способами. Допустим, у нас есть data test с именем `assert_total_payment_amount_is_positive`, который зависит от модели `payments`. Все приведённые ниже команды позволят выбрать и выполнить именно этот тест:
 
@@ -178,7 +178,7 @@ dbt test --select "config.materialized:snapshot"
 
 Обратите внимание, что это поведение может измениться в будущих версиях dbt.
 
-### Запуск тестов для колонок с тегами
+### Запуск тестов для колонок с тегами {#run-tests-on-tagged-columns}
 
 Поскольку колонка `order_id` помечена тегом `my_column_tag`, сам тест также получает тег `my_column_tag`. Поэтому это пример прямого выбора.
 
@@ -203,7 +203,7 @@ dbt test --select "tag:my_column_tag"
 
 В настоящее время тесты «наследуют» теги, применённые к колонкам, источникам и таблицам источников. Они _не_ наследуют теги, применённые к моделям, seeds или snapshots. Скорее всего, такие тесты всё равно будут выбраны косвенно, потому что тег выбирает их родительский ресурс. Это тонкое различие, и оно может измениться в будущих версиях dbt.
 
-### Запуск только тегированных тестов
+### Запуск только тегированных тестов {#run-tagged-tests-only}
 
 Это ещё более наглядный пример прямого выбора: сам тест помечен тегом `my_test_tag` и выбирается напрямую.
 

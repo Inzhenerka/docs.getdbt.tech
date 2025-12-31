@@ -14,7 +14,7 @@ State и [defer](/reference/node-selection/defer) можно задавать к
 
 Если указаны и флаг, и переменная окружения, приоритет имеет флаг.
 
-#### Примечания
+#### Примечания {#notes}
 - Артефакты, передаваемые через `--state`, должны иметь версии схем, совместимые с текущей версией dbt.
 - Это мощные и достаточно сложные возможности. Рекомендуем ознакомиться с [известными оговорками и ограничениями](/reference/node-selection/state-comparison-caveats), связанными со сравнением состояний.
 
@@ -24,7 +24,7 @@ State и [defer](/reference/node-selection/defer) можно задавать к
 
 :::
 
-### Статус "result"
+### Статус "result" {#the-result-status}
 
 Ещё одним элементом состояния задания является `result` — результат предыдущего запуска dbt. Например, после выполнения `dbt run` dbt создаёт артефакт `run_results.json`, который содержит время выполнения и статусы успеха / ошибок для моделей dbt. Подробнее о `run_results.json` можно прочитать на странице ['run results'](/reference/artifacts/run-results-json).
 
@@ -52,7 +52,7 @@ dbt run --select "result:<status>" --defer --state path/to/prod/artifacts
 | `result:warn`    |     |      |      |  ✅      |
 | `result:pass`    |     |      |      |  ✅      |
 
-### Совмещение селекторов `state` и `result`
+### Совмещение селекторов `state` и `result` {#combining-state-and-result-selectors}
 
 Селекторы state и result можно комбинировать в одном запуске dbt, чтобы, например, обработать ошибки из предыдущего запуска **или** любые новые либо изменённые модели.
 
@@ -60,7 +60,7 @@ dbt run --select "result:<status>" --defer --state path/to/prod/artifacts
 dbt run --select "result:<status>+" state:modified+ --defer --state ./<dbt-artifact-path>
 ```
 
-### Статус "source_status"
+### Статус "source_status" {#the-source_status-status}
 
 Ещё одним элементом состояния задания является `source_status` предыдущего запуска dbt. Например, после выполнения `dbt source freshness` dbt создаёт артефакт `sources.json`, который содержит время выполнения и значения `max_loaded_at` для источников dbt. Подробнее о `sources.json` можно прочитать на странице ['sources'](/reference/artifacts/sources-json).
 
@@ -78,6 +78,6 @@ dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 
 Больше примеров команд можно найти в разделе [Pro-tips for workflows](/best-practices/best-practice-workflows#pro-tips-for-workflows).
 
-## Связанные материалы
+## Связанные материалы {#related-docs}
 - [О state в dbt](/reference/node-selection/state-selection)
 - [Оговорки сравнения state](/reference/node-selection/state-comparison-caveats)

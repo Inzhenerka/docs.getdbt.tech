@@ -12,10 +12,10 @@ asset-paths: [directorypath]
 
 </File>
 
-## Определение
+## Определение {#definition}
 При необходимости укажите пользовательский список директорий, которые нужно скопировать в директорию `target` как часть команды `docs generate`. Это полезно для отображения изображений из вашего репозитория в документации вашего проекта.
 
-## По умолчанию
+## По умолчанию {#default}
 
 По умолчанию dbt не будет копировать дополнительные файлы как часть docs generate. Например, `asset-paths: []`.
 
@@ -38,8 +38,8 @@ absolute="/Users/username/project/assets"
     asset-paths: ["/Users/username/project/assets"]
     ```
 
-## Примеры
-### Компиляция файлов в поддиректории `assets` как часть `docs generate`
+## Примеры {#examples}
+### Компиляция файлов в поддиректории `assets` как часть `docs generate` {#compile-files-in-the-assets-subdirectory-as-part-of-docs-generate}
 
 <File name='dbt_project.yml'>
 

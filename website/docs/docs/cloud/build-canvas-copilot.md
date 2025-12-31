@@ -4,7 +4,7 @@ sidebar_label: "Сборка с dbt Copilot"
 description: "Используйте dbt Copilot, чтобы создавать визуальные модели в Canvas с помощью запросов на естественном языке"
 ---
 
-# Работа с dbt Copilot <Lifecycle status='managed, managed_plus'/> 
+# Работа с dbt Copilot <Lifecycle status='managed, managed_plus'/> {#build-with-dbt-copilot}
 
 <IntroText>
 Используйте <Constant name="copilot" />, чтобы создавать визуальные модели в <Constant name="visual_editor" /> с помощью запросов на естественном языке.

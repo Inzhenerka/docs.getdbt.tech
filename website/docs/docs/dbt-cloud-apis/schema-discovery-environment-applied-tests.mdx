@@ -10,13 +10,13 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 
 [Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать у объекта `tests`. Обратитесь к разделу [Fields](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
 
-### Аргументы
+### Аргументы {#arguments}
 
 При запросе `tests` вы можете использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="tests" />
 
-### Пример запроса
+### Пример запроса {#example-query}
 
 Вы можете использовать `environmentId` и отфильтровать по типам тестов, чтобы вернуть метаданные всех тестов в окружении:
 
@@ -51,12 +51,12 @@ query {
 }
 ```
 
-### Поля
+### Поля {#fields}
 
 При запросе `tests` вы можете использовать следующие поля:
 
 <SchemaTable nodeName="TestAppliedStateNodeConnection" />
 
-### Ключевые поля узлов
+### Ключевые поля узлов {#key-fields-from-nodes}
 
 <SchemaTable nodeName="TestAppliedStateNode" />

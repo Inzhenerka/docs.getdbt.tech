@@ -8,12 +8,12 @@ meta:
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 * [Модели](/docs/build/models)
 * [Команда `run`](/reference/commands/run)
 
-## Доступные конфигурации
-### Конфигурации, специфичные для модели
+## Доступные конфигурации {#available-configurations}
+### Конфигурации, специфичные для модели {#model-specific-configurations}
 
 <ConfigResource meta={frontMatter.meta}/>
 
@@ -146,7 +146,7 @@ models:
 
 </Tabs>
 
-### Общие конфигурации
+### Общие конфигурации {#general-configurations}
 
 <ConfigGeneral />
 
@@ -254,14 +254,14 @@ models:
 
 </Tabs>
 
-### Конфигурации, специфичные для хранилища
+### Конфигурации, специфичные для хранилища {#warehouse-specific-configurations}
 * [Конфигурации BigQuery](/reference/resource-configs/bigquery-configs)
 * [Конфигурации Redshift](/reference/resource-configs/redshift-configs)
 * [Конфигурации Snowflake](/reference/resource-configs/snowflake-configs)
 * [Конфигурации Databricks](/reference/resource-configs/databricks-configs)
 * [Конфигурации Spark](/reference/resource-configs/spark-configs)
 
-## Конфигурирование моделей
+## Конфигурирование моделей {#configuring-models}
 
 Конфигурации моделей применяются иерархически. Вы можете настраивать модели как в установленном пакете, так и в вашем проекте dbt следующими способами, перечисленными в порядке приоритета:
 
@@ -273,9 +273,9 @@ models:
 
 Конфигурации моделей в вашем корневом проекте dbt имеют _высший_ приоритет по сравнению с конфигурациями в установленных пакетах. Это позволяет вам переопределять конфигурации установленных пакетов, предоставляя больше контроля над вашими запусками dbt.
 
-## Пример
+## Пример {#example}
 
-### Конфигурирование каталогов моделей в `dbt_project.yml`
+### Конфигурирование каталогов моделей в `dbt_project.yml` {#configuring-directories-of-models-in-dbt_projectyml}
 
 Чтобы настроить модели в вашем файле `dbt_project.yml`, используйте опцию конфигурации `models:`. Убедитесь, что вы указали пространство имен для ваших конфигураций в вашем проекте (показано ниже):
 
@@ -305,7 +305,7 @@ models:
 
 </File>
 
-### Применение конфигураций только к одной модели
+### Применение конфигураций только к одной модели {#apply-configurations-to-one-model-only}
 
 Некоторые типы конфигураций специфичны для конкретной модели. В этих случаях размещение конфигураций в файле `dbt_project.yml` может быть неудобным. Вместо этого вы можете указать эти конфигурации в начале файла модели `.sql` или в его индивидуальных YAML-свойствах.
 
