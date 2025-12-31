@@ -197,27 +197,27 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | Кросс-базовые макросы | date_spine                    | :white_check_mark:    | не требуется настройка
 
 #### Примеры для кросс-базовых макросов {#examples-for-cross-db-macros}
-  ##### <a name="replace"></a>replace {#replace}
+  ##### <a name="replace"></a>replace
   \{\{ dbt.replace("string_text_column", "old_chars", "new_chars") \}\}
   \{\{ replace('abcgef', 'g', 'd') \}\}
 
-  ##### <a name="date_trunc"></a>date_trunc {#date_trunc}
+  ##### <a name="date_trunc"></a>date_trunc
   \{\{ dbt.date_trunc("date_part", "date") \}\}
   \{\{ dbt.date_trunc("DD", "'2018-01-05 12:00:00'") \}\}
 
-  ##### <a name="datediff"></a>datediff {#datediff}
+  ##### <a name="datediff"></a>datediff
   Макрос `datediff` в teradata поддерживает разницу между датами. Разница между временными метками не поддерживается.
 
-  ##### <a name="hash"></a>hash {#hash}
+  ##### <a name="hash"></a>hash
 
 Макрос `Hash` требует реализации функции `md5`. Teradata не поддерживает `md5` нативно. Вам необходимо установить пользовательскую функцию (User Defined Function, UDF) и при необходимости указать переменную `md5_udf` ([variable](/docs/build/project-variables)).
 
 Если переменная не указана, код по умолчанию использует `GLOBAL_FUNCTIONS.hash_md5`. Ниже приведены инструкции по установке пользовательской UDF:
 
 1. Скачайте реализацию md5 UDF от Teradata (требуется регистрация): https://downloads.teradata.com/download/extensibility/md5-message-digest-udf.
-1. Распакуйте архив и перейдите в каталог `src`.
-1. Запустите `bteq` и подключитесь к вашей базе данных.
-1. Создайте базу данных `GLOBAL_FUNCTIONS`, в которой будет размещена UDF. Вы не можете изменить имя базы данных, так как оно жестко задано в макросе:
+2. Распакуйте архив и перейдите в каталог `src`.
+3. Запустите `bteq` и подключитесь к вашей базе данных.
+4. Создайте базу данных `GLOBAL_FUNCTIONS`, в которой будет размещена UDF. Вы не можете изменить имя базы данных, так как оно жестко задано в макросе:
       ```sql
       CREATE DATABASE GLOBAL_FUNCTIONS AS PERMANENT = 60e6, SPOOL = 120e6;
       ```
@@ -227,7 +227,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
       DATABASE GLOBAL_FUNCTIONS;
       .run file = hash_md5.btq
       ```
-  1. Предоставьте разрешения на выполнение UDF с опцией предоставления.
+  2. Предоставьте разрешения на выполнение UDF с опцией предоставления.
       ```sql
       GRANT EXECUTE FUNCTION ON GLOBAL_FUNCTIONS TO PUBLIC WITH GRANT OPTION;
       ```
@@ -237,7 +237,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
     md5_udf: Custom_database_name.hash_method_function
   ```
  
-  ##### <a name="last_day"></a>last_day {#last_day}
+  ##### <a name="last_day"></a>last_day
 
   `last_day` в `teradata_utils`, в отличие от соответствующего макроса в `dbt_utils`, не поддерживает `quarter` в качестве части даты.
 

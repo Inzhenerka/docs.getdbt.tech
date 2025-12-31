@@ -468,11 +468,11 @@ id: "vertica-configs"
 
 Вы можете настроить эти оптимизации в своем SQL-файле модели, как описано в примерах ниже: 
 
- ### Конфигурация предложения `ORDER BY` {#configuring-the-order-by-clause}
+### Конфигурация предложения `ORDER BY` {#configuring-the-order-by-clause}
 
- Чтобы использовать предложение `ORDER BY` в операторе `CREATE TABLE`, используйте параметр конфигурации `order_by` в вашей модели. 
+Чтобы использовать предложение `ORDER BY` в операторе `CREATE TABLE`, используйте параметр конфигурации `order_by` в вашей модели. 
 
- #### Использование параметра конфигурации `order_by` {#using-the-order_by-config-parameter}
+#### Использование параметра конфигурации `order_by` {#using-the-order_by-config-parameter}
 
 <Tabs
   defaultValue="source"

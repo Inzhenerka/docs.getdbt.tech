@@ -86,7 +86,8 @@ description: "Включение dbt Copilot — AI‑ассистента в db
     - [С использованием Target URI](#from-a-target-uri)
     - [Путём ручного ввода учётных данных](#manually-providing-the-credentials)
 
-  #### Из целевого URI {#from-a-target-uri}
+  <a id="from-a-target-uri"></a>
+  #### Из целевого URI
 
   1. Найдите URI вашего развёртывания Azure OpenAI на странице сведений о развёртывании в Azure.
   2. В разделе **Azure OpenAI** в <Constant name="cloud" /> выберите вкладку **From Target URI**.
@@ -96,7 +97,8 @@ description: "Включение dbt Copilot — AI‑ассистента в db
   6. Нажмите **Save**.
   <Lightbox src="/img/docs/dbt-cloud/account-integration-azure-target.png" width="85%" title="Пример раздела интеграции Azure OpenAI" />
 
-  #### Ручной ввод учётных данных {#manually-providing-the-credentials}
+  <a id="manually-providing-the-credentials"></a>
+  #### Ручной ввод учётных данных
 
   1. Найдите конфигурацию Azure OpenAI на странице сведений о развёртывании в Azure.
   2. В разделе **Azure OpenAI** в <Constant name="cloud" /> выберите вкладку **Manual Input**.

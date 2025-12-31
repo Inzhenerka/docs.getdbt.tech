@@ -839,7 +839,7 @@ https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/snippets/_new-s
 
 Выполняйте запросы к метрикам и через другие инструменты, такие как [first-class integrations](/docs/cloud-integrations/avail-sl-integrations), [API <Constant name="semantic_layer" />](/docs/dbt-cloud-apis/sl-api-overview) и [exports](/docs/use-dbt-semantic-layer/exports), чтобы публиковать таблицы метрик и измерений в вашей платформе данных и создавать кастомные интеграции.
 
- ### Подключение и запросы через Google Sheets {#connect-and-query-with-google-sheets}
+### Подключение и запросы через Google Sheets {#connect-and-query-with-google-sheets}
 
 <!-- Приведенный ниже snippet для gsheets (или reusables) можно найти в репозитории документации по следующему пути:
 
