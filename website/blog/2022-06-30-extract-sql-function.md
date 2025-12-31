@@ -22,7 +22,7 @@ is_featured: false
 > **Что такое функция SQL?**
 > На высоком уровне функция принимает входные данные (или несколько входных данных) и возвращает их обработку. Некоторые распространённые функции SQL — это [COALESCE](https://docs.getdbt.tech/blog/coalesce-sql-love-letter/), [LOWER](https://docs.getdbt.tech/blog/lower-sql-love-letter/) и [DATEDIFF](https://docs.getdbt.tech/blog/datediff-sql-love-letter/). Например, функция COALESCE принимает группу значений и возвращает первое ненулевое значение из этой группы.
 
-## Как использовать функцию EXTRACT
+## Как использовать функцию EXTRACT {#how-to-use-the-extract-function}
 
 Одной из наших любимых особенностей функции EXTRACT является её читаемость. Иногда вы можете столкнуться с функциями SQL и не сразу понять, какие аргументы используются и какой должен быть ожидаемый результат. (Мы смотрим на тебя, SPLIT_PART.) Функция EXTRACT не такая.
 
@@ -37,18 +37,18 @@ extract(<date_part> from <date/time field>)
 > **Примечание:**
 > Вы также можете увидеть использование запятой вместо 'from' в функции EXTRACT, как `extract(<date_part>, <date/time field>)`. Мы считаем, что использование 'from' в функции делает её немного более читаемой.
 
-### Функция DATE_PART
+### Функция DATE_PART {#the-date_part-function}
 
 Вы также можете увидеть использование функции DATE_PART вместо функции EXTRACT. Обе функции, DATE_PART и EXTRACT, выполняют одну и ту же функциональность, это просто вопрос предпочтений, какую из них вы хотите использовать.
 
 > **Postgres и DATE_PART:**
 > Это может показаться излишне педантичным, и вы, вероятно, никогда не столкнётесь с проблемой, когда DATE_PART и EXTRACT дают различия в значениях, которые действительно имеют значение, но это стоит отметить. Ранее функции DATE_PART и EXTRACT в Postgres давали одинаковый результат. Однако с Postgres 14 [функция EXTRACT теперь возвращает числовой тип вместо 8-байтового числа с плавающей запятой.](https://stackoverflow.com/questions/38442340/difference-between-extractyear-from-timestamp-function-and-date-partyear-t)
 
-### Поддержка функции EXTRACT в хранилищах данных
+### Поддержка функции EXTRACT в хранилищах данных {#data-warehouse-support-for-the-extract-function}
 
 [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#extract), [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_EXTRACT_function.html), [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/extract.html), [Postgres](https://www.postgresqltutorial.com/postgresql-date-functions/postgresql-extract/) и [Databricks](https://docs.databricks.com/sql/language-manual/functions/extract.html) поддерживают функцию EXTRACT. Кроме того, синтаксис использования EXTRACT одинаков во всех них.
 
-## Пример использования функции EXTRACT
+## Пример использования функции EXTRACT {#extract-function-example}
 
 Давайте рассмотрим реальный пример! Мы будем использовать [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql), простой набор данных и проект dbt, чтобы помочь нам. В таблице `orders` <Term id="table" /> jaffle shop есть некоторые поля, связанные со статусом заказа, датой заказа и суммой заказа.
 
@@ -74,7 +74,7 @@ from {{ ref('orders') }}
 
 Как видите, этот запрос извлёк неделю года, месяц года и год из `order_date`.
 
-## Почему мы её любим
+## Почему мы её любим {#why-we-love-it}
 
 Будем честны: EXTRACT не является самой широко используемой функцией SQL в нашем проекте dbt. Однако у EXTRACT есть своё время и место:
 

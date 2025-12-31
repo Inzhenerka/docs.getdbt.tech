@@ -12,7 +12,7 @@ date: 2022-11-30
 is_featured: true
 ---
 
-## Почему мы это создали: Краткая история команды профессиональных услуг dbt Labs
+## Почему мы это создали: Краткая история команды профессиональных услуг dbt Labs {#why-we-built-this-a-brief-history-of-the-dbt-labs-professional-services-team}
 
 Если вы посетили [Coalesce 2022](https://www.youtube.com/watch?v=smbRwmcM1Ok), вы знаете, что секрет раскрыт — команда профессиональных услуг dbt Labs — это не просто [группа опытных консультантов по данным](https://www.getdbt.com/dbt-labs/services/); мы также межгалактическая группа инопланетян, путешествующих по Млечному Пути с миссией помочь аналитическим инженерам успешно внедрять и управлять dbt по всей галактике.
 
@@ -51,7 +51,7 @@ is_featured: true
 
 Родился [dbt_project_evaluator](https://github.com/dbt-labs/dbt-project-evaluator): пакет dbt, который использует общий язык SQL, моделей и тестов для выявления и утверждения конкретных рекомендаций для данного dbt проекта.
 
-## Как работает пакет `dbt_project_evaluator`
+## Как работает пакет `dbt_project_evaluator` {#how-the-dbtprojectevaluator-package-works}
 
 Когда вы устанавливаете и запускаете этот пакет в своем dbt проекте, он:
 
@@ -84,7 +84,7 @@ is_featured: true
 
 Для инструкций и фрагментов кода для каждого метода настройки, ознакомьтесь с [README](https://github.com/dbt-labs/dbt-project-evaluator#customization-1).
 
-## Попробуйте!
+## Попробуйте! {#try-it-out}
 
 Чтобы попробовать пакет в вашем собственном проекте:
 

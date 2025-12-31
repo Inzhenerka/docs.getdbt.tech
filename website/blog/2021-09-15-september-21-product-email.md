@@ -36,14 +36,14 @@ is_featured: false
 <!--truncate-->
 
 
-## **Что нового**
+## **Что нового** {#whats-new}
 --------------
 
-### dbt v0.20.2
+### dbt v0.20.2 {#dbt-v0202}
 - Загляните в канал [#dbt-releases](https://getdbt.slack.com/archives/C37J8BQEL?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) в сообществе dbt Slack для получения полной информации!
 - Больше исправлений ошибок, поддержка последней версии Python и лучшая на сегодняшний день частичная разборка для стабильной и быстрой разработки
 
-### dbt v0.21.0-rc1
+### dbt v0.21.0-rc1 {#dbt-v0210-rc1}
 - Загляните в канал [#dbt-prereleases](https://getdbt.slack.com/archives/C016X6ABVUK?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) в сообществе dbt Slack и пост Джереми на [Discourse](https://discourse.getdbt.com/t/prerelease-dbt-core-v0-21-louis-kahn/3077?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)!
 - dbt build: Вы видели наш тизер в прошлом месяце на [Staging](https://www.youtube.com/watch?v=-XRD_IjWX2U&utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)?
 - Определение конфигураций ресурсов во всех ожидаемых местах (например, YAML файлы)
@@ -51,33 +51,33 @@ is_featured: false
 
  ![Screen Shot 2021-09-20 at 11.34.47 AM (1)](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-20%20at%2011.34.47%20AM%20(1).png?upscale=true&width=600&upscale=true&name=Screen%20Shot%202021-09-20%20at%2011.34.47%20AM%20(1).png) 
 
-### dbt Cloud v1.1.32 - v1.1.35: 
+### dbt Cloud v1.1.32 - v1.1.35: {#dbt-cloud-v1132-v1135}
 - Журнал изменений и дополнительные материалы находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)*
 - [DAG в IDE](https://blog.getdbt.com/on-dags-hierarchies-and-ides/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Мы хотим, чтобы пользователи имели беспрепятственный опыт при навигации между кодом и контекстом. Встраивание DAG в IDE значительно упрощает исследование структуры проекта
  ![Screen Shot 2021-09-22 at 4.59.24 PM](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png?upscale=true&width=1120&upscale=true&name=Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png) 
 - [API метаданных](https://docs.getdbt.tech/docs/dbt-cloud-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Теперь в GA! Оцените здоровье данных с помощью метаданных, сгенерированных недавними запусками задач dbt
 - [Плитки статуса на панели управления](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-dashboard-status-tiles?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Встраивайте эту плитку в любое место, где живут iFrames, чтобы быстро проверить свежесть данных
 
-## Новые ресурсы 
+## Новые ресурсы {#new-resources}
 --------------
 
-### Что почитать 📚
+### Что почитать 📚 {#things-to-read}
 
 - Подписались ли вы на [Обзор аналитической инженерии](https://roundup.getdbt.com/subscribe?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)? Тристан (основатель и генеральный директор dbt Labs) и Анна (директор сообщества) только начали чередовать отправку по воскресеньям, давая им обоим немного больше времени, чтобы углубиться в тему, которая актуальна для всех в Data Twitter. Последнее размышление Анны? *[Ваш PM по данным не является панацеей](https://roundup.getdbt.com/p/your-data-pm-is-not-a-panacea?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD).*
 
-### Что послушать 🎧
+### Что послушать 🎧 {#things-to-listen-to}
 
 - Последний [эпизод](https://roundup.getdbt.com/p/brittany-bennett-sunrise-movement?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) подкаста Analytics Engineering вышел сегодня утром, и я буквально слушаю его, пока печатаю. Гость, Бриттани Беннетт, говорит о найме на основе соответствия миссии, а не "технических" навыков. Я даже чувствую это в маркетинге продукта, поэтому мне интересно провести параллели! *Также, если вы думаете, что могли бы лучше справиться с этими письмами (я не сомневаюсь, что вы могли бы), вы должны присоединиться к моей команде — свяжитесь со мной.*
 
 - Если вы пропустили предыдущий эпизод подкаста, наши друзья из [Hex](https://hex.tech/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) присоединились к Тристану и Джулии, чтобы задать вопрос: *"Что если бы сотрудничество команды данных выглядело больше как GDoc, чем как Git workflow?"* 😱 Вдалеке можно услышать, как я спрашиваю, почему сотрудничество в маркетинге не может выглядеть больше как Powerpoint, но никто не отвечает, потому что никто не согласен.
 
-### Что испытать ✨
+### Что испытать ✨ {#things-to-experience}
 
 - Всемирно известный ведущий подкастов и менеджер по продукту Джулия Шоттенштейн выступает на [конференции Open Source Data](https://www.opensourcedatastack.com/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) на следующей неделе! Она присоединится к звездной панели друзей из Snowplow, Meltano, Elementl и других.
 
 - Всемирно известная воздушная акробатка и архитектор решений Эми Чен проведет мастер-класс на [Snowflake Build Summit](https://www.snowflake.com/build/?utm_source=dbt-labs&utm_medium=referral&utm_campaign=build-summit-na-en-partner-dbt&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) в следующем месяце! Они поделятся [как построить масштабируемый конвейер данных](https://events.snowflake.com/build/agenda/session/619834?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD) с использованием dbt + Snowflake для случаев использования в финансовой отчетности.
 
-### Что наблюдать 👀
+### Что наблюдать 👀 {#things-to-observe}
 
 - Это фото меня на вершине горы Уитни после моего одиночного похода SOBO по JMT в прошлом месяце. Это и причина, по которой я больше никогда не буду есть овсянку, и причина, по которой вы не получили новостную рассылку в августе. *Извините за это.*
 

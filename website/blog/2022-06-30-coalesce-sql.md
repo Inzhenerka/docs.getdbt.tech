@@ -21,7 +21,7 @@ COALESCE — это невероятно полезная функция, кот
 > **Что такое SQL-функция?**
 > На высоком уровне функция принимает входные данные (или несколько входных данных) и возвращает манипуляцию с этими данными. Некоторые распространённые SQL-функции — это [EXTRACT](https://docs.getdbt.tech/blog/extract-sql-love-letter/), [LOWER](https://docs.getdbt.tech/blog/lower-sql-love-letter/) и [DATEDIFF](https://docs.getdbt.tech/blog/datediff-sql-love-letter/). Например, функция LOWER принимает строковое значение и возвращает его в виде строки в нижнем регистре.
 
-## Как использовать функцию COALESCE
+## Как использовать функцию COALESCE {#how-to-use-the-coalesce-function}
 
 В формальных терминах, использование функции COALESCE на серии значений вернёт первое ненулевое значение.
 
@@ -36,11 +36,11 @@ coalesce(<input_1>, <input_2>,...<input_n>)
 > **Посмотрите, как это работает:**
 > Функция COALESCE используется в макросе [surrogate_key](https://docs.getdbt.tech/blog/sql-surrogate-keys) для замены null-значений столбца.
 
-### Поддержка функции COALESCE в хранилищах данных
+### Поддержка функции COALESCE в хранилищах данных {#data-warehouse-support-for-the-coalesce-function}
 
 Большинство, если не все, современные хранилища данных поддерживают функцию COALESCE; [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#coalesce), [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_COALESCE.html), [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/coalesce.html), [Postgres](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-coalesce/) и [Databricks](https://docs.databricks.com/sql/language-manual/functions/coalesce.html) все поддерживают функцию COALESCE. Кроме того, синтаксис использования COALESCE одинаков для всех них.
 
-## Пример использования функции COALESCE в SQL
+## Пример использования функции COALESCE в SQL {#coalesce-sql-function-example}
 
 Давайте рассмотрим реальный пример использования COALESCE. Ниже у нас есть таблица `orders` с тремя значениями столбцов: `order_id`, `order_date` и `order_status`.
 
@@ -75,7 +75,7 @@ from {{ ref('orders') }}
 > **Заменять или не заменять:**
 > COALESCE имеет простое применение — заполнение отсутствующих значений указанными вами значениями, но вы также хотите убедиться, что не изменяете непустые значения при его использовании. Здесь важен порядок входных значений для функции COALESCE: слева направо, первое ненулевое значение — это то, которое возвращается.
 
-## Почему мы её любим
+## Почему мы её любим {#why-we-love-it}
 
 Мы проверили проект dbt нашей команды данных и использовали функцию COALESCE более 100 раз. Мы настолько любим функцию COALESCE, что назвали [ежегодную конференцию по аналитической инженерии](https://coalesce.getdbt.com/) в её честь.
 

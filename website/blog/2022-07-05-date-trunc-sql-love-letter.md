@@ -25,7 +25,7 @@ is_featured: false
 
 В целом, это отличная функция, которая поможет вам агрегировать ваши данные в определенные части даты, сохраняя формат даты. Однако функция DATE_TRUNC не является вашим швейцарским ножом — она не может творить чудеса или решать все ваши проблемы (мы смотрим на вас, [звезда](https://getdbt.com/sql-foundations/star-sql-love-letter/)). Вместо этого DATE_TRUNC — это ваш стандартный кухонный нож — он прост и эффективен, и вы почти никогда не начинаете готовить (моделирование данных) без него.
 
-## Как использовать функцию DATE_TRUNC
+## Как использовать функцию DATE_TRUNC {#how-to-use-the-date_trunc-function}
 
 Для функции DATE_TRUNC необходимо передать два аргумента:
 
@@ -38,7 +38,7 @@ is_featured: false
 
 Ниже мы опишем некоторые незначительные различия в реализации между некоторыми хранилищами данных.
 
-### Функция DATE_TRUNC в Snowflake и Databricks
+### Функция DATE_TRUNC в Snowflake и Databricks {#the-date_trunc-function-in-snowflake-and-databricks}
 
 В [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/date_trunc.html) и [Databricks](https://docs.databricks.com/sql/language-manual/functions/date_trunc.html) вы можете использовать функцию DATE_TRUNC с помощью следующего синтаксиса:
 
@@ -48,7 +48,7 @@ date_trunc(<date_part>, <date/time field>)
 
 На этих платформах `<date_part>` передается в качестве первого аргумента в функции DATE_TRUNC.
 
-### Функция DATE_TRUNC в Google BigQuery и Amazon Redshift
+### Функция DATE_TRUNC в Google BigQuery и Amazon Redshift {#the-date_trunc-function-in-google-bigquery-and-amazon-redshift}
 
 В [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_trunc) и [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_DATE_TRUNC.html) `<date_part>` передается в качестве первого аргумента, а `<date/time field>` — в качестве второго аргумента.
 
@@ -59,7 +59,7 @@ date_trunc(<date/time field>, <date part>)
 > **Примечание о BigQuery:**
 > Функция DATE_TRUNC в BigQuery поддерживает усечение типов данных даты, тогда как в Snowflake, Redshift и Databricks `date/time field` может быть типом данных даты или метки времени. BigQuery также поддерживает функции DATETIME_TRUNC и TIMESTAMP_TRUNC для усечения более детализированных типов данных даты/времени.
 
-## Макрос dbt, который стоит запомнить
+## Макрос dbt, который стоит запомнить {#a-dbt-macro-to-remember}
 
 Почему Snowflake, Amazon Redshift, Databricks и Google BigQuery решили использовать разные реализации по сути одной и той же функции, остается загадкой, и не стоит ломать голову, пытаясь это понять. Вместо того чтобы запоминать, что идет первым — `<date_part>` или `<date/time field>`, (что, честно говоря, мы никогда не можем запомнить) вы можете полагаться на макрос dbt Core, чтобы избежать сложного синтаксиса.
 
@@ -92,7 +92,7 @@ from {{ ref('orders') }}
 
 **Небольшое предупреждение:** Если вы используете функцию DATE_TRUNC для изменения полей или создания новых, важно использовать сильные соглашения об именах для этих полей. Поскольку вывод функции DATE_TRUNC выглядит как обычная дата, другие специалисты по данным или бизнес-пользователи могут не понять, что это измененное поле, и могут принять его за фактическую дату, когда что-то произошло.
 
-## Почему мы её любим
+## Почему мы её любим {#why-we-love-it}
 
 Функция DATE_TRUNC — отличный способ для анализа данных и моделирования данных, которые должны происходить на более отдаленной части даты. Она часто используется для работы, связанной с временем, такой как моделирование удержания клиентов или анализ. Функция DATE_TRUNC также позволяет сохранить формат даты поля, что обеспечивает максимальное удобство и совместимость в большинстве инструментов BI (бизнес-аналитики).
 

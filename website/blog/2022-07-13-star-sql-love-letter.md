@@ -29,7 +29,7 @@ from {{ ref('table_a') }}
 
 <!--truncate-->
 
-## Макрос `star` в dbt
+## Макрос `star` в dbt {#the-star-dbt-macro}
 
 dbt поддерживает [dbt_utils](https://github.com/dbt-labs/dbt-utils), [пакет макросов и тестов](https://docs.getdbt.tech/docs/build/packages), который специалисты по данным могут использовать, чтобы писать более <Term id="dry" /> код в своем проекте dbt. Один из макросов, предлагаемых dbt utils, — это генератор `star`.
 
@@ -72,7 +72,7 @@ from {{ ref('table_a') }}
 
 [Под капотом](https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/star.sql) макрос `star` на самом деле использует другой макрос dbt utils ([get_filtered_columns_in_relation](https://github.com/dbt-labs/dbt-utils#get_filtered_columns_in_relation-source)), чтобы перебрать поля для их выбора, присвоения псевдонимов и/или добавления к ним строковых значений.
 
-## Почему мы любим макрос `star`
+## Почему мы любим макрос `star` {#why-we-love-the-star-macro}
 
 Это не секрет: команда данных в dbt Labs любит использовать макросы и тесты dbt utils, когда это уместно. Мы настолько любим dbt utils, что создали для них турнир March Madness Utils Bracket (вопросы не принимаются в данный момент) и использовали макрос `star` более 30 раз в нашем внутреннем репозитории dbt.
 

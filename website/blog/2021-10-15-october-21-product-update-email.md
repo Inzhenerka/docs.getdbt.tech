@@ -45,22 +45,22 @@ is_featured: false
 
 *Вы действительно не хотите пропустить это - [зарегистрируйтесь бесплатно здесь](https://coalesce.getdbt.com/talks/keynote-building-a-force-of-gravity/?utm_medium=ema%5B%E2%80%A6%5Dn%3Dh2-2021_coalesce-2021_awareness&utm_content=connect_prod_&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).*
 
-## Что нового
+## Что нового {#whats-new}
 --------------
 
 У меня есть три действительно захватывающие вещи, которыми я хочу поделиться в этом месяце!
 
-### dbt v0.21: 
+### dbt v0.21: {#dbt-v021}
 -	Посмотрите канал [#dbt-releases](https://getdbt.slack.com/archives/C37J8BQEL?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) в Slack-сообществе dbt для получения полной информации!
 
 -   [dbt build](https://docs.getdbt.tech/reference/commands/build?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) здесь! 🙌 Эта команда выполняет все, что вы хотите сделать в DAG, по порядку, и делает это с *мнениями*: Запускает модели, тестирует тесты, делает снимки и загружает данные, уделяя приоритетное внимание качеству и устойчивости. Сократите несколько шагов до одной команды и следуйте лучшим практикам 🚗
 
-### v1.0 beta: 
+### v1.0 beta: {#v10-beta}
 -	Посмотрите канал [#dbt-prereleases](https://getdbt.slack.com/archives/C016X6ABVUK?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) в Slack-сообществе dbt и пост Джереми на [Discourse](https://discourse.getdbt.com/t/prerelease-dbt-core-v1-0-0-b1/3180?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)!*
 
 -   v1.0 — это огромная веха со всеми дополнениями, включая 100-кратное ускорение парсинга проектов по сравнению с v0.19.0 ⚡. Мы рады отпраздновать это с вами во время [сессии Джереми на Coalesce](https://coalesce.getdbt.com/talks/dbt-v10-reveal/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ), но до тех пор мы надеемся, что вы попробуете [бета-версию](https://getdbt.slack.com/archives/C016X6ABVUK/p1634151813050300?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)! И не забудьте присоединиться к каналу [#dbt-v1-readiness](https://getdbt.slack.com/archives/C02HM9AAXL4?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) в Slack.
 
-### dbt Cloud v1.1.36 - v1.1.37
+### dbt Cloud v1.1.36 - v1.1.37 {#dbt-cloud-v1136-v1137}
 -	Список изменений и документация находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)
 
 -   [Бета-версия узких мест модели](https://getdbt.slack.com/archives/C02GUTGK73N?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ): Определите долго выполняющиеся модели, которые можно переработать (или переназначить). Новая панель времени выполнения модели на странице деталей запуска помогает быстро оценить состав задания, порядок и продолжительность, чтобы оптимизировать ваши рабочие процессы и сократить затраты💰
@@ -70,20 +70,20 @@ is_featured: false
 Вкладка Model Timing в dbt Cloud выделяет модели, которые занимают особенно много времени для выполнения.
 
 
-## Новые ресурсы 
+## Новые ресурсы {#new-resources}
 --------------
 
-### Что попробовать 🛠️
+### Что попробовать 🛠️ {#things-to-try}
 
 -   Почти *500* аккаунтов dbt Cloud используют CI. Хотите знать почему? (или, может быть... *как?*) Джулия объясняет это в своем [последнем блоге](https://blog.getdbt.com/adopting-ci-cd-with-dbt-cloud/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) и делится, как выбрать и настроить непрерывную доставку или развертывание в вашей организации.
 - Hex только что [запустил интеграцию](https://hex.tech/blog/dbt-integration?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) с dbt! Она использует [dbt Cloud Metadata API](https://docs.getdbt.tech/docs/dbt-cloud-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ), чтобы отображать метаданные из dbt прямо в Hex, позволяя вам быстро получить необходимый контекст по таким вещам, как свежесть данных, без необходимости переключаться между несколькими приложениями и вкладками браузера. Начните [здесь](https://docs.hex.tech/connecting-to-data/configuring-data-connections/dbt-integration?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
 -   [Адаптер dbt-Rockset](https://github.com/rockset/dbt-rockset?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) (теперь в бета-версии) только что получил крупное обновление. Теперь он поддерживает материализации View, Table, Incremental и Ephemeral, чтобы помочь вам выполнять преобразования данных в реальном времени на Rockset. Подробнее читайте [здесь.](https://rockset.com/blog/real-time-data-transformations-dbt-rockset?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
 
-### Что почитать 📚
+### Что почитать 📚 {#things-to-read}
 
 -   Все говорят о следующем слое современной дата-стека. Это [не новый разговор](https://benn.substack.com/p/metrics-layer?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ), но он начинает набирать обороты. Анна (директор сообщества dbt Labs) делает феноменальную работу, связывая события этой недели в последнем выпуске [Analytics Engineering Roundup](https://roundup.getdbt.com/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
 
-### Что посмотреть 📺
+### Что посмотреть 📺 {#things-to-watch}
 
 -   [Инфраструктура как код и современный опыт работы с данными](https://futuredata.brighttalk.live/talk/19069-506932/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)
 

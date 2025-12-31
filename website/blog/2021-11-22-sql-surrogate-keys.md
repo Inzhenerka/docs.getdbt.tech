@@ -11,7 +11,7 @@ date: 2021-11-29
 is_featured: false
 ---
 
-### Почему первичные ключи важны
+### Почему первичные ключи важны {#why-primary-keys-are-important}
 
 Мы все знаем одно из самых фундаментальных правил в данных: каждая <Term id="table" /> должна иметь <Term id="primary-key" />. Первичные ключи важны по многим причинам:
 
@@ -32,7 +32,7 @@ is_featured: false
 
 <WistiaVideo id="anuo7x4w3a" />
 
-### Что такое суррогатный ключ?
+### Что такое суррогатный ключ? {#whats-a-surrogate-key}
 
 <Term id="surrogate-key">Суррогатный ключ</Term> — это первичный ключ, который, вместо того чтобы существовать в вашем исходном наборе данных, _создается на уровне аналитики._
 
@@ -49,7 +49,7 @@ is_featured: false
 
 Хотя процесс создания суррогатного ключа относительно хорошо понятен, вы будете шокированы (ШОКИРОВАНЫ, ГОВОРЮ Я), узнав, что синтаксис SQL может иметь тонкие различия в разных диалектах и базах данных.
 
-#### Суррогатные ключи в BigQuery, Databricks, Redshift и Snowflake
+#### Суррогатные ключи в BigQuery, Databricks, Redshift и Snowflake {#surrogate-keys-in-bigquery-databricks-redshift-and-snowflake}
 
 Функции concat в [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#concat), [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_CONCAT.html) и [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/concat.html) возвращают null, если любой из указанных столбцов для этой строки возвращает null, поэтому для создания правильного суррогатного ключа вам нужно обернуть каждый столбец в `coalesce` перед хэшированием с помощью функции md5:
 
@@ -63,7 +63,7 @@ md5 ( concat ( coalesce(column1, '_this_used_to_be_null_'), coalesce(column2, '_
 
 Вы также можете разделить свои столбцы с помощью вертикальных черт ( `||` ) вместо использования функции concat, но я обычно избегаю вертикальных черт (одна запятая > две вертикальные черты).
 
-#### Суррогатные ключи в Postgres
+#### Суррогатные ключи в Postgres {#surrogate-keys-in-postgres}
 
 Функция `concat` в Postgres игнорирует null, что избавляет вас от необходимости оборачивать каждый столбец в функцию `coalesce`, чтобы по умолчанию null заменялся на другое значение (но это имеет тот же недостаток, показанный в таблице выше, где вы можете получить тот же ключ из разных входных данных).
 
@@ -75,7 +75,7 @@ md5 ( concat ( coalesce(column1, '_this_used_to_be_null_'), coalesce(column2, '_
 md5 ( concat (column1, column2) )
 ```
 
-#### Проблема значения null в суррогатных ключах
+#### Проблема значения null в суррогатных ключах {#the-null-value-problem-in-surrogate-keys}
 
 Основная проблема при создании суррогатных ключей возникает, когда вы пытаетесь объединить строку, в которой одно или несколько значений столбцов равны null. Если любое значение равно null, то часто вся объединенная строка возвращается как null - это не подходит!
 
@@ -205,7 +205,7 @@ from example_ids
 
 Давайте посмотрим, как генерация суррогатных ключей выглядит на практике в различных <Term id="data-warehouse">хранилищах данных</Term>, и как вы можете использовать один простой макрос dbt ([dbt_utils.generate_surrogate_key](https://github.com/dbt-labs/dbt-utils#surrogate_key-source)), чтобы абстрагировать проблему значения null.
 
-### Макрос surrogate_key на помощь
+### Макрос surrogate_key на помощь {#a-surrogate_key-macro-to-the-rescue}
 
 Благодаря удобной функции [generate_surrogate_key](https://github.com/dbt-labs/dbt-utils#generate_surrogate_key-source) в [пакете dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), вы можете освободить себя от необходимости оборачивать свои столбцы в `coalesce` каждый раз, когда хотите сгенерировать суррогатный ключ.
 

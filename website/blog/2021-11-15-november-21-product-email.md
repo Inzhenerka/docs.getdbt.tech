@@ -28,36 +28,36 @@ is_featured: false
 
 <!--truncate-->
 
-## **Что нового**
+## **Что нового** {#whats-new}
 --------------
 
-### dbt v1.0.0rc1:
+### dbt v1.0.0rc1: {#dbt-v100rc1}
 - Посетите канал [#dbt-prereleases](https://getdbt.slack.com/archives/C016X6ABVUK?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) в сообществе dbt Slack и пост Джереми на [Discourse](https://discourse.getdbt.com/t/prerelease-dbt-core-v1-0-0-b1/3180?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo)!
 
 - Первая версия-кандидат v1.0 теперь доступна! 🎉 Я уже немного говорил о v1.0, но эта версия также включает новый интерфейс логирования и начало работы над [вопросом метрик](https://github.com/dbt-labs/dbt-core/issues/4071?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo), упомянутым в прошлом месяце *(Дрю расскажет об этом подробнее на [Coalesce](https://coalesce.getdbt.com/talks/keynote-building-a-force-of-gravity/?utm_medium=ema%5B%E2%80%A6%5Dn%3Dh2-2021_coalesce-2021_awareness&utm_content=connect_prod_&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo)!)*
 
-### dbt v0.21.1: 
+### dbt v0.21.1: {#dbt-v0211}
 - Посетите канал [#dbt-prereleases](https://getdbt.slack.com/archives/C016X6ABVUK?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) в сообществе dbt Slack!
 
 - Версия-кандидат для v0.21.1 доступна, официальный выпуск ожидается на следующей неделе. Это обновление решает некоторые [проблемы с замедлением](https://github.com/dbt-labs/dbt-core/issues/4012?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo), возникшие в крупных проектах на v0.21.0.
 
-### dbt Cloud v1.1.38 - v1.1.39: *Список изменений и документация находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo)*
+### dbt Cloud v1.1.38 - v1.1.39: *Список изменений и документация находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo)* {#dbt-cloud-v1138-v1139-changelog-docs-located-here}
 
 - [Переменные окружения](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) появились в dbt Cloud! Клонируйте приватные пакеты, ограничивайте данные, обрабатываемые в средах разработки, и многое другое.
 
-## Новые ресурсы 
+## Новые ресурсы {#new-resources}
 --------------
 
-### Что попробовать 🛠️
+### Что попробовать 🛠️ {#things-to-try}
 
 - Новый курс! Если вы новичок в dbt и хотите узнать, как перенести устаревший код трансформации в модульные модели данных dbt, наш новый [курс по рефакторингу](https://blog.getdbt.com/sql-refactoring-course/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) может помочь! *Он занимает всего 3,5 часа, так что никаких оправданий* 🙂
 
-### Что почитать 📚
+### Что почитать 📚 {#things-to-read}
 
 - [dbt Discourse](https://discourse.getdbt.com/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) стал отличным местом для задавания вопросов в длинной форме и обмена полезными инструкциями, такими как [эта невероятно популярная статья](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) о 10-кратном ускорении CI с использованием Slim CI. Но чтобы собрать больше знаний от нашего сообщества, нам нужна большая лодка. Следите за решением, которое появится 29 ноября 👀
 - Можете угадать, какая должность является самой популярной среди зарегистрировавшихся на Coalesce? 🛎️ Инженер данных! Но вам не обязательно быть им, чтобы получить пользу от более чем 60 сессий, предлагаемых на этой неделе. Ознакомьтесь с [этим блогом](https://blog.getdbt.com/coalesce-returns-for-year-two-this-december/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo) от самой Королевы Coalesce, чтобы помочь вам решить, какие сессии подходят именно вам.
 
-### Что послушать 🎧
+### Что послушать 🎧 {#things-to-listen-to}
 
 - Жюльен Ле Дем присоединился к [подкасту Analytics Engineer](https://roundup.getdbt.com/p/ep-10-why-data-lineage-matters-w?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-9SoWbfj9_ZRDew6i8p8yand1JSmLh7yfridIrLwO7bgHTUmnbKcRp3AEKCO8pOytotdxAo), чтобы поговорить о том, как проекты с открытым исходным кодом становятся стандартами и почему <Term id="data-lineage" /> в частности нуждается в открытом стандарте.
 
