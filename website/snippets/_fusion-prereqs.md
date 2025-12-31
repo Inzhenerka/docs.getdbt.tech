@@ -2,7 +2,7 @@ import FusionDWH from '/snippets/_fusion-dwh.md';
 
 Узнайте больше о локальной установке <Constant name="fusion" />, включая важные предварительные требования, пошаговые инструкции по установке, устранение распространённых проблем и рекомендации по настройке.
 
-## Prerequisites
+## Prerequisites {#prerequisites}
 
 Перед установкой <Constant name="fusion" /> убедитесь, что вы:
 

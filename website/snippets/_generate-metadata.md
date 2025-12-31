@@ -1,10 +1,10 @@
-## Генерация метаданных
+## Генерация метаданных {#generate-metadata}
 
 <Constant name="explorer" /> использует метаданные, предоставляемые [Discovery API](/docs/dbt-cloud-apis/discovery-api), чтобы отображать сведения о [состоянии вашего dbt‑проекта](/docs/dbt-cloud-apis/project-state). Доступный набор метаданных зависит от [среды развертывания](/docs/deploy/deploy-environments), которую вы указали как _production_ или _staging_ в вашем проекте <Constant name="cloud" />.
 
 <Constant name="explorer" /> также позволяет загружать внешние метаданные из Snowflake, предоставляя видимость таблиц, представлений и других ресурсов, которые не определены в dbt, непосредственно в <Constant name="explorer" />.
 
-## Метаданные dbt
+## Метаданные dbt {#dbt-metadata}
 
 Если вы используете [гибридную настройку проекта](/docs/deploy/hybrid-setup) и загружаете артефакты из dbt Core, обязательно следуйте [инструкциям по настройке](/docs/deploy/hybrid-setup#connect-project-in-dbt-cloud), чтобы подключить проект в <Constant name="cloud" />. Это позволит <Constant name="explorer" /> корректно получать и отображать ваши метаданные.
 

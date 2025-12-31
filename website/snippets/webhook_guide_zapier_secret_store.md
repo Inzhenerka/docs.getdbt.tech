@@ -2,10 +2,10 @@
 
 В этом гайде используется временный шаг Code action для сохранения секретов, но вы также можете использовать инструмент вроде Postman, чтобы взаимодействовать с [REST API](https://store.zapier.com/), или создать отдельный Zap и вызвать [Set Value Action](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
 
-#### a. Создайте подключение Storage by Zapier
+#### a. Создайте подключение Storage by Zapier {#a-create-a-storage-by-zapier-connection}
 Если у вас его ещё нет, перейдите на [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) и создайте новое подключение. Запомните UUID‑секрет, который вы сгенерируете — он понадобится позже.
 
-#### b. Добавьте временный шаг с кодом
+#### b. Добавьте временный шаг с кодом {#b-add-a-temporary-code-step}
 В качестве Event выберите **Run Python**. Запустите следующий код:
 ```python 
 store = StoreClient('abc123') #замените на ваш UUID‑секрет

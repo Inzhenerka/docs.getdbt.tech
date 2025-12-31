@@ -4,7 +4,7 @@
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="Открытый ключ создаётся после сохранения"/>
 
-#### О бастионном сервере в AWS
+#### О бастионном сервере в AWS {#about-the-bastion-server-in-aws}
 
 <details>
   <summary>Что такое бастионный сервер?</summary>
@@ -22,7 +22,7 @@
 </details>
 
 
-#### Настройка bastion‑сервера в AWS
+#### Настройка bastion‑сервера в AWS {#configuring-the-bastion-server-in-aws}
 
 Чтобы настроить SSH‑туннель в <Constant name="cloud" />, вам нужно указать hostname/IP вашего bastion‑сервера, имя пользователя и порт (на ваш выбор), к которому будет подключаться <Constant name="cloud" />. Выполните следующие шаги:
 

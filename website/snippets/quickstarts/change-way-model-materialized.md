@@ -58,7 +58,7 @@
    - Пользователям BigQuery необходимо выполнить `dbt run --full-refresh` вместо `dbt run`, чтобы полностью применить изменения материализации.
 5. Введите команду `dbt run --full-refresh`, чтобы изменения вступили в силу в вашем хранилище данных.
 
-### Часто задаваемые вопросы
+### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Models/available-materializations" />
 <FAQ path="Project/which-materialization" />

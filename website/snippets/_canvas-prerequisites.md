@@ -1,4 +1,4 @@
-## Предварительные требования для Canvas
+## Предварительные требования для Canvas {#canvas-prerequisites}
 Перед использованием <Constant name="visual_editor" /> убедитесь, что:
 
 - У вас есть учетная запись [<Constant name="cloud" /> Enterprise или Enterprise+](https://www.getdbt.com/pricing).

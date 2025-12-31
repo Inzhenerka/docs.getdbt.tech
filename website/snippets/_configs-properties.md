@@ -1,4 +1,4 @@
-## Пример
+## Пример {#example}
 Ниже приведён пример, в котором для проекта определены и `sources`, и `models`:
 
 <File name='models/jaffle_shop.yml'>
@@ -64,7 +64,7 @@ models:
 
 </File>
 
-## Связанная документация
+## Связанная документация {#related-documentation}
 Полный список всех поддерживаемых свойств и конфигураций, разбитый по типам ресурсов, можно найти здесь:
 * Модели: [properties](/reference/model-properties) и [configs](/reference/model-configs)
 * Источники: [properties](/reference/source-properties) и [configs](/reference/source-configs)
@@ -74,7 +74,7 @@ models:
 * Макросы: [properties](/reference/macro-properties)
 * Экспозиции (exposures): [properties](/reference/exposure-properties)
 
-## Часто задаваемые вопросы (FAQ)
+## Часто задаваемые вопросы (FAQ) {#faqs}
 <FAQ path="Project/schema-yml-name" />
 <FAQ path="Project/resource-yml-name" />
 <FAQ path="Project/multiple-resource-yml-files" />
@@ -82,7 +82,7 @@ models:
 <FAQ path="Project/why-version-2" />
 <FAQ path="Project/yaml-file-extension" />
 
-## Устранение распространённых ошибок
+## Устранение распространённых ошибок {#troubleshooting-common-errors}
 
 <Expandable alt_header="Invalid test config given in [model name]">
 

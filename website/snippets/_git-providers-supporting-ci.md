@@ -1,4 +1,4 @@
-## Доступность функций в зависимости от Git‑провайдера
+## Доступность функций в зависимости от Git‑провайдера {#availability-of-features-by-git-provider}
 
 - Если ваш git‑провайдер имеет [нативную интеграцию с <Constant name="cloud" />](/docs/cloud/git/git-configuration-in-dbt-cloud), вы можете без лишних усилий настраивать задания [continuous integration (CI)](/docs/deploy/ci-jobs) прямо в <Constant name="cloud" />. 
 

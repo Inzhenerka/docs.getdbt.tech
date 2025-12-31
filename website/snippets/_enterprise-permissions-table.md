@@ -12,7 +12,7 @@
 
 :::
 
-### Разрешения аккаунта
+### Разрешения аккаунта {#account-permissions}
 
 Наборы разрешений уровня аккаунта позволяют управлять аккаунтом <Constant name="cloud" /> и его настройками (например, создавать service tokens, приглашать пользователей и настраивать SSO). Они также предоставляют разрешения на уровне проектов. Набор разрешений **Account Admin** является наивысшим уровнем доступа, который можно назначить.
 
@@ -22,7 +22,7 @@
 * **(W)rite** &mdash; Создание новых или изменение существующих. Включает `send`, `create`, `delete`, `allocate`, `modify` и `develop`.
 * **(R)ead** &mdash; Можно просматривать, но нельзя создавать или изменять какие‑либо поля.
 
-#### Доступ к аккаунту для разрешений аккаунта
+#### Доступ к аккаунту для разрешений аккаунта {#account-access-for-account-permissions}
 
 <FilterableTable>
 
@@ -47,7 +47,7 @@
 
 \* Наборы разрешений с правом записи (**W**) к настройкам учетной записи могут изменять настройки уровня учетной записи, включая [настройку уведомлений Slack](/docs/deploy/job-notifications#slack-notifications).
 
-#### Доступ к проекту для разрешений уровня аккаунта
+#### Доступ к проекту для разрешений уровня аккаунта {#project-access-for-account-permissions}
 
 <FilterableTable>
 | Разрешение уровня проекта    | Account Admin | Billing admin | Project creator | Security admin | Viewer |
@@ -66,7 +66,7 @@
 | Semantic Layer config        | W             | -             | W               | v              | R      |
 </FilterableTable>
 
-### Разрешения проекта
+### Разрешения проекта {#project-permissions}
 
 Наборы разрешений проекта позволяют вам работать с проектами в разных ролях. В первую очередь они предоставляют доступ к разрешениям уровня проекта, таким как репозитории и <Constant name="cloud_ide" /> или <Constant name="cloud_cli" />, но также могут включать некоторые разрешения уровня аккаунта.
 
@@ -75,7 +75,7 @@
 * **(W)rite** — создание новых или изменение существующих объектов. Включает `send`, `create`, `delete`, `allocate`, `modify` и `develop`.
 * **(R)ead** — можно просматривать, но нельзя создавать или изменять какие‑либо поля.
 
-#### Доступ уровня аккаунта для разрешений проекта
+#### Доступ уровня аккаунта для разрешений проекта {#account-access-for-project-permissions}
 
 <FilterableTable>
 | Разрешение уровня аккаунта | Admin | Analyst | Database admin | Developer | Git Admin | Job admin | Job runner  | Job viewer  | Metadata (Discovery API only) | Semantic Layer | Stakeholder/Read-Only | Team admin |
@@ -94,7 +94,7 @@
 | Webhooks                   |   W   |    -    |      -         |     W     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |
 </FilterableTable>
 
-#### Доступ к проекту для разрешений проекта
+#### Доступ к проекту для разрешений проекта {#project-access-for-project-permissions}
 
 <FilterableTable> 
 |Project-level permission  | Admin | Analyst | Database admin | Developer | Fusion admin | Git Admin | Job admin | Job runner  | Job viewer  | Metadata (Discovery API only) | Semantic Layer | Stakeholder/Read-Only | Team admin |

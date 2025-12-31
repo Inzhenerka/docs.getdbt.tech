@@ -1,4 +1,4 @@
-## Просмотр downstream exposures
+## Просмотр downstream exposures {#view-downstream-exposures}
 
 После настройки downstream exposures в <Constant name="cloud" /> вы можете просматривать их в [<Constant name="explorer" />](/docs/explore/explore-projects), что даёт более удобный и наглядный опыт работы.
 

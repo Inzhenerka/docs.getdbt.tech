@@ -6,7 +6,7 @@
 
 Кроме того, вы можете выполнять команды с помощью SQL-клиентов, таких как DataGrip, DBeaver или RazorSQL.
 
-### Пользователи Studio IDE
+### Пользователи Studio IDE {#studio-ide-users}
 
 Вы можете использовать префикс `dbt sl` перед именем команды, чтобы выполнять их в <Constant name="cloud" />. Например, чтобы вывести список всех метрик, выполните `dbt sl list metrics`. Полный список команд MetricFlow, доступных в <Constant name="cloud_ide" />, см. на странице [MetricFlow commands](/docs/build/metricflow-commands#metricflow-commandss).
 
@@ -16,7 +16,7 @@
 
 <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-ide-dag.png" title="Проверяйте свои метрики с помощью вкладки Lineage в IDE." />
 
-### Пользователи Cloud CLI
+### Пользователи Cloud CLI {#cloud-cli-users}
 
 Этот раздел предназначен для пользователей <Constant name="cloud_cli" />. Команды MetricFlow интегрированы с <Constant name="cloud" />, что означает, что вы можете запускать команды MetricFlow сразу после установки <Constant name="cloud_cli" />. Ваша учетная запись будет автоматически управлять контролем версий.
 
