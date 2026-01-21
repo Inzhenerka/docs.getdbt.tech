@@ -46,10 +46,10 @@ jobs:
         shell: bash
 
       - name: 🔃 Purge CDN cache
-        uses: yc-actions/yc-cdn-cache@v1
+        uses: yc-actions/yc-cdn-cache@v2
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          cdn-resource-id: bc8abm2727b4b5law2ep
+          cdn-resource-id: bc8rgxsypvhgvr52v62s
 
       - name: 🏁 Create GitHub deployment
         uses: chrnorm/deployment-action@v2
