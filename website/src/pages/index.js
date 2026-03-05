@@ -113,8 +113,8 @@ function Home() {
                 <div className="translated-note__intro">
                   <h2 className="heading-3 translated-note__title">Это перевод</h2>
                   <p className="translated-note__copy">
-                    Этот сайт — переведенная версия оригинальной документации по dbt и полностью ее дублирует.
-                    Откройте нужную страницу на оригинальном сайте и замените домен, чтобы получить русскую версию:
+                    Этот сайт — адаптированная версия документации по dbt.
+                    На оригинальном англоязычном сайте достаточно поменять адрес, чтобы получить русскую версию страницы:
                   </p>                  
                   <div className="translated-note__swap-box">
                     <span className="translated-note__domain">https://docs.getdbt.com</span>

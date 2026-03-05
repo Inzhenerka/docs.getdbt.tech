@@ -2,21 +2,34 @@
  * Schema generators for different structured data types
  */
 
+function getStructuredDataLanguage(siteConfig) {
+  const defaultLocale = siteConfig?.i18n?.defaultLocale;
+  if (!defaultLocale) {
+    return "en-US";
+  }
+  return siteConfig?.i18n?.localeConfigs?.[defaultLocale]?.htmlLang || defaultLocale;
+}
+
+function getPublisherName(siteConfig) {
+  return siteConfig?.customFields?.structuredDataPublisherName || "Inzhenerka.Tech";
+}
+
 /**
  * Generate common properties shared across all schema types
  */
 export function getCommonProperties({ title, description, url, date, dateModified, tags, siteConfig }) {
+  const publisherName = getPublisherName(siteConfig);
   const properties = {
     "@context": "https://schema.org",
     name: title,
     description: description,
     url: url,
-    inLanguage: "en-US",
+    inLanguage: getStructuredDataLanguage(siteConfig),
     mainEntityOfPage: url,
     keywords: tags?.map((tag) => (typeof tag === 'string' ? tag : tag.label)).join(","),
     publisher: {
       "@type": "Organization",
-      name: "dbt Labs",
+      name: publisherName,
       logo: {
         "@type": "ImageObject",
         url: siteConfig.url + "/img/dbt-logo.svg",
@@ -64,7 +77,7 @@ export function generateHowToSchema({ totalTime, commonProperties }) {
     "@type": "HowTo",
     author: {
       "@type": "Organization",
-      name: "dbt Labs",
+      name: commonProperties?.publisher?.name || "Inzhenerka.Tech",
     },
   };
 
@@ -85,7 +98,7 @@ export function generateTechArticleSchema({ commonProperties }) {
     "@type": "TechArticle",
     author: {
       "@type": "Organization",
-      name: "dbt Labs",
+      name: commonProperties?.publisher?.name || "Inzhenerka.Tech",
     },
   };
 }
@@ -99,7 +112,7 @@ export function generateWebPageSchema({ commonProperties }) {
     "@type": "WebPage",
     author: {
       "@type": "Organization",
-      name: "dbt Labs",
+      name: commonProperties?.publisher?.name || "Inzhenerka.Tech",
     },
   };
 }

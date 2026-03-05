@@ -5,7 +5,7 @@
 Если вы заметили неточность или хотите помочь, присылайте правки в репозиторий: https://github.com/Inzhenerka/docs.getdbt.tech  
 Или напишите в поддержку: https://t.me/inzhenerkatech_sup
 
-Сайт полностью дублирует оригинальный, поэтому для перевода любой страницы достаточно заменить адрес `https://docs.getdbt.com` на `https://docs.getdbt.tech`.
+Сайт по структуре дублирует оригинальный, поэтому для перевода любой страницы достаточно заменить адрес `https://docs.getdbt.com` на `https://docs.getdbt.tech`.
 
 _Мы используем [docusaurus](https://v2.docusaurus.io/) для сайта [docs.getdbt.tech](https://docs.getdbt.tech/)._
 

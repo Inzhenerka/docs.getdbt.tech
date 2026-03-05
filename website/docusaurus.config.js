@@ -44,7 +44,7 @@ console.log("DEBUG: metatags = ", metatags);
 var siteSettings = {
   baseUrl: "/",
   tagline: "Документация, гайды и руководства по dbt на русском языке",
-  title: "Документация dbt - перевод официального сайта на русский",
+  title: "Документация dbt",
   url: SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
@@ -57,6 +57,9 @@ var siteSettings = {
         htmlLang: 'ru-RU',
       },
     },
+  },
+  customFields: {
+    structuredDataPublisherName: "Inzhenerka.Tech",
   },
   themeConfig: {
     docs: {
@@ -350,6 +353,22 @@ var siteSettings = {
           // Un-truncated blog posts will throw an error
           // https://docusaurus.io/blog/releases/3.5#onuntruncatedblogposts
           onUntruncatedBlogPosts: "throw",
+        },
+        sitemap: {
+          ignorePatterns: [
+            "/tags",
+            "/tags/",
+            "/tags/**",
+            "/blog/tags",
+            "/blog/tags/",
+            "/blog/tags/**",
+            "/blog/authors",
+            "/blog/authors/",
+            "/blog/authors/**",
+            "/blog/archive",
+            "/blog/archive/",
+            "/blog/archive/**",
+          ],
         },
       },
     ],
