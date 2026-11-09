@@ -52,7 +52,7 @@ select ...
 
 ### Ориентация столбцов {#column-orientation}
 
-Greenplum поддерживает два типа [ориентации](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic39): строковую и столбцовую:
+Greenplum поддерживает два типа [ориентации хранения](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic39): по строкам и по столбцам:
 
 ```sql
 {{
@@ -69,11 +69,11 @@ select ...
 
 ### Сжатие {#compression}
 
-Сжатие позволяет уменьшить время чтения и записи. Greenplum предлагает несколько [алгоритмов](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic40) для сжатия таблиц с оптимизацией добавления:
-- RLE_TYPE (только для таблиц с ориентацией по столбцам)
-- ZLIB
-- ZSTD
-- QUICKLZ
+Сжатие позволяет сократить время чтения и записи. Greenplum предлагает несколько [алгоритмов](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic40) для сжатия таблиц, оптимизированных для добавления данных (append-optimized):
+ - RLE_TYPE (только для таблиц с хранением по столбцам)
+ - ZLIB
+ - ZSTD 
+ - QUICKLZ
 
 ```sql
 {{

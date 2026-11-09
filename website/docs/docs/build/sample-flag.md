@@ -4,6 +4,7 @@ description: "Используйте флаг sample, чтобы сократи�
 sidebar_label: "Флаг sample"    
 pagination_next: null
 pagination_prev: "docs/build/empty-flag"
+availability: all_users
 ---
 
 # О флаге `--sample` {#about-the-sample-flag}
@@ -70,4 +71,4 @@ source as (
 
 ```
 
-После этого dbt выполнит SQL модели в целевом хранилище данных и построит таблицы с данными из указанных размеров выборки.
+Затем dbt выполнит SQL-код модели в целевом хранилище данных и создаст таблицы с данными из выборок указанного размера.

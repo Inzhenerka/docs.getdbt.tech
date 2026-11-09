@@ -1,14 +1,17 @@
 ---
 id: ratio
-title: "Метрики отношения"
-description: "Используйте метрики отношения для создания отношения из двух измерений."
+title: "Метрики отношений"
+description: "Используйте метрики отношений для вычисления отношения двух метрик. "
 sidebar_label: Отношение
-tags: [Метрики, Семантический слой]
+tags: [Metrics, Semantic Layer]
+availability: all_users
 ---
 
-Метрика отношения позволяет создать отношение между двумя метриками. Вы просто указываете метрику числителя и метрику знаменателя. Кроме того, вы можете применить фильтр по измерению как к числителю, так и к знаменателю, используя строку ограничения при вычислении метрики.
+Метрики отношений позволяют вычислять отношение двух метрик. Вы указываете метрику для числителя и метрику для знаменателя. При вычислении метрики можно дополнительно применять фильтры, имена и псевдонимы как к числителю, так и к знаменателю.
 
-Параметры, описание и тип для метрик отношения:
+Параметры метрик отношений:
+
+<VersionBlock lastVersion="1.11">
 
 | Параметр | Описание | Обязательный | Тип | 
 | --------- | ----------- | ---- | ---- |
@@ -22,8 +25,33 @@ tags: [Метрики, Семантический слой]
 | `filter` | Необязательный фильтр для числителя или знаменателя. | Необязательный | Строка |
 | `alias` | Необязательный псевдоним для числителя или знаменателя. | Необязательный | Строка |
 
-Ниже представлена полная спецификация для метрик отношения, а также пример.
+</VersionBlock>
 
+<VersionBlock firstVersion="1.12">
+
+| Parameter | Description | Required | Type | 
+| --------- | ----------- | ---- | ---- |
+| `name` | The name of the metric. | Required | String |
+| `description` | The description of the metric. | Optional | String |
+| `type` | The type of the metric (cumulative, derived, ratio, or simple). | Required | String |
+| `label` | Defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Optional | String |
+| `numerator` | The name of the metric used for the numerator. Can be a string (metric name) or a dict with `name`, `filter`, and `alias` properties. | Required | String or Dict |
+| `denominator` | The name of the metric used for the denominator. Can be a string (metric name) or a dict with `name`, `filter`, and `alias` properties. | Required | String or Dict |
+
+#### Numerator/Denominator dictionary properties
+The following properties are available for the numerator and denominator dictionary:
+
+| Property | Description | Required | Type |
+| -------- | ----------- | -------- | ---- |
+| `name` | Name of the metric. | Required | String |
+| `filter` | Filter to apply to the metric. | Optional | String |
+| `alias` | Alias for the metric. | Optional | String |
+
+</VersionBlock>
+
+The complete specification for ratio metrics is as follows:
+
+<VersionBlock lastVersion="1.11">
 <File name="models/metrics/file_name.yml">
  
 ```yaml
@@ -44,7 +72,36 @@ metrics:
 ```
 </File>
 
-Для продвинутого моделирования данных вы можете использовать `fill_nulls_with` и `join_to_timespine`, чтобы [установить нулевые значения метрик в ноль](/docs/build/fill-nulls-advanced), обеспечивая числовые значения для каждой строки данных.
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+<File name="models/file_name.yml">
+
+```yaml
+models:
+  - name: file_name
+    semantic_model:
+      - enabled: true # required
+      - name: my_semantic_model
+      ... rest of config...
+    metrics:
+      - name: my_advanced_ratio_metric
+        type: ratio
+        numerator:
+          name: my_simple_metric
+          filter: "{{ Dimension('my_primary_entity__my_categorical_dimension_column') }} > 10"
+          alias: joel_loves_data
+        denominator:
+          name: my_simple_metric_that_uses_the_other_time_dimension_but_is_also_from_another_semantic_model
+          filter: "{{ Dimension('my_primary_entity__my_categorical_dimension_column') }} < 10"
+          alias: joel_hates_data
+```
+</File>
+
+</VersionBlock>
+
+Для продвинутого моделирования данных можно использовать `fill_nulls_with` и `join_to_timespine`, чтобы [заменить значения null в метриках на нули](/docs/build/fill-nulls-advanced), обеспечивая числовые значения в каждой строке данных.
 
 ## Пример метрик отношения {#ratio-metrics-example}
 
@@ -53,6 +110,7 @@ metrics:
 #### Пример 1 {#example-1}
 Этот пример представляет собой базовую метрику отношения, которая вычисляет отношение заказов на еду к общему количеству заказов:
 
+<VersionBlock lastVersion="1.11">
 <File name="models/metrics/file_name.yml">
  
 ```yaml
@@ -67,8 +125,28 @@ metrics:
 ```
 </File>
 
-#### Пример 2 {#example-2}
-Этот пример представляет собой метрику отношения, которая вычисляет отношение заказов на еду к общему количеству заказов с применением фильтра и псевдонима к числителю. Обратите внимание, что для добавления этих атрибутов вам также потребуется использовать явный ключ для атрибута имени.
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+<File name="models/file_name.yml">
+ 
+```yaml
+metrics:
+  - name: food_order_pct
+    description: "Количество заказов еды как доля от общего количества заказов"
+    label: Food order ratio
+    type: ratio
+    numerator: food_orders
+    denominator: orders
+```
+</File>
+</VersionBlock>
+
+#### Пример 2 
+В этом примере метрика отношения вычисляет отношение количества заказов еды к общему количеству заказов, при этом к числителю применяются фильтр и псевдоним. Обратите внимание: чтобы добавить эти атрибуты, вам также потребуется явно указать ключ для атрибута name.
+
+<VersionBlock lastVersion="1.11">
 
 <File name="models/metrics/file_name.yml">
  
@@ -90,7 +168,34 @@ metrics:
 ```
 </File>
 
-## Метрики отношения с использованием различных семантических моделей {#ratio-metrics-using-different-semantic-models}
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+<File name="models/file_name.yml">
+ 
+```yaml
+metrics:
+  - name: food_order_pct
+    description: "Количество заказов еды как доля от общего количества заказов"
+    label: Доля заказов еды по местоположению
+    type: ratio
+    numerator:
+      name: food_orders
+      filter: location = 'New York'
+      alias: ny_food_orders
+    denominator:
+      name: orders
+      filter: location = 'New York'
+      alias: ny_orders
+```
+</File>
+
+</VersionBlock>
+
+## Метрики отношения с использованием разных семантических моделей
+
+Система упростит вычисление метрики отношения на основе разных семантических моделей, вычислив значения числителя и знаменателя в подзапросах. Затем она объединит результирующие наборы данных по общим измерениям, чтобы вычислить итоговое отношение. Ниже приведён пример SQL, сгенерированного для такой метрики отношения.
 
 Система упростит и преобразует числитель и знаменатель в метрику отношения из различных семантических моделей, вычисляя их значения в подзапросах. Затем она объединит результирующий набор на основе общих измерений для вычисления окончательного отношения. Вот пример SQL, сгенерированного для такой метрики отношения.
 
@@ -142,6 +247,8 @@ on
 
 Пользователи могут определять ограничения на входные метрики для метрики отношения, применяя фильтр непосредственно к входной метрике, следующим образом:
 
+<VersionBlock lastVersion="1.11">
+
 <File name="models/metrics/file_name.yml">
  
 ```yaml
@@ -160,10 +267,33 @@ metrics:
 ```
 </File>
 
-Обратите внимание на параметры `filter` и `alias` для метрики, указанной в числителе.
-- Используйте параметр `filter`, чтобы применить фильтр к метрике, к которой он прикреплен.
-- Параметр `alias` используется для избежания конфликтов имен в сгенерированных SQL-запросах, когда одна и та же метрика используется с различными фильтрами.
-- Если конфликтов имен нет, параметр `alias` можно не указывать.
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+<File name="models/file_name.yml">
+ 
+```yaml
+metrics:
+  - name: frequent_purchaser_ratio
+    description: Fraction of active users who qualify as frequent purchasers
+    type: ratio
+    numerator:
+      name: distinct_purchasers
+      filter: | 
+        "{{ Dimension('customer__is_frequent_purchaser') }}"
+      alias: frequent_purchasers
+    denominator:
+      name: distinct_purchasers
+```
+</File>
+
+</VersionBlock>
+
+Обратите внимание на параметры `filter` и `alias` для метрики, указанной в числителе. 
+- Используйте параметр `filter`, чтобы применить фильтр к метрике, к которой он относится. 
+- Параметр `alias` используется для предотвращения конфликтов имен в сгенерированных SQL-запросах, когда одна и та же метрика используется с разными фильтрами. 
+- Если конфликтов имен нет, параметр `alias` можно опустить.
 
 ## Связанные документы {#related-docs}
 - [Заполнение нулевых значений для простых, производных или метрик отношения](/docs/build/fill-nulls-advanced)

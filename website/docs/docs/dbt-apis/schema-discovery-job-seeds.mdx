@@ -1,0 +1,45 @@
+---
+title: "Схема объекта seeds"
+sidebar_label: "Seeds"
+id: "discovery-schema-job-seeds"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект `seeds` позволяет запрашивать информацию обо всех seed-файлах в рамках заданного job.
+
+### Аргументы {#arguments}
+
+При выполнении запроса к `seeds` доступны следующие аргументы.
+
+<NodeArgsTable parent="JobNode" name="seeds" />
+
+Ниже приведены иллюстративные примеры запросов, а также описание схемы объекта `seeds`.
+
+### Пример запроса {#example-query}
+
+В примере ниже показан запрос, который извлекает релевантную информацию обо всех seed-файлах в заданном job. Например, так можно посмотреть время загрузки.
+
+```graphql
+{
+  job(id: 123) {
+    seeds(first: 10, after: "{somePaginationCursorValue}") {
+      uniqueId
+      name
+      executionTime
+      status
+      paginationCursor
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запроса к `seeds` доступны следующие поля:
+
+<SchemaTable nodeName="SeedNode" />

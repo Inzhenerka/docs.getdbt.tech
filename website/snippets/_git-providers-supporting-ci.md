@@ -1,14 +1,14 @@
 ## Доступность функций в зависимости от Git‑провайдера {#availability-of-features-by-git-provider}
 
-- Если ваш git‑провайдер имеет [нативную интеграцию с <Constant name="cloud" />](/docs/cloud/git/git-configuration-in-dbt-cloud), вы можете без лишних усилий настраивать задания [continuous integration (CI)](/docs/deploy/ci-jobs) прямо в <Constant name="cloud" />. 
+- Если ваш Git-провайдер поддерживает [встроенную интеграцию с <Constant name="dbt" />](/docs/platform/git/configure-git), вы можете легко настроить задания [непрерывной интеграции (CI)](/docs/deploy/ci-jobs) непосредственно в <Constant name="dbt" />. 
 
-- Для провайдеров без нативной интеграции вы всё равно можете использовать [метод Git clone](/docs/cloud/git/import-a-project-by-git-url), чтобы импортировать git URL, и задействовать [Administrative API <Constant name="cloud" />](/docs/dbt-cloud-apis/admin-cloud-api) для запуска CI‑заданий.
+- Для провайдеров без встроенной интеграции вы по-прежнему можете использовать [метод Git clone](/docs/platform/git/import-a-project-by-git-url), чтобы импортировать проект по URL Git-репозитория, и [административный API <Constant name="dbt" />](/docs/dbt-apis/admin-api), чтобы запускать задание CI.
 
-В следующей таблице приведены доступные варианты интеграции и соответствующие им возможности.
+В следующей таблице представлены доступные варианты интеграции и соответствующие им возможности.
 
-| **Git‑провайдер** | **Нативная интеграция с <Constant name="cloud" />** | **Автоматизированное CI‑задание** | **Git clone** | **Информация** | **Поддерживаемые планы** |
-| ------------------ | --------------------------------- | -------------------- | ------------- | -------------- | -------- |
-|[Azure DevOps](/docs/cloud/git/connect-azure-devops)<br /> | ✅ | ✅ | ✅ | Организации на планах Starter и Developer могут подключаться к Azure DevOps с использованием deploy key. Обратите внимание: вы не сможете настраивать автоматизированные CI‑задания, но при этом сможете вести разработку. | Enterprise, Enterprise+ |
-|[GitHub](/docs/cloud/git/connect-github)<br /> | ✅ | ✅ |  |  | Все планы <Constant name="cloud" /> |
-|[GitLab](/docs/cloud/git/connect-gitlab)<br /> | ✅ | ✅ | ✅ |  | Все планы <Constant name="cloud" /> |
-|Все остальные git‑провайдеры при использовании [Git clone](/docs/cloud/git/import-a-project-by-git-url) ([BitBucket](/docs/cloud/git/import-a-project-by-git-url#bitbucket), [AWS CodeCommit](/docs/cloud/git/import-a-project-by-git-url#aws-codecommit) и другие) | ❌ | ❌ | ✅ | См. руководство [Customizing CI/CD with custom pipelines](/guides/custom-cicd-pipelines?step=1) для настройки continuous integration и continuous deployment (CI/CD). |
+| **Git-провайдер** | **Встроенная интеграция с <Constant name="dbt" />** | **Автоматизированное задание CI**|**Git clone**| **Информация**| **Поддерживаемые тарифные планы**|
+| -----------------| ---------------------------------| --------------------|-------------|----------------| --------|
+|[Azure DevOps](/docs/platform/git/connect-azure-devops)<br /> |  ✅|  ✅ |  ✅  | Организации на тарифных планах Starter и Developer могут подключаться к Azure DevOps с помощью ключа развертывания. Обратите внимание: вы не сможете настроить автоматизированные задания CI, но по-прежнему сможете вести разработку.| Enterprise, Enterprise+ |
+|[GitHub](/docs/platform/git/connect-github)<br />  | ✅ | ✅ | ✅ |  | Все тарифные планы <Constant name="dbt" /> |
+|[GitLab](/docs/platform/git/connect-gitlab)<br /> | ✅ | ✅ |  ✅  | | Все тарифные планы <Constant name="dbt" /> |
+|Все остальные Git-провайдеры, подключаемые с помощью [Git clone](/docs/platform/git/import-a-project-by-git-url) ([BitBucket](/docs/platform/git/import-a-project-by-git-url#bitbucket), [AWS CodeCommit](/docs/platform/git/import-a-project-by-git-url#aws-codecommit) и другие)| ❌    | ❌    | ✅   | Чтобы настроить непрерывную интеграцию и непрерывное развертывание (CI/CD), обратитесь к руководству [Настройка CI/CD с использованием собственных конвейеров](/guides/custom-cicd-pipelines?step=1).|

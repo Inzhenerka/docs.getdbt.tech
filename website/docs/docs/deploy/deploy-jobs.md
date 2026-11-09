@@ -2,64 +2,84 @@
 title: "Задания развертывания"
 description: "Узнайте, как создавать и планировать задания развертывания в dbt для запуска через планировщик. При запуске dbt вы получаете встроенные возможности наблюдаемости, логирования и оповещений."
 tags: [scheduler]
+availability: platform_login
 ---
 
-Вы можете использовать deploy jobs, чтобы собирать production data assets. Deploy jobs упрощают запуск команд dbt для проекта в вашей облачной data platform: по расписанию или по событиям. Каждый запуск job в <Constant name="cloud" /> будет отображаться в истории запусков job, а также в подробном обзоре запуска, где доступны:
+Вы можете использовать задания развертывания для создания ресурсов данных в производственной среде. Задания развертывания позволяют легко запускать команды dbt для проекта на вашей облачной платформе данных по расписанию или при наступлении событий. Для каждого запуска задания в <Constant name="dbt" /> создается запись в истории запусков задания и доступен подробный обзор запуска, который предоставляет вам:
 
 - Тип триггера job
 - Commit SHA
-- Имя окружения
-- Информация об источниках (sources) и документации, если применимо
-- Детали запуска job, включая тайминги, [данные о времени выполнения моделей](/docs/deploy/run-visibility#model-timing) и [артефакты](/docs/deploy/artifacts)
-- Подробные шаги запуска с логами и статусами шагов
+- Название окружения
+- Информация об источниках и документации, если применимо
+- Сведения о запуске задания, включая время выполнения, [данные о времени выполнения моделей](/docs/deploy/run-visibility#model-timing-tab) и [артефакты](/docs/deploy/artifacts)
+- Подробные шаги запуска с логами и статусами выполнения каждого шага. Для запусков <Constant name="fusion"/> также можно скачать логи OpenTelemetry для отдельных шагов. См. раздел [Скачивание логов](/docs/deploy/run-visibility#access-logs).
 
 Вы можете создать deploy job и настроить его запуск по [расписанию по дням и времени](#schedule-days), задать [кастомное cron-расписание](#cron-schedule) или [запускать job после завершения другой job](#trigger-on-job-completion).
 
 
 ## Предварительные требования {#prerequisites}
 
-- У вас должна быть [учетная запись <Constant name="cloud" />](https://www.getdbt.com/signup/) и лицензия [Developer seat](/docs/cloud/manage-access/seats-and-users).
-    - Для функции [Trigger on job completion](#trigger-on-job-completion) ваш аккаунт <Constant name="cloud" /> должен быть на тарифе [Starter или Enterprise-tier](https://www.getdbt.com/pricing/).
-- У вас должен быть dbt‑проект, подключенный к [data platform](/docs/cloud/connect-data-platform/about-connections).
-- У вас должны быть [права доступа](/docs/cloud/manage-access/about-user-access) для просмотра, создания, изменения или запуска jobs.
-- Вам нужно настроить [deployment environment](/docs/deploy/deploy-environments).
+- У вас должна быть [учетная запись <Constant name="dbt" />](https://www.getdbt.com/signup/) и [лицензия Developer](/docs/platform/manage-access/seats-and-users).
+    - Для использования функции [запуска по завершении задания](#trigger-on-job-completion) ваша учетная запись <Constant name="dbt" /> должна использовать [тариф Starter или один из тарифов уровня Enterprise](https://www.getdbt.com/pricing/).
+- У вас должен быть проект dbt, подключенный к [платформе данных](/docs/platform/connect-data-platform/about-connections).
+- У вас должны быть [права доступа](/docs/platform/manage-access/about-user-access) для просмотра, создания, изменения или запуска заданий.
+- Необходимо настроить [среду развертывания](/docs/deploy/deploy-environments).
 
 ## Создание и расписание jobs {#create-and-schedule-jobs}
 
-1. На странице deployment environment нажмите **Create job** > **Deploy job**, чтобы создать новый deploy job.
+:::info
+
+<Constant name="dbt" /> использует [всемирное координированное время](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC) для всех заданий, включая задания с расписанием cron. Поправки на ваш местный часовой пояс или переход на летнее время не применяются. Например:
+
+- 0 означает 00:00 (полночь) UTC
+- 12 означает 12:00 (полдень) UTC
+- 23 означает 23:00 UTC
+
+:::
+
+1. На странице среды развертывания нажмите **Create job** > **Deploy job**, чтобы создать новое задание развертывания. 
 2. Параметры в разделе **Job settings**:
-    - **Job name** &mdash; Укажите имя deploy job. Например: `Daily build`.
-    - (Опционально) **Description** &mdash; Добавьте описание того, что делает job (например, что job потребляет и что она создает).
-    - **Environment** &mdash; По умолчанию установлено deployment environment, из которого вы создавали deploy job.
+    - **Job name** &mdash; Укажите имя задания развертывания. Например, `Daily build`.
+    - (Необязательно) **Description** &mdash; Опишите, что делает задание (например, какие данные оно использует и какие создает). 
+    - **Environment** &mdash; По умолчанию выбрана среда развертывания, из которой вы создали задание развертывания.
 3. Параметры в разделе **Execution settings**:
-    - [**Commands**](/docs/deploy/job-commands#built-in-commands) &mdash; По умолчанию включает команду `dbt build`. Нажмите **Add command**, чтобы добавить другие [команды](/docs/deploy/job-commands), которые должны выполняться при запуске job. Во время запуска job [built-in commands](/docs/deploy/job-commands#built-in-commands) «цепочкой» выполняются друг за другом; если один шаг падает, вся job завершится со статусом "Error".
-    - [**Generate docs on run**](/docs/deploy/job-commands#checkbox-commands) &mdash; Включите, если хотите [генерировать документацию проекта](/docs/explore/build-and-view-your-docs) при запуске deploy job. Если этот шаг упадет, job всё равно может завершиться успешно, если последующие шаги пройдут.
-    - [**Run source freshness**](/docs/deploy/job-commands#checkbox-commands) &mdash; Включите, чтобы выполнить команду `dbt source freshness` перед запуском deploy job. Если этот шаг упадет, job всё равно может завершиться успешно, если последующие шаги пройдут. Подробнее см. [Source freshness](/docs/deploy/source-freshness).
+    - [**Commands**](/docs/deploy/job-commands#built-in-commands) &mdash; По умолчанию содержит команду `dbt build`. Нажмите **Add command**, чтобы добавить другие [команды](/docs/deploy/job-commands), которые должны вызываться при выполнении задания. Во время выполнения задания [встроенные команды](/docs/deploy/job-commands#built-in-commands) выполняются последовательно, и если один из шагов завершается с ошибкой, все задание завершается со статусом «Error». 
+    <VersionBlock lastVersion="1.99">
+
+    - [**Generate docs on run**](/docs/deploy/job-commands#checkbox-commands) &mdash; Включите этот параметр, если хотите [создавать документацию проекта](/docs/explore/build-and-view-your-docs) при выполнении этого задания развертывания. Если этот шаг завершится с ошибкой, задание все равно может завершиться успешно при условии успешного выполнения последующих шагов.
+
+    </VersionBlock>
+
+    - [**Run source freshness**](/docs/deploy/source-freshness) &mdash; Включите этот параметр, чтобы вызывать команду `dbt source freshness` перед выполнением задания развертывания. Если этот шаг завершится с ошибкой, задание все равно может завершиться успешно при условии успешного выполнения последующих шагов. Подробнее см. в разделе [Актуальность источников](/docs/deploy/source-freshness).
+    - [**dbt State**](/docs/deploy/dbt-state-about) &mdash; [dbt State] повторно использует узлы, если их логика и данные не изменились, избегая ненужных повторных сборок. Выберите **On**, **Off** или **Inherited from environment**, чтобы использовать настройку среды. Этот параметр отображается только в том случае, если dbt State [включен](/docs/deploy/dbt-state-setup) для вашей учетной записи. Подробнее о [включении dbt State для отдельных заданий](/docs/deploy/dbt-state-enable-env-jobs#enabling-dbt-state-on-individual-jobs).
 4. Параметры в разделе **Triggers**:
-    - **Run on schedule** &mdash; Запускать deploy job по расписанию.
-        - **Timing** &mdash; Укажите, как [расписать](#schedule-days) deploy job: **Intervals** (запуск каждые N часов), **Specific hours** (в определенные часы суток) или **Cron schedule** (по [cron синтаксису](#cron-schedule)).
-        - **Days of the week** &mdash; По умолчанию установлено каждый день, если в **Timing** выбран **Intervals** или **Specific hours**.
-    - **Run when another job finishes** &mdash; Запускать deploy job после завершения другой _upstream_ deploy [job](#trigger-on-job-completion).
-        - **Project** &mdash; Укажите родительский проект, в котором находится upstream deploy job.
-        - **Job** &mdash; Укажите upstream deploy job.
-        - **Completes on** &mdash; Выберите статус(ы) запуска job, при которых deploy job будет поставлена в очередь ([enqueue](/docs/deploy/job-scheduler#scheduler-queue)).
+    - **Run on schedule** &mdash; Выполнять задание развертывания по заданному расписанию.
+        - **Timing** &mdash; Укажите, как [настроить расписание](#schedule-days) задания развертывания: **Intervals** — запускать задание через заданное число часов, **Specific hours** — запускать задание в определенное время суток или **Cron schedule** — запускать задание по расписанию, заданному с помощью [синтаксиса cron](#cron-schedule).
+        - **Days of the week** &mdash; По умолчанию выбраны все дни недели, если для **Timing** выбран вариант **Intervals** или **Specific hours**.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Пример раздела Triggers на странице Deploy Job"/>
+        :::note Использование `state:modified` в задании по расписанию
+        При использовании селектора [`state:modified`](/reference/node-selection/methods#state) в задании по расписанию задание может завершиться успешно, не собрав ни одной модели, если с момента последнего запуска, состояние которого используется для отсрочки, не обнаружено изменений. Подробнее и рекомендации см. в разделе [Задания по расписанию и state:modified](#scheduled-jobs-and-statemodified).
+        :::
 
-5. (Опционально) Параметры в разделе **Advanced settings**:
-    - **Environment variables** &mdash; Определите [переменные окружения](/docs/build/environment-variables), чтобы настроить поведение проекта при запуске deploy job.
-    - **Target name** &mdash; Определите [имя target](/docs/build/custom-target-names), чтобы настроить поведение проекта при запуске deploy job. Переменные окружения и target name часто используются взаимозаменяемо.
-    - **Run timeout** &mdash; Отменить deploy job, если время выполнения превышает значение таймаута.
-    - **Compare changes against** &mdash; По умолчанию установлено **No deferral**. Выберите **Environment** или **This Job**, чтобы указать <Constant name="cloud" />, с чем нужно сравнивать изменения.
+    - **Run when another job finishes** &mdash; Выполнять задание развертывания, когда другое, _предшествующее_ задание развертывания [завершается](#trigger-on-job-completion).  
+        - **Project** &mdash; Укажите родительский проект, содержащий это предшествующее задание развертывания. 
+        - **Job** &mdash; Укажите предшествующее задание развертывания. 
+        - **Completes on** &mdash; Выберите статусы выполнения задания, при которых задание развертывания будет [поставлено в очередь](/docs/deploy/job-scheduler#scheduler-queue).  
+
+5. (Необязательно) Параметры в разделе **Advanced settings**: 
+    - **Environment variables** &mdash; Определите [переменные среды](/docs/build/environment-variables), чтобы настроить поведение проекта при выполнении задания развертывания.
+    - **Target name** &mdash; Определите [имя целевого окружения](/docs/build/custom-target-names), чтобы настроить поведение проекта при выполнении задания развертывания. Переменные среды и имена целевых окружений часто используются как взаимозаменяемые средства настройки. 
+    - **Run timeout** &mdash; Отменять задание развертывания, если время выполнения превышает заданный тайм-аут. 
+    - **Compare changes against** &mdash; По умолчанию выбран вариант **No deferral**. Выберите **Environment** или **This Job**, чтобы указать <Constant name="dbt" />, с чем сравнивать изменения.  
 
     :::info
-    В старых версиях <Constant name="cloud" /> можно было делать deferral только на конкретную job, а не на environment. Deferral на job сравнивает state с кодом проекта из последнего успешного запуска deferred job. Deferral на environment эффективнее, поскольку <Constant name="cloud" /> сравнивает с представлением проекта (которое хранится в `manifest.json`) из последнего успешного запуска deploy job в deferred environment. Учитывая _все_ deploy jobs, которые выполняются в deferred environment, <Constant name="cloud" /> получает более точное и актуальное представление state проекта.
+    Более ранние версии <Constant name="dbt" /> позволяют использовать для отсрочки только конкретное задание, а не среду. При отсрочке на задание состояние сравнивается с кодом проекта, который выполнялся при последнем успешном запуске выбранного задания. Отсрочка на среду эффективнее: <Constant name="dbt" /> выполняет сравнение с представлением проекта (хранящимся в `manifest.json`) из последнего успешного запуска задания развертывания в выбранной среде. Учитывая _все_ задания развертывания, выполняемые в выбранной среде, <Constant name="dbt" /> получает более точное и актуальное представление состояния проекта.
     :::
 
-    - **dbt version** &mdash; По умолчанию наследуется [версия dbt](/docs/dbt-versions/core) из окружения. dbt Labs настоятельно рекомендует не менять настройку по умолчанию. Возможность менять версию на уровне job полезна только при обновлении проекта до следующей версии dbt; иначе несовпадение версий окружения и job может приводить к непредсказуемому поведению.
-    - **Threads** &mdash; По умолчанию установлено 4 [потока](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Увеличьте количество потоков, чтобы повысить параллельность выполнения моделей.
+    - **dbt version** &mdash; По умолчанию [версия dbt](/docs/dbt-versions) наследуется из среды. dbt Labs настоятельно рекомендует не изменять настройку по умолчанию. Возможность изменить версию на уровне задания полезна только при обновлении проекта до следующей версии dbt; в остальных случаях несовпадение версий среды и задания может приводить к неожиданному поведению. 
+    - **Threads** &mdash; По умолчанию задано 4 [потока](/docs/running-a-dbt-project/using-threads). Увеличьте число потоков, чтобы повысить параллелизм выполнения моделей.
 
-    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/deploy-job-adv-settings.png" width="90%" title="Пример Advanced Settings на странице Deploy Job"/>
+    <Lightbox src="/img/docs/dbt-platform/using-dbt-platform/deploy-job-adv-settings.png" width="90%" title="Пример расширенных настроек на странице задания развертывания"/>
 
 ### Расписание по дням {#schedule-days}
 
@@ -71,47 +91,45 @@ tags: [scheduler]
 
 - **Specific hours** &mdash; Используйте этот вариант, чтобы задать конкретные часы запуска job. Можно указать список часов (в UTC) через запятую, когда job должна запускаться. Например, если указать `0,12,23,`, job будет запускаться в полночь, в полдень и в 11 вечера UTC. Запуски будут консистентны по часам и дням, так что если job запускается в 00:05, 12:05 и 23:05 UTC, то она будет запускаться в эти же часы каждый день. Этот вариант полезен, если job должна выполняться в определенное время суток и не должна запускаться чаще одного раза в день.
 
-
-:::info
-
-<Constant name="cloud" /> использует [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC) и не выполняет преобразование в ваш часовой пояс и не учитывает переходы на летнее/зимнее время. Например:
-
-- 0 означает 12am (полночь) UTC
-- 12 означает 12pm (день) UTC
-- 23 означает 11pm UTC
-
-:::
-
-### Cron schedule {#cron-schedule}
+### Расписание cron {#cron-schedule}
 
 Чтобы полностью кастомизировать расписание job, выберите опцию **Cron schedule** и используйте cron‑синтаксис. В этом синтаксисе можно указать минуту, час, день месяца, месяц и день недели, что позволяет задавать сложные расписания (например запуск job в первый понедельник каждого месяца).
 
-**Частота cron**
+**Примечание:** Расписания Cron в <Constant name="dbt" /> используют UTC, не преобразуются в ваш местный часовой пояс и не учитывают переход на летнее время.
 
-Чтобы повысить производительность, ограничения частоты расписания зависят от тарифа <Constant name="cloud" />:
+**Частота запуска по Cron**
 
-- Developer plans: <Constant name="cloud" /> задает минимальный интервал в 10 минут. Это означает, что запуск чаще, чем раз в 10 минут, или с интервалом меньше 10 минут, не поддерживается.
-- Starter, Enterprise и Enterprise+ plans: ограничений на частоту выполнения job нет.
+Для повышения производительности допустимая частота запуска заданий по расписанию зависит от тарифного плана <Constant name="dbt" />:
+
+- Тарифный план Developer: <Constant name="dbt" /> устанавливает минимальный интервал между запусками заданий по расписанию в 10 минут. Это означает, что запуск заданий чаще, то есть с интервалом менее 10 минут, не поддерживается.
+- Тарифные планы Starter, Enterprise и Enterprise+: ограничений на частоту выполнения заданий нет.
 
 **Примеры**
 
-Используйте инструменты вроде [crontab.guru](https://crontab.guru/), чтобы сформировать корректный cron‑синтаксис. Этот инструмент позволяет вводить cron‑фрагменты и получать их расшифровку на обычном языке. Планировщик <Constant name="cloud" /> поддерживает `L` для запуска jobs в последний день месяца.
+Используйте такие инструменты, как [crontab.guru](https://crontab.guru/), чтобы сформировать корректное выражение cron. Этот инструмент позволяет вводить выражения cron и получать их описание на простом английском языке. Планировщик заданий <Constant name="dbt" /> поддерживает использование `L` для запуска заданий в последний день месяца.
 
 Примеры cron‑расписаний:
 
-- `0 * * * *`: Каждый час, в 0 минут.
-- `*/5 * * * *`: Каждые 5 минут. (Недоступно на Developer plans)
-- `5 4 * * *`: Ровно в 4:05 AM UTC.
-- `30 */4 * * *`: В минуту 30 каждого 4‑го часа (например 4:30 AM, 8:30 AM, 12:30 PM и т. д., всё UTC).
-- `0 0 */2 * *`: В 12:00 AM (полночь) UTC через день.
+- `0 * * * *`: Каждый час, на нулевой минуте.
+- `*/5 * * * *`: Каждые 5 минут. (Недоступно на тарифных планах Developer)
+- `5 4 * * *`: Ровно в 04:05 UTC.
+- `30 */4 * * *`: На 30-й минуте каждого четвёртого часа (например, в 04:30, 08:30, 12:30 и так далее, по UTC).
+- `0 0 */2 * *`: В 00:00 (полночь) UTC через день.
 - `0 0 * * 1`: В полночь UTC каждый понедельник.
-- `0 0 L * *`: В 12:00 AM (полночь), в последний день месяца.
-- `0 0 L 1,2,3,4,5,6,8,9,10,11,12 *`: В 12:00 AM в последний день месяца, только в январе, феврале, марте, апреле, мае, июне, августе, сентябре, октябре, ноябре и декабре.
-- `0 0 L 7 *`: В 12:00 AM в последний день месяца, только в июле.
-- `0 0 L * FRI,SAT`: В 12:00 AM в последний день месяца и в пятницу и субботу.
-- `0 12 L * *`: В 12:00 PM (день), в последний день месяца.
-- `0 7 L * 5`: В 07:00 AM, в последний день месяца и в пятницу.
-- `30 14 L * *`: В 02:30 PM, в последний день месяца.
+- `0 0 L * *`: В 00:00 (полночь) в последний день месяца.
+- `0 0 L 1,2,3,4,5,6,8,9,10,11,12 *`: В 00:00 в последний день месяца, только в январе, феврале, марте, апреле, мае, июне, августе, сентябре, октябре, ноябре и декабре.
+- `0 0 L 7 *`: В 00:00 в последний день месяца, только в июле.
+- `0 0 L * FRI,SAT`: В 00:00 в последний день месяца, а также по пятницам и субботам.
+- `0 12 L * *`: В 12:00 (полдень) в последний день месяца.
+- `0 7 L * 5`: В 07:00 в последний день месяца, а также по пятницам.
+- `30 14 L * *`: В 14:30 в последний день месяца.
+- `0 4 * * MON#1`: В 04:00 в первый понедельник каждого месяца.
+
+### Задания по расписанию и `state:modified` {#scheduled-jobs-and-statemodified}
+
+import StateModifiedScheduledJobs from '/snippets/_state-modified-scheduled-jobs.md';
+
+<StateModifiedScheduledJobs />
 
 ### Триггер по завершению job  <Lifecycle status="self_service,managed,managed_plus" /> {#trigger-on-job-completion}
 Чтобы _связывать_ deploy jobs в цепочку:
@@ -121,9 +139,9 @@ tags: [scheduler]
    - Это также можно настроить через [Create Job API](/dbt-cloud/api-v2#/operations/Create%20Job).
 4. В опции **Completes on** выберите статус(ы) запуска job, при которых deploy job будет поставлена в очередь ([enqueue](/docs/deploy/job-scheduler#scheduler-queue)).
 
-<Lightbox src="/img/docs/deploy/deploy-job-completion.jpg" width="100%" title="Пример Trigger on job completion на странице Deploy job"/>
+<Lightbox src="/img/docs/deploy/deploy-job-completion.png" width="100%" title="Пример настройки запуска по завершении задания на странице задания развертывания"/>
 
-5. Вы можете настроить конфигурацию, где одна upstream job триггерит несколько downstream (дочерних) jobs, а также jobs в других проектах. Для настройки триггера у вас должны быть соответствующие [permissions](/docs/cloud/manage-access/enterprise-permissions#project-role-permissions) на проект и job.
+5. Вы можете настроить конфигурацию, в которой вышестоящее задание запускает несколько нижестоящих (дочерних) заданий, а также задания в других проектах. Для настройки такого запуска у вас должны быть соответствующие [разрешения](/docs/platform/manage-access/enterprise-permissions#project-access-for-project-permissions) на доступ к проекту и заданию.
 
 Если запуск вашей job был триггернут другой job, ссылку на upstream job можно найти в [разделе деталей запуска](/docs/deploy/run-visibility#job-run-details).
 
@@ -151,6 +169,7 @@ import JobMonitoring from '/snippets/_in-progress-top-jobs.md';
 
 ## Связанные материалы {#related-docs}
 
+- [Run visibility](/docs/deploy/run-visibility)
 - [Artifacts](/docs/deploy/artifacts)
 - [Continuous integration (CI) jobs](/docs/deploy/ci-jobs)
 - [Webhooks](/docs/deploy/webhooks)

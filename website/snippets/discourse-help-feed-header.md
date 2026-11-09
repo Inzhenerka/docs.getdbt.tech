@@ -1,1 +1,0 @@
-### Вопросы от сообщества {#questions-from-the-community}

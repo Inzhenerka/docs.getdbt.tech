@@ -1,8 +1,8 @@
 ---
-resource_types: [models, seeds, snapshots, tests]
-description: "Псевдонимизация ресурса позволяет задать ему пользовательское имя в базе данных вместо использования имени файла."
+resource_types: [models, seeds, snapshots, tests, functions]
+description: "Псевдоним ресурса позволяет задать ему собственное имя в базе данных вместо имени файла."
 datatype: string
-intro_text: Укажите пользовательский алиас для модели, теста данных, snapshot или seed и присвойте ему более удобное для пользователя имя в базе данных.
+intro_text: Укажите собственный псевдоним для модели, теста данных, снимка, seed или функции, чтобы задать более удобное имя в базе данных.
 ---
 
 <Tabs>
@@ -125,6 +125,8 @@ snapshots:
   - name: your_snapshot_name
     config:
       alias: the_best_snapshot
+```
+
 </File>
 
 В файле `snapshots/your_snapshot.sql`:
@@ -190,11 +192,61 @@ models:
 При использовании [`store_failures_as`](/reference/resource-configs/store_failures_as), это вернет имя `analytics.dbt_test__audit.orders_order_id_unique_order_id_test` в базе данных.
 
 </TabItem>
+
+<TabItem value="functions" label="Functions">
+
+Configure a function's alias in your project YAML file (`dbt_project.yml`), a properties YAML file (for example, `functions/properties.yml`), or in a SQL file config block.
+
+The following examples demonstrate how to `alias` a function named `calculate_tax` to `tax_calculator`.
+
+In the `dbt_project.yml` file at the project level:
+
+<File name='dbt_project.yml'>
+
+```yml
+functions:
+  your_project:
+    calculate_tax:
+      +alias: tax_calculator
+```
+
+</File>
+
+In `functions/properties.yml`:
+
+<File name='functions/properties.yml'>
+
+```yml
+functions:
+  - name: calculate_tax
+    config:
+      alias: tax_calculator
+```
+
+</File>
+
+In `functions/calculate_tax.sql`:
+
+<File name='functions/calculate_tax.sql'>
+
+```sql
+{{ config(
+    alias="tax_calculator"
+) }}
+```
+
+</File>
+
+This creates the function as `analytics.finance.tax_calculator` in the database. Without an alias, dbt uses the function name (`calculate_tax`) as the identifier.
+
+When referencing the function in your project, use `{{ function('calculate_tax') }}`. dbt looks up the function name and returns the fully-qualified name using the alias, for example `analytics.finance.tax_calculator`.
+
+</TabItem>
 </Tabs>
 
 ## Определение
 
-При необходимости укажите пользовательский псевдоним для [модели](/docs/build/models), [теста данных](/docs/build/data-tests), [снапшота](/docs/build/snapshots) или [сида](/docs/build/seeds).
+При необходимости укажите пользовательский псевдоним для [модели](/docs/build/models), [теста данных](/docs/build/data-tests), [снимка](/docs/build/snapshots), [seed](/docs/build/seeds) или [функции](/docs/build/udfs).
 
 Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например, `analytics.finance.payments`.
 

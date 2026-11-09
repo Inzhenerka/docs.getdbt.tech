@@ -1,4 +1,5 @@
 ---
+description: "Specify how a data test stores its failures in the database: as a table, a view, or ephemerally."
 resource_types: [tests]
 id: "store_failures_as"
 ---
@@ -71,6 +72,6 @@ data_tests:
 Дополнительные ресурсы:
 
 - [Конфигурации тестов данных](/reference/data-test-configs#related-documentation)
-- [Конфигурации, специфичные для тестов данных](/reference/data-test-configs#test-data-specific-configurations)
+- [Конфигурации, специфичные для тестов данных](/reference/data-test-configs#data-test-specific-configurations)
 - [Настройка директорий моделей в dbt_project.yml](/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml)
 - [Наследование конфигураций](/reference/define-configs#config-inheritance)

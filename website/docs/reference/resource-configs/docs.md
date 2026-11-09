@@ -52,13 +52,13 @@ models:
 
 <TabItem value="sources">
 
-Это свойство не реализовано для источников.
+Конфигурация `docs` не поддерживается для источников.
 
 </TabItem>
 
 <TabItem value="seeds">
 
-Вы можете использовать свойство docs в YAML-файлах, включая `dbt_project.yml`:
+Вы можете использовать конфигурацию `docs` в YAML-файлах, включая `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -89,7 +89,7 @@ seeds:
 
 <TabItem value="snapshots">
 
-Вы можете использовать свойство docs в YAML-файлах, включая `dbt_project.yml`:
+Вы можете использовать конфигурацию `docs` в YAML-файлах, в том числе в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -121,7 +121,7 @@ snapshots:
 
 <TabItem value="analyses">
 
-Вы можете использовать свойство docs в YAML-файлах, _кроме_ `dbt_project.yml`. Обратитесь к [Свойства анализа](/reference/analysis-properties) для получения дополнительной информации.
+Вы можете настроить `docs` для анализов в блоке `config` в разделе `analyses:` вашего YAML-файла. Подробнее см. в разделе [Свойства анализов](/reference/analysis-properties).
 
 <File name='analysis/schema.yml'>
 
@@ -140,18 +140,18 @@ analyses:
 
 <TabItem value="macros">
 
-Вы можете использовать свойство docs в YAML-файлах, _кроме_ `dbt_project.yml`. Обратитесь к [Свойства макросов](/reference/macro-properties) для получения дополнительной информации.
+Вы можете настроить `docs` для макросов в блоке `config` в разделе `macros:` вашего YAML-файла. Подробнее см. в разделе [Свойства макросов](/reference/macro-properties).
 
 <File name='macros/schema.yml'>
 
 ```yml
-
 macros:
   - name: macro_name
-    config:
-      docs: # changed to config in v1.10
+    config: 
+      docs: # changed to config in v1.11
         show: true | false
 ```
+
 </File>
 
 </TabItem>
@@ -160,8 +160,10 @@ macros:
 
 Обратите внимание, что для обратной совместимости `docs` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
 
-## Определение {#definition}
-Свойство `docs` можно использовать для задания конфигурации, относящейся к документации, для моделей. Оно поддерживает атрибут `show`, который управляет тем, отображаются ли узлы на автоматически сгенерированном сайте документации. Также поддерживается `node_color` для моделей, seeds, snapshots и analyses. Другие типы узлов не поддерживаются.
+## Определение
+Вы можете использовать конфигурацию `docs`, чтобы задать настройки документации для ресурсов. Она поддерживает следующие атрибуты:
+- `show`: Определяет, отображаются ли узлы на автоматически создаваемом сайте документации.
+- `node_color`: Определяет цвета узлов, отображаемых в DAG. Поддерживается для моделей, seed-файлов, снимков и анализов. Другие типы узлов не поддерживаются.
 
 **Примечание:** Скрытые модели все равно будут отображаться в визуализации DAG dbt, но будут обозначены как "скрытые".
 
@@ -210,9 +212,9 @@ models:
 
 Обратите внимание: чтобы применить и увидеть настроенные цвета, необходимо выполнить или повторно выполнить команду `dbt docs generate`.
 
-:::info Пользовательские цвета узлов не применяются в <Constant name="explorer" />
+:::info Пользовательские цвета узлов не применяются в <Constant name="catalog" />
 
-Пользовательский атрибут `node_color` не применяется в <Constant name="explorer" />. Вместо этого Explorer предоставляет [lenses](/docs/explore/explore-projects#lenses) — это слои карты для вашего <Term id="dag"/>. Lenses помогают лучше понимать контекстные метаданные проекта в масштабе и различать отдельные модели или их подмножества.
+Пользовательский атрибут `node_color` не применяется в <Constant name="catalog" />. Вместо него Explorer предоставляет [линзы](/docs/explore/explore-projects#lenses) — слои карты для вашего <Term id="dag"/>. Линзы помогают лучше понимать контекстные метаданные проекта в большом масштабе и выделять отдельные модели или их подмножества.
 
 :::
 
@@ -220,7 +222,7 @@ models:
 
 ![Пример](../../../../website/static/img/node_color_example.png)
 
-`marts/core/fct_orders.sql` с `node_color: red` переопределяет `dbt_project.yml` с `node_color: gold`
+<Lightbox src="/img/node_color_example.png" title="Пример" />
 
 `marts/core/schema.yml` с `node_color: #000000` переопределяет `dbt_project.yml` с `node_color: gold`
 <File name='dbt_project.yml'>

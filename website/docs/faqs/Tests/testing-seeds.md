@@ -6,15 +6,13 @@ id: testing-seeds
 
 ---
 
-Чтобы тестировать и документировать seeds, используйте [файл схемы](/reference/configs-and-properties) и разместите конфигурации под ключом `seeds:`
+Чтобы тестировать и документировать seed-файлы, используйте [файл свойств](/reference/configs-and-properties) и размещайте настройки внутри ключа `seeds:`
 
 ## Пример {#example}
 
-<File name='seeds/schema.yml'>
+<File name='seeds/properties.yml'>
 
 ```yml
-version: 2
-
 seeds:
   - name: country_codes
     description: Сопоставление двухбуквенных кодов стран с названиями стран

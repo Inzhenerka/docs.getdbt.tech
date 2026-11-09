@@ -1,5 +1,6 @@
 ---
 title: "Конфигурации Firebolt"
+description: "Настройте специфичные для Firebolt параметры моделей dbt, включая quote_columns и другие параметры адаптера."
 id: "firebolt-configs"
 ---
 
@@ -257,11 +258,12 @@ sources:
               data_type: <type>
 ```
 
-`aws_key_id` и `aws_secret_key` — это учетные данные, которые позволяют Firebolt получить доступ к вашему S3 бакету. Узнайте, как их настроить, следуя этому [руководству](https://docs.firebolt.io/godocs/Guides/loading-data/creating-access-keys-aws.html). Если ваш бакет является публичным, эти параметры не обязательны.
+`aws_key_id` и `aws_secret_key` — это учетные данные, которые предоставляют Firebolt доступ к вашему бакету S3. Узнайте,
+как их настроить, следуя этому [руководству](https://docs.firebolt.io/godocs/Guides/loading-data/creating-access-keys-aws.html). Если ваш бакет общедоступен, эти параметры не нужны.
 
 #### Запуск внешних таблиц {#running-external-tables}
 
-Макрос `stage_external_sources` наследуется из [пакета dbt-external-tables](https://github.com/dbt-labs/dbt-external-tables#syntax) и является основным точкой входа при использовании этого пакета. Он имеет два режима работы: стандартный и "полное обновление".
+Макрос `stage_external_sources` наследуется из [пакета dbt-external-tables](https://github.com/dbt-labs/dbt-external-tables#syntax) и служит основной точкой входа при использовании этого пакета. У него два режима работы: стандартный и «полное обновление».
 
 ```bash
 # перебрать все узлы источников, создать, если отсутствует, обновить метаданные

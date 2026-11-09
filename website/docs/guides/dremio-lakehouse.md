@@ -1,13 +1,14 @@
 ---
-title: Создание озера данных с dbt Core и Dremio Cloud
+title: Создание озёрного хранилища данных с dbt v1 и Dremio Cloud
 id: build-dremio-lakehouse
-description: Узнайте, как создать озеро данных с dbt Core и Dremio Cloud.
-displayText: Создание озера данных с dbt Core и Dremio Cloud
-hoverSnippet: Узнайте, как создать озеро данных с dbt Core и Dremio Cloud
+description:  Узнайте, как создать озёрное хранилище данных с dbt v1 и Dremio Cloud.
+displayText: Создание озёрного хранилища данных с dbt v1 и Dremio Cloud
+hoverSnippet: Узнайте, как создать озёрное хранилище данных с dbt v1 и Dremio Cloud
+# time_to_complete: '30 minutes' закомментировано до завершения тестирования
 platform: 'dbt-core'
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Dremio', 'dbt Core']
+tags: ['Dremio', 'dbt v1']
 level: 'Intermediate'
 ---
 
@@ -15,15 +16,15 @@ level: 'Intermediate'
 
 ## Введение {#introduction}
 
-Это руководство покажет, как построить data lakehouse с использованием <Constant name="core" /> версии 1.5 или новее и Dremio Cloud. Вы сможете упростить и оптимизировать свою инфраструктуру данных с помощью надежного фреймворка трансформаций dbt и открытого, простого в использовании lakehouse от Dremio. Интегрированное решение позволяет компаниям создать прочную основу для данных и аналитики, поддерживать self-service аналитику и улучшать бизнес-инсайты, одновременно упрощая операционную деятельность за счёт устранения необходимости писать сложные конвейеры Extract, Transform, and Load (ETL).
+В этом руководстве показано, как создать озеро-хранилище данных (data lakehouse) с помощью <Constant name="dbt" /> версии 1.5 или новее и Dremio Cloud. Вы можете упростить и оптимизировать свою инфраструктуру данных благодаря мощному фреймворку трансформации данных dbt и открытому, удобному в использовании озеру-хранилищу данных Dremio. Это интегрированное решение позволяет компаниям создать прочную основу для работы с данными и аналитикой, развивать самостоятельную аналитику и получать более глубокое понимание бизнеса, одновременно упрощая рабочие процессы за счёт устранения необходимости писать сложные конвейеры извлечения, трансформации и загрузки данных (ETL).
 
 ### Предварительные требования {#prerequisites}
 
 * У вас должна быть учетная запись [Dremio Cloud](https://docs.dremio.com/cloud/).
 * У вас должен быть установлен Python 3.
-* У вас должен быть установлен <Constant name="core" /> версии 1.5 или новее ([инструкция по установке](//docs/core/installation-overview)).
-* У вас должен быть установлен и настроен адаптер Dremio версии 1.5.0 или новее для Dremio Cloud ([см. инструкцию](/docs/core/connect-data-platform/dremio-setup)).
-* У вас должны быть базовые практические знания <Constant name="git" /> и интерфейса командной строки (CLI).
+* У вас должен быть [установлен](//docs/local/install-dbt) <Constant name="dbt" /> версии 1.5 или новее. 
+* У вас должен быть [установлен и настроен](/docs/local/connect-data-platform/dremio-setup) адаптер Dremio версии 1.5.0 или новее для Dremio Cloud.
+* У вас должны быть базовые навыки работы с <Constant name="git" /> и интерфейсом командной строки (CLI).
 
 ## Проверка вашей среды {#validate-your-environment}
 
@@ -56,7 +57,7 @@ Plugins:
 
 1. Склонируйте пример проекта Dremio <Constant name="core" /> из [репозитория GitHub](https://github.com/dremio-brock/DremioDBTSample/tree/master/dremioSamples).
 
-2. В вашей интегрированной среде разработки (<Constant name="cloud_ide" />) откройте файл `relation.py` в каталоге адаптера Dremio:
+2. В интегрированной среде разработки (<Constant name="studio_ide" />) откройте файл relation.py в каталоге адаптера Dremio:
   `$HOME/Library/Python/3.9/lib/python/site-packages/dbt/adapters/dremio/relation.py`
 
 3. Найдите и обновите строки 51 и 52, чтобы они соответствовали следующему синтаксису:
@@ -142,7 +143,7 @@ dremioSamples:
 
 ```
 
-Теперь, когда у вас есть настроенная среда и выполненная задача, вы можете просмотреть данные в Dremio и расширить свой код. Ниже показан снимок структуры проекта в <Constant name="cloud_ide" />:
+Теперь, когда у вас есть работающее окружение и завершённое задание, вы можете просмотреть данные в Dremio и доработать свой код. Ниже показана структура проекта в <Constant name="studio_ide" />:
 
 <Lightbox src="/img/guides/dremio/dremio-cloned-repo.png" title="Клонированный репозиторий в IDE"/>
 

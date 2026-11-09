@@ -5,26 +5,56 @@ description: "Синтаксис выбора узлов позволяет вы
 
 Синтаксис выбора узлов в dbt позволяет запускать только определенные ресурсы в конкретном вызове dbt. Этот синтаксис выбора используется для следующих подкоманд:
 
+<VersionBlock lastVersion="1.11">
+
 | команда                         | аргумент(ы)                                                          |
 | :------------------------------ | -------------------------------------------------------------------- |
 | [run](/reference/commands/run)             | `--select`, `--exclude`, `--selector`, `--defer`                     |
 | [test](/reference/commands/test)           | `--select`, `--exclude`, `--selector`, `--defer`                     |
 | [seed](/reference/commands/seed)           | `--select`, `--exclude`, `--selector`                                |
-| [snapshot](/reference/commands/snapshot)   | `--select`, `--exclude`  `--selector`                                |
+| [snapshot](/reference/commands/snapshot)   | `--select`, `--exclude`, `--selector`                                |
 | [ls (list)](/reference/commands/list)      | `--select`, `--exclude`, `--selector`, `--resource-type`             |
 | [compile](/reference/commands/compile)     | `--select`, `--exclude`, `--selector`, `--inline`                    |
 | [freshness](/reference/commands/source)    | `--select`, `--exclude`, `--selector`                                |
 | [build](/reference/commands/build)         | `--select`, `--exclude`, `--selector`, `--resource-type`, `--defer`  |
-| [docs generate](/reference/commands/cmd-docs) | `--select`, `--exclude`, `--selector`                  |
+| [docs generate](/reference/commands/cmd-docs) | `--select`, `--exclude`, `--selector`                             |
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+| command                         | argument(s)                                                          |
+| :------------------------------ | -------------------------------------------------------------------- |
+| [run](/reference/commands/run)             | `--select`, `--exclude`, `--defer`                                   |
+| [test](/reference/commands/test)           | `--select`, `--exclude`, `--defer`                                   |
+| [seed](/reference/commands/seed)           | `--select`, `--exclude`                                              |
+| [snapshot](/reference/commands/snapshot)   | `--select`, `--exclude`                                              |
+| [ls (list)](/reference/commands/list)      | `--select`, `--exclude`, `--resource-type`                           |
+| [compile](/reference/commands/compile)     | `--select`, `--exclude`, `--inline`                                  |
+| [freshness](/reference/commands/source)    | `--select`, `--exclude`                                              |
+| [build](/reference/commands/build)         | `--select`, `--exclude`, `--resource-type`, `--defer`                |
+| [docs generate](/reference/commands/cmd-docs) | `--select`, `--exclude`                                           |
+
+</VersionBlock>
 
 :::info Узлы и ресурсы
 
 Мы используем термины <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">"узлы"</a> и "ресурсы" взаимозаменяемо. Они охватывают все модели, тесты, источники, семена, снимки, экспозиции и анализы в вашем проекте. Это объекты, которые составляют DAG (ориентированный ациклический граф) dbt.
 :::
 
-Аргументы `--select` и `--selector` похожи тем, что оба позволяют выбирать ресурсы. Чтобы понять разницу между ними, см. [Differences between `--select` and `--selector`](/reference/node-selection/yaml-selectors#difference-between---select-and---selector).
+<VersionBlock lastVersion="1.11">
 
-## Указание ресурсов {#specifying-resources}
+Аргументы `--select` и `--selector` похожи тем, что оба позволяют выбирать ресурсы. Чтобы понять разницу, см. [Различия между `--select` и `--selector`](/reference/node-selection/yaml-selectors#difference-between---select-and---selector).
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+Вы можете ссылаться на именованный селектор с помощью метода `selector:` в аргументах `--select` или `--exclude`. Подробнее см. в разделе [Метод `selector:`](/reference/node-selection/methods#selector).
+
+</VersionBlock>
+
+## Указание ресурсов
 
 По умолчанию, `dbt run` выполняет _все_ модели в графе зависимостей; `dbt seed` создает все семена, `dbt snapshot` выполняет каждый снимок. Флаг `--select` используется для указания подмножества узлов для выполнения.
 
@@ -44,7 +74,11 @@ description: "Синтаксис выбора узлов позволяет вы
 
 ### Примеры {#examples}
 
-По умолчанию, `dbt run` выполнит _все_ модели в графе зависимостей. Во время разработки (и развертывания) полезно указать только подмножество моделей для запуска. Используйте флаг `--select` с `dbt run`, чтобы выбрать подмножество моделей для запуска. Обратите внимание, что следующие аргументы (`--select`, `--exclude` и `--selector`) также применимы к другим задачам dbt, таким как `test` и `build`.
+Выберите ресурсы для сборки (run, test, seed, snapshot) или проверки актуальности данных: `--select`, `-s`
+
+### Примеры
+
+По умолчанию `dbt run` выполняет _все_ модели в графе зависимостей. Во время разработки (и развертывания) полезно указывать для выполнения только подмножество моделей. Используйте флаг `--select` с `dbt run`, чтобы выбрать подмножество моделей для выполнения. <VersionBlock lastVersion="1.11">Обратите внимание, что следующие аргументы (`--select`, `--exclude` и `--selector`) также применимы к другим задачам dbt, таким как `test` и `build`.</VersionBlock><VersionBlock firstVersion="1.12">Обратите внимание, что следующие аргументы (`--select` и `--exclude`) также применимы к другим задачам dbt, таким как `test` и `build`.</VersionBlock>
 
 <Tabs>
 <TabItem value="select" label="Примеры флага select">
@@ -53,21 +87,21 @@ description: "Синтаксис выбора узлов позволяет вы
 
 1. имя пакета
 2. имя модели
-3. полностью квалифицированный путь к каталогу моделей
-4. метод выбора (`path:`, `tag:`, `config:`, `test_type:`, `test_name:`)
+3. полный путь к каталогу моделей
+4. метод выбора (`path:`, `tag:`, `config:`, `test_type:`, `test_name:`, `selector:`)
 
 Примеры:
 
 ```bash
 dbt run --select "my_dbt_project_name"   # запускает все модели в вашем проекте
-dbt run --select "my_dbt_model"          # запускает конкретную модель
-dbt run --select "path/to/my/models"     # запускает все модели в конкретном каталоге
-dbt run --select "my_package.some_model" # запускает конкретную модель в конкретном пакете
+dbt run --select "my_dbt_model"          # запускает определённую модель
+dbt run --select "path/to/my/models"     # запускает все модели в определённом каталоге
+dbt run --select "my_package.some_model" # запускает определённую модель из определённого пакета
 dbt run --select "tag:nightly"           # запускает модели с тегом "nightly"
-dbt run --select "path/to/models"        # запускает модели, содержащиеся в path/to/models
-dbt run --select "path/to/my_model.sql"  # запускает конкретную модель по ее пути
+dbt run --select "path/to/models"        # запускает модели, находящиеся в path/to/models
+dbt run --select "path/to/my_model.sql"  # запускает определённую модель по её пути
+dbt run --select "selector:my_selector"  # запускает набор узлов, заданный именованным селектором в selectors.yml; доступно начиная с версии 1.12
 ```
-
 </TabItem>
 
 <TabItem value="subset" label="Примеры подмножеств узлов">
@@ -96,15 +130,28 @@ dbt run --select "tag:nightly my_model finance.base.*"
 
 # используйте методы и пересечения для более сложных селекторов
 dbt run --select "path:marts/finance,tag:nightly,config.materialized:table"
+
+# combine a named selector with another method
+dbt run --select "selector:staging,tag:nightly"
 ```
 
 </TabItem>
 
 </Tabs>
 
-Когда ваша логика выбора становится более сложной и неудобной для ввода в виде аргументов командной строки, рассмотрите возможность использования [yaml-селектора](/reference/node-selection/yaml-selectors). Вы можете использовать предопределенное определение с флагом `--selector`. Обратите внимание, что при использовании `--selector` большинство других флагов (а именно `--select` и `--exclude`) будут игнорироваться.
+По мере усложнения логики выбора, когда её становится неудобно задавать аргументами командной строки, рассмотрите возможность использования [селектора YAML](/reference/node-selection/yaml-selectors).
 
-Аргументы `--select` и `--selector` похожи тем, что оба позволяют выбирать ресурсы. Чтобы понять разницу между аргументами `--select` и `--selector`, см. [этот раздел](/reference/node-selection/yaml-selectors#difference-between---select-and---selector) с более подробным объяснением.
+<VersionBlock lastVersion="1.11">
+Вы можете использовать предопределённый селектор с флагом `--selector`. Обратите внимание: при использовании `--selector` dbt игнорирует `--select` и `--exclude`.
+
+Аргументы `--select` и `--selector` похожи тем, что оба позволяют выбирать ресурсы. Чтобы понять разницу, см. раздел [Различия между `--select` и `--selector`](/reference/node-selection/yaml-selectors#difference-between---select-and---selector).
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+Вы можете ссылаться на предопределённый селектор с помощью метода `selector:` при использовании `--select` или `--exclude`. Подробнее см. в разделе [Метод `selector:`](/reference/node-selection/methods#selector).
+
+</VersionBlock>
 
 ### Диагностика с помощью команды `ls` {#troubleshoot-with-the-ls-command}
 
@@ -114,8 +161,5 @@ dbt run --select "path:marts/finance,tag:nightly,config.materialized:table"
 dbt ls --select "path/to/my/models" # Список всех моделей в конкретном каталоге.
 dbt ls --select "source_status:fresher+" # Показывает источники, обновленные с момента последнего запуска dbt source freshness.
 dbt ls --select state:modified+ # Отображает узлы, измененные по сравнению с предыдущим состоянием.
-dbt ls --select "result:<status>+" state:modified+ --state ./<dbt-artifact-path> # Список узлов, которые соответствуют определенным [статусам результата](/reference/node-selection/syntax#the-result-status) и изменены.
+dbt ls --select "result:<status>+" state:modified+ --state ./<dbt-artifact-path> # Список узлов, которые соответствуют определенным [статусам результата](/reference/node-selection/methods#result) и изменены.
 ```
-
-<Snippet path="discourse-help-feed-header" />
-<DiscourseHelpFeed tags="node-selection"/>

@@ -3,6 +3,7 @@ title: "Добавление Seeds в ваш DAG"
 sidebar_label: "Seeds"
 description: "Предоставляйте seed‑файлы данных для ваших моделей dbt."
 id: "seeds"
+availability: all_users
 ---
 ## Связанные справочные документы {#related-reference-docs}
 * [Конфигурации Seed](/reference/seed-configs)

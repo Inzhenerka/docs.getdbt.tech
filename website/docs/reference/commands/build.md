@@ -4,12 +4,16 @@ sidebar_label: "build"
 id: "build"
 ---
 
+import SnapshotFullRefresh from '/snippets/_snapshot-full-refresh.md';
+import InfoSchemaStaticAnalysis from '/snippets/_info-schema-static-analysis.md';
+import InfoSchemaIntro from '/snippets/_info-schema-intro.md';
+
 Команда `dbt build` выполняет следующие действия:
-- запускает [models](/docs/build/models)
-- выполняет проверки [tests](/docs/build/data-tests)
-- создает [snapshots](/docs/build/snapshots)
-- загружает [seeds](/docs/build/seeds)
-- собирает [user-defined functions](/docs/build/udfs) (доступно начиная с dbt Core v1.11 и в <Constant name="fusion_engine" />)
+- запускает [модели](/docs/build/models)
+- выполняет [тесты](/docs/build/data-tests)
+- создаёт [снимки](/docs/build/snapshots)
+- загружает [seed-файлы](/docs/build/seeds)
+- создаёт [пользовательские функции](/docs/build/udfs) (доступно начиная с <Constant name="dbt" /> v1.11)
 
 В порядке DAG для выбранных ресурсов или всего проекта.
 
@@ -17,16 +21,75 @@ id: "build"
 
 **Артефакты:** Задача `build` создаст один [manifest](/reference/artifacts/manifest-json) и один [артефакт результатов выполнения](/reference/artifacts/run-results-json). Результаты выполнения будут включать информацию обо всех моделях, тестах, данных и снимках, которые были выбраны для сборки, объединенные в один файл.
 
-**Пропуск при сбоях:** Тесты на вышестоящих ресурсах будут блокировать выполнение нижестоящих ресурсов, а сбой теста приведёт к тому, что эти нижестоящие ресурсы будут полностью пропущены. Например, если `model_b` зависит от `model_a`, и тест `unique` на `model_a` завершается с ошибкой, то `model_b` будет иметь статус `SKIP`.
-- Не хотите, чтобы тест приводил к пропуску? Измените его [severity или thresholds](/reference/resource-configs/severity) на `warn` вместо `error`
-- В случае теста с несколькими родительскими ресурсами, где один родитель зависит от другого (например, тест `relationships` между `model_a` и `model_b`), этот тест будет блокировать и пропускать только потомков наиболее «нижестоящего» родителя (`model_b`)
-- Если у вас есть тест с несколькими родителями, которые не зависят друг от друга, dbt [пропускает](https://github.com/dbt-labs/dbt-core/blob/d5071fa13502be273596a0b7c8b13d14b6c68655/core/dbt/compilation.py#L224-L257) нижестоящий узел только в том случае, если этот узел зависит от всех этих родителей
+<VersionBlock firstVersion="2.0">
 
-**Выбор ресурсов:** Задача `build` поддерживает стандартный синтаксис выбора (`--select`, `--exclude`, `--selector`), а также флаг `--resource-type`, который предлагает окончательный фильтр (как и `list`). Какие бы ресурсы ни были выбраны, именно они будут запускаться/тестироваться/создаваться/загружаться с помощью `build`.
-- Помните, что тесты поддерживают косвенный выбор, поэтому `dbt build -s model_a` будет как запускать, так и тестировать `model_a`. Что это значит? Любые тесты, которые напрямую зависят от `model_a`, будут включены, если только эти тесты не зависят также от других невыбранных родителей. См. [выбор тестов](/reference/node-selection/test-selection-examples) для подробностей и примеров.
+<InfoSchemaIntro label="Информационная схема dbt:" />
 
-**Флаги:** Задача `build` поддерживает все те же флаги, что и `run`, `test`, `snapshot` и `seed`. Для флагов, которые используются в нескольких задачах (например, `--full-refresh`), `build` будет использовать одно и то же значение для всех выбранных типов ресурсов (например, как для моделей, так и для данных будет выполнено полное обновление).
+```shell
+dbt build --generate-info-schema
+```
 
+<InfoSchemaStaticAnalysis />
+
+```shell
+dbt build --generate-info-schema --static-analysis strict
+```
+
+</VersionBlock>
+
+**Пропуск при сбоях:** Тесты вышестоящих ресурсов блокируют выполнение нижестоящих ресурсов, а сбой теста приводит к полному пропуску этих нижестоящих ресурсов. Например, если `model_b` зависит от `model_a` и тест `unique` для `model_a` завершается с ошибкой, то `model_b` получает статус `SKIP`.
+- Не хотите, чтобы тест приводил к пропуску ресурсов? Измените его [уровень серьёзности или пороговые значения](/reference/resource-configs/severity), чтобы использовать `warn` вместо `error`.
+- Если у теста несколько родительских ресурсов и один из них зависит от другого (например, тест `relationships` между `model_a` и `model_b`), этот тест блокирует и пропускает только дочерние ресурсы самого нижестоящего родительского ресурса (`model_b`).
+- Если у теста несколько родительских ресурсов, независимых друг от друга, dbt [пропускает](https://github.com/dbt-labs/dbt/blob/d5071fa13502be273596a0b7c8b13d14b6c68655/core/dbt/compilation.py#L224-L257) нижестоящий узел, только если этот узел зависит от всех этих родительских ресурсов.
+
+<VersionBlock firstVersion="2.0">
+
+**Проверки:** `dbt build` выполняет [проверки](/docs/build/checks) перед компиляцией или выполнением любых моделей. Проверки — это SQL-запросы, которые вы пишете к [информационной схеме dbt](/docs/build/dbt-information-schema), чтобы обеспечить соблюдение стандартов проекта вашей команды. Например, проверка может требовать, чтобы у каждой модели было описание. Проверка считается пройденной, если её запрос не возвращает строк. Непройденная проверка останавливает сборку до материализации любых ресурсов, если только для параметра `severity` этой проверки не задано значение `warn`.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+**Пропуск при ошибках моделей:** По умолчанию, если модель завершается с ошибкой, все нижестоящие модели пропускаются. Задайте для модели [`on_error: continue`](/reference/resource-configs/on_error), чтобы разрешить выполнение нижестоящих моделей, даже если эта модель завершается с ошибкой.
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.11">
+
+**Выбор ресурсов:** Задача `build` поддерживает стандартный синтаксис выбора (`--select`, `--exclude`, `--selector`), а также флаг `--resource-type`, который позволяет применить заключительный фильтр (как и в `list`). Именно выбранные ресурсы будут выполнены, протестированы, обработаны как snapshot или загружены как seed с помощью `build`.
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+**Выбор ресурсов:** Задача `build` поддерживает стандартный синтаксис выбора (`--select`, `--exclude`), а также флаг `--resource-type`, который позволяет применить заключительный фильтр (как и в `list`). Именно выбранные ресурсы будут выполнены, протестированы, обработаны как snapshot или загружены как seed с помощью `build`.
+</VersionBlock>
+
+- Помните, что тесты поддерживают косвенный выбор, поэтому `dbt build -s model_a` и выполнит, _и_ протестирует `model_a`. Что это означает? Будут включены все тесты, напрямую зависящие от `model_a`, при условии, что эти тесты не зависят также от других, невыбранных родительских ресурсов. Подробности и примеры см. в разделе [Выбор тестов](/reference/node-selection/test-selection-examples).
+
+**Флаги:** Задача `build` поддерживает те же флаги, что и `run`, `test`, `snapshot` и `seed`. Для флагов, общих для нескольких задач (например, `--full-refresh`), `build` использует одно и то же значение для всех выбранных типов ресурсов, которые его поддерживают (например, и модели, и seed-ресурсы будут полностью обновлены).
+
+<SnapshotFullRefresh />
+
+<VersionBlock firstVersion="2.0">
+
+### The `--skip-checks` flag
+
+The `build` command supports `--skip-checks` to bypass the [checks](/docs/build/checks) gate.
+
+```shell
+dbt build --skip-checks
+```
+
+To disable a single check rather than the entire gate, set `enabled: false` on that check's config:
+
+```yaml
+checks:
+  - name: all_models_have_descriptions
+    config:
+      enabled: false
+```
+
+</VersionBlock>
 
 ### Флаг `--empty` {#the-empty-flag}
 
@@ -81,11 +144,14 @@ Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
 ## Functions {#functions}
 _Доступно начиная с dbt Core v1.11 и в <Constant name="fusion_engine" />_
 
-Команда `build` собирает [пользовательские функции](/docs/build/udfs) как часть выполнения DAG. Чтобы собрать или пересобрать **только** `functions` в вашем проекте, выполните `dbt build --select "resource_type:function"`. Например:
+## Функции
+_Доступно начиная с <Constant name="dbt" /> v1.11_
+
+Команда `build` создает [пользовательские функции](/docs/build/udfs) в рамках выполнения DAG. Чтобы создать или пересоздать только ресурсы типа `functions` в вашем проекте, выполните `dbt build --select "resource_type:function"`. Например:
 
 ```bash
 dbt build --select "resource_type:function"
-dbt-fusion 2.0.0-preview.45
+dbt-fusion 2.0.1
  Succeeded [  0.98s] function dbt_schema.whoami (function)
  Succeeded [  1.12s] function dbt_schema.area_of_circle (function)
 ```

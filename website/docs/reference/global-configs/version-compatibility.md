@@ -14,7 +14,7 @@ Running with dbt=1.0.0
 Found 13 models, 2 tests, 1 archives, 0 analyses, 204 macros, 2 operations....
 ```
 
-:::note <Constant name="cloud" /> каналы релизов
+:::note Каналы выпуска <Constant name="dbt" />
 <Snippet path="_config-dbt-version-check" />
 
 :::

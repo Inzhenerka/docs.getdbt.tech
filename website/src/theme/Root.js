@@ -2,6 +2,16 @@ import React from 'react'
 import Head from '@docusaurus/Head'
 import { useLocation } from '@docusaurus/router'
 import { VersionContextProvider } from '../stores/VersionContext'
+import { useVersionUrlSync } from '../utils/useVersionUrlSync'
+
+/**
+ * Inner component that syncs version to URL on route changes.
+ * Must be inside VersionContextProvider to access the version context.
+ */
+function VersionUrlSyncHandler({ children }) {
+  useVersionUrlSync();
+  return children;
+}
 
 const NOINDEX_PREFIXES = [
   '/tags/',
@@ -27,7 +37,7 @@ function Root({children}) {
           <meta name="googlebot" content="noindex,follow" />
         </Head>
       )}
-      {children}
+      <VersionUrlSyncHandler>{children}</VersionUrlSyncHandler>
     </VersionContextProvider>
   )
 }

@@ -145,7 +145,7 @@ dispatch:
 ### Переопределение глобальных макросов {#overriding-global-macros}
 
 :::tip
-Некоторые функции, такие как [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и [`config`](/reference/dbt-jinja-functions/config), не могут быть переопределены с помощью пакета, используя конфигурацию dispatch. Это потому, что `ref`, `source` и `config` являются свойствами контекста в dbt и не диспетчеризируются как глобальные макросы. Обратитесь к [этому обсуждению на GitHub](https://github.com/dbt-labs/dbt-core/issues/4491#issuecomment-994709916) для получения дополнительной информации.
+Некоторые функции, такие как [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и [`config`](/reference/dbt-jinja-functions/config), нельзя переопределить с помощью пакета, используя настройку `dispatch`. Это связано с тем, что `ref`, `source` и `config` являются свойствами контекста в dbt и не используют механизм диспетчеризации глобальных макросов. Дополнительную информацию см. в [этом обсуждении на GitHub](https://github.com/dbt-labs/dbt/issues/4491#issuecomment-994709916).
 :::
 
 Я поддерживаю внутренний пакет утилит в моей организации, названный `my_org_dbt_helpers`. Я использую этот пакет для переопределения встроенных макросов dbt от имени всех моих коллег, использующих dbt, которые работают в ряде проектов dbt.

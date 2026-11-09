@@ -12,7 +12,7 @@ date: 2025-04-17
 is_featured: true
 ---
 
-Как администратор dbt Cloud, вы только что перешли на dbt Cloud с тарифом [Enterprise plan](https://www.getdbt.com/pricing) — **поздравляем**! dbt Cloud предлагает множество возможностей, таких как [CI/CD](/docs/deploy/about-ci), [Orchestration](/docs/deploy/deployments), [dbt Explorer](/docs/explore/explore-projects), [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro), [Visual Editor](/docs/cloud/canvas), [dbt Copilot](/docs/cloud/dbt-copilot) и многое другое. ***Но с чего начать?***
+Вы — администратор dbt Cloud и только что перешли на [тариф Enterprise](https://www.getdbt.com/pricing) — **поздравляем**! dbt Cloud предлагает множество возможностей, таких как [CI/CD](/docs/deploy/about-ci), [оркестрация](/docs/deploy/deployments), [dbt Explorer](/docs/explore/explore-projects), [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro), [визуальный редактор](/docs/platform/canvas), [dbt Copilot](/docs/platform/wizard-platform) и многое другое. ***Но с чего начать?***
 
 Мы настоятельно рекомендуем, начиная внедрение функциональности dbt Cloud, в первую очередь настроить Single Sign-On (SSO) и Role-Based Access Control (RBAC). Этот базовый шаг позволяет вашей организации защитить пайплайны данных, упростить онбординг пользователей в dbt Cloud и оптимизировать затраты в долгосрочной перспективе.
 
@@ -27,7 +27,7 @@ is_featured: true
 
 ## Single Sign-On (SSO) {#single-sign-on-sso}
 
-Шаги по настройке SSO зависят от вашего IdP, поэтому мы рекомендуем начать с страницы [SSO Overview](/docs/cloud/manage-access/sso-overview) и найти документацию, относящуюся к конкретному IdP в вашей конфигурации.
+Шаги по настройке SSO зависят от вашего IdP, поэтому рекомендуем начать со страницы [Обзор SSO](/docs/platform/manage-access/sso-overview) и найти в этом разделе документацию для IdP, который используется в вашей конфигурации.
 
 Независимо от того, какой IdP вы используете, одной из первых задач администратора dbt Cloud является задание значения **login slug**. Это должен быть *уникальный идентификатор компании*.
 
@@ -35,16 +35,16 @@ is_featured: true
 - Если задать login slug `mynewco`
 - SSO URL будет выглядеть примерно так: `https://cloud.getdbt.com/enterprise-login/mynewco`.
 
-На первый взгляд на этом экране много информации и полей, однако, имея под рукой [SSO documentation](/docs/cloud/manage-access/sso-overview), администраторы dbt Cloud могут уверенно приступить к настройке удобных и масштабируемых процессов.
+На первый взгляд, на этом экране много информации и полей &mdash; но с [документацией по SSO](/docs/platform/manage-access/sso-overview) под рукой администраторы dbt Cloud готовы приступить к настройке удобных и масштабируемых рабочих процессов.
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/1_sso_config.png" title="dbt Cloud's SSO configuration page" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/1_sso_config.png" title="Страница настройки SSO в dbt Cloud" width="85%" />
 
 Разберём процесс на высоком уровне, чтобы его было проще воспринимать:
 
-1. После задания нужного login slug *администратор dbt Cloud* переходит на страницу настройки SSO и копирует все значения из секции **Identity provider values**, после чего передаёт их *администратору IdP*.
-2. *Администратор IdP* создаёт [dbt Cloud app](/docs/cloud/manage-access/set-up-sso-saml-2.0#creating-the-application) и затем передаёт значения из секции **dbt configuration** *администратору dbt Cloud*.
+1. После настройки нужного идентификатора входа (login slug) *администратор dbt Cloud* перейдёт на страницу настройки SSO в dbt Cloud, скопирует всё содержимое раздела **Identity provider values** и передаст эти значения *администратору IdP*.
+2. *Администратор IdP* создаст [приложение dbt Cloud](/docs/platform/manage-access/set-up-sso-saml-2.0#creating-the-application), а затем передаст значения из раздела **dbt configuration** *администратору dbt Cloud*.
    :::tip
-   Обратитесь к соответствующей документации по настройке для [Google Workspace](/docs/cloud/manage-access/set-up-sso-google-workspace), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Microsoft Entra ID](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) или [SAML 2.0](/docs/cloud/manage-access/set-up-sso-saml-2.0).
+   См. соответствующую документацию по настройке для [Google Workspace](/docs/platform/manage-access/set-up-sso-google-workspace), [Okta](/docs/platform/manage-access/set-up-sso-okta), [Microsoft Entra ID](/docs/platform/manage-access/set-up-sso-microsoft-entra-id) или [SAML 2.0](/docs/platform/manage-access/set-up-sso-saml-2.0).
    :::
 3. *Администратор dbt Cloud* заполняет полученные значения в секции **dbt configuration** на странице настройки SSO и нажимает **Save**, чтобы завершить процесс.
 
@@ -54,7 +54,7 @@ is_featured: true
 - Если SSO не работает должным образом, администратор аккаунта по‑прежнему сможет войти с помощью пароля и исправить конфигурацию.
 
 :::tip
-Обратите внимание на нашу [SSO enforcement policy](https://docs.getdbt.tech/docs/cloud/manage-access/sso-overview#sso-enforcement) — после настройки SSO все пользователи, кроме администраторов аккаунта, должны будут входить только через SSO в целях безопасности, в то время как администраторы аккаунта по умолчанию могут продолжать аутентифицироваться с помощью пароля вместо [multi-factor authentication (MFA)](/docs/cloud/manage-access/mfa).
+Обратите внимание на нашу [политику обязательного использования SSO](https://docs.getdbt.com/docs/platform/manage-access/sso-overview#sso-enforcement) &mdash; после настройки SSO все пользователи без прав администратора должны будут входить через SSO в соответствии с рекомендациями по безопасности, тогда как администраторы аккаунта по умолчанию по-прежнему могут проходить аутентификацию с помощью пароля вместо [многофакторной аутентификации (MFA)](/docs/platform/manage-access/mfa).
 :::
 
 После успешной настройки SSO у вас появляется несколько способов онбординга пользователей в dbt Cloud помимо отправки email‑приглашений:
@@ -62,7 +62,7 @@ is_featured: true
 - Предоставить пользователям SSO URL для доступа в dbt Cloud. Это называется *SP-initiated flow* (SP — Service Provider, в данном случае dbt Cloud).
 - Настроить доступ к dbt Cloud через дашборд IdP. Это называется *IdP-initiated flow*.
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/2_sso_flows.png" title="SSO flows into dbt Cloud" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/2_sso_flows.png" title="Сценарии входа через SSO в dbt Cloud" width="85%" />
 
 Возникли сложности с настройкой SSO? [Откройте тикет в поддержку](mailto:support@getdbt.com), и один из наших Customer Solutions Engineers с радостью поможет вам!
 
@@ -76,7 +76,7 @@ is_featured: true
 
 ### Licenses {#licenses}
 
-В dbt Cloud существует три [типа лицензий](/docs/cloud/manage-access/seats-and-users):
+В dbt Cloud есть три [типа лицензий](/docs/platform/manage-access/seats-and-users):
 
 - **Developer:** пользователю могут быть назначены *любые* права.
 - **Read-Only:** пользователю назначаются права только на чтение для всех ресурсов dbt Cloud, независимо от ролевых разрешений.
@@ -84,19 +84,19 @@ is_featured: true
 
 Скорее всего, большинство ваших пользователей — это разработчики или аналитики, которым потребуются лицензии Developer. Вы можете назначать лицензии по умолчанию на основе групп пользователей в IdP в разделе **Account Settings** → **Groups & Licenses** → **License mappings**.
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/3_license_mapping_example.png" title="An example license mapping" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/3_license_mapping_example.png" title="Пример сопоставления лицензий" width="85%" />
 
 Если пользователь состоит в нескольких группах с разными типами лицензий, ему будет назначена лицензия с наивысшим уровнем — Developer.
 
 ### Groups {#groups}
 
-Группы используются для управления правами доступа. Они определяют, что пользователь может видеть и делать в рамках проектов и окружений. Мы рекомендуем ознакомиться с [доступными наборами прав](https://docs.getdbt.tech/docs/cloud/manage-access/enterprise-permissions) и определить, какие из них подходят для вашей аудитории пользователей dbt Cloud.
+Группы используются для управления разрешениями. Они определяют, что пользователь может видеть и какие действия может выполнять в проектах и средах. Рекомендуем ознакомиться с [доступными наборами разрешений](https://docs.getdbt.com/docs/platform/manage-access/enterprise-permissions) и определить, какие из них подходят вашим пользователям dbt Cloud.
 
 Имейте в виду, что права групп имеют аддитивный характер: если пользователь состоит в нескольких группах, он наследует все назначенные им разрешения.
 
 Перейдя на страницу Groups & Licenses в dbt Cloud, вы увидите три группы по умолчанию — Everyone, Member и Owner. Также в правом верхнем углу доступна опция создания собственных групп.
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/4_default_dbt_cloud_groups.png" title="The out-of-the-box dbt Cloud groups you may use" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/4_default_dbt_cloud_groups.png" title="Встроенные группы dbt Cloud" width="85%" />
 
 Кратко о группах по умолчанию:
 
@@ -116,7 +116,7 @@ is_featured: true
 
 Также группы можно использовать для управления доступом к конкретным проектам и окружениям.
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/5_new_dbt_cloud_group.png" title="Creating a new dbt Cloud group" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/5_new_dbt_cloud_group.png" title="Создание группы dbt Cloud" width="85%" />
 
 ## Role-Based Access Control через IdP {#role-based-access-control-via-idp}
 
@@ -124,7 +124,7 @@ is_featured: true
 
 Например, предположим, что вы хотите, чтобы пользователи с SSO group mapping `dbt-developer` попадали в определённую группу. Обратите внимание, что можно указать несколько значений.
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/6_sso_group_mapping.png" title="Configuring a SSO group mapping within a group" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/6_sso_group_mapping.png" title="Настройка сопоставления с группой SSO" width="85%" />
 
 Для этого нужно:
 
@@ -137,11 +137,11 @@ is_featured: true
 - Названия групп должны полностью совпадать
 - Регистр символов должен быть одинаковым
 
-<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/7_okta_sso_group_mapping_example.png" title="Making a SSO group mapping work with your idenity provider" width="85%" />
+<Lightbox src="/img/blog/2025-04-10-sso-and-rbac/7_okta_sso_group_mapping_example.png" title="Пример сопоставления группы SSO с группой у поставщика удостоверений" width="85%" />
 
 ## Автоматизация SSO и RBAC: знакомство с SCIM {#automate-sso-rbac-introducing-scim}
 
-У нас отличные новости — поддержка [System for Cross-Domain Identity Management (SCIM)](/docs/cloud/manage-access/scim) станет общедоступной в мае 2025 года (для SCIM‑совместимых IdP и Okta)! Если вы не знакомы со SCIM, его можно рассматривать как автоматизированное управление пользователями в dbt Cloud. Он повышает безопасность пользовательских данных и упрощает работу администраторов и пользователей за счёт автоматизации жизненного цикла учётных записей и групп.
+У нас отличные новости &mdash; поддержка [System for Cross-Domain Identity Management (SCIM)](/docs/platform/manage-access/scim) станет общедоступной в мае 2025 года (для SCIM-совместимых поставщиков удостоверений (IdP) и Okta)! Если вы не знакомы с SCIM, его можно рассматривать как средство автоматического управления учетными записями пользователей в dbt Cloud. Оно повышает безопасность пользовательских данных и упрощает работу администраторов и пользователей за счет автоматизации жизненного цикла учетных записей пользователей и групп.
 
 Вот почему администратору dbt Cloud стоит обратить внимание на SCIM:
 

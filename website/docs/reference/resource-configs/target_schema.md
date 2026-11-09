@@ -6,9 +6,9 @@ datatype: string
 
 :::note
 
-Начиная с dbt Core v1.9+ эта функциональность больше не используется. Вместо неё используйте конфигурацию [schema](/reference/resource-configs/schema), чтобы определить пользовательскую схему, при этом продолжая учитывать макрос `generate_schema_name`.
+Начиная с <Constant name="dbt" /> v1.9, эта функциональность больше не используется. Вместо неё используйте конфигурацию [schema](/reference/resource-configs/schema), чтобы задать пользовательскую схему с учётом макроса `generate_schema_name`. 
 
-Попробуйте прямо сейчас в [<Constant name="cloud" /> треке релизов «Latest»](/docs/dbt-versions/cloud-release-tracks).
+Попробуйте это уже сейчас в [канале выпусков <Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks).
 
 :::
 
@@ -41,7 +41,7 @@ snapshots:
 
 ## По умолчанию {#default}
 
-<VersionBlock firstVersion="1.9">В dbt Core v1.9+ и в релизном треке <Constant name="cloud" /> «Latest» этот параметр не является обязательным.</VersionBlock>
+<VersionBlock firstVersion="1.9">В <Constant name="dbt" /> версии 1.9 и выше этот параметр не является обязательным. </VersionBlock>
 
 ## Примеры {#examples}
 ### Построение всех снимков в схеме с именем `snapshots` {#build-all-snapshots-in-a-schema-named-snapshots}

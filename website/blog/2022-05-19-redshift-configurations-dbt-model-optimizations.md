@@ -34,7 +34,7 @@ is_featured: true
 
 Сначала визуализируем пример кластера:
 
-![Cluster.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Cluster.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Cluster.png" title="Cluster.png" />
 
 Этот кластер имеет два узла, которые служат для хранения данных и выполнения некоторых частей ваших запросов. У вас может быть больше узлов, но для простоты мы оставим два.
 
@@ -42,7 +42,7 @@ is_featured: true
 
 Давайте посмотрим на данные, ожидающие загрузки в Redshift:
 
-![Source-Data.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Source-Data.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Source-Data.png" title="Source-Data.png" />
 
 Вы можете видеть, что здесь есть три <Term id="table">таблицы</Term> данных. Когда вы загружаете данные в Redshift, данные распределяются между офисами. Чтобы понять, как это происходит, давайте рассмотрим стили распределения.
 
@@ -66,7 +66,7 @@ Redshift имеет три стиля распределения:
 ```
 
 Вот визуализация данных, хранящихся на наших узлах:
-![All-Distribution.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/All-Distribution.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/All-Distribution.png" title="Распределение ALL" />
 
 **Когда использовать распределение `all`**:
 
@@ -82,7 +82,7 @@ Redshift имеет три стиля распределения:
 ```
 
 Вот визуализация данных, хранящихся на наших узлах:
-![Even-Distribution.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Even-Distribution.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Even-Distribution.png" title="Равномерное распределение" />
 
 Обратите внимание, как наш первый работник получил первые строки наших данных, второй работник получил вторые строки, первый работник получил третьи строки и так далее.
 
@@ -100,7 +100,7 @@ Redshift имеет три стиля распределения:
 ```
 
 Вот визуализация данных, хранящихся на наших узлах:
-![Key-Based.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based.png" title="Распределение по ключу.png" />
 
 Это не выглядит сильно отличающимся от `even`, верно? Разница здесь в том, что поскольку мы используем `person_id` в качестве ключа распределения, мы обеспечиваем:
 
@@ -113,7 +113,7 @@ Redshift имеет три стиля распределения:
 {{ config(materialized='table', dist='person_id') }}
 ```
 Вот визуализация данных, хранящихся на наших узлах:
-![Key-Based-2.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-2.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-2.png" title="Распределение по ключу — 2" />
 
 Вы можете видеть выше, что поскольку мы распределили `visitors` по `person_id`, узлы получили связанные данные, которые мы описали выше. У нас были некоторые null `person_ids` - они будут рассматриваться как ключевое значение и распределены на один узел.
 
@@ -155,7 +155,7 @@ on visitors.person_id = known_visitor_profiles.person_id
 
 Использование `all` копирует наши наборы данных и хранит их полностью в каждом узле.
 
-![All-Joining.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/All-Joining.gif)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/All-Joining.gif" title="All-Joining.gif" />
 
 В нашем примере с офисами это означает, что наши работники могут выполнять свою часть работы спокойно, не прерываясь и не покидая свои офисы, так как у них есть вся необходимая информация.
 
@@ -167,7 +167,7 @@ on visitors.person_id = known_visitor_profiles.person_id
 
 Использование `even` распределяет наши наборы данных, как описано в разделе [Что такое стили распределения?](#what-are-distribution-styles) (круговое распределение) на каждый узел. Равномерное распределение приводит к тому, что каждый узел имеет данные, которые они *могут* или *не могут* нуждаться для выполнения своих задач.
 
-![Even-Joining.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Even-Joining.gif)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Even-Joining.gif" title="Even-Joining.gif" />
 
 В нашем сценарии с офисными работниками это означает, что если наши работники не могут найти данные, которые им нужны для выполнения задания в своем офисе, им нужно отправить запрос на информацию в другой офис, чтобы попытаться найти данные. Эта коммуникация занимает время!
 
@@ -180,7 +180,7 @@ on visitors.person_id = known_visitor_profiles.person_id
 - Узел 1 был распределен данными, связанными с ключевыми значениями null, 1, 3 и 5.
 - Узел 2 был распределен данными, связанными с ключевыми значениями 2, 4 и 6
 
-![Key-Based-Joining.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-Joining.gif)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-Joining.gif" title="Key-Based-Joining.gif" />
 
 Это означает, что когда мы соединяем две распределенные таблицы, данные **совместно размещены** на одном узле, и поэтому нашим работникам не нужно покидать свои офисы, чтобы собрать данные, которые им нужны для выполнения работы. Круто, да?
 
@@ -199,20 +199,20 @@ left join unknown_visitor_profiles
 
 Как бы вы решили распределить данные `anonymous_visitor_profiles`?
 
-![Key-Based-Joining-2.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-Joining-2.png)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-Joining-2.png" title="Key-Based-Joining-2.png" />
 
 У нас есть несколько вариантов:
 
-- **Распределить по `all`**  
-Но если это таблица, которая часто обновляется, это может быть не лучшим решением.
-![Key-Based-All.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-All.gif)
+- **Распределение с помощью `all`**  
+Но если таблица часто обновляется, этот вариант может быть не лучшим.
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-All.gif" title="Распределение по ключу — all.gif" />
     
 
 - **Распределить по `even`**  
 Но тогда нашим узлам нужно будет общаться, когда `visitors` соединяется с `anonymous_visitor_profiles`.  
 
-  Если вы решите сделать что-то подобное, вам следует сначала рассмотреть, какие из ваших *крупнейших* наборов данных, и распределить, используя соответствующие ключи для совместного размещения этих данных. Затем протестируйте время выполнения с вашими дополнительными таблицами, распределенными с помощью all или even - дополнительное время может быть тем, с чем вы можете смириться!
-![Key-Based-Even.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-Even.gif)
+Если вы решите использовать подобный подход, сначала определите, какие из ваших наборов данных *самые большие*, и распределите их по подходящим ключам, чтобы связанные данные размещались вместе. Затем сравните время выполнения при распределении дополнительных таблиц с помощью all или even — возможно, дополнительное время выполнения окажется для вас приемлемым!
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Key-Based-Even.gif" title="Распределение по ключу и равномерное распределение.gif" />
     
 
 - **Распределить по ключу**  
@@ -234,13 +234,13 @@ left join unknown_visitor_profiles
 
 ### Ступенчатые соединения {#staggered-joins}
 
-![Staggered-Joins.png](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Staggered-Joins.jpg)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Staggered-Joins.jpg" title="Staggered-Joins.png" />
 
 В этом методе вы разбиваете ваши соединения на основе основной таблицы, к которой они присоединяются. Например, если у вас есть пять таблиц, которые все соединяются с использованием `person_id`, то вы подготавливаете ваши данные (конечно, выполняя их очистку), распределяете их, используя `dist='person_id'`, и затем объединяете их в некоторую таблицу ниже по потоку. Теперь с этой новой таблицей вы можете выбрать следующий ключ распределения, который вам понадобится для следующего процесса. В нашем примере выше следующий шаг - соединение с таблицей `anonymous_visitor_profiles`, которая распределена по `mask_id`, поэтому результаты нашего соединения также должны быть распределены по `mask_id`.
 
 ### Разрешение до одного ключа {#resolve-to-a-single-key}
 
-![Resolve-to-single-key](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Resolve-to-single-key.jpg)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Resolve-to-single-key.jpg" title="Resolve-to-single-key" />
 
 Этот метод требует времени на обдумывание, и может не иметь смысла в зависимости от того, что вам нужно. Это определенно баланс между согласованностью, удобством использования и производительностью.
 
@@ -256,11 +256,11 @@ left join unknown_visitor_profiles
 
 Давайте посмотрим на информацию в нашем картотечном шкафу в отсортированном и неотсортированном форматах. Ниже представлена наша таблица `anonymous_visitor_profiles`, отсортированная по `mask_id`:
 
-![Sorting.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Sorting.gif)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Sorting.gif" title="Sorting.gif" />
 
 После сортировки Redshift может отслеживать, что существует в блоках информации. Это эквивалентно информации в нашем картотечном шкафу, организованной в папки, где элементы с идентификаторами масок, начинающимися с букв b до c, находятся в одной папке, идентификаторы масок, начинающиеся с букв d до f, находятся в другой папке и так далее. Теперь наш офисный работник может пропустить просмотр папки b-c и перейти прямо к d-f:
 
-![Scanning-Sort.gif](/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Scanning-Sort.gif)
+<Lightbox src="/img/blog/2022-05-19-redshift-configurations-dbt-model-optimizations/Scanning-Sort.gif" title="Scanning-Sort.gif" />
 
 Даже без установки явного распределения это может значительно помочь в оптимизации. Вот несколько хороших мест для его применения:
 
@@ -280,13 +280,13 @@ left join unknown_visitor_profiles
 
 ### Документируйте перед настройкой {#document-before-tweaking}
 
-Если вы собираетесь настраивать эти конфигурации, убедитесь, что вы документируете, сколько времени занимает модель до изменений! Если у вас есть ограничения в разработке, вы все равно можете провести тестирование на пределе до и после изменений, хотя *более* *идеально* работать с большими объемами данных, чтобы действительно понять, как это повлияет на обработку в производственной среде. Я смог успешно протестировать изменения на ограниченных наборах данных, и это прекрасно перевелось в производственные среды, но ваш опыт может отличаться.
+Если вы собираетесь изменить эти настройки, обязательно зафиксируйте время выполнения модели до внесения изменений! Если в среде разработки у вас действуют ограничения на объём данных, вы всё равно можете измерить производительность на ограниченном наборе данных до и после изменений, хотя для понимания того, как они повлияют на обработку в продуктивной среде, *всё же* лучше работать с бо́льшими объёмами данных. Мне удавалось успешно тестировать изменения на ограниченных наборах данных, и результаты отлично воспроизводились в продуктивных средах, но в вашем случае всё может быть иначе.
 
 ### Сначала протестируйте удаление устаревших стилей `dist` и ключей сортировки {#test-removing-legacy-dist-styles-and-sort-keys-first}
 
 Если уже определены какие-либо ключи сортировки или стили распределения, удалите их, чтобы посмотреть, как ваши модели работают с настройками по умолчанию. Неправильный ключ сортировки или стиль распределения может негативно повлиять на вашу производительность, поэтому я предлагаю не настраивать их на любой новой модели, если вы не уверены в их влиянии.
 
-### Решите, нужно ли вам вообще оптимизировать! {#decide-whether-you-you-need-to-optimize-at-all}
+### Определите, нужна ли вам вообще оптимизация!
 
 Определение того, нужно ли вам изменять эти конфигурации, иногда не является очевидным, особенно когда у вас много всего происходит в вашей модели! Вот несколько советов, которые помогут вам:
 

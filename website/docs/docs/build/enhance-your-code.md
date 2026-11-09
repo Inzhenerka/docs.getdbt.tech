@@ -3,6 +3,7 @@ title: "Улучшите ваш код"
 description: "Узнайте, как вы можете улучшить ваш код"
 pagination_next: "docs/build/project-variables"
 pagination_prev: null
+availability: all_users
 ---
 
 <div className="grid--2-col">

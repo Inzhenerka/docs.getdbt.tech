@@ -3,6 +3,7 @@ title: "О проектах dbt"
 id: "projects"
 pagination_next: null
 pagination_prev: null
+availability: all_users
 ---
 
 Проект dbt информирует dbt о контексте вашего проекта и о том, как трансформировать ваши данные (создавать наборы данных). По замыслу, dbt обеспечивает верхнеуровневую структуру проекта dbt, такую как файл `dbt_project.yml`, директорию `models`, директорию `snapshots` и так далее. В пределах верхнеуровневых директорий вы можете организовать свой проект любым способом, который соответствует потребностям вашей организации и конвейера данных.
@@ -28,9 +29,9 @@ pagination_prev: null
 
 При создании структуры вашего проекта вы должны учитывать следующие аспекты, влияющие на рабочий процесс вашей организации:
 
-* **Как люди будут запускать команды dbt** &mdash; выбор подходящего пути
-* **Как люди будут перемещаться внутри проекта** &mdash; будь то разработчики в <Constant name="cloud_ide" /> или стейкхолдеры, работающие с документацией
-* **Как люди будут настраивать модели** &mdash; некоторые массовые настройки проще выполнять на уровне директорий, чтобы людям не приходилось помнить о необходимости указывать всё в блоке `config` для каждой новой модели
+* **Как пользователи будут запускать команды dbt** &mdash; Выбор пути
+* **Как пользователи будут ориентироваться в проекте** &mdash; Будь то разработчики в <Constant name="studio_ide" /> или заинтересованные стороны, использующие документацию
+* **Как пользователи будут настраивать модели** &mdash; Некоторые общие настройки проще задавать на уровне каталога, чтобы пользователям не приходилось помнить о необходимости указывать всё в блоке конфигурации для каждой новой модели
 
 ## Конфигурация проекта {#project-configuration}
 Каждый проект dbt включает файл конфигурации проекта под названием `dbt_project.yml`. Он определяет директорию проекта dbt и другие конфигурации проекта.
@@ -41,17 +42,17 @@ pagination_prev: null
 
 | YAML ключ  | Описание значения  |
 | :--- | :--- |
-| [name](/reference/project-configs/name) | Имя вашего проекта в формате [snake case](https://en.wikipedia.org/wiki/Snake_case) |
+| [name](/reference/project-configs/name) | Название вашего проекта в формате [snake case](https://en.wikipedia.org/wiki/Snake_case) |
 | [version](/reference/project-configs/version) | Версия вашего проекта |
-| [require-dbt-version](/reference/project-configs/require-dbt-version) | Ограничивает использование проекта только указанным диапазоном [версий <Constant name="core" />](/docs/dbt-versions/core) |
+| [require-dbt-version](/reference/project-configs/require-dbt-version) | Ограничение совместимости проекта диапазоном [версий <Constant name="core" />](/docs/dbt-versions) |
 | [profile](/reference/project-configs/profile) | Профиль, который dbt использует для подключения к вашей платформе данных |
-| [model-paths](/reference/project-configs/model-paths) | Каталоги, в которых находятся ваши файлы моделей и источников |
-| [seed-paths](/reference/project-configs/seed-paths) | Каталоги, в которых находятся ваши seed-файлы |
-| [test-paths](/reference/project-configs/test-paths) | Каталоги, в которых находятся ваши тестовые файлы |
-| [analysis-paths](/reference/project-configs/analysis-paths) | Каталоги, в которых находятся ваши файлы анализов |
+| [model-paths](/reference/project-configs/model-paths) | Каталоги, в которых находятся файлы моделей и источников  |
+| [seed-paths](/reference/project-configs/seed-paths) | Каталоги, в которых находятся seed-файлы |
+| [test-paths](/reference/project-configs/test-paths) | Каталоги, в которых находятся файлы тестов |
+| [analysis-paths](/reference/project-configs/analysis-paths) | Каталоги, в которых находятся ваши аналитические запросы |
 | [macro-paths](/reference/project-configs/macro-paths) | Каталоги, в которых находятся ваши макросы |
-| [snapshot-paths](/reference/project-configs/snapshot-paths) | Каталоги, в которых находятся ваши снапшоты |
-| [docs-paths](/reference/project-configs/docs-paths) | Каталоги, в которых находятся ваши doc-блоки |
+| [snapshot-paths](/reference/project-configs/snapshot-paths) | Каталоги, в которых находятся ваши снимки |
+| [docs-paths](/reference/project-configs/docs-paths) | Каталоги, в которых находятся ваши блоки документации |
 | [vars](/docs/build/project-variables) | Переменные проекта, которые вы хотите использовать при компиляции данных |
 
 </div>
@@ -60,9 +61,9 @@ pagination_prev: null
 
 ## Поддиректории проекта {#project-subdirectories}
 
-Вы можете использовать опцию **Project subdirectory** в <Constant name="cloud" />, чтобы указать подкаталог в вашем git‑репозитории, который dbt должен использовать в качестве корневого каталога проекта. Это удобно, если в одном репозитории у вас находится несколько dbt‑проектов или если вы хотите организовать файлы dbt‑проекта по подкаталогам для более удобного управления.
+Вы можете использовать параметр Project subdirectory в <Constant name="dbt" />, чтобы указать подкаталог в вашем git-репозитории, который dbt должен использовать в качестве корневого каталога проекта. Это полезно, если в одном репозитории находится несколько проектов dbt или если вы хотите распределить файлы проекта dbt по подкаталогам для удобства управления.
 
-Чтобы использовать опцию **Project subdirectory** в <Constant name="cloud" />, выполните следующие шаги:
+Чтобы использовать параметр Project subdirectory в <Constant name="dbt" />, выполните следующие действия:
 
 1. Нажмите на имя вашей учетной записи в левом нижнем углу и выберите **Your profile**.
 
@@ -76,9 +77,9 @@ pagination_prev: null
 
 5. Нажмите **Сохранить**, когда закончите.
 
-После настройки опции **Project subdirectory**, <Constant name="cloud" /> будет использовать её как корневой каталог вашего dbt‑проекта. Это означает, что команды dbt, такие как `dbt run` или `dbt test`, будут выполняться над файлами внутри указанного подкаталога. Если в подкаталоге Project отсутствует файл `dbt_project.yml`, вам будет предложено инициализировать dbt‑проект.
+После настройки параметра Project subdirectory <Constant name="dbt" /> будет использовать указанный подкаталог в качестве корневого каталога вашего проекта dbt. Это означает, что команды dbt, такие как `dbt run` или `dbt test`, будут работать с файлами в указанном подкаталоге. Если в подкаталоге, указанном в Project subdirectory, нет файла `dbt_project.yml`, вам будет предложено инициализировать проект dbt.
 
-:::info Поддержка проекта в планах <Constant name="cloud" />
+:::info Поддержка проектов в тарифных планах <Constant name="dbt" />
 
 Некоторые [планы](https://www.getdbt.com/pricing) поддерживают только один dbt‑проект, тогда как [планы уровня Enterprise](https://www.getdbt.com/contact) позволяют работать с несколькими проектами и использовать [межпроектные ссылки](/best-practices/how-we-mesh/mesh-1-intro) с помощью <Constant name="mesh" />.
 
@@ -86,19 +87,19 @@ pagination_prev: null
 
 ## Новые проекты {#new-projects}
 
-Вы можете создавать новые проекты и [делиться ими](/docs/cloud/git/git-version-control) с другими людьми, размещая их в хостируемом git‑репозитории, таком как GitHub, GitLab или BitBucket.
+Вы можете создавать новые проекты и [делиться ими](/docs/platform/git/git-version-control) с другими людьми, размещая их в репозитории Git на таких платформах, как GitHub, GitLab и BitBucket.
 
-После того как вы настроите подключение к вашей платформе данных, вы можете [инициализировать новый проект в <Constant name="cloud" />](/guides) и начать разработку. Либо выполните команду [dbt init из командной строки](/reference/commands/init), чтобы настроить новый проект.
+После настройки подключения к вашей платформе данных вы можете [инициализировать новый проект в <Constant name="dbt" />](/guides) и начать разработку. Или выполните [dbt init из командной строки](/reference/commands/init), чтобы настроить новый проект.
 
 Во время инициализации проекта dbt создает примерные файлы моделей в вашей директории проекта, чтобы помочь вам быстро начать разработку.
 
 ## Примерные проекты {#sample-projects}
 
-Если вы хотите более подробно изучить проекты dbt, вы можете клонировать [Jaffle shop](https://github.com/dbt-labs/jaffle_shop) от dbt Lab на GitHub. Это исполняемый проект, который содержит примерные конфигурации и полезные заметки.
+Если вы хотите подробнее изучить проекты dbt, обратитесь к руководству [Клонирование примера проекта Jaffle Shop](/guides/clone-jaffle-shop). Этот проект можно запустить; он содержит примеры конфигураций и полезные примечания.
 
 Если вы хотите увидеть, как выглядит зрелый, производственный проект, ознакомьтесь с [публичным репозиторием команды данных GitLab](https://gitlab.com/gitlab-data/analytics/-/tree/master/transform/snowflake-dbt).
 
-## Связанные материалы {#related-docs}
-* [Лучшие практики: как мы структурируем наши dbt‑проекты](/best-practices/how-we-structure/1-guide-overview)
-* [Быстрый старт для <Constant name="cloud" />](/guides)
-* [Быстрый старт для <Constant name="core" />](/guides/manual-install)
+## Связанная документация
+* [Лучшие практики: как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview)
+* [Руководства по быстрому старту с <Constant name="dbt" />](/guides)
+* [Руководство по быстрому старту с <Constant name="core" />](/guides/manual-install)

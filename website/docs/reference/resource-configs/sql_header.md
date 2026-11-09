@@ -21,8 +21,9 @@ datatype: "string"
     { label: 'Models', value: 'models', },
     { label: 'Seeds', value: 'seeds', },
     { label: 'Snapshots', value: 'snapshots', },
-  ]}
->
+{ label: 'Файл свойств', value: 'property-yaml', },
+  ]
+}>
 <TabItem value="models">
 
 <File name='models/<modelname>.sql'>
@@ -93,6 +94,48 @@ snapshots:
 
 </TabItem>
 
+<TabItem value="property-yaml">
+
+Setting `sql_header` in the `config` of a [generic data test](/docs/build/data-tests) is available starting in <Constant name="dbt" /> v1.12. Enable the [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs) flag to use `sql_header` in `properties.yml` for generic data tests.
+
+
+Here's an example of a model-level configuration:
+
+<File name="models/properties.yml">
+
+```yaml
+models:
+  - name: orders
+    data_tests:
+      - unique:
+          name: unique_orders_order_id
+          arguments:
+            column_name: order_id
+          config:
+            sql_header: "-- SQL_HEADER_TEST_MARKER"
+```
+</File>
+
+You can also use `sql_header` for column-level data tests:
+
+<File name="models/properties.yml">
+
+```yaml
+models:
+  - name: orders
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null:
+              name: not_null_orders_order_id
+              config:
+                sql_header: "-- SQL_HEADER_TEST_MARKER"
+```
+
+</File>
+
+</TabItem>
+
 </Tabs>
 
 
@@ -101,8 +144,16 @@ snapshots:
 
 `sql_header` можно задать с помощью конфигурации или вызовом макроса `set_sql_header` (пример ниже).
 
-## Сравнение с pre-hooks {#comparison-to-pre-hooks}
-[Pre-hooks](/reference/resource-configs/pre-hook-post-hook) также предоставляют возможность выполнить SQL перед созданием модели, как _предшествующий_ запрос. В сравнении, SQL в `sql_header` выполняется в том же _запросе_, что и оператор `create table|view as`.
+<VersionBlock firstVersion="1.12">
+
+Вы также можете задать `sql_header` в `config` [универсального теста данных](/docs/build/data-tests) на уровне модели или столбца в файле `properties.yml`. Используйте `sql_header`, чтобы определить SQL, который должен выполняться перед запуском теста (например, для создания временных функций, настройки параметров сеанса или объявления переменных, необходимых для запроса теста). dbt выполняет этот SQL перед выполнением теста.
+
+Включите флаг [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs), чтобы использовать `sql_header` для тестов данных. Дополнительную информацию см. в разделе [Конфигурации тестов данных](/reference/data-test-configs).
+
+</VersionBlock>
+
+## Сравнение с pre-hooks
+[Pre-hooks](/reference/resource-configs/pre-hook-post-hook) также позволяют выполнять SQL перед созданием модели в виде _предшествующего_ запроса. В отличие от них, SQL в `sql_header` выполняется в том же _запросе_, что и инструкция `create table|view as`.
 
 В результате это делает его более полезным для [параметров сессии Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html) и [временных UDF в BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions#sql-udf-examples).
 
@@ -161,3 +212,5 @@ select yes_no_to_boolean(yes_no) from {{ ref('other_model') }}
 ```
 
 </File>
+
+

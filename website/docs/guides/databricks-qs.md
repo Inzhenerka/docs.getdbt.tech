@@ -5,30 +5,34 @@ level: 'Beginner'
 icon: 'databricks'
 hide_table_of_contents: true
 tags: ['Platform', 'Quickstart', 'Databricks']
+product_badge: "dbt v2 compatible"
+agent_guidance:
+  pacing: In the first reply, confirm the reader’s prerequisites and connection path before listing steps. Then default to one guide section per reply (combine two or three short sections), with all its steps, labeled Step 1, Step 2, and so on, and confirm the success check before continuing. If the reader asks for a different pace, follow it.
+  stay_on_path: This guide uses dbt platform. Don’t switch the reader to a local setup. If the reader wants to set up dbt locally, use the https://docs.getdbt.com/guides/dbt guide instead
+  safety: Never ask for passwords or keys in chat.
+  signup_link: When the reader needs a dbt account, share https://www.getdbt.com/signup?utm_source=ai_assistant&utm_medium=docs_md&utm_campaign=databricks-qs
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Введение {#introduction}
+## Введение 
 
-В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> вместе с Databricks. В нём показано, как:
+В этом кратком руководстве вы узнаете, как использовать <Constant name="dbt" /> с Databricks. В нём показано, как: 
 
 - Создать рабочее пространство Databricks.
-- Загрузить пример данных в ваш аккаунт Databricks.
-- Подключить <Constant name="cloud" /> к Databricks.
-- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это `select`-запрос.
+- Загрузить тестовые данные в свою учётную запись Databricks.
+- Подключить <Constant name="dbt" /> к Databricks.
+- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это SQL-запрос SELECT.
 - Добавить тесты к вашим моделям.
-- Задокументировать ваши модели.
-- Запланировать выполнение задания.
+- Документировать ваши модели.
+- Настроить запуск задания по расписанию.
 
-:::tip Видео для вас
-Вы можете бесплатно ознакомиться с [Основами dbt](https://learn.getdbt.com/courses/dbt-fundamentals), если вас интересует обучение с видео.
-:::
+<AgentPrompt />
 
 ### Предварительные требования {#prerequisites}
 
-- У вас есть [аккаунт <Constant name="cloud" />](https://www.getdbt.com/signup/).  
-- У вас есть аккаунт у облачного провайдера (например, AWS, GCP или Azure), а также права на создание S3 bucket в рамках этого аккаунта. В демонстрационных целях в этом руководстве в качестве облачного провайдера используется AWS.
+- У вас есть [учетная запись <Constant name="dbt" />](https://www.getdbt.com/signup/). 
+- У вас есть учетная запись у поставщика облачных услуг (например, AWS, GCP или Azure) и разрешения на создание бакета S3 с помощью этой учетной записи. В этом руководстве для демонстрации используется AWS в качестве поставщика облачных услуг.
 
 ### Связанные материалы {#related-content}
 
@@ -38,7 +42,11 @@ tags: ['Platform', 'Quickstart', 'Databricks']
 - [Уведомления о заданиях](/docs/deploy/job-notifications)
 - [Актуальность источников](/docs/deploy/source-freshness)
 
-## Создание рабочего пространства Databricks {#create-a-databricks-workspace}
+:::tip Видео для вас
+Если вам интересны учебные курсы с видео, вы можете бесплатно пройти [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
+:::
+
+## Создайте рабочую область Databricks
 
 1. Используйте ваш существующий аккаунт или [зарегистрируйтесь для получения аккаунта Databricks](https://databricks.com/). Заполните форму с вашей пользовательской информацией и нажмите **Continue**.
 
@@ -164,17 +172,17 @@ tags: ['Platform', 'Quickstart', 'Databricks']
 
 ## Подключение dbt к Databricks {#connect-dbt-to-databricks}
 
-Существует два способа подключить <Constant name="cloud" /> к Databricks. Первый вариант — Partner Connect, который предоставляет упрощённый процесс настройки и позволяет создать учётную запись <Constant name="cloud" /> прямо из вашей новой пробной учётной записи Databricks. Второй вариант — создать учётную запись <Constant name="cloud" /> отдельно и самостоятельно настроить подключение к Databricks (ручное подключение).
+Есть два способа подключить <Constant name="dbt" /> к Databricks. Первый — Partner Connect, который упрощает настройку и позволяет создать учетную запись <Constant name="dbt" /> непосредственно из новой пробной учетной записи Databricks. Второй — создать учетную запись <Constant name="dbt" /> отдельно и самостоятельно настроить подключение к Databricks (подключиться вручную). Если вы хотите быстро приступить к работе, dbt Labs рекомендует использовать Partner Connect. Если вы хотите с самого начала настроить все под свои требования и ознакомиться с процессом настройки <Constant name="dbt" />, dbt Labs рекомендует подключиться вручную.
 
 Если вы хотите начать работу как можно быстрее, dbt Labs рекомендует использовать Partner Connect. Если же вы хотите с самого начала настроить конфигурацию под свои требования и лучше разобраться в процессе настройки <Constant name="cloud" />, dbt Labs рекомендует подключаться вручную.
 
 ## Настройка интеграции через Partner Connect {#set-up-the-integration-from-partner-connect}
 
 :::note
-Partner Connect предназначен для пробных партнёрских аккаунтов. Если у вашей организации уже есть аккаунт <Constant name="cloud" />, подключение нужно выполнить вручную. Инструкции см. в разделе [Connect to <Constant name="cloud" /> manually](https://docs.databricks.com/partners/prep/dbt-cloud.html#connect-to-dbt-cloud-manually) документации Databricks.
+Partner Connect предназначен для пробных учетных записей партнеров. Если у вашей организации уже есть учетная запись <Constant name="dbt" />, выполните подключение вручную. Инструкции см. в разделе [Подключение к <Constant name="dbt" /> вручную](https://docs.databricks.com/partners/prep/dbt-cloud.html#connect-to-dbt-cloud-manually) документации Databricks.
 :::
 
-Чтобы подключить <Constant name="cloud" /> к Databricks с помощью Partner Connect, выполните следующие действия:
+Чтобы подключить <Constant name="dbt" /> к Databricks с помощью Partner Connect, выполните следующие действия:
 
 1. В боковой панели вашего аккаунта Databricks нажмите **Partner Connect**.
 
@@ -211,13 +219,13 @@ Partner Connect предназначен для пробных партнёрс�
 
 8. Нажмите **Next**.
 
-Поле **Email** отображает адрес электронной почты вашей учетной записи Databricks. dbt Labs использует этот адрес электронной почты, чтобы предложить вам создать пробную учетную запись <Constant name="cloud" />.
+В поле **Email** отображается адрес электронной почты вашей учетной записи Databricks. dbt Labs использует этот адрес электронной почты, чтобы предложить вам создать пробную учетную запись <Constant name="dbt" />.
 
-9. Нажмите **Connect to <Constant name="cloud" />**.
+9. Нажмите **Connect to <Constant name="dbt" />**.
 
    В вашем веб-браузере откроется новая вкладка, на которой отображается веб-сайт getdbt.com.
 
-10. Выполните инструкции на экране на сайте getdbt.com, чтобы создать пробную учетную запись <Constant name="cloud" />.
+10. Следуйте инструкциям на экране на сайте getdbt.com, чтобы создать пробную учетную запись <Constant name="dbt" />.
 
 ## Настройка репозитория под управлением dbt {#set-up-a-dbt-managed-repository}
 
@@ -225,13 +233,13 @@ Partner Connect предназначен для пробных партнёрс�
 
 ## Инициализация вашего проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
 
-Теперь, когда у вас настроен репозиторий, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="dbt" />:
 
-1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске это может занять несколько минут: в это время устанавливается соединение с git, клонируется репозиторий и проверяется подключение к хранилищу данных.
-2. Над деревом файлов слева нажмите **Initialize dbt project**. В результате будет создана структура папок с примерами моделей.
-3. Сделайте первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в вашем управляемом репозитории и позволит открыть ветку, в которой вы сможете добавлять новый dbt-код.
-4. Теперь вы можете напрямую выполнять запросы к данным в вашем хранилище и запускать `dbt run`. Вы можете попробовать это прямо сейчас:
-    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить новый файл:
+1. Нажмите **Start developing in the <Constant name="studio_ide" />**. Первый запуск проекта может занять несколько минут: за это время устанавливается соединение с Git, клонируется репозиторий и проверяется подключение к хранилищу данных.
+2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок с примерами моделей.
+3. Создайте первый коммит, нажав **Commit and sync**. Укажите сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в управляемом репозитории и позволит вам создать ветку, в которой можно добавлять новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из хранилища и выполнять `dbt run`. Попробуйте сделать это прямо сейчас:
+    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить его:
         ```sql
         select * from default.jaffle_shop_customers
         ```
@@ -239,10 +247,12 @@ Partner Connect предназначен для пробных партнёрс�
 
 ## Создание вашей первой модели {#build-your-first-model}
 
-У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
+Если вы хотите использовать ИИ для создания своей первой модели, ознакомьтесь с разделом <a id="qs-jump-to-build-with-ai" href="#build-it-with-ai-using-dbt-wizard">«Создайте модель с помощью dbt Wizard»</a> ниже.
 
-- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку, чтобы вносить изменения и коммитить их. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
-- Редактировать в защищённой основной ветке &mdash; Если вы предпочитаете редактировать, форматировать или линтить файлы и выполнять команды dbt напрямую в вашей основной git-ветке. <Constant name="cloud_ide" /> не позволяет делать коммиты в защищённую ветку, поэтому вам будет предложено закоммитить изменения в новую ветку.
+У вас есть два варианта работы с файлами в <Constant name="studio_ide" />:
+
+- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку для редактирования и фиксации изменений. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
+- Редактировать в защищённой основной ветке &mdash; Если вы предпочитаете редактировать, форматировать файлы или проверять их линтером, а также выполнять команды dbt непосредственно в основной ветке Git. <Constant name="studio_ide" /> не позволяет создавать коммиты в защищённой ветке, поэтому вам будет предложено зафиксировать изменения в новой ветке.
 
 Назовите новую ветку `add-customers-model`.
 
@@ -310,7 +320,7 @@ select * from final
 
 4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешное выполнение и увидеть три модели.
 
-Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
+Позже вы сможете подключить свои инструменты бизнес-аналитики (BI), например [dbt Charts](https://dbtcharts.com/), к этим представлениям и таблицам, чтобы они считывали только очищенные, а не сырые данные.
 
 #### Часто задаваемые вопросы {#faqs}
 
@@ -320,7 +330,9 @@ select * from final
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации вашей модели {#change-the-way-your-model-is-materialized}
+<Snippet path="quickstarts/build-first-model-with-wizard" />
+
+## Измените способ материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
@@ -432,3 +444,5 @@ select * from final
 <Snippet path="quickstarts/test-and-document-your-project" />
 
 <Snippet path="quickstarts/schedule-a-job" />
+
+<Snippet path="quickstarts/connect-your-ai" />

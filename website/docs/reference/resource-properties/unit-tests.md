@@ -12,28 +12,25 @@ datatype: test
 Чтобы запустить только ваши модульные тесты, используйте команду:
 `dbt test --select test_type:unit`
 
-## Прежде чем начать {#before-you-begin}
+import UnitTestsPrereqs from '/snippets/_unit-tests-prereqs.md';
 
-- В настоящее время мы поддерживаем модульное тестирование только для SQL-моделей.
-- В настоящее время мы поддерживаем добавление модульных тестов только к моделям в вашем _текущем_ проекте.
-- Если у вашей модели несколько версий, по умолчанию модульный тест будет запускаться на *всех* версиях вашей модели. Прочтите [модульное тестирование версионных моделей](/reference/resource-properties/unit-testing-versions) для получения дополнительной информации.
-- Модульные тесты должны быть определены в YML-файле в вашем каталоге `models/`.
-- Если вы хотите протестировать модель, которая зависит от эфемерной модели, вы должны использовать `format: sql` для этого входного параметра.
+<UnitTestsPrereqs />
 
 <File name='models/schema.yml'>
 
-```yml
+```yaml
 
 unit_tests:
-  - name: <test-name> # это уникальное имя теста
-    model: <model-name> 
-      versions: #опционально
-        include: <list-of-versions-to-include> #опционально
-        exclude: <list-of-versions-to-exclude> #опционально
+- name: <test-name> # уникальное имя теста
+    model: <model-name>
+    versions: #необязательно
+      include: <list-of-versions-to-include> #необязательно
+      exclude: <list-of-versions-to-exclude> #необязательно
     config: 
       meta: {dictionary}
       tags: <string> | [<string>]
       enabled: {boolean} # optional. v1.9 or higher. If not configured, defaults to `true`
+      compute: local | remote # optional. v2.0 or higher. Defaults to `remote`.  Requires DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS=true. See [Run unit tests locally](/docs/build/unit-tests#run-unit-tests-locally)
     given:
       - input: <ref_or_source_call> # опционально для seeds
         format: dict | csv | sql
@@ -43,7 +40,7 @@ unit_tests:
       - input: ... # объявить дополнительные входные данные
     expect:
       format: dict | csv | sql
-      # либо определите строки в коде, либо имя фикстуры
+# либо определите строки непосредственно здесь, либо укажите имя фикстуры
       rows: {dictionary} | <string>
       fixture: <fixture-name> # SQL или CSV
     overrides: # необязательно: конфигурация окружения выполнения dbt
@@ -54,9 +51,8 @@ unit_tests:
         # ... любое другое свойство контекста
       vars: {dictionary}
       env_vars: {dictionary}
-  - name: <test-name> ... # объявите дополнительные модульные тесты
-
-  ```
+- name: <test-name> ... # объявите дополнительные модульные тесты
+```
 
 </File>
 
@@ -64,7 +60,7 @@ unit_tests:
 
 <File name='models/schema.yml'>
 
-```yml
+```yaml
 
 unit_tests:
   - name: test_is_valid_email_address # это уникальное имя теста
@@ -92,7 +88,7 @@ unit_tests:
 
 <File name='models/schema.yml'>
 
-```yml
+```yaml
 
 unit_tests:
   - name: test_is_valid_email_address # это уникальное имя теста
@@ -119,7 +115,7 @@ unit_tests:
 
 <File name='models/schema.yml'>
 
-```yml
+```yaml
 
 unit_tests:
   - name: test_is_valid_email_address # это уникальное имя теста

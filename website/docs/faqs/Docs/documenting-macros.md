@@ -7,15 +7,13 @@ id: documenting-macros
 
 import MacroArgsNote from '/snippets/_validate-macro-args.md';
 
-Чтобы задокументировать макросы, используйте [schema file](/reference/macro-properties) и вложите конфигурации под ключом `macros:`
+Чтобы документировать макросы, используйте [файл свойств](/reference/macro-properties) и размещайте настройки внутри ключа `macros:`
 
 ## Пример {#example}
 
-<File name='macros/schema.yml'>
+<File name='macros/properties.yml'>
 
 ```yml
-version: 2
-
 macros:
   - name: cents_to_dollars
     description: Макрос для преобразования центов в доллары
@@ -44,8 +42,6 @@ materialization_{materialization_name}_{adapter}
 <File name='macros/properties.yml'>
 
 ```yaml
-version: 2
-
 macros:
   - name: materialization_my_materialization_name_default
     description: Пользовательская материализация для вставки записей в таблицу только для добавления и отслеживания времени их добавления.

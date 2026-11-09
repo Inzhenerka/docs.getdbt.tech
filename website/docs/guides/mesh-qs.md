@@ -11,14 +11,14 @@ hide_table_of_contents: true
 
 ## Введение {#introduction}
 
-<Constant name="mesh" /> — это фреймворк, который помогает организациям эффективно масштабировать команды и данные. Он продвигает лучшие практики управления (governance) и разбивает крупные проекты на управляемые части &mdash; что ускоряет разработку аналитики. <Constant name="mesh" /> доступен для аккаунтов [<Constant name="cloud" /> Enterprise](https://www.getdbt.com/).
+<Constant name="mesh" /> — это подход, который помогает организациям эффективно масштабировать команды и ресурсы данных. Он способствует внедрению лучших практик управления и позволяет разбивать крупные проекты на управляемые части &mdash; для ускорения разработки решений для работы с данными. <Constant name="mesh" /> доступен для учетных записей [<Constant name="dbt" /> Enterprise](https://www.getdbt.com/).
 
-В этом руководстве вы научитесь настраивать мультипроектную архитектуру, используя базовые концепции [<Constant name="mesh" />](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh), а также реализовывать data mesh в <Constant name="cloud" />:
+В этом руководстве вы узнаете, как организовать работу с несколькими проектами, используя основные концепции [<Constant name="mesh" />](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh), и как реализовать data mesh в <Constant name="dbt" />:
 
-- Настроите базовый (foundational) проект под названием “Jaffle | Data Analytics”
-- Настроите downstream‑проект под названием “Jaffle | Finance”
-- Добавите доступ к моделям, версии и контракты
-- Настроите задание <Constant name="cloud" />, которое запускается после завершения upstream‑задания
+- Настроить базовый проект под названием «Jaffle | Data Analytics»
+- Настроить зависимый проект под названием «Jaffle | Finance»
+- Добавить настройки доступа к моделям, версии и контракты
+- Настроить задание <Constant name="dbt" />, которое запускается после завершения вышестоящего задания
  
 Подробнее о том, почему data mesh важен, читайте в статье: [What is data mesh? The definition and importance of data mesh](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh).
 
@@ -38,9 +38,9 @@ hide_table_of_contents: true
 
 Чтобы использовать <Constant name="mesh" />, необходимо следующее:
 
-- У вас должен быть аккаунт [<Constant name="cloud" /> уровня Enterprise](https://www.getdbt.com/get-started/enterprise-contact-pricing) <Lifecycle status="managed,managed_plus" />
-- У вас есть доступ к облачной платформе данных, права на загрузку примеров таблиц и разрешения в <Constant name="cloud" /> на создание новых проектов. 
-- В этом руководстве используются примерные данные Jaffle Shop, включая таблицы `customers`, `orders` и `payments`. Следуйте инструкциям, чтобы загрузить эти данные в вашу платформу данных:
+- У вас должна быть [учётная запись <Constant name="dbt" /> с тарифом Enterprise](https://www.getdbt.com/contact) <Lifecycle status="managed,managed_plus" />
+- У вас есть доступ к облачной платформе данных, разрешения на загрузку таблиц с демонстрационными данными и разрешения в <Constant name="dbt" /> на создание новых проектов. 
+- В этом руководстве используются демонстрационные данные Jaffle Shop, включая таблицы `customers`, `orders` и `payments`. Следуйте приведённым инструкциям, чтобы загрузить эти данные на используемую вами платформу данных:
   - [Snowflake](/guides/snowflake?step=3)
   - [Databricks](/guides/databricks?step=3)
   - [Redshift](/guides/redshift?step=3)
@@ -52,32 +52,30 @@ hide_table_of_contents: true
 
 ## Создание и настройка двух проектов {#create-and-configure-two-projects}
 
-В этом разделе вы создадите два новых пустых проекта в <Constant name="cloud" />, которые будут использоваться как базовый и downstream‑проекты:
+В этом разделе вы создадите два новых пустых проекта в <Constant name="dbt" />, которые будут служить вашим базовым и нижестоящим проектами:
 
 - **Базовые проекты** (или upstream‑проекты) обычно содержат основные модели и датасеты, которые служат фундаментом для дальнейшей аналитики и отчетности.
 - **Downstream‑проекты** строятся поверх этого фундамента и часто добавляют более специфичные трансформации или бизнес‑логику для отдельных команд или задач. 
 
-Например, вымышленная, но всегда предприимчивая компания “Jaffle Labs” создаст два проекта для команд аналитики данных и финансов: Jaffle | Data Analytics и Jaffle | Finance.
+Например, предприимчивая вымышленная организация «Jaffle Labs» создаст в своей учетной записи два проекта для команд аналитики данных и финансов: **Jaffle | Data Analytics** и **Jaffle | Finance**.
 
-<Lightbox src="/img/guides/dbt-mesh/project_names.png" width="50%" title="Создайте два новых dbt‑проекта с именами 'Jaffle | Data Analytics' и 'Jaffle Finance'" />
+Чтобы [создать](/docs/platform/about-platform-setup) новый проект в <Constant name="dbt" />:
 
-Чтобы [создать](/docs/cloud/about-cloud-setup) новый проект в <Constant name="cloud" />:
-
-1. В **Account settings** перейдите в **Projects**. Нажмите **New project**.
-2. Введите имя проекта и нажмите **Continue**.
-   - Используйте "Jaffle | Data Analytics" для одного проекта
-   - Используйте "Jaffle | Finance" для второго проекта
-3. Выберите вашу платформу данных и нажмите **Next** для настройки подключения.
-4. В разделе **Configure your environment** введите **Settings** для нового проекта.
-5. Нажмите **Test Connection**, чтобы проверить доступ <Constant name="cloud" /> к вашей платформе данных.
-6. Нажмите **Next**, если тест прошел успешно. Если нет — вернитесь и перепроверьте настройки.
-   - Для этого руководства убедитесь, что в каждом проекте создано по одному [development](/docs/dbt-cloud-environments#create-a-development-environment) и [Deployment](/docs/deploy/deploy-environments) окружению.
-     - Для "Jaffle | Data Analytics" установите базу данных по умолчанию `jaffle_da`.
-     - Для "Jaffle | Finance" установите базу данных по умолчанию `jaffle_finance`.
-7. Продолжайте следовать подсказкам до завершения настройки проекта. В итоге каждый проект должен иметь:
+1. В разделе **Account settings** перейдите в **Projects**. Нажмите **New project**.
+2. Введите название проекта и нажмите **Continue**.
+   - Используйте «Jaffle | Data Analytics» для одного проекта
+   - Используйте «Jaffle | Finance» для другого проекта
+3. Выберите свою платформу данных, затем нажмите **Next**, чтобы настроить подключение.
+4. В разделе **Configure your environment** укажите параметры **Settings** для нового проекта.
+5. Нажмите **Test Connection**. Эта проверка подтверждает, что <Constant name="dbt" /> может получить доступ к вашей учетной записи на платформе данных.
+6. Нажмите **Next**, если проверка прошла успешно. Если проверка завершилась с ошибкой, возможно, потребуется вернуться и перепроверить настройки.
+   - В рамках этого руководства обязательно создайте для каждого проекта по одной [среде разработки](/docs/dbt-platform-environments#create-a-development-environment) и [среде развертывания](/docs/deploy/deploy-environments).
+     - Для «Jaffle | Data Analytics» задайте базу данных по умолчанию `jaffle_da`.
+     - Для «Jaffle | Finance» задайте базу данных по умолчанию `jaffle_finance`.
+7. Следуйте дальнейшим указаниям, чтобы завершить настройку проекта. После настройки в каждом проекте должны быть:
     - Подключение к платформе данных
-    - Новый git‑репозиторий
-    - Одно или несколько [окружений](/docs/deploy/deploy-environments) (например, development, deployment)
+    - Новый репозиторий Git
+    - Одна или несколько [сред](/docs/deploy/deploy-environments) (например, среда разработки и среда развертывания)
 
 <DocCarousel slidesPerView={1}>
 
@@ -94,8 +92,8 @@ hide_table_of_contents: true
 </DocCarousel>
 
 
-### Создание production‑окружения {#create-a-production-environment}
-В <Constant name="cloud" /> каждый проект может иметь одно deployment‑окружение, назначенное как “Production”. Для каждого проекта, который вы хотите объединить в mesh, необходимо настроить ["Production" или "Staging" deployment‑окружение](/docs/deploy/deploy-environments). Это позволит использовать <Constant name="explorer" /> на [последующих шагах](/guides/mesh-qs?step=5#create-and-run-a-dbt-cloud-job) данного руководства.
+### Создайте производственную среду {#create-a-production-environment}
+В <Constant name="dbt" /> в каждом проекте можно назначить одну среду развертывания производственной («Production»). Вы должны настроить [среду развертывания «Production» или «Staging»](/docs/deploy/deploy-environments) для каждого проекта, который хотите объединить в mesh. Это позволит вам использовать <Constant name="catalog" /> на [последующих этапах](/guides/mesh-qs?step=5#create-and-run-a-dbt-job) этого руководства.
 
 Чтобы настроить production‑окружение:
 1. Перейдите в **Deploy** -> **Environments** и нажмите **Create New Environment**.
@@ -106,14 +104,35 @@ hide_table_of_contents: true
 6. Нажмите **Test Connection**, чтобы проверить подключение.
 6. Нажмите **Save**, чтобы создать production‑окружение.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings-1.png" width="100%" title="Назначьте production‑окружение окружением по умолчанию в настройках Environment Settings"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/prod-settings-1.png" width="100%" title="Установите производственную среду в качестве среды по умолчанию в настройках среды"/>
 
 
-## Настройка базового проекта {#set-up-a-foundational-project}
+## Настройка базового проекта
+
+В этом вышестоящем проекте вы создаёте основные ресурсы данных. Этот проект будет содержать источники исходных данных, модели подготовительного слоя (staging) и основную бизнес-логику.
+
+<Constant name="dbt" /> позволяет специалистам по работе с данными разрабатывать в удобном для них инструменте и предоставляет локальный [<Constant name="dbt" /> CLI](/docs/platform/dbt-cli-installation) или работающую в браузере среду [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio).
+
+В этом разделе руководства вы настроите проект «Jaffle | Data Analytics» в качестве базового проекта с помощью <Constant name="studio_ide" />.
+
+1. Сначала перейдите на страницу **<Constant name="studio_ide"/>**, чтобы проверить настройки.
+2. Нажмите **Initialize dbt project**, если вы начали с пустого репозитория.
+3. Удалите папку `models/example`.  
+4. Перейдите к файлу `dbt_project.yml` и измените имя проекта (строка 5) с `my_new_project` на `analytics`.
+5. В файле `dbt_project.yml` удалите строки 39–42 (ссылку на модель `my_new_project`).
+6. В разделе **File <Constant name="catalog" />** наведите указатель на каталог проекта и нажмите **...**, затем выберите **Create file**.
+7. Создайте две новые папки: `models/staging` и `models/core`.
+
+
+### Подготовительный слой (staging)
+Теперь, когда базовый проект настроен, приступим к созданию ресурсов данных. Настройте подготовительный слой следующим образом:
+
+1. Создайте новый YAML-файл свойств `models/staging/sources.yml`.
+2. Объявите источники, скопировав следующий фрагмент в файл и нажав **Save**.
 
 Этот upstream‑проект — место, где вы создаете ключевые дата‑ассеты. Он будет содержать исходные источники данных, staging‑модели и основную бизнес‑логику.
 
-<Constant name="cloud" /> позволяет специалистам по данным разрабатывать в привычных инструментах и предоставляет как локальный [<Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation), так и браузерный [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio).
+<Constant name="cloud" /> позволяет специалистам по данным разрабатывать в привычных инструментах и предоставляет как локальный [<Constant name="cloud" /> CLI](/docs/platform/dbt-cli-installation), так и браузерный [<Constant name="cloud_ide" />](/docs/platform/studio-ide/develop-in-studio).
 
 В этом разделе вы настроите проект “Jaffle | Data Analytics” как базовый, используя <Constant name="cloud_ide" />.
 
@@ -180,6 +199,11 @@ from {{ source('jaffle_shop', 'orders') }}
 
 </File>
 
+Прежде чем команда, использующая результаты этого базового проекта, сможет воспользоваться его ресурсами, необходимо:
+- [Создать и определить](/docs/mesh/govern/model-access) хотя бы одну модель с уровнем доступа «public»
+- Успешно выполнить [задание развертывания](/docs/deploy/deploy-jobs)
+  - Обратите внимание: <VersionBlock lastVersion="1.99">включите [**Generate docs on run**](/docs/deploy/deploy-jobs) для этого задания, чтобы обновить ресурсы в <Constant name="catalog" />.</VersionBlock><VersionBlock firstVersion="2.0">это задание автоматически обновляет ресурсы в <Constant name="catalog" />.</VersionBlock> После выполнения задания нажмите **Catalog** в главном меню навигации и выберите свой проект, чтобы убедиться, что его граф зависимостей, тесты и документация успешно отображаются.
+
 5. Создайте файл `models/core/fct_orders.sql` для построения факт‑таблицы с данными о клиентах и заказах.
 
 <File name='models/core/fct_orders.sql'>
@@ -243,7 +267,7 @@ select * from final
 
 <File name='models/core/core.yml'>
 
-```yaml
+2. Перейдите на вкладку **Lineage** в <Constant name="studio_ide" />, чтобы увидеть отметку **Public** под названием модели.
 
 models:
   - name: fct_orders
@@ -267,28 +291,36 @@ models:
         data_type: number
         description: ""
 
-      - name: first_name
-        data_type: varchar
-        description: ""
+Чтобы впервые запустить задание развертывания <Constant name="dbt" />, вам нужно создать новое задание <Constant name="dbt" />.  
+1. Перейдите в **Orchestration** > **Jobs**. 
+2. Нажмите **Create job**, а затем **Deploy job**.
+3. <VersionBlock lastVersion="1.99">Выберите параметр **Generate docs on run**. Это позволит наполнить <Constant name="catalog"/> вашими метаданными.</VersionBlock><VersionBlock firstVersion="2.0">Оставьте команду `dbt build`, заданную по умолчанию. При каждом запуске задания <Constant name="catalog"/> автоматически наполняется вашими метаданными.</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
 
       - name: last_name
         data_type: varchar
         description: ""
 
-      - name: first_order_date
-        data_type: date
-        description: ""
+</VersionBlock>
 
-      - name: days_as_customer_at_purchase
-        data_type: number
-        description: "Days between this purchase and customer's first purchase"
-```
+4. Нажмите **Save**.
+5. Нажмите **Run now**, чтобы запустить задание.
+6. После завершения запуска перейдите в <Constant name="catalog"/>. Теперь вы должны увидеть, что граф зависимостей, тесты и документация успешно отобразились.
+
+Подробнее о том, как <Constant name="dbt" /> использует метаданные из среды Staging для разрешения ссылок в зависимых проектах, см. в разделе [Staging с зависимыми проектами](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
 
 </File>
 
 Примечание: по умолчанию доступ моделей установлен как “protected”, что означает, что на них можно ссылаться только внутри того же проекта. Подробнее о типах доступа и группах моделей читайте [здесь](/docs/mesh/govern/model-access#access-modifiers).
 
-2. Перейдите во вкладку **Lineage** в <Constant name="cloud_ide" />, чтобы увидеть модель, помеченную как **Public**, под ее именем.
+1. Если вы также начали работу с новым репозиторием git, нажмите **Initialize dbt project** в разделе **Version control**.
+2. Удалите папку `models/example`.
+3. Откройте файл `dbt_project.yml` и измените имя проекта (строка 5) с `my_new_project` на `finance`.
+4. Откройте файл `dbt_project.yml` и удалите строки 39–42 (ссылку на модель `my_new_project`).
+5. В **File <Constant name="catalog" />** наведите указатель на каталог проекта, нажмите **...** и выберите **Create file**.
+6. Назовите файл `dependencies.yml`.
+7. Добавьте вышестоящий проект `analytics` и пакет `dbt_utils`. Нажмите **Save**.
 
 <Lightbox src="/img/guides/dbt-mesh/da_lineage.png" title="Lineage проекта Jaffle | Data Analytics" />
 
@@ -384,6 +416,9 @@ select * from final
 ```
 
 </File>
+
+2. Обратите внимание, как работает межпроектный ref! Когда вы добавляете `ref`, функция автодополнения в <Constant name="studio_ide" /> распознаёт публичную модель как доступную.
+<Lightbox src="/img/guides/dbt-mesh/cross_proj_ref_autocomplete.png" title="Автодополнение межпроектного ref в Studio IDE" />
 
 ### Ссылка на публичную модель {#reference-the-public-model}
 
@@ -560,7 +595,7 @@ select * from {{ ref('fct_orders') }}
 ## Добавление dbt‑задания в downstream‑проект {#add-a-dbt-job-in-the-downstream-project}
 Перед продолжением убедитесь, что вы закоммитили и смержили изменения в обоих проектах — “Jaffle | Data Analytics” и “Jaffle | Finance”.
 
-Участник команды Finance хочет запланировать задание <Constant name="cloud" /> для анализа пути клиента по платежам сразу после обновления пайплайнов командой аналитики.
+Сотрудник финансовой команды хочет настроить запуск задания <Constant name="dbt" /> для анализа процесса оплаты клиентами сразу после того, как команда аналитики данных обновит свои пайплайны.
 
 1. В проекте “Jaffle | Finance” перейдите на страницу **Jobs** через **Orchestration** > **Jobs**. 
 2. Нажмите **Create job**, затем **Deploy job**.
@@ -616,15 +651,15 @@ select * from final
 
 </File>
 
-3. В <Constant name="cloud_ide" /> перейдите в **Version control**, чтобы закоммитить и смержить изменения.
-4. Перейдите в **Deploy**, затем на страницу **Jobs**.
-5. Нажмите **Run now**, чтобы запустить задание Finance. Модель `agg_customer_payment_journey` будет собрана, и вы увидите предупреждение о дате вывода версии из эксплуатации.
+3. В <Constant name="studio_ide" /> перейдите в раздел **Version control**, чтобы создать коммит и выполнить слияние изменений.
+4. Перейдите в раздел **Deploy**, а затем на страницу **Jobs**.
+5. Нажмите **Run now**, чтобы запустить задание Finance. Модель `agg_customer_payment_journey` будет построена, и появится предупреждение о дате прекращения её поддержки.
 
 <Lightbox src="/img/guides/dbt-mesh/deprecation_date_warning.png" title="Модель отображает предупреждение о дате вывода версии из эксплуатации." />
 
 ## Просмотр lineage с помощью dbt Catalog {#view-lineage-with-dbt-catalog}
 
-Используйте [<Constant name="explorer" />](/docs/explore/explore-projects), чтобы просмотреть lineage между проектами в <Constant name="cloud" />. Перейдите на страницу **Explore** каждого проекта &mdash; теперь вы увидите [lineage, непрерывно связанный между проектами](/docs/explore/explore-multiple-projects).
+Используйте [<Constant name="catalog" />](/docs/explore/explore-projects), чтобы просматривать граф зависимостей между проектами в <Constant name="dbt" />. Перейдите на страницу **Explore** каждого из ваших проектов &mdash; теперь вы должны видеть [единый граф зависимостей между проектами](/docs/explore/explore-multiple-projects).
 
 <Lightbox src="/img/guides/dbt-mesh/jaffle_da_final_lineage.png" width="85%" title="Просмотр lineage проекта 'Jaffle | Data Analytics' в dbt Catalog" />
 
@@ -634,18 +669,19 @@ select * from final
 
 Поздравляем 🎉! Вы готовы внедрять преимущества <Constant name="mesh" /> в вашей организации. Вы узнали:
 
-- Как создать базовый проект “Jaffle | Data Analytics”
-- Как создать downstream‑проект “Jaffle | Finance”
-- Как реализовать доступ к моделям, версии и контракты
-- Как настроить задания <Constant name="cloud" />, запускаемые после завершения upstream‑заданий
+- Как настроить базовый проект «Jaffle | Data Analytics».
+- Создать зависимый проект «Jaffle | Finance».
+- Настроить доступ к моделям, их версии и контракты.
+- Настроить задания <Constant name="dbt" />, запускаемые по завершении вышестоящих заданий.
 
 Вот несколько дополнительных ресурсов, которые помогут продолжить путь:
 
-- [Как мы строим наши проекты dbt mesh](/best-practices/how-we-mesh/mesh-1-intro)
-- [Часто задаваемые вопросы по <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-5-faqs)
-- [Реализация <Constant name="mesh" /> с использованием <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs#how-can-i-implement-dbt-mesh-with-the-dbt-semantic-layer)
+- [Как мы создаём проекты dbt mesh](/best-practices/how-we-mesh/mesh-1-intro)
+- [Часто задаваемые вопросы о <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-5-faqs)
+- [Внедрение <Constant name="mesh" /> с помощью <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl)
 - [Межпроектные ссылки](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref)
-- [<Constant name="explorer" />](/docs/explore/explore-projects)
+- [<Constant name="catalog" />](/docs/explore/explore-projects)
+- [Гибридная разработка с <Constant name="dbt_platform"/> и <Constant name="fusion"/>](/guides/dbt-platform-local-workflow) — поддерживайте синхронизацию локальной среды и среды платформы: учётных данных, переменных окружения и версий <Constant name="fusion"/>
 
 </ConfettiTrigger>
 

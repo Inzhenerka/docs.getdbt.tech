@@ -3,6 +3,7 @@ title: "О документации"
 description: "Узнайте, как качественная документация для ваших моделей dbt помогает заинтересованным сторонам находить и понимать ваши наборы данных."
 id: "documentation"
 pagination_next: "docs/build/view-documentation"
+availability: all_users
 ---
 
 import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
@@ -71,18 +72,70 @@ models:
 
 ## Генерация документации {#generating-documentation}
 
-Сгенерируйте документацию для вашего проекта, выполнив следующие шаги:
+dbt предоставляет решения как для самостоятельного размещения, так и для размещения в облаке, позволяющие [просматривать документацию](/docs/build/view-documentation) вашего проекта. Выбор зависит от версии dbt и среды, в которой вы запускаете dbt.
 
-1. Запустите команду `dbt docs generate` ([command](/reference/commands/cmd-docs#dbt-docs-generate)), чтобы скомпилировать релевантную информацию о вашем dbt‑проекте и хранилище данных в файлы `manifest.json` и `catalog.json` соответственно.  
-2. Убедитесь, что вы создали модели с помощью `dbt run` или `dbt build`, чтобы в документации отображались все колонки, а не только те, которые описаны в вашем проекте.  
-3. Если вы разрабатываете локально, запустите команду `dbt docs serve` ([command](/reference/commands/cmd-docs#dbt-docs-serve)), чтобы использовать эти `.json`‑файлы для наполнения локального веб‑сайта.
 
-dbt предоставляет два взаимодополняющих способа [просмотра документации](/docs/build/view-documentation) и описаний после их генерации:
+<VersionBlock lastVersion="1.99">
 
-- [**dbt Docs**:](/docs/build/view-documentation#dbt-docs) Статический сайт документации с lineage моделей, метаданными и описаниями, который можно разместить на вашем веб‑сервере (например, S3 или Netlify). Доступно для тарифов разработчика <Constant name="core" /> или <Constant name="cloud" />.  
-- [**<Constant name="explorer" />**](/docs/explore/explore-projects): Расширяет dbt Docs, предоставляя динамический интерфейс в реальном времени с расширенными метаданными, настраиваемыми представлениями, более глубоким анализом проекта и инструментами для совместной работы. Доступно в <Constant name="cloud" /> на тарифах [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
+:::tip Используйте dbt Docs v2 локально!
 
-См. раздел [View documentation](/docs/build/view-documentation), чтобы получить максимальную пользу от документации вашего dbt‑проекта.
+dbt Docs v2, созданный на основе мощных возможностей dbt v2, — это современный сайт документации с открытым исходным кодом, метаданными Semantic Layer и графом зависимостей на уровне столбцов, который можно разместить где угодно. [Обновитесь до v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2) и обратитесь к разделу [dbt Docs v2](/docs/build/view-documentation?version=2#dbt-docs-v2) за дополнительной информацией.
+:::
+
+<SimpleTable>
+
+| Вариант | Что это | Где используется | Как сгенерировать |
+|--------|-----------|------------------|--------------------|
+| [**dbt Docs v1**](/docs/build/view-documentation#dbt-docs-%D1%83%D1%81%D1%82%D0%B0%D1%80%D0%B5%D0%B2%D1%88%D0%B8%D0%B9-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82) | Статический сайт с графом зависимостей моделей, метаданными и документацией, который можно разместить на собственном веб-сервере (например, в S3 или Netlify) | <Constant name="core_v1" /> или тарифные планы Developer в <Constant name="dbt" /> | Выполните `dbt docs generate`. Пошаговые инструкции см. в разделе [Генерация документации локально](#generate-docs-locally) |
+| [**dbt <Constant name="catalog" />**](/docs/explore/explore-projects) | Динамический интерфейс, работающий в реальном времени, с расширенными метаданными, настраиваемыми представлениями, углублённой аналитикой проекта и инструментами для совместной работы. | <Constant name="dbt_platform" /> на [тарифных планах Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing) | Наполняется автоматически при выполнении ваших заданий с <Constant name="fusion_engine" />. Дополнительные действия не требуются! |
+
+</SimpleTable>
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+<SimpleTable>
+
+| Вариант | Что это | Где используется | Как сгенерировать |
+|--------|-----------|------------------|--------------------|
+| [**dbt Docs v2**](/docs/build/view-documentation#dbt-docs-v2) | Переработанный сайт документации с открытым исходным кодом, метаданными Semantic Layer и [графом зависимостей на уровне столбцов](/docs/explore/column-level-lineage), который можно разместить где угодно | Локально с <Constant name="fusion_engine" />. Недоступен в <Constant name="dbt_platform" /> | Выполните `dbt docs generate` локально. Пошаговые инструкции см. в разделе [Генерация документации локально](#generate-docs-locally) |
+| [**dbt <Constant name="catalog" />**](/docs/explore/explore-projects) | Динамический интерфейс, работающий в реальном времени, с расширенными метаданными, настраиваемыми представлениями, углублённой аналитикой проекта и инструментами для совместной работы. | <Constant name="dbt_platform" /> на [тарифных планах Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing) | Наполняется автоматически при выполнении ваших заданий с <Constant name="fusion_engine" />. Дополнительные действия не требуются! |
+
+</SimpleTable>
+
+</VersionBlock>
+
+:::tip Хотите поделиться документацией с заинтересованными сторонами?
+Любой пользователь с лицензией разработчика или лицензией только для чтения может изучать ваши проекты в <Constant name="catalog" />. Добавьте столько лицензий только для чтения, сколько нужно, чтобы предоставить заинтересованным сторонам доступ к документации, — отдельный сайт документации не требуется.
+:::
+
+### Генерация документации локально {#generate-docs-locally}
+
+<VersionBlock lastVersion="1.99">
+
+1. Сохраните изменения описаний моделей, источников и столбцов в YAML. Используйте тот же контекст проекта, что и при разработке, включая все селекторы и исключения, чтобы сгенерированные артефакты соответствовали ресурсам, которые dbt разбирает при этом запуске.
+2. Постройте модели с помощью `dbt run` или `dbt build`, чтобы документация включала все столбцы, а не только те, которые описаны в проекте.
+3. Выполните [`dbt docs generate`](/reference/commands/cmd-docs?version=1.12#dbt-docs-generate), чтобы скомпилировать информацию о проекте и хранилище данных в файлы `manifest.json` и `catalog.json`.
+4. Выполните [`dbt docs serve`](/reference/commands/cmd-docs?version=1.12#dbt-docs-serve), чтобы использовать эти файлы для наполнения локального веб-сайта.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+Используя <Constant name="fusion_engine" />, dbt Docs v2 расширяет возможности исходного статического сайта v1, предоставляя современный высокопроизводительный каталог. Команда dbt docs generate компилирует проект, создаёт артефакты v2 в формате Parquet и записывает статический сайт, к которому браузер обращается напрямую с помощью DuckDB-WASM (WebAssembly), поэтому сервер для его просмотра не нужен. 
+
+Чтобы сгенерировать документацию и запустить её просмотр локально:
+
+- Выполните `dbt docs generate`, чтобы одной командой скомпилировать проект, записать индекс и экспортировать сайт документации.
+- Выполните `dbt docs serve` для локального предварительного просмотра сайта.
+
+:::note Доступность dbt Docs v2
+dbt Docs v2 работает только в самостоятельно размещённых установках dbt v2. Если вы используете <Constant name="dbt_platform" />, воспользуйтесь [<Constant name="catalog" />](/docs/explore/explore-projects), который наполняется автоматически при выполнении ваших заданий с v2. Добавление шага `dbt docs generate` в задание не создаст статический сайт в <Constant name="dbt_platform" />.
+:::
+
+</VersionBlock>
+
+Полную информацию об использовании см. в разделе [Команды dbt docs](/reference/commands/cmd-docs), а рекомендации по эффективной работе с документацией проекта — в разделе [Просмотр документации](/docs/build/view-documentation).
 
 ## Использование docs blocks {#using-docs-blocks}
 
@@ -103,7 +156,7 @@ Docs blocks предоставляют удобный и гибкий спосо
 
 Эта таблица содержит события кликов с маркетингового веб-сайта.
 
-События в этой таблице записываются с помощью [Snowplow](http://github.com/snowplow/snowplow) и передаются в хранилище каждый час. Отслеживаются следующие страницы маркетингового сайта:
+События в этой таблице регистрируются с помощью [Snowplow](https://github.com/snowplow/snowplow) и ежечасно загружаются в хранилище данных. Отслеживаются следующие страницы маркетингового сайта:
  - /
  - /about
  - /team
@@ -118,14 +171,22 @@ Docs blocks предоставляют удобный и гибкий спосо
 
 ### Размещение {#placement}
 
-<VersionBlock firstVersion="1.9">
+<VersionBlock lastVersion="1.11">
 
 Блоки документации должны быть размещены в файлах с расширением `.md`. По умолчанию dbt будет искать блоки документации во всех путях ресурсов (например, в объединенном списке [model-paths](/reference/project-configs/model-paths), [seed-paths](/reference/project-configs/seed-paths), [analysis-paths](/reference/project-configs/analysis-paths), [test-paths](/reference/project-configs/test-paths), [macro-paths](/reference/project-configs/macro-paths) и [snapshot-paths](/reference/project-configs/snapshot-paths)) &mdash; вы можете настроить это поведение с помощью конфигурации [docs-paths](/reference/project-configs/docs-paths).
 
 </VersionBlock>
 
-### Использование {#usage}
-Чтобы использовать блок документации, сослитесь на него в файле `schema.yml`, указав функцию [doc()](/reference/dbt-jinja-functions/doc) вместо markdown-строки. Используя примеры выше, документацию `table_events` можно подключить в файле `schema.yml`, как показано здесь:
+<VersionBlock firstVersion="1.12">
+
+Размещайте блоки docs в файлах `.md`. Также можно использовать расширения в стиле Jinja (`.md.j2`, `.md.jinja`, `.md.jinja2`), однако для этого необходимо задать [`allow_jinja_file_extensions: true`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions) в файле `dbt_project.yml`. Это позволяет использовать подсветку синтаксиса с учётом Jinja в IDE, которые связывают эти расширения с шаблонизацией Jinja.
+
+По умолчанию dbt ищет блоки docs во всех путях к ресурсам (например, в объединённом списке [model-paths](/reference/project-configs/model-paths), [seed-paths](/reference/project-configs/seed-paths), [analysis-paths](/reference/project-configs/analysis-paths), [test-paths](/reference/project-configs/test-paths), [macro-paths](/reference/project-configs/macro-paths) и [snapshot-paths](/reference/project-configs/snapshot-paths)). Это поведение можно изменить с помощью настройки [docs-paths](/reference/project-configs/docs-paths).
+
+</VersionBlock>
+
+### Использование
+Чтобы использовать блок docs, сошлитесь на него из файла `schema.yml` с помощью функции [doc()](/reference/dbt-jinja-functions/doc) вместо строки Markdown. Документацию `table_events` из приведённых выше примеров можно включить в файл `schema.yml`, как показано ниже:
 
 <File name='schema.yml'>
 
@@ -150,8 +211,11 @@ models:
 ## Установка пользовательского обзора {#setting-a-custom-overview}
 *Доступно только для dbt Docs.*
 
-## Настройка собственного overview
-*В настоящее время доступно только для dbt Docs.*
+## Настройка собственного обзора
+
+:::info Доступность
+Эта функция доступна только в [dbt Docs](/docs/build/documentation) — сгенерированном сайте документации вашего проекта dbt.
+:::
 
 Раздел **overview**, отображаемый на сайте dbt Docs, можно переопределить, указав собственный docs-блок с именем `__overview__`.
 
@@ -173,8 +237,7 @@ models:
 
 </File>
 
-### Пользовательские обзоры на уровне проекта {#custom-project-level-overviews}
-*Доступно только для dbt Docs.*
+### Пользовательские обзоры на уровне проекта
 
 Вы можете задать разные обзорные страницы (overviews) для каждого dbt‑проекта или пакета, включённого в ваш сайт документации, создав блок документации с именем `__[project_name]__`.
 

@@ -3,6 +3,7 @@ title: "Советы и хитрости dbt"
 description: "Ознакомьтесь с советами и хитростями, связанными с dbt, которые помогут вам работать быстрее и повысить продуктивность."
 sidebar_label: "Советы и хитрости dbt"
 pagination_next: null
+availability: all_users
 ---
 
 Используйте эту страницу как источник полезных наблюдений и практических рекомендаций для улучшения работы с dbt. Независимо от того, только ли вы начинаете работать с dbt или уже являетесь опытным пользователем, эти советы помогут вам работать более эффективно и результативно.
@@ -12,18 +13,29 @@ pagination_next: null
 - [Советы по пакетам](#package-tips), которые помогут оптимизировать ваш рабочий процесс.
 - [Продвинутые советы и техники](#advanced-tips-and-techniques), которые помогут получить максимум от dbt.
 
-Если вы разрабатываете в <Constant name="cloud_ide" />, вы можете обратиться к странице [горячих клавиш](/docs/cloud/studio-ide/keyboard-shortcuts), чтобы сделать разработку более продуктивной и удобной для всех.
+Если вы разрабатываете с помощью <Constant name="studio_ide" />, обратитесь к странице [сочетаний клавиш](/docs/platform/studio-ide/keyboard-shortcuts), чтобы сделать разработку продуктивнее и удобнее для всех.
 
 ## Советы по YAML {#yaml-tips}
 
-В этом разделе поясняется, где именно вы можете использовать [Jinja](/docs/build/jinja-macros), а также вкладывать [vars](/reference/dbt-jinja-functions/var) и [`env_var`](/reference/dbt-jinja-functions/env_var) в ваших YAML-файлах.
+В этом разделе поясняется, где можно использовать [Jinja](/docs/build/jinja-macros), а также вкладывать [vars](/reference/dbt-jinja-functions/var) и [`env_var`](/reference/dbt-jinja-functions/env_var) в YAML-файлах. Полную справку по каждому типу файлов см. в разделе [Поддержка Jinja по типам файлов](/reference/jinja-file-support).
 
-- Вы можете использовать Jinja почти в каждом YAML-файле dbt, _за исключением_ файла [`dependencies.yml`](/docs/build/packages#use-cases). Это связано с тем, что файл `dependencies.yml` не поддерживает Jinja.
+<VersionBlock lastVersion="1.99">
+
+- Jinja можно использовать почти во всех YAML-файлах в dbt. Основное исключение — [файл `dependencies.yml`](/docs/build/packages#use-cases): <Constant name="core" /> не поддерживает Jinja в этом файле.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+- Jinja можно использовать почти во всех YAML-файлах в dbt, включая `dependencies.yml` при работе с <Constant name="fusion_engine" />. Если ваш проект также должен работать с <Constant name="core" />, используйте `packages.yml` для описания пакетов с применением Jinja, чтобы сохранить обратную совместимость.
+
+</VersionBlock>
+
 - Используйте `vars` в любом YAML-файле, который поддерживает Jinja (например, `schema.yml`, `snapshots.yml`). Однако обратите внимание:
-  - В файлах `dbt_project.yml`, `packages.yml` и `profiles.yml` вы должны передавать `vars` через CLI с помощью флага `--vars`, а не определять их внутри блока `vars:` в самом YAML-файле. Это связано с тем, что эти файлы обрабатываются до рендеринга Jinja.
-- Вы можете использовать `env_var()` во всех YAML-файлах, которые поддерживают Jinja. При этом только `profiles.yml` и `packages.yml` поддерживают использование переменных окружения для безопасных значений (с префиксом `DBT_ENV_SECRET_`). Такие значения маскируются в логах и предназначены для хранения учетных данных или секретов.
+  - В файлах `dbt_project.yml`, `packages.yml` и `profiles.yml` необходимо передавать `vars` через CLI с помощью `--vars`, а не определять их в блоке `vars:` внутри YAML-файла. Это связано с тем, что разбор этих файлов выполняется до рендеринга Jinja.
+- Вы можете использовать `env_var()` во всех YAML-файлах, которые поддерживают Jinja. Только `profiles.yml` и `packages.yml` поддерживают переменные окружения для конфиденциальных значений (с префиксом `DBT_ENV_SECRET_`). Их значения маскируются в логах; эти переменные предназначены для учётных данных или секретов.
 
-Для получения дополнительной информации ознакомьтесь с [документацией по контексту <Constant name="core" />](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/context/README.md).
+Дополнительную информацию см. в [документации по контексту <Constant name="core" />](https://github.com/dbt-labs/dbt/blob/1.latest/core/dbt/context/README.md).
 
 ## Советы по пакетам {#package-tips}
 
@@ -57,10 +69,10 @@ pagination_next: null
 - Используйте флаг [--exclude](/reference/node-selection/exclude), чтобы исключить подмножество моделей из выборки.
 - Используйте флаг [--full-refresh](/reference/commands/run#refresh-incremental-models), чтобы пересобрать инкрементальную модель с нуля.
 - Используйте [seeds](/docs/build/seeds) для создания справочных таблиц вручную, например соответствий ZIP-кодов штатам или UTM-меток маркетинга кампаниям. Команда `dbt seed` загрузит CSV-файлы в ваше хранилище данных и сделает их доступными для использования через `ref` в моделях.
-- Используйте [target.name](/docs/build/custom-schemas#an-alternative-pattern-for-generating-schema-names), чтобы ветвить логику в зависимости от используемого окружения. Например, при разработке собирать все в одной схеме, а в продакшене — использовать несколько схем.
+- Используйте [target.name](/docs/build/custom-schemas#a-built-in-alternative-pattern-for-generating-schema-names), чтобы ветвить логику в зависимости от используемого окружения. Например, при разработке собирать все в одной схеме, а в продакшене — использовать несколько схем.
 
 ## Связанные документы {#related-docs}
 
 - [Руководство по быстрому старту](/guides)
-- [О <Constant name="cloud" />](/docs/cloud/about-cloud/dbt-cloud-features)
-- [Разработка в облаке](/docs/cloud/about-develop-dbt)
+- [О <Constant name="dbt" />](/docs/platform/about-platform/dbt-platform-features)
+- [Разработка в облаке](/docs/platform/about-develop-dbt)

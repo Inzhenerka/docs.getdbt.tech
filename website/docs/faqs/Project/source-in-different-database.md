@@ -11,15 +11,13 @@ id: source-in-different-database
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
-
 sources:
   - name: jaffle_shop
     database: raw
+    schema: jaffle_shop
     tables:
       - name: orders
       - name: customers
-
 ```
 
 </File>

@@ -3,7 +3,8 @@ title: "Об инкрементальной стратегии"
 sidebar_label: "Инкрементальная стратегия"
 description: "Инкрементальные стратегии для материализаций оптимизируют производительность, определяя, как обрабатывать новые и изменённые данные."
 id: "incremental-strategy"
-intro_text: "Инкрементальные стратегии для материализаций оптимизируют производительность, определяя, как обрабатывать новые и изменённые данные."
+intro_text: "Инкрементальные стратегии материализации оптимизируют производительность, определяя способ обработки новых и изменённых данных."
+availability: all_users
 ---
 
 Существует несколько стратегий для реализации концепции инкрементальных материализаций. Ценность каждой стратегии зависит от:
@@ -22,9 +23,9 @@ intro_text: "Инкрементальные стратегии для матер
 
 ### Поддерживаемые стратегии инкрементального обновления по адаптерам {#supported-incremental-strategies-by-adapter}
 
-Эта таблица показывает поддержку каждой инкрементальной стратегии для адаптеров, доступных в <Constant name="cloud" /> на [треке последних релизов](/docs/dbt-versions/cloud-release-tracks). Некоторые стратегии могут быть недоступны, если вы используете не трек **Latest**, и соответствующая функциональность ещё не была выпущена на трек **Compatible**.  
+В этой таблице показана поддержка каждой инкрементальной стратегии адаптерами, доступными в <Constant name="fusion" /> или в [**канале релизов v1 Latest**](/docs/dbt-versions/dbt-release-tracks) dbt. Некоторые стратегии могут быть недоступны, если вы не используете **v1 Latest**, а соответствующая функциональность ещё не появилась в канале **v1 Compatible**.
 
-Если вас интересует адаптер, доступный только в <Constant name="core" />, ознакомьтесь с [индивидуальной страницей конфигурации адаптера](/reference/resource-configs/resource-configs) для получения более подробной информации.
+Если вас интересуют инкрементальные стратегии для других адаптеров, подробную информацию можно найти на [странице конфигурации соответствующего адаптера](/reference/resource-configs).
 
 Нажмите на название адаптера в таблице ниже, чтобы узнать больше о поддерживаемых инкрементальных стратегиях:
 
@@ -34,12 +35,14 @@ intro_text: "Инкрементальные стратегии для матер
 | [dbt-redshift](/reference/resource-configs/redshift-configs#incremental-materialization-strategies) |     ✅    |    ✅   |  ✅ |   |   ✅   |
 | [dbt-bigquery](/reference/resource-configs/bigquery-configs#merge-behavior-incremental-models)      |           |    ✅   |    | ✅ |  ✅    |
 | [dbt-spark](/reference/resource-configs/spark-configs#incremental-models)                           |     ✅    |    ✅   |    |    ✅   | ✅ |
-| [dbt-databricks](/reference/resource-configs/databricks-configs#incremental-models)                 |     ✅    |    ✅   |    |          ✅         |          ✅         |
+| [dbt-databricks](/reference/resource-configs/databricks-configs#incremental-models)                 |     ✅    |    ✅   | ✅ |          ✅         |          ✅         |
 | [dbt-snowflake](/reference/resource-configs/snowflake-configs#merge-behavior-incremental-models)    |     ✅    |    ✅   | ✅  | ✅ | ✅  |
 | [dbt-trino](/reference/resource-configs/trino-configs#incremental)                                  |     ✅    |    ✅   | ✅  |    |  ✅  |
-| [dbt-fabric](/reference/resource-configs/fabric-configs#incremental)                                |     ✅    |    ✅   | ✅  |    |    |
+| [dbt-fabric](/reference/resource-configs/fabric-configs#incremental-models)                                |     ✅    |    ✅   | ✅  |    |  ✅  |
 | [dbt-athena](/reference/resource-configs/athena-configs#incremental-models)                         |     ✅    |    ✅   |     | ✅ | ✅  |
 | [dbt-teradata](/reference/resource-configs/teradata-configs#valid_history-incremental-materialization-strategy)  | ✅    |  ✅   |   ✅   |    |         ✅    |
+| [dbt-duckdb](/reference/resource-configs/duckdb-configs)  | ✅    |  ✅   |   ✅   |    |         ✅    |
+| [dbt-clickhouse](/reference/resource-configs/clickhouse-configs#incremental-materialization) | ✅ |  | ✅ | ✅ | |
 
 ### Настройка стратегии инкрементального обновления {#configuring-incremental-strategy}
 
@@ -187,7 +190,7 @@ select * from {{ ref("some_model") }}
 
 Стратегия `delete+insert` удаляет данные с указанным `unique_key` из целевой таблицы, а затем вставляет данные с тем же `unique_key`. Для больших наборов данных это может быть менее эффективно. Такой подход гарантирует, что обновлённые записи полностью заменяются, без частичных обновлений, и может быть полезен, если `unique_key` на самом деле не является уникальным или если `merge` не поддерживается.
 
-`delete+insert` не соответствует напрямую логике SCD (ни типу 1, ни типу 2), так как данные перезаписываются, а история изменений не отслеживается.
+`delete+insert` не соответствует напрямую логике SCD (типа 1 или 2), поскольку перезаписывает данные на уровне строк и, хотя может добавлять новые строки, не отслеживает историю изменений.
 
 Для реализации SCD2 используйте [dbt snapshots](/docs/build/snapshots#what-are-snapshots), а не `delete+insert`.
 
@@ -273,7 +276,7 @@ dbt не будет проверять пользовательские стра
 
 </File>
 
-Если вы используете пользовательский макрос microbatch, установите [флаг поведения `require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy) в вашем `dbt_project.yml`, чтобы включить пакетное выполнение вашей пользовательской стратегии. 
+Если вы используете пользовательский макрос микропакетной обработки, используйте [флаг поведения `require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-flags/require_batched_execution_for_custom_microbatch_strategy) в файле `dbt_project.yml` для управления пакетным выполнением. Установите для него значение `true`, чтобы включить пакетное выполнение до того, как это поведение станет стандартным. Когда это поведение станет стандартным (значение по умолчанию: `true`), установите для флага значение `false`, чтобы вернуться к выполнению за один вызов.
 
 ### Пользовательские стратегии из пакета {#custom-strategies-from-a-package}
 
@@ -291,5 +294,3 @@ dbt не будет проверять пользовательские стра
 
 </File>
 
-<Snippet path="discourse-help-feed-header" />
-<DiscourseHelpFeed tags="incremental"/>

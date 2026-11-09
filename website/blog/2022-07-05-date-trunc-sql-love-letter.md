@@ -61,7 +61,7 @@ date_trunc(<date/time field>, <date part>)
 
 ## Макрос dbt, который стоит запомнить {#a-dbt-macro-to-remember}
 
-Почему Snowflake, Amazon Redshift, Databricks и Google BigQuery решили использовать разные реализации по сути одной и той же функции, остается загадкой, и не стоит ломать голову, пытаясь это понять. Вместо того чтобы запоминать, что идет первым — `<date_part>` или `<date/time field>`, (что, честно говоря, мы никогда не можем запомнить) вы можете полагаться на макрос dbt Core, чтобы избежать сложного синтаксиса.
+Почему Snowflake, Amazon Redshift, Databricks и Google BigQuery решили использовать разные реализации по сути одной и той же функции, для нас загадка, и ломать над этим голову не стоит. Вместо того чтобы запоминать, что идёт первым — `<date_part>` или `<date/time field>` (честно говоря, мы и сами никогда не можем это запомнить), можно положиться на макрос dbt, который избавит вас от тонкостей синтаксиса.
 
 С dbt v1.2 [адаптеры](https://docs.getdbt.tech/docs/supported-data-platforms) теперь поддерживают [кросс-базовые макросы](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros), которые помогут вам писать определенные функции, такие как [DATE_TRUNC](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#date_trunc) и [DATEDIFF](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#datediff), без необходимости запоминать сложный синтаксис функций.
 

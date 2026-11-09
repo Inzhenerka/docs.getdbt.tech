@@ -39,7 +39,7 @@ is_featured: true
 
 В SQL мы фильтруем источник так, чтобы выбирать только новые записи с момента последней загрузки. Например, для инкрементальной загрузки новых транзакций:
 
-#### Code: Append Incremental Strategy {#code-append-incremental-strategy}
+#### Код стратегии Append {#code-append-incremental-strategy}
 
 ```jinja
 {{ config(
@@ -65,14 +65,14 @@ WHERE transaction_date > (
 
 Этот запрос добавляет только те транзакции, у которых `transaction_date` больше максимальной даты транзакции в целевой таблице.
 
-#### Append Incremental Model – Before Incremental Run {#append-incremental-model-before-incremental-run}
+#### Инкрементальная модель со стратегией Append до запуска {#append-incremental-model-before-incremental-run}
 
 | transaction_id | customer_id | transaction_date | amount | status |
 | --- | --- | --- | --- | --- |
 | 10001 | C001 | 2023-09-28 | ₦12,000 | completed |
 | 10002 | C002 | 2023-09-28 | ₦5,000 | completed |
 
-#### Append Incremental Model – After Incremental Run {#append-incremental-model-after-incremental-run}
+#### Инкрементальная модель со стратегией Append после запуска {#append-incremental-model-after-incremental-run}
 
 | transaction_id | customer_id | transaction_date | amount | status |
 | --- | --- | --- | --- | --- |
@@ -94,7 +94,7 @@ Append хорошо подошёл нам для ingestion-пайплайнов,
 
 Вот как мы настраивали модель с `insert_overwrite` в BigQuery:
 
-#### Code: Insert Overwrite Strategy {#code-insert-overwrite-strategy}
+#### Код стратегии Insert Overwrite {#code-insert-overwrite-strategy}
 
 ```jinja
 {{ config(
@@ -116,7 +116,7 @@ WHERE transaction_date >= {{ this.last_partition }}
 
 Здесь `partition_by` задаёт партиционирование таблицы. В `WHERE` используется `{{ this.last_partition }}` (_последняя партиция, уже присутствующая в целевой таблице_), чтобы выбирать данные только для новых или обновлённых партиций. При каждом запуске BigQuery заменяет существующие партиции, попадающие под фильтр (например, партицию за последнюю дату), результатами запроса. Старые партиции остаются нетронутыми.
 
-#### Insert Overwrite Strategy – Before Incremental Run {#insert-overwrite-strategy-before-incremental-run}
+#### Инкрементальная модель со стратегией Insert Overwrite до запуска {#insert-overwrite-strategy-before-incremental-run}
 
 | transaction_date | transaction_id | customer_id | amount | status |
 | --- | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ WHERE transaction_date >= {{ this.last_partition }}
 
 _(Партиция, которая будет перезаписана, выделена жирным.)_
 
-#### Insert Overwrite Strategy – After Incremental Run {#insert-overwrite-strategy-after-incremental-run}
+#### Инкрементальная модель со стратегией Insert Overwrite после запуска {#insert-overwrite-strategy-after-incremental-run}
 
 | transaction_date | transaction_id | customer_id | amount | status |
 | --- | --- | --- | --- | --- |
@@ -151,7 +151,7 @@ _(Новые данные партиции показаны жирным — о�
 
 В dbt использование `incremental_strategy='merge'` требует указания `unique_key` (в BigQuery или Snowflake dbt компилирует это в оператор MERGE). Также можно ограничить список обновляемых колонок с помощью `merge_update_columns` или исключить поля через `merge_exclude_columns`. Например:
 
-#### Code: Merge Strategy {#code-merge-strategy}
+#### Код стратегии Merge {#code-merge-strategy}
 
 ```jinja
 {{ config(
@@ -205,7 +205,7 @@ Merge был нашей основной стратегией для upsert-сц
 
 Для наглядности — упрощённая сводка дневных транзакций. Изначально она содержала данные до _30 сентября 2023 года_:
 
-#### Daily Transactions Summary – Before {#daily-transactions-summary-before}
+#### Сводка по ежедневным транзакциям до запуска {#daily-transactions-summary-before}
 
 | date       | transactions_count | total_amount |
 |------------|--------------------|--------------|
@@ -215,7 +215,7 @@ Merge был нашей основной стратегией для upsert-сц
 
 После следующей инкрементальной загрузки (с транзакциями за _1 октября 2023 года_) таблица автоматически пополнилась метриками за новый день без пересчёта предыдущих:
 
-#### Daily Transactions Summary – After {#daily-transactions-summary-after}
+#### Сводка по ежедневным транзакциям после запуска {#daily-transactions-summary-after}
 
 | date       | transactions_count | total_amount |
 |------------|--------------------|--------------|

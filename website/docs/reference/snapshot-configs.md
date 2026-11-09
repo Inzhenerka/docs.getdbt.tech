@@ -105,7 +105,7 @@ import LegacySnapshotConfig from '/snippets/_legacy-snapshot-config.md';
 
 ### Миграция конфигурации снимков {#snapshot-configuration-migration}
 
-Последние конфигурации снапшотов, представленные в dbt Core v1.9 (такие как [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) и `hard_deletes`), лучше всего подходят для новых снапшотов. Однако вы также можете внедрить их в уже существующие снапшоты, аккуратно выполнив миграцию схемы таблицы и конфигураций, чтобы избежать несогласованностей в данных снапшота.
+Новые конфигурации снимков, появившиеся в <Constant name="dbt" /> v1.9 (такие как [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) и `hard_deletes`), лучше всего подходят для новых снимков, но их можно использовать и в существующих снимках, если аккуратно перенести схему таблицы и конфигурации, чтобы избежать несогласованности данных в снимках.
 
 Ниже описан рекомендуемый порядок действий:
 
@@ -236,9 +236,8 @@ snapshots:
 
 <VersionBlock firstVersion="1.9">
 
-1. Определяются в YAML-файлах с использованием свойства ресурса `config` ([resource property](/reference/model-properties)), как правило, в вашем [каталоге snapshots](/reference/project-configs/snapshot-paths) или в любой другой папке, которую вы предпочитаете. Доступно в [релизном треке <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), начиная с dbt v1.9 и выше.
-2. Из файла `dbt_project.yml`, в разделе `snapshots:`. Чтобы применить конфигурацию к снапшоту или каталогу со снапшотами, укажите путь к ресурсу в виде вложенных ключей словаря.
-
+1. В YAML-файлах с помощью [свойства ресурса](/reference/model-properties) `config`, обычно в [каталоге снимков](/reference/project-configs/snapshot-paths) или в любой другой удобной вам папке. Доступно в [канале выпусков <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks), а также в dbt версии 1.9 и выше.
+2. В файле `dbt_project.yml`, в разделе `snapshots:`. Чтобы применить конфигурацию к снимку или каталогу снимков, задайте путь к ресурсу с помощью вложенных ключей словаря.
 </VersionBlock>
 
 Конфигурации снапшотов применяются иерархически в указанном выше порядке, при этом более высокие уровни имеют приоритет. Вы также можете применять [data tests](/reference/snapshot-properties) к снапшотам с помощью свойства [`tests`](/reference/resource-properties/data-tests).

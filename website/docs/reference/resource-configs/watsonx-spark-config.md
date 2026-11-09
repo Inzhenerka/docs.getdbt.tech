@@ -1,5 +1,6 @@
 ---
-title: "Конфигурация IBM watsonx.data Spark"
+title: "Конфигурации IBM watsonx.data Spark"
+description: "Настройте специфичные для IBM watsonx.data Spark параметры моделей dbt, включая требования к экземпляру и разрешения для каталогов."
 id: "watsonx-spark-config"
 ---
 

@@ -1,0 +1,49 @@
+---
+title: "Схема объекта applied"
+sidebar_label: "Applied"
+id: "discovery-schema-environment-applied"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { SchemaTable } from "./schema";
+
+Объект `applied` позволяет запрашивать информацию о конкретной модели на основе `environmentId`.
+
+В разделе [Примеры запросов](#example-queries) показаны некоторые поля, которые можно запрашивать с помощью объекта `environment`. Полная схема со всеми полями, доступными для запросов, приведена в разделе [Поля](#fields).
+
+:::info Поля `executionInfo` отслеживают два разных понятия
+
+В `executionInfo` поля `lastRun*` отражают последнюю _попытку_ запуска (независимо от результата), а поля `execute*`, `executionTime`, `runGeneratedAt` и `lastSuccess*` — последнюю _успешную_ материализацию. Дополнительную информацию см. в разделе [Состояние проекта](/docs/dbt-apis/project-state#definition-logical-vs-applied-state-of-dbt-nodes).
+
+:::
+
+### Примеры запросов {#example-queries}
+
+Вы можете использовать `id` вашего production-окружения:
+
+```graphql
+query Example {
+	environment(id: 834){ # Get the latest state of the production environment
+		applied { # The state of an executed node as it exists as an object in the database
+			models(first: 100){ # Pagination to ensure manageable response for large projects
+				edges { node {
+					uniqueId, name, description, rawCode, compiledCode, # Basic properties
+					database, schema, alias, # Table/view identifier (can also filter by)
+					executionInfo {executeCompletedAt, executionTime}, # Metadata from when the model was built
+					tests {name, executionInfo{lastRunStatus, lastRunError}}, # Latest test results
+					catalog {columns {name, description, type}, stats {label, value}}, # Catalog info
+					ancestors(types:[Source]) {name, ...on SourceAppliedStateNestedNode {freshness{maxLoadedAt, freshnessStatus}}}, # Source freshness }
+					children {name, resourceType}}} # Immediate dependencies in lineage
+				totalCount } # Number of models in the project
+		}
+	}
+}
+```
+
+### Поля {#fields}
+
+При запросе поля `applied` у объекта `environment` вы можете использовать следующие поля.
+<SchemaTable nodeName="AppliedState" />

@@ -52,11 +52,9 @@
 
 #### Изменение временной детализации {#modifying-time-granularity}
 
-<p>Когда вы выбираете временные измерения в меню <strong>Группировать по</strong>, вы увидите список доступных временных детализаций. По умолчанию выбрана самая низкая детализация. Время метрики является временным измерением по умолчанию для группировки ваших метрик.</p>
+import SlCustomGranularity from '/snippets/_sl-custom-granularity.md';
 
-:::info 
-Примечание: [Custom time granularities](/docs/build/metricflow-time-spine#add-custom-granularities) (например, fiscal year) в настоящее время не поддерживаются и недоступны в рамках этой интеграции. Доступны только [standard granularities](/docs/build/dimensions?dimension=time_gran#time) (например, day, week, month и так далее). Если вам нужен доступ к пользовательским гранулярностям, рассмотрите возможность использования [Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview).
-:::
+<SlCustomGranularity />
 
 #### Фильтрация данных {#filtering-data}
 

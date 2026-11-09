@@ -1,7 +1,7 @@
-- У вас должен быть аккаунт <Constant name="cloud" /> уровня Starter, Enterprise или Enterprise+. Доступно для всех [конфигураций тенанта](/docs/cloud/about-cloud/tenancy).
-- Убедитесь, что ваши production- и development-окружения используют [поддерживаемую версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- У вас должна быть учетная запись <Constant name="dbt" /> на тарифе Starter, Enterprise или Enterprise+. Доступно во всех [конфигурациях арендаторов](/docs/platform/about-platform/tenancy).
+- Убедитесь, что ваши производственные среды и среды разработки используют [поддерживаемую версию dbt](/docs/dbt-versions/upgrade-dbt-platform-version).
 - Используйте Snowflake, BigQuery, Databricks, Redshift, Postgres или Trino.
-- Создайте успешный run в окружении, где вы настраиваете <Constant name="semantic_layer" />.
-  - **Примечание:** <Constant name="semantic_layer" /> поддерживает выполнение запросов в Deployment-окружениях; возможность выполнять запросы в development-окружениях появится в ближайшее время.
-- Разберитесь с ключевыми концепциями [MetricFlow](/docs/build/about-metricflow), которые лежат в основе <Constant name="semantic_layer" />.
-- Обратите внимание, что <Constant name="semantic_layer" /> не поддерживает использование [Single sign-on (SSO)](/docs/cloud/manage-access/sso-overview) для [production credentials](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens), хотя SSO поддерживается для пользовательских аккаунтов в development-окружениях.
+-  Выполните успешный запуск в среде, в которой вы настраиваете <Constant name="semantic_layer" />.
+   - **Примечание:** <Constant name="semantic_layer" /> поддерживает выполнение запросов в средах развертывания; поддержка запросов в средах разработки появится в ближайшее время.
+- Ознакомьтесь с ключевыми концепциями [MetricFlow](/docs/build/about-metricflow), лежащими в основе <Constant name="semantic_layer" />.  
+- Обратите внимание, что <Constant name="semantic_layer" /> не поддерживает использование [единого входа (SSO)](/docs/platform/manage-access/sso-overview) для [учетных данных производственной среды](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens), хотя SSO поддерживается для учетных записей пользователей в средах разработки.

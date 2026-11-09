@@ -1,0 +1,95 @@
+---
+title: "Схема объекта model"
+sidebar_label: "Model"
+id: "discovery-schema-job-model"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект `model` позволяет запрашивать информацию о конкретной модели в рамках заданного job.
+
+### Аргументы {#arguments}
+
+При выполнении запроса к `model` доступны следующие аргументы.
+
+<NodeArgsTable parent="JobNode" name="model" />
+
+Ниже приведены наглядные примеры запросов, а также описание схемы (всех возможных полей, которые можно запрашивать) объекта `model`.
+
+### Пример запроса для поиска родительских моделей и источников {#example-query-for-finding-parent-models-and-sources}
+
+В примере ниже используются поля `parentsModels` и `parentsSources` для получения информации о родительских моделях и родительских источниках заданной модели. Поля jobID и uniqueID являются заглушками — вам нужно заменить их на собственные значения.
+
+```graphql
+{
+  job(id: 123) {
+    model(uniqueId: "model.jaffle_shop.dim_user") {
+      parentsModels {
+        runId
+        uniqueId
+        executionTime
+      }
+      parentsSources {
+        runId
+        uniqueId
+        state
+      }
+    }
+  }
+}
+
+```
+
+### Пример запроса для анализа времени выполнения модели {#example-query-for-model-timing}
+
+Пример запроса ниже может быть полезен, если вам нужно разобраться с информацией о времени выполнения конкретной модели (начало, окончание, завершение).
+
+```graphql
+{
+  job(id: 123) {
+    model(uniqueId: "model.jaffle_shop.dim_user") {
+      runId
+      projectId
+      name
+      uniqueId
+      resourceType
+      executeStartedAt
+      executeCompletedAt
+      executionTime
+    }
+  }
+}
+```
+
+### Пример запроса для получения информации на уровне колонок {#example-query-for-column-level-information}
+
+Следующий пример запроса можно использовать, чтобы получить больше информации о колонках заданной модели. Этот запрос будет работать только в том случае, если job сгенерировал документацию; то есть он будет работать при использовании команды `dbt docs generate`.
+
+```graphql
+{
+  job(id: 123) {
+    model(uniqueId: "model.jaffle_shop.dim_user") {
+      columns {
+        name
+        index
+        type
+        comment
+        description
+        tags
+        meta
+      }
+    }
+  }
+}
+```
+
+
+### Поля {#fields}
+
+При выполнении запроса к `model` доступны следующие поля:
+
+<SchemaTable nodeName="ModelNode" />

@@ -5,26 +5,41 @@ description: "Узнайте о MetricFlow и создайте свои метр
 sidebar_label: Создание ваших метрик
 tags: [Metrics, Semantic Layer, Governance]
 hide_table_of_contents: true
-pagination_next: "guides/sl-snowflake-qs"
+pagination_next: "guides/sl-qs"
 pagination_prev: null
+availability: all_users
 ---
 
 Используйте MetricFlow в dbt, чтобы централизованно определять ваши метрики. Являясь ключевым компонентом [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl), MetricFlow отвечает за построение SQL‑запросов и определение спецификаций для семантических моделей и метрик dbt. Он использует знакомые концепции, такие как семантические модели и метрики, чтобы избежать дублирования кода, оптимизировать процесс разработки, обеспечить управление корпоративными метриками и гарантировать единообразие данных для их потребителей.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-concept.png" width="50%" title="Эта диаграмма показывает, как dbt Semantic Layer работает с вашим стеком данных." />
+Полный список параметров конфигурации и спецификаций свойств см. в [справочнике по семантическому слою](/reference/semantic-layer-reference).
 
-MetricFlow позволяет вам:
+<Lightbox src="/img/docs/dbt-platform/semantic-layer/sl-concept.png" width="50%" title="Эта схема показывает, как семантический слой dbt работает с вашим стеком данных." />
+
+MetricFlow позволяет:
 - Интуитивно определять метрики в вашем проекте dbt
-- Разрабатывать в привычной для вас среде — будь то [CLI <Constant name="cloud" />](/docs/cloud/cloud-cli-installation), [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="core" />](/docs/core/installation-overview)
-- Использовать [команды MetricFlow](/docs/build/metricflow-commands) для выполнения запросов и тестирования этих метрик в среде разработки
-- Использовать весь потенциал универсального <Constant name="semantic_layer" /> и динамически запрашивать эти метрики в downstream‑инструментах (доступно только для аккаунтов <Constant name="cloud" /> уровней [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/)).
+- Разрабатывать в удобной для вас среде: [dbt platform CLI](/docs/platform/dbt-cli-installation), [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) или [<Constant name="core" />](/docs/local/install-dbt)
+- Использовать [команды MetricFlow](/docs/build/metricflow-commands) для выполнения запросов к этим метрикам и их тестирования в вашей среде разработки 
+- Раскрыть весь потенциал универсального слоя <Constant name="semantic_layer" /> и динамически запрашивать эти метрики в инструментах, использующих его данные (доступно только для учетных записей <Constant name="dbt" /> на тарифах [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/)).
 
 <div className="grid--3-col">
 
+  <Card
+    title="Semantic Layer reference"
+    body="Complete, exhaustive configuration reference for semantic models, metrics, and dimensions."
+    link="/reference/semantic-layer-reference"
+    icon="dbt-bit"/>
+
+  <Card
+    title="Migrate to the latest YAML spec"
+    body="Learn how to migrate from the legacy metrics YAML spec to the latest metrics YAML spec."
+    link="/docs/build/latest-metrics-spec"
+    icon="dbt-bit"/>
+
  <Card
-    title="Быстрый старт для семантического слоя dbt"
-    body="Используйте это руководство, чтобы создать и определить метрики, настроить семантический слой dbt и выполнять запросы к ним с помощью downstream-инструментов."
-    link="/guides/sl-snowflake-qs"
+title="Быстрый старт с семантическим слоем dbt"
+    body="Воспользуйтесь этим руководством, чтобы создать и определить метрики, настроить семантический слой dbt и выполнять запросы к метрикам с помощью инструментов-потребителей."
+    link="/guides/sl-qs"
     icon="dbt-bit"/>
 
 <Card
@@ -40,8 +55,8 @@ MetricFlow позволяет вам:
     icon="dbt-bit"/>
 
   <Card
-    title="Метрики"
-    body="Определяйте метрики через мощное сочетание мер, ограничений или функций, легко организованных в YAML-файлах или отдельных файлах."
+title="Метрики"
+    body="Определяйте метрики в своём проекте dbt, используя различные типы метрик в YAML-файлах."
     link="/docs/build/metrics-overview"
     icon="dbt-bit"/>
   
@@ -58,16 +73,16 @@ MetricFlow позволяет вам:
     icon="dbt-bit"/>
 
   <Card
-    title="Доступные интеграции"
-    body="Откройте для себя разнообразный спектр партнеров, которые бесшовно интегрируются с мощным Семантическим слоем dbt, позволяя вам запрашивать и извлекать ценные инсайты из вашей экосистемы данных."
-    link="/docs/cloud-integrations/avail-sl-integrations"
+title="Доступные интеграции"
+    body="Ознакомьтесь с широким кругом партнёров, чьи решения легко интегрируются с мощным семантическим слоем dbt Semantic Layer, позволяя выполнять запросы и извлекать ценные аналитические выводы из вашей экосистемы данных."
+    link="/docs/platform-integrations/avail-sl-integrations"
     icon="dbt-bit"/>
 
 </div> <br />
 
 ## Связанные документы {#related-docs}
 
-- [Краткое руководство по началу работы с <Constant name="semantic_layer" />](/guides/sl-snowflake-qs)
-- [<Constant name="semantic_layer" />: что дальше](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/) — блог
-- [Онлайн-курс по <Constant name="semantic_layer" />](https://learn.getdbt.com/courses/semantic-layer)
-- [Часто задаваемые вопросы по <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs)
+- [Краткое руководство по началу работы с <Constant name="semantic_layer" />](/guides/sl-qs)
+- Статья в блоге [<Constant name="semantic_layer" />: что дальше](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/)
+- [Курс по <Constant name="semantic_layer" /> для самостоятельного изучения](https://learn.getdbt.com/courses/semantic-layer)
+- [Часто задаваемые вопросы о <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs)

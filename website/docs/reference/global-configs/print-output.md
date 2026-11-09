@@ -6,7 +6,7 @@ sidebar: "Вывод печати"
 
 ### Подавление сообщений `print()` в stdout {#suppress-print-messages-in-stdout}
 
-По умолчанию, dbt включает сообщения [`print()`](/reference/dbt-jinja-functions/print) в стандартный вывод (stdout). Вы можете использовать переменную окружения `DBT_PRINT`, чтобы предотвратить появление этих сообщений в stdout.
+По умолчанию dbt выводит сообщения [`print()`](/reference/dbt-jinja-functions/print) в стандартный поток вывода (stdout). Вы можете использовать переменную окружения <VersionBlock lastVersion="1.10">`DBT_PRINT`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_PRINT`</VersionBlock>, чтобы эти сообщения не попадали в stdout.
 
 :::warning Устаревание синтаксиса
 

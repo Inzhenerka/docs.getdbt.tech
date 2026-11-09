@@ -4,7 +4,7 @@ description: "Receiving a 'Could not parse dbt_project.yml' error in dbt? This e
 sidebar_label: 'Could not parse dbt_project.yml error in dbt'
 ---
 
-Сообщение об ошибке `Could not parse dbt_project.yml: while scanning for...` при запуске или разработке job в <Constant name="cloud" /> обычно возникает по нескольким причинам:
+Сообщение об ошибке `Could not parse dbt_project.yml: while scanning for...` при запуске задания или во время разработки в <Constant name="dbt" /> обычно возникает по нескольким причинам:
 
 - Ошибка разбора в YAML файле (например, табуляция или символы Unicode).
 - В вашем файле `dbt_project.yml` отсутствуют поля или он имеет неправильное форматирование.
@@ -14,4 +14,4 @@ sidebar_label: 'Could not parse dbt_project.yml error in dbt'
 - Используйте онлайн-парсер или валидатор YAML, чтобы проверить наличие ошибок разбора в вашем YAML файле. Известные ошибки разбора включают отсутствующие поля, неправильное форматирование или табуляцию.
 - Или убедитесь, что ваш файл `dbt_project.yml` существует.
 
-После того как вы определили проблему, вы можете исправить ошибку и повторно запустить свой <Constant name="cloud" /> job.
+Определив причину проблемы, вы можете исправить ошибку и повторно запустить задание <Constant name="dbt" />.

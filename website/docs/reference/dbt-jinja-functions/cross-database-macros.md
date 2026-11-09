@@ -18,7 +18,7 @@ description: "Прочтите это руководство, чтобы пон�
 
 ## Все функции (в алфавитном порядке) {#all-functions-alphabetical}
 
-- [Кросс-базовые макросы](#cross-database-macros)
+- [Кросс-базовые макросы](/reference/dbt-jinja-functions/cross-database-macros)
   - [Все функции (в алфавитном порядке)](#all-functions-alphabetical)
   - [Функции типов данных](#data-type-functions)
     - [type\_bigint](#type_bigint)
@@ -45,7 +45,7 @@ description: "Прочтите это руководство, чтобы пон�
     - [right](#right)
     - [split\_part](#split_part)
   - [Функции строковых литералов](#string-literal-functions)
-    - [escape\_single\_quotes](#escape_single_quotes)
+    - [escape\_single\_quotes](#escapesinglequotes)
     - [string\_literal](#string_literal)
   - [Агрегатные и оконные функции](#aggregate-and-window-functions)
     - [any\_value](#any_value)
@@ -53,8 +53,10 @@ description: "Прочтите это руководство, чтобы пон�
     - [listagg](#listagg)
   - [Функции приведения типов](#cast-functions)
     - [cast](#cast)
-    - [cast\_bool\_to\_text](#cast_bool_to_text)
+    - [cast\_bool\_to\_text](#castboolto_text)
     - [safe\_cast](#safe_cast)
+- [Функции сравнения](#comparison-functions)
+    - [equals](#equals)
   - [Функции даты и времени](#date-and-time-functions)
     - [date](#date)
     - [dateadd](#dateadd)
@@ -92,7 +94,7 @@ description: "Прочтите это руководство, чтобы пон�
 - [split_part](#split_part)
 
 [**Функции строковых литералов**](#string-literal-functions)
-- [escape_single_quotes](#escape_single_quotes)
+- [escape_single_quotes](#escapesinglequotes)
 - [string_literal](#string_literal)
 
 [**Агрегатные и оконные функции**](#aggregate-and-window-functions)
@@ -102,8 +104,11 @@ description: "Прочтите это руководство, чтобы пон�
 
 [**Функции приведения типов**](#cast-functions)
 - [cast](#cast)
-- [cast_bool_to_text](#cast_bool_to_text)
+- [cast_bool_to_text](#castboolto_text)
 - [safe_cast](#safe_cast)
+
+[**Функции сравнения**](#comparison-functions)
+- [equals](#equals)
 
 [**Функции даты и времени**](#date-and-time-functions)
 - [date](#date)
@@ -801,6 +806,37 @@ __Аргументы__:
     cast(column_1 as TEXT)
     cast(column_2 as INT)
     cast('2016-03-09' as date)
+```
+
+## Функции сравнения {#comparison-functions}
+
+Функции сравнения — это макросы, которые сравнивают два SQL-выражения и возвращают логическое SQL-выражение (например, `TRUE`, `FALSE` или `UNKNOWN`).
+
+### equals 
+
+__Аргументы__:
+
+- `a`: [имя атрибута или выражение](#sql-expressions).
+- `b`: [имя атрибута или выражение](#sql-expressions).
+
+Этот макрос сравнивает два выражения на равенство.
+
+По умолчанию макрос `equals()` следует [трёхзначной логике (3VL)](https://modern-sql.com/concept/three-valued-logic) SQL, поэтому результатом вычисления `NULL = NULL` будет `UNKNOWN`, а не `TRUE`.
+
+Когда флаг [`enable_truthy_nulls_equals_macro`](/reference/global-configs/behavior-flags/enable_truthy_nulls_equals_macro) включён, `equals()` ведёт себя как SQL-оператор [`IS NOT DISTINCT FROM`](https://modern-sql.com/feature/is-distinct-from) и считает два значения `NULL` одинаковыми.
+
+**Использование**:
+
+```sql
+{{ dbt.equals("column_a", "column_b") }}
+{{ dbt.equals("id", "previous_id") }}
+```
+
+**Пример результата (PostgreSQL с включённым флагом [`enable_truthy_nulls_equals_macro`](/reference/global-configs/behavior-flags/enable_truthy_nulls_equals_macro))**:
+
+```sql
+(column_a IS NOT DISTINCT FROM column_b)
+(id IS NOT DISTINCT FROM previous_id)
 ```
 
 ## Функции даты и времени {#date-and-time-functions}

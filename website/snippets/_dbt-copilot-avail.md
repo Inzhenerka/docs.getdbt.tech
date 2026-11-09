@@ -1,4 +1,4 @@
 :::tip Совет
 
-<span>Используйте [dbt Copilot](/docs/cloud/dbt-copilot), доступный для аккаунтов <Constant name="cloud" /> Enterprise и Enterprise+, чтобы генерировать {props.resource} только в <Constant name="cloud_ide" />.</span>
+<span>Используйте [<Constant name="wizard" />](/docs/platform/wizard-overview), чтобы генерировать {props.resource} в <Constant name="dbt_platform" /> или локально через CLI.</span>
 :::

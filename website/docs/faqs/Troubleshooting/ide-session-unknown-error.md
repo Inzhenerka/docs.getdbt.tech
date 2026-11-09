@@ -5,14 +5,14 @@ sidebar_label: 'Получение неизвестной ошибки в IDE'
 
 ---
 
-Если при запуске <Constant name="cloud_ide" /> вы видите следующую ошибку, это может быть связано с несколькими сценариями, но чаще всего она указывает на отсутствие репозитория:
+Если при запуске <Constant name="studio_ide" /> вы видите следующую ошибку, это может быть вызвано несколькими причинами, но чаще всего она указывает на отсутствие репозитория:
 
 ```shell
 
-Your <Constant name="cloud_ide" /> session experienced an unknown error and was terminated. Please contact support.
+Your Studio IDE session experienced an unknown error and was terminated. Please contact support.
 
 ```
 
-Вы можете попробовать решить эту проблему, добавив репозиторий, например [managed repository](/docs/cloud/git/managed-repository), или подключив предпочитаемый аккаунт <Constant name="git" />. Чтобы добавить свой аккаунт <Constant name="git" />, перейдите в **Project** > **Repository** и выберите нужный репозиторий.
+Вы можете попробовать решить эту проблему, добавив репозиторий, например [управляемый репозиторий](/docs/platform/git/managed-repository), или подключив предпочитаемую учетную запись <Constant name="git" />. Чтобы добавить учетную запись <Constant name="git" />, перейдите в раздел **Project** > **Repository** и выберите свой репозиторий.
 
 Если ошибка продолжает возникать, пожалуйста, свяжитесь с командой поддержки по адресу support@getdbt.com для получения помощи.

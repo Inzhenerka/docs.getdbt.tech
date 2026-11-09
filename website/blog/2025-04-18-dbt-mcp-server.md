@@ -53,7 +53,7 @@ dbt MCP server предоставляет доступ к набору *tools*, 
 
 На сегодняшний день у dbt MCP server есть три основных функции.
 
-<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_use_cases.png" title="Three use‑case pillars of the dbt MCP server" width="100%" />
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_use_cases.png" title="Три основных сценария использования сервера dbt MCP" width="100%" />
 
 - Обнаружение данных: понимание того, какие data‑assets существуют в вашем dbt‑проекте.
 - Запросы к данным: прямой доступ к данным dbt‑проекта. Состоит из двух частей:
@@ -61,13 +61,13 @@ dbt MCP server предоставляет доступ к набору *tools*, 
   - Выполнение SQL‑запросов для более свободного исследования и разработки
 - Запуск и выполнение команд dbt: доступ к dbt CLI для запуска проекта и выполнения других операций
 
-<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_architecture_overview.png" title="How the dbt MCP server fits between data sources and MCP‑enabled clients" width="100%" />
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/mcp_architecture_overview.png" title="Место сервера dbt MCP между источниками данных и клиентами с поддержкой MCP" width="100%" />
 
 ❓ Нужно ли быть клиентом dbt Cloud, чтобы использовать dbt MCP server?
 
 - Нет — в MCP включена функциональность как для <Constant name="cloud" />, так и для пользователей dbt Core. Со временем Cloud‑специфичные сервисы будут добавляться в MCP server там, где они дают дополнительную ценность.
 
-Далее рассмотрим примеры использования и объясним, почему каждый из них полезен как для сценариев с участием человека, так и для агентных сценариев.
+- Нет — MCP включает функциональность как для пользователей <Constant name="dbt" />, так и для пользователей dbt Core. Со временем в MCP-сервер будут добавляться сервисы, специфичные для Cloud, если они предоставляют дополнительные преимущества.
 
 ## **Использование dbt MCP Server для обнаружения data‑assets** {#using-the-dbt-mcp-server-for-sql-execution-to-power-text-to-sql}
 
@@ -159,11 +159,11 @@ dbt MCP server доступен как экспериментальный рел
 
 - Следуйте инструкциям в README для установки MCP server
 - Убедитесь, что вы добавили MCP‑конфигурацию в настройки Claude Desktop. В разделе Claude→Settings→Developer вы должны увидеть ‘dbt’
-<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_settings_dbt_mcp.png" title="Claude Desktop – MCP server running in Developer settings" width="100%" />
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_settings_dbt_mcp.png" title="Сервер MCP в настройках разработчика Claude Desktop" width="100%" />
 
 - Создайте новый проект с названием “analytics” и опишите, как конечный пользователь будет с ним взаимодействовать
 
-<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_project_card.png" title="Example Claude Desktop project connected to the dbt MCP server" width="100%" />
+<Lightbox src="/img/blog/2025-04-18-dbt-mcp-server/claudedesktop_project_card.png" title="Пример проекта Claude Desktop, подключённого к серверу dbt MCP" width="100%" />
 
 - **Добавьте кастомный prompt, объясняющий, что вопросы в этом проекте, вероятно, будут маршрутизироваться через dbt MCP server.** Настройте его под контекст вашей организации.
   - Например: Этот диалог подключен к информации вашего dbt‑проекта через dbt MCP server. Если вы получаете вопрос, для ответа на который нужны данные из внешнего источника, используйте инструменты dbt MCP server.
@@ -183,8 +183,8 @@ dbt MCP server доступен как экспериментальный рел
 
 Мы уверены, что подход предоставления контекста AI‑системам через dbt станет устойчивым элементом этого стека. По мере работы с сообществом детали реализации и способы доступа могут меняться. Ниже — направления, в которых мы ожидаем эволюцию.
 
-**Определение лучшего источника контекста для dbt MCP**  
-Инструменты используют два основных источника информации — dbt Cloud APIs и dbt CLI. Мы продолжим развивать оба направления, особенно dbt Cloud APIs как предпочтительный уровень абстракции при работе с конкретным [environment](https://docs.getdbt.tech/docs/dbt-cloud-environments).
+**Выбор оптимального источника контекста для dbt MCP**
+Вы заметите, что эти инструменты используют два основных источника информации — API dbt Cloud и dbt CLI. Мы планируем и дальше развивать поддержку обоих источников, в частности API dbt Cloud — в качестве предпочтительного уровня абстракции, когда требуется работать с конкретной [средой](https://docs.getdbt.com/docs/dbt-platform-environments).
 
 Для других сценариев, особенно разработки dbt, потребуется работа из текущего рабочего контекста — соответствующие инструменты появятся в ближайшее время (и мы приветствуем вклад сообщества). Мы будем рады экспериментам и обратной связи.
 

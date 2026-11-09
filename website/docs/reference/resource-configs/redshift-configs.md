@@ -2,7 +2,7 @@
 title: "Конфигурации Redshift"
 description: "Конфигурации Redshift — подробное руководство, которое поможет разобраться с настройками в dbt."
 id: "redshift-configs"
-tags: ['Redshift', 'dbt Fusion', 'dbt Core']
+tags: ['Redshift', 'dbt v2', 'dbt v1']
 ---
 
 <!----
@@ -10,6 +10,8 @@ tags: ['Redshift', 'dbt Fusion', 'dbt Core']
 - использовать структуру справочной документации для этой статьи/разделить на отдельные статьи
 - подумать, не должны ли некоторые из них быть вне моделей
 --->
+
+import RedshiftDatasharing from '/snippets/_redshift-datasharing.md';
 
 ## Стратегии инкрементальной материализации {#incremental-materialization-strategies}
 
@@ -68,7 +70,61 @@ select ...
 - [AWS Documentation » Amazon Redshift » Database Developer Guide » Designing Tables » Choosing a Data Distribution Style](https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html)
 - [AWS Documentation » Amazon Redshift » Database Developer Guide » Designing Tables » Choosing Sort Keys](https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html)
 
-## Позднее связывание представлений (Late binding views) {#late-binding-views}
+<VersionBlock firstVersion="1.12">
+
+### Настройка сеанса {#session-configuration}
+
+Адаптер Redshift поддерживает параметр сеанса `query_group`, который позволяет при запусках dbt помечать запросы для диспетчера рабочих нагрузок Redshift (WLM) и журналирования запросов (например, в `STL_QUERY` и `SVL_QLOG`). Вы можете задать `query_group` на уровне профиля (значение по умолчанию для подключения) и переопределить его на уровне модели.
+
+- **Настройка на уровне профиля**
+
+  Настройте `query_group` в файле `profiles.yml`, чтобы применить значение по умолчанию ко всем запросам, выполняемым с использованием этого профиля. dbt устанавливает `query_group` при открытии подключения.
+
+  <File name="profiles.yml">
+
+  ```yml
+  outputs:
+    dev:
+      type: redshift
+      host: CLUSTER_ENDPOINT
+      user: REDSHIFT_USER
+      password: REDSHIFT_PASSWORD
+      dbname: REDSHIFT_DBNAME
+      port: 5439
+      schema: analytics
+      threads: 4
+      query_group: QUERY_GROUP_NAME
+  ```
+
+  </File>
+
+  ```sql
+  -- models/a_default_group.sql
+  -- Выполняется с query_group = 'QUERY_GROUP_NAME' (из профиля)
+  select 1 as id
+  ```
+
+- **Настройка на уровне модели**
+
+  Задайте `query_group` в блоке `config()` модели, чтобы временно переопределить значение по умолчанию на время выполнения этой модели. dbt применяет значение уровня модели во время её выполнения, а затем восстанавливает значение по умолчанию после материализации модели.
+
+  ```sql
+  -- models/b_override_group.sql
+  -- dbt временно устанавливает query_group = 'dbt_finance' для этой модели, затем восстанавливает значение по умолчанию
+  {{ config(query_group='dbt_finance') }}
+
+  select 1 as id
+  ```
+
+</VersionBlock>
+
+## Совместное использование данных
+
+<RedshiftDatasharing />
+
+Инструкции по настройке см. в разделе [Настройка Redshift](/docs/local/connect-data-platform/redshift-setup).
+
+## Представления с поздним связыванием {#late-binding-views}
 
 Redshift поддерживает <Term id="view">представления</Term>, не связанные жёстко со своими зависимостями, или [late binding views](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_VIEW.html#late-binding-views). Эта опция DDL «отвязывает» представление от данных, из которых оно выбирает. На практике это означает, что если вышестоящие представления или таблицы удаляются с использованием `cascade`, late-binding view при этом не будет удалено.
 
@@ -231,6 +287,8 @@ dbt не может отслеживать этот параметр, так к�
 
 - Redshift не поддерживает [unit tests](/docs/build/unit-tests), если SQL в common table expression (CTE) содержит функции, такие как `LISTAGG`, `MEDIAN`, `PERCENTILE_CONT` и т.п. Эти функции должны выполняться над таблицей, созданной пользователем. dbt объединяет переданные строки так, чтобы они были частью CTE, что Redshift не поддерживает.
 
-  Чтобы в будущем поддержать этот паттерн, dbt потребуется «материализовывать» входные фикстуры в виде таблиц, а не подставлять их как CTE. Если вам интересна эта функциональность, мы рекомендуем поучаствовать в обсуждении issue на GitHub: [dbt-labs/<Constant name="core" />#8499](https://github.com/dbt-labs/dbt-core/issues/8499)
+Чтобы поддерживать этот подход в будущем, dbt потребуется «материализовывать» входные фикстуры в виде таблиц, а не подставлять их в запросы как CTE. Если вас интересует эта функциональность, приглашаем вас принять участие в обсуждении этой задачи на GitHub: [dbt-labs/dbt#8499](https://github.com/dbt-labs/dbt/issues/8499)
+
+- Redshift не поддерживает модульные тесты, использующие источники из базы данных, отличной от той, в которой находятся модели. Подробнее см. в этой задаче на GitHub: https://github.com/dbt-labs/dbt-redshift/issues/995
 
 - Redshift не поддерживает unit-тесты, которые используют источники (sources) в базе данных, отличной от базы данных моделей. Подробнее см. соответствующий issue на GitHub: https://github.com/dbt-labs/dbt-redshift/issues/995

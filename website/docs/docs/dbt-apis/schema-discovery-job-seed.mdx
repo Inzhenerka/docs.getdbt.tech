@@ -1,0 +1,46 @@
+---
+title: "Схема объекта seed"
+sidebar_label: "Seed"
+id: "discovery-schema-job-seed"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект `seed` позволяет запрашивать информацию о конкретном seed в рамках заданного job.
+
+### Аргументы {#arguments}
+
+При выполнении запроса к `seed` доступны следующие аргументы.
+
+<NodeArgsTable parent="JobNode" name="seed" />
+
+Ниже приведены примеры запросов для иллюстрации, а также описание схемы объекта seed.
+
+### Пример запроса {#example-query}
+
+Пример ниже извлекает релевантную информацию о заданном seed. Например, вы можете посмотреть время загрузки.
+
+```graphql
+{
+  job(id: 123) {
+    seed(uniqueId: "seed.jaffle_shop.raw_customers") {
+      database
+      schema
+      uniqueId
+      name
+      status
+      error
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запроса к `seed` доступны следующие поля:
+
+<SchemaTable nodeName="SeedNode" />

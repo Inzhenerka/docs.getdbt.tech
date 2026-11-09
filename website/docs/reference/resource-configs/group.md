@@ -1,4 +1,5 @@
 ---
+description: "Assign dbt resources to groups to organize ownership and control access to private models."
 resource_types: [models, seeds, snapshots, tests, analyses, metrics]
 id: "group"
 ---
@@ -241,6 +242,7 @@ semantic-models:
 
 </File>
 
+<VersionBlock lastVersion="1.11">
 <File name='models/semantic_models.yml'>
 
 ```yaml
@@ -251,6 +253,22 @@ semantic_models:
 ```
 
 </File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+<File name='models/file_name.yml'>
+
+```yaml
+models:
+  - name: model_name
+    semantic_model:
+      enabled: true
+      group: group_name
+
+```
+
+</File>
+</VersionBlock>
 
 </TabItem>
 

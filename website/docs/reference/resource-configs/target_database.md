@@ -6,9 +6,9 @@ datatype: string
 
 :::note
 
-Начиная с dbt Core версии 1.9+, эта функциональность больше не используется. Используйте конфигурацию [database](/reference/resource-configs/database) в качестве альтернативы для определения пользовательской базы данных, при этом соблюдая макрос `generate_database_name`.
+Начиная с <Constant name="dbt" /> v1.9 эта функциональность больше не используется. Вместо неё используйте конфигурацию [database](/reference/resource-configs/database), чтобы задать пользовательскую базу данных, сохранив при этом применение макроса `generate_database_name`. 
 
-Попробуйте это прямо сейчас в [треке релизов <Constant name="cloud" /> «Latest»](/docs/dbt-versions/cloud-release-tracks).
+Попробуйте прямо сейчас в [канале релизов <Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks).
 
 :::
 

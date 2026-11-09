@@ -5,16 +5,16 @@ sidebar_label: "Каталог"
 
 **Текущая схема**: [`v1`](https://schemas.getdbt.com/dbt/catalog/v1.json)
     
-**Создается с помощью:** [`docs generate`](/reference/commands/cmd-docs)
+**Создаётся с помощью:** <VersionBlock lastVersion="1.99">[`docs generate`](/reference/commands/cmd-docs)</VersionBlock><VersionBlock firstVersion="2.0">флага [`--write-catalog`](/reference/commands/cmd-docs#--write-catalog-flag)</VersionBlock>
 
-Этот файл содержит информацию из вашего <Term id="data-warehouse" /> о таблицах и <Term id="view">представлениях</Term>, которые создаются и определяются ресурсами в вашем проекте. В настоящее время dbt использует этот файл для заполнения метаданных — таких как типы столбцов и статистика <Term id="table" /> — на [сайте документации](/docs/explore/build-and-view-your-docs).
+Этот файл содержит информацию из вашего <Term id="data-warehouse" /> о таблицах и <Term id="view">представлениях</Term>, создаваемых и определяемых ресурсами вашего проекта. <VersionBlock lastVersion="1.99">dbt использует этот файл для заполнения метаданных, таких как типы столбцов и статистика <Term id="table" />, на [сайте документации](/docs/explore/build-and-view-your-docs).</VersionBlock><VersionBlock firstVersion="2.0">[dbt Docs v2](/reference/commands/cmd-docs#dbt-docs-v2) считывает данные из [dbt Information Schema](/docs/build/dbt-information-schema), а не из этого файла. `catalog.json` остаётся доступным в качестве отдельного артефакта для [<Constant name="catalog" />](/docs/explore/explore-projects) и внешних инструментов.</VersionBlock>
 
 ### Ключи верхнего уровня {#top-level-keys}
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
-- `nodes`: Словарь, содержащий информацию о объектах базы данных, соответствующих моделям dbt, семенам и снимкам.
-- `sources`: Словарь, содержащий информацию о объектах базы данных, соответствующих источникам dbt.
-- `errors`: Ошибки, полученные при выполнении запросов метаданных во время `dbt docs generate`.
+- `nodes`: Словарь, содержащий информацию об объектах базы данных, соответствующих моделям, seed-файлам и снимкам dbt.
+- `sources`: Словарь, содержащий информацию об объектах базы данных, соответствующих источникам dbt.
+- `errors`: Ошибки, полученные при выполнении запросов к метаданным во время <VersionBlock lastVersion="1.99">выполнения `dbt docs generate`</VersionBlock><VersionBlock firstVersion="2.0">генерации каталога (с помощью флага `--write-catalog`)</VersionBlock>.
 
 ### Детали ресурсов {#resource-details}
 

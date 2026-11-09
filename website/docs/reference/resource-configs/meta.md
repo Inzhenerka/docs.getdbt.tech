@@ -1,25 +1,26 @@
 ---
+description: "Attach arbitrary metadata as key-value pairs to dbt resources such as models, sources, seeds, and snapshots."
 resource_types: all
 datatype: "{<словарь>}"
 default_value: {}
-hide_table_of_contents: true
 ---
 
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Модели', value: 'models', },
+{ label: 'Модели', value: 'models', },
     { label: 'Источники', value: 'sources', },
     { label: 'Сиды', value: 'seeds', },
     { label: 'Снимки', value: 'snapshots', },
     { label: 'Тесты', value: 'tests', },
     { label: 'Модульные тесты', value: 'unit tests', },
-    { label: 'Аналитика', value: 'analyses', },
+    { label: 'Анализы', value: 'analyses', },
     { label: 'Макросы', value: 'macros', },
     { label: 'Экспозиции', value: 'exposures', },
     { label: 'Семантические модели', value: 'semantic models', },
     { label: 'Метрики', value: 'metrics', },
     { label: 'Сохранённые запросы', value: 'saved queries', },
+    { label: 'Функции', value: 'functions', },
   ]
 }>
 <TabItem value="models">
@@ -127,10 +128,9 @@ seeds:
 
 </File>
 
-Конфигурация `meta` может быть задана:
-
-- В разделе `seeds` в файле свойств (показано в предыдущем примере `seeds/schema.yml`)
-- В разделе `seeds` в файле проекта (`dbt_project.yml`). Подробнее см. [configs and properties](/reference/configs-and-properties).
+Конфигурацию `meta` можно определить:
+- В разделе `seeds` в файле свойств (как показано в предыдущем примере 'seeds/schema.yml') 
+- В разделе `seeds` в файле проекта (`dbt_project.yml`). Подробнее см. в разделе [Конфигурации и свойства](/reference/configs-and-properties).
 
 </TabItem>
 
@@ -175,7 +175,65 @@ snapshots:
 
 <TabItem value="tests">
 
-Вы не можете добавлять YAML конфигурации `meta` для [общих тестов](/docs/build/data-tests#generic-data-tests). Однако вы можете добавлять свойства `meta` к [единичным тестам](/docs/build/data-tests#singular-data-tests) с помощью `config()` в начале файла теста. 
+Используйте поле `meta`, чтобы добавить метаданные к [универсальным](/docs/build/data-tests#generic-data-tests) или [единичным тестам](/docs/build/data-tests#singular-data-tests). Поле `meta` принимает пары «ключ — значение», включается в `manifest.json` при компиляции и отображается в автоматически создаваемой документации.
+
+**Универсальные тесты данных**
+
+Добавьте `meta` в блок `config` в файле `properties.yml`:
+
+<File name="models/properties.yml">
+  
+```yaml
+models:
+  - name: my_model
+    columns:
+      - name: my_column
+        data_tests:
+          - unique:
+              config:
+                meta:
+                  owner: "docs team"
+ ```
+</File>
+
+Или задайте значения по умолчанию в `dbt_project.yml`:
+
+<File name="dbt_project.yml">
+
+```yaml
+data_tests:
+  my_project:
+    +meta:
+      owner: "docs team"
+ ```
+</File>
+
+**Единичные тесты данных**
+
+Добавьте `meta` в SQL-файл теста с помощью `config()`:
+
+<File name="tests/my_singular_test.sql">
+
+```sql
+{{ config(meta={'owner': 'docs team'}) }}
+
+select * from {{ ref('my_model') }}
+where my_column is null
+```
+</File>
+
+Или укажите метаданные в `tests/properties.yml`:
+
+<File name="tests/properties.yml">
+
+```yaml
+data_tests:
+  - name: my_singular_test
+    config:
+      meta:
+        owner: "analytics_team"
+```
+</File>
 
 </TabItem>
 
@@ -226,15 +284,12 @@ macros:
 <File name='macros/schema.yml'>
 
 ```yml
-
-[макросы](/reference/macro-properties):
+[macros](/reference/macro-properties):
   - name: macro_name
-    config:
-      meta: {<dictionary>} # изменено на config в v1.10
-
+    config: 
+      meta: {<dictionary>} # перенесено в config в v1.11
     arguments:
       - name: argument_name
-
 ```
 
 </File>
@@ -268,22 +323,9 @@ exposures:
 </TabItem>
 
 <TabItem value="semantic models">
+<VersionBlock lastVersion="1.11">
 
-Настройте `meta` в файле свойств ваших [семантических моделей](/docs/build/semantic-models) или в разделе конфигурации `semantic-models` в файле проекта (`dbt_project.yml`). 
-
-<VersionBlock lastVersion="1.9">
-
-<File name='models/semantic_models.yml'>
-
-```yml
-semantic_models:
-  - name: semantic_model_name
-    config:
-      meta: {<словарь>}
-
-```
-
-</File>
+Настройте `meta` в YAML-файле ваших [семантических моделей](/docs/build/semantic-models) или в блоке конфигурации `semantic-models` в файле `dbt_project.yml`.
 
 <File name='dbt_project.yml'>
 
@@ -294,18 +336,6 @@ semantic-models:
 ```
 </File>
 
-</VersionBlock>
-
-<VersionBlock firstVersion="1.9">
-
-<File name='dbt_project.yml'>
-
-```yml
-semantic-models:
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +meta: {<dictionary>}
-```
-</File>
 
 <File name='models/semantic_models.yml'>
 
@@ -316,8 +346,37 @@ semantic_models:
       meta: {<dictionary>}
 
 ```
-
 </File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+Configure `meta` in the [semantic models](/docs/build/semantic-models) embedded within your model YAML file or under the `semantic-models` config block in the `dbt_project.yml` file. 
+
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
+<File name='models/file_name.yml'>
+
+```yml
+models:
+  - name: model_name
+    semantic_model:
+      enabled: true
+      config:
+        meta: {<dictionary>}
+
+```
+</File>
+</VersionBlock>
+
+<VersionBlock lastVersion="1.11">
 
 [Dimensions](/docs/build/dimensions), [entities](/docs/build/entities) и [measures](/docs/build/measures) также могут иметь собственные конфигурации `meta`.
 
@@ -347,13 +406,55 @@ semantic_models:
 ```
 
 </File>
+</VersionBlock>
 
+<VersionBlock firstVersion="1.12">
+
+[Dimensions](/docs/build/dimensions), [entities](/docs/build/entities), and metrics can also have their own `meta` configurations.
+
+<File name='models/file_name.yml'>
+
+```yml
+models:
+  - name: model_name
+    semantic_model:
+      enabled: true
+      config:
+        meta: {<dictionary>}
+
+    agg_time_dimension: your_time_dimension_name
+
+    columns:
+      - name: entity_column_name
+        entity:
+          type: primary
+          name: entity_name
+          config:
+            meta: {<dictionary>}
+
+      - name: dimension_column_name
+        dimension:
+          type: categorical
+          name: dimension_name
+          config:
+            meta: {<dictionary>}
+
+    metrics:
+      - name: simple_metric_name
+        description: "Description of the metric"
+        type: simple
+        agg: sum  
+        expr: column_name 
+        config:
+          meta: {<dictionary>}
+```
+
+</File>
 </VersionBlock>
 
 Конфигурацию `meta` можно определить:
-
-- В разделе `semantic-models` файла свойств (как показано в предыдущем примере `models/semantic_models.yml`)
-- В разделе `semantic-models` файла проекта (`dbt_project.yml`). Подробнее см. в разделе [configs and properties](/reference/configs-and-properties).
+- В разделе `semantic-models` файла свойств (как показано в предыдущем примере `models/semantic_models.yml`) 
+- В разделе `semantic-models` файла проекта (`dbt_project.yml`). Подробнее см. в разделе [Конфигурации и свойства](/reference/configs-and-properties).
 
 </TabItem>
 
@@ -368,6 +469,7 @@ metrics:
 ```
 </File>
 
+<VersionBlock lastVersion="1.11">
 <File name='models/metrics.yml'>
 
 ```yml
@@ -384,6 +486,35 @@ metrics:
 ```
 
 </File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+<File name='models/file_name.yml'>
+
+```yml
+models:
+  - name: model_name 
+    semantic_model:
+      enabled: true
+    agg_time_dimension: your_time_dimension
+    columns:
+      - name: column_name
+        dimension:
+          type: time
+        granularity: day
+    metrics:
+      - name: number_of_people
+        type: simple
+        description: Total count of people
+        agg: count
+        expr: people
+        config:
+          meta:
+            my_meta_config: 'config_value'
+```
+
+</File>
+</VersionBlock>
 
 </TabItem>
 
@@ -409,26 +540,56 @@ saved_queries:
 
 </File>
 </TabItem>
+
+<TabItem value="functions">
+
+<File name='dbt_project.yml'>
+
+```yml
+functions:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)meta: {<dictionary>}
+```
+
+</File>
+
+<File name='functions/properties.yml'>
+
+```yaml
+functions:
+  - name: function_name
+    config:
+      meta: {<dictionary>}
+```
+
+</File>
+
+</TabItem>
 </Tabs>
 
-## Определение {#definition}
-Поле `meta` можно использовать для задания метаданных ресурса и оно принимает любые пары «ключ-значение». Эти метаданные компилируются в файл `manifest.json`, который генерируется dbt, и отображаются в автоматически сгенерированной документации.
+## Определение
+Конфигурация `meta` задаёт метаданные ресурса и принимает любые пары «ключ — значение». Эти метаданные включаются в файл `manifest.json`, создаваемый dbt, и отображаются в автоматически сгенерированной документации.
 
 В зависимости от ресурса, который вы настраиваете, `meta` может быть доступно в свойстве `config` и/или в качестве ключа верхнего уровня. (Для обратной совместимости `meta` часто (но не всегда) поддерживается в качестве ключа верхнего уровня, хотя без возможностей наследования конфигурации.)
+
+:::note Effect on state comparison
+Changes to `meta`, including at the column level, don't trigger [`state:modified`](/reference/node-selection/methods#state). dbt treats `meta` (and `tags`) as metadata only, since it doesn't affect how a resource is materialized. Refer to [caveats to state comparison](/reference/node-selection/state-comparison-caveats#tags-and-meta) for more detail.
+:::
 
 
 ## Примеры {#examples}
 Чтобы показать, как использовать конфигурацию `meta`, приведём несколько примеров:
 
 <!-- no toc -->
-  - [Назначить владельца модели](#designate-a-model-owner)
-  - [Обозначить столбец источника как содержащий PII](#designate-a-source-column-as-containing-pii)
-  - [Настроить один атрибут meta для всех seeds](#configure-one-meta-attribute-for-all-seeds)
-  - [Переопределить один атрибут meta для одной модели](#override-one-meta-attribute-for-a-single-model)
-  - [Задать owner и favorite\_color в dbt\_project.yml как свойство config](#assign-owner-and-favorite_color-in-the-dbt_projectyml-as-a-config-property)
-  - [Назначить meta для semantic model](#assign-meta-to-semantic-model)
-  - [Назначить meta для dimensions, measures, entities](#assign-meta-to-dimensions-measures-entities)
-  - [Доступ к значениям meta в Python-моделях](#access-meta-values-in-python-models)
+- [Назначить владельца модели](#designate-a-model-owner)
+  - [Указать, что столбец источника содержит персональные данные (PII)](#designate-a-source-column-as-containing-pii)
+  - [Настроить один атрибут meta для всех seed-файлов](#configure-one-meta-attribute-for-all-seeds)
+  - [Переопределить один атрибут meta для отдельной модели](#override-one-meta-attribute-for-a-single-model)
+  - [Задать owner и favorite\_color в dbt\_project.yml как свойство конфигурации](#assign-owner-and-favoritecolor-in-the-dbtprojectyml-as-a-config-property)
+  - [Задать meta для семантической модели](#assign-meta-to-semantic-model)
+  - [Задать meta для измерений, мер и сущностей](#assign-meta-to-dimensions-measures-entities)
+  - [Добавить meta к универсальным и единичным тестам данных](#add-meta-to-generic-and-singular-data-tests)
+  - [Получить доступ к значениям meta в моделях Python](#access-meta-values-in-python-models)
 
 
 ### Назначить владельца модели {#designate-a-model-owner}
@@ -517,7 +678,9 @@ models:
 
 ### Назначение meta для семантической модели {#assign-meta-to-semantic-model}
 
-Следующий пример показывает, как назначить значение `meta` для [семантической модели](/docs/build/semantic-models) в файлах `semantic_model.yml` и `dbt_project.yml`:
+<VersionBlock lastVersion="1.11">
+
+В следующем примере показано, как задать значение `meta` для [семантической модели](/docs/build/semantic-models) в файлах `semantic_model.yml` и `dbt_project.yml`:
 
 <Tabs>
 <TabItem value="semantic_model" label="Semantic model">
@@ -547,10 +710,48 @@ semantic-models:
 ```
 </TabItem>
 </Tabs>
+</VersionBlock>
+
+
+<VersionBlock firstVersion="1.12">
+
+The following example shows how to assign a `meta` value to a [semantic model](/docs/build/semantic-models) in the model YAML file and  `dbt_project.yml` file:
+
+<Tabs>
+<TabItem value="semantic_model" label="Semantic model">
+
+```yaml
+models:
+  - name: fact_transactions
+    description: "Transaction fact table at the transaction level. This table contains one row per transaction and includes the transaction timestamp."
+    semantic_model:
+      enabled: true
+      name: transaction
+      config:
+        meta:
+          data_owner: "Finance team"
+          used_in_reporting: true
+
+    agg_time_dimension: transaction_date
+```
+
+</TabItem>
+
+<TabItem value="project.yml" label="dbt_project.yml">
+
+```yaml
+semantic-models:
+  jaffle_shop:
+    +meta:
+      used_in_reporting: true
+```
+</TabItem>
+</Tabs>
+</VersionBlock>
 
 ### Назначение meta для измерений, метрик и сущностей {#assign-meta-to-dimensions-measures-entities}
 
-<VersionBlock firstVersion="1.9">
+<VersionBlock lastVersion="1.11">
 
 <Tabs>
 <TabItem value="semantic_model" label="Semantic model">
@@ -612,9 +813,124 @@ semantic-models:
 </Tabs>
 </VersionBlock>
 
-### Доступ к значениям meta в Python-моделях {#access-meta-values-in-python-models}
+<VersionBlock firstVersion="1.12">
 
-Чтобы получить доступ к пользовательским значениям `meta` в [Python-моделях](/docs/build/python-models), сначала извлеките объект `meta` с помощью метода `dbt.config.get()`, а затем обращайтесь к нужным пользовательским значениям.
+<Tabs>
+<TabItem value="semantic_model" label="Семантическая модель">
+
+В следующем примере показано, как задать значение `meta` для [измерения](/docs/build/dimensions), [сущности](/docs/build/entities) и [простых метрик](/docs/build/simple) в семантической модели:
+
+<File name='model_name.yml'>
+
+```yml
+models:
+  - name: model_name
+    semantic_model:
+      enabled: true
+      name: semantic_model
+
+    agg_time_dimension: order_date
+
+    columns:
+      - name: order_date
+        dimension:
+          type: time
+          config:
+            meta:
+              data_owner: "Finance team"
+              used_in_reporting: true
+
+      - name: customer_id
+        entity:
+          type: primary
+          config:
+            meta:
+              description: "Unique identifier for customers"
+              data_owner: "Sales team"
+              used_in_reporting: false
+
+    metrics:
+      - name: count_of_users
+        type: simple
+        agg: count_distinct
+        expr: user_id
+        config:
+          meta:
+            used_in_reporting: true
+```
+
+</File>
+</TabItem>
+
+<TabItem value="project.yml" label="dbt_project.yml">
+
+Во втором примере показано, как задать `data_owner` и дополнительные метаданные для измерения в файле `dbt_project.yml` с помощью синтаксиса `+meta`. Аналогичный синтаксис можно использовать для сущностей и простых метрик.
+
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  jaffle_shop:
+    ...
+    [dimensions](/docs/build/dimensions):
+      - name: order_date
+        config:
+          meta:
+            data_owner: "Finance team"
+            used_in_reporting: true
+```
+
+
+</File>
+</TabItem>
+</Tabs>
+</VersionBlock>
+
+### Добавление meta в обобщённые и единичные тесты данных {#add-meta-to-generic-and-singular-data-tests}
+
+В следующих примерах показано, как добавить `meta` в [обобщённые тесты данных](/docs/build/data-tests#generic-data-tests) в файле `properties.yml` и в [единичные тесты данных](/docs/build/data-tests#singular-data-tests) с помощью `config()`. Также можно задать значения по умолчанию в `dbt_project.yml` или `tests/properties.yml`.
+
+<Tabs>
+<TabItem value="generic" label="Обобщённый тест данных">
+
+<File name='models/properties.yml'>
+
+```yaml
+models:
+  - name: orders
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null:
+              config:
+                meta:
+                  owner: "@data_team"
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="singular" label="Единичный тест данных">
+
+<File name='tests/assert_order_ids.sql'>
+
+```sql
+{{ config(meta={'owner': '@data_team'}) }}
+
+select *
+from {{ ref('orders') }}
+where order_id is null
+```
+
+</File>
+
+</TabItem>
+</Tabs>
+
+### Доступ к значениям meta в моделях Python {#access-meta-values-in-python-models}
+
+Для доступа к пользовательским значениям `meta` в [моделях Python](/docs/build/python-models) используйте метод `dbt.config.meta_get()`.
 
 Например, если у вас есть модель с именем `my_python_model` и вы хотите сохранить в ней пользовательские значения, можно сделать следующее:
 
@@ -635,12 +951,9 @@ models:
 
 ```python
 def model(dbt, session):
-    # First, get the meta object
-    meta = dbt.config.get("meta")
-    
-    # Then access your custom values from meta
-    batch_size = meta.get("batch_size")
-    processing_mode = meta.get("processing_mode")
+    # Access custom values stored in meta directly
+    batch_size = dbt.config.meta_get("batch_size")
+    processing_mode = dbt.config.meta_get("processing_mode")
     
     # Use the meta values in your model logic
     df = dbt.ref("upstream_model")

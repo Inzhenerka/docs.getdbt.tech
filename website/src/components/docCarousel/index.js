@@ -1,11 +1,11 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Navigation, Pagination } from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-function DocCarousel({ slidesPerView = 3, autoHeight = false, children }) {
+function DocCarousel({ slidesPerView = 3, autoHeight = true, children }) {
     if ( !children?.length > 0 ){      
         return false
     }

@@ -5,7 +5,10 @@ description: "Команда dbt run выполняет скомпилирова
 id: "run"
 ---
 
-## Обзор {#overview}
+import InfoSchemaStaticAnalysis from '/snippets/_info-schema-static-analysis.md';
+import InfoSchemaIntro from '/snippets/_info-schema-intro.md';
+
+## Обзор
 
 Команда `dbt run` применяется **только к моделям**. Она не запускает тесты, снапшоты, сиды или другие типы ресурсов. Для запуска этих операций используйте соответствующие команды dbt, описанные в разделе [dbt commands](/reference/dbt-commands), — например, `dbt test`, `dbt snapshot` или `dbt seed`.  
 В качестве альтернативы можно использовать `dbt build` с [селектором типа ресурса](/reference/node-selection/methods#resource_type).
@@ -63,7 +66,25 @@ dbt также позволяет выбрать, какие конкретны�
 
 Для получения дополнительной информации о запуске родительских или дочерних моделей см. [Документацию по операторам графа](/reference/node-selection/graph-operators).
 
-## Обработка предупреждений как ошибок {#treat-warnings-as-errors}
+<VersionBlock firstVersion="2.0">
+
+## Информационная схема dbt
+
+<InfoSchemaIntro />
+
+```shell
+dbt run --generate-info-schema
+```
+
+<InfoSchemaStaticAnalysis />
+
+```shell
+dbt run --generate-info-schema --static-analysis strict
+```
+
+</VersionBlock>
+
+## Рассматривать предупреждения как ошибки
 
 См. [глобальные конфигурации](/reference/global-configs/warnings)
 
@@ -80,7 +101,7 @@ dbt также позволяет выбрать, какие конкретны�
 
 Команда `run` поддерживает флаг `--empty` для построения сухих запусков только со схемой. Флаг `--empty` ограничивает ссылки и источники до нуля строк. dbt все равно выполнит SQL модели в целевом хранилище данных, но избежит дорогостоящих чтений входных данных. Это проверяет зависимости и гарантирует, что ваши модели будут правильно построены.
 
-## Коды состояния {#status-codes}
+## Коды состояния
 
 При вызове [api list_runs](/dbt-cloud/api-v2#/operations/List%20Runs) вы получите код статуса для каждого выполнения. Доступные коды статуса выполнения следующие:
 

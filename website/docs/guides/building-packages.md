@@ -6,7 +6,6 @@ displayText: Создание пакетов dbt
 hoverSnippet: Узнайте, как создавать пакеты для dbt.
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Core']
 level: 'Advanced'
 ---
 
@@ -28,13 +27,13 @@ level: 'Advanced'
 - макросы, которые решают конкретную задачу аналитической инженерии — например, [аудит результатов запроса](https://hub.getdbt.com/dbt-labs/audit_helper/latest/), [генерация кода](https://hub.getdbt.com/dbt-labs/codegen/latest/) или [добавление дополнительных тестов схемы в проект dbt](https://hub.getdbt.com/calogica/dbt_expectations/latest/).
 - модели для общего набора данных — например, набор данных для программных продуктов, таких как [MailChimp](https://hub.getdbt.com/fivetran/mailchimp/latest/) или [Snowplow](https://hub.getdbt.com/dbt-labs/snowplow/latest/), или даже модели для метаданных о вашем стеке данных, таких как [расходы на запросы Snowflake](https://hub.getdbt.com/gitlabhq/snowflake_spend/latest/) и [артефакты, созданные `dbt run`](https://hub.getdbt.com/tailsdotcom/dbt_artifacts/latest/). В общем, должен быть общий набор отраслевых стандартных метрик, которые вы можете моделировать (например, уровень открытия электронной почты).
 
-Мы также рекомендуем убедиться, что ваш пакет совместим с [<Constant name="fusion"/>](/docs/fusion) и [<Constant name="core"/>](/docs/about-dbt-install). Чтобы обеспечить совместимость с <Constant name="fusion"/>, вы можете следовать шагам из [руководства по обновлению пакетов для Fusion](/guides/fusion-package-compat).
+Мы также рекомендуем убедиться, что ваш пакет совместим с [<Constant name="fusion"/>](/docs/introduction) и [<Constant name="core"/>](/docs/local/install-dbt). Чтобы обеспечить совместимость с <Constant name="fusion"/>, следуйте инструкциям в [руководстве по обновлению пакетов до v2](/guides/dbt-package-compat).
 
 Пакеты _не_ подходят для распространения моделей, содержащих бизнес-специфичную логику, например кода для маркетинговой атрибуции или расчёта ежемесячной повторяющейся выручки (MRR). Вместо этого лучше опубликовать статью в блоге и дать ссылку на пример репозитория, а не упаковывать такой код в виде пакета (вот наш пост в блоге про [маркетинговую атрибуцию](https://blog.getdbt.com/modeling-marketing-attribution/) в качестве примера).
 
-## Создайте новый проект {#create-your-new-project}
+## Создайте новый проект
 :::note Использование командной строки для разработки пакетов
-Мы обычно используем интерфейс командной строки для разработки пакетов. Процесс разработки часто включает установку локальной копии вашего пакета в другой проект dbt — в настоящее время <Constant name="cloud" /> не предназначен для такого рабочего процесса.
+Для разработки пакетов мы обычно используем интерфейс командной строки. Рабочий процесс разработки часто предполагает установку локальной копии вашего пакета в другой проект dbt — в настоящее время <Constant name="dbt" /> не предназначен для такого рабочего процесса.
 :::
 
 1. Используйте команду [dbt init](/reference/commands/init) для создания нового проекта dbt, который станет вашим пакетом:
@@ -52,8 +51,8 @@ $ dbt init [package_name]
 
 При работе над вашим пакетом мы часто находим полезным установить локальную копию пакета в другой проект dbt — этот рабочий процесс описан [здесь](https://discourse.getdbt.com/t/contributing-to-an-external-dbt-package/657).
 
-### Обеспечьте совместимость с Fusion {#ensure-fusion-compatibility}
-Если вы разрабатываете пакет, мы рекомендуем убедиться, что он совместим с [<Constant name="fusion"/>](/docs/fusion) и [<Constant name="core"/>](/docs/about-dbt-install). Чтобы обеспечить совместимость с <Constant name="fusion"/>, вы можете следовать шагам из [руководства по обновлению пакетов для Fusion](/guides/fusion-package-compat).
+### Обеспечьте совместимость с dbt v2
+Если вы разрабатываете пакет, рекомендуем убедиться, что он совместим с [<Constant name="fusion"/>](/docs/introduction) и [<Constant name="core"/>](/docs/local/install-dbt). Чтобы обеспечить совместимость с <Constant name="fusion"/>, выполните шаги из [руководства по обновлению пакетов для v2](/guides/dbt-package-compat).
 
 Это обеспечит совместимость вашего пакета с <Constant name="fusion_engine"/> (и <Constant name="core"/>), а также приведёт к тому, что в dbt package hub он будет отображаться с бейджем совместимости с <Constant name="fusion"/>.
 

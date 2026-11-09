@@ -14,10 +14,13 @@ default_value: true
     { label: 'Tests', value: 'tests', },
     { label: 'Unit tests', value: 'unit tests', },
     { label: 'Sources', value: 'sources', },
+    { label: 'Analyses', value: 'analyses', },
     { label: 'Metrics', value: 'metrics', },
     { label: 'Exposures', value: 'exposures', },
     { label: 'Semantic models', value: 'semantic models', },
     { label: 'Saved queries', value: 'saved queries', },
+    { label: 'Functions', value: 'functions', },
+    { label: 'Skills', value: 'skills', },
   ]
 }>
 <TabItem value="models">
@@ -220,6 +223,35 @@ sources:
 
 </TabItem>
 
+<TabItem value="analyses">
+
+<File name='analyses/<filename>.yml'>
+
+```yaml
+analyses:
+  - name: <analysis_name>
+    config:
+      enabled: true | false
+```
+
+</File>
+
+To configure analyses at the project level, set the [`require_corrected_analysis_fqns`](/reference/global-configs/behavior-flags/require_corrected_analysis_fqns) flag to `true` in your `dbt_project.yml`.
+
+<File name='dbt_project.yml'>
+
+```yaml
+flags:
+  require_corrected_analysis_fqns: true
+
+analyses:
+  +enabled: true | false
+```
+
+</File>
+
+</TabItem>
+
 <TabItem value="metrics">
 
 <File name='dbt_project.yml'>
@@ -284,6 +316,7 @@ semantic-models:
 
 </File>
 
+<VersionBlock lastVersion="1.11">
 <File name='models/semantic_models.yml'>
 
 ```yaml
@@ -294,6 +327,20 @@ semantic_models:
 ```
 
 </File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+<File name='models/file_name.yml'>
+
+```yaml
+models:
+  - name: model_name
+    semantic_model:
+      enabled: true | false # Required under 'semantic_model'
+```
+
+</File>
+</VersionBlock>
 
 </TabItem>
 
@@ -319,6 +366,64 @@ saved_queries:
 ```
 
 </File>
+
+</TabItem>
+
+<TabItem value="functions">
+
+<File name='dbt_project.yml'>
+
+```yaml
+functions:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)enabled: true | false
+```
+
+</File>
+
+<File name='functions/properties.yml'>
+
+```yaml
+functions:
+  - name: [<function-name>]
+    [config](/reference/resource-properties/config):
+      enabled: true | false
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="skills">
+
+<VersionBlock firstVersion="2.0">
+
+<File name='dbt_project.yml'>
+
+```yaml
+skills:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)enabled: true | false
+```
+
+</File>
+
+For [agent skills](/docs/dbt-ai/package-skills), the resource path is the package that ships the skill, followed by the skill's name:
+
+<File name='dbt_project.yml'>
+
+```yaml
+skills:
+  demo_skills:
+    naming-conventions:
+      +enabled: false
+```
+
+</File>
+
+A package's own `skills` config sets the defaults for the skills it ships, and your root project's `skills` config overrides it. Disabling a skill is how you resolve two packages that ship skills with the same name.
+
+</VersionBlock>
 
 </TabItem>
 
@@ -353,3 +458,39 @@ models:
 ```
 
 </File>
+
+<VersionBlock firstVersion="2.0" >
+
+### Отключение ресурсов Semantic Layer из пакета
+
+Некоторые пакеты могут определять ресурсы <Constant name="semantic_layer" /> (семантические модели, метрики, сохранённые запросы) с использованием устаревшей спецификации, несовместимой с <Constant name="fusion_engine" />. 
+
+Чтобы использовать эти пакеты с <Constant name="fusion" />, сохранив собственные определения семантического слоя, отключите ресурсы семантического слоя пакета в соответствующем YAML-файле.
+
+<File name='dbt_project.yml'>
+
+```yml
+# Disable the package's time spine model (if it conflicts with yours)
+models:
+  ad_reporting:
+    semantic_models:
+      metricflow_time_spine:
+        +enabled: false
+
+# Disable all semantic layer resources from the package
+semantic-models:
+  ad_reporting:
+    +enabled: false
+
+metrics:
+  ad_reporting:
+    +enabled: false
+
+saved-queries:
+  ad_reporting:
+    +enabled: false
+```
+
+</File>
+
+</VersionBlock>

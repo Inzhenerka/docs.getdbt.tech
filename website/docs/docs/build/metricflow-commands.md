@@ -1,44 +1,53 @@
 ---
 title: Команды MetricFlow
 id: metricflow-commands
-description: "Запрос метрик и метаданных в вашем проекте dbt с помощью команд MetricFlow."
+description: "Запрашивайте метрики и метаданные в вашем проекте dbt с помощью команд MetricFlow."
 sidebar_label: "Команды MetricFlow"
-tags: [Метрики, Семантический слой]
+tags: [Metrics, Semantic Layer]
+availability: all_users
 ---
 
-После того как вы определите метрики в своём проекте dbt, вы сможете запрашивать метрики, измерения и значения измерений, а также проверять корректность конфигураций с помощью команд MetricFlow.
+MetricFlow позволяет определять и запрашивать метрики в вашем проекте dbt в [<Constant name="dbt_platform" />](/docs/platform/about-develop-dbt) или локально в [самостоятельно размещённом dbt](/docs/local/install-dbt). Чтобы воспользоваться возможностями универсального [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) и динамически запрашивать эти метрики в инструментах-потребителях, вам потребуется учётная запись <Constant name="dbt" /> с тарифом [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/). 
 
-MetricFlow позволяет определять и запрашивать метрики в вашем проекте dbt в [<Constant name="cloud" />](/docs/cloud/about-develop-dbt) или [<Constant name="core" />](/docs/core/installation-overview). Чтобы воспользоваться возможностями универсального [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) и динамически запрашивать эти метрики в downstream‑инструментах, вам понадобится аккаунт <Constant name="cloud" /> уровня [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
+Определив метрики в вашем проекте dbt, вы можете запрашивать метрики, измерения и значения измерений, а также проверять корректность конфигураций с помощью команд MetricFlow, доступных в разных [версиях dbt](/docs/introduction).
 
 MetricFlow совместим с версиями Python 3.8, 3.9, 3.10, 3.11 и 3.12.
 
 ## MetricFlow {#metricflow}
 
-MetricFlow — это пакет dbt, который позволяет определять и запрашивать метрики в вашем проекте dbt. Вы можете использовать MetricFlow для запросов метрик в проекте dbt через CLI <Constant name="cloud" />, <Constant name="cloud_ide" /> или <Constant name="core" />.
+<VersionBlock lastVersion="1.11">
+MetricFlow — это библиотека Python, которая позволяет определять метрики в вашем проекте dbt и выполнять запросы к ним. С помощью MetricFlow вы можете запрашивать метрики в вашем проекте dbt через <Constant name="dbt" /> CLI, <Constant name="studio_ide" /> или dbt v1 (с открытым исходным кодом).
+</VersionBlock>
 
-Использование MetricFlow с <Constant name="cloud" /> означает, что вам не нужно управлять версиями — ваш аккаунт <Constant name="cloud" /> автоматически занимается управлением версиями.
+<VersionBlock firstVersion="1.12">
 
-Задания <Constant name="cloud" /> поддерживают команду `dbt sl validate` для [автоматического тестирования семантических узлов](/docs/deploy/ci-jobs#semantic-validations-in-ci). Вы также можете добавить проверки MetricFlow в интеграции с вашим git‑провайдером (например, GitHub Actions), установив MetricFlow (`python -m pip install metricflow`). Это позволяет запускать команды MetricFlow в рамках проверок непрерывной интеграции (CI) для pull request’ов.
+MetricFlow — это библиотека Python, которая позволяет определять метрики в вашем проекте dbt и выполнять запросы к ним. С помощью MetricFlow вы можете запрашивать метрики в вашем проекте dbt двумя способами: в <Constant name="dbt_platform" /> или локально, используя самостоятельно развернутый dbt, где вы сами устанавливаете движок и управляете им.
+</VersionBlock>
 
 <Tabs>
 
-<TabItem value="cloud" label="MetricFlow with the dbt platform">
+<TabItem value="cloud" label="MetricFlow in dbt platform">
 
-В <Constant name="cloud" /> вы можете запускать команды MetricFlow напрямую в [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или в [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation).
+Этот раздел предназначен для пользователей <Constant name="dbt_platform" />, использующих движок v1 или v2, у которых команды и проверки выполняются удалённо в <Constant name="dbt_platform" />. 
 
-Для пользователей <Constant name="cloud_cli" /> команды MetricFlow встроены в <Constant name="cloud_cli" />, что означает, что вы можете сразу же запускать их после установки <Constant name="cloud_cli" /> и вам не нужно устанавливать MetricFlow отдельно. Вам также не нужно управлять версиями, поскольку ваш аккаунт <Constant name="cloud" /> автоматически делает это за вас.
+- Выполняйте команды MetricFlow с префиксом `dbt sl` в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) или [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) либо с помощью [расширения для VS Code](/docs/install-dbt-extension).
+- Для пользователей CLI или VS Code/Cursor команды MetricFlow встроены: их можно выполнять сразу после установки [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) или [расширения для VS Code](/docs/install-dbt-extension), без необходимости устанавливать MetricFlow отдельно. 
+- При использовании MetricFlow с <Constant name="dbt_platform" /> вам не нужно управлять версиями &mdash; управление версиями выполняется автоматически в вашей учётной записи <Constant name="dbt" />.
+- Задания <Constant name="dbt" /> поддерживают команду `dbt sl validate` для [автоматического тестирования семантических узлов](/docs/deploy/ci-jobs#semantic-validations-in-ci). Вы также можете добавить проверки MetricFlow с помощью своего Git-провайдера (например, GitHub Actions), установив MetricFlow (`python -m pip install metricflow`). Это позволяет выполнять команды MetricFlow в рамках проверок непрерывной интеграции для PR.
 
 </TabItem>
 
-<TabItem value="core" label="MetricFlow с dbt Core">
+<TabItem value="core" label="MetricFlow с самостоятельно размещённым dbt">  
 
-Вы можете установить [MetricFlow](https://github.com/dbt-labs/metricflow#getting-started) из [PyPI](https://pypi.org/project/dbt-metricflow/). Вам нужно использовать `pip` для установки MetricFlow на операционных системах Windows или Linux:
+Этот раздел предназначен для пользователей локального, самостоятельно размещённого dbt, которые не используют <Constant name="dbt_platform" />.
 
+Вы можете установить [MetricFlow](https://github.com/dbt-labs/metricflow#getting-started) из [PyPI](https://pypi.org/project/dbt-metricflow/). Для установки MetricFlow в операционных системах Windows или Linux необходимо использовать `pip`:
+ 
 1. Создайте или активируйте виртуальное окружение `python -m venv venv`.
 2. Выполните `pip install dbt-metricflow`.
-   * Вы можете установить MetricFlow через PyPI как расширение вашего dbt‑адаптера из командной строки. Чтобы установить адаптер, выполните `python -m pip install "dbt-metricflow[adapter_package_name]"` и укажите имя адаптера в конце команды. Например, для адаптера Snowflake выполните `python -m pip install "dbt-metricflow[dbt-snowflake]"`.
+  * Вы можете установить MetricFlow из PyPI как расширение своего адаптера dbt через командную строку. Чтобы установить адаптер, выполните `python -m pip install "dbt-metricflow[adapter_package_name]"`, указав имя адаптера в конце команды. Например, для адаптера Snowflake выполните `python -m pip install "dbt-metricflow[dbt-snowflake]"`.
 
-**Примечание:** вам потребуется самостоятельно управлять версиями между <Constant name="core" />, вашим адаптером и MetricFlow.
+**Примечание**: вам потребуется самостоятельно управлять совместимостью версий dbt, вашего адаптера и MetricFlow при использовании движка v1 или версий dbt и MetricFlow при использовании движка v2.
 
 Обратите внимание, команды MetricFlow `mf` возвращают ошибку, если у вас установлен пакет Metafont latex. Чтобы запустить команды `mf`, удалите этот пакет.
 
@@ -47,41 +56,47 @@ MetricFlow — это пакет dbt, который позволяет опре
 
 ## Команды MetricFlow {#metricflow-commands}
 
-MetricFlow предоставляет следующие команды для получения метаданных и запроса метрик.
+Используйте команды MetricFlow для получения метаданных и выполнения запросов к метрикам. В следующей таблице представлена матрица совместимости команд MetricFlow и указано, где их можно выполнять.
+
+| Среда разработки | Движок | Где выполняется | <div style={{width:'100px'}}>Префикс</div>  | Примечания |
+|------------|------------|----------------|-------------|-----------|
+|<Constant name="studio_ide" />/<Constant name="platform_cli" /> или расширение VS Code| dbt v2 или v1 | <Constant name="dbt_platform" /> | `dbt sl` | Удалённое выполнение; платформа управляет версиями.<br />Пользователям расширения VS Code необходим файл [`dbt_cloud.yml`](/reference/dbt_cloud.yml) с действительным токеном для подключения к платформе dbt |
+| Собственная среда <br /> (без проекта в <Constant name="dbt_platform" />) | dbt v2 или v1  | Локальный компьютер | `mf` | Установка MetricFlow и управление им выполняются локально. |
+
+- Если вы используете v2 с <Constant name="dbt_platform" /> и у вас есть файл [`dbt_cloud.yml`](/reference/dbt_cloud.yml) с действительным токеном для подключения к <Constant name="dbt_platform" />, выполняйте команды MetricFlow с префиксом `dbt sl`. 
+  - Это позволяет работать с метриками, запросы к которым выполняются удалённо на <Constant name="dbt_platform" /> (например, из [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) или [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation)).
+- Если вы используете [v2 CLI](/docs/local/install-dbt?version=2) и не подключены к <Constant name="dbt_platform" />, установите MetricFlow отдельно и используйте префикс `mf` для локального выполнения команд.
+- Если вы используете v1 локально без v2, выполняйте команды MetricFlow с префиксом `mf`.
 
 <Tabs>
-<TabItem value="cloudcommands" label="Commands for the dbt platform">
+<TabItem value="cloudcommands" label="Commands for dbt platform">
 
-Вы можете использовать префикс `dbt sl` перед именем команды, чтобы выполнять их в <Constant name="cloud_ide" /> или <Constant name="cloud_cli" />. Например, чтобы вывести список всех метрик, выполните команду `dbt sl list metrics`.
+Этот раздел предназначен для пользователей <Constant name="dbt_platform" />, использующих движок v2 или v1, при котором команды и проверки выполняются удалённо в <Constant name="dbt_platform" />.
 
-Пользователи <Constant name="cloud_cli" /> могут выполнить `dbt sl --help` в терминале, чтобы получить полный список команд и флагов MetricFlow.
+- Используйте префикс `dbt sl` перед названием команды, чтобы выполнять команды в <Constant name="dbt_platform"/> (<Constant name="studio_ide"/>, VS Code/Cursor, <Constant name="platform_cli" />) (например, `dbt sl list metrics` для вывода списка всех метрик). 
+  - Пользователям <Constant name="dbt_platform"/>, работающим с CLI или редактором (например, VS Code), следует выполнить команду `dbt sl --help` в терминале, чтобы просмотреть полный список команд и флагов MetricFlow.
+- В следующей таблице перечислены команды, совместимые с <Constant name="dbt_platform"/> (<Constant name="studio_ide"/>, VS Code/Cursor, <Constant name="platform_cli" />) на базе движка v2 или v1:
 
-В следующей таблице перечислены команды, совместимые с <Constant name="cloud_ide" /> и <Constant name="cloud_cli" />:
+| <div style={{width:'250px'}}>Команда</div>  | <div style={{width:'100px'}}>Описание</div> | <Constant name="studio_ide" /> | <Constant name="platform_cli" /> | VS Code/Cursor |
+|---------|-------------|---------------|---------------| -----------|
+| [`list metrics`](#list-metrics) | Выводит список метрик с измерениями. |  ✅ | ✅ | ✅ |
+| [`list dimensions`](#list-metrics) | Выводит список уникальных измерений для метрик. |  ✅  | ✅ | ✅ |
+| [`list dimension-values`](#list-dimension-values) | Выводит список измерений с метриками. | ✅ | ✅ | ✅ |
+| [`list entities`](#list-entities) | Выводит список всех уникальных сущностей.  |  ✅  | ✅ | ✅ |
+| [`list saved-queries`](#list-saved-queries) | Выводит список доступных сохранённых запросов. Используйте флаг `--show-exports`, чтобы отобразить каждый экспорт, указанный в сохранённом запросе, или `--show-parameters`, чтобы показать полный набор параметров, используемых каждым сохранённым запросом. |  ✅ | ✅ | ✅ |
+| [`query`](#query) | Выполняет запрос к метрикам, сохранённым запросам и измерениям, которые вы хотите увидеть в интерфейсе командной строки. Обратитесь к [примерам запросов](#query-examples), чтобы узнать, как запрашивать метрики и измерения (например, запрашивать метрики, использовать фильтр `where`, добавлять `order` и многое другое).  |  ✅ | ✅ | ✅ |
+| [`validate`](#validate) | Проверяет конфигурации семантических моделей. |  ✅ | ✅ | ✅ |
+| [`export`](#export) |  Выполняет экспорты для одного сохранённого запроса, чтобы тестировать и создавать экспорты в вашей среде разработки. Вы также можете использовать флаг `--select`, чтобы указать конкретные экспорты из сохранённого запроса. |  ❌ | ✅ | ✅ |
+| [`export-all`](#export-all) | Выполняет экспорты для нескольких сохранённых запросов одновременно, экономя время и усилия. |  ❌ | ✅ | ✅ |
 
-| <div style={{width:'250px'}}>Command</div>  | <div style={{width:'100px'}}>Description</div> | <Constant name="cloud_ide" /> | <Constant name="cloud_cli" /> |
-|---------|-------------|---------------|---------------|
-| [`list metrics`](#list-metrics) | Выводит список метрик с измерениями. |  ✅ | ✅ |
-| [`list dimensions`](#list) | Выводит список уникальных измерений для метрик. |  ✅  | ✅ |
-| [`list dimension-values`](#list-dimension-values) | Выводит измерения вместе с метриками. | ✅ | ✅ |
-| [`list entities`](#list-entities) | Выводит список всех уникальных сущностей. |  ✅  | ✅ |
-| [`list saved-queries`](#list-saved-queries) | Выводит список доступных сохранённых запросов. Используйте флаг `--show-exports`, чтобы отобразить каждый экспорт, связанный с сохранённым запросом, или `--show-parameters`, чтобы показать полный набор параметров запроса, которые использует каждый сохранённый запрос. |  ✅ | ✅ |
-| [`query`](#query) | Выполняет запросы к метрикам, сохранённым запросам и измерениям, которые вы хотите увидеть в интерфейсе командной строки. См. [примеры запросов](#query-examples), чтобы узнать, как запрашивать метрики и измерения (например, запрос метрик, использование фильтра `where`, добавление `order` и другое).  |  ✅ | ✅ |
-| [`validate`](#validate) | Проверяет корректность конфигураций семантических моделей. |  ✅ | ✅ |
-| [`export`](#export) | Запускает экспорты для одного сохранённого запроса с целью тестирования и генерации экспортов в среде разработки. Вы также можете использовать флаг `--select`, чтобы указать конкретные экспорты из сохранённого запроса. |  ❌ | ✅ |
-| [`export-all`](#export-all) | Запускает экспорты сразу для нескольких сохранённых запросов, экономя время и усилия. |  ❌ | ✅ |
 
-<!--приведённые ниже команды пока не поддерживаются в dbt
-- [`health-checks`](#health-checks) &mdash; Выполняет проверку состояния платформы данных.
-- [`tutorial`](#tutorial) &mdash; Отдельное руководство по MetricFlow, которое поможет вам начать работу.
--->
-
-:::tip Запустите dbt parse, чтобы отразить изменения метрик
-Когда вы вносите изменения в метрики, обязательно как минимум выполните команду `dbt parse`, чтобы обновить <Constant name="semantic_layer" />. Это обновит файл `semantic_manifest.json`, отразив ваши изменения при выполнении запросов к метрикам. При запуске `dbt parse` вам не потребуется пересобирать все модели.
+:::tip Выполните dbt parse, чтобы отразить изменения метрик
+При внесении изменений в метрики обязательно выполните как минимум `dbt parse`, чтобы обновить <Constant name="semantic_layer" />. Эта команда обновляет файл `semantic_manifest.json`<VersionBlock firstVersion="1.12"> и `osi_document.json`</VersionBlock>, благодаря чему ваши изменения учитываются при запросе метрик. Выполнив `dbt parse`, вы сможете обойтись без повторного построения всех моделей.
 ::: 
 
-<Expandable alt_header="Как выполнять запросы или просматривать метрики с помощью dbt CLI?">
+<Expandable alt_header="Как запрашивать или предварительно просматривать метрики с помощью dbt platform CLI?">
 
-Посмотрите следующее видео с короткой демонстрацией того, как выполнять запросы или предварительный просмотр метрик с помощью <Constant name="cloud_cli" />:
+Посмотрите следующее короткое демонстрационное видео о том, как запрашивать или предварительно просматривать метрики с помощью <Constant name="platform_cli" />:
 
 <LoomVideo id='09e2b287f063497d888f4bed91469d79' />
 
@@ -89,18 +104,9 @@ MetricFlow предоставляет следующие команды для �
 
 </TabItem>
 
-<TabItem value="corecommands" label="Команды для dbt Core">
+<TabItem value="corecommands" label="Команды для локального dbt на собственной инфраструктуре">
 
-Используйте префикс `mf` перед именем команды, чтобы выполнить их в dbt Core. Например, чтобы перечислить все метрики, выполните `mf list metrics`.
-
-- [`list metrics`](#list-metrics) &mdash; Перечисляет метрики с измерениями.
-- [`list dimensions`](#list) &mdash; Перечисляет уникальные измерения для метрик.
-- [`list dimension-values`](#list-dimension-values) &mdash; Перечисляет измерения с метриками.
-- [`list entities`](#list-entities) &mdash; Перечисляет все уникальные сущности.
-- [`validate-configs`](#validate-configs) &mdash; Проверяет конфигурации семантической модели.
-- [`health-checks`](#health-checks) &mdash; Выполняет проверку состояния платформы данных.
-- [`tutorial`](#tutorial) &mdash; Посвященный учебник MetricFlow, чтобы помочь вам начать.
-- [`query`](#query) &mdash; Запрос метрик и измерений, которые вы хотите увидеть в интерфейсе командной строки. Обратитесь к [примерам запросов](#query-examples), чтобы помочь вам начать.
+Этот раздел предназначен для пользователей, которые запускают dbt локально на собственной инфраструктуре и не используют <Constant name="dbt_platform" />, независимо от того, используется ли v1 или v2. Команды и проверки выполняются локально; для их запуска перед именем команды указывается префикс `mf`. Например, чтобы вывести список всех метрик, выполните `mf list metrics`.
 
 </TabItem>
 </Tabs>
@@ -109,9 +115,8 @@ MetricFlow предоставляет следующие команды для �
 Эта команда выводит список метрик с указанием доступных для них измерений (dimensions):
 
 ```bash
-dbt sl list metrics <metric_name> # На платформе dbt
-
-mf list metrics <metric_name> # В dbt Core
+dbt sl list metrics <metric_name>  # Для пользователей платформы dbt (dbt v1 или v2)
+mf list metrics <metric_name> # Для пользователей с самостоятельным размещением (dbt v1 или v2)
 
 Опции:
   --search TEXT          Фильтровать доступные метрики по этому поисковому запросу
@@ -124,9 +129,9 @@ mf list metrics <metric_name> # В dbt Core
 Эта команда перечисляет все уникальные измерения для метрики или нескольких метрик. Она отображает только общие измерения при запросе нескольких метрик:
 
 ```bash
-dbt sl list dimensions --metrics <metric_name> # На платформе dbt
+dbt sl list dimensions --metrics <metric_name>  # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf list dimensions --metrics <metric_name> # В dbt Core
+mf list dimensions --metrics <metric_name> # Для пользователей с самостоятельным размещением (dbt v1 или v2)
 
 Опции:
   --metrics SEQUENCE  Перечислить измерения по заданным метрикам (пересечение). Например, --metrics bookings,messages
@@ -138,20 +143,20 @@ mf list dimensions --metrics <metric_name> # В dbt Core
 Эта команда перечисляет все значения измерений с соответствующей метрикой:
 
 ```bash
-dbt sl list dimension-values --metrics <metric_name> --dimension <dimension_name> # На платформе dbt
+dbt sl list dimension-values --metrics <metric_name> --dimension <dimension_name>  # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf list dimension-values --metrics <metric_name> --dimension <dimension_name> # В dbt Core
+mf list dimension-values --metrics <metric_name> --dimension <dimension_name> # Для пользователей с самостоятельным размещением (dbt v1 или v2)
 
 Options:
   --dimension TEXT    Измерение, из которого нужно получить значения  [required]
   --metrics SEQUENCE  Метрики, которые связаны с данным измерением
                       [required]
-  --end-time TEXT     Необязательная временная метка в формате iso8601,
-                      ограничивающая конечный момент времени данных (включительно)
-                      *Пока недоступно в dbt platform
-  --start-time TEXT   Необязательная временная метка в формате iso8601,
-                      ограничивающая начальный момент времени данных (включительно)
-                      *Пока недоступно в dbt platform
+--end-time TEXT     Необязательная временная метка iso8601 для ограничения конечного времени
+                      данных (включительно)
+                      *Пока недоступно в dbt platform/dbt v2
+  --start-time TEXT   Необязательная временная метка iso8601 для ограничения начального времени
+                      данных (включительно)
+                      *Пока недоступно в dbt platform/dbt v2
   --help              Показать это сообщение и выйти.
 ```
 
@@ -160,9 +165,9 @@ Options:
 Эта команда перечисляет все уникальные сущности:
 
 ```bash
-dbt sl list entities --metrics <metric_name> # На платформе dbt
+dbt sl list entities --metrics <metric_name>  # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf list entities --metrics <metric_name> # В dbt Core
+mf list entities --metrics <metric_name> # Для пользователей с самостоятельно развернутой средой (dbt v1 или v2)
 
 Опции:
   --metrics SEQUENCE  Перечислить сущности по заданным метрикам (пересечение). Например, --metrics bookings,messages
@@ -174,19 +179,19 @@ mf list entities --metrics <metric_name> # В dbt Core
 Эта команда перечисляет все доступные сохраненные запросы:
 
 ```bash
-dbt sl list saved-queries
+dbt sl list saved-queries # For dbt platform users (dbt v1 or v2) 
 ```
 
 Вы также можете добавить флаг (или опцию) `--show-exports`, чтобы показать каждый экспорт, перечисленный под сохраненным запросом:
 
 ```bash
-dbt sl list saved-queries --show-exports
+dbt sl list saved-queries --show-exports # For dbt platform users (dbt v1 or v2) 
 ```
 
 **Вывод**
 
 ```bash
-dbt sl list saved-queries --show-exports
+dbt sl list saved-queries --show-exports 
 
 Список доступных сохраненных запросов:
 - new_customer_orders
@@ -200,47 +205,54 @@ dbt sl list saved-queries --show-exports
 
 Следующая команда выполняет проверки против определенных конфигураций семантической модели.
 
-```bash
-dbt sl validate        # Для пользователей dbt
-mf validate-configs   # Для пользователей dbt Core
+- Для пользователей dbt v2 и <Constant name="platform_cli" /> с корректным файлом [`dbt_cloud.yml`](/reference/dbt_cloud.yml):
 
-Опции:
-  --timeout                       # только для dbt platform
-                                  Необязательный тайм-аут для проверки
-                                  хранилища данных в dbt platform.
-  --dw-timeout INTEGER            # только для dbt Core
-                                  Необязательный тайм-аут для этапов
-                                  валидации хранилища данных.
-                                  По умолчанию: None.
-  --skip-dw                       # только для dbt Core
+  ```bash
+  dbt sl validate
+  ```
+
+- Для пользователей с самостоятельным развертыванием (dbt v1 или v2):
+
+  ```bash
+  mf validate-configs
+  ```
+
+```bash
+Параметры:
+
+  --timeout                       # Только для платформы dbt
+                                  Необязательное время ожидания проверки хранилища данных на платформе dbt.
+  --dw-timeout INTEGER            # Только для dbt v1
+                                  Необязательное время ожидания для этапов проверки
+                                  хранилища данных. По умолчанию None.
+  --skip-dw                       # Только для dbt v1
                                   Пропускает проверки хранилища данных.
-  --show-all                      # только для dbt Core
-                                  Выводит предупреждения и будущие ошибки.
-  --verbose-issues                # только для dbt Core
-                                  Выводит дополнительные детали по проблемам.
-  --semantic-validation-workers INTEGER  # только для dbt Core
-                                  Использует указанное количество воркеров
-                                  для обработки больших конфигураций.
-  --help                          Показывает это сообщение и завершает работу.
+  --show-all                      # Только для dbt v1
+                                  Выводит предупреждения и сообщения о будущих ошибках.
+  --verbose-issues                # Только для dbt v1
+                                  Выводит дополнительные сведения о проблемах.
+  --semantic-validation-workers INTEGER  # Только для dbt v1
+                                  Использует указанное количество рабочих процессов для больших конфигураций.
+  --help                          Показать это сообщение и выйти.
 ```
 
 ## Проверка состояния {#health-checks}
 
 Следующая команда выполняет проверку состояния платформы данных, которую вы указали в конфигурациях.
 
-Обратите внимание: в <Constant name="cloud" /> команда `health-checks` не требуется, так как для выполнения проверки состояния используются учетные данные <Constant name="cloud" />.
+Обратите внимание: в <Constant name="dbt" /> команда `health-checks` не требуется, поскольку для проверки работоспособности используются учетные данные <Constant name="dbt" />.
 
 ```bash
-mf health-checks # В dbt Core
+mf health-checks # Для пользователей с самостоятельным размещением (dbt v1 или v2)
 ```
 
 ## Руководство (tutorial) {#tutorial}
 
-Следуйте специальному руководству по MetricFlow, чтобы быстрее начать работу:
-<!--dbt sl tutorial # На платформе dbt-->
+Следуйте специальному руководству по MetricFlow, чтобы начать работу:
+<!--dbt sl tutorial  # Для пользователей платформы dbt (dbt v1 или v2) -->
 
 ```bash
-mf tutorial # В dbt Core
+mf tutorial # Для пользователей с самостоятельным развертыванием (dbt v1 или v2)
 ```
 
 ## Query {#query}
@@ -248,10 +260,10 @@ mf tutorial # В dbt Core
 Создайте новый запрос с помощью MetricFlow и выполните его на вашей платформе данных. Запрос возвращает следующий результат:
 
 ```bash
-dbt sl query --metrics <metric_name> --group-by <dimension_name> # На платформе dbt  
-dbt sl query --saved-query <name> # На платформе dbt
+dbt sl query --metrics <metric_name> --group-by <dimension_name>  # Для пользователей платформы dbt (dbt v1 или v2) 
+dbt sl query --saved-query <name> # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf query --metrics <metric_name> --group-by <dimension_name> # В dbt Core
+mf query --metrics <metric_name> --group-by <dimension_name> # Для пользователей самостоятельно развернутого dbt (dbt v1 или v2)
 
 Опции:
 
@@ -266,13 +278,13 @@ mf query --metrics <metric_name> --group-by <dimension_name> # В dbt Core
                            Например, --group-by ds,org
                            
 
-  --end-time TEXT          Необязательная временная метка в формате iso8601,
-                           задающая конечный момент данных (включительно).
-                           *Пока недоступно в dbt platform
+--end-time TEXT          Необязательная временная метка iso8601 для ограничения
+                           конечного времени данных (включительно).
+                           *Пока недоступно на платформе dbt / в dbt v2 
 
-  --start-time TEXT        Необязательная временная метка в формате iso8601,
-                           задающая начальный момент данных (включительно)
-                           *Пока недоступно в dbt platform
+  --start-time TEXT        Необязательная временная метка iso8601 для ограничения
+                           начального времени данных (включительно)
+                           *Пока недоступно на платформе dbt / в dbt v2
 
   --where TEXT             SQL‑подобное условие where, передаваемое в виде строки и обязательно заключённое в кавычки.
                            Все элементы фильтра должны явно ссылаться на поля или измерения (dimensions), которые являются частью вашей модели.
@@ -292,8 +304,8 @@ mf query --metrics <metric_name> --group-by <dimension_name> # В dbt Core
 
   --csv FILENAME           Укажите путь к файлу для вывода фрейма данных в csv
 
-  --compile (the dbt platform)          В выводе запроса показать SQL‑запрос, который был скомпилирован dbt.
-  --explain (dbt Core)     В выводе запроса показать SQL‑запрос, который был выполнен в хранилище данных.
+--compile (dbt platform/dbt v2)          В выводе запроса показать запрос, который был
+ --explain (dbt v1)     выполнен в хранилище данных
 
 
   --show-dataflow-plan     Показать план потока данных в выводе объяснения
@@ -309,6 +321,8 @@ mf query --metrics <metric_name> --group-by <dimension_name> # В dbt Core
   ```
 
 ### Примеры запросов {#query-metrics}
+
+<a id="query-examples" />
 
 ## Query examples {#additional-query-examples}
 
@@ -327,9 +341,9 @@ mf query --metrics <metric_name> --group-by <dimension_name> # В dbt Core
 
 **Запрос**
 ```bash
-dbt sl query --metrics order_total,users_active --group-by metric_time # На платформе dbt
+dbt sl query --metrics order_total,users_active --group-by metric_time # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf query --metrics order_total,users_active --group-by metric_time # В dbt Core
+mf query --metrics order_total,users_active --group-by metric_time # Для пользователей самостоятельно развернутой версии (dbt v1 или v2)
 ```
 
 **Результат**
@@ -345,15 +359,17 @@ mf query --metrics order_total,users_active --group-by metric_time # В dbt Core
 | 2017-06-21    |         541.65 |
 ```
 
+<a id="query-dimensions" />
+
 ### Измерения запроса
 
 Вы можете включить несколько измерений в запрос. Например, вы можете сгруппировать по измерению `is_food_order`, чтобы подтвердить, были ли заказы на еду или нет. Обратите внимание, что при запросе измерения вам нужно указать основную сущность для этого измерения. В следующем примере основной сущностью является `order_id`.
 
 **Запрос**
 ```bash
-dbt sl query --metrics order_total --group-by order_id__is_food_order # На платформе dbt
+dbt sl query --metrics order_total --group-by order_id__is_food_order # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf query --metrics order_total --group-by order_id__is_food_order # В dbt Core
+mf query --metrics order_total --group-by order_id__is_food_order # Для пользователей с собственным хостингом (dbt v1 или v2)
 ```
 
 **Результат**
@@ -371,6 +387,8 @@ mf query --metrics order_total --group-by order_id__is_food_order # В dbt Core
 | 2017-06-19    | True            |         448.11 |
 ```
 
+<a id="add-orderlimit" />
+
 ### Добавление order/limit
 
 Вы можете добавить функции порядка и ограничения, чтобы отфильтровать и представить данные в читаемом формате. Следующий запрос ограничивает набор данных до 10 записей и упорядочивает их по `metric_time` в порядке убывания. Обратите внимание, что использование префикса `-` отсортирует запрос в порядке убывания. Без префикса `-` запрос сортируется в порядке возрастания.
@@ -379,10 +397,10 @@ mf query --metrics order_total --group-by order_id__is_food_order # В dbt Core
 
 **Запрос**
 ```bash
-# На платформе dbt
+# Для пользователей платформы dbt (dbt v1 или v2) 
 dbt sl query --metrics order_total --group-by order_id__is_food_order --limit 10 --order-by -metric_time 
 
-# В dbt Core
+# Для пользователей с самостоятельным размещением (dbt v1 или v2)
 mf query --metrics order_total --group-by order_id__is_food_order --limit 10 --order-by -metric_time 
 ```
 
@@ -400,16 +418,18 @@ mf query --metrics order_total --group-by order_id__is_food_order --limit 10 --o
 | 2017-08-28    | False           |         334.73 |
 ```
 
+<a id="add-where-clause" />
+
 ### Добавление условия where
 
 Вы можете дополнительно отфильтровать набор данных, добавив в запрос условие `where`. В следующем примере показано, как выполнить запрос метрики `order_total`, сгруппированной по `is_food_order`, с использованием нескольких условий `where` (заказы, которые являются заказами еды, и заказы за неделю, начинающуюся не ранее 1 февраля 2024 года).
 
 **Запрос**
 ```bash
-# На платформе dbt
+# Для пользователей платформы dbt (dbt v1 или v2) 
 dbt sl query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True" --where "{{ TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
 
-# В dbt Core
+# Для пользователей с самостоятельно развернутым dbt (dbt v1 или v2)
 mf query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True" --where "{{ TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
 ```
 
@@ -434,6 +454,8 @@ Notes:
 | 2017-08-22    | True            |         401.91 |
 ```
 
+<a id="filter-by-time" />
+
 ### Фильтрация по времени
 
 Для фильтрации по времени существуют специальные опции начала и конца времени. Использование этих опций для фильтрации по времени позволяет MetricFlow дополнительно оптимизировать производительность запроса, когда это уместно.
@@ -442,7 +464,7 @@ Notes:
 
 **Query**
 ```bash
-# В dbt Core
+# Для пользователей самостоятельно размещённых инсталляций (dbt v1 или v2)
 mf query --metrics order_total --group-by order_id__is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' 
 ```
 
@@ -459,18 +481,21 @@ mf query --metrics order_total --group-by order_id__is_food_order --limit 10 --o
 | 2017-08-22    | True            |         401.91 |
 ```
 
+<a id="query-saved-queries" />
+
 ### Запрос сохранённых запросов
 
 Вы можете использовать это для часто используемых запросов. Замените `<name>` на имя вашего [сохраненного запроса](/docs/build/saved-queries).
 
 **Запрос**
 ```bash
-dbt sl query --saved-query <name> # На платформе dbt
+dbt sl query --saved-query <name> # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf query --saved-query <name> # В dbt Core
+mf query --saved-query <name> # Для пользователей самостоятельно развернутой версии (dbt v1 или v2)
+
 ```
 
-Например, если вы используете `<Constant name="cloud" />` и у вас есть сохранённый запрос с именем `new_customer_orders`, вы можете выполнить команду `dbt sl query --saved-query new_customer_orders`.
+Например, если вы используете <Constant name="dbt" /> и у вас есть сохраненный запрос с именем `new_customer_orders`, выполните команду `dbt sl query --saved-query new_customer_orders`.
 
 :::info Примечание о запросе сохраненных запросов
 При запросе [сохраненных запросов](/docs/build/saved-queries) вы можете использовать такие параметры, как `where`, `limit`, `order`, `compile` и так далее. Однако имейте в виду, что вы не можете получить доступ к параметрам `metric` или `group_by` в этом контексте. Это связано с тем, что они являются предопределенными и фиксированными параметрами для сохраненных запросов, и вы не можете изменить их во время запроса. Если вы хотите запросить больше метрик или измерений, вы можете построить запрос, используя стандартный формат.
@@ -484,15 +509,15 @@ mf query --saved-query <name> # В dbt Core
 
 <TabItem value="eg6" label="Флаг --compile/--explain">
 
-Добавьте `--compile` (или `--explain` для пользователей dbt Core) в ваш запрос, чтобы увидеть SQL, сгенерированный MetricFlow.
+Добавьте `--compile` (или `--explain` для пользователей v1) к своему запросу, чтобы просмотреть SQL, сгенерированный MetricFlow.
 
 **Запрос**
 
 ```bash
-# На платформе dbt
+# Для пользователей платформы dbt (dbt v1 или v2) 
 dbt sl query --metrics order_total --group-by metric_time,is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' --compile
 
-# В dbt Core
+# Для пользователей с самостоятельным размещением (dbt v1 или v2)
 mf query --metrics order_total --group-by metric_time,is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' --explain
 ```
 
@@ -524,13 +549,13 @@ limit 10
 
 <TabItem value="eg7" label=" Export to CSV">
  
-Добавьте флаг `--csv file_name.csv`, чтобы экспортировать результаты вашего запроса в CSV. Флаг `--csv` доступен только в dbt Core и не поддерживается в <Constant name="cloud" />.
+Добавьте флаг `--csv file_name.csv`, чтобы экспортировать результаты запроса в CSV-файл. Флаг `--csv` доступен только пользователям, работающим локально в самостоятельно развернутой среде (с префиксом `mf`), и не поддерживается командой `dbt sl` в <Constant name="dbt_platform" />.
 
 **Запрос**
 
 ```bash
 
-# В dbt Core
+# Для пользователей с самостоятельным размещением (dbt v1 или v2)
 mf query --metrics order_total --group-by metric_time,is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' --csv query_example.csv
 ```
 
@@ -550,29 +575,29 @@ mf query --metrics order_total --group-by metric_time,is_food_order --limit 10 -
 Ниже приведен пример запроса данных метрики на месячной основе:
 
 ```bash
-dbt sl query --metrics revenue --group-by metric_time__month # На платформе dbt
+dbt sl query --metrics revenue --group-by metric_time__month # Для пользователей платформы dbt (dbt v1 или v2) 
 
-mf query --metrics revenue --group-by metric_time__month # В dbt Core
+mf query --metrics revenue --group-by metric_time__month # Для пользователей с самостоятельным размещением (dbt v1 или v2)
 ```
 
 ## Export {#export-all}
 
 Запустите [экспорты для конкретного сохраненного запроса](/docs/use-dbt-semantic-layer/exports#exports-for-single-saved-query). Используйте эту команду для тестирования и генерации экспортов в вашей среде разработки. Вы также можете использовать флаг `--select`, чтобы указать конкретные экспорты из сохраненного запроса. Обратитесь к [экспортам в разработке](/docs/use-dbt-semantic-layer/exports#exports-in-development) для получения дополнительной информации.
 
-Экспорт доступен в <Constant name="cloud" />.
+Экспорт доступен в <Constant name="dbt" />.
 
 ```bash
-dbt sl export 
+dbt sl export # For dbt platform users (dbt v1 or v2)
 ```
 
 ## Export-all {#faqs}
 
 Запустите [экспорты для нескольких сохраненных запросов](/docs/use-dbt-semantic-layer/exports#exports-for-multiple-saved-queries) одновременно. Эта команда предоставляет удобный способ управления и выполнения экспортов для нескольких запросов одновременно, экономя время и усилия. Обратитесь к [экспортам в разработке](/docs/use-dbt-semantic-layer/exports#exports-in-development) для получения дополнительной информации.
 
-Экспорт доступен в <Constant name="cloud" />.
+Экспорт доступен в <Constant name="dbt" />.
 
 ```bash
-dbt sl export-all 
+dbt sl export-all # For dbt platform users (dbt v1 or v2)
 ```
 
 ## Часто задаваемые вопросы
@@ -616,9 +641,9 @@ source ~/.zshrc
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Почему мой запрос ограничен 100 строками в dbt CLI?">
+<DetailsToggle alt_header="Почему результат моего запроса в CLI платформы dbt ограничен 100 строками?">
 
-Значение `limit` по умолчанию для запросов, выполняемых из <Constant name="cloud_cli" />, составляет 100 строк. Мы установили это значение по умолчанию, чтобы избежать возврата избыточно больших наборов данных, поскольку <Constant name="cloud_cli" /> обычно используется для работы с dbt Semantic Layer в процессе разработки, а не для продакшен-отчётности или доступа к большим объёмам данных. Для большинства рабочих сценариев достаточно возвращать лишь подмножество данных.
+По умолчанию значение `limit` для запросов, выполняемых из <Constant name="platform_cli" />, составляет 100 строк. Мы установили это значение по умолчанию, чтобы избежать возврата неоправданно больших наборов данных, поскольку <Constant name="platform_cli" /> обычно используется для запросов к семантическому слою dbt в процессе разработки, а не для формирования отчётности в промышленной среде или доступа к большим наборам данных. Для большинства рабочих процессов достаточно получить лишь часть данных.
 
 Однако вы можете изменить это ограничение, если необходимо, установив опцию `--limit` в вашем запросе. Например, чтобы вернуть 1000 строк, вы можете выполнить `dbt sl list metrics --limit 1000`.
 

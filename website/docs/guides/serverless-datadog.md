@@ -14,7 +14,7 @@ level: 'Advanced'
 
 ## Введение {#introduction}
 
-Это руководство научит вас, как создать и разместить базовое Python‑приложение, которое будет отправлять события выполнения заданий <Constant name="cloud" /> в Datadog. Для этого, когда задание <Constant name="cloud" /> завершается, приложение будет создавать запись лога для каждого узла, который был выполнен, включая всю информацию об узле, предоставляемую [Discovery API](/docs/dbt-cloud-apis/discovery-schema-job-models).
+В этом руководстве вы узнаете, как создать и разместить простое приложение на Python, которое будет добавлять события заданий <Constant name="dbt" /> в Datadog. Для этого после завершения задания <Constant name="dbt" /> приложение будет создавать запись в журнале для каждого выполненного узла, содержащую всю информацию об этом узле, предоставляемую [Discovery API](/docs/dbt-apis/discovery-schema-job-models).
 
 В этом примере мы будем использовать [fly.io](https://fly.io) для хостинга и запуска сервиса. fly.io — это платформа для запуска полнофункциональных приложений без необходимости настраивать серверы и сопутствующую инфраструктуру. Такой уровень использования без проблем укладывается в рамки бесплатного тарифа. Вы также можете использовать альтернативные инструменты, такие как [AWS Lambda](https://ademoverflow.com/en/posts/tutorial-fastapi-aws-lambda-serverless/) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
 
@@ -22,9 +22,10 @@ level: 'Advanced'
 
 В этом руководстве предполагается, что вы уже знакомы со следующим:
 
-- [<Constant name="cloud" /> Webhooks](/docs/deploy/webhooks)
-- CLI-приложения
-- Развёртывание кода в serverless-исполнителях, таких как fly.io или AWS Lambda
+В этом руководстве предполагается, что вы уже знакомы с:
+- [Вебхуками <Constant name="dbt" />](/docs/deploy/webhooks)
+- Приложениями командной строки
+- Развертыванием кода в бессерверной среде выполнения, такой как fly.io или AWS Lambda
 
 ## Клонирование репозитория `dbt-cloud-webhooks-datadog` {#clone-the-dbt-cloud-webhooks-datadog-repo}
 
@@ -106,10 +107,10 @@ Wrote config file fly.toml<br/>
 
 ## Хранение секретов {#store-secrets}
 
-Приложению требуется задать четыре секрета, используя следующие имена:
-- `DBT_CLOUD_SERVICE_TOKEN`: [персональный токен доступа](/docs/dbt-cloud-apis/user-tokens) или [токен сервисного аккаунта](/docs/dbt-cloud-apis/service-tokens) для <Constant name="cloud" /> с как минимум разрешением `Metdata Only`.
-- `DBT_CLOUD_AUTH_TOKEN`: секретный ключ (Secret Key) для вебхука <Constant name="cloud" />, который вы создали ранее.
-- `DD_API_KEY`: API-ключ, который вы создали ранее.
+Для работы приложения необходимо задать четыре секрета со следующими именами:
+- `DBT_CLOUD_SERVICE_TOKEN`: <Constant name="dbt" /> [токен персонального доступа](/docs/dbt-apis/user-tokens) или [токен сервисной учётной записи](/docs/dbt-apis/service-tokens) как минимум с разрешением `Metadata Only`.
+- `DBT_CLOUD_AUTH_TOKEN`: секретный ключ вебхука <Constant name="dbt" />, созданного ранее.
+- `DD_API_KEY`: ключ API, созданный ранее.
 - `DD_SITE`: сайт Datadog для вашей организации, например `datadoghq.com`.
 
 Установите эти секреты следующим образом, заменив `abc123` и т.д. на фактические значения:
@@ -119,6 +120,6 @@ Wrote config file fly.toml<br/>
 
 ## Развертывание вашего приложения {#deploy-your-app}
 
-После того как вы зададите свои секреты, fly.io выполнит повторное развертывание вашего приложения. Когда оно успешно завершится, вернитесь в настройки вебхука <Constant name="cloud" /> и нажмите **Test Endpoint**.
+После того как вы зададите секреты, fly.io повторно развернёт ваше приложение. Когда развёртывание успешно завершится, вернитесь к настройкам вебхука <Constant name="dbt" /> и нажмите **Test Endpoint**.
 
 </div>

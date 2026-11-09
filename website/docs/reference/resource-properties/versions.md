@@ -1,4 +1,5 @@
 ---
+description: "Use the versions property to define multiple versions of a model and how each one differs."
 resource_types: [models]
 datatype: list
 required: no
@@ -162,12 +163,25 @@ models:
 
 ---
 
-### Наши рекомендации {#our-recommendations}
-- Придерживайтесь единого соглашения об именовании версий моделей и их алиасов.
-- Используйте `defined_in` и `alias` только при наличии веской причины.
-- Создайте представление (view), которое всегда указывает на последнюю версию вашей модели. Вы можете автоматизировать это для всех версионированных моделей в проекте с помощью хука `on-run-end`. Подробнее см. в полной документации по ["Model versions"](/docs/mesh/govern/model-versions#configuring-database-location-with-alias).
+### Наши рекомендации
 
-### Обнаружение значительных изменений {#detecting-breaking-changes}
+<VersionBlock lastVersion="1.11">
+
+- Придерживайтесь единого соглашения об именовании версий моделей и их псевдонимов.
+- Используйте `defined_in` и `alias`, только если у вас есть веская причина.
+- Создайте представление, которое всегда указывает на последнюю версию вашей модели. Это можно автоматизировать для всех версионируемых моделей в вашем проекте с помощью хука `on-run-end`. Подробнее читайте в полной документации в разделе [«Версии моделей»](/docs/mesh/govern/model-versions#configuring-database-location-with-alias)
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+- Придерживайтесь единого соглашения об именовании версий моделей и их псевдонимов.
+- Используйте `defined_in` и `alias`, только если у вас есть веская причина.
+- Используйте параметр конфигурации [`latest_version_pointer`](/reference/resource-configs/latest_version_pointer), чтобы автоматически создавать представление, указывающее на последнюю версию вашей модели. Включите его для отдельной модели или глобально с помощью флага [`latest_version_pointer_enabled_by_default`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default) в `dbt_project.yml`.
+
+</VersionBlock>
+
+### Обнаружение изменений, нарушающих обратную совместимость {#detecting-breaking-changes}
 
 Когда вы используете метод выбора `state:modified` в Slim CI, dbt обнаружит изменения в контрактах версионных моделей и выдаст ошибку, если какие-либо из этих изменений могут быть значительными для потребителей ниже по потоку.
 

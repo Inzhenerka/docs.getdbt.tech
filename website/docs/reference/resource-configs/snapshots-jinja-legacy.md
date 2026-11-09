@@ -14,7 +14,7 @@ sidebar: "Устаревшая конфигурация"
 
 В некоторых ситуациях вам может понадобиться использовать устаревший синтаксис для [snapshots](/docs/build/snapshots) в любой версии или ветке релизов dbt. На этой странице описано, как при необходимости использовать устаревшие SQL‑конфигурации.
 
-В dbt v1.9 этот синтаксис был заменён на [YAML‑конфигурацию](/reference/snapshot-configs#configuring-snapshots) в ветке релизов <Constant name="cloud" /> "Latest" (/docs/dbt-versions/cloud-release-tracks). Преимущество YAML‑конфигураций заключается в том, что снапшоты становятся чувствительными к окружению: вам не нужно указывать `schema` или `database`, а сам синтаксис становится более лаконичным.
+В dbt v1.9 этот синтаксис был заменён на [конфигурацию на основе YAML](/reference/snapshot-configs#configuring-snapshots) в [канале релизов **v1 Latest** <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks). Преимущества конфигураций на основе YAML заключаются в том, что снимки учитывают окружение, поэтому вам не нужно указывать `schema` или `database`, а синтаксис стал более лаконичным.
 
 Для новых снапшотов мы рекомендуем использовать актуальные YAML‑конфигурации. Если вы хотите перейти на YAML‑конфигурацию для существующих снапшотов, вы можете [выполнить миграцию](/reference/snapshot-configs#snapshot-configuration-migration).
 
@@ -25,10 +25,10 @@ sidebar: "Устаревшая конфигурация"
   - Подходит для существующих снапшотов, которые уже используют этот синтаксис.
   - Подходит для выполнения очень лёгких трансформаций (однако для лучшей поддерживаемости рекомендуется выносить трансформации в отдельную ephemeral‑модель).
 
-- YAML‑синтаксис:
-  - Определяется в файлах `whatever_name.yml` или в директориях `snapshots` или `models` — на ваш выбор. Доступен в ветке релизов <Constant name="cloud" /> "Latest" и в dbt v1.9 и выше.
-  - Идеален для новых снапшотов или существующих снапшотов, которые нужно [мигрировать](/reference/snapshot-configs#snapshot-configuration-migration).
-  - Трансформации выносятся за пределы файла снапшота путём создания ephemeral‑модели и ссылки на неё в снапшоте с помощью поля `relation`.
+- Синтаксис на основе YAML:
+  - Определяется в файле `whatever_name.yml` в каталоге `snapshots` или `models` по вашему выбору. Доступен в канале выпусков **v1 Latest** <Constant name="dbt" /> и в dbt v1.9 и более поздних версиях.
+  - Идеально подходит для новых снимков или существующих снимков, которые необходимо [мигрировать](/reference/snapshot-configs#snapshot-configuration-migration).
+  - Определяйте преобразования отдельно от файла снимка: создайте эфемерную модель и укажите ссылку на неё в снимке с помощью поля `relation`.
 
 ## Конфигурации снапшотов {#snapshot-configurations}
 
@@ -58,7 +58,7 @@ sidebar: "Устаревшая конфигурация"
     [strategy](/reference/resource-configs/strategy)="timestamp" | "check",
     [updated_at](/reference/resource-configs/updated_at)="<column_name>",
     [check_cols](/reference/resource-configs/check_cols)=["<column_name>"] | "all"
-    [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
+    [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes)=true | false
 ) 
 }}
 

@@ -4,10 +4,15 @@ sidebar_label: "Сигналы здоровья данных"
 id: data-health-signals
 description: "Узнайте, как сигналы здоровья данных дают быстрый обзор состояния данных при просмотре ресурсов в dbt Catalog."
 image: /img/docs/collaborate/dbt-explorer/data-health-signal.jpg
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
 ---
 
-# Сигналы здоровья данных <Lifecycle status="preview" /> {#data-health-signals}
-Сигналы здоровья данных предоставляют быстрый, наглядный обзор состояния данных при просмотре ресурсов в <Constant name="explorer" />. Они позволяют вам быть в курсе состояния здоровья ресурса с помощью индикаторов **Healthy**, **Caution**, **Degraded** или **Unknown**.
+# Сигналы состояния данных <Lifecycle status="preview" />
+
+Сигналы состояния данных позволяют быстро оценить состояние данных при просмотре ресурсов в <Constant name="catalog" />. Они информируют вас о состоянии ресурса с помощью индикаторов **Healthy** (в норме), **Caution** (требует внимания), **Degraded** (ухудшено) или **Unknown** (неизвестно).
 
 Обратите внимание: для ресурсов, не относящихся к dbt, расчет состояния здоровья данных не выполняется.
 
@@ -17,7 +22,7 @@ image: /img/docs/collaborate/dbt-explorer/data-health-signal.jpg
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.jpg" width="55%" title="Просматривайте сигналы состояния данных для ваших моделей."/> 
 
-## Доступ к сигналам здоровья данных {#access-data-health-signals}
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-health-signal.png" width="55%" title="Просматривайте индикаторы состояния данных для ваших моделей."/>
 
 Сигналы здоровья данных доступны в следующих местах:
 - В [функции поиска](/docs/explore/explore-projects#search-resources) или в разделах **Models**, **Sources** или **Exposures** на вкладке **Resource**.  

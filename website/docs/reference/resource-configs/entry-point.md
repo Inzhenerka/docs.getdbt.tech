@@ -1,5 +1,6 @@
 ---
 title: entry_point
+description: "Specify the Python function that serves as the entry point when dbt creates a Python user-defined function (UDF) on Snowflake and BigQuery."
 sidebar_label: "entry_point"
 id: entry-point
 ---
@@ -11,7 +12,7 @@ id: entry-point
 functions:
   - name: <function name>
     config:
-      entry_point: <string> # обязательно для Python UDF
+entry_point: <string> # обязательно для Snowflake и BigQuery; необязательно и игнорируется в Databricks
 ```
 
 </File>
@@ -20,12 +21,13 @@ functions:
 
 При создании Python UDF необходимо указать Python‑функцию, которая будет вызываться, с помощью параметра `entry_point`.
 
-В настоящее время Python UDF поддерживаются в Snowflake и BigQuery. В каждом хранилище данных используется своё название для функции точки входа. В следующей таблице показано, как именно используется `entry_point`:
+В настоящее время Python UDF поддерживаются в Snowflake, BigQuery и Databricks. В каждом хранилище данных используется своё имя для функции точки входа. В следующей таблице приведены эти имена:
 
 | Хранилище  | Как используется `entry_point` | 
 | -- | -- | 
-| Snowflake | Преобразуется в имя `HANDLER` в `LANGUAGE PYTHON UDF` | 
-| BigQuery | Преобразуется в `entry_point` в `OPTIONS(...)` |  
+| Snowflake | Становится именем `HANDLER` в `LANGUAGE PYTHON UDF` | 
+| BigQuery |  Становится значением `entry_point` в `OPTIONS(...)` |  
+| Databricks | Принимается для совместимости, но ни на что не влияет. Тело функции используется напрямую, поэтому dbt выводит предупреждение, если этот параметр задан. Доступен в `dbt-databricks` v1.12+. |
 
 ## Пример {#example}
 
@@ -75,11 +77,14 @@ functions:
 
 ## Связанная документация {#related-documentation}
 
-- [Пользовательские функции (UDF)](/docs/build/udfs)
+## Связанная документация
+
+- [Пользовательские функции](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)
 - [Конфигурации функций](/reference/function-configs)
-- [Type](/reference/resource-configs/type)
-- [Volatility](/reference/resource-configs/volatility)
+- [type](/reference/resource-configs/type)
+- [volatility](/reference/resource-configs/volatility)
 - [runtime_version](/reference/resource-configs/runtime-version)
-- [Аргументы](/reference/resource-properties/function-arguments)
-- [Returns](/reference/resource-properties/returns)
+- [packages](/reference/resource-configs/packages)
+- [arguments](/reference/resource-properties/function-arguments)
+- [returns](/reference/resource-properties/returns)

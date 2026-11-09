@@ -4,6 +4,8 @@ sidebar_label: "Навигация по интерфейсу"
 description: "Узнайте, как ориентироваться в интерфейсе state-aware оркестрации для лучшей видимости сборок моделей и отслеживания затрат." 
 id: "state-aware-interface"
 tags: ['scheduler','SAO', 'cost savings', 'models built']
+unlisted: true
+availability: platform_login
 ---
 
 <IntroText>
@@ -12,7 +14,11 @@ tags: ['scheduler','SAO', 'cost savings', 'models built']
 
 </IntroText>
 
-## Диаграмма собранных и повторно использованных моделей {#models-built-and-reused-chart}
+import SaoDeprecated from '/snippets/_sao-deprecated.md';
+
+<SaoDeprecated />
+
+## Диаграмма созданных и повторно используемых моделей
 
 Когда вы переходите на **Account home**, вы увидите диаграмму, показывающую количество собранных и повторно использованных моделей. Она дает наглядное представление о том, как state-aware оркестрация оптимизирует сборки данных. Эта диаграмма помогает:
 
@@ -22,8 +28,8 @@ tags: ['scheduler','SAO', 'cost savings', 'models built']
 Также вы можете посмотреть количество повторно использованных моделей по каждому проекту на странице **Accounts home**.
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/account-home-chart.png" width="90%" title="Диаграмма собранных и повторно использованных моделей на Account home"/>
-<Lightbox src="/img/docs/deploy/sao-model-reuse.png" width="90%" title="Просмотр количества повторно использованных моделей по проектам на странице Accounts home"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/account-home-chart.png" width="90%" title="Диаграмма построенных и повторно используемых моделей на главной странице аккаунта"/>
+<Lightbox src="/img/docs/deploy/sao-model-reuse.png" width="90%" title="Просмотр количества повторно используемых моделей по проектам на главной странице аккаунта"/>
 </DocCarousel>
 
 ## Просмотр потребления моделей в jobs {#model-consumption-view-in-jobs}
@@ -34,19 +40,19 @@ State-aware jobs предоставляют диаграммы, которые �
  - **Последние запуски**
  - **Общая длительность выполнения** 
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-runs-chart.png" width="90%" title="Диаграммы Recent runs и Total run duration time"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-runs-chart.png" width="90%" title="Диаграммы последних запусков и общей продолжительности выполнения"/>
 
 Во вкладке **Models**:
  - **Созданные модели** 
  - **Повторно использованные модели** 
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-models-chart.png" width="90%" title="Диаграммы Models built и Models reused"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-models-chart.png" width="90%" title="Диаграммы построенных и повторно использованных моделей"/>
 
 ## Просмотр логов собранных моделей {#logs-view-of-built-models}
 
 Во время выполнения job структурированный просмотр логов показывает, какие модели были собраны, пропущены или повторно использованы.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-logs-view.png" title="Просмотр логов собранных моделей"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-logs-view.png" title="Просмотр логов собранных моделей"/>
 
 1. У каждой модели есть иконка, указывающая её статус.
 2. Вкладка **Reused** показывает общее количество повторно использованных моделей.
@@ -55,11 +61,11 @@ State-aware jobs предоставляют диаграммы, которые �
 
 ## Тег Reused в линзе Latest status {#reused-tag-in-the-latest-status-lens}
 
-Lineage lenses — это интерактивные визуальные фильтры в [dbt <Constant name="explorer" />](/docs/explore/explore-projects#lenses), которые показывают дополнительный контекст в lineage-графе и помогают понять, как ресурсы определены или как они работают. При применении линзы на узлах lineage-графа становятся видны теги, указывающие значение слоя, а также цветовая индикация на основе этого значения. При сильном отдалении масштаба в графе видны только теги и их цвета.
+Линзы графа зависимостей — это интерактивные визуальные фильтры в [dbt <Constant name="catalog" />](/docs/explore/explore-projects#lenses), которые отображают дополнительный контекст на графе зависимостей и помогают понять, как определены ресурсы или как они работают. При применении линзы на узлах графа зависимостей появляются метки, указывающие значение слоя и окрашенные в соответствующий этому значению цвет. При сильном уменьшении масштаба на графе видны только метки и их цвета.
 
 Линза **Latest status** показывает статус ресурса на основе его последнего выполнения в текущем окружении. При использовании этой линзы в lineage-графе модели, которые были повторно использованы state-aware оркестрацией, помечаются тегом **Reused**.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-latest-status-lens.png" width="90%" title="Линза Latest status с отображением повторно использованных моделей"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-latest-status-lens.png" width="90%" title="Представление последнего статуса с повторно используемыми моделями"/>
 
 Чтобы посмотреть lineage с линзой **Latest status**:
 
@@ -73,8 +79,15 @@ Lineage lenses — это интерактивные визуальные фил
 
 State-aware оркестрация использует кэшированный хеш как кода, так и состояния данных для каждой модели в окружении. Этот хеш хранится в Redis. При запуске job dbt проверяет, есть ли изменения в хеше модели между сохранённым состоянием в Redis и текущим состоянием, которое будет построено в рамках job. Если изменения есть, dbt собирает модель. Если изменений нет, dbt повторно использует модель с момента её последней сборки.
 
-- Чтобы полностью очистить это состояние и начать заново, очистите кэш, перейдя в **Orchestration** > **Environments**. Выберите нужное окружение и нажмите кнопку **Clear cache**. 
-- Кнопка **Clear cache** доступна только в том случае, если у вас включена state-aware оркестрация.
-- После очистки кэша следующий run пересоберёт все модели с нуля. Последующие запуски будут использовать заново сгенерированный кэш.
+- Чтобы полностью сбросить это состояние и начать заново, очистите кеш, перейдя в **Orchestration** > **Environments**. Выберите свою среду и нажмите кнопку **Clear cache**. 
+- Кнопка **Clear cache** доступна только в том случае, если вы включили оркестрацию с учетом состояния.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/sao-clear-cache.png" width="90%" title="Кнопка Clear cache"/>
+- После очистки кеша следующий запуск заново построит все модели с нуля. Последующие запуски будут использовать заново сформированный кеш.
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-clear-cache.png" width="90%" title="Кнопка очистки кеша"/>
+
+## Связанная документация
+
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Конфигурации dbt State](/reference/resource-configs/dbt-state-configs)
+- [Переход на dbt State](/docs/deploy/dbt-state-migration)

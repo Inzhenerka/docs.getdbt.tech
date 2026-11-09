@@ -1,8 +1,11 @@
 ---
+description: "Set a deprecation_date on a model to tell consumers when it will stop being supported."
 resource_types: [models]
 datatype: дата_устаревания
 required: нет
 ---
+
+import DeprecationDateCallout from '/snippets/_deprecation-date-callout.md';
 
 <File name='models/<schema>.yml'>
 
@@ -42,7 +45,9 @@ models:
 
 Указание `deprecation_date` хорошо работает в сочетании с другими возможностями [model governance](/docs/mesh/govern/about-model-governance), такими как [model versions](/docs/mesh/govern/model-versions), но также может использоваться и независимо от них.
 
-### Предупреждающие сообщения {#warning-messages}
+<DeprecationDateCallout />
+
+### Предупреждающие сообщения
 
 Когда проект ссылается на модель, которая подлежит устареванию, или дата устаревания прошла, генерируется предупреждение. Если это версия модели, с доступной более новой версией, то предупреждение об этом сообщает. Этот дополнительный элемент межкомандной коммуникации, от производителей к потребителям, является преимуществом использования встроенной функциональности dbt вокруг версий моделей для упрощения миграций.
 

@@ -161,7 +161,7 @@ Workflow:
 
 Чтобы создать jobs из диаграммы, нам нужны окружения dbt Cloud. Типовые конфигурации для этого сценария выглядят так:
 
-| Название окружения | [Тип окружения](https://docs.getdbt.tech/docs/dbt-cloud-environments#types-of-environments) | [Тип развертывания](https://docs.getdbt.tech/docs/deploy/deploy-environments#staging-environment) | Базовая ветка | Обработчик |
+| Название окружения | [Тип окружения](https://docs.getdbt.com/docs/dbt-platform-environments#types-of-environments) | [Тип развертывания](https://docs.getdbt.com/docs/deploy/deploy-environments#staging-environment) | Базовая ветка | Будет обрабатывать… |
 | --- | --- | --- | --- | --- |
 | Development | development | - | `main` | Операции в IDE (включая создание feature-веток) |
 | Continuous Integration | deployment | General | `main` | CI job |
@@ -185,7 +185,7 @@ Workflow:
 | Production | `production` | `analytics` |
 
 :::note
-Здесь показаны конфигурации окружений, однако база данных по умолчанию задаётся на более высоком уровне — в **[connection](https://docs.getdbt.tech/docs/cloud/connect-data-platform/about-connections)** (это обязательная настройка окружения). *Deployment*-окружения при необходимости могут переопределять database из connection.
+Здесь показаны конфигурации окружений, но база данных по умолчанию задаётся на самом верхнем уровне — в **[подключении](https://docs.getdbt.com/docs/platform/connect-data-platform/about-connections)** (которое является обязательной настройкой окружения). Окружения *развёртывания* при необходимости могут переопределять базу данных, заданную в подключении.
 :::
 
 ### Пример direct promotion {#direct-promotion-example}
@@ -225,7 +225,7 @@ Workflow:
 В оставшейся части статьи мы будем называть нашу промежуточную ветку `qa`.
 
 Вот рабочий процесс для этой стратегии\:
-<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/6_indirect_git.png" title="Indirect Promotion branching strategy" width="85%" />
+<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/6_indirect_git.png" title="Стратегия ветвления при непрямом продвижении" width="85%" />
 
 ### Как выглядит рабочий процесс разработки глазами разработчика? {#how-does-the-development-workflow-look-to-a-developer}
 Изменения относительно нашего процесса direct promotion подсвечены <mark style={{backgroundColor:"#d6eaf8"}}>синим</mark>.
@@ -256,11 +256,11 @@ Workflow:
 
 Вот наша стратегия ветвления ещё раз, но теперь с процессами dbt Cloud, которые мы хотим включить\:
 
-<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/7_indirect_dbt_deployment.png" title="Indirect Promotion strategy with dbt cloud processes denoted" width="85%" />
+<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/7_indirect_dbt_deployment.png" title="Стратегия непрямого продвижения с обозначенными процессами dbt Cloud" width="85%" />
 
 Чтобы создать джобы на нашей схеме, нам нужны окружения dbt Cloud. Вот типичные конфигурации для такого сетапа\: 
 
-| Название окружения | [Тип окружения](https://docs.getdbt.com/docs/dbt-cloud-environments#types-of-environments) | [Тип развертывания](https://docs.getdbt.com/docs/deploy/deploy-environments#staging-environment) | Базовая ветка | Будет обрабатывать… |
+| Название окружения | [Тип окружения](https://docs.getdbt.com/docs/dbt-platform-environments#types-of-environments) | [Тип развертывания](https://docs.getdbt.com/docs/deploy/deploy-environments#staging-environment) | Базовая ветка | Будет использоваться для… |
 | --- | --- | --- | --- | --- |
 | Development | development | - | `qa` | Операции, выполняемые в IDE (включая создание feature-веток) |
 | Feature CI | deployment | General | `qa` | Джоб непрерывной интеграции |
@@ -274,13 +274,13 @@ Workflow:
 Есть два распространённых варианта сопоставления кода, но прежде чем перейти к ним,
 вспомним это примечание из direct promotion\:
 :::note
-Здесь мы показываем конфигурации окружений, но база данных по умолчанию задаётся на более высоком уровне — в **[подключении](https://docs.getdbt.com/docs/cloud/connect-data-platform/about-connections)** (а подключение — обязательная настройка окружения). *Deployment*-окружения при необходимости могут переопределять настройку базы данных из подключения.
+Здесь показаны настройки окружений, но база данных по умолчанию задаётся на самом верхнем уровне — в **[подключении](https://docs.getdbt.com/docs/platform/connect-data-platform/about-connections)** (которое является обязательной настройкой окружения). При необходимости окружения *развёртывания* могут переопределять базу данных, заданную в подключении.
 ::: 
 
 - **Конфигурация 1**\: соответствие 1\:1 для ресурсов `qa` и `main`
     В этом паттерне CI-схемы создаются в базе данных *вне* Production и QA. Обычно так делают, чтобы базы данных соответствовали тому, что слито в их ветки.
     Вот наша схема, но теперь с сопоставлением на платформу данных для этого паттерна\:
-    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/8_indirect_data_population.png" title="Indirect Promotion branches and how they relate to 1\:1 organization in the data platform" width="85%" />
+    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/8_indirect_data_population.png" title="Ветки при непрямом продвижении и их соответствие объектам платформы данных один к одному" width="85%" />
 
     Вот конфигурации для этого паттерна\:
     | Название окружения | **Database** | **Schema** |
@@ -295,7 +295,7 @@ Workflow:
     
     В этом паттерне CI-схемы создаются в базе `qa`, потому что это часть шага quality assurance.
     Вот наша схема, но теперь с сопоставлением на платформу данных для этого паттерна\:
-    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/9_alt_indirect_data_population.png" title="Indirect Promotion branches and how they relate to workflow initiative organization in the data platform" width="85%" />
+    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/9_alt_indirect_data_population.png" title="Ветки при непрямом продвижении и их связь с организацией рабочих процессов на платформе данных" width="85%" />
 
     Вот конфигурации для этого паттерна\:    
     | Название окружения | **Database** | **Schema** |
@@ -433,7 +433,7 @@ Workflow:
 <summary>Как запускать другие виды проверок в процессе разработки?</summary>
 <p>
 
-Автоформатирование и линтинг — это [функции, доступные в IDE dbt Cloud](https://docs.getdbt.com/docs/cloud/studio-ide/lint-format#format). Линтинг можно включить [в рамках CI job](https://docs.getdbt.com/docs/deploy/continuous-integration#sql-linting).
+Автоматическое форматирование и линтинг — это [функции, доступные в IDE dbt Cloud](https://docs.getdbt.com/docs/platform/studio-ide/lint-format#format). Вы можете включить линтинг [в задании CI](https://docs.getdbt.com/docs/deploy/continuous-integration#sql-linting).
 
 Другие виды проверок обычно реализуются через внешние пайплайны — и чаще всего через Git-провайдера, потому что это соответствует тому, где именно такие проверки нужны в процессе разработки. У многих Git-провайдеров есть функциональность пайплайнов, например GitHub Actions или GitLab CI/CD Pipelines. Вот пример, который [проверяет, что имя ветки соответствует шаблону при событии pull request](https://medium.com/@durgeshm01722/add-a-branch-naming-pattern-status-check-to-your-github-prs-660c53331b68)).
     
@@ -477,7 +477,7 @@ Workflow:
 
 Процесс выбора конкретных коммитов, которые нужно перенести в другую ветку, называется **cherry-picking**.
 
-<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/11_cherry_picking.png" title="Cherry Picking diagram" width="85%" />
+<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/11_cherry_picking.png" title="Схема переноса отдельных коммитов с помощью cherry-pick" width="85%" />
 
 Может возникнуть соблазн перейти на менее стандартную стратегию ветвления, чтобы этого избежать — наша коллега Grace Goheen [написала об этом свои мысли](https://docs.getdbt.com/blog/the-case-against-git-cherry-picking) и привела примеры — стоит прочитать!
 
@@ -504,7 +504,7 @@ dbt не выполняет операции cherry-picking, и это нужн�
 
 Паттерн для hotfix’ов в иерархическом продвижении выглядит так\:
 
-<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/12_hotfixes.png" title="Hotfix diagram" width="85%" />
+<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/12_hotfixes.png" title="Схема выпуска срочного исправления" width="85%" />
 
 Обычно это делается так\:
 
@@ -525,7 +525,7 @@ dbt не выполняет операции cherry-picking, и это нужн�
 
 По нашему опыту, более одной промежуточной ветки нужно редко. Чем больше шагов между вами и `main`, тем больше препятствий нужно преодолевать, чтобы вернуться к ней. Если команда не подготовлена, это создаёт большой оверхед для development operations. Поэтому мы не рекомендуем добавлять ветки без необходимости. Команды, у которых успешно получается работать с большим числом «стволов» (trunks), обычно имеют достаточно людей, которые могут выделить время на управление и сопровождение этих процессов.
 
-<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/13_more_branches.png" title="A git strategy with more branches" width="85%" />
+<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/13_more_branches.png" title="Стратегия Git с дополнительными ветками" width="85%" />
 
 Такая структура чаще всего нужна, когда есть требования использовать разные версии данных (например, «очищенные» данные) разным командам, но при этом работать с одними и теми же изменениями кода. Эта структура позволяет каждой команде иметь выделенное окружение для деплоев. Пример\:
 
@@ -537,11 +537,11 @@ dbt не выполняет операции cherry-picking, и это нужн�
 
 - Indirect Promotion\:
     
-    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/14_indirect_tagging.png" title="Tagging in Indirect Promotion" width="85%" />
+    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/14_indirect_tagging.png" title="Создание тегов при непрямом продвижении" width="85%" />
 
 - Direct Promotion\:
     
-    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/15_direct_tagging.png" title="Tagging in Direct Promotion" width="85%" />
+    <Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/15_direct_tagging.png" title="Создание тегов при прямом продвижении" width="85%" />
 
 Какой вариант выбрать — зависит от того, как вашей команде удобнее управлять изменениями. Вне зависимости от причин иметь больше веток, эти вопросы всегда важно продумать\:
 
@@ -573,7 +573,7 @@ Git releases/tags — это механизм, который помогает �
 Джобы Production теперь будут выкачивать код на `v2`.
 - Мы настраиваем окружение под названием “QA”, указав в **custom branch** значение `main`. Для database и schema мы указываем базу `qa` и схему `analytics`. Джобы, созданные с этим окружением, будут выкачивать код из `main` и собирать его в `qa.analytics`.
 
-<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/16_direct_tagging_middle_env.png" title="Tagging in Direct Promotion to create a middle environment" width="85%" />
+<Lightbox src="/img/blog/2025-01-28-git-branching-strategies-and-dbt/16_direct_tagging_middle_env.png" title="Создание промежуточного окружения с помощью тегов при прямом продвижении" width="85%" />
 
 <LoomVideo id="dfe057bf92b2498eb1e653c32fc72e93" />
 
@@ -591,8 +591,8 @@ Git releases/tags — это механизм, который помогает �
     - Создайте новую ветку `qa`, производную от `main`
     - Защитите `qa` правилами защиты веток (branch protection)
 - dbt Cloud
-    - Development\: переключите окружение на опцию **custom branch** и укажите `qa`. Теперь разработчики будут базироваться на коде из `qa`.
-    - Continous Integration\: если у вас уже есть джоб для этого, убедитесь, что **custom branch** изменён на `qa`. Это изменит триггер CI job: он будет запускаться на pull request’ы в `qa`.
+- Разработка\: Переключите окружение на использование опции **custom branch** и укажите `qa`. Теперь разработчики будут работать на основе кода из `qa`.
+    - Непрерывная интеграция\: Если у вас уже есть задание для этого, убедитесь, что значение **custom branch** изменено на `qa`. После этого задание CI будет запускаться при создании пул-реквестов в `qa`.
 
 **На этом этапе ваши разработчики будут следовать процессу indirect promotion, а вы сможете продолжать настраивать остальное в фоне.** Вам всё ещё может понадобиться настроить базу данных, права на базу, окружения, deployment jobs и т. д. Вот короткий чеклист, который поможет! Для гораздо большего количества деталей вернитесь к нашему разделу про indirect promotion\:
 

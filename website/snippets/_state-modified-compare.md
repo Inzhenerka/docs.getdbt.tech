@@ -1,3 +1,3 @@
-Вам нужно собрать директорию состояния (state directory), используя dbt версии v1.9 или выше либо [трек релизов <Constant name="cloud" /> «Latest»](/docs/dbt-versions/cloud-release-tracks), а также установить параметр `state_modified_compare_more_unrendered_values` в значение `true` в файле `dbt_project.yml`.
+Необходимо создать каталог состояния с помощью dbt v1.9 или выше либо [<Constant name="dbt" /> на канале обновлений **v1 Latest**](/docs/dbt-versions/dbt-release-tracks), а также установить `state_modified_compare_more_unrendered_values` в значение `true` в файле dbt_project.yml.
 
 Если каталог состояния был создан с использованием более старой версии dbt или если флаг изменения поведения `state_modified_compare_more_unrendered_values` не был установлен или был установлен в значение `false`, вам необходимо пересоздать каталог состояния, чтобы избежать ложных срабатываний при сравнении состояния с `state:modified`.

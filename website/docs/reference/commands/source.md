@@ -2,19 +2,46 @@
 title: "О команде dbt source"
 sidebar_label: "source"
 id: "source"
+description: "Use the dbt source command to work with source data in your dbt project."
 ---
 
-Команда `dbt source` предоставляет подкоманды, которые полезны при работе с исходными данными. Эта команда включает одну подкоманду — `dbt source freshness`.
+<VersionBlock firstVersion="2.0">
+
+Команда `dbt source` предоставляет одну устаревшую подкоманду — `dbt source freshness`, которая проверяет только источники.
+
+В версии v2 используйте команду верхнего уровня [`dbt freshness`](/reference/commands/freshness), чтобы одной командой проверять и источники, и модели на соответствие настроенным для них [пороговым значениям свежести данных](/reference/resource-configs/freshness).
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+Команда `dbt source` предоставляет подкоманду, полезную при работе с исходными данными. Доступная подкоманда — `dbt source freshness`.
+
+</VersionBlock>
 
 ### dbt source freshness {#dbt-source-freshness}
 
-Если ваш проект dbt [настроен с источниками](/docs/build/sources), то команда `dbt source freshness` выполнит запрос ко всем определенным исходным таблицам, определяя "свежесть" этих таблиц. Если таблицы устарели (на основе конфигурации `freshness`, указанной для ваших источников), то dbt сообщит предупреждение или ошибку соответственно. Если исходная <Term id="table" /> находится в устаревшем состоянии, то dbt завершится с ненулевым кодом выхода.
+### Актуальность
 
-Вы также можете использовать [команды source freshness](/reference/commands/source#source-freshness-commands), чтобы убедиться, что получаемые данные являются актуальными, а не старыми или устаревшими.
+<VersionBlock firstVersion="2.0">
+
+Если в вашем проекте dbt [настроены источники](/docs/build/sources), dbt определяет «актуальность» каждой таблицы источника на основе конфигурации `freshness`, заданной для этого источника. Если данные в таблице устарели, dbt сообщает об этом предупреждением или ошибкой в зависимости от настроек и завершает работу с ненулевым кодом выхода.
+
+Чтобы проверить актуальность источников, выполните команду [`dbt freshness`](/reference/commands/freshness).
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
 
 ### Настройка source freshness {#configure-source-freshness}
 
-В примере ниже показано, как настроить source freshness в dbt. Подробнее см. в разделе [Declaring source freshness](/docs/build/sources#declaring-source-freshness).
+Вы также можете использовать [команды проверки свежести источников](/reference/commands/source#source-freshness-commands), чтобы убедиться, что получаемые данные свежие, а не старые или устаревшие.
+
+</VersionBlock>
+
+### Настройка свежести
+
+В примере ниже показано, как настроить проверку свежести источников в dbt. Дополнительную информацию см. в разделе [Объявление свежести источников](/docs/build/sources#declaring-source-freshness).
 
 <File name='models/<filename>.yml'>
 
@@ -51,7 +78,10 @@ sources:
 
 Это помогает отслеживать состояние и «здоровье» пайплайна данных.
 
-Вы также можете настроить source freshness в разделе **Execution settings** на странице **Settings** вашего задания в <Constant name="cloud" />. Подробнее см. в разделе [Enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
+Вы также можете настроить проверку свежести источников в разделе **Execution settings** на странице **Settings** задания в dbt platform. Дополнительную информацию см. в разделе [Включение проверок свежести источников](/docs/deploy/source-freshness#enabling-source-freshness-checks).
+
+
+<VersionBlock lastVersion="1.99">
 
 ### Команды source freshness {#source-freshness-commands}
 
@@ -61,23 +91,57 @@ sources:
 
 | **Command**                                                                 | **Description**                  | 
 | ----------------------------------------------------------------------------| ---------------------------------|
-|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |Проверяет «freshness» для всех источников.|
-|[`dbt source freshness --output target/source_freshness.json`](/reference/commands/source#configuring-source-freshness-output)|Выводит информацию о «freshness» в другой путь.|
-|[`dbt source freshness --select "source:source_name"`](/reference/commands/source#specifying-sources-to-snapshot)|Проверяет «freshness» для конкретных источников.|
+|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |Проверяет актуальность всех источников.|
+|[`dbt source freshness --output target/source_freshness.json`](/reference/commands/source#configuring-source-freshness-output)|Выводит информацию об актуальности по другому пути.|
+|[`dbt source freshness --select "source:source_name"`](/reference/commands/source#specifying-sources-to-check)|Проверяет актуальность указанных источников.|
 
-### Указание источников для snapshot {#specifying-sources-to-snapshot}
+</VersionBlock>
 
-По умолчанию `dbt source freshness` будет вычислять информацию о свежести для всех источников в вашем проекте. Чтобы сделать снимок свежести для подмножества этих источников, используйте флаг `--select`.
+<VersionBlock firstVersion="2.0">
+
+### Проверка указанных источников
+
+По умолчанию `dbt freshness` проверяет все источники и модели в вашем проекте, для которых задана конфигурация `freshness`. Чтобы проверить только часть источников, используйте флаг `--select`.
 
 ```bash
-# Сделать снимок свежести для всех таблиц Snowplow:
+# Проверить актуальность всех таблиц Snowplow:
+$ dbt freshness --select "source:snowplow"
+
+# Проверить актуальность определённой таблицы источника:
+$ dbt freshness --select "source:snowplow.event"
+```
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+### Указание источников для проверки
+
+По умолчанию `dbt source freshness` рассчитывает показатели актуальности для всех источников в вашем проекте. Чтобы проверить актуальность только части этих источников, используйте флаг `--select`.
+
+```bash
+# Проверить актуальность всех таблиц Snowplow:
 $ dbt source freshness --select "source:snowplow"
 
-# Сделать снимок свежести для конкретной исходной таблицы:
+# Проверить актуальность определённой таблицы источника:
 $ dbt source freshness --select "source:snowplow.event"
 ```
 
-### Настройка вывода свежести источников {#configuring-source-freshness-output}
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+### Результаты проверки актуальности
+
+После завершения `dbt freshness` dbt записывает результаты для проверенных источников и моделей в `target/freshness.json`. Каждая запись содержит поле `resource_type`, указывающее, является ли ресурс источником или моделью. Полную схему см. в разделе [`freshness.json`](/reference/artifacts/freshness-json).
+
+Если в ходе запуска проверяются источники, dbt также записывает `target/sources.json` для обратной совместимости. Этот файл содержит только источники, без поля `resource_type`. Полную схему см. в разделе [`sources.json`](/reference/artifacts/sources-json).
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+### Настройка вывода результатов проверки актуальности источников
 
 Когда `dbt source freshness` завершится, файл <Term id="json" /> с информацией о свежести ваших источников будет сохранен в `target/sources.json`. Пример `sources.json` будет выглядеть следующим образом:
 
@@ -119,13 +183,29 @@ $ dbt source freshness --select "source:snowplow.event"
 $ dbt source freshness --output target/source_freshness.json
 ```
 
-### Использование свежести источников {#using-source-freshness}
+</VersionBlock>
 
-Снимки свежести источников могут быть использованы для понимания:
+<VersionBlock firstVersion="2.0">
+
+### Использование результатов проверки актуальности
+
+Результаты проверки актуальности помогают понять, поступают ли данные в источник или модель с задержкой и как их актуальность меняется со временем.
+
+Вы можете в любой момент проверить актуальность вручную с помощью [`dbt freshness`](/reference/commands/freshness). Мы также рекомендуем запускать эту проверку по расписанию и сохранять результаты через регулярные интервалы времени. Накопленные за длительный период результаты позволяют получать оповещения о нарушении соглашений об уровне обслуживания (SLA) в отношении актуальности исходных данных и отслеживать, как актуальность меняется со временем.
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+### Использование проверки актуальности источников
+
+Результаты проверки актуальности источников позволяют понять:
 
 1. Если конкретный источник данных находится в задержанном состоянии
 2. Тренда свежести источников данных с течением времени
 
-Эту команду можно запускать вручную, чтобы определить состояние свежести ваших исходных данных в любое время. Также рекомендуется запускать эту команду по расписанию, сохраняя результаты снимка свежести через регулярные интервалы. Эти продольные снимки позволят получать уведомления, когда нарушаются SLA свежести данных источников, а также понимать тренд свежести с течением времени.
+Эту команду можно запускать вручную в любое время, чтобы определить актуальность исходных данных. Также рекомендуется запускать эту команду по расписанию, сохраняя результаты проверки актуальности через регулярные интервалы. Результаты, накопленные за длительный период, позволят получать оповещения о нарушении SLA по актуальности исходных данных, а также отслеживать, как актуальность меняется со временем.
 
-<Constant name="cloud" /> упрощает создание снапшотов свежести источников по расписанию и предоставляет готовый дашборд, который показывает состояние свежести для всех источников, определённых в вашем проекте. Подробнее о создании снапшотов свежести в <Constant name="cloud" /> см. в [документации](/docs/build/sources#source-data-freshness).
+</VersionBlock>
+
+<Constant name="dbt" /> позволяет легко запускать проверки актуальности по расписанию и предоставляет готовую панель мониторинга, которая показывает состояние актуальности источников, определённых в вашем проекте. Подробнее см. в разделе [Актуальность исходных данных](/docs/build/sources#source-data-freshness).

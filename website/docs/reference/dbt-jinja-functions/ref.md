@@ -94,7 +94,13 @@ select * from {{ ref('project_or_package', 'model_name') }}
 
 Мы особенно рекомендуем использовать двухаргументный `ref`, чтобы избежать двусмысленности в случаях, когда имя модели дублируется в нескольких проектах или установленных пакетах. Если вы используете одноаргументный `ref` (только `model_name`), dbt будет искать модель с таким именем в том же пространстве имен (пакет или проект); если он не найдет ни одной, он выдаст ошибку.
 
-**Примечание:** `project_or_package` должно совпадать с `name` проекта/пакета, как определено в его `dbt_project.yml`. Это может отличаться от имени репозитория. Оно никогда не включает имя организации репозитория. Например, если вы используете пакет [`fivetran/stripe`](https://hub.getdbt.com/fivetran/stripe/latest/), имя пакета — `stripe`, а не `fivetran/stripe`.
+<VersionBlock firstVersion="1.12">
+import SLMeshLatestSpec from '/snippets/_sl-mesh-latest-spec.md';
+
+<SLMeshLatestSpec/>
+</VersionBlock>
+
+**Примечание:** Значение `project_or_package` должно совпадать со значением `name` проекта или пакета, заданным в его файле `dbt_project.yml`. Оно может отличаться от имени репозитория. Оно никогда не включает имя организации, которой принадлежит репозиторий. Например, если вы используете пакет [`fivetran/stripe`](https://hub.getdbt.com/fivetran/stripe/latest/), имя пакета — `stripe`, а не `fivetran/stripe`.
 
 ### Принудительное задание зависимостей {#forcing-dependencies}
 

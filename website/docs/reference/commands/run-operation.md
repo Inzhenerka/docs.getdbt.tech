@@ -1,30 +1,104 @@
 ---
 title: "О команде dbt run-operation"
 sidebar_label: "run-operation"
-description: "Прочтите это руководство, чтобы узнать, как команда dbt run-operation может быть использована для вызова макроса."
+description: "Из этого руководства вы узнаете, как использовать команду dbt run-operation для вызова макроса или непосредственного выполнения SQL."
 id: "run-operation"
 ---
 
-### Обзор {#overview}
+## Обзор
 
-Команда `dbt run-operation` используется для вызова макроса. Информацию об использовании см. в документации по [operations](/docs/build/hooks-operations#about-operations).
+Команда `dbt run-operation` используется для вызова макроса или выполнения строки SQL или Jinja непосредственно в целевой базе данных. Информацию об использовании операций на основе макросов см. в разделе [Операции](/docs/build/hooks-operations#about-operations).
 
-### Использование {#usage}
+<VersionBlock firstVersion="1.12">
+
+При вызове макроса с помощью `dbt run-operation` dbt не применяет ограничения моделей, заданные через [access](/reference/resource-configs/access) или [group](/reference/resource-configs/group), поэтому макрос может использовать `ref()` для обращения ко всем моделям (включая модели с уровнем доступа `private` и `protected`).
+
+Например, макрос может ссылаться на приватную модель:
+
+```jinja
+{% macro example_macro() %}
+  {{ ref('my_private_model') }}
+{% endmacro %}
 ```
-$ dbt run-operation {macro} --args '{args}'
-  {macro}        Укажите макрос для вызова. dbt вызовет этот макрос
-                        с предоставленными аргументами и затем завершит работу
+
+Затем этот макрос можно запустить с помощью `dbt run-operation`:
+
+```bash
+dbt run-operation example_macro
+```
+
+</VersionBlock>
+
+## Использование
+
+```
+$ dbt run-operation [macro] --args '{args}'
+$ dbt run-operation --sql '{sql}'
+ 
+  [macro]               Укажите макрос для вызова. dbt вызовет этот макрос
+                        с переданными аргументами, а затем завершит работу. Обязателен,
+                        если не указан --sql. Нельзя использовать вместе с --sql.
+ 
   --args ARGS           Передайте аргументы макросу. Этот словарь будет
-                        сопоставлен с именованными аргументами, определенными в
-                        выбранном макросе. Этот аргумент должен быть строкой в формате YAML,
-                        например, '{my_variable: my_value}'
+                        сопоставлен с именованными аргументами, определёнными в
+                        выбранном макросе. Аргумент должен быть строкой YAML,
+                        например '{my_variable: my_value}'. Нельзя использовать с --sql.
+ 
+  --sql SQL             Выполните строку SQL или Jinja непосредственно в
+                        целевой базе данных без необходимости определять макрос.
+                        Нельзя сочетать с именем макроса или --args.
+                        Доступно в dbt v1.12+.
 ```
-### Примеры командной строки {#command-line-examples}
 
-Пример 1:
+## Использование флага `--sql`
 
-`$ dbt run-operation grant_select --args '{role: reporter}'`
+Starting <Constant name="dbt" /> v1.12, you can use the `--sql` flag to execute ad hoc database statements directly against your warehouse, without defining a macro. This flag is useful for one-off operations like dropping or altering a table, applying grants, or running a data fix. The statement runs through the full Jinja compilation pipeline, so you have access to `ref()`, `source()`, `var()`, `target`, and all other context variables. When your SQL contains no Jinja, dbt skips manifest compilation entirely, making execution faster.
 
-Пример 2:
+Например:
 
-`$ dbt run-operation clean_stale_models --args '{days: 7, dry_run: True}'`
+```bash
+# Удалить таблицу в хранилище данных
+dbt run-operation --sql "DROP TABLE IF EXISTS my_schema.old_table"
+
+# Использовать переменные контекста Jinja в SQL-инструкции
+dbt run-operation --sql "GRANT SELECT ON {{ target.schema }}.my_table TO reporter"
+```
+
+Во время выполнения операции dbt выводит в терминал строки состояния:
+
+```
+1 of 1 START executing inline_query ........... [RUN]
+1 of 1 OK executed inline_query ............... [SELECT 1 in 0.05s]
+```
+
+В логах операция называется `inline_query`. Если операция завершается с ошибкой, в строке состояния отображается `ERROR` вместо `OK`.
+
+Обратите внимание: флаг `--sql` нельзя использовать вместе с именем макроса или `--args`.
+
+### Когда использовать `--sql` вместо макроса
+
+`--sql` удобен для быстрых разовых операций, ради которых не стоит создавать файл макроса (например, для предоставления прав доступа, удаления таблицы или исправления данных).
+
+Если вам нужно повторно использовать операцию в разных средах или поделиться ею с командой, напишите [макрос](/docs/build/jinja-macros), чтобы его можно было хранить в системе контроля версий и тестировать.
+
+## Примеры командной строки
+
+- Вызов макроса:
+
+  ```bash
+  # Передать макросу один аргумент
+  dbt run-operation grant_select --args '{role: reporter}'
+
+  # Передать макросу несколько аргументов
+  dbt run-operation clean_stale_models --args '{days: 7, dry_run: True}'
+  ```
+
+- Использование флага `--sql`:
+
+  ```bash
+  # Выполнить DDL-инструкцию
+  dbt run-operation --sql "CREATE TABLE my_schema.my_table (id int)"
+
+  # Предоставить право SELECT на модель dbt с помощью ref()
+  dbt run-operation --sql "GRANT SELECT ON {{ ref('my_model') }} TO reporter"
+  ```

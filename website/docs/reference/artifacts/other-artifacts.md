@@ -29,7 +29,7 @@ sidebar_label: "Другие артефакты"
 
 Этот файл полезен для исследования проблем производительности в графовых алгоритмах <Constant name="core" />.
 
-Он более анонимизирован и компактен, чем [`manifest.json`](/reference/artifacts/manifest-json) и [`graph.gpickle`](#graph.gpickle).
+Он более анонимизирован и компактен, чем [`manifest.json`](/reference/artifacts/manifest-json) и [`graph.gpickle`](#graphgpickle).
 
 Он включает информацию в двух отдельных точках времени:
 1. `linked` &mdash; сразу после связывания графа, и

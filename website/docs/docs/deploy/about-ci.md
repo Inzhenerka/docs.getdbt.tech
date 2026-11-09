@@ -4,9 +4,10 @@ sidebar_label: "О непрерывной интеграции"
 pagination_prev: null
 pagination_next: "docs/deploy/continuous-integration"
 hide_table_of_contents: true
+availability: platform_login
 ---
 
-Используйте [CI jobs](/docs/deploy/ci-jobs) в <Constant name="cloud" />, чтобы настроить автоматизацию для тестирования изменений кода перед их слиянием в production. Кроме того, [включите Advanced CI features](/docs/cloud/account-settings#account-access-to-advanced-ci-features) для этих jobs, чтобы оценивать, приводят ли изменения кода к ожидаемым изменениям данных, просматривая различия сравнения, которые предоставляет dbt.
+Используйте [задания CI](/docs/deploy/ci-jobs) в <Constant name="dbt" />, чтобы настроить автоматическое тестирование изменений кода перед их слиянием с кодом в production. Кроме того, [включите расширенные функции CI](/docs/platform/account-settings#enabling-advanced-ci-features-) для этих заданий, чтобы оценить, приводят ли изменения кода к ожидаемым изменениям данных, анализируя различия в результатах сравнения, которые предоставляет dbt.
 
 Обратитесь к руководству [Начало работы с тестами непрерывной интеграции](/guides/set-up-ci?step=1) для получения дополнительной информации.
 

@@ -1,4 +1,5 @@
 ---
+description: "Set whether a data test always or never stores its failing records in the database."
 resource_types: [tests]
 datatype: boolean
 ---
@@ -12,7 +13,7 @@ datatype: boolean
 - Если конфигурация `store_failures` имеет значение `none` или не указана, ресурс будет использовать значение флага `--store-failures`.
 - При значении `true` параметр `store_failures` сохраняет все записи (в пределах [limit](/reference/resource-configs/limit)), которые не прошли тест. Ошибки сохраняются в новой таблице с именем теста.
 - Результаты теста всегда **заменяют** предыдущие ошибки для этого же теста, даже если текущий запуск теста не выявил ни одной ошибки.
-- По умолчанию `store_failures` использует схему с именем `{{ profile.schema }}_dbt_test__audit`, однако вы можете [настроить](/reference/resource-configs/schema#tests) схему на другое значение. Убедитесь, что у вас есть права на создание или доступ к схемам, необходимым для вашей работы. Подробнее см. в разделе [FAQ](#faqs).
+- По умолчанию `store_failures` использует схему с именем `{{ profile.schema }}_dbt_test__audit`, однако вы можете [настроить](/reference/resource-configs/schema#data-tests) схему на другое значение. Убедитесь, что у вас есть права на создание или доступ к схемам, необходимым для вашей работы. Подробнее см. в разделе [FAQ](#faqs).
 
 Эта логика реализована в макросе [`should_store_failures()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql#L15).
 

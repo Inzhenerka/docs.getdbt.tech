@@ -6,6 +6,7 @@ sidebar: "Доступные версии dbt"
 pagination_next: null
 pagination_prev: null
 hide_table_of_contents: true
+availability: all_users
 ---
 
 Независимо от того, используете ли вы CLI или работаете в <Constant name="dbt_platform" />, ваши окружения всегда привязаны к определённому версионному релизу dbt.
@@ -13,21 +14,25 @@ hide_table_of_contents: true
 <div className="grid--3-col">
 
 <Card
-    title="О версиях dbt Core"
-    body="Информация о том, как версионируется dbt Core и как работать с конкретными версиями."
-    link="/docs/dbt-versions/core"
+title="О версиях dbt"
+    body="Узнайте о семантическом версионировании движков dbt и сроках поддержки их версий."
+    link="/docs/dbt-versions"
+    icon="dbt-bit"/>
+<Card
+    title="Совместимость версий dbt v2"
+    body="Узнайте о совместимости версий v2, LSP и расширения для VS Code."
+    link="/docs/dbt-versions/dbt-version-compatibility"
+    icon="dbt-bit"/>
+<Card
+title="О каналах выпуска"
+    body="Узнайте, как версии dbt соотносятся с каналами выпуска, доступными на платформе dbt."
+    link="/docs/dbt-versions/dbt-release-tracks"
     icon="dbt-bit"/>
 
 <Card
-    title="О треках релизов"
-    body="Узнайте, как версии dbt соотносятся с треками релизов, доступными на dbt platform."
-    link="/docs/dbt-versions/cloud-release-tracks"
-    icon="dbt-bit"/>
-
-<Card
-    title="Обновление версий в dbt platform"
-    body="Инструкции по обновлению проектов dbt platform до последней версии dbt, включая Fusion Engine."
-    link="/docs/dbt-versions/upgrade-dbt-version-in-cloud"
+    title="Обновление версий на платформе dbt"
+    body="Инструкции по обновлению ваших проектов на платформе dbt до последней версии dbt, включая dbt v2."
+    link="/docs/dbt-versions/upgrade-dbt-platform-version"
     icon="dbt-bit"/>
 
 <Card
@@ -43,9 +48,9 @@ hide_table_of_contents: true
     icon="dbt-bit"/>
 
 <Card
-    title="Руководства по обновлению версий dbt"
-    body="Вся информация, необходимая для подготовки ваших проектов к следующей версии dbt, включая Fusion. Содержит рекомендации по новым возможностям, изменениям поведения, депрекейшенам и многому другому."
-    link="/docs/dbt-versions/core-upgrade"
+title="Руководства по обновлению версии dbt"
+    body="Вся необходимая информация для подготовки ваших проектов к следующей версии dbt, включая dbt v2. Содержит рекомендации по новым возможностям, изменениям поведения, устаревающим функциям и многому другому."
+    link="/docs/dbt-versions/dbt-upgrade"
     icon="dbt-bit"/>
 
 </div> <br />

@@ -6,7 +6,7 @@ displayText: Создание пользовательских универса�
 hoverSnippet: Узнайте, как написать собственные пользовательские универсальные тесты данных.
 ---
 
-dbt поставляется с универсальными тестами данных [Not Null](/reference/resource-properties/data-tests#not-null), [Unique](/reference/resource-properties/data-tests#unique), [Relationships](/reference/resource-properties/data-tests#relationships) и [Accepted Values](/reference/resource-properties/data-tests#accepted-values). (Ранее они назывались "тестами схемы", и вы все еще можете встретить это название в некоторых местах.) Внутри эти универсальные тесты данных определяются как блоки `test` (как макросы).
+dbt поставляется с универсальными тестами данных [Not Null](/reference/resource-properties/data-tests#not_null), [Unique](/reference/resource-properties/data-tests#unique), [Relationships](/reference/resource-properties/data-tests#relationships) и [Accepted Values](/reference/resource-properties/data-tests#accepted_values). (Ранее они назывались "тестами схемы", и вы все еще можете встретить это название в некоторых местах.) Внутри эти универсальные тесты данных определяются как блоки `test` (как макросы).
 
 :::info
 Существует множество универсальных тестов данных, определенных в open source пакетах, таких как [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) и [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) — возможно, тест, который вы ищете, уже здесь!
@@ -86,7 +86,7 @@ models:
 
 Вот пример:
 
-<File name="macros/generic/schema.yml">
+<File name="tests/generic/schema.yml">
     
 ```yaml
 macros:

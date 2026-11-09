@@ -5,7 +5,6 @@ import Card from '@site/src/components/card';
 import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/default/p/blog-archive-61f.json';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
-import { getSpotlightMember } from '../utils/get-spotlight-member';
 import { getInzhenerkaPromo } from '../utils/get-inzhenerka-promo';
 import Link from '@docusaurus/Link';
 import BlogPostCard from '@site/src/components/blogPostCard';
@@ -57,13 +56,7 @@ function Home() {
   // Set spotlightSection to featuredResource by default
   let spotlightSection = featuredResource;
 
-  // Check if featured community spotlight member set in Docusaurus config
   const { siteConfig } = useDocusaurusContext();
-  let communitySpotlightMember =
-    siteConfig?.themeConfig?.communitySpotlightMember || null;
-
-  // Get spotlight member by ID or date if available
-  const spotlightMember = getSpotlightMember(communitySpotlightMember);
 
   // Set Inzhenerka promo instead of community members
   spotlightSection = getInzhenerkaPromo() || spotlightSection;
@@ -99,7 +92,7 @@ function Home() {
                   <Link
                     id="hero-vs-code-cta"
                     className="hero-border-beam-cta"
-                    to="/docs/get-started-dbt">
+                    to="/docs/dbt/get-started-dbt">
                       <span>Начать работу с dbt</span>
                       </Link>
                 </div>
@@ -227,10 +220,10 @@ function Home() {
               <div className="home-link-grid">
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Документация</h4>
-                  <Link to="/docs/dbt-cloud-apis/overview">Документация API</Link>
+                  <Link to="/docs/dbt-apis/overview">Документация API</Link>
                   <Link to="/docs/introduction">Документация по продукту</Link>
                   <Link to="/best-practices">Лучшие практики</Link>
-                  <Link to="/docs/cloud/dbt-copilot">dbt Copilot</Link>
+                  <Link to="/docs/platform/wizard-platform">dbt Wizard</Link>
                 </div>
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Гайды</h4>
@@ -242,12 +235,12 @@ function Home() {
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Справочники</h4>
                   <Link to="/reference/dbt-commands">Справочник команд</Link>
-                  <Link to="/category/project-configs">Конфигурации проекта</Link>
+                  <Link to="/category/projects">Конфигурации проекта</Link>
                   <Link to="/reference/artifacts/dbt-artifacts">Артефакты dbt</Link>
                 </div>
                 <div className="home-link-grid-item">
                   <h4 className="heading-4">Другое</h4>
-                  <Link to="/docs/dbt-versions/dbt-cloud-release-notes">Что нового в dbt</Link>
+                  <Link to="/docs/dbt-versions/release-notes">Что нового в dbt</Link>
                   <Link to="/blog">Блог разработчиков</Link>
                   <Link to="/community/join">Присоединиться к сообществу</Link>
                 </div>
@@ -303,13 +296,13 @@ function Home() {
                 <Card
                   title="Ответить на вопрос на Discourse"
                   body="Помогите кому-то решить реальную задачу — и укрепляйте свою репутацию."
-                  link="/community/forum"
+                  link="https://discourse.getdbt.com/"
                   icon="message"
                 />
                 <Card
-                  title="События и митапы"
-                  body="Присоединяйтесь к локальным и глобальным митапам dbt."
-                  link="/community/events"
+                  title="Вебинары dbt Labs"
+                  body="Смотрите предстоящие и записанные вебинары dbt Labs."
+                  link="https://www.getdbt.com/resources/webinars"
                   icon="globe"
                 />
                 <Card

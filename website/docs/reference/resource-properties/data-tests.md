@@ -7,6 +7,14 @@ datatype: data-test
 keywords: [test, tests, custom tests, custom test name, test name]
 ---
 
+## Description
+
+The `data_tests` property defines assertions about a column, <Term id="table" />, or <Term id="view" />. The property contains a list of [generic data tests](/docs/build/data-tests#generic-data-tests), referenced by name, which can include the four built-in generic tests available in dbt. For example, you can add data tests that ensure a column contains no duplicates and zero null values. Any arguments or [configurations](/reference/data-test-configs) passed to those data tests should be nested below the `arguments` property.
+
+Once these data tests are defined, you can validate their correctness by running `dbt test`.
+
+To help you get started, the examples below show how to define the `data_tests` property on different resource types (models, sources, seeds, snapshots, and analyses).
+
 <Tabs
   defaultValue="models"
   values={[
@@ -155,17 +163,7 @@ snapshots:
 
 </Tabs>
 
-## Связанная документация {#related-documentation}
-
-* [Руководство по тестированию данных](/docs/build/data-tests)
-
-## Описание {#description}
-
-Свойство `data_tests` определяет проверки (assertions) для столбца, <Term id="table" /> или <Term id="view" />. Это свойство содержит список [обобщённых тестов данных](/docs/build/data-tests#generic-data-tests), на которые ссылаются по имени; в него могут входить четыре встроенных обобщённых теста, доступных в dbt. Например, вы можете добавить тесты данных, которые гарантируют, что столбец не содержит дубликатов и нулевых значений. Любые аргументы или [конфигурации](/reference/data-test-configs), передаваемые в эти тесты данных, должны быть вложены в свойство `arguments`.
-
-После определения этих тестов данных вы можете проверить их корректность, выполнив команду `dbt test`.
-
-## Готовые тесты данных {#out-of-the-box-data-tests}
+## Готовые тесты данных
 
 Существует четыре общих теста данных, которые доступны из коробки для всех пользователей dbt.
 
@@ -183,11 +181,14 @@ models:
       - name: order_id
         data_tests:
           - not_null
+      ...
 ```
 
 </File>
 
-### `unique` {#unique}
+Вы можете добавить блок `arguments` для входных параметров теста и блок `config` для таких настроек, как `severity` или `where`. Полный список см. в разделе [Конфигурации тестов данных](/reference/data-test-configs?version=2.0#data-test-specific-configurations). Если вы видите предупреждение об устаревшем способе указания аргументов теста, см. предупреждения, связанные с тестами, в разделе [Устаревшие возможности](/reference/deprecations?version=2.0).
+
+### `unique`
 
 Этот data test проверяет, что в поле отсутствуют дублирующиеся значения.
 
@@ -476,3 +477,7 @@ models:
 ```
 
 </File>
+
+## Связанная документация
+
+- [Руководство по тестированию данных](/docs/build/data-tests)

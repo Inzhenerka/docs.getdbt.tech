@@ -5,13 +5,29 @@ id: "statement-blocks"
 description: "SQL‑запросы, которые выполняются в базе данных и возвращают результаты в ваш Jinja‑контекст."
 ---
 
+<VersionBlock lastVersion="1.99">
+
 :::tip Рекомендация
 
 Мы рекомендуем использовать макрос [`run_query`](/reference/dbt-jinja-functions/run_query) вместо блоков `statement`. Макрос `run_query` предоставляет более удобный способ выполнения запросов и получения их результатов, оборачивая блоки `statement`. Вы можете использовать этот макрос для написания более лаконичного кода, который легче поддерживать.
 
 :::
 
-`statement` — это SQL‑запросы, которые выполняются в базе данных и возвращают результаты в ваш Jinja‑контекст. Ниже приведён пример `statement`, который получает список всех штатов из <Term id="table" /> с пользователями.
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+:::tip Когда использовать блоки statement в <Constant name="fusion" />
+
+Для запросов, результаты которых нужно получить (например, когда вашему макросу или коду Jinja нужны данные, возвращаемые из базы данных), можно использовать блоки `statement` с `fetch_result=True` или [макрос `run_query`](/reference/dbt-jinja-functions/run_query).
+
+Для операций <Term id="ddl" /> или служебных операций (таких как `OPTIMIZE`, `VACUUM` или запросы для обслуживания) используйте блоки `statement` с `fetch_result=False`, если вам не нужен доступ к результатам в Jinja. Это позволяет избежать проблем со строгой проверкой типов в <Constant name="fusion" />, которая может завершиться ошибкой при обработке наборов результатов, содержащих значения `NULL` в столбцах, объявленных как не допускающие `NULL`.
+
+:::
+
+</VersionBlock>
+
+Блоки `statement` — это SQL-запросы, которые обращаются к базе данных и возвращают результаты в ваш контекст Jinja. Вот пример блока `statement`, который получает все штаты из таблицы пользователей (<Term id="table" />).
 
 <File name='get_states_statement.sql'>
 
@@ -107,3 +123,45 @@ __Аргументы__:
 ```
 
 </File>
+
+<VersionBlock firstVersion="2.0">
+
+## Операции без получения результатов
+
+Для операций <Term id="ddl" /> или служебных операций, результаты которых вам не нужны (поскольку вы не используете возвращаемые строки в Jinja), задайте `fetch_result=False`. Этот подход рекомендуется для таких операций, как `OPTIMIZE` или `VACUUM` в Databricks, которые возвращают наборы результатов, способные содержать значения null в столбцах, не допускающих null.
+
+<File name='macros/optimize_table.sql'>
+
+```jinja
+{% macro optimize_table(table, zorder_fields=[]) %}
+  {% set zorder_str = zorder_fields | join(', ') %}
+
+  {% set query %}
+    OPTIMIZE {{ table }}
+    {% if zorder_str | length > 0 %}
+      ZORDER BY ({{ zorder_str }})
+    {% endif %}
+  {% endset %}
+
+  {% call statement('optimize', fetch_result=False) %}
+    {{ query }}
+  {% endcall %}
+{% endmacro %}
+```
+
+</File>
+
+Этот макрос можно использовать в post-hook:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  my_project:
+    +post-hook:
+      - "{{ optimize_table(this, ['customer_id', 'order_date']) }}"
+```
+
+</File>
+
+</VersionBlock>

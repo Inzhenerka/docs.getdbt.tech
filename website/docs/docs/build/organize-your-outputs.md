@@ -3,6 +3,7 @@ title: "Организация ваших выходных данных"
 description: "Узнайте, как можно организовать ваши выходные данные"
 pagination_next: "docs/build/custom-schemas"
 pagination_prev: null
+availability: all_users
 ---
 
 <div className="grid--2-col">

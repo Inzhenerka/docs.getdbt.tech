@@ -5,4 +5,4 @@ sidebar_label: 'Специфичные для dbt Jinja'
 id: dbt-specific-jinja
 ---
 
-Существуют определенные выражения, которые специфичны для dbt — они задокументированы в разделе [Справочник функций Jinja](/reference/dbt-jinja-functions) этой документации. Кроме того, блоки docs, snapshots и <Term id="materialization">материализации</Term> являются пользовательскими блоками Jinja, которые существуют только в dbt.
+Некоторые выражения специфичны для dbt — они описаны в разделе [Справочник функций Jinja](/reference/dbt-jinja-functions-context-variables) этой документации. Кроме того, блоки docs, снимки и <Term id="materialization">материализации</Term> — это пользовательские _блоки_ Jinja, которые существуют только в dbt.

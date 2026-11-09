@@ -14,20 +14,43 @@ dbt Labs стремится создать лучшую версию dbt, и в�
 - Анонимизированный хеш-ключ, представляющий содержимое модели.
 - Количество узлов, которые были запущены.
 
-Для полной прозрачности вы можете увидеть все определения событий в файле [`tracking.py`](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/tracking.py).
+<VersionBlock lastVersion="1.99">
 
-- В <Constant name="cloud" /> по умолчанию включена телеметрия — это помогает нам улучшать пользовательский опыт и продукт, используя обратную связь от реальных пользователей и данные об использовании. Хотя её нельзя отключить, мы гарантируем, что данные [надёжно защищены](https://www.getdbt.com/security) и используются ответственно. Сбор этих данных позволяет нам предоставлять более качественный продукт, в том числе улучшать производительность dbt.
+## Телеметрия <Constant name="core" />
 
-- У пользователей <Constant name="core" /> телеметрия также включена по умолчанию — это помогает нам понимать паттерны использования и улучшать продукт. Вы можете в любой момент отказаться от отслеживания событий, добавив следующее в файл `dbt_project.yml`:
+В <Constant name="core" /> телеметрия включена по умолчанию. Для полной прозрачности все определения событий доступны в файле [`tracking.py`](https://github.com/dbt-labs/dbt/blob/1.latest/core/dbt/tracking.py).
 
-  <File name="dbt_project.yml">
+You can opt out of event tracking at any time by adding the following configuration to your `dbt_project.yml` file:
 
-  ```yaml
-  flags:
-    send_anonymous_usage_stats: false
-  ```
-  </File>
+<File name="dbt_project.yml">
 
-  Пользователи dbt Core также могут использовать переменную окружения `DO_NOT_TRACK` для включения или отключения отправки анонимных данных. Для получения дополнительной информации см. [Переменные окружения](/docs/build/environment-variables).
+```yaml
+flags:
+  send_anonymous_usage_stats: false
+```
 
-  `DO_NOT_TRACK=1` эквивалентно `DBT_SEND_ANONYMOUS_USAGE_STATS=False`
+</File>
+
+Вы также можете задать переменную окружения `DO_NOT_TRACK`. Дополнительную информацию см. в разделе [Переменные окружения](/docs/build/environment-variables).
+
+`DO_NOT_TRACK=1` эквивалентно <VersionBlock lastVersion="1.10">`DBT_SEND_ANONYMOUS_USAGE_STATS=False`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_SEND_ANONYMOUS_USAGE_STATS=False`</VersionBlock>.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+## Телеметрия <Constant name="fusion_engine" />
+
+В <Constant name="fusion" /> телеметрия включена по умолчанию. Для полной прозрачности определения событий доступны в файле [`event_functions.rs`](https://github.com/dbt-labs/dbt/blob/main/crates/vortex-events/src/event_functions.rs).
+
+Для работы телеметрии требуется исходящий доступ по HTTPS к `https://p.vx.dbt.com`. Если этот адрес недоступен, <Constant name="fusion" /> записывает ошибки в журнал при каждом запуске. Полный список адресов для исходящих подключений см. в разделе [Сетевые требования dbt v2](/docs/local/dbt-networking-requirements).
+
+Чтобы отключить сбор анонимной статистики использования, задайте следующую переменную окружения:
+
+```shell
+export DBT_ENGINE_SEND_ANONYMOUS_USAGE_STATS=false
+```
+
+Вы также можете задать `DO_NOT_TRACK=1`.
+
+</VersionBlock>

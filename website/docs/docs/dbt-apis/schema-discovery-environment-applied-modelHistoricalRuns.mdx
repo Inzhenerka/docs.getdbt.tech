@@ -1,0 +1,54 @@
+---
+title: "Схема объекта исторических запусков модели"
+sidebar_label: "Исторические запуски модели"
+id: "discovery-schema-environment-applied-modelHistoricalRuns"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+ 
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект исторических запусков модели позволяет запрашивать информацию об истории запусков конкретной модели.
+
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `modelHistoricalRuns`. Обратитесь к разделу [Поля](#fields), чтобы увидеть полную схему, которая содержит все возможные поля, доступные для запроса.
+
+### Аргументы {#arguments}
+
+При выполнении запроса `modelHistoricalRuns` можно использовать следующие аргументы:
+
+<NodeArgsTable parent="AppliedState" name="modelHistoricalRuns" />
+
+### Пример запроса {#example-query}
+
+Вы можете указать `environmentId` и `uniqueId` модели, чтобы вернуть модель и историю её выполнения для модели `customers` из пакета `marketing`, включая метрики производительности и результаты тестов за последние 20 запусков, независимо от того, какой job выполнял эту модель.
+
+```graphql
+query {
+  environment(id: 834) {
+    applied {
+      modelHistoricalRuns(
+        uniqueId: "model.marketing.customers" # Use this format for unique ID: RESOURCE_TYPE.PACKAGE_NAME.RESOURCE_NAME
+        lastRunCount: 20
+      ) {
+        runId # Get historical results for a particular model
+        runGeneratedAt
+        executionTime # View build time across runs
+        status
+        tests {
+          name
+          status
+          executeCompletedAt
+        } # View test results across runs
+      }
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запроса `modelHistoricalRuns` можно использовать следующие поля:
+
+<SchemaTable nodeName="ModelNode" />

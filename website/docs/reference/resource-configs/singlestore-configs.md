@@ -1,10 +1,11 @@
 ---
 title: "Конфигурации SingleStore"
+description: "Настройте специфичные для SingleStore параметры моделей dbt, включая стратегии инкрементального обновления, такие как delete+insert, append и microbatch."
 id: "singlestore-configs"
 ---
 
-## Стратегии материализации инкрементальных моделей {#incremental-materialization-strategies}
-[Конфигурация `incremental_strategy`](/docs/build/incremental-models#about-incremental_strategy) управляет тем, как dbt строит инкрементальные модели. В настоящее время SingleStoreDB поддерживает только конфигурацию `delete+insert`.
+## Стратегии инкрементальной материализации
+[Параметр конфигурации `incremental_strategy`](/docs/build/incremental-strategy) определяет, как dbt строит инкрементальные модели. В настоящее время SingleStoreDB поддерживает конфигурации `delete+insert`, `append` и `microbatch`.
 
 Инкрементальная стратегия `delete+insert` направляет dbt следовать двухэтапному инкрементальному подходу. Сначала она идентифицирует и удаляет записи, отмеченные в блоке `is_incremental()`. Затем эти записи повторно вставляются.
 
@@ -24,13 +25,58 @@ select ...
 
 </File>
 
-### Ключи {#keys}
+### Справочные таблицы
 
-Таблицы SingleStore [шардированы](https://docs.singlestore.com/managed-service/en/getting-started-with-managed-service/about-managed-service/sharding.html) и могут быть созданы с различными определениями столбцов. Адаптер dbt-singlestore поддерживает следующие опции, каждая из которых принимает `column_list` (список имен столбцов) в качестве значения опции. Пожалуйста, обратитесь к [Создание таблицы Columnstore](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/procedures-for-physical-database-schema-design/creating-a-columnstore-table.html) для получения дополнительной информации о различных типах ключей в SingleStore.
-- `primary_key` (переводится как `PRIMARY KEY (column_list)`)
-- `sort_key` (переводится как `KEY (column_list) USING CLUSTERED COLUMNSTORE`)
-- `shard_key` (переводится как `SHARD KEY (column_list)`)
-- `unique_table_key` (переводится как `UNIQUE KEY (column_list)`)
+SingleStore поддерживает таблицы **REFERENCE** (доступны начиная с [dbt-singlestore 1.10.0](https://pypi.org/project/dbt-singlestore/1.10.0/)), которые реплицируются по всему кластеру и полезны для небольших таблиц и таблиц измерений, часто используемых в операциях соединения.
+
+Чтобы создать таблицу **REFERENCE** из модели dbt, задайте `reference=true` для материализации `table`:
+
+```sql
+{{
+    config(
+        materialized='table',
+        reference=true,
+    )
+}}
+
+select ...
+```
+
+При `reference=true` (по умолчанию — `false`) адаптер генерирует `CREATE REFERENCE TABLE ...` вместо обычного `CREATE TABLE ...`
+
+### Справочные таблицы с построчным хранением
+
+Если вам нужна справочная таблица с построчным хранением, задайте `storage_type='rowstore'`:
+
+```sql
+{{
+    config(
+        materialized='table',
+        reference=true,
+        storage_type='rowstore',
+    )
+}}
+
+select ...
+```
+
+Это соответствует `CREATE ROWSTORE REFERENCE TABLE ...`
+
+#### Ограничения и проверки
+
+Для соответствия семантике SingleStore адаптер dbt-singlestore обеспечивает соблюдение следующих ограничений:
+
+- Нельзя использовать `shard_key` вместе с `reference=true` — справочные таблицы не используют шардирование; если заданы оба параметра, компиляция завершается ошибкой.
+
+- SingleStore не поддерживает временные справочные таблицы. Компиляция в dbt-singlestore завершается ошибкой, если при `reference=true` должна быть создана временная таблица (например, если задано `temporary=true` или стратегия материализации использует временные таблицы внутри своей реализации).
+
+### Ключи
+
+Таблицы SingleStore [шардируются](https://docs.singlestore.com/managed-service/en/getting-started-with-managed-service/about-managed-service/sharding.html) и могут создаваться с различными определениями столбцов. Адаптер dbt-singlestore поддерживает следующие параметры, каждый из которых принимает `column_list` (список имён столбцов) в качестве значения. Дополнительную информацию о различных типах ключей в SingleStore см. в разделе [Создание таблицы с колоночным хранением](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/procedures-for-physical-database-schema-design/creating-a-columnstore-table.html).
+- `primary_key` (преобразуется в `PRIMARY KEY (column_list)`)
+- `sort_key` (преобразуется в `KEY (column_list) USING CLUSTERED COLUMNSTORE`)
+- `shard_key` (преобразуется в `SHARD KEY (column_list)`)
+- `unique_table_key` (преобразуется в `UNIQUE KEY (column_list)`)
 
 <File name='primary_and_shard_model.sql'>
 
@@ -89,7 +135,9 @@ select ...
 
 ### Другие опции {#other-options}
 
-Вы можете указать набор символов и сортировку для таблицы, используя опции `charset` и/или `collation`. Поддерживаемые значения для `charset` — `binary`, `utf8` и `utf8mb4`. Поддерживаемые значения для `collation` можно увидеть в выводе SQL-запроса `SHOW COLLATION`. Значения сортировки по умолчанию для соответствующих наборов символов — `binary`, `utf8_general_ci` и `utf8mb4_general_ci`.
+### Другие параметры
+
+Вы можете указать набор символов и порядок сортировки для таблицы с помощью параметров `charset` и/или `collation`. Поддерживаемые значения `charset`: `binary`, `utf8` и `utf8mb4`. Поддерживаемые значения `collation` можно просмотреть в результате выполнения SQL-запроса `SHOW COLLATION`. Порядки сортировки по умолчанию для соответствующих наборов символов: `binary`, `utf8_general_ci` и `utf8mb4_general_ci`.
 
 <File name='utf8mb4_model.sql'>
 

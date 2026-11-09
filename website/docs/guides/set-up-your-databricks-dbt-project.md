@@ -6,7 +6,7 @@ displayText: Настройка вашего dbt проекта с Databricks
 hoverSnippet: Узнайте, как настроить ваш dbt проект с Databricks.
 icon: 'databricks'
 hide_table_of_contents: true
-tags: ['Databricks', 'dbt Core', 'dbt platform']
+tags: ['Databricks', 'dbt platform']
 level: 'Intermediate'
 ---
 
@@ -24,11 +24,11 @@ Databricks и dbt Labs сотрудничают, чтобы помочь ком�
 
 Мы создадим два разных *каталога* в Unity Catalog: **dev** и **prod**. Каталог — это контейнер верхнего уровня для *схем* (ранее известных как базы данных в Databricks), которые, в свою очередь, содержат таблицы и представления.
 
-Наш dev catalog будет средой разработки, с которой аналитические инженеры взаимодействуют через свой <Constant name="cloud_ide" />. У разработчиков должна быть собственная песочница для создания и тестирования объектов без риска перезаписать или удалить работу коллег; для этого мы рекомендуем создавать персональные схемы. С точки зрения прав доступа, у них должен быть доступ только к каталогу **dev**.
+Наш каталог dev будет средой разработки, с которой инженеры по аналитике будут взаимодействовать через <Constant name="studio_ide" />. У каждого разработчика должна быть собственная изолированная среда для создания и тестирования объектов без риска перезаписать или удалить результаты работы коллег; для этого мы рекомендуем создавать персональные схемы. Что касается прав доступа, у разработчиков должен быть доступ только к каталогу **dev**.
 
 Только производственные запуски будут иметь доступ к данным в каталоге **prod**. В будущем руководстве мы обсудим каталог **test**, где наша система непрерывной интеграции/непрерывного развертывания (CI/CD) сможет запускать `dbt test`.
 
-На данный момент давайте упростим задачу и [создадим два каталога](https://docs.databricks.com/sql/language-manual/sql-ref-syntax-ddl-create-catalog.html) — либо с помощью **Data <Constant name="explorer" />**, либо в SQL‑редакторе, используя следующие команды:
+Пока не будем усложнять и [создадим два каталога](https://docs.databricks.com/sql/language-manual/sql-ref-syntax-ddl-create-catalog.html) либо с помощью Data <Constant name="catalog" />, либо в SQL-редакторе с помощью следующих команд:
 
 ```sql
 create catalog if not exists dev;
@@ -39,15 +39,15 @@ create catalog if not exists prod;
 
 ## Настройка сервисных принципалов {#setting-up-service-principals}
 
-Когда аналитический инженер запускает проект dbt из своего <Constant name="cloud_ide" />, совершенно нормально, что итоговые запросы выполняются от имени этого пользователя. Однако для продакшен‑запусков мы хотим, чтобы выполнение происходило от имени *service principal*. Напомним, что service principal — это безличная учётная запись, не принадлежащая конкретному человеку.
+Когда инженер по аналитике запускает проект dbt из <Constant name="studio_ide" />, вполне допустимо, чтобы полученные запросы выполнялись от имени этого пользователя. Однако мы хотим, чтобы запуски в производственной среде выполнялись от имени *субъекта-службы (service principal)*. Напомним, что субъект-служба — это служебная учётная запись, не привязанная к реальному человеку.
 
 Сервисные принципалы используются для исключения людей из процесса развертывания в производственной среде для удобства и безопасности. Личные идентичности не должны использоваться для создания производственных конвейеров, так как они могут сломаться, если пользователь покинет компанию или изменит свои учетные данные. Также не должно быть произвольных команд, изменяющих производственные данные. Только запланированные задания и код, прошедший тесты CI и код-ревью, должны иметь возможность изменять производственные данные. Если что-то ломается, есть аудируемый след изменений, чтобы найти коренную причину, легко вернуться к последней рабочей версии кода и минимизировать влияние на конечных пользователей.
 
 [Давайте создадим сервисный принципал](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#add-a-service-principal-to-your-databricks-account) в Databricks:
 
-1. Попросите администратора вашего аккаунта Databricks [добавить сервисный принципал](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#add-a-service-principal-to-your-databricks-account) в ваш аккаунт. Имя сервисного принципала должно отличаться от идентификатора пользователя и четко указывать на его назначение (например, dbt_prod_sp).
-2. Добавьте сервисный принципал в любые группы, членом которых он должен быть на данный момент. Более подробная информация о разрешениях содержится в нашем руководстве ["Лучшие практики Unity Catalog"](/best-practices/dbt-unity-catalog-best-practices).
-3. [Добавьте сервисный принципал в ваше рабочее пространство](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#add-a-service-principal-to-a-workspace) и примените все [необходимые права](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#add-a-service-principal-to-a-workspace-using-the-admin-console), такие как доступ к Databricks SQL и доступ к рабочему пространству.
+1. Попросите администратора вашего аккаунта Databricks [добавить субъект-службу (service principal)](https://docs.databricks.com/aws/en/admin/users-groups/manage-service-principals#-add-service-principals-to-your-account) в ваш аккаунт. Имя субъекта-службы должно отличаться от идентификатора пользователя и ясно указывать на его назначение (например, dbt_prod_sp).
+2. На этом этапе включите созданный субъект-службу во все группы, в которых он должен состоять. Подробнее о разрешениях читайте в нашем [руководстве «Рекомендации по работе с Unity Catalog»](/best-practices/dbt-unity-catalog-best-practices).
+3. [Добавьте субъект-службу в рабочую область](https://docs.databricks.com/aws/en/admin/users-groups/manage-service-principals#assign-a-service-principal-to-a-workspace) и предоставьте все [необходимые права доступа](https://docs.databricks.com/aws/en/security/auth/entitlements), например Databricks SQL access и Workspace access.
 
 ## Настройка вычислительных ресурсов Databricks {#setting-up-databricks-compute}
 
@@ -65,7 +65,7 @@ create catalog if not exists prod;
 6. Нажмите **Create**.
 7. Настройте права доступа к warehouse, чтобы наш service principal и разработчик имели необходимый уровень доступа.
 
-В этом материале мы не рассматриваем Python, но если вы хотите узнать больше, ознакомьтесь с этой [документацией](/docs/build/python-models#specific-data-platforms). В зависимости от вашей нагрузки, вы можете создать более крупный SQL Warehouse для production‑процессов и использовать меньший SQL Warehouse для разработки (если вы не используете Serverless SQL Warehouses). По мере роста проекта вам также может понадобиться применять [настройки compute на уровне отдельных моделей](/reference/resource-configs/databricks-configs#specifying-the-compute-for-models).
+В этом материале мы не рассматриваем Python, но если вы хотите узнать больше, ознакомьтесь с этой [документацией](/docs/build/python-models#configuring-python-models). В зависимости от вашей нагрузки, вы можете создать более крупный SQL Warehouse для production‑процессов и использовать меньший SQL Warehouse для разработки (если вы не используете Serverless SQL Warehouses). По мере роста проекта вам также может понадобиться применять [настройки compute на уровне отдельных моделей](/reference/resource-configs/databricks-configs#specifying-the-compute-for-models).
 
 ## Настройка вашего dbt проекта {#configure-your-dbt-project}
 
@@ -77,9 +77,9 @@ create catalog if not exists prod;
 
 ### Подключение dbt к Databricks {#connect-dbt-to-databricks}
 
-Сначала вам нужно подключить проект dbt к Databricks, чтобы он мог отправлять инструкции по трансформации и создавать объекты в Unity Catalog. Следуйте инструкциям для [<Constant name="cloud" />](/guides/databricks?step=4) или [Core](/docs/core/connect-data-platform/databricks-setup), чтобы настроить учетные данные для подключения вашего проекта.
+Сначала вам нужно подключить проект dbt к Databricks, чтобы он мог отправлять инструкции по преобразованию данных и создавать объекты в Unity Catalog. Следуйте инструкциям для [<Constant name="dbt" />](/guides/databricks?step=4) или [<Constant name="core" />](/docs/local/connect-data-platform/databricks-setup), чтобы настроить учётные данные для подключения проекта.
 
-Каждый разработчик должен сгенерировать свой Databricks PAT и использовать этот токен в своих учетных данных для разработки. Также необходимо указать уникальную схему разработчика, в которой будут храниться таблицы и представления, создаваемые запусками dbt, выполненными из их <Constant name="cloud_ide" />. Это обеспечивает изолированные среды для разработчиков и гарантирует, что доступ к данным соответствует назначению.
+Каждый разработчик должен создать свой персональный токен доступа (PAT) Databricks и использовать его в своих учётных данных. Также необходимо указать уникальную схему разработчика, в которой будут храниться таблицы и представления, создаваемые при запусках dbt из его <Constant name="studio_ide" />. Это обеспечивает изолированные среды разработки и доступ к данным, соответствующий рабочим задачам.
 
 Давайте сгенерируем [персональный токен доступа Databricks (PAT)](https://docs.databricks.com/sql/user/security/personal-access-tokens.html) для разработки:
 
@@ -90,8 +90,7 @@ create catalog if not exists prod;
 
 Для ваших учетных данных разработки/profiles.yml:
 
-1. Установите ваш каталог по умолчанию на dev.
-2. Ваша схема разработчика должна быть названа в честь вас. Мы рекомендуем dbt_&lt;первая_буква_имени&gt;&lt;фамилия&gt;.
+Для ваших учетных данных пользователя в profiles.yml:
 
 Во время первого вызова `dbt run`, dbt создаст схему разработчика, если она еще не существует в каталоге dev.
 
@@ -101,7 +100,7 @@ create catalog if not exists prod;
 
 Нам нужно дать dbt способ деплоить код за пределами сред разработки. Для этого мы будем использовать [окружения dbt](/docs/environments-in-dbt), чтобы определить production-цели, с которыми будут взаимодействовать конечные пользователи.
 
-В core‑проектах можно использовать [targets в profiles](/docs/core/connect-data-platform/connection-profiles#understanding-targets-in-profiles) для разделения окружений. Окружения [<Constant name="cloud" />](/docs/cloud/studio-ide/develop-in-studio#set-up-and-access-the-cloud-ide) позволяют определять окружения через UI и [планировать задания](/guides/databricks#create-and-run-a-job) для конкретных окружений.
+Проекты <Constant name="core" /> могут использовать [целевые конфигурации (targets) в профилях](/docs/local/profiles.yml#%D1%86%D0%B5%D0%BB%D0%B5%D0%B2%D1%8B%D0%B5-%D0%BE%D0%BA%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8F%D1%85) для разделения сред. [Среды <Constant name="dbt" />](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) позволяют определять среды через пользовательский интерфейс и [планировать задания](/guides/databricks#create-and-run-a-job) для конкретных сред.
 
 1. Следуйте инструкциям Databricks, чтобы [настроить токен вашего сервисного принципала](https://docs.databricks.com/dev-tools/service-principals.html#use-curl-or-postman). Обратите внимание, что `lifetime_seconds` определит, как долго эти учетные данные будут оставаться действительными. Вы должны использовать большое число здесь, чтобы избежать частого регенерирования токенов и сбоев производственных заданий.
 2. Теперь давайте вернемся к dbt Cloud, чтобы заполнить поля окружения. Нажмите на окружения в интерфейсе dbt Cloud или определите новую цель в вашем profiles.yml.
@@ -109,15 +108,15 @@ create catalog if not exists prod;
 4. Установите схему по умолчанию для вашей prod среды. Это может быть переопределено [пользовательскими схемами](https://docs.getdbt.tech/docs/build/custom-schemas#what-is-a-custom-schema), если вам нужно использовать более одной.
 5. Предоставьте токен вашего сервисного принципала.
 
-1. Следуйте инструкциям Databricks, чтобы [настроить токен вашего service principal](https://docs.databricks.com/dev-tools/service-principals.html#use-curl-or-postman). Обратите внимание, что параметр `lifetime_seconds` определяет, как долго этот учетный данные будут оставаться действительными. Рекомендуется указать большое значение, чтобы избежать частой регенерации токенов и сбоев production‑задач.
-2. Теперь вернитесь в <Constant name="cloud" />, чтобы заполнить поля окружения. Нажмите **environments** в UI <Constant name="cloud" /> или определите новый target в вашем `profiles.yml`.
-3. Установите для production‑окружения значение *catalog* равным каталогу **prod**, созданному выше. Укажите [service token](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#manage-access-tokens-for-a-service-principal) для вашего **prod** service principal и задайте его в качестве *token* в deployment credentials вашего production‑окружения.
-4. Установите schema в значение по умолчанию для вашего prod‑окружения. При необходимости это можно переопределить с помощью [custom schemas](/docs/build/custom-schemas#what-is-a-custom-schema), если вам нужно использовать более одной схемы.
-5. Укажите токен вашего Service Principal.
+1. Следуйте инструкциям Databricks, чтобы [настроить токен сервисного принципала](https://docs.databricks.com/dev-tools/service-principals.html#use-curl-or-postman). Обратите внимание: `lifetime_seconds` определяет срок действия этих учётных данных. Укажите здесь большое значение, чтобы избежать частого повторного создания токенов и сбоев заданий в производственной среде.
+2. Теперь вернёмся в <Constant name="dbt" />, чтобы заполнить поля среды. Откройте раздел сред в интерфейсе <Constant name="dbt" /> или определите новую целевую конфигурацию в файле profiles.yml.
+3. В поле *catalog* производственной среды укажите каталог **prod**, созданный выше. Укажите [сервисный токен](https://docs.databricks.com/administration-guide/users-groups/service-principals.html#manage-access-tokens-for-a-service-principal) для сервисного принципала **prod** в поле *token* учётных данных развёртывания производственной среды.
+4. Укажите схему по умолчанию для производственной среды. Это значение можно переопределить с помощью [пользовательских схем](/docs/build/custom-schemas#understanding-custom-schemas), если вам нужно использовать несколько схем.
+5. Укажите токен сервисного принципала.
 
-Далее вам понадобится место для хранения и контроля версий вашего кода, которое позволит вам сотрудничать с коллегами. Подключите ваш dbt проект к git репозиторию с помощью [dbt Cloud](/guides/databricks#set-up-a-dbt-cloud-managed-repository). [Core](/guides/manual-install#create-a-repository) проекты будут использовать git CLI.
+Далее вам понадобится место для хранения и контроля версий вашего кода, которое позволит вам сотрудничать с коллегами. Подключите ваш dbt проект к git репозиторию с помощью [dbt Cloud](/guides/databricks#set-up-a-dbt-managed-repository). [Core](/guides/manual-install#create-a-repository) проекты будут использовать git CLI.
 
-Далее вам понадобится место для хранения кода и управления его версиями, которое также позволит вам совместно работать с коллегами. Подключите свой проект dbt к git-репозиторию с помощью [<Constant name="cloud" />](/guides/databricks#set-up-a-dbt-cloud-managed-repository). Проекты [Core](/guides/manual-install#create-a-repository) будут использовать git CLI.
+Далее вам понадобится место для хранения кода и управления его версиями, которое позволит совместно работать с коллегами. Подключите свой проект dbt к репозиторию git с помощью [<Constant name="dbt" />](/guides/databricks#set-up-a-dbt-managed-repository). Для проектов [<Constant name="core" />](/guides/manual-install#create-a-repository) используется интерфейс командной строки git.
 
 Теперь, когда ваш проект настроен, вы можете начать трансформировать ваши данные в Databricks с помощью dbt. Чтобы помочь вам масштабироваться эффективно, мы рекомендуем следовать нашим лучшим практикам, начиная с [лучших практик Unity Catalog](/best-practices/dbt-unity-catalog-best-practices), затем вы можете [оптимизировать модели dbt на Databricks](/guides/optimize-dbt-models-on-databricks).
 

@@ -2,6 +2,7 @@
 title: "Хуки и операции"  
 description: "Настройка рабочих процессов dbt с использованием хуков и операций."
 id: "hooks-operations"
+availability: all_users
 ---
 
 import OnRunCommands from '/snippets/_onrunstart-onrunend-commands.md';
@@ -42,8 +43,8 @@ dbt предоставляет хуки и операции, чтобы вы м�
 
 Если (и только если) вы не можете использовать [`grants` resource-config](/reference/resource-configs/grants), вы можете использовать `post-hook` для выполнения более сложных рабочих процессов:
 
-* Необходимо применить `grants` более сложным способом, который конфигурация `grants` в dbt Core пока не поддерживает.
-* Необходимо выполнить пост-обработку, которую dbt не поддерживает из коробки. Например, `analyze table`, `alter table set property`, `alter table ... add row access policy` и т.д.
+* Нужно применять `grants` более сложным образом, который конфигурация `grants` в dbt (пока) не поддерживает.
+* Нужно выполнять дополнительную обработку, которую dbt не поддерживает из коробки. Например, `analyze table`, `alter table set property`, `alter table ... add row access policy` и т. д.
 
 ### Примеры использования хуков {#examples-using-hooks}
 

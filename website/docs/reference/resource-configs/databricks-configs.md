@@ -1,38 +1,49 @@
 ---
-title: "Конфигурации Databricks"
+title: "Настройки Databricks"
+description: "Настройте специфичные для Databricks параметры моделей в dbt, включая форматы файлов, свойства таблиц и материализации."
 id: "databricks-configs"
-tags: ['Databricks', 'dbt Fusion', 'dbt Core']
+tags: ['Databricks', 'dbt v2', 'dbt v1']
 ---
 
 ## Конфигурация таблиц {#configuring-tables}
 
-При материализации модели как `table`, вы можете включить несколько дополнительных конфигураций, специфичных для плагина dbt-databricks, в дополнение к стандартным [конфигурациям моделей](/reference/model-configs).
+При материализации модели как `table` вы можете указать несколько необязательных параметров конфигурации, специфичных для плагина dbt-databricks, в дополнение к стандартным [параметрам конфигурации моделей](/reference/model-configs).
 
-dbt-databricks v1.9 добавляет поддержку конфигурации `table_format: iceberg`. Попробуйте уже сейчас в ветке релизов [<Constant name="cloud" /> "Latest"](/docs/dbt-versions/cloud-release-tracks). Все остальные конфигурации таблиц также поддерживались в версии 1.8.
+В dbt-databricks v1.9 добавлена поддержка параметра конфигурации `table_format: iceberg`. Попробуйте его уже сейчас в [канале выпусков <Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks). Все остальные параметры конфигурации таблиц также поддерживались в версии 1.8.
 
-| Option    | Description| Required?     | Model support   | Example      |
-|-------------|--------|-----------|-----------------|---------------|
-| table_format   | Нужно ли включать совместимость с [Iceberg](https://docs.databricks.com/en/delta/uniform.html) для данной materialization | Optional     | SQL, Python     | `iceberg`    |
-| file_format <sup>†</sup>        | Формат файлов, который будет использоваться при создании таблиц (`parquet`, `delta`, `hudi`, `csv`, `json`, `text`, `jdbc`, `orc`, `hive` или `libsvm`).   | Optional     | SQL, Python     | `delta`     |
-| location_root       | Создаваемая таблица использует указанный каталог для хранения данных. К этому пути будет добавлен алиас таблицы.     | Optional  | SQL, Python     | `/mnt/root`  |
-| partition_by        | Разбивает создаваемую таблицу на партиции по указанным колонкам. Для каждой партиции создаётся отдельный каталог. | Optional   | SQL, Python     | `date_day`  |
-| liquid_clustered_by<sup>^</sup>  | Кластеризует создаваемую таблицу по указанным колонкам. Метод кластеризации основан на функциональности [Liquid Clustering в Delta](https://docs.databricks.com/en/delta/clustering.html). Доступно начиная с dbt-databricks 1.6.2. | Optional          | SQL, Python     | `date_day` |
-| auto_liquid_cluster\+ | Создаваемая таблица [автоматически кластеризуется Databricks](https://docs.databricks.com/aws/en/delta/clustering#automatic-liquid-clustering). Доступно начиная с dbt-databricks 1.10.0 | Optional | SQL, Python | `auto_liquid_cluster: true` |
-| clustered_by        | Каждая партиция в создаваемой таблице будет разбита на фиксированное количество бакетов по указанным колонкам.      | Optional     | SQL, Python     | `country_code`           |
-| buckets    | Количество бакетов, создаваемых при кластеризации   | Required if `clustered_by` is specified   | SQL, Python     | `8`        |
-| tblproperties   | [Tblproperties](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html), которые будут установлены для создаваемой таблицы   | Optional     | SQL, Python*    | `{'this.is.my.key': 12}` |
-| databricks_tags     | [Теги](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html), которые будут заданы для создаваемой таблицы     | Optional    | SQL <sup>‡</sup> , Python <sup>‡</sup> | `{'my_tag': 'my_value'}` |
-| compression   | Устанавливает алгоритм сжатия.   | Optional    | SQL, Python     | `zstd`    |
+dbt-databricks v1.9 добавляет поддержку конфигурации `table_format: iceberg`. Попробуйте уже сейчас в ветке релизов [<Constant name="cloud" /> "Latest"](/docs/dbt-versions/dbt-release-tracks). Все остальные конфигурации таблиц также поддерживались в версии 1.8.
 
-\* В настоящее время в PySpark нет API для задания tblproperties при создании таблицы, поэтому эта возможность в первую очередь предназначена для того, чтобы пользователи могли аннотировать таблицы, созданные из Python, с помощью tblproperties.
+| Параметр    | Описание                                                                                                                                                                                                                                                                                                                              | Обязательный?     | Поддержка моделей   | Пример      |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|-----------------|---------------|
+| table_format   | Определяет, нужно ли обеспечивать совместимость материализации с [Iceberg](https://docs.databricks.com/en/delta/uniform.html)                                                                                                                                                                                                           | Необязательный     | SQL, Python     | `iceberg`    |
+| use_uniform <sup>1</sup>   | Определяет, создает ли dbt управляемую таблицу Iceberg в Unity Catalog (`false`) или таблицу Delta в формате UniForm с поддержкой чтения через Iceberg (`true`), когда `table_format` имеет значение `iceberg`. Подробнее см. в разделе [Поддержка Iceberg в Databricks](/docs/build/iceberg/adapters/databricks-iceberg-support#choose-between-managed-iceberg-and-uniform). | Необязательный | SQL, Python | `true` |
+| file_format <sup>2</sup>        | Формат файлов, используемый при создании таблиц (`parquet`, `delta`, `hudi`, `csv`, `json`, `text`, `jdbc`, `orc`, `hive` или `libsvm`).                                                                                                                                                                                                      | Необязательный     | SQL, Python     | `delta`     |
+| location_root       | Созданная таблица использует указанный каталог для хранения своих данных. К пути этого каталога добавляется псевдоним таблицы.                                                                                                                                                                                                                                     | Необязательный  | SQL, Python     | `/mnt/root`  |
+| include_full_name_in_path   | Определяет, нужно ли использовать полный путь таблицы для уточнения корневого каталога хранения. Если параметр включен, к пути корневого каталога добавляются база данных, схема и псевдоним таблицы.                                                                                                                                                                            | Необязательный  | SQL, Python     | `true`  |
+| partition_by        | Разбивает созданную таблицу на партиции по указанным столбцам. Для каждой партиции создается отдельный каталог.                                                                                                                                                                                                                                         | Необязательный   | SQL, Python     | `date_day`  |
+| liquid_clustered_by<sup>3</sup>  | Кластеризует созданную таблицу по указанным столбцам. Метод кластеризации основан на [функции Liquid Clustering в Delta](https://docs.databricks.com/en/delta/clustering.html). Доступен начиная с dbt-databricks 1.6.2.                                                                                                                       | Необязательный          | SQL, Python     | `date_day` |
+| auto_liquid_cluster<sup>4</sup> | Созданная таблица [автоматически кластеризуется средствами Databricks](https://docs.databricks.com/aws/en/delta/clustering#automatic-liquid-clustering). Доступен начиная с dbt-databricks 1.10.0                                                                                                                                                    | Необязательный | SQL, Python | `auto_liquid_cluster: true` |
+| clustered_by        | Каждая партиция созданной таблицы разбивается на фиксированное количество бакетов по указанным столбцам.                                                                                                                                                                                                                               | Необязательный     | SQL, Python     | `country_code`           |
+| buckets    | Количество бакетов, создаваемых при кластеризации                                                                                                                                                                                                                                                                                         | Обязательный, если указан `clustered_by`   | SQL, Python     | `8`        |
+| tblproperties   | [Свойства таблицы (Tblproperties)](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html), задаваемые для созданной таблицы                                                                                                                                                                                                 | Необязательный     | SQL, Python<sup>5</sup>    | `{'this.is.my.key': 12}` |
+| databricks_tags     | [Теги](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html), задаваемые для созданной таблицы                                                                                                                                                                                                                            | Необязательный    | SQL <sup>6</sup> , Python <sup>6</sup> | `{'my_tag': 'my_value'}` |
+| compression   | Задает алгоритм сжатия.                                                                                                                                                                                                                                                                                                           | Необязательный    | SQL, Python     | `zstd`    |
+| skip_optimize<sup>7</sup>   | Пропускает операцию `OPTIMIZE` после материализации этой модели, сохраняя `zorder` / `liquid_clustered_by` / `auto_liquid_cluster` в определении таблицы. Доступен начиная с dbt-databricks 1.12.2.                                                                                                                                 | Необязательный    | SQL, Python     | `skip_optimize: true`    |
 
-† When `table_format` is `iceberg`, `file_format` must be `delta`.
+<sup>1</sup> `use_uniform` применяется только к <Constant name="fusion" />. `dbt-databricks` пока не поддерживает этот параметр &mdash; адаптер записывает предупреждение в журнал и игнорирует значение. В `dbt-databricks` вместо него используйте флаг поведения [`use_managed_iceberg`](/reference/global-configs/databricks-changes#use-managed-iceberg).
 
-‡ `databricks_tags` are applied via `ALTER` statements. Tags cannot be removed via dbt-databricks once applied. To remove tags, use Databricks directly or a post-hook.
+<sup>2</sup> When `table_format` is `iceberg`, `file_format` must be `delta`. This requirement applies to `dbt-databricks` only. In <Constant name="fusion" />, managed Iceberg tables use `parquet`.
 
-<sup>^</sup> Когда включён `liquid_clustered_by`, dbt-databricks выполняет операцию `OPTIMIZE` (Liquid Clustering) после каждого запуска. Чтобы отключить это поведение, установите переменную `DATABRICKS_SKIP_OPTIMIZE=true`, которую можно передать в команду запуска dbt (`dbt run --vars "{'databricks_skip_optimize': true}"`) или задать как переменную окружения. См. [issue #802](https://github.com/databricks/dbt-databricks/issues/802).
+<sup>3</sup> When `liquid_clustered_by` is enabled, dbt-databricks issues an `OPTIMIZE` (Liquid Clustering) operation after each run. To disable this behavior, set the variable `DATABRICKS_SKIP_OPTIMIZE=true`, which can be passed into the dbt run command (`dbt run --vars "{'databricks_skip_optimize': true}"`) or set as an environment variable. See [issue #802](https://github.com/databricks/dbt-databricks/issues/802).
 
-\+ Do not use `liquid_clustered_by` and `auto_liquid_cluster` on the same model.
+<sup>4</sup>  Не используйте `liquid_clustered_by` и `auto_liquid_cluster` в одной модели.
+
+<sup>5</sup> В PySpark пока нет API для задания tblproperties при создании таблицы, поэтому эта функция предназначена прежде всего для того, чтобы пользователи могли добавлять tblproperties к таблицам, созданным с помощью Python.
+
+<sup>6</sup> `databricks_tags` применяются с помощью операторов `ALTER`. После применения теги нельзя удалить через dbt-databricks. Для удаления тегов используйте Databricks напрямую или post-hook. Начиная с `dbt-databricks` v1.12, значения `databricks_tags`, заданные на нескольких уровнях иерархии конфигурации, [объединяются с добавлением значений](#databricks_tags), а не полностью заменяются значениями с нижнего (более конкретного) уровня.
+
+<sup>7</sup> `skip_optimize` позволяет управлять вызовом `OPTIMIZE` после материализации для каждой модели отдельно. Поскольку это стандартный параметр конфигурации модели dbt, его также можно задать на уровне папки или проекта через наследование конфигурации. Переменная `DATABRICKS_SKIP_OPTIMIZE`, действующая на весь запуск, имеет приоритет над `skip_optimize`: если задать `DATABRICKS_SKIP_OPTIMIZE=true` (или `databricks_skip_optimize: true`), переменная отключит `OPTIMIZE` для всех моделей, и повторно включить его для отдельной модели с помощью `skip_optimize: false` будет невозможно. Используйте `skip_optimize`, если хотите оставить `OPTIMIZE` включённым для большинства моделей, но отключить его для отдельных моделей &mdash; например, если вы передаёте выполнение `OPTIMIZE` механизму [Predictive Optimization](https://docs.databricks.com/en/optimizations/predictive-optimization.html) или запускаете его отдельно по расписанию. См. [issue #703](https://github.com/databricks/dbt-databricks/issues/703).
+
 
 В dbt-databricks v1.10 появилось несколько новых вариантов конфигурации моделей, доступных при включённом флаге `use_materialization_v2`.
 Подробнее см. [документацию по флагам поведения Databricks](/reference/global-configs/databricks-changes).
@@ -40,34 +51,44 @@ dbt-databricks v1.9 добавляет поддержку конфигураци
 ### Методы отправки Python {#python-submission-methods}
 _Доступно в версиях 1.9 и выше_
 
-В dbt-databricks v1.9 (попробуйте уже сейчас в [треке релизов <Constant name="cloud" /> «Latest»](/docs/dbt-versions/cloud-release-tracks)) вы можете использовать следующие четыре варианта для `submission_method`:
+В dbt-databricks v1.9 (попробуйте уже сейчас в [треке релизов <Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks)) для `submission_method` доступны четыре варианта: 
 
-* `all_purpose_cluster`: Выполняет модель Python либо напрямую с использованием [command api](https://docs.databricks.com/api/workspace/commandexecution), либо загружая блокнот и создавая одноразовый запуск задания
-* `job_cluster`: Создает новый кластер заданий для выполнения загруженного блокнота как одноразового запуска задания
-* `serverless_cluster`: Использует [безсерверный кластер](https://docs.databricks.com/en/jobs/run-serverless-jobs.html) для выполнения загруженного блокнота как одноразового запуска задания
-* `workflow_job`: Создает/обновляет повторно используемый рабочий процесс и загруженный блокнот для выполнения на кластерах общего назначения, задания или безсерверных кластерах.
+* `all_purpose_cluster`: выполняет модель Python либо напрямую через [command API](https://docs.databricks.com/api/command-execution/v2/execute), либо загружая блокнот и [создавая одноразовый запуск задания](https://docs.databricks.com/api/jobs/v2/submit-run)
+* `job_cluster`: создаёт новый кластер заданий для выполнения загруженного блокнота в рамках одноразового запуска задания
+* `serverless_cluster`: использует [бессерверный кластер](https://docs.databricks.com/en/jobs/run-serverless-jobs.html) для выполнения загруженного блокнота в рамках одноразового запуска задания
+* `workflow_job`: создаёт или обновляет многократно используемый рабочий процесс и загруженный блокнот для выполнения на универсальных кластерах, кластерах заданий или бессерверных кластерах.
    :::caution 
    Этот подход дает вам максимальную гибкость, но создаст постоянные артефакты в Databricks (рабочий процесс), которые пользователи могут запускать вне dbt.
    :::
 
 В настоящее время мы находимся в переходном периоде, когда существует разрыв между старыми методами отправки (которые были сгруппированы по вычислениям) и логически различными методами отправки (команда, запуск задания, рабочий процесс).
 
-Таким образом, поддерживаемая матрица конфигурации несколько сложна:
+Таким образом, матрица поддерживаемых конфигураций довольно сложна. В столбце **По умолчанию** `[]` означает пустой список, а `{}` — пустой словарь (значения ещё не заданы).
 
-| Конфигурация          | Использование                                                              | По умолчанию        | `all_purpose_cluster`* | `job_cluster` | `serverless_cluster` | `workflow_job` |
-| --------------------- | -------------------------------------------------------------------------- | ------------------ | ---------------------- | ------------- | -------------------- | -------------- |
-| `create_notebook`     | если false, используйте Command API, иначе загрузите блокнот и используйте запуск задания | `false`            | ✅                     | ❌             | ❌                   | ❌             |
-| `timeout`             | максимальное время ожидания выполнения команды/задания                    | `0` (Без таймаута) | ✅                     | ✅             | ✅                   | ✅             |
+| Параметр              | Назначение                                                           | По умолчанию       | `all_purpose_cluster`* | `job_cluster` | `serverless_cluster` | `workflow_job` |
+| --------------------- | -------------------------------------------------------------------- | ------------------ | ---------------------- | ------------- | -------------------- | -------------- |
+| `create_notebook`     | если задано false, используется Command API, иначе загружается блокнот и запускается задание | `false`            | ✅                     | ❌             | ❌                   | ❌             |
+| `timeout`             | максимальное время ожидания выполнения команды или задания           | `0` (без ограничения времени) | ✅                     | ✅             | ✅                   | ✅             |
 | `job_cluster_config`  | настраивает [новый кластер](https://docs.databricks.com/api/workspace/jobs/submit#tasks-new_cluster) для выполнения модели | `{}` | ❌ | ✅ | ❌            | ✅             |
-| `access_control_list` | напрямую настраивает [контроль доступа](https://docs.databricks.com/api/workspace/jobs/submit#access_control_list) для задания | `{}` | ✅ | ✅ | ✅          | ✅             |
-| `packages`            | список пакетов для установки на выполняющем кластере                       | `[]`               | ✅                     | ✅             | ✅                   | ✅             |
-| `index_url`           | URL для установки `packages`                                               | `None` (использует pypi) | ✅                     | ✅             | ✅                   | ✅             |
+| `access_control_list` | определяет, кто может просматривать [задание](https://docs.databricks.com/api/workspace/jobs/submit#access_control_list) Databricks, выполняющее эту Python-модель, или управлять им | `[]` | ✅ | ✅ | ✅          | ✅             |
+| `notebook_access_control_list` | определяет, кто может просматривать, запускать или редактировать [блокнот](https://docs.databricks.com/aws/en/security/auth/access-control/#notebook-acls), который dbt создаёт в Databricks на основе этой Python-модели | `[]` | ✅ | ✅ | ✅ | ✅ |
+| `packages`            | список пакетов для установки на кластере, выполняющем модель          | `[]`               | ✅                     | ✅             | ✅                   | ✅             |
+| `index_url`           | URL для установки `packages`                                         | `None` (используется pypi) | ✅                     | ✅             | ✅                   | ✅             |
 | `additional_libs`     | напрямую настраивает [библиотеки](https://docs.databricks.com/api/workspace/jobs/submit#tasks-libraries) | `[]` | ✅ | ✅             | ✅                   | ✅             |
-| `python_job_config`   | дополнительная конфигурация для заданий/рабочих процессов (см. таблицу ниже) | `{}`               | ✅                     | ✅             | ✅                   | ✅             |
-| `cluster_id`          | идентификатор существующего кластера общего назначения для выполнения      | `None`             | ✅                     | ❌             | ❌                   | ✅             |
-| `http_path`           | путь к существующему кластеру общего назначения для выполнения             | `None`             | ✅                     | ❌             | ❌                   | ❌             |
+| `python_job_config`   | дополнительная конфигурация заданий и рабочих процессов (см. таблицу ниже) | `{}`               | ✅                     | ✅             | ✅                   | ✅             |
+| `cluster_id`          | идентификатор существующего универсального кластера для выполнения модели | `None`             | ✅                     | ❌             | ❌                   | ✅             |
+| `http_path`           | путь к существующему универсальному кластеру для выполнения модели   | `None`             | ✅                     | ❌             | ❌                   | ❌             |
 
-\* Только `timeout` и `cluster_id`/`http_path` поддерживаются, когда `create_notebook` равно false
+\* Если `create_notebook` имеет значение false, поддерживаются только `timeout` и `cluster_id`/`http_path`. Параметр `notebook_access_control_list` применяется только тогда, когда dbt создаёт блокнот в Databricks.
+
+Когда dbt создаёт блокнот для Python-модели, он копирует код модели в ваше рабочее пространство Databricks и запускает этот блокнот как задание. Исключение — метод отправки `all_purpose_cluster`, который по умолчанию выполняет код непосредственно на универсальном кластере, не создавая блокнот или задание.
+
+Когда dbt создаёт блокнот и задание, вы можете управлять доступом к каждому из них:
+
+- `access_control_list` определяет, кто может просматривать задание или управлять им. Уровни разрешений описаны в разделе [Списки управления доступом к заданиям](https://docs.databricks.com/aws/en/security/auth/access-control/#job-acls).
+- `notebook_access_control_list` определяет, кто может открывать блокнот, например для изучения кода после неудачного запуска. Уровни разрешений описаны в разделе [Списки управления доступом к блокнотам](https://docs.databricks.com/aws/en/security/auth/access-control/#notebook-acls).
+
+Рекомендуем использовать названия разрешений, которые ожидает API Databricks, например `CAN_READ`, а не CAN VIEW, как в пользовательском интерфейсе.
 
 С введением метода отправки `workflow_job`, мы выбрали дальнейшую сегрегацию конфигурации отправки модели Python под верхнеуровневую конфигурацию, названную `python_job_config`. Это позволяет конфигурационным опциям для заданий и рабочих процессов быть пространственно именованными таким образом, чтобы они не мешали другим конфигурациям модели, что позволяет нам быть гораздо более гибкими в том, что поддерживается для выполнения заданий.
 
@@ -149,7 +170,7 @@ _Доступно в версиях 1.10 и выше_
 \* `using_columns` supports all parameter types listed in [Databricks column mask parameters](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-column-mask#parameters).
 
 
-† `databricks_tags` are applied via `ALTER` statements. Tags cannot be removed via dbt-databricks once applied. To remove tags, use Databricks directly or a post-hook.
+† `databricks_tags` are applied via `ALTER` statements. Tags cannot be removed via dbt-databricks once applied. To remove tags, use Databricks directly or a post-hook. Starting in `dbt-databricks` v1.12, `databricks_tags` set at multiple config hierarchy levels [merge additively](#databricks_tags) instead of the lower (more specific) level fully replacing the higher one.
 
 This example uses the column-level configurations in the previous table:
 
@@ -168,6 +189,35 @@ models:
         column_mask:
           function: my_catalog.my_schema.mask_email
           using_columns: "customer_id, 'literal string'"
+```
+
+</File>
+
+## Настройка фильтров строк {#setting-row-filters}
+_Доступно в версиях 1.12 и выше_
+
+Вы можете задать `row_filter`, чтобы применить к модели [фильтр строк Unity Catalog](https://docs.databricks.com/aws/en/tables/row-and-column-filters), ограничивающий строки, возвращаемые запросом, с помощью SQL UDF. dbt применяет фильтр с помощью предложения `WITH ROW FILTER` при создании отношения и выполняет `ALTER ... SET ROW FILTER` / `ALTER ... DROP ROW FILTER` для добавления, обновления или удаления фильтра при последующих запусках.
+
+`row_filter` — необязательная конфигурация уровня модели. Если вы задаёте её, оба следующих свойства обязательны:
+
+| Свойство   | Описание   | Обязательно?| Пример  |
+|------------|---------------|----------|----------|
+| function   | UDF для фильтрации строк, которую нужно применить. Укажите либо неквалифицированное имя (dbt дополнит его каталогом и схемой модели), либо полностью квалифицированное имя `catalog.schema.function`. dbt отклоняет имя из двух частей schema.function как неоднозначное. | Да | `region_filter` |
+| columns    | Столбцы, передаваемые в качестве аргументов функции фильтрации. Можно указать одну строку или список. Обязательно, если задано свойство `function`. | Да | `[region]` |
+
+Фильтры строк поддерживаются для материализаций `table`, `incremental`, `materialized_view` и `streaming_table`. Они _не_ поддерживаются для обычных представлений и отношений в Hive Metastore. Настройка `row_filter` для любого из этих двух типов объектов вызывает ошибку компиляции.
+
+В этом примере к модели применяется фильтр строк:
+
+<File name='schema.yml'>
+
+```yaml
+models:
+  - name: orders
+    config:
+      row_filter:
+        function: my_catalog.my_schema.region_filter
+        columns: [region]
 ```
 
 </File>
@@ -263,9 +313,9 @@ insert into table analytics.databricks_incremental
 
 При использовании `liquid_clustered_by` ключи `replace on` будут совпадать с ключами `liquid_clustered_by` (аналогично поведению `partition_by`).
 
-Если установить [`use_replace_on_for_insert_overwrite`](/reference/global-configs/databricks-changes#use-replace-on-for-insert_overwrite-strategy) в `True` (в SQL warehouses или при использовании кластерных вычислений), dbt будет динамически перезаписывать партиции и заменять **только** те партиции или кластеры, которые возвращаются запросом модели. В этом случае dbt выполняет оператор [`insert overwrite` с `partitionOverwriteMode='dynamic'`](https://docs.databricks.com/aws/en/delta/selective-overwrite#dynamic-partition-overwrites-with-partitionoverwritemode-legacyl), что помогает сократить количество ненужных перезаписей и повысить производительность.
+Если задать для [`use_replace_on_for_insert_overwrite`](/reference/global-configs/databricks-changes#use-replace-on-for-insert_overwrite-strategy) значение `true` (в SQL-хранилищах или при использовании кластерных вычислительных ресурсов), dbt динамически перезаписывает партиции и заменяет только те партиции или кластеры, которые возвращает запрос модели. dbt выполняет [оператор `insert overwrite` с partitionOverwriteMode='dynamic'](https://docs.databricks.com/aws/en/delta/selective-overwrite#dynamic-partition-overwrites-with-partitionoverwritemode-legacyl), что помогает сократить количество ненужных перезаписей и повысить производительность. 
 
-Если установить [`use_replace_on_for_insert_overwrite`](/reference/global-configs/databricks-changes#use-replace-on-for-insert_overwrite-strategy) в `False` в SQL warehouses, dbt будет обрезать (полностью очищать) таблицу перед вставкой новых данных. Это приводит к замене всех строк таблицы при каждом запуске модели, что может увеличить время выполнения и стоимость для больших наборов данных.
+Если задать для [`use_replace_on_for_insert_overwrite`](/reference/global-configs/databricks-changes#use-replace-on-for-insert_overwrite-strategy) значение `false` в SQL-хранилищах, dbt полностью очищает таблицу перед вставкой новых данных. При этом все строки в таблице заменяются при каждом запуске модели, что может увеличить время выполнения и затраты при работе с большими наборами данных
 
 Если вы не укажете `partition_by` или `liquid_clustered_by`, стратегия `insert_overwrite` будет атомарно заменять **всё содержимое таблицы**, перезаписывая все существующие данные только новыми записями. При этом схема столбцов таблицы остаётся неизменной. В некоторых ограниченных случаях такое поведение может быть желательным, так как оно минимизирует простой во время перезаписи содержимого таблицы. Эта операция сопоставима с выполнением `truncate` и `insert` в других базах данных. Для атомарной замены таблиц в формате Delta вместо этого используйте материализацию `table` (которая выполняет `create or replace`).
 
@@ -677,7 +727,8 @@ This strategy is particularly useful when:
     materialized='incremental',
     file_format='delta',
     incremental_strategy='delete+insert',
-    unique_key='user_id'
+    unique_key='user_id',
+    incremental_predicates='user_id >= 10000' # Never delete/insert users with ids < 10000
 ) }}
 
 with new_events as (
@@ -727,7 +778,7 @@ create temporary view delete_insert_incremental__dbt_tmp as
 insert into table analytics.delete_insert_incremental as target
 replace on (target.user_id <=> temp.user_id)
 (select `user_id`, `last_seen`
-   from delete_insert_incremental__dbt_tmp where date_day >= date_add(current_date, -1)) as temp
+   from delete_insert_incremental__dbt_tmp where user_id >= 10000) as temp
 ```
 
 </File>
@@ -760,13 +811,13 @@ create temporary view delete_insert_incremental__dbt_tmp as
 -- Step 1: Delete matching rows
 delete from analytics.delete_insert_incremental
 where analytics.delete_insert_incremental.user_id IN (SELECT user_id FROM delete_insert_incremental__dbt_tmp)
-  and date_day >= date_add(current_date, -1);
+  and user_id >= 10000;
 
 -- Step 2: Insert new rows
 insert into analytics.delete_insert_incremental by name
 select `user_id`, `last_seen`
 from delete_insert_incremental__dbt_tmp
-where date_day >= date_add(current_date, -1)
+where user_id >= 10000
 ```
 
 </File>
@@ -915,7 +966,7 @@ models:
 
 Чтобы воспользоваться этой возможностью, вам нужно будет добавить блоки вычислений в ваш профиль:
 
-<File name='profile.yml'>
+<File name='profiles.yml'>
 
 ```yaml
 
@@ -972,7 +1023,7 @@ profile-name:
 
 :::
 
-Чтобы настроить это внутри `<Constant name="cloud" />`, используйте [функцию расширенных атрибутов](/docs/dbt-cloud-environments#extended-attributes-) в нужных окружениях:
+Чтобы настроить это в <Constant name="dbt" />, используйте [функцию расширенных атрибутов](/docs/dbt-platform-environments#extended-attributes) в нужных окружениях:
 
 ```yaml
 
@@ -1093,6 +1144,121 @@ def model(dbt, session):
 увидеть описания моделей в поле `Comment` команды `describe [table] extended`
 или `show table extended in [database] like '*'`.
 
+## Query tags
+_Available in versions 1.11 or higher_
+
+[Query tags](https://docs.databricks.com/aws/en/sql/user/queries/query-tags) are a Databricks feature that allows you to attach custom key-value metadata to SQL queries. This metadata appears in system tables and query history, making it useful for tracking query costs, debugging, and auditing.
+
+:::note Feature availability
+
+Query tags may not yet be available in all Databricks workspaces. Check the [Databricks documentation](https://docs.databricks.com/aws/en/sql/user/queries/query-tags) for the latest information on feature availability.
+
+:::
+
+dbt-databricks supports setting query tags at both the connection level (in your profile) and the model level (in model configs). When you run dbt, it automatically includes default tags containing dbt metadata, such as the model name and dbt version.
+
+### Default query tags
+
+dbt-databricks automatically adds the following tags to every query:
+
+| Tag key | Description |
+|---------|-------------|
+| `@@dbt_model_name` | The name of the model being executed |
+| `@@dbt_core_version` | The version of dbt being used |
+| `@@dbt_databricks_version` | The version of dbt-databricks being used |
+| `@@dbt_materialized` | The materialization type (table, view, incremental, and so on.) |
+
+These reserved keys cannot be overridden by user-defined tags.
+
+### Configuring query tags
+
+You can set query tags at the connection level in your profile or at the model level in your model config. Model-level tags take precedence over connection-level tags.
+
+#### Connection-level query tags
+
+To set query tags for all queries in a connection, add the `query_tags` parameter to your `profiles.yml` file as a JSON string:
+
+<File name='~/.dbt/profiles.yml'>
+
+```yaml
+your_profile_name:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      catalog: my_catalog
+      schema: my_schema
+      host: yourorg.databrickshost.com
+      http_path: /sql/your/http/path
+      token: dapiXXXXXXXXXXXXXXXXXXXXXXX
+      query_tags: '{"team": "analytics", "project": "customer_360"}'
+```
+
+</File>
+
+#### Model-level query tags
+
+To set query tags for a specific model, use the `query_tags` config:
+
+<File name='models/my_model.sql'>
+
+```sql
+{{ config(
+    query_tags = {'cost_center': 'marketing', 'priority': 'high'}
+) }}
+
+select * from {{ ref('upstream_model') }}
+```
+
+</File>
+
+You can also configure query tags in your `dbt_project.yml` for groups of models:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  my_project:
+    marketing:
+      +query_tags: {'department': 'marketing'}
+    finance:
+      +query_tags: {'department': 'finance'}
+```
+
+</File>
+
+### Tag precedence and merging
+
+When query tags are defined at multiple levels, they are merged with the following precedence (highest to lowest):
+
+1. Model-level tags (from `config()` or schema.yml)
+2. Connection-level tags (from `profiles.yml`)
+3. Default dbt tags (automatically added)
+
+If the same key appears at multiple levels, the higher-precedence value wins.
+
+:::note Why connection-level tags?
+
+Due to how dbt merges configs, specifying `query_tags` at the model level in `config()` or `schema.yml` will **replace** any `query_tags` you defined in `dbt_project.yml` rather than merging them. This is standard dbt behavior for dictionary configs.
+
+To work around this limitation, dbt-databricks accepts `query_tags` in your connection profile (`profiles.yml`). Connection-level tags are always merged with model-level tags, allowing you to define common tags once in your profile and selectively add or override specific keys at the model level.
+
+**Recommended pattern:**
+- Define shared tags (team, project, environment) in your profile's `query_tags`
+- Use model-level `query_tags` when you need to add model-specific tags
+
+:::
+
+### Limitations
+
+- **Maximum 20 tags**: The total number of query tags (including default tags) cannot exceed 20.
+- **Value length**: Tag values must be at most 128 characters. Default tag values that exceed this limit are automatically truncated.
+- **Special characters**: Backslash (`\`), comma (`,`), and colon (`:`) characters in tag values are automatically escaped. A warning is logged when escaping occurs.
+- **Reserved keys**: The keys `@@dbt_model_name`, `@@dbt_core_version`, `@@dbt_databricks_version`, and `@@dbt_materialized` are reserved and cannot be used in user-defined tags.
+
+### Viewing query tags
+
+Query tags appear in Databricks system tables and query history. For information on how to query and analyze query tags, see the [Databricks query tags documentation](https://docs.databricks.com/aws/en/sql/user/queries/query-tags).
 
 ## Конфигурации формата файлов по умолчанию {#default-file-format-configurations}
 
@@ -1121,8 +1287,9 @@ snapshots:
 
 ## Материализованные представления и стриминговые таблицы {#materialized-views-and-streaming-tables}
 
-[Материализованные представления](https://docs.databricks.com/en/sql/user/materialized-views.html) и [потоковые таблицы](https://docs.databricks.com/en/sql/load-data-streaming-table.html) являются альтернативами инкрементальным таблицам, которые поддерживаются [Delta Live Tables](https://docs.databricks.com/en/delta-live-tables/index.html).
-См. [Что такое Delta Live Tables?](https://docs.databricks.com/en/delta-live-tables/index.html#what-are-delta-live-tables-datasets) для получения дополнительной информации и примеров использования.
+[Материализованные представления](https://docs.databricks.com/en/sql/user/materialized-views.html) и [потоковые таблицы](https://docs.databricks.com/en/sql/load-data-streaming-table.html) — это альтернативы инкрементальным таблицам, работающие на базе [Delta Live Tables](https://docs.databricks.com/en/delta-live-tables/index.html).
+
+Дополнительную информацию и примеры использования см. в разделе [Что такое Delta Live Tables?](https://docs.databricks.com/en/delta-live-tables/index.html#what-are-delta-live-tables-datasets)
 
 Чтобы использовать эти стратегии материализации, вам потребуется рабочее пространство, включенное для Unity Catalog и безсерверных SQL-складов.
 
@@ -1148,8 +1315,9 @@ snapshots:
 
 </File>
 
-Мы поддерживаем параметр [on_configuration_change](/reference/resource-configs/on_configuration_change) для большинства доступных свойств этих материализаций.  
-В следующей таблице приведено обобщение поддержки конфигураций:
+Мы поддерживаем [on_configuration_change](/reference/resource-configs/on_configuration_change) для большинства доступных свойств этих материализаций. В следующей таблице приведена сводная информация о поддерживаемых конфигурациях. Подробнее о каждой конфигурации см. в разделе [Сведения о конфигурациях](#configuration-details):
+
+<SimpleTable>
 
 | Концепция Databricks | Имя конфига | Поддержка MV/ST | Версия |
 | ------------------- | ------------| --------------- | ------- |
@@ -1159,7 +1327,11 @@ snapshots:
 | [TBLPROPERTIES](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html#tblproperties) | `tblproperties` | MV/ST | Все |
 | [TAGS](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html) | `databricks_tags` | MV/ST | v1.11+ |
 | [SCHEDULE CRON](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-create-materialized-view.html#parameters) | `schedule: { 'cron': '\<cron schedule\>', 'time_zone_value': '\<time zone value\>' }` | MV/ST | Все |
-| query | определяется SQL вашего model | on_configuration_change только для MV | Все |
+| [SCHEDULE EVERY](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-materialized-view#parameters) | `schedule: { 'every': '\<n\> \<unit\>' }` | MV/ST | v1.12+ |
+| [TRIGGER ON UPDATE](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-materialized-view#parameters) | `schedule: { 'on_update': true, 'at_most_every': '\<n\> \<unit\>' }` | MV/ST | v1.12+ |
+| [WITH ROW FILTER](https://docs.databricks.com/aws/en/tables/row-and-column-filters) | `row_filter` | MV/ST | v1.12+ |
+| query | определяется SQL-кодом вашей модели | on_configuration_change только для MV | Все |
+</SimpleTable>
 
 <File name='mv_example.sql'>
 
@@ -1206,43 +1378,149 @@ _Доступно в версиях 1.11 или выше_
 ) }}
 ```
 
-Теги применяются с помощью операторов `ALTER` после создания материализации. После применения теги нельзя удалить через изменения конфигурации dbt-databricks. Для удаления тегов необходимо использовать Databricks напрямую или post-hook.
+В `dbt-databricks` v1.12+ добавлена поддержка тегов, состоящих только из ключа. Чтобы задать тег с ключом, но без значения, укажите в качестве значения тега пустую строку `''` или `None`:
 
-#### description {#description}
-Как и в случае представлений и таблиц, добавление `description` в вашу конфигурацию приведет к добавлению комментария на уровне таблицы в вашу материализацию.
+```sql
+{{ config(
+    materialized='streaming_table',
+    databricks_tags={'sensitive': '', 'reviewed': None}
+) }}
+```
+
+Это относится к `databricks_tags` как на уровне таблиц, так и на уровне столбцов. Значения, не являющиеся строками, например числа или логические значения, преобразуются в строки.
+
+Теги применяются с помощью операторов `ALTER` после создания материализации. После применения теги нельзя удалить путём изменения конфигурации dbt-databricks. Чтобы удалить теги, необходимо использовать Databricks напрямую или post-hook.
+
+:::caution Изменение поведения в v1.12
+Начиная с `dbt-databricks` v1.12.0, конфигурации `databricks_tags` объединяются с сохранением тегов на разных уровнях иерархии конфигурации (например, на уровне проекта и на уровне модели), а не полностью заменяются конфигурациями нижележащих уровней.
+
+Если один и тот же ключ тега определён на нескольких уровнях, приоритет имеет значение с нижележащего уровня. Ключи тегов, определённые только на вышележащих уровнях, сохраняются.
+
+Это поведение действует везде, где можно настроить `databricks_tags`, включая таблицы, столбцы, материализованные представления и потоковые таблицы.
+:::
+
+Например, при следующих конфигурациях на уровне проекта и модели:
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  my_project:
+    +databricks_tags:
+      a: "b"
+      c: "project_value"
+```
+
+</File>
+
+<File name='models/my_model.sql'>
+
+```sql
+{{ config(
+    databricks_tags={'c': 'model_value', 'k': 'v'}
+) }}
+```
+
+</File>
+
+В результате будут применены следующие теги:
+
+- `a: b` — сохранён с уровня проекта
+- `c: model_value` — значение на уровне модели переопределяет значение `c` на уровне проекта
+- `k: v` — добавлен на уровне модели
+
+#### description
+Как и для представлений и таблиц, добавление `description` в конфигурацию приведёт к добавлению комментария на уровне таблицы к вашей материализации.
 
 #### tblproperties {#tblproperties}
 `tblproperties` работает так же, как для представлений и таблиц, с важным исключением: адаптер поддерживает список ключей, которые устанавливаются Databricks при создании материализованного представления или потоковой таблицы, которые игнорируются для определения изменений конфигурации.
 
-#### schedule {#schedule}
-Используйте это для установки расписания обновления для модели. Если вы используете ключ `schedule`, ключ `cron` обязателен в связанном словаре, но `time_zone_value` является необязательным (см. пример выше). Значение `cron` должно быть отформатировано, как это задокументировано Databricks.
-Если расписание установлено на материализации в Databricks, а ваш проект dbt не указывает расписание для него (когда `on_configuration_change` установлено в `apply`), расписание обновления будет установлено на ручное при следующем запуске проекта.
-Даже когда расписания установлены, dbt будет запрашивать, чтобы материализация обновлялась вручную при запуске.
+#### schedule
+Задайте расписание обновления модели, используя один из трёх взаимоисключающих режимов:
+ 
+| Режим | Конфигурация | Формат | Версия |
+|------|--------|--------|---------|
+| `cron` | `schedule: { 'cron': '...', 'time_zone_value': '...' }` | Строка Cron ([формат Databricks](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-materialized-view#parameters)). Параметр `time_zone_value` необязателен. | Все |
+| `every` | `schedule: { 'every': '<n> <unit>' }` | `'<n> <unit>'`, где unit — `HOURS`, `DAYS` или `WEEKS`, например `'2 HOURS'` | v1.12+ |
+| `on_update` | `schedule: { 'on_update': true, 'at_most_every': '<n> <unit>' }` | Установите `true` для обновления при изменении вышестоящих данных. Необязательный параметр `at_most_every` ограничивает частоту обновлений (минимальный интервал — 60 секунд). Например, `'15 MINUTES'` | v1.12+ |
+ 
+**Поведение обновления в зависимости от режима:**
+- `cron`: dbt запрашивает ручное обновление при каждом запуске.
+- `every` и `on_update`: Databricks автоматически управляет обновлением; dbt не инициирует ручное обновление при повторном запуске без изменений.
+Если в Databricks задано расписание, но в вашем проекте dbt оно не указано, при следующем запуске обновление переключается в ручной режим (если для `on_configuration_change` установлено значение `apply`).
+ 
+#### query
+Для материализованных представлений, если скомпилированный запрос отличается от запроса в базе данных, dbt выполняет действие, заданное параметром `on_configuration_change`. Изменения запросов для потоковых таблиц в настоящее время не обнаруживаются. Подробнее см. в разделе [on_configuration_change](#on_configuration_change).
 
-#### query {#query}
-Для материализованных представлений, если скомпилированный запрос для модели отличается от запроса в базе данных, мы примем действие, указанное в `on_configuration_change`.
-Изменения в запросе в настоящее время не обнаруживаются для потоковых таблиц; см. следующий раздел для подробностей.
+#### row_filter
+_Доступно в версиях 1.12 и выше_
 
-### on_configuration_change {#onconfigurationchange}
-`on_configuration_change` поддерживается для материализованных представлений и потоковых таблиц, хотя две материализации обрабатывают это по-разному.
+`row_filter` применяет к модели [фильтр строк Unity Catalog](https://docs.databricks.com/aws/en/tables/row-and-column-filters). Он поддерживается для материализаций `table`, `incremental`, `materialized_view` и `streaming_table`. Полное описание конфигурации и примеры см. в разделе [Настройка фильтров строк](#setting-row-filters).
 
-#### Материализованные представления {#materialized-views}
-В настоящее время единственное изменение, которое можно применить без воссоздания материализованного представления в Databricks, - это обновление расписания.
-Это связано с ограничениями в SQL API Databricks.
+### on_configuration_change
+ 
+| Материализация | Требуется удаление и повторное создание? | Примечания |
+|----------------|----------------------------|-------|
+| Материализованные представления | Да, для всех изменений, кроме обновлений расписания | Ограничение Databricks SQL API |
+| Потоковые таблицы | Только при изменении `partition_by` | Для всех остальных поддерживаемых изменений используется `CREATE OR REFRESH`, а для изменения расписания дополнительно используется `ALTER` |
+ 
+Примечание об изменениях запросов потоковых таблиц: в настоящее время адаптер не может определить, изменился ли запрос потоковой таблицы. Независимо от поведения `on_configuration_change`, dbt использует `CREATE OR REFRESH`, который применяет обновлённый запрос только к будущим строкам &mdash; ранее обработанные строки не обрабатываются повторно.
+ 
+Чтобы повторно обработать доступные исходные данные с обновлённым запросом, выполните запуск с `--full-refresh`.
+ 
+<VersionBlock firstVersion="1.12">
 
-#### Streaming Tables {#streaming-tables}
-Для стриминговых таблиц в настоящее время **только изменения в партиционировании** требуют, чтобы таблица была удалена и создана заново.  
-Для любых других поддерживаемых изменений конфигурации мы используем `CREATE OR REFRESH` (а также оператор `ALTER` для изменений расписания), чтобы применить эти изменения.
+## Представления метрик
 
-В настоящее время у адаптера нет механизма для определения того, изменилась ли SQL‑запрос стриминговой таблицы. Поэтому в этом случае, независимо от поведения, заданного в `on_configuration_change`, будет использован оператор `create or refresh` (при условии, что `partitioned by` не изменился). Это приведёт к тому, что обновлённый запрос будет применяться только к будущим строкам, без повторного выполнения для уже обработанных данных.
+Установите `materialized='metric_view'`, чтобы управлять [представлением метрик Unity Catalog](https://docs.databricks.com/aws/en/metric-views/) с помощью dbt. Вместо SQL тело модели содержит YAML-определение представления метрик: `version`, `source`, `dimensions`, `measures` и необязательный `filter`. dbt создаёт представление метрик с помощью `CREATE OR REPLACE VIEW ... WITH METRICS LANGUAGE YAML`.
 
-Если исходные данные всё ещё доступны, запуск с флагом `--full-refresh` повторно обработает доступные данные с использованием обновлённого текущего запроса.
+<File name='order_metrics.sql'>
 
-## Setting table properties {#setting-table-properties}
-[Table properties](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html) можно задавать в конфигурации таблиц или представлений с помощью параметра `tblproperties`:
+```sql
+{{ config(materialized='metric_view') }}
 
+version: 1.1
+source: "{{ ref('source_orders') }}"
+filter: status = 'completed'
+dimensions:
+  - name: order_date
+    expr: order_date
+  - name: status
+    expr: status
+    synonyms: [state, order_state]
+measures:
+  - name: total_orders
+    expr: count(1)
+  - name: total_revenue
+    expr: sum(revenue)
+    synonyms: [revenue, sales]
+```
+
+</File>
+
+Укажите ссылку на исходный объект в `source` с помощью `ref()`, чтобы dbt мог определить зависимости. Для запросов к полученному представлению метрик используйте функцию `MEASURE()`.
+
+dbt передаёт YAML-содержимое в Databricks без изменений, поэтому представление метрик поддерживает **всю** [спецификацию YAML для представлений метрик Unity Catalog](https://docs.databricks.com/aws/en/business-semantics/metric-views/yaml-reference), а не только показанные выше ключи. Через dbt можно использовать любое поле, которое Databricks принимает на стороне сервера, включая [`synonyms`](https://docs.databricks.com/aws/en/metric-views/semantic-metadata) и `display_name` для измерений и мер, а также `format` и `window` для мер.
+
+Для представления метрик также можно задать `databricks_tags` и [`grants`](/reference/resource-configs/grants). Свойства `tblproperties` применяются только при обновлении представления на месте (с помощью `view_update_via_alter`) или его замене, но не при первоначальном создании.
+
+### Обновление представления метрик
+
+По умолчанию dbt пересоздаёт представление метрик с помощью `CREATE OR REPLACE VIEW` при каждом запуске.
+
+Если для [`view_update_via_alter`](/reference/global-configs/databricks-changes#changes-to-the-view-materialization) установлено значение `true`, dbt применяет изменения на месте, не заменяя представление:
+
+- Изменения YAML-определения применяются с помощью `ALTER VIEW ... AS`.
+- Изменения `databricks_tags` или `tblproperties` применяются с помощью `ALTER VIEW ... SET`.
+
+Если ни определение, ни теги, ни свойства не изменились, dbt пропускает обновление.
+
+</VersionBlock>
+
+## Настройка свойств таблиц
+[Свойства таблиц](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-tblproperties.html) можно задать в конфигурации таблиц или представлений с помощью `tblproperties`:
 <File name='with_table_properties.sql'>
-
+   
 ```sql
 {{ config(
     tblproperties={
@@ -1251,17 +1529,14 @@ _Доступно в версиях 1.11 или выше_
     }
  ) }}
 ```
-
+ 
 </File>
-
 :::caution
-
-Эти свойства отправляются напрямую в Databricks без проверки в dbt, поэтому будьте внимательны при использовании этой функции. Вам нужно будет выполнить полное обновление инкрементальных материализаций, если вы измените их `tblproperties`.
-
+Эти свойства передаются напрямую в Databricks без проверки в dbt. При изменении `tblproperties` инкрементальных материализаций потребуется выполнить их полное обновление.
+ 
 :::
-
-Одним из применений этой функции является обеспечение совместимости таблиц `delta` с читателями `iceberg` с использованием [Универсального формата](https://docs.databricks.com/en/delta/uniform.html).
-
+ 
+Один из вариантов использования — обеспечение совместимости таблиц `delta` со средствами чтения `iceberg` с помощью [Universal Format](https://docs.databricks.com/en/delta/uniform.html):
 ```sql
 {{ config(
     tblproperties={
@@ -1270,6 +1545,4 @@ _Доступно в версиях 1.11 или выше_
     }
  ) }}
 ```
-
-`tblproperties` могут быть указаны для моделей Python, но они будут применены через оператор `ALTER` после создания таблицы.
-Это связано с ограничением в PySpark.
+`tblproperties` можно указать для моделей Python, но из-за ограничения PySpark они применяются с помощью оператора `ALTER` после создания таблицы.

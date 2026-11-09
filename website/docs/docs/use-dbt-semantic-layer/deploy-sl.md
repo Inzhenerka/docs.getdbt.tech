@@ -5,9 +5,13 @@ description: "Разверните семантический слой dbt в db
 sidebar_label: "Разверните метрики"
 tags: [Semantic Layer]
 pagination_next: "docs/use-dbt-semantic-layer/exports"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
 ---
 
-# Развертывание ваших метрик <Lifecycle status="self_service,managed,managed_plus" /> {#deploy-your-metrics}
+# Разверните свои метрики
 
 <!-- Приведённый ниже фрагмент можно найти в следующих расположениях файлов в репозитории кода документации:
 
@@ -17,11 +21,11 @@ import RunProdJob from '/snippets/_sl-run-prod-job.md';
 
 <RunProdJob/>
 
-## Следующие шаги {#next-steps}
-После того как вы выполнили job и задеплоили свой <Constant name="semantic_layer" />:
-- [Настройте ваш <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) в <Constant name="cloud" />.
-- Ознакомьтесь с [доступными интеграциями](/docs/cloud-integrations/avail-sl-integrations), такими как Tableau, Google Sheets, Microsoft Excel и другими.
-- Начните выполнять запросы к своим метрикам с помощью [синтаксиса запросов API](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata).
+## Следующие шаги
+После того как вы выполнили задание и развернули <Constant name="semantic_layer" />:
+- [Настройте <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) в <Constant name="dbt" />.
+- Ознакомьтесь с [доступными интеграциями](/docs/platform-integrations/avail-sl-integrations), такими как Tableau, Google Sheets, Microsoft Excel и другими.
+- Начните запрашивать метрики, используя [синтаксис запросов API](/docs/dbt-apis/sl-jdbc#querying-the-api-for-metric-metadata).
 
 ## Связанные документы {#related-docs}
 - [Оптимизируйте производительность запросов](/docs/use-dbt-semantic-layer/sl-cache) с помощью декларативного кэширования.

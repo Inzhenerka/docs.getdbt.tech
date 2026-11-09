@@ -4,16 +4,18 @@ title: "Справочник по командам dbt"
 
 Вы можете запускать dbt, используя следующие инструменты:
 
-- В браузере с помощью [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio)  
-- В интерфейсе командной строки, используя [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) или open-source версию [<Constant name="core" />](/docs/core/installation-overview).
+- В браузере с помощью [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio)
+- В интерфейсе командной строки с помощью [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) или самостоятельно размещённого dbt &mdash; [<Constant name="fusion" />](/docs/local/install-dbt?version=2.0) или [<Constant name="core" />](/docs/local/install-dbt?version=1.0).
 
-Ключевое различие между упомянутыми инструментами заключается в том, что <Constant name="cloud_cli" /> и <Constant name="cloud_ide" /> спроектированы для поддержки безопасного параллельного выполнения команд dbt, используя инфраструктуру <Constant name="cloud" /> и её широкий набор [возможностей](/docs/cloud/about-cloud/dbt-cloud-features). В отличие от них, <Constant name="core" /> _не поддерживает_ безопасное параллельное выполнение нескольких вызовов в рамках одного процесса. Подробнее см. в разделе [параллельное выполнение](#parallel-execution).
+Ключевое отличие заключается в том, что <Constant name="platform_cli" /> и <Constant name="studio_ide" /> разработаны для безопасного параллельного выполнения команд dbt с использованием инфраструктуры <Constant name="dbt_platform" /> и широкого набора её [возможностей](/docs/platform/about-platform/dbt-platform-features). В отличие от них, <Constant name="core" /> _не поддерживает_ безопасное параллельное выполнение нескольких вызовов в рамках одного процесса. Подробнее см. в разделе [«Параллельное выполнение»](#parallel-execution).
 
-Ключевое различие между упомянутыми инструментами заключается в том, что dbt Cloud CLI и IDE разработаны для поддержки безопасного параллельного выполнения команд dbt, используя инфраструктуру dbt Cloud и его обширные [функции](/docs/cloud/about-cloud/dbt-cloud-features). В отличие от них, `dbt-core` _не поддерживает_ безопасное параллельное выполнение для нескольких вызовов в одном процессе. Узнайте больше в разделе [параллельное выполнение](#parallel-execution).
+Ключевое различие между упомянутыми инструментами заключается в том, что <Constant name="cloud_cli" /> и <Constant name="cloud_ide" /> спроектированы для поддержки безопасного параллельного выполнения команд dbt, используя инфраструктуру <Constant name="cloud" /> и её широкий набор [возможностей](/docs/platform/about-platform/dbt-platform-features). В отличие от них, <Constant name="core" /> _не поддерживает_ безопасное параллельное выполнение нескольких вызовов в рамках одного процесса. Подробнее см. в разделе [параллельное выполнение](#parallel-execution).
 
-<Constant name="cloud" /> позволяет выполнять команды параллельно, повышая эффективность без ущерба для целостности данных. Это дает возможность запускать несколько команд одновременно. Однако важно понимать, какие команды можно выполнять параллельно, а какие — нет.
+<Constant name="dbt_platform" /> позволяет выполнять команды одновременно, повышая эффективность без ущерба для целостности данных. Это дает возможность запускать несколько команд в одно и то же время. Однако важно понимать, какие команды можно выполнять параллельно, а какие — нельзя.
 
-dbt Cloud позволяет выполнять команды одновременно, повышая эффективность без ущерба для целостности данных. Это позволяет запускать несколько команд одновременно. Однако важно понимать, какие команды можно выполнять параллельно, а какие нет.
+В отличие от этого, [`dbt` _не поддерживает_](/reference/programmatic-invocations#parallel-execution-not-supported) безопасное параллельное выполнение нескольких вызовов в одном процессе и требует от пользователей самостоятельно управлять параллельным выполнением, чтобы обеспечить целостность данных и стабильность системы.
+
+Чтобы ваши рабочие процессы dbt были эффективными и безопасными, можно параллельно выполнять команды dbt разных типов &mdash; например, `dbt build` (операция записи) можно безопасно выполнять одновременно с `dbt parse` (операция чтения). Однако выполнять `dbt build` и `dbt run` (обе — операции записи) параллельно нельзя.
 
 В отличие от этого, [`dbt-core` _не поддерживает_](/reference/programmatic-invocations#parallel-execution-not-supported) безопасное параллельное выполнение для нескольких вызовов в одном процессе и требует от пользователей самостоятельного управления параллельностью для обеспечения целостности данных и стабильности системы.
 
@@ -26,43 +28,49 @@ dbt Cloud позволяет выполнять команды одноврем�
 | **Запись** | Эти команды выполняют действия, которые изменяют данные или метаданные в вашей платформе данных.<br /><br /> Ограничены одним вызовом в любой момент времени, что предотвращает возможные конфликты, такие как перезапись одной и той же таблицы в вашей платформе данных одновременно. | `dbt build`<br />`dbt run` |
 | **Чтение** | Эти команды включают операции, которые извлекают или читают данные без внесения изменений в вашу платформу данных.<br /><br /> Могут иметь несколько вызовов параллельно и не ограничены одним вызовом в любой момент времени. Это означает, что команды чтения могут выполняться параллельно с другими командами чтения и одной командой записи.| `dbt parse`<br />`dbt compile`|
 
+<a id="available-commands" />
+
 ## Доступные команды {#parallel-execution}
 
-Следующие разделы описывают команды, поддерживаемые dbt, и их соответствующие флаги. Они доступны во всех инструментах и всех [поддерживаемых версиях](/docs/dbt-versions/core), если не указано иное. Вы можете запускать эти команды в вашем конкретном инструменте, добавляя к ним префикс `dbt` &mdash; например, чтобы запустить команду `test`, введите `dbt test`.
+В следующих разделах описаны команды, поддерживаемые dbt, и соответствующие им флаги. Они доступны во всех инструментах и во всех [поддерживаемых версиях](/docs/dbt-versions), если не указано иное. Вы можете выполнять эти команды в используемом инструменте, добавляя перед ними `dbt` &mdash; например, чтобы выполнить команду `test`, введите `dbt test`.
+
+Вы также можете программно вызывать эти команды и передавать флаги с помощью `dbtRunner.invoke`. Подробности см. в разделе [Программный вызов команд](/reference/programmatic-invocations).
 
 Для получения информации о выборе моделей в командной строке обратитесь к [Синтаксис выбора моделей](/reference/node-selection/syntax).
 
-Команды с ('❌') указывают на команды записи, команды с ('✅') указывают на команды чтения, а команды с (N/A) указывают на то, что они не имеют отношения к параллелизации команд dbt.
-
-:::info
-Некоторые команды пока не поддерживаются в <Constant name="fusion_engine" /> или имеют ограниченную функциональность. Подробности см. на странице [Fusion supported features](/docs/fusion/supported-features).
-:::
+Команды, отмеченные ❌, выполняют запись, команды, отмеченные ✅, выполняют чтение, а отметка N/A означает, что параллельное выполнение неприменимо к данной команде.
 
 
 | Command | Description | Parallel execution |  <div style={{width:'250px'}}>Caveats</div> |
 |---------|-------------| :-----------------:| ------------------------------------------ |
-| [build](/reference/commands/build) | Собирает и тестирует все выбранные ресурсы (models, seeds, tests и другие) |  ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) | 
-| cancel | Отменяет последний запуск. | N/A | <Constant name="cloud_cli" /> <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions/core) |
-| [clean](/reference/commands/clean) | Удаляет артефакты, присутствующие в dbt‑проекте |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [clone](/reference/commands/clone) | Клонирует выбранные модели из указанного состояния |  ❌ | Все инструменты <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions/core) |
-| [compile](/reference/commands/compile) | Компилирует (но не выполняет) модели в проекте |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [debug](/reference/commands/debug) | Выполняет отладку подключений и проектов dbt | ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [deps](/reference/commands/deps) | Загружает зависимости для проекта |  ✅ |  Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [docs](/reference/commands/cmd-docs) | Генерирует документацию для проекта |   ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) <br /> Пока не поддерживается в <Constant name="fusion" /> |
-| [environment](/reference/commands/dbt-environment) | Позволяет взаимодействовать с вашим окружением <Constant name="cloud" />. |   N/A | <Constant name="cloud_cli" /> <br /> Требуется [dbt v1.5 или выше](/docs/dbt-versions/core) |
-| help | Отображает справочную информацию для любой команды | N/A | <Constant name="core" />, <Constant name="cloud_cli" /> <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [init](/reference/commands/init) | Инициализирует новый dbt‑проект |   ✅ | <Constant name="fusion" /> <br /> <Constant name="core" /><br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [invocation](/reference/commands/invocation) | Позволяет пользователям отлаживать длительные сессии, взаимодействуя с активными запусками. |  N/A | <Constant name="cloud_cli" /> <br /> Требуется [dbt v1.5 или выше](/docs/dbt-versions/core) |
-| [list](/reference/commands/list) | Выводит список ресурсов, определённых в dbt‑проекте |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [parse](/reference/commands/parse) | Разбирает проект и записывает подробную информацию о времени выполнения |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| reattach | Повторно подключается к последнему запуску для получения логов и артефактов. |   N/A | <Constant name="cloud_cli" /> <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions/core) |
-| [retry](/reference/commands/retry) | Повторно запускает последнюю команду `dbt` с точки сбоя |  ❌ | Все инструменты <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions/core)<br /> Пока не поддерживается в <Constant name="fusion" /> |
-| [run](/reference/commands/run) | Выполняет модели в проекте |   ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [run-operation](/reference/commands/run-operation) | Вызывает макрос, включая выполнение произвольного обслуживающего SQL в базе данных | ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [seed](/reference/commands/seed) | Загружает CSV‑файлы в базу данных |  ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [show](/reference/commands/show) | Предварительно просматривает строки таблиц после трансформации | ✅ |  Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [snapshot](/reference/commands/snapshot) | Выполняет задания типа "snapshot", определённые в проекте |  ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [source](/reference/commands/source) | Предоставляет инструменты для работы с исходными данными (включая проверку «свежести» источников) | ✅ | Все инструменты<br /> Все [поддерживаемые версии](/docs/dbt-versions/core) |
-| [test](/reference/commands/test) | Выполняет тесты, определённые в проекте  |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions/core) <br /> В <Constant name="fusion" /> флаги `--store-failures`, `--fail-fast`, `--warn-error` пока не поддерживаются |
+| [build](/reference/commands/build) | Создаёт и тестирует все выбранные ресурсы. |  ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| cancel | Отменяет последний вызов. | N/A | <Constant name="platform_cli" /> <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions) |
+| [check](/reference/commands/check) | Выполняет проверки на основе [dbt Information Schema](/docs/build/dbt-information-schema) | ✅ | <Constant name="core_v2" /> и более поздние версии |
+| [clean](/reference/commands/clean) | Удаляет артефакты из проекта dbt |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [clone](/reference/commands/clone) | Клонирует выбранные модели из указанного состояния |  ❌ | Все инструменты <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions) |
+| [compile](/reference/commands/compile) | Компилирует (но не запускает) модели в проекте |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [debug](/reference/commands/debug) | Выполняет диагностику подключений и проектов dbt | ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [deps](/reference/commands/deps) | Загружает зависимости проекта |  ✅ |  Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [docs](/reference/commands/cmd-docs) | Создаёт документацию проекта |   ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [environment](/reference/commands/dbt-environment?version=2.0) | Позволяет взаимодействовать с вашей средой <Constant name="dbt_platform" />. |   N/A | <Constant name="platform_cli" /> <br /> Требуется [dbt v1.5 или выше](/docs/dbt-versions) |
+| [freshness](/reference/commands/freshness) | Проверяет, соответствуют ли источники и модели с настроенной проверкой свежести заданным порогам устаревания данных | ✅ | Все инструменты <br /> Требуется [dbt v2.0 или выше](/docs/dbt-versions) |
+| help | Выводит справочную информацию по любой команде | N/A | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [init](/reference/commands/init) | Инициализирует новый проект dbt |   ✅ | <Constant name="fusion" /> <br /> <Constant name="core" /><br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [invocation](/reference/commands/invocation?version=2.0) | Позволяет пользователям отлаживать длительные сеансы, взаимодействуя с активными вызовами.|  N/A | <Constant name="platform_cli" /> <br /> Требуется [dbt v1.5 или выше](/docs/dbt-versions) |
+| [lint](/reference/commands/lint?version=2.0) | Проверяет SQL-файлы проекта на нарушения стиля, корректности и принятых соглашений | ✅ | Все инструменты <br /> Только <Constant name="fusion_engine" /> |
+| [list](/reference/commands/list) | Выводит список ресурсов, определённых в проекте dbt |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [login](/reference/commands/login?version=2.0) | Выполняет вход в вашу учётную запись <Constant name="dbt_platform" /> | N/A | v1.13 и более поздние версии <br /> <Constant name="platform_cli" /> |
+| [parse](/reference/commands/parse) | Выполняет разбор проекта и записывает подробную информацию о времени выполнения |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| reattach | Повторно подключается к последнему вызову для получения журналов и артефактов. |   N/A | <Constant name="platform_cli" /> <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions) |
+| [retry](/reference/commands/retry) | Повторно выполняет последнюю запущенную команду `dbt` с места сбоя |  ✅ | Все инструменты <br /> Требуется [dbt v1.6 или выше](/docs/dbt-versions) |
+| [run](/reference/commands/run) | Запускает модели в проекте |   ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [run-operation](/reference/commands/run-operation) | Вызывает макрос, в том числе для выполнения произвольных SQL-команд обслуживания базы данных | ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [seed](/reference/commands/seed) | Загружает CSV-файлы в базу данных |  ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [show](/reference/commands/show) | Показывает предварительный просмотр строк таблицы после преобразования | ✅ |  Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [snapshot](/reference/commands/snapshot) | Выполняет задания по созданию снимков, определённые в проекте |  ❌ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [source](/reference/commands/source) | Предоставляет инструменты для работы с исходными данными (в том числе для проверки свежести источников) | ✅ | Все инструменты<br /> Все [поддерживаемые версии](/docs/dbt-versions) |
+| [system](/reference/commands/system?version=2.0) | Управляет установкой CLI: обновляет до новой версии, удаляет или предварительно устанавливает драйверы адаптеров ADBC | N/A | Только <Constant name="fusion" /> |
+| [test](/reference/commands/test) | Выполняет тесты, определённые в проекте  |  ✅ | Все инструменты <br /> Все [поддерживаемые версии](/docs/dbt-versions) <br /> В <Constant name="fusion" /> флаг `--warn-error` пока не поддерживается  |
+| [wizard](/docs/dbt-ai/wizard-cli-reference) | Запускает из командной строки сеанс разработки dbt с ИИ-агентом <Constant name="wizard"/> | N/A |  [Все поддерживаемые версии](/docs/dbt-versions) |
 
-Примечание: используйте флаг [`--version`](/reference/commands/version), чтобы отобразить установленную версию <Constant name="core" /> или <Constant name="cloud_cli" />. (Не применяется к <Constant name="cloud_ide" />). Доступно во всех [поддерживаемых версиях](/docs/dbt-versions/core).
+Примечание: используйте флаг [`--version`](/reference/commands/version), чтобы вывести установленную версию <Constant name="core" /> или <Constant name="platform_cli" />. (Неприменимо к <Constant name="studio_ide" />). Доступно во всех [поддерживаемых версиях](/docs/dbt-versions).

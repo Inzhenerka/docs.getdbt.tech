@@ -2,7 +2,7 @@
 title: "Конфигурации BigQuery"
 description: "Справочное руководство по конфигурациям BigQuery в dbt."
 id: "bigquery-configs"
-tags: ['BigQuery', 'dbt Fusion', 'dbt Core']
+tags: ['BigQuery', 'dbt v2', 'dbt v1']
 ---
 
 <!----
@@ -106,7 +106,7 @@ as (
 
 #### Партиционирование по дате или timestamp загрузки (ingestion) {#partitioning-by-an-ingestion-date-or-timestamp}
 
-BigQuery поддерживает [более старый механизм партиционирования](https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time), основанный на времени загрузки каждой строки. Хотя мы рекомендуем по возможности использовать более новый и удобный подход к партиционированию, для очень больших наборов данных этот более механистичный подход может дать некоторые улучшения производительности. Подробнее см. [описание инкрементальной стратегии `insert_overwrite` ниже](#copying-ingestion-time-partitions).
+BigQuery поддерживает [более старый механизм партиционирования](https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time), основанный на времени загрузки каждой строки. Хотя мы рекомендуем по возможности использовать более новый и удобный подход к партиционированию, для очень больших наборов данных этот более механистичный подход может дать некоторые улучшения производительности. Подробнее см. [описание инкрементальной стратегии `insert_overwrite` ниже](#copying-partitions).
 
 dbt всегда инструктирует BigQuery партиционировать таблицу по значениям колонки, указанной в `partition_by.field`. Если в конфигурации модели указать `partition_by.time_ingestion_partitioning` равным `True`, dbt будет использовать эту колонку как вход для псевдоколонки `_PARTITIONTIME`. В отличие от более нового партиционирования по колонке, в этом случае вы должны убедиться, что значения в колонке партиционирования точно соответствуют временной гранулярности ваших партиций.
 
@@ -304,7 +304,41 @@ select * from ...
 
 </File>
 
-## Управление шифрованием KMS {#managing-kms-encryption}
+## Использование резервирований
+
+Настройка `reservation` направляет задания BigQuery, отправленные dbt, в определённое [резервирование](https://docs.cloud.google.com/bigquery/docs/reservations-workload-management#flexible).
+
+Вы можете задать `reservation` на трёх уровнях, перечисленных в порядке возрастания приоритета:
+
+1. **Уровень целевого окружения** (`profiles.yml`) — применяется ко всем заданиям для целевого окружения. См. [Подключение к BigQuery](/docs/local/connect-data-platform/bigquery-setup?version=1.12#reservation).
+
+2. **Уровень проекта** (`dbt_project.yml`) — применяется ко всем моделям, соответствующим настройке.
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  my_project:
+    +reservation: 'projects/abc-123/locations/US/reservations/my-reservation'
+```
+
+</File>
+
+3. **Уровень модели** (`{{ config(...) }}`) — переопределяет настройки проекта и целевого окружения для отдельной модели.
+
+<File name='models/my_model.sql'>
+
+```sql
+{{ config(
+    reservation='projects/abc-123/locations/US/reservations/my-reservation'
+) }}
+
+select ...
+```
+
+</File>
+
+## Управление шифрованием с помощью KMS
 
 [Ключи шифрования, управляемые клиентом](https://cloud.google.com/bigquery/docs/customer-managed-encryption), могут быть настроены для таблиц BigQuery с помощью конфигурации модели `kms_key_name`.
 
@@ -337,7 +371,9 @@ dbt поддерживает задание labels BigQuery для таблиц 
 
 Конфигурация `labels` может быть задана в конфигурации модели или в файле `dbt_project.yml`, как показано ниже.
 
-  Пары ключ‑значение BigQuery для labels длиной более 63 символов обрезаются.
+Модель без конфигурации `labels` наследует метки из `dbt_project.yml`. Метки, заданные в конфигурации модели, имеют приоритет над метками, заданными в `dbt_project.yml`. <Constant name="dbt" /> не объединяет эти два набора.
+
+  Ключи и значения меток BigQuery длиной более 63 символов обрезаются.
 
 **Настройка labels в файле модели**
 
@@ -374,7 +410,11 @@ models:
 
 </File>
 
-<Lightbox src="/img/docs/building-a-dbt-project/building-models/73eaa8a-Screen_Shot_2020-01-20_at_12.12.54_PM.png" title="Просмотр labels в консоли BigQuery"/>
+:::caution
+В `dbt_project.yml` заключайте в кавычки значения меток, которые YAML может интерпретировать как логические значения или числа, например `yes`, `no`, `on`, `off`, `true`, `false` или `123`. Значения меток должны быть строками, поэтому указывайте `test: "yes"`. В блоке `config()` модели заключайте строковые значения в кавычки, например `labels={'contains_pii': 'yes'}`.
+:::
+
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/73eaa8a-Screen_Shot_2020-01-20_at_12.12.54_PM.png" title="Просмотр меток в консоли BigQuery"/>
 
 ### Применение labels к заданиям (jobs) {#applying-labels-to-jobs}
 
@@ -558,7 +598,17 @@ models:
 - `insert_overwrite`
 - [`microbatch`](/docs/build/incremental-microbatch)
 
-### Производительность и стоимость {#performance-and-cost}
+<VersionBlock lastVersion="1.99">
+
+### История изменений
+
+Параметр `enable_change_history` включает [функцию истории изменений BigQuery](https://cloud.google.com/bigquery/docs/change-history), которая отслеживает изменения в таблице BigQuery. Когда эта функция включена, вы можете использовать историю изменений для аудита и отладки поведения ваших инкрементальных моделей. 
+
+Параметр `enable_change_history` принимает значения типа `<boolean>`.
+
+</VersionBlock>
+
+### Производительность и стоимость
 
 Операции, выполняемые dbt при сборке инкрементальной модели BigQuery, 
 можно сделать более дешёвыми и быстрыми, используя [кластеризацию](#clustering-clause) в конфигурации модели. 
@@ -674,10 +724,10 @@ with events as (
 
 </File>
 
-Этот пример модели каждый день заменяет данные в целевой таблице как за _сегодня_, так 
-и за _вчера_. Это самый быстрый и дешёвый способ инкрементального обновления таблицы с 
-помощью dbt. Если бы мы хотели сделать это более динамичным образом — например, всегда 
-за последние 3 дня, — мы могли бы использовать встроенные в dbt [datetime‑макросы](https://github.com/dbt-labs/dbt-core/blob/dev/octavius-catto/core/dbt/include/global_project/macros/etc/datetime.sql) и написать несколько собственных.
+Эта модель-пример заменяет данные в целевой таблице за
+_сегодня_ и _вчера_ при каждом ежедневном запуске. Это самый быстрый и экономичный
+способ инкрементально обновлять таблицу с помощью dbt. Если бы мы хотели сделать этот процесс более динамичным —
+например, всегда обновлять данные за последние 3 дня, — мы могли бы воспользоваться встроенными в dbt [макросами для работы с датой и временем](https://github.com/dbt-labs/dbt/blob/dev/octavius-catto/core/dbt/include/global_project/macros/etc/datetime.sql) и написать несколько собственных.
 
 Это можно рассматривать как режим «полного контроля». Вы должны убедиться, что выражения или литеральные значения в конфигурации `partitions` корректно экранированы при шаблонизации и соответствуют `partition_by.data_type` (`timestamp`, `datetime`, `date` или `int64`). В противном случае фильтр в инкрементальном операторе `merge` приведёт к ошибке.
 
@@ -771,10 +821,6 @@ from {{ ref('events') }}
 По умолчанию таблицы, созданные dbt, никогда не истекают. Вы можете настроить отдельные модели
 на истечение через заданное количество часов, установив `hours_to_expiration`.
 
-:::info Note
-Параметр `hours_to_expiration` применяется только при первоначальном создании таблицы. Он не сбрасывается для инкрементальных моделей при последующих запусках.
-:::
-
 <File name='dbt_project.yml'>
 
 ```yml
@@ -800,7 +846,32 @@ select ...
 
 </File>
 
-## Авторизованные представления (Authorized views) {#authorized-views}
+Конфигурация `hours_to_expiration` применяется только при первоначальном создании базовой таблицы. При инкрементальных запусках срок действия не сбрасывается. Чтобы обойти это ограничение, вызовите в +post-hook макрос, который вручную сбрасывает временную метку истечения срока действия. Установите аргумент hours в соответствии со значением hours_to_expiration.
+
+**Пример SQL-кода макроса:**
+
+```sql
+{% macro reset_expiration_for_incremental(hours) %}
+  -- Проверяем, выполняется ли текущая модель в инкрементальном режиме
+  {% if is_incremental() %}
+    -- Задаём временную метку истечения срока действия, поскольку она применяется только при создании, а не при слиянии
+    ALTER TABLE {{ this }}
+      SET OPTIONS (expiration_timestamp = TIMESTAMP_ADD(CURRENT_TIMESTAMP(), INTERVAL {{ hours }} HOUR))
+  {% endif %}
+{% endmacro %}
+```
+<File name='dbt_project.yml'>
+
+```yml
+models:
+  my_project:
+    +post-hook:
+      - "{{ reset_expiration_for_incremental(hours=6) }}"
+```
+
+</File>
+
+## Авторизованные представления {#authorized-views}
 
 Если для модели, материализованной как представление (view), указана конфигурация `grant_access_to`,
 dbt предоставит модели представления доступ на `SELECT` к списку указанных датасетов.
@@ -895,8 +966,8 @@ models:
     [+](/reference/resource-configs/plus-prefix)[description](/reference/resource-properties/description): <string>
     [+](/reference/resource-configs/plus-prefix)[labels](#specifying-labels): {<label-name>: <label-value>}
     [+](/reference/resource-configs/plus-prefix)[resource_tags](#resource-tags): {<tag-key>: <tag-value>}
-    [+](/reference/resource-configs/plus-prefix)[hours_to_expiration](#acontrolling-table-expiration): <integer>
-    [+](/reference/resource-configs/plus-prefix)[kms_key_name](##using-kms-encryption): <path-to-key>
+    [+](/reference/resource-configs/plus-prefix)[hours_to_expiration](#controlling-table-expiration): <integer>
+    [+](/reference/resource-configs/plus-prefix)[kms_key_name](#using-kms-encryption): <path-to-key>
 ```
 
 </File>
@@ -932,8 +1003,8 @@ models:
       [description](/reference/resource-properties/description): <string>
       [labels](#specifying-labels): {<label-name>: <label-value>}
       [resource_tags](#resource-tags): {<tag-key>: <tag-value>}
-      [hours_to_expiration](#acontrolling-table-expiration): <integer>
-      [kms_key_name](##using-kms-encryption): <path-to-key>
+      [hours_to_expiration](#controlling-table-expiration): <integer>
+      [kms_key_name](#using-kms-encryption): <path-to-key>
 ```
 
 </File>
@@ -978,8 +1049,8 @@ models:
     [resource_tags](#resource-tags)={
         "<tag-key>": "<tag-value>",
     },
-    [hours_to_expiration](#acontrolling-table-expiration)=<integer>,
-    [kms_key_name](##using-kms-encryption)="<path_to_key>",
+    [hours_to_expiration](#controlling-table-expiration)=<integer>,
+    [kms_key_name](#using-kms-encryption)="<path_to_key>",
 ) }}
 ```
 
@@ -1057,7 +1128,7 @@ gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceA
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/bigquery.dataEditor
 #Grant Service Account user 
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
-#Grant Colab Entperprise User
+#Grant Colab Enterprise User
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=serviceAccount:dbt-bigframes-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com --role=roles/aiplatform.colabEnterpriseUser
 ```
 
@@ -1078,7 +1149,7 @@ my_dbt_project_sa:
   outputs:
     dev:
       compute_region: us-central1
-      dataset: <BIGQUERY_DATESET>
+      dataset: <BIGQUERY_DATASET>
       gcs_bucket: <GCS BUCKET USED FOR BIGFRAME LOGS>
       job_execution_timeout_seconds: 300
       job_retries: 1
@@ -1106,10 +1177,10 @@ Dataproc (`serverless` или заранее настроенный `cluster`) �
 
 <Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-connector-initialization.png" title="Добавление Spark BigQuery connector в качестве initialization action"/>
 
-Для запуска Python-моделей на Dataproc необходимы следующие конфигурации. Их можно добавить в [профиль BigQuery](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc) или задать для конкретных Python-моделей:
-- `gcs_bucket`: bucket, в который dbt загрузит скомпилированный PySpark-код модели.
-- `dataproc_region`: регион GCP, в котором включён Dataproc (например, `us-central1`).
-- `dataproc_cluster_name`: имя кластера Dataproc для запуска Python-модели (PySpark job). Требуется только при `submission_method: cluster`.
+Для запуска моделей Python в Dataproc необходимы следующие настройки. Вы можете добавить их в свой [профиль BigQuery](/docs/local/connect-data-platform/bigquery-setup?version=1.12#running-python-models-on-dataproc) или задать их для отдельных моделей Python:
+- `gcs_bucket`: Бакет хранилища, в который dbt будет загружать скомпилированный код PySpark вашей модели.
+- `dataproc_region`: Регион GCP, в котором у вас включён Dataproc (например, `us-central1`).
+- `dataproc_cluster_name`: Имя кластера Dataproc, используемого для запуска модели Python (выполнения задания PySpark). Требуется только при `submission_method: cluster`.
 
 ```python
 def model(dbt, session):
@@ -1126,7 +1197,7 @@ models:
       submission_method: serverless
 ```
 
-Python-модели, выполняемые в Dataproc Serverless, могут быть дополнительно настроены в вашем [профиле BigQuery](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc).
+Для Python-моделей, выполняемых в Dataproc Serverless, можно задать дополнительные настройки в [профиле BigQuery](/docs/local/connect-data-platform/bigquery-setup?version=1.12#running-python-models-on-dataproc).
 
 Любой пользователь или сервисный аккаунт, запускающий Python-модели dbt, должен иметь следующие права, помимо необходимых прав BigQuery:
 ```
@@ -1154,6 +1225,7 @@ storage.objects.delete
 
 - **Dataproc Serverless** — Google рекомендует использовать [пользовательский Docker-образ](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers) для установки сторонних пакетов. Образ должен быть размещён в [Google Artifact Registry](https://cloud.google.com/artifact-registry/docs). После этого его можно указать в профилях dbt:
 
+- **Dataproc Serverless** &mdash; Google рекомендует использовать [пользовательский образ Docker](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers) для установки сторонних пакетов. Образ необходимо разместить в [Google Artifact Registry](https://cloud.google.com/artifact-registry/docs). Затем его можно использовать, указав путь к образу в профилях dbt:
     <File name='profiles.yml'>
     ```yml
     my-profile:
@@ -1184,16 +1256,16 @@ storage.objects.delete
 
 Python-модели BigQuery также поддерживают следующие дополнительные параметры конфигурации:
 
-| Параметр               | Тип          | Обязательный | По умолчанию | Допустимые значения |
-| :--------------------- | :----------- | :----------- | :----------- | :------------------ |
-| `enable_list_inference` | `<boolean>` | нет          | `True`       | `True`, `False`     |
-| `intermediate_format`   | `<string>`  | нет          | `parquet`    | `parquet`, `orc`    |
-| `submission_method`     | `<string>`  | нет          | ``           | `serverless`, `bigframes`, `cluster` |
-| `notebook_template_id`  | `<Integer>` | нет          | ``           | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
-| `compute_region`        | `<string>`  | нет          | ``           | `<COMPUTE_REGION>`  |
-| `gcs_bucket`            | `<string>`  | нет          | ``           | `<GCS_BUCKET>`     |
-| `packages`              | `<string>`  | нет          | ``           | `['numpy<=1.1.1', 'pandas', 'mlflow']` |
-| `enable_change_history` | `<boolean>` | нет          | ``           | `True`, `False`     |
+| Параметр                | Тип         | Обязательный | По умолчанию | Допустимые значения |
+| :---------------------- | :---------- | :------- | :-------- | :--------------- |
+| `enable_list_inference` | `<boolean>` | нет      | `True`    | `True`, `False`  |
+| `intermediate_format`   | `<string>`  | нет      | `parquet` | `parquet`, `orc` |
+| `submission_method`     | `<string>`  | нет      | ``        | `serverless`, `bigframes`, `cluster` |
+| `notebook_template_id`  | `<integer>` | нет      | ``        | `<NOTEBOOK RUNTIME TEMPLATE_ID>` |
+| `compute_region`        | `<string>`  | нет      | ``        | `<COMPUTE_REGION>` |
+| `gcs_bucket`            | `<string>`  | нет      | ``        | `<GCS_BUCKET>` |
+| `packages`              | `<string>`  | нет      | ``        | `['numpy<=1.1.1', 'pandas', 'mlflow']` (только для `bigframes`) |
+| `timeout`               | `<integer>` | нет      | ``        | `<timeout_in_seconds>` |
 
 - Параметр `enable_list_inference`
   - Включает возможность чтения нескольких записей за одну операцию в PySpark DataFrame. По умолчанию установлен в `True` для поддержки формата `intermediate_format` по умолчанию (`parquet`).
@@ -1213,8 +1285,11 @@ Python-модели BigQuery также поддерживают следующ�
 - Параметр `gcs_bucket`
   - Указывает GCS bucket, используемый для хранения артефактов задания.
 
-- Параметр `enable_change_history`
-  - Включает [функцию истории изменений BigQuery](https://cloud.google.com/bigquery/docs/change-history), которая отслеживает изменения, внесённые в таблицу BigQuery. При включении можно использовать историю изменений для аудита и отладки поведения инкрементальных моделей.
+- Параметр `packages`
+  - Параметр `packages` задаёт список пакетов Python для установки с помощью `pip install` перед запуском модели. Он работает только при `submission_method: bigframes`. Dataproc (`serverless` и `cluster`) игнорирует его без ошибок и предупреждений. Для установки пакетов в Dataproc используйте собственный образ контейнера (serverless) или действия инициализации (cluster). См. раздел **Установка пакетов** на вкладке Dataproc в разделе [Настройка моделей Python](#python-model-configuration).
+
+- Параметр `timeout`
+  - Параметр `timeout` задаёт максимальное время выполнения модели Python в секундах. Это особенно полезно для моделей BigFrames, которым может требоваться больше времени для сложной обработки данных или выполнения задач машинного обучения. Если параметр не указан, модель использует время ожидания по умолчанию, настроенное для среды выполнения.
 
 **Связанная документация:**
 

@@ -16,7 +16,7 @@ snapshot-paths: [directorypath]
 При необходимости укажите пользовательский список директорий, где находятся [снимки](/docs/build/snapshots).
 
 <VersionBlock firstVersion="1.9">
-В <Constant name="core" /> v1.9+ вы можете размещать снапшоты вместе с моделями, если они [определены с использованием последнего синтаксиса YAML](/docs/build/snapshots). 
+В <Constant name="dbt" /> v1.9 и более поздних версиях вы можете размещать снимки вместе с моделями, если они [определены с использованием нового синтаксиса YAML](/docs/build/snapshots).
 </VersionBlock>
 
 ## По умолчанию {#default}

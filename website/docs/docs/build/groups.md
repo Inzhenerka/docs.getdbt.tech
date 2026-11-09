@@ -3,7 +3,8 @@ title: "Добавление групп в ваш DAG"
 sidebar_label: "Группы"
 id: "groups"
 keywords:
-  - группы доступ mesh
+- groups access mesh
+availability: all_users
 ---
 
 Группа — это коллекция узлов в dbt DAG. Группы имеют названия, и у каждой группы есть `владелец`. Они позволяют организовать целенаправленное сотрудничество внутри и между командами, ограничивая [доступ к приватным](/reference/resource-configs/access) моделям.
@@ -28,7 +29,37 @@ import DefineGroups from '/snippets/_define-groups.md';
   ```
 
 
-### Добавление модели в группу {#adding-a-model-to-a-group}
+### Свойства группы
+
+При определении группы доступны следующие свойства:
+
+| Свойство | Обязательность | Описание |
+|----------|----------|-------------|
+| `name` | Обязательно | Уникальное имя группы в рамках проекта. Используется для назначения ресурсов с помощью [конфигурации `group`](/reference/resource-configs/group). |
+| `owner` | Обязательно | Указывает, кто отвечает за группу. Должно включать `name:` или `email:`. |
+| `description` | Необязательно | Понятное человеку описание назначения группы. Поддерживает markdown и [функцию Jinja `doc`](/reference/dbt-jinja-functions/doc). Поддерживается в версии v1.10 и более поздних. |
+| `config.meta` | Необязательно | Словарь произвольных метаданных о группе в формате «ключ/значение». Полезен для хранения такой информации, как центры затрат, категории данных или контактные данные команды.
+
+
+<File name='models/marts/finance/finance.yml'>
+
+```yaml
+groups:
+  - name: finance
+    description: "All models owned by the Finance team."
+    owner:
+      email: finance@jaffleshop.com
+    config:
+      meta:
+        data_owner: Finance team
+        cost_center: finance
+        data_classification: sensitive
+```
+
+</File>
+
+
+### Добавление модели в группу
 
 Используйте конфигурацию `group`, чтобы добавить одну или несколько моделей в группу.
 

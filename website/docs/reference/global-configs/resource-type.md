@@ -6,7 +6,22 @@ sidebar: "resource type"
 
 <VersionBlock firstVersion="1.9">
 
-Флаги `--resource-type` и `--exclude-resource-type` включают или исключают типы ресурсов из команд `dbt build`, `dbt test`, `dbt clone` и `dbt list`.
+Флаги `--resource-type` и `--exclude-resource-type` позволяют включать или исключать типы ресурсов при выполнении команд `dbt build`, `dbt clone`, `dbt test` и `dbt list`.
+
+<Expandable alt_header="Фильтрация типов тестов с помощью dbt test">
+
+Используйте селектор `test_type` для фильтрации типов тестов при выполнении `dbt test` &mdash; он работает во всех движках:
+
+- `dbt test --select test_type:unit` &mdash; запускает только модульные тесты
+- `dbt test --select test_type:data` &mdash; запускает только тесты данных
+
+Если вы используете dbt версии 1.9 или выше, вы также можете использовать `--resource-type`:
+
+- `dbt test --resource-type unit_test` &mdash; запускает только модульные тесты
+- `dbt test --resource-type test` &mdash; запускает только тесты данных
+
+Дополнительные примеры см. в разделе [Примеры выбора тестов](/reference/node-selection/test-selection-examples).
+</Expandable>
 
 </VersionBlock>
 
@@ -122,14 +137,15 @@ dbt build --resource-type test
 
 <VersionBlock firstVersion="1.9">
 
-### Включать все data-тесты при выполнении тестирования {#include-all-data-tests-during-testing}
+### Запуск только тестов данных при тестировании
 
-Используйте следующую команду, чтобы при запуске тестов включить только data tests:
+Чтобы при выполнении `dbt test` запускать только тесты данных (исключая модульные тесты), используйте селектор `test_type`:
 
 <File name='Использование'>
 
 ```text
-dbt test --resource-type test
+dbt test --select test_type:data -- dbt v1 and dbt v2
+dbt test --resource-type test -- dbt v1 only
 ```
 
 </File>
@@ -165,14 +181,15 @@ dbt build --exclude-resource-type unit_test
 
 <VersionBlock firstVersion="1.9">
 
-### Исключение всех unit-тестов при запуске тестов {#exclude-all-unit-tests-during-testing}
+### Исключение модульных тестов при тестировании
 
-Используйте следующую команду, чтобы исключить unit-тесты при выполнении тестов:
+Чтобы исключить модульные тесты при использовании `dbt test`, используйте селектор `test_type` для запуска только тестов данных:
 
 <File name='Usage'>
 
 ```text
-dbt test --exclude-resource-type unit_test
+dbt test --select test_type:data -- dbt v1 and dbt v2
+dbt test --exclude-resource-type unit_test -- dbt v1 only
 ```
 
 </File>

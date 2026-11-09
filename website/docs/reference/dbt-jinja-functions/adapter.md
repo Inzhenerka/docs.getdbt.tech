@@ -14,10 +14,10 @@ description: "Обертка для внутреннего адаптера ба
 Например, методы адаптера ниже будут переведены в конкретные SQL-запросы в зависимости от типа адаптера, который использует ваш проект:
 
 - [adapter.dispatch](/reference/dbt-jinja-functions/dispatch)
-- [adapter.get_missing_columns](#get_missing_columns)
-- [adapter.expand_target_column_types](#expand_target_column_types)
+- [adapter.get_missing_columns](#getmissingcolumns)
+- [adapter.expand_target_column_types](#expandtargetcolumn_types)
 - [adapter.get_relation](#get_relation) или [load_relation](#load_relation)
-- [adapter.get_columns_in_relation](#get_columns_in_relation)
+- [adapter.get_columns_in_relation](#getcolumnsin_relation)
 - [adapter.create_schema](#create_schema)
 - [adapter.drop_schema](#drop_schema)
 - [adapter.drop_relation](#drop_relation)
@@ -27,7 +27,7 @@ description: "Обертка для внутреннего адаптера ба
 ### Устаревшие функции адаптера {#deprecated-adapter-functions}
 
 Следующие функции адаптера устарели и будут удалены в будущих версиях.
-- [adapter.get_columns_in_table](#get_columns_in_table) **(устарело)**
+- [adapter.get_columns_in_table](#getcolumnsin_table) **(устарело)**
 - [adapter.already_exists](#already_exists) **(устарело)**
 - [adapter_macro](#adapter_macro) **(устарело)**
 
@@ -263,7 +263,7 @@ select
 
 :::danger Устарело
 
-Этот метод устарел и будет удален в будущих версиях. Пожалуйста, используйте [get_columns_in_relation](#get_columns_in_relation) вместо него.
+Этот метод устарел и будет удален в будущих версиях. Пожалуйста, используйте [get_columns_in_relation](#getcolumnsin_relation) вместо него.
 
 :::
 

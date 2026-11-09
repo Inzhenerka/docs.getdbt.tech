@@ -5,11 +5,15 @@ description: "Узнайте, как dbt Semantic Layer позволяет да�
 sidebar_label: "О dbt Semantic Layer"
 tags: [Semantic Layer]
 hide_table_of_contents: false
-pagination_next: "guides/sl-snowflake-qs"
+pagination_next: "guides/sl-qs"
 pagination_prev: null
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
 ---
 
-# dbt Semantic Layer <Lifecycle status="self_service,managed,managed_plus" /> {#dbt-semantic-layer}
+# Семантический слой dbt
 
 <IntroText>
 
@@ -17,9 +21,13 @@ dbt Semantic Layer устраняет дублирование кода, поз�
 
 </IntroText>
 
-dbt Semantic Layer, работающий на базе [MetricFlow](/docs/build/about-metricflow), упрощает процесс определения и использования критически важных бизнес-метрик, таких как `revenue`, на уровне моделирования (ваш dbt‑проект). Централизация определений метрик позволяет дата-командам обеспечивать согласованный self‑service‑доступ к этим метрикам в downstream‑инструментах и приложениях.
+import SlConnectYourAi from '/snippets/_sl-connect-your-ai.md';
 
-Перенос определений метрик из BI‑слоя в слой моделирования позволяет дата-командам быть уверенными, что разные бизнес‑подразделения используют одни и те же определения метрик, независимо от выбранного инструмента. Если определение метрики изменяется в dbt, оно обновляется везде, где используется, обеспечивая согласованность во всех приложениях. Для обеспечения безопасного контроля доступа <Constant name="semantic_layer" /> реализует надежные механизмы [разграничения прав доступа](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer).
+<SlConnectYourAi/>
+
+Семантический слой dbt, работающий на базе [MetricFlow](/docs/build/about-metricflow), упрощает определение и использование ключевых бизнес-метрик, таких как `revenue`, на уровне моделирования (в вашем проекте dbt). Централизуя определения метрик, команды по работе с данными могут обеспечить пользователям согласованный самостоятельный доступ к этим метрикам в инструментах и приложениях, использующих эти данные.
+
+Перенос определений метрик из BI‑слоя в слой моделирования позволяет дата-командам быть уверенными, что разные бизнес‑подразделения используют одни и те же определения метрик, независимо от выбранного инструмента. Если определение метрики изменяется в dbt, оно обновляется везде, где используется, обеспечивая согласованность во всех приложениях. Для обеспечения безопасного контроля доступа <Constant name="semantic_layer" /> реализует надежные механизмы [разграничения прав доступа](/docs/use-dbt-semantic-layer/setup-sl#administer-the-semantic-layer-1).
 
 Чтобы узнать больше, ознакомьтесь с [FAQ по <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) или прочитайте пост в блоге [Why we need a universal semantic layer](https://www.getdbt.com/blog/universal-semantic-layer/).
 
@@ -38,31 +46,40 @@ product="dbt Semantic Layer"
 plan="dbt Starter or Enterprise-tier"
 />
 
-:::info Пока не поддерживается в движке dbt Fusion
-<Constant name="semantic_layer" /> в настоящее время поддерживается в <Constant name="dbt_platform" /> для окружений, использующих версии <Constant name="core" />. Поддержка окружений на движке dbt Fusion появится в ближайшее время.
-:::
-
-Эта страница содержит ссылки на различные ресурсы, которые помогут вам понять, настроить, развернуть и интегрировать <Constant name="semantic_layer" />. В следующих разделах собраны ссылки на отдельные страницы с подробным описанием каждого аспекта. Используйте их для быстрого перехода к нужной информации — будь то первоначальная настройка <Constant name="semantic_layer" />, деплой метрик или интеграция с downstream‑инструментами.
+На этой странице собраны ссылки на различные ресурсы, которые помогут вам разобраться в <Constant name="semantic_layer" />, настроить и развернуть его, а также интегрировать с другими инструментами. В следующих разделах приведены ссылки на отдельные страницы, где подробно рассматривается каждый из этих аспектов. Используйте эти ссылки, чтобы сразу перейти к нужной информации — будь то первоначальная настройка <Constant name="semantic_layer" />, развертывание метрик или интеграция с инструментами, использующими его данные.
 
 Для начала работы с <Constant name="semantic_layer" /> ознакомьтесь со следующими ресурсами:
-- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-snowflake-qs) &mdash; Создание и определение метрик, настройка <Constant name="semantic_layer" /> и выполнение запросов с использованием наших первоклассных интеграций.
+- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-qs) &mdash; Создание и определение метрик, настройка <Constant name="semantic_layer" /> и выполнение запросов с использованием наших первоклассных интеграций.
 - [Создание метрик](/docs/build/build-metrics-intro) &mdash; Используйте MetricFlow в <Constant name="cloud" /> для централизованного определения метрик.
 - [FAQ по <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Ответы на часто задаваемые вопросы о <Constant name="semantic_layer" />, включая доступность, интеграции и многое другое.
 
-## Настройка dbt Semantic Layer {#configure-the-dbt-semantic-layer}
+Чтобы начать работу с <Constant name="semantic_layer" />, обратитесь к следующим ресурсам:
+- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-qs): Создавайте и определяйте метрики, настройте <Constant name="semantic_layer" /> и запрашивайте метрики в Google Sheets и других инструментах.
+- [Создание метрик](/docs/build/build-metrics-intro) &mdash; Используйте MetricFlow в <Constant name="dbt" /> для централизованного определения метрик.
+- [Часто задаваемые вопросы о <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Найдите ответы на часто задаваемые вопросы о <Constant name="semantic_layer" />, включая доступность, интеграции и другие темы.
 
 Следующие ресурсы содержат информацию о том, как настроить <Constant name="semantic_layer" />:
 - [Администрирование <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) &mdash; Удобная настройка учетных данных и токенов для начала выполнения запросов к <Constant name="semantic_layer" />. 
 - [Архитектура](/docs/use-dbt-semantic-layer/sl-architecture) &mdash; Обзор ключевых компонентов, из которых состоит <Constant name="semantic_layer" />.
 
-## Развертывание метрик {#deploy-metrics}
-В этом разделе представлена информация о том, как развернуть <Constant name="semantic_layer" /> и материализовать метрики:
-- [Развертывание <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/deploy-sl) &mdash; Запуск задания в <Constant name="cloud" /> для развертывания <Constant name="semantic_layer" /> и материализации метрик.
-- [Написание запросов с помощью exports](/docs/use-dbt-semantic-layer/exports) &mdash; Использование exports для написания часто используемых запросов непосредственно в вашей платформе данных по расписанию.
-- [Кэширование распространенных запросов](/docs/use-dbt-semantic-layer/sl-cache) &mdash; Использование кэширования результатов и декларативного кэширования для ускорения выполнения распространенных запросов и снижения вычислительной нагрузки.
+Следующие ресурсы содержат информацию о настройке <Constant name="semantic_layer" />:
+- [Администрирование <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) &mdash; С лёгкостью настройте учётные данные и токены, чтобы начать выполнять запросы к <Constant name="semantic_layer" />. 
+- [Архитектура](/docs/use-dbt-semantic-layer/sl-architecture) &mdash; Изучите мощные компоненты, из которых состоит <Constant name="semantic_layer" />.
+
+## Развёртывание метрик
+В этом разделе рассказывается, как развернуть <Constant name="semantic_layer" /> и материализовать метрики:
+- [Развёртывание <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/deploy-sl) &mdash; Запустите задание <Constant name="dbt" />, чтобы развернуть <Constant name="semantic_layer" /> и материализовать метрики.
+- [Создание запросов с помощью экспортов](/docs/use-dbt-semantic-layer/exports) &mdash; Используйте экспорты для выполнения часто используемых запросов непосредственно на вашей платформе данных по расписанию.
+- [Кэширование типовых запросов](/docs/use-dbt-semantic-layer/sl-cache) &mdash; Используйте кэширование результатов и декларативное кэширование для типовых запросов, чтобы повысить производительность и сократить объём вычислений при выполнении запросов.
+
+## Использование метрик и интеграция
+Используйте метрики и интегрируйте <Constant name="semantic_layer" /> с инструментами и приложениями, которые их используют:
+- [Использование метрик](/docs/use-dbt-semantic-layer/consume-metrics) &mdash; Запрашивайте и используйте метрики в инструментах и приложениях с помощью <Constant name="semantic_layer" />.
+- [Доступные интеграции](/docs/platform-integrations/avail-sl-integrations) &mdash; Ознакомьтесь с широким кругом партнёрских решений, которые можно интегрировать с <Constant name="semantic_layer" /> для выполнения запросов.
+- [API <Constant name="semantic_layer" />](/docs/dbt-apis/sl-api-overview) &mdash; Используйте API <Constant name="semantic_layer" /> для запроса метрик в инструментах, работающих с этими данными, чтобы получать согласованные и надёжные метрики.
 
 ## Использование метрик и интеграция {#consume-metrics-and-integrate}
 Используйте метрики и интегрируйте <Constant name="semantic_layer" /> с downstream‑инструментами и приложениями:
 - [Использование метрик](/docs/use-dbt-semantic-layer/consume-metrics) &mdash; Выполнение запросов и использование метрик в downstream‑инструментах и приложениях с помощью <Constant name="semantic_layer" />.
-- [Доступные интеграции](/docs/cloud-integrations/avail-sl-integrations) &mdash; Обзор широкого спектра партнеров, с которыми можно интегрироваться и выполнять запросы через <Constant name="semantic_layer" />.
-- [API <Constant name="semantic_layer" />](/docs/dbt-cloud-apis/sl-api-overview) &mdash; Использование API <Constant name="semantic_layer" /> для выполнения запросов к метрикам в downstream‑инструментах и обеспечения согласованных и надежных данных по метрикам.
+- [Доступные интеграции](/docs/platform-integrations/avail-sl-integrations) &mdash; Обзор широкого спектра партнеров, с которыми можно интегрироваться и выполнять запросы через <Constant name="semantic_layer" />.
+- [API <Constant name="semantic_layer" />](/docs/dbt-apis/sl-api-overview) &mdash; Использование API <Constant name="semantic_layer" /> для выполнения запросов к метрикам в downstream‑инструментах и обеспечения согласованных и надежных данных по метрикам.

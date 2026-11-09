@@ -1,15 +1,15 @@
 ---
 sidebar_label: "schema"
-resource_types: [models, seeds, tests]
-description: "Переопределение стандартной схемы при создании ресурсов dbt на вашей платформе данных."
+resource_types: [models, seeds, tests, snapshots, saved queries, functions]
+description: "Переопределите схему по умолчанию, в которой dbt создаёт ресурсы на вашей платформе данных."
 datatype: string
 ---
 
 <Tabs>
 <TabItem value="model" label="Модель">
 
-Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для группы моделей в YAML-файле вашего проекта (`dbt_project.yml`) или в [настройках конфигурации SQL-файла](/reference/resource-configs/schema#models).
-
+Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для группы моделей в YAML-файле проекта (`dbt_project.yml`), в [конфигурации SQL-файла](/reference/resource-configs/schema#models) или в YAML-файле свойств.
+ 
 Например, если у вас есть группа моделей, связанных с маркетингом, и вы хотите разместить их в отдельной схеме с именем `marketing`, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
@@ -22,7 +22,20 @@ models:
 ```
 </File>
 
-Это приведет к тому, что сгенерированные отношения для этих моделей будут находиться в схеме `marketing`, так что полные имена отношений будут `analytics.target_schema_marketing.model_name`. Это происходит потому, что схема отношения — это `{{ target.schema }}_{{ schema }}`. Раздел [определение](#definition) объясняет это более подробно.
+Вы также можете задать схему для отдельной модели в её файле свойств:
+
+<File name='models/properties.yml'>
+
+```yml
+models:
+  - name: my_model
+    config:
+      schema: marketing
+```
+</File>
+
+
+В результате сгенерированные отношения для этих моделей будут размещены в схеме `marketing`, а полные имена отношений будут иметь вид `analytics.target_schema_marketing.model_name`. Это связано с тем, что схема отношения задаётся как `{{ target.schema }}_{{ schema }}`. В разделе [Определение](#definition) это объясняется подробнее.
 
 </TabItem>
 
@@ -117,6 +130,38 @@ data_tests:
 Это приведет к тому, что результаты тестов будут сохранены в схеме `test_results`.
 </File>
 </TabItem>
+
+<TabItem value="functions" label="Functions">
+
+Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a function in your `dbt_project.yml` or properties file.
+
+For example, if you want to place a function in a schema called `finance` instead of the target schema, you can configure it in the `dbt_project.yml` or `properties.yml` file:
+
+<File name='dbt_project.yml'>
+
+```yml
+functions:
+  your_project:
+    calculate_tax:
+      +schema: finance
+```
+
+</File>
+
+<File name='functions/properties.yml'>
+
+```yaml
+functions:
+  - name: calculate_tax
+    config:
+      schema: finance
+```
+
+</File>
+
+This results in the function being located in the `target_schema_finance` schema, so the full relation name would be `analytics.target_schema_finance.calculate_tax`.
+
+</TabItem>
 </Tabs>
 
 Обратитесь к разделу [Использование](#usage) для получения дополнительных примеров.
@@ -124,7 +169,7 @@ data_tests:
 ## Определение {#definition}
 При необходимости укажите пользовательскую схему для [модели](/docs/build/sql-models), [сида](/docs/build/seeds), [снапшота](/docs/build/snapshots), [сохраненного запроса](/docs/build/saved-queries) или [теста](/docs/build/data-tests).
 
-Для пользователей <Constant name="cloud" /> версии 1.8 или ниже используйте конфигурацию [`target_schema`](/reference/resource-configs/target_schema), чтобы указать пользовательскую схему для snapshot.
+Если вы используете <Constant name="dbt" /> версии 1.8 или более ранней, используйте [конфигурацию `target_schema`](/reference/resource-configs/target_schema), чтобы указать пользовательскую схему для снимка.
 
 Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например, `analytics.finance.payments`.
 
@@ -163,7 +208,20 @@ models:
 
 </File>
 
-### Сиды {#seeds}
+Или настройте отдельные модели в файле свойств:
+
+<File name='models/properties.yml'>
+
+```yml
+models:
+  - name: my_model
+    config:
+      schema: marketing
+```
+
+</File>
+
+### Сиды
 <File name='dbt_project.yml'>
 
 ```yml

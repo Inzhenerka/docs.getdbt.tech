@@ -7,7 +7,7 @@ id: seed-datatypes
 ---
 dbt будет определять тип данных для каждого столбца на основе данных в вашем CSV.
 
-Вы также можете явно задать тип данных, используя [конфигурацию](reference/resource-configs/column_types.md) `column_types`, следующим образом:
+Вы также можете явно задать тип данных с помощью [конфигурации](/reference/resource-configs/column_types) `column_types`, как показано ниже:
 
 <File name='dbt_project.yml'>
 

@@ -4,22 +4,45 @@ id: "supported-data-platforms"
 sidebar_label: "О поддерживаемых платформах данных"
 description: "Подключайте dbt к любой платформе данных с помощью специализированного плагина-адаптера"
 hide_table_of_contents: true
-pagination_next: "docs/connect-adapters"
+pagination_next: "docs/community-adapters"
 pagination_prev: null
 ---
 
-dbt подключается к вашей базе данных, хранилищу данных, озеру данных или query engine и выполняет SQL‑запросы. Все эти платформы, работающие с SQL, в совокупности называются _data platforms_. dbt подключается к data platforms с помощью отдельного плагина‑адаптера для каждой из них. Плагины реализованы в виде Python‑модулей, которые <Constant name="core" /> обнаруживает, если они установлены в вашей системе. Подробнее см. руководство [Build, test, document, and promote adapters](/guides/adapter-creation).
+import FusionLifecycle from '/snippets/_v2-lifecycle.md';
 
-Вы можете [подключаться](/docs/connect-adapters) к адаптерам и data platforms нативно в <Constant name="cloud" /> или устанавливать их вручную с помощью <Constant name="core" />.
+dbt подключается к вашей базе данных, хранилищу данных, озеру данных или движку запросов и выполняет SQL-запросы. Эти платформы, поддерживающие SQL, обобщённо называются _платформами данных_. dbt подключается к платформам данных с помощью отдельного плагина-адаптера для каждой из них. Плагины представляют собой модули Python, которые <Constant name="core" /> обнаруживает, если они установлены в вашей системе. Подробности см. в руководстве [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
 
-Вы также можете дополнительно настроить, как dbt работает с вашей конкретной платформой данных через конфигурацию: см. [Настройка Postgres](/reference/resource-configs/postgres-configs) в качестве примера.
+Адаптеры поддерживаются dbt Labs, партнёрами и участниками сообщества. Общий список см. в разделе [Адаптеры сообщества](/docs/community-adapters).
 
-## Типы адаптеров {#types-of-adapters}
+### Установка адаптера
 
-На сегодняшний день доступны два типа адаптеров:
+Чтобы использовать dbt из командной строки, установите адаптер для вашей платформы данных и настройте файл `profiles.yml`. См. раздел [Установка dbt](/docs/local/install-dbt).
 
-- **Trusted** &mdash; [Trusted adapters](/docs/trusted-adapters) — это адаптеры, для которых мейнтейнеры приняли решение участвовать в программе Trusted Adapter Program и взяли на себя обязательство соответствовать её требованиям. Для адаптеров, поддерживаемых в <Constant name="cloud" />, мейнтейнеры проходят дополнительный строгий процесс, который охватывает контрактные требования к разработке, документации, пользовательскому опыту и сопровождению.
-- **Community** &mdash; [Community adapters](/docs/community-adapters) являются open-source и поддерживаются членами сообщества. Эти адаптеры не входят в программу Trusted Adapter Program и могут иметь несогласованности в использовании.
+<VersionBlock lastVersion="1.99">
+
+За некоторыми исключениями, адаптеры можно установить из PyPI с помощью `python -m pip install adapter-name`. Чтобы установить адаптер Snowflake, используйте `python -m pip install dbt-snowflake`. При установке также устанавливаются <Constant name="core" /> и все остальные необходимые зависимости.
+
+При установке с помощью `pip` используйте имя пакета в PyPI.
+
+| Имя репозитория адаптера | Имя пакета в PyPI |
+| --- | --- |
+| `dbt-layer` | `dbt-layer-bigquery` |
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+Адаптеры поставляются вместе с <Constant name="fusion" />. После [установки dbt](/docs/local/install-dbt) поддерживаемые платформы данных доступны без отдельного выполнения `pip install` для каждого адаптера.
+
+Дополнительную информацию см. в руководстве [Участие в разработке адаптера dbt v2](/guides/adapter-creation-v2?step=1).
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0" >
+
+<FusionLifecycle/>
+
+</VersionBlock>
 
 <details>
   <summary>Соображения по поводу зависимости от проекта с открытым исходным кодом</summary>

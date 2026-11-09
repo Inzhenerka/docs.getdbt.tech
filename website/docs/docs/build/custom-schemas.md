@@ -3,11 +3,12 @@ title: "Пользовательские схемы"
 description: "Настройка пользовательских схем для таблиц и представлений ваших dbt‑моделей в базе данных."
 id: "custom-schemas"
 pagination_next: "docs/build/custom-databases"
+availability: all_users
 ---
 
-По умолчанию все модели dbt собираются в схеме, указанной в вашем [окружении](/docs/dbt-cloud-environments) (<Constant name="cloud" />) или в [target профиля](/docs/core/dbt-core-environments) (<Constant name="core" />). Эта схема по умолчанию называется _target schema_.
+По умолчанию все модели dbt создаются в схеме, указанной в вашей [среде](/docs/dbt-platform-environments) (<Constant name="dbt_platform" />) или в [целевой конфигурации профиля](/docs/local/dbt-environments) (<Constant name="core" />). Эта схема по умолчанию называется _целевой схемой_.
 
-Для проектов dbt с большим количеством моделей часто создают модели в нескольких схемах и группируют похожие модели вместе. Например, вы можете захотеть:
+В проектах с большим количеством моделей их часто распределяют по нескольким схемам. Например, вам может понадобиться:
 
 * Группировать модели на основе бизнес-единицы, использующей модель, создавая такие схемы, как `core`, `marketing`, `finance` и `support`.
 * Скрыть промежуточные модели в схеме `staging`, и только представить модели, которые должны быть доступны для запроса конечным пользователем, в схеме `analytics`.
@@ -200,16 +201,17 @@ dbt поставляется с макросом для этого случая 
 
 В примерах макроса `generate_schema_name`, показанных в разделе [встроенный альтернативный шаблон](#a-built-in-alternative-pattern-for-generating-schema-names), переменная контекста `target.name` используется для изменения имени схемы, которое dbt генерирует для моделей. Если макрос `generate_schema_name` в вашем проекте использует переменную контекста `target.name`, вы должны убедиться, что ваши различные среды dbt настроены соответствующим образом. Хотя вы можете использовать любую схему именования, которую пожелаете, мы обычно рекомендуем:
 
-* **dev** &mdash; Ваше локальное окружение для разработки; настраивается в файле `profiles.yml` на вашем компьютере.
-* **ci** &mdash; Окружение [непрерывной интеграции](/docs/cloud/git/connect-github), которое запускается для pull request’ов в GitHub, GitLab и т. п.
-* **prod** &mdash; Продакшен‑развертывание вашего dbt‑проекта, например в <Constant name="cloud" />, Airflow или [аналогичных системах](/docs/deploy/deployments).
+* **dev** &mdash; Ваша локальная среда разработки; настраивается в файле `profiles.yml` на вашем компьютере.
+* **ci** &mdash; Среда [непрерывной интеграции](/docs/platform/git/connect-github), в которой выполняются проверки при создании и обновлении pull request в GitHub, GitLab и других системах.
+* **prod** &mdash; Развертывание вашего проекта dbt в рабочей среде, например в <Constant name="dbt" />, Airflow или [аналогичной системе](/docs/deploy/deployments).
 
 Если ваши имена схем генерируются неправильно, дважды проверьте имя цели в соответствующей среде.
 
-Для получения дополнительной информации см. руководство [managing environments in <Constant name="core" />](/docs/core/dbt-core-environments).
+Дополнительную информацию см. в руководстве по [управлению окружениями в <Constant name="dbt" />](/docs/local/dbt-environments).
 
 ## Связанные материалы {#related-docs}
 
-- [Customize dbt models database, schema, and alias](/guides/customize-schema-alias?step=1) — о том, как настраивать базу данных, схему и alias для моделей dbt  
-- [Custom database](/docs/build/custom-databases) — о том, как настраивать базу данных для моделей dbt  
-- [Custom aliases](/docs/build/custom-aliases) — о том, как настраивать имя alias для моделей dbt
+- [Сопоставление папок проекта со схемами хранилища](/best-practices/how-we-structure/6-mapping-folders-to-warehouse) — чтобы сопоставить папки staging, intermediate и marts со схемами хранилища
+- [Настройка базы данных, схемы и псевдонима моделей dbt](/guides/customize-schema-alias?step=1) — чтобы узнать, как настроить базу данных, схему и псевдоним моделей dbt
+- [Настройка базы данных](/docs/build/custom-databases) — чтобы узнать, как настроить базу данных для модели dbt
+- [Настройка псевдонимов](/docs/build/custom-aliases) — чтобы узнать, как настроить имя псевдонима для модели dbt

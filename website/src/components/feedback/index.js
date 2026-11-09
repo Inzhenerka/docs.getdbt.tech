@@ -101,7 +101,7 @@ export const Feedback = () => {
   };
 
   return (
-    <div className={styles.feedbackContainer}>
+    <div className={styles.feedbackContainer} data-md-hide="true">
       <h2 id="feedback-header" className={styles.feedbackHeader}>Нашли ошибку?</h2>
       <div>
         <div className={styles.feedbackLinks}>

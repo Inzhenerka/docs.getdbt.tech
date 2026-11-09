@@ -1,9 +1,10 @@
 ---
 title: Временная шкала MetricFlow
 id: metricflow-time-spine
-description: "MetricFlow ожидает таблицу временной шкалы по умолчанию, называемую metricflow_time_spine"
+description: "MetricFlow ожидает таблицу временной шкалы по умолчанию с именем metricflow_time_spine"
 sidebar_label: "Временная шкала MetricFlow"
-tags: [Метрики, Семантический слой]
+tags: [Metrics, Semantic Layer]
+availability: all_users
 ---
 <VersionBlock firstVersion="1.9">
 
@@ -93,13 +94,13 @@ MetricFlow поддерживает гранулярности от миллис
 </File>
 </VersionBlock>
 
-- В этом примере конфигурации показана модель time spine с именами `time_spine_hourly` и `time_spine_daily`. В ней настройки time spine задаются под ключом `time_spine`.  
-- `standard_granularity_column` — это колонка, которая сопоставляется с одной из [стандартных гранулярностей](/docs/build/dimensions?dimension=time_gran). Эта колонка должна быть указана под ключом `columns` и должна иметь гранулярность, которая является более мелкой или равной любой пользовательской гранулярности, определённой в той же модели.  
-  - Она должна ссылаться на колонку, определённую под ключом `columns` — в данном случае это `date_hour` и `date_day` соответственно.  
-  - Гранулярность задаётся на уровне колонки с помощью ключа `granularity`, в данном примере — `hour` и `day` соответственно.  
-- MetricFlow будет использовать `standard_granularity_column` в качестве ключа соединения при join таблицы time spine с другой исходной таблицей.  
-- Поле [`custom_granularities`](#custom-calendar) (доступно в <Constant name="cloud" /> Latest и в dbt Core версии 1.9 и выше) позволяет указывать нестандартные временные периоды, такие как `fiscal_year` или `retail_month`, которые могут использоваться в вашей организации.  
-  - Поле `column_name` должно ссылаться на колонку, которая существует в той же модели.
+- В этом примере конфигурации показаны модели временной шкалы `time_spine_hourly` и `time_spine_daily`. Настройки временной шкалы задаются в ключе `time_spine`. 
+- `standard_granularity_column` — это столбец, соответствующий одному из [стандартных уровней детализации](/docs/build/dimensions?dimension=time_gran). Этот столбец должен быть задан в ключе `columns` и иметь уровень детализации не менее подробный, чем у любого столбца с пользовательским уровнем детализации, определённого в той же модели.
+  - Он должен ссылаться на столбец, определённый в ключе `columns`, — в данном случае на `date_hour` и `date_day` соответственно.
+  - Уровень детализации задаётся на уровне столбца с помощью ключа `granularity` — в данном случае это `hour` и `day` соответственно. 
+- MetricFlow будет использовать `standard_granularity_column` в качестве ключа соединения при соединении таблицы временной шкалы с другой исходной таблицей.
+- [Поле `custom_granularities`](#custom-calendar) (доступно в <Constant name="dbt" /> Latest и <Constant name="dbt" /> v1.9 и выше) позволяет задавать нестандартные временные периоды, такие как `fiscal_year` или `retail_month`, которые могут использоваться в вашей организации.
+  - Поле `column_name` должно ссылаться на столбец, существующий в той же модели.
 
 Для примера проекта обратитесь к нашему [примеру Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template/blob/main/models/marts/_models.yml).
 
@@ -314,7 +315,7 @@ and date_hour < dateadd(day, 30, current_timestamp())
 </VersionBlock>
 
 
-## Пользовательский календарь <Lifecycle status="Preview"/> {#custom-calendar}
+## Пользовательский календарь <Lifecycle status="preview"/> {#custom-calendar}
 
 :::tip
 Ознакомьтесь с нашим мини‑руководством о [how to create a time spine table](/guides/mf-time-spine) для начала!

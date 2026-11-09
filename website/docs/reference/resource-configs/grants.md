@@ -1,4 +1,5 @@
 ---
+description: "Manage access to the database objects dbt produces by applying grants to models, seeds, and snapshots at build time."
 resource_types: [models,seeds,snapshots]
 datatype: "{<dictionary>}"
 default_value: {}
@@ -326,14 +327,20 @@ models:
 
 <div warehouse="Redshift">
 
-* Предоставление и отзыв прав полностью поддерживаются только для пользователей Redshift (не для [groups](https://docs.aws.amazon.com/redshift/latest/dg/r_Groups.html) и не для [roles](https://docs.aws.amazon.com/redshift/latest/dg/r_roles-managing.html)). См. соответствующую задачу [dbt-redshift#415](https://github.com/dbt-labs/dbt-redshift/issues/415).
+* Redshift поддерживает предоставление привилегий пользователям, [группам](https://docs.aws.amazon.com/redshift/latest/dg/r_Groups.html) и [ролям](https://docs.aws.amazon.com/redshift/latest/dg/r_roles-managing.html). Чтобы предоставить привилегии группам или ролям, используйте префикс `group:` или `role:` в именах получателей. Имена без префикса интерпретируются как имена пользователей.
+
+```yaml
+models:
+  +grants:
+    select: ["user1", "user:user2", "group:analysts", "role:reporter"]
+```
 
 </div>
 
 <div warehouse="Snowflake">
 
-* dbt учитывает конфигурацию [`copy_grants`](/reference/resource-configs/snowflake-configs#copying-grants) при расчёте того, какие grants нужно добавить или удалить.
-* Предоставление и отзыв прав полностью поддерживаются только для ролей Snowflake (не для [database roles](https://docs.snowflake.com/user-guide/security-access-control-overview#types-of-roles)).
+* dbt использует [`copy_grants`](/reference/resource-configs/snowflake-configs#copying-grants) при применении прав доступа. Если `copy_grants` имеет значение `false` (по умолчанию) и Snowflake пересоздаёт таблицу или представление, `dbt-snowflake` версии 1.13 и выше добавляет `IGNORE GRANTS`, чтобы права доступа не переносились. В более ранних версиях адаптера Snowflake может сохранять эти права после [изменения поведения CREATE OR REPLACE в отношении прав доступа](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433), и dbt не удаляет лишние права.
+* Предоставление и отзыв прав доступа полностью поддерживаются только для ролей Snowflake (но не для [ролей базы данных](https://docs.snowflake.com/user-guide/security-access-control-overview#types-of-roles)).
 
 </div>
 

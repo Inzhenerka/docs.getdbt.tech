@@ -6,101 +6,341 @@ datatype: string | [string]
 ---
 
 <Tabs
-  defaultValue="project-yaml"
+  defaultValue="models"
   values={[
-    { label: 'Файл проекта', value: 'project-yaml', },
-    { label: 'Файл свойств', value: 'other-yaml', },
-    { label: 'Конфигурация SQL-файла', value: 'config', },
+{ label: 'Модели', value: 'models', },
+    { label: 'Seed-файлы', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Сохранённые запросы', value: 'saved queries', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Экспозиции', value: 'exposures', },
+    { label: 'Тесты', value: 'tests', },
+    { label: 'Функции', value: 'functions', },
   ]
 }>
-<TabItem value="project-yaml">
+<TabItem value="models">
 
 <File name='dbt_project.yml'>
 
 <VersionBlock firstVersion="1.9">
 
 ```yml
-
-[models](/reference/model-configs):
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +tags: <string> | [<string>] # Supports single strings or list of strings
-
-[snapshots](/reference/snapshot-configs):
+models:
   [<resource-path>](/reference/resource-configs/resource-path):
     +tags: <string> | [<string>]
-
-[seeds](/reference/seed-configs):
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +tags: <string> | [<string>]
-
-[saved-queries:](/docs/build/saved-queries)
-  [<resource-path>](/reference/resource-configs/resource-path):
-    +tags: <string> | [<string>]
-
 ```
-</VersionBlock>
 
+</VersionBlock>
 
 </File>
-</TabItem>
 
-<TabItem value="other-yaml">
-
-<VersionBlock firstVersion="1.9">
-
-Следующие примеры показывают, как добавлять теги к ресурсам dbt в YAML-файлах. Замените `resource_type` на `exposures`, `models`, `snapshots`, `seeds` или `saved_queries` по мере необходимости.
-</VersionBlock>
-
-<File name='resource_type/properties.yml'>
+<File name='models/properties.yml'>
 
 ```yaml
-resource_type:
-  - name: resource_name
+models:
+  - name: model_name
     config:
-      tags: <string> | [<string>] # Supports single strings or list of strings
-    # Optional: Add the following specific properties for models
+      tags: <string> | [<string>]
     columns:
       - name: column_name
         config:
           tags: <string> | [<string>] # changed to config in v1.10 and backported to 1.9
         data_tests:
-          test-name:
-            config:
-              tags: "single-string" # Supports single string 
-              tags: ["string-1", "string-2"] # Supports list of strings
+          - test_name:
+              config:
+                tags: <string> | [<string>]
 ```
 
 </File>
 
-Чтобы применить теги к модели в вашем каталоге `models/`, добавьте свойство `config`, аналогично следующему примеру:
+<File name='models/<modelname>.sql'>
 
-<File name='models/model.yml'>
+```sql
+{{ config(
+    tags="<string>" | ["<string>"]
+) }}
 
-```yaml
-models:
-  - name: my_model
-    description: A model description
-    config:
-      tags: ['example_tag']
+select ...
 ```
 
 </File>
 
 </TabItem>
 
-<TabItem value="config">
+<TabItem value="seeds">
 
-<File name='models/model.sql'>
+<File name='dbt_project.yml'>
+
+<VersionBlock firstVersion="1.9">
+
+```yml
+seeds:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>]
+```
+
+</VersionBlock>
+
+</File>
+
+<File name='seeds/properties.yml'>
+
+```yaml
+seeds:
+  - name: seed_name
+    config:
+      tags: <string> | [<string>]
+    columns:
+      - name: column_name
+        config:
+          tags: <string> | [<string>] # changed to config in v1.10 and backported to 1.9
+        data_tests:
+          - test_name:
+              config:
+                tags: <string> | [<string>]
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="snapshots">
+
+<File name='dbt_project.yml'>
+
+<VersionBlock firstVersion="1.9">
+
+```yml
+snapshots:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>]
+```
+
+</VersionBlock>
+
+</File>
+
+<VersionBlock firstVersion="1.9">
+
+<File name='snapshots/properties.yml'>
+
+```yaml
+snapshots:
+  - name: snapshot_name
+    config:
+      tags: <string> | [<string>]
+```
+
+</File>
+
+</VersionBlock>
+
+<File name='snapshots/<filename>.sql'>
+
+```sql
+{% snapshot snapshot_name %}
+
+{{ config(
+    tags="<string>" | ["<string>"]
+) }}
+
+select ...
+
+{% endsnapshot %}
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="saved queries">
+
+<File name='dbt_project.yml'>
+
+<VersionBlock firstVersion="1.9">
+
+```yml
+saved-queries:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>]
+```
+
+</VersionBlock>
+
+</File>
+
+<File name='models/semantic_models.yml'>
+
+```yaml
+saved_queries:
+  - name: saved_query_name
+    config:
+      tags: <string> | [<string>]
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="sources">
+
+<File name='dbt_project.yml'>
+
+<VersionBlock firstVersion="1.9">
+
+```yml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>]
+```
+
+</VersionBlock>
+
+</File>
+
+<File name='models/properties.yml'>
+
+```yaml
+sources:
+  - name: source_name
+    config:
+      tags: <string> | [<string>] # changed to config in v1.10
+    tables:
+      - name: table_name
+        config:
+          tags: <string> | [<string>] # changed to config in v1.10
+        columns:
+          - name: column_name
+            config:
+              tags: <string> | [<string>] # changed to config in v1.10 and backported to 1.9
+            data_tests:
+              - test_name:
+                  config:
+                    tags: <string> | [<string>]
+```
+
+</File>
+
+Note that for backwards compatibility, `tags` is supported as a top-level key for sources, but without the capabilities of config inheritance.
+
+</TabItem>
+
+<TabItem value="exposures">
+
+<File name='dbt_project.yml'>
+
+<VersionBlock firstVersion="1.9">
+
+```yml
+exposures:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>]
+```
+
+</VersionBlock>
+
+</File>
+
+<File name='models/exposures.yml'>
+
+```yaml
+exposures:
+  - name: exposure_name
+    config:
+      tags: <string> | [<string>] # changed to config in v1.10
+```
+
+</File>
+
+Note that for backwards compatibility, `tags` is supported as a top-level key for exposures, but without the capabilities of config inheritance.
+
+</TabItem>
+
+<TabItem value="tests">
+
+<File name='dbt_project.yml'>
+
+<VersionBlock firstVersion="1.9">
+
+```yml
+data_tests:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +tags: <string> | [<string>]
+```
+
+</VersionBlock>
+
+</File>
+
+<File name='models/properties.yml'>
+
+```yaml
+models:
+  - name: model_name
+    columns:
+      - name: column_name
+        data_tests:
+          - test_name:
+              config:
+                tags: <string> | [<string>]
+```
+
+</File>
+
+<File name='tests/<filename>.sql'>
+
+```sql
+{% test test_name() %}
+
+{{ config(
+    tags="<string>" | ["<string>"]
+) }}
+
+select ...
+
+{% endtest %}
+```
+
+</File>
+
+</TabItem>
+
+<TabItem value="functions">
+
+<File name='dbt_project.yml'>
+
+```yml
+functions:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)tags: <string> | [<string>]
+```
+
+</File>
+
+<File name='functions/properties.yml'>
+
+```yaml
+functions:
+  - name: function_name
+    config:
+      tags: <string> | [<string>]
+```
+
+</File>
+
+<File name='functions/<filename>.sql'>
+
 ```sql
 {{ config(
     tags="<string>" | ["<string>"]
 ) }}
 ```
+
 </File>
 
 </TabItem>
+
 </Tabs>
-Обратите внимание, что для обратной совместимости `tags` поддерживается как ключ верхнего уровня, но без возможностей наследования конфигурации.
 
 ## Определение {#definition}
 Примените тег (или список тегов) к ресурсу.
@@ -112,12 +352,16 @@ models:
 - `dbt snapshot --select tag:my_tag` &mdash; Создаёт snapshot для всех ресурсов, помеченных указанным тегом.
 - `dbt test --select tag:my_tag` &mdash; Косвенно запускает все тесты, связанные с моделями, которые помечены этим тегом.
 
-#### Использование тегов с оператором `+` {#using-tags-with-the-operator}
-Вы можете использовать [оператор `+`](/reference/node-selection/graph-operators#the-plus-operator), чтобы включать восходящие или нисходящие зависимости при выборе по `tag`:
-- `dbt run --select tag:my_tag+` &mdash; Запускает модели, помеченные `my_tag`, и все их нисходящие зависимости.
-- `dbt run --select +tag:my_tag` &mdash; Запускает модели, помеченные `my_tag`, и все их восходящие зависимости.
-- `dbt run --select +tag:my_tag+` &mdash; Запускает модели, помеченные `my_tag`, а также их восходящие и нисходящие зависимости.
-- `dbt run --select tag:my_tag+ --exclude tag:exclude_tag` &mdash; Запускает модели, помеченные `my_tag`, и их нисходящие зависимости, и исключает модели, помеченные `exclude_tag`, независимо от их зависимостей.
+:::note Влияние на сравнение состояний
+Изменения в `tags`, в том числе на уровне столбцов, не приводят к включению ресурса в выборку [`state:modified`](/reference/node-selection/methods#state). dbt рассматривает `tags` (и `meta`) исключительно как метаданные, поскольку они не влияют на способ материализации ресурса. Подробнее см. в разделе [«Ограничения сравнения состояний»](/reference/node-selection/state-comparison-caveats#tags-and-meta).
+:::
+
+#### Использование тегов с оператором `+`
+Вы можете использовать [оператор `+`](/reference/node-selection/graph-operators#the-plus-operator), чтобы включить вышестоящие или нижестоящие зависимости в выборку по `tag`:
+- `dbt run --select tag:my_tag+` &mdash; Запустить модели с тегом `my_tag` и все их нижестоящие зависимости.
+- `dbt run --select +tag:my_tag` &mdash; Запустить модели с тегом `my_tag` и все их вышестоящие зависимости.
+- `dbt run --select +tag:my_tag+` &mdash; Запустить модели с тегом `my_tag`, их вышестоящие и нижестоящие зависимости.
+- `dbt run --select tag:my_tag+ --exclude tag:exclude_tag` &mdash; Запустить модели с тегом `my_tag` и их нижестоящие зависимости, исключив модели с тегом `exclude_tag` независимо от их зависимостей.
 
 :::tip Примечания по использованию тегов
 
@@ -132,7 +376,7 @@ models:
 
 ## Примеры {#examples}
 
-Следующие примеры показывают, как применять теги к ресурсам в вашем проекте. Вы можете настраивать теги в файлах `dbt_project.yml`, `schema.yml` или в SQL-файлах.
+Следующие примеры показывают, как применять теги к ресурсам в вашем проекте. Вы можете настроить теги в файле `dbt_project.yml`, файлах свойств или SQL-файлах.
 
 ### Использование тегов для запуска частей проекта {#use-tags-to-run-parts-of-your-project}
 
@@ -257,7 +501,7 @@ seeds:
 <File name='dbt_project.yml'>
 
 ```yml
-[saved-queries](/docs/build/saved-queries):
+saved-queries:
   jaffle_shop:
     customer_order_metrics:
       +tags: order_metrics
@@ -335,47 +579,63 @@ Field config.tags: {'my_tag': 'my_value'} is not valid for source (ecom)
 | models/marts/dim_customers.sql   | `contains_pii`, `hourly`, `published` |
 | models/metrics/daily_metrics.sql | `contains_pii`, `daily`, `published`  |
 
-### Другие типы ресурсов {#other-resource-types}
+### Применение тегов к отдельным столбцам и тестам
 
-Теги также можно применять к [sources](/docs/build/sources), [exposures](/docs/build/exposures) и даже к _отдельным столбцам_ ресурса.  
-Эти ресурсы пока не поддерживают свойство `config`, поэтому теги нужно указывать как ключ верхнего уровня.
+Вы также можете применять теги к отдельным столбцам ресурса и к тестам.
 
-<File name='models/schema.yml'>
+<File name='models/properties.yml'>
 
 ```yml
-
-exposures:
-  - name: my_exposure
-    config:
-      tags: ['exposure_tag'] # changed to config in v1.10
-    ...
-
-sources:
-  - name: source_name
-    config:
-      tags: ['top_level'] # changed to config in v1.10
-
-    tables:
-      - name: table_name
+models:
+  - name: my_model
+    columns:
+      - name: column_name
         config:
-          tags: ['table_level'] # changed to config in v1.10
-
-        columns:
-          - name: column_name
-            config:
-              tags: ['column_level'] # changed to config in v1.10 and backported to 1.9
-            data_tests:
-              - unique:
-                config:
-                  tags: ['test_level'] # changed to config in v1.10
+          tags: ['column_level'] # changed to config in v1.10 and backported to 1.9
+        data_tests:
+          - unique:
+              config:
+                tags: ['test_level'] # changed to config in v1.10
 ```
 
 </File>
 
-В приведённом выше примере тест `unique` будет выбран при использовании любого из этих четырёх тегов:
+В приведённом выше примере тест `unique` будет выбран по любому из этих тегов:
 ```bash
-dbt test --select tag:top_level
-dbt test --select tag:table_level
 dbt test --select tag:column_level
 dbt test --select tag:test_level
 ```
+
+### Backwards compatibility for sources and exposures
+
+For backwards compatibility, `tags` is supported as a top-level key for sources and exposures (prior to dbt v1.10), but without the capabilities of config inheritance.
+
+<File name='models/properties.yml'>
+
+```yml
+exposures:
+  - name: my_exposure
+    tags: ['exposure_tag'] # top-level key (legacy)
+    # OR use config (v1.10+)
+    config:
+      tags: ['exposure_tag']
+
+sources:
+  - name: source_name
+    tags: ['top_level'] # top-level key (legacy)
+    # OR use config (v1.10+)
+    config:
+      tags: ['top_level']
+    tables:
+      - name: table_name
+        tags: ['table_level'] # top-level key (legacy)
+        # OR use config (v1.10+)
+        config:
+          tags: ['table_level']
+        columns:
+          - name: column_name
+            config:
+              tags: ['column_level'] # changed to config in v1.10 and backported to 1.9
+```
+
+</File>

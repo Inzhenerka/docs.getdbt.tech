@@ -31,7 +31,7 @@ is_featured: true
 
 Мы можем разбить концепцию зрелости на две категории. Первая - это **полнота функций**, или количество различных функций dbt, которые вы используете. Другая - это **глубина функций**, уровень сложности в использовании отдельных функций. Например, добавление функции источника в ваш проект увеличит полноту вашего проекта, но добавление функции свежести источника к уже определенным источникам будет способом добавить глубину вашему проекту. Пройдя по этой матрице, мы можем наблюдать, как крошечный проект вырастает в полностью зрелый производственный конвейер dbt.
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_0.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_0.png" title="Image alt text" />
 
 **Как мы это делаем?**
 
@@ -57,7 +57,7 @@ is_featured: true
 
 * Выполните свой первый [dbt run](/reference/commands/run)
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_1.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_1.png" title="Image alt text" />
 
 **Темы и цели**
 
@@ -75,7 +75,7 @@ is_featured: true
 
 У нас есть одна единственная SQL модель в нашей папке моделей, и, честно говоря, это все. На этом этапе README и dbt_project.yml - это просто артефакты от [dbt init command](/reference/commands/init), и они еще не имеют конкретной документации или конфигурации. На этом этапе нашего пути мы просто хотим запустить и работать с функциональным проектом dbt.
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_2.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_2.png" title="Image alt text" />
 
 Самое важное, что мы вводим, когда ваш проект является младенцем, это современный, контролируемый версиями, совместный подход к аналитике, который предлагает dbt. Волнение от выполнения вашего первого успешного dbt run - это все, что вам нужно, чтобы понять, как dbt может оказать огромное влияние на вашу аналитическую команду.
 
@@ -89,7 +89,7 @@ is_featured: true
 
 * [Документируйте](/docs/build/documentation) и [тестируйте](/docs/build/data-tests) свои первые модели
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_3.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_3.png" title="Image alt text" />
 
 **Темы и цели**
 
@@ -109,11 +109,9 @@ is_featured: true
 
 Давайте проверим рост [нашего проекта](https://github.com/dbt-labs/dbt-project-maturity/tree/main/2-toddlerhood). Мы разбили часть нашей логики на собственную модель — наш оригинальный скрипт имел повторяющуюся логику в <Term id="subquery">подзапросах</Term>, теперь он следует ключевому принципу аналитической инженерии: <Term id="dry">Не повторяй себя (DRY)</Term>. Для получения дополнительной информации о том, как рефакторить ваши SQL-запросы для модульности, ознакомьтесь с нашим [бесплатным курсом по запросу](https://learn.getdbt.com/courses/refactoring-sql-for-modularity).
 
-Мы также добавили наши первые [YML‑файлы](https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/). Здесь у нас есть один YAML‑файл для [настройки источников](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/source.yml) и один YAML‑файл для [описания моделей](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/schema.yml). 
+Мы также добавили наши первые [YML-файлы](https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/). Здесь у нас один YAML-файл для [настройки источников](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/source.yml) и один YAML-файл для [описания моделей](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/schema.yml). Мы только начинаем: добавляем базовые объявления источников, проверяем <Term id="primary-key" /> с помощью встроенных тестов dbt и добавляем описание на уровне модели — это первые шаги проекта, который только учится ходить!
 
-Пока мы ограничиваемся базовыми декларациями источников, тестированием <Term id="primary-key" /> с использованием встроенных тестов dbt и описанием на уровне модели — это самые первые шаги проекта, который только учится ходить!
-
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_4.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_4.png" title="Image alt text" />
 
 Переход от младенца к ребенку — это огромный скачок в плане полноты функций! Добавив источники и ссылки, мы действительно начали использовать то, что делает dbt особенным.
 
@@ -129,7 +127,7 @@ is_featured: true
 
 * [Разверните ваш проект](/docs/deploy/deployments)!
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_5.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_5.png" title="Image alt text" />
 
 **Темы и цели**
 
@@ -147,7 +145,7 @@ is_featured: true
 
 Давайте посмотрим на наши модели — мы перешли от ранней стадии DAG, начинаем чувствовать модульность, к чистому, стандартизированному и логически организованному DAG — теперь мы можем видеть логические слои моделирования, которые соответствуют структуре файлового дерева, которую мы видели ранее — мы даже можем видеть, как конвенции именования моделей выстраиваются в соответствии с этими слоями (stg, int, fct). Определение стандартов в том, как мы организуем наши модели на уровне проекта, привело к более чистому, более понятному DAG!
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_6.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_6.png" title="Image alt text" />
 
 Хотя мы не изменили функцию многих наших функций, *кодификация и стандартизация использования этих функций - это огромный шаг вперед для зрелости проекта.* Достигнув этого уровня зрелости, мы обычно начинаем думать о запуске этого проекта в производстве. С этими ограждениями мы можем быть уверены, что наш проект не упадет с кровати ночью и не поранится — он готов взять на себя немного независимости!
 
@@ -161,7 +159,7 @@ is_featured: true
 
 * Сократите время сборки dbt в производстве с помощью [продвинутых материализаций](/docs/build/materializations)
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_7.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_7.png" title="Image alt text" />
 
 **Темы и цели**
 
@@ -173,7 +171,7 @@ is_featured: true
 
 Мы можем видеть основное развитие на [этом этапе](https://github.com/dbt-labs/dbt-project-maturity/tree/main/4-adolescence) - добавление дополнительных моделей, которые делают наш оригинальный отчет о претензиях гораздо более гибким — мы показывали нашим пользователям только подмножество информации о пациентах и врачах в нашей фактической модели. Теперь у нас есть более Kimball-стильная настройка рынков, и мы можем оставить выбор измерений на наше BI-решение.
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_8.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_8.png" title="Image alt text" />
 
 Другие улучшения, не видимые в DAG на этом этапе, включают новые пользовательские макросы, чтобы сделать написание SQL более динамичным и менее повторяющимся. Мы также можем видеть файл packages.yml, и мы можем начать использовать тесты, макросы и даже модели, разработанные сообществом dbt. Использование кода пакетов - это ключевой способ сократить наше время разработки! Мы также перешли на использование инкрементальной логики для наших самых больших наборов данных, чтобы ускорить наши запуски и быстрее предоставлять инсайты. Мы также заинтересованы в предоставлении немного метаданных из нашего проекта — мы можем начать с улучшения наших рынков данными о их актуальности, включив функцию свежести источника. Знание того, что данные в нашей панели актуальны и надежны, может значительно повысить уверенность потребителей в нашем стеке.
 
@@ -187,7 +185,7 @@ is_featured: true
 
 * Продвинутое использование метаданных
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_9.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_9.png" title="Image alt text" />
 
 **Темы и цели**
 
@@ -203,7 +201,7 @@ is_featured: true
 
 Это полное понимание видно и на DAG — мы можем видеть панель, которую мы объявили в нашем файле exposures, здесь в оранжевом цвете!
 
-![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_10.png)
+<Lightbox src="/img/blog/building-a-mature-dbt-project-from-scratch/image_10.png" title="Image alt text" />
 
 Переход к размышлениям о метаданных - это действительно мощный способ найти области для улучшения в вашем проекте. Например, вы можете разработать макросы для измерения таких вещей, как покрытие тестами и соотношение тестов к моделям. Вы можете изучить пакеты, такие как dbt_meta_testing, чтобы убедиться, что вы достигаете минимальных требований к тестированию и документации.
 

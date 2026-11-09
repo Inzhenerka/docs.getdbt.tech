@@ -3,11 +3,21 @@ title: "Об артефактах dbt"
 sidebar_label: "Об артефактах dbt"
 ---
 
-При каждом запуске dbt генерирует и сохраняет один или несколько *артефактов*. Несколько из них представляют собой <Term id="json" /> файлы (`semantic_manifest.json`, `manifest.json`, `catalog.json`, `run_results.json` и `sources.json`), которые используются для:
+<VersionBlock lastVersion="1.11">
+
+При каждом вызове dbt создает и сохраняет один или несколько *артефактов*. Некоторые из них — файлы <Term id="json" /> (`semantic_manifest.json`, `manifest.json`, `catalog.json`, `run_results.json` и `sources.json`), которые используются для следующих возможностей:
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+При каждом вызове dbt создает и сохраняет один или несколько *артефактов*. Некоторые из них — файлы <Term id="json" /> (`semantic_manifest.json`, `osi_document.json`, `manifest.json`, `catalog.json`, `run_results.json` и `sources.json`), которые используются для следующих возможностей:
+
+</VersionBlock>
 
 - [документация](/docs/explore/build-and-view-your-docs)
-- [состояние](/reference/node-selection/syntax#about-node-selection)
-- [визуализация актуальности источников](/docs/build/sources#source-data-freshness)
+- [состояние](/reference/node-selection/syntax#how-does-selection-work)
+- [визуализация актуальности данных источников](/docs/build/sources#source-data-freshness)
 
 Они также могут быть использованы для:
 
@@ -19,14 +29,29 @@ sidebar_label: "Об артефактах dbt"
 
 ### Когда создаются артефакты? <Lifecycle status="self_service,managed" /> {#when-are-artifacts-produced}
 
-Большинство команд dbt (и соответствующих RPC методов) создают артефакты:
-- [семантический манифест](/reference/artifacts/sl-manifest): создается всякий раз, когда ваш dbt проект анализируется
-- [манифест](/reference/artifacts/manifest-json): создается командами, которые читают и понимают ваш проект
-- [результаты выполнения](/reference/artifacts/run-results-json): создается командами, которые выполняют, компилируют или каталогизируют узлы в вашем DAG
-- [каталог](/reference/artifacts/catalog-json): создается командой `docs generate`
-- [источники](/reference/artifacts/sources-json): создается командой `source freshness`
+Большинство команд dbt (и соответствующих методов RPC) создают артефакты:
+- [семантический манифест](/reference/artifacts/sl-manifest): создаётся при каждом разборе вашего проекта dbt
+<VersionBlock firstVersion="1.12">
 
-При запуске команд из [<Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation) по умолчанию загружаются все артефакты. Если вы хотите изменить это поведение, обратитесь к разделу [How to skip artifacts from being downloaded](/docs/cloud/configure-cloud-cli#how-to-skip-artifacts-from-being-downloaded).
+- [документ Apache Ossie](/reference/artifacts/sl-manifest#apache-ossie-document): создаётся при каждом разборе вашего проекта dbt
+
+</VersionBlock>
+- [манифест](/reference/artifacts/manifest-json): создаётся командами, которые читают и анализируют ваш проект
+- [результаты выполнения](/reference/artifacts/run-results-json): создаются командами, которые выполняют, компилируют или каталогизируют узлы вашего DAG
+- [каталог](/reference/artifacts/catalog-json): создаётся командой `docs generate`
+<VersionBlock lastVersion="1.99">
+
+- [источники](/reference/artifacts/sources-json): создаётся командой `dbt source freshness`
+
+</VersionBlock>
+<VersionBlock firstVersion="2.0">
+
+- [источники](/reference/artifacts/sources-json): создаётся командой `dbt freshness`, если включены источники; сохраняется для обратной совместимости
+- [актуальность данных](/reference/artifacts/freshness-json): создаётся командой [`dbt freshness`](/reference/commands/freshness); охватывает как источники, так и модели с настроенной проверкой актуальности данных; поле `resource_type` в каждой записи позволяет различать их
+
+</VersionBlock>
+
+При выполнении команд из [<Constant name="dbt" /> CLI](/docs/platform/dbt-cli-installation) все артефакты скачиваются по умолчанию. Если вы хотите изменить это поведение, см. раздел [Как отключить скачивание артефактов](/docs/platform/configure-dbt-cli#considerations-1).
 
 ## Где создаются артефакты? {#where-are-artifacts-produced}
 
@@ -43,11 +68,11 @@ sidebar_label: "Об артефактах dbt"
 - `env`: Любые переменные окружения с префиксом `DBT_ENV_CUSTOM_ENV_` будут включены в словарь, где имя переменной без префикса будет ключом.
 - [`invocation_id`](/reference/dbt-jinja-functions/invocation_id): Уникальный идентификатор для этого вызова dbt
 
-В манифесте `metadata` также может включать:
-- `send_anonymous_usage_stats`: Отправлял ли этот вызов [анонимную статистику использования](/reference/global-configs/usage-stats) во время выполнения.
-- `project_name`: `name`, определенное в корневом проекте `dbt_project.yml`. (Добавлено в манифесте v10 / dbt Core v1.6)
-- `project_id`: Идентификатор проекта, хешированный из `project_name`, отправляется с анонимной статистикой использования, если она включена.
-- `user_id`: Идентификатор пользователя, по умолчанию хранится в `~/dbt/.user.yml`, отправляется с анонимной статистикой использования, если она включена.
+В манифесте `metadata` также может содержать:
+- `send_anonymous_usage_stats`: Отправлялась ли [анонимная статистика использования](/reference/global-configs/usage-stats) во время выполнения этого вызова.
+- `project_name`: Значение `name`, определённое в файле `dbt_project.yml` корневого проекта. (Добавлено в манифесте v10 / <Constant name="dbt" /> v1.6)
+- `project_id`: Идентификатор проекта, полученный хешированием `project_name`; отправляется вместе с анонимной статистикой использования, если её отправка включена.
+- `user_id`: Идентификатор пользователя, по умолчанию хранящийся в `~/dbt/.user.yml`; отправляется вместе с анонимной статистикой использования, если её отправка включена.
 
 #### Примечания: {#notes}
 

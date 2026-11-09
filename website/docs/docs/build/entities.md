@@ -4,11 +4,20 @@ id: entities
 description: "Сущности — это концепции реального мира, которые соответствуют ключевым частям вашего бизнеса, таким как клиенты, транзакции и рекламные кампании."
 sidebar_label: "Сущности"
 tags: [Metrics, Semantic Layer]
+availability: all_users
 ---
 
 Сущности — это концепции реального мира в бизнесе, такие как клиенты, транзакции и рекламные кампании. Мы часто фокусируем наши аналитические задачи на конкретных сущностях, например на оттоке клиентов или моделировании годовой регулярной выручки. В моделях Semantic Layer эти сущности служат ключами для соединения (join key) между семантическими моделями.
 
-В семантическом графе обязательными параметрами для сущности являются `name` и `type`. `name` относится либо к названию ключевого столбца из исходной таблицы данных, либо может служить псевдонимом с именем столбца, указанным в параметре `expr`. `name` вашей сущности должно быть уникальным для семантической модели и не может совпадать с существующими `measure` или `dimension` в этой же модели.
+<VersionBlock lastVersion="1.11">
+
+В семантическом графе обязательными параметрами сущности являются `name` и `type`. Параметр `name` указывает либо имя ключевого столбца исходной таблицы данных, либо псевдоним, при этом имя столбца указывается в параметре `expr`. Значение `name` для сущности должно быть уникальным в пределах семантической модели и не может совпадать с именем существующей меры (`measure`) или измерения (`dimension`) в той же модели.
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+В семантическом графе обязательными параметрами сущности являются `name` и `type`. Параметр `name` указывает либо имя ключевого столбца исходной таблицы данных, либо псевдоним, при этом имя столбца указывается в параметре `expr`. Значение `name` для сущности должно быть уникальным в пределах семантической модели и не может совпадать с именем существующей простой метрики или измерения (`dimension`) в той же модели.
+</VersionBlock>
 
 Сущности могут быть заданы с одним столбцом или несколькими столбцами. Сущности (ключи соединения) в семантической модели идентифицируются по их имени. Каждое имя сущности должно быть уникальным в пределах семантической модели, но не обязательно уникальным в разных семантических моделях.
 
@@ -95,7 +104,7 @@ customer_id (foreign key)
 
 Ниже приведена полная спецификация для сущностей:
 
-<VersionBlock firstVersion="1.9">
+<VersionBlock firstVersion="1.9" lastVersion="1.11">
 
 ```yaml
 semantic_models:
@@ -112,9 +121,34 @@ semantic_models:
 ```
 </VersionBlock>
 
-Вот пример того, как определить сущности в семантической модели:
+<VersionBlock firstVersion="1.12">
 
-<VersionBlock firstVersion="1.9">
+```yaml
+models:
+  - name: model_name
+    semantic_model:
+      enabled: true
+      name: semantic_model_name
+      
+    # ...остальная конфигурация семантической модели (метки, группы и т. д.)
+
+    columns:
+      - name: transaction_id                 
+        entity:
+          type: primary # Обязательно; primary | natural | foreign | unique
+          name: entity_name # Необязательно; по умолчанию используется имя столбца
+          description: "Описание поля или роли, которую сущность играет в этой таблице"
+          # Дополнительная конфигурация
+          [config](/reference/resource-properties/config): # Необязательно
+            [meta](/reference/resource-configs/meta):
+              owner: "Team Name"
+```
+
+</VersionBlock>
+
+Вот пример определения сущностей в семантической модели:
+
+<VersionBlock firstVersion="1.9" lastVersion="1.11">
 
 ```yaml
 entities:
@@ -139,11 +173,50 @@ entities:
 ```
 </VersionBlock>
 
-## Комбинирование столбцов с ключом {#combine-columns-with-a-key}
+<VersionBlock firstVersion="1.12"> 
+
+```yaml
+models:
+  - name: your_model_name
+    semantic_model:
+      enabled: true
+
+    columns:
+      - name: id_transaction
+        entity:
+          type: primary
+          name: transaction
+
+      - name: id_order
+        entity:
+          type: foreign
+          name: order
+```
+
+## `derived_semantics` в `entities` {#derived_semantics-in-entities}
+
+Используйте `derived_semantics`, когда нужна сущность, которая не соответствует напрямую одному физическому столбцу в соотношении 1:1. При использовании `derived_semantics` поле `expr` обязательно.
+
+Например:
+
+```yaml
+# Производные сущности (на основе выражений)
+derived_semantics:
+  entities:
+    - name: user
+      type: foreign
+      expr: "substring(id_order from 2)" # Обязательно
+```
+</VersionBlock>
+
+
+## Объединение столбцов с помощью ключа
 
 Если у таблицы нет какого-либо ключа (например, первичного ключа), используйте **_суррогатную комбинацию_**, чтобы сформировать ключ, который позволит идентифицировать запись путём объединения двух колонок. Это применимо к любому [типу сущности](/docs/build/entities#entity-types).
 
 Например, вы можете объединить `date_key` и `brand_code` из таблицы `raw_brand_target_weekly`, чтобы сформировать _суррогатный ключ_. В следующем примере суррогатный ключ создаётся путём объединения `date_key` и `brand_code` с использованием вертикальной черты (`|`) в качестве разделителя.
+
+<VersionBlock lastVersion="1.11"> 
 
 ```yaml
 
@@ -152,6 +225,23 @@ entities:
     type: foreign # This can be any entity type key. 
     expr: date_key || '|' || brand_code # Defines the expression for linking fields to form the surrogate key.
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12"> 
+
+```yaml
+models:
+  - name: your_model_name
+    semantic_model:
+      enabled: true
+
+    derived_semantics:
+      entities:
+        - name: brand_target_key
+          type: foreign
+          expr: "date_key || '|' || brand_code"
+```
+</VersionBlock>
 
 ## Примеры {#examples}
 
@@ -176,7 +266,9 @@ order_total
 
 Как можно определить YAML для Semantic Layer так, чтобы иметь возможность запрашивать `order_total` по `ordered_at` `fiscal_year_name` и по `delivered_at` `fiscal_year_name`?
 
-Сначала необходимо определить две сущности типа `unique` в модели `date_categories`, указав выражение `date_day`:
+<VersionBlock lastVersion="1.11"> 
+
+Сначала нужно определить две сущности типа `unique` в `date_categories`, задав для выражения значение `date_day`:
 
 ```yaml
 semantic_models:
@@ -206,7 +298,52 @@ semantic_models:
     type: categorical
 ```
 
-Затем нужно добавить эти же сущности в модель `orders` как ключи типа `foreign`, указав выражения `ordered_at` и `delivered_at` соответственно:
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12"> 
+
+Сначала нужно определить две сущности типа `unique` в `date_categories`, задав для выражения значение `date_day`:
+
+```yaml
+models:
+  - name: date_categories
+    semantic_model:
+      enabled: true
+
+    agg_time_dimension: date_day
+
+    columns:
+      - name: date_id
+        entity:
+          type: primary
+          name: date_id
+
+      - name: date_day
+        granularity: day
+        dimension:
+          type: time
+          name: date_day
+
+      - name: fiscal_year_name
+        dimension:
+          type: categorical
+          name: fiscal_year_name
+          description: "Строка финансового года в заданном формате (например, 'FY2025')"
+
+    derived_semantics: # Уникальные сущности 
+      entities:
+        - name: ordered_at_entity
+          type: unique
+          expr: date_day
+        - name: delivered_at_entity
+          type: unique
+          expr: date_day
+```
+</VersionBlock>
+
+<VersionBlock lastVersion="1.11"> 
+
+Затем нужно добавить эти же сущности в модель `orders` в качестве ключей типа `foreign`, задав для выражений значения `ordered_at` и `delivered_at` соответственно:
 
 ```yaml
 semantic_models:
@@ -241,6 +378,48 @@ semantic_models:
         agg: sum
         create_metric: True
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12"> 
+
+Затем нужно добавить эти же сущности в нашу модель `orders` в качестве ключей типа `foreign`, задав для них выражения `ordered_at` и `delivered_at`:
+
+```yaml
+models:
+  - name: orders
+    semantic_model:
+      enabled: true
+
+    agg_time_dimension: ordered_at
+
+    columns:
+      - name: order_id
+        entity:
+          type: primary
+          name: order_id
+
+      - name: ordered_at
+        granularity: day
+        dimension:
+          type: time
+          name: ordered_at
+
+    derived_semantics: # Foreign keys
+      entities:
+        - name: ordered_at_entity
+          type: foreign
+          expr: ordered_at
+        - name: delivered_at_entity
+          type: foreign
+          expr: delivered_at
+
+    metrics:
+      - name: order_total
+        type: simple
+        agg: sum
+        description: "Total amount for each order including taxes."
+```
+</VersionBlock>
 
 При такой конфигурации семантические модели смогут выполнять соединение по условию `ordered_at = date_day` через сущность `ordered_at_entity`, а также по условию `delivered_at = date_day` через сущность `delivered_at_entity`.  
 Чтобы проверить результат, можно выполнить одну из следующих команд:

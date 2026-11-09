@@ -5,9 +5,11 @@ sidebar_label: 'Удалить задание или окружение'
 id: delete-environment-job
 ---
 
-Чтобы удалить среду или задание в <Constant name="cloud" />, у вас должна быть лицензия `developer` (см. [license](/docs/cloud/manage-access/seats-and-users)), а также необходимые [права доступа](/docs/cloud/manage-access/about-user-access).
+Чтобы удалить среду или задание в <Constant name="cloud" />, у вас должна быть лицензия `developer` (см. [license](/docs/platform/manage-access/seats-and-users)), а также необходимые [права доступа](/docs/platform/manage-access/about-user-access).
 
-### Удаление задания {#delete-a-job}
+Чтобы удалить среду или задание в <Constant name="dbt" />, у вас должна быть [лицензия](/docs/platform/manage-access/seats-and-users) `developer` и необходимые [права доступа](/docs/platform/manage-access/about-user-access). 
+
+### Удаление задания
 
 import DeleteJob from '/snippets/_delete-job.md';
 

@@ -1,5 +1,6 @@
 ---
 title: "Конфигурации Microsoft SQL Server"
+description: "Настройте специфичные для Microsoft SQL Server параметры моделей dbt, включая поддерживаемые материализации и особенности T-SQL."
 id: "mssql-configs"
 ---
 

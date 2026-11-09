@@ -1,8 +1,25 @@
-Чтобы подключиться к экземпляру {props.redshift}{props.postgresalloydb} через SSH‑туннель, при создании подключения выберите опцию **Use SSH Tunnel**. При настройке туннеля необходимо указать hostname, имя пользователя и порт для [bastion‑сервера](#about-the-bastion-server-in-aws).
+Используйте SSH-туннель, если ваш экземпляр {props.redshift}{props.postgresalloydb} недоступен из общедоступной сети и доступ к нему должен осуществляться через [бастионный сервер](/docs/platform/connect-data-platform/connect-redshift#about-the-bastion-server-in-aws). Если эта функция включена, <Constant name="dbt_platform" /> подключается к вашей базе данных, сначала устанавливая защищённое соединение с бастионным сервером, который затем перенаправляет трафик в вашу базу данных.
 
-После сохранения подключения для него будет сгенерирован и отображён публичный ключ. Вы можете скопировать этот публичный ключ на bastion‑сервер, чтобы авторизовать <Constant name="cloud" /> для подключения к вашей базе данных через bastion‑сервер.
+Чтобы настроить подключение через SSH-туннель:
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="Открытый ключ создаётся после сохранения"/>
+1. Перейдите в **Account settings** (нажав на название своей учётной записи в левом боковом меню) и выберите **Connections**.
+2. Выберите существующее подключение для редактирования или нажмите **+ New connection**.
+3. В разделе **Connection settings** убедитесь, что установлен флажок **SSH Tunnel Enabled**.
+4. Введите имя хоста, имя пользователя и порт бастионного сервера.
+
+<Lightbox
+  src="/img/docs/dbt-platform/platform-configuring-dbt-platform/postgres-redshift-ssh-tunnel.png"
+  width="70%"
+  title="Открытый ключ генерируется после сохранения"
+/>
+
+5. Нажмите **Save**. <Constant name="dbt_platform" /> сгенерирует и отобразит открытый ключ.
+6. Скопируйте новый открытый ключ на бастионный сервер и добавьте его в файл `authorized_keys` сервера, чтобы разрешить <Constant name="dbt_platform" /> подключаться через бастионный сервер. Если новый ключ не добавлен, установить соединение через SSH-туннель не удастся.
+
+
+    :::important
+    Каждый раз, когда вы создаёте и сохраняете новое подключение через SSH-туннель, <Constant name="dbt_platform" /> генерирует уникальную пару SSH-ключей, даже если параметры подключения полностью совпадают с параметрами существующего подключения.
+    :::
 
 #### О бастионном сервере в AWS {#about-the-bastion-server-in-aws}
 
@@ -10,11 +27,11 @@
   <summary>Что такое бастионный сервер?</summary>
   <div>
     <div>
-      Bastion‑сервер в <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> — это хост, который позволяет <Constant name="cloud" /> устанавливать SSH‑соединение.
+Бастионный сервер в <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> — это хост, который позволяет <Constant name="dbt" /> устанавливать SSH-соединение.
       
       <br></br>
     
-      <Constant name="cloud" /> отправляет только запросы и не передаёт большие объёмы данных. Это означает, что bastion‑сервер может работать на AWS‑инстансе практически любого размера, например t2.small или t2.micro.<br></br><br></br>
+      <Constant name="dbt" /> только отправляет запросы и не передаёт большие объёмы данных. Это означает, что бастионный сервер может работать на инстансе AWS любого размера, например t2.small или t2.micro.<br></br><br></br>
     
       Убедитесь, что инстанс расположен в той же Virtual Private Cloud (VPC), что и экземпляр {props.redshift}{props.postgres}, и что для группы безопасности bastion‑сервера настроены правила, позволяющие подключаться к порту хранилища данных.
     </div>
@@ -24,10 +41,10 @@
 
 #### Настройка bastion‑сервера в AWS {#configuring-the-bastion-server-in-aws}
 
-Чтобы настроить SSH‑туннель в <Constant name="cloud" />, вам нужно указать hostname/IP вашего bastion‑сервера, имя пользователя и порт (на ваш выбор), к которому будет подключаться <Constant name="cloud" />. Выполните следующие шаги:
+Чтобы настроить SSH-туннель в <Constant name="dbt" />, вам потребуется указать имя хоста или IP-адрес вашего бастионного сервера, имя пользователя и выбранный вами порт, к которому будет подключаться <Constant name="dbt" />. Выполните следующие действия:
 
-1. Убедитесь, что сетевые правила безопасности bastion‑сервера настроены так, чтобы принимать подключения с [IP‑адресов <Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses) на тот порт, который вы настроили.
-2. Создайте пользовательскую учётную запись с помощью CLI инстанса bastion‑сервера. В следующем примере используется имя пользователя `dbtcloud`:
+1. Убедитесь, что правила сетевой безопасности бастионного сервера разрешают подключения с [IP-адресов <Constant name="dbt" />](/docs/platform/about-platform/access-regions-ip-addresses) через настроенный вами порт.
+2. Настройте учетную запись пользователя с помощью интерфейса командной строки (CLI) экземпляра бастионного сервера. В следующем примере используется имя пользователя `dbtcloud`:
     
     ```shell
     sudo groupadd dbtcloud
@@ -39,6 +56,6 @@
     chmod 600 ~/.ssh/authorized_keys
     ```  
 
-3. Скопируйте и вставьте сгенерированный <Constant name="cloud" /> публичный ключ в файл `authorized_keys`.
+3. Скопируйте открытый ключ, сгенерированный <Constant name="dbt" />, и вставьте его в файл authorized_keys.
 
-После этого bastion‑сервер будет готов к использованию <Constant name="cloud" /> в качестве туннеля для подключения к окружению {props.redshift}{props.postgres}.
+Теперь бастионный сервер должен быть готов к использованию <Constant name="dbt" /> в качестве туннеля для подключения к среде {props.redshift}{props.postgres}.

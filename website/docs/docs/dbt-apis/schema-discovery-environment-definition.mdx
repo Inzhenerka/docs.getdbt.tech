@@ -1,0 +1,39 @@
+---
+title: "Схема объекта Definition"
+sidebar_label: "Определение"
+id: "discovery-schema-environment-definition"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+ 
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект `definition` позволяет запрашивать логическое состояние конкретного узла проекта на основе самых последних моделей, сгенерированных из manifest-файла.
+
+В разделе [Example queries](#example-queries) показаны примеры запросов для некоторых полей, доступных через объект `definition`. Полный список всех возможных полей, которые можно запрашивать, см. в разделе [Fields](#fields), где приведена вся схема.
+
+
+### Примеры запросов {#example-queries}
+
+Вы можете использовать `id` вашего production-окружения:
+
+```graphql
+query Example {
+	environment(id: 834){ # Get the latest state of the production environment
+		definition { # The logical state of a given project node given its most recent manifest generated
+			models(first: 100, filter:{access:public}){ # Filter on model access (or other properties)
+				edges { node {
+					rawCode, # Compare to see if/how the model has changed since the last build
+					jobDefinitionId, runGeneratedAt,	# When the code was last compiled or run
+					contractEnforced, group, version}}} # Model governance
+		}
+	}
+}
+```
+
+
+### Поля {#fields}
+При запросе поля `definition` у объекта `environment` вы можете использовать следующие поля.
+<SchemaTable nodeName="DefinitionState" />

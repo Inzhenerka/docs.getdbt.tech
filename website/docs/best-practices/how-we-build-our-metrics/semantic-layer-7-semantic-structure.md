@@ -5,7 +5,11 @@ hoverSnippet: Узнайте, как начать работу с семанти
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-8-refactor-a-rollup"
 ---
 
-## Файлы и папки {#files-and-folders}
+import NewSLYAMLCallout from '/snippets/_new-sl-yaml-callout.md';
+
+<NewSLYAMLCallout />
+
+## Файлы и папки
 
 Первое, что вам нужно определить, это как вы будете последовательно структурировать ваш код. Есть две рекомендуемые лучшие практики на выбор:
 

@@ -1,5 +1,6 @@
 ---
 title: runtime_version
+description: "Specify the Python runtime version used to run a Python user-defined function (UDF) on Snowflake and BigQuery."
 sidebar_label: "runtime_version"
 id: runtime-version
 ---
@@ -11,7 +12,7 @@ id: runtime-version
 functions:
   - name: <function name>
     config:
-      runtime_version: <string> # обязательно для Python UDF
+runtime_version: <string> # обязателен для Snowflake и BigQuery; необязателен и игнорируется в Databricks
 ```
 
 </File>
@@ -24,6 +25,7 @@ functions:
 
 - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12` и `3.13`
 - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
+- Databricks: Accepted for compatibility but has no effect. Databricks manages the Python runtime internally, so dbt displays a warning if you set it. Available in `dbt-databricks` v1.12+.
 
 ## Пример {#example}
 
@@ -39,13 +41,12 @@ functions:
 ```
 </File>
 
-## Связанная документация {#related-documentation}
-
-- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Пользовательские функции](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)
 - [Конфигурации функций](/reference/function-configs)
-- [Type](/reference/resource-configs/type)
-- [Volatility](/reference/resource-configs/volatility)
+- [type](/reference/resource-configs/type)
+- [volatility](/reference/resource-configs/volatility)
 - [entry_point](/reference/resource-configs/entry-point)
-- [Аргументы](/reference/resource-properties/function-arguments)
-- [Returns](/reference/resource-properties/returns)
+- [packages](/reference/resource-configs/packages)
+- [arguments](/reference/resource-properties/function-arguments)
+- [returns](/reference/resource-properties/returns)

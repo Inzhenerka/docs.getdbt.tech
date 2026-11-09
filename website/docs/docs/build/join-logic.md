@@ -4,9 +4,10 @@ id: join-logic
 description: "Соединения позволяют объединять данные из разных таблиц и создавать новые метрики"
 sidebar_label: "Соединения"
 tags: [Metrics, Semantic Layer]
+availability: all_users
 ---
 
-Соединения являются мощной частью MetricFlow и упрощают процесс предоставления всех доступных измерений для ваших метрик во время выполнения запроса, независимо от того, где они определены в различных семантических моделях. С помощью соединений вы также можете создавать метрики, используя меры из разных семантических моделей.
+Соединения — мощный инструмент MetricFlow, который упрощает доступ ко всем допустимым измерениям для ваших метрик во время выполнения запроса независимо от того, в каких семантических моделях они определены. С помощью соединений вы также можете создавать метрики, используя <VersionBlock lastVersion="1.11">меры</VersionBlock><VersionBlock firstVersion="1.12">простые метрики</VersionBlock> из разных семантических моделей.
 
 Соединения используют `entities`, определенные в конфигурациях вашей семантической модели, в качестве ключей соединения между таблицами. Предполагая, что сущности определены в семантической модели, MetricFlow создает граф, используя семантические модели в качестве узлов и пути соединения в качестве ребер для автоматического выполнения соединений. MetricFlow выбирает подходящий тип соединения и избегает фан-аут или хазм соединений с другими таблицами на основе типов сущностей.
 
@@ -20,6 +21,8 @@ MetricFlow автоматически генерирует необходимы�
 
 :::tip Джоины генерируются автоматически
 MetricFlow автоматически генерирует необходимые соединения (joins) с определёнными семантическими объектами, избавляя вас от необходимости создавать новые семантические модели или конфигурационные файлы.
+
+## Типы соединений {#types-of-joins}
 
 В этом разделе объясняются различные типы соединений, которые могут использоваться с сущностями, а также то, как выполнять запросы с их использованием.
 :::
@@ -58,9 +61,11 @@ MetricFlow выполняет семантическую валидацию, и�
 
 ## Пример {#example}
 
-Следующий пример использует две семантические модели с общей сущностью и показывает запрос MetricFlow, который требует соединения между двумя семантическими моделями. Две семантические модели:
-- `transactions`
-- `user_signup`
+В следующем примере используются две семантические модели с общей сущностью и показан запрос MetricFlow, для выполнения которого требуется соединение двух семантических моделей: `transactions` и `user_signup`.
+
+<VersionBlock lastVersion="1.11">
+
+<VersionBlock lastVersion="1.11">
 
 ```yaml
 semantic_models:
@@ -84,18 +89,72 @@ semantic_models:
       - name: type
         type: categorical
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+<!--insert new yaml spec-->
+</VersionBlock>
 
 - MetricFlow использует `user_id` в качестве ключа соединения для связывания двух семантических моделей, `transactions` и `user_signup`. Это позволяет вам запрашивать метрику `average_purchase_price` в семантической модели `transactions`, сгруппированную по измерению `type` в семантической модели `user_signup`.
   - Обратите внимание, что мера `average_purchase_price` определена в `transactions`, где `user_id` является внешней сущностью. Однако в `user_signup` `user_id` является основной сущностью.
 - Поскольку `user_id` является внешним ключом в `transactions` и основным ключом в `user_signup`, MetricFlow выполняет левое соединение, где `transactions` соединяется с `user_signup`, чтобы получить доступ к мере `average_purchase_price`, определенной в `transactions`.
 - Чтобы запрашивать измерения из разных семантических моделей, добавьте двойное подчеркивание (или dunder) к имени измерения после соединения сущности в вашем инструменте редактирования. Следующий запрос, `user_id__type`, включен в качестве измерения с использованием флага `--group-by` (`type` является измерением).
 
-```bash
-dbt sl query --metrics average_purchase_price --group-by metric_time,user_id__type # In <Constant name="cloud" />
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+<File name='models/model.yml'>
+
+```yaml
+models:
+  - name: transactions_model
+    semantic_model:
+      enabled: true
+      name: transactions
+    columns:
+      - name: id
+        entity:
+          name: transaction            
+          type: primary
+      - name: user_id
+        entity:
+          name: user
+          type: foreign
+    metrics:
+      - name: average_purchase_price
+        type: simple
+        agg: average
+        expr: purchase_price
+
+  - name: user_model
+    semantic_model:
+      enabled: true
+      name: user_signup
+    columns:
+      - name: user_id
+        entity:
+          name: user
+          type: primary
+      - name: type
+        dimension:
+          type: categorical
+```
+</File>
+
+- MetricFlow использует `user_id` в качестве ключа соединения для связи двух семантических моделей: `transactions` и `user_signup`. Это позволяет запрашивать метрику `average_purchase_price` из семантической модели `transactions` с группировкой по измерению `type` из семантической модели `user_signup`.
+  - Обратите внимание, что простая метрика `average_purchase_price` определена в `transactions`, где `user_id` — внешняя сущность. При этом в `user_signup` сущность `user_id` является первичной. 
+- Поскольку `user_id` — внешний ключ в `transactions` и первичный ключ в `user_signup`, MetricFlow выполняет левое соединение, при котором `transactions` соединяется с `user_signup`, чтобы получить доступ к простой метрике `average_purchase_price`, определённой в `transactions`.
+- Чтобы запрашивать измерения из разных семантических моделей, в своём инструменте редактирования укажите сущность, затем двойное подчёркивание (dunder), а после него — имя измерения. В следующем запросе `user_id__type` указано как измерение с помощью флага `--group-by` (где `type` — измерение).
+
+</VersionBlock>
+
+```yaml 
+dbt sl query --metrics average_purchase_price --group-by metric_time,user_id__type # In dbt platform />
 ```
 
-```bash
-mf query --metrics average_purchase_price --group-by metric_time,user_id__type # In <Constant name="core" />
+```yaml 
+mf query --metrics average_purchase_price --group-by metric_time,user_id__type # In dbt v1
 ```
 
 #### Примеры SQL {#sql-examples}
@@ -144,7 +203,7 @@ where sales.user_id is not null or returns.user_id is not null;
 
 ## Многошаговые (multi-hop) соединения {#multi-hop-joins}
 
-MetricFlow позволяет пользователям соединять меры и измерения через граф сущностей, переходя от одной таблицы к другой в графе. Это называется "мульти-хоп соединение".
+MetricFlow позволяет пользователям объединять <VersionBlock lastVersion="1.11">меры</VersionBlock><VersionBlock firstVersion="1.12">простые метрики</VersionBlock> и измерения в графе сущностей, переходя от одной таблицы к другой внутри графа. Это называется «соединением через несколько переходов» (multi-hop join).
 
 MetricFlow может соединять до трех таблиц, поддерживая мульти-хоп соединения с ограничением в два хопа. Это позволяет:
 - Выполнять сложный анализ данных без неоднозначных путей.
@@ -154,7 +213,9 @@ MetricFlow может соединять до трех таблиц, подде�
 
 Например, если у вас есть две модели, `country` и `region`, где клиенты связаны с странами, которые, в свою очередь, связаны с регионами, вы можете соединить их все в одном SQL-запросе и анализировать `orders` по `customer__country_country_name`, но не по `customer__country__region_name`.
 
-![Multi-Hop-Join](/img/docs/building-a-dbt-project/multihop-diagram.png "Пример схемы для справки")
+<Lightbox src="/img/docs/building-a-dbt-project/multihop-diagram.png" title="Соединение через несколько переходов" />
+
+<VersionBlock lastVersion="1.11">
 
 Обратите внимание, как схема может быть переведена в следующие три семантические модели MetricFlow для создания метрики 'Средняя цена покупки по странам', используя меру `purchase_price` из таблицы продаж и измерение `country_name` из таблицы `country_dim`.
 
@@ -195,6 +256,87 @@ semantic_models:
       - name: country_name
         type: categorical
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+Notice how the schema can be translated into the following three MetricFlow semantic models to create the metric 'Average purchase price by country' using the `purchase_price` simple metric from the sales table and the `country_name` dimension from the `country_dim` table.
+
+<File name='models/model.yml'>
+
+```yaml
+models:
+  - name: sales_model
+    semantic_model:
+      enabled: true
+      name: sales
+    
+    agg_time_dimension: first_ordered_at
+    
+    columns:
+      - name: id
+        entity:
+          type: primary
+      
+      - name: user_id
+        entity:
+          type: foreign
+      
+      - name: purchase_price
+        # Column for the simple metric expression
+      
+      - name: first_ordered_at
+        granularity: day
+        dimension:
+          type: time
+          name: metric_time
+    
+    metrics:
+      - name: average_purchase_price
+        type: simple
+        agg: avg
+        expr: purchase_price
+
+  - name: user_signup_model
+    semantic_model:
+      enabled: true
+      name: user_signup
+    
+    columns:
+      - name: user_id
+        entity:
+          type: primary
+      
+      - name: country_id
+        entity:
+          type: unique
+      
+      - name: signup_date
+        granularity: day
+        dimension:
+          type: time
+      
+      - name: country_dim
+        dimension:
+          type: categorical
+
+  - name: country_model
+    semantic_model:
+      enabled: true
+      name: country
+    
+    columns:
+      - name: country_id
+        entity:
+          type: primary
+      
+      - name: country_name
+        dimension:
+          type: categorical
+```
+
+</File>
+</VersionBlock>
 
 ### Запрос мульти-хоп соединений {#query-multi-hop-joins}
 

@@ -1,26 +1,28 @@
 ---
-title: Просмотр наших руководств
-description: Платформа dbt — это самый быстрый и надежный способ развертывания dbt для масштабируемых преобразований данных, а dbt Core обеспечивает работу open-source пайплайнов трансформации. Вместе они предоставляют целостный и удобный опыт аналитической инженерии. Изучите наши пошаговые руководства, быстрые туториалы и материалы по устранению неполадок, чтобы начать работу с dbt и вашей платформой данных.
+title: Ознакомьтесь с нашими руководствами
+description: Платформа dbt — самый быстрый и надежный способ развернуть dbt для масштабируемого преобразования данных, а dbt v1 обеспечивает работу процессов преобразования данных с открытым исходным кодом. Вместе они создают целостную среду для аналитической инженерии. Изучите наши пошаговые руководства, учебные материалы для быстрого старта и ресурсы по устранению неполадок, чтобы начать работу с dbt и вашей платформой данных.
 categories:
-  - title: Fusion
-    guides:
-      - fusion
-      - prepare-fusion-upgrade
-      - upgrade-to-fusion
 
-  - title: Самые популярные
+  - title: Начало работы с dbt v2
     guides:
-      - fusion
+      - dbt
+      - prepare-v2-upgrade
+      - upgrade-to-v2
+      - dbt-platform-local-workflow
+      - adapter-creation-v2
+
+  - title: Foundations
+    guides:
+      - terminal-guide
+      - clone-jaffle-shop
+
+  - title: Popular
+    guides:
+      - dbt-charts
       - snowflake
       - databricks
       - bigquery
       - redshift
-      - microsoft-fabric
-      - athena
-      - manual-install
-      - azure-synapse-analytics
-      - starburst-galaxy
-      - teradata
 
   - title: Устранение неполадок
     guides:
@@ -30,10 +32,14 @@ categories:
 
   - title: Продвинутые сценарии использования
     guides:
-      - fusion-package-compat
+      - iceberg
+      - dbt-package-compat
+      - qs-mcp-oauth
+      - qs-mcp-local 
       - airflow-and-dbt-cloud
       - adapter-creation
-      - core-to-cloud-1
+      - adapter-creation-v2
+      - dbt-migration-1
       - create-new-materializations
       - customize-schema-alias
       - refactoring-legacy-sql

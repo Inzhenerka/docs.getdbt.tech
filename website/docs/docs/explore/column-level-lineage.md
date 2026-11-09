@@ -1,29 +1,47 @@
 ---
 title: "Column-level lineage"
-description: "Use dbt Catalog's column-level lineage to gain insights about your data at a granular level."
+description: "Use column-level lineage to gain insights about your data at a granular level, in dbt Catalog or locally with dbt v2."
+tags: ['CLL']
+availability:
+  surface:
+  - local
+  - platform
 ---
 
-# Происхождение на уровне столбцов <Lifecycle status="managed,managed_plus" /> {#column-level-lineage}
+# Происхождение данных на уровне столбцов
 
-<Constant name="explorer" /> теперь предлагает column-level lineage (CLL) для ресурсов в вашем dbt‑проекте. Аналитические инженеры могут быстро и удобно получать представление о происхождении своих дата‑продуктов на более детальном уровне. Для каждого столбца в ресурсе (модели, источнике или snapshot) в dbt‑проекте <Constant name="explorer" /> предоставляет сквозную lineage данных в этом столбце с учётом того, как он используется.
+Отслеживание происхождения данных на уровне столбцов (column-level lineage, CLL) позволяет подробнее изучить происхождение ваших продуктов данных. Для каждого столбца ресурса (модели, источника или снимка) в проекте dbt предоставляет сквозную информацию о происхождении данных в этом столбце с учётом того, как он используется.
 
-CLL доступна во всех тарифных планах <Constant name="cloud" /> Enterprise, которые поддерживают использование <Constant name="explorer" />.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-overview-cll.png" width="95%" title="Обзор происхождения данных на уровне столбцов"/>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-overview-cll.png" width="95%" title="Обзор линии родословной на уровне столбцов"/>
+## Prerequisites
+
+You can use CLL in two places:
+
+- **[<Constant name="catalog" />](/docs/explore/explore-projects) in the <Constant name="dbt_platform" />**:  Requires an Enterprise or Enterprise+ plan with <Constant name="catalog" /> access.
+- **Locally with <Constant name="dbt" /> v2**: Requires [strict static analysis](/docs/build/about-static-analysis#configuring-static_analysis). Available in the [dbt VS Code extension](/docs/dbt-extension-features#rich-lineage-in-context), [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2), or from the command line. For more information, refer to [dbt Information Schema](/docs/build/dbt-information-schema?version=2).
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-## Доступ к линии родословной на уровне столбцов {#access-the-column-level-lineage}
+## Доступ к происхождению данных на уровне столбцов в Catalog
 
-Для CLL не требуется никакой дополнительной настройки, если ваша учетная запись находится на тарифе Enterprise, который поддерживает использование <Constant name="explorer" />. Вы можете получить доступ к CLL, развернув карточку столбца на вкладке **Columns** в <Constant name="explorer" /> на [странице сведений о ресурсе](/docs/explore/explore-projects#view-resource-details) для модели, источника или снапшота.
+Для использования происхождения данных на уровне столбцов (CLL) в <Constant name="catalog" /> дополнительная настройка не требуется, если ваша учетная запись использует тарифный план Enterprise или Enterprise+ с доступом к <Constant name="catalog" />. Открыть CLL можно из карточки столбца на вкладке **Columns** на [странице сведений о ресурсе](/docs/explore/explore-projects#view-resource-details) в <Constant name="catalog" /> для модели, источника или снимка.
 
-<Constant name="cloud" /> обновляет lineage в Explorer после каждого запуска, выполненного в среде production или staging. Как минимум одно задание в среде production или staging должно выполнять команду `dbt docs generate`. Подробнее см. в разделе [Генерация метаданных](/docs/explore/explore-projects#generate-metadata).
+<Constant name="dbt" /> обновляет сведения о происхождении данных в <Constant name="catalog" /> после каждого запуска в производственной среде или среде staging. <VersionBlock lastVersion="1.99">Хотя бы одно задание в производственной среде или среде staging должно выполнять `dbt docs generate`.</VersionBlock><VersionBlock firstVersion="2.0">Задания, использующие v2, автоматически обновляют эти метаданные при каждом запуске.</VersionBlock> Подробнее см. в разделе [Генерация метаданных](/docs/explore/explore-projects#generate-metadata).
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-cll.png" width="40%" title="Пример вкладки Columns и где развернуть для CLL"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-cll.png" width="40%" title="Пример вкладки Columns и расположение элемента для открытия CLL"/>
 
-## Линза эволюции столбцов {#column-lens}
+## Локальный доступ к происхождению данных на уровне столбцов
+
+При разработке с использованием <Constant name="dbt" /> v2 просматривать происхождение данных на уровне столбцов можно следующими способами:
+
+- **Расширение dbt для VS Code**: Щелкните правой кнопкой мыши имя файла или SQL-код модели, затем выберите **dbt: View Lineage** &rarr; **Show column lineage**. Полное описание процесса см. в разделе [Подробное представление происхождения данных в контексте](/docs/dbt-extension-features#rich-lineage-in-context).
+- **dbt Docs v2**: Выполните `dbt compile --generate-info-schema --static-analysis strict`, затем `dbt docs generate --no-compile`. У команды `dbt docs generate` нет флага `--static-analysis`, поэтому сначала необходимо выполнить компиляцию в строгом режиме, иначе сайт не будет содержать сведения о происхождении данных на уровне столбцов. См. раздел [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2).
+- **Командная строка или артефакт**: Выполните `dbt compile --generate-info-schema --static-analysis strict`, затем [`dbt show --info column_lineage`](/docs/build/dbt-information-schema#querying-with-dbt-show). Эти файлы находятся в `target/info_schema/`, и вы можете напрямую прочитать файл Parquet [`dbt.column_lineage`](/reference/info-schema).
+
+<a id="column-lens" />
 
 Вы можете использовать линзу эволюции линии родословной столбцов, чтобы определить, когда столбец трансформируется или повторно используется (передача или переименование). Линза помогает различать, когда и как столбец фактически изменяется, проходя через вашу линию родословной dbt, что особенно полезно для отладки рабочих процессов.
 
@@ -31,7 +49,11 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 ### Унаследованные описания столбцов {#inherited-column-descriptions}
 
-Повторно используемый столбец, обозначенный как **Passthrough** или **Rename** в линии родословной, автоматически наследует свое описание от столбцов исходной и вышестоящей модели. Наследование продолжается настолько далеко, насколько это возможно. Пока столбец не трансформируется, вам не нужно вручную определять описание; оно будет автоматически распространяться вниз по потоку.
+В столбце **Transformation** отображается предварительный просмотр формулы, используемой для вычисления значений столбца. Чтобы просмотреть полную формулу, выберите столбец в полном представлении происхождения данных.
+
+Тип преобразования и формула появляются после обновления проекта и выполнения задания в среде production или staging.
+
+### Унаследованные описания столбцов
 
 Столбцы передачи и переименования четко обозначены и имеют цветовую кодировку в линии родословной.
 
@@ -39,7 +61,7 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-prop-inherit.jpg" width="100%" title="Пример линии родословной с распространенными и унаследованными описаниями столбцов."/>
 
-## Примеры использования линии родословной на уровне столбцов {#use-cases}
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-prop-inherit.png" width="100%" title="Пример графа зависимостей с распространёнными и унаследованными описаниями столбцов."/>
 
 Узнайте больше о том, почему и как вы можете использовать CLL в следующих разделах.
 
@@ -57,15 +79,17 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 ## Предостережения {#caveats}
 
-Обратитесь к следующим предостережениям или ограничениям CLL, когда вы используете dbt Explorer.
+## Особенности и ограничения Catalog
 
-При работе с <Constant name="explorer" /> обратите внимание на следующие оговорки или ограничения CLL.
+При работе с <Constant name="catalog" /> учитывайте следующие особенности и ограничения CLL.
 
-Линия родословной на уровне столбцов отражает линию родословной из `select` операторов в SQL-коде ваших моделей. Она не отражает другое использование, такое как соединения и фильтры.
+### Использование столбцов
+
+Происхождение данных на уровне столбцов отражает связи из операторов `select` в SQL-коде ваших моделей. Оно не отражает другие способы использования столбцов, например в соединениях и фильтрах.
 
 ### Разбор SQL {#column-usage}
 
-Линейность на уровне колонок (column-level lineage) основана на разборе SQL. Ошибки могут возникать в случаях, когда разбор SQL не удаётся или источник колонки невозможно определить (например, при распаковке JSON, использовании lateral join и т.п.). В таких ситуациях линейность может быть неполной, и <Constant name="cloud" /> отобразит предупреждение об этом в линейности колонок.
+Происхождение данных на уровне столбцов определяется с помощью разбора SQL. Ошибки могут возникать, если разбор завершается сбоем или источник столбца неизвестен (например, при распаковке JSON, использовании латеральных соединений и т. п.). В таких случаях информация о происхождении данных может быть неполной, и <Constant name="dbt" /> отобразит соответствующее предупреждение в представлении происхождения данных на уровне столбцов.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-parsing-error-pill.png" title="Пример предупреждения в полном графе линии родословной"/>
 

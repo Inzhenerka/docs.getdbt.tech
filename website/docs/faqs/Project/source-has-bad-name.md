@@ -1,7 +1,7 @@
 ---
-title: Что делать, если мой источник находится в плохо названной схеме или таблице?
-description: "Используйте свойства schema и identifier для определения имен"
-sidebar_label: 'Источник в плохо названной схеме или таблице'
+title: Что делать, если источник находится в схеме или таблице с неудачным именем?
+description: "Используйте свойства schema и identifier для задания имен"
+sidebar_label: 'Источник в схеме или таблице с неудачным именем'
 id: source-has-bad-name
 
 ---
@@ -13,17 +13,13 @@ id: source-has-bad-name
 <File name='models/<filename>.yml'>
 
 ```yml
-version: 2
-
 sources:
   - name: jaffle_shop
-    schema: postgres_backend_public_schema
     database: raw
+    schema: postgres_backend_public_schema
     tables:
       - name: orders
         identifier: api_orders
-
-
 ```
 
 </File>

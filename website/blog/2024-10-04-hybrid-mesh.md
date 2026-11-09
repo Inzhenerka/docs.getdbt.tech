@@ -39,7 +39,7 @@ dbt Mesh мощен, потому что позволяет командам р�
 
 Создание гибридной Mesh в основном такое же, как создание любого другого рабочего процесса [dbt Mesh](/guides/mesh-qs?step=1) &mdash; есть несколько соображений, но в основном _это просто работает_. Мы ожидаем, что она продолжит внедряться, поскольку все больше центральных команд данных стремятся вовлечь свои нижестоящие доменные команды.
 
-Гибридная Mesh может быть принята как стабильный долгосрочный паттерн или как промежуточный этап, пока вы выполняете [миграцию с dbt Core на dbt Cloud](/guides/core-cloud-2?step=1).
+Гибридную сетку (Hybrid Mesh) можно использовать как устойчивую долгосрочную архитектуру или как промежуточное решение при [миграции с dbt Core на dbt Cloud](/guides/dbt-migration-2?step=1).
 
 ## Как построить гибридную Mesh {#how-to-build-a-hybrid-mesh}
 Включение гибридной Mesh так же просто, как несколько дополнительных шагов для импорта метаданных из вашего проекта Core в dbt Cloud. После этого вы сможете управлять своей dbt Mesh как обычно, и все наши [стандартные рекомендации](/best-practices/how-we-mesh/mesh-1-intro) по-прежнему применимы.
@@ -55,12 +55,12 @@ dbt Mesh мощен, потому что позволяет командам р�
 ### Шаг 2: Отразите каждый "производящий" проект Core в dbt Cloud {#step-2-mirror-each-producer-core-project-in-dbt-cloud}
 Это позволяет dbt Cloud знать о содержимом и метаданных вашего проекта, что, в свою очередь, позволяет другим проектам получать доступ к его моделям.
 
-- [Создайте аккаунт в dbt Cloud](https://www.getdbt.com/signup/) и проект dbt для каждого upstream‑проекта на dbt Core.
-  - Примечание: если в вашем проекте используются [environment variables](/docs/build/environment-variables), то переменные окружения в dbt Cloud должны иметь префикс `DBT_` (включая `DBT_ENV_CUSTOM_ENV_` или `DBT_ENV_SECRET`). Следуйте инструкциям из [этого руководства](https://docs.getdbt.tech/guides/core-to-cloud-1?step=8#environment-variables), чтобы корректно преобразовать их для dbt Cloud.
-- Для каждого upstream‑проекта на dbt Core в dbt Cloud должна существовать production‑[environment](/docs/dbt-cloud-environments). Вам необходимо настроить учетные данные и переменные окружения в dbt Cloud так, чтобы разрешение имен relations происходило в тех же местах, куда ваши dbt Core workflows деплоят модели.
-- Настройте [merge job](/docs/deploy/merge-jobs) в production‑environment для запуска `dbt parse`. Это позволит подключать downstream‑проекты в dbt Mesh за счет генерации необходимых [artifacts](/reference/artifacts/dbt-artifacts) для кросс‑проектных ссылок.
-  - Опционально: вместо merge job для `dbt parse` можно настроить обычную job с запуском `dbt build` и централизовать оркестрацию dbt, перенеся production‑запуски в dbt Cloud. Подробнее о переносе production‑запусков в dbt Cloud см. в [этом руководстве](/guides/core-to-cloud-1?step=9).
-- Опционально: настройте регулярную job (например, ежедневную) для запуска `source freshness` и `docs generate`. Это наполнит dbt Cloud дополнительными метаданными и включит возможности в [dbt Explorer](/docs/explore/explore-projects), которые будут полезны обеим командам, включая [column‑level lineage](/docs/explore/column-level-lineage).
+- [Создайте учётную запись dbt Cloud](https://www.getdbt.com/signup/) и отдельный проект dbt для каждого вышестоящего проекта Core.
+  - Примечание: если в вашем проекте есть [переменные окружения](/docs/build/environment-variables), в dbt Cloud их имена должны начинаться с префикса `DBT_ ` (включая `DBT_ENV_CUSTOM_ENV_` или `DBT_ENV_SECRET`). Следуйте инструкциям в [этом руководстве](https://docs.getdbt.com/guides/dbt-migration-1?step=8#environment-variables), чтобы адаптировать их для dbt Cloud.
+- Для каждого вышестоящего проекта Core необходимо создать производственную [среду](/docs/dbt-platform-environments) в dbt Cloud. Настройте учётные данные и переменные окружения в dbt Cloud так, чтобы имена объектов базы данных разрешались в те же расположения, в которых ваши рабочие процессы dbt Core развёртывают эти модели.
+- Настройте [задание при слиянии](/docs/deploy/merge-jobs) в производственной среде для выполнения `dbt parse`. Это позволит подключать нижестоящие проекты в dbt Mesh благодаря созданию необходимых [артефактов](/reference/artifacts/dbt-artifacts) для межпроектных ссылок.
+  - Необязательно: настройте обычное задание для выполнения `dbt build` вместо задания при слиянии для `dbt parse` и централизуйте оркестрацию dbt, перенеся производственные запуски в dbt Cloud. Подробнее о переносе производственных запусков в dbt Cloud читайте в [этом руководстве](/guides/dbt-migration-1?step=9).
+- Необязательно: настройте регулярное задание (например, ежедневное) для выполнения `source freshness` и `docs generate`. Это наполнит dbt Cloud дополнительными метаданными и позволит использовать функции [dbt Explorer](/docs/explore/explore-projects), полезные обеим командам, включая [отслеживание происхождения данных на уровне столбцов](/docs/explore/column-level-lineage).
 
 ### Шаг 3: Создайте downstream‑проекты и подключите их к вашему Core‑проекту с помощью dbt Mesh {#step-3-create-and-connect-your-downstream-projects-to-your-core-project-using-dbt-mesh}
 Теперь, когда dbt Cloud располагает всей необходимой информацией о вашем Core‑проекте, вы можете приступить к настройке downstream‑проектов, которые будут строиться поверх public‑моделей проекта, перенесенного в Cloud на [шаге 2](#step-2-mirror-each-producer-core-project-in-dbt-cloud). Для этого:

@@ -1,0 +1,73 @@
+---
+title: "Схема объекта Sources"
+sidebar_label: "Sources"
+id: "discovery-schema-job-sources"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект `sources` позволяет запрашивать информацию обо всех источниках в рамках заданного job.
+
+### Аргументы {#arguments}
+
+При запросе `sources` доступны следующие аргументы.
+
+<NodeArgsTable parent="JobNode" name="sources" />
+
+Ниже приведены наглядные примеры запросов и описана схема объекта `sources`.
+
+### Примеры запросов {#example-queries}
+
+Аргументы `database`, `schema` и `identifier` являются необязательными. Это означает, что с помощью данного эндпоинта вы можете:
+
+- Найти конкретный источник, указав `<database>.<schema>.<identifier>`
+- Найти все источники в базе данных и/или схеме, указав `<database>` и/или `<schema>`
+
+#### Поиск источников по базе данных, схеме и идентификатору {#finding-sources-by-their-database-schema-and-identifier}
+
+Пример запроса ниже находит источник по его уникальным значениям базы данных, схемы и идентификатора.
+
+```graphql
+{
+  job(id: 123) {
+    sources(
+      database: "analytics"
+      schema: "analytics"
+      identifier: "dim_customers"
+      first: 10
+      after: "{somePaginationCursorValue}"
+    ) {
+      uniqueId
+      paginationCursor
+    }
+  }
+}
+```
+
+#### Поиск источников по схеме {#finding-sources-by-their-schema}
+
+Пример запроса ниже находит все источники в указанной схеме и их соответствующие состояния (pass, error, fail).
+
+```graphql
+{
+  job(id: 123) {
+    sources(schema: "analytics", first: 10, after: "{somePaginationCursorValue}") {
+      uniqueId
+      state
+      paginationCursor
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+Объект sources предоставляет доступ к _тем же полям_, что и [узел source](/docs/dbt-apis/discovery-schema-job-source). Разница в том, что объект sources может возвращать список: вместо запроса полей одного конкретного источника вы можете запросить эти параметры для всех источников в рамках jobID, базы данных и так далее.
+
+При запросе `sources` доступны следующие поля:
+
+<SchemaTable nodeName="SourceNode" />

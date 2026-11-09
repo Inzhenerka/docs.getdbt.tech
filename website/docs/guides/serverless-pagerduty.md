@@ -14,10 +14,11 @@ level: 'Advanced'
 
 ## Введение {#introduction}
 
-Это руководство научит вас, как создать и разместить простой Python‑приложение, которое будет отслеживать задания <Constant name="cloud" /> и создавать оповещения PagerDuty при сбоях. Для этого, когда задание <Constant name="cloud" /> завершается, приложение будет:
+Это руководство научит вас создавать и размещать простое приложение на Python, которое будет отслеживать задания <Constant name="dbt" /> и создавать оповещения в PagerDuty при сбоях. Для этого после завершения задания <Constant name="dbt" /> приложение будет:
+ - Проверять наличие узлов, завершившихся с ошибкой (например, непройденных тестов или моделей с ошибками), и
+ - создавать оповещение в PagerDuty на основе этих узлов, вызывая PagerDuty Events API. Дубликаты событий устраняются по идентификатору запуска.
 
-- проверять наличие неуспешных узлов (например, тестов, не прошедших проверку, или моделей с ошибками), и  
-- создавать оповещение PagerDuty на основе этих узлов, вызывая PagerDuty Events API. События дедуплицируются для каждого ID запуска.
+<Lightbox src="/img/guides/orchestration/webhooks/serverless-pagerduty/pagerduty-example-alarm.png" title="Снимок интерфейса PagerDuty с оповещением, созданным из-за некорректного SQL в модели dbt" />
 
 ![Скриншот интерфейса PagerDuty, показывающий тревогу, созданную из-за некорректного SQL в модели dbt](/img/guides/orchestration/webhooks/serverless-pagerduty/pagerduty-example-alarm.png)
 
@@ -29,9 +30,10 @@ level: 'Advanced'
 
 Это руководство предполагает, что вы уже знакомы со следующим:
 
-- [<Constant name="cloud" /> Webhooks](/docs/deploy/webhooks)
-- CLI‑приложения
-- Развёртывание кода в serverless‑среде выполнения, такой как fly.io или AWS Lambda
+Это руководство предполагает некоторое знакомство с:
+- [Вебхуками <Constant name="dbt" />](/docs/deploy/webhooks)
+- CLI-приложениями
+- Развертыванием кода в бессерверной среде выполнения, такой как fly.io или AWS Lambda
 
 
 ## Клонирование репозитория `dbt-cloud-webhooks-pagerduty` {#clone-the-dbt-cloud-webhooks-pagerduty-repo}
@@ -114,11 +116,11 @@ Wrote config file fly.toml<br/>
 
 *Не тестируйте конечную точку*; это не сработает, пока вы не сохраните ключи аутентификации (следующий шаг).
 
-## Хранение секретов {#store-secrets}
-Приложению необходимо задать три секрета со следующими именами:
-- `DBT_CLOUD_SERVICE_TOKEN`: [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens) для <Constant name="cloud" />, с как минимум разрешением `Metdata Only`.
-- `DBT_CLOUD_AUTH_TOKEN`: Secret Key для вебхука <Constant name="cloud" />, который вы создали ранее.
-- `PD_ROUTING_KEY`: ключ интеграции для интеграции PagerDuty, которую вы создали ранее.
+## Сохранение секретов
+Для работы приложения необходимо задать три секрета со следующими именами:
+- `DBT_CLOUD_SERVICE_TOKEN`: [персональный токен доступа](/docs/dbt-apis/user-tokens) или [токен сервисной учётной записи](/docs/dbt-apis/service-tokens) <Constant name="dbt" /> как минимум с разрешением `Metadata Only`.
+- `DBT_CLOUD_AUTH_TOKEN`: секретный ключ (Secret Key) для вебхука <Constant name="dbt" />, созданного ранее.
+- `PD_ROUTING_KEY`: ключ интеграции для интеграции с PagerDuty, созданной ранее.
 
 Установите эти секреты следующим образом, заменив `abc123` и т.д. на фактические значения:
 ```shell
@@ -127,6 +129,6 @@ flyctl secrets set DBT_CLOUD_SERVICE_TOKEN=abc123 DBT_CLOUD_AUTH_TOKEN=def456 PD
 
 ## Развертывание вашего приложения {#deploy-your-app}
 
-После того как вы зададите свои секреты, fly.io выполнит повторное развертывание вашего приложения. Когда оно успешно завершится, вернитесь в настройки вебхука <Constant name="cloud" /> и нажмите **Test Endpoint**.
+После того как вы зададите секреты, fly.io повторно развернёт ваше приложение. Когда развёртывание успешно завершится, вернитесь к настройкам вебхука <Constant name="dbt" /> и нажмите **Test Endpoint**.
 
 </div>

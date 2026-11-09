@@ -8,7 +8,29 @@ sidebar: "logs"
 
 dbt выводит логи в два разных места: консоль CLI и файл логов.
 
-Конфигурации `LOG_FORMAT` и `LOG_FORMAT_FILE` определяют, как должны быть отформатированы логи dbt, и у них есть одинаковые опции: `json`, `text` и `debug`.
+<VersionBlock lastVersion="1.99">
+
+Настройки `LOG_FORMAT` и `LOG_FORMAT_FILE` определяют формат логов dbt, и для каждой из них доступны одинаковые варианты: `json`, `text` и `debug`.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+The `LOG_FORMAT` and `LOG_FORMAT_FILE` configs specify how dbt's logs should be formatted. Shared options are `text`, `json`, and `default`. The `otel` option is available for `LOG_FORMAT` only (console output). Setting `--log-format-file otel` has no effect.
+
+The `otel` format streams [OpenTelemetry](https://opentelemetry.io/)-style structured telemetry to the console. It uses a different schema than <Constant name="core" />'s `json` logs. For JSONL files, Parquet export, OTLP, and how this maps to <Constant name="core" /> structured logging, refer to [<Constant name="fusion" /> telemetry and observability](/reference/telemetry-observability).
+
+<File name='Usage'>
+
+```text
+dbt build --log-format otel
+```
+
+</File>
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
 
 <File name='Usage'>
 
@@ -18,14 +40,33 @@ dbt run --log-format json
 
 </File>
 
-Формат `text` является стандартным для логов в консоли и содержит сообщения в простом текстовом формате с префиксом в виде простого временного штампа:
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+Формат `text` используется по умолчанию для логов в консоли и содержит сообщения в виде обычного текста, перед которыми указывается простая временная метка:
 
 ```
 23:30:16  Running with dbt=1.8.0
 23:30:17  Registered adapter: postgres=1.8.0
 ```
 
-Формат `debug` является стандартным для файла логов и аналогичен формату `text`, но с более детализированным временным штампом, а также включает [`invocation_id`](/reference/dbt-jinja-functions/invocation_id), [`thread_id`](/reference/dbt-jinja-functions/thread_id) и [уровень логирования](/reference/global-configs/logs#log-level) каждого сообщения:
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+Формат `text` используется по умолчанию для логов в консоли и выводит сообщения о ходе выполнения в виде обычного текста:
+
+```
+dbt 2.0.1
+   Loading ~/.dbt/profiles.yml
+```
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+Формат `debug` используется по умолчанию для файла логов и аналогичен формату `text`, но содержит более подробную временную метку, а также [`invocation_id`](/reference/dbt-jinja-functions/invocation_id), [`thread_id`](/reference/dbt-jinja-functions/thread_id) и [уровень логирования](/reference/global-configs/logs#log-level) каждого сообщения:
 
 ```
 ============================== 16:12:08.555032 | 9089bafa-4010-4f38-9b42-564ec9106e07 ==============================
@@ -33,14 +74,39 @@ dbt run --log-format json
 16:12:08.751069 [info ] [MainThread]: Registered adapter: postgres=1.8.0
 ```
 
-Формат `json` выводит полностью структурированные логи в формате <Term id="json" />:
+</VersionBlock>
+
+Формат `json` выводит полностью структурированные журналы в формате <Term id="json" />:
+
+<VersionBlock firstVersion="2.0">
+
+```json
+{"data": {"log_version": 3, "version": "=2.0.0-preview.181"}, "info": {"category": "", "code": "A001", "extra": {}, "invocation_id": "019fb7d4-ce89-7712-8d06-5ad013a23be9", "level": "info", "msg": "Running with dbt-fusion=2.0.0-preview.181", "name": "MainReportVersion", "pid": 92554, "thread": "tokio-rt-worker", "ts": "2026-07-31T11:00:04.877509Z"}}
+{"data": {"msg": "Loading ~/.dbt/profiles.yml"}, "info": {"category": "", "code": "", "extra": {}, "invocation_id": "019fb7d4-ce89-7712-8d06-5ad013a23be9", "level": "info", "msg": "Loading ~/.dbt/profiles.yml", "name": "Generic", "pid": 92554, "thread": "tokio-rt-worker", "ts": "2026-07-31T11:00:04.882928Z"}}
+```
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
 
 ```json
 {"data": {"log_version": 3, "version": "=1.8.0"}, "info": {"category": "", "code": "A001", "extra": {}, "invocation_id": "82131fa0-d2b4-4a77-9436-019834e22746", "level": "info", "msg": "Running with dbt=1.8.0", "name": "MainReportVersion", "pid": 7875, "thread": "MainThread", "ts": "2024-05-29T23:32:54.993336Z"}}
 {"data": {"adapter_name": "postgres", "adapter_version": "=1.8.0"}, "info": {"category": "", "code": "E034", "extra": {}, "invocation_id": "82131fa0-d2b4-4a77-9436-019834e22746", "level": "info", "msg": "Registered adapter: postgres=1.8.0", "name": "AdapterRegistered", "pid": 7875, "thread": "MainThread", "ts": "2024-05-29T23:32:56.437986Z"}}
 ```
 
-Когда `LOG_FORMAT` задан явно, он применяется как к выводу в консоль, так и к лог-файлам, тогда как `LOG_FORMAT_FILE` влияет только на лог-файл.
+</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
+
+Если `LOG_FORMAT` задан явно, он применяется как к выводу в консоль, так и к файлам журналов, тогда как `LOG_FORMAT_FILE` влияет только на файл журнала.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+When the `LOG_FORMAT` is set explicitly to `text`, `json`, or `default`, it takes effect in both the console and log files. The `otel` value applies to console output only. Use `LOG_FORMAT_FILE` to set a different format for the log file (`text`, `json`, or `default`).
+
+</VersionBlock>
 
 <File name='Usage'>
 
@@ -50,6 +116,8 @@ dbt run --log-format-file json
 
 </File>
 
+<VersionBlock lastVersion="1.99">
+
 :::tip Совет: подробные структурированные логи
 
 Используйте значение форматирования `json` вместе с конфигурацией `DEBUG`, чтобы получить богатую информацию о логах, которую можно передать в инструменты мониторинга для анализа:
@@ -58,11 +126,29 @@ dbt run --log-format-file json
 dbt run --debug --log-format json
 ```
 
-Смотрите [структурированное логирование](/reference/events-logging#structured-logging) для более подробной информации.
+Подробнее см. в разделе [Структурированное журналирование](/reference/events-logging#structured-logging).
 
 :::
 
-### Уровень логирования {#log-level}
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+:::tip Совет: структурированная наблюдаемость
+
+Используйте `--log-format otel` для потокового вывода телеметрии в стиле OpenTelemetry в консоль или `--otel-file-name` и связанные флаги для записи в файлы и интеграции с платформами. См. раздел [Телеметрия и наблюдаемость <Constant name="fusion" />](/reference/telemetry-observability).
+
+Для вывода строк журнала в формате JSON используйте `--log-format json` с настройкой `DEBUG`:
+
+```text
+dbt build --debug --log-format json
+```
+
+:::
+
+</VersionBlock>
+
+### Уровень журналирования {#log-level}
 
 Конфигурация `LOG_LEVEL` устанавливает минимальную серьезность событий, фиксируемых в консоли и файлах логов. Это более гибкая альтернатива флагу `--debug`. Доступные опции для уровней логирования: `debug`, `info`, `warn`, `error` или `none`.
 
@@ -109,7 +195,7 @@ dbt run --debug
 
 Как и другие глобальные конфигурации, эти значения можно переопределить для вашей среды или вызова, используя опции CLI (`--target-path`, `--log-path`) или переменные окружения (`DBT_TARGET_PATH`, `DBT_LOG_PATH`).
 
-### Подавление логов без ошибок в выводе {#suppress-non-error-logs-in-output}
+Как и другие глобальные настройки, эти значения можно переопределить для вашей среды или конкретного запуска с помощью параметров CLI (`--target-path`, `--log-path`) или переменных окружения (<VersionBlock lastVersion="1.10">`DBT_TARGET_PATH`, `DBT_LOG_PATH`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_TARGET_PATH`, `DBT_ENGINE_LOG_PATH`</VersionBlock>).
 
 ### Подавление неошибочных логов в выводе {#dbt-list-logging}
 
@@ -132,15 +218,7 @@ dbt run --quiet
 
 ### Логирование списка dbt {#logging-relational-cache-events}
 
-В [dbt версии 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5#behavior-changes) мы обновили поведение логирования команды [dbt list](/reference/commands/list), добавив вывод логов уровня `INFO` по умолчанию.
-
-Вы можете использовать любой из этих параметров, чтобы обеспечить чистый вывод, совместимый с последующими процессами, такими как передача результатов в [`jq`](https://jqlang.github.io/jq/manual/), файл или другой процесс:
-
-- `dbt --log-level warn list` (рекомендуется; эквивалентно предыдущему значению по умолчанию)
-- `dbt --quiet list` (подавляет все логи ниже уровня `ERROR`, кроме "напечатанных" сообщений и вывода списка)
-
-- `dbt list --log-level warn` (рекомендуется; эквивалентно предыдущему значению по умолчанию)
-- `dbt list --quiet` (подавляет все сообщения логирования с уровнем ниже `ERROR`, за исключением «печатных» сообщений и вывода команды `list`)
+В [dbt версии 1.5](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5#behavior-changes) мы изменили поведение команды [dbt list](/reference/commands/list) при ведении журнала: теперь по умолчанию в него включаются сообщения уровня `INFO`.
 
 
 ### Логирование событий реляционного кэша {#color}

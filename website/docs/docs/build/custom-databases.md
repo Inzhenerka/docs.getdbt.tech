@@ -1,6 +1,7 @@
 ---
 title: "Пользовательские базы данных"
 id: "custom-databases"
+availability: all_users
 ---
 
 :::info Слово о наименованиях
@@ -53,7 +54,7 @@ select * from ...
 
 ### generate_database_name {#generatedatabasename}
 
-Имя базы данных, генерируемое для модели, контролируется макросом под названием `generate_database_name`. Этот макрос может быть переопределен в проекте dbt для изменения способа генерации имен баз данных для моделей. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration).
+Имя базы данных, генерируемое для модели, контролируется макросом под названием `generate_database_name`. Этот макрос может быть переопределен в проекте dbt для изменения способа генерации имен баз данных для моделей. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#changing-the-way-dbt-generates-a-schema-name).
 
 Чтобы переопределить генерацию имен баз данных в dbt, создайте макрос с именем `generate_database_name` в вашем собственном проекте dbt. Макрос `generate_database_name` принимает два аргумента:
 

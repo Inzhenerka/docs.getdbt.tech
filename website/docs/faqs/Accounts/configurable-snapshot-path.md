@@ -6,8 +6,8 @@ id: configurable-snapshot-path
 ---
 По умолчанию dbt ожидает, что файлы snapshot’ов будут находиться в поддиректории `snapshots` вашего проекта.
 
-Чтобы изменить это поведение, обновите конфигурацию [snapshot-paths](reference/project-configs/snapshot-paths.md) 
-в файле `dbt_project.yml`, например, так:
+Чтобы изменить это, обновите настройку [snapshot-paths](/reference/project-configs/snapshot-paths) в файле `dbt_project.yml`
+следующим образом:
 
 <File name='dbt_project.yml'>
 

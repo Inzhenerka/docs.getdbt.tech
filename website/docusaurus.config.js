@@ -1,9 +1,17 @@
 import path from "path";
 import math from "remark-math";
 import katex from "rehype-katex";
+import rehypeCodeLanguage from "./plugins/rehypeCodeLanguage.js";
+import rehypeCleanMarkdown from "./plugins/rehypeCleanMarkdown.js";
+import rehypeTabsToHeadings from "./plugins/rehypeTabsToHeadings.js";
+import rehypeMdHide from "./plugins/rehypeMdHide.js";
+import rehypeMdOnly from "./plugins/rehypeMdOnly.js";
+import llmsContentSelectors from "./plugins/llmsContentSelectors.js";
+import remarkBlogFootnoteLinks from "./plugins/remarkBlogFootnoteLinks.js";
+import remarkConstantsInCode from "./plugins/remarkConstantsInCode.js";
 const { themes } = require('prism-react-renderer')
 
-const { versions, versionedPages, versionedCategories } = require("./dbt-versions");
+const { products, versions, versionedPages, versionedCategories } = require("./dbt-versions");
 require("dotenv").config();
 
 /* Debugging */
@@ -150,7 +158,7 @@ var siteSettings = {
           position: "right",
         },
         {
-          to: "/docs/dbt-cloud-apis/overview",
+          to: "/docs/dbt-apis/overview",
           label: "API",
           position: "right",
         },
@@ -160,7 +168,7 @@ var siteSettings = {
           items: [
             {
               label: "Что нового",
-              to: "/docs/dbt-versions/dbt-cloud-release-notes",
+              to: "/docs/dbt-versions/release-notes",
             },
             {
               label: "FAQ",
@@ -202,15 +210,15 @@ var siteSettings = {
             },
             {
               label: "Официальный форум",
-              to: "/community/forum",
+              href: "https://discourse.getdbt.com/",
             },
             {
               label: "Мероприятия",
-              to: "/community/events",
+              href: "https://www.getdbt.com/resources/webinars",
             },
             {
-              label: "В центре внимания",
-              to: "/community/spotlight",
+              label: "Присоединиться к сообществу",
+              to: "/community/join",
             },
           ],
         },
@@ -317,6 +325,7 @@ var siteSettings = {
       ],
     },
   },
+  clientModules: [require.resolve("./src/clientModules/resizeTransitionStopper.js")],
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -328,7 +337,7 @@ var siteSettings = {
           path: "docs",
           routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
-          remarkPlugins: [math],
+          remarkPlugins: [math, remarkConstantsInCode],
           rehypePlugins: [katex],
 
           editUrl:
@@ -339,7 +348,7 @@ var siteSettings = {
           //showLastUpdateAuthor: false,
 
           sidebarCollapsible: true,
-          exclude: ["hover-terms.md"],
+          exclude: ["hover-terms.md", "faqs/Runs/sao-difference-core.md"],
         },
         blog: {
           blogTitle: "Блоги разработчиков | dbt",
@@ -348,7 +357,7 @@ var siteSettings = {
           postsPerPage: 20,
           blogSidebarTitle: "Recent posts",
           blogSidebarCount: 5,
-          remarkPlugins: [math],
+          remarkPlugins: [math, remarkBlogFootnoteLinks, remarkConstantsInCode],
           rehypePlugins: [katex],
           // Un-truncated blog posts will throw an error
           // https://docusaurus.io/blog/releases/3.5#onuntruncatedblogposts
@@ -376,21 +385,32 @@ var siteSettings = {
   plugins: [
     [path.resolve("plugins/insertMetaTags"), { metatags }],
     path.resolve("plugins/customWebpackConfig"),
+    path.resolve("plugins/s3-img-proxy"),
     [
       path.resolve("plugins/buildGlobalData"),
       { versionedPages, versionedCategories },
     ],
-    path.resolve("plugins/buildSpotlightIndexPage"),
     path.resolve("plugins/buildQuickstartIndexPage"),
     path.resolve("plugins/buildRSSFeeds"),
     path.resolve("plugins/buildRawMarkdownData"),
+    path.resolve("plugins/buildFusionReleases"),
+    path.resolve("plugins/buildPageBanners"),
     [
       "@signalwire/docusaurus-plugin-llms-txt",
       {
         generate: {
+          // This plugin owns the per-page .md files, generated from the rendered
+          // HTML so partials are inlined and components (VersionBlock, FAQ, Term)
+          // are resolved. buildRawMarkdownData is kept only for the in-browser
+          // "Copy page" global data, not for writing files.
           enableMarkdownFiles: true,
           enableLlmsFullTxt: true,
           relativePaths: false,
+        },
+        processing: {
+          beforeDefaultRehypePlugins: [rehypeCodeLanguage, rehypeCleanMarkdown, rehypeTabsToHeadings, rehypeMdHide, rehypeMdOnly],
+          // Adds a [data-md-root] marker ahead of the defaults; see the module.
+          contentSelectors: llmsContentSelectors,
         },
         include: {
           includeBlog: false,
@@ -405,7 +425,7 @@ var siteSettings = {
               name: "Начало работы",
               routes: [
                 { route: "/docs/introduction" },
-                { route: "/docs/get-started-dbt" },
+                { route: "/docs/dbt/get-started-dbt" },
                 { route: "/docs/configuration-checklist" },
               ],
             },
@@ -422,67 +442,55 @@ var siteSettings = {
                   id: "dbt-platform",
                   name: "Платформа dbt",
                   routes: [
-                    { route: "/docs/about-cloud-setup" },
-                    { route: "/docs/cloud/account-settings" },
-                    { route: "/docs/cloud/account-integrations" },
-                    { route: "/docs/dbt-cloud-environments" },
-                    { route: "/docs/cloud/migration" },
+                    { route: "/docs/platform/about-platform-setup" },
+                    { route: "/docs/platform/account-settings" },
+                    { route: "/docs/platform/account-integrations" },
+                    { route: "/docs/dbt-platform-environments" },
+                    { route: "/docs/platform/migration" },
                   ],
                   subsections: [
                     {
                       id: "connect-data-platform",
-                      name: "Подключение платформы данных",
-                      routes: [{ route: "/docs/cloud/connect-data-platform/**" }],
+                      name: "Connect data platform",
+                      routes: [
+                        { route: "/docs/platform/connect-data-platform/**" },
+                      ],
                     },
                     {
                       id: "manage-access",
-                      name: "Управление доступом",
-                      routes: [{ route: "/docs/cloud/manage-access/**" }],
+                      name: "Manage access",
+                      routes: [{ route: "/docs/platform/manage-access/**" }],
                     },
                     {
                       id: "git",
                       name: "Git",
-                      routes: [{ route: "/docs/cloud/git/**" }],
+                      routes: [{ route: "/docs/platform/git/**" }],
                     },
                     {
                       id: "secure",
-                      name: "Безопасность",
-                      routes: [{ route: "/docs/cloud/secure/**" }],
+                      name: "Secure",
+                      routes: [{ route: "/docs/platform/secure/**" }],
                     },
                   ],
                 },
                 {
-                  id: "dbt-core-and-fusion",
-                  name: "dbt Core и Fusion",
+                  id: "install-dbt",
+                  name: "dbt local installation",
                   routes: [
-                    { route: "/docs/about-dbt-install" },
-                    { route: "/docs/core/dbt-core-environments" },
+                    { route: "/docs/local/install-dbt" },
+                    { route: "/docs/local/dbt-environments" },
                   ],
                   subsections: [
                     {
-                      id: "install-dbt-fusion-engine",
-                      name: "Установка движка dbt Fusion",
-                      routes: [
-                        { route: "/docs/fusion/about-fusion-install" },
-                        { route: "/docs/fusion/install-dbt-extension" },
-                        { route: "/docs/fusion/install-fusion-cli" },
-                      ],
-                    },
-                    {
-                      id: "install-dbt-core",
-                      name: "Установка dbt Core",
-                      routes: [
-                        { route: "/docs/core/installation-overview" },
-                        { route: "/docs/core/docker-install" },
-                        { route: "/docs/core/pip-install" },
-                        { route: "/docs/core/source-install" },
-                      ],
+                      id: "about-fusion-install",
+                      name: "Install dbt Fusion engine",
+                      routes: [{ route: "/docs/dbt/about-dbt-install" }],
                     },
                     {
                       id: "core-connect-data-platform",
                       name: "Подключение платформы данных",
                       routes: [
-                        { route: "/docs/core/connect-data-platform/**" },
+                        { route: "/docs/local/connect-data-platform/**" },
                       ],
                     },
                   ],
@@ -492,17 +500,17 @@ var siteSettings = {
             {
               id: "fusion",
               name: "Fusion",
-              routes: [{ route: "/docs/fusion/**" }],
+              routes: [{ route: "/docs/dbt/**" }],
             },
             {
               id: "platform",
-              name: "Платформа",
-              routes: [{ route: "/docs/cloud/**" }],
+              name: "Platform",
+              routes: [{ route: "/docs/platform/**" }],
             },
             {
               id: "api-reference",
-              name: "Справочник по API",
-              routes: [{ route: "/docs/dbt-cloud-apis/**" }],
+              name: "API Reference",
+              routes: [{ route: "/docs/dbt-apis/**" }],
             },
           ],
           siteTitle: "dbt Developer Hub",
@@ -544,6 +552,7 @@ var siteSettings = {
     "/css/search.css",
     "/css/api.css",
     "https://use.typekit.net/kvb8avc.css",
+    "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css",
     {
       href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
       type: "text/css",
@@ -571,23 +580,18 @@ var siteSettings = {
   },
 };
 
-// If versions json file found, add versions dropdown to nav
-if (versions) {
+// If products defined, add version dropdown to nav using sub-product names as items
+if (products) {
   siteSettings.themeConfig.navbar.items.push({
     label: "Versions",
-    position: "right",
+    position: "left",
     className: "nav-versioning",
-    items: [
-      ...versions.reduce((acc, version) => {
-        if (version?.version) {
-          acc.push({
-            label: `${version.version}`,
-            href: "#",
-          });
-        }
-        return acc;
-      }, []),
-    ],
+    items: products.flatMap((product) =>
+      product.subProducts.map((sp) => ({
+        label: sp.name,
+        href: "#",
+      }))
+    ),
   });
 }
 

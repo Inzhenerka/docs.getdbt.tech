@@ -49,11 +49,14 @@ functions:
 functions:
   - name: [<function-name>]
     config:
-      [type](/reference/resource-configs/type): scalar  # необязательно, по умолчанию scalar. В будущем появятся aggregate | table
+[type](/reference/resource-configs/type): scalar  # необязательно, по умолчанию scalar. В дальнейшем будут добавлены aggregate | table
       [volatility](/reference/resource-configs/volatility): deterministic | stable | non-deterministic # необязательно
-      [runtime_version](/reference/resource-configs/runtime-version): <string> # обязательно для Python UDF
-      [entry_point](/reference/resource-configs/entry-point): <string> # обязательно для Python UDF
-      # Стандартные конфигурации, применимые к функциям
+      [runtime_version](/reference/resource-configs/runtime-version): <string> # обязательно для UDF на Python
+      [entry_point](/reference/resource-configs/entry-point): <string> # обязательно для UDF на Python
+      [packages](/reference/resource-configs/packages): [<string>] # необязательно, только для UDF на Python
+      snowflake:
+        [quote_args](/reference/resource-configs/quote_args): true | false # необязательно, только для UDF на JavaScript в Snowflake, доступно в версии 1.12+
+      # стандартные параметры конфигурации, применимые к функциям
       [database](/reference/resource-configs/database): <string>
       [schema](/reference/resource-properties/schema): <string>
       [alias](/reference/resource-configs/alias): <string>

@@ -133,6 +133,7 @@ select ...
 - BigQuery
 - Databricks 
 - Apache Spark
+- Starburst Galaxy (`dbt-trino`)
 
 Однако некоторые базы данных ограничивают, где и как можно добавлять описания к объектам базы данных. Эти адаптеры баз данных могут не поддерживать `persist_docs` или могут предлагать только частичную поддержку.
 
@@ -151,7 +152,7 @@ select ...
 - Если имя колонки в SQL-модели задано в смешанном регистре (например, `ca_net_ht_N`), документация для этой колонки **не будет сохранена**. Чтобы документация сохранялась, есть два варианта:
 
   - Определить имя колонки в соответствующем YML-файле, используя **только строчные или только заглавные буквы**.
-  - Использовать конфигурацию [`quote`](../resource-properties/columns.md#quoter) в соответствующем YML-файле.
+  - Использовать конфигурацию [`quote`](../resource-properties/columns.md#quote) в соответствующем YML-файле.
 
   Ниже приведён пример пошаговых действий, показывающий, как использовать поле `quote` для колонок со смешанным регистром.
 
@@ -188,6 +189,13 @@ select ...
     alter table analytics.<schema>.<modelname> alter
         "ca_net_ht_N" COMMENT $$This should be the description of the column$$;
     ```
+
+</div>
+
+<div warehouse="Starburst Galaxy (dbt-trino)">
+
+- To sync descriptions to Data Discovery Catalog, configure the [Starburst/Trino metadata profile fields](/reference/resource-configs/trino-configs#persist_docs).
+
 
 </div>
 

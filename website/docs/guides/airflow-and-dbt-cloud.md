@@ -11,17 +11,17 @@ level: 'Intermediate'
 
 ## Введение {#introduction}
 
-Многие организации уже используют [Airflow](https://airflow.apache.org/) для оркестрации своих data‑workflow. <Constant name="cloud" /> отлично работает вместе с Airflow, позволяя выполнять ваш dbt‑код в <Constant name="cloud" />, при этом оставляя задачи оркестрации за Airflow. Это гарантирует, что метаданные вашего проекта (важные для таких инструментов, как <Constant name="explorer" />) будут доступны и актуальны, одновременно сохраняя возможность использовать Airflow для общих задач, таких как:
+Многие организации уже используют [Airflow](https://airflow.apache.org/) для оркестрации рабочих процессов обработки данных. <Constant name="dbt" /> отлично работает с Airflow, позволяя выполнять код dbt в <Constant name="dbt" />, оставляя задачи оркестрации за Airflow. Это обеспечивает доступность и актуальность метаданных вашего проекта (важных для таких инструментов, как <Constant name="catalog" />), при этом сохраняя возможность использовать Airflow для общих задач, таких как:
 
-- планирование других процессов, не связанных с dbt‑запусками;
-- обеспечение того, чтобы [dbt job](/docs/deploy/job-scheduler) запускался до или после другого процесса вне <Constant name="cloud" />;
-- запуск dbt job только после завершения другого задания.
+- Планирование других процессов вне запусков dbt
+- Обеспечение запуска [задания dbt](/docs/deploy/job-scheduler) до или после другого процесса вне <Constant name="dbt" />
+- Запуск задания dbt только после завершения другого задания
 
 В этом руководстве вы узнаете, как:
 
-1. Создайте рабочее локальное окружение Airflow  
-2. Запустите задание <Constant name="cloud" /> с помощью Airflow  
-3. Переиспользуйте проверенный и надёжный код Airflow для ваших конкретных сценариев использования
+1. Создать рабочее локальное окружение Airflow
+2. Запустить задание <Constant name="dbt" /> с помощью Airflow
+3. Повторно использовать проверенный и надёжный код Airflow для ваших конкретных сценариев использования
 
 Вы также лучше поймете, как это поможет:
 
@@ -31,9 +31,11 @@ level: 'Intermediate'
 
 ## Предварительные требования {#prerequisites}
 
-- Аккаунт [<Constant name="cloud" /> Enterprise или Enterprise+](https://www.getdbt.com/pricing/) (с [доступом администратора](/docs/cloud/manage-access/enterprise-permissions)) — он необходим для создания service token. С информацией о правах доступа для service token можно ознакомиться [здесь](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
-- [Бесплатный аккаунт Docker](https://hub.docker.com/signup) — он нужен для входа в Docker Desktop, который будет установлен на этапе первоначальной настройки.
-- Локальный цифровой «черновик» для временного копирования и вставки API-ключей и URL-адресов
+- [Учетная запись <Constant name="dbt_platform" /> Enterprise или Enterprise+](https://www.getdbt.com/pricing/) (с [правами администратора](/docs/platform/manage-access/enterprise-permissions)) для создания служебного токена. Сведения о разрешениях для служебных токенов доступны [здесь](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens).
+- Токен служебной учетной записи, если у вас есть [лицензия Developer (с правами администратора)](/docs/platform/manage-access/enterprise-permissions)). Сведения о разрешениях для служебных токенов доступны [здесь](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens) и [здесь](/docs/platform/manage-access/seats-and-users?version=2.0).
+- [Персональный токен доступа (PAT)](https://docs.getdbt.com/docs/dbt-apis/user-tokens#create-a-personal-access-token), если у вас есть лицензия Developer, IT или Read-only.
+- [Бесплатная учетная запись Docker](https://hub.docker.com/signup) для входа в Docker Desktop, который будет установлен в ходе первоначальной настройки.
+- Локальный электронный блокнот для временного копирования и вставки ключей API и URL-адресов
 
 🙌 Давайте начнем! 🙌
 
@@ -59,7 +61,7 @@ Docker позволяет нам развернуть среду со всеми
 
 ## Клонирование репозитория airflow-dbt-cloud {#clone-the-airflow-dbt-cloud-repository}
 
-Откройте терминал и клонируйте репозиторий [airflow-dbt-cloud](https://github.com/dbt-labs/airflow-dbt-cloud). В нём содержатся примеры DAG’ов Airflow, которые вы будете использовать для оркестрации вашей задачи <Constant name="cloud" />. После клонирования перейдите в каталог проекта `airflow-dbt-cloud`.
+Откройте терминал и клонируйте [репозиторий airflow-dbt-cloud](https://github.com/dbt-labs/airflow-dbt-cloud). Он содержит примеры DAG для Airflow, которые вы будете использовать для оркестрации задания <Constant name="dbt" />. После клонирования перейдите в каталог проекта `airflow-dbt-cloud`.
 
 ```bash
 git clone https://github.com/dbt-labs/airflow-dbt-cloud.git
@@ -96,22 +98,24 @@ cd airflow-dbt-cloud
    - Имя пользователя: admin
    - Пароль: admin
 
-   ![Экран входа в Airflow](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-login.png)
+<Lightbox src="/img/guides/orchestration/airflow-and-dbt-platform/airflow-login.png" title="Экран входа в Airflow" />
 
 <WistiaVideo id="2rzsjo0uml" paddingTweak="62.25%" />
 
 ## Создайте сервисный токен dbt {#create-a-dbt-service-token}
 
-[Создайте сервисный токен](/docs/dbt-cloud-apis/service-tokens) с правами `Job Admin` внутри <Constant name="cloud" />. Обязательно сохраните копию токена, так как позже получить к нему доступ будет невозможно.
+[Создайте сервисный токен](/docs/dbt-apis/service-tokens) с правами `Job Admin` в <Constant name="dbt" />. Обязательно сохраните копию токена, так как позже вы не сможете получить к нему доступ.
+
+В качестве альтернативы вы можете [создать PAT](/docs/dbt-apis/user-tokens#create-a-personal-access-token), если у вас есть лицензия Developer, IT или Read-only.
 
 <WistiaVideo id="amubh6qmwq" paddingTweak="62.25%" />
 
 ## Создайте задание dbt {#create-a-dbt-job}
 
-[Создайте задание в вашем аккаунте <Constant name="cloud" />](/docs/deploy/deploy-jobs#create-and-schedule-jobs), обратив особое внимание на пункты ниже.
+[Создайте задание в своей учетной записи <Constant name="dbt" />](/docs/deploy/deploy-jobs#create-and-schedule-jobs), уделив особое внимание приведенным ниже пунктам.
 
-- Настройте задание с полным набором команд, которые должны выполняться при его запуске. В этом примере Airflow инициирует задание <Constant name="cloud" /> и выполнение всех его команд, вместо того чтобы явно указывать отдельные модели для запуска непосредственно из Airflow.
-- Убедитесь, что расписание **отключено**, так как запуск будет выполняться через Airflow.
+- Настройте задание, указав все команды, которые нужно выполнить при его запуске. В этом примере кода Airflow запускает задание <Constant name="dbt" /> и все его команды, а не указывает явно отдельные модели для запуска из Airflow.
+- Убедитесь, что расписание **отключено**, поскольку для запуска мы будем использовать Airflow.
 - После нажатия `save` в настройках задания обязательно скопируйте URL и сохраните его для дальнейшего использования. URL будет выглядеть примерно так:
 
 ```html
@@ -122,25 +126,25 @@ https://YOUR_ACCESS_URL/#/accounts/{account_id}/projects/{project_id}/jobs/{job_
 
 ## Подключение dbt к Airflow {#connect-dbt-to-airflow}
 
-Теперь у вас есть все необходимые рабочие компоненты, чтобы начать использовать связку Airflow + <Constant name="cloud" />. Пришло время **настроить подключение** и **запустить DAG в Airflow**, который будет инициировать выполнение задания <Constant name="cloud" />.
+Теперь у вас есть всё необходимое для начала работы с Airflow + <Constant name="dbt" />. Пора **настроить подключение** и **запустить DAG в Airflow**, который запустит задание <Constant name="dbt" />.
 
 1. В интерфейсе Airflow перейдите в раздел Admin и нажмите на **Connections**
 
-    ![Меню подключений Airflow](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-connections-menu.png)
+<Lightbox src="/img/guides/orchestration/airflow-and-dbt-platform/airflow-connections-menu.png" title="Меню подключений Airflow" />
 
-2. Нажмите на знак `+`, чтобы добавить новое подключение, затем нажмите на выпадающий список и выполните поиск типа подключения <Constant name="cloud" />.
+2. Нажмите на значок `+`, чтобы добавить новое подключение, затем откройте раскрывающийся список и найдите тип подключения <Constant name="dbt" />.
 
-    ![Тип подключения](/img/guides/orchestration/airflow-and-dbt-cloud/connection-type.png)
+    <Lightbox src="/img/guides/orchestration/airflow-and-dbt-platform/connection-type.png" title="Тип подключения" />
 
-3. Добавьте данные для подключения и идентификатор вашего аккаунта <Constant name="cloud" /> по умолчанию. Его можно найти в URL вашего <Constant name="cloud" /> сразу после сегмента маршрута `accounts` (`/accounts/{YOUR_ACCOUNT_ID}`). Например, аккаунт с идентификатором 16173 увидит в своем URL следующее: `https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/`
+3. Укажите данные подключения и идентификатор аккаунта <Constant name="dbt" /> по умолчанию. Этот идентификатор находится в URL вашего аккаунта <Constant name="dbt" /> после сегмента пути accounts (`/accounts/{YOUR_ACCOUNT_ID}`). Например, для аккаунта с идентификатором 16173 URL будет выглядеть так: `https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/`
 
-    ![Тип подключения](/img/guides/orchestration/airflow-and-dbt-cloud/connection-type-configured.png)
+    <Lightbox src="/img/guides/orchestration/airflow-and-dbt-platform/connection-type-configured.png" title="Тип подключения" />
 
 ## Обновление заполнителей в примере кода {#update-the-placeholders-in-the-sample-code}
 
-Добавьте ваш `account_id` и `job_id` в файл python [dbt_cloud_run_job.py](https://github.com/dbt-labs/airflow-dbt-cloud/blob/main/dags/dbt_cloud_run_job.py).
+Добавьте свои `account_id` и `job_id` в файл Python [run_dbt_cloud_job.py](https://github.com/dbt-labs/airflow-dbt-cloud/blob/main/dags/run_dbt_cloud_job.py).
 
-Оба идентификатора включены в URL задания <Constant name="cloud" />, как показано в следующих фрагментах:
+Оба идентификатора содержатся в URL задания <Constant name="dbt" />, как показано в следующих фрагментах:
 
 ```python
 # For the dbt Job URL https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/
@@ -156,10 +160,10 @@ JOB_ID = "65767"
 
 Включите DAG и запустите его. Убедитесь, что задание успешно выполнено после запуска.
 
-![DAG в Airflow](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-dag.png)
+<Lightbox src="/img/guides/orchestration/airflow-and-dbt-platform/airflow-dag.png" title="DAG в Airflow" />
 
-Нажмите **Monitor Job Run**, чтобы открыть подробную информацию о выполнении задания в <Constant name="cloud" />.
-![Task run instance](/img/guides/orchestration/airflow-and-dbt-cloud/task-run-instance.png)
+Нажмите **Monitor Job Run**, чтобы открыть сведения о запуске в <Constant name="dbt" />.
+<Lightbox src="/img/guides/orchestration/airflow-and-dbt-platform/task-run-instance.png" title="Экземпляр запуска задачи" />
 
 ## Очистка {#cleaning-up}
 
@@ -195,9 +199,9 @@ airflow-dbt-cloud_e3fe3c-postgres-1     exited
 
 ### Как мы можем запускать конкретные подмножества DAG dbt в Airflow? {#how-can-we-run-specific-subsections-of-the-dbt-dag-in-airflow}
 
-Поскольку DAG в Airflow ссылается на задания <Constant name="cloud" />, ваши аналитические инженеры могут взять на себя ответственность за настройку этих заданий в <Constant name="cloud" />.
+Поскольку DAG Airflow ссылается на задания <Constant name="dbt" />, ваши инженеры по аналитике могут взять на себя ответственность за настройку заданий в <Constant name="dbt" />.
 
-Например, чтобы запускать одни модели каждый час, а другие — ежедневно, можно создать задания вроде `Hourly Run` или `Daily Run`, использующие команды `dbt run --select tag:hourly` и `dbt run --select tag:daily` соответственно. После настройки в <Constant name="cloud" /> их можно добавить как шаги в DAG Airflow, как показано в этом руководстве. Подробности см. в полной документации по [синтаксису выбора узлов](/reference/node-selection/syntax).
+Например, чтобы запускать одни модели ежечасно, а другие ежедневно, можно создать задания `Hourly Run` и `Daily Run`, использующие команды `dbt run --select tag:hourly` и `dbt run --select tag:daily` соответственно. После настройки в <Constant name="dbt" /> эти задания можно добавить в качестве шагов в DAG Airflow, как показано в этом руководстве. Подробнее см. в нашей полной [документации по синтаксису выбора узлов](/reference/node-selection/syntax).
 
 ### Как я могу повторно запустить модели с точки сбоя? {#how-can-i-re-run-models-from-the-point-of-failure}
 
@@ -211,11 +215,14 @@ airflow-dbt-cloud_e3fe3c-postgres-1     exited
 
 ### Мы хотим запускать наши задания dbt после того, как наш инструмент загрузки данных (например, Fivetran) / конвейеры данных завершат загрузку данных. Есть ли какие-либо лучшие практики по этому поводу? {#we-want-to-kick-off-our-dbt-jobs-after-our-ingestion-tool-such-as-fivetran-data-pipelines-are-done-loading-data-any-best-practices-around-that}
 
-В реестре DAG’ов Astronomer есть пример рабочего процесса, который объединяет Fivetran, <Constant name="cloud" /> и Census — см. [здесь](https://registry.astronomer.io/dags/fivetran-dbt_cloud-census/versions/3.0.0).
+В реестре DAG Astronomer представлен пример рабочего процесса, объединяющего Fivetran, <Constant name="dbt" /> и Census, [по этой ссылке](https://registry.astronomer.io/dags/fivetran-dbt_cloud-census/versions/3.0.0).
+  
+### Как настроить рабочий процесс CI/CD с Airflow?
 
 ### Как настроить CI/CD‑процесс с Airflow? {#how-do-you-set-up-a-cicd-workflow-with-airflow}
 
-### Как настроить рабочий процесс CI/CD с Airflow? {#can-dbt-dynamically-create-tasks-in-the-dag-like-airflow-can}
+- [Непрерывная интеграция с <Constant name="dbt" />](/docs/deploy/continuous-integration)
+- [Пример CI/CD от Astronomer](https://docs.astronomer.io/software/ci-cd/#example-cicd-workflow)
 
 - [Непрерывная интеграция с <Constant name="cloud" />](/docs/deploy/continuous-integration)
 - [Пример CI/CD от Astronomer](https://docs.astronomer.io/software/ci-cd/#example-cicd-workflow)
@@ -225,7 +232,7 @@ airflow-dbt-cloud_e3fe3c-postgres-1     exited
 
 ### Может ли dbt динамически создавать задачи в DAG, как это делает Airflow? {#can-you-trigger-notifications-if-a-dbt-job-fails-with-airflow}
 
-Как обсуждалось выше, мы предпочитаем держать задания объединенными и содержащими столько узлов, сколько необходимо. Если вам по какой-то причине нужно запускать узлы по одному, ознакомьтесь с [этой статьей](https://www.astronomer.io/blog/airflow-dbt-1/) для получения некоторых советов.
+Да, с помощью [функциональности Airflow для уведомлений по электронной почте и в Slack](https://www.astronomer.io/guides/error-notifications-in-airflow/) или [уведомлений <Constant name="dbt" />](/docs/deploy/job-notifications), которые поддерживают отправку по электронной почте и в Slack. Вы также можете создать [вебхук](/docs/deploy/webhooks).
 
 Да — либо с помощью функциональности [email/Slack в Airflow](https://www.astronomer.io/guides/error-notifications-in-airflow/), либо с помощью [уведомлений <Constant name="cloud" />](/docs/deploy/job-notifications), которые поддерживают отправку уведомлений по email и в Slack. Также вы можете создать [webhook](/docs/deploy/webhooks).
 

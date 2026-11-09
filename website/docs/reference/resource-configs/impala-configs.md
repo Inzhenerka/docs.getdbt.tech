@@ -10,19 +10,19 @@ id: "impala-configs"
 
 | Опция  | Описание                                        | Обязательно?               | Пример                  |
 |---------|----------------------------------------------------|-------------------------|--------------------------|
-| partition_by | разбиение по столбцу; как правило, для каждого партициона создаётся отдельный каталог | No | partition_by=['name'] |
-| sort_by | сортировка по столбцу | No | sort_by=['age'] |
-| row_format | формат, который будет использоваться при хранении отдельных строк | No | row_format='delimited' |
-| stored_as | базовый формат хранения таблицы | No | stored_as='PARQUET' |
-| location | место хранения, как правило путь в HDFS | No | LOCATION='/user/etl/destination' |
-| comment | комментарий к таблице | No | comment='this is the cleanest model' |
-| serde_properties | свойства SerDe (сериализации/десериализации) таблицы | No | serde_properties="('quoteChar'='\'', 'escapeChar'='\\')" |
-| tbl_properties | произвольные метаданные, которые могут быть сохранены с таблицей в виде пар ключ/значение | No | tbl_properties="('dbt_test'='1')" |
-| is_cached | true или false — указывает, кэшируется ли таблица | No | is_cached=false (default) |
-| cache_pool | имя пула кэша, используемого если is_cached установлено в true | No |  |
-| replication_factor | коэффициент репликации кэша, используемый если is_cached установлено в true | No | |  
-| external | является ли таблица внешней — true / false | No | external=true |
-| table_type | указывает тип таблицы — iceberg / kudu | No | table_type="iceberg" |
+| partition_by | секционирование по столбцу; обычно для каждой секции создаётся отдельный каталог | Нет | partition_by=['name'] |
+| sort_by | сортировка по столбцу  | Нет | sort_by=['age'] |
+| row_format | формат для хранения отдельных строк | Нет | row_format='delimited' |
+| stored_as | базовый формат хранения таблицы | Нет | stored_as='PARQUET' |
+| location | расположение хранилища, обычно путь в HDFS | Нет | LOCATION='/user/etl/destination' |
+| comment | комментарий к таблице | Нет | comment='this is the cleanest model' |
+| serde_properties | свойства SerDes (сериализации и десериализации) таблицы | Нет | serde_properties="('quoteChar'='\'', 'escapeChar'='\\')" |
+| tbl_properties | любые метаданные можно хранить вместе с таблицей в виде пар ключ/значение | Нет | tbl_properties="('dbt_test'='1')" |
+| is_cached | true или false — указывает, кэшируется ли эта таблица | Нет | is_cached=false (по умолчанию) |
+| cache_pool | имя пула кэша, используемого, если is_cached имеет значение true | Нет |  |
+| replication_factor | коэффициент репликации кэша, используемый, если is_cached имеет значение true  | Нет | |  
+| external | является ли таблица внешней — true / false | Нет | external=true |
+| table_type | указывает тип таблицы — iceberg / kudu | Нет | table_type="iceberg" |
 
 Для специфичных для Cloudera опций вышеуказанных параметров смотрите документацию CREATE TABLE (https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_create_table.html)
 
@@ -36,7 +36,11 @@ id: "impala-configs"
  - **`unique_key`** Этот вариант не поддерживается для инкрементальных моделей в dbt-impala
  - **`merge`**: Слияние не поддерживается базовым хранилищем, и, следовательно, не поддерживается dbt-impala
 
-## Пример: Использование опции конфигурации partition_by {#example-using-partition_by-config-option}
+Неподдерживаемые режимы:
+ - **`unique_key`** Эта опция не поддерживается для инкрементальных моделей в dbt-impala
+ - **`merge`**: Операция Merge не поддерживается используемым хранилищем данных, поэтому она также не поддерживается в dbt-impala
+
+## Пример: использование параметра конфигурации partition_by
 
 <File name='impala_partition_by.sql'>
 

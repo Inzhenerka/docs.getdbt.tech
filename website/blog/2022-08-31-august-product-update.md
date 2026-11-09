@@ -22,9 +22,9 @@ is_featured: false
 
 ## **Что нового** {#whats-new}
 
-- **dbt Core v1.3 beta:** Используете Python для аналитики? Первая бета-версия dbt Core v1.3, включая поддержку моделей dbt, написанных на Python, [готова к изучению](https://docs.getdbt.tech/docs/dbt-versions/core-upgrade/older%20versions/upgrading-to-v1.3)! Ознакомьтесь с ней и прочитайте больше о поддерживаемых dbt моделях на Python [в нашей документации](/docs/build/python-models).
-- **Программа технологических партнеров:** Мы только что запустили нашу новую [Программу технологических партнеров](https://www.getdbt.com/blog/dbt-labs-technology-partner-program/) с более чем 40 друзьями в Modern Data Stack, чтобы обеспечить постоянную поддержку для бесшовных интеграций, которым могут доверять совместные пользователи. Ознакомьтесь с нашей новой [страницей интеграций dbt Cloud](http://www.getdbt.com/product/integrations), чтобы узнать, что доступно сегодня!
-- **Пользователи с одним арендатором:** dbt Cloud v1.1.60 теперь доступен на dbt Cloud Enterprise.
+- **Бета-версия dbt Core v1.3:** Используете Python для аналитики? Первая предварительная бета-версия dbt Core v1.3, включающая поддержку моделей dbt, написанных на Python, уже [доступна для ознакомления](https://docs.getdbt.com/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.3)! Попробуйте её и узнайте больше о поддерживаемых в dbt моделях на Python [в нашей документации](/docs/build/python-models).
+- **Программа технологического партнёрства:** Мы только что запустили нашу новую [программу технологического партнёрства](https://www.getdbt.com/blog/dbt-labs-technology-partner-program/) совместно с более чем 40 партнёрами из экосистемы Modern Data Stack, чтобы обеспечить стабильную поддержку бесшовных интеграций, на которые могут положиться наши общие пользователи. Посетите новую [страницу интеграций dbt Cloud](http://www.getdbt.com/product/integrations), чтобы узнать, что доступно уже сегодня!
+- **Пользователям выделенных сред (single-tenant):** dbt Cloud v1.1.60 теперь доступен в dbt Cloud Enterprise.
 
 ## Что улучшилось {#whats-better}
 

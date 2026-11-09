@@ -10,7 +10,10 @@ id: "materialize-configs"
 
 Включите конфигурацию [кластеров](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
 
-Кластер по умолчанию, который используется для поддержки материализованных представлений или индексов, может быть настроен в вашем [профиле](/docs/core/connect-data-platform/profiles.yml) с использованием параметра подключения `cluster`. Чтобы переопределить кластер, используемый для конкретных моделей (или групп моделей), используйте параметр конфигурации `cluster`.
+Позволяет настраивать [кластеры](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
+
+
+[Кластер](https://materialize.com/docs/overview/key-concepts/#clusters) по умолчанию, используемый для поддержания материализованных представлений или индексов, можно настроить в [профиле](/docs/local/profiles.yml) с помощью параметра подключения `cluster`. Чтобы переопределить кластер для отдельных моделей (или групп моделей), используйте параметр конфигурации `cluster`.
 
 <File name='my_view_cluster.sql'>
 

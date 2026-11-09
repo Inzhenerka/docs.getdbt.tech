@@ -5,12 +5,6 @@ sidebar: "Методы выбора узлов"
 
 Методы выбора возвращают все ресурсы, которые имеют общие свойства, используя синтаксис `method:value`. Хотя рекомендуется явно указывать метод, вы можете его опустить (значение по умолчанию будет одним из `path`, `file` или `fqn`).
 
-<Expandable alt_header="Различия между --select и --selector">
-
-Аргументы `--select` и `--selector` звучат похоже, но это разные вещи. Чтобы понять разницу, см. [Differences between `--select` and `--selector`](/reference/node-selection/yaml-selectors#difference-between---select-and---selector).
-
-</Expandable>
-
 import UsingCommas from '/snippets/_using-commas.md';
 
 <UsingCommas />
@@ -218,7 +212,7 @@ dbt run --select "snowplow.*"
 
 <VersionBlock lastVersion="1.10">
 
-Используйте метод `resource_type` для выбора узлов определённого типа (`model`, `test`, `exposure` и т.д.). Это похоже на использование флага `--resource-type` в команде [`dbt ls`](/reference/commands/list).
+Используйте метод `resource_type`, чтобы выбрать узлы определённого типа (`model`, `test`, `exposure` и так далее). Это аналогично флагу `--resource-type`, используемому в [командах](/reference/dbt-commands#available-commands) `dbt build`, `dbt test`, `dbt clone` и `dbt list`.
 
 
   ```bash
@@ -231,7 +225,7 @@ dbt run --select "snowplow.*"
 
 <VersionBlock firstVersion="1.11">
 
-Используйте метод `resource_type`, чтобы выбрать узлы определённого типа (`model`, `test`, `exposure`, `function` и т.д.). Это похоже на флаг `--resource-type`, который используется в команде [`dbt ls`](/reference/commands/list).
+Используйте метод `resource_type`, чтобы выбрать узлы определённого типа (`model`, `test`, `exposure`, `function` и так далее). Это аналог флага `--resource-type`, используемого в [командах](/reference/dbt-commands#available-commands) `dbt build`, `dbt test`, `dbt clone` и `dbt list`.
 
 ```bash
 dbt build --select "resource_type:exposure"    # собрать все ресурсы upstream от exposures
@@ -282,7 +276,30 @@ dbt list --select "saved_query:*"                    # перечислить в
 dbt list --select "+saved_query:orders_saved_query"  # перечислить ваш сохраненный запрос с именем "orders_saved_query" и все вышестоящие ресурсы
 ```
 
-### semantic_model {#semantic_model}
+<VersionBlock firstVersion="1.12">
+
+### selector
+
+Метод `selector` выбирает узлы, определённые именованным [YAML-селектором](/reference/node-selection/yaml-selectors) в `selectors.yml`. Используйте его в строках `--select` или `--exclude`, чтобы сочетать именованный селектор с другими [методами](/reference/node-selection/methods), [операторами графа](/reference/node-selection/graph-operators) и [операторами множеств](/reference/node-selection/set-operators).
+
+```bash
+dbt run --select "selector:my_selector"          # тот же набор узлов, что и у `dbt run --selector my_selector`
+dbt build --select "selector:staging selector:nightly"   # объединение (разделение пробелом)
+dbt build --select "selector:staging,selector:nightly"   # пересечение (разделение запятой)
+dbt build --select "1+selector:staging"                  # операторы графа
+dbt build --select "selector:staging tag:nightly"        # сочетание с другими методами
+dbt run --select "selector:staging" --exclude "selector:exclude_tests"
+```
+
+При использовании устаревшего флага `--selector` вместе с `--select` или `--exclude` dbt использует для выбора узлов только `--selector` и игнорирует `--select` и `--exclude`. Начиная с <Constant name="dbt" /> v1.12, dbt выдаёт предупреждение `SelectExcludeIgnoredWithSelectorWarning`, если `--selector` используется вместе с `--select` или `--exclude`. Если вы хотите сочетать селектор с этими флагами, используйте вместо этого метод `selector:`.
+
+При запуске команды без явного указания условий выбора (без `--select` или `--exclude`) dbt применяет [селектор по умолчанию](/reference/node-selection/yaml-selectors#default), если он определён в `selectors.yml`. При использовании `--select` или `--exclude` dbt игнорирует селектор по умолчанию. Чтобы включить селектор в строку `--select` или `--exclude`, необходимо явно сослаться на него с помощью метода `selector:`.
+
+Если определения селекторов ссылаются друг на друга, образуя цикл, dbt выдаёт ошибку `DbtRecursionError` во время выполнения. Подробнее см. в разделе [Наследование селекторов](/reference/node-selection/yaml-selectors#selector-inheritance).
+
+</VersionBlock>
+
+### semantic_model
 
 Метод `semantic_model` выбирает [семантические модели](/docs/build/semantic-models).
 
@@ -296,10 +313,14 @@ dbt list --select "+semantic_model:orders"  # перечислить вашу с
 Метод `source` используется для выбора моделей, которые выбирают из указанного [источника](/docs/build/sources#using-sources). Используйте в сочетании с оператором `+`.
 
 ```bash
-dbt run --select "source:snowplow+"    # запустить все модели, которые выбирают из источников Snowplow
+dbt run --select "source:snowplow+"    # запустить все модели, которые выбирают данные из источников Snowplow
+dbt run --select "source:snowplow.events+"    # запустить все модели, зависящие от таблицы events в источнике Snowplow
 ```
 
-### source_status {#source_status}
+Подробнее см. в [часто задаваемых вопросах об источниках](/docs/build/sources#faqs). 
+### source_status
+  
+Ещё один элемент состояния задания — `source_status` предыдущего вызова dbt. Например, после выполнения `dbt source freshness` dbt создаёт артефакт `sources.json`, который содержит время выполнения и даты `max_loaded_at` для источников dbt. Подробнее о `sources.json` можно прочитать на странице ['sources'](/reference/artifacts/sources-json).
 
 Еще один элемент состояния задания — это `source_status` предыдущего вызова dbt. Например, после выполнения `dbt source freshness` dbt создает артефакт `sources.json`, который содержит время выполнения и даты `max_loaded_at` для источников dbt. Подробнее о `sources.json` можно прочитать на странице ['sources'](/reference/artifacts/sources-json).
 
@@ -308,17 +329,31 @@ dbt run --select "source:snowplow+"    # запустить все модели,
 
 После выполнения одной из вышеуказанных команд вы можете ссылаться на результаты свежести источников, добавив селектор к последующей команде следующим образом:
 
+<VersionBlock lastVersion="1.10">
+
 ```bash
 # Вы также можете установить переменную окружения DBT_STATE вместо флага --state.
 dbt source freshness # необходимо запустить снова для сравнения текущего состояния с предыдущим
 dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 ```
 
-### state {#state}
+</VersionBlock>
+
+<VersionBlock firstVersion="1.11">
+
+```bash
+# Вместо флага --state можно также задать переменную окружения DBT_ENGINE_STATE.
+dbt source freshness # необходимо запустить повторно, чтобы сравнить текущее состояние с предыдущим
+dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
+```
+
+</VersionBlock>
+
+### state
 
 **N.B.** [State-based selection](/reference/node-selection/state-selection) — это мощная и сложная возможность. Обязательно ознакомьтесь с [known caveats and limitations](/reference/node-selection/state-comparison-caveats), связанными с сравнением состояний.
 
-Метод `state` используется для выбора узлов путем сравнения их с предыдущей версией того же проекта, которая представлена [манифестом](/reference/artifacts/manifest-json). Путь к файлу манифеста для сравнения _должен_ быть указан через флаг `--state` или переменную окружения `DBT_STATE`.
+Метод `state` используется для выбора узлов путём их сравнения с предыдущей версией того же проекта, представленной в виде [манифеста](/reference/artifacts/manifest-json). Путь к файлу манифеста для сравнения _обязательно_ должен быть указан с помощью флага `--state` или переменной окружения <VersionBlock lastVersion="1.10">`DBT_STATE`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_STATE`</VersionBlock>.
 
 `state:new`: В манифесте для сравнения нет узла с таким же `unique_id`
 
@@ -330,15 +365,19 @@ dbt run --select "state:modified" --state path/to/artifacts  # запустит�
 dbt ls --select "state:modified" --state path/to/artifacts   # перечислить все измененные узлы (не только модели)
 ```
 
-Поскольку сравнение состояний является сложным, и каждый проект уникален, dbt поддерживает подселекторы, которые включают подмножество полного критерия `modified`:
-- `state:modified.body`: Изменения в теле узла (например, SQL модели, значения seed)
-- `state:modified.configs`: Изменения в любой конфигурации узла, за исключением `database`/`schema`/`alias`
-- `state:modified.relation`: Изменения в `database`/`schema`/`alias` (представление этого узла в базе данных), независимо от значений `target` или макросов `generate_x_name`
-- `state:modified.persisted_descriptions`: Изменения в описании на уровне отношения или столбца, _если и только если_ `persist_docs` включен на каждом уровне
-- `state:modified.macros`: Изменения в вышестоящих макросах (независимо от того, вызываются ли они напрямую или косвенно другим макросом)
-- `state:modified.contract`: Изменения в [контракте](/reference/resource-configs/contract) модели, которые в настоящее время включают `name` и `data_type` `columns`. Удаление или изменение типа существующего столбца считается критическим изменением и вызовет ошибку.
+Поскольку сравнение состояний — сложный процесс, а каждый проект имеет свои особенности, dbt поддерживает подселекторы, которые охватывают подмножество полного набора критериев `modified`:
+- `state:modified.body`: Изменения в теле узла (например, в SQL-коде модели или значениях seed)
+- `state:modified.configs`: Изменения любых настроек узла, за исключением `database`/`schema`/`alias`/`tags`/`meta`
+- `state:modified.relation`: Изменения `database`/`schema`/`alias` (представления этого узла в базе данных), независимо от значений `target` или макросов `generate_x_name`
+- `state:modified.persisted_descriptions`: Изменения `description` на уровне отношения или столбца, _тогда и только тогда_, когда `persist_docs` включён на соответствующем уровне
+- `state:modified.macros`: Изменения макросов, от которых зависит узел (вызываемых напрямую или косвенно через другой макрос)
+- `state:modified.contract`: Изменения [контракта](/reference/resource-configs/contract) модели, которые в настоящее время включают изменения `name` и `data_type` в `columns`. Удаление существующего столбца или изменение его типа считается нарушением обратной совместимости и приводит к ошибке.
 
-Помните, что `state:modified` включает _все_ вышеуказанные критерии, а также некоторые дополнительные критерии, специфичные для ресурсов, такие как изменение правил `freshness` или `quoting` источника или свойства `maturity` exposure. (Просмотрите исходный код для полного набора проверок, используемых при сравнении [источников](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L660-L681), [exposures](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L768-L783) и [выполняемых узлов](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L319-L330).)
+Помните, что `state:modified` включает _все_ перечисленные выше критерии, а также некоторые дополнительные критерии, специфичные для отдельных типов ресурсов, например изменение правил `freshness` или `quoting` у источника либо свойства `maturity` у экспозиции. (Полный набор проверок, используемых при сравнении [источников](https://github.com/dbt-labs/dbt/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L660-L681), [экспозиций](https://github.com/dbt-labs/dbt/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L768-L783) и [исполняемых узлов](https://github.com/dbt-labs/dbt/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L319-L330), можно посмотреть в исходном коде.)
+
+dbt рассматривает `tags` и `meta` как поля, содержащие только метаданные, и не учитывает их изменения ни на уровне ресурса, ни на уровне столбца. Изменение значения `tags` или `meta` (в том числе для отдельных столбцов в YAML-файле) не приводит к выбору ресурса селектором `state:modified`, поскольку эти поля не влияют на то, как dbt материализует ресурс.
+
+Этим они отличаются, например, от `description`, изменение которого _учитывается_ при включённом `persist_docs`. dbt учитывает изменение любой другой настройки, поскольку такая настройка может повлиять на материализацию.
 
 Существуют два дополнительных селектора `state`, которые дополняют `state:new` и `state:modified`, представляя инверсии этих функций:
 - `state:old` &mdash; Узел с таким же `unique_id` существует в манифесте для сравнения

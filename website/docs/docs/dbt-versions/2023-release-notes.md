@@ -1,13 +1,16 @@
 ---
-title: "2023 заметки о релизах dbt Cloud"
-description: "Заметки о релизах dbt Cloud за 2023 год"
+title: "Примечания к выпускам платформы dbt за 2023 год"
+description: "Примечания к выпускам платформы dbt за 2023 год"
 id: "2023-release-notes"
-sidebar: "Заметки о релизах 2023"
+sidebar_label: "Примечания к выпускам за 2023 год"
 pagination_next: null
 pagination_prev: null
+availability:
+  surface: platform
+  access: free
 ---
 
-Архивные примечания к релизам для <Constant name="cloud" /> за 2023 год
+Архив примечаний к выпускам <Constant name="dbt" /> за 2023 год
 
 ## Декабрь 2023 {#december-2023}
 
@@ -31,13 +34,13 @@ pagination_prev: null
 
 - <Expandable alt_header='Внешние атрибуты'>
 
-    Функция расширенных атрибутов в dbt Cloud теперь доступна в GA! Она позволяет переопределять любой атрибут YAML на уровне окружения, который принимает адаптер dbt в своем `profiles.yml`. Вы можете предоставить фрагмент YAML, чтобы добавить или заменить любое значение [профиля](/docs/core/connect-data-platform/profiles.yml).
+  Функция расширенных атрибутов в dbt Cloud теперь общедоступна (GA)! Она позволяет на уровне окружения переопределять любые атрибуты YAML, которые адаптер dbt принимает в файле `profiles.yml`. Вы можете указать фрагмент YAML, чтобы добавить или заменить любое значение [профиля](/docs/local/profiles.yml).
 
-    Чтобы узнать больше, обратитесь к [Расширенным атрибутам](/docs/dbt-cloud-environments#extended-attributes).
+    Подробнее см. в разделе [Расширенные атрибуты](/docs/dbt-platform-environments#extended-attributes).
 
     Текстовое поле **Расширенные атрибуты** доступно на странице настроек вашего окружения:
 
-    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/extended-attributes.png" width="85%" title="Пример текстового поля расширенных атрибутов" />
+  <Lightbox src="/img/docs/dbt-platform/using-dbt-platform/extended-attributes.png" width="85%" title="Пример текстового поля расширенных атрибутов" />
 
   </Expandable>
 
@@ -59,9 +62,8 @@ pagination_prev: null
 
     ### Ломающее изменения и рекомендации
 
-    - Для пользователей на версии dbt 1.5 и ниже с метриками dbt и прокси Snowflake:
-    - **Влияние**: После устаревания запросы, использующие прокси, _не будут_ выполняться.
-    - **Необходимое действие:** Необходима _немедленная_ миграция. Обратитесь к [руководству по миграции семантического слоя dbt](/guides/sl-migration?step=1)
+  - Для пользователей dbt версии 1.5 и ниже, использующих dbt Metrics и прокси Snowflake:
+    - **Последствия**: После прекращения поддержки запросы, использующие прокси, _не будут_ выполняться.
 
     - Для пользователей на версии dbt 1.5 и ниже, использующих метрики dbt без прокси Snowflake:
     - **Влияние**: Никаких немедленных нарушений, но пакет не будет получать обновления или поддержку после устаревания.
@@ -69,10 +71,10 @@ pagination_prev: null
 
     ### Взаимодействие и поддержка
 
-    - Обратная связь и поддержка сообщества &mdash; Взаимодействуйте и делитесь отзывами с командой dbt Labs и сообществом dbt в Slack, используя каналы, такие как [#dbt-cloud-semantic-layer](https://getdbt.slack.com/archives/C046L0VTVR6) и [#dbt-metricflow](https://getdbt.slack.com/archives/C02CCBBBR1D). Или свяжитесь с вашим представителем по аккаунту dbt Cloud.
-    - Ресурсы для обновления &mdash; Ознакомьтесь с дополнительной информацией и ресурсами, которые помогут вам обновить вашу версию dbt:
-    - [Обновление версии в dbt Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
-    - [Руководства по миграции версий](/docs/dbt-versions/core-upgrade)
+  - Обратная связь и поддержка сообщества &mdash; Общайтесь с командой dbt Labs и сообществом dbt в Slack и делитесь отзывами в таких каналах, как [#dbt-cloud-semantic-layer](https://getdbt.slack.com/archives/C046L0VTVR6) и [#dbt-metricflow](https://getdbt.slack.com/archives/C02CCBBBR1D). Или свяжитесь с вашим представителем dbt Cloud.
+    - Ресурсы для обновления &mdash; Ознакомьтесь с дополнительной информацией и ресурсами, которые помогут вам обновить версию dbt:
+    - [Обновление версии в dbt Cloud](/docs/dbt-versions/upgrade-dbt-platform-version)
+    - [Руководства по переходу на новые версии](/docs/dbt-versions/dbt-upgrade)
 
   </Expandable>
 
@@ -110,7 +112,7 @@ pagination_prev: null
 
     Теперь для планов dbt Cloud Enterprise доступна новая опция для включения кэширования Git-репозитория для ваших запусков заданий. При включении dbt Cloud кэширует Git-репозиторий вашего проекта dbt и использует кэшированную копию, если происходит сбой с поставщиком Git. Эта функция улучшает надежность и стабильность ваших запусков заданий.
 
-    Чтобы узнать больше, обратитесь к [Кэшированию репозитория](/docs/cloud/account-settings#git-repository-caching).
+  Подробнее см. в разделе [Кэширование репозитория](/docs/platform/account-settings#git-repository-caching-).
 
     <Lightbox src="/img/docs/deploy/account-settings-repository-caching.png" width="85%" title="Пример опции Repository caching" />
 
@@ -120,9 +122,9 @@ pagination_prev: null
 
 - <Expandable alt_header='API dbt Cloud'>
 
-    Начиная с 1 декабря 2023 года, [Административный API](/docs/dbt-cloud-apis/admin-cloud-api) v2 и v3 будут ожидать, что вы ограничите все методы API "list" или `GET` до 100 результатов на запрос API. Это ограничение повышает эффективность и стабильность наших услуг. Если вам нужно обработать более 100 результатов, используйте параметры запроса `limit` и `offset` для постраничной навигации; в противном случае вы получите ошибку.
+  Начиная с 1 декабря 2023 года, [Administrative API](/docs/dbt-apis/admin-api) версий v2 и v3 требует ограничивать результаты всех методов API для получения списков («list») или методов `GET` до 100 записей на один запрос к API. Это ограничение повышает эффективность и стабильность наших сервисов. Если вам нужно обработать более 100 записей, используйте параметры запроса `limit` и `offset` для постраничного получения результатов; в противном случае вы получите ошибку. 
 
-    Это максимальное ограничение применяется только к [многоарендным экземплярам](/docs/cloud/about-cloud/access-regions-ip-addresses) и _не применяется_ к одноарендным экземплярам.
+    Это ограничение максимального количества результатов применяется только к [многопользовательским экземплярам (multi-tenant)](/docs/platform/about-platform/access-regions-ip-addresses) и _не применяется_ к однопользовательским экземплярам (single-tenant).
 
     Подробнее о том, как реализовать пагинацию ответов API, см. разделы [API v3 Pagination](/dbt-cloud/api-v3#/) или [API v2 Pagination](/dbt-cloud/api-v2#/). 
 
@@ -151,13 +153,13 @@ pagination_prev: null
     - Рабочий процесс разработки для dbt Semantic Layer
     - Более быстрые и менее затратные сборки
 
-    Подробнее см. в разделе [dbt CLI](/docs/cloud/cloud-cli-installation).
+  Подробнее см. в разделе [dbt CLI](/docs/platform/dbt-cli-installation).
 
   </Expandable>
 
 - <Expandable alt_header='Исправление пользовательской ветки'>
 
-    Если вы не установили [пользовательскую ветку](/docs/dbt-cloud-environments#custom-branch-behavior) для вашего окружения dbt Cloud, она теперь по умолчанию устанавливается на ветку по умолчанию вашего Git-репозитория (например, `main`). Ранее [CI задания](/docs/deploy/ci-jobs) выполнялись для запросов на вытягивание (PR), которые были открыты против _любой ветки_ или обновлены новыми коммитами, если опция **Пользовательская ветка** не была установлена.
+  Если вы не зададите [пользовательскую ветку](/docs/dbt-platform-environments#custom-branch-behavior) для своей среды dbt Cloud, теперь по умолчанию будет использоваться ветка по умолчанию вашего Git-репозитория (например, `main`). Ранее, если параметр **Custom Branch** не был задан, [задания CI](/docs/deploy/ci-jobs) запускались для запросов на слияние (PR), открытых в _любую ветку_ или обновлённых новыми коммитами.
 
     ## Azure DevOps 
 
@@ -197,19 +199,19 @@ pagination_prev: null
 
     * Перенос документации с Netlify на Vercel.
 
-    ## ☁ Проекты Cloud
-    - Задания непрерывной интеграции (Continuous integration jobs) теперь общедоступны и больше не находятся в статусе beta.
-    - Добавлена страница с настройкой [Postgres PrivateLink](/docs/cloud/secure/postgres-privatelink).
-    - Опубликована beta-документация для [dbt Explorer](/docs/explore/explore-projects).
-    - Добавлена новая документация по Semantic Layer — [GraphQL API doc](/docs/dbt-cloud-apis/sl-graphql), а также обновлены [документы по интеграциям](/docs/cloud-integrations/avail-sl-integrations) с добавлением Hex. Мы также отреагировали на обратную связь сообщества dbt и уточнили сценарии использования Metricflow для dbt Core и dbt Cloud.
-    - Добавлен [FAQ](/faqs/Git/git-migration) с описанием того, как выполнить миграцию с одного git‑провайдера на другой в dbt Cloud.
-    - Уточнён пример и добавлен [раздел troubleshooting](/docs/cloud/connect-data-platform/connect-snowflake#troubleshooting) в документацию по подключению к Snowflake, чтобы описать распространённые ошибки и способы их решения.
+  ## ☁ Проекты Cloud
+    - Задания непрерывной интеграции теперь общедоступны и больше не находятся в стадии бета-тестирования!
+    - Добавлена [страница настройки PrivateLink для Postgres](/docs/platform/secure/private-connectivity/aws/aws-postgres).
+    - Опубликована документация по бета-версии [dbt Explorer](/docs/explore/explore-projects).
+    - Добавлена новая [документация по GraphQL API](/docs/dbt-apis/sl-graphql) для Semantic Layer и обновлена [документация по интеграциям](/docs/platform-integrations/avail-sl-integrations): в неё включён Hex. С учётом отзывов сообщества dbt уточнены сценарии использования Metricflow в dbt Core и dbt Cloud.
+    - Добавлен [ответ на часто задаваемый вопрос](/faqs/Git/git-migration) о том, как перейти от одного Git-провайдера к другому в dbt Cloud.
+    - Уточнён пример и добавлен [раздел устранения неполадок](/docs/platform/connect-data-platform/connect-snowflake#troubleshooting) в документацию по подключению к Snowflake с описанием распространённых ошибок и способов их устранения.
 
     ## 🎯 Проекты Core
 
-    - Устарели версии dbt Core v1.0 и v1.1 в документации.
-    - Добавлены инструкции по настройке для плагина сообщества [AWS Glue](/docs/core/connect-data-platform/glue-setup).
-    - Переработан быстрый старт dbt Core, чтобы сделать его более удобным для следования. Этот гид разделен на шаги, которые соответствуют [другим руководствам](/guides/manual-install?step=1).
+  - Документация для dbt Core v1.0 и v1.1 помечена как устаревшая.
+    - Добавлены инструкции по настройке плагина [AWS Glue](/docs/local/connect-data-platform/glue-setup), поддерживаемого сообществом.
+    - Переработано краткое руководство по началу работы с dbt Core, чтобы упростить его использование. Руководство разделено на шаги по аналогии с [другими руководствами](/guides/manual-install?step=1).
 
     ## Новые 📚 Руководства, ✏️ блог-посты и FAQ
 
@@ -223,22 +225,22 @@ pagination_prev: null
 
 - <Expandable alt_header='Семантический слой GA'>
   
-    Если вы используете устаревший семантический слой, мы _настоятельно_ рекомендуем вам [обновить вашу версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud) до версии dbt v1.6 или выше и [мигрировать](/guides/sl-migration) на последний семантический слой.
+  Если вы используете устаревший Semantic Layer, мы _настоятельно_ рекомендуем [обновить версию dbt](/docs/dbt-versions/upgrade-dbt-platform-version) до dbt v1.6 или выше и перейти на новейшую версию Semantic Layer.
 
     dbt Labs с радостью объявляет, что [семантический слой dbt](/docs/use-dbt-semantic-layer/dbt-sl) теперь доступен в общем доступе. Он предлагает последовательную организацию данных, улучшенное управление, сниженные затраты, повышенную эффективность и доступные данные для лучшего принятия решений и сотрудничества в организациях.
 
     Он направлен на то, чтобы принести лучшее из моделирования и семантики в downstream-приложения, вводя:
 
-    - Совершенно новые [интеграции](/docs/cloud-integrations/avail-sl-integrations), такие как Tableau, Google Sheets, Hex, Mode и Lightdash.
-    - Новые [API семантического слоя](/docs/dbt-cloud-apis/sl-api-overview) с использованием GraphQL и JDBC для запроса метрик и построения интеграций.
-    - Поддержка dbt Cloud [многоарендных регионов](/docs/cloud/about-cloud/access-regions-ip-addresses) для Северной Америки, EMEA и APAC. Поддержка одноарендных клиентов скоро появится.
-    - Скоро появится &mdash; Запланированные экспорты (способ создания таблиц в вашей платформе данных) как часть вашего задания dbt Cloud. Используйте API для вызова экспорта, а затем получайте доступ к ним в вашем предпочтительном BI-инструменте.  
+  - Совершенно новые [интеграции](/docs/platform-integrations/avail-sl-integrations), такие как Tableau, Google Sheets, Hex, Mode и Lightdash.
+    - Новые [API семантического слоя](/docs/dbt-apis/sl-api-overview), использующие GraphQL и JDBC для запроса метрик и создания интеграций.
+    - Поддержка [мультитенантных региональных развертываний](/docs/platform/about-platform/access-regions-ip-addresses) dbt Cloud для Северной Америки, EMEA и APAC. Поддержка однотенантных развертываний появится в ближайшее время.
+    - Скоро &mdash; Запуск экспорта по расписанию (способ создания таблиц на вашей платформе данных) в рамках задания dbt Cloud. Используйте API для запуска экспорта, а затем получайте доступ к экспортированным данным в предпочитаемом BI-инструменте.  
 
-    <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-architecture.jpg" width="80%" title="Используйте универсальный семантический слой dbt для определения и запроса метрик в интеграционных инструментах."/>
+    <Lightbox src="/img/docs/dbt-platform/semantic-layer/sl-architecture.jpg" width="80%" title="Используйте универсальный семантический слой dbt для определения и запроса метрик в интегрированных инструментах."/>
 
-    Семантический слой dbt доступен для многопользовательских тарифных планов [dbt Cloud Team или Enterprise](https://www.getdbt.com/) при использовании dbt версии 1.6 или выше.  
-    - Клиенты Team и Enterprise могут использовать до 1 000 Queried Metrics в месяц без дополнительной оплаты в рамках ограниченного пробного периода при условии разумного использования. Подробнее см. в разделе [Billing](/docs/cloud/billing#what-counts-as-a-queried-metric).
-    - Пользователи тарифного плана <Constant name="cloud" /> Developer и пользователи <Constant name="core" /> могут определять метрики, но не смогут запрашивать их с помощью интегрированных инструментов.
+    Семантический слой dbt доступен в мультитенантных развертываниях на тарифах [dbt Cloud Team или Enterprise](https://www.getdbt.com/) при использовании dbt версии 1.6 или выше. 
+    - Клиенты тарифов Team и Enterprise могут выполнять 1 000 запросов метрик (Queried Metrics) в месяц без дополнительной платы в рамках ограниченного пробного периода с учетом ограничений разумного использования. Подробнее см. в разделе [Оплата](/docs/platform/billing/how-pricing-works#what-counts-as-a-queried-metric).
+    - Пользователи тарифа <Constant name="dbt" /> Developer и пользователи <Constant name="core" /> могут определять метрики, но не смогут запрашивать их через интегрированные инструменты.
 
   </Expandable>
 
@@ -250,9 +252,7 @@ pagination_prev: null
 
     Благодаря двум типам jobs вместо одного универсального типа мы можем лучше проводить вас через процесс настройки. Best practices встроены в настройки по умолчанию, поэтому вы можете перейти от интереса к готовой настройке за считанные секунды.
 
-    <Lightbox src="/img/docs/release-notes/ci-job-setup.gif" width="60%" title="Пример настройки CI job"/>
-
-    Кроме того, теперь проверки CI выполняют более эффективное сравнение state: вы не будете тратить сборку или тесты на код, который не менялся. Теперь мы более эффективно сравниваем код в pull request (PR) в <Constant name="git" /> и то, что запущено в production, благодаря появлению deferral на environment вместо deferral на job. Подробнее см. [Continuous integration в <Constant name="cloud" />](/docs/deploy/continuous-integration).
+  Кроме того, сравнение состояний при проверках CI стало эффективнее: больше не нужно тратить ресурсы на сборку или тестирование кода, который не изменился. Теперь мы эффективнее сравниваем код из pull request (PR) в <Constant name="git" /> с кодом, работающим в продакшене, благодаря возможности использовать состояние окружения, а не задания, для отложенного разрешения ссылок (deferral). Подробнее см. в разделе [Непрерывная интеграция в <Constant name="dbt" />](/docs/deploy/continuous-integration).
 
     Ниже — сравнительная таблица, описывающая, чем отличаются deploy jobs и CI jobs:
 
@@ -273,11 +273,9 @@ pagination_prev: null
 
     Если вы использовали API endpoint [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job), но не указали `"triggers":triggers.git_provider_webhook`, job была классифицирована как deploy job, и вам нужно пересоздать ее, как описано в [Trigger a CI job with the API](/docs/deploy/ci-jobs#trigger-a-ci-job-with-the-api).
 
-        Если вы использовали UI <Constant name="cloud" />, но не включили опцию **Run on Pull Requests**, которая находилась во вкладке **Continuous Integration** (CI), job была классифицирована как deploy job, и вам нужно пересоздать ее, как описано в [Set up CI jobs](/docs/deploy/ci-jobs#set-up-ci-jobs).
+  Если вы использовали интерфейс <Constant name="dbt" />, но не включили опцию **Run on Pull Requests**, которая находилась на вкладке **Continuous Integration** (CI), задание было ошибочно классифицировано как задание развертывания, и его необходимо создать заново, как описано в разделе [Настройка заданий CI](/docs/deploy/ci-jobs#set-up-ci-jobs).
 
-        Чтобы проверить тип job, откройте список CI jobs в <Constant name="cloud" /> в разделе [Run History](/docs/deploy/run-visibility#run-history) и проверьте наличие тега **CI Job** под именем job. Если тега нет, job была классифицирована неверно и ее нужно пересоздать.
-
-        <Lightbox src="/img/docs/release-notes/ci-job-tag.png" width="60%" title="Пример корректного типа CI job"/>
+        Чтобы проверить тип задания, просмотрите свои задания CI в [истории запусков](/docs/deploy/run-visibility#run-history) <Constant name="dbt" /> и проверьте наличие метки **CI Job** под названием задания. Если этой метки нет, задание было ошибочно классифицировано и его необходимо создать заново.
 
     **CI update phase 3 &mdash; Обновление: улучшено автоматическое удаление временных схем** 
 
@@ -300,44 +298,43 @@ pagination_prev: null
 
     Также выражаем особую благодарность 22 участникам сообщества, которые впервые внесли вклад в [dbt Product docs](https://docs.getdbt.com). На основе обратной связи от сообщества dbt мы внесли следующие изменения:
 
-    - Добавили [таблицу прав доступа](/docs/cloud/manage-access/enterprise-permissions) для Enterprise‑аккаунтов.
-    - Добавили страницу про [сессию в браузере](/docs/cloud/about-cloud/browsers#browser-sessions), которая уточняет длительность браузерной сессии в dbt Cloud и то, когда пользователя разлогинивает.
+  - Добавлена [таблица разрешений](/docs/platform/manage-access/enterprise-permissions) для учетных записей Enterprise
+    - Добавлена [страница о сеансах браузера](/docs/platform/about-platform/browsers#browser-sessions), на которой поясняется длительность сеанса браузера в dbt Cloud и условия автоматического выхода пользователей из системы.
+        
+    Вы можете оставить отзыв, создав pull request или issue в [нашем репозитории](https://github.com/dbt-labs/docs.getdbt.com) или написав в канал Slack сообщества dbt [#dbt-product-docs](https://getdbt.slack.com/archives/C0441GSRU04)).
 
     Вы можете оставить обратную связь, открыв pull request или issue в [нашем репозитории](https://github.com/dbt-labs/docs.getdbt.com), или написав в Slack‑сообществе dbt в канал [#dbt-product-docs](https://getdbt.slack.com/archives/C0441GSRU04)).
 
-    ## :zap: Общие проекты по документации
+  * Добавлена возможность сворачивать разделы, которые вы сейчас не просматриваете. Об этом просили довольно многие пользователи, да и нам самим этого не хватало, поэтому мы рады, что наконец реализовали эту возможность!
+    * Введено понятие [«доверенных» адаптеров](/docs/community-adapters).
 
     * Добавили возможность сворачивать секции, которые вы сейчас не просматриваете. Многие этого хотели, и нас это тоже раздражало, так что мы рады, что успели доставить!
-    * Ввели понятие [«Trusted» адаптеров](/docs/supported-data-platforms#types-of-adapters).
+    * Ввели понятие [«Trusted» адаптеров](/docs/supported-data-platforms#adapter-lifecycle).
 
-    ## ☁ Cloud projects
+  * Виджет обновлений продукта **Что нового?** снова доступен в интерфейсе dbt Cloud! Команда документации начнёт обновлять его содержимое, чтобы держать вас в курсе новых возможностей.
+    * Опубликована обновлённая [документация по бета-версии Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), которая знакомит пользователей с новым API и новым руководством по настройке MetricFlow и нового Semantic Layer. Также переработан раздел «Использование dbt Semantic Layer».
+    * Обновлена документация по [Admin API v2 и v3](/docs/dbt-apis/admin-api), чтобы помочь вам разобраться в различиях между ними и понять, какая версия включает используемые вами эндпоинты.
+    * Чтобы упростить поиск информации, команда документации внесла изменения в [боковую панель раздела о развёртывании dbt](/docs/deploy/deployments). Мы добавили карточки и привели структуру раздела в большее соответствие с интерфейсом dbt Cloud и тем, как его используют.
+    * Устаревшие схемы заданий в [Discovery API](/docs/dbt-apis/discovery-api) объявлены устаревшими.
+    * Добавлена страница с описанием [экспериментальных функций и функций в бета-версии](/docs/dbt-versions/experimental-features) в dbt Cloud и важной информацией об их использовании.
+    * Добавлен раздел, представляющий новую функцию в бета-версии [**Extended Attributes**](/docs/dbt-platform-environments#extended-attributes), которая позволяет пользователям задавать гибко настраиваемый фрагмент `profiles.yml` в настройках окружения dbt Cloud.
+    ## 🎯 Основные проекты
 
-    * Виджет продуктовых обновлений **What’s new?** снова доступен в UI dbt Cloud! Команда документации начнет обновлять контент, чтобы держать вас в курсе новых функций.
-    * Выпустили обновлённые [Semantic Layer beta docs](/docs/use-dbt-semantic-layer/dbt-sl): они знакомят пользователей с новым API, новым руководством по настройке MetricFlow и Semantic Layer, а также с переработанным разделом «Use the dbt Semantic Layer».
-    * Обновили документацию по [Admin API v2 и v3](/docs/dbt-cloud-apis/admin-cloud-api), чтобы было проще понять различия между ними и в какой версии есть нужные вам эндпоинты.
-    * Чтобы улучшить discoverability, команда документации изменила [deploy dbt sidebar](/docs/deploy/deployments): добавили карточки и лучше выровняли структуру с UI dbt Cloud и тем, как продукт используется.
-    * Объявили устаревшими (deprecated) legacy job schemas в [Discovery API](/docs/dbt-cloud-apis/discovery-api).
-    * Добавили страницу с описанием [experimental и beta features](/docs/dbt-versions/experimental-features) в dbt Cloud и важной информацией о них.
-    * Добавили раздел, представляющий новую beta‑фичу [**Extended Attributes**](/docs/dbt-cloud-environments#extended-attributes-beta), которая позволяет пользователям задавать гибкий фрагмент `profiles.yml` в настройках Environment в dbt Cloud.
-    ## 🎯 Core projects
+    * Мы выпустили [dbt 1.6](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.6)! Мы добавили документацию по новым командам `dbt retry` и `dbt clone`
 
-    * Мы выпустили [dbt 1.6](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.6)! Мы добавили документацию для новых команд `dbt retry` и `dbt clone`.
+    * Мы выпустили [dbt 1.6](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.6)! Мы добавили документацию для новых команд `dbt retry` и `dbt clone`.
 
-    ## Новые 📚 гайды, ✏️ blog posts и FAQ
-
-    * Посмотрите, как участники сообщества используют dbt community, в разделе [Community spotlight](/community/spotlight).
-    * Летом были опубликованы посты: [Optimizing Materialized Views with dbt](/blog/announcing-materialized-views), [Data Vault 2.0 with dbt Cloud](/blog/data-vault-with-dbt-cloud) и [Create dbt Documentation and Tests 10x faster with ChatGPT](/blog/create-dbt-documentation-10x-faster-with-ChatGPT).
-    - У нас также появились два новых best practice guide: [How we build our metrics](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) и [Set up Continuous Integration](/guides/set-up-ci).
+  * Узнайте, как [присоединиться к сообществу dbt](/community/join).
+    * Среди публикаций в блоге за это лето — [Оптимизация материализованных представлений с помощью dbt](/blog/announcing-materialized-views),  [Data Vault 2.0 с dbt Cloud](/blog/data-vault-with-dbt-cloud) и [Создавайте документацию и тесты dbt в 10 раз быстрее с помощью ChatGPT](/blog/create-dbt-documentation-10x-faster-with-ChatGPT) 
+    - Теперь у нас есть два новых руководства по лучшим практикам: [Как мы создаём наши метрики](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) и [Настройка непрерывной интеграции](/guides/set-up-ci).
 
   </Expandable>
 
 - <Expandable alt_header='Удаление prerelease-версий'>
 
-    Ранее, когда dbt Labs выпускала новую [версию](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning) в dbt Cloud, более старая prerelease patch‑версия и версия _latest_ оставались доступными в выпадающем списке в **Environment settings**. Теперь, когда выпускается версия _latest_, prerelease‑версия будет удаляться, а все пользователи, которые остаются на ней, будут автоматически мигрированы без лишних шагов. Во время этой миграции не будет перерывов в работе сервиса.
+  Ранее, когда dbt Labs выпускала новую [версию](/docs/dbt-versions#how-dbt-v1-uses-semantic-versioning) в dbt Cloud, предыдущая _предварительная_ версия исправления и _последняя_ версия оставались доступными для выбора в раскрывающемся меню в разделе **Настройки окружения**. Теперь при выпуске _последней_ версии _предварительная_ версия будет удаляться, а все клиенты, которые всё ещё её используют, будут автоматически переведены на новую версию. Этот переход не приведёт к перебоям в работе сервиса.
 
     Чтобы посмотреть, какую версию вы используете сейчас, и выполнить обновление, выберите **Deploy** в верхней навигации и откройте **Environments**. Выберите нужное окружение и нажмите **Settings**. Нажмите **Edit**, чтобы изменить текущую версию dbt. dbt Labs рекомендует по возможности всегда использовать последнюю версию, чтобы получать доступ к новым функциям и возможностям.
-
-    <Lightbox src="/img/docs/release-notes/dbt-cloud-versions.png" title="Выпадающий список версий dbt Cloud"/>
 
   </Expandable>
 
@@ -345,7 +342,7 @@ pagination_prev: null
 
 - <Expandable alt_header='Deprecation of endpoints in the Discovery API'>
 
-    dbt Labs объявили устаревшими и продолжают объявлять устаревшими некоторые паттерны запросов, заменяя их новыми соглашениями, чтобы повысить производительность [Discovery API](/docs/dbt-cloud-apis/discovery-api) в dbt Cloud.
+  dbt Labs уже объявила некоторые шаблоны запросов устаревшими и продолжит этот процесс, заменяя их новыми подходами для повышения производительности [Discovery API](/docs/dbt-apis/discovery-api) в dbt Cloud.
 
     Все эти изменения вступят в силу _7 сентября 2023 года_.
 
@@ -521,7 +518,7 @@ pagination_prev: null
 
     Важно учитывать, что каждое выполняющееся задание занимает один слот на всё время своего выполнения, и если все слоты заняты, новые задания будут поставлены в очередь.
 
-    Подробнее о возможностях см. на [странице тарифов <Constant name="cloud" />](https://www.getdbt.com/pricing/).
+  Подробнее о возможностях см. на [странице тарифов <Constant name="dbt" />](https://www.getdbt.com/pricing/).
 
     Обратите внимание: аккаунты Team, созданные после июля 2023 года, также получают неограниченную параллельность заданий:
     - Legacy-аккаунты Team имеют фиксированное количество слотов запусков.
@@ -539,15 +536,15 @@ pagination_prev: null
 
     Для SQL-файлов вы можете легко выполнять линтинг и форматирование с помощью [SQLFluff](https://sqlfluff.com/) и применять единый стиль форматирования с использованием [sqlfmt](http://sqlfmt.com/). Кроме того, для других типов файлов — YAML, Markdown, JSON и Python — вы можете использовать соответствующие инструменты на базе [Prettier](https://prettier.io/) и [Black](https://black.readthedocs.io/en/latest/), чтобы обеспечить чистое и стандартизированное форматирование кода.
 
-    Подробнее см. в разделе [Линтинг и форматирование кода](/docs/cloud/studio-ide/lint-format).
+  Подробнее читайте в разделе [Проверка и форматирование кода](/docs/platform/studio-ide/lint-format).
 
     <DocCarousel slidesPerView={1}>
 
-    <Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfluff.gif" width="100%" title="Использование SQLFluff для линтинга и форматирования SQL-кода с отображением ошибок во вкладке Code Quality."/>
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfluff.gif" width="100%" title="Используйте SQLFluff для проверки и форматирования SQL-кода и просматривайте ошибки кода на вкладке Code Quality."/>
 
-    <Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfmt.gif" width="95%" title="Форматирование SQL-кода с помощью sqlfmt."/>
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfmt.gif" width="95%" title="Используйте sqlfmt для форматирования SQL-кода."/>
 
-    <Lightbox src="/img/docs/dbt-cloud/cloud-ide/prettier.gif" width="95%" title="Форматирование YAML-, Markdown- и JSON-файлов с помощью Prettier."/>
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/prettier.gif" width="95%" title="Форматируйте файлы YAML, Markdown и JSON с помощью Prettier."/>
 
     </DocCarousel>
 
@@ -559,13 +556,13 @@ pagination_prev: null
 
     <Lightbox src="/img/docs/release-notes/ci-checks.png" width="75%" title="CI-проверки напрямую из Git"/>
 
-    Ключевое отличие CI в <Constant name="cloud" /> от других CI-решений заключается в том, что он учитывает состояние продакшен-окружения. Благодаря этому при запуске CI-задачи собираются и тестируются только изменённые data-ассеты из pull request и их downstream-зависимости — и всё это в staging-схеме. <Constant name="cloud" /> стремится сделать каждую CI-проверку максимально эффективной, чтобы не расходовать ресурсы хранилища данных впустую. Сразу после завершения CI-запуска его статус автоматически публикуется обратно в PR в GitHub, GitLab или Azure DevOps — в зависимости от используемого <Constant name="git" />-провайдера. Команды могут настраивать guardrails, разрешая мердж только тех PR, которые успешно прошли CI-проверки, а процесс peer-review становится значительно проще, поскольку первый этап тестирования берёт на себя <Constant name="cloud" />.
+  В отличие от других CI-провайдеров, <Constant name="dbt" /> CI отслеживает состояние того, что выполняется в вашей производственной среде. Благодаря этому при запуске задания CI в промежуточной схеме создаются и тестируются только изменённые в вашем pull request ресурсы данных и зависящие от них нижестоящие ресурсы. <Constant name="dbt" /> стремится сделать каждую проверку CI максимально эффективной, чтобы не расходовать ресурсы хранилища данных впустую. Как только запуск CI завершается, его статус публикуется непосредственно в PR в GitHub, GitLab или Azure DevOps — в зависимости от того, какого <Constant name="git" />-провайдера вы используете. Команды могут настроить ограничения, позволяющие одобрять слияние только тех PR, которые успешно прошли проверки CI. При этом процесс проверки коллегами значительно упрощается, поскольку <Constant name="dbt" /> выполняет первый этап тестирования.
 
-    Мы рады представить несколько ключевых возможностей в <Constant name="cloud" /> CI, которые повысят продуктивность и улучшат совместную работу в процессах тестирования и интеграции. Начиная с этой недели, вы можете:
+    Мы рады представить несколько важных возможностей <Constant name="dbt" /> CI, которые повысят продуктивность и улучшат совместную работу вашей команды в процессе тестирования и интеграции. Начиная с этой недели вы можете:
 
     - **Запускать несколько CI-проверок параллельно.** Если несколько участников почти одновременно вносят изменения в один и тот же dbt-проект, последующие CI-проверки больше не ждут завершения предыдущих — они выполняются параллельно.
 
-    - **Автоматически отменять устаревшие CI-запуски.** Если вы отправляете несколько коммитов в один PR, <Constant name="cloud" /> автоматически отменяет старые, уже неактуальные CI-проверки. Никаких лишних затрат ресурсов на проверку устаревшего кода.
+  - **Автоматическая отмена устаревших запусков CI**. Если вы отправите несколько коммитов в один и тот же PR, <Constant name="dbt" /> автоматически отменит предыдущие проверки CI, которые уже потеряли актуальность. Ресурсы не будут тратиться на проверку устаревшего кода.
 
     - **Запускать CI-проверки без блокировки продакшен-запусков.** CI-проверки больше не занимают run-слоты, что позволяет запускать любое количество CI-задач без влияния на продакшен-джобы.
 
@@ -575,13 +572,13 @@ pagination_prev: null
 
 - <Expandable alt_header='Admin API'>
 
-    dbt Labs обновили документацию для [Administrative API dbt Cloud](/docs/dbt-cloud-apis/admin-cloud-api) — теперь она доступна как для версии [v2](/dbt-cloud/api-v2#/), так и для [v3](/dbt-cloud/api-v3#/).
+  dbt Labs обновила документацию по [административному API dbt Cloud](/docs/dbt-apis/admin-api), и теперь она доступна как для [v2](/dbt-cloud/api-v2#/), так и для [v3](/dbt-cloud/api-v3#/). 
 
-    - Теперь используется Spotlight для улучшенного UI и UX.
-    - Все эндпоинты задокументированы для v2 и v3. В документацию добавлена автоматизация, чтобы она всегда оставалась актуальной.
-    - Задокументированы многие тела запросов и ответов.
-    - Теперь вы можете тестировать эндпоинты прямо из документации API, а также выбирать [региональный сервер](/docs/cloud/about-cloud/access-regions-ip-addresses) (Северная Америка, APAC или EMEA).
-    - В новом интерфейсе стало проще генерировать код для любого эндпоинта.
+    - Теперь используется Spotlight для улучшения пользовательского интерфейса и удобства работы.
+    - Теперь задокументированы все эндпоинты v2 и v3. Добавлена автоматизация, чтобы документация оставалась актуальной.  
+    - Описаны тела многих запросов и ответов.
+    - Теперь вы можете тестировать эндпоинты прямо в документации API. Кроме того, вы можете выбрать, какой [региональный сервер](/docs/platform/about-platform/access-regions-ip-addresses) использовать (Северная Америка, APAC или EMEA).
+    - Благодаря новому интерфейсу стало проще генерировать код для любого эндпоинта.
 
   </Expandable>
 
@@ -593,15 +590,15 @@ pagination_prev: null
 
     ## ☁ Cloud-проекты
 
-    - Мы уточнили нюансы [CI и CI jobs](/docs/deploy/continuous-integration), обновили материалы по [Scheduler](/docs/deploy/job-scheduler), добавили две новые страницы про настройки джобов и видимость запусков, перенесли страницу project state на страницу [Syntax](/reference/node-selection/syntax), а также добавили лендинг для [Deploying with Cloud](/docs/deploy/jobs), чтобы упростить навигацию по контенту.
-    - Мы переработали страницу [Supported data platforms](/docs/supported-data-platforms): добавили туда dbt Cloud, разбили контент на несколько страниц, начали использовать карточки для отображения проверенных адаптеров и перенесли страницы [Warehouse setup](/docs/core/connect-data-platform/about-core-connections) в раздел Docs.
-    - Мы запустили новую страницу [Lint and format](/docs/cloud/studio-ide/lint-format), посвящённую новым возможностям линтинга и форматирования в dbt Cloud IDE.
-    - Мы связали [release notes dbt Cloud](/docs/dbt-versions/dbt-cloud-release-notes) с сообществом dbt в Slack. Теперь новые релиз-ноты dbt Cloud автоматически публикуются в Slack-канале [#dbt-cloud](https://getdbt.slack.com/archives/CMZ2V0X8V) через RSS, чтобы пользователи всегда были в курсе изменений.
-    - Мы добавили две новые ссылки на документацию прямо в UI настроек dbt Cloud Jobs — это поможет пользователям успешнее настраивать джобы: [job commands](/docs/deploy/job-commands) и job triggers.
-    - Мы добавили информацию о новой [IT-лицензии](/docs/cloud/manage-access/about-user-access#license-based-access-control), доступной в тарифах Team и Enterprise.
-    - Мы запустили новую страницу [Supported browser](/docs/cloud/about-cloud/browsers) со списком рекомендованных браузеров для dbt Cloud.
-    - Мы опубликовали новую страницу про [Experimental features](/docs/dbt-versions/experimental-features) в dbt Cloud.
-    - Мы совместно с командой dbt Engineering помогли опубликовать новые бета-версии документации по [Administrative API dbt Cloud](/docs/dbt-cloud-apis/admin-cloud-api).
+  - Мы уточнили нюансы [CI и заданий CI](/docs/deploy/continuous-integration), обновили [материалы о планировщике](/docs/deploy/job-scheduler), добавили две новые страницы о настройках заданий и видимости запусков, перенесли страницу о состоянии проекта на [страницу синтаксиса](/reference/node-selection/syntax) и подготовили обзорную страницу [развёртывания с помощью dbt Cloud](/docs/deploy/jobs), чтобы читателям было проще ориентироваться в материалах.
+    - Мы изменили структуру [страницы поддерживаемых платформ данных](/docs/supported-data-platforms): добавили на неё dbt Cloud, разделили её на несколько страниц, использовали карточки для отображения проверенных адаптеров и перенесли [страницы настройки хранилищ данных](/docs/local/connect-data-platform/about-dbt-connections) в раздел документации. 
+    - Мы опубликовали новую [страницу о линтинге и форматировании](/docs/platform/studio-ide/lint-format), посвящённую замечательной новой функции проверки и форматирования кода в dbt Cloud IDE.
+    - Мы настроили связь между [примечаниями к выпускам dbt Cloud](/docs/dbt-versions/release-notes) и сообществом dbt в Slack. Теперь новые примечания к выпускам dbt Cloud автоматически отправляются через RSS-ленту в [канал #dbt-cloud](https://getdbt.slack.com/archives/CMZ2V0X8V) сообщества в Slack, чтобы пользователи оставались в курсе изменений, которые могут их затронуть. 
+    - Мы добавили две новые ссылки на документацию в пользовательский интерфейс (UI) настроек заданий dbt Cloud. Они предоставят дополнительные рекомендации и помогут пользователям успешно настроить задание dbt Cloud: [команды заданий](/docs/deploy/job-commands) и триггеры заданий.    
+    - Мы добавили информацию о недавно появившейся [лицензии IT](/docs/platform/manage-access/about-user-access#role-based-access-control-), доступной в тарифных планах Team и Enterprise. 
+    - Мы добавили новую [страницу поддерживаемых браузеров](/docs/platform/about-platform/browsers), на которой перечислены рекомендуемые браузеры для dbt Cloud.
+    - Мы опубликовали новую страницу, рассказывающую пользователям о [новой опции экспериментальных функций](/docs/dbt-versions/experimental-features) в dbt Cloud.
+    - Совместно с командой разработки dbt мы помогли опубликовать новые бета-версии [документации dbt Cloud Administrative API](/docs/dbt-apis/admin-api).
 
     ## 🎯 Core-проекты
 
@@ -618,35 +615,31 @@ pagination_prev: null
 
 - <Expandable alt_header='dbt Cloud IDE'>
 
-    Чтобы продолжать улучшать опыт разработки в [Cloud IDE](/docs/cloud/studio-ide/develop-in-studio), команда dbt Labs активно работает над добавлением новых функций, исправлением багов и повышением надёжности ✨.
+  Чтобы сделать разработку в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio) ещё удобнее, команда dbt Labs продолжает добавлять новые функции, исправлять ошибки и повышать надёжность ✨.
 
     Следите за обновлениями, связанными с IDE, в разделе [IDE-related changes](/tags/ide).
 
     ## Новые возможности
 
-    - Линтинг SQL с помощью SQLFluff теперь доступен в бете (GA — в течение ближайших 2–3 недель)
-    - Форматирование Markdown-файлов с помощью Prettier
-    - Использование шорткатов для улучшения developer experience, включая  
-      `Ctrl + \`` (открыть/закрыть панель истории),  
-      `CMD + Option + /` (включить/выключить блочный комментарий),  
-      `CMD + Shift + P` (открыть палитру команд),  
-      `Option + W` (закрыть вкладку редактора)
-    - Отображение имени родительской папки для файлов с одинаковыми именами в разделе Changes
-    - Быстрая навигация по новым возможностям IDE через страницу помощи [IDE User Interface](/docs/cloud/studio-ide/ide-user-interface)
-    - Использование `top X` в SQL при предпросмотре запросов в IDE
-    - Возможность перейти на новый backend-слой IDE (по-прежнему с dbt-rpc); бета-версия ожидается позже в июне
+  - Проверка кода с помощью SQL Fluff теперь доступна в бета-версии (общая доступность ожидается в течение следующих 2–3 недель)
+    - Форматируйте файлы markdown с помощью prettier
+    - Используйте сочетания клавиш для удобства разработки, включая ``Ctrl + ` `` (показать или скрыть панель истории), `CMD + Option + /` (добавить или убрать блочный комментарий), `CMD + Shift + P` (открыть палитру команд), `Option + W` (закрыть вкладку редактора)
+    - Отображайте имя родительской папки для файлов с одинаковыми именами в разделе Changes
+    - Быстро осваивайте новые возможности IDE с помощью [справочной страницы об интерфейсе IDE](/docs/platform/studio-ide/ide-user-interface)
+    - Используйте `top X` в SQL при предварительном просмотре в IDE
+    - В течение последнего месяца можно было по желанию подключиться к новому серверному слою IDE (пока ещё с dbt-rpc). Бета-версия будет готова позднее в июне!
 
     ## Улучшения продукта
 
-    - Улучшения производительности:
-        - Время холодного старта сокращено более чем на 60%
-        - Время рендера модальных окон в IDE улучшено на 98%
-        - Повышена производительность IDE при использовании dbt Core v1.5+ (быстрее и отзывчивее — настоятельно рекомендуем [обновить версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud)!)
-    - Обновлён sqlfmt (используется кнопкой Format) до версии 0.18.0
-    - Кнопка Build теперь меняет доступные опции в зависимости от типа файла/модели (snapshot, macro и т.д.)
-    - Добавлено сообщение с предложением отключить adblocker при ошибке загрузки содержимого файла
-    - Кнопка Format перенесена в панель консоли
-    - Выполнено множество улучшений безопасности в IDE
+  - Улучшения производительности:
+        - Время холодного запуска сокращено более чем на 60%
+        - Время отрисовки модальных окон в IDE сокращено на 98%
+        - Повышена производительность IDE при работе с dbt Core v1.5+ (интерфейс стал быстрее и отзывчивее — настоятельно рекомендуем [обновить версию dbt](/docs/dbt-versions/upgrade-dbt-platform-version)!)
+    - sqlfmt (инструмент, используемый кнопкой Format) обновлён до версии 0.18.0
+    - Кнопка Build обновлена: теперь пункты меню меняются в зависимости от типа файла или модели (snapshot, macro и т. д.)
+    - Добавлено сообщение с предложением отключить блокировщик рекламы при ошибке загрузки содержимого файла
+    - Кнопка Format перемещена на панель консоли
+    - В IDE внесено множество улучшений безопасности
 
     ## Исправления ошибок
 
@@ -667,9 +660,7 @@ pagination_prev: null
 
     В dbt Cloud стали доступны новые улучшения удобства использования и дизайна дашборда **Run History**. Эти изменения помогают быстрее находить нужную информацию за счёт сокращения количества кликов, вывода более релевантных данных, сохранения состояния потока (flow state) и более интуитивного интерфейса.
 
-    <Lightbox src="/img/docs/release-notes/run-history-improvements.gif" title="Улучшения Run History в dbt Cloud" />
-
-    Ключевые изменения:
+  Основные моменты:
 
     - Улучшения удобства для CI-запусков: ссылки на ветку, PR и commit SHA, а также более наглядные имена временных схем
     - Предпросмотр сообщений об ошибках при наведении
@@ -681,11 +672,11 @@ pagination_prev: null
 
     dbt Labs также меняет политику хранения и получения метаданных для истории запусков в dbt Cloud.
 
-    **Начиная с 1 июня 2023 года** разработчики, использующие мультиарендное приложение <Constant name="cloud" />, смогут самостоятельно получать доступ к истории запусков своего аккаунта через интерфейс <Constant name="cloud" /> и API только за последние 365 дней (по скользящему окну). Более старая история запусков будет доступна по запросу через службу поддержки. Мы стремимся минимизировать объём хранимых метаданных, одновременно повышая производительность приложения.
+  **Начиная с 1 июня 2023 года** разработчики, использующие мультитенантное приложение <Constant name="dbt" />, смогут самостоятельно получать доступ к истории запусков своей учетной записи через пользовательский интерфейс (UI) и API <Constant name="dbt" /> только за последние 365 дней. Более раннюю историю запусков можно будет скачать, обратившись в службу поддержки клиентов. Мы стремимся минимизировать объем хранимых метаданных и при этом максимально повысить производительность приложения.
 
     В частности, все `GET`-запросы к эндпоинту dbt Cloud [Runs](/dbt-cloud/api-v2#/operations/List%20Runs) будут возвращать информацию о запусках, артефактах, логах и шагах выполнения только за последние 365 дней. Аналогично, в интерфейсе dbt Cloud будет отображаться история запусков лишь за этот период.
 
-    <Lightbox src="/img/docs/dbt-cloud/rn-run-history.jpg" width="100%" title="Интерфейс dbt Cloud с отображением Run History" />
+  <Lightbox src="/img/docs/dbt-platform/rn-run-history.jpg" width="100%" title="Интерфейс dbt Cloud с историей запусков"/>
 
     Более старая история запусков будет храниться в холодном хранилище и может быть предоставлена клиентам по запросу. Чтобы получить данные о старых запусках, свяжитесь со службой поддержки по адресу [support@getdbt.com](mailto:support@getdbt.com) или воспользуйтесь чатом в приложении dbt Cloud, нажав на иконку `?` в интерфейсе.
 
@@ -703,8 +694,6 @@ pagination_prev: null
     - Более чистый и аккуратный интерфейс с улучшенной иконографией
     - Полезные подсказки (tooltips)
 
-    <Lightbox src="/img/docs/release-notes/run-details-and-logs-improvements.gif" title="Улучшения страницы деталей запусков и логов в dbt Cloud" />
-
   </Expandable>
 
 - <Expandable alt_header='Обновления продуктовой документации'>
@@ -715,24 +704,24 @@ pagination_prev: null
 
     ## 🔎 Обнаруживаемость
 
-    - Мы явно обозначили, что пользователям dbt Cloud **не нужен файл** [profiles.yml](/docs/core/connect-data-platform/profiles.yml), добавив соответствующие подсказки на нескольких ключевых страницах.
-    - Доработали страницу про [Jinja-переменную `model`](/reference/dbt-jinja-functions/model), в которой ранее не хватало концептуальных объяснений и не было ссылки на страницу схем.
-    - Добавили новую [лендинговую страницу Quickstarts](/guides). Новый формат закладывает основу для будущих итераций с фильтрацией, а пока позволяет проходить quickstart-гайды в более сфокусированном виде.
+  - Мы добавили информационные блоки на несколько ключевых страниц, чтобы все знали: пользователям dbt Cloud не нужен [файл profiles.yml](/docs/local/profiles.yml).
+    - Дополнили [страницу переменной Jinja model](/reference/dbt-jinja-functions/model), на которой изначально не хватало объяснения основных понятий и ссылки на страницу схемы.
+    - Добавили новую [главную страницу руководств по быстрому старту](/guides). Этот новый формат закладывает основу для будущих улучшений, в том числе фильтрации! А пока мы рады, что теперь вы можете последовательно проходить руководства по быстрому старту, не отвлекаясь на лишнее.
 
     ## Cloud-проекты
 
-    - Запустили документацию по интерфейсу [dbt Cloud IDE](/docs/cloud/studio-ide/ide-user-interface), в которой подробно разобраны элементы UI и их назначение.
-    - Запустили обновлённую страницу [dbt Cloud Scheduler](/docs/deploy/job-scheduler) ✨ — раньше про планировщик было мало информации, а теперь появился полноценный раздел с описанием его возможностей и принципов работы.
-    - Обновили страницу [лицензий пользователей dbt Cloud](/docs/cloud/manage-access/seats-and-users#licenses), чтобы прояснить процесс добавления и удаления пользователей.
-    - Опубликовали документацию по Discovery API одновременно с его запуском:
-      - [О Discovery API](/docs/dbt-cloud-apis/discovery-api)
-      - [Use cases и примеры для Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples)
-      - [Запросы к Discovery API](/docs/dbt-cloud-apis/discovery-querying)
+  - Мы опубликовали [документацию по пользовательскому интерфейсу dbt Cloud IDE](/docs/platform/studio-ide/ide-user-interface), в которой подробно рассматриваются элементы интерфейса IDE и их назначение.
+    - Запустили совершенно новую [страницу планировщика dbt Cloud](/docs/deploy/job-scheduler) ✨! Раньше материалов о планировщике было мало, а теперь ему посвящён целый подраздел, подробно описывающий его замечательные возможности и принципы работы.
+    - Обновили [страницу пользовательских лицензий dbt Cloud](/docs/platform/manage-access/seats-and-users#licenses), чтобы уточнить, как добавлять или удалять пользователей облачной платформы.
+    - К запуску Discovery API мы выпустили следующую документацию:
+      - [О Discovery API](/docs/dbt-apis/discovery-api)
+      - [Сценарии использования и примеры для Discovery API](/docs/dbt-apis/discovery-use-cases-and-examples)
+      - [Запросы к Discovery API](/docs/dbt-apis/discovery-querying)
 
     ## 🎯 Core-проекты
 
-    - Посмотрите, что готовится [в dbt Core v1.6](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aissue+label%3A%22dbt-core+v1.6%22)!
-    - Мы превратили страницу про `profiles.yml` в [лендинг](/docs/core/connect-data-platform/profiles.yml), добавили больше контекста и переместили раздел «About CLI» выше в секции `Set up dbt`.
+  - Узнайте, что появится [в Core v 1.6](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aissue+label%3A%22dbt-core+v1.6%22)!
+    - Мы превратили [страницу](/docs/local/profiles.yml) `profiles.yml` в обзорную, добавили на неё больше контекста и переместили страницу «О CLI» выше в разделе `Настройка dbt`.
 
     ## Новые 📚 руководства, ✏️ блог-посты и FAQ
 
@@ -796,7 +785,7 @@ pagination_prev: null
 
     :::info URL-адреса доступа
  
-    dbt Cloud размещается в нескольких регионах по всему миру, и каждый регион имеет другой URL-адрес доступа. Пользователи на корпоративных планах могут выбрать, чтобы их аккаунт размещался в любом из этих регионов. Для полного списка доступных URL-адресов доступа dbt Cloud обратитесь к [Регионов и IP-адресов](/docs/cloud/about-cloud/access-regions-ip-addresses).  
+  dbt Cloud размещается в нескольких регионах по всему миру, и для каждого региона используется свой URL для доступа. Пользователи тарифных планов Enterprise могут выбрать любой из этих регионов для размещения своей учетной записи. Полный список доступных URL для доступа к dbt Cloud приведен в разделе [Регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
 
     :::
 
@@ -828,28 +817,28 @@ pagination_prev: null
 
     ## 🔎 Обнаружимость
 
-    - Документация [API](/docs/dbt-cloud-apis/overview) теперь доступна в боковой панели для улучшения обнаружимости.
-    - Боковая панель [развертывания dbt jobs](/docs/deploy/deployments) получила обновление 💅, которое разделяет "о развертывании" на два пути (развертывание с dbt cloud и развертывание с другими инструментами), добавляет больше информации о планировщике dbt cloud, его функциях и о том, как создать задание, добавляет руководство по развертыванию ADF. Мы надеемся, что изменения улучшат пользовательский опыт и предоставят пользователям руководство при развертывании с другими инструментами.
+  - [Документация по API](/docs/dbt-apis/overview) теперь доступна в левой боковой панели, чтобы её было проще найти.
+    - [Боковая панель раздела о развёртывании заданий dbt](/docs/deploy/deployments) преобразилась 💅: раздел «О развёртывании» теперь разделён на два направления (развёртывание с помощью dbt Cloud и развёртывание с помощью других инструментов), добавлены подробности о планировщике dbt Cloud, его возможностях и создании заданий, а также рекомендации по развёртыванию с помощью ADF. Надеемся, что эти изменения сделают документацию удобнее и помогут пользователям при развёртывании с помощью других инструментов.
 
     ## ☁ Проекты Cloud
 
-    - Добавлены документы адаптера Starburst/Trino, включая:
-      * [руководство по быстрому старту dbt Cloud](/guides/starburst-galaxy), 
-      * [страница подключения](/docs/cloud/connect-data-platform/connect-starburst-trino), 
-      * [страница настройки](/docs/core/connect-data-platform/trino-setup), и [страница конфигурации](/reference/resource-configs/trino-configs). 
-    - Улучшена [страница заданий dbt Cloud](/docs/deploy/jobs) и раздел, чтобы включить концептуальную информацию о времени ожидания очереди, улучшениях, внесенных вокруг него, и о неудавшихся заданиях. 
-    - Ознакомьтесь с апрельскими [заметками о релизах dbt Cloud](/docs/dbt-versions/dbt-cloud-release-notes)
+  - Добавлена документация по адаптеру Starburst/Trino, в том числе:
+  * [руководство по быстрому старту в dbt Cloud](/guides/starburst-galaxy), 
+  * [страница подключения](/docs/platform/connect-data-platform/connect-starburst-trino), 
+  * [страница настройки](/docs/local/connect-data-platform/trino-setup) и [страница конфигурации](/reference/resource-configs/trino-configs). 
+    - Дополнены [страница заданий dbt Cloud](/docs/deploy/jobs) и соответствующий раздел: добавлены сведения о времени ожидания в очереди, улучшениях в этой области и заданиях, завершившихся с ошибкой. 
+    - Ознакомьтесь с апрельскими [примечаниями к выпуску dbt Cloud](/docs/dbt-versions/release-notes)
 
     ## 🎯 Проекты Core 
 
-    - Более понятные описания на странице [Jinja functions](/reference/dbt-jinja-functions), которые улучшают содержание каждой карточки.  
-    - Документация [1.5 Docs](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5) была выпущена в статусе Release Candidate (RC)!  
-    - Посмотрите на отличную работу, отражённую в [Core v 1.5](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aissue+label%3A%22dbt-core+v1.5%22+is%3Aclosed).
+  - Более понятные описания на [странице функций Jinja](/reference/dbt-jinja-functions-context-variables), улучшающие содержимое каждой карточки. 
+    - [Документация версии 1.5](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5) опубликована для релиз-кандидата (RC)! 
+    - Ознакомьтесь с замечательными [результатами работы над Core v1.5](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aissue+label%3A%22dbt-core+v1.5%22+is%3Aclosed).
 
     ## Новые 📚 Руководства и ✏️ блог-посты
 
-    - [Используйте рабочие процессы Databricks для запуска заданий dbt Cloud](/guides/how-to-use-databricks-workflows-to-run-dbt-cloud-jobs)
-    - [Обновите рабочую книгу Tableau с извлечениями после завершения задания](/guides/zapier-refresh-tableau-workbook)
+  - [Используйте рабочие процессы Databricks для запуска заданий dbt Cloud](/guides/databricks-workflows)
+    - [Обновляйте рабочую книгу Tableau с извлечениями после завершения задания](/guides/zapier-refresh-tableau-workbook)
     - [dbt Python Snowpark workshop/tutorial](/guides/dbt-python-snowpark)
     - [Как оптимизировать и устранять неполадки моделей dbt на Databricks](/guides/optimize-dbt-models-on-databricks)
     - [Недостающий гид по debug() в dbt](/blog/guide-to-jinja-debug)
@@ -866,34 +855,34 @@ pagination_prev: null
     
     Все окружения или задания, настроенные с версией dbt ниже 1.0, были автоматически обновлены до dbt v1.4, которая является последней минорной версией, доступной в dbt Cloud.
 
-    Для получения дополнительной информации о версиях dbt, релизах и временной шкале поддержки dbt Cloud обратитесь к [О версиях dbt Core](/docs/dbt-versions/core#latest-releases).
+  Подробнее о версиях и выпусках dbt, а также о сроках поддержки в dbt Cloud см. в разделе [О версиях dbt Core](/docs/dbt-versions#latest-releases).
 
     Ознакомьтесь с дополнительной информацией и ресурсами, которые помогут вам обновить вашу версию dbt:
 
-    - [Как обновлять dbt без страха](/blog/upgrade-dbt-without-fear)  
-    - [Вопросы и ответы по обновлению и ломающим изменениям](/docs/dbt-versions/upgrade-dbt-version-in-cloud#upgrading-legacy-versions-under-10)  
-    - [Руководства по миграции между версиями](/docs/dbt-versions/core-upgrade)
+  - [Как обновить dbt без опасений](/blog/upgrade-dbt-without-fear) 
+    - [Вопросы и ответы об обновлении: изменения, нарушающие обратную совместимость](/docs/dbt-versions/upgrade-dbt-platform-version#supported-versions)
+    - [Руководства по переходу между версиями](/docs/dbt-versions/dbt-upgrade)
 
   </Expandable>
 
 - <Expandable alt_header='dbt Cloud IDE'>
 
-    Чтобы и дальше улучшать ваш опыт разработки в [Cloud IDE](/docs/cloud/studio-ide/develop-in-studio), команда dbt Labs продолжает работать над добавлением новых возможностей, исправлением ошибок и повышением надёжности ✨.
+  Чтобы и дальше улучшать процесс разработки в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio), команда dbt Labs продолжает добавлять новые функции, исправлять ошибки и повышать надежность ✨.
 
     Подробнее читайте о [предстоящих улучшениях Cloud IDE](https://www.getdbt.com/blog/improvements-to-the-dbt-cloud-ide/) и следите за всеми [изменениями, связанными с IDE](/tags/ide).
 
     ## Новые функции 
 
-    - Фиксация (commit) и откат отдельных файлов в разделе **Version Control**.
-    - Используйте [command palette](/docs/cloud/studio-ide/develop-in-studio#cloud-ide-features) для вызова часто используемых сложных команд dbt, например для возобновления выполнения после последней ошибки.
-    - Создание PR даже при наличии незафиксированных изменений (через выпадающее меню **git**).
-    - При редактировании YML-файлов IDE будет показывать больше подсказок автодополнения на основе [dbt-jsonschema](https://github.com/dbt-labs/dbt-jsonschema).
-    - В дереве файлов появились дополнительные пункты в контекстном меню (правый клик), такие как Copy model as ref или Copy file path.
-    - Представление DAG было изменено: теперь значение по умолчанию — `2+model+2`.
-    - В под-вкладке DAG/lineage реализован селектор lineage.
-    - Возможность редактировать код напрямую в представлении git diff, расположенном в правой панели.
-    - Теперь отображается предупреждающее сообщение, если пользователь нажимает Command‑W / Control‑W при наличии несохранённых изменений.
-    - Стал доступен новый onboarding‑гайд для первичного знакомства с инструментом.
+  - Создавайте коммиты и отменяйте изменения для отдельных файлов в разделе **Version Control**.
+    - Используйте [палитру команд](/docs/platform/studio-ide/develop-in-studio#studio-ide-features) для вызова распространённых сложных команд dbt, например для возобновления выполнения с места последнего сбоя.
+    - Создавайте PR даже при наличии незакоммиченных изменений (в раскрывающемся меню **git**).
+    - При редактировании YML-файла IDE будет показывать больше подсказок автодополнения благодаря [dbt-jsonschema](https://github.com/dbt-labs/dbt-jsonschema).
+    - В контекстном меню дерева файлов теперь доступны дополнительные действия, например копирование модели в виде ref или копирование пути к файлу.
+    - Для представления DAG установлено значение по умолчанию `2+model+2`.
+    - На вложенной вкладке DAG/lineage реализован селектор зависимостей.
+    - Редактируйте файлы непосредственно в представлении git diff на правой панели.
+    - Теперь при нажатии Command-W/Control-W будет появляться предупреждение, если есть несохранённые изменения.
+    - Теперь доступно новое пошаговое руководство по началу работы.
 
     ## Усовершенствования продукта 
 
@@ -926,7 +915,7 @@ pagination_prev: null
 
     Чтобы сделать API более масштабируемым и надежным, мы внедрили максимальный лимит в `100` для всех запросов API к нашим `list` эндпоинтам. Если запросы API превышают максимальный лимит параметра `100`, пользователь получит сообщение об ошибке API.
 
-    Это максимальное ограничение применяется только к [многоарендным экземплярам](/docs/cloud/about-cloud/access-regions-ip-addresses) и _не применяется_ к одноарендным экземплярам.
+  Это максимальное ограничение применяется только к [многопользовательским экземплярам](/docs/platform/about-platform/access-regions-ip-addresses) и _не применяется_ к однопользовательским экземплярам.
 
     Подробнее об этом изменении см. раздел [Pagination](/dbt-cloud/api-v2#/) в обзоре.
 
@@ -944,20 +933,20 @@ pagination_prev: null
 
 - <Expandable alt_header='dbt Cloud IDE'>
 
-    Чтобы продолжить улучшение работы в [Cloud IDE](/docs/cloud/studio-ide/develop-in-studio), команда dbt Labs занималась исправлением ошибок, повышением надёжности и добавлением новых функций ✨.
+  Чтобы сделать работу в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio) ещё удобнее, команда dbt Labs работала над исправлением ошибок, повышением надёжности и добавлением новых возможностей ✨.
 
     Узнайте больше о [февральских изменениях](https://getdbt.slack.com/archives/C03SAHKKG2Z/p1677605383451109). 
 
     ## Новые функции 
 
-    - Поддержка пользовательских цветов узлов в визуализации DAG IDE.
-    - Автозаполнение ref включает модели из seed и снимков.
-    - Предотвращение обрезки меню (выпадающее меню git, выпадающее меню дерева файлов, кнопка сборки, параметры вкладки редактора).
-    - Дополнительная опция доступа к меню файлов, щелкнув правой кнопкой мыши на файлах и папках в дереве файлов.
-    - Переименование файлов двойным щелчком по файлам в дереве файлов и вкладках редактора.
-    - Щелчок правой кнопкой мыши на вкладках файлов имеет новые параметры и теперь открывается в месте курсора, а не посередине вкладки.
-    - Имя ветки git над **Контролем версий** ссылается на репозиторий для конкретных поставщиков git.
-      - В настоящее время доступно для всех [многоарендных](/docs/cloud/about-cloud/access-regions-ip-addresses) экземпляров, использующих поставщики GitHub или GitLab. 
+  - Поддержка пользовательских цветов узлов при визуализации DAG в IDE
+    - Автодополнение ref включает модели из seeds и snapshots
+    - Предотвращено обрезание меню (выпадающего меню элементов управления git, выпадающего меню дерева файлов, меню кнопки сборки и меню параметров вкладок редактора)
+    - Добавлена возможность открыть меню файла, щёлкнув правой кнопкой мыши по файлу или папке в дереве файлов
+    - Переименование файлов двойным щелчком по файлам в дереве файлов и по вкладкам редактора
+    - В контекстное меню вкладок файлов добавлены новые пункты; теперь оно открывается у курсора, а не посередине вкладки
+    - Название ветки git над разделом **Version Control** служит ссылкой на репозиторий для определённых провайдеров git
+      - Сейчас доступно для всех [мультитенантных](/docs/platform/about-platform/access-regions-ip-addresses) экземпляров, использующих провайдеров GitHub или GitLab
 
     ## Усовершенствования продукта 
 
@@ -984,7 +973,7 @@ pagination_prev: null
 
 - <Expandable alt_header='dbt Cloud IDE'>
 
-    В рамках нашей постоянной работы по улучшению [Cloud IDE](/docs/cloud/studio-ide/develop-in-studio) команда dbt Labs занималась исправлением ошибок, повышением надёжности и добавлением новых функций ✨.
+  Продолжая совершенствовать работу в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio), команда dbt Labs работала над исправлением ошибок, повышением надежности и добавлением новых возможностей ✨.
 
     Узнайте больше о [январских изменениях](https://getdbt.slack.com/archives/C03SAHKKG2Z/p1675272600286119) и о том, что будет скоро.
 

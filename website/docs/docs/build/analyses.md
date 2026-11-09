@@ -3,9 +3,12 @@ title: "Analyses"
 description: "Настройка SQL-файлов в dbt для создания скомпилированного кода, используемого для аналитических задач."
 id: "analyses"
 pagination_next: null
+availability: all_users
 ---
 
-## Обзор {#overview}
+import AnalysesProjectLevelConfig from '/snippets/_analyses-project-level-config.md';
+
+## Обзор
 
 Концепция `models` в dbt упрощает для команд работы с данными контроль версий и совместную работу над преобразованиями данных. Однако иногда определенное SQL-выражение не совсем вписывается в структуру модели dbt. Эти более "аналитические" SQL-файлы могут быть версионированы внутри вашего проекта dbt с использованием функциональности `analysis`.
 
@@ -42,6 +45,54 @@ order by account_id, id
 ```
 
 </File>
+
+Вы можете настроить отдельные анализы в их файле свойств. Например:
+
+<File name='analyses/<filename>.yml'>
+
+```yaml
+analyses:
+  - name: running_total_by_account
+    description: Вычисляет нарастающий итог скорректированных сумм по каждому счёту с течением времени.
+    config:
+      enabled: true
+      docs:
+        show: true
+        node_color: purple
+      tags: ['finance', 'accounting']
+    columns:
+      - name: account_id
+        description: Уникальный идентификатор счёта.
+      - name: adjusted_amount
+        description: Скорректированная сумма транзакции по счёту.
+```
+
+</File>
+
+Дополнительную информацию см. в разделе [Свойства анализов](/reference/analysis-properties).
+
+<VersionBlock firstVersion="1.12">
+
+## Настройка на уровне проекта
+
+Вы также можете настроить анализы на уровне проекта в `dbt_project.yml`.
+
+<AnalysesProjectLevelConfig />
+
+<File name='dbt_project.yml'>
+
+```yaml
+flags:
+  require_corrected_analysis_fqns: true
+
+analyses:
+  +enabled: true | false
+```
+</File>
+
+</VersionBlock>
+
+## Компиляция анализов
 
 Чтобы скомпилировать этот анализ в исполняемый SQL, выполните:
 ```

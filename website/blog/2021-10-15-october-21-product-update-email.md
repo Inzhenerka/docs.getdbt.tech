@@ -10,14 +10,14 @@ date: 2021-10-15
 is_featured: false
 ---
 
-:::tip February 2024 Update
+:::tip Обновление за февраль 2024 года
 
 Прошло уже несколько лет с тех пор, как dbt-core достиг версии 1.0! С тех пор мы стараемся по возможности выпускать обновления без ломающих изменений, и обновление версий dbt Core стало значительно проще.
 
 В 2024 году мы идём ещё дальше и делаем следующее:
 
-- Стабилизируем интерфейсы для всех — мейнтейнеров адаптеров, потребителей метаданных и (конечно же) всех, кто пишет dbt-код — как это обсуждалось в [обновлении roadmap за ноябрь 2023 года](https://github.com/dbt-labs/dbt-core/blob/main/docs/roadmap/2023-11-dbt-tng.md).
-- Добавляем [Release tracks](/docs/dbt-versions/cloud-release-tracks) (ранее известные как Versionless) в dbt Cloud. Больше никаких ручных обновлений и никакой необходимости в _отдельном sandbox-проекте_ только для того, чтобы попробовать новые возможности в разработке. Подробнее см. в разделе [Upgrade Core version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Стабилизация интерфейсов для всех — разработчиков и сопровождающих адаптеров, потребителей метаданных и, конечно же, всех, кто пишет код dbt, — как описано в [ноябрьском обновлении нашей дорожной карты за 2023 год](https://github.com/dbt-labs/dbt/blob/main/docs/roadmap/2023-11-dbt-tng.md).
+- Внедрение [каналов выпуска](/docs/dbt-versions/dbt-release-tracks) (ранее известных как Versionless) в dbt Cloud. Больше не нужно обновляться вручную и создавать _второй проект-песочницу_, только чтобы опробовать новые функции в процессе разработки. Подробнее см. в разделе [Обновление версии Core в Cloud](/docs/dbt-versions/upgrade-dbt-platform-version).
 
 Мы оставляем остальную часть этого поста без изменений, чтобы мы все могли помнить, как это было раньше. Приятной прогулки по волнам памяти.
 
@@ -25,13 +25,11 @@ is_featured: false
 
 Привет,
 
-Хотя у меня есть много интересного, чем можно поделиться в этом месяце, я не могу начать с чего-то другого, кроме этого:
-
-[![Скриншот 2021-10-20 в 6.12.16 PM](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-10-20%20at%206.12.16%20PM.png?upscale=true&width=800&upscale=true&name=Screen%20Shot%202021-10-20%20at%206.12.16%20PM.png)](https://twitter.com/getdbt/status/1449090582865981442?s=20&utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)
+Хотя в этом месяце у меня много интересных новостей, я не могу начать ни с чего другого, кроме [этого] (https://twitter.com/getdbt/status/1449090582865981442?s=20&utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)
 
 Да, это официально:
 
-**💥[dbt будет поддерживать определение метрик](https://github.com/dbt-labs/dbt-core/issues/4071?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)💥**
+**💥[dbt будет поддерживать определения метрик](https://github.com/dbt-labs/dbt/issues/4071?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ)💥**
 
 С этой функцией вы сможете централизованно определять правила для агрегации метрик (например, "активные пользователи" или "MRR") в коде проекта dbt, который находится под версионным контролем, протестирован и документирован.
 
@@ -75,9 +73,9 @@ is_featured: false
 
 ### Что попробовать 🛠️ {#things-to-try}
 
--   Почти *500* аккаунтов dbt Cloud используют CI. Хотите знать почему? (или, может быть... *как?*) Джулия объясняет это в своем [последнем блоге](https://blog.getdbt.com/adopting-ci-cd-with-dbt-cloud/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) и делится, как выбрать и настроить непрерывную доставку или развертывание в вашей организации.
-- Hex только что [запустил интеграцию](https://hex.tech/blog/dbt-integration?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) с dbt! Она использует [dbt Cloud Metadata API](https://docs.getdbt.tech/docs/dbt-cloud-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ), чтобы отображать метаданные из dbt прямо в Hex, позволяя вам быстро получить необходимый контекст по таким вещам, как свежесть данных, без необходимости переключаться между несколькими приложениями и вкладками браузера. Начните [здесь](https://docs.hex.tech/connecting-to-data/configuring-data-connections/dbt-integration?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
--   [Адаптер dbt-Rockset](https://github.com/rockset/dbt-rockset?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) (теперь в бета-версии) только что получил крупное обновление. Теперь он поддерживает материализации View, Table, Incremental и Ephemeral, чтобы помочь вам выполнять преобразования данных в реальном времени на Rockset. Подробнее читайте [здесь.](https://rockset.com/blog/real-time-data-transformations-dbt-rockset?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
+-   Уже почти *500* аккаунтов dbt Cloud используют CI. Хотите узнать почему? (А может... *как?*) Джулия подробно рассказывает об этом в своей [последней статье в блоге](https://blog.getdbt.com/adopting-ci-cd-with-dbt-cloud/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) и объясняет, как выбрать и настроить непрерывную доставку или непрерывное развертывание в вашей организации.
+- Hex только что [представил интеграцию](https://hex.tech/blog/dbt-integration?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) с dbt! Она использует [dbt Cloud Metadata API](https://docs.getdbt.com/docs/dbt-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ), чтобы отображать метаданные из dbt прямо в Hex. Это позволяет быстро получать необходимую информацию, например об актуальности данных, без переключения между множеством приложений и вкладок браузера. Начните работу [здесь](https://docs.hex.tech/connecting-to-data/configuring-data-connections/dbt-integration?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
+-   [Адаптер dbt-Rockset](https://github.com/rockset/dbt-rockset?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ) (сейчас в бета-версии) только что получил крупное обновление. Теперь он поддерживает материализации View, Table, Incremental и Ephemeral, позволяя выполнять преобразования данных в Rockset в реальном времени. Подробнее читайте [здесь.](https://rockset.com/blog/real-time-data-transformations-dbt-rockset?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-_wfy8vfjMjwQ7o8TXEOVz-oXI35iVcVP1HtAvriVHfJoAd1IcsP-MCww6vJUDlvAfiuQjZ).
 
 ### Что почитать 📚 {#things-to-read}
 

@@ -10,13 +10,13 @@ profile: string
 
 </File>
 
-## Определение {#definition}
+## Определение
 Профиль, который ваш проект dbt должен использовать для подключения к вашему <Term id="data-warehouse" />.
-* Если вы разрабатываете в <Constant name="cloud" />: эта конфигурация не применяется.
-* Если вы разрабатываете локально: эта конфигурация обязательна, если только не используется опция командной строки, такая как [`--profile`](/docs/core/connect-data-platform/connection-profiles#overriding-profiles-and-targets). Флаг `--profile` переопределяет профиль, заданный в `dbt_project.yml`.
+* Если вы ведёте разработку в <Constant name="dbt" />: эта настройка не применяется
+* Если вы ведёте разработку локально: эта настройка обязательна, если не указан параметр командной строки, например [`--profile`](/docs/local/profiles.yml#%D0%BF%D0%B5%D1%80%D0%B5%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B5%D0%B9-%D0%B8-%D1%86%D0%B5%D0%BB%D0%B5%D0%B2%D1%8B%D1%85-%D0%BE%D0%BA%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9). Флаг `--profile` переопределяет профиль, заданный в `dbt_project.yml`.
 
-## Связанные руководства {#related-guides}
-* [Подключение к вашему хранилищу данных с использованием командной строки](/docs/core/connect-data-platform/connection-profiles#connecting-to-your-warehouse-using-the-command-line)
+## Связанные руководства
+* [Подключение к хранилищу данных с помощью командной строки](/docs/local/profiles.yml#create-and-configure-the-profilesyml-file)
 
 ## Рекомендация {#recommendation}
 Часто в организации есть только одно <Term id="data-warehouse" />, поэтому разумно использовать название вашей организации в качестве имени профиля, в формате `snake_case`. Например:

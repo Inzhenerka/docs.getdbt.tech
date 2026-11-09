@@ -7,8 +7,8 @@ id: configurable-data-test-path
 ---
 По умолчанию dbt ожидает, что файлы **singular data tests** будут располагаться в подкаталоге `tests` вашего проекта, а определения **generic data tests** — в `tests/generic` или в `macros`.
 
-Чтобы изменить это поведение, обновите конфигурацию [test-paths](reference/project-configs/test-paths.md) 
-в файле `dbt_project.yml`, например, так:
+Чтобы изменить это, обновите настройку [test-paths](/reference/project-configs/test-paths) в файле `dbt_project.yml`
+следующим образом:
 
 <File name='dbt_project.yml'>
 

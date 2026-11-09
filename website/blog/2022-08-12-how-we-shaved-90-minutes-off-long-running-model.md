@@ -20,13 +20,13 @@ is_featured: true
 
 Внутренний проект dbt Labs — это настоящий монстр! Наша ежедневная инкрементальная задача dbt Cloud запускается 4 раза в день и вызывает более 1700 моделей. Мы любим просматривать нашу задачу dbt Cloud, используя вкладку [Model Timing](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) в dbt Cloud. Панель `Model Timing` отображает состав моделей, порядок и время выполнения для каждой задачи в dbt Cloud (для командных и корпоративных планов). Топ 1% длительностей выполнения моделей автоматически выделяется, что облегчает поиск узких мест в наших запусках. Вы можете увидеть, что наша самая долго выполняющаяся модель выделяется как больной палец — вот пример нашей инкрементальной задачи до применения исправления:
 
-![Model Timing tab before picture](/img/blog/2022-08-12-model-timing/model_timing_before.png)
+<Lightbox src="/img/blog/2022-08-12-model-timing/model_timing_before.png" title="Вкладка времени выполнения модели до оптимизации" />
 
 Как вы можете видеть, легко определить модель, которая вызывает длительное время выполнения и задерживает другие модели. Модель `fct_dbt_invocations` в среднем занимает 1,5 часа на выполнение. Это неудивительно, учитывая, что это относительно большой набор данных (~5 миллиардов записей) и что мы выполняем несколько интенсивных SQL-вычислений. Кроме того, эта модель вызывает [эфемерную модель](https://docs.getdbt.tech/docs/build/materializations#ephemeral) под названием `dbt_model_summary`, которая также выполняет значительную работу. Тем не менее, мы решили исследовать возможность рефакторинга этой модели, чтобы сделать ее быстрее.
 
 После рефакторинга этого кода мы заменили эфемерную модель `dbt_model_summary` на инкрементальную модель, которая вынесла основную часть обработки из основной модели `fct_dbt_invocations`. Вместо того чтобы пересчитывать эту сложную логику при каждом запуске, мы извлекаем только новые данные и применяем эту логику к меньшему подмножеству этих записей. Общее время выполнения новой `dbt_model_summary` и `fct_dbt_invocations` теперь составляет ~15-20 минут, что позволяет сэкономить более часа на каждом запуске!
 
-![Model Timing tab after picture](/img/blog/2022-08-12-model-timing/model_timing_after.png)
+<Lightbox src="/img/blog/2022-08-12-model-timing/model_timing_after.png" title="Вкладка времени выполнения модели после оптимизации" />
 
 ## Определение проблемы {#identifying-the-problem}
 
@@ -42,7 +42,7 @@ is_featured: true
 
 Ниже вы можете увидеть план запроса для `fct_dbt_invocations`, который включает логику из `dbt_model_summary`:
 
-![Snowflake query plan](/img/blog/2022-08-12-model-timing/snowflake_query_plan.png)
+<Lightbox src="/img/blog/2022-08-12-model-timing/snowflake_query_plan.png" title="План запроса Snowflake" />
 
 Из профиля запроса было легко найти проблему. Существуют две оконные функции, которые составляют более 90% времени выполнения, когда мы учитываем сканирование таблицы, необходимое для извлечения данных. Кроме того, почти 1 ТБ данных [выгружается в удаленное хранилище](https://github.com/dbt-labs/docs.getdbt.com/discussions/1550) в рамках этого запроса. В Snowflake [удаленное хранилище значительно медленнее](https://docs.snowflake.com/en/user-guide/ui-query-profile.html?_ga=2.162889724.1914632094.1659383329-1610273913.1651521575&_gac=1.229438062.1658341107.Cj0KCQjwz96WBhC8ARIsAATR2516I_11uMuOf0cXXe0zlyOBUXLap5CfVvKnpGwTb3bLqC5tHwlurxcaAskEEALw_wcB#queries-too-large-to-fit-in-memory:~:text=This%20spilling%20can%20have%20a%20profound%20effect%20on%20query%20performance%20(especially%20if%20remote%20disk%20is%20used%20for%20spilling).%20To%20alleviate%20this%2C%20we%20recommend%3A) как для записи, так и для чтения, поэтому любые данные, находящиеся на удаленном диске, действительно замедляют выполнение запроса. Мы нашли проблему!
 
@@ -153,7 +153,7 @@ with model_execution as (
 
     {% elif is_incremental() %}
 
-        --инкрементальные запуски повторно обрабатывают полный день каждый раз, чтобы получить точный режим ниже
+--при каждом инкрементальном запуске повторно обрабатываются данные за полный день, чтобы ниже корректно вычислить моду
         and collector_tstamp > (select max(max_collector_tstamp)::date from {{ this }})
 
     {% endif %}

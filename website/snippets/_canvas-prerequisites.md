@@ -1,17 +1,17 @@
-## Предварительные требования для Canvas {#canvas-prerequisites}
-Перед использованием <Constant name="visual_editor" /> убедитесь, что:
-
-- У вас есть учетная запись [<Constant name="cloud" /> Enterprise или Enterprise+](https://www.getdbt.com/pricing).
-- У вас есть [лицензия разработчика](/docs/cloud/manage-access/seats-and-users) с настроенными учетными данными разработчика.
-- Вы используете один из следующих адаптеров:
+## Предварительные требования для Canvas
+Перед использованием <Constant name="canvas" /> необходимо:
+- Иметь учетную запись [<Constant name="dbt" /> Enterprise или Enterprise+](https://www.getdbt.com/pricing).
+- Иметь [лицензию разработчика](/docs/platform/manage-access/seats-and-users) с настроенными учетными данными пользователя.
+- Использовать один из следующих адаптеров:
     - Bigquery
     - Databricks
     - Redshift 
     - Snowflake
     - Trino
-    - Вы можете получить доступ к <Constant name="visual_editor" /> и с адаптерами, не указанными в списке, однако на данный момент некоторые функции могут быть недоступны.
-- В качестве провайдера <Constant name="git" /> вы используете [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab) или [Azure DevOps](/docs/cloud/git/connect-azure-devops), подключенные к dbt по HTTPS. Подключения по SSH в настоящее время не поддерживаются для <Constant name="visual_editor" />.
-- У вас уже создан проект <Constant name="cloud" />, в котором был выполнен как минимум один запуск в среде Staging или Production.
-- Вы проверили, что ваша среда разработки использует поддерживаемый [release track](/docs/dbt-versions/cloud-release-tracks), чтобы получать регулярные обновления.
-- У вас есть доступ только на чтение к [среде Staging](/docs/deploy/deploy-environments#staging-environment) с данными, чтобы иметь возможность выполнять команду `run` в <Constant name="visual_editor" />. Чтобы настроить необходимые уровни доступа для пользовательской группы <Constant name="visual_editor" />, см. [Настройка разрешений на уровне среды](/docs/cloud/manage-access/environment-permissions-setup).
-- Включен переключатель функций на базе ИИ (для [интеграции с <Constant name="copilot" />](/docs/cloud/dbt-copilot)).
+- Вы можете использовать <Constant name="canvas" /> с адаптерами, не указанными в списке, но некоторые функции могут быть пока недоступны.
+- Используйте [GitHub](/docs/platform/git/connect-github), [GitLab](/docs/platform/git/connect-gitlab) или [Azure DevOps](/docs/platform/git/connect-azure-devops) в качестве провайдера <Constant name="git" />, подключённого к dbt через HTTPS.
+  - Подключения по SSH пока не поддерживаются.
+  - Использование <Constant name="canvas"/> с самостоятельно размещёнными или локальными развёртываниями любого Git-провайдера пока не поддерживается.
+- У вас должен быть уже созданный проект <Constant name="dbt" />, в котором завершён запуск в среде Staging или Production.
+- Убедитесь, что ваша среда разработки использует поддерживаемый [канал выпуска](/docs/dbt-versions/dbt-release-tracks), чтобы регулярно получать обновления.
+- У вас должен быть доступ только для чтения к [среде Staging](/docs/deploy/deploy-environments#staging-environment) с данными, чтобы выполнять `run` в <Constant name="canvas" />. Подробнее о настройке необходимого доступа для группы пользователей <Constant name="canvas" /> см. в разделе [Настройка разрешений на уровне среды](/docs/platform/manage-access/environment-permissions-setup).

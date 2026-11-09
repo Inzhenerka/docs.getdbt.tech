@@ -18,7 +18,7 @@ import VersionsCallout from '/snippets/_model-version-callout.md';
 
 Начиная с версии dbt 1.5, параметр `version` в файле `dbt_project.yml` является *необязательным*. Если он используется, значение версии должно быть указано в формате [семантического версионирования](https://semver.org/), например `1.0.0`. Если параметр не задан, по умолчанию используется значение `None`. Для пользователей dbt версии 1.4 и ниже этот параметр является обязательным, хотя в настоящее время dbt не использует его каким-либо значимым образом.
 
-Подробнее о версиях Core см. в разделе [About <Constant name="core" /> versions](/docs/dbt-versions/core).
+Подробнее о версиях <Constant name="core" /> см. в разделе [О версиях <Constant name="dbt" />](/docs/dbt-versions).
 
 <File name='dbt_project.yml'>
 

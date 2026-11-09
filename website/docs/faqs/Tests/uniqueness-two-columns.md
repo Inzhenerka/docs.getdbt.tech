@@ -6,7 +6,7 @@ id: uniqueness-two-columns
 
 ---
 
-Да, существует несколько разных вариантов.
+Да, есть несколько способов проверить уникальность сочетания двух столбцов.
 
 Рассмотрим таблицу заказов, которая содержит записи из нескольких стран, и комбинация ID и кода страны уникальна:
 
@@ -38,15 +38,12 @@ select
 <File name='models/orders.yml'>
 
 ```yml
-version: 2
-
 models:
   - name: orders
     columns:
       - name: surrogate_key
         data_tests:
           - unique
-
 ```
 
 </File>
@@ -56,8 +53,6 @@ models:
 <File name='models/orders.yml'>
 
 ```yml
-version: 2
-
 models:
   - name: orders
     data_tests:
@@ -75,8 +70,6 @@ models:
 <File name='models/orders.yml'>
 
 ```yml
-version: 2
-
 models:
   - name: orders
     data_tests:

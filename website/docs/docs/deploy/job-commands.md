@@ -1,17 +1,18 @@
 ---
 title: "Команды заданий"
 id: "job-commands"
-description: "Как использовать команды dbt, чтобы задавать задачи для ваших dbt jobs."
+description: "Как использовать команды dbt для настройки задач в заданиях dbt."
+availability: platform_login
 ---
 
-Production job в <Constant name="cloud" /> позволяет настроить систему, которая будет запускать dbt job и job commands по расписанию, вместо того чтобы выполнять dbt-команды вручную из командной строки или из [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio). Job состоит из команд, которые «цепочкой» выполняются как шаги запуска (run steps). Каждый шаг запуска может завершиться успехом или ошибкой, что влияет на итоговый статус job (Success, Cancel или Error).
+Задание <Constant name="dbt" /> для производственной среды позволяет настроить систему для запуска задания dbt и его команд по расписанию вместо ручного выполнения команд dbt из командной строки или [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio). Задание состоит из команд, объединённых в «цепочку» и выполняемых в виде шагов запуска. Каждый шаг запуска может завершиться успешно или с ошибкой, что может определять статус запуска задания (Success, Cancel или Error).
 
 Каждая job позволяет вам:
 
 - Настраивать job commands
 - Просматривать детали запусков job, включая тайминги, артефакты и подробные шаги запуска
 - Открывать логи, чтобы просматривать их, помогать с отладкой проблем и видеть историю запусков dbt
-- Настраивать уведомления и [другое](/docs/deploy/deployments#dbt-cloud)
+- Настраивать уведомления и [другое](/docs/deploy/deployments#%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%81-dbt)
 
 ## Типы команд job {#job-command-types}
 
@@ -19,7 +20,7 @@ Job commands — это конкретные задачи, которые вып
 
 Во время запуска job команды выполняются «цепочкой» и идут как run steps. При добавлении dbt-команды в разделе **Commands** вы можете ожидать иные результаты по сравнению с вариантом через чекбоксы.
 
-<Lightbox src ="/img/docs/dbt-cloud/using-dbt-cloud/job-commands.gif" width="85%" title="Настройка чекбоксов и списка команд"/>
+<Lightbox src ="/img/docs/dbt-platform/using-dbt-platform/job-commands.gif" width="85%" title="Настройка флажка и списка команд"/>
 
 
 ### Встроенные команды {#built-in-commands}
@@ -28,19 +29,34 @@ Job commands — это конкретные задачи, которые вып
 
 **Результат job** &mdash; Во время запуска job built-in commands выполняются «цепочкой». Это означает, что если один из шагов в цепочке падает, последующие команды не выполняются, а вся job завершается со статусом "Error".
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/fail-dbtdeps.png" width="85%" title="Неуспешная job с ошибкой на шаге dbt deps"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/fail-dbtdeps.png" width="85%" title="Неудачное задание, в котором возникла ошибка на этапе выполнения dbt deps."/>
+
+<VersionBlock lastVersion="1.99">
 
 ### Команды-чекбоксы {#checkbox-commands}
 
 Для каждой job у вас есть возможность выбрать чекбоксы [Generate docs on run](/docs/explore/build-and-view-your-docs) или [Run source freshness](/docs/deploy/source-freshness), чтобы запускать эти команды автоматически.
 
-**Результат job для чекбокса Generate docs on run** &mdash; <Constant name="cloud" /> выполняет команду `dbt docs generate` _после_ команд из списка. Если этот шаг падает, job всё равно может завершиться успешно, если все последующие шаги выполнятся успешно. Подробнее см. [Set up documentation job](/docs/explore/build-and-view-your-docs).
+Флажок **Generate docs on run** &mdash; <Constant name="dbt" /> выполняет команду `dbt docs generate` _после_ перечисленных команд. Если этот конкретный шаг выполнения в задании завершится с ошибкой, задание всё равно может завершиться успешно, если все последующие шаги выполнения будут успешными. Подробнее см. в разделе [Настройка задания для создания документации](/docs/explore/build-and-view-your-docs#set-up-a-documentation-job).
 
-**Результат job для чекбокса Source freshness** &mdash; <Constant name="cloud" /> выполняет команду `dbt source freshness` первым шагом запуска в job. Если этот шаг падает, job всё равно может завершиться успешно, если все последующие шаги выполнятся успешно. Подробнее см. [Source freshness](/docs/deploy/source-freshness).
+Флажок **Run source freshness** &mdash; <Constant name="dbt" /> выполняет команду `dbt source freshness` в качестве первого шага выполнения в задании. Если этот конкретный шаг выполнения в задании завершится с ошибкой, задание всё равно может завершиться успешно, если все последующие шаги выполнения будут успешными. Подробнее см. в разделе [Актуальность данных источников](/docs/deploy/source-freshness).
+
+</VersionBlock>
 
 ### Список команд {#command-list}
 
-Вы можете добавлять и удалять столько dbt-команд, сколько нужно для каждой job. Однако должна быть как минимум одна dbt-команда. На странице [dbt Command reference](/reference/dbt-commands) некоторые команды помечены как "<Constant name="cloud" /> CLI" или "<Constant name="core" />". Это значит, что они предназначены для использования в <Constant name="core" /> или <Constant name="cloud" /> CLI, а не в <Constant name="cloud_ide" />.
+Вы можете добавлять или удалять столько команд dbt, сколько необходимо для каждого задания. Однако в задании должна быть хотя бы одна команда dbt. На странице [справочника команд dbt](/reference/dbt-commands) некоторые команды помечены как "<Constant name="dbt" /> CLI" или "<Constant name="core" />". Это означает, что они предназначены для использования в <Constant name="core" /> или <Constant name="dbt" /> CLI, а не в <Constant name="studio_ide" />.
+
+Чтобы запускать линтинг в задании, включите **Linting** при [настройке задания CI](/docs/deploy/ci-jobs#set-up-ci-jobs). В заданиях развертывания этот параметр недоступен, и добавить команду `dbt lint` в список **Commands** нельзя. Подробнее о том, как линтинг работает в v1 и v2, какие файлы он проверяет и что происходит при неудачной проверке, см. в разделе [Линтинг SQL](/docs/deploy/continuous-integration#sql-linting).
+
+<VersionBlock firstVersion="2.0">
+
+Для заданий v2:
+
+- Добавлять команду для генерации документации не нужно. Каждый запуск задания автоматически обновляет метаданные [<Constant name="catalog" />](/docs/explore/explore-projects). Подробнее см. в разделе [Настройка задания для генерации документации](/docs/explore/build-and-view-your-docs?version=2#set-up-a-documentation-job).
+- Чтобы перед построением моделей проверить актуальность исходных данных, добавьте `dbt source freshness` в список **Commands** или установите флажок **Run source freshness**. Подробнее см. в разделе [Актуальность источников](/docs/deploy/source-freshness).
+
+</VersionBlock>
 
 :::tip Используйте selectors
 
@@ -64,7 +80,7 @@ Job commands — это конкретные задачи, которые вып
 - Исключите модели на основе тегов для сценариев, когда модели имеют общую функцию или характеристику. Используйте следующую команду:
 
    ```sql 
-      --select state modified --exclude tag:tagname_a tag:tagname_b
+      --select state:modified --exclude tag:tagname_a tag:tagname_b
    ```
 - Включите модели, которые были непосредственно изменены, а также те, которые находятся на один шаг ниже по потоку, используя селектор `modified+1`. Используйте следующую команду:
   ```sql
@@ -76,20 +92,20 @@ Job commands — это конкретные задачи, которые вып
 
 На изображении ниже первые четыре run steps успешны. Однако если пятый шаг (`dbt run --select state:modified+ --full-refresh --fail-fast`) падает, следующие шаги не выполняются, и вся job завершается с ошибкой. Неуспешная job возвращает ненулевой [exit code](/reference/exit-codes) и статус job "Error":
 
-<Lightbox src ="/img/docs/dbt-cloud/using-dbt-cloud/skipped-jobs.png" width="85%" title="Неуспешный запуск job с ошибкой на run step"/>
+<Lightbox src ="/img/docs/dbt-platform/using-dbt-platform/skipped-jobs.png" width="85%" title="Неудачный запуск задания из-за ошибки на одном из этапов выполнения"/>
 
 ## Ошибки выполнения job commands {#job-command-failures}
 
 Ошибки job commands могут означать разные вещи для разных команд. Некоторые распространенные причины, по которым job command может завершиться неуспешно:
 
-- **Ошибка на `dbt run`** &mdash; [`dbt run`](/reference/commands/run) выполняет скомпилированные SQL-файлы моделей в текущей target database. Команда упадет, если в любой из собранных моделей есть ошибка. Тесты на upstream-ресурсах предотвращают запуск downstream-ресурсов, а упавший тест приведет к пропуску downstream.
+- **Ошибка при выполнении `dbt run`** &mdash; [`dbt run`](/reference/commands/run) выполняет скомпилированные SQL-файлы моделей в текущей целевой базе данных. Команда завершится с ошибкой, если в любой из создаваемых моделей возникнет ошибка. По умолчанию, если выполнение модели завершается с ошибкой, зависимые от неё модели также пропускаются. В <Constant name="dbt" /> v1.12+ можно задать для модели [`on_error: continue`](/reference/resource-configs/on_error), чтобы разрешить попытку выполнения зависимых от неё моделей, несмотря на ошибку.
 
-- **Ошибка на `dbt test`** &mdash; [`dbt test`](/reference/commands/test) запускает тесты, определенные для моделей, sources, snapshots и seeds. Тест может пройти, упасть или выдать warning в зависимости от его [severity](/reference/resource-configs/severity). Если вы не настроили [warnings как errors](/reference/global-configs/warnings), только error останавливает следующий шаг.
+- **Ошибка при выполнении `dbt test`** &mdash;  [`dbt test`](/reference/commands/test) запускает тесты, определённые для моделей, источников, снимков и seed-файлов. Тест может пройти успешно, завершиться с ошибкой или выдать предупреждение в зависимости от его [уровня серьёзности](/reference/resource-configs/severity). Если вы не настроили [обработку предупреждений как ошибок](/reference/global-configs/warnings), только ошибка приводит к неуспешному завершению команды. Тесты вышестоящих ресурсов блокируют выполнение зависимых ресурсов, а при неуспешном тесте эти ресурсы пропускаются.
 
-- **Ошибка на `dbt build`** &mdash; [`dbt build`](/reference/commands/build) запускает модели, тесты, snapshots и seeds. Эта команда выполняет ресурсы в порядке, заданном DAG. Если любой upstream-ресурс упадет, все downstream-ресурсы будут пропущены, и команда завершится с кодом ошибки 1.
+- **Ошибка при выполнении `dbt build`** &mdash; [`dbt build`](/reference/commands/build) запускает модели, тесты, снимки и seed-файлы. Эта команда выполняет ресурсы в порядке, заданном DAG. Если выполнение любого вышестоящего ресурса завершается с ошибкой, все зависимые ресурсы пропускаются, а команда завершается с кодом ошибки `1`. В <Constant name="dbt" /> v1.12+ можно задать для модели [`on_error: continue`](/reference/resource-configs/on_error), чтобы разрешить попытку выполнения зависимых от неё моделей, если выполнение этой модели завершится с ошибкой.
 
-- **Ошибки selector’ов**
-   - Если [`select`](/reference/node-selection/set-operators) выбирает несколько нод и одна из них падает, job получит exit code `1`, а последующая команда в job завершится ошибкой. Если вы указали флаг [`—fail-fast`](/reference/global-configs/failing-fast), то первая ошибка остановит всё выполнение для моделей, которые выполняются в данный момент.
+- **Ошибки при использовании селекторов**
+   - Если [`select`](/reference/node-selection/set-operators) выбирает несколько узлов и выполнение одного из них завершается с ошибкой, задание завершится с кодом `1`, а последующая команда завершится с ошибкой. Если указан флаг [`--fail-fast`](/reference/global-configs/failing-fast), первая же ошибка приведёт к закрытию всех соединений для моделей, выполнение которых ещё продолжается.
 
    - Если selector не совпадает ни с одной нодой, это не считается ошибкой.
 

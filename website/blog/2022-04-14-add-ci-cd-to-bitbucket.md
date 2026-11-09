@@ -281,7 +281,7 @@ pipelines:
 1. Определите значения всех переменных в `.ci/profiles.yml` (`DB_{CI,PROD}_{HOST,PORT,USER,PWD,DBNAME,SCHEMA}`)
 2. Перейдите в Repository > Repository Settings > Repository Variables в Bitbucket и определите их там, убедившись, что любые конфиденциальные значения хранятся как "Secured".
 
-![Скриншот настроек переменных репозитория Bitbucket](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-2.png)
+<Lightbox src="/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-2.png" title="Снимок экрана настроек переменных репозитория Bitbucket" />
 
 ### Аутентификация Bitbucket Downloads {#bitbucket-downloads-authentication}
 
@@ -290,13 +290,13 @@ pipelines:
     1. `BITBUCKET_USERNAME`, который не является вашим e-mail для регистрации, а является именем пользователя, найденным, нажав на ваш аватар в левом верхнем углу > Personal settings > Account settings page, в разделе Bitbucket Profile Settings.
     2. `BITBUCKET_APP_PASSWORD`, убедившись, что он хранится как "Secured"
 
-![Скриншот настроек области пароля приложения Bitbucket](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-1.png)
+<Lightbox src="/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-1.png" title="Скриншот настроек области действия пароля приложения для репозитория Bitbucket" />
 
 ### Включение Bitbucket Pipelines {#enable-bitbucket-pipelines}
 
 Наконец, в разделе Repository > Repository Settings > Pipelines Settings, отметьте "Enable Pipelines".
 
-![Скриншот включения настроек конвейера Bitbucket](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-3.png)
+<Lightbox src="/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-3.png" title="Снимок экрана включения конвейеров в настройках Bitbucket" />
 
 ## Шаг 4: Тестирование {#step-4-test}
 
@@ -311,4 +311,3 @@ pipelines:
 
 Кроме того, это хорошее время, и приятно наблюдать, как тестовые индикаторы становятся зелеными. Динь!
 
-![wild-child-yes.gif](https://c.tenor.com/wemr0g_Do8IAAAAC/wild-child-yes.gif)

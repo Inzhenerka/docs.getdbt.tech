@@ -13,8 +13,8 @@ __Аргументы__:
 Записывает строку либо в лог-файл, либо в stdout.
 
 <details>
-	<summary>Исходный код</summary>
-	Обратитесь к <a href="https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> или к следующему коду в качестве источника: <br /><br />
+<summary>Исходный код</summary>
+	В качестве источника используйте <a href="https://github.com/dbt-labs/dbt/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> или следующий код: <br /><br />
 
 ```python
     def log(msg: str, info: bool = False) -> str: 

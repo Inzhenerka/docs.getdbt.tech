@@ -13,6 +13,12 @@ pagination_prev: null
 <div className="grid--3-col">
 
 <Card
+    title="BigQuery"
+    body="Behavior changes for the BigQuery adapter."
+    link="reference/global-configs/bigquery-changes"
+    icon="bigquery"/>
+
+<Card
     title="Databricks"
     body="Изменения в поведении для адаптера Databricks."
     link="reference/global-configs/databricks-changes"

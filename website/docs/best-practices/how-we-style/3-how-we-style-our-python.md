@@ -13,7 +13,7 @@ id: 3-how-we-style-our-python
   - Линтер [ruff](https://pypi.org/project/ruff/)
 
   :::info
-☁️ <Constant name="cloud" /> поставляется со встроенным [форматтером black](/docs/cloud/studio-ide/lint-format), который автоматически выполняет линтинг и форматирование Python-кода. Вам не нужно ничего скачивать или настраивать — просто нажмите `Format` в Python-модели, и всё готово!
+☁️ <Constant name="dbt" /> поставляется со [встроенным форматтером black](/docs/platform/studio-ide/lint-format) для автоматической проверки и форматирования кода Python. Вам не нужно ничего скачивать или настраивать — просто нажмите `Format` в модели Python, и всё готово!
   :::
 
 ## Пример Python {#example-python}

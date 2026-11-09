@@ -6,35 +6,49 @@
 
 <Card
     title="Power BI"
-    link="/docs/cloud-integrations/semantic-layer/power-bi"
-    body="Используйте отчёты для выполнения запросов к семантическому слою dbt с помощью Power BI и создания дашбордов с проверенными данными."
+link="/docs/platform-integrations/semantic-layer/power-bi"
+    body="Используйте отчеты для выполнения запросов к семантическому слою dbt через Power BI и создания дашбордов на основе достоверных данных."
     icon="pbi"/>
 
  <Card
     title="Tableau"
-    link="/docs/cloud-integrations/semantic-layer/tableau"
+link="/docs/platform-integrations/semantic-layer/tableau"
     body="Узнайте, как подключиться к Tableau для выполнения запросов к метрикам и совместной работы с вашей командой."
     icon="tableau-software"/>
   
   <Card
     title="Google Sheets"
-    link="/docs/cloud-integrations/semantic-layer/gsheets"
+link="/docs/platform-integrations/semantic-layer/gsheets"
     body="Узнайте, как подключиться к Google Sheets для выполнения запросов к метрикам и совместной работы с вашей командой."
     icon="google-sheets-logo-icon"/>
 
   <Card
     title="Microsoft Excel"
-    link="/docs/cloud-integrations/semantic-layer/excel"
-    body="Подключитесь к Microsoft Excel, чтобы выполнять запросы к метрикам и работать совместно с вашей командой. Доступно для Excel Desktop или Excel Online."
+link="/docs/platform-integrations/semantic-layer/excel"
+    body="Подключитесь к Microsoft Excel, чтобы запрашивать метрики и совместно работать с командой. Доступно для Excel Desktop и Excel Online."
     icon="excel"/>
 
   <div className="card-container">
     <Card
+      title="Omni"
+      link="https://docs.omni.co/integrations/dbt/semantic-layer"
+      body="Connect Omni to the dbt Semantic Layer to query trusted metrics directly within your Omni data model."
+      icon="omni"/>
+      <a href="https://docs.omni.co/integrations/dbt/semantic-layer"
+      className="external-link"
+      target="_blank"
+      rel="noopener noreferrer">
+      <Icon name='fa-external-link' />
+    </a>
+  </div>
+
+  <div className="card-container">
+    <Card
       title="Dot"
-      link="https://docs.getdot.ai/dot/integrations/dbt-semantic-layer"
-      body="Позвольте всем анализировать данные с помощью AI в Slack или Teams."
+link="https://docs.getdot.ai/integrations/semantic-layers/dbt-semantic-layer"
+      body="Подключите Dot к семантическому слою dbt, чтобы задавать вопросы в Slack, Microsoft Teams или через веб-интерфейс и получать ответы на основе ваших метрик."
       icon="dot-ai"/>
-      <a href="https://docs.getdot.ai/dot/integrations/dbt-semantic-layer"
+      <a href="https://docs.getdot.ai/integrations/semantic-layers/dbt-semantic-layer"
       className="external-link"
       target="_blank"
       rel="noopener noreferrer">
@@ -129,4 +143,4 @@
 
 </div><br />
 
-Прежде чем подключиться к этим инструментам, вам необходимо сначала [настроить dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) и [создать токен службы](/docs/dbt-cloud-apis/service-tokens) для создания разрешений **Semantic Layer Only** и **Metadata Only**.
+Прежде чем подключаться к этим инструментам, необходимо [настроить семантический слой dbt](/docs/use-dbt-semantic-layer/setup-sl) и [сгенерировать сервисный токен](/docs/dbt-apis/service-tokens), чтобы настроить разрешения **Semantic Layer Only** и **Metadata Only**.

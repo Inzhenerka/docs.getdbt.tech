@@ -5,9 +5,25 @@ sidebar_label: "Источники"
 
 **Текущая схема:** [`v3`](https://schemas.getdbt.com/dbt/sources/v3/index.html)
 
-**Создано с помощью:** [`source freshness`](/reference/commands/source)
+<VersionBlock lastVersion="1.99">
 
-Этот файл содержит информацию об [источниках с проверками свежести](/docs/build/sources#checking-source-freshness). В настоящее время <Constant name="cloud" /> использует этот файл для работы своей [визуализации свежести источников данных](/docs/build/sources#source-data-freshness).
+**Создаётся командой:** [`dbt source freshness`](/reference/commands/source)
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+**Создаётся командой:** [`dbt freshness`](/reference/commands/freshness) (если в запуск включены источники)
+
+</VersionBlock>
+
+Этот файл содержит информацию об [источниках с проверками актуальности данных](/docs/build/sources#evaluate-source-freshness). dbt использует этот файл для [визуализации актуальности данных источников](/docs/build/sources#source-data-freshness).
+
+<VersionBlock firstVersion="2.0">
+
+`sources.json` — устаревший артефакт, который содержит результаты проверок актуальности данных только для источников. Чтобы получить результаты для источников и моделей в одном файле, используйте [`freshness.json`](/reference/artifacts/freshness-json). Если при запуске `dbt freshness` проверяются только модели и источники не включены, dbt не перезаписывает `sources.json`.
+
+</VersionBlock>
 
 ### Ключи верхнего уровня {#top-level-keys}
 

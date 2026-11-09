@@ -6,19 +6,18 @@ id: model-custom-schemas
 
 ---
 
-Да! Используйте конфигурацию [schema](reference/resource-configs/schema.md) в вашем файле `dbt_project.yml` или с помощью блока `config`:
+Да! Используйте конфигурацию [schema](/reference/resource-configs/schema) в файле `dbt_project.yml` или в блоке `config`:
 
 <File name='dbt_project.yml'>
 
 ```yml
-
 name: jaffle_shop
 ...
 
 models:
   jaffle_shop:
     marketing:
-      schema: marketing # seeds в подкаталоге `models/mapping/` будут использовать схему marketing
++schema: marketing # модели в подкаталоге `models/marketing/` будут использовать схему marketing
 ```
 
 </File>

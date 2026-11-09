@@ -5,8 +5,8 @@ sidebar_label: 'Доступ к документации в dbt Catalog'
 id: sharing-documentation
 ---
 
-Если вы используете <Constant name="cloud" /> для развертывания вашего проекта и у вас есть тариф [Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/), вы можете использовать <Constant name="explorer" /> для просмотра [ресурсов](/docs/build/projects) вашего проекта (таких как модели, тесты и метрики), а также их <Term id="data-lineage">линейности данных</Term>, чтобы лучше понять его текущее состояние в продакшене.
+Если вы используете <Constant name="dbt" /> для развертывания проекта и у вас [тарифный план Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing/), вы можете использовать <Constant name="catalog" /> для просмотра [ресурсов](/docs/build/projects) проекта (таких как модели, тесты и метрики) и их <Term id="data-lineage">происхождения и связей</Term>, чтобы лучше понимать текущее состояние проекта в промышленной среде. 
 
-Получить доступ к <Constant name="explorer" /> в <Constant name="cloud" /> можно, нажав ссылку **Explore** в навигации. Вы можете предоставить доступ к документации вашего проекта до 5 пользователям с правами только для чтения.
+Чтобы открыть <Constant name="catalog" /> в <Constant name="dbt" />, нажмите ссылку **Catalog** в меню навигации. Пользователи с доступом только для чтения могут просматривать документацию вашего проекта &mdash; сведения о доступности лицензий в зависимости от тарифного плана см. на странице [тарифов dbt](https://www.getdbt.com/pricing).
 
-Пользователи тарифного плана <Constant name="cloud" /> Developer и <Constant name="core" /> могут использовать [dbt Docs](/docs/explore/build-and-view-your-docs#dbt-docs), который генерирует базовую документацию, однако он не предоставляет такую же скорость работы, объем метаданных и уровень видимости, как <Constant name="explorer" />.
+Пользователи тарифного плана Developer в <Constant name="dbt" /> и пользователи <Constant name="core" /> могут использовать [dbt Docs](/docs/explore/build-and-view-your-docs?version=1.12#dbt-docs): этот инструмент создает базовую документацию, но не обеспечивает такую же скорость работы, объем метаданных и наглядность, как <Constant name="catalog" />.

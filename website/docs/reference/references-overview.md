@@ -1,14 +1,14 @@
 ---
 title: "О справочнике"
 id: "references-overview"
-sidebar_label: "О ссылках"
-description: "Подключите dbt к любой платформе данных в dbt platform или dbt Core, используя специализированный плагин адаптера"
+sidebar_label: "О справочной документации"
+description: "Подключите dbt к любой платформе данных в dbt platform или локально с помощью специального плагина-адаптера"
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 ---
 
-Раздел References содержит справочные материалы для разработки с использованием dbt, включая <Constant name="cloud" /> и <Constant name="core" />.
+Раздел «Справочные материалы» содержит справочную информацию для разработки с помощью dbt, включая <Constant name="dbt" /> и <Constant name="core" />.
 
 Узнайте, как добавить больше конфигураций в ваш проект dbt или адаптер, используйте свойства для расширения возможностей, обратитесь к командам dbt, используйте мощные функции Jinja для оптимизации вашего проекта dbt и поймите, как использовать артефакты dbt.  <br />
 
@@ -21,9 +21,9 @@ pagination_prev: null
     icon="computer"/>
 
 <Card
-    title="Конфигурации, специфичные для платформы"
-    body="Узнайте, как оптимизировать производительность с помощью конфигураций, специфичных для платформ данных, в dbt и dbt Core."
-    link="/reference/resource-configs/resource-configs"
+title="Настройки для конкретных платформ"
+    body="Узнайте, как оптимизировать производительность с помощью настроек dbt для конкретных платформ данных."
+    link="/reference/resource-configs"
     icon="computer"/>
 
 <Card
@@ -33,15 +33,27 @@ pagination_prev: null
     icon="computer"/>
 
 <Card
+title="Конфигурации семантического слоя"
+    body="Полный справочник по настройке семантических моделей, метрик и измерений в семантическом слое dbt."
+    link="/reference/semantic-layer-reference"
+    icon="computer"/>
+
+<Card
     title="Команды dbt"
-    body="Описывает команды, поддерживаемые dbt, и их соответствующие флаги."
+    body="Обзор команд, поддерживаемых dbt, и соответствующих флагов."
     link="/reference/dbt-commands"
     icon="computer"/>
 
 <Card
-    title="Функции Jinja в dbt"
-    body="Дополнительные функции и переменные в контексте Jinja, которые полезны при работе с проектом dbt."
-    link="/reference/dbt-jinja-functions"
+title="Поддержка Jinja по типам файлов"
+    body="Какие типы файлов dbt поддерживают выражения Jinja, встроенные функции и пользовательские макросы."
+    link="/reference/jinja-file-support"
+    icon="computer"/>
+
+<Card
+    title="Функции Jinja и переменные контекста dbt"
+    body="Дополнительные функции и переменные контекста Jinja, полезные при работе с проектом dbt."
+    link="/reference/dbt-jinja-functions-context-variables"
     icon="computer"/>
 
 <Card

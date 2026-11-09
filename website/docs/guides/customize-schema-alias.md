@@ -25,19 +25,15 @@ keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "c
 
 Ниже описано поведение dbt «из коробки» по умолчанию:
 
-- База данных, в которой создаётся объект, определяется настройкой database, заданной на [уровне окружения в <Constant name="cloud" />](/docs/dbt-cloud-environments) или в [файле `profiles.yml`](/docs/core/connect-data-platform/profiles.yml) в dbt Core.
+- База данных, в которой создаётся объект, определяется настройкой database, заданной на [уровне окружения в <Constant name="cloud" />](/docs/dbt-platform-environments) или в [файле `profiles.yml`](/docs/local/profiles.yml) в dbt Core.
 
-- Схема зависит от того, определена ли для модели [кастомная схема](/docs/build/custom-schemas):
-    - Если кастомная схема не определена, dbt создаёт объект в схеме по умолчанию. В <Constant name="cloud" /> это обычно `dbt_username` для разработки и схема по умолчанию для окружений деплоя. В dbt Core используется схема, указанная в файле `profiles.yml`.
-    - Если кастомная схема определена, dbt конкатенирует ранее упомянутую схему с кастомной.
-    - Например, если сконфигурированная схема — `dbt_myschema`, а кастомная — `marketing`, объекты будут созданы в `dbt_myschema_marketing`.
-    - Обратите внимание, что для автоматизированных CI-задач имя схемы формируется на основе номера джобы и номера PR: `dbt_cloud_pr_<job_id>_<pr_id>`.
+- База данных, в которой создаётся объект, определяется базой данных, настроенной на [уровне окружения в <Constant name="dbt" />](/docs/dbt-platform-environments) или в [файле `profiles.yml`](/docs/local/profiles.yml) в <Constant name="core" />.
 
-- Имя объекта зависит от того, задан ли [алиас](/reference/resource-configs/alias) для модели:
-    - Если алиас не задан, объект будет создан с тем же именем, что и модель, без суффикса `.sql` или `.py`.
-        - Например, если у нас есть модель с SQL-файлом `fct_orders_complete.sql`, кастомной схемой `marketing` и без кастомного алиаса, итоговая модель будет создана как `dbt_myschema_marketing.fct_orders_complete` в dev-окружении.
-    - Если алиас задан, объект будет создан с указанным алиасом.
-    - Например, если SQL-файл называется `fct_orders_complete.sql`, кастомная схема — `marketing`, а алиас задан как `fct_orders`, итоговая модель будет создана как `dbt_myschema_marketing.fct_orders`.
+- Схема зависит от того, определили ли вы [пользовательскую схему](/docs/build/custom-schemas) для модели:
+    - Если вы не определили пользовательскую схему, dbt создаёт объект в схеме по умолчанию. В <Constant name="dbt" /> это обычно `dbt_username` для разработки и схема по умолчанию для окружений развёртывания. В <Constant name="core" /> используется схема, указанная в файле `profiles.yml`.
+    - Если вы определили пользовательскую схему, dbt объединяет упомянутую выше схему с пользовательской.
+    - Например, если настроенная схема — `dbt_myschema`, а пользовательская — `marketing`, объекты будут созданы в схеме `dbt_myschema_marketing`.
+    - Обратите внимание: для автоматизированных заданий CI имя схемы формируется на основе номера задания и номера PR: `dbt_cloud_pr_<job_id>_<pr_id>`.
 
 Эти правила по умолчанию являются отличной отправной точкой, и многие организации выбирают использовать их без какой-либо дополнительной кастомизации.
 
@@ -55,7 +51,7 @@ keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "c
 
 По этой причине dbt предоставляет три макроса для настройки того, где именно объекты создаются в хранилище данных:
 
-- [`generate_database_name()`](/docs/build/custom-databases#generate_database_name)
+- [`generate_database_name()`](/docs/build/custom-databases#generatedatabasename)
 - [`generate_schema_name()`](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name)
 - [`generate_alias_name()`](/docs/build/custom-aliases#generate_alias_name)
 
@@ -78,11 +74,21 @@ keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "c
     - Их можно задавать на уровне окружения, и все джобы автоматически унаследуют значения по умолчанию. Мы добавим Jinja-логику (`if/else/endif`) для определения, происходит ли запуск в dev, prod, CI и т.д.
 - В качестве альтернативы переменным окружения можно использовать `target.name`. Подробнее см. [About target variables](/reference/dbt-jinja-functions/target).
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/custom-schema-env-var.png" title="Переменные окружения для кастомной схемы и target name." />
+- В <Constant name="dbt" /> мы рекомендуем использовать [переменные окружения](/docs/build/environment-variables), чтобы указать, в каком окружении выполняется вызов dbt (dev/stg/prod).
+    - Их можно задать на уровне окружения, и все задания автоматически унаследуют значения по умолчанию. Мы добавим логику Jinja (`if/else/endif`), чтобы определить, выполняется ли запуск в dev, prod, CI или другом окружении.
+    
+- В качестве альтернативы переменным окружения можно использовать `target.name`. Дополнительные сведения см. в разделе [О переменных target](/reference/dbt-jinja-functions/target).
 
 Чтобы имя базы данных / схемы / объекта зависело от текущей ветки, можно использовать готовую переменную окружения `DBT_CLOUD_GIT_BRANCH` из [специальных переменных окружения](/docs/build/environment-variables#special-environment-variables) в <Constant name="cloud" />.
 
-## Примеры сценариев использования {#example-use-cases}
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/Environment Variables/custom-schema-env-var.png" title="Имя целевого окружения в переменных окружения для пользовательской схемы." />
+
+Чтобы имя базы данных/схемы/объекта зависело от текущей ветки, можно использовать встроенную переменную окружения `DBT_CLOUD_GIT_BRANCH` из числа [специальных переменных окружения](/docs/build/environment-variables#special-environment-variables) <Constant name="dbt" />.
+
+
+## Примеры использования
+
+Вот несколько типичных примеров, с которыми мы сталкивались у пользователей dbt, использующих эти 3 макроса с различной логикой.
 
 Ниже приведены типичные примеры, с которыми мы сталкивались у пользователей dbt, применяющих эти 3 макроса с различной логикой.
 
@@ -237,7 +243,7 @@ keywords: ["generate", "schema name", "guide", "dbt", "schema customization", "c
 
 :::note
 
-Переменная `DBT_CLOUD_GIT_BRANCH` доступна только в <Constant name="cloud_ide" />, но не в <Constant name="cloud_cli" />.
+Переменная `DBT_CLOUD_GIT_BRANCH` доступна только в <Constant name="studio_ide" /> и недоступна в <Constant name="platform_cli" />.
 
 :::
 
@@ -455,7 +461,26 @@ dbt автоматически пытается создать схему, ес�
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/development-credentials.png" title="Учётные данные для разработки." width="60%" />
 
-### Всегда требовать указания кастомных схем {#always-enforce-custom-schemas}
+### Определение контекста с помощью переменных окружения вместо `target.name`
+
+
+Мы предпочитаем использовать [переменные окружения](/docs/build/environment-variables) вместо `target.name` для определения контекста вызова dbt. Подробнее см. в разделе [О переменных target](/reference/dbt-jinja-functions/target). 
+
+- `target.name` нельзя задать на уровне окружения. Поэтому в каждом задании внутри окружения необходимо явно переопределять значение `target.name`. Если в задании не задано подходящее значение `target.name`, база данных, схема или псевдоним могут определяться некорректно. В отличие от этого, значения переменных окружения наследуются заданиями из соответствующего окружения. При необходимости значения переменных окружения также можно переопределить в заданиях.
+
+
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/custom-schema-env-var-targetname.png" title="Настройка псевдонима схемы с помощью переменной окружения."/>
+
+
+- При использовании `target.name` каждый разработчик должен указать одно и то же значение (обычно ‘dev’) в поле имени target в своих пользовательских учётных данных для проекта. Если у разработчика не задано подходящее имя target, его база данных, схема или псевдоним могут определяться некорректно. 
+
+
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/development-credentials.png" title="Учётные данные пользователя." width="60%" />
+
+
+### Всегда требуйте указания пользовательских схем
+
+Некоторые пользователи предпочитают требовать указания пользовательских схем для всех объектов в своих проектах. Это позволяет избежать записи в непредусмотренные расположения «по умолчанию». Вы можете добавить в макрос `generate_schema_name()` логику, которая будет [вызывать ошибку компиляции](/reference/dbt-jinja-functions/exceptions), если для объекта не задана пользовательская схема.
 
 Некоторые пользователи предпочитают принудительно задавать кастомные схемы для всех объектов в проекте. Это позволяет избежать записи в нежелательные «дефолтные» локации. Вы можете добавить соответствующую логику в макрос `generate_schema_name()`, чтобы [вызывать ошибку компиляции](/reference/dbt-jinja-functions/exceptions), если кастомная схема для объекта не определена.
 

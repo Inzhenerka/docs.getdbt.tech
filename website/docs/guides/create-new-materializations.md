@@ -21,7 +21,17 @@ level: 'Advanced'
 
 :::
 
-## Создание материализации {#creating-a-materialization}
+<VersionBlock firstVersion="2.0" >
+
+:::info Пользовательские материализации и статический анализ
+
+К моделям, использующим пользовательскую материализацию, применяются стандартные правила [`static_analysis`](/reference/resource-configs/static-analysis#custom-materializations). Если вы используете `strict` и ваша материализация изменяет схему модели (например, добавляет или переименовывает столбцы либо изменяет их типы), задайте для этих моделей `static_analysis: off`. Поскольку значение `off` распространяется каскадно, статический анализ также отключается для зависимых от них моделей. Подробнее см. в разделе [Пользовательские материализации](/docs/build/about-static-analysis#custom-materializations).
+
+:::
+
+</VersionBlock>
+
+## Создание материализации
 
 import CourseCallout from '/snippets/_materialization-video-callout.md';
 

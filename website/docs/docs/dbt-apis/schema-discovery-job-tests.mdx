@@ -1,0 +1,48 @@
+---
+title: "Схема объекта tests"
+sidebar_label: "Tests"
+id: "discovery-schema-job-tests"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект `tests` позволяет запрашивать информацию обо всех тестах в рамках заданного job.
+
+### Аргументы {#arguments}
+
+При выполнении запроса к `tests` доступны следующие аргументы.
+
+<NodeArgsTable parent="JobNode" name="tests" />
+
+Ниже приведены иллюстративные примеры запросов, а также описание схемы (всех возможных полей, которые можно запрашивать) объекта `tests`.
+
+### Пример запроса {#example-query}
+
+Пример запроса ниже находит все тесты в данном job и включает информацию об этих тестах.
+
+```graphql
+{
+  job(id: 123) {
+    tests(first: 10, after: "{somePaginationCursorValue}") {
+      runId
+      accountId
+      projectId
+      uniqueId
+      name
+      columnName
+      state
+      paginationCursor
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запроса к `tests` доступны следующие поля:
+
+<SchemaTable nodeName="TestNode" />

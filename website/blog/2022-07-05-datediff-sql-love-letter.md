@@ -69,7 +69,7 @@ datediff(<date part>, <start date/time>, <end date/time>)
 
 Вы можете запомнить синтаксис функции DATEDIFF для основного хранилища данных, которое вы используете. Что произойдет, когда вы перейдете на другое для новой работы или нового стека данных? Запоминание, есть ли подчеркивание в имени функции или в каком аргументе передается `<date part>`, не доставляет удовольствия и приводит к неизбежным, бесчисленным поискам в Google «datediff в bigquery».
 
-К счастью, [dbt-core](https://github.com/dbt-labs/dbt-core) вас поддерживает! dbt Core — это открытый продукт dbt, который помогает специалистам по данным писать свои [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/), следуя лучшим практикам программной инженерии.
+К счастью, [dbt](https://github.com/dbt-labs/dbt) придёт вам на помощь! dbt Core — это продукт dbt с открытым исходным кодом, который помогает специалистам по данным писать [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/), следуя лучшим практикам разработки программного обеспечения.
 
 С dbt v1.2 [адаптеры](https://docs.getdbt.tech/docs/supported-data-platforms) теперь поддерживают [кросс-базовые макросы](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros), чтобы помочь вам писать определенные функции, такие как [DATE_TRUNC](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#date_trunc) и [DATEDIFF](https://docs.getdbt.tech/reference/dbt-jinja-functions/cross-database-macros#datediff), без необходимости запоминать сложный синтаксис функций.
 

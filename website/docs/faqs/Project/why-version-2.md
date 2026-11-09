@@ -8,7 +8,7 @@ id: why-version-2
 
 Когда‑то структура этих файлов `.yml` была совсем другой (привет всем, кто пользовался dbt в те времена!). Добавление `version: 2` позволило нам сделать эту структуру более расширяемой.
 
-Начиная с [dbt Core v1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5#quick-hits), ключ верхнего уровня `version:` является необязательным во всех ресурсных YAML‑файлах. Если он указан, поддерживается только `version: 2`.
+Начиная с [dbt v1.5](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5#quick-hits), ключ `version:` верхнего уровня необязателен во всех YAML-файлах ресурсов. Если он указан, поддерживается только значение `version: 2`.
 
 Также, начиная с версии 1.5, и [`config-version: 2`](/reference/project-configs/config-version), и ключ верхнего уровня `version:` в файле `dbt_project.yml` являются необязательными.
 

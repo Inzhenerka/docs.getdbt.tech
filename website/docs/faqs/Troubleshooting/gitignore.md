@@ -11,7 +11,7 @@ id: gitignore
 
 Чтобы исправить это, выполните следующие шаги:
 
-1. В <Constant name="cloud_ide" /> добавьте следующее содержимое [.gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) в файл `.gitignore` вашего dbt‑проекта:
+1. В <Constant name="studio_ide" /> добавьте следующее [содержимое .gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) в файл `.gitignore` вашего проекта dbt:
 ```bash
 target/
 dbt_packages/
@@ -19,20 +19,20 @@ logs/
 # legacy -- переименовано в dbt_packages в dbt v1
 dbt_modules/
 ```
-2. Сохраните изменения, но _не делайте commit_.
-3. Перезапустите <Constant name="cloud_ide" />, нажав на три точки рядом с **кнопкой статуса <Constant name="cloud_ide" />** в правом нижнем углу <Constant name="cloud_ide" />.
+2. Сохраните изменения, но _не создавайте коммит_
+3. Перезапустите <Constant name="studio_ide" />, нажав на три точки рядом с **кнопкой статуса <Constant name="studio_ide" />** в правом нижнем углу <Constant name="studio_ide" />.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.png" width="50%" title="Перезапуск IDE с помощью кнопки с тремя точками в правом нижнем углу или через строку статуса" />
+<Lightbox src="/img/docs/dbt-platform/platform-ide/restart-ide.png" width="50%" title="Перезапустите IDE, нажав на три точки в правом нижнем углу или на строку состояния" />
 
-4. Выберите **Restart <Constant name="cloud_ide" />**.
+4. Выберите **Restart <Constant name="studio_ide" />**.
 5. Вернитесь в **File explorer** в IDE и удалите следующие файлы или папки, если они у вас есть:
     * `target`, `dbt_modules`, `dbt_packages`, `logs`
-6. **Сохраните** изменения, затем выполните **Commit and sync**.
-7. Снова перезапустите <Constant name="cloud_ide" />.
-8. В меню **Version Control** создайте pull request (PR), чтобы интегрировать новые изменения.
-9. Выполните merge PR на странице вашего git‑провайдера.
-10. Переключитесь на основную ветку и нажмите **Pull from remote**, чтобы подтянуть все изменения в основную ветку. Вы можете проверить, что всё применилось корректно, убедившись, что файлы и папки, указанные в `.gitignore`, отображаются курсивом.
+6. Нажмите **Save**, а затем **Commit and sync**, чтобы сохранить изменения, создать коммит и синхронизировать их.
+7. Снова перезапустите <Constant name="studio_ide" />.
+8. Создайте запрос на слияние (PR) в меню **Version Control**, чтобы включить новые изменения.
+9.  Выполните слияние PR на странице вашего Git-провайдера.
+10. Переключитесь на основную ветку и нажмите **Pull from remote**, чтобы получить все изменения, внесённые в основную ветку. Чтобы проверить изменения, убедитесь, что файлы и папки, указанные в файле .gitignore, отображаются курсивом. 
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/gitignore-italics.png" width="50%" title="Проект dbt в основной ветке с корректно настроенными папками из gitignore (выделены курсивом)." />
+<Lightbox src="/img/docs/dbt-platform/platform-ide/gitignore-italics.png" width="50%" title="Проект dbt в основной ветке с правильно настроенными в gitignore папками (выделены курсивом)."/>
 
 Для получения дополнительной информации, обратитесь к этому [подробному видео](https://www.loom.com/share/9b3b8e2b617f41a8bad76ec7e42dd014) для дополнительной помощи.

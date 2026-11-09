@@ -3,15 +3,19 @@ title: "Добавление снапшотов в ваш DAG"
 sidebar_label: "Снапшоты"
 description: "Настройка снапшотов в dbt для отслеживания изменений ваших данных со временем."
 id: "snapshots"
+availability: all_users
 ---
 
 ## Связанная документация {#related-documentation}
 
-- [Конфигурации снапшотов](/reference/snapshot-configs)
-- [Свойства снапшотов](/reference/snapshot-properties)
+- [Конфигурации снимков](/reference/snapshot-configs)
+- [Свойства снимков](/reference/snapshot-properties)
 - [Команда `snapshot`](/reference/commands/snapshot)
+- [Выбор между инкрементальными моделями и снимками](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots) — рекомендации по использованию снимков для отслеживания изменений данных (CDC)
 
 import CourseCallout from '/snippets/_materialization-video-callout.md';
+import SnapshotCompiledSql from '/snippets/_snapshot-compiled-sql.md';
+import SnapshotFullRefresh from '/snippets/_snapshot-full-refresh.md';
 
 <CourseCallout resource="Snapshots" 
 url="https://learn.getdbt.com/courses/snapshots"
@@ -83,12 +87,13 @@ snapshots:
 | [snapshot_meta_column_names](/reference/resource-configs/snapshot_meta_column_names) | Настроить имена мета‑полей snapshot | No | dictionary |
 | [hard_deletes](/reference/resource-configs/hard-deletes) | Указать, как обрабатывать удалённые строки из источника. Поддерживаемые варианты: `ignore` (по умолчанию), `invalidate` (заменяет устаревший `invalidate_hard_deletes=true`) и `new_record`. | No | string |
 
-- В версии v1.9 параметр `target_schema` стал необязательным, что позволило snapshot‑ам учитывать окружение. По умолчанию, если `target_schema` или `target_database` не определены, snapshot‑ы используют макросы `generate_schema_name` или `generate_database_name`, чтобы определить, где выполняться.
-- Разработчики по‑прежнему могут задать пользовательское расположение с помощью конфигураций [`schema`](/reference/resource-configs/schema) и [`database`](/reference/resource-configs/database), аналогично другим типам ресурсов.
-- Также поддерживается ряд других конфигураций (например, `tags` и `post-hook`). Полный список см. в разделе [Snapshot configurations](/reference/snapshot-configs).
-- Вы можете настраивать snapshot‑ы как в файле `dbt_project.yml`, так и в блоке `config`. Подробнее см. в [документации по конфигурации](/reference/snapshot-configs).
+- В v1.9 параметр `target_schema` стал необязательным, что позволяет снимкам учитывать окружение. По умолчанию, если `target_schema` и `target_database` не заданы, снимки теперь используют макросы `generate_schema_name` или `generate_database_name`, чтобы определить, где их создавать.
+- Разработчики по-прежнему могут задать собственное расположение с помощью конфигураций [`schema`](/reference/resource-configs/schema) и [`database`](/reference/resource-configs/database), как и для других типов ресурсов.
+- Также поддерживается ряд других конфигураций (например, `tags` и `post-hook`). Полный список см. в разделе [Конфигурации снимков](/reference/snapshot-configs).
+- Снимки можно настраивать как в файле `dbt_project.yml`, так и в блоке `config`. Подробнее см. в [документации по конфигурациям](/reference/snapshot-configs).
+- Начиная с <Constant name="dbt" /> v1.12, вы можете просмотреть SQL, сгенерированный для снимков, выполнив команду [`dbt compile`](/reference/commands/compile). Скомпилированные SQL-файлы находятся в каталоге `target/compiled/` вашего проекта dbt.
 
-Чтобы добавить снимок в ваш проект, выполните следующие шаги. Для пользователей версий 1.8 и ранее обратитесь к [Настройка снимков в версиях 1.8 и ранее](#configure-snapshots-in-versions-18-and-earlier).
+Чтобы добавить снимок в ваш проект, выполните следующие шаги. Для пользователей версий 1.8 и ранее обратитесь к [Настройка снимков в версиях 1.8 и ранее](#configuring-snapshots).
 
 Чтобы добавить snapshot в ваш проект, выполните следующие шаги. Для пользователей версий 1.8 и ниже см. раздел [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy).
 
@@ -111,16 +116,30 @@ snapshots:
     ```
     </File>
 
-2. Поскольку снимки сосредоточены на конфигурации, логика трансформации минимальна. Обычно вы выбираете все данные из источника. Если вам нужно применить трансформации (например, фильтры, удаление дубликатов), лучше всего определить эфемерную модель и ссылаться на нее в вашей конфигурации снимка.
+2. (Необязательно) Примените преобразования с помощью эфемерной модели. По умолчанию снимки ссылаются непосредственно на источник (как показано в YAML на предыдущем шаге). Если вам нужно применить преобразования (например, фильтрацию или дедупликацию), сначала определите эфемерную модель для выполнения этих преобразований и укажите ссылку на неё в поле relation снимка вместо прямого вызова `source()`.
 
-    <File name="models/ephemeral_orders.sql" >
-
-    ```yaml
-    {{ config(materialized='ephemeral') }}
-
-    select * from {{ source('jaffle_shop', 'orders') }}
-    ```
-    </File>
+      For example, here's an ephemeral model:
+    
+      <File name="models/ephemeral_orders.sql" >
+    
+      ```sql
+      {{ config(materialized='ephemeral') }}
+    
+      select * from {{ source('jaffle_shop', 'orders') }}
+      ```
+      </File>
+    
+      This is how to reference the ephemeral model in the `relation` field:
+       
+      <File name='snapshots/orders_snapshot.yml'>
+    
+      ```yaml
+        snapshots:
+          - name: orders_snapshot
+            relation: ref('ephemeral_orders')
+            ... rest of config...
+      ```
+      </File>
 
 3. Проверьте, включает ли результирующий набор вашего запроса надежную колонку с временной меткой, которая указывает, когда запись была в последний раз обновлена. В нашем примере колонка `updated_at` надежно указывает изменения записей, поэтому мы можем использовать стратегию `timestamp`. Если в результирующем наборе вашего запроса нет надежной временной метки, вам нужно будет использовать стратегию `check` — подробнее об этом ниже.
 
@@ -142,7 +161,9 @@ snapshots:
     Done. PASS=2 ERROR=0 SKIP=0 TOTAL=1
     ```
 
-5. Проверьте результаты, выбрав из таблицы, созданной dbt (`analytics.snapshots.orders_snapshot`). После первого запуска вы должны увидеть результаты вашего запроса, плюс [мета-поля снимков](#snapshot-meta-fields), описанные далее.
+<SnapshotCompiledSql />
+
+5. Проверьте результаты, выполнив запрос к таблице, созданной dbt (`analytics.snapshots.orders_snapshot`). После первого запуска вы должны увидеть результаты вашего запроса, а также [поля метаданных снимка](#snapshot-meta-fields), описанные ниже.
 
 6. Запустите команду `dbt snapshot` снова и проверьте результаты. Если какие-либо записи были обновлены, снимок должен это отразить.
 
@@ -179,7 +200,9 @@ snapshots:
 
 По умолчанию `dbt_valid_to` равно `NULL` для текущих записей. Однако, если вы установите [конфигурацию `dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) (доступно в dbt Core v1.9+), `dbt_valid_to` будет установлено в указанное вами значение (например, `9999-12-31`) для текущих записей.
 
-Это позволяет легко фильтровать по диапазону дат.
+По умолчанию `dbt_valid_to` имеет значение `NULL` для текущих записей. Однако если вы зададите [конфигурацию `dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) (доступна в <Constant name="dbt" /> v1.9 и новее), для текущих записей `dbt_valid_to` будет принимать указанное вами значение (например, `9999-12-31`).
+
+Это упрощает фильтрацию по диапазону дат.
 
 </Expandable>
 
@@ -207,10 +230,12 @@ snapshots:
 
 Когда вы запускаете команду [`dbt snapshot`](/reference/commands/snapshot):
 
-- **При первом запуске:** dbt создаст исходную таблицу снапшота — это будет результат выполнения вашего `select`‑запроса с добавленными колонками, включая `dbt_valid_from` и `dbt_valid_to`. Для всех записей значение `dbt_valid_to` будет равно `null` либо значению, заданному в [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) (доступно начиная с dbt Core 1.9+), если эта настройка сконфигурирована.
-- **При последующих запусках:** dbt проверит, какие записи изменились, а также появились ли новые записи:
-  - Колонка `dbt_valid_to` будет обновлена для всех существующих записей, которые изменились.
-  - Обновлённые записи и все новые записи будут вставлены в таблицу снапшота. Для этих записей значение `dbt_valid_to` будет равно `null` либо значению, заданному в `dbt_valid_to_current` (доступно в dbt Core v1.9+).
+- **При первом запуске:** dbt создаст исходную таблицу снимка — она будет содержать результат вашего оператора `select` с дополнительными столбцами, включая `dbt_valid_from` и `dbt_valid_to`. У всех записей будет `dbt_valid_to = null` или значение, указанное в [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) (доступно в <Constant name="dbt" /> 1.9+), если этот параметр настроен.
+- **При последующих запусках:** dbt проверит, какие записи изменились и появились ли новые записи:
+  - Для всех существующих записей, которые изменились, будет обновлён столбец `dbt_valid_to`.
+  - Обновлённая запись и все новые записи будут вставлены в таблицу снимка. У этих записей будет `dbt_valid_to = null` или значение, настроенное в `dbt_valid_to_current` (доступно в <Constant name="dbt" /> v1.9+).
+
+<SnapshotFullRefresh />
 
 <VersionBlock firstVersion="1.9">
 
@@ -325,7 +350,7 @@ snapshots:
 В этом примере:
 
 - Если изменяется хотя бы одно из указанных значений в `check_cols`, снапшот создаёт новую строку. Если колонка `updated_at` содержит значение (не равна null), снапшот использует его; в противном случае используется текущее время.
-- Если `updated_at` не задана, dbt автоматически возвращается к [использованию текущего времени](#sample-results-for-the-check-strategy) для отслеживания изменений.
+- Если `updated_at` не задана, dbt автоматически возвращается к [использованию текущего времени](#check-strategy) для отслеживания изменений.
 - Используйте этот подход, если ваша колонка `updated_at` не всегда надёжна для отслеживания обновлений записей, но вы всё равно хотите применять её — вместо времени выполнения снапшота — когда изменения строк всё же обнаружены.
 
 ### Жёсткие удаления (opt-in) {#hard-deletes-opt-in}
@@ -379,26 +404,29 @@ snapshots:
 
 ## Метаполя snapshot {#snapshot-meta-fields}
 
-Снимки <Term id="table">таблицы</Term> будут созданы как клон вашего исходного набора данных, плюс некоторые дополнительные мета-поля*.
+<Term id="table">Таблицы</Term> снимков создаются как копия исходного набора данных с дополнительными полями метаданных.
 
-В <Constant name="core" /> версии 1.9+ (или доступно раньше в [треке релизов «Latest» для <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks)):
-
-- Эти имена колонок можно настроить в соответствии с командными или организационными соглашениями с помощью конфига [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names).
-- Используйте конфиг [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current), чтобы задать пользовательский индикатор значения `dbt_valid_to` для текущих записей снапшота (например, будущую дату вроде `9999-12-31`). По умолчанию это значение равно `NULL`. Если оно задано, dbt будет использовать указанное значение вместо `NULL` для `dbt_valid_to` у текущих записей в таблице снапшота.
-- Используйте конфиг [`hard_deletes`](/reference/resource-configs/hard-deletes) для отслеживания удалённых записей как новых строк с мета-полем `dbt_is_deleted` при использовании значения `hard_deletes='new_record'`.
+В <Constant name="dbt" /> версии 1.9 и выше (или раньше — в [канале обновлений **v1 Latest** на <Constant name="dbt_platform" />](/docs/dbt-versions/dbt-release-tracks)):
+- Имена этих столбцов можно настроить в соответствии с соглашениями вашей команды или организации с помощью параметра [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names).
+- Используйте [параметр `dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current), чтобы задать собственное значение `dbt_valid_to` для текущих записей снимка (например, дату в будущем, такую как `9999-12-31`). По умолчанию это значение равно `NULL`. Если параметр задан, dbt будет использовать указанное значение вместо `NULL` для `dbt_valid_to` в текущих записях таблицы снимка.
+- Используйте параметр [`hard_deletes`](/reference/resource-configs/hard-deletes) со значением `hard_deletes='new_record'`, чтобы отслеживать удалённые записи, добавляя новые строки с полем метаданных `dbt_is_deleted`.
 
 
 | Field          | <div style={{width:'250px'}}>Значение</div> | Примечания | Пример |
 | -------------- | ------- | ----- | ------- |
-| `dbt_valid_from` | Временная метка, когда эта строка снапшота была впервые вставлена и стала валидной. | Эту колонку можно использовать для упорядочивания различных «версий» записи. | `snapshot_meta_column_names: {dbt_valid_from: start_date}` |
-| `dbt_valid_to`   | Временная метка, когда эта строка стала невалидной. Для текущих записей по умолчанию это `NULL` или значение, указанное в `dbt_valid_to_current`. | Самая последняя запись снапшота будет иметь `dbt_valid_to`, равное `NULL` или указанному значению. | `snapshot_meta_column_names: {dbt_valid_to: end_date}` |
-| `dbt_scd_id`     | Уникальный ключ, сгенерированный для каждой строки снапшота. | Используется внутри dbt. | `snapshot_meta_column_names: {dbt_scd_id: scd_id}` |
-| `dbt_updated_at` | Временная метка `updated_at` исходной записи на момент вставки этой строки снапшота. | Используется внутри dbt. | `snapshot_meta_column_names: {dbt_updated_at: modified_date}` |
-| `dbt_is_deleted` | Строковое значение, указывающее, была ли запись удалена (`True` — удалена, `False` — не удалена). | Добавляется, когда сконфигурирован `hard_deletes='new_record'`. | `snapshot_meta_column_names: {dbt_is_deleted: is_deleted}` |
+| `dbt_valid_from` | Метка времени, с которой эта строка снимка стала действительной. | Используется для упорядочивания версий записи. Для конкретной строки это значение часто совпадает с `dbt_updated_at`, но эти поля имеют разный смысл. Примеры для каждой стратегии см. в разделе [Метки времени стратегии и метаполей](#strategy-and-meta-field-timestamps). | `snapshot_meta_column_names: {dbt_valid_from: start_date}` |
+| `dbt_valid_to`   | Метка времени, с которой эта строка перестала быть действительной. Для текущих записей по умолчанию имеет значение `NULL` или значение, указанное в `dbt_valid_to_current`. | У самой последней записи снимка поле `dbt_valid_to` будет иметь значение `NULL` или указанное значение.  | `snapshot_meta_column_names: {dbt_valid_to: end_date}` |
+| `dbt_scd_id`     | Уникальный ключ, генерируемый для каждой строки снимка. | Используется внутри dbt для идентификации каждой SCD-версии. О том, как dbt формирует этот ключ, см. в разделе [Как вычисляется dbt_scd_id](/reference/resource-configs/snapshot_meta_column_names#how-dbtscdid-is-calculated). | `snapshot_meta_column_names: {dbt_scd_id: scd_id}` |
+| `dbt_updated_at` | Метка времени изменения исходной записи на момент вставки этой строки снимка. | Используется внутри dbt. В разделе [Метки времени стратегии и метаполей](#strategy-and-meta-field-timestamps) описано, каким значением заполняется этот столбец для каждой стратегии. | `snapshot_meta_column_names: {dbt_updated_at: modified_date}` |
+| `dbt_is_deleted` | Строковое значение, указывающее, удалена ли запись. (`True`, если удалена, `False`, если не удалена). |Добавляется, если настроено `hard_deletes='new_record'`.  | `snapshot_meta_column_names: {dbt_is_deleted: is_deleted}` |
 
 Все эти имена колонок можно настроить с помощью конфига `snapshot_meta_column_names`. Подробнее см. в этом [примере](/reference/resource-configs/snapshot_meta_column_names#example).
 
-*Временные метки, используемые для каждой колонки, немного различаются в зависимости от используемой стратегии:
+При вставке значения `dbt_valid_from` и `dbt_updated_at` устанавливаются на основе одного и того же значения. Они обозначают начало периода действия и время зарегистрированного изменения соответственно.
+
+### Стратегия и временные метки метаполей {#strategy-and-meta-field-timestamps}
+
+Временные метки, используемые для каждого столбца, зависят от выбранной стратегии:
 
 - Для стратегии `timestamp` настроенная колонка `updated_at` используется для заполнения колонок `dbt_valid_from`, `dbt_valid_to` и `dbt_updated_at`.
 

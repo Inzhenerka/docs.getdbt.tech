@@ -11,16 +11,16 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 ## Введение {#introduction}
 
-В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с Amazon Athena. В нём показано, как:
+В этом руководстве по быстрому старту вы узнаете, как использовать <Constant name="dbt" /> с Amazon Athena. В нём показано, как: 
 
-- Создать S3‑бакет для результатов запросов Athena.
+- Создать бакет S3 для результатов запросов Athena.
 - Создать базу данных Athena.
-- Получить доступ к примерным данным из публичного датасета.
-- Подключить <Constant name="cloud" /> к Amazon Athena.
-- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор `select`.
-- Добавить тесты к вашим моделям.
-- Задокументировать ваши модели.
-- Запланировать выполнение задания.
+- Получить доступ к демонстрационным данным из общедоступного набора данных.
+- Подключить <Constant name="dbt" /> к Amazon Athena.
+- Взять пример запроса и преобразовать его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Добавить тесты для ваших моделей.
+- Документировать ваши модели.
+- Настроить запуск задания по расписанию.
 
 :::tip Видео для вас
 Вы можете бесплатно ознакомиться с [Основами dbt](https://learn.getdbt.com/courses/dbt-fundamentals), если вас интересует обучение с видео.
@@ -28,9 +28,9 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 ### Предварительные требования {#prerequisites}
 
-- У вас есть [<Constant name="cloud" /> аккаунт](https://www.getdbt.com/signup/).  
-- У вас есть [аккаунт AWS](https://aws.amazon.com/).  
-- У вас настроен [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/getting-started.html).
+- У вас есть [учетная запись <Constant name="dbt" />](https://www.getdbt.com/signup/). 
+- У вас есть [учетная запись AWS](https://aws.amazon.com/).
+- Вы настроили [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/getting-started.html).
 
 ### Связанные материалы {#related-content}
 
@@ -86,9 +86,11 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 ### Файл AWS credentials {#aws-credentials-file}
 
-Чтобы получить файл AWS credentials:
-1. Следуйте инструкциям по [настройке файла credentials](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html) с использованием AWS CLI
-1. Найдите файл `~/.aws/credentials` на вашем компьютере
+### Файл учетных данных AWS
+
+Чтобы получить файл учетных данных AWS:
+1. Следуйте инструкциям по [настройке файла учетных данных](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html) с помощью AWS CLI
+1. Найдите файл `~/.aws/credentials` на своем компьютере
     1. Windows: `%USERPROFILE%\.aws\credentials`
     2. Mac/Linux: `~/.aws/credentials`
 
@@ -96,7 +98,14 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 ## Настройка подключения в dbt {#configure-the-connection-in-dbt}
 
-Чтобы настроить подключение к Athena в <Constant name="cloud" />:
+Чтобы настроить подключение к Athena в <Constant name="dbt" />:
+1. Нажмите **название своей учетной записи** в меню слева и выберите **Account settings**.
+1. Нажмите **Connections**, затем **New connection**.
+1. Выберите **Athena** и заполните обязательные поля (и при необходимости необязательные).
+    1. **AWS region name** &mdash; Регион AWS вашей среды.
+    1. **Database (catalog)** &mdash; Введите имя базы данных, созданной на предыдущих шагах (только в нижнем регистре).
+    1. **AWS S3 staging directory** &mdash; Укажите бакет S3, созданный на предыдущих шагах.
+1. Нажмите **Save**
 
 1. Нажмите на **имя вашей учетной записи** в левом боковом меню и выберите **Account settings**.
 1. Перейдите в раздел **Connections** и нажмите **New connection**.
@@ -106,30 +115,30 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
     1. **AWS S3 staging directory** &mdash; Укажите S3‑бакет, созданный на предыдущих шагах.
 1. Нажмите **Save**
 
-### Настройка вашей среды {#configure-your-environment}
-
 Чтобы настроить учетные данные Athena в вашей среде:
-1. Нажмите **Deploy** в левом меню и выберите **Environments**.
-1. Нажмите **Create environment** и заполните **General settings**.
-    - Ваша **версия dbt** должна быть установлена на `Versionless`, чтобы использовать подключение Athena.
-1. Выберите подключение Athena из выпадающего списка **Connection**.
-1. Заполните `aws_access_key` и `aws_access_id`, записанные на предыдущих шагах, а также `Schema`, в который будет производиться запись.
-1. Нажмите **Test connection** и после успешного теста **Save** среду.
+1. Нажмите **Deploy** в меню слева, затем выберите **Environments**.
+1. Нажмите **Create environment** и заполните раздел **General settings**. 
+    - Для подключения к Athena ваша **dbt version** должна относиться к одному из [каналов выпуска](/docs/dbt-versions/dbt-release-tracks). 
+1. Выберите подключение Athena в раскрывающемся списке **Connection**. 
+1. Укажите `aws_access_key` и `aws_access_id`, сохраненные на предыдущих шагах, а также `Schema`, в которую будут записываться данные. 
+1. Нажмите **Test connection** и после успешной проверки нажмите **Save**, чтобы сохранить среду.
 
-Повторите этот процесс, чтобы создать [среду разработки](/docs/dbt-cloud-environments#types-of-environments).
+Повторите эти действия, чтобы создать [среду разработки](/docs/dbt-platform-environments#types-of-environments).
+
+Повторите этот процесс, чтобы создать [среду разработки](/docs/dbt-platform-environments#types-of-environments).
 
 ## Настройка репозитория под управлением dbt {#set-up-a-dbt-managed-repository}
 <Snippet path="tutorial-managed-repo" />
 
 ## Инициализация вашего проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
 
-Теперь, когда у вас настроен репозиторий, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="dbt" />:
 
-1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске проекта это может занять несколько минут: в это время устанавливается подключение к git, клонируется репозиторий и проверяется соединение с хранилищем данных.
-2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок и добавит примеры моделей.
-3. Сделайте первый коммит, нажав **Commit and sync**. Введите сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в управляемом репозитории и позволит вам открыть ветку, в которой можно добавлять новый dbt-код.
-4. Теперь вы можете напрямую выполнять запросы к вашему хранилищу данных и запускать `dbt run`. Вы можете попробовать это прямо сейчас:
-    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить файл:
+1. Нажмите **Start developing in the <Constant name="studio_ide" />**. Первый запуск проекта может занять несколько минут: за это время устанавливается соединение с Git, клонируется репозиторий и проверяется подключение к хранилищу данных.
+2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок с примерами моделей.
+3. Создайте первый коммит, нажав **Commit and sync**. Укажите сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в вашем управляемом репозитории и позволит создать ветку, в которой вы сможете добавлять новый код dbt.
+4. Теперь вы можете выполнять запросы к данным непосредственно в хранилище и запускать `dbt run`. Попробуйте сделать это прямо сейчас:
+    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить новый файл:
         ```sql
         select * from jaffle_shop.customers
         ```
@@ -137,10 +146,12 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 ## Создание вашей первой модели {#build-your-first-model}
 
-У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
+Если вы хотите использовать ИИ для создания своей первой модели, ознакомьтесь с разделом <a id="qs-jump-to-build-with-ai" href="#build-it-with-ai-using-dbt-wizard">создания модели с помощью dbt Wizard</a> ниже.
+
+У вас есть два варианта работы с файлами в <Constant name="studio_ide" />:
 
 - Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку для редактирования файлов и фиксации изменений. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
-- Редактировать в защищённой основной ветке &mdash; Если вы предпочитаете редактировать, форматировать или линтить файлы, а также выполнять команды dbt непосредственно в вашей основной git-ветке. <Constant name="cloud_ide" /> не позволяет выполнять коммиты в защищённую ветку, поэтому вам будет предложено зафиксировать изменения в новой ветке.
+- Редактировать файлы в защищённой основной ветке &mdash; Если вы предпочитаете редактировать, форматировать файлы или проверять их линтером, а также выполнять команды dbt непосредственно в основной ветке git. <Constant name="studio_ide" /> не позволяет создавать коммиты в защищённой ветке, поэтому вам будет предложено зафиксировать изменения в новой ветке.
 
 Назовите новую ветку `add-customers-model`.
 
@@ -208,7 +219,7 @@ select * from final
 
 4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешное выполнение и увидеть три модели.
 
-Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
+Позже вы сможете подключить свои инструменты бизнес-аналитики (BI), такие как [dbt Charts](https://dbtcharts.com/), к этим представлениям и таблицам, чтобы они считывали только очищенные данные, а не необработанные.
 
 #### Часто задаваемые вопросы {#faqs}
 
@@ -218,7 +229,9 @@ select * from final
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации вашей модели {#change-the-way-your-model-is-materialized}
+<Snippet path="quickstarts/build-first-model-with-wizard" />
+
+## Измените способ материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
@@ -329,3 +342,5 @@ select * from final
 <Snippet path="quickstarts/test-and-document-your-project" />
 
 <Snippet path="quickstarts/schedule-a-job" />
+
+<Snippet path="quickstarts/connect-your-ai" />

@@ -1,5 +1,6 @@
 ---
 title: "Конфигурации Oracle"
+description: "Настройте параметры моделей dbt, специфичные для Oracle, включая подсказки параллельного выполнения и параметры адаптера."
 id: "oracle-configs"
 ---
 
@@ -86,7 +87,9 @@ SELECT *
 FROM {{ source('sh_database', 'sales') }}
 ```
 
-## Информация о сессии в `v$session` {#session-info-in-vsession}
+## Информация о сеансе в `v$session`
+
+Пользовательскую информацию о сеансе можно указать в параметре `session_info` в файле `profiles.yml`
 
 Пользовательская информация о сессии может быть указана в `session_info` в `profile.yml`
 

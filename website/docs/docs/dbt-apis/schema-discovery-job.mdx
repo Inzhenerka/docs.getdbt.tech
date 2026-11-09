@@ -1,0 +1,70 @@
+---
+title: "Схема объекта Job"
+sidebar_label: "Job"
+id: "discovery-schema-job"
+pagination_next: "docs/dbt-apis/discovery-schema-job-model"
+pagination_prev: null
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { QueryArgsTable, SchemaTable } from "./schema";
+
+Объект `job` позволяет запрашивать информацию о конкретной модели на основе `jobId` и, опционально, `runId`.
+
+Если вы не укажете `runId`, API вернёт информацию о последнем `runId` для данного job.
+
+[Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать в объекте `job`. Обратитесь к разделу [Fields](#fields), чтобы увидеть полную схему, содержащую все возможные поля, доступные для запроса.
+
+### Аргументы {#arguments}
+
+При запросе `job` вы можете использовать следующие аргументы.
+
+<QueryArgsTable queryName="job" />
+
+
+### Пример запроса {#example-query}
+
+Вы можете использовать `id` вашего production job.
+
+```graphql
+query JobQueryExample {
+  # Provide runId for looking at specific run, otherwise it defaults to latest run
+  job(id: 940) {
+    # Get all models from this job's latest run
+    models(schema: "analytics", first: 10, after: "{somePaginationCursorValue}") {
+      uniqueId
+      executionTime
+      paginationCursor
+    }
+
+    # Or query a single node
+    source(uniqueId: "source.jaffle_shop.snowplow.event") {
+      uniqueId
+      sourceName
+      name
+      state
+      maxLoadedAt
+      criteria {
+        warnAfter {
+          period
+          count
+        }
+        errorAfter {
+          period
+          count
+        }
+      }
+      maxLoadedAtTimeAgoInS
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При запросе `job` вы можете использовать следующие поля.
+
+<SchemaTable nodeName="JobNode" exclude={['metric', 'metrics']} />

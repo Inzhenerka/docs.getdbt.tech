@@ -17,7 +17,7 @@ functions:
 
 </File>
 
-В будущем мы рассматриваем возможность добавления поддержки типа `table`. Следите за прогрессом и оставляйте обратную связь в [этом issue](https://github.com/dbt-labs/dbt-core/issues/11917).
+В будущем мы рассматриваем возможность добавления поддержки типа `table`. Следите за ходом работы и оставляйте свои отзывы в [этом issue](https://github.com/dbt-labs/dbt/issues/11917).
 
 ## Определение {#definition}
 
@@ -39,6 +39,7 @@ functions:
 | dbt-databricks	| ✅	| ❌	| ❌	| ❌ |
 | dbt-postgres	| ✅	| ❌	| ❌	| ❌ |
 | dbt-redshift	| ✅	| ❌	| ❌	| ❌ |
+| dbt-trino	| ✅	| ❌	| ❌	| ❌ |
 
 ### scalar (по умолчанию) {#scalar-default}
 
@@ -98,9 +99,9 @@ functions:
 
 ## Связанная документация {#related-documentation}
 
-- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Пользовательские функции](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)
 - [Конфигурации функций](/reference/function-configs)
-- [Volatility](/reference/resource-configs/volatility)
-- [Аргументы](/reference/resource-properties/function-arguments)
-- [Returns](/reference/resource-properties/returns)
+- [volatility](/reference/resource-configs/volatility)
+- [arguments](/reference/resource-properties/function-arguments)
+- [returns](/reference/resource-properties/returns)

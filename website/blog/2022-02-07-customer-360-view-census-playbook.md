@@ -26,13 +26,13 @@ is_featured: true
 
 > "Поджаренный сэндвич с запечатанными краями. Изобретен в Бонди в 1949 году, скромный jaffle является австралийской классикой. Запечатанные края позволяют любителям jaffle наслаждаться жидкими начинками внутри сэндвича, которые достигают температур, близких к ядру Земли, во время приготовления. Часто употребляется дома после ночной прогулки, самая классическая начинка — консервированные спагетти, а мой личный фаворит — оставшееся тушеное мясо с расплавленным сыром."
 
-![свежеподжаренные jaffles](/img/blog/2022-02-08-customer-360-view/image_0.jpg)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_0.jpg" title="Свежеподжаренные сэндвичи джаффл" />
 
 *Смотрите выше: Вкусные, вкусные jaffles.*
 
 Jaffle Shop — это демонстрационный репозиторий, упомянутый в [Руководстве по началу работы с dbt](/guides), и его jaffles занимают особое место в сердцах сообщества dbt, а также на Data Twitter™.
 
-![jaffles на Data Twitter](/img/blog/2022-02-08-customer-360-view/image_1.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_1.png" title="Jaffles в Twitter-сообществе специалистов по данным" />
 
 Поэтому я подумал, что будет уместно использовать коллективное уважение к этим вкусным, хрустящим закускам, чтобы поговорить об обзорах клиентов 360.
 
@@ -57,7 +57,7 @@ JaffleGaggle быстро растет и только что приобрела
 
 По мере того, как люди приглашают больше своих коллег в свою Gaggle, они могут разблокировать еще больше рецептов и jaffles.
 
-![живой взгляд на jafflegaggle](/img/blog/2022-02-08-customer-360-view/jafflegaggle_screenshot.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/jafflegaggle_screenshot.png" title="Взгляд на jafflegaggle в реальном времени" />
 
 **Видно выше**: Один из многих, многих вкусных рецептов jaffle, которые ждут команды на JaffleGaggle.
 
@@ -101,15 +101,15 @@ JaffleGaggle должна отслеживать информацию о сво�
 
 * **Контакты** (контакты, уникальные по адресу электронной почты)
 
-![контакты в dbt DAG](/img/blog/2022-02-08-customer-360-view/image_2.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_2.png" title="Контакты в DAG dbt" />
 
 * **Gaggles** (понимание активности рабочего пространства)
 
-![gaggles в dbt DAG](/img/blog/2022-02-08-customer-360-view/image_3.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_3.png" title="Скопления в DAG dbt" />
 
 * **Аккаунты** (компании, которые наша команда продаж может отслеживать и приоритизировать)
 
-![аккаунты в dbt DAG](/img/blog/2022-02-08-customer-360-view/image_4.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_4.png" title="Аккаунты в DAG dbt" />
 
 ## Шаг 2: Моделирование контакта {#step-2-model-the-contact}
 
@@ -239,7 +239,7 @@ left join {{ ref('merged_user') }}
 
 Это дает нам доступ к DAG для `jafflegaggle_contacts.sql`, который может служить источником истины для команды Ops JaffleGaggle о том, где находятся аналитические определения для контактов в системе.
 
-![DAG контактов jafflegaggle](/img/blog/2022-02-08-customer-360-view/image_6.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_6.png" title="DAG контактов Jafflegaggle" />
 
 ## Шаг 3: Моделирование Gaggle {#step-3-model-the-gaggle}
 
@@ -286,11 +286,11 @@ gaggle_total_facts as (
 
 Я знаю, это много кода. Ознакомьтесь с dbt docs для проекта, чтобы получить объяснение полей. Вот вывод финальной таблицы `jafflegaggle_facts`:
 
-![вывод запроса фактов jafflegaggle](/img/blog/2022-02-08-customer-360-view/image_7.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_7.png" title="Снимок экрана с результатами запроса фактов Jafflegaggle" />
 
 Ссылаясь на DAG из dbt docs, вы можете увидеть, как мы уже получаем выгоду от объединения на уровне пользователей для аналитической информации, связанной с `jafflegaggle_contacts`.
 
-![DAG моделирования gaggle](/img/blog/2022-02-08-customer-360-view/image_8.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_8.png" title="DAG моделирования gaggle" />
 
 Мы также используем восходящую таблицу `stg_gaggles`, которая подтягивает информацию о создании Gaggle и его имени.
 
@@ -302,7 +302,7 @@ gaggle_total_facts as (
 
 Посмотрев на dbt docs, мы видим, что каждая модель является восходящим источником для [`jafflegaggle_corporate_accounts`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_corporate_accounts.sql).
 
-![корпоративные аккаунты jafflegaggle](/img/blog/2022-02-08-customer-360-view/image_9.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_9.png" title="Корпоративные аккаунты Jagglegaggle" />
 
 На этом уровне мы **объединяем компанию для объединенного домена**, как мы сделали с `merged_users` ранее. Вот код для этого шага:
 
@@ -324,7 +324,7 @@ select
 
 Вот вывод финальной таблицы корпоративных аккаунтов:
 
-![таблица корпоративных аккаунтов](/img/blog/2022-02-08-customer-360-view/image_10.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_10.png" title="Таблица корпоративных аккаунтов" />
 
 ### Шаг 4.1: Идентификация активных пользователей для аккаунта {#step-41-identify-power-users-for-an-account}
 
@@ -394,7 +394,7 @@ corporate_power_users as (
 3. Используйте <Term id="etl" />/<Term id="elt" />, чтобы вернуть данные CRM в хранилище данных
 4. Разработайте, как вы можете расширить текущее решение по объединению
 
-![диаграмма архитектуры обзора клиентов 360](/img/blog/2022-02-08-customer-360-view/image_11.png)
+<Lightbox src="/img/blog/2022-02-08-customer-360-view/image_11.png" title="Архитектурная схема комплексного представления клиента (Customer 360)" />
 
 Если вы дошли до этого момента, вы прошли путь от трех исходных таблиц до бизнес-специфического источника истины в вашем собственном хранилище данных с разрешением идентичности "человек в цикле", магией макросов dbt для доменов электронной почты и лучшими практиками для операционализации роста B2B, основанного на продукте. Вы определенно заслуживаете jaffle. 🥪
 

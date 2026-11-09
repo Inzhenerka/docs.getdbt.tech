@@ -1,6 +1,6 @@
 ---
 sidebar_label: "database"
-resource_types: [models, seeds, tests]
+resource_types: [models, seeds, tests, functions]
 datatype: string
 description: "Переопределение базы данных по умолчанию при создании ресурсов в вашей платформе данных с помощью dbt."
 ---
@@ -100,6 +100,38 @@ data_tests:
 Это приведет к тому, что результаты тестов будут сохранены в базе данных `test_results`.
 </File>
 </TabItem>
+
+<TabItem value="functions" label="Functions">
+
+Specify a custom database for a function in your `dbt_project.yml` or a properties YAML file.
+
+For example, to create a function in a database called `analytics` instead of the target database:
+
+<File name='dbt_project.yml'>
+
+```yml
+functions:
+  your_project:
+    calculate_tax:
+      +database: analytics
+```
+
+</File>
+
+<File name='functions/properties.yml'>
+
+```yaml
+functions:
+  - name: calculate_tax
+    config:
+      database: analytics
+```
+
+</File>
+
+This results in the function being located in the `analytics` database, so the full relation name would be `analytics.finance.calculate_tax` instead of the default target database.
+
+</TabItem>
 </Tabs>
 
 ## Определение {#definition}
@@ -112,7 +144,17 @@ data_tests:
 * Если пользовательская база данных _не_ указана, база данных отношения — это целевая база данных (`{{ target.database }}`).
 * Если пользовательская база данных указана, база данных отношения — это значение `{{ database }}`.
 
-Чтобы узнать больше о том, как изменить способ генерации `database` для отношения в dbt, прочитайте [Использование пользовательских баз данных](/docs/build/custom-databases).
+Стандартное поведение dbt:
+* Если пользовательская база данных _не_ указана, для отношения используется целевая база данных (`{{ target.database }}`).
+* Если пользовательская база данных указана, для отношения используется значение `{{ database }}`.
+
+Подробнее об изменении способа, которым dbt формирует `database` для отношения, читайте в разделе [Использование пользовательских баз данных](/docs/build/custom-databases)
+
+
+
+## Особенности хранилищ данных
+* BigQuery: `project` и `database` взаимозаменяемы
+* Databricks: `catalog` и `database` взаимозаменяемы
 
 ## Информация, специфичная для хранилища {#warehouse-specific-information}
 * BigQuery: `project` и `database` взаимозаменяемы.

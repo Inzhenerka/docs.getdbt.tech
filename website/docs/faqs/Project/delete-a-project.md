@@ -5,14 +5,14 @@ sidebar_label: 'Как удалить проект'
 id: delete-a-project
 
 ---
-Чтобы удалить проект в <Constant name="cloud" />, вы должны быть владельцем аккаунта или иметь права администратора.
+Чтобы удалить проект в <Constant name="dbt" />, необходимо быть владельцем аккаунта или обладать правами администратора. 
 
-1. В <Constant name="cloud" /> нажмите на имя вашего аккаунта в левом боковом меню и выберите **Account settings**.
+1. В <Constant name="dbt" /> нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings** (Настройки аккаунта).
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" title="Перейти к настройкам аккаунта" />
+<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" title="Переход к настройкам аккаунта" />
 
 2. В **Account Settings** выберите **Projects**. На странице **Projects** нажмите на проект, который вы хотите удалить.  
 3. Нажмите на значок редактирования в правом нижнем углу раздела **Project Details**. В левой части этого же представления с деталями появится опция **Delete**.  
 4. Нажмите **Delete**. Подтвердите действие — проект будет удалён немедленно, без дополнительных запросов пароля. После подтверждения проект удаляется сразу. Обратите внимание: после удаления проекта это действие нельзя отменить.
 
-<Lightbox src="/img/docs/dbt-cloud/delete_projects_from_dbt_cloud.png" title="Удаление проектов" />
+<Lightbox src="/img/docs/dbt-platform/delete_projects_from_dbt_cloud.png" title="Удаление проектов" />

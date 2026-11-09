@@ -4,11 +4,19 @@ description: "Узнайте, как запрашивать и использо�
 sidebar_label: "Использование метрик"
 tags: [Semantic Layer]
 pagination_next: "docs/use-dbt-semantic-layer/sl-faqs"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
 ---
 
-# Использование метрик из вашего Semantic Layer <Lifecycle status="self_service,managed,managed_plus" /> {#consume-metrics-from-your-semantic-layer}
+# Использование метрик из вашего семантического слоя
 
-После [развертывания](/docs/use-dbt-semantic-layer/deploy-sl) вашего <Constant name="semantic_layer" /> следующим важным (и интересным!) шагом становится выполнение запросов и использование метрик, которые вы определили. На этой странице собраны ссылки на ключевые ресурсы, которые помогут вам разобраться с процессом потребления метрик через различные интеграции, API и инструменты, используя разные [синтаксисы запросов](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata).
+После [развертывания](/docs/use-dbt-semantic-layer/deploy-sl) вашего <Constant name="semantic_layer" /> следующий важный (и увлекательный!) шаг — выполнение запросов к определенным вами метрикам и их использование. На этой странице собраны ссылки на ключевые ресурсы, которые помогут вам использовать метрики в различных интеграциях, API и инструментах с помощью разных вариантов [синтаксиса запросов](/docs/dbt-apis/sl-jdbc#querying-the-api-for-metric-metadata).
+
+import SlConnectYourAi from '/snippets/_sl-connect-your-ai.md';
+
+<SlConnectYourAi/>
 
 Когда ваш <Constant name="semantic_layer" /> развернут, вы можете начать запрашивать метрики с помощью различных инструментов и API. Ниже приведены основные ресурсы, с которых стоит начать:
 
@@ -16,16 +24,15 @@ pagination_next: "docs/use-dbt-semantic-layer/sl-faqs"
 
 Интегрируйте <Constant name="semantic_layer" /> с различными инструментами бизнес-аналитики (BI) и платформами данных, чтобы выполнять запросы к метрикам напрямую в рамках уже существующих рабочих процессов. Ознакомьтесь со следующими интеграциями:
 
-- [Available integrations](/docs/cloud-integrations/avail-sl-integrations) &mdash; Ознакомьтесь с широким списком партнёров, таких как Tableau, Google Sheets, Microsoft Excel и другие, где вы можете запрашивать свои метрики напрямую из <Constant name="semantic_layer" />.
+- [Доступные интеграции](/docs/platform-integrations/avail-sl-integrations) &mdash; Ознакомьтесь с широким выбором партнёрских инструментов, таких как Tableau, Google Sheets, Microsoft Excel и другие, в которых можно запрашивать метрики напрямую из <Constant name="semantic_layer" />.
 
 ### Запросы с помощью API {#query-with-apis}
 
-Чтобы использовать все возможности <Constant name="semantic_layer" />, вы можете применять API <Constant name="semantic_layer" /> для программного запроса метрик:
-
-- [API <Constant name="semantic_layer" />](/docs/dbt-cloud-apis/sl-api-overview) &mdash; Узнайте, как использовать API <Constant name="semantic_layer" /> для запроса метрик в downstream‑инструментах, обеспечивая согласованность и надежность метрик данных.
-  - [Синтаксис запросов JDBC API](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) &mdash; Подробно разберите синтаксис запросов метрик с использованием JDBC API, включая примеры и детальные инструкции.
-  - [Синтаксис запросов GraphQL API](/docs/dbt-cloud-apis/sl-graphql#querying) &mdash; Изучите синтаксис запросов метрик через GraphQL API, включая примеры и подробные инструкции.
-  - [Python SDK](/docs/dbt-cloud-apis/sl-python#usage-examples) &mdash; Используйте библиотеку Python SDK для программного запроса метрик с помощью Python.
+Чтобы в полной мере использовать возможности <Constant name="semantic_layer" />, вы можете обращаться к API <Constant name="semantic_layer" /> для программного выполнения запросов к метрикам:
+- [API <Constant name="semantic_layer" />](/docs/dbt-apis/sl-api-overview) &mdash; Узнайте, как использовать API <Constant name="semantic_layer" /> для выполнения запросов к метрикам в инструментах, использующих эти данные, обеспечивая согласованность и надежность метрик.
+  - [Синтаксис запросов JDBC API](/docs/dbt-apis/sl-jdbc#querying-the-api-for-metric-metadata) &mdash; Изучите синтаксис запросов к метрикам через JDBC API с примерами и подробными инструкциями.
+  - [Синтаксис запросов GraphQL API](/docs/dbt-apis/sl-graphql#querying) &mdash; Узнайте о синтаксисе запросов к метрикам через GraphQL API, включая примеры и подробные инструкции.
+  - [Python SDK](/docs/dbt-apis/sl-python#usage-examples) &mdash; Используйте библиотеку Python SDK для программного выполнения запросов к метрикам на Python.
   
 ### Запросы в процессе разработки {#query-during-development}
 

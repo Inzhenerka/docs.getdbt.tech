@@ -1,5 +1,6 @@
 ---
 title: "Конфигурации Teradata"
+description: "Настройте специфичные для Teradata параметры моделей dbt, включая quote_columns и другие параметры адаптера."
 id: "teradata-configs"
 ---
 

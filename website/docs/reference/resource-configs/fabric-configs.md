@@ -1,9 +1,10 @@
 ---
 title: "Конфигурации Microsoft Fabric Data Warehouse"
+description: "Настройте параметры Microsoft Fabric Data Warehouse в dbt, включая материализации, инкрементальные стратегии и ссылки между хранилищами."
 id: "fabric-configs"
 ---
 
-На этой странице описываются параметры конфигурации, специфичные для адаптера `dbt-fabric` при работе с Microsoft Fabric Data Warehouse. Здесь приводится обзор поддерживаемых материализаций, стратегий инкрементальной загрузки (включая [merge](#merge) и ]microbatch](#microbatch)), межхранилищных ссылок, снапшотов хранилища и настройки профиля.
+На этой странице описаны параметры конфигурации, специфичные для адаптера `dbt-fabric` для Microsoft Fabric Data Warehouse. Здесь рассматриваются поддерживаемые материализации, инкрементальные стратегии (включая [merge](#merge-default) и [microbatch](#microbatch)), [контракты моделей](#model-contracts), ссылки между хранилищами, снимки хранилищ и настройка профиля.
 
 ## Материализации {#materializations}
 
@@ -107,6 +108,50 @@ models:
 
 > **Ограничение:** В материализациях моделей не поддерживаются вложенные CTE (Common Table Expressions). Модели, использующие несколько уровней вложенных CTE, могут завершиться ошибкой на этапе компиляции или выполнения.
 
+## Model contracts
+
+The `dbt-fabric` adapter supports [model contracts](/docs/mesh/govern/model-contracts) and [constraints](/reference/resource-properties/constraints) on `table` and `incremental` models.
+
+| Constraint type | Supported | Checked when the model builds |
+|-----------------|:---------:|:-----------------------------:|
+| `not_null`      | ✅ | ✅ |
+| `primary_key`   | ✅ | ❌ |
+| `foreign_key`   | ✅ | ❌ |
+| `unique`        | ✅ | ❌ |
+| `check`         | ❌ | ❌ |
+
+<br />
+
+Only `not_null` is checked when the model builds. Other supported constraint types are recorded on the table for reference, but Microsoft Fabric does not check them when new data is added. Use [data tests](/docs/build/data-tests) if you need to verify those rules. Define `primary_key`, `foreign_key`, and `unique` at the model level. The adapter ignores those constraint types at the column level.
+
+Microsoft Fabric does not include all constraints in the initial `create table` statement. dbt creates the table first, then runs separate statements to add model-level constraints. You must provide a `name` for each model-level constraint.
+
+<File name='models/dim_customers.yml'>
+
+```yaml
+models:
+  - name: dim_customers
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [id]
+        name: pk_dim_customers
+    columns:
+      - name: id
+        data_type: int
+        constraints:
+          - type: not_null
+      - name: customer_name
+        data_type: varchar(100)
+      - name: first_transaction_date
+        data_type: date
+```
+
+</File>
+
+For more information, refer to [constraints](/reference/resource-properties/constraints) and [model contracts](/docs/mesh/govern/model-contracts).
 
 ## Снимки (Snapshots) {#snapshots}
 

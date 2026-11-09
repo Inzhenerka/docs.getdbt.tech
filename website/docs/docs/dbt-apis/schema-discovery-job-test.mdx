@@ -1,0 +1,47 @@
+---
+title: "Схема объекта test"
+sidebar_label: "Test"
+id: "discovery-schema-job-test"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+Объект **test** позволяет запрашивать информацию о конкретном тесте.
+
+### Аргументы {#arguments}
+
+При запросе `test` доступны следующие аргументы.
+
+<NodeArgsTable parent="JobNode" name="test" />
+
+Ниже приведены иллюстративные примеры запросов и описание схемы (всех возможных полей, которые можно запрашивать) объекта **test**.
+
+### Пример запроса {#example-query}
+
+Пример запроса ниже выводит информацию о тесте, включая состояние результата теста. В порядке убывания серьезности результат может принимать одно из следующих значений: `"error"`, `"fail"`, `"warn"` или `"pass"`.
+
+```graphql
+{
+  job(id: 123) {
+    test(uniqueId: "test.internal_analytics.not_null_metrics_id") {
+      runId
+      accountId
+      projectId
+      uniqueId
+      name
+      columnName
+      state
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При запросе `test` доступны следующие поля:
+
+<SchemaTable nodeName="TestNode" />

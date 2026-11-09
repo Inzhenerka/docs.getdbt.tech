@@ -1,5 +1,6 @@
 ---
 title: volatility
+description: "Declare the volatility (deterministic, stable, or non-deterministic) of a user-defined function (UDF) so the warehouse can optimize how it runs."
 sidebar_label: "volatility"
 id: volatility
 ---
@@ -37,7 +38,7 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 | Value | Description | Example |
 | --- | --- | --- |
 | `deterministic` | Всегда возвращает один и тот же результат для одинаковых входных данных. Безопасно для агрессивных оптимизаций и кэширования. | `substr()` &mdash; Возвращает одну и ту же подстроку при одинаковой строке и параметрах. |
-| `stable` | Возвращает одно и то же значение в рамках одного выполнения запроса, но может изменяться между выполнениями. Поддерживается не всеми хранилищами. Подробнее см. [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#warehouse-specific-volatility-keywords). | `now()` &mdash; Возвращает текущее время на момент начала запроса; остаётся постоянным в рамках одного запроса, но отличается между запусками. |
+| `stable` | Возвращает одно и то же значение в рамках одного выполнения запроса, но может изменяться между выполнениями. Поддерживается не всеми хранилищами. Подробнее см. [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#supported-volatility-types). | `now()` &mdash; Возвращает текущее время на момент начала запроса; остаётся постоянным в рамках одного запроса, но отличается между запусками. |
 | `non-deterministic` | Может возвращать разные результаты для одинаковых входных данных. Хранилища не должны кэшировать или переупорядочивать вычисления, предполагая стабильный результат. | `first()` &mdash; Может возвращать разные строки в зависимости от плана запроса или порядка данных. <br></br>`random()` &mdash; Генерирует случайное число, которое меняется при каждом вызове, даже при одинаковых входных данных. |
 
 ## Пример {#example}
@@ -62,9 +63,9 @@ functions:
 
 ## Связанная документация {#related-documentation}
 
-- [Пользовательские функции (UDF)](/docs/build/udfs)
+- [Пользовательские функции](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)
 - [Конфигурации функций](/reference/function-configs)
-- [Type](/reference/resource-configs/type)
-- [Аргументы](/reference/resource-properties/function-arguments)
-- [Returns](/reference/resource-properties/returns)
+- [type](/reference/resource-configs/type)
+- [arguments](/reference/resource-properties/function-arguments)
+- [returns](/reference/resource-properties/returns)

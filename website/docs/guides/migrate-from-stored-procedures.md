@@ -7,7 +7,7 @@ hoverSnippet: Узнайте, как преобразовать историче
 platform: 'dbt-core'
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Migration', 'dbt Core']
+tags: ['Migration']
 level: 'Beginner'
 ---
 

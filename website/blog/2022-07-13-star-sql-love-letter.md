@@ -76,6 +76,6 @@ from {{ ref('table_a') }}
 
 Это не секрет: команда данных в dbt Labs любит использовать макросы и тесты dbt utils, когда это уместно. Мы настолько любим dbt utils, что создали для них турнир March Madness Utils Bracket (вопросы не принимаются в данный момент) и использовали макрос `star` более 30 раз в нашем внутреннем репозитории dbt.
 
-![](/img/blog/2022-07-13-star-sql-love-letter/utils-madness-1.png)
+<Lightbox src="/img/blog/2022-07-13-star-sql-love-letter/utils-madness-1.png" />
 
 В целом, макрос `star` — отличный способ начать использовать пакет dbt utils, писать DRY код и уменьшить риск развития туннельного синдрома.

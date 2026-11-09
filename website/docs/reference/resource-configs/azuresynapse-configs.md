@@ -1,5 +1,6 @@
 ---
-title: "Конфигурации Microsoft Azure Synapse DWH"
+title: "Настройки Microsoft Azure Synapse DWH"
+description: "Настройте параметры индексов и распределения для таблиц хранилища данных Microsoft Azure Synapse в dbt."
 id: "azuresynapse-configs"
 ---
 

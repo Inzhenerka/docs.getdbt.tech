@@ -14,21 +14,28 @@ level: 'Advanced'
 
 ## Введение {#introduction}
 
-Это руководство покажет, как настроить интеграцию между заданиями <Constant name="cloud" /> и Microsoft Teams с использованием [вебхуков <Constant name="cloud" />](/docs/deploy/webhooks) и Zapier — аналогично [встроенной интеграции со Slack](/docs/deploy/job-notifications#slack-notifications).
+В этом руководстве показано, как настроить интеграцию заданий <Constant name="dbt" /> с Microsoft Teams с помощью [вебхуков <Constant name="dbt" />](/docs/deploy/webhooks) и Zapier, аналогичную [встроенной интеграции со Slack](/docs/deploy/job-notifications#slack-notifications). 
 
-Когда задание <Constant name="cloud" /> завершает выполнение, интеграция будет:
+:::tip Нужны уведомления в Microsoft Teams без Zapier?
+Если вам нужны только оповещения о статусе заданий в Microsoft Teams (например, «задание выполнено успешно / завершилось с ошибкой») и _не требуется_ обрабатывать данные вебхуков, вместо этого можно использовать **уведомления о заданиях**, отправляя их на адрес электронной почты канала Teams (External Email).
 
-- получать уведомление вебхука в Zapier,
-- извлекать результаты из admin API <Constant name="cloud" />, и
-- публиковать сводку в канал Microsoft Teams.
+См. раздел **Уведомления о заданиях**: [Уведомления о заданиях](https://docs.getdbt.com/docs/deploy/job-notifications)
+:::
 
-![Скриншот сообщения в MS Teams, показывающего сводку выполнения <Constant name="cloud" />, которое завершилось с ошибкой](/img/guides/orchestration/webhooks/zapier-ms-teams/ms-teams-ui.png)
+После завершения задания <Constant name="dbt" /> интеграция выполнит следующие действия:
+
+ - Получит уведомление вебхука в Zapier,
+ - Извлечёт результаты из API администрирования <Constant name="dbt" /> и
+ - Опубликует сводку в канале Microsoft Teams.
+
+<Lightbox src="/img/guides/orchestration/webhooks/zapier-ms-teams/ms-teams-ui.png" title="Снимок экрана с сообщением в MS Teams, содержащим сводку о запуске dbt, завершившемся с ошибкой" />
 
 ### Предварительные требования {#prerequisites}
 
 Для настройки интеграции вам потребуется знакомство со следующим:
 
-- [<Constant name="cloud" /> Webhooks](/docs/deploy/webhooks)
+Для настройки интеграции необходимо ознакомиться с:
+- [Вебхуками <Constant name="dbt" />](/docs/deploy/webhooks)
 - Zapier
 
 ## Настройка соединения между Zapier и Microsoft Teams {#set-up-the-connection-between-zapier-and-microsoft-teams}
@@ -42,7 +49,7 @@ level: 'Advanced'
 
 Нажмите **Continue**, затем скопируйте URL вебхука.
 
-![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
+<Lightbox src="/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png" title="Скриншот интерфейса Zapier с URL вебхука, готовым к копированию" />
 
 ### 3. Настройте новый вебхук в dbt {#3-configure-a-new-webhook-in-dbt}
 
@@ -50,13 +57,13 @@ level: 'Advanced'
 
 Запомните секретный ключ вебхука для дальнейшего использования.
 
-После того как вы протестируете endpoint в <Constant name="cloud" />, вернитесь в Zapier и нажмите **Test Trigger** — это создаст пример тела вебхука на основе тестового события, отправленного из <Constant name="cloud" />.
+После того как вы протестируете эндпоинт в <Constant name="dbt" />, вернитесь в Zapier и нажмите **Test Trigger**. Это создаст пример тела вебхука на основе тестового события, отправленного <Constant name="dbt" />.
 
 Значения в примере тела жестко закодированы и не отражают ваш проект, но они дают Zapier правильно сформированный объект во время разработки.
 
 ## Хранение секретов {#store-secrets}
 
-На следующем шаге вам понадобится **Webhook Secret Key** с предыдущего шага, а также <Constant name="cloud" /> [personal access token](/docs/dbt-cloud-apis/user-tokens) или [service account token](/docs/dbt-cloud-apis/service-tokens).
+На следующем шаге вам понадобятся секретный ключ вебхука из предыдущего шага и [персональный токен доступа](/docs/dbt-apis/user-tokens) или [токен сервисной учётной записи](/docs/dbt-apis/service-tokens) <Constant name="dbt" />.
 
 Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps), что предотвращает отображение ваших ключей в открытом виде в коде Zap. Вы сможете получить к ним доступ через [утилиту StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
 
@@ -67,11 +74,11 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 В области **Set up action** добавьте два элемента в **Input Data**: `raw_body` и `auth_header`. Свяжите их с полями `1. Raw Body` и `1. Headers Http Authorization` из шага **Catch Raw Hook** выше.
 
-![Скриншот интерфейса Zapier, показывающий сопоставления raw_body и auth_header](/img/guides/orchestration/webhooks/zapier-common/run-python.png)
+<Lightbox src="/img/guides/orchestration/webhooks/zapier-common/run-python.png" title="Снимок интерфейса Zapier с сопоставлениями raw_body и auth_header" />
 
-В поле **Code** вставьте следующий код, заменив `YOUR_SECRET_HERE` на секрет, который вы создали при настройке интеграции Storage by Zapier. Обратите внимание, что это **не** секрет <Constant name="cloud" />.
+В поле **Code** вставьте следующий код, заменив `YOUR_SECRET_HERE` секретом, который вы создали при настройке интеграции Storage by Zapier. Помните, что это не ваш секрет <Constant name="dbt" />.
 
-Приведённый ниже код проверит подлинность запроса, извлечёт логи запуска для завершённой задачи из Admin API, а затем сформирует сводное сообщение, в котором будут выделены все сообщения об ошибках из логов завершения выполнения, созданных <Constant name="core" />.
+Приведённый ниже код проверит подлинность запроса, получит журналы запуска завершённого задания через Admin API, а затем сформирует сводное сообщение, извлекая все сообщения об ошибках из журналов, которые dbt создаёт в конце выполнения.
 
 ```python
 import hashlib
@@ -92,7 +99,7 @@ api_token = secret_store.get('DBT_CLOUD_SERVICE_TOKEN')
 signature = hmac.new(hook_secret.encode('utf-8'), raw_body.encode('utf-8'), hashlib.sha256).hexdigest()
 
 if signature != auth_header:
-  raise Exception("Calculated signature doesn't match contents of the Authorization header. This webhook may not have been sent from <Constant name="cloud" />.")
+  raise Exception("Calculated signature doesn't match contents of the Authorization header. This webhook may not have been sent from dbt.")
 
 full_body = json.loads(raw_body)
 hook_data = full_body['data'] 
@@ -160,7 +167,7 @@ output = {'outcome_message': outcome_message}
 
 В области **Set up action** выберите команду и канал. Установите **Message Text Format** в **markdown**, затем поместите **2. Outcome Message** из Run Python в Code by Zapier в поле **Message Text**.
 
-![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов с сообщением MS Teams](/img/guides/orchestration/webhooks/zapier-ms-teams/ms-teams-zap-config.png)
+<Lightbox src="/img/guides/orchestration/webhooks/zapier-ms-teams/ms-teams-zap-config.png" title="Скриншот интерфейса Zapier, показывающий сопоставление данных из предыдущих шагов с сообщением MS Teams" />
 
 ## Тестирование и развертывание {#test-and-deploy}
 

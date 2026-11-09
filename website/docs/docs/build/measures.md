@@ -1,12 +1,17 @@
 ---
 title: Меры
 id: measures
-description: "Меры — это агрегаты, выполняемые над столбцами в вашей модели."
+description: "Меры — это агрегации, выполняемые над столбцами вашей модели."
 sidebar_label: "Меры"
-tags: [Метрики, Семантический слой]
+tags: [Metrics, Semantic Layer]
+availability: all_users
 ---
 
-Меры — это агрегаты, выполняемые над столбцами в вашей модели. Они могут использоваться как конечные метрики или как строительные блоки для более сложных метрик.
+:::tip Меры устарели в новой спецификации
+Обратите внимание: меры объявлены устаревшими в пользу простых метрик в разделе `metrics:`. Для миграции преобразуйте каждую меру в метрику с `type: simple`. Подробнее см. в разделах [Переход на актуальную спецификацию YAML](/docs/build/latest-metrics-spec) и [Обновление до v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2).
+:::
+
+Меры — это агрегации, выполняемые над столбцами вашей модели. Их можно использовать как итоговые метрики или как составные элементы для более сложных метрик.
 
 Меры имеют несколько входных параметров, которые описаны в следующей таблице вместе с их типами полей.
 
@@ -17,8 +22,6 @@ import MeasuresParameters from '/snippets/_sl-measures-parameters.md';
 ## Спецификация меры {#measure-spec}
 
 Пример полной спецификации YAML для мер приведен ниже. Фактическая конфигурация ваших мер будет зависеть от используемой агрегации.
-
-<VersionBlock firstVersion="1.9">
 
 ```yaml
 semantic_models:
@@ -35,8 +38,6 @@ semantic_models:
         [config](/reference/resource-properties/config): Use the config property to specify configurations for your measure.  ## Опционально
           [meta](/reference/resource-configs/meta):  {<dictionary>} Задает метаданные для ресурса и помогает организовывать ресурсы. Принимает обычный текст, пробелы и кавычки. ## Опционально
 ```
-
-</VersionBlock>
 
 ### Имя {#name}
 
@@ -103,8 +104,6 @@ agg_params:
 :::
 
 ### Модель с различными агрегациями {#model-with-different-aggregations}
-
-<VersionBlock firstVersion="1.9">
 
 ```yaml
 semantic_models:
@@ -190,7 +189,6 @@ semantic_models:
         expr: case when quantity > 10 then true else false end
 
 ```
-</VersionBlock>
 
 
 ### Неаддитивные измерения {#non-additive-dimensions}
@@ -266,7 +264,7 @@ metrics:
 
 Мы можем запросить полуаддитивные метрики, используя следующий синтаксис:
 
-Для <Constant name="cloud" />:
+Для <Constant name="dbt" />:
 
 ```bash
 dbt sl query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__month --order subscription__subscription_date__month 

@@ -1,0 +1,60 @@
+---
+title: "Схема объекта Exposures"
+sidebar_label: "Exposures"
+id: "discovery-schema-environment-applied-exposures"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+ 
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+[Exposures](/docs/build/exposures) — это ресурсы dbt, которые представляют нисходящее использование вашего проекта, например дашборды, приложения или пайплайны data science. Вы можете запрашивать exposures через Discovery API, чтобы понять, какие активы зависят от ваших моделей.
+
+[Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать с помощью объекта `exposures`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, которая содержит все возможные поля, доступные для запроса.
+
+### Аргументы {#arguments}
+
+При выполнении запроса к `exposures` вы можете использовать следующие аргументы:
+
+<NodeArgsTable parent="AppliedState" name="exposures" />
+
+### Пример запроса {#example-query}
+
+Вы можете указать `environmentId`, `first: 100` и отфильтровать по `uniqueIds` моделей, чтобы вернуть все downstream exposures (дашборды, приложения и т. д.), которые зависят от модели `customers` в пакете `marketing`, ограничив результат первыми 100 записями:
+
+```graphql
+query {
+  environment(id: 834) {
+    applied {
+      exposures(
+        filter: {
+          uniqueIds: ["model.marketing.customers"] # Use this format for unique ID: RESOURCE_TYPE.PACKAGE_NAME.RESOURCE_NAME
+        }, 
+        first: 100
+      ) {
+        edges {
+          node {
+            accountId
+            exposureType
+            fqn
+            projectId
+            url
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запроса к `exposures` вы можете использовать следующие поля:
+
+<SchemaTable nodeName="ExposureAppliedStateNodeConnection" />
+
+### Ключевые поля узлов {#key-fields-from-nodes}
+
+<SchemaTable nodeName="ExposureAppliedStateNode" />

@@ -26,13 +26,13 @@ hide_table_of_contents: true
 
 ### Предварительные требования {#prerequisites}
 
-Перед началом убедитесь, что у вас есть:
+- Настроенный проект dbt. Если у вас его ещё нет, воспользуйтесь [кратким руководством по началу работы с <Constant name="semantic_layer" />](/guides/sl-qs?step=1) или [краткими руководствами по началу работы с <Constant name="dbt" />](/guides?tags=Quickstart).
 
-- настроенный dbt‑проект. Если его нет, воспользуйтесь [quickstart‑руководством по <Constant name="semantic_layer" />](/guides/sl-snowflake-qs?step=1) или одним из [quickstart‑руководств <Constant name="cloud" />](/guides?tags=Quickstart).
+- настроенный dbt‑проект. Если его нет, воспользуйтесь [quickstart‑руководством по <Constant name="semantic_layer" />](/guides/sl-qs?step=1) или одним из [quickstart‑руководств <Constant name="cloud" />](/guides?tags=Quickstart).
 
-## Добавление SQL‑модели time spine {#add-a-time-spine-sql-model}
+Для начала предположим, что вы создаёте временную шкалу (time spine) с нуля. Если у вас уже настроен проект dbt и есть собственная временная шкала (например, модель типа `dim_date`), вы можете пропустить этот шаг и перейти к разделу [Использование существующей модели dim_date](https://docs.getdbt.com/guides/mf-time-spine?step=3#using-an-existing-dim_date-model).
 
-Начнём с предположения, что вы создаёте time spine с нуля. Если у вас уже есть dbt‑проект и собственная time spine (например, модель типа `dim_date`), этот шаг можно пропустить и сразу перейти к разделу [Использование существующей модели dim_date](/guides/mf-time-spine#using-an-existing-dim-date-model).
+Начнём с предположения, что вы создаёте time spine с нуля. Если у вас уже есть dbt‑проект и собственная time spine (например, модель типа `dim_date`), этот шаг можно пропустить и сразу перейти к разделу [Использование существующей модели dim_date](/guides/mf-time-spine#using-an-existing-dim_date-model).
 
 Time spine — это dbt‑модель, которая генерирует последовательность дат (или временных меток) с заданной гранулярностью. В этом примере мы создадим ежедневный time spine — `time_spine_daily.sql`.
 
@@ -81,7 +81,7 @@ Time spine — это dbt‑модель, которая генерирует п
     dbt show --select time_spine_daily # Используйте эту команду для предпросмотра при локальной разработке
     ```
 
-4. Если вы работаете в <Constant name="cloud_ide" />, вы можете посмотреть результат, нажав кнопку **Preview**:
+4. Если вы разрабатываете модель в <Constant name="studio_ide" />, вы можете просмотреть результат её выполнения, нажав кнопку **Preview**:
    <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
 
 ## Добавление YAML‑конфигурации для time spine {#add-yaml-configuration-for-the-time-spine}
@@ -150,7 +150,7 @@ Time spine — это dbt‑модель, которая генерирует п
    dbt show --select time_spine_daily # Используйте для предпросмотра при локальной разработке
    ```
 
-2. При работе в <Constant name="cloud_ide" /> используйте кнопку **Preview**:
+2. Если вы разрабатываете в <Constant name="studio_ide" />, вы можете предварительно просмотреть модель, нажав кнопку **Preview**:
     <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
 
 3. Убедитесь, что модель:
@@ -165,8 +165,8 @@ Time spine — это dbt‑модель, которая генерирует п
     dbt sl query --metrics revenue --group-by metric_time
     ```
 
-    Результат будет выглядеть примерно так в <Constant name="cloud_ide" />:
-    <Lightbox src="/img/quickstarts/dbt-cloud/validate-mf-timespine-output.png" title="Validate the metrics and time spine output in the Studio IDE" />
+В <Constant name="studio_ide" /> будут выведены результаты, аналогичные следующим:
+    <Lightbox src="/img/quickstarts/dbt-platform/validate-mf-timespine-output.png" title="Проверка результатов метрик и временной шкалы в Studio IDE" />
 
 5. Проверьте, что данные корректны и соответствуют ожиданиям.
 
@@ -245,7 +245,7 @@ Time spine — это dbt‑модель, которая генерирует п
    dbt sl query --metrics orders --group-by metric_time__year
    ```
 
-При работе в <Constant name="cloud_ide" /> используйте кнопку **Preview**.
+Если вы разрабатываете в <Constant name="studio_ide" />, вы можете просмотреть результат выполнения модели, нажав кнопку **Preview**.
    <Lightbox src="/img/mf-guide-query.png" title="Validate the metrics and time spine output in the Studio IDE" />
 
 :::tip Дополнительные баллы!
@@ -258,9 +258,7 @@ Time spine — это dbt‑модель, которая генерирует п
 
 ### Пользовательские календари {#custom-calendars}
 
-Для поддержки пользовательских календарей (фискальные годы, фискальные кварталы и т. д.) создайте дополнительный time spine и настройте его в YAML. Эта возможность доступна в <Constant name="cloud" /> на [Latest release track](/docs/dbt-versions/cloud-release-tracks) или в [<Constant name="core" /> версии 1.9 и выше](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
-
-1. Добавьте SQL‑файл `fiscal_calendar.sql` со следующим содержимым (или используйте собственный календарь):
+Чтобы поддерживать пользовательские календари (например, финансовые годы, финансовые кварталы и т. д.), создайте дополнительную временную шкалу (time spine) и настройте её в YAML. Эта возможность доступна в [треке релизов **v1 Latest**](/docs/dbt-versions/dbt-release-tracks) <Constant name="dbt" /> или в [<Constant name="dbt" /> версии 1.9 и выше](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.9).
 
     <File name='models/marts/fiscal_calendar.sql'>
 
@@ -332,7 +330,7 @@ Time spine — это dbt‑модель, которая генерирует п
    dbt show --select fiscal_calendar # Для предпросмотра при локальной разработке
    ```
 
-   В <Constant name="cloud_ide" /> используйте кнопку **Preview**.
+Если вы разрабатываете в <Constant name="studio_ide" />, вы можете предварительно просмотреть модель, нажав кнопку **Preview**.
 
 4. Проверьте результат, выполнив запрос:
    ```bash
@@ -356,7 +354,7 @@ Time spine — это dbt‑модель, которая генерирует п
 - [Time spine в MetricFlow](/docs/build/metricflow-time-spine)
 - [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl)
 - [Создание метрик](/docs/build/metrics-overview)
-- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-snowflake-qs?step=1)
+- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-qs?step=1)
 
 </ConfettiTrigger>
 

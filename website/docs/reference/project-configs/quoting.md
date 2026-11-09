@@ -12,8 +12,8 @@ quoting:
   database: true | false
   schema: true | false
   identifier: true | false
-  snowflake_ignore_case: true | false  # Fusion-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
-                                       # Ignored by dbt Core and other adapters.
+  snowflake_ignore_case: true | false  # v2-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
+                                       # Ignored by dbt v1 and other adapters.
 ```
 
 </File>
@@ -72,8 +72,8 @@ quoting:
   database: false
   schema: false
   identifier: false
-  snowflake_ignore_case: false  # Fusion-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
-                                # Ignored by dbt Core and other adapters.
+  snowflake_ignore_case: false  # v2-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
+                                # Ignored by dbt v1 and other adapters.
 ```
 
 </File>
@@ -93,8 +93,8 @@ quoting:
   database: false
   schema: false
   identifier: false      
-  snowflake_ignore_case: false  # Fusion-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
-                                # Ignored by dbt Core and other adapters.
+  snowflake_ignore_case: false  # v2-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
+                                # Ignored by dbt v1 and other adapters.
 ```
 
 dbt затем создаст связи без кавычек:
@@ -112,17 +112,17 @@ create table analytics.dbt_alice.dim_customers
 
 Если вы используете Snowflake, мы рекомендуем:
 
-- Установить все параметры quoting в значение `False` в вашем [`dbt_project.yml`](/reference/dbt_project.yml), чтобы избежать лишнего экранирования (quoting) имён моделей и колонок и снизить риск проблем с чувствительностью к регистру.
-  - Установка всех параметров quoting в `False` также означает, что вы не сможете использовать зарезервированные слова в качестве идентификаторов, например имена моделей или таблиц. В любом случае мы рекомендуем избегать использования таких зарезервированных слов.  
-- Если вы используете Fusion и в вашем окружении Snowflake установлен параметр сессии `QUOTED_IDENTIFIERS_IGNORE_CASE = true` (например, в оркестраторе или pre-hook), вам также следует включить quoting и `snowflake_ignore_case` в вашем `dbt_project.yml`, чтобы сохранить точный регистр имён базы данных, схемы и идентификаторов:
+- Установите все параметры заключения в кавычки в значение `False` в файле [`dbt_project.yml`](/reference/dbt_project.yml), чтобы без необходимости не заключать имена моделей и столбцов в кавычки и избежать проблем с чувствительностью к регистру.
+  - Установка всех параметров заключения в кавычки в значение `False` также означает, что вы не сможете использовать зарезервированные слова в качестве идентификаторов, например имен моделей или таблиц. В любом случае мы рекомендуем избегать использования таких зарезервированных слов.  
+- Если вы используете <Constant name="fusion" /> и в вашей среде Snowflake параметр сеанса `QUOTED_IDENTIFIERS_IGNORE_CASE = true` задан, например, в оркестраторе или pre-hook, вам также следует включить заключение в кавычки и `snowflake_ignore_case` в файле `dbt_project.yml`, чтобы сохранить точный регистр имен базы данных, схемы и идентификатора:
 
   ```yml
   quoting:
     database: true
     schema: true
     identifier: true
-    snowflake_ignore_case: true  # Конфигурация только для Fusion. Соответствует поведению параметра сессии Snowflake QUOTED_IDENTIFIERS_IGNORE_CASE.
-                                 # Игнорируется dbt Core и другими адаптерами.
+    snowflake_ignore_case: true  # Настройка только для v2. Соответствует поведению параметра сеанса Snowflake QUOTED_IDENTIFIERS_IGNORE_CASE. 
+                                 # Игнорируется dbt v1 и другими адаптерами.
   ```
 
   Установка `snowflake_ignore_case: true` гарантирует, что имена колонок и идентификаторов, которые dbt генерирует на этапе компиляции, будут соответствовать поведению Snowflake во время выполнения запросов. Это сохраняет согласованность между логикой на этапе компиляции и во время выполнения. Без этого вы можете столкнуться с ошибками вида «column not found».
@@ -181,7 +181,50 @@ select * from analytics.orders;
 
 </File>
 
+### Redshift
 
+Leave the default quoting values. You can do this  in `dbt_project.yml` by either omitting the `quoting` config or setting `database`, `schema`, and `identifier` to `true`. The `quoting` config only controls whether dbt wraps names in double quotes, so it can't work around Redshift lowercasing mixed-case names. If you need mixed-case names, turn on the Redshift `enable_case_sensitive_identifier` setting and keep `quoting` on. If you set `quoting` to `false`, dbt sends unquoted names, and Redshift lowercases them even when `enable_case_sensitive_identifier` is `true`.
+
+By default, Redshift lowercases database, schema, table, and column names, even when they're quoted. The `enable_case_sensitive_identifier` setting controls this:
+
+- `false` (default): Redshift lowercases all names, whether or not they're quoted.
+- `true`: Redshift keeps the case of quoted names. Unquoted names are still lowercased.
+
+You can set this parameter to `true` for a cluster or workgroup. A `SET` command applies only to the current session. Refer to [Turn on case sensitivity](https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-setting-up.case-sensitivity.html) and the [parameter reference](https://docs.aws.amazon.com/redshift/latest/dg/r_enable_case_sensitive_identifier.html) in the Amazon Redshift documentation.
+
+The following example shows the difference between setting the parameter to `false` or `true` when run in a Redshift session:
+
+<File name="redshift_casing.sql">
+
+```sql
+-- Default: quoted names are still lowercased
+SET enable_case_sensitive_identifier TO false;
+
+CREATE TABLE "MixedCasedTable" ("MixedCasedColumn" int);
+INSERT INTO "MixedCasedTable" VALUES (1);
+
+-- These work. Redshift stored the names in lowercase.
+SELECT mixedcasedcolumn FROM mixedcasedtable;
+SELECT "MixedCasedColumn" FROM "MixedCasedTable";
+
+DROP TABLE mixedcasedtable;
+
+-- With the setting on, quoted names keep their case.
+SET enable_case_sensitive_identifier TO true;
+
+CREATE TABLE "MixedCasedTable" ("MixedCasedColumn" int);
+INSERT INTO "MixedCasedTable" ("MixedCasedColumn") VALUES (1);
+
+-- This works. You must quote the names and match the case.
+SELECT "MixedCasedColumn" FROM "MixedCasedTable";
+
+-- This fails: relation "mixedcasedtable" does not exist
+SELECT mixedcasedcolumn FROM mixedcasedtable;
+
+DROP TABLE "MixedCasedTable";
+```
+
+</File>
 
 ### Другие хранилища {#other-warehouses}
 

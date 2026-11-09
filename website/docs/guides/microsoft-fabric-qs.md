@@ -5,25 +5,32 @@ level: 'Beginner'
 icon: 'fabric'
 hide_table_of_contents: true
 tags: ['Platform', 'Quickstart']
+agent_guidance:
+  pacing: In the first reply, confirm the reader’s prerequisites and connection path before listing steps. Then default to one guide section per reply (combine two or three short sections), with all its steps, labeled Step 1, Step 2, and so on, and confirm the success check before continuing. If the reader asks for a different pace, follow it.
+  stay_on_path: This guide uses dbt platform. Don’t switch the reader to a local setup. If the reader wants to set up dbt locally, use the https://docs.getdbt.com/guides/dbt guide instead
+  safety: Never ask for passwords or keys in chat.
+  signup_link: When the reader needs a dbt account, share https://www.getdbt.com/signup?utm_source=ai_assistant&utm_medium=docs_md&utm_campaign=microsoft-fabric-qs
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение {#introduction}
 
-В этом кратком руководстве вы узнаете, как использовать <Constant name="cloud" /> с [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric). В нём показано, как:
+В этом кратком руководстве вы узнаете, как использовать <Constant name="dbt" /> с [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric). В нём показано, как:
 
-- Загрузить пример данных Jaffle Shop (предоставляется dbt Labs) в хранилище Microsoft Fabric.  
-- Подключить <Constant name="cloud" /> к Microsoft Fabric.  
-- Превратить пример запроса в модель в вашем dbt‑проекте. Модель в dbt — это SQL‑выражение `SELECT`.  
-- Добавить тесты к вашим моделям.  
-- Задокументировать ваши модели.  
-- Запланировать выполнение задания (job).
+- Загрузить демонстрационные данные Jaffle Shop (предоставленные dbt Labs) в хранилище Microsoft Fabric. 
+- Подключить <Constant name="dbt" /> к Microsoft Fabric.
+- Преобразовать пример запроса в модель в вашем проекте dbt. Модель в dbt — это инструкция SELECT.
+- Добавить тесты для ваших моделей.
+- Документировать ваши модели.
+- Настроить запуск задания по расписанию.
 
-### Предварительные требования {#prerequisites}
-- У вас есть аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/).  
-- Вы запустили пробный период Microsoft Fabric (Preview). Подробнее см. [Microsoft Fabric (Preview) trial](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial) в документации Microsoft.  
-- Как администратор Microsoft, вы включили аутентификацию с использованием service principal. Необходимо добавить service principal в рабочее пространство Microsoft Fabric с правами Member (рекомендуется) или Admin. Также service principal должен иметь привилегии `CONNECT` к базе данных в хранилище. Подробнее см. [Enable service principal authentication](https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-enable-read-only-apis) в документации Microsoft. <Constant name="cloud" /> использует эти учётные данные аутентификации для подключения к Microsoft Fabric.
+<AgentPrompt />
+
+### Предварительные требования
+- У вас есть учётная запись [<Constant name="dbt" />](https://www.getdbt.com/signup/).
+- Вы активировали пробную версию Microsoft Fabric (Preview). Подробнее см. в разделе [Пробная версия Microsoft Fabric (Preview)](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial) документации Microsoft.
+- Вы, как администратор Microsoft, включили проверку подлинности субъекта-службы (service principal). Необходимо добавить субъект-службу в рабочую область Microsoft Fabric с набором разрешений Member (рекомендуется) или Admin. У субъекта-службы также должны быть права `CONNECT` для базы данных в хранилище. Подробнее см. в разделе [Включение проверки подлинности субъекта-службы](https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-enable-read-only-apis) документации Microsoft. <Constant name="dbt" /> нужны эти учётные данные для подключения к Microsoft Fabric.
 
 ### Связанные материалы {#related-content}
 - [Курсы dbt Learn](https://learn.getdbt.com)
@@ -34,24 +41,20 @@ tags: ['Platform', 'Quickstart']
 
 ## Загрузка данных в ваш склад Microsoft Fabric {#load-data-into-your-microsoft-fabric-warehouse}
 
-1. Войдите в свой аккаунт [Microsoft Fabric](http://app.fabric.microsoft.com).  
-2. На главной странице выберите плитку **Synapse Data Warehouse**.
-
-    <Lightbox src="/img/quickstarts/dbt-cloud/example-start-fabric.png" width="80%" title="Пример плитки Synapse Data Warehouse" />
-
-3. В разделе **Workspaces** на левой боковой панели перейдите в рабочее пространство вашей организации. Или вы можете создать новое рабочее пространство; для получения подробной информации обратитесь к [Create a workspace](https://learn.microsoft.com/en-us/fabric/get-started/create-workspaces) в документации Microsoft.
-4. Выберите ваш склад из таблицы. Или вы можете создать новый склад; для получения подробной информации обратитесь к [Create a warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/tutorial-create-warehouse) в документации Microsoft.
-5. Откройте SQL-редактор, выбрав **New SQL query** на верхней панели.
-6. Скопируйте эти операторы в SQL-редактор, чтобы загрузить пример данных Jaffle Shop:
+1. Войдите в свою учетную запись [Microsoft Fabric](http://app.fabric.microsoft.com).  
+2. В разделе **Workspaces** на левой боковой панели перейдите в рабочую область вашей организации. Вы также можете создать новую рабочую область; подробности см. в разделе [Создание рабочей области](https://learn.microsoft.com/en-us/fabric/get-started/create-workspaces) документации Microsoft.
+3. Выберите свое хранилище в таблице. Вы также можете создать новое, выбрав **+ New item** > **Warehouse** в своей рабочей области; подробности см. в разделе [Создание хранилища](https://learn.microsoft.com/en-us/fabric/data-warehouse/create-warehouse) документации Microsoft.
+4. Откройте редактор SQL, выбрав **New SQL query** на верхней панели. 
+5. Скопируйте эти инструкции в редактор SQL, чтобы загрузить демонстрационные данные Jaffle Shop:
 
     ```sql
-    DROP TABLE dbo.customers;
+    DROP TABLE IF EXISTS dbo.customers;
 
     CREATE TABLE dbo.customers
     (
         [ID] [int],
-        \[FIRST_NAME] [varchar](8000),
-        \[LAST_NAME] [varchar](8000)
+        [FIRST_NAME] varchar(8000),
+        [LAST_NAME] varchar(8000)
     );
 
     COPY INTO [dbo].[customers]
@@ -60,7 +63,7 @@ tags: ['Platform', 'Quickstart']
         FILE_TYPE = 'PARQUET'
     );
 
-    DROP TABLE dbo.orders;
+    DROP TABLE IF EXISTS dbo.orders;
 
     CREATE TABLE dbo.orders
     (
@@ -68,7 +71,7 @@ tags: ['Platform', 'Quickstart']
         [USER_ID] [int],
         -- [ORDER_DATE] [int],
         [ORDER_DATE] [date],
-        \[STATUS] [varchar](8000)
+        [STATUS] varchar(8000)
     );
 
     COPY INTO [dbo].[orders]
@@ -77,14 +80,14 @@ tags: ['Platform', 'Quickstart']
         FILE_TYPE = 'PARQUET'
     );
 
-    DROP TABLE dbo.payments;
+    DROP TABLE IF EXISTS dbo.payments;
 
     CREATE TABLE dbo.payments
     (
         [ID] [int],
         [ORDERID] [int],
-        \[PAYMENTMETHOD] [varchar](8000),
-        \[STATUS] [varchar](8000),
+        [PAYMENTMETHOD] varchar(8000),
+        [STATUS] varchar(8000),
         [AMOUNT] [int],
         [CREATED] [date]
     );
@@ -96,43 +99,45 @@ tags: ['Platform', 'Quickstart']
     );
     ```
 
-    <Lightbox src="/img/quickstarts/dbt-cloud/example-load-data-ms-fabric.png" width="80%" title="Пример загрузки данных" />
+<Lightbox src="/img/quickstarts/dbt-platform/example-load-data-ms-fabric.png" width="80%" title="Пример загрузки данных" />
 
 ## Подключение dbt к Microsoft Fabric {#connect-dbt-to-microsoft-fabric}
 
-1. Создайте новый проект в <Constant name="cloud" />. Перейдите в **Account settings** (кликнув по имени вашего аккаунта в меню слева) и нажмите **+ New Project**.
-2. Введите имя проекта и нажмите **Continue**.
-3. Выберите **Fabric** в качестве типа подключения и нажмите **Next**.
+1. Создайте новый проект в <Constant name="dbt" />. Перейдите в **Account settings** (нажав на имя своей учетной записи в меню слева) и нажмите **+ New Project**.
+2. Введите название проекта и нажмите **Continue**.
+3. Выберите **Fabric** в качестве подключения и нажмите **Next**.
 4. В разделе **Configure your environment** укажите **Settings** для нового проекта:
-    - **Server** — используйте значение **host** сервисного принципала для тестового endpoint Microsoft Fabric.
-    - **Port** — 1433 (значение по умолчанию).
-    - **Database** — используйте значение **database** сервисного принципала для тестового endpoint Microsoft Fabric.
-5. Укажите **Development credentials** для нового проекта:
-    - **Authentication** — выберите **Service Principal** из выпадающего списка.
-    - **Tenant ID** — используйте значение **Directory (tenant) id** сервисного принципала.
-    - **Client ID** — используйте значение **application (client) ID id** сервисного принципала.
-    - **Client secret** — используйте **client secret** сервисного принципала (не **client secret id**).
-6. Нажмите **Test connection**. Это проверит, что <Constant name="cloud" /> может получить доступ к вашему аккаунту Microsoft Fabric.
-7. Когда тест завершится успешно, нажмите **Next**. Если тест не прошёл, проверьте настройки сервисного принципала. Убедитесь, что у принципала есть привилегии `CONNECT` к базе данных в warehouse.
+    - **Server** &mdash; используйте значение **host** субъекта-службы для тестовой конечной точки Fabric. 
+    - **Port** &mdash; 1433 (значение по умолчанию).
+    - **Database** &mdash; используйте значение **database** субъекта-службы для тестовой конечной точки Fabric. 
+5. Укажите **User credentials** для нового проекта:
+    - **Authentication** &mdash; выберите **Service Principal** в раскрывающемся списке.
+    - **Tenant ID** &mdash; используйте значение **Directory (tenant) id** субъекта-службы.
+    - **Client ID** &mdash; используйте значение **application (client) ID** субъекта-службы.
+    - **Client secret** &mdash; используйте значение **client secret** субъекта-службы (не **client secret id**).
+6. Нажмите **Test connection**. Эта проверка подтверждает, что <Constant name="dbt" /> может получить доступ к вашей учетной записи Microsoft Fabric.
+7. Если проверка прошла успешно, нажмите **Next**. Если проверка завершилась ошибкой, возможно, потребуется проверить субъект-службу Microsoft. Убедитесь, что у субъекта-службы есть права `CONNECT` для базы данных в хранилище.
 
 ## Настройка управляемого репозитория dbt {#set-up-a-dbt-managed-repository}
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация проекта dbt и начало разработки {#initialize-your-dbt-project-and-start-developing}
-Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
+## Инициализируйте проект dbt и начните разработку
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="dbt" />:
 
-1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. При первом запуске это может занять несколько минут: в это время устанавливается подключение к git, клонируется репозиторий и проверяется соединение с warehouse.
-2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру каталогов с примерами моделей.
-3. Сделайте первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в управляемом репозитории и позволит открыть ветку, в которой вы сможете добавлять новый dbt‑код.
-4. Теперь вы можете напрямую выполнять запросы к данным в вашем warehouse и запускать `dbt run`. Можете попробовать это прямо сейчас:
-    - В командной строке внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
+1. Нажмите **Start developing in the <Constant name="studio_ide" />**. Первый запуск проекта может занять несколько минут: за это время устанавливается подключение к git, клонируется репозиторий и проверяется подключение к хранилищу данных.
+2. Над деревом файлов слева нажмите **Initialize dbt project**. Будет создана структура папок с примерами моделей.
+3. Создайте первый коммит, нажав **Commit and sync**. Введите сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в вашем управляемом репозитории и позволит создать ветку, в которой можно добавлять новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из хранилища и выполнять `dbt run`. Попробуйте сделать это прямо сейчас:
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Должно появиться сообщение `dbt run succeeded`.
 
 ## Создание вашей первой модели {#build-your-first-model}
 
-У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
+Если вы хотите использовать ИИ для создания своей первой модели, ознакомьтесь с инструкцией <a id="qs-jump-to-build-with-ai" href="#build-it-with-ai-using-dbt-wizard">по созданию модели с помощью dbt Wizard</a> в следующем разделе.
 
-- **Create a new branch (recommended)** &mdash; Создайте новую ветку, чтобы редактировать файлы и коммитить изменения. Перейдите в **Version Control** на левой боковой панели и нажмите **Create branch**.
-- **Edit in the protected primary branch** &mdash; Если вы предпочитаете редактировать, форматировать или линтить файлы, а также выполнять команды dbt напрямую в основной git-ветке. <Constant name="cloud_ide" /> не позволяет делать коммиты в защищённую ветку, поэтому вам будет предложено закоммитить изменения в новую ветку.
+У вас есть два варианта работы с файлами в <Constant name="studio_ide" />:
+
+- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку для редактирования и фиксации изменений. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
+- Редактировать в защищённой основной ветке &mdash; Этот вариант подходит, если вы предпочитаете редактировать, форматировать файлы или проверять их линтером, а также выполнять команды dbt непосредственно в основной ветке git. <Constant name="studio_ide" /> не позволяет создавать коммиты в защищённой ветке, поэтому вам будет предложено зафиксировать изменения в новой ветке.
 
 Назовите новую ветку `add-customers-model`.
 
@@ -199,7 +204,7 @@ tags: ['Platform', 'Quickstart']
 
 4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешное выполнение и увидеть три модели.
 
-Позже вы сможете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
+Позже вы сможете подключить свои инструменты бизнес-аналитики (BI), такие как [dbt Charts](https://dbtcharts.com/), к этим представлениям и таблицам, чтобы они считывали только очищенные данные, а не необработанные.
 
 #### Часто задаваемые вопросы {#faqs}
 
@@ -209,7 +214,9 @@ tags: ['Platform', 'Quickstart']
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации вашей модели {#change-the-way-your-model-is-materialized}
+<Snippet path="quickstarts/build-first-model-with-wizard" />
+
+## Измените способ материализации модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
@@ -321,3 +328,5 @@ tags: ['Platform', 'Quickstart']
 <Snippet path="quickstarts/test-and-document-your-project" />
 
 <Snippet path="quickstarts/schedule-a-job" />
+
+<Snippet path="quickstarts/connect-your-ai" />

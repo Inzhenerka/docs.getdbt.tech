@@ -9,7 +9,7 @@ description: "`invocation_id` выводит UUID, сгенерированны�
 
 Если доступно, `invocation_id`:
 - доступен в контексте компиляции [`query-comment`](/reference/project-configs/query-comment)
-- включен в словарь `info` в dbt [событиях и логах](/reference/events-logging#info)
+- включен в словарь `info` в dbt [событиях и логах](/reference/events-logging#structured-logging)
 - включен в словарь `metadata` в [артефактах dbt](/reference/artifacts/dbt-artifacts#common-metadata)
 - включен как метка во всех заданиях BigQuery, инициированных dbt
 

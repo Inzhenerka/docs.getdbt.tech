@@ -14,7 +14,7 @@ level: 'Advanced'
 
 ## Введение {#introduction}
 
-Это руководство покажет вам, как обновлять рабочую книгу Tableau, использующую [extracts](https://help.tableau.com/current/pro/desktop/en-us/extracting_data.htm), после того как задание <Constant name="cloud" /> успешно завершилось и появились свежие данные. Интеграция будет:
+В этом руководстве вы узнаете, как обновить рабочую книгу Tableau, использующую [экстракты](https://help.tableau.com/current/pro/desktop/en-us/extracting_data.htm), после успешного завершения задания <Constant name="dbt" />, когда доступны свежие данные. Интеграция позволит:
 
  - Получать уведомление вебхука в Zapier
  - Запускать обновление рабочей книги Tableau
@@ -23,7 +23,7 @@ level: 'Advanced'
 
 Для настройки интеграции вам необходимо быть знакомым с:
 
-- [<Constant name="cloud" /> Вебхуки](/docs/deploy/webhooks)
+- [Вебхуки <Constant name="dbt" />](/docs/deploy/webhooks)
 - Zapier
 - [API Tableau](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm)
 - [Версией](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm#rest_api_versioning) REST API Tableau, совместимой с вашим сервером
@@ -37,14 +37,14 @@ level: 'Advanced'
 
 Нажмите **Continue**, затем скопируйте URL вебхука.
 
-![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
+<Lightbox src="/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png" title="Снимок экрана интерфейса Zapier с URL вебхука, готовым к копированию" />
 
-## Настройка нового webhook в dbt {#configure-a-new-webhook-in-dbt}
-Чтобы настроить подписку на webhook для <Constant name="cloud" />, следуйте инструкциям в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed** и измените список **Jobs**, оставив только те задания, которые должны запускать обновление отчета.
+## Настройка нового вебхука в dbt
+Чтобы настроить подписку на вебхук для <Constant name="dbt" />, следуйте инструкциям в разделе [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed** и измените список **Jobs**, включив в него только те задания, которые должны запускать обновление отчёта.
 
 Не забудьте сохранить Webhook Secret Key — он понадобится позже. Вставьте webhook URL, полученный из Zapier на шаге 2, в поле **Endpoint** и протестируйте endpoint.
 
-После того как вы протестируете endpoint в <Constant name="cloud" />, вернитесь в Zapier и нажмите **Test Trigger** — это создаст пример тела webhook на основе тестового события, которое <Constant name="cloud" /> отправил.
+После того как вы протестируете эндпоинт в <Constant name="dbt" />, вернитесь в Zapier и нажмите **Test Trigger**. Это создаст пример тела вебхука на основе тестового события, отправленного <Constant name="dbt" />.
 
 Значения в примере тела захардкожены и не отражают ваш проект, но они дают Zapier объект корректной структуры (shape) во время разработки.
 
@@ -67,7 +67,7 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 ```python 
 store = StoreClient('abc123') #replace with your UUID secret
-store.set('DBT_WEBHOOK_KEY', 'abc123') #replace with your <Constant name="cloud" /> Webhook key
+store.set('DBT_WEBHOOK_KEY', 'abc123') #replace with your dbt Webhook key
 store.set('TABLEAU_SITE_URL', 'abc123') #replace with your Tableau Site URL, inclusive of https:// and .com
 store.set('TABLEAU_SITE_NAME', 'abc123') #replace with your Tableau Site/Server Name
 store.set('TABLEAU_API_TOKEN_NAME', 'abc123') #replace with your Tableau API Token Name
@@ -81,7 +81,7 @@ store.set('TABLEAU_API_TOKEN_SECRET', 'abc123') #replace with your Tableau API S
 
 В области **Set up action** добавьте два элемента в **Input Data**: `raw_body` и `auth_header`. Свяжите их с полями `1. Raw Body` и `1. Headers Http Authorization` из шага **Catch Raw Hook** выше.
 
-![Скриншот интерфейса Zapier, показывающий сопоставления raw_body и auth_header](/img/guides/orchestration/webhooks/zapier-common/run-python.png)
+<Lightbox src="/img/guides/orchestration/webhooks/zapier-common/run-python.png" title="Скриншот интерфейса Zapier с сопоставлениями raw_body и auth_header" />
 
 В поле **Code** вставьте следующий код, заменив `YOUR_STORAGE_SECRET_HERE` в конструкторе StoreClient на секрет UUID, который вы создали при настройке интеграции Storage by Zapier, и заменив переменные `workbook_name` и `api_version` на фактические значения.
 
@@ -105,14 +105,14 @@ pat_secret = secret_store.get('TABLEAU_API_TOKEN_SECRET')
 workbook_name = "YOUR_WORKBOOK_NAME"
 api_version = "ENTER_COMPATIBLE_VERSION"
 
-# Проверка подлинности вебхука, поступающего из <Constant name="cloud" />
+#Проверка подлинности вебхука, поступающего от dbt
 auth_header = input_data['auth_header']
 raw_body = input_data['raw_body']
 
 signature = hmac.new(hook_secret.encode('utf-8'), raw_body.encode('utf-8'), hashlib.sha256).hexdigest()
 
 if signature != auth_header:
-    raise Exception("Вычисленная подпись не совпадает с содержимым заголовка Authorization. Возможно, этот вебхук был отправлен не из <Constant name=\"cloud\" />.")
+raise Exception("Calculated signature doesn't match contents of the Authorization header. This webhook may not have been sent from dbt.")
 
 full_body = json.loads(raw_body)
 hook_data = full_body['data'] 

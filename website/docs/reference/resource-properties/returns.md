@@ -30,12 +30,13 @@ functions:
 
 Поле `data_type` задаёт тип данных, который возвращает функция. Это обязательное поле, и его значение должно соответствовать типам данных, поддерживаемым вашей конкретной платформой хранения данных.
 
-:::important Типы данных зависят от хранилища
-Значения `data_type` зависят от конкретного хранилища. Используйте синтаксис типов данных, который требуется вашим хранилищем:
-- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ`, `VARIANT` и т.д.
-- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>`, `STRUCT` и т.д.
-- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `SUPER` и т.д.
-- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `JSONB` и т.д.
+:::important Типы данных, специфичные для хранилища
+Значения `data_type` зависят от хранилища данных. Используйте синтаксис типов данных, который требуется в вашем хранилище:
+- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ`, `VARIANT` и т. д.
+- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>`, `STRUCT` и т. д.
+- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `SUPER` и т. д.
+- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP`, `JSONB` и т. д.
+- **Starburst/Trino**: `VARCHAR`, `INTEGER`, `DOUBLE`, `BOOLEAN` и другие [типы данных Trino](https://trino.io/docs/current/language/types.html).
 
 Обратитесь к документации вашего хранилища для получения полного списка поддерживаемых типов данных и их синтаксиса.
 :::
@@ -106,7 +107,12 @@ functions:
 
 </File>
 
-## Связанная документация {#related-documentation}
+## Связанная документация
+
+- [Пользовательские функции](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
+- [arguments](/reference/resource-properties/function-arguments)
 
 - [Пользовательские функции (UDF)](/docs/build/udfs)
 - [Свойства функций](/reference/function-properties)

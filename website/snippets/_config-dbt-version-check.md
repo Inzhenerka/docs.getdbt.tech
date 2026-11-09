@@ -1,8 +1,10 @@
-Начиная с 2024 года, когда вы выбираете [release track в <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), чтобы получать регулярные обновления версии dbt, dbt будет игнорировать конфигурацию `require-dbt-version`.
+Начиная с 2024 года, когда вы выбираете [release track в <Constant name="cloud" />](/docs/dbt-versions/dbt-release-tracks), чтобы получать регулярные обновления версии dbt, dbt будет игнорировать конфигурацию `require-dbt-version`.
 
-dbt Labs придерживается принципа нулевых «ломающих» изменений для кода в dbt‑проектах — при регулярных релизах в <Constant name="cloud" /> и выходе новых версий dbt Core. Мы также рекомендуем следующие best practices:
+Если вы выбираете [канал релизов в <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks), чтобы регулярно получать обновления версии dbt, dbt будет игнорировать настройку `require-dbt-version`.
 
-<Expandable alt_header="Установка dbt‑пакетов" >
+dbt Labs стремится не допускать изменений, нарушающих совместимость кода в проектах dbt, при регулярном выпуске новых версий <Constant name="dbt" />. Мы также рекомендуем следующие практики:
+
+<Expandable alt_header="Установка пакетов dbt">
 
 Если вы устанавливаете dbt‑пакеты для использования в проекте — независимо от того, поддерживается ли пакет вашими коллегами или участником open source‑сообщества dbt — мы рекомендуем закреплять пакет на конкретной ревизии или границе `version`. dbt управляет этим «из коробки», _фиксируя_ версию/ревизию пакетов в разработке, чтобы гарантировать предсказуемые сборки в продакшене. Подробнее см. [Predictable package installs](/reference/commands/deps#predictable-package-installs).
 

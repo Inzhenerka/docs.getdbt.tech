@@ -15,6 +15,7 @@ description: "Это руководство объясняет, как испо�
     { label: 'Macros', value: 'macros', },
     { label: 'Data tests', value: 'data_tests', },
     { label: 'Unit tests', value: 'unit_tests', },
+    { label: 'Groups', value: 'groups', },
   ]
 }>
 <TabItem value="models">
@@ -211,22 +212,42 @@ unit_tests:
 
 </TabItem>
 
+<TabItem value="groups">
+
+
+<File name='models/schema.yml'>
+
+```yml
+
+groups:
+  - name: group_name
+    description: markdown_string  # Supported in v1.10 and later
+    owner:
+      email: owner@example.com
+
+```
+
+</File>
+
+</TabItem>
+
 </Tabs>
 
 ## Определение {#definition}
 
 Пользовательское описание, используемое для документирования:
 
-- моделей и столбцов моделей
-- источников, таблиц источников и столбцов источников
-- seed-файлов и столбцов seed-файлов
-- snapshots и столбцов snapshots
-- analyses и столбцов analyses
-- macros и аргументов macros
-- data tests и столбцов data tests
-- unit tests для моделей
+- модель и столбцы модели
+- источники, таблицы источников и столбцы источников
+- seed-файлы и столбцы seed-файлов
+- снимки и столбцы снимков
+- анализы и столбцы анализов
+- макросы и аргументы макросов
+- тесты данных и столбцы тестов данных
+- модульные тесты для моделей
+- группы (<Constant name="dbt" /> v1.10+)
 
-Эти описания используются на сайте документации, который рендерится dbt (см. [руководство по документации](/docs/build/documentation) или [<Constant name="explorer" />](/docs/explore/explore-projects)).
+Эти описания используются на сайте документации, который формирует dbt (см. [руководство по документации](/docs/build/documentation) или [<Constant name="catalog" />](/docs/explore/explore-projects)).
 
 Описания могут включать markdown, а также [Jinja-функцию `doc`](/reference/dbt-jinja-functions/doc).
 
@@ -282,7 +303,7 @@ models:
   - name: dim_customers
     description: >
       One record per customer. Note that a customer must have made a purchase to
-      be included in this <Term id="table" /> — customer accounts that were created but never
+      be included in this table — customer accounts that were created but never
       used have been filtered out.
 
     columns:
@@ -389,7 +410,7 @@ models:
 
 Этот раздел относится только к пользователям <Constant name="core" />. Добавление изображений непосредственно из вашего репозитория гарантирует, что они будут находиться под версионным контролем.
 
-Пользователи как <Constant name="cloud" />, так и <Constant name="core" /> могут [добавлять изображения из интернета](#include-an-image-from-the-web-in-your-descriptions), что обеспечивает динамический контент, уменьшение размера репозитория, улучшенную доступность и удобство совместной работы.
+Пользователи как <Constant name="dbt" />, так и <Constant name="core" /> могут [добавить изображение из интернета](#include-an-image-from-the-web-in-your-descriptions), что позволяет использовать динамический контент, уменьшить размер репозитория, повысить доступность и упростить совместную работу.
 
 Чтобы включить изображение в поле `description` вашей модели:
 
@@ -431,7 +452,7 @@ models:
 
 ### Включение изображения из интернета в ваши описания {#include-an-image-from-the-web-in-your-descriptions}
 
-Этот раздел относится к пользователям <Constant name="cloud" /> и <Constant name="core" />. Использование изображений из интернета обеспечивает динамический контент, уменьшает размер репозитория, повышает доступность и упрощает совместную работу.
+Этот раздел предназначен для пользователей <Constant name="dbt" /> и <Constant name="core" />. Добавление изображения из интернета обеспечивает динамическое содержимое, уменьшает размер репозитория, повышает доступность и упрощает совместную работу.
 
 Чтобы включить изображения из интернета, укажите URL изображения в поле `description` вашей модели:
 
@@ -442,7 +463,7 @@ version: 2
 
 models:
   - name: customers
-    description: "!\[dbt Logo](https://github.com/dbt-labs/dbt-core/blob/main/etc/dbt-core.svg)"
+    description: "!\[dbt Logo](https://raw.githubusercontent.com/dbt-labs/dbt/refs/heads/1.latest/docs/images/dbt-core.svg)"
 
     columns:
       - name: customer_id

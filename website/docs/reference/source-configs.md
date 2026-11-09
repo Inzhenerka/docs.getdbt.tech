@@ -38,7 +38,7 @@ sources:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
     [+](/reference/resource-configs/plus-prefix)[event_time](/reference/resource-configs/event-time): my_time_field
-    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness):
       warn_after:  
         count: <positive_integer>
         period: minute | hour | day
@@ -69,7 +69,7 @@ sources:
       [enabled](/reference/resource-configs/enabled): true | false
       [event_time](/reference/resource-configs/event-time): my_time_field
       [meta](/reference/resource-configs/meta): {<dictionary>}
-      [freshness](/reference/resource-properties/freshness):
+      [freshness](/reference/resource-configs/freshness):
         warn_after:  
           count: <positive_integer>
           period: minute | hour | day
@@ -260,7 +260,7 @@ sources:
 
 dbt сравнивает наиболее свежую временную метку обновления, рассчитанную на основе колонки, метаданных хранилища или пользовательского запроса, с текущим временем в момент запуска проверки свежести.
 
-Вы можете указать один или оба параметра `warn_after` и `error_after`. Если ни один из них не задан, dbt не будет рассчитывать снимки свежести для таблиц в этом источнике. Подробнее см. в разделе [freshness](/reference/resource-properties/freshness).
+Вы можете указать один или оба параметра: `warn_after` и `error_after`. Если ни один из них не указан, dbt не будет рассчитывать показатели свежести данных для таблиц в этом источнике. Подробнее см. в разделе [freshness](/reference/resource-configs/freshness).
 
 Ниже приведен пример файла `dbt_project.yml`, использующего конфигурацию `freshness`:
 
@@ -269,7 +269,7 @@ dbt сравнивает наиболее свежую временную мет
 ```yml
 sources:
   [<resource-path>](/reference/resource-configs/resource-path):
-    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-properties/freshness):
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness):
       warn_after:  
         count: 4
         period: hour

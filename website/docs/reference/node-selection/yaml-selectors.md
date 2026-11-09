@@ -2,8 +2,15 @@
 title: "YAML Селекторы"
 ---
 
-Пишите селекторы ресурсов в YAML, сохраняйте их с удобочитаемым именем и используйте их с помощью флага `--selector`.
-Записывая селекторы в файл верхнего уровня `selectors.yml`:
+<VersionBlock lastVersion="1.11">
+Определяйте селекторы ресурсов в YAML, сохраняйте их под понятными именами и ссылайтесь на них с помощью флага `--selector`.
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+Определяйте селекторы ресурсов в YAML, сохраняйте их под понятными именами и ссылайтесь на них с помощью метода `selector:` с флагом `--select`.
+</VersionBlock>
+
+Сохраняя селекторы в файле `selectors.yml` в корне проекта:
 
 * **Читаемость:** сложные критерии выбора составляются из словарей и массивов
 * **Контроль версий:** определения селекторов хранятся в том же git-репозитории, что и проект dbt
@@ -24,7 +31,13 @@ selectors:
 ```
 </File>
 
-## Определения {#definitions}
+<VersionBlock firstVersion="1.12">
+
+Начиная с <Constant name="dbt" /> v1.12, вы можете ссылаться на именованный селектор в `--select` или `--exclude` с помощью [метода `selector`](/reference/node-selection/methods#selector) (например, `selector:my_selector`).
+
+</VersionBlock>
+
+## Определения
 
 Каждое `definition` состоит из одного или нескольких аргументов, которые могут быть следующими:
 * **CLI-стиль:** строки, представляющие аргументы в стиле CLI
@@ -129,7 +142,7 @@ definition:
       indirect_selection: empty  # будут включены тесты только для выбранного узла и игнорированы все тесты, прикрепленные к model_d
 ```
 
-Если указано, значение `indirect_selection` YAML селектора будет иметь приоритет над флагом CLI `--indirect-selection`. Поскольку `indirect_selection` определяется отдельно для _каждого_ критерия выбора, возможно смешивать режимы eager/cautious/buildable/empty в одном определении, чтобы достичь нужного поведения. Помните, что вы всегда можете протестировать свои критерии с помощью `dbt ls --selector`.
+Если для YAML-селектора задано значение `indirect_selection`, оно имеет приоритет над флагом CLI `--indirect-selection`. Поскольку `indirect_selection` задаётся отдельно для _каждого_ критерия выбора, в одном определении можно сочетать режимы eager/cautious/buildable/empty, чтобы добиться именно того поведения, которое вам нужно. <VersionBlock lastVersion="1.11">Вы всегда можете проверить свои критерии с помощью `dbt ls --selector`.</VersionBlock><VersionBlock firstVersion="1.12">Вы всегда можете проверить свои критерии с помощью `dbt ls --select selector:SELECTOR_NAME`.</VersionBlock>
 
 Смотрите [примеры выбора тестов](/reference/node-selection/test-selection-examples) для более подробной информации о косвенном выборе.
 
@@ -206,10 +219,19 @@ selectors:
 
 </Tabs>
 
-Затем в определении нашей задачи:
+Затем в определении нашего задания:
+
+<VersionBlock lastVersion="1.11">
 ```bash
 dbt run --selector nightly_diet_snowplow
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+```bash
+dbt run --select selector:nightly_diet_snowplow
+```
+</VersionBlock>
 
 ## По умолчанию {#default}
 
@@ -237,12 +259,21 @@ dbt source freshness
 dbt docs generate
 ```
 
-Если я запускаю команду, которая определяет свои собственные критерии выбора (через `--select`, `--exclude` или `--selector`), dbt проигнорирует селектор по умолчанию и использует критерии флага вместо этого. Он не будет пытаться комбинировать их.
+<VersionBlock lastVersion="1.11">
+Если я выполняю команду, которая задаёт собственные критерии выбора (через `--select`, `--exclude` или `--selector`), dbt игнорирует селектор по умолчанию и вместо него использует критерии, заданные флагами. Он не пытается объединить эти два набора критериев.
+</VersionBlock>
 
-```bash
-dbt run --select  "model_a"
-dbt run --exclude model_a
+<VersionBlock firstVersion="1.12">
+Если я выполняю команду, которая задаёт собственные критерии выбора (через `--select` или `--exclude`), dbt игнорирует селектор по умолчанию и вместо него использует критерии, заданные флагами. Он не пытается объединить эти два набора критериев.
+
+Если вы хотите применить оба набора критериев, используйте метод `selector:` с флагом `--select`, чтобы сослаться на селектор по умолчанию наряду с другими критериями. Например:
+
 ```
+dbt build --select selector:root_project_only tag:nightly
+```
+
+For more information, refer to [Using `selector:` with `--select`](#%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-selector-%D1%81---select).
+</VersionBlock>
 
 Только один селектор может установить `default: true` для данного вызова; в противном случае dbt вернет ошибку. Вы можете использовать выражение Jinja, чтобы настроить значение `default` в зависимости от среды:
 
@@ -284,20 +315,54 @@ selectors:
 
 Метод `selector` возвращает полный набор узлов, который определяется именованным селектором.
 
-## Разница между `--select` и `--selector` {#difference-between-select-and-selector}
+<VersionBlock firstVersion="1.12">
+Если определения селекторов циклически ссылаются друг на друга, dbt вызывает ошибку `DbtRecursionError` во время выполнения. Например, следующее наследование селекторов недопустимо:
 
-В dbt [`select`](/reference/node-selection/syntax#how-does-selection-work) и `selector` — это связанные концепции, которые используются для выбора конкретных моделей, тестов или других ресурсов. В таблице ниже объясняются различия между ними и приводятся рекомендации, когда лучше использовать каждый из подходов:
+```yaml
+selectors:
+  - name: selector_a
+    definition:
+      method: selector
+      value: selector_b
+
+  - name: selector_b
+    definition:
+      method: selector
+      value: selector_a
+```
+</VersionBlock>
+
+<VersionBlock lastVersion="1.11">
+## Разница между `--select` и `--selector`
+
+В dbt [`select`](/reference/node-selection/syntax#how-does-selection-work) и `selector` — связанные понятия, используемые для выбора конкретных моделей, тестов или ресурсов. В следующей таблице объясняются различия между ними и ситуации, в которых их лучше использовать:
 
 | Характеристика | `--select` | `--selector` |
-| -------------- | ---------- | ------------- |
-| Определение | Ad-hoc, задаётся напрямую в команде. | Предварительно определяется в файле `selectors.yml`. |
-| Использование | Одноразовая или задачеспецифичная фильтрация. | Переиспользуемый вариант для многократных запусков. |
-| Сложность | Требует ручного ввода критериев выбора. | Может инкапсулировать сложную логику для повторного использования. |
-| Гибкость | Гибкий, но менее переиспользуемый. | Гибкий, с акцентом на переиспользуемую и структурированную логику. |
-| Пример | `dbt run --select my_model+`<br /> (запускает `my_model` и все downstream‑зависимости с использованием оператора `+`). | `dbt run --selector nightly_diet_snowplow`<br /> (запускает модели, определённые селектором `nightly_diet_snowplow` в файле `selectors.yml`). |
+| ------- | ---------- | ------------- |
+| Определение |	Задаётся непосредственно в команде для конкретного случая.	| Заранее определяется в файле `selectors.yml`. |
+| Использование |	Разовая фильтрация или фильтрация для конкретной задачи.|	Повторное использование при нескольких запусках. |
+| Сложность	| Требует ручного ввода критериев выбора.	| Позволяет объединить сложную логику для повторного использования. |
+| Гибкость	| Гибкий подход; меньше возможностей для повторного использования. |	Гибкий подход с упором на повторно используемую и структурированную логику.|
+| Пример	| `dbt run --select my_model+`<br /> (запускает `my_model` и все зависимые от неё узлы с помощью оператора `+`). |	`dbt run --selector nightly_diet_snowplow`<br /> (запускает модели, определённые селектором `nightly_diet_snowplow` в `selectors.yml`).  |
 
 Примечания:
-- Вы можете комбинировать `--select` с `--exclude` для ad-hoc выбора узлов.
-- Синтаксис `--select` и `--selector` предоставляет один и тот же набор возможностей для выбора узлов. Использование [графовых операторов](/reference/node-selection/graph-operators) (таких как `+`, `@` и т.д.) и [операторов над множествами](/reference/node-selection/set-operators) (таких как `union` и `intersection`) в `--select` эквивалентно YAML‑конфигурациям в `--selector`.
+- Можно сочетать `--select` с `--exclude` для выбора узлов под конкретную задачу.
+- Использование [операторов графа](/reference/node-selection/graph-operators) (таких как `+`, `@`) и [операторов множеств](/reference/node-selection/set-operators) (таких как `union` и `intersection`) в `--select` эквивалентно конфигурациям на основе YAML в `--selector`.
+- Если использовать `--selector` вместе с `--select` или `--exclude`, dbt применяет для выбора узлов только `--selector` и игнорирует `--select` и `--exclude`.
 
-Для дополнительных примеров см. [этот GitHub Gist](https://gist.github.com/jeremyyeo/1aeca767e2a4f157b07955d58f8078f7).
+Дополнительные примеры приведены в [этом GitHub Gist](https://gist.github.com/jeremyyeo/1aeca767e2a4f157b07955d58f8078f7).
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+## Использование `selector:` с `--select`
+
+Начиная с <Constant name="dbt" /> v1.12, dbt выдаёт предупреждение `SelectExcludeIgnoredWithSelectorWarning`, если устаревший флаг `--selector` используется вместе с `--select` или `--exclude`. Используйте [метод `selector:`](/reference/node-selection/methods#selector) непосредственно с `--select`, чтобы ссылаться на заранее определённый селектор наряду с другими критериями выбора.
+
+Например: 
+
+```
+dbt run --select selector:nightly_diet_snowplow tag:nightly
+```
+
+</VersionBlock>

@@ -7,5 +7,5 @@ description: Узнайте, как определять приватные па
 
 Это зависит от того, каким способом вы получаете доступ к приватным пакетам:
 
-- Если вы используете [нативные приватные пакеты](/docs/build/packages#native-private-packages), вы можете определять их в файле `dependencies.yml`.
-- Если вы используете [метод с git-токеном](/docs/build/packages#git-token-method), вы должны определять их в файле `packages.yml`, а не в `dependencies.yml`. Это связано с тем, что условный рендеринг (например, Jinja в YAML) не поддерживается в `dependencies.yml`.
+- Если вы используете [встроенную поддержку приватных пакетов](/docs/build/packages#native-private-packages), их можно определить в файле `dependencies.yml`.
+- Если вы используете [метод с Git-токеном](/docs/build/packages#git-token-method), в <Constant name="core" /> используйте `packages.yml`, поскольку Jinja не поддерживается в `dependencies.yml`. В <Constant name="fusion_engine" /> можно использовать `dependencies.yml`, но мы рекомендуем использовать `packages.yml`, если ваш проект должен также работать в <Constant name="core" />. См. [Поддержка Jinja по типам файлов](/reference/jinja-file-support).

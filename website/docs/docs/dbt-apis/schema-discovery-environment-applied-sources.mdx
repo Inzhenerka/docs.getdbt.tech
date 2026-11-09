@@ -1,0 +1,76 @@
+---
+title: "Схема объекта Sources"
+sidebar_label: "Sources"
+id: "discovery-schema-environment-applied-sources"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+ 
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+
+[Sources](/docs/build/sources) позволяют задавать имена и описывать данные, загружаемые в ваше хранилище инструментами извлечения и загрузки данных. Вы можете запрашивать источники данных через Discovery API.
+
+В разделе [Example query](#example-query) показаны несколько полей, которые можно запрашивать с помощью объекта `sources`. Полный список всех доступных для запроса полей см. в разделе [Fields](#fields), где представлена полная схема.
+
+### Аргументы {#arguments}
+
+При выполнении запросов к `sources` можно использовать следующие аргументы:
+
+<NodeArgsTable parent="AppliedState" name="sources" />
+
+### Пример запроса {#example-query}
+
+Вы можете указать `environmentId` и отфильтровать по имени базы данных, чтобы получить информацию о свежести данных и статусе выполнения для первых 100 источников из указанной базы данных:
+
+```graphql
+query {
+  environment(id: 834) {
+    applied {
+      sources(
+        filter: {
+          database: "analytics"
+        }, 
+        first: 100
+      ) {
+        edges {
+          node {
+            name
+            fqn
+            description
+            filePath
+            freshness {
+              freshnessChecked
+              freshnessStatus
+            }
+            sourceName
+            sourceDescription
+            tests {
+              name
+              description
+              testType
+              executionInfo {
+                lastRunStatus
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При запросе `sources` можно использовать следующие поля:
+
+<SchemaTable nodeName="SourceAppliedStateNodeConnection" />
+
+### Ключевые поля из узлов {#key-fields-from-nodes}
+
+Основные поля, доступные в узлах:
+
+<SchemaTable nodeName="SourceAppliedStateNode" />

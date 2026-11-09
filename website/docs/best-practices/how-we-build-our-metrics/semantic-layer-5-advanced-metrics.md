@@ -5,7 +5,7 @@ hoverSnippet: Узнайте, как начать работу с Семанти
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-6-terminology"
 ---
 
-## Более сложные типы метрик {#more-advanced-metric-types}
+## Более сложные типы метрик
 
 Мы не ограничены только передачей измерений в наши метрики, мы также можем _комбинировать_ измерения для моделирования более сложных метрик.
 
@@ -19,7 +19,7 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-6-termi
 - 🥪 Давайте рассчитаем **процент** выручки нашего магазина Jaffle, который **поступает от продуктов питания**.
 - 💰 У нас уже есть наш знаменатель, выручка, но мы хотим **создать новую метрику для нашего числителя**, назвав ее `food_revenue`.
 
-<File name="models/marts/orders.yml" />
+<File name="models/marts/order_items.yml" />
 
 ```yml
 - name: food_revenue
@@ -32,7 +32,7 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-6-termi
 
 - 📝 Теперь мы можем настроить нашу метрику отношения.
 
-<File name="models/marts/orders.yml" />
+<File name="models/marts/order_items.yml" />
 
 ```yml
 - name: food_revenue_pct
@@ -52,7 +52,7 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-6-termi
   - 🧮 Выражение, которое выполняет расчет с этими метриками.
 - С этими частями мы можем собрать сложную логику, которая в противном случае должна была бы быть 'заморожена' в логических моделях.
 
-<File name="models/marts/orders.yml" />
+<File name="models/marts/order_items.yml" />
 
 ```yml
 - name: revenue_growth_mom
@@ -74,7 +74,7 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-6-termi
 - ➕ Наконец, давайте создадим **кумулятивную метрику**. В соответствии с нашей темой бизнес-приоритетов, давайте продолжим с выручкой и создадим **метрику выручки за все время** для любого заданного временного окна.
 - 🪟 Все, что нам нужно сделать, это указать, что тип — `cumulative`, и не указывать `window` в `type_params`, что указывает на то, что мы хотим кумулятивную метрику за весь период, выбранный нашими конечными пользователями.
 
-<File name="models/marts/orders.yml" />
+<File name="models/marts/order_items.yml" />
 
 ```yml
 - name: cumulative_revenue

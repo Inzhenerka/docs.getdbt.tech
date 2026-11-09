@@ -4,45 +4,49 @@ description: "Узнайте, как получить доступ к интер
 sidebar_label: "Доступ и запуск запросов"
 tags: [dbt Insights]
 image: /img/docs/dbt-insights/insights-chart.jpg
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: enterprise
 ---
 
-# Доступ к интерфейсу dbt Insights <Lifecycle status="managed,managed_plus" /> {#access-the-dbt-insights-interface}
+# Доступ к интерфейсу dbt Insights
 
 <IntroText>
-Узнайте, как получить доступ к <Constant name="query_page" />, запускать запросы и просматривать результаты.
+Узнайте, как открыть <Constant name="insights" />, выполнять запросы и просматривать результаты.
 </IntroText>
 
-<Constant name="query_page" /> предоставляет полноценный консольный интерфейс с удобной навигацией в редакторе. Вы можете ожидать, что <Constant name="query_page" /> позволит:
-- Писать SQL‑запросы с возможностью открывать несколько вкладок  
-- Использовать автодополнение SQL + dbt и подсветку синтаксиса  
-- Сохранять SQL‑запросы  
-- Просматривать результаты запроса и его детали во вкладках **Data** и **Details**  
-- Создавать визуализации результатов запроса во вкладке **Chart**  
-- Просматривать историю запросов и их статусы (например, Success, Error, Pending) во вкладке **Query history**  
-- Использовать <Constant name="copilot" /> для генерации или редактирования SQL‑запросов с помощью подсказок на естественном языке  
-- Интегрироваться с [<Constant name="copilot" />](/docs/cloud/dbt-copilot), [<Constant name="explorer" />](/docs/explore/explore-projects), [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) и [<Constant name="visual_editor" />](/docs/cloud/canvas), обеспечивая единый опыт исследования данных, написания SQL с поддержкой ИИ и совместной работы
+<Constant name="insights" /> предоставляет многофункциональную консоль с навигацией по редактору. В <Constant name="insights" /> вы можете:
+- Писать SQL-запросы с возможностью открывать несколько вкладок 
+- Использовать автодополнение SQL + dbt и подсветку синтаксиса
+- Сохранять SQL-запросы
+- Просматривать результаты запроса и подробные сведения о нём на вкладках **Data** или **Details**
+- Создавать визуализации результатов запроса на вкладке **Chart**
+- Просматривать историю запросов и их статусы (например, Success, Error, Pending) на вкладке **Query history**
+- Использовать dbt Copilot в Insights для создания или редактирования SQL-запросов с помощью инструкций на естественном языке
+- Использовать интеграцию с [<Constant name="catalog" />](/docs/explore/explore-projects), [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) и [<Constant name="canvas" />](/docs/platform/canvas) для удобного исследования данных, написания кода с помощью ИИ и совместной работы
 
 ## Доступ к интерфейсу dbt Insights {#access-the-dbt-insights-interface-1}
 
-Перед тем как получить доступ к <Constant name="query_page" />, убедитесь, что выполнены [предварительные требования](/docs/explore/dbt-insights#prerequisites).
+Перед началом работы с <Constant name="insights" /> убедитесь, что выполнены [предварительные требования](/docs/explore/dbt-insights#prerequisites).
 
-1. Чтобы открыть <Constant name="query_page" />, выберите пункт **Insights** в боковой панели навигации.
-2. Если ваши [developer credentials](/docs/cloud/studio-ide/develop-in-studio#get-started-with-the-cloud-ide) ещё не настроены, <Constant name="query_page" /> предложит настроить их. Возможность выполнять запросы к данным зависит от разрешений провайдера хранилища данных и ваших developer credentials.
-3. После настройки учётных данных вы сможете писать, запускать и редактировать SQL‑запросы в редакторе <Constant name="query_page" /> для существующих моделей в вашем проекте.
+1. Чтобы открыть <Constant name="insights" />, выберите **Insights** на боковой панели навигации.
+2. Если ваши [учетные данные пользователя](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) еще не настроены, <Constant name="insights" /> предложит вам настроить их. Возможность выполнять запросы к данным зависит от разрешений, предоставленных вашим учетным данным на стороне поставщика хранилища данных.
+3. После настройки учетных данных вы сможете писать, выполнять и редактировать SQL-запросы в редакторе <Constant name="insights" /> для существующих моделей вашего проекта.
 
 ## Запуск запросов {#run-queries}
 
-Для запуска запросов в <Constant name="query_page" /> можно использовать:
+Для выполнения запросов в <Constant name="insights" /> можно использовать:
 - Стандартный SQL  
-- Jinja (функции [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и другие Jinja‑функции)
-- Ссылки из SQL‑кода `ref` на соответствующие страницы в Explorer  
+- Jinja (функции [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и другие функции Jinja)
+- Ссылки из `ref` в SQL-коде на соответствующую страницу Explorer
 - <Term id="cte">CTE</Term> и <Term id="subquery">подзапросы</Term>  
-- Базовые агрегации и join‑ы  
-- Запросы <Constant name="semantic_layer" /> с использованием Jinja‑функций <Constant name="semantic_layer" />
+- Базовые агрегации и соединения 
+- Запросы к <Constant name="semantic_layer" /> с использованием Jinja-функций <Constant name="semantic_layer" />
 
 ## Пример {#example}
 
-Рассмотрим пример, который показывает, как запускать запросы в <Constant name="query_page" />:
+Рассмотрим на примере, как выполнять запросы в <Constant name="insights" />:
 
 - Один из магазинов [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) хочет посчитать количество уникальных заказов и уникальных клиентов, чтобы понять, можно ли расширить бизнес в других регионах мира.
 - Чтобы выразить эту логику в SQL, вы (аналитик, назначенный на этот проект) хотите проанализировать годовые тренды, которые помогут принять решение о расширении. Напишите следующий SQL‑запрос, чтобы вычислить количество уникальных клиентов, городов и общий доход от заказов: <br /><br />
@@ -69,33 +73,39 @@ image: /img/docs/dbt-insights/insights-chart.jpg
     order by 1
     ```
 
-### Использование dbt Copilot {#use-dbt-copilot}
+### Использование dbt Copilot
 
-Чтобы упростить работу, [используйте <Constant name="copilot" />](/docs/cloud/use-dbt-copilot#build-queries) — это поможет сэкономить время и изучить другие способы анализа данных. <Constant name="copilot" /> может быстро обновить существующий запрос или сгенерировать новый на основе вашего запроса.
+Чтобы упростить работу, [используйте dbt Copilot в Insights](/docs/explore/navigate-dbt-insights): это поможет сэкономить время и найти другие способы анализа данных. dbt Copilot поможет быстро обновить запрос или сгенерировать новый на основе вашего описания.
 
-1. Нажмите на иконку **<Constant name="copilot" />** в боковой панели Query console, чтобы открыть окно ввода запроса.  
-2. Введите подсказку на естественном языке с просьбой показать годовую разбивку по уникальным клиентам и общему доходу, затем нажмите **Submit**.
-3. <Constant name="copilot" /> вернёт:
-   - Краткое описание запроса  
-   - Объяснение логики  
-   - Сгенерированный SQL  
-   - Опции **Add** или **Replace** для добавления или замены текущего запроса
-4. Просмотрите результат и нажмите **Replace**, чтобы использовать SQL, сгенерированный <Constant name="copilot" />, в редакторе.
-5. Затем нажмите **Run**, чтобы предварительно посмотреть результаты.
+import CopilotWizardDifferences from '/snippets/_copilot-wizard-diff.md';
 
-<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="95%" title="dbt Insights с dbt Copilot" />
+<CopilotWizardDifferences/>
 
-После этого вы можете:
-- Продолжить создание или изменение запроса с помощью <Constant name="copilot" />
-- Изучить [результаты](#view-results) во вкладке **Data**
-- [Просмотреть метаданные и детали запроса](#view-details) во вкладке **Details**
-- [Визуализировать результаты](#chart-results) во вкладке **Chart**
-- Проверить [**Query history**](#query-history) для просмотра статусов и прошлых запусков
-- Использовать [**<Constant name="explorer" />**](#use-dbt-explorer) для изучения lineage и контекста моделей
-- Если вы хотите сохранить запрос, нажмите **Save Insight** в [меню Query console](/docs/explore/navigate-dbt-insights#query-console-menu), чтобы сохранить его для дальнейшего использования
+1. Нажмите значок **dbt Copilot** на боковой панели консоли запросов.
+2. В раскрывающемся меню над полем ввода dbt Copilot выберите **Generate SQL**.
+3. Введите запрос на естественном языке и попросите вывести количество уникальных клиентов и общую выручку с разбивкой по годам.
+4. Нажмите **↑**, чтобы отправить запрос.
+4. В ответ dbt Copilot предоставит:
+   - Краткое описание SQL-запроса
+   - Объяснение логики
+   - Сгенерированный SQL
+   - Возможность добавить сгенерированный SQL к существующему запросу (**Add**) или заменить им существующий запрос (**Replace**)
+5. Проверьте результат и нажмите **Replace**, чтобы использовать сгенерированный dbt Copilot SQL в редакторе.
+6. Нажмите **Run**, чтобы просмотреть результаты.
+
+<Lightbox src="/img/docs/dbt-insights/insights-copilot.png" width="60%" title="dbt Insights с dbt Copilot" />
+
+Далее вы можете:
+- Продолжить создание или изменение запроса с помощью dbt Copilot.
+- Изучить [результаты](#view-results) на вкладке **Data**.
+- [Просмотреть метаданные и сведения о запросе](#view-details) на вкладке **Details**.
+- [Визуализировать результаты](#chart-results) на вкладке **Chart**.
+- Проверить статус и предыдущие запуски в [**Query history**](#query-history).
+- Использовать [**<Constant name="catalog" />**](/docs/explore/explore-projects) для изучения связей между моделями и их контекста.
+- Если вы хотите сохранить запрос для дальнейшего использования, нажмите **Save Insight** в [меню консоли запросов](/docs/explore/navigate-dbt-insights#query-console-menu).
 
 :::tip Хотите превратить запрос в модель?
-Вы можете открыть [<Constant name="cloud_ide" />](/docs/cloud/studio-ide/develop-in-studio) или [<Constant name="visual_editor" />](/docs/cloud/canvas) из [меню Query console](/docs/explore/navigate-dbt-insights#query-console-menu), чтобы превратить SQL в переиспользуемую модель dbt — и всё это прямо в <Constant name="cloud" />!
+Вы можете открыть [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) или [<Constant name="canvas" />](/docs/platform/canvas) из [меню консоли запросов](/docs/explore/navigate-dbt-insights#query-console-menu), чтобы преобразовать свой SQL в модель dbt, пригодную для повторного использования, &mdash; и всё это в <Constant name="dbt" />!
 :::
 
 ### Просмотр результатов {#view-results}
@@ -107,7 +117,11 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 - Экспортировать в CSV — в правом верхнем углу таблицы нажмите кнопку загрузки, чтобы выгрузить датасет.
 <Lightbox src="/img/docs/dbt-insights/insights-export-csv.png" width="95%" title="Экспорт в CSV в dbt Insights" />
 
-### Просмотр деталей {#view-details}
+### Просмотр подробностей {#view-details}
+Чтобы просмотреть подробности запроса, нажмите на вкладку **Details**:
+- **Метаданные запроса** &mdash; Заголовок и описание, сгенерированные dbt Copilot, исходный SQL и соответствующий скомпилированный SQL.
+- **Сведения о подключении** &mdash; Информация о подключении к платформе данных, используемом для запроса.
+- **Сведения о запросе** &mdash; Длительность выполнения запроса, статус, количество столбцов и строк.
 
 Откройте вкладку **Details**, чтобы посмотреть детали запроса:
 - **Query metadata** — заголовок и описание, сгенерированные <Constant name="copilot" />, исходный SQL и соответствующий скомпилированный SQL.
@@ -136,21 +150,25 @@ image: /img/docs/dbt-insights/insights-chart.jpg
 
 <Lightbox src="/img/docs/dbt-insights/insights-query-history.png" width="95%" title="Иконка Query history в dbt Insights" />
 
-### Использование dbt Catalog {#use-dbt-catalog}
+Откройте [<Constant name="catalog" />](/docs/explore/explore-projects) прямо в <Constant name="insights" />, чтобы просматривать ресурсы проекта, такие как модели, столбцы, метрики, измерения и многое другое, — всё это доступно в интерфейсе <Constant name="insights" />. 
 
-Откройте [<Constant name="explorer" />](/docs/explore/explore-projects) напрямую в <Constant name="query_page" />, чтобы просматривать ресурсы проекта — модели, столбцы, метрики, измерения и многое другое — прямо в интерфейсе <Constant name="query_page" />.
+Это встроенное представление позволяет вам и вашим пользователям продолжать работу с запросами, получая дополнительную информацию о моделях, семантических моделях, метриках, макросах и других ресурсах. Встроенное представление <Constant name="catalog" /> предоставляет следующие возможности:
+- Те же возможности поиска, что и в <Constant name="catalog" />
+- Фильтрация отображаемых объектов по типу
+- Переход по гиперссылке из `ref` в SQL-коде на соответствующую страницу <Constant name="catalog" />
+- Более подробный просмотр ресурсов в полном интерфейсе <Constant name="catalog" /> или их открытие в dbt Copilot.
 
-Такой интегрированный вид позволяет вам и другим пользователям не прерывать рабочий процесс с запросами, получая при этом больше контекста о моделях, семантических моделях, метриках, макросах и другом. Встроенный <Constant name="explorer" /> предоставляет:
-- Те же возможности поиска, что и <Constant name="explorer" />
-- Возможность ограничивать отображаемые объекты по типу
-- Гиперссылки из SQL‑кода `ref` на соответствующие страницы <Constant name="explorer" />
-- Просмотр активов более детально, открыв полный интерфейс <Constant name="explorer" /> или открыв их в <Constant name="copilot" />
+Чтобы открыть <Constant name="catalog" />, нажмите значок **<Constant name="catalog" />** в [боковом меню консоли запросов](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
 
 Чтобы открыть <Constant name="explorer" />, нажмите на иконку **<Constant name="explorer" />** в [боковом меню Query console](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
 
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights, интегрированный с dbt Catalog" />
 
-### Настройка окружения Jinja {#set-jinja-environment}
+Задайте среду компиляции, чтобы управлять тем, как обрабатываются функции Jinja. Эта функция:
+- Поддерживает «типизированные» среды, отмеченные как `Production`, `Staging` и/или `Development`.
+- Позволяет выполнять запросы <Constant name="semantic_layer" /> к средам staging (среды разработки не поддерживаются).
+- По-прежнему использует учетные данные конкретного пользователя, поэтому пользователи должны иметь соответствующие права доступа для выполнения запросов к `PROD` и `STG`. 
+- При смене среды меняется контекст представления <Constant name="catalog" /> в <Constant name="insights" />, а также контекст среды при переходе в <Constant name="catalog" /> и <Constant name="canvas" />. Например, если переключиться на `Staging` в <Constant name="insights" /> и выбрать **View in Catalog**, откроется представление `Staging` в <Constant name="catalog" />.
 
 Настройте окружение компиляции, чтобы управлять тем, как рендерятся Jinja‑функции. Эта функция:
 - Поддерживает «типизированные» окружения, помеченные как `Production`, `Staging` и/или `Development`.
@@ -173,13 +191,14 @@ Insights предоставляет удобный механизм сохран
 
 ## Особенности и ограничения {#considerations}
 
-- <Constant name="query_page" /> использует ваши development credentials для выполнения запросов. Вы можете выполнять запросы к любым объектам в вашем хранилище данных, к которым у вас есть доступ с этими учётными данными.
-- Каждая Jinja‑функция использует [`defer --favor-state`](/reference/node-selection/defer) для разрешения Jinja.
+## Важные замечания 
+- <Constant name="insights" /> использует ваши учетные данные для выполнения запросов. Вы можете выполнять запросы к любому объекту в вашем хранилище данных, доступному с учетными данными пользователя, настроенными в **Account settings**. 
+- Каждая функция Jinja использует [`defer --favor-state`](/reference/node-selection/defer) для разрешения ссылок Jinja.
 
-<!-- this can move to another page -->
+<!-- это можно перенести на другую страницу -->
 
-## FAQs {#faqs}
-- В чём разница между <Constant name="query_page" /> и <Constant name="explorer" />?
-  - Отличный вопрос! <Constant name="explorer" /> помогает понять структуру вашего dbt‑проекта, его ресурсы, lineage и метрики, предоставляя контекст для данных.
-  - <Constant name="query_page" /> развивает этот контекст, позволяя писать, запускать и итеративно дорабатывать SQL‑запросы прямо в <Constant name="cloud" />. Он предназначен для ad‑hoc и исследовательской аналитики и помогает бизнес‑пользователям и аналитикам исследовать данные, задавать вопросы и эффективно сотрудничать.
-  - <Constant name="explorer" /> даёт контекст, а <Constant name="query_page" /> позволяет действовать.
+## Часто задаваемые вопросы
+- В чем разница между <Constant name="insights" /> и <Constant name="catalog" />?
+  - Отличный вопрос! <Constant name="catalog" /> помогает разобраться в структуре, ресурсах, связях и метриках вашего проекта dbt, предоставляя контекст для ваших данных.
+  - <Constant name="insights" /> опирается на этот контекст и позволяет писать, выполнять и дорабатывать SQL-запросы непосредственно в <Constant name="dbt" />. Этот инструмент предназначен для разового или исследовательского анализа и дает бизнес-пользователям и аналитикам возможность изучать данные, задавать вопросы и беспрепятственно сотрудничать.
+  - <Constant name="catalog" /> предоставляет контекст, а <Constant name="insights" /> позволяет действовать.

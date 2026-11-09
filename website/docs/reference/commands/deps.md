@@ -122,3 +122,18 @@ dbt deps --add-package https://github.com/fivetran/dbt_amplitude@v0.3.0 --source
 # Локальный пакет
 dbt deps --add-package /opt/dbt/redshift --source local
 ```
+
+<VersionBlock firstVersion="2.0">
+
+## Установка навыков агента
+
+Если вы зададите флаг [`ai_provider`](/docs/dbt-ai/package-skills#set-the-ai_provider-flag), `dbt deps` также установит [навыки агента](/docs/dbt-ai/package-skills), поставляемые с вашим проектом и его пакетами, записав их в каталог, из которого ваш агент для программирования считывает навыки:
+
+```text
+Installing add-a-data-test (demo_skills) -> .claude/skills
+Installing naming-conventions (demo_skills) -> .claude/skills
+```
+
+Без `ai_provider` команда `dbt deps` устанавливает пакеты как обычно и не записывает никаких навыков.
+
+</VersionBlock>

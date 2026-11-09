@@ -5,7 +5,9 @@ id: macro-properties
 
 import PropsCallout from '/snippets/_config-prop-callout.md';
 
-Свойства макросов могут быть объявлены в любом файле `properties.yml`. <PropsCallout title={frontMatter.title}/> 
+Вы можете объявлять свойства и конфигурации макросов в файлах `.yml` вашего проекта. <PropsCallout title={frontMatter.title}/> 
+
+Макросы поддерживают блок `config`. Внутри `config` можно определить `meta` и `docs`.
 
 Вы можете назвать эти файлы как угодно, например, `whatever_you_want.yml`, и размещать их на любой глубине в подкаталогах.
 
@@ -30,4 +32,27 @@ macros:
 
 ```
 
+</File>
+
+## Пример
+
+<File name='macros/schema.yml'>
+
+```yaml
+macros:
+  - name: cents_to_dollars
+    description: Преобразует числовой столбец из центов в доллары.
+    config:
+      docs:
+        show: true
+      meta:
+        owner: analytics
+    arguments:
+      - name: column_name
+        type: column
+        description: Столбец для преобразования
+      - name: precision
+        type: integer
+        description: Количество знаков после запятой. По умолчанию — 2.
+```
 </File>

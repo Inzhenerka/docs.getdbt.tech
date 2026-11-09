@@ -56,7 +56,7 @@ datediff(<date part>, <start date/time>, <end date/time>)
 
 Возможно, вы сможете запомнить синтаксис функции DATEDIFF для основного хранилища данных, которое вы используете. Что произойдет, когда вы перейдете на другое для новой работы или нового стека данных? Запоминание, есть ли подчеркивание в имени функции или в каком аргументе передается `<date part>`, не доставляет удовольствия и приводит к неизбежным, бесчисленным поискам в Google «datediff в bigquery».
 
-К счастью, [<Constant name="core" />](https://github.com/dbt-labs/dbt-core) прикроет вам спину! <Constant name="core" /> — это open source‑продукт dbt, который помогает специалистам по данным писать свои [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) в соответствии с лучшими практиками программной инженерии.
+К счастью, [dbt](https://github.com/dbt-labs/dbt) придёт вам на помощь! dbt — это продукт, который помогает специалистам по данным писать [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/), следуя лучшим практикам разработки программного обеспечения.
 
 [Adapters](/docs/supported-data-platforms) поддерживают [cross-database macros](/reference/dbt-jinja-functions/cross-database-macros), которые помогают писать некоторые функции, такие как DATE_TRUNC и DATEDIFF, без необходимости запоминать специфичный синтаксис функций для каждой базы данных.
 

@@ -1,5 +1,6 @@
 ---
-title: "Конфигурация IBM watsonx.data Presto"
+title: "Конфигурации IBM watsonx.data Presto"
+description: "Настройте специфичные для IBM watsonx.data Presto параметры моделей dbt, включая требования к экземпляру и разрешения для каталогов."
 id: "watsonx-presto-config"
 ---
 

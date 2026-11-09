@@ -80,14 +80,13 @@ data_tests:
 <TabItem value="property-yaml">
 
 ```yaml
-
 <resource_type>:
   - name: <resource_name>
     data_tests:
       - <test_name>: # Фактическое имя теста. Например, dbt_utils.equality
           name: # Человекочитаемое имя теста. Например, equality_fct_test_coverage
           [description](/reference/resource-properties/description): "markdown formatting"
-          arguments: # Доступно в версии v1.10.5 и выше. В более старых версиях <argument_name> можно указывать как свойство верхнего уровня.
+arguments: # Доступно в версии v1.10.5 и выше. В более ранних версиях <argument_name> можно задать как свойство верхнего уровня.
             <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [fail_calc](/reference/resource-configs/fail_calc): <string>
@@ -97,14 +96,16 @@ data_tests:
             [warn_if](/reference/resource-configs/severity): <string>
             [store_failures](/reference/resource-configs/store_failures): true | false
             [where](/reference/resource-configs/where): <string>
+            # Available in v1.12 and higher. Requires enabling the `require_sql_header_in_test_configs` flag.
+            [sql_header](/reference/resource-configs/sql_header): <string> 
 
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
         data_tests:
           - <test_name>:
-              name: 
+              name:
               [description](/reference/resource-properties/description): "markdown formatting"
-              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+              arguments: # Available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [fail_calc](/reference/resource-configs/fail_calc): <string>
@@ -114,9 +115,13 @@ data_tests:
                 [warn_if](/reference/resource-configs/severity): <string>
                 [store_failures](/reference/resource-configs/store_failures): true | false
                 [where](/reference/resource-configs/where): <string>
+                # Available in v1.12 and higher. Requires enabling the `require_sql_header_in_test_configs` flag.
+                [sql_header](/reference/resource-configs/sql_header): <string> 
 ```
 
 Этот механизм конфигурации поддерживается только для конкретных экземпляров общих тестов. Чтобы настроить конкретный отдельный тест, следует использовать макрос `config()` в его SQL-определении.
+
+Starting in <Constant name="dbt" /> v1.12, you can set [`sql_header`](/reference/resource-configs/sql_header) in the `config` of a generic data test at the model or column level of your `properties.yml`. Enable the [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs) flag to use `config.sql_header` in your data tests.
 
 
 </TabItem>
@@ -307,7 +312,7 @@ models:
 
 #### Добавление описания к generic и singular тестам {#add-a-description-to-generic-and-singular-tests}
 
-Начиная с dbt v1.9 (также доступно в <Constant name="cloud" /> [release tracks](/docs/dbt-versions/cloud-release-tracks)), вы можете добавлять [описания](/reference/resource-properties/data-tests#description) как к generic, так и к singular тестам.
+Начиная с dbt v1.9 (также доступно в [каналах выпуска](/docs/dbt-versions/dbt-release-tracks) <Constant name="dbt" />), вы можете добавлять [описания](/reference/resource-properties/data-tests#description) как к универсальным, так и к единичным тестам.
 
 Для generic теста описание добавляется непосредственно в существующий YAML:
 
@@ -341,4 +346,28 @@ data_tests:
 
 </File>
 
-Дополнительную информацию см. в разделе [Add a description to a data test](/reference/resource-properties/description#add-a-description-to-a-data-test).
+Дополнительную информацию см. в разделе [Добавление описания к тесту данных](/reference/resource-properties/description#add-a-description-to-a-data-test).
+
+<VersionBlock firstVersion="1.12">
+
+#### Настройка `sql_header` в универсальном тесте данных
+
+Если флаг [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs) включён, вы можете задать [`sql_header`](/reference/resource-configs/sql_header) в блоке `config` универсального теста данных, чтобы указанный SQL-код выполнялся перед запуском теста (например, для настройки параметров сеанса или добавления комментария):
+
+<File name="models/properties.yml">
+
+```yaml
+models:
+  - name: orders
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null:
+              name: not_null_orders_order_id
+              config:
+                sql_header: "-- SQL_HEADER_TEST_MARKER"
+```
+
+</File>
+
+</VersionBlock>

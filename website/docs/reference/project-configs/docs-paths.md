@@ -13,7 +13,7 @@ docs-paths: [directorypath]
 </File>
 
 ## Определение {#definition}
-При необходимости укажите пользовательский список директорий, где расположены [блоки документации](/docs/build/documentation#docs-blocks).
+При необходимости укажите пользовательский список директорий, где расположены [блоки документации](/docs/build/documentation#using-docs-blocks).
 
 ## Значение по умолчанию {#default}
 

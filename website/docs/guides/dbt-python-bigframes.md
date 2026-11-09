@@ -24,14 +24,14 @@ level: 'Intermediate'
 
 BigQuery DataFrames — это open source Python‑пакет, который транслирует код pandas и scikit‑learn в масштабируемый SQL для BigQuery. Адаптер dbt-bigquery использует сервис BigQuery Studio Notebook Executor Service для выполнения клиентского Python‑кода.
 
-### Предварительные требования {#prerequisites}
+- [Аккаунт Google Cloud](https://cloud.google.com/free) 
+- [Аккаунт <Constant name="dbt" />](https://www.getdbt.com/signup/) 
+- Знание SQL и Python на базовом или среднем уровне.
+- Базовое понимание основ dbt. Рекомендуем пройти [курс «Основы dbt»](https://learn.getdbt.com).
 
-- Аккаунт [Google Cloud](https://cloud.google.com/free)  
-- Аккаунт [<Constant name="cloud" />](https://www.getdbt.com/signup/)  
-- Базовые или средние знания SQL и Python.  
-- Базовое понимание принципов работы dbt. Рекомендуем курс [dbt Fundamentals](https://learn.getdbt.com).
+Во время настройки вам потребуется выбрать адаптер **BigQuery** и указать значения для **Google Cloud Storage Bucket** и **Dataproc Region** в <Constant name="dbt_platform"/>. Подробнее см. в разделе [Настройка BigQuery в dbt platform](/guides/dbt-python-bigframes?step=2#configure-bigquery-in-the-dbt-platform).
 
-Во время настройки вам потребуется выбрать адаптер **BigQuery (Legacy)** и указать значения для **Google Cloud Storage Bucket** и **Dataproc Region** в <Constant name="dbt_platform"/>. Подробности см. в разделе [Configure BigQuery in dbt platform](/guides/dbt-python-bigframes?step=2#configure-bigquery-in-dbt-platform).
+Во время настройки вам потребуется выбрать адаптер **BigQuery (Legacy)** и указать значения для **Google Cloud Storage Bucket** и **Dataproc Region** в <Constant name="dbt_platform"/>. Подробности см. в разделе [Configure BigQuery in dbt platform](/guides/dbt-python-bigframes?step=2#configure-bigquery-in-the-dbt-platform).
 
 ### Что вы создадите {#what-youll-build}
 
@@ -116,19 +116,20 @@ BigQuery DataFrames — это open source Python‑пакет, который �
 
 ### Настройте BigQuery в dbt platform {#configure-bigquery-in-the-dbt-platform}
 
-Чтобы настроить подключение BigQuery DataFrames в <Constant name="dbt_platform"/>, выполните следующие шаги:
+Чтобы настроить подключение BigQuery DataFrames в <Constant name="dbt_platform"/>, выполните следующие действия:
+1. Перейдите в **Account settings** > **Connections**. Нажмите **New connection**. 
+2. В разделе **Type** выберите **BigQuery**.
+3. Выберите **BigQuery** в качестве адаптера.
+2. В разделе **Optional settings** укажите значения следующих полей:
+    - **Google Cloud Storage Bucket** (например: `dbt_name_bucket`)
+    - **Dataproc Region** (например: `us-central1`)
+3. Нажмите **Save**.
+ 
+Эта настройка необходима для корректного выполнения заданий BigFrames.
 
-1. Перейдите в **Account settings** > **Connections** и нажмите **New connection**.  
-2. В разделе **Type** выберите **BigQuery**.  
-3. Выберите адаптер **BigQuery (Legacy)**.  
-4. В разделе **Optional settings** укажите значения для следующих полей:
-   - **Google Cloud Storage Bucket** (например: `dbt_name_bucket`)
-   - **Dataproc Region** (например: `us-central1`)
-5. Нажмите **Save**.
+Подробнее о подключении к BigQuery в <Constant name="dbt_platform"/> см. в разделе [Подключение к BigQuery](/docs/platform/connect-data-platform/connect-bigquery).
 
-Это необходимо для корректного выполнения заданий BigFrames.
-
-Дополнительную информацию см. в разделе [Connect to BigQuery](/docs/cloud/connect-data-platform/connect-bigquery).
+Дополнительную информацию см. в разделе [Connect to BigQuery](/docs/platform/connect-data-platform/connect-bigquery).
 
 <Lightbox src="/img/guides/gcp-guides/dbt-platform-bq.png" width="80%" title="Настройте BigQuery в dbt platform"/>
 

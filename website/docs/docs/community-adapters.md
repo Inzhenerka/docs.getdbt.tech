@@ -1,19 +1,58 @@
 ---
 title: "Адаптеры сообщества"
 id: "community-adapters"
+sidebar_label: "Community adapters"
+description: "Community adapters connect dbt to data platforms. They are maintained by dbt Labs, partners, and the community."
+hide_table_of_contents: true
+availability: all_users
 ---
 
-Адаптеры сообщества — это плагины адаптеров, которые предоставляются и поддерживаются членами сообщества. Мы приветствуем и поощряем [вклад в разработку плагинов адаптеров](/docs/contribute-core-adapters#contribute-to-a-pre-existing-adapter) от сообщества dbt. Пожалуйста, помните, что эти [поддерживающие сообщество](/docs/connect-adapters#maintainers) — отважные волонтеры, которые жертвуют своим временем и усилиями, поэтому будьте добры, понимайте и помогайте, где можете!
+<VersionBlock lastVersion="1.99">
 
-| Платформы данных (нажмите, чтобы просмотреть руководство по настройке) |||
-| ------------------------------------------ | -------------------------------- | ------------------------------------- |
-| [CrateDB](/docs/core/connect-data-platform/cratedb-setup) | [Databend Cloud](/docs/core/connect-data-platform/databend-setup) | [DeltaStream](/docs/core/connect-data-platform/deltastream-setup) |
-| [Doris & SelectDB](/docs/core/connect-data-platform/doris-setup) | [DuckDB](/docs/core/connect-data-platform/duckdb-setup) | [Exasol Analytics](/docs/core/connect-data-platform/exasol-setup) |
-| [Extrica](/docs/core/connect-data-platform/extrica-setup) | [Hive](/docs/core/connect-data-platform/hive-setup) | [IBM DB2](/docs/core/connect-data-platform/ibmdb2-setup) |
-| [IBM watsonx.data - Spark](/docs/core/connect-data-platform/watsonx-spark-setup) | [Impala](/docs/core/connect-data-platform/impala-setup) | [Infer](/docs/core/connect-data-platform/infer-setup) |
-| [iomete](/docs/core/connect-data-platform/iomete-setup) | [MaxCompute](/docs/core/connect-data-platform/maxcompute-setup) | [MindsDB](/docs/core/connect-data-platform/mindsdb-setup) |
-| [MySQL](/docs/core/connect-data-platform/mysql-setup) | [RisingWave](/docs/core/connect-data-platform/risingwave-setup) | [Rockset](/docs/core/connect-data-platform/rockset-setup) |
-| [SingleStore](/docs/core/connect-data-platform/singlestore-setup) | [SQL Server & Azure SQL](/docs/core/connect-data-platform/mssql-setup) | [SQLite](/docs/core/connect-data-platform/sqlite-setup) |
-| [Starrocks](/docs/core/connect-data-platform/starrocks-setup) | [TiDB](/docs/core/connect-data-platform/tidb-setup) | [TimescaleDB](https://dbt-timescaledb.debruyn.dev/) |
-| [Upsolver](/docs/core/connect-data-platform/upsolver-setup) | [Vertica](/docs/core/connect-data-platform/vertica-setup) | [Watsonx-Presto](/docs/core/connect-data-platform/watsonx-presto-setup) |
-| [Yellowbrick](/docs/core/connect-data-platform/yellowbrick-setup) | | |
+:::note
+Программа Trusted Adapter Program для v1 завершена. Все адаптеры, поддерживаемые dbt Labs, партнёрами и сообществом, перечислены на этой странице.
+:::
+
+</VersionBlock>
+
+Адаптеры подключают dbt к платформам данных. Их поддерживают dbt Labs, партнёры и участники сообщества.
+
+Мы приветствуем [участие в разработке существующих адаптеров](/docs/contribute-dbt-adapters#contribute-to-a-pre-existing-adapter). Многие адаптеры поддерживаются добровольцами, поэтому будьте доброжелательны и помогайте по мере возможности.
+
+<VersionBlock lastVersion="1.99">
+
+Чтобы создать адаптер v1, обратитесь к руководству [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+Чтобы внести свой вклад в разработку адаптера v2, обратитесь к руководству [Участие в разработке адаптера dbt v2](/guides/adapter-creation-v2?step=1).
+
+</VersionBlock>
+
+import CommunityAdapters from '/snippets/_community-adapters.md';
+
+<CommunityAdapters />
+
+<VersionBlock lastVersion="1.99">
+
+### Дополнительные адаптеры
+
+<SimpleTable>
+
+| Платформа данных |  |  |
+| --- | --- | --- |
+| [Confluent Cloud](/docs/local/connect-data-platform/confluent-setup) | [CrateDB](/docs/local/connect-data-platform/cratedb-setup) | [Databend Cloud](/docs/local/connect-data-platform/databend-setup) |
+| [DeltaStream](/docs/local/connect-data-platform/deltastream-setup) | [Doris & SelectDB](/docs/local/connect-data-platform/doris-setup) | [Extrica](/docs/local/connect-data-platform/extrica-setup) |
+| [Firebird](/docs/local/connect-data-platform/firebird-setup) | [Hologres](/docs/local/connect-data-platform/hologres-setup) | [IBM watsonx.data - Spark](/docs/local/connect-data-platform/watsonx-spark-setup) |
+| [Infer](/docs/local/connect-data-platform/infer-setup) | [iomete](/docs/local/connect-data-platform/iomete-setup) | [MaxCompute](/docs/local/connect-data-platform/maxcompute-setup) |
+| [MindsDB](/docs/local/connect-data-platform/mindsdb-setup) | [MySQL](/docs/local/connect-data-platform/mysql-setup) | [Rockset](/docs/local/connect-data-platform/rockset-setup) |
+| [Sail](/docs/local/connect-data-platform/sail-setup) | [SQL Server & Azure SQL](/docs/local/connect-data-platform/mssql-setup) | [SQLite](/docs/local/connect-data-platform/sqlite-setup) |
+| [Starrocks](/docs/local/connect-data-platform/starrocks-setup) | [TiDB](/docs/local/connect-data-platform/tidb-setup) | [TimescaleDB](https://dbt-timescaledb.debruyn.dev/) |
+| [Upsolver](/docs/local/connect-data-platform/upsolver-setup) | [Vertica](/docs/local/connect-data-platform/vertica-setup) | [Watsonx-Presto](/docs/local/connect-data-platform/watsonx-presto-setup) |
+| [Yellowbrick](/docs/local/connect-data-platform/yellowbrick-setup) |
+
+</SimpleTable>
+
+</VersionBlock>

@@ -1,4 +1,4 @@
-Чтобы удалить одно задание или несколько заданий в <Constant name="cloud" />:
+Чтобы удалить одно или несколько заданий в <Constant name="dbt" />:
 
 1. Нажмите **Deploy** в навигационной панели.
 2. Нажмите **Jobs** и выберите задание, которое вы хотите удалить.
@@ -6,7 +6,7 @@
 4. Прокрутите страницу вниз и нажмите **Delete job**, чтобы удалить задание. <br />
 
 <figure>
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/delete-job.png" width="100%" title="Delete a job"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/delete-job.png" width="100%" title="Delete a job"/>
 </figure>
 
 5. Подтвердите действие во всплывающем окне, нажав **Confirm delete** в правом нижнем углу, чтобы немедленно удалить задание. Это действие нельзя отменить. Однако вы можете создать новое задание с теми же параметрами, если удаление было выполнено по ошибке.

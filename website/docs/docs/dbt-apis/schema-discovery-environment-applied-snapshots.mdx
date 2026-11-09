@@ -1,0 +1,66 @@
+---
+title: "Схема объекта Snapshots"
+sidebar_label: "Snapshots"
+id: "discovery-schema-environment-applied-snapshots"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+[Snapshots](/docs/build/snapshots) представляют собой снимки данных на определённый момент времени, которые позволяют отслеживать исторические изменения. Вы можете выполнять запросы к своим snapshots через Discovery API.
+
+[Пример запроса](#example-query) демонстрирует некоторые поля, которые можно запрашивать с помощью объекта `snapshots`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запросов.
+
+### Аргументы {#arguments}
+
+При выполнении запросов к `snapshots` вы можете использовать следующие аргументы:
+
+<NodeArgsTable parent="AppliedState" name="snapshots" />
+
+### Пример запроса {#example-query}
+
+Вы можете указать `environmentId`, отфильтровать по базе данных и ограничить выборку первыми 100 записями, чтобы получить первые 100 snapshots в базе данных `analytics`, включая информацию об их производительности выполнения и статусе:
+
+```graphql
+query {
+  environment(id: 834) {
+    applied {
+      snapshots(
+        filter: {
+          database: "analytics"
+        }, 
+        first: 100
+      ) {
+        edges {
+          node {
+            executionInfo {
+              compileCompletedAt
+              compileStartedAt
+              executeCompletedAt
+              executeStartedAt
+              executionTime
+              lastRunStatus
+              lastRunId
+            }
+            fqn
+            name
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запросов к `snapshots` вы можете использовать следующие поля:
+
+<SchemaTable nodeName="SnapshotAppliedStateNodeConnection" />
+
+### Ключевые поля узлов {#key-fields-from-nodes}
+
+<SchemaTable nodeName="SnapshotAppliedStateNode" />

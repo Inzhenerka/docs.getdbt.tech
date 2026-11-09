@@ -111,6 +111,8 @@ from raw,
 
 Чтобы быстро внедрить эту функциональность, EQT открыла pull request, Snowflake помогла с некоторыми проблемами, которые у нас возникли с CI, и сотрудник dbt Labs помог написать тесты и объединить код!
 
-Теперь dbt включает эту функциональность в dbt 1.8+ и во всех [выпусках](/docs/dbt-versions/cloud-release-tracks) в dbt Cloud.
+Теперь dbt включает эту функциональность в dbt 1.8+ и во всех [выпусках](/docs/dbt-versions/dbt-release-tracks) в dbt Cloud.
 
-Сотрудники dbt Labs и члены сообщества будут рады обсудить это в канале slack [#db-snowflake](https://getdbt.slack.com/archives/CJN7XRF1B).
+Эта функциональность теперь доступна в dbt версии 1.8 и выше, а также во всех [каналах выпуска](/docs/dbt-versions/dbt-release-tracks) в dbt Cloud.
+
+Сотрудники dbt Labs и участники сообщества будут рады обсудить её подробнее в канале Slack [#db-snowflake](https://getdbt.slack.com/archives/CJN7XRF1B).

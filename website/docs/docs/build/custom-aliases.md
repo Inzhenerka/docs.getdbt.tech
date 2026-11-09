@@ -2,6 +2,7 @@
 title: "Пользовательские алиасы"
 description: "Настройка пользовательских алиасов для переопределения стандартных соглашений об именовании моделей и других ресурсов в dbt."
 id: "custom-aliases"
+availability: all_users
 ---
 
 ## Обзор {#overview}
@@ -66,9 +67,11 @@ select * from {{ ref('snowplow_sessions') }}
 
 </File>
 
+<a id="generate_alias_name" />
+
 ### generate_alias_name {#generatealiasname}
 
-Псевдоним, создаваемый для модели, контролируется макросом под названием `generate_alias_name`. Этот макрос можно переопределить в проекте dbt, чтобы изменить способ, которым dbt присваивает псевдонимы моделям. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration).
+Псевдоним, создаваемый для модели, контролируется макросом под названием `generate_alias_name`. Этот макрос можно переопределить в проекте dbt, чтобы изменить способ, которым dbt присваивает псевдонимы моделям. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#changing-the-way-dbt-generates-a-schema-name).
 
 Чтобы переопределить генерацию псевдонимов в dbt, создайте макрос с именем `generate_alias_name` в вашем проекте dbt. Макрос `generate_alias_name` принимает два аргумента:
 
@@ -106,7 +109,51 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
-### Макрос Dispatch - управление SQL псевдонимами для баз данных и пакетов dbt {#dispatch-macro-sql-alias-management-for-databases-and-dbt-packages}
+<VersionBlock firstVersion="1.12">
+
+### generate_latest_version_pointer_alias
+
+Когда конфигурация [`latest_version_pointer`](/reference/resource-configs/latest_version_pointer) включена, dbt использует макрос `generate_latest_version_pointer_alias`, чтобы определить имя представления-указателя, создаваемого для последней версии модели с версионированием. Этот макрос следует тому же принципу, что и [`generate_alias_name`](#generate_alias_name).
+
+Реализация по умолчанию использует базовое имя модели (например, `dim_customers`), если пользовательский псевдоним не задан с помощью `latest_version_pointer.alias`:
+
+<File name='macros/generate_latest_version_pointer_alias.sql'>
+
+```jinja2
+{% macro generate_latest_version_pointer_alias(custom_alias_name=none, node=none) -%}
+    {{ return(adapter.dispatch('generate_latest_version_pointer_alias', 'dbt')(custom_alias_name, node)) }}
+{%- endmacro %}
+
+{% macro default__generate_latest_version_pointer_alias(custom_alias_name=none, node=none) -%}
+    {%- if custom_alias_name -%}
+        {{ custom_alias_name | trim }}
+    {%- else -%}
+        {{ node.name }}
+    {%- endif -%}
+{%- endmacro %}
+```
+
+</File>
+
+Чтобы переопределить поведение по умолчанию, создайте в своём проекте макрос с именем `generate_latest_version_pointer_alias`. Например, чтобы добавлять суффикс `_latest` вместо использования базового имени без изменений:
+
+<File name='macros/get_latest_version_pointer_alias.sql'>
+
+```jinja2
+{% macro generate_latest_version_pointer_alias(custom_alias_name=none, node=none) -%}
+    {%- if custom_alias_name -%}
+        {{ custom_alias_name | trim }}
+    {%- else -%}
+        {{ node.name ~ "_latest" }}
+    {%- endif -%}
+{%- endmacro %}
+```
+
+</File>
+
+</VersionBlock>
+
+### Макрос Dispatch — управление SQL-псевдонимами для баз данных и пакетов dbt
 
 См. документацию по макросу `dispatch`: ["Управление различными глобальными переопределениями в пакетах"](/reference/dbt-jinja-functions/dispatch#managing-different-global-overrides-across-packages)
 

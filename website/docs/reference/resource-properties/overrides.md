@@ -4,7 +4,7 @@ datatype: string
 ---
 
 :::warning Deprecation
-Свойство `overrides` устарело в v1.10.
+Свойство `overrides` [объявлено устаревшим в версии v1.10](/reference/deprecations#sourceoverridedeprecation). Вместо него можно [включить или отключить источник](/reference/source-configs#configuring-sources) из пакета.
 :::
 
 <File name='models/<filename>.yml'>
@@ -31,14 +31,14 @@ sources:
  - [schema](/reference/resource-properties/schema)
  - [loader](/reference/resource-properties/loader)
  - [quoting](/reference/resource-properties/quoting)
- - [freshness](/reference/resource-properties/freshness)
- - [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field)
+ - [freshness](/reference/resource-configs/freshness)
+ - [loaded_at_field](/reference/resource-configs/freshness)
  - [tags](/reference/resource-configs/tags)
 
 ## Примеры {#examples}
 ### Укажите имя вашей базы данных и схемы для источника, определенного в пакете {#supply-your-database-and-schema-name-for-a-source-defined-in-a-package}
 
-Этот пример основан на [пакете источника Fivetran GitHub](https://github.com/fivetran/dbt_github_source/blob/830ba43ac2948e4853a3c167ab7ee88b8b425fa0/models/src_github.yml#L3-L29).
+Этот пример основан на [пакете Fivetran GitHub Source](https://github.com/fivetran/dbt_github_source/blob/830ba43ac2948e4853a3c167ab7ee88b8b425fa0/models/src_github.yml#L3-L29).
 Здесь база данных и схема переопределяются в родительском проекте dbt, который включает пакет `github_source`.
 
 <File name='models/src_github.yml'>

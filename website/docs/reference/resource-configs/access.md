@@ -1,7 +1,10 @@
 ---
+description: "Set a model's access level (private, protected, or public) to control whether other groups, packages, or projects can reference it."
 resource_types: [models]
 datatype: access
 ---
+
+import MacroAccessRestrictions from '/snippets/_macro-access-restrictions.md';
 
 <File name='models/<schema>.yml'>
 
@@ -21,7 +24,7 @@ models:
 
 Существует несколько подходов к настройке доступа:
 
-- В `properties.yml` с использованием старого метода:
+- В `properties.yml` при использовании старого способа (dbt версии 1.9 и более ранних) — на верхнем уровне, непосредственно под моделью:
 
   <File name='models/properties_my_public_model.yml'>
   
@@ -29,14 +32,12 @@ models:
   
   models:
     - name: my_public_model
-      config:
-        access: public # Старый способ, по‑прежнему поддерживается
-          # изменён на config в версии v1.10
+      access: public
       
   ```
   </File>
   
-- В `properties.yml` с использованием нового метода (для версии 1.7 или выше). Используйте либо старый метод, либо новый метод, но не оба для одной и той же модели:
+- В `properties.yml` с использованием актуального способа (для версии v1.10 или выше). Используйте либо старый, либо актуальный способ, но не оба одновременно для одной и той же модели:
 
   <File name='models/properties_my_public_model.yml'>
   
@@ -99,7 +100,9 @@ dbt.exceptions.DbtReferenceError: Parsing Error
   which is not allowed because the referenced node is private to the finance group.
 ```
 
-## Значение по умолчанию {#default}
+<MacroAccessRestrictions />
+
+## По умолчанию
 
 По умолчанию все модели "защищены". Это означает, что другие модели в том же проекте могут ссылаться на них.
 

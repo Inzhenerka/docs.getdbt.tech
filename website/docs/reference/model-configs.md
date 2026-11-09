@@ -37,25 +37,42 @@ models:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
     [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
-    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #только для материализованных представлений на поддерживаемых адаптерах
+[+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # только для материализованных представлений при использовании поддерживаемых адаптеров
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
 
 ```
 
 </VersionBlock>
 
-<VersionBlock firstVersion="1.10">
+<VersionBlock firstVersion="1.10" lastVersion="1.11">
 
 ```yaml
 models:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
     [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
-    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
     [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness): <dict>
     
 ```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+
+```yaml
+models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
+    [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
+    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
+    [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+    [+](/reference/resource-configs/plus-prefix)[freshness](/reference/resource-configs/freshness): <dict>
+    [+](/reference/resource-configs/plus-prefix)[on_error](/reference/resource-configs/on_error): skip_children | continue
+    [+](/reference/resource-configs/plus-prefix)[latest_version_pointer](/reference/resource-configs/latest_version_pointer): <dict>
+
+  ```
 
 </VersionBlock>
 </File>
@@ -82,7 +99,7 @@ models:
 </File>
 </VersionBlock>
 
-<VersionBlock firstVersion="1.10">
+<VersionBlock firstVersion="1.10" lastVersion="1.11">
 
 Обратите внимание, что большинство конфигураций моделей определены в `config`, тогда как `build_after` задаётся в `freshness`.
 
@@ -95,11 +112,61 @@ models:
     config:
       [materialized](/reference/resource-configs/materialized): <materialization_name>
       [sql_header](/reference/resource-configs/sql_header): <string>
-      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
       [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
       [freshness](/reference/resource-configs/freshness):
         # build_after is nested under freshness. Available on dbt platform Enterprise tiers only.
         build_after: <dict>
+```
+
+</File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12" lastVersion="1.99">
+
+Note, most model configurations are defined under `config`, while `build_after` is set under `freshness`.
+
+<File name='models/properties.yml'>
+
+```yaml
+
+models:
+  - name: [<model-name>]
+    config:
+      [materialized](/reference/resource-configs/materialized): <materialization_name>
+      [sql_header](/reference/resource-configs/sql_header): <string>
+      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
+      [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+      [freshness](/reference/resource-configs/freshness):
+        # build_after is nested under freshness. Available on dbt platform Enterprise tiers only.
+        build_after: <dict>
+      [on_error](/reference/resource-configs/on_error): skip_children | continue
+      [latest_version_pointer](/reference/resource-configs/latest_version_pointer): <dict>
+```
+
+</File>
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+<File name='models/properties.yml'>
+
+```yaml
+
+models:
+  - name: [<model-name>]
+    config:
+      [materialized](/reference/resource-configs/materialized): <materialization_name>
+      [sql_header](/reference/resource-configs/sql_header): <string>
+      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
+      [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+      [freshness](/reference/resource-configs/freshness):
+        warn_after: {count: 24, period: hour}
+        error_after: {count: 48, period: hour}
+        build_after: <dict>        # build scheduling — Enterprise only
+      loaded_at_field: updated_at  # or loaded_at_query
+      [on_error](/reference/resource-configs/on_error): skip_children | continue
+      [latest_version_pointer](/reference/resource-configs/latest_version_pointer): <dict>
 ```
 
 </File>
@@ -125,7 +192,22 @@ models:
 
 </VersionBlock>
 
-<VersionBlock firstVersion="1.10">
+<VersionBlock firstVersion="1.10" lastVersion="1.11">
+
+```sql
+
+{{ config(
+    [materialized](/reference/resource-configs/materialized)="<materialization_name>",
+    [sql_header](/reference/resource-configs/sql_header)="<string>"
+    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
+    [unique_key](/reference/resource-configs/unique_key)='column_name_or_expression'
+    [freshness](/reference/resource-configs/freshness)=<dict>
+) }}
+```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
 
 ```sql
 
@@ -135,6 +217,8 @@ models:
     [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views for supported adapters
     [unique_key](/reference/resource-configs/unique_key)='column_name_or_expression'
     [freshness](/reference/resource-configs/freshness)=<dict>
+    [on_error](/reference/resource-configs/on_error)="skip_children" | "continue"
+    [latest_version_pointer](/reference/resource-configs/latest_version_pointer)=<dict>
 ) }}
 ```
 
@@ -344,7 +428,7 @@ models:
 
 </File>
 
-<VersionBlock firstVersion="1.10">
+<VersionBlock firstVersion="1.10" lastVersion="1.99">
 
 ### Настройка свежести источников
 
@@ -355,7 +439,7 @@ models:
 Ниже приведён пример файла `my_model.yml`, в котором используется конфигурация `freshness`:
 
 <File name="models/my_model.yml">
-  
+
 ```yml
 models:
   - name: stg_orders
@@ -366,7 +450,40 @@ models:
           period: minute | hour | day
           updates_on: any | all # необязательная настройка
 ```
-  
+
+</File>
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+### Configuring model freshness
+
+You can use the `freshness` config in the following ways:
+
+- **Freshness SLA** (`warn_after`, `error_after`): To declare how stale this model's data is allowed to be. dbt evaluates these thresholds when you run [`dbt freshness`](/reference/commands/freshness) and reports `Pass`, `Warn`, or `Error`. Support varies by materialization and measurement method. Refer to the [measurement methods table](/reference/commands/freshness#how-freshness-is-evaluated) for more information.
+
+- **Build scheduling** (`build_after`): To skip rebuilding a model when upstream data hasn't changed since the last build. Available on dbt platform Enterprise tiers only.
+
+
+<File name="models/my_model.yml">
+
+```yml
+models:
+  - name: stg_orders
+    config:
+      freshness:
+        # Freshness SLA — report warn/error when data is stale
+        warn_after: {count: 24, period: hour}
+        error_after: {count: 48, period: hour}
+        # Build scheduling — Enterprise only
+        build_after:
+          count: 6
+          period: hour
+          updates_on: any  # optional
+      loaded_at_field: updated_at  # or loaded_at_query
+```
+
 </File>
 
 </VersionBlock>

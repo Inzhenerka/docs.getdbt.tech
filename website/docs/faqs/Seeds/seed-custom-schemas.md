@@ -6,20 +6,19 @@ id: seed-custom-schemas
 
 ---
 
-Да! Используйте конфигурацию [schema](reference/resource-configs/schema.md) в вашем файле `dbt_project.yml`.
+Да! Используйте конфигурацию [schema](/reference/resource-configs/schema) в файле `dbt_project.yml`.
 
 <File name='dbt_project.yml'>
 
 ```yml
-
 name: jaffle_shop
 ...
 
 seeds:
   jaffle_shop:
-    schema: mappings # все seeds в этом проекте по умолчанию будут использовать схему "mappings"
++schema: mappings # все seeds в этом проекте по умолчанию будут использовать схему "mappings"
     marketing:
-      schema: marketing # seeds в подкаталоге "seeds/marketing/" будут использовать схему "marketing"
+      +schema: marketing # seeds в подкаталоге "seeds/marketing/" будут использовать схему "marketing"
 ```
 
 </File>

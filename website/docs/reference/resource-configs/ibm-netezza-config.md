@@ -1,5 +1,6 @@
 ---
-title: "Конфигурация IBM Netezza"
+title: "Конфигурации IBM Netezza"
+description: "Настройте параметры моделей dbt, специфичные для IBM Netezza, включая требования к экземпляру и разрешения адаптера."
 id: "ibm-netezza-config"
 ---
 

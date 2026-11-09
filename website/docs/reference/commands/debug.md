@@ -20,11 +20,11 @@ intro_text: "Используйте dbt debug для проверки подкл
 
 ## Flags {#flags}
 
-Большинство флагов `dbt debug` применимы к CLI <Constant name="core" />. Некоторые флаги также работают в <Constant name="cloud_cli" />, но в <Constant name="cloud_ide" /> поддерживается только `--connection`.
+Большинство флагов `dbt debug` применимы к самостоятельно размещаемому dbt CLI. Некоторые флаги также работают в <Constant name="platform_cli" />, но в <Constant name="studio_ide" /> поддерживается только `--connection`.
 
-- CLI <Constant name="core" />: поддерживает все флаги.
-- <Constant name="cloud_ide" />: поддерживает только `dbt debug` и `dbt debug --connection`.
-- <Constant name="cloud_cli" />: поддерживает только `dbt debug` и `dbt debug --connection`. Также вы можете использовать команду [`dbt environment`](/reference/commands/dbt-environment) для взаимодействия с вашим окружением <Constant name="cloud" />. 
+- dbt CLI: поддерживает все флаги.
+- <Constant name="studio_ide" />: поддерживает только dbt `debug` и `dbt debug --connection`.
+- <Constant name="platform_cli" />: поддерживает только dbt `debug` и `dbt debug --connection`. Вы также можете использовать команду [`dbt environment`](/reference/commands/dbt-environment?version=2.0) для взаимодействия со своей средой <Constant name="dbt" />.
 
 `dbt debug` поддерживает следующие флаги при использовании интерфейса командной строки (CLI):
 
@@ -67,11 +67,13 @@ Options:
                 database object in the current environment.
 
  --indirect-selection [eager|cautious|buildable|empty]
-                Choose which tests to select that are
-                adjacent to selected resources. Eager is
-                most inclusive, cautious is most exclusive,
-                and buildable is in between. Empty includes
-                no tests at all.
+                Controls which tests run based on their
+                relationships to selected models in your DAG.
+                Eager (default) is most inclusive and runs
+                tests that reference your selected models.
+                Cautious is most exclusive and only runs tests
+                that reference selected models.
+                Buildable is in between. Empty runs no tests.
 
  --log-cache-events / --no-log-cache-events
                 Enable verbose logging for relational cache
@@ -104,7 +106,7 @@ Options:
  --log-path PATH         
                 Configure the 'log-path'. Only applies this
                 setting for the current run. Overrides the
-                'DBT_LOG_PATH' if it is set.
+                'DBT_LOG_PATH' (v1.10 and earlier) or 'DBT_ENGINE_LOG_PATH' (v1.11 or later) when set.
 
  --partial-parse / --no-partial-parse
                 Allow for partial parsing by looking for and
@@ -163,9 +165,6 @@ Options:
                 general --use-colors/--no-use-colors
                 setting.
 
- --use-experimental-parser / --no-use-experimental-parser
-                Enable experimental parsing features.
-
  -V, -v, --version        
                 Show version information and exit
 
@@ -203,7 +202,7 @@ Options:
  --connection          
                 Test the connection to the target database
                 independent of dependency checks.
-                Available in Studio IDE and dbt Core CLI
+                Available in Studio IDE and dbt CLI
 
  --config-dir          
                 Print a system-specific command to access
@@ -251,7 +250,7 @@ To view your profiles.yml file, run:
 open /Users/alice/.dbt
 ```
 
-Проверить подключение в <Constant name="cloud_ide" />:
+Проверьте подключение в <Constant name="studio_ide" />:
 
 ```text
 dbt debug --connection

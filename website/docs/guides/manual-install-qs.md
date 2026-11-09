@@ -1,11 +1,11 @@
 ---
-title: "Быстрый старт для dbt Core с ручной установкой"
+title: "Быстрый старт с dbt при ручной установке"
 id: manual-install
-description: "Подключение вашего хранилища к dbt Core с использованием CLI."
+description: "Подключение вашего хранилища данных к dbt с помощью CLI."
 level: 'Beginner'
-platform: 'dbt-core'
+platform: 'dbt'
 icon: 'square-terminal'
-tags: ['dbt Core','Quickstart']
+tags: ['Quickstart']
 hide_table_of_contents: true
 ---
 
@@ -13,16 +13,16 @@ hide_table_of_contents: true
 
 ## Введение {#introduction}
 
-Когда вы используете <Constant name="core" /> для работы с dbt, вы будете редактировать файлы локально с помощью редактора кода и запускать проекты через интерфейс командной строки (CLI).
+При использовании <Constant name="dbt" />, установленного вручную, вы будете редактировать файлы локально в редакторе кода и запускать проекты через интерфейс командной строки (CLI). 
 
-Если вы хотите редактировать файлы и запускать проекты с использованием веб‑ориентированной интегрированной среды разработки dbt (<Constant name="cloud_ide" />), обратитесь к [кратким руководствам <Constant name="cloud" />](/guides). Вы также можете разрабатывать и выполнять команды dbt с помощью [CLI <Constant name="cloud" />](/docs/cloud/cloud-cli-installation) &mdash; командной строки, работающей на базе <Constant name="cloud" />.
+Если вы хотите редактировать файлы и запускать проекты в веб-среде интегрированной разработки dbt (<Constant name="studio_ide" />), обратитесь к [руководствам по быстрому началу работы с <Constant name="dbt" />](/guides). Вы также можете разрабатывать проекты и выполнять команды dbt с помощью [<Constant name="dbt" /> CLI](/docs/platform/dbt-cli-installation) &mdash; интерфейса командной строки на базе <Constant name="dbt" />.
 
 ### Предварительные требования {#prerequisites}
 
-* Чтобы использовать dbt Core, важно знать основы работы с Терминалом. В частности, вы должны понимать, как работают команды `cd`, `ls` и `pwd`, чтобы легко перемещаться по структуре каталогов на вашем компьютере.
-* Установите <Constant name="core" /> с помощью [инструкций по установке](/docs/core/installation-overview) для вашей операционной системы.
-* Выполните соответствующие шаги по настройке и загрузке данных в разделе Quickstart для серии <Constant name="cloud" />. Например, для BigQuery выполните шаги [Setting up (in BigQuery)](/guides/bigquery?step=2) и [Loading data (BigQuery)](/guides/bigquery?step=3).
-* [Создайте аккаунт GitHub](https://github.com/join), если у вас его ещё нет.
+* Для работы с <Constant name="dbt" /> важно знать основы работы с терминалом. В частности, вы должны понимать, как использовать команды `cd`, `ls` и `pwd`, чтобы легко перемещаться по структуре каталогов вашего компьютера.
+* Установите <Constant name="dbt" />, следуя [инструкциям по установке](/docs/local/install-dbt) для вашей операционной системы.
+* Выполните соответствующие шаги по настройке и загрузке данных из серии руководств по быстрому началу работы с <Constant name="dbt" />. Например, для BigQuery выполните шаги [Настройка (в BigQuery)](/guides/bigquery?step=2) и [Загрузка данных (BigQuery)](/guides/bigquery?step=3).
+* [Создайте учетную запись GitHub](https://github.com/join), если у вас ее еще нет.
 
 ### Создание стартового проекта {#create-a-starter-project}
 
@@ -43,11 +43,11 @@ hide_table_of_contents: true
 
 ## Создание проекта {#create-a-project}
 
-Узнайте, как использовать серию команд в командной строке Терминала для создания вашего проекта. dbt Core включает команду `init`, которая помогает создать каркас проекта dbt.
+Узнайте, как создать проект с помощью последовательности команд в командной строке терминала. <Constant name="dbt" /> включает команду `init`, которая помогает создать начальную структуру проекта dbt.
 
 Чтобы создать ваш dbt проект:
 
-1. Убедитесь, что dbt Core установлен, и проверьте версию с помощью команды `dbt --version`:
+1. Убедитесь, что у вас установлен <Constant name="dbt" />, и проверьте версию с помощью команды `dbt --version`:
 
 ```shell
 dbt --version
@@ -72,7 +72,7 @@ $ pwd
 > Users/BBaggins/dbt-tutorial/jaffle_shop
 ```
 
-5. Используйте текстовый редактор, такой как Atom или VSCode, чтобы открыть директорию проекта, которую вы создали на предыдущих шагах, и которую мы назвали jaffle_shop. Содержимое включает папки и файлы `.sql` и `.yml`, сгенерированные командой `init`.
+5. Откройте каталог проекта, созданный на предыдущих шагах и названный jaffle_shop, в редакторе кода, например VS Code. В нём находятся папки, а также файлы `.sql` и `.yml`, созданные командой `init`.
 
 <div style={{maxWidth: '400px'}}>
 <Lightbox src="/img/starter-project-dbt-cli.png" title="Стартовый проект в текстовом редакторе" />
@@ -100,7 +100,7 @@ models:
 
 ## Подключение к BigQuery {#connect-to-bigquery}
 
-При локальной разработке dbt подключается к вашему <Term id="data-warehouse" /> с использованием [профиля](/docs/core/connect-data-platform/connection-profiles), который является YAML файлом со всеми деталями подключения к вашему хранилищу.
+При локальной разработке dbt подключается к вашему <Term id="data-warehouse" /> с помощью [профиля](/docs/local/profiles.yml) — YAML-файла, содержащего все параметры подключения к вашему хранилищу данных.
 
 1. Создайте файл в директории `~/.dbt/` с именем `profiles.yml`.
 2. Переместите ваш ключевой файл BigQuery в эту директорию.
@@ -115,13 +115,11 @@ jaffle_shop: # это должно совпадать с профилем в в�
         dev:
             type: bigquery
             method: service-account
-            keyfile: /Users/BBaggins/.dbt/dbt-tutorial-project-331118.json # замените это на полный путь к вашему ключевому файлу
-            project: grand-highway-265418 # Замените это на ваш project id
-            dataset: dbt_bbagins # Замените это на dbt_ваше_имя, например, dbt_bilbo
-            threads: 1
-            timeout_seconds: 300
-            location: US
-            priority: interactive
+keyfile: /Users/BBAGGINS/.dbt/KEYFILE_NAME.json # Замените на полный путь к вашему файлу ключа
+            database: GCP_PROJECT_ID # Идентификатор вашего проекта Google Cloud
+            schema: dbt_YOUR_NAME # Ваш набор данных для разработки, например dbt_bbaggins
+            threads: 4
+            location: US # Должно совпадать с расположением ваших наборов данных BigQuery
 ```
 
 </File>
@@ -196,15 +194,18 @@ $ git checkout -b add-customers-model
 
 ## Создайте вашу первую модель {#build-your-first-model}
 
-1. Откройте ваш проект в вашем любимом текстовом редакторе.
-2. Создайте новый SQL файл в директории `models`, названный `models/customers.sql`.
+Если вы хотите использовать ИИ для создания своей первой модели, ознакомьтесь с разделом <a id="qs-jump-to-build-with-ai" href="#build-it-with-ai-using-dbt-wizard">Создание модели с помощью dbt Wizard</a> ниже.
+
+
+1. Откройте свой проект в предпочитаемом редакторе кода.
+2. Создайте новый SQL-файл в каталоге `models` с именем `models/customers.sql`.
 3. Вставьте следующий запрос в файл `models/customers.sql`.
 
 <Snippet path="tutorial-sql-query" />
 
 4. Из командной строки введите `dbt run`.
 <div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/first-model-dbt-cli.png" title="Успешный запуск с dbt Core CLI" />
+<Lightbox src="/img/first-model-dbt-cli.png" title="Успешное выполнение dbt из командной строки" />
 </div>
 
 Когда вы вернетесь в консоль BigQuery, вы можете выполнить `select` из этой модели.
@@ -217,7 +218,9 @@ $ git checkout -b add-customers-model
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Измените способ материализации вашей модели {#change-the-way-your-model-is-materialized}
+<Snippet path="quickstarts/build-first-model-with-wizard-cli" />
+
+## Измените способ материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
@@ -430,45 +433,100 @@ select * from final
 
 Вы также можете исследовать:
 
-* Директорию `target`, чтобы увидеть весь скомпилированный SQL. Директория `run` показывает операторы create или replace table, которые выполняются, это операторы select, обернутые в правильный DDL.
-* Файл `logs`, чтобы увидеть, как dbt Core регистрирует все действия, происходящие в вашем проекте. Он показывает операторы select, которые выполняются, и python логирование, происходящее при выполнении dbt.
+* Каталог `target`, чтобы просмотреть весь скомпилированный SQL. В каталоге `run` находятся выполняемые операторы create or replace table — это операторы select, обёрнутые в соответствующий DDL.
+* Файл `logs`, чтобы посмотреть, как <Constant name="dbt" /> записывает в журнал все действия, происходящие в вашем проекте. В нём отображаются выполняемые операторы select и другие сообщения журнала, выводимые при запуске dbt.
 
 ## Добавьте тесты к вашим моделям {#add-tests-to-your-models}
 
 <Snippet path="tutorial-add-tests-to-models" />
 
-## Документируйте ваши модели {#document-your-models}
+### Следующие шаги
 
-<Snippet path="tutorial-document-your-models" />
+<Snippet path="tutorial-next-steps-tests" />
 
-3. Выполните команду `dbt docs serve`, чтобы запустить документацию на локальном веб-сайте.
+## Документируйте свои модели
 
-#### Часто задаваемые вопросы {#faqs-2}
+Adding [documentation](/docs/build/documentation) to your project allows you to describe your models in rich detail, and share that information with your team. Here, we're going to add some basic documentation to our project.
+
+Обновите файл `models/schema.yml`, добавив описания, например приведённые ниже.
+
+    <File name='models/schema.yml'>
+
+    ```yaml
+    version: 2
+
+    models:
+      - name: customers
+        description: Одна запись на каждого клиента
+        columns:
+          - name: customer_id
+            description: Первичный ключ
+            data_tests:
+              - unique
+              - not_null
+          - name: first_order_date
+            description: NULL, если клиент ещё не сделал ни одного заказа.
+
+      - name: stg_customers
+        description: Эта модель очищает данные о клиентах
+        columns:
+          - name: customer_id
+            description: Первичный ключ
+            data_tests:
+              - unique
+              - not_null
+
+      - name: stg_orders
+        description: Эта модель очищает данные о заказах
+        columns:
+          - name: order_id
+            description: Первичный ключ
+            data_tests:
+              - unique
+              - not_null
+          - name: status
+            data_tests:
+              - accepted_values:
+                  arguments: # доступно в версии v1.10.5 и выше. В более ранних версиях <argument_name> можно задать как свойство верхнего уровня.
+                    values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+          - name: customer_id
+            data_tests:
+              - not_null
+              - relationships:
+                  arguments:
+                    to: ref('stg_customers')
+                    field: customer_id
+    ```
+
+    </File>
+
+1. Выполните `dbt docs generate`, чтобы скомпилировать артефакты, необходимые для статического сайта документации вашего проекта.
+2. Выполните `dbt docs serve`, чтобы открыть документацию на локальном веб-сайте.
+
+### Часто задаваемые вопросы
 
 <FAQ path="Docs/long-descriptions" />
 <FAQ path="Docs/sharing-documentation" />
 
-#### Следующие шаги {#next-steps-1}
-
-<Snippet path="tutorial-next-steps-tests" />
-
-## Зафиксируйте обновленные изменения {#commit-updated-changes}
+## Создайте коммит с обновлёнными изменениями
 
 Вам нужно зафиксировать изменения, которые вы внесли в проект, чтобы репозиторий содержал ваш последний код.
 
-1. Добавьте все ваши изменения в git: `git add -A`
-2. Зафиксируйте ваши изменения: `git commit -m "Add customers model, tests, docs"`
-3. Отправьте ваши изменения в ваш репозиторий: `git push`
-4. Перейдите в ваш репозиторий и откройте pull request, чтобы объединить код в вашу основную ветку.
+1. Добавьте все изменения в git: `git add -A`
+2. Создайте коммит с изменениями: `git commit -m "Add customers model, tests, docs"`
+3. Отправьте изменения в свой репозиторий: `git push -u origin add-customers-model`
+4. Перейдите в свой репозиторий и откройте пул-реквест, чтобы объединить код с веткой master.
 
 ## Запланируйте задание {#schedule-a-job}
 
-Мы рекомендуем использовать <Constant name="cloud" /> как самый простой и надёжный способ [развёртывания заданий](/docs/deploy/deployments) и автоматизации вашего dbt‑проекта в продакшене.
+Мы рекомендуем использовать <Constant name="dbt_platform" /> как самый простой и надёжный способ [запускать задания](/docs/deploy/deployments) и автоматизировать ваш проект dbt в промышленной среде.
 
 Для получения дополнительной информации о том, как начать, обратитесь к [созданию и планированию заданий](/docs/deploy/deploy-jobs#create-and-schedule-jobs).
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/run-overview.png" width="90%" title="Обзор выполнения задания dbt, который включает сведения о запуске задания, тип триггера, commit SHA, имя окружения, подробные шаги выполнения, логи и многое другое."/>
+<Lightbox src="/img/docs/dbt-platform/deployment/run-overview.png" width="90%" title="Обзор запуска задания dbt, включая сведения о запуске, тип триггера, SHA коммита, имя среды, подробные шаги выполнения, журналы и многое другое."/>
 
-Для получения дополнительной информации об использовании <Constant name="core" /> для планирования задания см. запись в блоге [dbt airflow](/blog/dbt-airflow-spiritual-alignment).
+Чтобы самостоятельно настроить расписание заданий с помощью оркестратора, например Airflow, обратитесь к статье в блоге [dbt и Airflow](/blog/dbt-airflow-spiritual-alignment).
+
+<Snippet path="quickstarts/connect-your-ai" />
 
 </div>

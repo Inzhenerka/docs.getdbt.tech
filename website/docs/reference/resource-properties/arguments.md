@@ -5,7 +5,6 @@ id: arguments
 ---
 
 import MacroArgsNote from '/snippets/_validate-macro-args.md';
-import ArgumentsShared from '/snippets/_arguments-shared.md';
 
 <File name='macros/<filename>.yml'>
 
@@ -25,7 +24,7 @@ macros:
 
 ## Определение {#definition}
 
-<ArgumentsShared />
+The `arguments` property is used to define the parameters that a resource can accept. Each argument can have a `name`, a `type` field, and an optional `description`.
 
 Для **макросов** вы можете добавить секцию `arguments` в [свойства макроса](/reference/macro-properties). Это помогает документировать макрос и понимать, какие входные параметры он ожидает.
 
@@ -38,7 +37,7 @@ macros:
 </VersionBlock>
 <VersionBlock firstVersion="1.10">
 
-Тип данных аргумента. Установка параметра [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) в значение `true` гарантирует, что задокументированные имена аргументов макроса совпадают с аргументами в его определении, а также проверяет их типы на соответствие [поддерживаемым типам](#supported-types). Если установлено значение `false`, поле `type` используется только для документации, и никаких ограничений на указываемые значения нет.
+Тип данных аргумента. Если параметр [`validate_macro_args`](/reference/global-configs/behavior-flags/validate_macro_args) установлен в `true`, dbt проверяет, что имена аргументов макроса в документации совпадают с именами в определении макроса, а их типы входят в число [поддерживаемых типов](#supported-types). Если параметр установлен в `false`, `type` используется только для документации, и на указываемые значения не накладывается никаких ограничений.
 
 </VersionBlock>
 
@@ -60,7 +59,26 @@ macros:
 
 ### Поддерживаемые типы {#supported-types}
 
-Начиная с версии <Constant name="core" /> v1.10, при использовании флага [`validate_macro_args`](/reference/global-configs/behavior-changes#macro-argument-validation) dbt поддерживает следующие типы аргументов макросов:
+<VersionBlock lastVersion="1.99">
+
+Начиная с <Constant name="dbt" /> v1.10, при использовании флага [`validate_macro_args`](/reference/global-configs/behavior-flags/validate_macro_args) dbt поддерживает следующие типы аргументов макросов:
+
+- `string` или `str`
+- `bool` (`boolean` не поддерживается и вызывает предупреждение о недопустимом типе)
+- `integer` или `int`
+- `float`
+- `any`
+- `list[<Type>]`, например, `list[string]`
+- `dict[<Type>, <Type>]`, например, `dict[str, list[int]]`
+- `optional[<Type>]`, например, `optional[integer]`
+- [`relation`](/reference/dbt-classes#relation)
+- [`column`](/reference/dbt-classes#column)
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+При использовании флага [`validate_macro_args`](/reference/global-configs/behavior-flags/validate_macro_args) dbt поддерживает следующие типы аргументов макросов:
 
 - `string` или `str`
 - `boolean` или `bool`
@@ -73,7 +91,9 @@ macros:
 - [`relation`](/reference/dbt-classes#relation)
 - [`column`](/reference/dbt-classes#column)
 
-Обратите внимание, что синтаксис типов напоминает Python, однако они используются исключительно для документации и валидации. Это не Python-типы.
+</VersionBlock>
+
+Обратите внимание, что типы оформлены в стиле Python, но используются только для документирования и валидации. Это не типы Python.
 
 ## Примеры {#examples}
 

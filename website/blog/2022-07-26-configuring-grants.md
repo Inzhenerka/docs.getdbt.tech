@@ -200,10 +200,10 @@ on-run-start:
 - Стандартные + будущие гранты — наша оригинальная рекомендация, еще в 2019 году — *сложны.* Они часто требуют дополнительных разрешений (статус суперпользователя!), они вступают в силу автоматически и не подходят для многих организаций с более строгими политиками безопасности.
 
 ### Проблемы, связанные с хуками {#issues-related-to-hooks}
-Это всего лишь образец проблем, которые мы видели:
-- [Post hooks, которые вызывают макросы, парсятся с execute = False #2370](https://github.com/dbt-labs/dbt-core/issues/2370)
-- [get_relation возвращает none в контексте хука #2938](https://github.com/dbt-labs/dbt-core/issues/2938)
-- [this.is_view и this.is_table не работают в BigQuery внутри хука #3529](https://github.com/dbt-labs/dbt-core/issues/3529)
-- [пользовательский путь схемы таблицы \{\{ this \}\} неправильно парсится в post-hook макросе #3985](https://github.com/dbt-labs/dbt-core/issues/3985)
-- [Post-hook не разрешает пользовательскую схему #4023](https://github.com/dbt-labs/dbt-core/issues/4023)
-- [[CT-80] [Bug] post-hook макрос генерирует SQL с неправильной исходной таблицей #4606](https://github.com/dbt-labs/dbt-core/issues/4606)
+Вот лишь некоторые из проблем, с которыми мы сталкивались:
+- [Пост-хуки, вызывающие макросы, разбираются с execute = False #2370](https://github.com/dbt-labs/dbt/issues/2370)
+- [get_relation возвращает none в контексте хука #2938](https://github.com/dbt-labs/dbt/issues/2938)
+- [this.is_view и this.is_table не работают в BigQuery внутри хука #3529](https://github.com/dbt-labs/dbt/issues/3529)
+- [Путь к таблице с пользовательской схемой в \{\{ this \}\} некорректно разбирается в макросе пост-хука #3985](https://github.com/dbt-labs/dbt/issues/3985)
+- [Пост-хук не определяет пользовательскую схему #4023](https://github.com/dbt-labs/dbt/issues/4023)
+- [[CT-80] [Ошибка] Макрос пост-хука генерирует SQL с неверной исходной таблицей #4606](https://github.com/dbt-labs/dbt/issues/4606)

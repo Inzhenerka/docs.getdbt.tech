@@ -1,18 +1,19 @@
 ---
-title: "Устаревшие функции"
+title: "Устаревающие возможности"
+intro_text: "Устаревающие возможности — это элементы кода вашего проекта (модели, конфигурации, синтаксис), которые перестанут работать в будущих версиях."
 ---
 
 :::note
 
-Устаревшая функциональность продолжает работать в релизе v1.10, однако она больше не поддерживается и будет удалена в одной из будущих версий.
+Устаревшая функциональность по-прежнему работает в версии v1.10, но больше не поддерживается и будет удалена в одной из будущих версий. Сейчас сообщения об устаревшей функциональности отображаются как предупреждения и не препятствуют выполнению запусков и других команд (если вы не настроили [обработку предупреждений как ошибок](/reference/global-configs/warnings)), но после обновления они приведут к ошибкам, если не устранить их причины. 
 
-Это означает, что устаревшие возможности сейчас приводят только к предупреждениям, но не блокируют выполнение команд и запусков (если только у вас не настроен режим [warnings as errors](/reference/global-configs/warnings)).
+Это не то же самое, что [флаги изменения поведения](/reference/global-configs/behavior-changes) (флаги в файле `dbt_project.yml`, позволяющие включать или отключать изменения поведения) или [устаревшие флаги CLI](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) (флаги командной строки, которые удаляются в <Constant name="fusion" />). Краткое сравнение см. в разделе [Обзор изменений](/reference/changes-overview).
 
-Когда соответствующая функциональность будет окончательно удалена, это приведёт к ошибкам в запусках dbt после обновления, если вы заранее не устраните причины устареваний.
+Переходите на [<Constant name="fusion" />](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2)? Перед обновлением необходимо устранить все случаи использования устаревшей функциональности, перечисленные на этой странице.
 
 :::
 
-Во время выполнения dbt генерирует различные категории [событий](/reference/events-logging), одна из которых — _deprecations_ (устаревания). Устаревания — это особый тип предупреждений, который сообщает о проблемах в частях вашего проекта, способных привести к ломающим изменениям в будущих версиях dbt. Несмотря на то что сейчас это всего лишь предупреждения, крайне важно устранять их, чтобы в дальнейшем работать безопаснее, получать более точную обратную связь и быть уверенными в обновлениях.
+Во время работы dbt генерирует различные категории [событий](/reference/events-logging), одна из которых — _сообщения об устаревшей функциональности_. Это особый тип предупреждений, сообщающих о проблемах в отдельных частях вашего проекта, которые приведут к несовместимым изменениям в одной из будущих версий dbt. Хотя пока это лишь предупреждения, важно устранить причины всех таких предупреждений в проекте, чтобы в дальнейшем работать безопаснее и увереннее, получая своевременную обратную связь.
 
 ## Определение предупреждений об устаревании {#identify-deprecation-warnings}
 
@@ -28,6 +29,18 @@ dbt parse --no-partial-parse --show-all-deprecations
 
 Флаг `--no-partial-parse` гарантирует, что будут включены даже те устаревания, которые обнаруживаются только на этапе парсинга. Флаг `--show-all-deprecations` обеспечивает вывод каждого случая устаревания, а не только первого.
 
+<VersionBlock firstVersion="2.0">
+
+:::note <Constant name="fusion" /> and `dbt parse`
+
+When you use <Constant name="fusion_engine" />, omit `--no-partial-parse` from the command above. That flag is deprecated in <Constant name="fusion" /> and may log deprecation warning `dbt1700`. Run `dbt parse --show-all-deprecations` without `--no-partial-parse`.
+
+For more information, refer to [Deprecated flags](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) in the guide to upgrading to <Constant name="fusion_engine" />.
+
+:::
+
+</VersionBlock>
+
 ```bash
 19:15:13 [WARNING]: Deprecated functionality
 Summary of encountered deprecations:
@@ -36,21 +49,50 @@ Summary of encountered deprecations:
 
 ### Платформа dbt {#the-dbt-platform}
 
-Если вы используете <Constant name="cloud" />, вы можете просматривать предупреждения об устаревании в разделе **Dashboard** вашего аккаунта.
+Если вы используете <Constant name="dbt" />, вы можете просмотреть предупреждения об устаревании в разделе **Dashboard** вашей учетной записи.
 
-<Lightbox src="/img/docs/dbt-cloud/deprecation-warnings.png" title="Предупреждения об устаревании на дашборде dbt." />
+    <Lightbox src="/img/docs/dbt-platform/deprecation-warnings.png" title="Предупреждения об устаревании на панели управления dbt." />
 
-Откройте конкретную задачу, чтобы увидеть подробности и найти предупреждения в логах (или выполните команду `parse` с флагами из <Constant name="cloud_ide" /> или <Constant name="cloud_cli" />).
+Откройте задание, чтобы просмотреть подробную информацию и найти предупреждения об устаревании в логах (или выполните команду `parse` с флагами в <Constant name="studio_ide" /> или <Constant name="platform_cli" />).
 
-<Lightbox src="/img/docs/dbt-cloud/deprecation-list.png" title="Предупреждения об устаревании в логах." />
+    <Lightbox src="/img/docs/dbt-platform/deprecation-list.png" title="Предупреждения об устаревании в логах." />
 
 ### Автоматическое исправление {#automatic-remediation}
 
-Некоторые устаревания можно исправить автоматически с помощью скрипта. Подробнее об этом читайте в [посте блога dbt](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine#:~:text=2.%20Resolve%20deprecation%20warnings). Вы можете [скачать скрипт](https://github.com/dbt-labs/dbt-autofix) и следовать инструкциям по установке.
+Некоторые проблемы, связанные с устаревшими возможностями, можно автоматически исправить с помощью скрипта. Подробнее об этом читайте в [этой статье блога dbt](https://www.getdbt.com/blog/how-to-get-ready-for-the-new-dbt-engine#:~:text=2.%20Resolve%20deprecation%20warnings). [Скачайте скрипт](https://github.com/dbt-labs/dbt-autofix) и следуйте инструкциям по установке, чтобы начать работу.
 
-**Скоро**: в IDE появится интерфейс для запуска этого же скрипта и устранения предупреждений об устаревании в <Constant name="cloud" />.
+Вы можете запустить этот скрипт непосредственно из [<Constant name="studio_ide"/>](/docs/platform/studio-ide/autofix-deprecations) с помощью кнопки **Autofix warnings**, чтобы устранить предупреждения об устаревших возможностях в <Constant name="dbt_platform" />.
 
-## Список предупреждений об устаревании {#list-of-deprecation-warnings}
+<Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-button.png" width="90%" title="Используйте кнопку Autofix warnings в Studio IDE, чтобы устранить предупреждения об устаревших возможностях в dbt platform."/>
+
+### Подавление предупреждений об устаревших возможностях
+
+dbt Labs рекомендует устранять причины предупреждений об устаревших возможностях, а не подавлять их. Если вам нужно временно уменьшить количество лишних сообщений в логах, используйте `--warn-error-options` с параметром `silence`. Это работает с любой командой dbt, включая `dbt test` и `dbt parse`.
+
+Полный список вариантов настройки (флаг CLI, переменная окружения и `dbt_project.yml`) приведён в разделе [Предупреждения](/reference/global-configs/warnings).
+
+Чтобы подавить все предупреждения об устаревших возможностях в <Constant name="core" />:
+
+```bash
+dbt test --warn-error-options '{"silence": ["Deprecations"]}'
+```
+
+<VersionBlock lastVersion="1.99">
+
+Вы также можете подавлять отдельные типы предупреждений об устаревших возможностях по имени (например, `ConfigLogPathDeprecation`).
+
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+
+В <Constant name="fusion" /> поведение отличается от <Constant name="core" />:
+
+- Группа `Deprecations` может подавлять не все предупреждения, связанные с устаревшими возможностями. Предпочтительно указывать конкретное имя события из логов (например, `SemanticModelDeprecated`).
+- Некоторые устаревшие настройки в <Constant name="fusion" /> вызывают ошибки, которые нельзя подавить. Такие настройки необходимо исправить.
+
+Подробнее о том, как <Constant name="fusion" /> обрабатывает `warn_error_options`, о поддерживаемых именах и случаях возникновения ошибок, которые нельзя подавить, читайте в разделе [Поведение <Constant name="fusion" /> и коды предупреждений](/reference/global-configs/warnings#dbt-v2-behavior-and-warning-codes).
+
+</VersionBlock>
 
 Ниже приведены предупреждения об устаревании, существующие в dbt на текущий момент, а также версии, в которых они появились впервые.
 
@@ -58,7 +100,7 @@ Summary of encountered deprecations:
 
 dbt объявил устаревшей возможность указывать пользовательское свойство верхнего уровня с именем `arguments` в generic-тестах. Это предупреждение возникает только в том случае, если флаг поведения `require_generic_test_arguments_property` установлен в `False`.
 
-#### Устранение ArgumentsPropertyInGenericTestDeprecation {#argumentspropertyingenerictestdeprecation-warning-resolution}
+В dbt объявлена устаревшей возможность указывать пользовательское свойство верхнего уровня с именем `arguments` в универсальных тестах. Это предупреждение об устаревании выводится только в том случае, если флаг поведения `require_generic_test_arguments_property` установлен в `false`.
 
 Ранее в пользовательских generic-тестах могло использоваться свойство `arguments`:
 
@@ -75,7 +117,7 @@ models:
 
 </File>
 
-Теперь необходимо установить флаг `require_generic_test_arguments_property` в `True` и вложить все аргументы теста в новое свойство `arguments`:
+Следует установить флаг `require_generic_test_arguments_property` в значение `true` и поместить все именованные аргументы теста в новое свойство `arguments`:
 
 <File name='model.yml'>
 
@@ -109,7 +151,7 @@ models:
 
 ### ConfigDataPathDeprecation {#configdatapathdeprecation}
 
-В [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) параметр `data-paths` был переименован в [seed-paths](/reference/project-configs/model-paths). Получение этого предупреждения означает, что в вашем `dbt_project.yml` всё ещё используется `data-paths`.
+В [dbt v1.0](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.0) параметр `data-paths` был переименован в [seed-paths](/reference/project-configs/model-paths). Если вы получаете это предупреждение об устаревшем параметре, значит, в файле `dbt_project.yml` вашего проекта всё ещё используется `data-paths`.
 
 Пример предупреждения:
 
@@ -127,11 +169,14 @@ The `data-paths` config has been renamed to `seed-paths`. Please update your
 
 ### ConfigLogPathDeprecation {#configlogpathdeprecation}
 
-Начиная с [dbt v1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5), указание `log-path` в `dbt_project.yml` было признано устаревшим. Получение этого предупреждения об устаревании означает, что `log-path` всё ещё указан в вашем `dbt_project.yml` и не установлен в значение по умолчанию `logs`.
+В [dbt v1.5](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5) указание `log-path` в `dbt_project.yml` было объявлено устаревшим. Это предупреждение об устаревании означает, что в вашем файле `dbt_project.yml` по-прежнему указан параметр `log-path` и его значение отличается от значения по умолчанию — `logs`.
 
 Пример:
 
 <File name='CLI'>
+
+<VersionBlock lastVersion="1.10">
+
 ```bash
 23:39:18  [WARNING]: Deprecated functionality
 The `log-path` config in `dbt_project.yml` has been deprecated and will no
@@ -139,16 +184,31 @@ longer be supported in a future version of dbt-core. If you wish to write dbt
 logs to a custom directory, please use the --log-path CLI flag or DBT_LOG_PATH
 env var instead.
 ```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.11">
+
+```bash
+23:39:18  [WARNING]: Deprecated functionality
+The `log-path` config in `dbt_project.yml` has been deprecated and will no
+longer be supported in a future version of dbt-core. If you wish to write dbt
+logs to a custom directory, please use the --log-path CLI flag or DBT_ENGINE_LOG_PATH
+env var instead.
+```
+
+</VersionBlock>
+
 </File>
 
 #### Как устранить предупреждение ConfigLogPathDeprecation {#configlogpathdeprecation-warning-resolution}
 
-Удалите `log-path` из `dbt_project.yml` и задайте его либо через CLI‑флаг `--log-path`, либо через переменную окружения `DBT_LOG_PATH`, [как описано здесь](/reference/global-configs/logs#log-and-target-paths).
+Удалите `log-path` из файла `dbt_project.yml` и задайте путь с помощью флага CLI `--log-path` или переменной окружения <VersionBlock lastVersion="1.10">`DBT_LOG_PATH`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_LOG_PATH`</VersionBlock>, [как описано здесь](/reference/global-configs/logs#log-and-target-paths).
 
 
 ### ConfigSourcePathDeprecation {#configsourcepathdeprecation}
 
-Начиная с [dbt v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0), `source-paths` было переименовано в [model-paths](/reference/project-configs/model-paths). Получение этого предупреждения об устаревании означает, что `source-paths` всё ещё используется в `dbt_project.yml` вашего проекта.
+В [dbt v1.0](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.0) параметр `source-paths` был переименован в [model-paths](/reference/project-configs/model-paths). Это предупреждение об устаревшем параметре означает, что в файле `dbt_project.yml` вашего проекта всё ещё используется `source-paths`.
 
 Пример:
 
@@ -167,11 +227,14 @@ The `source-paths` config has been renamed to `model-paths`. Please update your
 
 ### ConfigTargetPathDeprecation {#configtargetpathdeprecation}
 
-Начиная с [dbt 1.5](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.5), указание `target-path` в `dbt_project.yml` было признано устаревшим. Получение этого предупреждения об устаревании означает, что `target-path` всё ещё указан в вашем `dbt_project.yml` и не установлен в значение по умолчанию `target`.
+В [dbt 1.5](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5) указание `target-path` в `dbt_project.yml` было объявлено устаревшим. Это предупреждение об устаревании означает, что `target-path` по-прежнему указан в вашем `dbt_project.yml` и его значение отличается от значения по умолчанию — `target`.
 
 Пример:
 
 <File name='CLI'>
+
+<VersionBlock lastVersion="1.10">
+
 ```bash
 23:22:01  [WARNING]: Deprecated functionality
 The `target-path` config in `dbt_project.yml` has been deprecated and will no
@@ -179,11 +242,26 @@ longer be supported in a future version of dbt-core. If you wish to write dbt
 artifacts to a custom directory, please use the --target-path CLI flag or
 DBT_TARGET_PATH env var instead.
 ```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.11">
+
+```bash
+23:22:01  [WARNING]: Deprecated functionality
+The `target-path` config in `dbt_project.yml` has been deprecated and will no
+longer be supported in a future version of dbt-core. If you wish to write dbt
+artifacts to a custom directory, please use the --target-path CLI flag or
+DBT_ENGINE_TARGET_PATH env var instead.
+```
+
+</VersionBlock>
+
 </File>
 
 #### Как устранить предупреждение ConfigTargetPathDeprecation {#configtargetpathdeprecation-warning-resolution}
 
-Удалите `target-path` из `dbt_project.yml` и задайте его либо через CLI‑флаг `--target-path`, либо через переменную окружения [`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths).
+Удалите `target-path` из файла `dbt_project.yml` и укажите его с помощью флага CLI `--target-path` или переменной окружения <VersionBlock lastVersion="1.10">[`DBT_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths)</VersionBlock><VersionBlock firstVersion="1.11">[`DBT_ENGINE_TARGET_PATH`](/reference/global-configs/logs#log-and-target-paths)</VersionBlock>.
 
 ### CustomKeyInConfigDeprecation {#customkeyinconfigdeprecation}
 
@@ -216,7 +294,7 @@ models:
 
 Ранее, когда можно было определять любые дополнительные поля напрямую под `config`, это могло приводить к конфликтам между уже существующими пользовательскими конфигурациями и официальными конфигурациями фреймворка dbt.
 
-Начиная с dbt Core v1.10 и в <Constant name="fusion_engine" />, ключи конфигурации верхнего уровня будут зарезервированы для официальных конфигураций фреймворка dbt.
+Начиная с dbt v1.10, а также в <Constant name="fusion_engine" />, ключи конфигурации верхнего уровня будут зарезервированы для официальных настроек фреймворка dbt.
 
 import DeprecationWarnings4 from '/snippets/_deprecation-warnings.md';
 
@@ -226,7 +304,13 @@ import DeprecationWarnings4 from '/snippets/_deprecation-warnings.md';
 
 Поместите пользовательские конфигурации под `meta` и убедитесь, что `meta` вложен под `config` (аналогично [`PropertyMovedToConfigDeprecation`](#propertymovedtoconfigdeprecation)).
 
-Пример, который приводит к предупреждению:
+Один и тот же способ решения применим независимо от того, где указан пользовательский ключ: в конфигурации модели или в определении универсального теста. Выберите соответствующую вкладку, чтобы посмотреть пример:
+
+<Tabs>
+
+<TabItem value="model" label="Конфигурация модели">
+
+Пример, при котором возникает предупреждение:
 
 ```yaml
 models:
@@ -254,7 +338,45 @@ models:
             some_key: some_value
 ```
 
-Чтобы получить доступ к пользовательским конфигурациям, вложенным в атрибуты `meta`, используйте `config.get('meta')`, а затем обратитесь к словарю meta по имени вашего пользовательского атрибута. Пользователям нужно будет скорректировать код, который обращается к пользовательским ключам конфигурации напрямую как к ключам верхнего уровня.
+</TabItem>
+
+<TabItem value="test" label="Определение универсального теста">
+
+Если вы определяете пользовательский ключ непосредственно под тестом в блоке `tests:`, поместите его в `config.meta`.
+
+Пример, вызывающий предупреждение:
+
+```yaml
+tests:
+  - name: custom_generic_test
+    description: My custom generic test
+    arguments:
+      - name: active_timestamp
+        type: timestamp
+        description: The active timestamp for the model
+```
+
+Пример исправления:
+
+```yaml
+tests:
+  - name: custom_generic_test
+    description: My custom generic test
+    config:
+      meta:
+        arguments:
+          - name: active_timestamp
+            type: timestamp
+            description: The active timestamp for the model
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Доступ к вложенным конфигурациям
+
+Чтобы получить доступ к пользовательским конфигурациям, вложенным в атрибуты `meta`, используйте `config.get('meta')`, а затем обратитесь к словарю meta по имени пользовательского атрибута. Пользователям потребуется изменить код, который обращается к пользовательским ключам конфигурации напрямую как к ключам верхнего уровня.
 
 Пример до того, как пользовательские конфигурации были вложены под meta:
 
@@ -334,9 +456,9 @@ config:
 
 ### DuplicateNameDistinctNodeTypesDeprecation {#duplicatenamedistinctnodetypesdeprecation}
 
-dbt выдаёт это предупреждение, когда два неверсионированных ресурса в одном пакете имеют одно и то же имя (например, model и seed, оба с именем `sales`), а флаг `require_unique_project_resource_names` установлен в `False`. Раньше dbt не всегда обнаруживал такие конфликты имён, из‑за чего дублирующиеся имена иногда могли указывать не на тот ресурс.
+dbt выводит это предупреждение, когда два ресурса без версий в одном пакете имеют одинаковое имя (например, модель и seed с именем `sales`), а флаг `require_unique_project_resource_names` установлен в `false`. Ранее dbt не всегда обнаруживал такие конфликты имён, из-за чего ссылки на ресурсы с совпадающими именами иногда могли указывать не на тот ресурс.
 
-Когда флаг `require_unique_project_resource_names` установлен в `True`, dbt выбрасывает ошибку `DuplicateResourceNameError`. Подробнее см. [Unique project resource names](/reference/global-configs/behavior-changes#unique-project-resource-names).
+Когда флаг `require_unique_project_resource_names` установлен в `true`, dbt выдаёт ошибку `DuplicateResourceNameError`. Подробнее см. в разделе [Уникальные имена ресурсов проекта](/reference/global-configs/behavior-flags/require_unique_project_resource_names).
 
 #### Как устранить предупреждение DuplicateNameDistinctNodeTypesDeprecation {#duplicatenamedistinctnodetypesdeprecation-warning-resolution}
 
@@ -346,7 +468,7 @@ dbt выдаёт это предупреждение, когда два неве
 
 Это предупреждение возникает, когда в `profiles.yml` существуют два одинаковых ключа.
 
-Ранее, если одинаковые ключи присутствовали в [файле `profiles.yml`](/docs/core/connect-data-platform/profiles.yml), dbt использовал последнюю конфигурацию, указанную в файле.
+Ранее, если в [файле `profiles.yml`](/docs/local/profiles.yml) встречались одинаковые ключи, dbt использовал последнюю конфигурацию, указанную в файле.
 
 <File name='profiles.yml'>
 
@@ -382,7 +504,7 @@ my_profile: # dbt would use this profile key
 
 ### ExposureNameDeprecation {#exposurenamedeprecation}
 
-Начиная с [dbt 1.3](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation), dbt начал разрешать только буквы, цифры и подчёркивания в свойстве `name` у [exposures](/reference/exposure-properties).
+Начиная с [dbt 1.3](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.3#new-and-changed-documentation), в свойстве `name` [экспозиций](/reference/exposure-properties) допускаются только буквы, цифры и символы подчёркивания.
 
 Пример:
 
@@ -402,18 +524,42 @@ dbt-core.
 
 Убедитесь, что имена ваших exposures содержат только буквы, цифры и подчёркивания. Более человекочитаемое имя можно указать в свойстве [`label`](/reference/exposure-properties#overview) у exposures.
 
-### GenericJSONSchemaValidationDeprecation {#genericjsonschemavalidationdeprecation}
+### GenerateSchemaNameNullValueDeprecation
+
+dbt выводит это предупреждение об устаревшем поведении, когда пользовательский макрос `generate_schema_name` возвращает значение `null`. Возврат `null` вместо имени схемы может привести к некорректному или непредсказуемому поведению.
+
+Это предупреждение об устаревшем поведении выводится, когда [флаг `require_valid_schema_from_generate_schema_name`](/reference/global-configs/behavior-flags/require_valid_schema_from_generate_schema_name) установлен в `false`. Когда флаг установлен в `true`, dbt выдаёт ошибку на этапе разбора.
+
+#### Устранение предупреждения GenerateSchemaNameNullValueDeprecation
+
+Если в вашем проекте определён макрос `generate_schema_name`, обновите его так, чтобы он возвращал допустимое имя схемы. Например:
+
+<File name='macros/get_custom_schema.sql'>
+
+```sql
+{% macro generate_schema_name(custom_schema_name, node) -%}
+    {%- if custom_schema_name is none -%}
+        {{ return(target.schema) }}
+    {%- else -%}
+        {{ custom_schema_name | trim }}
+    {%- endif -%}
+{%- endmacro %}
+```
+
+</File>
+
+### GenericJSONSchemaValidationDeprecation
 
 
 Этот тип устаревания — «универсальный» (catch-all) / запасной вариант. dbt пытается обрабатывать все ошибки валидации JSON Schema через конкретные типы deprecation events, но возможно, мы что-то упустили. «Упустить что-то» означает, что либо dbt не обработал конкретный случай через deprecation event, _либо_ JSON Schema некорректна в каком-то месте.
 
 #### Как устранить предупреждение GenericJSONSchemaValidationDeprecation {#genericjsonschemavalidationdeprecation-warning-resolution}
 
-Если вы видите это предупреждение, к сожалению, сейчас вы мало что можете сделать, но мы продолжаем работать над тем, чтобы уменьшить количество таких случаев. Если вам нужна помощь с конкретным случаем, пожалуйста, [обратитесь в поддержку](mailto:support@getdbt.com) (доступно для клиентов dbt platform в облаке) или в [community Slack](https://www.getdbt.com/community) (для пользователей dbt Core).
+Если вы видите это предупреждение, к сожалению, на данный момент вы мало что можете сделать, но мы продолжаем работать над тем, чтобы предупреждения об использовании устаревших возможностей появлялись реже. Если вам нужны рекомендации по конкретному случаю, с которым вы столкнулись, [обратитесь в службу поддержки](mailto:support@getdbt.com) (для клиентов облачной платформы dbt) или в [Slack-сообщество](https://www.getdbt.com/community) (для пользователей <Constant name="core" />).
 
 ### MFCumulativeTypeParamsDeprecation {#mfcumulativetypeparamsdeprecation}
 
-Начиная с dbt [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9), прямое указание `window` и `time_to_grain` в `type_params` у [metric](/reference/global-configs/behavior-changes#cumulative-metrics) стало устаревшим.
+В dbt [v1.9](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.9) указание `window` и `time_to_grain` непосредственно в `type_params` [метрики](/reference/global-configs/behavior-flags/require_nested_cumulative_type_params) было объявлено устаревшим.
 
 Пример:
 
@@ -434,7 +580,7 @@ https://docs.getdbt.tech/reference/global-configs/behavior-changes.
 
 ### MFTimespineWithoutYamlConfigurationDeprecation {#mftimespinewithoutyamlconfigurationdeprecation}
 
-До dbt v1.9 конфигурация time spine для MetricFlow хранилась в файле `metricflow_time_spine.sql`. В [v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9) dbt представил [YAML‑определение timespine](/docs/build/metricflow-time-spine#configuring-time-spine-in-yaml) для MetricFlow, и затем было решено, что дальше это будет стандартом. Если вы видите это предупреждение об устаревании, значит у вас нет YAML‑определения timespine для MetricFlow.
+До dbt v1.9 конфигурация временной шкалы MetricFlow хранилась в файле `metricflow_time_spine.sql`. В [v1.9](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.9) в dbt появилось [определение временной шкалы в YAML](/docs/build/metricflow-time-spine#configuring-time-spine-in-yaml) для MetricFlow. Впоследствии было решено сделать этот способ стандартным для дальнейшего использования. Если вы видите это предупреждение об устаревании, у вас отсутствует определение временной шкалы в YAML для MetricFlow.
 
 Пример:
 
@@ -455,9 +601,9 @@ https://docs.getdbt.tech/reference/global-configs/behavior-changes
 
 ### MissingArgumentsPropertyInGenericTestDeprecation {#missingargumentspropertyingenerictestdeprecation}
 
-dbt признал устаревшим указание именованных аргументов (keyword arguments) как свойств в пользовательских generic data tests или в data tests, которые используют [альтернативный формат `test_name`](/docs/reference/resource-properties/data-tests.md#alternative-format-for-defining-tests). Вместо этого аргументы тестов следует указывать под новым свойством `arguments`.
+В dbt объявлено устаревшим указание именованных аргументов в качестве свойств пользовательских обобщённых тестов данных или тестов данных, использующих [альтернативный формат `test_name`](/docs/reference/resource-properties/data-tests.md#alternative-format-for-defining-tests). Вместо этого аргументы тестов следует указывать в новом свойстве `arguments`.
 
-Это предупреждение об устаревании появляется только когда флаг поведения `require_generic_test_arguments_property` установлен в `True`.
+Это предупреждение об устаревании выводится только в том случае, если флаг поведения `require_generic_test_arguments_property` установлен в `true`.
 
 
 #### Как устранить предупреждение MissingArgumentsPropertyInGenericTestDeprecation {#missingargumentspropertyingenerictestdeprecation-warning-resolution}
@@ -574,7 +720,7 @@ models:
 
 ### ModelParamUsageDeprecation {#modelparamusagedeprecation}
 
-Флаг `--models` / `--model` / `-m` был переименован в `--select` / `--s` ещё в dbt Core v0.21 (октябрь 2021). «Тихое» пропускание этого флага означает игнорирование критериев выбора в вашей команде, из‑за чего может собраться весь DAG, хотя вы хотели выбрать только небольшой поднабор. Поэтому флаг `--models` / `--model` / `-m` будет выдавать предупреждение в dbt Core v1.10 и ошибку в Fusion. Пожалуйста, обновите определения ваших job соответствующим образом.
+Флаг `--models` / `--model` / `-m` был переименован в `--select` / `--s` ещё в dbt v0.21 (октябрь 2021 года). Пропуск этого флага без предупреждения означает игнорирование критериев выбора, заданных в вашей команде, что может привести к построению всего DAG, хотя вы намеревались выбрать лишь небольшое подмножество. По этой причине флаг `--models` / `--model` / `-m` будет вызывать предупреждение в dbt v1.10 и ошибку в <Constant name="fusion" />. Обновите определения своих заданий соответствующим образом.
 
 #### Как устранить предупреждение ModelParamUsageDeprecation {#modelparamusagedeprecation-warning-resolution}
 
@@ -597,7 +743,7 @@ instead.
 
 #### Как устранить предупреждение ModulesItertoolsUsageDeprecation {#modulesitertoolsusagedeprecation-warning-resolution}
 
-Если вы сейчас используете функции из модуля `itertools` в Jinja SQL‑шаблонах, вместо этого используйте доступные встроенные [функции dbt](/reference/dbt-jinja-functions) и [методы Jinja](/docs/build/jinja-macros).
+Если вы сейчас используете функции из модуля `itertools` в SQL-шаблонах Jinja, используйте вместо них доступные встроенные [функции dbt](/reference/dbt-jinja-functions-context-variables) и [методы Jinja](/docs/build/jinja-macros).
 
 Например, следующий SQL‑файл:
 
@@ -672,7 +818,7 @@ If you'd like to keep the current value.
 
 ### PackageMaterializationOverrideDeprecation {#packagematerializationoverridedeprecation}
 
-Устаревает поведение, при котором установленные пакеты могли переопределять встроенные материализации без явного подтверждения (opt-in) с вашей стороны. Установка флага [`require_explicit_package_overrides_for_builtin_materializations`](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) в `false` в `dbt_project.yml` позволяла пакетам, совпадающим по имени со встроенной материализацией, продолжать участвовать в порядке поиска и разрешения.
+Поведение, при котором установленные пакеты могли переопределять встроенные материализации без вашего явного согласия, объявлено устаревшим. Установка [флага `require_explicit_package_overrides_for_builtin_materializations`](/reference/global-configs/behavior-flags/require_explicit_package_overrides_for_builtin_materializations) в значение `false` в файле `dbt_project.yml` позволяла материализациям из пакетов, имена которых совпадали с именами встроенных материализаций, по-прежнему учитываться при поиске и определении используемой материализации.
 
 #### Как устранить предупреждение PackageMaterializationOverrideDeprecation {#packagematerializationoverridedeprecation-warning-resolution}
 
@@ -767,7 +913,7 @@ sources:
 
 ### ResourceNamesWithSpacesDeprecation {#resourcenameswithspacesdeprecation}
 
-Начиная с [dbt 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#managing-changes-to-legacy-behaviors), использование пробелов в именах ресурсов было признано устаревшим. Если вы получаете это предупреждение об устаревании, значит dbt обнаружил имя ресурса с пробелом.
+В [dbt 1.8](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.8#managing-changes-to-legacy-behaviors) использование пробелов в именах ресурсов было объявлено устаревшим. Если вы видите это предупреждение об устаревании, значит dbt обнаружил имя ресурса с пробелом.
 
 Пример:
 
@@ -783,7 +929,7 @@ sources:
 
 ### SourceFreshnessProjectHooksNotRun {#sourcefreshnessprojecthooksnotrun}
 
-Если вы видите это, значит флаг поведения `source_freshness_run_project_hooks` установлен в `false`, и при этом определён `on-run-start` или `on-run-end` ([документация](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness)). Ранее project hooks не выполнялись для sources при запуске `dbt source freshness`.
+Если вы видите это сообщение, значит, флаг поведения `source_freshness_run_project_hooks` установлен в `false` и определён хук `on-run-start` или `on-run-end` ([документация](/reference/global-configs/behavior-flags/source_freshness_run_project_hooks)). Ранее при выполнении `dbt source freshness` хуки проекта не запускались для источников.
 
 Пример:
 
@@ -797,7 +943,7 @@ information: https://docs.getdbt.tech/reference/global-configs/legacy-behaviors
 
 #### Как устранить предупреждение SourceFreshnessProjectHooksNotRun {#sourcefreshnessprojecthooksnotrun-warning-resolution}
 
-Установите `source_freshness_run_project_hooks` в `true`. Инструкции о том, как пропускать project hooks при вызове `dbt source freshness`, см. в [документации по изменениям поведения](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness).
+Установите `source_freshness_run_project_hooks` в значение `true`. Инструкции по пропуску хуков проекта при вызове `dbt source freshness` см. в [документации по изменению поведения](/reference/global-configs/behavior-flags/source_freshness_run_project_hooks).
 
 ### SourceOverrideDeprecation {#sourceoverridedeprecation}
 

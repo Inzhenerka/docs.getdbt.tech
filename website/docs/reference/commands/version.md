@@ -4,20 +4,24 @@ sidebar_label: "version"
 id: "version"
 ---
 
-Флаг командной строки `--version` возвращает информацию о текущей установленной версии <Constant name="core" /> или <Constant name="cloud_cli" />. Этот флаг не поддерживается при запуске dbt в других средах выполнения <Constant name="cloud" /> (например, в IDE или при запланированных запусках).
+Флаг командной строки `--version` возвращает информацию о текущей установленной версии <Constant name="core" />, <Constant name="platform_cli" /> или <Constant name="fusion_engine" />. Этот флаг не поддерживается при вызове dbt в других средах выполнения <Constant name="dbt" /> (например, в IDE или при запусках по расписанию).
 
 - **<Constant name="core" />** &mdash; Возвращает установленную версию <Constant name="core" /> и версии всех установленных адаптеров.
-- **<Constant name="cloud_cli" />** &mdash; Возвращает установленную версию [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation), а для остальных значений `dbt_version` — _последнюю_ версию среды выполнения dbt в <Constant name="cloud" />.
+- **<Constant name="platform_cli" />** &mdash; Возвращает установленную версию [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation), а для остальных значений `dbt_version` — _последнюю_ версию среды выполнения dbt в <Constant name="dbt" />.
+- **<Constant name="fusion_engine" />** &mdash; Возвращает установленную версию <Constant name="fusion" />. Поскольку CLI и языковой сервер поставляются в одном исполняемом файле, они всегда сообщают одну и ту же версию. О том, как эта версия соотносится с версией расширения dbt для VS Code, см. в разделе [Совместимость версий](/docs/dbt-versions/dbt-version-compatibility).
 
 ## Версионирование {#versioning}
-Чтобы узнать больше о версионировании релизов <Constant name="core" />, см. [Как <Constant name="core" /> использует семантическое версионирование](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning).
+Чтобы узнать больше о версионировании релизов <Constant name="core" />, см. [Как <Constant name="core" /> использует семантическое версионирование](/docs/dbt-versions#how-dbt-v1-uses-semantic-versioning).
 
-При использовании [треков релизов <Constant name="cloud" />](/docs/dbt-versions/cloud-release-tracks), которые обеспечивают регулярные обновления dbt, значение `dbt_version` представляет версию релиза dbt в <Constant name="cloud" />. Она также следует принципам семантического версионирования и использует формат `YYYY.M.D+<suffix>`. Год, месяц и день обозначают дату сборки версии (например, `2024.10.8+996c6a8`). Суффикс предоставляет дополнительный уникальный идентификатор для каждой сборки.
+## Версионирование
+Подробнее о версионировании выпусков <Constant name="core" /> см. в разделе [Как <Constant name="core" /> использует семантическое версионирование](/docs/dbt-versions#how-dbt-v1-uses-semantic-versioning). 
 
-## Примеры использования {#example-usages}
+Если вы используете [канал выпусков <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks), обеспечивающий регулярные обновления dbt, то `dbt_version` обозначает версию выпуска dbt в <Constant name="dbt" />. Она также соответствует правилам семантического версионирования и имеет формат `YYYY.M.D+<suffix>`. Год, месяц и день обозначают дату создания сборки этой версии (например, `2024.10.8+996c6a8`). Суффикс служит дополнительным уникальным идентификатором каждой сборки.
 
-Пример для <Constant name="core" />:
-<File name='dbt Core'>
+## Примеры использования
+
+Пример для <Constant name="core" />: 
+<File name='dbt v1'>
 
 ```text
 $ dbt --version
@@ -30,9 +34,9 @@ Plugins:
 
 </File>
 
-Пример для CLI <Constant name="cloud" />:
+Пример использования CLI <Constant name="dbt" />:
 
-<File name='dbt CLI'>
+<File name='dbt platform CLI'>
 
 ```text
 $ dbt --version
@@ -40,3 +44,23 @@ Cloud CLI - 0.35.7 (fae78a6f5f6f2d7dff3cab3305fe7f99bd2a36f3 2024-01-18T22:34:52
 ```
 
 </File>
+
+<Constant name="fusion_engine" /> example:
+
+```shell
+$ dbt --version
+dbt 2.0.1
+```
+
+For a machine-readable version, add the `--format json` flag. This is useful when filing a bug report or when tooling needs to parse the installed version:
+
+```shell
+dbt --version --format json
+```
+
+```json
+{
+  "version": "2.0.1"
+}
+```
+

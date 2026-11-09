@@ -25,24 +25,21 @@ sources:
     [schema](/reference/resource-properties/schema): <schema_name>
     [loader](/reference/resource-properties/loader): <string>
 
-    # требуется v1.1+
-    [config](/reference/resource-properties/config):
+[config](/reference/resource-properties/config): # требуется v1.1+
       [<source_config>](/reference/source-configs): <config_value>
-      [freshness](/reference/resource-properties/freshness):
-      # перенесено в config в v1.10
-      [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
+      [loaded_at_field](/reference/resource-configs/freshness): <column_name> # перемещено в config в v1.10
+      [freshness](/reference/resource-configs/freshness): # перемещено в config в v1.10
         warn_after:
-          [count](/reference/resource-properties/freshness#count): <positive_integer>
-          [period](/reference/resource-properties/freshness#period): minute | hour | day
+          [count](/reference/resource-configs/freshness#source-freshness): <positive_integer>
+          [period](/reference/resource-configs/freshness#source-freshness): minute | hour | day
         error_after:
-          [count](/reference/resource-properties/freshness#count): <positive_integer>
-          [period](/reference/resource-properties/freshness#period): minute | hour | day
-        [filter](/reference/resource-properties/freshness#filter): <where-condition>
+[count](/reference/resource-configs/freshness#source-freshness): <positive_integer>
+          [period](/reference/resource-configs/freshness#source-freshness): minute | hour | day
+        [filter](/reference/resource-configs/freshness#source-freshness): <where-condition>
       [meta](/reference/resource-configs/meta): {<dictionary>} # перенесено в config в v1.10
       [tags](/reference/resource-configs/tags): [<string>] # перенесено в config в v1.10
 
-    # объявлено устаревшим в v1.10
-    [overrides](/reference/resource-properties/overrides): <string>
+    [overrides](/reference/resource-properties/overrides): <string> # устарело в v1.10
 
     [quoting](/reference/resource-properties/quoting):
       database: true | false
@@ -57,17 +54,17 @@ sources:
           - <test>
           - ... # объявите дополнительные тесты
         [config](/reference/resource-properties/config):
-          [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
+          [loaded_at_field](/reference/resource-configs/freshness): <column_name>
           [meta](/reference/resource-configs/meta): {<dictionary>}
           [tags](/reference/resource-configs/tags): [<string>]
-          [freshness](/reference/resource-properties/freshness):
+          [freshness](/reference/resource-configs/freshness):
             warn_after:
-              [count](/reference/resource-properties/freshness#count): <positive_integer>
-              [period](/reference/resource-properties/freshness#period): minute | hour | day
+              [count](/reference/resource-configs/freshness#source-freshness): <positive_integer>
+              [period](/reference/resource-configs/freshness#source-freshness): minute | hour | day
             error_after:
-              [count](/reference/resource-properties/freshness#count): <positive_integer>
-              [period](/reference/resource-properties/freshness#period): minute | hour | day
-            [filter](/reference/resource-properties/freshness#filter): <where-condition>
+              [count](/reference/resource-configs/freshness#source-freshness): <positive_integer>
+              [period](/reference/resource-configs/freshness#source-freshness): minute | hour | day
+            [filter](/reference/resource-configs/freshness#source-freshness): <where-condition>
 
         [quoting](/reference/resource-properties/quoting):
           database: true | false

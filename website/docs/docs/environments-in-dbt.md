@@ -3,6 +3,7 @@ title: "О средах"
 id: "environments-in-dbt"
 hide_table_of_contents: true
 pagination_next: null
+availability: all_users
 ---
 
 В программной инженерии среды используются для того, чтобы инженеры могли разрабатывать и тестировать код, не влияя на пользователей их программного обеспечения. Обычно в dbt существуют два типа сред:
@@ -13,28 +14,28 @@ pagination_next: null
 
 В традиционной программной инженерии разные среды часто используют полностью отдельную архитектуру. Например, версии сайта для dev и prod могут использовать разные серверы и базы данных. <Term id="data-warehouse">Хранилища данных</Term> также могут быть спроектированы для наличия отдельных сред &mdash; _производственная_ среда относится к отношениям (например, схемам, таблицам и <Term id="view">представлениям</Term>), которые ваши конечные пользователи запрашивают (часто через BI-инструмент).
 
-Настройте окружения, чтобы указать <Constant name="cloud" /> или <Constant name="core" />, как собирать и выполнять ваш проект в среде разработки и в production:
+Настройте окружения, чтобы указать <Constant name="dbt" /> или <Constant name="core" />, как собирать и выполнять ваш проект в средах разработки и продакшена:
 
 <div className="grid--2-col">
 
 <Card
-    title="Окружения в dbt"
-    body="Гибко настраивайте окружения разработки и развертывания в dbt, чтобы управлять тем, как ваш проект выполняется в Studio IDE, dbt CLI и dbt jobs."
-    link="/docs/dbt-cloud-environments"
+title="Окружения на платформе dbt"
+    body="Легко настраивайте окружения разработки и развертывания в dbt, чтобы управлять выполнением проекта в Studio IDE, dbt platform CLI и заданиях dbt."
+    link="/docs/dbt-platform-environments"
     icon="dbt-bit"/>
 
 <Card
-    title="Среды в dbt Core"
-    body="Настройка и поддержка отдельных сред развертывания и разработки с использованием целей в файле профиля"
-    link="/docs/core/dbt-core-environments"
+    title="Окружения в самостоятельно размещаемом dbt"
+    body="Настраивайте и поддерживайте отдельные окружения развертывания и разработки с помощью целевых конфигураций (targets) в файле профиля"
+    link="/docs/local/dbt-environments"
     icon="command-line"/>
 
 </div> <br />
 
 ## Связанные документы {#related-docs}
 
-- [Лучшие практики работы со средами в <Constant name="cloud" />](/guides/set-up-ci)
-- [Среды развертывания](/docs/deploy/deploy-environments)
-- [О версиях <Constant name="core" />](/docs/dbt-versions/core)
-- [Настройка переменных среды в <Constant name="cloud" />](/docs/build/environment-variables#special-environment-variables)
-- [Использование переменных среды в jinja](/reference/dbt-jinja-functions/env_var)
+- [Рекомендации по работе с окружениями в <Constant name="dbt" />](/guides/set-up-ci)
+- [Окружения развертывания](/docs/deploy/deploy-environments)
+- [О версиях dbt](/docs/dbt-versions)
+- [Настройка переменных окружения в <Constant name="dbt" />](/docs/build/environment-variables#special-environment-variables)
+- [Использование переменных окружения в jinja](/reference/dbt-jinja-functions/env_var)

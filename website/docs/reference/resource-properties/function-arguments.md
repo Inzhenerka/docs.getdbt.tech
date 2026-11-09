@@ -4,7 +4,6 @@ sidebar_label: "arguments"
 id: function-arguments
 ---
 <VersionCallout version="1.11" /> 
-import ArgumentsShared from '/snippets/_arguments-shared.md';
 
 <File name='functions/<filename>.yml'>
 
@@ -24,7 +23,7 @@ functions:
 
 ## Определение {#definition}
 
-<ArgumentsShared />
+The `arguments` property is used to define the parameters that a resource can accept. Each argument can have a `name`, a `data_type` field, and optional properties such as `description` and `default_value`.
 
 Для **functions** вы можете добавить свойство `arguments` к [свойствам функции](/reference/function-properties). Оно определяет параметры пользовательских функций (UDF) в вашем хранилище данных. Поле `data_type` для аргументов функции зависит от конкретного хранилища (например, `STRING`, `VARCHAR`, `INTEGER`) и должно соответствовать типам данных, поддерживаемым вашей платформой данных.
 
@@ -42,10 +41,11 @@ functions:
 
 Значения `data_type` зависят от конкретного хранилища. Используйте синтаксис типов данных, который требуется вашим хранилищем:
 
-- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ` и т.д.
-- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>` и т.д.
-- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP` и т.д.
-- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP` и т.д.
+- **Snowflake**: `STRING`, `NUMBER`, `BOOLEAN`, `TIMESTAMP_NTZ` и т. д.
+- **BigQuery**: `STRING`, `INT64`, `BOOL`, `TIMESTAMP`, `ARRAY<STRING>` и т. д.
+- **Redshift**: `VARCHAR`, `INTEGER`, `BOOLEAN`, `TIMESTAMP` и т. д.
+- **Postgres**: `TEXT`, `INTEGER`, `BOOLEAN`, `TIMESTAMP` и т. д.
+- **Starburst/Trino**: `VARCHAR`, `INTEGER`, `DOUBLE`, `BOOLEAN` и другие [типы данных Trino](https://trino.io/docs/current/language/types.html).
 
 Полный список поддерживаемых типов данных смотрите в документации вашего хранилища.
 

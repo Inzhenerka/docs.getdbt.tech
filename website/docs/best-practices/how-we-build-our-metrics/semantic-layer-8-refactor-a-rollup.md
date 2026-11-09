@@ -36,14 +36,14 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-9-concl
 
 До сих пор мы работали с новыми моделями, указывающими на модель на этапе подготовки, чтобы упростить процесс создания новых ментальных моделей для MetricFlow. На практике, если вы не внедряете MetricFlow в новый проект dbt, вам, вероятно, придется провести некоторый рефакторинг. Давайте подробно рассмотрим это.
 
-1. 📚 Согласно вышеуказанным шагам, предположим, что мы определили нашу цель как сводный отчет по доходам, который построен на основе `orders` и `order_items`. Теперь нам нужно определить все базовые компоненты, это будут все 'import' CTE в начале этих витрин. В проекте Jaffle Shop нам понадобятся: `orders`, `order_items`, `products`, `locations` и `supplies`.
-2. 🗺️ Далее мы создадим семантические модели для всех этих компонентов. Давайте сначала рассмотрим простое преобразование с `locations`.
-3. ⛓️ Сначала мы должны решить, нужно ли нам выполнять какие-либо объединения, чтобы привести данные в нужную форму для нашей семантической модели. Основными факторами, определяющими это, являются два аспекта:
-   - 📏 Содержит ли эта семантическая модель **измерения**?
-   - 🕥 Имеет ли эта семантическая модель **основную временную метку**?
-   - 🫂 Если семантическая модель **имеет измерения, но не имеет временной метки** (например, supplies в проекте, где указаны статические затраты на поставки), вам, вероятно, придется **пожертвовать некоторой нормализацией и присоединить ее к другой модели**, которая имеет основную временную метку, чтобы обеспечить агрегацию метрик.
-4. 🔄 Если нам _не_ нужны объединения, мы просто перейдем к модели на этапе подготовки для `ref` нашей семантической модели. Locations имеет измерение `tax_rate`, но также имеет временную метку `ordered_at`, поэтому мы можем **перейти прямо к модели на этапе подготовки** здесь.
-5. 🥇 Мы указываем нашу **основную сущность** (на основе `location_id`), размерности (одна категориальная, `location_name`, и одна **основная временная размерность** `opened_at`), и, наконец, наши измерения, в данном случае только `average_tax_rate`.
+1. 📚 Предположим, что на предыдущих шагах мы определили нашу цель — сводную модель выручки, построенную на основе `orders` и `order_items`. Теперь нам нужно определить все базовые компоненты — это будут все CTE для импорта данных в начале этих витрин. Так, в проекте Jaffle Shop нам понадобятся: `orders`, `order_items`, `products`, `locations` и `supplies`.
+2. 🗺️ Далее мы создадим семантические модели для всех этих компонентов. Сначала рассмотрим простое преобразование на примере `locations`.
+3. ⛓️ В первую очередь нужно решить, требуются ли соединения, чтобы привести данные к нужному для семантической модели виду. Это в основном зависит от двух факторов:
+   - 📏 **Содержит ли эта семантическая модель меры**?
+   - 🕥 Есть ли у этой семантической модели **основная временная метка**?
+   - 🫂 Если семантическая модель **содержит меры, но не имеет временной метки** (например, supplies в демонстрационном проекте, где указаны статические затраты на расходные материалы), скорее всего, стоит **пожертвовать частью нормализации и присоединить её к другой модели**, у которой есть основная временная метка, чтобы обеспечить агрегацию метрик.
+4. 🔄 Если соединения _не_ нужны, укажем витрину в качестве источника для нашей семантической модели. У locations есть мера `tax_rate` и временное измерение `opened_date`, поэтому здесь мы можем напрямую сослаться на витрину `locations`.
+5. 🥇 Мы указываем **основную сущность** (на основе `location_id`), измерения (одно категориальное — `location_name`, и одно **основное временное измерение** — `opened_date`) и, наконец, меры — в данном случае только `average_tax_rate`.
 
 <File name="models/marts/locations.yml" />
 
@@ -51,8 +51,10 @@ pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-9-concl
 semantic_models:
   - name: locations
     description: |
-      Таблица размерности местоположений. Зерно таблицы — одна строка на местоположение.
-    model: ref('stg_locations')
+Таблица измерения местоположений. Уровень детализации таблицы — одна строка на местоположение.
+    model: ref('locations')
+    defaults:
+      agg_time_dimension: opened_date
     entities:
       - name: location
         type: primary
@@ -60,7 +62,8 @@ semantic_models:
     dimensions:
       - name: location_name
         type: categorical
-      - name: date_trunc('day', opened_at)
+      - name: opened_date
+        expr: opened_date
         type: time
         type_params:
           time_granularity: day
@@ -68,7 +71,7 @@ semantic_models:
       - name: average_tax_rate
         description: Средняя налоговая ставка.
         expr: tax_rate
-        agg: avg
+        agg: average
 ```
 
 ## Семантическое и логическое взаимодействие {#semantic-and-logical-interaction}
@@ -88,12 +91,6 @@ semantic_models:
 <File name="models/marts/order_items.sql" />
 
 ```sql
-{{
-   config(
-      materialized = 'table',
-   )
-}}
-
 with
 
 order_items as (
@@ -135,11 +132,15 @@ joined as (
 
    select
       order_items.*,
+
+      orders.ordered_at,
+
+      products.product_name,
       products.product_price,
-      order_supplies_summary.supply_cost,
       products.is_food_item,
       products.is_drink_item,
-      orders.ordered_at
+
+      order_supplies_summary.supply_cost
 
    from order_items
 
@@ -160,12 +161,11 @@ select * from joined
 
 ```yml
 semantic_models:
-   #Имя семантической модели.
-   - name: order_items
+- name: order_item
       defaults:
          agg_time_dimension: ordered_at
       description: |
-         Элементы, содержащиеся в каждом заказе. Зерно таблицы — одна строка на элемент заказа.
+         Позиции, входящие в каждый заказ. Уровень детализации таблицы — одна строка на позицию заказа.
       model: ref('order_items')
       entities:
          - name: order_item
@@ -179,7 +179,7 @@ semantic_models:
            expr: product_id
       dimensions:
          - name: ordered_at
-           expr: date_trunc('day', ordered_at)
+           expr: ordered_at
            type: time
            type_params:
              time_granularity: day
@@ -195,11 +195,11 @@ semantic_models:
          - name: food_revenue
            description: Доход, полученный за каждый элемент заказа. Доход рассчитывается как сумма дохода, связанного с каждым продуктом в заказе.
            agg: sum
-           expr: case when is_food_item = 1 then product_price else 0 end
+           expr: case when is_food_item then product_price else 0 end
          - name: drink_revenue
            description: Доход, полученный за каждый элемент заказа. Доход рассчитывается как сумма дохода, связанного с каждым продуктом в заказе.
            agg: sum
-           expr: case when is_drink_item = 1 then product_price else 0 end
+           expr: case when is_drink_item then product_price else 0 end
          - name: median_revenue
            description: Медианный доход, полученный за каждый элемент заказа.
            agg: median

@@ -26,8 +26,8 @@ is_featured: true
 
 <!--truncate-->
 
-![Скриншот разговора, который начал тему](/img/blog/2022-04-05-when-backend-devs-spark-joy/slack_thread_screenshot.png)
-*Скриншот разговора, который начал тему*
+<Lightbox src="/img/blog/2022-04-05-when-backend-devs-spark-joy/slack_thread_screenshot.png" title="Скриншот разговора, с которого началось обсуждение" />
+*Скриншот разговора, с которого началось обсуждение*
 
 ## Когда все части становятся на свои места {#when-the-pieces-fall-into-place}
 

@@ -3,18 +3,25 @@ title: "Интеграция VS Code с MCP"
 sidebar_label: "Интеграция VS Code с MCP"
 description: "Руководство по настройке VS Code для работы с dbt-mcp"
 id: "integrate-mcp-vscode"
+availability: all_users
 ---
 
 import MCPExample from '/snippets/_mcp-config-files.md';
+import MCPRemoteOauthBetaCallout from '/snippets/_mcp-remote-oauth-beta-callout.md';
+import MCPRemoteServerUrl from '/snippets/_mcp-remote-server-url.md';
+import MCPRemoteTokenHeaders from '/snippets/_mcp-remote-token-headers.md';
+import MCPOauthPreflight from '/snippets/_mcp-oauth-preflight.md';
+import MCPRemoteReadOnlyCredentials from '/snippets/_mcp-remote-read-only-credentials.md';
 
 [Microsoft Visual Studio Code (VS Code)](https://code.visualstudio.com/mcp) — это мощная и популярная интегрированная среда разработки (IDE).
 
-Данные инструкции описывают интеграцию dbt MCP и VS Code. Перед началом убедитесь, что вы:
-- Завершили [локальную настройку MCP](/docs/dbt-ai/setup-local-mcp)
-- Установили VS Code с последними обновлениями
-- (Для локального MCP с CLI) Настроили пути к вашему dbt-проекту
+VS Code может подключаться как к **самостоятельно размещённому** серверу dbt MCP (работает на вашем компьютере, поддерживает команды CLI, такие как `dbt run`), так и к **удалённому** серверу dbt MCP (работает по HTTP, не требует установки, ориентирован на потребление данных). Перед началом убедитесь, что у вас есть:
+- VS Code с установленными последними обновлениями.
+- Для самостоятельно размещённого MCP: выполнена [настройка самостоятельно размещённого MCP](/docs/dbt-ai/setup-local-mcp) и настроены пути к вашему проекту dbt.
+- Для удалённого MCP: ваш **MCP URL** из раздела **Account settings** &rarr; **Access URLs** &rarr; **MCP Endpoint URL** в <Constant name="dbt_platform" />.
+- <MCPRemoteReadOnlyCredentials />
 
-## Настройка с локальным сервером dbt MCP {#set-up-with-local-dbt-mcp-server}
+## Настройка подключения к самостоятельно размещённому серверу dbt MCP
 
 Чтобы начать, в VS Code:
 
@@ -36,10 +43,16 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 5. Добавьте конфигурацию сервера (`dbt`) в предоставленный файл `mcp.json` как один из серверов:
 
-    <Expandable alt_header="Локальный MCP с OAuth платформы dbt" >
+:::tip
+    Вам не нужно клонировать репозиторий dbt-mcp. Установите [uv](https://docs.astral.sh/uv/getting-started/installation/) и выполните `uvx dbt-mcp` (или используйте конфигурацию ниже); клонирование требуется только для участия в разработке.
+    :::
+
+    <Expandable alt_header="Самостоятельно размещаемый MCP с OAuth платформы dbt" >
 
 
-    Локальный MCP с OAuth предназначен для пользователей, которые хотят использовать возможности <Constant name="dbt_platform" />.
+    Самостоятельно размещаемый MCP с OAuth предназначен для пользователей, которым нужны возможности <Constant name="dbt_platform" />.
+
+    Функции ИИ включены по умолчанию. Администраторы могут [отключить их или снова включить в любое время](/docs/platform/manage-dbt-ai).
     
     Выберите конфигурацию в зависимости от вашего сценария использования:
 
@@ -47,9 +60,11 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
     </Expandable>
 
-    <Expandable alt_header="Локальный MCP (только CLI)">
+<Expandable alt_header="MCP с самостоятельным размещением (только CLI)">
 
-    Для пользователей, которым нужны только команды dbt CLI с <Constant name="core" /> или <Constant name="fusion" />
+    Для пользователей, которым нужно только выполнять команды dbt с <Constant name="core" /> или <Constant name="fusion" />
+
+    <VersionBlock lastVersion="1.10">
 
     ```json
     {
@@ -66,21 +81,48 @@ import MCPExample from '/snippets/_mcp-config-files.md';
     }
     ```
 
-    **Как найти пути:**
-    - **DBT_PROJECT_DIR**: полный путь к папке, содержащей файл `dbt_project.yml`
-      - macOS/Linux: выполните `pwd` из папки проекта.
-      - Windows: выполните `cd` из папки проекта в Command Prompt.
-    - **DBT_PATH**: путь к исполняемому файлу dbt
-      - macOS/Linux: выполните `which dbt`.
-      - Windows: выполните `where dbt`.
+</VersionBlock>
+
+    <VersionBlock firstVersion="1.11">
+
+    ```json
+    {
+      "servers": {
+        "dbt": {
+          "command": "uvx",
+          "args": ["dbt-mcp"],
+          "env": {
+            "DBT_ENGINE_PROJECT_DIR": "/path/to/your/dbt/project",
+            "DBT_PATH": "/path/to/your/dbt/executable"
+          }
+        }
+      }
+    }
+    ```
+
+    </VersionBlock>
+
+    **Как определить пути:**
+    - <VersionBlock lastVersion="1.10">**DBT_PROJECT_DIR**</VersionBlock><VersionBlock firstVersion="1.11">**DBT_ENGINE_PROJECT_DIR**</VersionBlock>: Полный путь к папке, содержащей файл `dbt_project.yml`
+      - macOS/Linux: Выполните `pwd` из папки проекта.
+      - Windows: Выполните `cd` из папки проекта в командной строке.
+    - **DBT_PATH**: Путь к исполняемому файлу dbt
+      - macOS/Linux: Выполните `which dbt`.
+      - Windows: Выполните `where dbt`.
 
     </Expandable>
 
-    <Expandable alt_header="Локальный MCP с .env">
+    <Expandable alt_header="Самостоятельно размещённый MCP с .env">
 
-    Для продвинутых пользователей, которым нужны кастомные переменные окружения или аутентификация через service token
+    Для опытных пользователей, которым нужны пользовательские переменные окружения или аутентификация с помощью сервисного токена. Поместите файл `.env` в _корневую папку проекта dbt_ (ту же папку, где находится `dbt_project.yml`) и укажите абсолютный путь с помощью `--env-file`. Полный список доступных переменных окружения для самостоятельно размещённого MCP-сервера приведён в [справочнике переменных окружения](/docs/dbt-ai/mcp-environment-variables).
 
-    Использование поля `env` (рекомендуется — конфигурация в одном файле):
+    Использование поля `env` (конфигурация в одном файле):
+
+    :::tip Идентификаторы — это целые числа, а не URL-адреса
+    `DBT_PROD_ENV_ID`, `DBT_DEV_ENV_ID` и `DBT_USER_ID` должны быть числовыми идентификаторами (например, `54321`), а не полными URL-адресами, скопированными из браузера. `DBT_HOST` принимает как `cloud.getdbt.com`, так и `https://cloud.getdbt.com`.
+    :::
+
+    <VersionBlock lastVersion="1.10">
 
     ```json
     {
@@ -100,14 +142,43 @@ import MCPExample from '/snippets/_mcp-config-files.md';
     }
     ```
 
-    Использование файла `.env` (альтернатива — конфигурация в двух файлах):
+С использованием файла `.env` (укажите абсолютный путь к `.env` в корневом каталоге вашего проекта dbt):
+    </VersionBlock>
+
+    <VersionBlock firstVersion="1.11">
 
     ```json
     {
       "servers": {
         "dbt": {
           "command": "uvx",
-          "args": ["--env-file", "/path/to/.env", "dbt-mcp"]
+          "args": ["dbt-mcp"],
+          "env": {
+            "DBT_ENGINE_HOST": "cloud.getdbt.com",
+            "DBT_TOKEN": "your-token-here",
+            "DBT_PROD_ENV_ID": "12345",
+            "DBT_ENGINE_PROJECT_DIR": "/path/to/project",
+            "DBT_PATH": "/path/to/dbt"
+          }
+        }
+      }
+    }
+    ```
+
+    </VersionBlock>
+
+    С использованием файла `.env` (альтернативный вариант — конфигурация из двух файлов):
+
+    ```json
+    {
+      "servers": {
+        "dbt": {
+          "command": "uvx",
+          "args": [
+            "--env-file",
+            "/absolute/path/to/your-dbt-project/.env",
+            "dbt-mcp"
+          ]
         }
       }
     }
@@ -123,56 +194,81 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 Теперь вы можете получать доступ к серверу dbt MCP в VS Code через такие интерфейсы, как GitHub Copilot.
 
-## Устранение неполадок {#troubleshooting}
+## Настройка подключения к удалённому серверу dbt MCP
+
+Удалённый сервер dbt MCP работает в <Constant name="dbt_platform" /> &mdash; `uvx` и самостоятельная установка не требуются. VS Code подключается к нему по HTTP с помощью того же файла `mcp.json`, который используется для серверов, размещённых самостоятельно.
+
+<MCPRemoteOauthBetaCallout />
+
+1. Откройте палитру команд (`Control/Command + Shift + P`) и выберите один из вариантов:
+    - **MCP: Open Workspace Folder MCP Configuration** &mdash; для этой рабочей области.
+    - **MCP: Open User Configuration** &mdash; для вашего пользователя.
+2. Получите URL-адрес MCP:
+
+    <MCPRemoteServerUrl />
+
+3. Добавьте запись `dbt` в ключ верхнего уровня `servers`. (VS Code использует `servers`, а не `mcpServers`.) Выберите вкладку, соответствующую вашему способу аутентификации:
+
+    <Tabs>
+    <TabItem value="oauth" label="OAuth (удалённый сервер)">
+
+    _OAuth для удалённого сервера MCP доступен в рамках публичного бета-тестирования для учётных записей Starter, Enterprise и Enterprise+._
+
+    <MCPOauthPreflight />
+
+    Добавьте следующий код в `mcp.json`. При первом подключении к серверу VS Code откроет браузер для входа и предоставления согласия.
+
+    ```json
+    {
+      "servers": {
+        "dbt": {
+          "type": "http",
+          "url": "https://YOUR_DBT_HOST_URL/api/ai/v1/mcp/"
+        }
+      }
+    }
+    ```
+
+    Замените `YOUR_DBT_HOST_URL` на имя вашего хоста (например, `abc123.us1.dbt.com`). URL-адрес можно найти в <Constant name="dbt_platform"/> в разделе **Account settings** &rarr; **Access URLs** &rarr; **MCP Endpoint URL**.
+
+    </TabItem>
+    <TabItem value="token" label="На основе токена">
+
+    Используйте аутентификацию на основе токена, если ваш клиент ещё не поддерживает OAuth для HTTP-серверов MCP или если вам нужна общая конфигурация либо конфигурация для CI.
+
+    ```json
+    {
+      "servers": {
+        "dbt": {
+          "type": "http",
+          "url": "https://YOUR_DBT_HOST_URL/api/ai/v1/mcp/",
+          "headers": {
+            "Authorization": "Token YOUR_DBT_ACCESS_TOKEN",
+            "x-dbt-prod-environment-id": "DBT_PROD_ENV_ID",
+            "x-dbt-user-id": "DBT_USER_ID",
+            "x-dbt-dev-environment-id": "DBT_DEV_ENV_ID"
+          }
+        }
+      }
+    }
+    ```
+
+    <MCPRemoteTokenHeaders />
+
+    </TabItem>
+    </Tabs>
+
+4. Сохраните файл. Выполните команду **MCP: List Servers** из палитры команд, чтобы запустить сервер, а затем задайте в Copilot Chat вопрос о данных, чтобы проверить подключение.
+
+## Устранение неполадок
 
 В этом разделе приведены шаги по устранению ошибок, с которыми вы можете столкнуться при интеграции VS Code с MCP.
 
-<Expandable alt_header="Не удаётся найти исполняемый файл `uvx`" >
+<FAQ path="dbt-mcp/troubleshooting/uvx" />
 
-Если вы видите ошибки вроде `Could not connect to MCP server dbt` или `spawn uvx ENOENT`, VS Code, возможно, не может найти исполняемый файл `uvx`.
+<FAQ path="dbt-mcp/troubleshooting/wsl" />
 
-Чтобы исправить это, используйте полный путь к `uvx` в конфигурации:
-
-1. Найдите полный путь:
-   - macOS/Linux: выполните `which uvx` в терминале.
-   - Windows: выполните `where uvx` в Command Prompt или PowerShell.
-
-2. Обновите `mcp.json`, указав полный путь:
-   ```json
-   {
-     "servers": {
-       "dbt": {
-         "command": "/full/path/to/uvx",
-         "args": ["dbt-mcp"],
-         "env": { ... }
-       }
-     }
-   }
-   ```
-
-   Пример для macOS с Homebrew: `"command": "/opt/homebrew/bin/uvx"`
-
-</Expandable>
-
-<Expandable alt_header="Конфигурация не работает в WSL">
-
-Если вы используете VS Code с Windows Subsystem for Linux (WSL), убедитесь, что MCP-сервер настроен в параметрах, специфичных для WSL, а не в локальных пользовательских настройках. Используйте вкладку **Remote** в редакторе **Settings** или выполните **Preferences: Open Remote Settings** из Command Palette.
-
-</Expandable>
-
-<Expandable alt_header="Сервер не запускается" >
-
-Проверьте статус MCP-сервера:
-1. Выполните `MCP: List Servers` из Command Palette (Control/Command + Shift + P).
-2. Посмотрите, есть ли сообщения об ошибках рядом с сервером dbt.
-3. Нажмите на сервер, чтобы посмотреть подробные логи.
-
-Распространённые проблемы:
-- Отсутствующие или некорректные пути для `DBT_PROJECT_DIR` или `DBT_PATH`
-- Неверные токены аутентификации
-- Отсутствующие обязательные переменные окружения
-
-</Expandable>
+<FAQ path="dbt-mcp/troubleshooting/server-not-starting" />
 
 ## Ресурсы {#resources}
 

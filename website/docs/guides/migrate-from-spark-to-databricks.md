@@ -7,7 +7,7 @@ hoverSnippet: Узнайте, как перейти с dbt-spark на dbt-databr
 # time_to_complete: '30 minutes' commenting out until we test
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Migration', 'dbt Core','dbt platform']
+tags: ['Migration', 'dbt platform']
 level: 'Intermediate'
 ---
 
@@ -19,13 +19,13 @@ level: 'Intermediate'
 
 ### Предварительные требования {#prerequisite}
 
-- Для <Constant name="cloud" /> вам потребуются административные (admin) права для миграции проектов dbt.
+- Для миграции проектов dbt в <Constant name="dbt" /> необходимы права администратора (admin).
 
 ### Упрощенная аутентификация {#simpler-authentication}
 
-Ранее вам нужно было предоставить ID `cluster` или `endpoint`, который было сложно извлечь из предоставленного `http_path`. Теперь не имеет значения, используете ли вы кластер или SQL endpoint, потому что [настройка dbt-databricks](/docs/core/connect-data-platform/databricks-setup) требует _одинаковые_ параметры для обоих. Все, что вам нужно предоставить:
-- имя хоста рабочего пространства Databricks
-- HTTP путь к SQL хранилищу или кластеру Databricks
+Раньше требовалось указать идентификатор `cluster` или `endpoint`, который было сложно извлечь из предоставленного вам `http_path`. Теперь неважно, используете ли вы кластер или SQL-эндпоинт, поскольку [настройка dbt-databricks](/docs/local/connect-data-platform/databricks-setup) требует _одинаковых_ входных данных для обоих вариантов. Достаточно указать:
+- имя хоста рабочей области Databricks
+- HTTP-путь SQL-хранилища или кластера Databricks
 - соответствующие учетные данные
 
 ### Улучшенные значения по умолчанию {#better-defaults}
@@ -38,11 +38,11 @@ level: 'Intermediate'
 
 Однако в dbt-spark значение по умолчанию для `incremental_strategy` — это `append`. Если вы хотите продолжать использовать `incremental_strategy=append`, вам нужно будет явно установить эту конфигурацию на ваших инкрементальных моделях. Если вы уже указали `incremental_strategy=merge` на ваших инкрементальных моделях, вам не нужно ничего менять при переходе на dbt-databricks; но вы можете сохранить ваши модели чистыми, удалив конфигурацию, так как она избыточна. Прочтите [О стратегии инкрементального обновления](/docs/build/incremental-strategy), чтобы узнать больше.
 
-Для получения дополнительной информации о значениях по умолчанию, см. [Предостережения](/docs/core/connect-data-platform/databricks-setup#caveats).
+Подробнее о значениях по умолчанию см. в разделе [Особенности](/docs/local/connect-data-platform/databricks-setup).
 
 ### Чистый Python {#pure-python}
 
-Если вы используете dbt Core, вам больше не нужно загружать независимый драйвер для взаимодействия с Databricks. Вся информация о подключении встроена в библиотеку на чистом Python под названием `databricks-sql-connector`.
+Если вы используете <Constant name="core" />, вам больше не нужно скачивать отдельный драйвер для взаимодействия с Databricks. Вся информация о подключении включена в библиотеку `databricks-sql-connector`, написанную целиком на Python.
 
 ## Миграция ваших dbt проектов в dbt Cloud {#migrate-your-dbt-projects-in-dbt}
 
@@ -52,7 +52,7 @@ level: 'Intermediate'
 
 Чтобы обновить подключение к Databricks в dbt Cloud:
 
-Чтобы обновить подключение Databricks в <Constant name="cloud" />:
+Чтобы обновить подключение к Databricks в <Constant name="dbt" />:
 
 1. В главной панели навигации выберите **Account Settings**.
 2. На вкладке **Projects** найдите проект, который вы хотите мигрировать на адаптер dbt-databricks.
@@ -65,23 +65,23 @@ level: 'Intermediate'
     3. (опционально) имя каталога
 7. Нажмите **Сохранить**.
 
-Всем в вашей организации, кто использует <Constant name="cloud" />, необходимо обновить <Constant name="cloud_ide" /> перед тем, как снова приступить к работе. Обновление должно занять меньше минуты.
+Всем сотрудникам вашей организации, которые используют <Constant name="dbt" />, необходимо обновить <Constant name="studio_ide" />, прежде чем возобновить работу. Обновление должно занять менее минуты.
 
 ## Настройка ваших учетных данных {#migrate-dbt-projects-in-dbt-core}
 
-Когда вы обновляете Databricks connection в <Constant name="cloud" />, ваша команда не потеряет свои учетные данные. Это упрощает миграцию, так как требуется лишь удалить Databricks connection и заново добавить информацию о кластере или endpoint.
+При обновлении подключения к Databricks в <Constant name="dbt" /> ваша команда не потеряет свои учетные данные. Это упрощает миграцию, поскольку вам нужно лишь удалить подключение к Databricks и заново добавить информацию о кластере или конечной точке.
 
 Эти учетные данные не будут потеряны при успешном подключении к Databricks с использованием метода `dbt-spark` ODBC:
 
-- Учётные данные, которые вы передали в <Constant name="cloud" />, чтобы подключиться к вашему рабочему пространству Databricks.
-- Персональные токены доступа, которые участники вашей команды добавили в свой профиль <Constant name="cloud" />, чтобы иметь возможность разрабатывать в <Constant name="cloud_ide" /> для конкретного проекта.
-- Токен доступа, который вы добавили для каждой среды развертывания, чтобы <Constant name="cloud" /> мог подключаться к Databricks во время выполнения production‑задач.
+- Учетные данные, которые вы предоставили <Constant name="dbt" /> для подключения к рабочей области Databricks.
+- Персональные токены доступа, которые участники вашей команды добавили в свои профили <Constant name="dbt" />, чтобы разрабатывать в <Constant name="studio_ide" /> в рамках конкретного проекта.
+- Токен доступа, который вы добавили для каждой среды развертывания, чтобы <Constant name="dbt" /> мог подключаться к Databricks при выполнении заданий в промышленной среде.
 
-## Миграция dbt проектов в dbt Core {#try-these-examples}
+## Перенос проектов dbt в <Constant name="dbt" />
 
-Чтобы перенести ваши проекты dbt Core на адаптер `dbt-databricks` с `dbt-spark`, вам нужно:
-1. Установить [адаптер dbt-databricks](https://github.com/databricks/dbt-databricks) в вашей среде
-1. Обновить ваше подключение к Databricks, изменив ваш `target` в файле `~/.dbt/profiles.yml`
+Чтобы перевести проекты <Constant name="core" /> с адаптера `dbt-spark` на `dbt-databricks`:
+1. Установите [адаптер dbt-databricks](https://github.com/databricks/dbt-databricks) в своей среде
+1. Обновите подключение к Databricks, изменив `target` в файле `~/.dbt/profiles.yml`
 
 Любой, кто использует ваш проект, также должен внести эти изменения в своей среде.
 

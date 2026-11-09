@@ -5,24 +5,28 @@ description: "Используйте флаг --static-analysis, чтобы пе
 sidebar: "Статический анализ"
 ---
 
-Используйте флаг `--static-analysis`, чтобы переопределить поведение `static_analysis`, заданное на уровне модели, для одного запуска. Этот флаг применяется **только** к <Constant name="fusion_engine" />; для <Constant name="core" /> он игнорируется.
+Используйте флаг `--static-analysis`, чтобы переопределить поведение `static_analysis`, заданное на уровне модели, для одного запуска. Этот флаг применяется только к <Constant name="fusion_engine" />; <Constant name="core" /> его игнорирует.
 
 Значения:
 
-- `off`: Отключить статический анализ для всех моделей в текущем запуске.
-- `unsafe`: Использовать Just-in-time (JIT) статический анализ для всех моделей в текущем запуске.
+- `baseline` (по умолчанию): выполнять статический анализ SQL для всех моделей в рамках запуска. Это рекомендуемый начальный режим для пользователей, переходящих с <Constant name="core" />.
+- `strict`: выполнять статический анализ всего SQL до начала выполнения. Обеспечивает максимальные гарантии проверки &mdash; выполнение не начнётся, пока не будет подтверждена корректность всего проекта.
+- `off`: отключить статический анализ для всех моделей в рамках запуска.
 
-Если флаг не задан, Fusion использует значения по умолчанию: Ahead-of-time (AOT) статический анализ (`on`) для подходящих моделей и JIT (`unsafe`) для интроспективных веток. Подробнее см. в разделе [Configuring `static_analysis`](/docs/fusion/new-concepts#configuring-static_analysis).
+Если параметр не задан, <Constant name="fusion" /> по умолчанию использует режим `baseline`, который обеспечивает плавный переход с <Constant name="core" />, при этом выявляя большинство ошибок SQL. Подробнее о постепенном переходе к более строгому анализу см. в разделе [Настройка `static_analysis`](/docs/build/about-static-analysis#configuring-static_analysis).
 
 <File name='Usage'>
 
 ```shell
+dbt run --static-analysis strict
+dbt run --static-analysis baseline
 dbt run --static-analysis off
-dbt run --static-analysis unsafe
 ```
 
 </File>
 
 ## Связанные материалы {#related-docs}
 
-Также ознакомьтесь со страницами про [`static_analysis` (resource config)](/reference/resource-configs/static-analysis) на уровне модели и [About flags](/reference/global-configs/about-global-configs) для получения дополнительных сведений.
+- [`static_analysis` (конфигурация ресурса)](/reference/resource-configs/static-analysis)
+- [О флагах](/reference/global-configs/about-global-configs)
+- [Оптимизация статического анализа для разработки и развертывания](/best-practices/optimize-static-analysis-for-development-and-deployment)

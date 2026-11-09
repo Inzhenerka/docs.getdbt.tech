@@ -10,14 +10,14 @@ date: 2021-09-15
 is_featured: false
 ---
 
-:::tip February 2024 Update
+:::tip Обновление за февраль 2024 года
 
 Прошло уже несколько лет с тех пор, как dbt-core достиг версии 1.0! С тех пор мы взяли на себя обязательство по возможности не выпускать ломающие изменения, и обновление версий dbt Core стало значительно проще.
 
 В 2024 году мы идём ещё дальше и делаем следующее:
 
-- Стабилизируем интерфейсы для всех — разработчиков адаптеров, потребителей метаданных и (конечно же) людей, которые пишут dbt‑код повсюду — как обсуждалось в [обновлении дорожной карты за ноябрь 2023 года](https://github.com/dbt-labs/dbt-core/blob/main/docs/roadmap/2023-11-dbt-tng.md).
-- Внедряем [Release tracks](/docs/dbt-versions/cloud-release-tracks) (ранее известные как Versionless) в dbt Cloud. Больше никаких ручных обновлений и никакой необходимости в _отдельном sandbox‑проекте_ только для того, чтобы попробовать новые возможности в разработке. Подробнее см. в разделе [Upgrade Core version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Стабилизация интерфейсов для всех — разработчиков и сопровождающих адаптеров, потребителей метаданных и, конечно же, всех, кто пишет код dbt, — как описано в [обновлении нашей дорожной карты за ноябрь 2023 года](https://github.com/dbt-labs/dbt/blob/main/docs/roadmap/2023-11-dbt-tng.md).
+- Внедрение [каналов обновлений](/docs/dbt-versions/dbt-release-tracks) (ранее известных как Versionless) в dbt Cloud. Больше никаких ручных обновлений и необходимости во _втором проекте-песочнице_ только ради того, чтобы опробовать новые возможности в среде разработки. Подробнее см. в разделе [Обновление версии Core в Cloud](/docs/dbt-versions/upgrade-dbt-platform-version).
 
 Остальную часть этого поста мы оставляем без изменений, чтобы мы все могли вспомнить, как это было раньше. Приятной прогулки по волнам памяти.
 
@@ -55,8 +55,8 @@ is_featured: false
 - Журнал изменений и дополнительные материалы находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)*
 - [DAG в IDE](https://blog.getdbt.com/on-dags-hierarchies-and-ides/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Мы хотим, чтобы пользователи имели беспрепятственный опыт при навигации между кодом и контекстом. Встраивание DAG в IDE значительно упрощает исследование структуры проекта
  ![Screen Shot 2021-09-22 at 4.59.24 PM](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png?upscale=true&width=1120&upscale=true&name=Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png) 
-- [API метаданных](https://docs.getdbt.tech/docs/dbt-cloud-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Теперь в GA! Оцените здоровье данных с помощью метаданных, сгенерированных недавними запусками задач dbt
-- [Плитки статуса на панели управления](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-dashboard-status-tiles?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Встраивайте эту плитку в любое место, где живут iFrames, чтобы быстро проверить свежесть данных
+- [Metadata API](https://docs.getdbt.com/docs/dbt-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Теперь общедоступен (GA)! Оценивайте состояние данных с помощью метаданных, созданных при последних запусках заданий dbt
+-   [Плитки статуса для дашбордов](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-dashboard-status-tiles?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Встраивайте эту плитку везде, где поддерживаются iFrame, чтобы быстро проверять актуальность данных
 
 ## Новые ресурсы {#new-resources}
 --------------

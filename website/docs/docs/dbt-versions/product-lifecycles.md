@@ -1,52 +1,142 @@
 ---
 title: "Жизненные циклы продуктов"
 id: "product-lifecycles"
+hide_table_of_contents: true
 description: "Узнайте о жизненных циклах продуктов dbt Labs."
+availability: all_users
 ---
 
-dbt Labs напрямую участвует в сопровождении трех продуктов:
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-- <Constant name="core" />: [Открытое программное обеспечение](https://github.com/dbt-labs/dbt-core), доступное бесплатно.
-- <Constant name="dbt_platform" />: Облачное [SaaS-решение](https://www.getdbt.com/signup), изначально построенное поверх <Constant name="core" />. Сейчас мы представляем новый движок dbt — <Constant name="fusion_engine" />. Подробнее см. в разделе [dbt Fusion engine](/docs/fusion).
-- <Constant name="fusion_engine" />: Движок dbt следующего поколения, существенно более быстрый, чем <Constant name="core" />, и включающий встроенные технологии понимания SQL, которые обеспечивают следующее поколение рабочих процессов аналитической инженерии. <Constant name="fusion_engine" /> разработан для того, чтобы обеспечить командам по работе с данными молниеносный процесс разработки, интеллектуальную экономию затрат и улучшенное управление.
+dbt Labs управляет жизненным циклом функциональности облачной платформы dbt и самостоятельно размещаемых версий v1 и v2. Каждой функции присваивается статус жизненного цикла, который описывает её стабильность, уровень поддержки и доступность. Используйте вкладки ниже, чтобы узнать об этапах жизненного цикла используемого вами продукта.
 
-Все возможности dbt относятся к определенной категории жизненного цикла, которая определяется их доступностью в следующих продуктах:
+Применение целевых показателей уровня обслуживания (SLO) зависит от продукта и этапа жизненного цикла.
 
-### Платформа dbt {#the-dbt-platform}
+<Tabs>
+<TabItem value="platform" label="Платформа dbt">
 
-Все возможности <Constant name="cloud" /> относятся к одной из следующих категорий:
+Функциональность платформы dbt проходит следующие этапы жизненного цикла:
 
-- **Beta:** Бета-функции находятся в разработке и могут быть не полностью стабильны; их следует использовать на риск клиента, так как возможны ломающие изменения. Бета-функции могут быть не полностью задокументированы, техническая поддержка ограничена, а целевые показатели уровня сервиса (SLO) могут не предоставляться. Для получения подробной информации загрузите документ [Beta Features Terms and Conditions](/assets/beta-tc.pdf). Если бета-функция помечена как `Private`, она должна быть включена dbt Labs, и доступ к ней не является самообслуживаемым. Если документация доступна, в ней будут приведены инструкции по запросу доступа.
-- **Preview:** Функции в статусе Preview являются стабильными и считаются функционально готовыми для использования в продакшене. До момента их общей доступности возможны некоторые запланированные дополнения и изменения поведения. Также может быть добавлена новая функциональность, несовместимая с предыдущими версиями. Функции в Preview включают документацию, техническую поддержку и целевые показатели уровня сервиса (SLO). Функции в статусе Preview предоставляются без дополнительной оплаты, однако после перехода в статус общей доступности они могут стать платными. Если функция Preview помечена как `Private`, она должна быть включена dbt Labs, и доступ к ней не является самообслуживаемым. См. документацию по функции для получения инструкций по запросу доступа.
-- **Generally available (GA):** Функции в статусе общей доступности предоставляют стабильную функциональность, доступную всем соответствующим учетным записям <Constant name="cloud" />. К GA-функциям применяются соглашения об уровне сервиса (SLA), включая документацию и техническую поддержку. Доступность некоторых GA-функций определяется версией dbt в окружении. Чтобы всегда получать самые последние GA-функции, убедитесь, что ваши [окружения](/docs/dbt-cloud-environments) <Constant name="cloud" /> используют поддерживаемый [Release Track](/docs/dbt-versions/cloud-release-tracks).
-- **Deprecated:** Функции в этом состоянии больше не развиваются и не улучшаются dbt Labs. Они продолжают работать в текущем виде, а их документация сохраняется до даты удаления. Однако на них больше не распространяется техническая поддержка.
-- **Removed:** Удаленные функции больше недоступны на платформе в любом виде.
+<div className="grid--3-col" style={{gap: '1.5rem'}}>
 
-### dbt Core {#dbt-core}
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-transform-orange-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-transform-orange-800)', fontSize: '1rem'}}>Бета-версия</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Находится в активной разработке. Может быть не полностью стабильной; возможны изменения, нарушающие обратную совместимость. Документация может быть неполной, техническая поддержка ограничена, а SLO могут не применяться. Подробности см. в документе [Условия использования бета-версий](/assets/beta-tc.pdf), доступном для скачивания. Если указана отметка `Private`, доступ должен быть включён dbt Labs.
+  </div>
+</div>
 
-Мы выпускаем <Constant name="core" /> в следующих состояниях жизненного цикла. Релизы Core следуют семантическому версионированию, подробнее об этом можно прочитать в разделе [About Core versions](/docs/dbt-versions/core).
-- **Unreleased:** Мы планируем включить эту функциональность в предварительный выпуск следующей минорной версии. Однако мы не даем никаких гарантий относительно ее поведения или реализации. Как мейнтейнеры, мы оставляем за собой право изменить любую ее часть или полностью удалить (с соответствующим объяснением).
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-coalesce-purple-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-coalesce-purple-800)', fontSize: '1rem'}}>Предварительная версия</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Стабильна и функционально готова к использованию в производственной среде. До этапа общей доступности (GA) ещё возможны запланированные дополнения или изменения, нарушающие обратную совместимость. Предоставляются документация и техническая поддержка, применяются SLO. Если указана отметка `Private`, доступ должен быть включён dbt Labs.
+  </div>
+</div>
 
-- **Prerelease:**
-    * **Beta:** Цель бета-версий — дать первое представление о совершенно новых возможностях, которые появятся в этой минорной версии в ее финальном релизе. 
-    Код, включенный в бета-версию, должен работать без регрессий существующей функциональности или негативных взаимодействий с другими уже выпущенными возможностями.
-    Совершенно новые функции, включенные в бета-версию, _могут_ быть неполными или иметь известные пограничные случаи и ограничения. 
-    Изменения, включенные в бета-версию, не являются «зафиксированными», и мейнтейнеры оставляют за собой право изменить их или удалить (с объяснением).
-    * **Release Candidate:** Цель версии-кандидата — предоставить двухнедельное окно для более масштабного тестирования на уровне продакшена с целью выявления регрессий до финального релиза.
-    Пользователи могут рассчитывать на то, что функции в Release Candidate будут работать так же в день релиза.
-    Однако, если будет обнаружена серьезная ошибка, мы все же оставляем за собой право изменить или удалить базовое поведение с четким объяснением.
-- **Released:** Готово для использования в продакшене.
-- **Experimental:** Функции, которые мы выпускаем для общей доступности и считаем пригодными для использования в текущем виде,
-но для которых можем задокументировать дополнительные оговорки.
-- **Undocumented:** Подмножества функциональности <Constant name="core" />, которые являются внутренними, не входят в контракт или намеренно оставлены без документации.
-Не следует считать эту функциональность частью поверхности продукта данного релиза.
-- **Deprecated:** Функции в этом состоянии активно не развиваются и не улучшаются dbt Labs и будут продолжать работать в текущем виде до даты их удаления.
-- **Removed:** Удаленные функции больше не имеют какого-либо уровня продуктовой функциональности или поддержки платформы.
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-green-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-green-700)', fontSize: '1rem'}}>Общая доступность (GA)</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Стабильная функциональность, доступная всем учётным записям dbt, соответствующим необходимым требованиям. Применяются SLO, предоставляются документация и техническая поддержка. Возможны изменения цен или введение платы. Доступность функциональности может зависеть от версии dbt в вашей среде. Используйте поддерживаемый [канал выпусков](/docs/dbt-versions/dbt-release-tracks), чтобы получать новейшую общедоступную функциональность.
+  </div>
+</div>
 
-### dbt Fusion engine {#dbt-fusion-engine}
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-yellow-50)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-yellow-800)', fontSize: '1rem'}}>Устаревшая функциональность</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Больше не разрабатывается и не совершенствуется активно. Функциональность продолжает работать в существующем виде, а документация остаётся доступной до даты удаления. Техническая поддержка больше не предоставляется.
+  </div>
+</div>
 
-<Constant name="fusion_engine" /> и [расширение для VS Code](/docs/about-dbt-extension) в настоящее время находятся в статусе Preview для локальных установок и в статусе Beta в <Constant name="cloud" />.
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-pink-50)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-pink-800)', fontSize: '1rem'}}>Удалённая функциональность</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Больше не доступна на платформе ни в каком виде.
+  </div>
+</div>
 
-- **Beta:** Бета-функции все еще находятся в разработке и доступны только ограниченному числу клиентов. Бета-функции являются неполными и могут быть не полностью стабильны; их следует использовать на риск клиента, так как возможны ломающие изменения. Бета-функции могут быть не полностью задокументированы, техническая поддержка ограничена, а целевые показатели уровня сервиса (SLO) могут не предоставляться. Для получения подробной информации загрузите документ [Beta Features Terms and Conditions](/assets/beta-tc.pdf).
-- **Preview:** Функции в статусе Preview являются стабильными и считаются функционально готовыми для использования в продакшене при условии использования поддерживаемых возможностей и отсутствия зависимости от устаревшей функциональности. Для получения актуальной информации о статусе функций и возможностей см. раздел [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements), где публикуются последние обновления.
-- **Path to Generally available (GA):** Узнайте, что необходимо для достижения статуса GA для dbt Fusion engine, в нашей публикации блога [Path to GA](/blog/dbt-fusion-engine-path-to-ga).
+</div>
+
+</TabItem>
+<TabItem value="self-hosted" label="dbt v1 и v2">
+
+Выпуски самостоятельно размещаемого dbt следуют правилам семантического версионирования. Подробнее см. в разделе [О версиях dbt](/docs/dbt-versions). Выпуски как v1, так и v2 проходят следующие этапы жизненного цикла:
+
+<div className="grid--3-col" style={{gap: '1.5rem', marginTop: '1rem'}}>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-terminal-black-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-terminal-black-600)', fontSize: '1rem'}}>Недокументированная функциональность</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    В открытых кодовых базах dbt может быть видна внутренняя функциональность, функциональность без гарантированного контракта или намеренно недокументированная функциональность. Она не считается частью публичной функциональности продукта в данном выпуске.
+  </div>
+</div>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-terminal-black-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-terminal-black-700)', fontSize: '1rem'}}>Ещё не выпущенная функциональность</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Запланирована для предварительного выпуска следующей минорной версии. Никаких обязательств относительно поведения или реализации не предоставляется. Сопровождающие проект разработчики оставляют за собой право изменить или полностью удалить её.
+  </div>
+</div>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-terminal-black-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-terminal-black-700)', fontSize: '1rem'}}>Альфа-версия</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Никаких обязательств относительно поведения или реализации не предоставляется; версия не предназначена для использования в производственной среде. Используйте на своё усмотрение. Сопровождающие проект разработчики оставляют за собой право изменить или полностью удалить её.
+  </div>
+</div>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-transform-orange-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-transform-orange-800)', fontSize: '1rem'}}>Бета-версия</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Первое знакомство с совершенно новой функциональностью предстоящего выпуска. Код должен работать без регрессий, но новая функциональность может быть неполной или иметь известные проблемы в граничных случаях. Изменения ещё не зафиксированы окончательно, и сопровождающие проект разработчики всё ещё могут изменить или удалить их.
+  </div>
+</div>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-blue-50)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-blue-700)', fontSize: '1rem'}}>Кандидат в релиз</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Двухнедельный период для тестирования в условиях производственной среды перед финальным выпуском. Ожидается, что функциональность войдёт в выпуск без изменений, хотя сопровождающие проект разработчики ещё могут исправить существенные ошибки до финального выпуска.
+  </div>
+</div>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-green-100)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-green-700)', fontSize: '1rem'}}>Общая доступность</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Готова к использованию в производственной среде.
+  </div>
+</div>
+
+<div style={{border: '1px solid var(--border-neutral-tertiary)', borderRadius: '16px', overflow: 'hidden'}}>
+  <div style={{background: 'var(--color-yellow-50)', padding: '0.75rem 1.5rem', borderBottom: '1px solid var(--border-neutral-tertiary)'}}>
+    <strong style={{color: 'var(--color-yellow-800)', fontSize: '1rem'}}>Устаревшая функциональность</strong>
+  </div>
+  <div style={{padding: '1.25rem 1.5rem', background: 'var(--ifm-background-color)'}}>
+    Больше не разрабатывается и не совершенствуется активно. Продолжает работать в существующем виде до даты удаления.
+  </div>
+</div>
+</div>
+
+</TabItem>
+</Tabs>

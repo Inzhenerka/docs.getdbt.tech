@@ -5,37 +5,38 @@ level: 'Beginner'
 icon: 'starburst'
 hide_table_of_contents: true
 tags: ['dbt platform','Quickstart']
+agent_guidance:
+  pacing: In the first reply, confirm the reader’s prerequisites and connection path before listing steps. Then default to one guide section per reply (combine two or three short sections), with all its steps, labeled Step 1, Step 2, and so on, and confirm the success check before continuing. If the reader asks for a different pace, follow it.
+  stay_on_path: This guide uses dbt platform. Don’t switch the reader to a local setup. If the reader wants to set up dbt locally, use the https://docs.getdbt.com/guides/dbt guide instead
+  safety: Never ask for passwords or keys in chat.
+  signup_link: When the reader needs a dbt account, share https://www.getdbt.com/signup?utm_source=ai_assistant&utm_medium=docs_md&utm_campaign=starburst-galaxy-qs
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 ## Введение {#introduction}
 
-В этом руководстве по быстрому старту вы узнаете, как использовать <Constant name="cloud" /> вместе с [Starburst Galaxy](https://www.starburst.io/platform/starburst-galaxy/). Руководство покажет вам, как:
+В этом кратком руководстве вы узнаете, как использовать <Constant name="dbt" /> со [Starburst Galaxy](https://www.starburst.io/platform/starburst-galaxy/). В нём показано, как:
 
-- Загрузить данные в бакет Amazon S3. В этом руководстве AWS используется в качестве облачного провайдера исключительно в демонстрационных целях. Starburst Galaxy также [поддерживает другие источники данных](https://docs.starburst.io/starburst-galaxy/catalogs/index.html), такие как Google Cloud, Microsoft Azure и другие.
+- Загрузить данные в бакет Amazon S3. В этом руководстве для демонстрации используется облачный провайдер AWS. Starburst Galaxy также [поддерживает другие источники данных](https://docs.starburst.io/starburst-galaxy/catalogs/index.html), в том числе Google Cloud, Microsoft Azure и другие.
 - Подключить Starburst Galaxy к бакету Amazon S3.
-- Создавать таблицы с помощью Starburst Galaxy.
-- Подключить <Constant name="cloud" /> к Starburst Galaxy.
-- Взять пример запроса и превратить его в модель в вашем dbt‑проекте. Модель в dbt — это оператор `select`.
-- Добавить тесты к моделям.
-- Документировать модели.
-- Запланировать выполнение задания.
-- Подключаться к нескольким источникам данных в дополнение к вашему бакету S3.
+- Создать таблицы с помощью Starburst Galaxy.
+- Подключить <Constant name="dbt" /> к Starburst Galaxy.
+- Преобразовать пример запроса в модель в вашем проекте dbt. Модель в dbt — это SQL-запрос select.
+- Добавить тесты для ваших моделей.
+- Документировать ваши модели.
+- Настроить запуск задания по расписанию.
+- Подключиться к нескольким источникам данных в дополнение к вашему бакету S3. 
 
-:::tip Видео для вас
-Вы можете бесплатно пройти курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals), если вам интересен формат обучения с видео.
-
-Также вы можете посмотреть видео на YouTube [Build Better Data Pipelines with dbt and Starburst](https://www.youtube.com/watch?v=tfWm4dWgwRg), подготовленное компанией Starburst Data, Inc.
-:::
+<AgentPrompt />
 
 ### Предварительные требования {#prerequisites}
 
-- У вас есть [multi-tenant](/docs/cloud/about-cloud/access-regions-ip-addresses)‑развертывание в [<Constant name="cloud" />](https://www.getdbt.com/signup/). Подробнее см. [Tenancy](/docs/cloud/about-cloud/tenancy).
-- У вас есть [учетная запись Starburst Galaxy](https://www.starburst.io/platform/starburst-galaxy/). Если нет, вы можете начать с бесплатного пробного периода. Дополнительные сведения по первоначальной настройке см. в [руководстве по началу работы](https://docs.starburst.io/starburst-galaxy/get-started.html) в документации Starburst Galaxy.
-- У вас есть учетная запись AWS с правами на загрузку данных в бакет S3.
-- Для аутентификации Amazon S3 вам потребуется либо AWS access key и AWS secret key с доступом к бакету, либо кросс‑аккаунтная IAM‑роль с доступом к бакету. Подробнее см. документацию Starburst Galaxy:
-    - [Инструкции по AWS access key и secret key](https://docs.starburst.io/starburst-galaxy/security/external-aws.html#aws-access-and-secret-key)
+- У вас есть [мультитенантное](/docs/platform/about-platform/access-regions-ip-addresses) развертывание в [<Constant name="dbt" />](https://www.getdbt.com/signup/). Подробнее см. в разделе [Тенантность](/docs/platform/about-platform/tenancy).
+- У вас есть [учетная запись Starburst Galaxy](https://www.starburst.io/platform/starburst-galaxy/). Если ее нет, вы можете начать бесплатный пробный период. Дополнительные сведения о настройке см. в [руководстве по началу работы](https://docs.starburst.io/starburst-galaxy/get-started.html) в документации Starburst Galaxy.
+- У вас есть учетная запись AWS с разрешениями на загрузку данных в бакет S3.
+- Для аутентификации в Amazon S3 вам потребуются либо ключ доступа AWS и секретный ключ AWS с доступом к бакету, либо межаккаунтная роль IAM с доступом к бакету. Подробнее см. в документации Starburst Galaxy: 
+    - [Инструкции по использованию ключа доступа и секретного ключа AWS](https://docs.starburst.io/starburst-galaxy/security/external-aws.html#aws-access-and-secret-key)
     - [Cross account IAM role](https://docs.starburst.io/starburst-galaxy/security/external-aws.html#role)
 
 ### Связанные материалы {#related-content}
@@ -46,9 +47,19 @@ tags: ['dbt platform','Quickstart']
 - [Свежесть источников](/docs/deploy/source-freshness)
 - [Обзор SQL для Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/sql/index.html)
 
-## Загрузка данных в бакет Amazon S3 {#load-data-to-s3}
+- [Курсы dbt Learn](https://learn.getdbt.com)
+- [Задание CI в <Constant name="dbt" />](/docs/deploy/continuous-integration)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Актуальность источников](/docs/deploy/source-freshness)
+- [Обзор SQL для Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/sql/index.html)    
 
-Используя Starburst Galaxy, вы можете создавать таблицы и трансформировать их с помощью dbt. Начните с загрузки данных Jaffle Shop (предоставлены dbt Labs) в ваш бакет Amazon S3. Jaffle Shop — это вымышленное кафе, продающее еду и напитки в нескольких городах США.
+:::tip Видео для вас
+Если вам интересно обучение по видеокурсам, вы можете бесплатно пройти курс [Основы dbt](https://learn.getdbt.com/courses/dbt-fundamentals).
+
+Вы также можете посмотреть на YouTube видео [Создание более эффективных конвейеров данных с помощью dbt и Starburst](https://www.youtube.com/watch?v=tfWm4dWgwRg), подготовленное компанией Starburst Data, Inc.
+:::
+
+## Загрузка данных в бакет Amazon S3 {#load-data-to-s3}
 
 1. Скачайте следующие CSV‑файлы на локальный компьютер:
 
@@ -94,9 +105,11 @@ tags: ['dbt platform','Quickstart']
     - **Allow creating external tables** — включите.
     - **Allow writing to external tables** — включите.
 
-    Страница **Amazon S3** должна выглядеть примерно так же, за исключением раздела **Authentication to S3**, который зависит от вашей конфигурации:
+<Lightbox src="/img/quickstarts/dbt-platform/starburst-galaxy-config-s3.png" title="Настройки подключения к Amazon S3 в Starburst Galaxy" />
 
-    <Lightbox src="/img/quickstarts/dbt-cloud/starburst-galaxy-config-s3.png" title="Настройки подключения Amazon S3 в Starburst Galaxy" />
+8. Нажмите **Test connection**. Это позволит проверить, есть ли у Starburst Galaxy доступ к вашему бакету S3. 
+9. Нажмите **Connect catalog**, если проверка подключения прошла успешно.
+    <Lightbox src="/img/quickstarts/dbt-platform/test-connection-success.png" title="Успешная проверка подключения" />
 
 8. Нажмите **Test connection**, чтобы проверить доступ Starburst Galaxy к вашему бакету S3.
 9. Если тест прошел успешно, нажмите **Connect catalog**.
@@ -108,7 +121,7 @@ tags: ['dbt platform','Quickstart']
 
     Если вы используете существующий кластер и не имеете доступа к роли accountadmin, выберите роль, к которой у вас есть доступ.
 
-    Подробнее о контроле доступа см. в разделе [Access control](https://docs.starburst.io/starburst-galaxy/security/access-control.html) документации Starburst Galaxy.
+<Lightbox src="/img/quickstarts/dbt-platform/add-privilege.png" title="Добавление привилегии роли accountadmin" />
 
 13. На странице **Roles** откройте вкладку **Privileges** и нажмите **Add privilege**.
 14. На странице **Add privilege** задайте:
@@ -118,7 +131,7 @@ tags: ['dbt platform','Quickstart']
 
     Нажмите **Add privileges**.
 
-    <Lightbox src="/img/quickstarts/dbt-cloud/add-privilege.png" title="Добавление привилегии для роли accountadmin" />
+<Lightbox src="/img/quickstarts/dbt-platform/starburst-galaxy-editor.png" title="Настройте кластер и каталог в редакторе запросов" />
 
 ## Создание таблиц в Starburst Galaxy {#create-tables-with-starburst-galaxy}
 
@@ -186,7 +199,7 @@ tags: ['dbt platform','Quickstart']
     );
     ```
 
-4. После выполнения запросов в левой боковой панели редактора вы увидите следующую иерархию:
+<Lightbox src="/img/quickstarts/dbt-platform/starburst-data-hierarchy.png" title="Иерархия данных в редакторе запросов" />
 
     <Lightbox src="/img/quickstarts/dbt-cloud/starburst-data-hierarchy.png" title="Иерархия данных в редакторе запросов" />
 
@@ -200,40 +213,37 @@ tags: ['dbt platform','Quickstart']
 
 ## Подключение dbt к Starburst Galaxy {#connect-dbt-to-starburst-galaxy}
 
-1. Убедитесь, что вы вошли в [Starburst Galaxy](https://galaxy.starburst.io/login).
-2. Если вы еще этого не сделали, установите роль учетной записи accountadmin. Нажмите на адрес электронной почты в правом верхнем углу, выберите **Switch role** и укажите **accountadmin**.
-
-    Если эта роль недоступна, выберите роль, которую вы использовали при добавлении привилегии location в разделе [Connect Starburst Galaxy to the Amazon S3 bucket](#connect-to-s3-bucket).
-3. В левой боковой панели нажмите **Clusters**.
-4. Найдите ваш кластер в таблице **View clusters** и нажмите **Connection info**. В выпадающем списке **Select client** выберите **dbt**. Оставьте модальное окно **Connection information** открытым — эти данные понадобятся в <Constant name="cloud" />.
-5. В другой вкладке браузера войдите в [<Constant name="cloud" />](/docs/cloud/about-cloud/access-regions-ip-addresses).
-6. Создайте новый проект в <Constant name="cloud" />. Нажмите на имя учетной записи в левом меню, выберите **Account settings** и нажмите **+ New Project**.
-7. Введите имя проекта и нажмите **Continue**.
+1. Убедитесь, что вы по-прежнему вошли в [Starburst Galaxy](https://galaxy.starburst.io/login).
+2. Если вы ещё этого не сделали, установите для своей учётной записи роль accountadmin. Нажмите на свой адрес электронной почты в правом верхнем углу, выберите **Switch role**, а затем — **accountadmin**. 
+    
+    Если этой роли нет в списке, выберите роль, которую вы указали в разделе [Подключение Starburst Galaxy к бакету Amazon S3](#connect-to-s3-bucket), когда добавляли привилегию доступа к расположению для своего бакета S3.
+3. Нажмите **Clusters** на левой боковой панели.
+4. Найдите свой кластер в таблице **View clusters** и нажмите **Connection info**. Выберите **dbt** в раскрывающемся списке **Select client**. Оставьте модальное окно **Connection information** открытым. Сведения из этого окна понадобятся вам в <Constant name="dbt" />.
+5. В другой вкладке браузера войдите в [<Constant name="dbt" />](/docs/platform/about-platform/access-regions-ip-addresses).
+6. Создайте новый проект в <Constant name="dbt" />. Нажмите на название своей учётной записи в меню слева, выберите **Account settings** и нажмите **+ New Project**.
+7. Введите название проекта и нажмите **Continue**.
 8. Выберите **Starburst** в качестве подключения и нажмите **Next**.
-9. Укажите **Settings**:
-    - **Host** — значение **Host** из окна **Connection information** в Starburst Galaxy.
-    - **Port** — 443 (значение по умолчанию).
-10. Укажите **Development Credentials**:
-    - **User** — значение **User** из окна **Connection information**. Обязательно используйте всю строку целиком, включая роль учетной записи после `/`.
-    - **Password** — пароль для входа в Starburst Galaxy.
-    - **Database** — каталог Starburst, в который будут сохраняться данные. Для справки: в <Constant name="cloud" /> и Starburst Galaxy термины database и catalog используются как синонимы.
-    - Остальные параметры оставьте без изменений.
-11. Нажмите **Test Connection**, чтобы проверить доступ <Constant name="cloud" /> к кластеру Starburst Galaxy.
-12. Если тест успешен, нажмите **Next**. Если нет — проверьте настройки и учетные данные.
-
-## Настройка репозитория, управляемого dbt {#set-up-a-dbt-managed-repository}
+9. Укажите настройки (**Settings**) нового проекта:
+    - **Host** — значение **Host** из модального окна **Connection information** на вкладке Starburst Galaxy.
+    - **Port** — 443 (значение по умолчанию)
+10. Укажите учётные данные пользователя (**User credentials**) для нового проекта:
+    - **User** — значение **User** из модального окна **Connection information** на вкладке Starburst Galaxy. Обязательно используйте всю строку, включая роль учётной записи: символ `/` и все следующие за ним символы. Если не указать эту часть, будет использована ваша роль по умолчанию, у которой может не быть необходимых разрешений для разработки проекта.
+    - **Password** — пароль, который вы используете для входа в свою учётную запись Starburst Galaxy.
+    - **Database** — каталог Starburst, в котором вы хотите сохранять данные (например, при записи новых таблиц). Обратите внимание: база данных в <Constant name="dbt" /> соответствует каталогу в Starburst Galaxy. 
+    - Оставьте остальные параметры без изменений. Можно использовать их значения по умолчанию.
+11. Нажмите **Test Connection**. Эта проверка позволяет убедиться, что <Constant name="dbt" /> может получить доступ к вашему кластеру Starburst Galaxy.
+12. Если проверка прошла успешно, нажмите **Next**. Если она завершилась ошибкой, возможно, потребуется проверить настройки и учётные данные Starburst Galaxy.
 
 <Snippet path="tutorial-managed-repo" />
 
-## Инициализация dbt‑проекта и начало разработки {#initialize-your-dbt-project-and-start-developing}
+## Инициализируйте проект dbt и начните разработку
+Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="dbt" />:
 
-Теперь, когда репозиторий настроен, вы можете инициализировать проект и начать разработку в <Constant name="cloud" />:
-
-1. Нажмите **Start developing in the <Constant name="cloud_ide" />**. Первый запуск может занять несколько минут.
-2. Над деревом файлов слева нажмите **Initialize dbt project**.
-3. Сделайте первый коммит: нажмите **Commit and sync**, используйте сообщение `initial commit` и нажмите **Commit**.
-4. Теперь вы можете выполнять запросы и запускать `dbt run`. Попробуйте:
-    - Нажмите **+ Create new file**, добавьте запрос и сохраните файл:
+1. Нажмите **Start developing in the <Constant name="studio_ide" />**. Первый запуск проекта может занять несколько минут: за это время устанавливается подключение к git, клонируется репозиторий и проверяется подключение к хранилищу данных.
+2. Над деревом файлов слева нажмите **Initialize dbt project**. Это создаст структуру папок с примерами моделей.
+3. Создайте первый коммит, нажав **Commit and sync**. Укажите сообщение коммита `initial commit` и нажмите **Commit**. Это создаст первый коммит в вашем управляемом репозитории и позволит открыть ветку, в которой вы сможете добавлять новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из хранилища и выполнять `dbt run`. Попробуйте сделать это прямо сейчас:
+    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить новый файл:
         ```sql
             select * from dbt_quickstart.jaffle_shop.jaffle_shop_customers
         ```
@@ -241,10 +251,12 @@ tags: ['dbt platform','Quickstart']
 
 ## Создание первой модели {#build-your-first-model}
 
-У вас есть два варианта работы с файлами в <Constant name="cloud_ide" />:
+Если вы хотите использовать ИИ для создания своей первой модели, ознакомьтесь с инструкцией <a id="qs-jump-to-build-with-ai" href="#build-it-with-ai-using-dbt-wizard">по созданию модели с помощью dbt Wizard</a> в следующем разделе.
 
-- Создать новую ветку (рекомендуется).
-- Редактировать в защищенной основной ветке.
+У вас есть два варианта работы с файлами в <Constant name="studio_ide" />:
+
+- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку для редактирования и коммита изменений. Перейдите в раздел **Version Control** на левой боковой панели и нажмите **Create branch**.
+- Редактировать в защищённой основной ветке &mdash; Если вы предпочитаете редактировать, форматировать файлы или проверять их линтером и выполнять команды dbt непосредственно в основной ветке Git. <Constant name="studio_ide" /> не позволяет создавать коммиты в защищённой ветке, поэтому вам будет предложено закоммитить изменения в новую ветку.
 
 Назовите новую ветку `add-customers-model`.
 
@@ -306,7 +318,7 @@ select * from final
 
 4. Выполните `dbt run` — вы должны увидеть успешное выполнение и три модели.
 
-Позже вы сможете подключить BI‑инструменты к этим представлениям и таблицам, чтобы они читали уже очищенные данные.
+Позже вы сможете подключить свои инструменты бизнес-аналитики (BI) (например, [dbt Charts](https://dbtcharts.com/)) к этим представлениям и таблицам, чтобы они считывали только очищенные, а не необработанные данные.
 
 #### FAQs {#faqs}
 
@@ -316,7 +328,9 @@ select * from final
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Изменение способа материализации модели {#change-the-way-your-model-is-materialized}
+<Snippet path="quickstarts/build-first-model-with-wizard" />
+
+## Измените способ материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
@@ -430,6 +444,9 @@ select * from final
 
 ## Подключение к нескольким источникам данных {#connect-to-multiple-data-sources}
 
-Этот быстрый старт посвящен использованию <Constant name="cloud" /> для запуска моделей поверх data lake (S3) с помощью Starburst Galaxy в качестве движка запросов. В реальных сценариях данные обычно распределены по нескольким источникам и хранятся в разных форматах. С помощью Starburst Galaxy, Starburst Enterprise и Trino вы можете запускать модели над любыми данными, независимо от места их хранения.
+## Подключение к нескольким источникам данных
+В этом кратком руководстве рассматривается использование <Constant name="dbt" /> для выполнения моделей с данными из озера данных (S3) с помощью Starburst Galaxy в качестве движка запросов. В большинстве реальных сценариев данные, необходимые для выполнения моделей, распределены между несколькими источниками и хранятся в различных форматах. С помощью Starburst Galaxy, Starburst Enterprise и Trino вы можете выполнять модели с любыми необходимыми данными независимо от того, где они хранятся.
 
-Если вы хотите попробовать это, обратитесь к [документации Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/catalogs/), добавьте дополнительные источники данных и загрузите данные Jaffle Shop в выбранный источник. Затем расширьте свои модели, чтобы они обращались как к новому источнику данных, так и к источнику, созданному в рамках этого быстрого старта.
+Если вы хотите попробовать это на практике, обратитесь к [документации Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/catalogs/), чтобы добавить другие источники данных и загрузить данные Jaffle Shop в выбранный источник. Затем доработайте модели, чтобы они запрашивали данные как из нового источника, так и из источника, созданного в этом кратком руководстве.
+
+<Snippet path="quickstarts/connect-your-ai" />

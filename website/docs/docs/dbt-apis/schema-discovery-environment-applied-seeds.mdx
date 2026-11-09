@@ -1,0 +1,63 @@
+---
+title: "Схема объекта Seeds"
+sidebar_label: "Seeds"
+id: "discovery-schema-environment-applied-seeds"
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: starter
+---
+ 
+import { NodeArgsTable, SchemaTable } from "./schema";
+
+[Seeds](/docs/build/seeds) — это CSV-файлы в вашем dbt‑проекте, которые dbt может загрузить в ваше хранилище данных. Вы можете запрашивать seeds через Discovery API.
+
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `seeds`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
+
+### Аргументы {#arguments}
+
+При выполнении запроса `seeds` вы можете использовать следующие аргументы:
+
+<NodeArgsTable parent="AppliedState" name="seeds" />
+
+### Пример запроса {#example-query}
+
+Вы можете указать `environmentId`, отфильтровать по базе данных и ограничить результат первыми 100 записями, чтобы получить информацию о первых 100 seed‑файлах в базе данных `analytics`, включая их метаданные и расположение файлов:
+
+```graphql
+query ($environmentId: BigInt!, $first: Int!, $filter: GenericMaterializedFilter) {
+  environment(id: $environmentId) {
+    applied {
+      seeds(
+        first: 100,
+        filter: {
+          database: "analytics"
+        }
+      ) {
+        edges {
+          node {
+            description
+            name
+            filePath
+            projectId
+            fqn
+            tags
+            uniqueId
+            resourceType
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### Поля {#fields}
+
+При выполнении запроса `seeds` вы можете использовать следующие поля:
+
+<SchemaTable nodeName="SeedAppliedStateNodeConnection" />
+
+### Ключевые поля узлов {#key-fields-from-nodes}
+
+<SchemaTable nodeName="SeedAppliedStateNode" />

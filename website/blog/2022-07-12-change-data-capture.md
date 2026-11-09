@@ -57,7 +57,7 @@ is_featured: true
 
 Вы можете представить ее DAG, как показано ниже, где `fct_income` фиксирует доход за месяц для каждой категории продуктов.
 
-![](/img/blog/2022-07-12-change-data-capture-metrics/fct-income-dag.png)
+<Lightbox src="/img/blog/2022-07-12-change-data-capture-metrics/fct-income-dag.png" />
 
 Джоанна выполняет `dbt run` 30 января 2022 года и делает запрос к полученной таблице:
 
@@ -91,7 +91,7 @@ select * from fct_income where month_year = "January 2022"
 
 Когда руководитель отдела продаж отправляет Джоанне следующий вопрос: "Можешь сказать мне доход за январь 2022 года по всем товарам одежды?", она не уверена, какое число дать: 100, 50 или 52.
 
-![](/img/blog/2022-07-12-change-data-capture-metrics/income-meme.png)
+<Lightbox src="/img/blog/2022-07-12-change-data-capture-metrics/income-meme.png" />
 
 Из-за этой сложности она решает зафиксировать историю своего отчета о доходах, чтобы она могла легко переключаться между версиями в своем BI-инструменте.
 
@@ -160,7 +160,7 @@ from {{ ref('fct_income') }}
 
 Ее финальный DAG теперь выглядит так:
 
-![](/img/blog/2022-07-12-change-data-capture-metrics/income-report-versions-dag.png)
+<Lightbox src="/img/blog/2022-07-12-change-data-capture-metrics/income-report-versions-dag.png" />
 
 Она создает снимки `fct_income`, объединяет файл семян со снимком, а затем предоставляет конечный вывод в свой BI-инструмент. Конечный вывод `stg_snapshot_fct_income` выглядит следующим образом:
 
@@ -237,7 +237,7 @@ from {{ ref('fct_income') }}
 
 В качестве последнего шага Джоанна создаст `fct_income_history`, чтобы объединить файл семян и определить, какие версии являются "правильными". Ее новый DAG выглядит так, где `int_income_history` является инкрементальной моделью без уникального ключа:
 
-![](/img/blog/2022-07-12-change-data-capture-metrics/int-income-history-dag.png)
+<Lightbox src="/img/blog/2022-07-12-change-data-capture-metrics/int-income-history-dag.png" />
 
 Конечный вывод `fct_income_history` будет идентичен `stg_snapshot_fct_income` из ее первоначального подхода:
 
@@ -259,7 +259,7 @@ from {{ ref('fct_income') }}
 
 Джоанна могла бы отслеживать изменения в исходных данных, добавляя снимки непосредственно поверх своих сырых данных.
 
-![](/img/blog/2022-07-12-change-data-capture-metrics/snapshots-dag.png)
+<Lightbox src="/img/blog/2022-07-12-change-data-capture-metrics/snapshots-dag.png" />
 
 Это *изменило бы <Term id="grain" />* этих `stg_` таблиц, так что она увидела бы строку для каждой версии каждого поля. Модели на этапе подготовки будут содержать историю каждой записи.
 
@@ -333,7 +333,7 @@ where to_timestamp('02/10/22 08:00:00') between dbt_valid_to and coalesce(dbt_va
 
 После объединения с файлом семян (ознакомьтесь с [Решение сложности объединения снимков](https://docs.getdbt.tech/blog/joining-snapshot-complexity)), ее новый DAG выглядит так:
 
-![](/img/blog/2022-07-12-change-data-capture-metrics/final-dag.png)
+<Lightbox src="/img/blog/2022-07-12-change-data-capture-metrics/final-dag.png" />
 
 Конечный вывод `fct_income_history` достигнет той же цели, что и `stg_snapshot_fct_income` из ее первоначального подхода:
 

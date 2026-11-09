@@ -7,9 +7,18 @@ datatype: "{dictionary}"
 
 Когда ограничения применяются, они гарантируют, что вы никогда не увидите недопустимые данные в таблице, материализованной вашей моделью. Применение варьируется в зависимости от платформы данных.
 
-Ограничения требуют объявления и применения контракта модели [contract](/reference/resource-configs/contract).
+## Предварительные требования
 
-**Ограничения никогда не применяются к моделям `ephemeral` или тем, которые материализуются как `view`.** Только модели `table` и `incremental` поддерживают применение и соблюдение ограничений.
+Перед использованием ограничений убедитесь, что выполнены следующие требования:
+
+- **Вы используете поддерживаемые материализации** &mdash; Ограничения работают только для моделей с материализацией `table` и `incremental`. Ограничения никогда не применяются к моделям с материализацией `ephemeral` или `view`. 
+- **Вы обеспечиваете соблюдение контракта** &mdash; Для использования ограничений ваша модель должна объявлять [контракт](/reference/resource-configs/contract) и обеспечивать его соблюдение. Это означает, что необходимо явно определить `data_type` для каждого столбца в конфигурации схемы модели.
+
+### Поддержка ограничений на платформах
+
+import ConstraintsTable from '/snippets/_constraints-table.md'; 
+
+<ConstraintsTable />
 
 ## Определение ограничений {#defining-constraints}
 
@@ -27,10 +36,9 @@ datatype: "{dictionary}"
 
 Ограничения внешнего ключа принимают два дополнительных параметра:
 
-- `to`: Входной параметр типа relation, как правило [`ref()`](/reference/dbt-jinja-functions/ref) и [`source()`](/reference/dbt-jinja-functions/source), указывающий на таблицу, на которую ссылается внешний ключ.
-- `to_columns`: Список столбцов в этой таблице, содержащих соответствующий первичный или уникальный ключ.
+Этот синтаксис определения внешних ключей использует `ref`, а значит, учитывает зависимости и работает в разных окружениях. Он доступен в [<Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks) и [<Constant name="dbt" /> v1.9+](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.9).
 
-Этот синтаксис определения внешних ключей использует `ref`, что означает автоматический учет зависимостей и корректную работу в разных окружениях. Он доступен в [<Constant name="cloud" /> "Latest"](/docs/dbt-versions/cloud-release-tracks) и [<Constant name="core" /> v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+Этот синтаксис определения внешних ключей использует `ref`, что означает автоматический учет зависимостей и корректную работу в разных окружениях. Он доступен в [<Constant name="cloud" /> "Latest"](/docs/dbt-versions/dbt-release-tracks) и [<Constant name="core" /> v1.9+](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.9).
 
 Поскольку поддержка и применение ограничений [различаются в зависимости от платформы](/reference/resource-properties/constraints#platform-specific-support), dbt предоставляет два необязательных поля, которые можно указать для любого ограничения:
 
@@ -45,6 +53,7 @@ models:
     
     # обязательно
     config:
+      materialized: table
       contract: {enforced: true}
     
     # ограничения на уровне модели
@@ -81,7 +90,7 @@ models:
 
 Supported dbt-adapters use these fields when populated, to render out the foreign key constraint instead of `expression`.
   
-Для получения дополнительной информации об адаптерах, которые поддерживают ограничения внешних ключей, ознакомьтесь с нашим руководством по [поддержке ограничений платформами](/docs/mesh/govern/model-contracts#platform-constraint-support).
+Для получения дополнительной информации об адаптерах, которые поддерживают ограничения внешних ключей, ознакомьтесь с нашим руководством по [поддержке ограничений платформами](/reference/resource-properties/constraints).
 
 </VersionBlock>
 
@@ -89,7 +98,7 @@ Supported dbt-adapters use these fields when populated, to render out the foreig
 
 В транзакционных базах данных возможно определение "ограничений" на допустимые значения определенных столбцов, более строгих, чем просто тип данных этих значений. Например, Postgres поддерживает и применяет все ограничения стандарта ANSI SQL (`not null`, `unique`, `primary key`, `foreign key`), а также гибкое ограничение на уровне строки `check`, которое оценивается в логическое выражение.
 
-Большинство аналитических платформ данных поддерживают и применяют ограничение `not null`, но они либо не поддерживают, либо не применяют остальные. Иногда все же желательно добавить "информационное" ограничение, зная, что оно _не_ применяется, для интеграции с устаревшими инструментами каталогов данных или диаграмм сущность-связь ([dbt-core#3295](https://github.com/dbt-labs/dbt-core/issues/3295)). Некоторые платформы данных могут опционально использовать ограничения первичного или внешнего ключа для оптимизации запросов, если вы укажете дополнительное ключевое слово.
+Большинство аналитических платформ данных поддерживают и обеспечивают соблюдение ограничения `not null`, но остальные ограничения они либо не поддерживают, либо не обеспечивают их соблюдение. Иногда всё же имеет смысл добавить «информационное» ограничение, зная, что его соблюдение _не_ обеспечивается, для интеграции с устаревшими каталогами данных или инструментами построения диаграмм «сущность — связь» ([dbt-labs/dbt#3295](https://github.com/dbt-labs/dbt/issues/3295)). Некоторые платформы данных могут использовать ограничения первичного или внешнего ключа для оптимизации запросов, если указать дополнительное ключевое слово.
 
 Для этого вы можете указать два дополнительных поля для любого фильтра:
 - `warn_unenforced: False`, чтобы пропустить предупреждение об ограничениях, которые поддерживаются, но не применяются этой платформой данных. Ограничение будет включено в шаблонный DDL.
@@ -122,7 +131,7 @@ select
 
 ```yml
 models:
-  - name: dim_customers
+  - name: constraints_example
     config:
       contract:
         enforced: true
@@ -196,7 +205,7 @@ select
 
 ```yml
 models:
-  - name: dim_customers
+  - name: constraints_example
     config:
       contract:
         enforced: true
@@ -282,7 +291,7 @@ select
 
 ```yml
 models:
-  - name: dim_customers
+  - name: constraints_example
     config:
       contract:
         enforced: true
@@ -309,7 +318,7 @@ models:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql
-create or replace transient table <database>.<schema>.constraints_model        
+create or replace transient table <database>.<schema>.constraints_example        
 (
     id integer not null primary key,
     customer_name text,
@@ -330,7 +339,7 @@ select
 
 <div warehouse="BigQuery">
 
-BigQuery позволяет определять и обеспечивать соблюдение ограничений `not null`, а также определять (но _не обеспечивать соблюдение_) ограничения `primary key` и `foreign key` (которые могут использоваться для оптимизации запросов). BigQuery не поддерживает определение или обеспечение соблюдения других ограничений. Подробнее см. в разделе [Platform constraint support](/docs/mesh/govern/model-contracts#platform-constraint-support).
+BigQuery позволяет определять и обеспечивать соблюдение ограничений `not null`, а также определять (но _не обеспечивать соблюдение_) ограничения `primary key` и `foreign key` (которые могут использоваться для оптимизации запросов). BigQuery не поддерживает определение или обеспечение соблюдения других ограничений. Подробнее см. в разделе [Platform constraint support](/reference/resource-properties/constraints).
 
 Документация: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
 
@@ -357,7 +366,7 @@ select
 
 ```yml
 models:
-  - name: dim_customers
+  - name: constraints_example
     config:
       contract:
         enforced: true
@@ -379,7 +388,29 @@ models:
 
 </File>
 
-### Ограничение на уровне столбца для вложенного столбца: {#column-level-constraint-on-nested-column}
+### Ожидаемый DDL для обеспечения соблюдения ограничений:
+
+<File name='target/run/.../constraints_example.sql'>
+
+```sql
+create or replace table `<project>`.`<dataset>`.`constraints_example`        
+(
+    id integer not null,
+    customer_name string,
+    first_transaction_date date  
+)
+as
+(
+select 
+  1 as id, 
+  'My Favorite Customer' as customer_name, 
+  cast('2019-01-01' as date) as first_transaction_date
+);
+```
+
+</File>
+
+### Ограничение уровня столбца для вложенного столбца:
 
 <File name='models/nested_column_constraints_example.sql'>
 
@@ -395,7 +426,7 @@ select
   struct(
     1 as id,
     'name' as name,
-    struct(2 as id, struct('test' as again, '2' as even_more) as another) as double_nested
+    struct(2 as id, struct('test' as again, 2 as even_more) as another) as double_nested
   ) as b
 ```
 
@@ -428,28 +459,6 @@ models:
         data_type: integer
         constraints: 
           - type: not_null
-```
-
-</File>
-
-### Ожидаемый DDL для применения ограничений: {#expected-ddl-to-enforce-constraints}
-
-<File name='target/run/.../constraints_example.sql'>
-
-```sql
-create or replace table `<project>`.`<dataset>`.`constraints_model`        
-(
-    id integer not null,
-    customer_name string,
-    first_transaction_date date  
-)
-as
-(
-select 
-  1 as id, 
-  'My Favorite Customer' as customer_name, 
-  cast('2019-01-01' as date) as first_transaction_date
-);
 ```
 
 </File>
@@ -493,7 +502,7 @@ select
 
 ```yml
 models:
-  - name: dim_customers
+  - name: constraints_example
     config:
       contract:
         enforced: true
@@ -519,7 +528,7 @@ models:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql
-  create or replace table schema_name.my_model 
+  create or replace table schema_name.constraints_example 
   using delta 
   as
     select
@@ -533,9 +542,89 @@ models:
 После чего выполняются операторы
 
 ```sql
-alter table schema_name.my_model change column id set not null;
-alter table schema_name.my_model add constraint 472394792387497234 check (id > 0);
+alter table schema_name.constraints_example change column id set not null;
+alter table schema_name.constraints_example add constraint 472394792387497234 check (id > 0);
 ```
+
+</div>
+
+<div warehouse="Fabric">
+
+Microsoft Fabric allows you to define:
+
+- A `not_null` constraint, which is checked when the model builds
+- The `primary_key`, `foreign_key`, and `unique` constraints, which are recorded on the table for reference but not checked when new data is added
+
+Be aware of the following limitations and requirements:
+
+- `check` constraints are not supported on Microsoft Fabric. Use [data tests](/docs/build/data-tests) such as `dbt_utils.expression_is_true` to validate custom rules instead.
+- Microsoft Fabric does not include all constraints in the initial `create table` statement. dbt creates the table first, then runs separate statements to add model-level constraints.
+- You must provide a `name` for each model-level constraint.
+- Columns in [snapshot](/docs/build/snapshots) source tables cannot have constraints. If a source column has a `not_null` constraint or similar rule, the snapshot may fail.
+
+For more on Microsoft Fabric setup, refer to [Microsoft Fabric Data Warehouse configurations](/reference/resource-configs/fabric-configs).
+
+<File name='models/constraints_example.sql'>
+
+```sql
+{{
+  config(
+    materialized = "table"
+  )
+}}
+
+select 
+  1 as id, 
+  'My Favorite Customer' as customer_name, 
+  cast('2019-01-01' as date) as first_transaction_date
+```
+
+</File>
+
+<File name='models/schema.yml'>
+
+```yml
+models:
+  - name: constraints_example
+    config:
+      contract:
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [id]
+        name: pk_constraints_example
+    columns:
+      - name: id
+        data_type: int
+        constraints:
+          - type: not_null
+          - type: check       # not supported -- will warn & skip
+            expression: "id > 0"
+        data_tests:
+          - unique            # primary_key constraint is not enforced
+      - name: customer_name
+        data_type: varchar(100)
+      - name: first_transaction_date
+        data_type: date
+```
+
+</File>
+
+Expected SQL to enforce constraints:
+<File name='target/run/.../constraints_example.sql'>
+
+```sql
+create table schema_name.constraints_example
+(
+    id int not null,
+    customer_name varchar(100),
+    first_transaction_date date
+);
+
+alter table schema_name.constraints_example add constraint pk_constraints_example primary key nonclustered(id) not enforced;
+```
+
+</File>
 
 </div>
 
@@ -543,7 +632,7 @@ alter table schema_name.my_model add constraint 472394792387497234 check (id > 0
 
 ## Пользовательские ограничения {#custom-constraints}
 
-В <Constant name="cloud" /> и <Constant name="core" /> вы можете использовать пользовательские ограничения (custom constraints) для расширенной настройки таблиц в моделях. Разные хранилища данных поддерживают различный синтаксис и разные возможности.
+В dbt можно использовать пользовательские ограничения для моделей, чтобы более гибко настраивать таблицы. Разные хранилища данных поддерживают разный синтаксис и разные возможности.
 
 Пользовательские ограничения позволяют добавлять конфигурацию к конкретным столбцам. Например:
 
@@ -562,7 +651,7 @@ alter table schema_name.my_model add constraint 472394792387497234 check (id > 0
 ```yaml
 
 models:
-  - name: my_model
+  - name: constraints_example
     config:
       contract:
         enforced: true
@@ -592,7 +681,7 @@ models:
 ```yaml
 
 models:
-  - name: my_model
+  - name: constraints_example
     config:
       contract:
         enforced: true

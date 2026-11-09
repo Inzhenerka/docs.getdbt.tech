@@ -2,7 +2,7 @@
 title: "Компоненты движка dbt Fusion и то, как они сочетаются друг с другом"
 description: "Новый движок позволяет отделить исходный код от функциональности, открывая новые способы распространения функциональности для сообщества."
 slug: dbt-fusion-engine-components
-image: /img/blog/2025-05-28-dbt-fusion-engine/next-gen-star.png
+image: /img/blog/2025-05-28-dbt-v2-engine/next-gen-star.png
 authors: [jason_ganz, joel_labes]
 tags: [analytics craft, data ecosystem]
 hide_table_of_contents: false
@@ -61,7 +61,7 @@ Fusion — это не какая‑то одна вещь. Это набор в
 
 Тип артефакта: предсобранный бинарный файл
 
-Как получить доступ: скачать, следуя инструкциям [здесь](/docs/fusion/install-fusion-cli)
+Как получить доступ: скачайте, следуя инструкциям [здесь](/docs/local/install-dbt?version=2)
 
 Лицензия: ELv2
 
@@ -81,13 +81,13 @@ Fusion — это не какая‑то одна вещь. Это набор в
 
 Тип артефакта: предсобранный бинарник и управляемый сервис
 
-Где доступно: [скачать бинарник](/docs/fusion/install-fusion-cli) и [зарегистрироваться в сервисе](http://getdbt.com/signup)
+Где доступно: [скачать бинарник](/docs/local/install-dbt) и [зарегистрироваться в сервисе](http://getdbt.com/signup)
 
-Лицензия: ELv2 (бинарник) и проприетарная (сервис)
+Доступно: [Скачать бинарный файл](/docs/local/install-dbt?version=2) и [зарегистрироваться в сервисе](http://getdbt.com/signup)
 
 Организации, *имеющие* коммерческое соглашение, получают доступ к ещё большему набору возможностей, при этом используя тот же самый публично распространяемый бинарник, о котором говорилось выше. Если вы хотите начать использовать платформенные функции, [например dbt Mesh](https://docs.getdbt.tech/docs/mesh/govern/project-dependencies), всё, что нужно — это [скачать конфигурационный файл](https://docs.getdbt.tech/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli). *(Комментарий Джоэла: как человек, который последние пару лет совмещал dbt Cloud CLI и dbt Core, я не могу передать, насколько я этому рад.)*
 
-Разумеется, для предоставления платформенных возможностей, таких как State-Aware Orchestration, необходимы дополнительные облачные сервисы. Этот код является проприетарным и регулируется вашим соглашением с dbt Labs.
+Организации, у которых *есть* коммерческое соглашение, получат доступ к ещё большему числу возможностей, но будут использовать тот же общедоступный бинарный файл, о котором говорилось выше. Если вы хотите начать использовать возможности платформы, [такие как dbt Mesh](https://docs.getdbt.com/docs/mesh/govern/project-dependencies), достаточно [скачать файл конфигурации](https://docs.getdbt.com/docs/platform/configure-dbt-cli#configure-the-dbt-cli). *(Комментарий Джоэла: последние пару лет мне приходилось попеременно работать с dbt Cloud CLI и dbt Core, и я не могу передать словами, насколько меня радует эта новость.)*
 
 ## Другие элементы мозаики {#other-pieces-of-the-puzzle}
 
@@ -107,7 +107,7 @@ Language Server построен на подмножестве технолог�
 
 <Lightbox src="/img/blog/2025-05-28-dbt-fusion-engine-components/vscode-ext-binary-roles.png" title="Расширение VS Code взаимодействует с Language Server для понимания SQL и с бинарником Fusion для выполнения SQL." />
 
-### Authoring Layer dbt {#the-dbt-authoring-layer}
+<Lightbox src="/img/blog/2025-05-28-dbt-v2-engine-components/vscode-ext-binary-roles.png" title="Расширение VS Code взаимодействует с языковым сервером для анализа вашего SQL и с бинарным файлом Fusion для выполнения вашего SQL." />
 
 Тип артефакта: определения JSON Schema
 

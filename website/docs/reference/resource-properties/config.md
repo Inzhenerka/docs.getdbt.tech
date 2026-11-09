@@ -1,5 +1,6 @@
 ---
 title: "О свойстве config"
+description: "Используйте свойство config, чтобы задавать конфигурации ресурса непосредственно в его YAML-файле, а не в dbt_project.yml."
 sidebar_label: "config"
 resource_types: [models, seeds, snapshots, tests, sources, metrics, exposures]
 datatype: "{dictionary}"
@@ -84,7 +85,7 @@ snapshots:
 <resource_type>:
   - name: <resource_name>
     data_tests:
-      - [<test_name>](#test_name):
+      - [<test_name>](/reference/resource-properties/data-tests#custom-data-test-name):
           arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
             <argument_name>: <argument_value>
           config:
@@ -94,8 +95,8 @@ snapshots:
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
         data_tests:
-          - [<test_name>](#test_name)
-          - [<test_name>](#test_name):
+          - [<test_name>](/reference/resource-properties/data-tests#custom-data-test-name)
+          - [<test_name>](/reference/resource-properties/data-tests#custom-data-test-name):
               arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 <argument_name>: <argument_value>
               config:
@@ -112,6 +113,7 @@ snapshots:
 
 <VersionCallout version="1.8" />
 
+<VersionBlock lastVersion="1.12">
 <File name='models/<filename>.yml'>
 
 ```yml
@@ -124,6 +126,24 @@ snapshots:
 ```
 
 </File>
+</VersionBlock>
+
+<VersionBlock firstVersion="2.0">
+<File name='models/<filename>.yml'>
+
+```yml
+[unit_tests](/reference/resource-properties/unit-tests):
+  - name: <test-name>
+    config:
+      [compute](/reference/resource-configs/compute): local | remote
+      [enabled](/reference/resource-configs/enabled): true | false
+      [meta](/reference/resource-configs/meta): {dictionary}
+      [static_analysis](/reference/resource-configs/static-analysis): strict | baseline | off
+      [tags](/reference/resource-configs/tags): <string>
+```
+
+</File>
+</VersionBlock>
 
 </TabItem>
 
@@ -185,6 +205,7 @@ exposures:
 
 <TabItem value="semantic models">
 
+<VersionBlock lastVersion="1.11">
 <File name='models/<filename>.yml'>
 
 ```yml
@@ -198,6 +219,23 @@ semantic_models:
 ```
 
 </File>
+</VersionBlock>
+
+<VersionBlock firstVersion="1.12">
+<File name='models/<filename>.yml'>
+
+```yml
+models:
+  - name: model_name
+    semantic_model:
+      [enabled](/reference/resource-configs/enabled): true | false
+      [group](/reference/resource-configs/group): <string>
+      config:
+        [meta](/reference/resource-configs/meta): {dictionary}
+```
+
+</File>
+</VersionBlock>
 
 </TabItem>
 

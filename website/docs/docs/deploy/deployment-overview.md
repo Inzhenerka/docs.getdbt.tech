@@ -6,15 +6,25 @@ hide_table_of_contents: true
 tags: ["scheduler"]
 pagination_next: "docs/deploy/job-scheduler"
 pagination_prev: null
+availability: platform_login
 ---
 
 <IntroText>
 
-Используйте возможности <Constant name="cloud" />, чтобы без лишних усилий запускать dbt‑задачи в production или staging‑окружениях. Вместо ручного запуска команд dbt из командной строки вы можете воспользоваться [встроенным планировщиком <Constant name="cloud" />](/docs/deploy/job-scheduler), чтобы автоматизировать то, как и когда выполняется dbt. 
+Используйте возможности <Constant name="dbt_platform" />, чтобы без труда запускать задания dbt в промышленной или предпромышленной среде. Вместо запуска команд dbt вручную из командной строки вы можете использовать [встроенный планировщик <Constant name="dbt_platform" />](/docs/deploy/job-scheduler), чтобы автоматизировать порядок и время выполнения dbt. 
 
 </IntroText>
 
-<Constant name="dbt_platform" /> предоставляет самый простой и надёжный способ запускать ваш dbt‑проект в production. Вы можете без труда продвигать высококачественный код из разработки в production и создавать актуальные данные, к которым обращаются инструменты бизнес‑аналитики и конечные пользователи для принятия бизнес‑решений. <Term id="deploying">Развёртывание</Term> с помощью <Constant name="cloud" /> позволяет вам:
+<Constant name="dbt_platform" /> предлагает самый простой и надежный способ запуска вашего проекта dbt в промышленной среде. Без труда переносите качественный код из среды разработки в промышленную среду и создавайте актуальные ресурсы данных, к которым обращаются ваши инструменты бизнес-аналитики (например, [dbt Charts](https://dbtcharts.com/)) и конечные пользователи для принятия бизнес-решений. <Term id="deploying">Развертывание</Term> с помощью <Constant name="dbt" /> позволяет:
+- Своевременно поддерживать актуальность данных в промышленной среде
+- Обеспечивать эффективность конвейеров CI и конвейеров промышленной среды 
+- Выявлять первопричины сбоев в средах развертывания
+- Поддерживать высокое качество кода и данных в промышленной среде
+- Отслеживать [состояние](/docs/explore/data-tile) заданий развертывания, моделей и тестов
+- Использовать [экспорт](/docs/use-dbt-semantic-layer/exports) для записи результатов [сохраненных запросов](/docs/build/saved-queries) на вашу платформу данных, обеспечивая надежную и быструю отчетность по метрикам
+- [Визуализировать](/docs/platform-integrations/downstream-exposures-tableau) и [оркестрировать](/docs/platform-integrations/orchestrate-exposures) downstream exposures, чтобы понимать, как модели используются в нижестоящих инструментах, и заблаговременно обновлять лежащие в их основе источники данных при выполнении заданий dbt по расписанию. <Lifecycle status="managed,managed_plus" />
+- Использовать [кэширование Git-репозитория в <Constant name="dbt" />](/docs/platform/account-settings#git-repository-caching-) для защиты от сбоев сторонних сервисов и повышения надежности выполнения заданий. <Lifecycle status="managed,managed_plus" />
+- Использовать [гибридные проекты](/docs/deploy/hybrid-projects) для загрузки артефактов <Constant name="dbt" /> в <Constant name="dbt_platform" />, чтобы обеспечить централизованный обзор, ссылки между проектами и упростить совместную работу. <Lifecycle status="managed_plus" /> <Lifecycle status="preview"/>
 
 - Поддерживать актуальность production‑данных на регулярной основе  
 - Обеспечивать эффективность CI‑ и production‑пайплайнов  
@@ -22,15 +32,12 @@ pagination_prev: null
 - Поддерживать высокое качество кода и данных в production  
 - Получать прозрачность и обзор [состояния](/docs/explore/data-tile) заданий развёртывания, моделей и тестов  
 - Использовать [exports](/docs/use-dbt-semantic-layer/exports) для записи [saved queries](/docs/build/saved-queries) в вашей платформе данных, обеспечивая надёжную и быструю отчётность по метрикам  
-- [Визуализировать](/docs/cloud-integrations/downstream-exposures-tableau) и [оркестрировать](/docs/cloud-integrations/orchestrate-exposures) downstream‑exposures, чтобы понимать, как модели используются во внешних инструментах, и проактивно обновлять базовые источники данных во время запланированных dbt‑задач. <Lifecycle status="managed,managed_plus" />  
-- Использовать [кэширование Git‑репозиториев <Constant name="cloud" />](/docs/cloud/account-settings#git-repository-caching) для защиты от сбоев сторонних сервисов и повышения надёжности выполнения заданий. <Lifecycle status="managed,managed_plus" />  
+- [Визуализировать](/docs/platform-integrations/downstream-exposures-tableau) и [оркестрировать](/docs/platform-integrations/orchestrate-exposures) downstream‑exposures, чтобы понимать, как модели используются во внешних инструментах, и проактивно обновлять базовые источники данных во время запланированных dbt‑задач. <Lifecycle status="managed,managed_plus" />  
+- Использовать [кэширование Git‑репозиториев <Constant name="cloud" />](/docs/platform/account-settings#git-repository-caching-) для защиты от сбоев сторонних сервисов и повышения надёжности выполнения заданий. <Lifecycle status="managed,managed_plus" />  
 - Использовать [Hybrid projects](/docs/deploy/hybrid-projects) для загрузки артефактов <Constant name="cloud" /> в <Constant name="dbt_platform" /> с целью централизованной видимости, перекрёстных ссылок между проектами и более удобной совместной работы. <Lifecycle status="managed_plus" /> <Lifecycle status="Preview"/>
 
-Перед продолжением убедитесь, что вы понимаете подход dbt к [средам развертывания](/docs/deploy/deploy-environments).
-
-Узнайте, как использовать возможности <Constant name="cloud" />, чтобы помочь вашей команде проще и быстрее поставлять в продакшен качественные данные.
-
-## Развертывание с помощью dbt {#deploy-with-dbt}
+Узнайте, как использовать возможности <Constant name="dbt" />, чтобы вашей команде было проще своевременно предоставлять качественные данные в промышленной среде.
+## Развертывание с dbt
 
 <div className="grid--3-col">
 
@@ -47,9 +54,9 @@ pagination_prev: null
     icon="dbt-bit"/>
 
 <Card
-    title="Оркестрация с учетом состояния"
-    body="Интеллектуально определяет, какие модели нужно собирать, обнаруживая изменения в коде или данных при каждом запуске задания."
-    link="/docs/deploy/state-aware-about"
+title="Состояние dbt"
+    body="Интеллектуально определяет, какие модели нужно построить, выявляя изменения в коде или данных при каждом запуске задания."
+    link="/docs/deploy/dbt-state-about"
     icon="dbt-bit"/>
 
 <Card
@@ -128,13 +135,13 @@ pagination_prev: null
 
 ## Связанные документы {#hybrid-projects}
 
-## Гибридные проекты <Lifecycle status="managed" /> <Lifecycle status="Preview"/> {#run-dbt-in-production}
+## Гибридные проекты <Lifecycle status="managed" /> <Lifecycle status="preview"/>
 
 <div className="grid--3-col">
 
 <Card
-    title="Гибридные проекты"
-    body="Используйте гибридные проекты, чтобы загружать артефакты dbt Core в платформу dbt для централизованной видимости, перекрёстных ссылок между проектами и более удобной совместной работы."
+title="Гибридные проекты"
+    body="Используйте гибридные проекты для загрузки артефактов dbt на платформу dbt, чтобы обеспечить централизованный обзор, ссылки между проектами и упростить совместную работу."
     link="/docs/deploy/hybrid-projects"
     icon="dbt-bit"/>
 
@@ -143,22 +150,11 @@ pagination_prev: null
 <!--
 <a href="https://docs.getdbt.tech/docs/deploy/dbt-cloud-job" target="_blank" class="pagination-nav__label nav-create-account button button--primary">Try deploying with dbt</a> 
 
-<DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="98%" title="An overview of a dbt job run which contains Run Summary, Job Trigger, Run Duration, and more."/>
-
-<Lightbox src="/img/docs/dbt-cloud/deployment/run-history.jpg" width="95%" title="Run History dashboard allows you to monitor the health of your dbt project and displays jobs, job status, environment, timing, and more."/>
-
-
-<Lightbox src="/img/docs/dbt-cloud/deployment/access-logs.gif" width="85%" title="Access logs for run steps" />
-
-<Lightbox src ="/img/docs/dbt-cloud/using-dbt-cloud/job-commands.gif" width="95%" title="Setting up a job and configuring checkbox and dbt commands"/>
-
-</DocCarousel>
 
 ## Run dbt in production {#related-docs}
 
-If you want to run dbt jobs on a schedule, you can use tools such as <Constant name="cloud" />, Airflow, Prefect, Dagster, automation server, or Cron.-->
+If you want to run dbt jobs on a schedule, you can use tools such as <Constant name="dbt" />, Airflow, Prefect, Dagster, automation server, or Cron.-->
 
 ## Связанные материалы
 

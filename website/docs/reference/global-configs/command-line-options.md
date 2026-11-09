@@ -4,9 +4,7 @@ id: "command-line-options"
 sidebar: "Опции командной строки"
 ---
 
-Для единообразия флаги интерфейса командной строки (CLI) следует указывать сразу после префикса `dbt` и его подкоманд. Это относится и к «глобальным» флагам (которые поддерживаются всеми командами). Полный список флагов <Constant name="cloud_cli" />, которые можно задать, см. в разделе [Available flags](/reference/global-configs/about-global-configs#available-flags). При указании флаги CLI имеют приоритет над [environment variables](/reference/global-configs/environment-variable-configs) и [project flags](/reference/global-configs/project-flags).
-
-Переменные окружения содержат префикс `DBT_`.
+Для единообразия флаги интерфейса командной строки (CLI) следует указывать сразу после префикса `dbt` и его подкоманд. Это относится и к «глобальным» флагам (поддерживаемым всеми командами). Полный список глобальных параметров CLI для <Constant name="core" /> или <Constant name="fusion_engine" /> (в зависимости от [выбранной версии документации](/docs/dbt-versions)) приведён в разделе [Доступные флаги](/reference/global-configs/about-global-configs#available-flags). Если флаги CLI заданы, они имеют приоритет над [переменными окружения](/reference/global-configs/environment-variable-configs) и [флагами проекта](/reference/global-configs/project-flags).
 
 Например, вместо использования:
 

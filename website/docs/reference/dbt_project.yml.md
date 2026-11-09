@@ -5,9 +5,9 @@ intro_text: "Файл dbt_project.yml является обязательным 
 
 Каждому [проекту dbt](/docs/build/projects) необходим файл `dbt_project.yml` — именно по нему dbt определяет, что каталог является проектом dbt. Кроме того, в этом файле содержится важная информация, которая сообщает dbt, как именно работать с вашим проектом. Принцип работы следующий:
 
-- dbt использует [YAML](https://yaml.org/) в нескольких местах. Если вы ранее не работали с YAML, полезно изучить, как в нём представлены массивы, словари и строки.
-- По умолчанию dbt ищет файл `dbt_project.yml` в текущем рабочем каталоге и его родительских каталогах, однако вы можете указать другой каталог с помощью флага `--project-dir` или переменной окружения `DBT_PROJECT_DIR`.
-- Укажите идентификатор вашего проекта <Constant name="cloud" /> в файле `dbt_project.yml`, используя параметр `project-id` в конфигурации `dbt-cloud`. Идентификатор проекта можно найти в URL вашего проекта <Constant name="cloud" />. Например, в `https://YOUR_ACCESS_URL/11/projects/123456` идентификатор проекта — `123456`.
+- dbt использует [YAML](https://yaml.org/) в нескольких местах. Если вы ещё не знакомы с YAML, стоит изучить, как в нём представляются массивы, словари и строки.
+- По умолчанию dbt ищет `dbt_project.yml` в текущем рабочем каталоге и его родительских каталогах, но вы можете указать другой каталог с помощью флага `--project-dir` или переменной окружения <VersionBlock lastVersion="1.10">`DBT_PROJECT_DIR`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_PROJECT_DIR`</VersionBlock>.
+- Укажите идентификатор проекта <Constant name="dbt" /> в файле `dbt_project.yml` с помощью параметра `project-id` в [блоке конфигурации `dbt-cloud`](/reference/dbt_cloud.yml#the-dbt-cloud-block-in-dbt_projectyml). Идентификатор проекта можно найти в URL вашего проекта <Constant name="dbt" />: например, в `https://YOUR_ACCESS_URL/develop/projects/123456` идентификатор проекта — `123456`.
 
 ## Пример {#example}
 
@@ -32,6 +32,9 @@ intro_text: "Файл dbt_project.yml является обязательным 
 [docs-paths](/reference/project-configs/docs-paths): [directorypath]
 [asset-paths](/reference/project-configs/asset-paths): [directorypath]
 [function-paths](/reference/project-configs/function-paths): [directorypath]
+[osi-paths](/reference/project-configs/osi-paths): [directorypath]
+[check-paths](/reference/project-configs/check-paths): [directorypath]
+[skill-paths](/reference/project-configs/skill-paths): [directorypath]
 
 [packages-install-path](/reference/project-configs/packages-install-path): directorypath
 
@@ -44,10 +47,14 @@ intro_text: "Файл dbt_project.yml является обязательным 
 [flags](/reference/global-configs/project-flags):
   [<global-configs>](/reference/global-configs/project-flags)
 
-[dbt-cloud](/docs/cloud/cloud-cli-installation):
-[project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cli): project_id # Обязательный параметр  
-  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cli): environment_id # Необязательный параметр  
-  [account-host](/docs/cloud/about-cloud/access-regions-ip-addresses): account-host # По умолчанию используется `cloud.getdbt.com`; обязателен, если используется другой Access URL  
+[dbt-cloud](/reference/dbt_cloud.yml#the-dbt-cloud-block-in-dbt_projectyml):
+  [project-id](/docs/platform/configure-dbt-cli#configure-the-dbt-platform-cli): project_id # Обязательно
+  [defer-env-id](/docs/platform/about-defer#defer-in-dbt-platform-cli): environment_id # Необязательно
+  [account_id](/reference/dbt_cloud.yml#the-dbt-cloud-block-in-dbt_projectyml): account_id # Необязательно, только для v2; обратите внимание на подчёркивание, в отличие от других полей dbt-cloud
+  [account-host](/docs/platform/about-platform/access-regions-ip-addresses): account-host # По умолчанию — 'cloud.getdbt.com'; обязательно при использовании другого URL доступа
+
+[analyses](/docs/build/analyses): # Требуется флаг require_corrected_analysis_fqns; доступно начиная с v1.12
+  [<analysis-configs>](/reference/analysis-properties)
 
 [exposures](/docs/build/exposures):  
   +[enabled](/reference/resource-configs/enabled): true | false
@@ -56,8 +63,8 @@ intro_text: "Файл dbt_project.yml является обязательным 
   database: true | false
   schema: true | false
   identifier: true | false
-  snowflake_ignore_case: true | false  # Fusion-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
-                                       # Ignored by dbt Core and other adapters.
+  snowflake_ignore_case: true | false  # v2-only config. Aligns with Snowflake's session parameter QUOTED_IDENTIFIERS_IGNORE_CASE behavior. 
+                                       # Ignored by dbt v1 and other adapters.
 metrics:
   [<metric-configs>](/docs/build/metrics-overview)
 
@@ -73,14 +80,23 @@ semantic-models:
 saved-queries:
   [<saved-queries-configs>](/docs/build/saved-queries)
 
+skills:
+  [<skill-configs>](/docs/dbt-ai/package-skills#disable-a-skill)
+
 snapshots:
   [<snapshot-configs>](/reference/snapshot-configs)
 
 sources:
   [<source-configs>](/reference/source-configs)
   
+checks:
+  [<check-configs>](/reference/check-configs)
+
 data_tests:
   [<test-configs>](/reference/data-test-configs)
+
+[info_schema](/docs/build/dbt-information-schema):
+  version: 1  # Pins which version of the dbt Information Schema the {{ info_schema() }} macro resolves to
 
 vars:
   [<variables>](/docs/build/project-variables)
@@ -111,24 +127,37 @@ import PlusPrefix from '/snippets/_plus-prefix.md';
 
 Важно следовать правильным конвенциям именования YAML для конфигураций в вашем файле `dbt_project.yml`, чтобы dbt мог правильно их обработать. Это особенно важно для типов ресурсов с более чем одним словом.
 
-- Используйте дефисы (`-`) при настройке типов ресурсов с несколькими словами в вашем файле `dbt_project.yml`. Вот пример для [сохраненных запросов](/docs/build/saved-queries#configure-saved-query):
+- Для типов ресурсов, состоящих из нескольких слов, — `saved-queries` и `semantic-models` — используйте дефисы (`-`) в `dbt_project.yml`. Вот пример для [сохранённых запросов](/docs/build/saved-queries#configure-saved-query):
 
     <File name="dbt_project.yml">
 
     ```yml
-    saved-queries:  # Используйте дефисы для типов ресурсов в файле dbt_project.yml.
+    saved-queries:  # Используйте дефисы в saved-queries и semantic-models в dbt_project.yml.
       my_saved_query:
         +cache:
           enabled: true
     ```
     </File>
 
-- Используйте подчеркивание (`_`) при настройке типов ресурсов с несколькими словами для YAML-файлов, отличных от `dbt_project.yml`. Например, вот тот же ресурс сохраненных запросов в файле `semantic_models.yml`:
+- Для [тестов данных](/docs/build/data-tests) и [модульных тестов](/docs/build/unit-tests) везде используйте символы подчёркивания (`_`), в том числе в `dbt_project.yml`:
 
-    <File name="models/semantic_models.yml">
+    <File name="dbt_project.yml">
 
     ```yml
-    saved_queries:  # Используйте подчеркивания везде, кроме файла dbt_project.yml.
+    data_tests:  # Используйте подчёркивания для data_tests и unit_tests даже в dbt_project.yml.
+      +store_failures: true
+
+    unit_tests:
+      +enabled: true
+    ```
+    </File>
+
+- В YAML-файлах, кроме `dbt_project.yml`, используйте подчёркивания (`_`) в названиях типов ресурсов, состоящих из нескольких слов. Например, тот же ресурс сохранённых запросов в файле свойств:
+
+    <File name="models/saved_queries.yml">
+
+    ```yml
+    saved_queries:  # Используйте подчёркивания вне dbt_project.yml.
       - name: saved_query_name
         ... # Остальная часть конфигурации сохраненных запросов.
         config:

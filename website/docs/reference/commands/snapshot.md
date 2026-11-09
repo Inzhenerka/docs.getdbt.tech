@@ -4,23 +4,30 @@ sidebar_label: "snapshot"
 id: "snapshot"
 ---
 
-Команда `dbt snapshot` выполняет [Снапшоты](/docs/build/snapshots), определенные в вашем проекте.
+Команда `dbt snapshot` выполняет [снимки](/docs/build/snapshots), определённые в вашем проекте. Снимки фиксируют изменения исходных данных с течением времени, реализуя [медленно изменяющиеся измерения типа 2](https://en.wikipedia.org/wiki/Slowly_changing_dimension#Type_2:_add_new_row). Запускайте `dbt snapshot` по расписанию (например, ежедневно), чтобы фиксировать изменения в исходных таблицах.
 
-dbt будет искать снапшоты в путях, указанных в параметре `snapshot-paths` в вашем файле `dbt_project.yml`. По умолчанию значение `snapshot-paths` — это путь `snapshots/`.
+Определяйте снимки в YAML, указывая стратегию и `unique_key`; подробности настройки см. в разделе [Конфигурации снимков](/reference/snapshot-configs). Вы также можете запускать снимки в составе [dbt build](/reference/commands/build).
 
-**Использование:**
+dbt ищет снимки в каталогах, перечисленных в `snapshot-paths` в файле `dbt_project.yml`. По умолчанию dbt использует каталог `snapshots/`. Если вы храните снимки в нескольких папках, можно указать несколько путей.
+
+## Использование
+
+Чтобы просмотреть полный список поддерживаемых параметров в терминале, выполните:
+
+```shell
+dbt snapshot --help
 ```
-$ dbt snapshot --help
-usage: dbt snapshot [-h] [--profiles-dir PROFILES_DIR]
-                                     [--profile PROFILE] [--target TARGET]
-                                     [--vars VARS] [--bypass-cache]
-                                     [--threads THREADS]
-                                     [--select SELECTOR [SELECTOR ...]]
-                                     [--exclude EXCLUDE [EXCLUDE ...]]
+Use `--select` or `--exclude` to choose which snapshots run. For selection syntax, refer to [Node selection syntax](/reference/node-selection/syntax). `dbt snapshot` also supports common command-line options, such as `--target` and `--threads`. For flag details (including logging options), refer to [About flags (global configs)](/reference/global-configs/about-global-configs).
 
-optional arguments:
-  --select SELECTOR [SELECTOR ...]
-                        Укажите снапшоты, которые нужно включить в выполнение.
-  --exclude EXCLUDE [EXCLUDE ...]
-                        Укажите снапшоты, которые нужно исключить из выполнения.
+Используйте `--vars`, если SQL-код вашего снимка обращается к значениям с помощью функции `var()`. Синтаксис, правила приоритета и дополнительные примеры приведены в разделе [Определение переменных в командной строке](/docs/build/project-variables#defining-variables-on-the-command-line).
+
+```shell
+dbt snapshot --select my_snapshot --vars '{"cutoff_date": "2026-01-01"}'
 ```
+
+import SnapshotCompiledSql from '/snippets/_snapshot-compiled-sql.md';
+import SnapshotFullRefresh from '/snippets/_snapshot-full-refresh.md';
+
+<SnapshotFullRefresh />
+
+<SnapshotCompiledSql />

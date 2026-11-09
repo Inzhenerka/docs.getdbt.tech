@@ -1,7 +1,7 @@
-:::caution Доступно для <Constant name="cloud" /> Enterprise и Enterprise+
+:::caution Доступно в планах <Constant name="dbt" /> Enterprise и Enterprise+
 
-Подключение облачной учетной записи Azure DevOps доступно для организаций, использующих планы <Constant name="cloud" /> Enterprise или Enterprise+. 
+Подключение облачной учетной записи Azure DevOps доступно организациям, использующим планы <Constant name="dbt" /> Enterprise или Enterprise+. 
 
-Нативная интеграция <Constant name="cloud" /> с Azure DevOps не поддерживает Azure DevOps Server (on‑premise). Вместо этого вы можете [импортировать проект по git URL](/docs/cloud/git/import-a-project-by-git-url), чтобы подключиться к Azure DevOps Server.
+Встроенная интеграция <Constant name="dbt" /> с Azure DevOps не поддерживает Azure DevOps Server (локальное развертывание). Вместо этого для подключения к Azure DevOps Server можно [импортировать проект по Git URL](/docs/platform/git/import-a-project-by-git-url).
 
 :::

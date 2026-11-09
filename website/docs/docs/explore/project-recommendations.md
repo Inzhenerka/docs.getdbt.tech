@@ -1,16 +1,20 @@
 ---
 title: "Рекомендации по проекту"
 sidebar_label: "Рекомендации по проекту"
-description: "dbt Catalog предоставляет рекомендации, которые помогут вам повысить качество вашего dbt‑проекта."
+description: "dbt Catalog предлагает рекомендации, которые помогут повысить качество вашего проекта dbt."
+availability:
+  surface: platform
+  access: paid_plan
+  minPlan: enterprise
 ---
 
-# Рекомендации по проекту <Lifecycle status="managed,managed_plus" /> {#project-recommendations}
+# Рекомендации по проекту
  
-<Constant name="explorer" /> предоставляет рекомендации по вашему проекту на основе пакета `dbt_project_evaluator` из [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/), используя метаданные из [Discovery API](/docs/dbt-cloud-apis/discovery-api). 
+<Constant name="catalog" /> предоставляет рекомендации по вашему проекту из [пакета](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) `dbt_project_evaluator`, используя метаданные из [Discovery API](/docs/dbt-apis/discovery-api). 
 
-- <Constant name="explorer" /> также предлагает глобальное представление, показывая все рекомендации по проекту в одном месте для удобной сортировки и обобщения.
-- Эти рекомендации дают представление о том, как создать более хорошо документированный, лучше протестированный и более качественно построенный dbt‑проект, повышая доверие и снижая путаницу.
-- Для единообразного и согласованного опыта рекомендации используют преднастроенные параметры `dbt_project_evaluator` и не учитывают кастомизации, применённые в вашем пакете или проекте.
+- <Constant name="catalog" /> также предоставляет общее представление всех рекомендаций по проекту, позволяя легко сортировать и обобщать их.
+- Эти рекомендации помогают понять, как улучшить документацию, тестирование и структуру проекта dbt, чтобы повысить доверие к нему и уменьшить путаницу.
+- Для удобства и единообразия рекомендации используют предопределённые настройки `dbt_project_evaluator` и не учитывают пользовательские настройки вашего пакета или проекта.
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 

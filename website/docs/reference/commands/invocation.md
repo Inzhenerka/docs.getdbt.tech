@@ -4,10 +4,10 @@ sidebar_label: "invocation"
 id: invocation
 ---
 
-Команда `dbt invocation` доступна в [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation) и позволяет вам:
-- Просматривать список активных invocation для отладки длительно выполняющихся или «зависших» запусков.
-- Определять и анализировать сессии, вызывающие ошибку `Session occupied`.
-- Отслеживать в реальном времени текущие активные команды dbt (например, `run`, `build`).
+Команда `dbt invocation` доступна в [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) и позволяет:
+- Выводить список активных вызовов для отладки длительно выполняющихся или зависших вызовов.
+- Выявлять и исследовать сеансы, вызывающие ошибку `Session occupied`.
+- Отслеживать выполняющиеся команды dbt (например, `run`, `build`) в реальном времени.
 
 Команда `dbt invocation` отображает **только активные invocation**. Если в данный момент ни одна сессия не запущена, список будет пустым. Завершённые сессии в вывод не включаются.
 
@@ -57,7 +57,7 @@ Use "dbt invocation [command] --help" for more information about a command.
 
 ### dbt invocation list {#dbt-invocation-list}
 
-Команда `list` предоставляет список активных invocation в вашем <Constant name="cloud_cli" />. Если выполняется длительная сессия, вы можете запустить эту команду в отдельном окне терминала, чтобы просмотреть активную сессию и упростить отладку проблемы.
+Команда `list` выводит список активных вызовов в <Constant name="platform_cli" />. Если активен длительный сеанс, вы можете выполнить эту команду в отдельном окне терминала, чтобы просмотреть активный сеанс и упростить диагностику проблемы.
 
 ```shell
 dbt invocation list
@@ -84,7 +84,10 @@ Active Invocations:
 
 :::
 
-## Связанные материалы {#related-docs}
+## Связанная документация
 
-- [Установка <Constant name="cloud" /> CLI](/docs/cloud/cloud-cli-installation)
-- [Устранение ошибки 'Session occupied' в <Constant name="cloud" /> CLI](/faqs/Troubleshooting/long-sessions-cloud-cli)
+- [Установка CLI <Constant name="dbt" />](/docs/platform/dbt-cli-installation)
+- [Устранение ошибки 'Session occupied' в CLI <Constant name="dbt" />](/faqs/Troubleshooting/long-sessions-dbt-cli)
+
+- [Установка <Constant name="cloud" /> CLI](/docs/platform/dbt-cli-installation)
+- [Устранение ошибки 'Session occupied' в <Constant name="cloud" /> CLI](/faqs/Troubleshooting/long-sessions-dbt-cli)

@@ -2,18 +2,24 @@
 title: "О команде dbt environment"
 sidebar_label: "environment"
 id: dbt-environment
+availability: platform_login
 ---
 
-Команда `dbt environment` позволяет взаимодействовать с вашей средой <Constant name="cloud" />. Используйте эту команду для:
+:::info 
+<Constant name="platform_cli" /> предоставляет команду `dbt environment` для просмотра сведений о среде и подключении. Если вы используете <Constant name="fusion" /> или <Constant name="core" />, используйте `dbt debug` для проверки профиля, целевой конфигурации и подключения &mdash; или используйте `dbtf debug`, если у вас установлены и <Constant name="core" />/<Constant name="fusion" />, и CLI платформы, а проверить нужно <Constant name="fusion" />.
 
-- Просмотра сведений о вашей локальной конфигурации (ID аккаунта, ID активного проекта, среда деплоя и другие параметры).
-- Просмотра сведений о конфигурации <Constant name="cloud" /> (ID среды, имя среды, тип подключения и другие параметры).
+:::
 
-В этом руководстве перечислены все команды и опции, которые можно использовать с `dbt environment` в [<Constant name="cloud_cli" />](/docs/cloud/cloud-cli-installation). Чтобы воспользоваться ими, добавьте команду или опцию в таком виде: `dbt environment [command]` или используйте сокращённый вариант `dbt env [command]`.
+Команда `dbt environment` позволяет взаимодействовать с вашей средой <Constant name="dbt" />. Используйте эту команду для:
+
+- Просмотра сведений о локальной конфигурации (идентификатор аккаунта, идентификатор активного проекта, среда развертывания и другие параметры).
+- Просмотра сведений о конфигурации <Constant name="dbt" /> (идентификатор среды, имя среды, тип подключения и другие параметры).
+
+В этом руководстве перечислены все команды и параметры, которые можно использовать с `dbt environment` в [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation). Чтобы использовать их, добавьте команду или параметр следующим образом: `dbt environment [command]` или воспользуйтесь сокращенной формой `dbt env [command]`.
 
 ### dbt environment show {#dbt-environment-show}
 
-Команда `show` — предназначена для просмотра сведений о вашей локальной конфигурации и конфигурации <Constant name="cloud" />. Чтобы выполнить команду с помощью <Constant name="cloud_cli" />, введите одну из следующих команд, включая сокращённый вариант:
+Команда `show` позволяет просмотреть сведения о локальной конфигурации и конфигурации <Constant name="dbt" />. Чтобы выполнить команду с помощью <Constant name="platform_cli" />, введите одну из следующих команд, включая сокращённый вариант:
 
 ```shell
 dbt environment show
@@ -26,18 +32,37 @@ dbt env show
 
 ```bash
 ❯ dbt env show
-Локальная конфигурация:
-```
-Active account ID              185854
-Active project ID              271692
-Active host name               cloud.getdbt.com
-dbt_cloud.yml file path        /Users/cesar/.dbt/dbt_cloud.yml
-dbt_project.yml file path      /Users/cesar/git/cloud-cli-test-project/dbt_project.yml
-<Constant name="cloud" /> CLI version          0.35.7
-OS info                        darwin arm64
+Local Configuration:
+  Active account ID              185854
+  Active project ID              271692
+  Active host name               cloud.getdbt.com
+  dbt_cloud.yml file path        /Users/cesar/.dbt/dbt_cloud.yml
+  dbt_project.yml file path      /Users/cesar/git/cloud-cli-test-project/dbt_project.yml
+  dbt CLI version          0.35.7
+  OS info                        darwin arm64
+
+Cloud Configuration:
+  Account ID                     185854
+  Project ID                     271692
+  Project name                   Snowflake
+  Environment ID                 243762
+  Environment name               Development
+  Defer environment ID           [N/A]
+  dbt version                    1.6.0-latest
+  Target name                    default
+  Connection type                snowflake
+
+Snowflake Connection Details:
+  Account                        ska67070
+  Warehouse                      DBT_TESTING_ALT
+  Database                       DBT_TEST
+  Schema                         CLOUD_CLI_TESTING
+  Role                           SYSADMIN
+  User                           dbt_cloud_user
+  Client session keep alive      false 
 ```
 
-> Примечание: значения, имена файлов, пути, версии и другие технические идентификаторы приведены без изменений, так как они относятся к конфигурации и выводу CLI.
+Обратите внимание: <Constant name="dbt" /> не выводит секретные ключи и возвращает 'NA' для любого поля, которое не настроено.
 
 Конфигурация Cloud:
   ID аккаунта                    185854
@@ -68,7 +93,7 @@ OS info                        darwin arm64
 
 - `-h`, `--help` &mdash; для просмотра документации по помощи для конкретной команды в вашем интерфейсе командной строки.
 
-  ```shell 
+  ```shell
   dbt environment [command] --help
   ```
 
@@ -93,7 +118,7 @@ OS info                        darwin arm64
   Используйте "dbt environment [command] --help" для получения дополнительной информации о команде.
   ```
 
-  Например, чтобы просмотреть документацию по помощи для команды `show`, введите одну из следующих команд, включая сокращение:
+Например, чтобы просмотреть справочную документацию по команде `show`, введите одну из следующих команд, в том числе с использованием сокращённой формы:
 
   ```shell
   dbt environment show --help

@@ -11,7 +11,7 @@ description: "Методы и переменные контекста, дост�
 
 **Доступные методы контекста:**
 - [env_var](/reference/dbt-jinja-functions/env_var)
-- [var](/reference/dbt-jinja-functions/var) (_Примечание: доступны только переменные, определённые с помощью `--vars`_)
+- [var](/reference/dbt-jinja-functions/var) <VersionBlock lastVersion="1.11">(_Примечание: доступны только переменные, определённые с помощью `--vars`_)</VersionBlock><VersionBlock firstVersion="1.12">(_Примечание: доступны переменные, определённые в `vars.yml` или с помощью `--vars`_)</VersionBlock>
 
 **Доступные переменные контекста:**
 - [target](/reference/dbt-jinja-functions/target)

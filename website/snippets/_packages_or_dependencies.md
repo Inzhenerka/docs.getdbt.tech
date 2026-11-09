@@ -2,8 +2,8 @@
 
 Следующая настройка подойдет для любого dbt-проекта:
 
-- Добавьте [зависимости от пакетов](/docs/mesh/govern/project-dependencies#when-to-use-project-dependencies) в `packages.yml`
-- Добавьте [зависимости от проектов](/docs/mesh/govern/project-dependencies#when-to-use-package-dependencies) в `dependencies.yml`
+- Добавьте [зависимости от пакетов](/docs/mesh/govern/project-dependencies#about-packagesyml-and-dependenciesyml) в `packages.yml`
+- Добавьте [зависимости от проектов](/docs/mesh/govern/project-dependencies#about-packagesyml-and-dependenciesyml) в `dependencies.yml`
 
 Однако, возможно, вы сможете объединить всё в один файл `dependencies.yml`. Прочитайте следующий раздел, чтобы узнать больше.
 
@@ -12,18 +12,27 @@
 - [Зависимости от пакетов](/docs/build/packages#how-do-i-add-a-package-to-my-project) позволяют добавлять в ваш проект исходный код из dbt-проекта другого автора — как библиотеку.
 - Зависимости от проектов (project dependencies) предоставляют другой способ строить решения поверх чужой работы в dbt.
 
-Если вашему dbt-проекту не требуется использовать Jinja в спецификациях пакетов, вы можете просто переименовать существующий `packages.yml` в `dependencies.yml`. Однако важно учитывать: если спецификации пакетов в вашем проекте используют Jinja (особенно в сценариях вроде добавления переменной окружения или метода [Git token method](/docs/build/packages#git-token-method) в спецификации приватного Git-пакета), стоит продолжать использовать имя файла `packages.yml`.
+#### О файлах packages.yml и dependencies.yml
+Файл `dependencies.yml` может содержать оба типа зависимостей: зависимости от пакетов и зависимости от проектов.
+- [Зависимости от пакетов](/docs/build/packages#how-do-i-add-a-package-to-my-project) позволяют добавлять исходный код из чужого проекта dbt в свой, как библиотеку.
+- Зависимости от проектов предоставляют другой способ использовать результаты чужой работы в dbt.
+- Для приватных Git-пакетов, которым требуется Jinja (например, при использовании [метода с Git-токеном](/docs/build/packages#git-token-method)), используйте `packages.yml` в <Constant name="core" />: этот файл поддерживает Jinja в спецификациях пакетов. <Constant name="fusion_engine" /> также поддерживает Jinja в `dependencies.yml`, но если проект должен работать и в <Constant name="core" />, используйте `packages.yml`. Подробнее см. в разделе [Поддержка Jinja по типам файлов](/reference/jinja-file-support). 
 
-Используйте переключатели ниже, чтобы понять различия и решить, когда использовать `dependencies.yml` или `packages.yml` (или оба). Подробнее см. [FAQ](#faqs).
+Для приватных пакетов без токенов Jinja можно использовать [встроенную поддержку приватных пакетов](/docs/build/packages#native-private-packages) в `packages.yml` или `dependencies.yml`.
 
-<Expandable alt_header="Когда использовать project dependencies" >
+Если вашему проекту dbt не требуется Jinja в спецификациях пакетов, вы можете переименовать `packages.yml` в `dependencies.yml`. Если вам требуется Jinja в спецификациях пакетов (например, для переменной окружения или [метода с Git-токеном](/docs/build/packages#git-token-method)):
+- В <Constant name="core" /> продолжайте использовать `packages.yml`. <Constant name="core" /> не обрабатывает Jinja в `dependencies.yml`.
+- В <Constant name="fusion_engine" /> можно использовать Jinja в `dependencies.yml`. Если проект должен работать и в <Constant name="core" />, рекомендуется использовать `packages.yml`.
 
-Project dependencies предназначены для воркфлоу [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) и [cross-project reference](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref):
+Полную таблицу поддержки см. в разделе [Поддержка Jinja по типам файлов](/reference/jinja-file-support). Используйте приведённые ниже переключатели, чтобы разобраться в различиях и определить, когда использовать `dependencies.yml` или `packages.yml` (или оба файла). Дополнительную информацию см. в разделе [Часто задаваемые вопросы](/docs/mesh/govern/project-dependencies#faqs).
 
-- Используйте `dependencies.yml`, когда нужно настроить cross-project references между разными dbt-проектами, особенно в рамках dbt Mesh.
-- Используйте `dependencies.yml`, когда хотите включить в зависимости проекта и другие проекты, и непубличные dbt-пакеты.
-  - Приватные пакеты не поддерживаются в `dependencies.yml`, потому что там намеренно не поддерживается рендеринг Jinja или условная конфигурация. Это нужно, чтобы конфигурация оставалась статичной и предсказуемой, а также для совместимости с другими сервисами, такими как <Constant name="cloud" />.
-- Используйте `dependencies.yml` для удобства и поддержки, если вы используете и [cross-project refs](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref), и [пакеты из dbt Hub](https://hub.getdbt.com/). Это снижает необходимость держать несколько YAML-файлов для управления зависимостями.
+<Expandable alt_header="Когда использовать зависимости проектов">
+
+Зависимости проектов предназначены для работы с [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) и [межпроектными ссылками](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref):
+
+- Используйте `dependencies.yml`, когда нужно настроить межпроектные ссылки между разными проектами dbt, особенно при использовании dbt Mesh.
+- Используйте `dependencies.yml`, когда хотите включить в зависимости своего проекта как другие проекты, так и неприватные пакеты dbt.
+- Используйте `dependencies.yml` для упорядочения зависимостей и упрощения их сопровождения, если вы используете одновременно [межпроектные ссылки](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) и [пакеты из dbt Hub](https://hub.getdbt.com/). Это позволяет сократить количество YAML-файлов, необходимых для управления зависимостями.
 
 </Expandable>
 
@@ -31,11 +40,11 @@ Project dependencies предназначены для воркфлоу [dbt Mes
 
 Package dependencies позволяют добавлять в ваш проект исходный код из dbt-проекта другого автора — как библиотеку:
 
-- Если вы используете только пакеты, например из [dbt Hub](https://hub.getdbt.com/), оставайтесь на `packages.yml`.
-- Используйте `packages.yml`, когда нужно скачать dbt-пакеты (например, dbt-проекты) в корневой (root) или родительский (parent) dbt-проект. Важно: это не относится к воркфлоу dbt Mesh.
-- Используйте `packages.yml`, чтобы включать пакеты в зависимости проекта. Это включает и публичные пакеты (например из [dbt Hub](https://hub.getdbt.com/)), и приватные пакеты. dbt теперь поддерживает [native private packages](/docs/build/packages#native-private-packages).
-- `packages.yml` поддерживает рендеринг Jinja по историческим причинам, что позволяет делать динамические конфигурации. Это может быть полезно, если нужно подставлять значения (например метод [Git token method](/docs/build/packages#git-token-method) из переменной окружения) в спецификации пакетов.
+- Если вы используете только пакеты, например из [dbt Hub](https://hub.getdbt.com/), продолжайте использовать `packages.yml`.
+- Используйте `packages.yml`, если хотите загружать пакеты dbt, например проекты dbt, в свой корневой или родительский проект dbt. Обратите внимание, что этот файл не участвует в рабочем процессе dbt Mesh.
+- Используйте `packages.yml`, чтобы включать пакеты в зависимости вашего проекта. Это касается как общедоступных пакетов, например из [dbt Hub](https://hub.getdbt.com/), так и приватных пакетов. Теперь dbt поддерживает [нативную работу с приватными пакетами](/docs/build/packages#native-private-packages).
+- По историческим причинам [`packages.yml` поддерживает рендеринг Jinja](/docs/build/dbt-tips#yaml-tips), что позволяет создавать динамические конфигурации. Это может быть полезно, если вам нужно подставлять значения из переменных окружения в спецификации пакетов, например при использовании [метода с токеном Git](/docs/build/packages#git-token-method). <Constant name="fusion_engine" /> также поддерживает Jinja в `dependencies.yml`; см. [поддержку Jinja по типам файлов](/reference/jinja-file-support).
 
-Ранее для использования приватных Git-репозиториев в dbt приходилось применять обходной путь: встраивать Git token с помощью Jinja. Это неидеально, потому что требует дополнительных шагов — например, создавать пользователя и делиться Git token. Мы добавили поддержку [native private packages](/docs/build/packages#native-private-packages-), чтобы решить эту проблему.
+Ранее для использования приватных Git-репозиториев в dbt приходилось применять обходной путь: встраивать Git token с помощью Jinja. Это неидеально, потому что требует дополнительных шагов — например, создавать пользователя и делиться Git token. Мы добавили поддержку [native private packages](/docs/build/packages#native-private-packages), чтобы решить эту проблему.
 
 </Expandable>

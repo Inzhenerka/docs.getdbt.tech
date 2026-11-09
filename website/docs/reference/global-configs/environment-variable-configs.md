@@ -4,7 +4,9 @@ id: "environment-variable-configs"
 sidebar: "Конфигурации переменных окружения"
 ---
 
-Переменные окружения содержат префикс `DBT_`. Для получения списка всех переменных окружения dbt, которые вы можете установить, обратитесь к [Доступные флаги](/reference/global-configs/about-global-configs#available-flags).
+<VersionBlock lastVersion="1.10">
+
+Переменные окружения содержат префикс `DBT_`. Список всех переменных окружения dbt, которые можно задать, приведён в разделе [Доступные флаги](/reference/global-configs/about-global-configs#available-flags).
 
 <File name='Env var'>
 
@@ -17,7 +19,26 @@ dbt run
 
 </File>
 
-Для получения более подробной информации ознакомьтесь с нашей страницей [environment variables page](/docs/build/environment-variables).
+</VersionBlock>
+
+<VersionBlock firstVersion="1.11">
+
+Переменные окружения используют префикс `DBT_ENGINE_`. Список всех переменных окружения dbt, которые можно задать, приведён в разделе [Доступные флаги](/reference/global-configs/about-global-configs#available-flags).
+
+<File name='Переменная окружения'>
+
+```text
+
+$ export DBT_ENGINE_<THIS-CONFIG>=True
+dbt run
+
+```
+
+</File>
+
+</VersionBlock>
+
+Более подробную информацию см. на нашей [странице о переменных окружения](/docs/build/environment-variables).
 
 ## Приоритет конфигурации {#config-precedence}
 

@@ -15,11 +15,10 @@ id: source-quotes
 <File name='models/<filename>.yml'>
 
 ```yaml
-version: 2
-
 sources:
   - name: jaffle_shop
     database: raw
+    schema: jaffle_shop
     quoting:
       database: true
       schema: true

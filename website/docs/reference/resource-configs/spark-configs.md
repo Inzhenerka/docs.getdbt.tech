@@ -12,7 +12,7 @@ description: "Конфигурации Apache Spark - Прочтите это п
 <Snippet path="dbt-databricks-for-databricks" />
 
 :::note
-См. [Конфигурация Databricks](#databricks-configs) для версии этой страницы для Databricks.
+См. [Конфигурация Databricks](/reference/resource-configs/databricks-configs) для версии этой страницы для Databricks.
 :::
 
 ## Конфигурация таблиц {#configuring-tables}

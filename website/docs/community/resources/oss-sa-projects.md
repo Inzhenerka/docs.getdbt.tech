@@ -4,16 +4,16 @@
 
 ## Rust {#rust}
 
-- [<Constant name="fusion_engine" />](https://github.com/dbt-labs/dbt-fusion) — движок следующего поколения, лежащий в основе dbt
+- [dbt OSS](https://github.com/dbt-labs/dbt) - дистрибутив dbt v2 с открытым исходным кодом под лицензией Apache 2.0
 
 ## Python {#python}
 
-- [<Constant name="core" />](https://github.com/dbt-labs/dbt-core) — оригинальный движок, на котором работает dbt
-- [hubcap](https://github.com/dbt-labs/hubcap) — код, обеспечивающий работу dbt Package hub
+- [<Constant name="core" />](https://github.com/dbt-labs/dbt/tree/1.latest) - оригинальный движок, на котором работает dbt
+- [hubcap](https://github.com/dbt-labs/hubcap) - код, обеспечивающий работу каталога пакетов dbt Package hub
 
 ## dbt {#dbt}
 
-- [Пакеты dbt Labs](https://hub.getdbt.com/dbt-labs/) - пакеты dbt, созданные и поддерживаемые dbt Labs. Пакеты — это просто проекты dbt, поэтому если вы знаете SQL, Jinja и YAML, необходимые для работы в dbt, вы можете вносить вклад в пакеты.
+- [Пакеты dbt Labs](https://hub.getdbt.com/dbt-labs/) — пакеты dbt, созданные и поддерживаемые dbt Labs. Пакеты — это обычные проекты dbt, поэтому, если вы владеете SQL, Jinja и YAML на уровне, необходимом для работы с dbt, вы можете вносить вклад в разработку пакетов.
 
 ## YAML и JSON Конфигурация {#yaml-and-json-config}
 

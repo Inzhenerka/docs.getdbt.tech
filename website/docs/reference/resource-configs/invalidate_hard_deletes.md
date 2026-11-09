@@ -16,7 +16,7 @@ sidebar_label: invalidate_hard_deletes
 
 :::warning Это устаревшая конфигурация &mdash; используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes) вместо этого.
 
-В релизных ветках <Constant name="cloud" />, а также в dbt Core версии 1.9 и выше, конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет `invalidate_hard_deletes`, обеспечивая более гибкий контроль над тем, как обрабатывать строки, удалённые из источника.
+В треках релизов <Constant name="dbt" /> и в <Constant name="dbt" /> версии 1.9 и выше конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет конфигурацию `invalidate_hard_deletes`, предоставляя больше контроля над обработкой строк, удалённых из источника.
 
 Для новых snapshot’ов используйте настройку `hard_deletes='invalidate'` вместо `invalidate_hard_deletes=true`. Для уже существующих snapshot’ов сначала [выполните обновление](/reference/snapshot-configs#snapshot-configuration-migration) ранее созданных таблиц, а затем включайте эту настройку.
 :::

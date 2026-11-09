@@ -12,7 +12,7 @@ id: snapshotting-freshness-for-one-source
 # Сделать снимок актуальности для всех таблиц Jaffle Shop:
 $ dbt source freshness --select source:jaffle_shop
 
-# Сделать снимок актуальности для конкретного источника <Term id="table" />:
+# Актуальность снимка для конкретной исходной таблицы:
 $ dbt source freshness --select source:jaffle_shop.orders
 
 # Сделать снимок актуальности для нескольких конкретных таблиц источников:

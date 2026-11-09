@@ -6,7 +6,7 @@ displayText: Отладка имен схем
 hoverSnippet: Узнайте, как отлаживать имена схем в dbt.
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Core','Troubleshooting']
+tags: ['Troubleshooting']
 level: 'Advanced'
 ---
 
@@ -52,7 +52,7 @@ level: 'Advanced'
     {{ generate_schema_name_for_env(custom_schema_name, node) }}
 {%- endmacro %}
 ```
-Ваш проект заменяет макрос `generate_schema_name` на другой макрос, `generate_schema_name_for_env`. Подобно приведенному выше примеру, это макрос, который определен в глобальном проекте dbt, [здесь](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt/include/global_project/macros/get_custom_name/get_custom_schema.sql).
+В вашем проекте макрос `generate_schema_name` заменяется другим макросом — `generate_schema_name_for_env`. Как и в примере выше, этот макрос определён в глобальном проекте dbt, [здесь](https://github.com/dbt-labs/dbt/blob/main/crates/dbt-loader/src/dbt_macro_assets/dbt-adapters/macros/get_custom_name/get_custom_schema.sql).
 ```sql
 {% macro generate_schema_name_for_env(custom_schema_name, node) -%}
 
@@ -90,7 +90,33 @@ level: 'Advanced'
 
 Вы должны обнаружить, что схема, которую dbt создает для вашей модели, соответствует выходным данным вашего макроса `generate_schema_name`.
 
-Будьте внимательны. Снэпшоты **не** следуют этому поведению, если задан параметр `target_schema`. Чтобы снэпшоты учитывали окружение в версии v1.9+ или <Constant name="cloud" />, удалите конфигурацию [`target_schema`](/reference/resource-configs/target_schema) из ваших снэпшотов. Если вам всё же нужна собственная схема для снэпшотов, используйте вместо этого параметр [`schema`](/reference/resource-configs/schema).
+Будьте внимательны. Снимки не следуют этому поведению, если задан параметр target_schema. Чтобы в v1.9+ или <Constant name="dbt" /> снимки учитывали окружение, удалите [конфигурацию target_schema](/reference/resource-configs/target_schema) из своих снимков. Если вам по-прежнему нужна пользовательская схема для снимков, используйте вместо неё конфигурацию [`schema`](/reference/resource-configs/schema).
+
+## Имена схем с префиксом
+
+По умолчанию dbt объединяет `target.schema` и `custom_schema_name` по следующему шаблону:
+`{target.schema}_{custom_schema_name}`.
+
+Например, если `target.schema` имеет значение `public`, а для модели задано `+schema: silver`, dbt создаёт модель в схеме `public_silver`, а не `silver`.
+
+Это поведение предусмотрено намеренно. Включение `target.schema` помогает предотвратить ситуации, когда разработчики и задания непрерывной интеграции (CI) создают объекты в одной и той же схеме и перезаписывают объекты друг друга.
+
+Если в рабочем окружении вы хотите использовать отдельные имена схем, такие как `silver` и `gold`, примените показанный ранее [шаблон `generate_schema_name_for_env`, учитывающий окружение](#you-have-a-generateschemaname-macro-in-a-project-that-calls-another-macro). Этот шаблон использует пользовательское имя схемы, когда `target.name` имеет значение `prod`, сохраняя при этом целевую схему в окружениях разработки и CI.
+
+Макрос выглядит так:
+
+```sql
+{% macro generate_schema_name_for_env(custom_schema_name, node) -%}
+    {%- set default_schema = target.schema -%}
+    {%- if target.name == 'prod' and custom_schema_name is not none -%}
+        {{ custom_schema_name | trim }}
+    {%- else -%}
+        {{ default_schema }}
+    {%- endif -%}
+{%- endmacro %}
+```
+
+Проверьте фактическое расположение объектов с помощью `dbt ls --output json` или запроса к каталогу вашего хранилища данных (`pg_views`, `information_schema.tables` или аналогичному).
 
 ## Настройте по мере необходимости {#adjust-as-necessary}
 
