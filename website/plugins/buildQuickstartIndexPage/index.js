@@ -1,7 +1,7 @@
 const fs = require('fs')
 const matter = require('gray-matter')
 
-module.exports = function buildQuickstartIndexPage() {
+module.exports = function buildQuickstartIndexPage({ siteConfig }) {
   return {
     name: 'docusaurus-build-quickstart-index-page-plugin',
     async loadContent() {
@@ -62,7 +62,7 @@ module.exports = function buildQuickstartIndexPage() {
       
       // Build the quickstart index page
       addRoute({
-        path: `/guides`,
+        path: `${siteConfig.baseUrl}guides`,
         component: '@site/src/components/quickstartGuideList/index.js',
         modules: {
           // propName -> JSON file path
