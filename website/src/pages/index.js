@@ -1,7 +1,8 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import Card from '@site/src/components/card';
-import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/default/p/blog-archive-61f.json';
+import { usePluginData } from '@docusaurus/useGlobalData';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
 import Link from '@docusaurus/Link';
@@ -26,21 +27,14 @@ function Home() {
 
   const formatDate = (blogDate) => dateTimeFormat.format(new Date(blogDate));
 
-  const recentBlogData = allBlogData?.archive?.blogPosts
-    ?.slice(0, 3)
-    .reduce((accumulator, currentValue) => {
-      let postMetaData = {
-        title: currentValue.metadata.title,
-        date: formatDate(currentValue.metadata.date),
-        readingTime: Math.round(currentValue.metadata.readingTime),
-        description: currentValue.metadata.description,
-        link: currentValue.metadata.permalink,
-        image: currentValue.metadata.image,
-        tags: currentValue.metadata.tags,
-      };
-      accumulator.push(postMetaData);
-      return accumulator;
-    }, []);
+  const { recentBlogPosts } = usePluginData('docusaurus-build-global-data-plugin');
+  const recentBlogData = recentBlogPosts.map(({ date, readingTime, permalink, ...post }) => ({
+    ...post,
+    date: formatDate(date),
+    readingTime: Math.round(readingTime),
+    link: permalink,
+  }));
+  const sitePreview = useBaseUrl('/img/doudou-site.png');
 
   const { siteConfig } = useDocusaurusContext();
 
@@ -113,7 +107,7 @@ function Home() {
                 <div className="translated-note__media">
                   <img
                     className="translated-note__image"
-                    src="/img/doudou-site.png"
+                    src={sitePreview}
                     alt="Скриншот сайта с русской версией документации"
                   />
                 </div>

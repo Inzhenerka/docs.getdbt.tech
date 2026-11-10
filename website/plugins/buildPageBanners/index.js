@@ -38,6 +38,7 @@ function normalizePath(pathname) {
 
 module.exports = function buildPageBannersPlugin(context) {
   const siteDir = (context && context.siteDir) || ".";
+  const basePath = context.siteConfig.baseUrl.replace(/\/$/, "");
   const configPath = path.join(siteDir, "page-banners.yml");
 
   return {
@@ -65,7 +66,7 @@ module.exports = function buildPageBannersPlugin(context) {
           open_in_new_tab: entry.open_in_new_tab,
         };
         targets.forEach((target) => {
-          if (target) banners[normalizePath(target)] = banner;
+          if (target) banners[normalizePath(basePath + target)] = banner;
         });
       });
 

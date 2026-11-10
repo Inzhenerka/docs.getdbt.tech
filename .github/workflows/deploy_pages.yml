@@ -2,7 +2,7 @@ name: Deploy dbt to GitHub Pages
 
 on:
   push:
-    branches: [codex/dbt-pages-preview]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

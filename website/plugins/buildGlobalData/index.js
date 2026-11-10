@@ -39,9 +39,15 @@ module.exports = function buildGlobalDataPlugin(context, options) {
         faqFiles
       }
     },
-    async contentLoaded({ content, actions }) {
-      const { setGlobalData } = actions;
-      setGlobalData(content);
+    async allContentLoaded({ allContent, actions }) {
+      const content = allContent['docusaurus-build-global-data-plugin'].default;
+      const blogPosts = allContent['docusaurus-plugin-content-blog']?.default?.blogPosts ?? [];
+      const recentBlogPosts = blogPosts
+        .filter(({ metadata }) => !metadata.unlisted)
+        .slice(0, 3)
+        .map(({ metadata: { title, date, readingTime, description, permalink, image, tags } }) =>
+          ({ title, date, readingTime, description, permalink, image, tags }));
+      actions.setGlobalData({ ...content, recentBlogPosts });
     },
   }
 }
