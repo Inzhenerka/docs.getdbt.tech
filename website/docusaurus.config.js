@@ -53,7 +53,7 @@ var siteSettings = {
   baseUrl: process.env.PAGES_BASE_PATH ? process.env.PAGES_BASE_PATH + "/" : "/",
   tagline: "Документация, гайды и руководства по dbt на русском языке",
   title: "Документация dbt",
-  url: process.env.PAGES_ORIGIN || SITE_URL,
+  url: process.env.PAGES_ORIGIN?.replace(/^http:/, "https:") || SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   trailingSlash: true,
